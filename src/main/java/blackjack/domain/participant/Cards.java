@@ -11,6 +11,7 @@ public class Cards {
     private static final int MIN_ACE_VALUE = 1;
     private static final int MAX_ACE_VALUE = 11;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -83,6 +84,10 @@ public class Cards {
     private boolean isAfford(int sum, int restAceCount) {
         final int ACE_VALUE_GAP = MAX_ACE_VALUE - MIN_ACE_VALUE;
         return (BLACKJACK_SCORE - sum) - restAceCount * MIN_ACE_VALUE >= ACE_VALUE_GAP;
+    }
+
+    public boolean isBlackjack() {
+        return getCardCount() == BLACKJACK_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

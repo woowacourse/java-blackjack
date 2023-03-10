@@ -29,6 +29,10 @@ abstract public class Participant {
         return cards.calculateScore();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackjack();
+    }
+
     public Name getName() {
         return name;
     }

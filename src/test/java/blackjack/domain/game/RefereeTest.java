@@ -64,5 +64,49 @@ class RefereeTest {
         Assertions.assertThat(dealerResult.get(Result.LOSE.getResult())).isEqualTo(1);
     }
 
+    @Test
+    void twoBlackJack() {
+        Dealer blackjackDealer = new Dealer();
+        Players blackjackPlayers = new Players("무민,아마란스");
+        hitBlackJack(blackjackDealer);
+        hitBlackJack(blackjackPlayers.getPlayers().get(0));
+        hitBlackJack(blackjackPlayers.getPlayers().get(1));
 
+        List<Result> results = referee.judgeResult(blackjackDealer, blackjackPlayers);
+
+        Assertions.assertThat(results).isEqualTo(List.of(Result.DRAW, Result.DRAW));
+    }
+
+    private void hitBlackJack(Participant participant) {
+        participant.hit(new StandardCard(Pattern.SPADE, "10"));
+        participant.hit(new AceCard(Pattern.SPADE));
+    }
+
+    @Test
+    void onlyDealerBlackJack() {
+        Dealer blackjackDealer = new Dealer();
+        Players players = new Players("무민,아마란스");
+        hitBlackJack(blackjackDealer);
+        Player score14Player = players.getPlayers().get(0);
+        Player score21Player = players.getPlayers().get(1);
+        hit(score14Player, List.of("6", "8"));
+        hit(score21Player, List.of("10", "5", "6"));
+
+        List<Result> results = referee.judgeResult(blackjackDealer, players);
+
+        Assertions.assertThat(results).isEqualTo(List.of(Result.LOSE, Result.LOSE));
+    }
+
+    @Test
+    void onlyPlayerBlackJack() {
+        Dealer dealer = new Dealer();
+        hit(dealer, List.of("7", "6", "8"));
+        Players blackjackplayers = new Players("무민,아마란스");
+        hitBlackJack(blackjackplayers.getPlayers().get(0));
+        hitBlackJack(blackjackplayers.getPlayers().get(1));
+
+        List<Result> results = referee.judgeResult(dealer, blackjackplayers);
+
+        Assertions.assertThat(results).isEqualTo(List.of(Result.BLACKJACK, Result.BLACKJACK));
+    }
 }
