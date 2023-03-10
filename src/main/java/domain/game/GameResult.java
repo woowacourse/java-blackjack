@@ -34,13 +34,13 @@ public class GameResult {
     private int updateDealerProfit() {
         int result = 0;
         for (Map.Entry<Result, List<Player>> entry : playerResult.entrySet()) {
-            result += checkProfit(entry);
-            result -= checkLoss(entry);
+            result += getProfit(entry);
+            result -= getLoss(entry);
         }
         return result;
     }
 
-    private static int checkProfit(final Map.Entry<Result, List<Player>> entry) {
+    private static int getProfit(final Map.Entry<Result, List<Player>> entry) {
         if (Result.LOSE == entry.getKey()) {
             return -entry.getValue().stream()
                     .mapToInt(Result.LOSE::calculateProfit)
@@ -49,7 +49,7 @@ public class GameResult {
         return 0;
     }
 
-    private static int checkLoss(final Map.Entry<Result, List<Player>> entry) {
+    private static int getLoss(final Map.Entry<Result, List<Player>> entry) {
         if (Result.WIN == entry.getKey()) {
             return entry.getValue().stream()
                     .mapToInt(Result.WIN::calculateProfit)

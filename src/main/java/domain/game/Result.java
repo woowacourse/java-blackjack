@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.card.Cards;
 import domain.participant.Player;
 
 public enum Result {
