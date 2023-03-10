@@ -11,7 +11,44 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PlayerTest {
 
     @Test
-    @DisplayName("상대의 점수가 내 점수보다 낮으면 승리해야 한다.")
+    @DisplayName("처음 받은 두 장의 카드의 점수 합이 21점이면 게임 결과는 블랙잭이다.")
+    void matchGame_blackjack() {
+        // given
+        Dealer dealer = new Dealer();
+        Player player = new Player("encho");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+
+        // when
+        GameResult gameResult = player.matchGame(dealer);
+
+        // then
+        assertThat(gameResult)
+                .isEqualTo(GameResult.BLACKJACK);
+
+    }
+
+    @Test
+    @DisplayName("가지고 있는 카드의 점수 합이 21점 초과이면 게임 결과는 패배이다.")
+    void matchGame_bust() {
+        // given
+        Dealer dealer = new Dealer();
+        Player player = new Player("encho");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
+        player.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        // when
+        GameResult gameResult = player.matchGame(dealer);
+
+        // then
+        assertThat(gameResult)
+                .isEqualTo(GameResult.LOSE);
+
+    }
+
+    @Test
+    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 내 점수보다 낮으면 승리해야 한다.")
     void matchGame_win() {
         // given
         Player player1 = new Player("glen");
@@ -28,7 +65,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("상대의 점수가 내 점수보다 높으면 패배해야 한다.")
+    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 내 점수보다 높으면 패배해야 한다.")
     void matchGame_lose() {
         // given
         Player player1 = new Player("glen");
@@ -45,34 +82,13 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("상대의 점수가 나와 같으면 무승부여야 한다.")
+    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 나와 같으면 무승부여야 한다.")
     void matchGame_draw() {
         // given
         Player player1 = new Player("glen");
         Player player2 = new Player("encho");
         player1.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
         player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-
-        // when
-        GameResult gameResult = player1.matchGame(player2);
-
-        // then
-        assertThat(gameResult)
-                .isEqualTo(GameResult.DRAW);
-    }
-
-    @Test
-    @DisplayName("상대의 점수와 나의 점수가 21점을 넘으면 무승부여야 한다.")
-    void matchGame_sameOverScore() {
-        // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
         // when
         GameResult gameResult = player1.matchGame(player2);
@@ -117,27 +133,26 @@ class PlayerTest {
     @DisplayName("이름이 공백이면 예외가 발생해야 한다.")
     void validateBlankName(String input) {
         // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player(input);
-        }).withMessage("[ERROR] 이름은 공백일 수 없습니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Player(input)).withMessage("[ERROR] 이름은 공백일 수 없습니다.");
     }
 
     @Test
     @DisplayName("이름이 딜러면 예외가 발생해야 한다.")
     void validateBlacklist() {
         // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player("딜러");
-        }).withMessage("[ERROR] 딜러는 사용할 수 없는 이름입니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Player("딜러"))
+                .withMessage("[ERROR] 딜러는 사용할 수 없는 이름입니다.");
     }
 
     @Test
     @DisplayName("이름이 5글자를 초과하면 예외가 발생해야 한다.")
     void validateNameLength() {
         // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player("123456");
-        }).withMessage("[ERROR] 이름은 5글자를 넘을 수 없습니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Player("123456"))
+                .withMessage("[ERROR] 이름은 5글자를 넘을 수 없습니다.");
     }
 
     @Test

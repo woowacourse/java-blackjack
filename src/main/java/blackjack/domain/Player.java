@@ -35,6 +35,31 @@ public class Player extends Person {
         }
     }
 
+    public GameResult matchGame(Person dealer) {
+        if (isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+        return compareScoreWith(dealer);
+    }
+
+    private GameResult compareScoreWith(Person dealer) {
+        int myScore = this.getScore();
+        int dealerScore = dealer.getScore();
+        if (myScore < dealerScore) {
+            return GameResult.LOSE;
+        }
+        if (myScore > dealerScore) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
+
     @Override
     public boolean isPlayer() {
         return true;

@@ -13,31 +13,20 @@ public abstract class Person {
         this.cards = new Cards();
     }
 
-    public GameResult matchGame(Person otherPerson) {
-        int otherScore = correctionOverScore(otherPerson.getScore());
-        int myScore = correctionOverScore(this.getScore());
-        if (otherScore > myScore) {
-            return GameResult.LOSE;
-        }
-        if (otherScore < myScore) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
-    }
-
-    private int correctionOverScore(int score) {
-        if (score > MAX_SCORE) {
-            return 0;
-        }
-        return score;
-    }
-
     public void addCard(Card card) {
         this.cards.addCard(card);
     }
 
     public int getScore() {
         return cards.getScore();
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public String getName() {
