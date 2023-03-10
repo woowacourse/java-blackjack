@@ -20,7 +20,7 @@ import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.CardDeckFixture.cardDeck;
 import static domain.fixture.GamblerFixture.gamblerWithMoneyAndCardArea;
-import static domain.player.Revenue.*;
+import static domain.player.GameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,47 +89,47 @@ class DealerTest {
                 Arguments.of(
                         Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
                         Named.of("17", new Dealer(equal17CardArea())),
-                        Named.of("패배", lose(money))
+                        Named.of("패배", LOSE.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
                         Named.of("22", new Dealer(equal22CardArea())),
-                        Named.of("승리", defaultWin(money))
+                        Named.of("승리", WIN.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
                         Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
-                        Named.of("패배", lose(money))
+                        Named.of("패배", LOSE.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
                         Named.of("22", new Dealer(equal22CardArea())),
-                        Named.of("패배", lose(money))
+                        Named.of("패배", LOSE.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
                         Named.of("19", new Dealer(equal19CardArea())),
-                        Named.of("패배", lose(money))
+                        Named.of("패배", LOSE.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
                         Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
-                        Named.of("무승부", draw(money))
+                        Named.of("무승부", DRAW.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
                         Named.of("20", new Dealer(equal20CardArea())),
-                        Named.of("승리", defaultWin(money))
+                        Named.of("승리", WIN.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
                         Named.of("16", new Dealer(equal16CardArea())),
-                        Named.of("무승부", draw(money))
+                        Named.of("무승부", DRAW.revenue(money))
                 ),
                 Arguments.of(
                         Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaBlackJack())),
                         Named.of("20", new Dealer(equal20CardArea())),
-                        Named.of("블랙잭 승리", blackJackWin(money))
+                        Named.of("블랙잭 승리", BLACKJACK_WIN.revenue(money))
                 )
         );
     }

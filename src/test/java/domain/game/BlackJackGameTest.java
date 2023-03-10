@@ -24,6 +24,7 @@ import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.GamblerFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
 import static domain.fixture.NameFixture.코다이름;
+import static domain.player.GameResult.*;
 import static org.assertj.core.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -68,9 +69,9 @@ class BlackJackGameTest {
 
         // then
         assertThat(revenue).contains(
-                entry(말랑, Revenue.draw(말랑.battingMoney())),
-                entry(콩떡, Revenue.lose(콩떡.battingMoney())),
-                entry(코다, Revenue.defaultWin(코다.battingMoney()))
+                entry(말랑, DRAW.revenue(말랑.battingMoney())),
+                entry(콩떡, LOSE.revenue(콩떡.battingMoney())),
+                entry(코다, WIN.revenue(코다.battingMoney()))
         );
     }
 
