@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
+    private static final String YES = "y";
+    private static final String STAY = "n";
 
     private InputView() {
     }
@@ -15,15 +17,27 @@ public class InputView {
         return readLine();
     }
 
-    public static String askAdditionalCard(String playerName) {
+    public static boolean askAdditionalCard(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return readLine();
+        String input = readLine();
+        validateCommand(input);
+        return isYes(input);
     }
 
     private static String readLine() {
         String input = sc.nextLine();
         validateBlank(input);
         return input;
+    }
+
+    private static boolean isYes(String input) {
+        return YES.equals(input);
+    }
+
+    private static void validateCommand(String input) {
+        if (!STAY.equals(input) && !YES.equals(input)) {
+            throw new IllegalArgumentException("y 또는 n 으로 입력해주세요.");
+        }
     }
 
     public static <T> T repeat(Supplier<T> supplier) {
