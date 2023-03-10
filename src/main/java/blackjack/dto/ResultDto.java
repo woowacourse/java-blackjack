@@ -15,7 +15,7 @@ public class ResultDto {
     }
 
     public static ResultDto of(Player player, Result result) {
-        return new ResultDto(player.getName().getName(), result.getResult());
+        return new ResultDto(player.getName(), result.getResult());
     }
 
     public String getName() {

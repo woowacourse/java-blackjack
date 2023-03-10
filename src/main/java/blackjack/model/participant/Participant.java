@@ -1,8 +1,10 @@
 package blackjack.model.participant;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.State;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -49,12 +51,12 @@ public abstract class Participant {
         return currentState.getOptimizedScore();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
-    public Hand getHand() {
-        return currentState.getHand();
+    public List<Card> getHand() {
+        return currentState.getHand().getCards();
     }
 
     @Override

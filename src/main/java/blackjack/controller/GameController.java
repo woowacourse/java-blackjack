@@ -46,7 +46,7 @@ public class GameController {
 
     private void printInitialCardStatus(Participants participants) {
         List<String> playerNames = participants.getPlayers().stream()
-                .map(player -> player.getName().getName())
+                .map(Participant::getName)
                 .collect(Collectors.toList());
         outputView.printDistributionMessage(playerNames);
 
@@ -60,7 +60,7 @@ public class GameController {
     private void hitOrStand(CardDeck cardDeck, Participants participants) {
         while (participants.hasNextPlayer()) {
             Player player = participants.getNextPlayer();
-            boolean isHit = inputView.readHitOrStand(player.getName().getName());
+            boolean isHit = inputView.readHitOrStand(player.getName());
             participants.hitOrStandByPlayer(cardDeck, player, isHit);
             outputView.printNameAndHand(ParticipantDto.from(player));
         }

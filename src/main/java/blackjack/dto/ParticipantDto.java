@@ -20,19 +20,19 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto from(Participant participant) {
-        String participantName = participant.getName().getName();
+        String participantName = participant.getName();
         List<String> participantCards = makeCardUnits(participant.getHand());
         return new ParticipantDto(participantName, participantCards);
     }
 
     public static ParticipantDto of(Participant participant, Card card) {
-        String participantName = participant.getName().getName();
+        String participantName = participant.getName();
         List<String> participantCard = Collections.singletonList((makeCardUnit(card.getNumber(), card.getSuit())));
         return new ParticipantDto(participantName, participantCard);
     }
 
-    private static List<String> makeCardUnits(Hand hand) {
-        return hand.getCards().stream()
+    private static List<String> makeCardUnits(List<Card> hand) {
+        return hand.stream()
                 .map(card -> makeCardUnit(card.getNumber(), card.getSuit()))
                 .collect(Collectors.toList());
     }
