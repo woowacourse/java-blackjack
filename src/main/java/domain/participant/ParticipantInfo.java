@@ -2,9 +2,12 @@ package domain.participant;
 
 import domain.game.EarningRate;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static domain.participant.Participant.DEALER_NAME;
 
@@ -29,7 +32,15 @@ public class ParticipantInfo {
                 });
     }
 
+    public List<Participant> findPlayerInfo() {
+        return participantInfo.keySet()
+                .stream()
+                .filter(Predicate.not(participant -> DEALER_NAME.isSame(participant.getName())))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public void loseAllMoney(final Participant participant) {
+        updateDealerMoney(findDealerInfo());
         final ParticipantMoney participantMoney = participantInfo.get(participant);
         participantInfo.put(participant, EarningRate.LOSE.calculateMoney(participantMoney));
     }

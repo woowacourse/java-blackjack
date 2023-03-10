@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,6 +40,20 @@ class ParticipantInfoTest {
 
         // when
         Participant actual = participantInfo.findDealerInfo();
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("findPlayerInfo()는 호출하면, 플레이어를 반환한다.")
+    void findPlayerInfo_whenCall_thenReturnDealer() {
+        // given
+        List<Player> expected = List.of(Player.create("pobi"), Player.create("crong"));
+
+        // when
+        List<Participant> actual = participantInfo.findPlayerInfo();
 
         // then
         assertThat(actual)
