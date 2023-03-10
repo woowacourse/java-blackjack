@@ -12,6 +12,11 @@ public class InputView {
         return List.of(scanner.nextLine().split(","));
     }
 
+    public String readBetAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        return scanner.nextLine();
+    }
+
     public String readCommandToAddCardOrNot(Name name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n) %n", name.getValue());
         return scanner.nextLine();
