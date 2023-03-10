@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.BetAmount;
-
 public class Player extends Participant {
 
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
