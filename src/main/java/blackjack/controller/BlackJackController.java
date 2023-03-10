@@ -9,6 +9,7 @@ import blackjack.strategy.RandomCardShuffle;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -21,12 +22,23 @@ public class BlackJackController {
 
     public void run() {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames, OutputView::printErrorMessage);
+        bet(players);
         final Dealer dealer = new Dealer();
 
         initHit(players, dealer);
         askPlayers(players);
         hitCardByDealer(dealer);
         printFinal(players, dealer);
+    }
+
+    private void bet(Players players) {
+        List<Integer> amounts = new ArrayList<>();
+
+        for (Player player : players.getPlayers()) {
+            amounts.add(Repeater.repeatIfError(() -> InputView.inputPlayerAmount(player.getName().getValue()),
+                    OutputView::printErrorMessage));
+        }
+        blackJackGame.bet(players, amounts);
     }
 
     private Players inputPlayerNames() {
