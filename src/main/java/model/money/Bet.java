@@ -1,7 +1,5 @@
 package model.money;
 
-import static model.card.State.*;
-
 import java.util.Objects;
 import model.card.State;
 
@@ -24,20 +22,20 @@ public class Bet {
         return new Bet(this.money + bet.money);
     }
 
-    public Bet calculateMoney(State result) {
-        if (result == BLACKJACK) {
+    public Bet calculateBet(State state) {
+        if (state.isBlackJack()) {
             return blackJack();
         }
 
-        return judge(result);
+        return judgeFinalBet(state);
     }
 
-    private Bet judge(State result) {
-        if (result == WIN) {
+    private Bet judgeFinalBet(State state) {
+        if (state.isWin()) {
             return this;
         }
 
-        if (result == LOSE) {
+        if (state.isLose()) {
             return lose();
         }
 
