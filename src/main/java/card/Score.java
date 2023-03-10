@@ -37,4 +37,8 @@ public class Score {
     public int getScore() {
         return score;
     }
+
+    public boolean isBiggerThan(Score compared) {
+        return this.score > compared.score;
+    }
 }

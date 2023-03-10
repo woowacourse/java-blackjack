@@ -1,5 +1,6 @@
 package blackjack.card;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -64,5 +65,23 @@ public class ScoreTest {
         Score score = new Score(22);
 
         assertThat(score.isOverMaxScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("비교하는 score보다 점수가 높으면 true를 반환한다.")
+    void isBiggerThan() {
+        Score score = new Score(11);
+        Score score1 = new Score(10);
+
+        assertThat(score.isBiggerThan(score1)).isTrue();
+    }
+
+    @Test
+    @DisplayName("비교하는 score보다 점수가 높으면 false를 반환한다.")
+    void isBiggerThanFalse() {
+        Score score = new Score(11);
+        Score score1 = new Score(10);
+
+        assertThat(score1.isBiggerThan(score)).isFalse();
     }
 }
