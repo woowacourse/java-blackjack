@@ -1,12 +1,9 @@
 package model.money;
 
-import model.user.Player;
-
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-
-import static java.util.stream.Collectors.toMap;
+import model.user.Player;
 
 public class Purse {
 
@@ -17,8 +14,10 @@ public class Purse {
     }
 
     public static Purse create(final List<Player> players) {
-        final Map<Player, Money> purses = players.stream()
-                .collect(toMap(Function.identity(), player -> Money.zero()));
+        final Map<Player, Money> purses = new LinkedHashMap<>();
+        for (Player player : players) {
+            purses.put(player, Money.zero());
+        }
         return new Purse(purses);
     }
 
