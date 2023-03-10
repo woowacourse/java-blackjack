@@ -1,12 +1,14 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.J;
 import static blackjack.domain.card.Denomination.K;
 import static blackjack.domain.card.Denomination.THREE;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -85,5 +87,28 @@ final class HandTest {
         Hand newHand = this.hand.add(new Card(TWO, CLOVER));
 
         assertThat(newHand.getHand().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    void isBustTest() {
+        this.hand = new Hand(List.of(
+                new Card(J, HEART),
+                new Card(K, HEART),
+                new Card(TWO, SPADE)
+        ));
+
+        assertThat(this.hand.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjackTest() {
+        this.hand = new Hand(List.of(
+                new Card(ACE, HEART),
+                new Card(K, HEART)
+        ));
+
+        assertThat(this.hand.isBlackjack()).isTrue();
     }
 }
