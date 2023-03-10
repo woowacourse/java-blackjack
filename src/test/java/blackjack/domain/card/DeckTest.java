@@ -14,7 +14,7 @@ public class DeckTest {
     @Test
     @DisplayName("52장의 트럼프 카드를 모두 생성하는지 테스트")
     void createAllCardTest() {
-        final Deck deck = Deck.createAllCard();
+        final Deck deck = Deck.createTrump();
 
         for (int i = 0; i < 52; i++) {
             Assertions.assertThatNoException().isThrownBy(deck::draw);

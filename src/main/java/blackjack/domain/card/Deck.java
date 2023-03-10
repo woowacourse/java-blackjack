@@ -31,7 +31,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public static Deck createAllCard() {
+    public static Deck createTrump() {
         Collections.shuffle(TRUMP);
 
         return new Deck(TRUMP);
