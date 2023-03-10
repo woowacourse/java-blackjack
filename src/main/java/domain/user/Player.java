@@ -19,4 +19,8 @@ public final class Player extends User {
     public boolean canAdd() {
         return super.calculateScore() < BLACKJACK_SCORE;
     }
+
+    public int getBettingAmountValue() {
+        return this.userInformation.getBettingAmountValue();
+    }
 }

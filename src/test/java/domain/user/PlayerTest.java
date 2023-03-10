@@ -113,4 +113,12 @@ class PlayerTest {
         Player player = new Player(UserInformation.from(new PlayerName("name"), 1_000), hand);
         assertThat(player.isBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("베팅 금액을 반환한다.")
+    void 베팅_금액_반환() {
+        int bettingAmountValue = 7_000;
+        Player player = Player.of("Player", bettingAmountValue);
+        assertThat(player.getBettingAmountValue()).isEqualTo(bettingAmountValue);
+    }
 }
