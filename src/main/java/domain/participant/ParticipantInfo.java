@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.game.EarningRate;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,6 +28,11 @@ public class ParticipantInfo {
                 });
     }
 
+    public void loseAllMoney(final Participant participant) {
+        final ParticipantMoney participantMoney = participantInfo.get(participant);
+        participantInfo.put(participant, EarningRate.LOSE.calculateMoney(participantMoney));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -37,5 +44,9 @@ public class ParticipantInfo {
     @Override
     public int hashCode() {
         return Objects.hash(participantInfo);
+    }
+
+    public Map<Participant, ParticipantMoney> getParticipantInfo() {
+        return participantInfo;
     }
 }

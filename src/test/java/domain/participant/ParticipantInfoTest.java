@@ -45,10 +45,20 @@ class ParticipantInfoTest {
                 .isEqualTo(expected);
     }
 
-    private Map<Participant, ParticipantMoney> makePlayerBettingInfo() {
-        final Map<Participant, ParticipantMoney> expected = new LinkedHashMap<>();
-        expected.put(Player.create("pobi"), ParticipantMoney.create("10000"));
-        expected.put(Player.create("crong"), ParticipantMoney.create("20000"));
-        return expected;
+    @Test
+    @DisplayName("loseAllMoney()는 주어진 플레이어의 돈을 모두 잃게 만든다.")
+    void loseAllMoney_givenPlayer_thenMinusPlayerMoney() {
+        // given
+        final Player targetPlayer = Player.create("pobi");
+
+        // when
+        participantInfo.loseAllMoney(targetPlayer);
+
+        // then
+        final Map<Participant, ParticipantMoney> allParticipantInfo = participantInfo.getParticipantInfo();
+        final ParticipantMoney playerMoney = allParticipantInfo.get(targetPlayer);
+
+        assertThat(playerMoney)
+                .isEqualTo(ParticipantMoney.create(-10000));
     }
 }
