@@ -28,7 +28,7 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer(new ArrayList<>());
-        participants = new Participants(dealer, List.of("pobi", "crong", "dali"), new ArrayList<>());
+        participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
         playersResult = new HashMap<>();
     }
 
@@ -42,7 +42,7 @@ public class ResultGameTest {
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
         final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
@@ -84,7 +84,7 @@ public class ResultGameTest {
     @DisplayName("플레이어가 블랙잭일 때")
     class PlayerNormal {
         final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
@@ -138,7 +138,7 @@ public class ResultGameTest {
     @DisplayName("플레이어가 블랙잭이 아닐 때")
     class PlayerBlackjack {
         final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 

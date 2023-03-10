@@ -36,7 +36,7 @@ public class BlackjackController {
         final Dealer dealer = new Dealer(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
 
-        return new Participants(dealer, playerNames, new ArrayList<>());
+        return new Participants(dealer, playerNames);
     }
 
     private void startGame(final Participants participants, final Deck deck) {

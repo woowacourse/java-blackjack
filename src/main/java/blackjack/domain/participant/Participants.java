@@ -12,12 +12,11 @@ public class Participants {
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
 
-    private final List<Participant> participants;
+    private final List<Participant> participants = new ArrayList<>();
 
-    public Participants(final Dealer dealer, final List<String> playerNames, final List<Participant> participants) {
+    public Participants(final Dealer dealer, final List<String> playerNames) {
         validate(playerNames);
 
-        this.participants = participants;
         participants.add(dealer);
         participants.addAll(makePlayers(playerNames));
     }
