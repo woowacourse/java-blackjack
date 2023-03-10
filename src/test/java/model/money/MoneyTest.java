@@ -20,6 +20,7 @@ public class MoneyTest {
         // then
         assertThat(result).isEqualTo(new Money(20_000));
     }
+
     @Test
     @DisplayName("게임에서 질 경우 돈의 값이 마이너스로 바뀐다.")
     void whenLoseGame_thenReturnLoseMoney() {

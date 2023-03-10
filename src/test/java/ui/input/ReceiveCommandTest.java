@@ -1,12 +1,15 @@
 package ui.input;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static ui.input.ReceiveCommand.*;
+import static ui.input.ReceiveCommand.HIT;
+import static ui.input.ReceiveCommand.STAY;
+import static ui.input.ReceiveCommand.isHit;
+import static ui.input.ReceiveCommand.of;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ReceiveCommandTest {
 

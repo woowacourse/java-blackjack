@@ -1,23 +1,20 @@
 package model.user;
 
+import static model.card.CardFixture.DIAMOND_KING;
+import static model.card.CardFixture.DIAMOND_SEVEN;
+import static model.card.CardFixture.DIAMOND_SIX;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Deck;
 import model.card.RandomShuffleMaker;
-import model.user.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static model.card.Shape.DIAMOND;
-import static model.card.Value.KING;
-import static model.card.Value.SEVEN;
-import static model.card.Value.SIX;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -42,8 +39,8 @@ class DealerTest {
 
     private static Stream<Arguments> receiveCardTestValues() {
         return Stream.of(
-                Arguments.of(new Card(DIAMOND, SIX), new Card(DIAMOND, KING), true),
-                Arguments.of(new Card(DIAMOND, SEVEN), new Card(DIAMOND, KING), false)
+                Arguments.of(DIAMOND_SIX, DIAMOND_KING, true),
+                Arguments.of(DIAMOND_SEVEN, DIAMOND_KING, false)
         );
     }
 

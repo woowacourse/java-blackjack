@@ -1,18 +1,14 @@
-package model.user;
+package model.card;
 
-import model.card.Card;
-import model.card.Deck;
-import model.card.ShuffleStrategy;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static model.card.Shape.DIAMOND;
-import static model.card.Shape.HEART;
-import static model.card.Value.ACE;
+import static model.card.CardFixture.DIAMOND_ACE;
+import static model.card.CardFixture.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
@@ -22,8 +18,8 @@ class DeckTest {
     void init() {
         testShuffleStrategy = cards -> {
             cards.clear();
-            cards.add(0,new Card(DIAMOND, ACE));
-            cards.add(1, new Card(HEART, ACE));
+            cards.add(0, DIAMOND_ACE);
+            cards.add(1, HEART_ACE);
         };
     }
 
@@ -39,11 +35,11 @@ class DeckTest {
 
         // then
         assertAll(
-                () -> assertThat(firstCard).isEqualTo(new Card(DIAMOND, ACE)),
-                () -> assertThat(secondCard).isEqualTo(new Card(HEART, ACE))
+                () -> assertThat(firstCard).isEqualTo(DIAMOND_ACE),
+                () -> assertThat(secondCard).isEqualTo(HEART_ACE)
         );
     }
-    
+
     @Test
     @DisplayName("덱이 비었을 때 카드를 꺼내려하면 오류를 던진다.")
     void whenCardPickEmptyDeck_throwException() {
