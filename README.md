@@ -46,7 +46,7 @@
 ## 1단계 미션 피드백 후 리팩토링 목록
 
 - 컨벤션
-    - [ ] 메서드 순서 정렬
+    - [x] 메서드 순서 정렬
     - [x] `static` 선언된 메소드 확인 후 제거
     - [x] 축약해서 사용한 메소드, 필드 네이밍 변경
     - [x] GameResult class getPlayerWinWhenDealerLessThan21 메소드 네이밍 변경
@@ -64,7 +64,7 @@
     - [x] given when then 제거
     - [x] assertDoesNotThrow를 사용한 테스트 메서드 -> 생성한 객체의 상태를 체크해주는 방식으로 변경
     - [x] `@BeforeEach` 사용 부분 변경
-    - [ ] GameTest 단위테스트 추가
+    - [x] GameResultTest 단위테스트 추가
     - [x] Parameterized test 네이밍 출력 형식 변경
 
 
@@ -84,7 +84,7 @@
 
 
 - TODO
-    - [ ] 단순 패스를 해주는 로직 변경
+    - [x] 단순 패스를 해주는 로직 변경
     - [ ] GamePlayer를 제거할 수 있는 방법
     - [ ] Dealer, Player가 생성될 때 받도록 만들기
 

@@ -34,25 +34,26 @@ public class GameResult {
         for (int i = 0; i < playersCount; i++) {
             int playerScore = playersScore.get(i);
             String playerName = game.getPlayerNameByIndex(i);
-            calculateVictoryOrDefeatByPlayerIndex(dealerScore, playerScore, playerName);
+            calculateVictoryOrDefeatWithDealerAndPlayer(dealerScore, playerScore, playerName);
         }
     }
 
-    private void calculateVictoryOrDefeatByPlayerIndex(int dealerScore, int playerScore, String playerName) {
+    public void calculateVictoryOrDefeatWithDealerAndPlayer(int dealerScore, int playerScore, String playerName) {
         if (playerScore == BLACKJACK) {
             playerScoreIsBlackJack(dealerScore, playerName);
+            return;
         }
         if (playerScore < BLACKJACK) {
             playerScoreLessThanBlackJack(dealerScore, playerScore, playerName);
+            return;
         }
-        if (playerScore > BLACKJACK) {
-            playerLose(playerName);
-        }
+        playerLose(playerName);
     }
 
     private void playerScoreIsBlackJack(int dealerScore, String playerName) {
         if (dealerScore == BLACKJACK) {
             draw(playerName);
+            return;
         }
         playerWin(playerName);
     }
@@ -60,18 +61,19 @@ public class GameResult {
     private void playerScoreLessThanBlackJack(int dealerScore, int playerScore, String playerName) {
         if (dealerScore == BLACKJACK) {
             playerLose(playerName);
+            return;
         }
         if (dealerScore > BLACKJACK) {
             playerWin(playerName);
+            return;
         }
-        if (dealerScore < BLACKJACK) {
-            dealerScoreLessThanBlackJack(dealerScore, playerScore, playerName);
-        }
+        dealerScoreLessThanBlackJack(dealerScore, playerScore, playerName);
     }
 
     private void dealerScoreLessThanBlackJack(int dealerScore, int playerScore, String playerName) {
         if (dealerScore < playerScore) {
             playerWin(playerName);
+            return;
         }
         playerLose(playerName);
     }
