@@ -1,10 +1,7 @@
 package blackjack.model.result;
 
 import blackjack.model.BetAmount;
-import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
 import blackjack.model.participant.*;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerInitialState;
@@ -14,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.model.Fixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ResultTest {
@@ -29,13 +27,7 @@ class ResultTest {
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
                 //given
-                Card card1 = Card.of(CardSuit.SPADE, CardNumber.SIX);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.NINE);
-                Card card3 = Card.of(CardSuit.CLUB, CardNumber.QUEEN);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
-                Card card6 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5, card6));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_SIX, HEART_NINE, HEART_JACK, HEART_TEN, DIAMOND_SIX, CLUB_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -60,12 +52,7 @@ class ResultTest {
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
                 //given
-                Card card1 = Card.of(CardSuit.HEART, CardNumber.FIVE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.QUEEN);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
-                Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_FIVE, CLUB_JACK, HEART_TEN, HEART_ACE, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -90,12 +77,7 @@ class ResultTest {
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
                 //given
-                Card card1 = Card.of(CardSuit.HEART, CardNumber.FIVE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.QUEEN);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
-                Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_FIVE, CLUB_JACK, HEART_TEN, HEART_SEVEN, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -126,12 +108,7 @@ class ResultTest {
             @DisplayName("플레이어가 승리한다")
             void player_win() {
                 //given
-                Card card1 = Card.of(CardSuit.HEART, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
-                Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, HEART_ACE, HEART_JACK, DIAMOND_SIX, CLUB_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -155,11 +132,7 @@ class ResultTest {
             @DisplayName("플레이어는 무승부다")
             void player_tie() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(CLUB_ACE, CLUB_JACK, HEART_ACE, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -182,11 +155,7 @@ class ResultTest {
             @DisplayName("플레이어가 승리한다")
             void player_win() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_ACE, HEART_TEN, HEART_SEVEN, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -215,12 +184,7 @@ class ResultTest {
             @DisplayName("플레이어가 승리한다")
             void player_win() {
                 //given
-                Card card1 = Card.of(CardSuit.HEART, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
-                Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, CLUB_NINE, CLUB_JACK, HEART_SIX, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -245,11 +209,7 @@ class ResultTest {
             @DisplayName("플레이어는 패배한다")
             void player_lose() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, HEART_JACK, HEART_ACE, CLUB_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -274,11 +234,7 @@ class ResultTest {
             @DisplayName("플레이어의 총점이 딜러보다 높으면 플레이어가 승리한다.")
             void player_win() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(CLUB_NINE, CLUB_JACK, HEART_SEVEN, HEART_TEN));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -298,11 +254,7 @@ class ResultTest {
             @DisplayName("플레이어의 총점과 딜러의 총점이 같으면 무승부다.")
             void player_tie() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.SEVEN);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_SEVEN, HEART_TEN, DIAMOND_SEVEN, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
@@ -322,11 +274,7 @@ class ResultTest {
             @DisplayName("플레이어의 총점이 딜러의 총점보다 작으면 패배한다.")
             void player_lose() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.SEVEN);
-                Card card2 = Card.of(CardSuit.HEART, CardNumber.TEN);
-                Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.NINE);
-                Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
-                CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+                CardDeck cardDeck = new CardDeck(List.of(HEART_SEVEN, HEART_TEN, HEART_NINE, HEART_JACK));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));

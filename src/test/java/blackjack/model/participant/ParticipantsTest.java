@@ -3,8 +3,6 @@ package blackjack.model.participant;
 import blackjack.model.BetAmount;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.model.Fixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -26,12 +25,7 @@ class ParticipantsTest {
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-        Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-        Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
-        Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-        Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.JACK);
-        Card card5 = Card.of(CardSuit.SPADE, CardNumber.SEVEN);
-        List<Card> cards = List.of(card5, card3, card4, card1, card2);
+        List<Card> cards = List.of(HEART_SEVEN, HEART_EIGHT, CLUB_JACK, CLUB_ACE, HEART_TEN);
         CardDeck cardDeck = new CardDeck(cards);
         Participants participants = new Participants(dealer, new ArrayList<>(List.of(player1, player2)));
 
@@ -54,11 +48,7 @@ class ParticipantsTest {
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-        Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-        Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
-        Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-        Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.JACK);
-        List<Card> cards = List.of(card3, card4, card1, card2);
+        List<Card> cards = List.of(HEART_EIGHT, HEART_JACK, CLUB_ACE, HEART_TEN);
         CardDeck cardDeck = new CardDeck(cards);
         Participants participants = new Participants(dealer, new ArrayList<>(List.of(player1, player2)));
 

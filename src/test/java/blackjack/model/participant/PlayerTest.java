@@ -3,8 +3,6 @@ package blackjack.model.participant;
 import blackjack.model.BetAmount;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.PlayerInitialState;
@@ -15,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.model.Fixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -29,8 +28,8 @@ class PlayerTest {
         void player_initial_state_draw() {
             //given
             Player player = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-            Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
-            Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
+            Card card1 = CLUB_EIGHT;
+            Card card2 = CLUB_JACK;
             List<Card> cards = List.of(card1, card2);
             CardDeck cardDeck = new CardDeck(cards);
 
@@ -45,12 +44,8 @@ class PlayerTest {
         @DisplayName("draw 상태의 플레이어는 버스트가 될 때까지 카드를 뽑을 수 있다.")
         void player_can_draw_until_bust() {
             //given
-            Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
-            Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
-            Card card3 = Card.of(CardSuit.HEART, CardNumber.NINE);
-            Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-            List<Card> cards = List.of(card4, card3);
-            Player player = new Player(new Name("도치"), new BetAmount(10000), new PlayerDrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
+            List<Card> cards = List.of(HEART_EIGHT, HEART_NINE);
+            Player player = new Player(new Name("도치"), new BetAmount(10000), new PlayerDrawState(new Hand(new ArrayList<>(List.of(CLUB_EIGHT, HEART_FIVE)))));
             CardDeck cardDeck = new CardDeck(cards);
 
             // when
@@ -66,10 +61,7 @@ class PlayerTest {
         @DisplayName("blackjack 상태의 플레이어는 카드를 뽑을 수 없다.")
         void player_when_blackjack_can_not_draw() {
             //given
-            Card card1 = Card.of(CardSuit.CLUB, CardNumber.JACK);
-            Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
-            Card card3 = Card.of(CardSuit.HEART, CardNumber.KING);
-            List<Card> cards = List.of(card1, card2, card3);
+            List<Card> cards = List.of(CLUB_JACK, HEART_ACE, HEART_JACK);
             Player player = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
             CardDeck cardDeck = new CardDeck(cards);
 
@@ -94,13 +86,7 @@ class PlayerTest {
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_bust() {
                 //given
-                Card card1 = Card.of(CardSuit.HEART, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card3 = Card.of(CardSuit.CLUB, CardNumber.JACK);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.QUEEN);
-                Card card5 = Card.of(CardSuit.HEART, CardNumber.FIVE);
-                Card card6 = Card.of(CardSuit.DIAMOND, CardNumber.KING);
-                List<Card> cards = List.of(card1, card2, card3, card4, card5, card6);
+                List<Card> cards = List.of(HEART_NINE, CLUB_NINE, CLUB_JACK, HEART_JACK, HEART_FIVE, HEART_TEN);
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 CardDeck cardDeck = new CardDeck(cards);
@@ -121,12 +107,7 @@ class PlayerTest {
             @DisplayName("딜러가 스탠드라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_stand() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.JACK);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.QUEEN);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.SEVEN);
-                Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.KING);
-                List<Card> cards = List.of(card1, card2, card3, card4, card5);
+                List<Card> cards = List.of(CLUB_NINE, CLUB_JACK, HEART_JACK, HEART_SEVEN, HEART_TEN);
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 CardDeck cardDeck = new CardDeck(cards);
@@ -146,12 +127,7 @@ class PlayerTest {
             @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_blackjack() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.JACK);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.QUEEN);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.ACE);
-                Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.KING);
-                List<Card> cards = List.of(card1, card2, card3, card4, card5);
+                List<Card> cards = List.of(CLUB_NINE, CLUB_JACK, HEART_JACK, HEART_ACE, HEART_TEN);
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 CardDeck cardDeck = new CardDeck(cards);
@@ -175,12 +151,7 @@ class PlayerTest {
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액의 1.5배를 얻는다")
             void player_get_x1_5_when_dealer_bust() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.KING);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.SIX);
-                Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.KING);
-                List<Card> cards = List.of(card1, card2, card3, card4, card5);
+                List<Card> cards = List.of(HEART_NINE, CLUB_ACE, CLUB_JACK, HEART_SIX, HEART_JACK);
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 CardDeck cardDeck = new CardDeck(cards);
@@ -206,12 +177,7 @@ class PlayerTest {
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액의 1배를 얻는다")
             void player_get_x1_when_dealer_bust() {
                 //given
-                Card card1 = Card.of(CardSuit.CLUB, CardNumber.NINE);
-                Card card2 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
-                Card card3 = Card.of(CardSuit.HEART, CardNumber.KING);
-                Card card4 = Card.of(CardSuit.HEART, CardNumber.SIX);
-                Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.KING);
-                List<Card> cards = List.of(card1, card2, card3, card4, card5);
+                List<Card> cards = List.of(CLUB_NINE, HEART_EIGHT, CLUB_JACK, HEART_SIX, HEART_TEN);
                 Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
                 CardDeck cardDeck = new CardDeck(cards);
