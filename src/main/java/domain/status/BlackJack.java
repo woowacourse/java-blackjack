@@ -1,4 +1,4 @@
 package domain.status;
 
-public class BlackJack {
+public class BlackJack extends Status {
 }
