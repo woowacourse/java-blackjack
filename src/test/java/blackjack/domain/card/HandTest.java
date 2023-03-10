@@ -12,11 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class HandTest {
-    @Test
-    @DisplayName("패 생성 테스트")
-    void constructCardsTest() {
-        assertThatNoException().isThrownBy(() -> Hand.from(new ArrayList<>()));
-    }
 
     @Test
     @DisplayName("카드를 추가한다")

@@ -30,12 +30,6 @@ public class ResultGameTest {
         playersResult = new HashMap<>();
     }
 
-    @Test
-    @DisplayName("생성자 테스트")
-    void constructorTest() {
-        assertThatNoException().isThrownBy(() -> ResultGame.from(playersResult, participants));
-    }
-
     @Nested
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
