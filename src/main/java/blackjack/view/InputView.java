@@ -32,8 +32,15 @@ public final class InputView {
     public String readHitOrStand(final Player player) {
         System.out.println(player.getName() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
+        isValidInput(input);
         System.out.println();
 
         return input;
+    }
+
+    private void isValidInput(final String input) {
+        if (!(input.equals("y") || input.equals("n"))) {
+            throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력해주세요.");
+        }
     }
 }
