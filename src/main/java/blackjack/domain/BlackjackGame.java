@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import java.util.List;
 
 public final class BlackjackGame {
 
@@ -32,7 +31,7 @@ public final class BlackjackGame {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    public Players getPlayers() {
+        return players;
     }
 }
