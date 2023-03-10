@@ -73,11 +73,11 @@ public class OutputView {
                 + card.getCardShape().getName();
     }
     
-    public static void printPlayersGameResult(final HashMap<String, ResultStatus> resultMap) {
+    public static void printPlayersGameResult(final Map<Player, ResultStatus> resultMap) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
-        resultMap.forEach((name, result) -> {
+        resultMap.forEach((player, result) -> {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(name);
+            stringBuilder.append(player.getName());
             stringBuilder.append(": ");
             if (result == ResultStatus.WIN || result == ResultStatus.WIN_BLACKJACK) {
                 stringBuilder.append("승");

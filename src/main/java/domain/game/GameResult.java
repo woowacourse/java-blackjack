@@ -39,15 +39,7 @@ public class GameResult {
         return dealerResult;
     }
     
-    public HashMap<String, ResultStatus> getResultMap() {
-        List<String> names = this.resultCacheMap.keySet().stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-        List<ResultStatus> resultStatuses = new ArrayList<>(this.resultCacheMap.values());
-        HashMap<String, ResultStatus> resultMap = new HashMap<>();
-        for (int i = 0; i < names.size(); i++) {
-            resultMap.put(names.get(i), resultStatuses.get(i));
-        }
-        return resultMap;
+    public Map<Player, ResultStatus> getResultMap() {
+        return Collections.unmodifiableMap(this.resultCacheMap);
     }
 }

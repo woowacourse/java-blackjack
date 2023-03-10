@@ -4,7 +4,7 @@ import domain.game.GameResult;
 import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Player;
-import java.util.HashMap;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ public class GameResultTest {
         GameResult gameResult = new GameResult();
         gameResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
         Player player = participants.getPlayers().get(0);
-        HashMap<String, ResultStatus> resultMap = gameResult.getResultMap();
-        Assertions.assertThat(resultMap.get(player.getName())).isEqualTo(ResultStatus.WIN);
+        Map<Player, ResultStatus> resultMap = gameResult.getResultMap();
+        Assertions.assertThat(resultMap.get(player)).isEqualTo(ResultStatus.WIN);
         
     }
     
@@ -29,7 +29,7 @@ public class GameResultTest {
         Participants participants = Participants.of("echo,split");
         GameResult gameResult = new GameResult();
         gameResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
-        HashMap<ResultStatus, Integer> dealerResultMap = gameResult.generateDealerResult();
+        Map<ResultStatus, Integer> dealerResultMap = gameResult.generateDealerResult();
         Assertions.assertThat(dealerResultMap.get(ResultStatus.LOSE)).isEqualTo(1);
         Assertions.assertThat(dealerResultMap.get(ResultStatus.DRAW)).isEqualTo(0);
         Assertions.assertThat(dealerResultMap.get(ResultStatus.WIN)).isEqualTo(0);
