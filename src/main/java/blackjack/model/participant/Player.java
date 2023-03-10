@@ -48,8 +48,4 @@ public class Player extends Participant {
     private int getIncreasedBetAmount() {
         return (int) (betAmount.getBetAmount() * ((FinalState) currentState).getProfitWeight());
     }
-
-    private Result getResult(Dealer dealer) {
-        return Result.checkPlayerResult(this, dealer);
-    }
 }
