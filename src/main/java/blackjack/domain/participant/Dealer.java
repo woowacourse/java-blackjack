@@ -19,4 +19,12 @@ public class Dealer extends Participant {
     public String getName() {
         return this.name;
     }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
 }
