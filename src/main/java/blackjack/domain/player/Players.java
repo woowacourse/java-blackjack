@@ -132,4 +132,11 @@ public final class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+    public List<Name> getGamblerNames() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .map(Player::name)
+                .collect(Collectors.toList());
+    }
 }

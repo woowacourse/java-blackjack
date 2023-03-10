@@ -99,6 +99,16 @@ public class BlackjackGameTest {
     }
 
     @Test
+    void 겜블러의_이름을_반환한다() {
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("후추", "허브"));
+
+        final List<Name> result = blackjackGame.getGamblerNames();
+
+        assertThat(result).containsExactly(Name.from("후추"), Name.from("허브"));
+    }
+
+    @Test
     void 딜러를_반환한다() {
         final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("허브"));

@@ -61,4 +61,8 @@ public final class BlackjackGame {
     public Dealer getDealer() {
         return players.getDealer();
     }
+
+    public List<Name> getGamblerNames() {
+        return players.getGamblerNames();
+    }
 }

@@ -136,6 +136,16 @@ public class PlayersTest {
     }
 
     @Test
+    void 겜블러의_이름을_반환한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
+
+        final List<Name> result = players.getGamblerNames();
+
+        assertThat(result).containsExactly(Name.from("후추"), Name.from("허브"));
+    }
+
+    @Test
     void 딜러를_반환한다() {
         final Players players = Players.create();
 
