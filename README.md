@@ -48,6 +48,7 @@
 #### `Status` 관리하기
 
 ```mermaid
+graph TD
 Ready[Ready] --> BlackJack[BlackJack]
 Ready --> Hit[Hit]
 Hit --> |y| Hit
