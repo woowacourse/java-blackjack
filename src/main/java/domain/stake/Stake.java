@@ -31,7 +31,7 @@ public final class Stake {
     }
 
     public Stake getPrize(final Status status) {
-        return new Stake((int) (value * status.getMultiply()));
+        return new Stake((int) (value * status.getMultiplyRatio()));
     }
 
     public Stake negate() {

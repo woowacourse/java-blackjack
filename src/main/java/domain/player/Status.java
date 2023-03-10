@@ -6,13 +6,13 @@ public enum Status {
     DRAW(0),
     LOSE(-1);
 
-    private final double multiply;
+    private final double multiplyRatio;
 
-    Status(final double multiply) {
-        this.multiply = multiply;
+    Status(final double multiplyRatio) {
+        this.multiplyRatio = multiplyRatio;
     }
 
-    public double getMultiply() {
-        return multiply;
+    public double getMultiplyRatio() {
+        return multiplyRatio;
     }
 }
