@@ -1,5 +1,6 @@
 package participant;
 
+import static blackjack.Fixtures.BLACKJACK_CARDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("게임 참여자는")
 class ParticipantTest {
+
+
     @DisplayName("카드를 여러 장 받을 수 있다.")
     @Test
     void hitCards() {
@@ -32,7 +35,7 @@ class ParticipantTest {
         //given
         Participant participant = new Participant(new Name("준팍"), new Hand()) {
         };
-        List<Card> cards = List.of(new Card(CardNumber.ACE, Pattern.DIAMOND), new Card(CardNumber.KING, Pattern.HEART));
+        List<Card> cards = BLACKJACK_CARDS;
         participant.hit(cards);
         //when
         //then

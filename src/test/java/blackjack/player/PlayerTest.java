@@ -1,6 +1,7 @@
 package blackjack.player;
 
 import static blackjack.Fixtures.BET_AMOUNT_10000;
+import static blackjack.Fixtures.CARDS_OF_BUST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+
     @Test
     @DisplayName("플레이어를 생성한다.")
     void createPlayer() {
@@ -82,9 +84,7 @@ class PlayerTest {
     @DisplayName("플레이어는 자신의 버스트 여부를 반환할 수 있다.")
     void isBust() {
         Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-        player.hit(new Card(CardNumber.KING, Pattern.HEART));
-        player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
-        player.hit(new Card(CardNumber.KING, Pattern.SPADE));
+        player.hit(CARDS_OF_BUST);
 
         assertThat(player.isBust()).isTrue();
     }

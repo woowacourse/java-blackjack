@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.Fixtures;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+
     @DisplayName("생성할 수 있다")
     @Test
     void create() {
@@ -96,8 +98,7 @@ class PlayersTest {
             Players newPlayers = players.add(player);
 
             Dealer dealer = new Dealer();
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            dealer.hit(Fixtures.CARDS_SUM_15);
             //when
             Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
             //then
