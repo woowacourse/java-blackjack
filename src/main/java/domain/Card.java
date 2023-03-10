@@ -1,43 +1,15 @@
 package domain;
 
-
-import java.util.Objects;
-
 public class Card {
+    private final CardType cardType;
+    private final CardValue cardValue;
 
-    private final Suit suit;
-    private final Number number;
-
-    public Card(Suit suit, Number number) {
-        this.suit = suit;
-        this.number = number;
+    public Card(CardType cardType, CardValue cardValue) {
+        this.cardType = cardType;
+        this.cardValue = cardValue;
     }
 
-    public Suit getSuit() {
-        return suit;
-    }
-    public Number getNumber() {
-        return number;
-    }
-
-    public boolean is(Number number) {
-        return number.equals(this.number);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return suit == card.suit && number == card.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(suit, number);
+    public CardValue getCardValue() {
+        return cardValue;
     }
 }
