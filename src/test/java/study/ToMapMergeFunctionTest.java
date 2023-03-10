@@ -1,6 +1,6 @@
 package study;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 import java.util.function.Function;
@@ -8,6 +8,10 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("학습 테스트")
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@DisplayName("collect(toMap())의 mergeFunctionTest")
 public class ToMapMergeFunctionTest {
 
     @Test
