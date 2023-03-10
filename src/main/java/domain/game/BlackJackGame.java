@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+    private static final int DEFAULT_DEALER_PROFIT = 0;
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -80,7 +81,7 @@ public class BlackJackGame {
         final Map<Name, Integer> profits = new LinkedHashMap<>();
         final Name dealerName = dealer.getName();
 
-        profits.put(dealerName, 0);
+        profits.put(dealerName, DEFAULT_DEALER_PROFIT);
         for (final Player player : players.getPlayers()) {
             final int profit = calculateProfit(outcomes.get(player.getName()), player.amount());
             profits.put(dealerName, profits.get(dealerName) - profit);
