@@ -10,9 +10,9 @@ public class Player extends Participant {
     private final BettingMoney bettingMoney;
     private Decision decision;
 
-    public Player(Name name, int bettingMoney) {
-        super(name);
-        this.bettingMoney = new BettingMoney(bettingMoney);
+    public Player(Name name, Hand hand, BettingMoney bettingMoney) {
+        super(name, hand);
+        this.bettingMoney = bettingMoney;
         this.decision = Decision.HIT;
     }
 
@@ -34,6 +34,5 @@ public class Player extends Participant {
     public int bettingMoney() {
         return bettingMoney.value();
     }
-
 
 }

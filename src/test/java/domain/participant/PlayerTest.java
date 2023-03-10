@@ -17,7 +17,7 @@ class PlayerTest {
             //given
 
             //when
-            Player player = new Player(new Name("이름"), 1000);
+            Player player = new Player(new Name("이름"), new Hand(), new BettingMoney(1000));
 
             //then
             assertThat(player.bettingMoney()).isEqualTo(1000);
@@ -29,7 +29,7 @@ class PlayerTest {
         @Test
         void should_히트가능하다_when_카드가추가되었는데점수가21보다작을때() {
             //given
-            Player player = new Player(new Name("에밀"), 1000);
+            Player player = new Player(new Name("에밀"), new Hand(), new BettingMoney(1000));
             player.receiveCard(new Card(Suit.SPADE, Number.ACE));
             player.receiveCard(new Card(Suit.CLUB, Number.ACE));
 
@@ -43,7 +43,7 @@ class PlayerTest {
         @Test
         void should_히트불가능하다_when_카드가추가되었는데점수가21이상일떄() {
             //given
-            Player player = new Player(new Name("에밀"), 1000);
+            Player player = new Player(new Name("에밀"), new Hand(), new BettingMoney(1000));
             player.receiveCard(new Card(Suit.SPADE, Number.ACE));
             player.receiveCard(new Card(Suit.CLUB, Number.JACK));
 
@@ -57,7 +57,7 @@ class PlayerTest {
         @Test
         void should_히트불가능하다_when_점수가21보다작은데사용자가STAND를선택했을때() {
             //given
-            Player player = new Player(new Name("에밀"), 1000);
+            Player player = new Player(new Name("에밀"), new Hand(), new BettingMoney(1000));
             player.receiveCard(new Card(Suit.SPADE, Number.ACE));
             player.receiveCard(new Card(Suit.CLUB, Number.ACE));
             player.stand();

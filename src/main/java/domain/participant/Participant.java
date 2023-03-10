@@ -9,9 +9,9 @@ public abstract class Participant {
     protected final Hand hand;
     private final Name name;
 
-    Participant(Name name) {
+    Participant(Name name, Hand hand) {
         this.name = name;
-        this.hand = new Hand();
+        this.hand = hand;
     }
 
     abstract boolean isDrawable();

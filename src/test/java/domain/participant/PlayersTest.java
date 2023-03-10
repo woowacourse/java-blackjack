@@ -22,8 +22,8 @@ class PlayersTest {
         @Test
         void should_플레이어를생성한다_when_from호출() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("에밀"), 1000),
-                    new Player(new Name("포이"), 2000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("에밀"), new Hand(), new BettingMoney(1000)),
+                    new Player(new Name("포이"), new Hand(), new BettingMoney(2000)));
 
             //when
             Players players = new Players(rawPlayers);
@@ -57,8 +57,8 @@ class PlayersTest {
         @Test
         void should_플레이어는카드를한장씩받는다_when_receiveCard호출() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000),
-                    new Player(new Name("에밀"), 2000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("에밀"), new Hand(), new BettingMoney(1000)),
+                    new Player(new Name("포이"), new Hand(), new BettingMoney(2000)));
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();
 
@@ -77,8 +77,8 @@ class PlayersTest {
         @Test
         void should_hasDrawablePlayer가true반환_when_카드를뽑을수있는플레이어존재() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000),
-                    new Player(new Name("에밀"), 2000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("에밀"), new Hand(), new BettingMoney(1000)),
+                    new Player(new Name("포이"), new Hand(), new BettingMoney(2000)));
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
@@ -98,7 +98,7 @@ class PlayersTest {
         @Test
         void should_hasDrawablePlayer가false반환_when_카드를뽑을수있는플레이어없을때() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), new Hand(), new BettingMoney(1000)));
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
@@ -122,8 +122,7 @@ class PlayersTest {
         @Test
         void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000),
-                    new Player(new Name("에밀"), 2000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), new Hand(), new BettingMoney(2000)));
             Players players = new Players(rawPlayers);
             String expected = "포이";
             Deck deck = Deck.create();
@@ -139,7 +138,7 @@ class PlayersTest {
         @Test
         void should_예외를반환한다_when_카드를받을수있는플레이어가없을시() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), new Hand(), new BettingMoney(1000)));
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
@@ -165,7 +164,7 @@ class PlayersTest {
         @Test
         void should_현재플레이어는카드를받는다_when_카드를받을수있는플레이어가있을때() {
             //given
-            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000));
+            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), new Hand(), new BettingMoney(1000)));
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
@@ -187,8 +186,8 @@ class PlayersTest {
         @Test
         void should_현재플레이어를다음플레이어로이동시킨다_when_현재플레이어가카드를받을수있어도() {
             //given
-            final Player poi = new Player(new Name("포이"), 1000);
-            final Player expected = new Player(new Name("에밀"), 1000);
+            final Player poi = new Player(new Name("포이"), new Hand(), new BettingMoney(1000));
+            final Player expected = new Player(new Name("에밀"), new Hand(), new BettingMoney(2000));
             final List<Player> rawPlayers = List.of(poi, expected);
             Players players = new Players(rawPlayers);
             Deck deck = Deck.create();

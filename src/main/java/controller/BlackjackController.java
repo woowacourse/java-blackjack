@@ -4,7 +4,9 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import domain.BlackjackGame;
 import domain.card.RandomShuffleStrategy;
+import domain.participant.BettingMoney;
 import domain.participant.Decision;
+import domain.participant.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -42,17 +44,6 @@ public class BlackjackController {
         return blackjackGame;
     }
 
-    private Players createPlayers(List<Name> playerNames) {
-        try {
-            return playerNames.stream()
-                    .map(playerName -> new Player(playerName, inputView.readBettingMoney(playerName.value())))
-                    .collect(Collectors.collectingAndThen(toUnmodifiableList(), Players::new));
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            return createPlayers(playerNames);
-        }
-    }
-
     private List<Name> createNames() {
         try {
             return inputView.readNames().stream()
@@ -62,6 +53,32 @@ public class BlackjackController {
             outputView.printErrorMessage(e.getMessage());
             return createNames();
         }
+    }
+
+    private Players createPlayers(List<Name> playerNames) {
+        try {
+            return playerNames.stream()
+                    .map(playerName -> new Player(playerName, new Hand(), createBettingMoney(playerName.value())))
+                    .collect(Collectors.collectingAndThen(toUnmodifiableList(), Players::new));
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return createPlayers(playerNames);
+        }
+    }
+
+    private BettingMoney createBettingMoney(String playerName) {
+        try {
+            return new BettingMoney(inputView.readBettingMoney(playerName));
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return createBettingMoney(playerName);
+        }
+    }
+
+    private List<ParticipantDto> toParticipantDtosOfInitialState(List<Participant> participants) {
+        return participants.stream()
+                .map(ParticipantDto::ofInitial)
+                .collect(toUnmodifiableList());
     }
 
     private void handOutCardsToPlayers(BlackjackGame blackjackGame) {
@@ -87,12 +104,6 @@ public class BlackjackController {
             blackjackGame.handOutCardToDealer();
             outputView.printDealerHandOutInfo();
         }
-    }
-
-    private List<ParticipantDto> toParticipantDtosOfInitialState(List<Participant> participants) {
-        return participants.stream()
-                .map(ParticipantDto::ofInitial)
-                .collect(toUnmodifiableList());
     }
 
     private List<ParticipantDtoWithScore> toParticipantDtosWithScore(List<Participant> participants) {

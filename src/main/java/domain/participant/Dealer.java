@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     private static final int NUMBER_OF_INITIAL_OPEN_CARD = 1;
 
     public Dealer() {
-        super(new Name("딜러"));
+        super(new Name("딜러"), new Hand());
     }
 
     @Override

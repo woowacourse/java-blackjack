@@ -19,7 +19,7 @@ class ParticipantTest {
         void should_카드를패에추가한다_when_receiveCard호출() {
             //given
             Participant participant = mock(Participant.class, withSettings().defaultAnswer(CALLS_REAL_METHODS)
-                    .useConstructor(new Name("포이")));
+                    .useConstructor(new Name("포이"), new Hand()));
             Card card = new Card(Suit.SPADE, Number.ACE);
 
             //when
