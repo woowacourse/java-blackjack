@@ -10,6 +10,8 @@ public enum GameOutcome {
     ;
 
     private static final int BLACK_JACK_SCORE = 21;
+    private static final int INITIAL_DRAW_SIZE = 2;
+
     private final IntUnaryOperator money;
 
     GameOutcome(final IntUnaryOperator money) {
@@ -17,7 +19,7 @@ public enum GameOutcome {
     }
 
     public int calculateRevenue(int bettingMoney) {
-        return this.money.applyAsInt(bettingMoney);
+        return money.applyAsInt(bettingMoney);
     }
 
     public static GameOutcome of(int criteria, int comparison, int cardSize) {
@@ -37,6 +39,6 @@ public enum GameOutcome {
     }
 
     private static boolean isBlackjack(final int criteria, final int comparison, final int cardSize) {
-        return cardSize == 2 && criteria == BLACK_JACK_SCORE && comparison != BLACK_JACK_SCORE;
+        return cardSize == INITIAL_DRAW_SIZE && criteria == BLACK_JACK_SCORE && comparison != BLACK_JACK_SCORE;
     }
 }

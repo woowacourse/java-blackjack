@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class Dealer extends Participant {
 
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 17;
+    private static final int NUMBER_OF_INITIAL_OPEN_CARD = 1;
 
     public Dealer() {
         super(new Name("딜러"));
@@ -15,7 +16,7 @@ public class Dealer extends Participant {
     public List<Card> initialHand() {
         return hand.getCards()
                 .stream()
-                .limit(1)
+                .limit(NUMBER_OF_INITIAL_OPEN_CARD)
                 .collect(Collectors.toUnmodifiableList());
     }
 
