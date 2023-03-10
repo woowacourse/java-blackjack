@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.FinishedState;
 import blackjack.model.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

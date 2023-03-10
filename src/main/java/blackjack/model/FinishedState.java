@@ -1,4 +1,6 @@
-package blackjack.model.participant;
+package blackjack.model;
+
+import blackjack.model.participant.Hand;
 
 public enum FinishedState {
 

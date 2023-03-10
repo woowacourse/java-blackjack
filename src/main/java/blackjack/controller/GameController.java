@@ -91,12 +91,16 @@ public class GameController {
     private void printProfitResult(Dealer dealer, Map<Player, Integer> profitResult) {
         outputView.printProfitResultMessage();
 
-        int dealerProfit = profitResult.values().stream().mapToInt(value -> value).sum() * -1;
+        int dealerProfit = sumAndReversePlayerProfits(profitResult);
         outputView.printProfitResult(ResultDto.of(dealer, dealerProfit));
 
         for (Map.Entry<Player, Integer> entry : profitResult.entrySet()) {
             outputView.printProfitResult(ResultDto.of(entry.getKey(), entry.getValue()));
         }
+    }
+
+    private int sumAndReversePlayerProfits(Map<Player, Integer> profitResult) {
+        return -1 * profitResult.values().stream().mapToInt(value -> value).sum();
     }
 
 }
