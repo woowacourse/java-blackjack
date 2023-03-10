@@ -48,7 +48,7 @@ public class MainController {
     }
 
     private void initBetMoney(final Players players) {
-        for(Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             outputView.printInitBetMoney(player);
             player.initBet(inputView.readBetMoney());
         }

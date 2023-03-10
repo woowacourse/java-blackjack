@@ -6,13 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BetTest {
 
     @DisplayName("최초의 배팅금액이 0이하이면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(ints = {-100, 0 , -1})
+    @ValueSource(ints = {-100, 0, -1})
     void constructBetTest(final int money) {
         assertThrows(IllegalArgumentException.class,
                 () -> new Bet(money))

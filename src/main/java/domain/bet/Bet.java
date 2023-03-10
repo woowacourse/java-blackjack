@@ -2,7 +2,7 @@ package domain.bet;
 
 import domain.result.Outcome;
 
-public class Bet {
+public final class Bet {
 
     private int money;
 
@@ -27,7 +27,7 @@ public class Bet {
             return;
         }
         if (Outcome.LOSE == outcome) {
-            this.money = this.money *(-1);
+            this.money = this.money * (-1);
         }
     }
 

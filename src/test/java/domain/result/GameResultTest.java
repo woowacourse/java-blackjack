@@ -1,14 +1,12 @@
 package domain.result;
 
 import domain.deck.Card;
-import domain.deck.Deck;
 import domain.deck.Rank;
 import domain.deck.Suit;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,7 +22,6 @@ class GameResultTest {
 
     @BeforeEach
     void setup() {
-        Deck deck = new Deck();
         gameResult = new GameResult();
         players = new Players(List.of("hardy", "ddoring", "crong", "doodoom"));
         dealer = new Dealer();

@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Application {
 
     public static void main(String[] args) {
+        
         InputView inputView = new InputView(new Scanner(System.in));
         OutputView outputView = new OutputView();
         MainController mainController = new MainController(inputView, outputView);
