@@ -23,10 +23,6 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final String MORE_CARD = "y";
-    private static final String CARD_STOP = "n";
-    private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -109,16 +105,6 @@ public class BlackJackController {
             isCardRequested = Answer.from(inputView.askMoreCard(player.getNameValue()));
             proceedOnce(cardDistributor, player, isCardRequested);
         }
-    }
-
-    private void validate(String answer) {
-        if (isNotRequestMoreCardCommand(answer)) {
-            throw new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE);
-        }
-    }
-
-    private boolean isNotRequestMoreCardCommand(String answer) {
-        return !(answer.equals(MORE_CARD) || answer.equals(CARD_STOP));
     }
 
     private void proceedOnce(CardDistributor cardDistributor, Player player, Answer answer) {
