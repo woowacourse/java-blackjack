@@ -32,7 +32,7 @@ public class Purse {
     public void calculateMoney(final Player player, final Dealer dealer) {
         final State state = player.judgeResult(dealer);
         final Bet bet = findMoneyByPlayer(player);
-        purses.put(player, bet.calculateMoney(state));
+        purses.put(player, bet.calculateBet(state));
     }
 
     public Bet findMoneyByPlayer(final Player player) {

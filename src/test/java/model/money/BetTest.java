@@ -50,7 +50,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet lose = bet.calculateMoney(BLACKJACK);
+            final Bet lose = bet.calculateBet(BLACKJACK);
 
             // then
             assertThat(lose).isEqualTo(new Bet(15_000));
@@ -63,7 +63,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet lose = bet.calculateMoney(LOSE);
+            final Bet lose = bet.calculateBet(LOSE);
 
             // then
             assertThat(lose).isEqualTo(new Bet(-10_000));
@@ -76,7 +76,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet tie = bet.calculateMoney(TIE);
+            final Bet tie = bet.calculateBet(TIE);
 
             // then
             assertThat(tie).isEqualTo(new Bet(0));
@@ -89,7 +89,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet tie = bet.calculateMoney(WIN);
+            final Bet tie = bet.calculateBet(WIN);
 
             // then
             assertThat(tie).isEqualTo(new Bet(10_000));
