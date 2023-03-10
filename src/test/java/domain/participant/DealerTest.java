@@ -1,13 +1,14 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
 import domain.card.Shape;
 import domain.card.Value;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -16,7 +17,7 @@ class DealerTest {
     void fillCardsTest() {
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.KING, Shape.HEART)));
-        dealer.receiveCard(new Card(Value.TEN, Shape.SPADE));
+        dealer.receiveCard(new Card(Value.THREE, Shape.SPADE));
         assertThat(dealer.getScore()).isEqualTo(23);
     }
 }

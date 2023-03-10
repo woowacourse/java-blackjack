@@ -14,16 +14,8 @@ public class Cards {
     }
 
     public void receiveInitialCards(final List<Card> initialCards) {
-        validateInitialCardsSize(initialCards);
         cards.addAll(initialCards);
     }
-
-    private static void validateInitialCardsSize(final List<Card> initialCards) {
-        if (initialCards.size() != INITIAL_CARDS_SIZE) {
-            throw new IllegalArgumentException("초기 카드는 2장을 받아야 합니다.");
-        }
-    }
-
     public void receiveCard(Card card) {
         this.cards.add(card);
     }

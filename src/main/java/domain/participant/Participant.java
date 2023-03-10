@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+
 import java.util.List;
 
 public abstract class Participant {
@@ -37,7 +38,7 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return List.copyOf(cards.getCards());
     }
 
     public int getScore() {

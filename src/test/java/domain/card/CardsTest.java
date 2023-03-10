@@ -1,15 +1,14 @@
 package domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import domain.participant.Score;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CardsTest {
 
@@ -17,13 +16,8 @@ class CardsTest {
     @Test
     void receiveInitialCardsTest() {
         Cards cards = new Cards();
-        assertAll(
-                () -> assertDoesNotThrow(() -> cards.receiveInitialCards(
-                        List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.QUEEN, Shape.HEART)))),
-                () -> assertThatThrownBy(() -> cards.receiveInitialCards(
-                        List.of(new Card(Value.KING, Shape.CLOVER))))
-                        .isInstanceOf(IllegalArgumentException.class)
-        );
+        assertDoesNotThrow(() -> cards.receiveInitialCards(
+                List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.QUEEN, Shape.HEART))));
     }
 
     @DisplayName("전체의 합을 계산할 수 있다.")
