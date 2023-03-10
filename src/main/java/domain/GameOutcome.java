@@ -4,7 +4,7 @@ import java.util.function.IntUnaryOperator;
 
 public enum GameOutcome {
     BLACKJACK(revenue -> (int) (revenue * 1.5)),
-    WIN(IntUnaryOperator.identity()),
+    WIN(revenue -> revenue),
     DRAW(revenue -> 0),
     LOSE(revenue -> -revenue),
     ;

@@ -155,4 +155,53 @@ class PlayersTest {
                     .hasMessage("카드를 받을 수 있는 플레이어가 없습니다.");
         }
     }
+
+    @Nested
+    class 현재플레이어의행동 {
+        @Test
+        void should_현재플레이어는카드를받는다_when_카드를받을수있는플레이어가있을때() {
+            //given
+            final List<Player> rawPlayers = List.of(new Player(new Name("포이"), 1000));
+            Players players = new Players(rawPlayers);
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.TWO));
+                cards.add(new Card(Suit.SPADE, Number.THREE));
+            });
+            players.receiveCard(deck);
+            players.receiveCard(deck);
+
+            //when
+            players.handOutCardToCurrentPlayer(new Card(Suit.SPADE, Number.ACE));
+            final List<Card> hand = players.getPlayers().get(0).hand();
+
+
+            //then
+            assertThat(hand).hasSize(3).contains(new Card(Suit.SPADE, Number.ACE));
+        }
+
+        @Test
+        void should_현재플레이어를다음플레이어로이동시킨다_when_현재플레이어가카드를받을수있어도() {
+            //given
+            final Player poi = new Player(new Name("포이"), 1000);
+            final Player expected = new Player(new Name("에밀"), 1000);
+            final List<Player> rawPlayers = List.of(poi, expected);
+            Players players = new Players(rawPlayers);
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.TWO));
+                cards.add(new Card(Suit.SPADE, Number.THREE));
+            });
+            players.receiveCard(deck);
+
+            //when
+            players.standCurrentPlayer();
+            final Player actual = players.getCurrentDrawablePlayer();
+
+            //then
+            assertThat(expected).isEqualTo(actual);
+        }
+    }
 }
