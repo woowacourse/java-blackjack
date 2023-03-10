@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.BetAmount;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
@@ -23,8 +24,8 @@ class ParticipantsTest {
     void has_nex_player() {
         //given
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
@@ -51,8 +52,8 @@ class ParticipantsTest {
     void get_next_player() {
         //given
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
@@ -75,8 +76,8 @@ class ParticipantsTest {
     void validate_duplicated_name() {
         //given
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-        Player player1 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+        Player player1 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
 
         //when
         List<Player> players = new ArrayList<>(List.of(player1, player2));
@@ -105,8 +106,8 @@ class ParticipantsTest {
     void distribute_two_cards_to_each_participant() {
         //given
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Participants participants = new Participants(dealer, List.of(player1, player2));
         CardDeck cardDeck = new CardDeck();
 

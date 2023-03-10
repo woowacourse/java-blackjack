@@ -1,5 +1,6 @@
 package blackjack.model.result;
 
+import blackjack.model.BetAmount;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
@@ -36,7 +37,7 @@ class ResultTest {
                 Card card6 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5, card6));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -66,7 +67,7 @@ class ResultTest {
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -96,7 +97,7 @@ class ResultTest {
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -132,7 +133,7 @@ class ResultTest {
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -160,7 +161,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -187,7 +188,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -221,7 +222,7 @@ class ResultTest {
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -250,7 +251,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -279,7 +280,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -303,7 +304,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -327,7 +328,7 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
                 Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
