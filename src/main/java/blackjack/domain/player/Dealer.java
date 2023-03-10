@@ -8,12 +8,17 @@ public final class Dealer extends Player {
     private static final int DEALER_STAY_NUMBER = 17;
 
 
-    private Dealer(final String name, final Cards cards) {
-        super(name, cards);
+    private Dealer(final Cards cards) {
+        super(cards);
     }
 
     public static Dealer create() {
-        return new Dealer(DEALER_NAME, new Cards());
+        return new Dealer(new Cards());
+    }
+
+    @Override
+    public String getName() {
+        return DEALER_NAME;
     }
 
     @Override
