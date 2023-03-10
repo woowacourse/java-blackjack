@@ -33,7 +33,7 @@ public class BlackJackController {
         printInitMessages(playerNames);
     }
 
-    private void printInitMessages(final List<String> playerNames){
+    private void printInitMessages(final List<String> playerNames) {
         OutputView.printInitHitMessage(playerNames);
         OutputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
         OutputView.printPlayerCards(blackJack.getPlayerToCardNames());
@@ -51,11 +51,15 @@ public class BlackJackController {
 
     private void playTurnOfPlayer(final Player player) {
         String playerName = player.getName();
-        while (blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit()) {
+        while (isHittablePlayer(player)) {
             blackJack.giveCard(playerName);
             Hand playerHand = player.getCards();
             OutputView.printEachPlayerCards(playerName, new CardNames(playerHand.getCardNames()));
         }
+    }
+
+    private boolean isHittablePlayer(final Player player) {
+        return blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit();
     }
 
     private HitCommand askHitCommandToPlayer(final Player player) {
