@@ -21,8 +21,18 @@ public class Results {
     }
 
     public void executeGame(Players players, Dealer dealer) {
+        if (dealer.getHandCards().checkBust() == 0) {
+            dealerBustCase(players, dealer);
+            return;
+        }
         for (Player player : players.getPlayers()) {
             fight(player, dealer);
+        }
+    }
+
+    private void dealerBustCase(Players players, Dealer dealer) {
+        for(Player player: players.getPlayers()) {
+            playerWin(results.get(player.getName()), results.get(dealer.getName()));
         }
     }
 

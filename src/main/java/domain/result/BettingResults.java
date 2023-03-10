@@ -12,7 +12,7 @@ public class BettingResults {
         this.bettingResults = new HashMap<>();
     }
 
-    public void setParticipantBet(Participant participant, Money money) {
+    public void initParticipantBet(Participant participant, Money money) {
         bettingResults.put(participant, money);
     }
 

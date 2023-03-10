@@ -13,10 +13,12 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackApplication {
+
     public static void main(String[] args) {
         BettingResults betting = new BettingResults();
         Players players = generatePlayers(betting);
         Dealer dealer = new Dealer();
+        betting.initParticipantBet(dealer, new Money());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
         endPhase(players, dealer);
@@ -53,14 +55,14 @@ public class BlackJackApplication {
             Money playerBet = readMoney(name);
             Player player = new Player(name);
             players.add(player);
-            betting.setParticipantBet(player, playerBet);
+            betting.initParticipantBet(player, playerBet);
         }
     }
 
     private static Money readMoney(Name name) {
         try {
-            String s = InputView.inputBettingAmount(name);
-            return new Money(s);
+            String inputBettingAmount = InputView.inputBettingAmount(name);
+            return new Money(inputBettingAmount);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readMoney(name);

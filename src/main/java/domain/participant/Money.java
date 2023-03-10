@@ -10,17 +10,21 @@ public class Money {
         this.amount = validateAmount(Integer.parseInt(amount));
     }
 
+    public Money() {
+        this.amount = 0;
+    }
+
     private void validateAmountRegex(String amount) {
         if (!amount.matches(MONEY_REGEX_FORMAT)) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자로 입력해 주세요");
         }
     }
 
-    private int validateAmount(int amount) {
-        if (amount == 0) {
+    private int validateAmount(int number) {
+        if (number == 0) {
             throw new IllegalArgumentException(BETTING_AMOUNT_ZERO_MESSAGE);
         }
-        return amount;
+        return number;
     }
 
     public int getAmount() {
