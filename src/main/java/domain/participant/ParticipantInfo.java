@@ -4,6 +4,7 @@ import domain.game.EarningRate;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import static domain.participant.Participant.DEALER_NAME;
 
@@ -50,6 +51,10 @@ public class ParticipantInfo {
     @Override
     public int hashCode() {
         return Objects.hash(participantInfo);
+    }
+
+    public Set<Participant> getParticipants() {
+        return participantInfo.keySet();
     }
 
     public Map<Participant, ParticipantMoney> getParticipantInfo() {
