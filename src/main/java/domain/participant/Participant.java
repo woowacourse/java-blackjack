@@ -57,11 +57,11 @@ public class Participant {
             return false;
         }
         Participant targetParticipant = (Participant) target;
-        return Objects.equals(hand, targetParticipant.hand) && Objects.equals(name, targetParticipant.name);
+        return Objects.equals(name, targetParticipant.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hand, name);
+        return Objects.hash(name);
     }
 }
