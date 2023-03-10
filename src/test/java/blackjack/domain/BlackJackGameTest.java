@@ -110,17 +110,6 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어 이름으로 bust됬는지 확인하는 기능 테스트")
-    void isBustTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
-                new RandomDeckGenerator());
-
-        boolean isBust = blackJackGame.isPlayerBust(TEST_PLAYER_NAME1);
-
-        assertThat(isBust).isFalse();
-    }
-
-    @Test
     @DisplayName("플레이어 턴 진행 테스트")
     void playPlayerTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
@@ -168,23 +157,6 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("유저의 점수가 BlackJackNumber인지 확인하는 기능 테스트")
-    void isBlackJackScoreTest() {
-        final List<Card> testCards = List.of(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.JACK)
-        );
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
-                new TestNonShuffledDeckGenerator(testCards));
-
-        boolean isBlackJack = blackJackGame.isBlackJackScore(TEST_PLAYER_NAME1);
-
-        assertThat(isBlackJack).isTrue();
-    }
-
-    @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
@@ -203,5 +175,4 @@ class BlackJackGameTest {
                     .isEqualTo(19);
         });
     }
-
 }

@@ -40,10 +40,6 @@ public class BlackJackGame {
         return true;
     }
 
-    public boolean isPlayerBust(final Name name) {
-        return users.isPlayerBust(name);
-    }
-
     public void drawDealer() {
         users.drawDealer(deck);
     }
@@ -70,7 +66,4 @@ public class BlackJackGame {
         return users.getDealerWinningResults();
     }
 
-    public boolean isBlackJackScore(final Name name) {
-        return users.isBlackJackScore(name);
-    }
 }
