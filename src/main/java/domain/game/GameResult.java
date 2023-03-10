@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.money.Profit;
 import domain.user.Player;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,24 +7,19 @@ import java.util.Map;
 
 public class GameResult {
     
-    private final Map<Player, ResultStatus> resultCacheMap = new HashMap<>();
+    private final Map<Player, ResultStatus> resultMap = new HashMap<>();
     
     public void accumulate(Player player, ResultStatus resultStatus) {
-        this.resultCacheMap.put(player, resultStatus);
+        this.resultMap.put(player, resultStatus);
     }
     
-    public Map<String, Profit> generatePlayerProfitResult() {
-        Map<String, Profit> playerProfitResult = new HashMap<>();
-        
-        return playerProfitResult;
-    }
     
     public Map<ResultStatus, Integer> generateDealerResult() {
         HashMap<ResultStatus, Integer> dealerResult = new HashMap<>();
         dealerResult.put(ResultStatus.WIN, 0);
         dealerResult.put(ResultStatus.DRAW, 0);
         dealerResult.put(ResultStatus.LOSE, 0);
-        for (ResultStatus resultStatus : this.resultCacheMap.values()) {
+        for (ResultStatus resultStatus : this.resultMap.values()) {
             if (resultStatus == ResultStatus.WIN || resultStatus == ResultStatus.WIN_BLACKJACK) {
                 dealerResult.put(ResultStatus.LOSE, dealerResult.get(ResultStatus.LOSE) + 1);
             }
@@ -40,6 +34,6 @@ public class GameResult {
     }
     
     public Map<Player, ResultStatus> getResultMap() {
-        return Collections.unmodifiableMap(this.resultCacheMap);
+        return Collections.unmodifiableMap(this.resultMap);
     }
 }
