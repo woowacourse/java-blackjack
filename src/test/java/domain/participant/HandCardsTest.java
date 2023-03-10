@@ -1,6 +1,9 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import domain.card.Card;
@@ -35,8 +38,26 @@ class HandCardsTest {
     }
 
     @Test
-    @DisplayName("손패의 카드 값들을 반환한다.")
-    void getCardValues() {
-        Assertions.assertThat(handCards.getValues()).contains(2, 10);
+    @DisplayName("Ace가 포함된 경우 1, 11 중 최적의 값을 선택해서 합을 구한다.")
+    void getOptimalSumValueWhenAceContain() {
+        // given
+        Card card = new Card(Suit.DIAMOND, Denomination.ACE);
+        handCards.addCard(card);
+
+        // when, then
+        assertThat(handCards.calculateOptimalCardValueSum()).isEqualTo(13);
+        assertThat(handCards.calculateOptimalCardValueSum()).isNotEqualTo(22);
     }
+
+    @Test
+    @DisplayName("Ace가 포함되지 않으면 단순 합을 구한다.")
+    void getOptimalSumValueWhenAceNotContain() {
+        // given
+        Card card = new Card(Suit.DIAMOND, Denomination.THREE);
+        handCards.addCard(card);
+
+        // when, then
+        assertThat(handCards.calculateOptimalCardValueSum()).isEqualTo(15);
+    }
+
 }
