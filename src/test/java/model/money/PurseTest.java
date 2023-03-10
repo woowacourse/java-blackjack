@@ -1,17 +1,14 @@
 package model.money;
 
-import model.money.Money;
-import model.money.Purse;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Map;
 import model.user.Player;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PurseTest {
 
@@ -40,9 +37,9 @@ class PurseTest {
     @DisplayName("지갑에 돈을 추가할 수 있다.")
     void whenAddMoney_thenSuccess() {
         // when
-        purse.addMoney(bebe, new Money(10_000L));
+        purse.addMoney(bebe, new Money(10_000));
 
         // then
-        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(10_000L));
+        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(10_000));
     }
 }

@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Money {
 
-    private static final Money zero = new Money(0L);
+    private static final Money zero = new Money(0);
 
-    private final Long money;
+    private final long money;
 
-    public Money(final Long money) {
+    public Money(final long money) {
         this.money = money;
     }
 

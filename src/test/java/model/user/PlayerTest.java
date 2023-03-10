@@ -1,17 +1,5 @@
 package model.user;
 
-import model.card.Card;
-import model.card.Deck;
-import model.card.RandomShuffleMaker;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
 import static model.card.Shape.CLOVER;
 import static model.card.Shape.DIAMOND;
 import static model.card.Shape.SPADE;
@@ -28,6 +16,17 @@ import static model.card.Value.TWO;
 import static model.user.Result.LOSE;
 import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
+import model.card.Card;
+import model.card.Deck;
+import model.card.RandomShuffleMaker;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
 
