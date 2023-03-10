@@ -53,11 +53,12 @@ class BetsTest {
         irene.receiveCard(THREE_SPADE); // score: 23 (bust)
 
         WinningResult winningResult = new WinningResult(participants);
-        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+        Map<Player, Money> weightedBets = bets.calculatePlayersProfit(winningResult);
 
         assertAll(
                 () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1000)),
-                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(-10000))
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(-10000)),
+                () -> assertThat(bets.calculateDealerProfit(winningResult)).isEqualTo(new Money(9000))
         );
     }
 
@@ -80,11 +81,12 @@ class BetsTest {
         irene.selectStand();
 
         WinningResult winningResult = new WinningResult(participants);
-        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+        Map<Player, Money> weightedBets = bets.calculatePlayersProfit(winningResult);
 
         assertAll(
                 () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1500)),
-                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(0))
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(0)),
+                () -> assertThat(bets.calculateDealerProfit(winningResult)).isEqualTo(new Money(-1500))
         );
     }
 
@@ -108,11 +110,12 @@ class BetsTest {
         irene.selectStand();
 
         WinningResult winningResult = new WinningResult(participants);
-        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+        Map<Player, Money> weightedBets = bets.calculatePlayersProfit(winningResult);
 
         assertAll(
                 () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1500)),
-                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(10000))
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(10000)),
+                () -> assertThat(bets.calculateDealerProfit(winningResult)).isEqualTo(new Money(-11500))
         );
     }
 
@@ -134,11 +137,12 @@ class BetsTest {
         irene.selectStand();
 
         WinningResult winningResult = new WinningResult(participants);
-        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+        Map<Player, Money> weightedBets = bets.calculatePlayersProfit(winningResult);
 
         assertAll(
                 () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(0)),
-                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(-10000))
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(-10000)),
+                () -> assertThat(bets.calculateDealerProfit(winningResult)).isEqualTo(new Money(10000))
         );
     }
 
@@ -163,11 +167,12 @@ class BetsTest {
         irene.selectStand();
 
         WinningResult winningResult = new WinningResult(participants);
-        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+        Map<Player, Money> weightedBets = bets.calculatePlayersProfit(winningResult);
 
         assertAll(
                 () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(-1000)),
-                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(10000))
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(10000)),
+                () -> assertThat(bets.calculateDealerProfit(winningResult)).isEqualTo(new Money(-9000))
         );
     }
 }

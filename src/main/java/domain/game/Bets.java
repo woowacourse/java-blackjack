@@ -19,7 +19,7 @@ public class Bets {
         bets.put(player, money);
     }
 
-    public Map<Player, Money> calculateBets(WinningResult winningResult) {
+    public Map<Player, Money> calculatePlayersProfit(WinningResult winningResult) {
         Map<Player, Money> weightedBets = new LinkedHashMap<>();
         Map<Player, WinningStatus> winningStatusMap = winningResult.getPlayersResult();
         for (Player player : winningStatusMap.keySet()) {
@@ -31,5 +31,13 @@ public class Bets {
             weightedBets.put(player, weightedBet);
         }
         return weightedBets;
+    }
+
+    public Money calculateDealerProfit(WinningResult winningResult) {
+        Map<Player, Money> playersProfit = calculatePlayersProfit(winningResult);
+        int profit = playersProfit.values().stream()
+                .mapToInt(Money::getAmount)
+                .sum();
+        return new Money(profit).multiply(BigDecimal.valueOf(-1));
     }
 }
