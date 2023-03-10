@@ -23,7 +23,7 @@ public class Player extends Participant {
         }
     }
 
-    public GameResult matchGame(Dealer dealer) {
+    private GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
         if (this.isBlackjack() && !dealer.isBlackjack()) {
