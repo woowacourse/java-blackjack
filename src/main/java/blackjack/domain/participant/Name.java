@@ -14,9 +14,13 @@ public class Name {
 
     private final String value;
 
-    public Name(final String value) {
+    private Name(final String value) {
         validate(value);
         this.value = value;
+    }
+
+    public static Name from(final String value) {
+        return new Name(value);
     }
 
     private void validate(final String value) {

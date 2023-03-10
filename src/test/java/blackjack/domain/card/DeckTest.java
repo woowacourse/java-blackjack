@@ -24,9 +24,9 @@ public class DeckTest {
     @Test
     @DisplayName("중복된 카드를 주입하면 에러를 반환한다")
     void throwExceptionWhenDuplicateCard() {
-        final List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK), new Card(Shape.DIAMOND, Letter.JACK));
+        final List<Card> cards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.JACK));
 
-        assertThatThrownBy(() -> new Deck(cards))
+        assertThatThrownBy(() -> Deck.from(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드가 존재합니다.");
     }
@@ -35,8 +35,8 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     void drawCardTest() {
         //given
-        final Deck deck = new Deck(List.of(new Card(Shape.DIAMOND, Letter.JACK)));
-        final Card expected = new Card(Shape.DIAMOND, Letter.JACK);
+        final Deck deck = Deck.from(List.of(Card.of(Shape.DIAMOND, Letter.JACK)));
+        final Card expected = Card.of(Shape.DIAMOND, Letter.JACK);
 
         //when
         final Card actual = deck.draw();

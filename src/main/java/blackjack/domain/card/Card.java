@@ -7,9 +7,13 @@ public class Card {
     final private Shape shape;
     final private Letter letter;
 
-    public Card(final Shape shape, final Letter letter) {
+    private Card(final Shape shape, final Letter letter) {
         this.shape = shape;
         this.letter = letter;
+    }
+
+    public static Card of(final Shape shape, final Letter letter) {
+        return new Card(shape, letter);
     }
 
     public String getCardName() {

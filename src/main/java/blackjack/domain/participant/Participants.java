@@ -14,11 +14,15 @@ public class Participants {
 
     private final List<Participant> participants = new ArrayList<>();
 
-    public Participants(final Dealer dealer, final List<String> playerNames) {
+    private Participants(final Dealer dealer, final List<String> playerNames) {
         validate(playerNames);
 
         participants.add(dealer);
         participants.addAll(makePlayers(playerNames));
+    }
+
+    public static Participants of(final Dealer dealer, final List<String> playerNames) {
+        return new Participants(dealer, playerNames);
     }
 
     private void validate(final List<String> playerNames) {
@@ -45,7 +49,7 @@ public class Participants {
 
     private List<Player> makePlayers(final List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Player(new Name(name), new ArrayList<>()))
+                .map(name -> Player.of(Name.from(name), new ArrayList<>()))
                 .collect(Collectors.toUnmodifiableList());
     }
 

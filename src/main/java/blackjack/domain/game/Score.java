@@ -8,8 +8,12 @@ public class Score {
 
     private final int value;
 
-    public Score(final int value) {
+    private Score(final int value) {
         this.value = value;
+    }
+
+    public static Score from(final int value) {
+        return new Score(value);
     }
 
     public Score minus(final int value) {

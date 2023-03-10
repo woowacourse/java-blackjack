@@ -14,7 +14,7 @@ public abstract class Participant {
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
-        this.hand = new Hand(cards);
+        this.hand = Hand.from(cards);
     }
 
     public void drawCard(final Card card) {

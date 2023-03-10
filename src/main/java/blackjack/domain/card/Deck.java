@@ -14,15 +14,19 @@ public class Deck {
     static {
         CARDS = Stream.of(Shape.values())
                 .flatMap(shape -> Stream.of(Letter.values())
-                        .map(letter -> new Card(shape, letter)))
+                        .map(letter -> Card.of(shape, letter)))
                 .collect(Collectors.toList());
     }
 
-    public Deck(final List<Card> cards) {
+    private Deck(final List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();
         this.cards.addAll(cards);
+    }
+
+    public static Deck from(final List<Card> cards) {
+        return new Deck(cards);
     }
 
     public static Deck createAllCard() {

@@ -12,8 +12,12 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(final List<Card> cards) {
+    private Hand(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Hand from(final List<Card> cards) {
+        return new Hand(cards);
     }
 
     public void add(final Card card) {
@@ -43,7 +47,7 @@ public class Hand {
                 .map(Card::getValue)
                 .reduce(ZERO, Integer::sum);
 
-        return new Score(score);
+        return Score.from(score);
     }
 
     private Score calculateScoreRegardAce(int aceCount, Score totalScore) {

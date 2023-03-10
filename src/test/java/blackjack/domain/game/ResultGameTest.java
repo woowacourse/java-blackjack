@@ -27,22 +27,22 @@ public class ResultGameTest {
 
     @BeforeEach
     void setting() {
-        dealer = new Dealer(new ArrayList<>());
-        participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
+        dealer = Dealer.from(new ArrayList<>());
+        participants = Participants.of(dealer, List.of("pobi", "crong", "dali"));
         playersResult = new HashMap<>();
     }
 
     @Test
     @DisplayName("생성자 테스트")
     void constructorTest() {
-        assertThatNoException().isThrownBy(() -> new ResultGame(playersResult));
+        assertThatNoException().isThrownBy(() -> ResultGame.from(playersResult));
     }
 
     @Nested
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
-        final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"));
+        final Dealer dealer = Dealer.from(new ArrayList<>());
+        final Participants participants = Participants.of(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
@@ -50,19 +50,19 @@ public class ResultGameTest {
         void initialPlayerBust() {
             player = participants.getPlayers().get(0);
 
-            player.drawCard(new Card(Shape.HEART, Letter.TEN));
-            player.drawCard(new Card(Shape.HEART, Letter.EIGHT));
-            player.drawCard(new Card(Shape.HEART, Letter.SEVEN));
+            player.drawCard(Card.of(Shape.HEART, Letter.TEN));
+            player.drawCard(Card.of(Shape.HEART, Letter.EIGHT));
+            player.drawCard(Card.of(Shape.HEART, Letter.SEVEN));
         }
 
         @Test
         @DisplayName("딜러가 버스트일 때 TIE가 나온다.")
         void dealerBust() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.SEVEN));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -70,11 +70,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 버스트가 아닐 때 LOSE가 나온다.")
         void dealerNotBust() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.THREE));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
@@ -83,8 +83,8 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭일 때")
     class PlayerNormal {
-        final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"));
+        final Dealer dealer = Dealer.from(new ArrayList<>());
+        final Participants participants = Participants.of(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
@@ -92,19 +92,19 @@ public class ResultGameTest {
         void initialPlayerBust() {
             player = participants.getPlayers().get(0);
 
-            player.drawCard(new Card(Shape.HEART, Letter.TEN));
-            player.drawCard(new Card(Shape.HEART, Letter.EIGHT));
-            player.drawCard(new Card(Shape.HEART, Letter.THREE));
+            player.drawCard(Card.of(Shape.HEART, Letter.TEN));
+            player.drawCard(Card.of(Shape.HEART, Letter.EIGHT));
+            player.drawCard(Card.of(Shape.HEART, Letter.THREE));
         }
 
         @Test
         @DisplayName("딜러가 플레이어보다 점수가 높을 때 WIN이 나온다.")
         void dealerGreaterThanPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.SEVEN));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -112,11 +112,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 플레이어와 점수가 같을 때 TIE가 나온다.")
         void dealerEqualsPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.THREE));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -124,11 +124,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 블랙잭이 아닐 때 WIN이 나온다.")
         void dealerLessThanPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TWO));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -137,8 +137,8 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭이 아닐 때")
     class PlayerBlackjack {
-        final Dealer dealer = new Dealer(new ArrayList<>());
-        final Participants participants = new Participants(dealer, List.of("pobi"));
+        final Dealer dealer = Dealer.from(new ArrayList<>());
+        final Participants participants = Participants.of(dealer, List.of("pobi"));
         final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
@@ -146,19 +146,19 @@ public class ResultGameTest {
         void initialPlayerBust() {
             player = participants.getPlayers().get(0);
 
-            player.drawCard(new Card(Shape.HEART, Letter.TEN));
-            player.drawCard(new Card(Shape.HEART, Letter.EIGHT));
-            player.drawCard(new Card(Shape.HEART, Letter.TWO));
+            player.drawCard(Card.of(Shape.HEART, Letter.TEN));
+            player.drawCard(Card.of(Shape.HEART, Letter.EIGHT));
+            player.drawCard(Card.of(Shape.HEART, Letter.TWO));
         }
 
         @Test
         @DisplayName("딜러가 버스트일 때 WIN이 나온다.")
         void dealerBust() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.SEVEN));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -166,11 +166,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 버스트가 아니고, 플레이어보다 점수가 높을 때 LOSE가 나온다.")
         void dealerNotBustAndGreaterThanPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.THREE));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
@@ -178,11 +178,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 플레이어와 점수가 같을 때 TIE이 나온다.")
         void dealerEqualPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.EIGHT));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TWO));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -190,11 +190,11 @@ public class ResultGameTest {
         @Test
         @DisplayName("딜러가 플레이어보다 점수가 낮을 때 WIN이 나온다.")
         void dealerLessThanPlayer() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
-            dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.SEVEN));
+            dealer.drawCard(Card.of(Shape.DIAMOND, Letter.TWO));
 
-            final ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = ResultGame.from(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -204,12 +204,12 @@ public class ResultGameTest {
     @DisplayName("딜러의 승무패가 제대로 나오는지 테스트")
     void getDealerCountTest() {
         // given
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
+        dealer.drawCard(Card.of(Shape.CLOVER, Letter.EIGHT));
         final Participant player = participants.getPlayers().get(0);
-        player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
+        player.drawCard(Card.of(Shape.CLOVER, Letter.NINE));
 
         // when
-        final ResultGame resultGame = new ResultGame(playersResult);
+        final ResultGame resultGame = ResultGame.from(playersResult);
         resultGame.calculateResult(participants);
 
         // then
@@ -220,12 +220,12 @@ public class ResultGameTest {
     @DisplayName("플레이어의 결과를 출력하는 테스트")
     void getPlayerResultTest() {
         // given
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
+        dealer.drawCard(Card.of(Shape.CLOVER, Letter.EIGHT));
         final Participant player = participants.getPlayers().get(0);
-        player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
+        player.drawCard(Card.of(Shape.CLOVER, Letter.NINE));
 
         // when
-        final ResultGame resultGame = new ResultGame(playersResult);
+        final ResultGame resultGame = ResultGame.from(playersResult);
         resultGame.calculateResult(participants);
 
         // then

@@ -15,9 +15,9 @@ public class DealerTest {
     @DisplayName("딜러의 카드의 합이 16이하 인지 테스트")
     void canHitTest() {
         //given
-        final Dealer dealer = new Dealer(new ArrayList<>());
-        final Card card1 = new Card(Shape.CLOVER, Letter.SIX);
-        final Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+        final Dealer dealer = Dealer.from(new ArrayList<>());
+        final Card card1 = Card.of(Shape.CLOVER, Letter.SIX);
+        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
 
         //when
         dealer.drawCard(card1);
@@ -31,9 +31,9 @@ public class DealerTest {
     @DisplayName("딜러의 카드의 합이 16초과 인지 테스트")
     void cantHitTest() {
         //given
-        final Dealer dealer = new Dealer(new ArrayList<>());
-        final Card card1 = new Card(Shape.CLOVER, Letter.SEVEN);
-        final Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+        final Dealer dealer = Dealer.from(new ArrayList<>());
+        final Card card1 = Card.of(Shape.CLOVER, Letter.SEVEN);
+        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
 
         //when
         dealer.drawCard(card1);

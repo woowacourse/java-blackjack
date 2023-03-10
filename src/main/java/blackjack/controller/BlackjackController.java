@@ -33,10 +33,10 @@ public class BlackjackController {
     }
 
     private Participants makeParticipants() {
-        final Dealer dealer = new Dealer(new ArrayList<>());
+        final Dealer dealer = Dealer.from(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
 
-        return new Participants(dealer, playerNames);
+        return Participants.of(dealer, playerNames);
     }
 
     private void startGame(final Participants participants, final Deck deck) {
@@ -85,7 +85,7 @@ public class BlackjackController {
     }
 
     private void displayAllResult(final Participants participants) {
-        final ResultGame resultGame = new ResultGame(new HashMap<>());
+        final ResultGame resultGame = ResultGame.from(new HashMap<>());
 
         resultGame.calculateResult(participants);
         outputView.printParticipantsResult(participants, resultGame);
