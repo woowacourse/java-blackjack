@@ -28,13 +28,9 @@ public class GameController {
         CardDeck cardDeck = new CardDeck();
         Participants participants = initializeParticipants();
 
-        participants.distributeTwoCardsToEach(cardDeck);
-        printInitialCardStatus(participants);
-
+        start(cardDeck, participants);
         hitOrStand(cardDeck, participants);
-        printFinalCardStatus(participants);
-
-        printWinningResult(participants.getPlayerResult());
+        finish(participants);
     }
 
     private Participants initializeParticipants() {
@@ -43,6 +39,11 @@ public class GameController {
                 .collect(Collectors.toList());
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         return new Participants(dealer, players);
+    }
+
+    private void start(CardDeck cardDeck, Participants participants) {
+        participants.distributeTwoCardsToEach(cardDeck);
+        printInitialCardStatus(participants);
     }
 
     private void printInitialCardStatus(Participants participants) {
@@ -66,6 +67,11 @@ public class GameController {
             outputView.printNameAndHand(ParticipantDto.from(player));
         }
         outputView.printDealerHitMessage(participants.hitOrStandByDealer(cardDeck));
+    }
+
+    private void finish(Participants participants) {
+        printFinalCardStatus(participants);
+        printWinningResult(participants.getPlayerResult());
     }
 
     private void printFinalCardStatus(Participants participants) {
