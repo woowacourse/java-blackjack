@@ -1,12 +1,12 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
+    private static final int FIRST_INDEX = 0;
 
-    private final Random random = new Random();
     private final List<Card> cards;
 
     public Deck() {
@@ -21,6 +21,7 @@ public class Deck {
             cards.addAll(buildCardsFrom(suit));
         }
 
+        Collections.shuffle(cards);
         return cards;
     }
 
@@ -37,17 +38,13 @@ public class Deck {
     public Card drawCard() {
         validateDrawCard();
 
-        return cards.remove(pickRandomCard());
+        return cards.remove(FIRST_INDEX);
     }
 
     private void validateDrawCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 모두 소진됐습니다.");
         }
-    }
-
-    private int pickRandomCard() {
-        return random.nextInt(cards.size());
     }
 
     public List<Card> getCards() {
