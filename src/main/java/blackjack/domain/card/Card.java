@@ -5,7 +5,7 @@ public class Card {
     private final CardNumber cardNumber;
     private final CardSymbol symbol;
 
-    public Card(CardNumber CardNumber, CardSymbol symbol) {
+    public Card(final CardNumber CardNumber, final CardSymbol symbol) {
         this.cardNumber = CardNumber;
         this.symbol = symbol;
     }

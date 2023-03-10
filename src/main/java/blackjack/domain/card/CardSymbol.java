@@ -10,7 +10,7 @@ public enum CardSymbol {
 
     private final String symbol;
 
-    CardSymbol(String symbol) {
+    CardSymbol(final String symbol) {
         this.symbol = symbol;
     }
 
