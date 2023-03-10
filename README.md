@@ -19,8 +19,6 @@
 ## BlackjackGame
 - [x] `Dealer`, `Players`를 가진다.
 - [ ] 게임을 진행한다.
-  - [x] `Bank`에 `Player`의 배팅 금액을 저장한다.
-  - [x] 딜러와 참가자들에게 2장의 카드를 나눠준다.
 
 ---
 
