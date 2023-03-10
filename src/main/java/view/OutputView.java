@@ -4,7 +4,6 @@ import domain.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -22,14 +21,14 @@ public class OutputView {
 
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName(), players.getPlayersName()
-                .stream()
+        System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName(), players.getPlayersName().stream()
                 .collect(Collectors.joining(SPLIT_DELIMITER)));
         Card dealerCard = dealer.getCards().get(0);
         System.out.println(dealer.getName() + ": " + namimgCard(dealerCard));
         for (String key : players.getInfo().keySet()) {
             List<Card> value = players.getInfo().get(key);
-            System.out.println(key + "카드: " + value.stream().map(this::namimgCard)
+            System.out.println(key + "카드: " + value.stream()
+                    .map(this::namimgCard)
                     .collect(Collectors.joining(SPLIT_DELIMITER)));
         }
     }
@@ -48,8 +47,8 @@ public class OutputView {
 
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards()
-                .stream().map(this::namimgCard)
+        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards().stream()
+                .map(this::namimgCard)
                 .collect(Collectors.joining(SPLIT_DELIMITER)), dealer.getCardsSum());
         for (String key : players.getInfo().keySet()) {
             List<Card> value = players.getInfo().get(key);
@@ -62,7 +61,9 @@ public class OutputView {
     public void printWinnerResult(GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        String dealerName = gameResult.getDealerResult().keySet().stream().findFirst().get();
+        String dealerName = gameResult.getDealerResult().keySet().stream()
+                .findFirst()
+                .get();
         List<ResultType> dealerResult = gameResult.getDealerResult().get(dealerName);
         System.out.printf(DEALER_RESULT_MESSAGE, dealerName,
                 Collections.frequency(dealerResult, ResultType.WIN),
