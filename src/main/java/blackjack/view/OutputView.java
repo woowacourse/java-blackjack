@@ -15,7 +15,7 @@ public class OutputView {
                 .map(Player::getName)
                 .collect(joining(", "));
 
-        System.out.println(dealer.getName() + "와 " + playerNames + "에게 " + dealer.getInitCardCount() + "장을 나누었습니다.");
+        System.out.println("[System]: " + dealer.getName() + "와 " + playerNames + "에게 " + dealer.getInitCardCount() + "장을 나누었습니다.");
         System.out.println();
 
         System.out.println(dealer.getName() + ": " + cardToString(dealer.showOneCard()));
@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     public void printDealerDrawMessage(final Dealer dealer) {
-        System.out.println(dealer.getName() + dealer.getCanDrawScore() + "점 이하라 한 장의 카드를 더 받았습니다.");
+        System.out.println("[System]: " + dealer.getName() + dealer.getCanDrawScore() + "점 이하이기에 카드를 더 뽑았습니다.");
         System.out.println();
     }
 
