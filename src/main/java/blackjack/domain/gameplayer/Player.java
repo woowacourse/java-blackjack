@@ -17,13 +17,13 @@ public class Player extends BlackJackParticipant {
         this.name = name;
     }
 
+    public String showName() {
+        return name.getName();
+    }
+
     @Override
     public List<Card> showCards() {
         return cards.getCards();
-    }
-
-    public String showName() {
-        return name.getName();
     }
 
     @Override
