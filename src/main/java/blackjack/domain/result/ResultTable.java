@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ResultTable {
@@ -17,5 +18,9 @@ public class ResultTable {
 
     public GameResult get(final String name) {
         return table.get(name);
+    }
+
+    public List<String> getGameEndedPlayerNames() {
+        return List.copyOf(table.keySet());
     }
 }

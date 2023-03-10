@@ -5,6 +5,8 @@ import blackjack.domain.bet.Money;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ResultTable;
 
+import java.util.List;
+
 public class ProfitCalculator {
 
     private final BettingTable bettingTable;
@@ -28,5 +30,13 @@ public class ProfitCalculator {
         return gameResult.calculateProfit(
                 bettingTable.get(name).getAmount()
         );
+    }
+
+    public int calculateDealerProfit() {
+        final List<String> playerNames = resultTable.getGameEndedPlayerNames();
+        final int playerProfitSum = playerNames.stream()
+                .mapToInt(this::calculateProfit)
+                .sum();
+        return -1 * playerProfitSum;
     }
 }
