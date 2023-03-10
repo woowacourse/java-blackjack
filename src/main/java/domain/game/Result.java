@@ -4,7 +4,7 @@ public enum Result {
     BLACKJACK {
         @Override
         public int calculateProfit(final int input) {
-            return (int) (1.5 * input);
+            return (int) (PROFIT_RATE * input);
         }
     },
     WIN {
@@ -25,6 +25,8 @@ public enum Result {
             return -input;
         }
     };
+
+    public static final double PROFIT_RATE = 1.5;
 
     public abstract int calculateProfit(final int input);
 }

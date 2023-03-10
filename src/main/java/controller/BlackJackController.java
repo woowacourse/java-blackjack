@@ -26,10 +26,11 @@ public final class BlackJackController {
 
     private BlackJack createBlackJack() {
         final List<Name> playerNames = repeat(this::userNameRequest);
-        final List<Integer> bets = new ArrayList<>();
-        for (Name playerName : playerNames) {
-            bets.add(repeat(() -> inputView.betRequest(playerName)));
-        }
+        final List<Integer> bets = playerNames.stream()
+                .map(name -> {
+                    return repeat(() -> inputView.betRequest(name));
+                })
+                .collect(Collectors.toList());
         return BlackJack.getInstance(playerNames, bets, new ShuffledDeck());
     }
 
@@ -68,7 +69,7 @@ public final class BlackJackController {
         return repeat(() -> cardRequest(player.getName()));
     }
 
-    private boolean cardRequest(Name name) {
+    private boolean cardRequest(final Name name) {
         return inputView.cardRequest(name);
     }
 

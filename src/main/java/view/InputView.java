@@ -25,7 +25,7 @@ public final class InputView {
     }
 
     public Integer betRequest(final Name name) {
-        System.out.printf("%s의 베팅 금액은?\n", name.getValue());
+        System.out.printf("%s의 배팅 금액은?\n", name.getValue());
         return toNumber(readLine());
     }
 

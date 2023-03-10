@@ -109,25 +109,12 @@ public final class OutputView {
 
     public void printFinalResult(final Dealer dealer, GameResult gameResult) {
         System.out.println("\n## 최종 수익");
-        printDealerResult(dealer, gameResult.getResult());
+        printDealerResult(dealer, gameResult);
         printPlayersResult(gameResult.getResult());
     }
 
-    private void printDealerResult(final Dealer dealer, final Map<Result, List<Player>> gameResult) {
-        int result = 0;
-        for (Map.Entry<Result, List<Player>> entry : gameResult.entrySet()) {
-            if (Result.WIN == entry.getKey()) {
-                for (Player player : entry.getValue()) {
-                    result -= Result.WIN.calculateProfit(player.getBet());
-                }
-            }
-            if (Result.LOSE == entry.getKey()) {
-                for (Player player : entry.getValue()) {
-                    result -= Result.LOSE.calculateProfit(player.getBet());
-                }
-            }
-        }
-        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), result);
+    private void printDealerResult(final Dealer dealer, final GameResult gameResult) {
+        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), gameResult.getDealerProfit());
     }
 
     private void printPlayersResult(final Map<Result, List<Player>> gameResult) {
