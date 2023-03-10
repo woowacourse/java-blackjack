@@ -31,7 +31,7 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    protected boolean isBlackjack() {
+    public boolean isBlackjack() {
         return cards.isBlackjack();
     }
 
