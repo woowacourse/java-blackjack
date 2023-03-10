@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultTable;
 import blackjack.domain.result.Score;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardAndScore;
@@ -16,12 +15,12 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Users users;
-    private final ResultTable.ProfitCalculator profitCalculator;
+    private final ProfitCalculator profitCalculator;
 
     public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
         this.deck = new Deck(deckGenerator);
         this.users = new Users(playerNames, deck);
-        profitCalculator = new ResultTable.ProfitCalculator();
+        profitCalculator = new ProfitCalculator();
     }
 
     public List<String> getPlayerNames() {
