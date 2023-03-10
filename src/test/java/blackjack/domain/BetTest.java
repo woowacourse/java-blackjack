@@ -15,15 +15,15 @@ class BetTest {
     @Test
     void createBet() {
         // given
-        double input = 1000;
+        int input = 1000;
 
         // when & then
         assertDoesNotThrow(() -> new Bet(input));
     }
 
     @ParameterizedTest(name = "양수가 아닐 경우 예외가 발생한다.")
-    @ValueSource(doubles = {-1000, 0})
-    void validatePositiveNumber(double input) {
+    @ValueSource(ints = {-1000, 0})
+    void validatePositiveNumber(int input) {
         // when & then
         assertThatThrownBy(() -> new Bet(input))
                 .isInstanceOf(IllegalArgumentException.class)
