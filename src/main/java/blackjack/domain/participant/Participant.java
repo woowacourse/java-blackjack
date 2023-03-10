@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Money;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Participant {
 
@@ -40,6 +40,10 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return this.hand.isBlackjack();
+    }
+
+    public Result compareTo(Hand anotherHand) {
+        return this.hand.compareTo(anotherHand);
     }
 
     public Hand getHand() {

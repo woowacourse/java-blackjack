@@ -1,8 +1,13 @@
 package blackjack.domain.participant;
 
+import static java.util.stream.Collectors.toMap;
+
+import blackjack.domain.Money;
+import blackjack.domain.Result;
 import blackjack.domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class Players {
 
@@ -37,6 +42,20 @@ public final class Players {
     private void validateCardsSize(final List<Hand> cards) {
         if (cards.size() != players.size()) {
             throw new IllegalArgumentException("세팅 카드와 플레이어의 수가 일치하지 않습니다.");
+        }
+    }
+
+    public Map<Player, Result> compareTo(Hand dealerHand) {
+        return players.stream()
+                .collect(toMap(
+                        player -> player,
+                        player -> player.compareTo(dealerHand)
+                ));
+    }
+
+    public void dealOutMoney(final Map<Player, Money> exchanges) {
+        for (Player player : exchanges.keySet()) {
+            player.receiveMoney(exchanges.get(player));
         }
     }
 
