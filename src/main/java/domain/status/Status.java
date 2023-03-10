@@ -1,4 +1,5 @@
 package domain.status;
 
-public class Status {
+public interface Status {
+
 }

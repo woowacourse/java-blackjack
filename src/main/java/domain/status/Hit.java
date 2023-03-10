@@ -3,7 +3,7 @@ package domain.status;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Hit extends Status {
+public class Hit implements Status {
 
     private final Cards cards;
 

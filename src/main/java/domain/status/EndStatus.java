@@ -1,4 +1,8 @@
 package domain.status;
 
-public class EndStatus {
+import java.math.BigDecimal;
+
+public interface EndStatus extends Status {
+
+    BigDecimal profitWeight();
 }

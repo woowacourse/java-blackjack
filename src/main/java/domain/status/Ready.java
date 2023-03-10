@@ -3,7 +3,7 @@ package domain.status;
 import domain.card.Cards;
 import domain.participant.Score;
 
-public class Ready extends Status {
+public class Ready implements Status {
     public Status firstDraw(final Cards cards) {
         Score score = cards.calculateScore();
         if (score.isBlackJack()) {

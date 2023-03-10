@@ -3,7 +3,7 @@ package domain.status;
 import domain.card.Cards;
 import java.math.BigDecimal;
 
-public class Stand extends Status {
+public class Stand implements EndStatus {
 
     private final Cards cards;
 
@@ -11,6 +11,7 @@ public class Stand extends Status {
         this.cards = cards;
     }
 
+    @Override
     public BigDecimal profitWeight() {
         return BigDecimal.valueOf(1);
     }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+
     @DisplayName("딜러는 카드를 추가로 받고, 점수를 계산할 수 있다.")
     @Test
     void fillCardsTest() {
