@@ -108,7 +108,7 @@ classDiagram
 ### UserInformation
 - 유저의 이름과 베팅 금액 정보를 가지고 있는 클래스
 - [x] 이름을 반환한다.
-- [ ] 베팅 금액을 반환한다.
+- [x] 베팅 금액을 반환한다.
 
 ### UserName (Interface)
 - 유저의 이름 정보를 가지고 있는 객체의 규격

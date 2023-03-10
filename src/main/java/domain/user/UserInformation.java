@@ -16,4 +16,9 @@ public class UserInformation {
     public String getNameValue() {
         return this.userName.getValue();
     }
+
+
+    public int getBettingAmountValue() {
+        return this.bettingAmount.getValue();
+    }
 }

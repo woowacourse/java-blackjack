@@ -14,4 +14,12 @@ class UserInformationTest {
         UserInformation userInformation = UserInformation.of(new PlayerName(nameInput), 1_000);
         assertThat(userInformation.getNameValue()).isEqualTo(nameInput);
     }
+
+    @DisplayName("User의 베팅 금액을 반환한다.")
+    @Test
+    void 베팅_금액_반환() {
+        int bettingAmountValue = 7_000;
+        UserInformation userInformation = UserInformation.of(new PlayerName("test"), bettingAmountValue);
+        assertThat(userInformation.getBettingAmountValue()).isEqualTo(bettingAmountValue);
+    }
 }
