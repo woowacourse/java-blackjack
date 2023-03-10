@@ -10,6 +10,7 @@ import static domain.Result.*;
 public class OutputView {
     private static final String JOINING_DELIMITER = ", ";
     private static final String NAME_AND_VALUE_DELIMITER = ": ";
+    private static final String BLANK = " ";
     private static final String CARD_NOTICE = "카드: ";
     private static final String GIVE_TWO_CARDS_NOTICE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String ACCEPTED_ADD_CARD_TO_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -85,7 +86,9 @@ public class OutputView {
         long loseCount = getCount(results, LOSE);
         long drawCount = getCount(results, DRAW);
 
-        String result = winCount + WIN.message() + drawCount + DRAW.message() + loseCount + LOSE.message();
+        String result = winCount + WIN.message() + BLANK
+                + drawCount + DRAW.message() + BLANK
+                + loseCount + LOSE.message();
         System.out.println(DEALER_NOTICE + result);
     }
 

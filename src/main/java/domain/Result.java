@@ -13,7 +13,7 @@ public enum Result {
     }
 
     public String message() {
-        return message + " ";
+        return message;
     }
 
 }
