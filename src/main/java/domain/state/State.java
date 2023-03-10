@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Score;
 
+import java.util.List;
+
 public abstract class State {
     
     private final Hand hand;
@@ -17,6 +19,10 @@ public abstract class State {
     
     protected Score score() {
         return hand.getTotalScore();
+    }
+    
+    protected List<Card> getCards() {
+        return hand.getCards();
     }
     
     protected Hand getHand() {
