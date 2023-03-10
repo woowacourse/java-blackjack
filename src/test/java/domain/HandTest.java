@@ -47,23 +47,23 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("점수가 21을 초과했을 경우 Burst 된다.")
-    void givenOverTwentyOneScore_thenBurst() {
+    @DisplayName("점수가 21을 초과했을 경우 Bust 된다.")
+    void givenOverTwentyOneScore_thenBust() {
         hand.addCard(new Card(Shape.SPADE, Number.KING));
         hand.addCard(new Card(Shape.SPADE, Number.QUEEN));
         hand.addCard(new Card(Shape.SPADE, Number.TWO));
 
-        assertThat(hand.isBurst(hand.getTotalScore())).isTrue();
+        assertThat(hand.isBust(hand.getTotalScore())).isTrue();
     }
 
     @Test
-    @DisplayName("점수가 21 이하일 경우 Burst되지 않는다.")
-    void givenOrLessTwentyOneScore_thenNotBurst() {
+    @DisplayName("점수가 21 이하일 경우 Bust되지 않는다.")
+    void givenOrLessTwentyOneScore_thenNotBust() {
         hand.addCard(new Card(Shape.SPADE, Number.KING));
         hand.addCard(new Card(Shape.SPADE, Number.ACE));
         hand.addCard(new Card(Shape.SPADE, Number.QUEEN));
 
-        assertThat(hand.isBurst(hand.getTotalScore())).isFalse();
+        assertThat(hand.isBust(hand.getTotalScore())).isFalse();
     }
     
     @Test

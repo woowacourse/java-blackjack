@@ -54,7 +54,7 @@ public class Application {
             OutputView.printParticipantCardCondition(List.of(participant));
         }
         
-        if (command.isNotAddCardCommand() || participant.isBurst()) {
+        if (command.isNotAddCardCommand() || participant.isBust()) {
             stopGivingCard(participant, command);
             return;
         }
@@ -72,8 +72,8 @@ public class Application {
             return;
         }
         
-        if (participant.isBurst()) {
-            OutputView.printBurstMessage(participant.getName());
+        if (participant.isBust()) {
+            OutputView.printBustMessage(participant.getName());
         }
     }
     

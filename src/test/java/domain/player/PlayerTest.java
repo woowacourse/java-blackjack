@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -53,14 +52,14 @@ class PlayerTest {
     }
     
     @DisplayName("버스트인지 확인")
-    @ParameterizedTest(name = "number : {0}, isBurst : {1}")
+    @ParameterizedTest(name = "number : {0}, isBust : {1}")
     @CsvSource(value = {"FIVE,false", "SIX,true"})
-    void isBurst(Number number, boolean isBurst) {
+    void isBust(Number number, boolean isBust) {
         dealer.addCard(new Card(Shape.HEART, Number.QUEEN));
         dealer.addCard(new Card(Shape.HEART, Number.SIX));
         dealer.addCard(new Card(Shape.DIAMOND, number));
         
-        assertThat(dealer.isBurst()).isEqualTo(isBurst);
+        assertThat(dealer.isBust()).isEqualTo(isBust);
     }
     
     @Test

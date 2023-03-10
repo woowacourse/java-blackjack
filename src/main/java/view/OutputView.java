@@ -86,7 +86,7 @@ public class OutputView {
         System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
     }
 
-    public static void printBurstMessage(String name) {
+    public static void printBustMessage(String name) {
         System.out.printf("%s님은 버스트 되셨습니다. 더이상 카드를 뽑을 수 없습니다.%n", name);
     }
 

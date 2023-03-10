@@ -20,8 +20,8 @@ public abstract class Player {
     }
     
     public GameResult battleResult(Player otherPlayer) {
-        if (isBurst() || otherPlayer.isBurst()) {
-            return decideGameResultWithBurst(otherPlayer);
+        if (isBust() || otherPlayer.isBust()) {
+            return decideGameResultWithBust(otherPlayer);
         }
         
         int totalScore = getTotalScore();
@@ -29,12 +29,12 @@ public abstract class Player {
         return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
     }
     
-    private GameResult decideGameResultWithBurst(Player otherPlayer) {
-        if (isBurst() && otherPlayer.isBurst()) {
+    private GameResult decideGameResultWithBust(Player otherPlayer) {
+        if (isBust() && otherPlayer.isBust()) {
             return GameResult.DRAW;
         }
         
-        if (isBurst()) {
+        if (isBust()) {
             return GameResult.LOSE;
         }
         
@@ -57,8 +57,8 @@ public abstract class Player {
         return hand.getTotalScore();
     }
     
-    public boolean isBurst() {
-        return hand.isBurst(getTotalScore());
+    public boolean isBust() {
+        return hand.isBust(getTotalScore());
     }
     
     public List<Card> getCards() {

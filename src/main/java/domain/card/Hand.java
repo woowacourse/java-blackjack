@@ -31,7 +31,7 @@ public class Hand {
         return totalScore + 10;
     }
     
-    public boolean isBurst(int totalScore) {
+    public boolean isBust(int totalScore) {
         return totalScore > BLACKJACK_SCORE;
     }
     
