@@ -80,7 +80,7 @@ public class BlackJackController {
 
     private List<CardStatusDto> getCardStatus(List<Card> cards) {
         return cards.stream()
-                .map(CardStatusDto::new)
+                .map(CardStatusDto::from)
                 .collect(Collectors.toList());
     }
 
