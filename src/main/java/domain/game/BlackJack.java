@@ -25,7 +25,7 @@ public final class BlackJack {
     }
 
     private void initGame(final DeckStrategy deck, final int count) {
-        dealer.takeCard(deck, count);
+        dealer.takeInitialCards(deck, count);
         players.takeCard(deck, count);
     }
 

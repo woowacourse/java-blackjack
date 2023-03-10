@@ -19,7 +19,7 @@ public final class Dealer extends Participant {
         return new Dealer(Name.of(DEALER_NAME));
     }
 
-    public void takeCard(final DeckStrategy deck, final int count) {
+    public void takeInitialCards(final DeckStrategy deck, final int count) {
         for (int i = 0; i < count; i++) {
             this.cards = cards.add(deck.drawCard());
         }

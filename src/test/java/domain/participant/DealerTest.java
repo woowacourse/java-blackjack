@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +34,7 @@ class DealerTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void dealerTakeCardTest(int value) {
-        dealer.takeCard(new ShuffledDeck(), value);
+        dealer.takeInitialCards(new ShuffledDeck(), value);
 
         assertThat(dealer)
                 .extracting("cards")
