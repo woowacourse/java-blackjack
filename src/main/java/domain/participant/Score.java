@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
+    private static final Score MAX = new Score(21);
     private static final Score BONUS = new Score(10);
 
     private final int value;
@@ -13,30 +13,28 @@ public final class Score {
         this.value = value;
     }
 
-    public boolean canAddBonusScore() {
-        return this.addBonus().isSmallerOrEqualsTo(BUST_BOUNDARY_EXCLUSIVE);
+    public Score applyBonusScore() {
+        if (canAddBonusScore()) {
+            return this.addBonus();
+        }
+        return this;
     }
 
-    public Score addBonusScore() {
-        return this.addBonus();
+    private boolean canAddBonusScore() {
+        return this.addBonus().isSmallerOrEqualsTo(MAX);
     }
 
     private Score addBonus() {
         return new Score(this.value + Score.BONUS.value);
     }
 
-    public boolean wins(final Score score) {
-        return this.isGreaterThan(score);
-    }
-
-    public boolean draws(final Score score) {
+    public boolean isEquals(final Score score) {
         return this.equals(score);
     }
 
     public boolean isGreaterThan(final Score score) {
         return this.value > score.value;
     }
-
 
     public boolean isSmallerOrEqualsTo(final Score score) {
         return this.value <= score.value;

@@ -1,11 +1,11 @@
 package domain.card;
 
 import domain.participant.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
     private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
     private final List<Card> cards;
 
@@ -28,10 +28,9 @@ public class Cards {
     public Score calculateScore() {
         boolean hasAce = hasAce();
         Score defaultScore = new Score(calculateDefaultScore());
-        boolean canAddBonusScore = defaultScore.canAddBonusScore();
 
-        if (hasAce && canAddBonusScore) {
-            defaultScore = defaultScore.addBonusScore();
+        if (hasAce) {
+            defaultScore = defaultScore.applyBonusScore();
         }
         return defaultScore;
     }
