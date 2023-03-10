@@ -122,4 +122,14 @@ class PlayerTest {
 
         assertThat(player.isSameScore(targetPlayer)).isTrue();
     }
+
+    @Test
+    @DisplayName("카드가 2장이고, 21점이면 블랙잭이다")
+    void is_blackjack_true() {
+        Card spadeTen = new Card(Shape.SPADE, Number.TEN);
+        Card spadeAce = new Card(Shape.SPADE, Number.ACE);
+
+        player.pickStartCards(spadeTen, spadeAce);
+        assertThat(player.isBlackjack()).isTrue();
+    }
 }
