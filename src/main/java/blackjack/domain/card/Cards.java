@@ -26,7 +26,9 @@ public class Cards {
         totalScore = mediateTotalScore(totalScore);
         return totalScore;
     }
-
+    public boolean isBlackjack(){
+        return cards.size()==2&&makeTotalScore()==BLACKJACK_NUMBER;
+    }
     private int mediateTotalScore(int totalScore) {
         int aceCount = countAce();
         while (totalScore > BLACKJACK_NUMBER && aceCount != ZERO) {
