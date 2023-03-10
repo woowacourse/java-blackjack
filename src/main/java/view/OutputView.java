@@ -57,20 +57,9 @@ public class OutputView {
         return String.format("%s - 결과: %d", generateCardsInfo(name, cards), score);
     }
 
-    public void printRevenues(Map<String, Integer> playerOutcomes) {
+    public void printRevenues(Map<String, Integer> revenues) {
         System.out.println(System.lineSeparator() + "## 최종 수익");
-        int dealerOutcome = calculateDealerRevenue(playerOutcomes);
-        printDealerOutcome(dealerOutcome);
-        playerOutcomes.forEach((name, outcome) -> System.out.println(name + NAME_INFO_DELIMITER + outcome));
-    }
-
-    private int calculateDealerRevenue(Map<String, Integer> playerOutcomes) {
-        return playerOutcomes.values().stream().mapToInt(Integer::intValue)
-                .sum() * -1;
-    }
-
-    private void printDealerOutcome(int dealerOutcome) {
-        System.out.println("딜러" + NAME_INFO_DELIMITER + dealerOutcome);
+        revenues.forEach((name, outcome) -> System.out.println(name + NAME_INFO_DELIMITER + outcome));
     }
 
     public void printErrorMessage(String errorMessage) {

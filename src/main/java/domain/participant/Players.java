@@ -51,7 +51,7 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public Map<String, Integer> battleWith(Dealer dealer) {
+    public Map<String, Integer> calculateRevenues(Dealer dealer) {
         int dealerScore = dealer.score();
         return players.stream()
                 .collect(toUnmodifiableMap(Player::name, player -> calculateRevenues(player, dealerScore)));

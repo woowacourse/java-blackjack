@@ -8,6 +8,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,17 @@ public class BlackjackGame {
     }
 
     public Map<String, Integer> getRevenues() {
-        return players.battleWith(dealer);
+        Map<String, Integer> playersRevenues = players.calculateRevenues(dealer);
+        int dealerRevenues = calculateDealerRevenue(playersRevenues);
+        Map<String, Integer> revenues = new LinkedHashMap<>();
+        revenues.put(dealer.name(), dealerRevenues);
+        revenues.putAll(playersRevenues);
+        return revenues;
+    }
+
+    private static int calculateDealerRevenue(Map<String, Integer> playersRevenues) {
+        return playersRevenues.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum() * -1;
     }
 }
