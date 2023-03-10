@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class ReadyTest {
     private State ready;
@@ -16,6 +17,15 @@ class ReadyTest {
     @BeforeEach
     void setUp() {
         ready = new Ready(new Hand());
+    }
+    
+    @Test
+    @DisplayName("카드 갯수가 2개 미만인 경우 Ready상태를 유지한다.")
+    void ready_state() {
+        final State state = ready
+                .draw(new Card(Shape.HEART, Number.QUEEN));
+        
+        assertThat(state).isExactlyInstanceOf(Ready.class);
     }
     
     @Test
@@ -36,5 +46,12 @@ class ReadyTest {
                 .draw(new Card(Shape.HEART, Number.ACE));
         
         assertThat(state).isExactlyInstanceOf(BlackJack.class);
+    }
+    
+    @Test
+    void calculateProfit() {
+        assertThatIllegalStateException()
+                .isThrownBy(() -> ready.calculateProfit(1000))
+                .withMessage("아직 배팅 금액을 계산할 수 없는 상태입니다.");
     }
 }

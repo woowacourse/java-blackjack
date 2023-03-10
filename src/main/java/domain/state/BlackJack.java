@@ -12,4 +12,9 @@ public class BlackJack extends State {
     public State draw(Card card) {
         throw new IllegalStateException("더이상 카드를 뽑을 수 없습니다.");
     }
+    
+    @Override
+    public double calculateProfit(int betAmount) {
+        return betAmount * 1.5;
+    }
 }

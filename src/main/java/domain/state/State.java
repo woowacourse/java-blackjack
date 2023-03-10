@@ -12,6 +12,7 @@ public abstract class State {
     }
     
     public abstract State draw(Card card);
+    public abstract double calculateProfit(int betAmount);
     
     protected Hand getHand() {
         return hand;

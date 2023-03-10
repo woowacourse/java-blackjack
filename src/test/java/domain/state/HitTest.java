@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class HitTest {
     private State hit;
@@ -38,5 +39,12 @@ class HitTest {
                 .draw(new Card(Shape.HEART, Number.TWO));
         
         assertThat(state).isExactlyInstanceOf(Bust.class);
+    }
+    
+    @Test
+    void calculateProfit() {
+        assertThatIllegalStateException()
+                .isThrownBy(() -> hit.calculateProfit(1000))
+                .withMessage("아직 배팅 금액을 계산할 수 없는 상태입니다.");
     }
 }

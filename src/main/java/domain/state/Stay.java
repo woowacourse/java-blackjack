@@ -12,4 +12,9 @@ public class Stay extends State {
     public State draw(Card card) {
         throw new IllegalStateException("더이상 카드를 뽑을 수 없는 상태입니다.");
     }
+    
+    @Override
+    public double calculateProfit(int betAmount) {
+        return betAmount;
+    }
 }
