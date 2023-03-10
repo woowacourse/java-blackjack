@@ -14,15 +14,15 @@ public class Score {
         return score == MAX_SCORE;
     }
 
-    public boolean canAddAdditionalScore() {
-        return score <= LIMIT_ADDITIONAL_SCORE;
-    }
-
-    public Score addAdditionalScore() {
+    public Score calculateAdditionalScore() {
         if(canAddAdditionalScore()) {
             return new Score(score + ADDITIONAL_SCORE);
         }
         return this;
+    }
+
+    private boolean canAddAdditionalScore() {
+        return score <= LIMIT_ADDITIONAL_SCORE;
     }
 
     public int getScore() {

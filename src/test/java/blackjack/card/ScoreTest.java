@@ -26,28 +26,12 @@ public class ScoreTest {
         assertThat(score.isMaxScore()).isFalse();
     }
 
-    @ParameterizedTest(name = "점수가 11점이 이하이면 true 를 반환한다. 입력값 = {0}")
-    @ValueSource(ints = {10, 9, 2})
-    void canAddAdditionalScore(int input) {
-        Score score = new Score(input);
-
-        assertThat(score.canAddAdditionalScore()).isTrue();
-    }
-
-    @ParameterizedTest(name = "점수가 11점 초과이면 false 를 반환한다. 입력값 = {0}")
-    @ValueSource(ints = {12, 13, 23})
-    void canAddAdditionalScoreFalse(int input) {
-        Score score = new Score(input);
-
-        assertThat(score.canAddAdditionalScore()).isFalse();
-    }
-
     @Test
     @DisplayName("점수가 11점 이하이면 10을 더한다.")
     void addAdditionalScore() {
         Score score = new Score(10);
 
-        assertThat(score.addAdditionalScore().getScore()).isEqualTo(20);
+        assertThat(score.calculateAdditionalScore().getScore()).isEqualTo(20);
     }
 
     @Test
@@ -55,6 +39,6 @@ public class ScoreTest {
     void addAdditionalScoreFail() {
         Score score = new Score(12);
 
-        assertThat(score.addAdditionalScore().getScore()).isEqualTo(12);
+        assertThat(score.calculateAdditionalScore().getScore()).isEqualTo(12);
     }
 }
