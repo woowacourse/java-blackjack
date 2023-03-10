@@ -1,6 +1,7 @@
 package model.money;
 
 import java.util.Objects;
+import model.user.Result;
 
 public class Money {
 
@@ -20,8 +21,24 @@ public class Money {
         return new Money(this.money + money.money);
     }
 
-    public Money lose() {
+    public Money calculateMoney(Result result) {
+        if (result == Result.WIN) {
+            return this;
+        }
+
+        if (result == Result.LOSE) {
+            return lose();
+        }
+
+        return draw();
+    }
+
+    private Money lose() {
         return new Money(-money);
+    }
+
+    private Money draw() {
+        return new Money(0);
     }
 
     public Money blackJack() {

@@ -34,6 +34,10 @@ public class Player implements Receivable {
         return user.getCardTotalValue();
     }
 
+    public Result judgeResult(Dealer dealer) {
+        return judgeResult(dealer.calculateTotalValue());
+    }
+
     @Override
     public boolean isBlackJack() {
         return user.isBlackJack();
