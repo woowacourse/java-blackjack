@@ -45,6 +45,19 @@ public class OutputView {
     }
 
     public void printLastCards(final Dealer dealer, final Players players) {
-
+        System.out.println(dealer.getName() + "카드: " + handToString(dealer.getHand()) + " - 결과: " + dealer.totalScore());
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + "카드: " + handToString(player.getHand()) + " - 결과: " + player.totalScore());
+        }
+        System.out.println();
     }
+
+    public void printRevenueResult(final Dealer dealer, final Players players) {
+        System.out.println("## 최종 수익");
+        System.out.println(dealer.getName() + ": " + dealer.getMoney());
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + ": " + player.getMoney());
+        }
+    }
+
 }

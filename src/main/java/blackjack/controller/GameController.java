@@ -12,7 +12,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-// TODO: 2023/03/10 남은 기능 모두 구현하고, Amend해서 이전 커밋과 하나로 통합해서 commit, push 하기
 public final class GameController {
 
     private static final String HIT = "y";
@@ -27,7 +26,6 @@ public final class GameController {
 
     public void run() {
         BlackjackGame blackjackGame = initGame();
-
         betMoney(blackjackGame);
         playGame(blackjackGame);
         finishGame(blackjackGame);
@@ -63,7 +61,7 @@ public final class GameController {
             play(blackjackGame.getDealer(), player);
         }
 
-        blackjackGame.getDealer().drawIfLowerOrEquals16();
+        blackjackGame.drawDealer();
         outputView.printDealerDrawMessage(blackjackGame.getDealer());
     }
 
@@ -85,6 +83,8 @@ public final class GameController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-
+        outputView.printLastCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        blackjackGame.dealOutMoney();
+        outputView.printRevenueResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 }
