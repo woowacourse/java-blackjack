@@ -7,10 +7,7 @@ import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlackJack {
 
@@ -55,6 +52,14 @@ public class BlackJack {
             }
         }
         return resultUsers;
+    }
+
+    public Map<Result, List<User>> getAllUsersResult() {
+        final LinkedHashMap<Result, List<User>> resultOfUsers = new LinkedHashMap<>();
+        for(Result result : Result.values()){
+            resultOfUsers.put(result, getUserOf(result));
+        }
+        return resultOfUsers;
     }
 
     public User getUser(Name user) {
