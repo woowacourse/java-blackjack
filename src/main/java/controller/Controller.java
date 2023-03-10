@@ -16,7 +16,7 @@ public class Controller {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.readPlayerNames());
-        BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardGenerator().generate()));
+        BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardDeckGenerator().generate()));
         game.shuffleCardDeck();
         distributeInitialCard(dealer, players, game);
         selectAdditionalCard(players, game);

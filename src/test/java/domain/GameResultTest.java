@@ -35,6 +35,7 @@ public class GameResultTest {
         dealerResult.put(dealer.getName(), List.of(ResultType.WIN, ResultType.WIN));
         Assertions.assertThat(blackjackGame.getGameResult().getDealerResult()).isEqualTo(dealerResult);
     }
+    CardDeck cardDeck = new CardDeck(new CardDeckGenerator().generate());
 
 }
 

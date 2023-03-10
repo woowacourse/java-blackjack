@@ -13,7 +13,7 @@ public class CardDeckTest {
     @Test
     @DisplayName("카드덱을 생성한다.")
     void createCardDeck() {
-        CardGenerator generator = new CardGenerator();
+        CardDeckGenerator generator = new CardDeckGenerator();
 
         Assertions.assertDoesNotThrow(
                 () -> new CardDeck(generator.generate()));
