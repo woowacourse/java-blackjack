@@ -34,7 +34,7 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
         playerPick(Card.of(Shape.HEART, Letter.KING));
 
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
         Map<Name, GameResult> gameResult = result.getResult();
 
         assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
@@ -45,7 +45,7 @@ public class ResultTest {
     void calculateGameResultWhenPlayerDraw() {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.NINE))));
 
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
         Map<Name, GameResult> gameResult = result.getResult();
 
         assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
@@ -57,7 +57,7 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
         dealer.pick(Card.of(Shape.HEART, Letter.QUEEN));
 
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
         Map<Name, GameResult> gameResult = result.getResult();
 
         assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
@@ -68,7 +68,7 @@ public class ResultTest {
     void calculateGameResultWhenPlayerWin() {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
 
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
         Map<Name, GameResult> gameResult = result.getResult();
 
         assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
@@ -79,7 +79,7 @@ public class ResultTest {
     void calculateGameResultPlayerBust() {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.NINE))));
         playerPick(Card.of(Shape.HEART, Letter.KING));
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
 
         Map<Name, GameResult> gameResult = result.getResult();
 
@@ -90,7 +90,7 @@ public class ResultTest {
     @DisplayName("둘 다 버스트가 아니고 플레이어가 게임에서 지는 경우를 확인한다.")
     void calculateGameResultWhenPlayerLose() {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.TWO))));
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
 
         Map<Name, GameResult> gameResult = result.getResult();
 
@@ -103,7 +103,7 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateBlackJackCard()));
         Dealer dealer = new Dealer(generateBlackJackCard());
         dealer.pick(Card.of(Shape.DIAMOND, Letter.JACK));
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
 
         Map<Name, GameResult> gameResult = result.getResult();
 
@@ -114,7 +114,7 @@ public class ResultTest {
     @DisplayName("Player 가 블랙잭으로 이기는 경우")
     void playerWinWhenPlayerHasBlackJack() {
         players = Players.of(names, new CardDistributor(generateBlackJackCard()));
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
 
         Map<Name, GameResult> gameResult = result.getResult();
 
@@ -127,7 +127,7 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateBlackJackCard()));
         playerPick(Card.of(Shape.HEART, Letter.JACK));
         Dealer dealer = new Dealer(generateBlackJackCard());
-        Result result = new Result(dealer, players);
+        Result result = new Result(dealer, players.getPlayers());
 
         Map<Name, GameResult> gameResult = result.getResult();
 

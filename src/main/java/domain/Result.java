@@ -1,19 +1,20 @@
 package domain;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Result {
 
     private final Map<Name, GameResult> gameResult;
 
-    public Result(Dealer dealer, Players players) {
+    public Result(Dealer dealer, List<Player> players) {
         gameResult = new LinkedHashMap<>();
         calculate(dealer, players);
     }
 
-    private void calculate(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
+    private void calculate(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
             calculateWinLose(dealer, player);
         }
     }
