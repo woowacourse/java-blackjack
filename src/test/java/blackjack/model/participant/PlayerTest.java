@@ -167,7 +167,44 @@ class PlayerTest {
                 assertThat(player.getProfit(dealer)).isEqualTo(15000);
             }
 
-            //todo 테스트 코드 추가 작성: 딜러스탠드, 딜러블랙잭
+            @Test
+            @DisplayName("딜러가 스탠드라면 플레이어는 베팅 금액의 1.5배를 얻는다")
+            void player_get_x1_5_when_dealer_stand() {
+                //given
+                List<Card> cards = List.of(CLUB_ACE, CLUB_JACK, HEART_EIGHT, HEART_JACK);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+
+                //then
+                assertThat(player.isBlackjack()).isTrue();
+                assertThat(dealer.isStand()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(15000);
+            }
+
+            @Test
+            @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 돌려받는다")
+            void player_get_nothing_when_dealer_bust() {
+                //given
+                List<Card> cards = List.of(CLUB_ACE, CLUB_JACK, HEART_ACE, HEART_JACK);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+
+                //then
+                assertThat(player.isBlackjack()).isTrue();
+                assertThat(dealer.isBlackjack()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(0);
+            }
+
         }
 
         @Nested
@@ -194,7 +231,85 @@ class PlayerTest {
                 assertThat(player.getProfit(dealer)).isEqualTo(10000);
             }
 
-            //todo 테스트 코드 추가 작성: 딜러버스트, 딜러블랙잭
+            @Test
+            @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 잃는다")
+            void player_lost_x1_when_dealer_blackjack() {
+                //given
+                List<Card> cards = List.of(HEART_EIGHT, CLUB_JACK, HEART_ACE, HEART_TEN);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+                player.changeToStand();
+
+                //then
+                assertThat(player.isStand()).isTrue();
+                assertThat(dealer.isBlackjack()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+            }
+
+            @Test
+            @DisplayName("딜러가 스탠드이고, 플레이어가 점수가 낮다면 플레이어는 베팅 금액을 잃는다")
+            void player_lost_x1_when_dealer_stand_and_player_score_low() {
+                //given
+                List<Card> cards = List.of(HEART_SEVEN, CLUB_JACK, HEART_EIGHT, HEART_TEN);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+                player.changeToStand();
+
+                //then
+                assertThat(player.isStand()).isTrue();
+                assertThat(dealer.isStand()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+            }
+
+            @Test
+            @DisplayName("딜러가 스탠드이고, 플레이어가 점수가 높다면 플레이어는 베팅 금액의 x1배를 얻는다")
+            void player_get_x1_when_dealer_stand_and_player_score_high() {
+                //given
+                List<Card> cards = List.of(HEART_TEN, CLUB_JACK, HEART_EIGHT, HEART_TEN);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+                player.changeToStand();
+
+                //then
+                assertThat(player.isStand()).isTrue();
+                assertThat(dealer.isStand()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(10000);
+            }
+
+            @Test
+            @DisplayName("딜러가 스탠드이고, 플레이어와 딜러의 점수가 같다면 플레이어는 베팅 금액을 돌려받는다")
+            void player_get_nothing_when_dealer_stand_and_player_score_same() {
+                //given
+                List<Card> cards = List.of(CLUB_EIGHT, CLUB_JACK, HEART_EIGHT, HEART_TEN);
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                CardDeck cardDeck = new CardDeck(cards);
+
+                // when
+                dealer.play(cardDeck);
+                player.play(cardDeck);
+                player.changeToStand();
+
+                //then
+                assertThat(player.isStand()).isTrue();
+                assertThat(dealer.isStand()).isTrue();
+                assertThat(player.getProfit(dealer)).isEqualTo(0);
+            }
         }
     }
 
