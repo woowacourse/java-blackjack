@@ -28,4 +28,11 @@ public class Money {
     public int getAmount() {
         return amount.intValue();
     }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "amount=" + amount +
+                '}';
+    }
 }

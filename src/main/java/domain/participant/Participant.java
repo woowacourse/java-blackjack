@@ -56,4 +56,12 @@ public abstract class Participant {
     public int getScore() {
         return calculateScore().getValue();
     }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name=" + name.getName() +
+                ", status=" + status.toString() +
+                '}';
+    }
 }
