@@ -35,7 +35,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(0);
     }
 
@@ -49,7 +49,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(13);
     }
 
@@ -64,7 +64,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(14);
     }
 
@@ -80,7 +80,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(14);
     }
 
@@ -95,7 +95,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(20);
     }
 
@@ -111,7 +111,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.sumCardNumbers())
+        assertThat(hand.calculateScore())
                 .isEqualTo(20);
     }
 
@@ -124,5 +124,16 @@ class HandTest {
         hand.add(card);
 
         assertThat(hand.getCards()).contains(card);
+    }
+
+    @Test
+    void isBust() {
+        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
+                Card.of(Suit.CLOVER, Denomination.TEN)));
+
+        hand.add(Card.of(Suit.DIAMOND, Denomination.FIVE));
+
+        assertThat(hand.isBust()).isTrue();
+
     }
 }

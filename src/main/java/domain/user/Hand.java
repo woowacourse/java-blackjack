@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Denomination;
+import domain.game.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,35 +23,19 @@ public class Hand {
         cards.add(card);
     }
 
-    public int sumCardNumbers() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getDenomination().value();
+    public int calculateScore() {
+        Score score = score();
+        if (hasAce()) {
+            score = score.minusTenIfNotBust();
         }
 
-        sum = decideAceNumber(sum, countAce());
-
-        return sum;
+        return score.value();
     }
 
-    private int decideAceNumber(int sum, int unDecidedAceCount) {
-        if (sum > BLACKJACK_NUMBER && unDecidedAceCount > 0) {
-            sum = sum - (Denomination.ACE.value() - MIN_ACE);
-            return decideAceNumber(sum, unDecidedAceCount - 1);
-        }
-        return sum;
-    }
-
-    public HandStatus getStatus() {
-        if (sumCardNumbers() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_SIZE) {
-            return HandStatus.BLACKJACK;
-        }
-
-        if (sumCardNumbers() > BLACKJACK_NUMBER) {
-            return HandStatus.BUST;
-        }
-
-        return HandStatus.CAN_HIT;
+    private Score score() {
+        return new Score(cards.stream()
+                .mapToInt(Card::score)
+                .sum());
     }
 
     private int countAce() {
@@ -59,7 +44,16 @@ public class Hand {
                 .count();
     }
 
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getDenomination() == Denomination.ACE);
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public Boolean isBust() {
+        return false;
     }
 }

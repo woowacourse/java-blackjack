@@ -1,5 +1,7 @@
 package domain.card;
 
+import domain.game.Score;
+
 import java.util.Objects;
 
 public class Card {
@@ -16,8 +18,16 @@ public class Card {
         return new Card(suit, denomination);
     }
 
+    public int score() {
+        return denomination.value();
+    }
+
     public Suit getSuit() {
         return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
@@ -26,10 +36,6 @@ public class Card {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return suit == card.suit && denomination == card.denomination;
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
     }
 
     @Override

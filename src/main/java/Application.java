@@ -1,4 +1,3 @@
-import controller.BlackjackController;
 import view.InputValidator;
 import view.InputView;
 import view.OutputView;
@@ -10,7 +9,7 @@ public class Application {
         InputView inputView = new InputView(new Scanner(System.in), new InputValidator());
         OutputView outputView = new OutputView();
 
-        BlackjackController controller = new BlackjackController(inputView, outputView);
-        controller.play();
+//        BlackjackController controller = new BlackjackController(inputView, outputView);
+//        controller.play();
     }
 }
