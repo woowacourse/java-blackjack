@@ -44,7 +44,7 @@ public class BlackJackGame {
 
     private void giveTwoCardToPerPlayer(Player player) {
         for (int divideCardCount = 0; divideCardCount < INIT_GIVE_CARD_COUNT; divideCardCount++) {
-            player.addCard(findAnyOneCard());
+            player.draw(findAnyOneCard());
         }
     }
 
@@ -53,7 +53,7 @@ public class BlackJackGame {
     }
 
     public void giveCard(Player player) {
-        player.addCard(deck.draw());
+        player.draw(deck.draw());
     }
 
     public boolean shouldDealerGetCard() {
@@ -62,7 +62,7 @@ public class BlackJackGame {
     }
 
     public void giveDealerCard() {
-        getDealer().addCard(findAnyOneCard());
+        getDealer().draw(findAnyOneCard());
     }
     
     public Player getDealer() {

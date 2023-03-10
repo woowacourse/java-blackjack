@@ -16,7 +16,7 @@ public abstract class Player {
         this.name = new PlayerName(name);
     }
     
-    public void addCard(Card card) {
+    public void draw(Card card) {
         hand.addCard(card);
     }
     
