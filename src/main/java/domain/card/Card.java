@@ -21,11 +21,11 @@ public class Card {
     }
 
     public CardValue cardValue() {
-        return this.cardValue;
+        return cardValue;
     }
 
     public int defaultScore() {
-        return this.cardValue.value();
+        return cardValue.value();
     }
 
     @Override
