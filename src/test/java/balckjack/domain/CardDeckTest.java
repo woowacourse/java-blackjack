@@ -33,6 +33,19 @@ class CardDeckTest {
         deck.addCard(new Card(Pattern.SPADE, Denomination.FOUR));
         Assertions.assertThat(deck.calculateScore()).isEqualTo(new Score(14));
     }
+    @Test
+    void isBlackJack() {
+        deck.addCard(new Card(Pattern.SPADE, Denomination.KING));
+        deck.addCard(new Card(Pattern.SPADE, Denomination.ACE));
+        Assertions.assertThat(deck.isBlackJack()).isTrue();
+    }
+    @Test
+    void isNotBlackJack() {
+        deck.addCard(new Card(Pattern.SPADE, Denomination.FOUR));
+        deck.addCard(new Card(Pattern.SPADE, Denomination.SIX));
+        deck.addCard(new Card(Pattern.SPADE, Denomination.ACE));
+        Assertions.assertThat(deck.isBlackJack()).isFalse();
+    }
 
 
     @Nested

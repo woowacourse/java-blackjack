@@ -1,17 +1,10 @@
 package balckjack.domain;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Referee {
-
-    private static final int BLACKJACK_SCORE = 21;
-    public static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Double> winningMoneys;
     private List<Result> results;
@@ -26,44 +19,35 @@ public class Referee {
     }
 
     private List<Result> generateResult(CardDeck dealerDeck, List<CardDeck> playersDeck) {
-        Score dealerScore = dealerDeck.calculateScore();
-        int dealerCardsCount = dealerDeck.findCardsCount();
         return playersDeck.stream()
-            .map((deck) -> compareScore(dealerScore.getValue(), dealerCardsCount,
-                deck.calculateScore().getValue(), deck.findCardsCount()))
+            .map((deck) -> compareScore(dealerDeck, deck))
             .collect(Collectors.toList());
     }
 
-    private Result compareScore(int dealerScore, int dealerCardsCount, int playerScore,
-        int playerCardCount) {
-        if (isBlackJack(playerScore, playerCardCount)) {
-            if (isBlackJack(dealerScore, dealerCardsCount)) {
+    private Result compareScore(CardDeck dealerDeck, CardDeck playerDeck) {
+        Score dealerScore = dealerDeck.calculateScore();
+        Score playerScore = playerDeck.calculateScore();
+
+        if (playerDeck.isBlackJack()) {
+            if (dealerDeck.isBlackJack()) {
                 return Result.DRAW;
             }
             return Result.BLACKJACK;
         }
-        if (isBlackJack(dealerScore, dealerCardsCount) || playerScore > BLACKJACK_SCORE) {
+        if (dealerDeck.isBlackJack() || playerScore.isMoreThan(Score.BLACKJACK_SCORE)) {
             return Result.LOSE;
         }
-        if (dealerScore > BLACKJACK_SCORE || playerScore > dealerScore) {
+        if (dealerScore.isMoreThan(Score.BLACKJACK_SCORE) || playerScore.isMoreThan(dealerScore)) {
             return Result.WIN;
         }
-        if (playerScore == dealerScore) {
+        if (playerScore.equals(dealerScore)) {
             return Result.DRAW;
         }
         return Result.LOSE;
     }
 
-    private boolean isBlackJack(int score, int count) {
-        return score == BLACKJACK_SCORE && count == BLACKJACK_CARD_COUNT;
-    }
-
     public Double calculateDealerWinningMoney() {
         return -winningMoneys.stream().mapToDouble(Double::doubleValue).sum();
-    }
-
-    public Map<String, Long> countDealerResult() {
-        return results.stream().collect(groupingBy(Result::getResult, counting()));
     }
 
     public List<Double> calculateWinningMoneys() {

@@ -55,5 +55,11 @@ class ScoreTest {
         Assertions.assertThat(score1.equals(score2)).isFalse();
     }
 
+    @Test
+    void isMoreThan() {
+        Score score1 = new Score(12);
+        Score score2 = new Score(11);
+        Assertions.assertThat(score1.isMoreThan(score2)).isTrue();
+    }
 
 }

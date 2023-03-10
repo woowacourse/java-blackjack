@@ -15,8 +15,9 @@ public class Money {
                 String.format("베팅 금액은 0보다 커야 합니다. 들어온 금액 : %d", value));
         }
     }
-    public double applyRate(Result result){
-        return value*result.getRate();
+
+    public double applyRate(Result result) {
+        return value * result.getRate();
     }
 
 }

@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final Score BLACKJACK_SCORE = new Score(21);
+
     private static final int DEALER_HIT_NUMBER = 16;
     private static final Score maxAceValue = new Score(11);
     private static final Score minAceValue = new Score(1);
-    private static final int BLACKJACK_SCORE = 21;
+
 
     private final int value;
 
@@ -37,7 +39,8 @@ public class Score {
 
     private boolean canAceHasMaxValue(Score score, int restAceCount) {
         final int ACE_VALUE_GAP = maxAceValue.value - minAceValue.value;
-        return (BLACKJACK_SCORE - score.value) - restAceCount * minAceValue.value >= ACE_VALUE_GAP;
+        return (BLACKJACK_SCORE.value - score.value) - restAceCount * minAceValue.value
+            >= ACE_VALUE_GAP;
     }
 
     private Score add(Score score) {
@@ -45,7 +48,11 @@ public class Score {
     }
 
     public boolean isBurst() {
-        return value > BLACKJACK_SCORE;
+        return value > BLACKJACK_SCORE.value;
+    }
+
+    public boolean isMoreThan(Score score) {
+        return value > score.value;
     }
 
     @Override

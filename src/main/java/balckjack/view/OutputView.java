@@ -79,12 +79,15 @@ public class OutputView {
             String.format("%s카드: %s - 결과 : %s", participant.getName().getValue(), cards, score));
     }
 
-    public static void printResult(Double dealerWinningMoney,List<Double> playerWinnningMoneys, Dealer dealer, Players players) {
+    public static void printResult(Double dealerWinningMoney, List<Double> playerWinnningMoneys,
+        Dealer dealer, Players players) {
         System.out.println("## 최종 수익");
         List<String> names = players.getPlayerNames();
-        System.out.println(String.format("%s: %d", dealer.getName().getValue(), dealerWinningMoney.longValue()));
+        System.out.println(
+            String.format("%s: %d", dealer.getName().getValue(), dealerWinningMoney.longValue()));
         for (int i = 0; i < names.size(); i++) {
-            System.out.println(String.format("%s: %d", names.get(i), playerWinnningMoneys.get(i).longValue()));
+            System.out.println(
+                String.format("%s: %d", names.get(i), playerWinnningMoneys.get(i).longValue()));
         }
     }
 

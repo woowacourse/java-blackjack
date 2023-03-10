@@ -5,6 +5,8 @@ import java.util.List;
 
 public class CardDeck {
 
+    private static final int BLACKJACK_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public CardDeck() {
@@ -22,7 +24,6 @@ public class CardDeck {
         }
     }
 
-
     public Score calculateScore() {
         Score standardSum = new Score(
             cards.stream().filter(card -> !card.isAce()).mapToInt(Card::getValue).sum());
@@ -39,8 +40,10 @@ public class CardDeck {
             .count());
     }
 
-    public int findCardsCount() {
-        return cards.size();
+    public boolean isBlackJack() {
+        Score score = calculateScore();
+        int count = cards.size();
+        return score.equals(Score.BLACKJACK_SCORE) && count == BLACKJACK_CARD_COUNT;
     }
 
     public List<Card> getCards() {

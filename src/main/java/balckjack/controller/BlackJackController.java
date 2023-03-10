@@ -41,7 +41,7 @@ public class BlackJackController {
     private Money generateMoney(String name) {
         return new Money(InputView.inputMoneys(name));
     }
-    
+
     private void initializeGame(CardPicker cardPicker, Players players, Dealer dealer) {
         dealer.distributeCards(cardPicker);
         players.initHit(cardPicker);
@@ -56,6 +56,9 @@ public class BlackJackController {
 
     private void tryPlayersTurn(CardPicker cardPicker, Players players) {
         for (Player player : players.getPlayers()) {
+            if (player.getCardDeck().isBlackJack()) {
+                continue;
+            }
             tryPlayerTurn(player, cardPicker);
         }
     }
