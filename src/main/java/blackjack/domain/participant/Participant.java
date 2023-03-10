@@ -35,4 +35,8 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
+
+    public boolean isBlackjack() {
+        return hand.getCards().size() == 2 && hand.calculateScore().isBlackjack();
+    }
 }
