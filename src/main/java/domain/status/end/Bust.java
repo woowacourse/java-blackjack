@@ -13,7 +13,7 @@ public final class Bust extends EndStatus {
 
     @Override
     public BigDecimal profitWeight() {
-        return BigDecimal.valueOf(0);
+        return BigDecimal.valueOf(1);
     }
 
     @Override
