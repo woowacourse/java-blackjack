@@ -130,6 +130,18 @@ class PlayerTest {
         Card spadeAce = new Card(Shape.SPADE, Number.ACE);
 
         player.pickStartCards(spadeTen, spadeAce);
+
         assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 2장이고, 20점이면 블랙잭이 아니다")
+    void is_not_blackjack_when_not_21() {
+        Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
+        Card heartKing = new Card(Shape.HEART, Number.KING);
+
+        player.pickStartCards(heartQueen, heartKing);
+
+        assertThat(player.isBlackjack()).isFalse();
     }
 }
