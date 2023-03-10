@@ -49,6 +49,7 @@ class ReadyTest {
     }
     
     @Test
+    @DisplayName("Ready 상태일 경우 수익률 계산 시도하면 예외가 발생한다.")
     void calculateProfit() {
         assertThatIllegalStateException()
                 .isThrownBy(() -> ready.calculateProfit(1000))

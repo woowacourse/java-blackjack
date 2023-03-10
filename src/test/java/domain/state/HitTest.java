@@ -42,6 +42,7 @@ class HitTest {
     }
     
     @Test
+    @DisplayName("Hit 상태일 경우 수익률 계산 시도하면 예외가 발생한다.")
     void calculateProfit() {
         assertThatIllegalStateException()
                 .isThrownBy(() -> hit.calculateProfit(1000))

@@ -29,6 +29,7 @@ class BlackJackTest {
     }
     
     @Test
+    @DisplayName("BlackJack 상태일 때 수익률 계산하면 1.5를 곱해서 반환한다.")
     void calculateProfit() {
         assertThat(state.calculateProfit(1000))
                 .isEqualTo(1500.0);

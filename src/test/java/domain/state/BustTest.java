@@ -23,10 +23,11 @@ class BustTest {
     void draw_exception() {
         assertThatIllegalStateException()
                 .isThrownBy(() -> state.draw(new Card(Shape.HEART, Number.NINE)))
-                .withMessage("더이상 카드를 뽑을 수 없는 상태입니다.");
+                .withMessage("더이상 카드를 뽑을 수 없습니다.");
     }
     
     @Test
+    @DisplayName("BlackJack 상태일 때 수익률 계산하면 -1을 곱해서 반환한다.")
     void calculateProfit() {
         assertThat(state.calculateProfit(1000))
                 .isEqualTo(-1000.0);
