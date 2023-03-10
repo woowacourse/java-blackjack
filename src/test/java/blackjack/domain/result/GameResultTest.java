@@ -14,9 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultMapTest {
+class GameResultTest {
 
-    private ResultMap resultMap;
+    private GameResult resultMap;
     private Players players;
 
     @BeforeEach
@@ -30,7 +30,7 @@ class ResultMapTest {
         players.getDealer().pickCard(heartSeven);
         players.getChallengers().get(0).pickCard(heartThree);
         players.getChallengers().get(1).pickCard(heartKing);
-        resultMap = ResultMap.from(players);
+        resultMap = GameResult.from(players, List.of(new Money(10000), new Money(20000)));
     }
 
     @Test
@@ -39,15 +39,15 @@ class ResultMapTest {
         Player oing = players.getChallengers().get(0);
         Player ditoo = players.getChallengers().get(1);
 
-        assertThat(resultMap.getChallengerResult(oing)).isEqualTo(ResultType.LOSE);
-        assertThat(resultMap.getChallengerResult(ditoo)).isEqualTo(ResultType.WIN);
+        assertThat(resultMap.getChallengerResult(oing)).isEqualTo(Result.LOSE);
+        assertThat(resultMap.getChallengerResult(ditoo)).isEqualTo(Result.WIN);
     }
 
     @Test
     @DisplayName("딜러의 승패가 올바르게 계산되는지 확인한다")
     void check_dealer_result() {
-        Map<ResultType, Integer> dealerResult = resultMap.getDealerResult();
+        Map<Result, Integer> dealerResult = resultMap.getDealerResult();
         assertThat(dealerResult)
-                .containsOnly(entry(ResultType.WIN, 1), entry(ResultType.LOSE, 1));
+                .containsOnly(entry(Result.WIN, 1), entry(Result.LOSE, 1));
     }
 }

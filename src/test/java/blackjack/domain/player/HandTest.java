@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import java.util.List;
@@ -13,13 +14,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class HoldingCardsTest {
+class HandTest {
 
-    private HoldingCards holdingCards;
+    private Hand hand;
 
     @BeforeEach
     void setup() {
-        holdingCards = new HoldingCards();
+        hand = new Hand();
     }
 
     @ParameterizedTest
@@ -27,9 +28,9 @@ class HoldingCardsTest {
     @DisplayName("카드의 합")
     void sum(List<Card> cards, int expected) {
         for (Card card : cards) {
-            holdingCards.add(card);
+            hand.add(card);
         }
-        assertThat(holdingCards.getSum()).isEqualTo(expected);
+        assertThat(hand.getSum()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideCards() {

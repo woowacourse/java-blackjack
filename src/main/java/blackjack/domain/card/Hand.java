@@ -1,10 +1,10 @@
-package blackjack.domain.player;
+package blackjack.domain.card;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoldingCards {
+public class Hand {
 
     private static final int MAXIMUM_SUM = 21;
     private static final int ACE_BONUS = 10;

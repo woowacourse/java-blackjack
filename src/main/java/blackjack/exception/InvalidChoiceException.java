@@ -1,6 +1,6 @@
-package blackjack.view.exception;
+package blackjack.exception;
 
-import blackjack.common.exception.CustomException;
+import blackjack.exception.CustomException;
 
 public class InvalidChoiceException extends CustomException {
 

@@ -1,4 +1,4 @@
-package blackjack.common.exception;
+package blackjack.exception;
 
 public class CustomException extends RuntimeException {
 

@@ -1,6 +1,6 @@
-package blackjack.domain.player.exception;
+package blackjack.exception;
 
-import blackjack.common.exception.CustomException;
+import blackjack.exception.CustomException;
 import blackjack.domain.player.Dealer;
 
 public class InvalidPlayerNameException extends CustomException {

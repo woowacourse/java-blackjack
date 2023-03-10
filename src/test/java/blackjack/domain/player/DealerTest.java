@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
-import blackjack.domain.result.ResultType;
+import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,7 @@ class DealerTest {
     @ParameterizedTest
     @MethodSource("challengerCards")
     @DisplayName("다른 Challenger의 게임 결과를 올바르게 판단하는지 확인한다")
-    void judge(List<Card> cards, ResultType expected) {
+    void judge(List<Card> cards, Result expected) {
         Challenger challenger = new Challenger("oing");
         challenger.pickStartCards(cards.get(0), cards.get(1));
 
@@ -33,17 +33,17 @@ class DealerTest {
                         List.of(
                                 new Card(Shape.DIAMOND, Symbol.QUEEN),
                                 new Card(Shape.CLOVER, Symbol.SIX)),
-                        ResultType.LOSE),
+                        Result.LOSE),
                 Arguments.of(
                         List.of(
                                 new Card(Shape.DIAMOND, Symbol.ACE),
                                 new Card(Shape.CLOVER, Symbol.KING)),
-                        ResultType.WIN),
+                        Result.WIN),
                 Arguments.of(
                         List.of(
                                 new Card(Shape.DIAMOND, Symbol.JACK),
                                 new Card(Shape.CLOVER, Symbol.KING)),
-                        ResultType.DRAW)
+                        Result.DRAW)
         );
     }
 

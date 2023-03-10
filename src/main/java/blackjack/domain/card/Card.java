@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Objects;
+
 public class Card {
 
     private final Shape shape;
@@ -12,6 +14,23 @@ public class Card {
 
     public boolean isAce() {
         return symbol.equals(Symbol.ACE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return shape == card.shape && symbol == card.symbol;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, symbol);
     }
 
     public Shape getShape() {
