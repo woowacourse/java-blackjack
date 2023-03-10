@@ -16,4 +16,8 @@ public class BettingAmount {
             throw new IllegalArgumentException("베팅 금액은 1,000원 이상 1억원 이하여야 합니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
