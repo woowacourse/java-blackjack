@@ -14,9 +14,10 @@ public class Participants {
         this.participants.addAll(players);
     }
 
-    public List<Person> getPlayers() {
+    public List<Player> getPlayers() {
         return participants.stream()
                 .filter(Person::isPlayer)
+                .map(Player.class::cast)
                 .collect(toList());
     }
 

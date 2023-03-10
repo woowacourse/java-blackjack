@@ -5,7 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,12 +16,13 @@ class BlackjackGameTest {
     String[] names = {"encho", "glen"};
     MockDeckMaker mockDeckMaker = new MockDeckMaker(new ArrayList<>(List.of(
             new Card(Suit.DIAMOND, Rank.KING),
-            new Card(Suit.CLOVER, Rank.TWO),
+            new Card(Suit.CLOVER, Rank.FOUR),
             new Card(Suit.DIAMOND, Rank.JACK),
-            new Card(Suit.HEART, Rank.FOUR),
+            new Card(Suit.HEART, Rank.TWO),
             new Card(Suit.SPADE, Rank.TEN),
-            new Card(Suit.CLOVER, Rank.SEVEN),
-            new Card(Suit.DIAMOND, Rank.TEN)
+            new Card(Suit.CLOVER, Rank.ACE),
+            new Card(Suit.DIAMOND, Rank.TEN),
+            new Card(Suit.SPADE, Rank.SIX)
     )));
 
     @Test
@@ -113,6 +116,31 @@ class BlackjackGameTest {
         // then
         assertThat(dealer.getCards())
                 .hasSize(3);
+    }
+
+    @Test
+    @DisplayName("베팅 금액과 참가자 정보로 참가자들의 수익과 딜러의 수익을 계산하여 반환할 수 있다.")
+    void getParticipantsProfit() {
+        // given
+        BlackjackGame blackjackGame = new BlackjackGame(names, mockDeckMaker);
+        blackjackGame.drawInitCard();
+        blackjackGame.drawMoreCard("encho");
+        blackjackGame.drawDealerMoreCard();
+
+        Map<String, Integer> bettingMoney = new HashMap<>();
+        bettingMoney.put("encho", 2000);
+        bettingMoney.put("glen", 3000);
+
+        // when
+        Map<String, Double> participantsProfit = blackjackGame.getParticipantsProfit(bettingMoney);
+
+        // then
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("encho", -2000.0);
+        expected.put("glen", 4500.0);
+        expected.put("딜러", -2500.0);
+
+        assertThat(participantsProfit).containsAllEntriesOf(expected);
     }
 
     static class MockDeckMaker implements Shuffler {

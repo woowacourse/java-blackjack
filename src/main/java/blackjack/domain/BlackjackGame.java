@@ -1,11 +1,8 @@
 package blackjack.domain;
 
-import blackjack.dto.GameResultDto;
 import blackjack.dto.PersonStatusDto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -77,13 +74,19 @@ public class BlackjackGame {
     public List<PersonStatusDto> getParticipantsInit() {
         List<PersonStatusDto> dto = new ArrayList<>();
         Person dealer = participants.getDealer();
-        List<Person> players = participants.getPlayers();
+        List<Player> players = participants.getPlayers();
 
         dto.add(PersonStatusDto.of(dealer.getName(), dealer.getInitCards()));
         for (Person player : players) {
             dto.add(PersonStatusDto.of(player.getName(), player.getInitCards()));
         }
         return dto;
+    }
+
+    public List<String> getParticipantsName() {
+        return participants.getParticipants().stream()
+                .map(Person::getName)
+                .collect(toList());
     }
 
     public List<String> getPlayersName() {
@@ -110,18 +113,35 @@ public class BlackjackGame {
         return participants.findByName(name).getScore();
     }
 
-    public GameResultDto getDelearGameResultDto() {
-        Person dealer = participants.getDealer();
-        List<GameResult> dealerGameResults = participants.getPlayers()
-                .stream()
-                .map(dealer::matchGame)
-                .collect(toList());
-        return GameResultDto.of(dealerGameResults);
+    public Map<String,Double> getParticipantsProfit(Map<String, Integer> bettingMoney) {
+        Exchanger exchanger = new Exchanger(bettingMoney);
+        Map<String, Double> playersProfit = getPlayersProfit(exchanger);
+        double dealerProfit = getDealerProfit(exchanger, playersProfit);
+
+        Map<String, Double> participantsProfit = new HashMap<>(playersProfit);
+        participantsProfit.put(participants.getDealer().getName(), dealerProfit);
+
+        return participantsProfit;
     }
 
-    public GameResultDto getPlayerGameResultDto(String name) {
+    private Map<String, Double> getPlayersProfit(Exchanger exchanger) {
         Person dealer = participants.getDealer();
-        Person player = participants.findByName(name);
-        return GameResultDto.of(player.matchGame(dealer));
+        List<String> playersName = getPlayersName();
+        Map<String, Double> playersProfit = new HashMap<>();
+        for (String name : playersName) {
+            Player player = (Player) participants.findByName(name);
+            double profit = exchanger.calculatePlayerProfit(name, player.matchGame(dealer));
+            playersProfit.put(name, profit);
+        }
+        return playersProfit;
+    }
+
+    private double getDealerProfit(Exchanger exchanger, Map<String, Double> playersProfit) {
+        List<Double> profits = getProfits(playersProfit);
+        return exchanger.calculateDealerProfit(profits);
+    }
+
+    private List<Double> getProfits(Map<String, Double> playersProfit) {
+        return new ArrayList<>(playersProfit.values());
     }
 }

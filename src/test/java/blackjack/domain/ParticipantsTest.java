@@ -15,7 +15,7 @@ class ParticipantsTest {
         Participants participants = new Participants(new Dealer(), List.of(new Player("glen"), new Player("encho")));
 
         // when
-        List<Person> players = participants.getPlayers();
+        List<Player> players = participants.getPlayers();
 
         // then
         assertThat(players)
