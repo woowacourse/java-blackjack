@@ -7,10 +7,12 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
-    private static final int MIN_PLAYER_COUNT = 1;
-    private static final int MAX_PLAYER_COUNT = 7;
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
+    private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_PLAYER_COUNT = 7;
+    public static final double BLACKJACK_OUTCOME_RATE = 1.5;
+    public static final int LOSE_RATE = -1;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -76,25 +78,21 @@ public class Participants {
     }
 
     private int getPlayerResult(Player player, int dealerScore) {
+        final int playerScore = player.calculateScore();
+
         if (player.isBust()) {
-            return -player.getBettingAmount();
+            return player.getBettingAmount() * LOSE_RATE;
         }
-        if (dealer.isBust() && player.isBlackjack()) {
-            return (int) (player.getBettingAmount() * 1.5);
-        }
-        if (dealer.isBust()) {
-            return player.getBettingAmount();
-        }
-        if (player.calculateScore() == dealerScore) {
+        if (playerScore == dealerScore) {
             return 0;
         }
         if (player.isBlackjack()) {
-            return (int) (player.getBettingAmount() * 1.5);
+            return (int) (player.getBettingAmount() * BLACKJACK_OUTCOME_RATE);
         }
-        if (player.calculateScore() > dealerScore) {
+        if (dealer.isBust() || playerScore > dealerScore) {
             return player.getBettingAmount();
         }
-        return -player.getBettingAmount();
+        return player.getBettingAmount() * LOSE_RATE;
     }
 
     public List<String> getPlayersName() {
