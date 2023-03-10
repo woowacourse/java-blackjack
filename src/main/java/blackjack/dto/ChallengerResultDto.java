@@ -4,13 +4,13 @@ import java.util.Map;
 
 public class ChallengerResultDto {
 
-    private final Map<String, String> nameAndResult;
+    private final Map<String, Integer> nameAndResult;
 
-    public ChallengerResultDto(Map<String, String> nameAndResult) {
+    public ChallengerResultDto(Map<String, Integer> nameAndResult) {
         this.nameAndResult = nameAndResult;
     }
 
-    public Map<String, String> getNameAndResult() {
+    public Map<String, Integer> getNameAndResult() {
         return nameAndResult;
     }
 }
