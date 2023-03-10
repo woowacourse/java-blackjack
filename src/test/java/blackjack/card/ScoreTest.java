@@ -20,9 +20,25 @@ public class ScoreTest {
 
     @ParameterizedTest(name = "점수가 21점이 아니면 false 를 반환한다. 입력값 = {0}")
     @ValueSource(ints = {10, 20, 22})
-    void isMaxScore(int input) {
+    void isMaxScoreFail(int input) {
         Score score = new Score(input);
 
         assertThat(score.isMaxScore()).isFalse();
+    }
+
+    @ParameterizedTest(name = "점수가 11점이 이하이면 true 를 반환한다. 입력값 = {0}")
+    @ValueSource(ints = {10, 9, 2})
+    void canAddAdditionalScore(int input) {
+        Score score = new Score(input);
+
+        assertThat(score.canAddAdditionalScore()).isTrue();
+    }
+
+    @ParameterizedTest(name = "점수가 11점 초과이면 false 를 반환한다. 입력값 = {0}")
+    @ValueSource(ints = {12,13,23})
+    void canAddAdditionalScoreFalse(int input) {
+        Score score = new Score(input);
+
+        assertThat(score.canAddAdditionalScore()).isFalse();
     }
 }
