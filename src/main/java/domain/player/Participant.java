@@ -30,10 +30,6 @@ public abstract class Participant {
         return cardArea.isBust();
     }
 
-    public void hit(final CardDeck cardDeck) {
-        cardArea.addCard(cardDeck.draw());
-    }
-
     public abstract boolean canHit();
 
     public BlackJackScore score() {
@@ -42,5 +38,11 @@ public abstract class Participant {
 
     protected boolean isLargerScoreThan(final Participant participant) {
         return score().isLargerThan(participant.score());
+    }
+
+    public abstract boolean hitOrStay(final CardDeck cardDeck);
+
+    protected void hit(final CardDeck cardDeck) {
+        cardArea.addCard(cardDeck.draw());
     }
 }

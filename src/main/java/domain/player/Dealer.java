@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.BlackJackScore;
 import domain.card.Card;
 import domain.card.CardArea;
+import domain.card.CardDeck;
 
 public class Dealer extends Participant {
 
@@ -16,6 +17,15 @@ public class Dealer extends Participant {
     @Override
     public boolean canHit() {
         return DEALER_DONT_HIT_SCORE.isLargerThan(score());
+    }
+
+    @Override
+    public boolean hitOrStay(final CardDeck cardDeck) {
+        if (!canHit()) {
+            return false;
+        }
+        hit(cardDeck);
+        return true;
     }
 
     public Card firstCard() {

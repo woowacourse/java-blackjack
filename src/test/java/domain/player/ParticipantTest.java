@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardArea;
+import domain.card.CardDeck;
 import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +32,11 @@ class ParticipantTest {
         public boolean canHit() {
             return false;
         }
+
+        @Override
+        public boolean hitOrStay(final CardDeck cardDeck) {
+            return false;
+        }
     };
 
     @Test
@@ -39,6 +45,11 @@ class ParticipantTest {
         assertDoesNotThrow(() -> new Participant(코다이름(), equal16CardArea()) {
             @Override
             public boolean canHit() {
+                return false;
+            }
+
+            @Override
+            public boolean hitOrStay(final CardDeck cardDeck) {
                 return false;
             }
         });

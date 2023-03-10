@@ -61,9 +61,7 @@ public class BlackJackGame {
     public void hitOrStayForGambler(final Gambler gambler, final HitState hitState) {
         validatePlayerExist(gambler);
         gambler.changeState(hitState);
-        if (gambler.wantHit()) {
-            gambler.hit(cardDeck);
-        }
+        gambler.hitOrStay(cardDeck);
     }
 
     private void validatePlayerExist(final Gambler gambler) {
@@ -73,11 +71,7 @@ public class BlackJackGame {
     }
 
     public boolean hitForDealerWhenShouldMoreHit() {
-        if (dealer.canHit()) {
-            dealer.hit(cardDeck);
-            return true;
-        }
-        return false;
+        return dealer.hitOrStay(cardDeck);
     }
 
     public Map<Participant, Revenue> revenue() {

@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.CardArea;
+import domain.card.CardDeck;
 
 public class Gambler extends Participant {
 
@@ -20,6 +21,15 @@ public class Gambler extends Participant {
     @Override
     public boolean canHit() {
         return cardArea.canMoreCard() && !state.isStay();
+    }
+
+    @Override
+    public boolean hitOrStay(final CardDeck cardDeck) {
+        if (canHit() && wantHit()) {
+            hit(cardDeck);
+            return true;
+        }
+        return false;
     }
 
     public boolean wantHit() {

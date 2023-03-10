@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.*;
+import static domain.fixture.CardDeckFixture.cardDeck;
 import static domain.fixture.GamblerFixture.gamblerWithMoneyAndCardArea;
 import static domain.player.Revenue.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -126,5 +127,28 @@ class DealerTest {
 
         // then
         assertThat(revenue).isEqualTo(actualRevenue);
+    }
+
+    @Nested
+    @DisplayName("hitOrStay() 테스트")
+    class HitOrStayForGamblerTest {
+
+        @Test
+        void 딜러의_카드가_16_점_이하이면_항상_Hit_을_더_해야한다() {
+            // given
+            final Dealer dealer = new Dealer(equal16CardArea());
+
+            // when & then
+            assertThat(dealer.hitOrStay(cardDeck(TEN))).isTrue();
+        }
+
+        @Test
+        void 딜러의_카드가_16_점_초과이면_항상_Hit_을_더_하지_않는다() {
+            // given
+            final Dealer dealer = new Dealer(over16CardArea());
+
+            // when & then
+            assertThat(dealer.hitOrStay(cardDeck(TEN))).isFalse();
+        }
     }
 }
