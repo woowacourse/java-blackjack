@@ -63,23 +63,9 @@
     - 21보다 작으면 11로 적용
     - 21보다 크면 1로 적용
 - (2단계) 배팅 금액
-  - validation: 양의 정수인지
-- (2단계) 상태에 따른 수익 배분
-  - BlackJack
-    - 플레이어: 1.5배 
-    - 플레이어 + 딜러: 1배
-  - Bust
-    - 플레이어: 0배
-    - 딜러: 1배
-  - Stay (=Not BlackJack && Not Bust) 
-    - 플레이어 > 딜러: 1배
-    - 플레이어 < 딜러: 0배
+  - [x] validation: 양의 정수인지
 - (2단계) 플레이어 결과에 따른 수익 배분
-  - Win
-    - BlackJack: 1.5배
-    - Stay: 1배
-  - Lose
-    - 0배
-  - Push
-    - 동시 BlackJack: 1배
-    - Stay: 1배
+  - BlackJack: 1.5배
+  - Win: 1배
+  - Lose: 0배
+  - Push: 1배
