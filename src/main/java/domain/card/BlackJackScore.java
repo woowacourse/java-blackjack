@@ -43,7 +43,7 @@ public class BlackJackScore {
         if (candidate.isBust()) {
             return this;
         }
-        return BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
+        return candidate;
     }
 
     public int value() {
