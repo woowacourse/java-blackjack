@@ -27,7 +27,7 @@ public class CardArea {
     public BlackJackScore calculate() {
         BlackJackScore total = minScore();
         if (hasAce()) {
-            return total.plusThenIfNotBust();
+            return total.plusTenIfNotBust();
         }
         return total;
     }

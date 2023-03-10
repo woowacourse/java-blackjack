@@ -38,7 +38,7 @@ public class BlackJackScore {
         return value > other.value;
     }
 
-    public BlackJackScore plusThenIfNotBust() {
+    public BlackJackScore plusTenIfNotBust() {
         final BlackJackScore candidate = BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
         if (candidate.isBust()) {
             return this;

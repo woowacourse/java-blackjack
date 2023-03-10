@@ -77,7 +77,8 @@ class BlackJackGameTest {
 
     @Nested
     @DisplayName("hitForDealerWhenShouldMoreHit() 테스트")
-    public class HitForDealerWhenShouldMoreHitTest {
+    class HitForDealerWhenShouldMoreHitTest {
+
         @Test
         void 딜러의_점수가_16점_이하가_아니라면_Hit_을_하고_true_를_반환한다() {
             // given
