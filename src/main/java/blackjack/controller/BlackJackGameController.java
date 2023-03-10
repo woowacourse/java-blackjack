@@ -6,7 +6,6 @@ import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class BlackJackGameController {
@@ -105,9 +104,10 @@ public class BlackJackGameController {
     }
 
     private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer) {
+        final DealerResult dealerResult = new DealerResult();
         final PlayerResult playerResult = new PlayerResult();
-        final Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResult(playerResult);
+        blackJackGame.calculateParticipantResult(dealerResult, playerResult);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(dealerResult, playerResult.getPlayerResults());
+        OutputView.printFinalResult(dealerResult.getDealerResult(), playerResult.getPlayerResults());
     }
 }

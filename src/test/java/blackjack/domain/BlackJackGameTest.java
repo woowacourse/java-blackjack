@@ -81,13 +81,14 @@ class BlackJackGameTest {
         }
 
         PlayerResult playerResult = new PlayerResult();
-        Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResult(playerResult);
+        DealerResult dealerResult = new DealerResult();
+        blackJackGame.calculateParticipantResult(dealerResult, playerResult);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerResult.get(Result.WIN)).isEqualTo(2);
-            softly.assertThat(dealerResult.get(Result.LOSE)).isNull();
-            softly.assertThat(dealerResult.get(Result.PUSH)).isNull();
+            softly.assertThat(dealerResult.getValue(Result.WIN)).isEqualTo(2);
+            softly.assertThat(dealerResult.getValue(Result.LOSE)).isNull();
+            softly.assertThat(dealerResult.getValue(Result.PUSH)).isNull();
         });
     }
 }
