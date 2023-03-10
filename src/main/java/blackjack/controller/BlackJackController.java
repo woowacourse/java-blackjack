@@ -54,8 +54,7 @@ public class BlackJackController {
     }
 
     private Bet readPlayerBet(String playerName) {
-        int bet = InputView.readPlayerBet(playerName);
-        return Bet.of(bet);
+        return repeat(() -> Bet.of(InputView.readPlayerBet(playerName)));
     }
 
     private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
