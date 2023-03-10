@@ -37,61 +37,8 @@ public class Players {
 
     public void calculateWinning(Dealer dealer) {
         for (Player player : players) {
-            compareScore(dealer, player);
+            player.compareScoreWith(dealer);
         }
-    }
-
-    private void compareScore(Dealer dealer, Player player) {
-        if (isPlayerBlackjackWin(dealer, player)) {
-            player.winBlackjack();
-            dealer.lose();
-            return;
-        }
-        if (isPlayerWinDealer(dealer, player)) {
-            player.win();
-            dealer.lose();
-            return;
-        }
-        if (isDealerWinPlayer(dealer, player)) {
-            player.lose();
-            dealer.win();
-            return;
-        }
-        if (isDraw(dealer, player)) {
-            player.tie();
-            dealer.tie();
-        }
-    }
-
-    private boolean isPlayerBlackjackWin(Dealer dealer, Player player) {
-        return player.isBlackjack() && !dealer.isBlackjack();
-    }
-
-    private boolean isDraw(Dealer dealer, Player player) {
-        return dealer.calculateScore().getScore() == player.calculateScore().getScore() && !player.isBust();
-    }
-
-    private boolean isDealerWinPlayer(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return true;
-        }
-        if (!player.isBlackjack() && dealer.isBlackjack()) {
-            return true;
-        }
-        if (dealer.isBust()) {
-            return false;
-        }
-        return dealer.calculateScore().getScore() > player.calculateScore().getScore();
-    }
-
-    private boolean isPlayerWinDealer(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return false;
-        }
-        if (dealer.isBust()) {
-            return true;
-        }
-        return player.calculateScore().getScore() > dealer.calculateScore().getScore();
     }
 
     public List<PlayerWinningDto> getWinningResults() {

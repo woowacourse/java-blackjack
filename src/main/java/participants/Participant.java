@@ -6,7 +6,7 @@ import java.util.Objects;
 import card.Card;
 import card.Score;
 
-public class Participant {
+public abstract class Participant {
     protected final Name name;
     protected final Hand hand;
 
@@ -38,6 +38,67 @@ public class Participant {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+
+    public void compareScoreWith(Participant other) {
+        if (isBlackjackWinTo(other)) {
+            this.winBlackjack();
+            other.lose();
+            return;
+        }
+        if (isWinTo(other)) {
+            this.win();
+            other.lose();
+            return;
+        }
+        if (isLoseTo(other)) {
+            this.lose();
+            other.win();
+            return;
+        }
+        if (isDrawTo(other)) {
+            this.tie();
+            other.tie();
+        }
+    }
+
+    private boolean isBlackjackWinTo(Participant other) {
+        return this.hand.isBlackjack() && !other.hand.isBlackjack();
+    }
+
+    private boolean isWinTo(Participant other) {
+        if (this.isBust()) {
+            return false;
+        }
+        if (other.isBust()) {
+            return true;
+        }
+        return this.calculateScore().getScore() > other.calculateScore().getScore();
+    }
+
+    private boolean isLoseTo(Participant other) {
+        if (this.isBust()) {
+            return true;
+        }
+        if (!this.isBlackjack() && other.isBlackjack()) {
+            return true;
+        }
+        if (other.isBust()) {
+            return false;
+        }
+        return other.calculateScore().getScore() > this.calculateScore().getScore();
+    }
+
+    private boolean isDrawTo(Participant other) {
+        return this.calculateScore().getScore() == other.calculateScore().getScore() && !this.isBust();
+    }
+
+    protected abstract void winBlackjack();
+
+    protected abstract void win();
+
+    protected abstract void lose();
+
+    protected abstract void tie();
 
     @Override
     public boolean equals(Object o) {
