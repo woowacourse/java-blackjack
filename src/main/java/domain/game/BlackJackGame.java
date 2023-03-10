@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -40,5 +40,9 @@ public final class BlackJackGame {
 
     public Dealer getDealer() {
         return participants.getDealer();
+    }
+
+    public void addBet(final Player player, final Money money) {
+
     }
 }
