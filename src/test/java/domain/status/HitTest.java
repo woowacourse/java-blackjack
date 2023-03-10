@@ -25,4 +25,10 @@ class HitTest {
         Hit hit = new Hit(cards);
         assertThat(hit.draw(ACE_CLOVER)).isInstanceOf(Hit.class);
     }
+
+    @Test
+    void selectStand() {
+        Hit hit = new Hit(new Cards());
+        assertThat(hit.selectStand()).isInstanceOf(Stand.class);
+    }
 }

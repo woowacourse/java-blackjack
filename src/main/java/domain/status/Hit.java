@@ -18,4 +18,8 @@ public class Hit extends Status {
         }
         return new Hit(newCards);
     }
+
+    public Status selectStand() {
+        return new Stand(cards);
+    }
 }
