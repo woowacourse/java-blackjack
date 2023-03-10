@@ -17,9 +17,9 @@ class HandTest {
     @DisplayName("카드 풀에 카드가 저장된다")
     void makeCardPoolTest() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.EIGHT),
-                new Card(Suit.DIAMOND, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.KING)
+                Card.of(Suit.CLOVER, Denomination.EIGHT),
+                Card.of(Suit.DIAMOND, Denomination.ACE),
+                Card.of(Suit.HEART, Denomination.KING)
         );
 
         Hand hand = new Hand(cards);
@@ -43,8 +43,8 @@ class HandTest {
     @DisplayName("카드가 있을때에는 합이 카드 값에 따라 결정된다")
     void sumCardPoolWhenCardsExist() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.EIGHT)
+                Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.HEART, Denomination.EIGHT)
         );
 
         Hand hand = new Hand(cards);
@@ -57,9 +57,9 @@ class HandTest {
     @DisplayName("에이스카드는 나머지 카드의 합이 10보다 크면 1로 결정된다")
     void decideAceSumOver() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.ACE)
+                Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.HEART, Denomination.EIGHT),
+                Card.of(Suit.CLOVER, Denomination.ACE)
         );
 
         Hand hand = new Hand(cards);
@@ -72,9 +72,9 @@ class HandTest {
     @DisplayName("에이스카드가 먼저 뽑혀도 나머지 카드의 합이 10보다 크면 1로 결정된다")
     void decideAceSumOverWhenFirstDraw() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.ACE),
-                new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.EIGHT)
+                Card.of(Suit.CLOVER, Denomination.ACE),
+                Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.HEART, Denomination.EIGHT)
 
         );
 
@@ -88,9 +88,9 @@ class HandTest {
     @DisplayName("에이스카드는 나머지 카드의 합이 10보다 작으면 11로 결정된다")
     void decideAceSumUnder() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.FOUR),
-                new Card(Suit.CLOVER, Denomination.ACE)
+                Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.HEART, Denomination.FOUR),
+                Card.of(Suit.CLOVER, Denomination.ACE)
         );
 
         Hand hand = new Hand(cards);
@@ -103,10 +103,10 @@ class HandTest {
     @DisplayName("에이스가 2장 이상일 때 카드의 합은 21을 넘지 않는 가장 큰 수로 결정된다.")
     void decideDoubleAceSumUnder() {
         List<Card> cards = List.of(
-                new Card(Suit.CLOVER, Denomination.ACE),
-                new Card(Suit.SPADE, Denomination.ACE),
-                new Card(Suit.CLOVER, Denomination.FOUR),
-                new Card(Suit.HEART, Denomination.FOUR)
+                Card.of(Suit.CLOVER, Denomination.ACE),
+                Card.of(Suit.SPADE, Denomination.ACE),
+                Card.of(Suit.CLOVER, Denomination.FOUR),
+                Card.of(Suit.HEART, Denomination.FOUR)
         );
 
         Hand hand = new Hand(cards);
@@ -119,7 +119,7 @@ class HandTest {
     @DisplayName("카드가 잘 들어가는지 테스트한다.")
     void addTest() {
         Hand hand = new Hand(Collections.emptyList());
-        Card card = new Card(Suit.CLOVER, Denomination.FOUR);
+        Card card = Card.of(Suit.CLOVER, Denomination.FOUR);
 
         hand.add(card);
 

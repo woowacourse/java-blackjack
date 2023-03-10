@@ -9,6 +9,7 @@ import java.util.List;
 public class Hand {
 
     private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MIN_ACE = 1;
 
     private final List<Card> cards;
@@ -40,8 +41,16 @@ public class Hand {
         return sum;
     }
 
-    public boolean isOverBlackjack() {
-        return sumCardNumbers() > BLACKJACK_NUMBER;
+    public HandStatus getStatus() {
+        if (sumCardNumbers() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_SIZE) {
+            return HandStatus.BLACKJACK;
+        }
+
+        if (sumCardNumbers() > BLACKJACK_NUMBER) {
+            return HandStatus.BUST;
+        }
+
+        return HandStatus.CAN_HIT;
     }
 
     private int countAce() {

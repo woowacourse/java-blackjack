@@ -15,7 +15,7 @@ class DeckTest {
     void drawFirstTest() {
         Deck deck = new Deck((x) -> 0);
 
-        assertThat(deck.serve()).isEqualTo(new Card(Suit.HEART, Denomination.ACE));
+        assertThat(deck.serve()).isEqualTo(Card.of(Suit.HEART, Denomination.ACE));
     }
 
     @Test
@@ -23,6 +23,6 @@ class DeckTest {
     void drawLastTest() {
         Deck deck = new Deck((x) -> 51);
 
-        assertThat(deck.serve()).isEqualTo(new Card(Suit.DIAMOND, Denomination.KING));
+        assertThat(deck.serve()).isEqualTo(Card.of(Suit.DIAMOND, Denomination.KING));
     }
 }

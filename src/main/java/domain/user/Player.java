@@ -46,7 +46,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.isOverBlackjack();
+        return hand.getStatus() == HandStatus.BUST;
     }
 
     public PlayerName getPlayerName() {

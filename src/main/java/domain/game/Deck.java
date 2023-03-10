@@ -27,7 +27,7 @@ public class Deck {
 
     private void mapCardNumbers(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
-            cards.add(new Card(suit, denomination));
+            cards.add(Card.of(suit, denomination));
         }
     }
 
