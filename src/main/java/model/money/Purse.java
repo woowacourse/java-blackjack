@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import model.user.Dealer;
 import model.user.Player;
+import model.user.Result;
 
 public class Purse {
 
@@ -28,7 +29,7 @@ public class Purse {
         purses.put(player, addedMoney);
     }
 
-    public void calculateMoney(Player player, Dealer dealer) {
+    public void calculateMoney(final Player player, final Dealer dealer) {
         final Money money = getMoney(player);
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return;
@@ -36,7 +37,11 @@ public class Purse {
 
         if (player.isBlackJack()) {
             purses.put(player, money.blackJack());
+            return;
         }
+
+        final Result result = player.judgeResult(dealer);
+        purses.put(player, money.calculateMoney(result));
     }
 
     public Money getMoney(final Player player) {
