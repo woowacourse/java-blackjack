@@ -15,6 +15,7 @@ public final class Dealer extends Participant {
     private static final String name = "딜러";
     private static final int INIT_CARD_COUNT = 2;
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int CAN_DRAW_SCORE = 16;
 
     private final Bank bank;
     private final Deck deck;
@@ -44,7 +45,7 @@ public final class Dealer extends Participant {
     }
 
     public Card showOneCard() {
-        List<Card> hand = this.getHand();
+        List<Card> hand = this.getHand().getHand();
 
         if (hand.isEmpty()) {
             throw new IllegalStateException("딜러의 손에는 카드가 존재하지 않습니다.");
@@ -56,6 +57,18 @@ public final class Dealer extends Participant {
         while (this.totalScore() <= 16) {
             this.receiveCard(deck.drawCard());
         }
+    }
+
+    public int getInitCardCount() {
+        return INIT_CARD_COUNT;
+    }
+
+    public int getCanDrawScore() {
+        return CAN_DRAW_SCORE;
+    }
+
+    public void giveCard(final Player player) {
+        player.receiveCard(deck.drawCard());
     }
 
     public String getName() {

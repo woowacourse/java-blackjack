@@ -30,7 +30,7 @@ class PlayerTest {
 
         player.receiveHand(hand);
 
-        assertThat(player.getHand().size()).isEqualTo(2);
+        assertThat(player.getHand().getHand().size()).isEqualTo(2);
     }
 
     @Test

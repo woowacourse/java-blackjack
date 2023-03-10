@@ -53,7 +53,7 @@ class DealerTest {
     void settingSelfTest() {
         dealer.settingSelf();
 
-        assertThat(dealer.getHand().size()).isEqualTo(2);
+        assertThat(dealer.getHand().getHand().size()).isEqualTo(2);
     }
 
     @Test
@@ -82,7 +82,7 @@ class DealerTest {
 
         assertAll(
                 () -> assertThat(dealer.totalScore()).isGreaterThan(16),
-                () -> assertThat(dealer.getHand().size()).isNotEqualTo(2)
+                () -> assertThat(dealer.getHand().getHand().size()).isNotEqualTo(2)
         );
     }
 }

@@ -42,8 +42,8 @@ public abstract class Participant {
         return this.hand.isBlackjack();
     }
 
-    public List<Card> getHand() {
-        return hand.getHand();
+    public Hand getHand() {
+        return hand;
     }
 
     public int getMoney() {
