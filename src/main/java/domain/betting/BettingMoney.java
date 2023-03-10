@@ -22,4 +22,8 @@ public class BettingMoney {
     private boolean isLessOrEqualZero(int money) {
         return money <= 0;
     }
+
+    public int getValue() {
+        return money;
+    }
 }
