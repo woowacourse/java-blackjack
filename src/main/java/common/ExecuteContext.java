@@ -1,5 +1,7 @@
 package common;
 
+import view.OutputView;
+
 public class ExecuteContext {
 
     public static <T> T workWithExecuteStrategy(final ExecuteStrategy<T> executeStrategy) {
@@ -14,7 +16,7 @@ public class ExecuteContext {
         try {
             result = executeStrategy.execute();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            OutputView.printErrorMessage(exception.getMessage());
         }
         return result;
     }

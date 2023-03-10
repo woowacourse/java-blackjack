@@ -72,4 +72,8 @@ public class OutputView {
         }
         return sj.toString();
     }
+
+    public static void printErrorMessage(final String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
