@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Score;
-
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,16 +26,9 @@ public final class WinningResult {
 
     private WinningStatus compete(final Player player, final Dealer dealer) {
         if (dealer.isBust()) {
-            return statusWhenDealerBust(player);
+            return WinningStatus.WIN;
         }
         return statusWhenDealerNotBust(player, dealer);
-    }
-
-    private WinningStatus statusWhenDealerBust(final Player player) {
-        if (player.isBust()) {
-            return WinningStatus.DRAW;
-        }
-        return WinningStatus.WIN;
     }
 
     private WinningStatus statusWhenDealerNotBust(final Player player, final Dealer dealer) {
