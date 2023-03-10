@@ -11,7 +11,7 @@ public class Stake {
         this.value = value;
     }
 
-    public void validate(final int value) {
+    private void validate(final int value) {
         validateRange(value);
         validateMultiple(value);
     }
