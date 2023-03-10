@@ -1,11 +1,18 @@
 package blackjack.domain;
 
+import static blackjack.domain.Result.DRAW;
+import static blackjack.domain.Result.WIN;
+
 import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Bank {
+
+    private static final double BLACKJACK_WIN_RATE = 1.5;
+    private static final int WIN_RATE = 2;
+    private static final int EMPTY_MONEY = 0;
 
     private final Map<Player, Money> bank;
 
@@ -26,6 +33,29 @@ public final class Bank {
 
     public Money findMoney(final Player player) {
         return bank.get(player);
+    }
+
+    public Money exchange(final Player player, final Result result) {
+        Money findMoney = bank.get(player);
+
+        return evaluate(player, result, findMoney);
+    }
+
+    private Money evaluate(final Player player, final Result result, final Money findMoney) {
+        if (isBlackJackWin(player, result)) {
+            return new Money((int) (findMoney.getMoney() * BLACKJACK_WIN_RATE));
+        }
+        if (result == WIN) {
+            return new Money(findMoney.getMoney() * WIN_RATE);
+        }
+        if (result == DRAW) {
+            return findMoney;
+        }
+        return new Money(EMPTY_MONEY);
+    }
+
+    private boolean isBlackJackWin(final Player player, final Result result) {
+        return result == WIN && player.isBlackjack();
     }
 
     public Map<Player, Money> getBank() {
