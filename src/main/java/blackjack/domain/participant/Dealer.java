@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Bank;
+import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
 
 public class Dealer extends Participant {
@@ -14,6 +15,10 @@ public class Dealer extends Participant {
         super();
         this.bank = new Bank();
         this.deck = new Deck();
+    }
+
+    public void saveBettingMoney(final Player player, final Money money) {
+        this.bank.betMoney(player, money);
     }
 
     public String getName() {

@@ -17,8 +17,9 @@
 
 # 주요 객체의 속성과 역할
 ## BlackjackGame
-- [ ] `Dealer`, `Players`를 가진다.
+- [x] `Dealer`, `Players`를 가진다.
 - [ ] 게임을 진행한다.
+  - [x] `Bank`에 `Player`의 배팅 금액을 저장한다.
 
 ---
 
