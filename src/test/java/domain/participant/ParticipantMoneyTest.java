@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class ParticipantMoneyTest {
 
     private Dealer dealer;
-    private Map<Player, BettingMoney> playerInfo;
+    private Map<Participant, BettingMoney> playerInfo;
 
     @BeforeEach
     void init() {
@@ -35,9 +35,7 @@ class ParticipantMoneyTest {
     void getPlayerMoney_whenCall_thenReturnPlayerMoneyInfo() {
         // given
         final ParticipantMoney participantMoney = ParticipantMoney.create(dealer, playerInfo);
-        final Map<Participant, BettingMoney> expected = new LinkedHashMap<>();
-        expected.put(Player.create("pobi"), BettingMoney.create("10000"));
-        expected.put(Player.create("crong"), BettingMoney.create("20000"));
+        final Map<Participant, BettingMoney> expected = makePlayerBettingInfo();
 
         // when
         final Map<Participant, BettingMoney> actual = participantMoney.getPlayerMoney();
@@ -45,5 +43,12 @@ class ParticipantMoneyTest {
         // then
         assertThat(actual)
                 .isEqualTo(expected);
+    }
+
+    private Map<Participant, BettingMoney> makePlayerBettingInfo() {
+        final Map<Participant, BettingMoney> expected = new LinkedHashMap<>();
+        expected.put(Player.create("pobi"), BettingMoney.create("10000"));
+        expected.put(Player.create("crong"), BettingMoney.create("20000"));
+        return expected;
     }
 }

@@ -1,5 +1,7 @@
 package domain.game;
 
+import java.util.Objects;
+
 public class BettingMoney {
     private static final int MIN_MONEY = 0;
     private static final int MAX_MONEY = 100_000_000;
@@ -38,5 +40,18 @@ public class BettingMoney {
 
     public BettingMoney add(final BettingMoney bettingMoney) {
         return new BettingMoney(this.money + bettingMoney.money);
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) return true;
+        if (target == null || getClass() != target.getClass()) return false;
+        final BettingMoney that = (BettingMoney) target;
+        return money == that.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }

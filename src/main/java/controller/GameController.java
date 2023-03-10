@@ -5,9 +5,9 @@ import domain.card.CardRandomShuffler;
 import domain.game.BettingMoney;
 import domain.game.GameManager;
 import domain.game.GameResult;
-import domain.game.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.ParticipantMoney;
 import domain.participant.Player;
 import domain.participant.Players;
 import view.InputView;
@@ -32,10 +32,11 @@ public final class GameController {
     public void start() {
         final Dealer dealer = Participant.createDealer();
         final List<Player> players = getPlayers();
-        final Map<Player, BettingMoney> playerBettingInfo = getBettingMoneys(players);
+        final Map<Participant, BettingMoney> playerBettingInfo = getBettingMoneys(players);
         final GameManager gameManager = makeGameManager(dealer, playerBettingInfo);
-        gameManager.handFirstCards();
+        ParticipantMoney participantMoneyInfo = gameManager.handFirstCards(dealer);
         printParticipantCards(dealer, players);
+        gameManager.getFirstBettingResult(dealer, participantMoneyInfo);
         drawPlayersCard(players, gameManager);
         handleDealerCards(dealer, gameManager);
         printGameResult(dealer, players);
@@ -54,7 +55,7 @@ public final class GameController {
         });
     }
 
-    private Map<Player, BettingMoney> getBettingMoneys(final List<Player> players) {
+    private Map<Participant, BettingMoney> getBettingMoneys(final List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(Function.identity(), this::getPlayerBettingMoneys,
                         (v1, v2) -> v1, LinkedHashMap::new));
@@ -67,7 +68,7 @@ public final class GameController {
         });
     }
 
-    private GameManager makeGameManager(final Dealer dealer, final Map<Player, BettingMoney> playerBettingInfo) {
+    private GameManager makeGameManager(final Dealer dealer, final Map<Participant, BettingMoney> playerBettingInfo) {
         final CardRandomShuffler cardRandomShuffler = new CardRandomShuffler();
         return GameManager.create(dealer, playerBettingInfo, cardRandomShuffler);
     }
@@ -149,14 +150,11 @@ public final class GameController {
     }
 
     private void printParticipantCardResult(final Participant participant) {
-        final List<Card> participantCards = participant.getHand();
-        final int participantScore = participant.calculateScore();
-        outputView.printCardResult(participant.getName(), participantCards, participantScore);
+        outputView.printCardResult(participant.getName(), participant.getHand(), participant.calculateScore());
     }
 
     private void printFinalGameResult(final Dealer dealer, final List<Player> players) {
         final GameResult gameResult = GameResult.create(dealer, players);
-        final Map<String, Result> playerGameResults = gameResult.getPlayerGameResults();
-        outputView.printFinalGameResult(dealer.getName(), playerGameResults);
+        outputView.printFinalGameResult(dealer.getName(), gameResult.getPlayerGameResults());
     }
 }
