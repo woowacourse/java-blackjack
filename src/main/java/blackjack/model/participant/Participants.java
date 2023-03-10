@@ -84,11 +84,11 @@ public class Participants {
     }
 
     public Map<Player, Integer> getPlayerProfitResult() {
-        Map<Player, Integer> playerEarningsResult = new HashMap<>();
+        Map<Player, Integer> playerProfitResult = new HashMap<>();
         for (Player player : players) {
-            playerEarningsResult.put(player, player.getProfit(dealer));
+            playerProfitResult.put(player, player.getProfit(dealer));
         }
-        return playerEarningsResult;
+        return playerProfitResult;
     }
 
 }
