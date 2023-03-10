@@ -4,6 +4,7 @@ import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Players;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,15 @@ public class OutputView {
     private static final String EMPTY = "";
     private static final int ZERO = 0;
 
-    public void printStartMsg(List<String> names) {
+    public void printStart(Players players, Dealer dealer) {
+        printStartMessage(players.getPlayersName());
+        printDealerCards(dealer, System.lineSeparator());
+        for (Player player : players) {
+            printPlayerCards(player, System.lineSeparator());
+        }
+    }
+
+    private void printStartMessage(List<String> names) {
         System.out.println();
         int lastIndex = names.size() - 1;
         System.out.print(INIT_START_MESSAGE);
@@ -41,7 +50,7 @@ public class OutputView {
         printCards(cards, end, lastIndex);
     }
 
-    public void printDealerCards(Dealer dealer, String end) {
+    private void printDealerCards(Dealer dealer, String end) {
         List<Card> cards = dealer.showAllCards();
         int lastIndex = cards.size() - 1;
         System.out.print(DEALER_MESSAGE);

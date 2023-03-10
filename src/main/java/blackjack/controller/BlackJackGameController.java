@@ -1,17 +1,19 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
-import blackjack.domain.card.Card;
+import blackjack.domain.Command;
+import blackjack.domain.Game;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
-import blackjack.domain.gameplayer.*;
+import blackjack.domain.gameplayer.Dealer;
+import blackjack.domain.gameplayer.Name;
+import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
@@ -33,7 +35,7 @@ public class BlackJackGameController {
 
     private Game start() {
         Game game = initGame();
-        printStartCards(game);
+        outputView.printStart(game.getPlayers(), game.getDealer());
         return game;
     }
 
@@ -60,14 +62,6 @@ public class BlackJackGameController {
 
     private Deck initDeck() {
         return DeckFactory.createDeck(DeckType.BLACKJACK);
-    }
-
-    private void printStartCards(Game game) {
-        outputView.printStartMsg(game.showPlayersName());
-        outputView.printDealerCards(game.getDealer(), System.lineSeparator());
-        for (Player player : game.getPlayers()) {
-            outputView.printPlayerCards(player, LINE_SEPARATOR);
-        }
     }
 
     private void play(Game game) {
