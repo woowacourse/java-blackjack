@@ -17,21 +17,21 @@
 
 # 주요 객체의 속성과 역할
 ## BlackjackGame
-- [ ] Bank와 Deck을 가진다.
+- [ ] `Dealer`, `Player`
 - [ ] 게임을 진행한다.
 ---
 ## Participant
 ### Participant
-- [ ] Hand와 Money를 가진다.
+- [ ] `Hand`와 `Money`를 가진다.
 - [ ] 카드를 받을 수 있다.
 - [ ] 돈을 받을 수 있다.
 
 ### Dealer
 - [ ] 딜러라는 이름을 가진다.
-- [ ] `Players`를 가진다.
+- [ ] `Bank`와 `Deck`을 가진다.
 
 ### Player
-- [ ] 이름을 가진다.
+- [x] 이름을 가진다.
 - [ ] Hit 를 할 수 있다.
 - [ ] Stand를 할 수 있다.
 ---
@@ -43,7 +43,7 @@
 ### Hand
 - [x] `Card`들을 가진다.
 - [x] 가지고 있는 `Card`들의 총점을 계산할 수 있다.
-  - [x] Card가 Ace라면 1 또는 11로 계산할 수 있다.
+  - [x] `Card`가 Ace라면 1 또는 11로 계산할 수 있다.
 
 ### Card
 - [x] `Denomination`을 가진다.
@@ -65,3 +65,6 @@
 ## Result
 - [ ] 승, 무, 패를 가진다.
 - [ ] 딜러의 카드와, 플레이어의 카드로 승패를 결정한다.
+
+## Action
+- [ ] 플레이어가 할 수 있는 행동을 가진다.
