@@ -32,7 +32,7 @@ class PlayerTest {
         player.play(cardDeck);
 
         //then
-        assertThat(player.getHand().getCards()).containsExactly(card2, card1);
+        assertThat(player.getHand()).containsExactly(card2, card1);
     }
 
     @Test

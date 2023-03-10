@@ -113,9 +113,9 @@ class ParticipantsTest {
         participants.distributeTwoCardsToEach(cardDeck);
 
         //then
-        assertAll(() -> assertThat(dealer.getHand().getCards().size()).isEqualTo(2),
-                () -> assertThat(player1.getHand().getCards().size()).isEqualTo(2),
-                () -> assertThat(player2.getHand().getCards().size()).isEqualTo(2));
+        assertAll(() -> assertThat(dealer.getHand().size()).isEqualTo(2),
+                () -> assertThat(player1.getHand().size()).isEqualTo(2),
+                () -> assertThat(player2.getHand().size()).isEqualTo(2));
     }
 
 }

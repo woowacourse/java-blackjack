@@ -32,7 +32,7 @@ class DealerTest {
         dealer.play(cardDeck);
 
         //then
-        assertThat(dealer.getHand().getCards()).containsExactly(card2, card1);
+        assertThat(dealer.getHand()).containsExactly(card2, card1);
     }
 
     @Test
