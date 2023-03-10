@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 import java.util.Map;
 
+import domain.betting.BettingMoney;
 import domain.card.Deck;
 import domain.participant.*;
 import domain.result.ResultCalculator;
@@ -23,6 +24,12 @@ public class BlackJackGame {
 
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
+    }
+
+    public void saveBettingMoney(String playerName, BettingMoney bettingMoney) {
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        Dealer dealer = participants.getDealer();
+        dealer.savePlayerBettingMoney(findPlayer, bettingMoney);
     }
 
     public List<String> findCardNamesByParticipantName(String participantName) {
@@ -72,5 +79,13 @@ public class BlackJackGame {
 
     public List<Player> getRawPlayers() {
         return participants.getRawPlayers();
+    }
+
+    public void calculatePlayersProfit() {
+        Players players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+        for (Player player : players.getPlayers()) {
+            dealer.calculateFinalProfit(player);
+        }
     }
 }
