@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,11 +31,14 @@ class BlackJackResultMakerTest {
 
     @BeforeAll
     public static void setUp() {
-        ArrayList<String> names = new ArrayList<>();
-        for (int i = 0; i < playerCards.size(); i++) {
-            names.add("test" + i);
-        }
-        players = Players.from(names);
+        final List<String> names = new ArrayList<>();
+        final List<Double> battings = new ArrayList<>();
+        IntStream.range(0, playerCards.size())
+            .forEach(i -> {
+                names.add("test" + i);
+                battings.add((double) (i * 1000));
+            });
+        players = Players.from(names, battings);
         players.addAll(playerCards);
     }
 

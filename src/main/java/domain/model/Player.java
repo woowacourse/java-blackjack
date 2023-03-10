@@ -1,14 +1,17 @@
 package domain.model;
 
+import domain.vo.Batting;
 import java.util.Objects;
 
 public class Player extends Participant {
 
     private final String name;
+    private final Batting batting;
 
-    public Player(final Cards cards, final String name) {
+    public Player(final Cards cards, final String name, final Batting batting) {
         super(cards);
         this.name = name;
+        this.batting = batting;
     }
 
     @Override
@@ -30,5 +33,9 @@ public class Player extends Participant {
 
     public String getName() {
         return name;
+    }
+
+    public Batting getBatting() {
+        return batting;
     }
 }

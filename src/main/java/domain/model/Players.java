@@ -1,5 +1,6 @@
 package domain.model;
 
+import domain.vo.Batting;
 import domain.vo.Score;
 import java.util.HashSet;
 import java.util.List;
@@ -13,14 +14,14 @@ public class Players {
     private static final String SIZE_NOT_MATCH_ERROR_MESSAGE = "플레이어와 카드의 개수가 일치하지 않습니다.";
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    public Players(final List<Player> players) {
         validate(players);
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        final List<Player> players = names.stream()
-            .map(name -> new Player(Cards.makeEmpty(), name))
+    public static Players from(final List<String> names, final List<Double> battings) {
+        final List<Player> players = IntStream.range(0, names.size())
+            .mapToObj(i -> new Player(Cards.makeEmpty(), names.get(i), Batting.of(battings.get(i))))
             .collect(Collectors.toList());
         return new Players(players);
     }
@@ -66,6 +67,6 @@ public class Players {
     public Player get(final int index) {
         final Player player = players.get(index);
         Set<Card> cards = new HashSet<>(player.getCards());
-        return new Player(new Cards(cards), player.getName());
+        return new Player(new Cards(cards), player.getName(), player.getBatting());
     }
 }

@@ -9,6 +9,7 @@ import domain.model.Player;
 import domain.model.Players;
 import domain.type.Letter;
 import domain.type.Suit;
+import domain.vo.Batting;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class CardDistributorTest {
                 return null;
             }
         });
-        final Player player = new Player(Cards.makeEmpty(), "player");
+        final Player player = new Player(Cards.makeEmpty(), "player", Batting.of(1000D));
 
         //when
         cardDistributor.giveCard(player);
@@ -57,7 +58,7 @@ class CardDistributorTest {
         cards.add(new Card(Suit.CLUB, Letter.TEN));
         cards.add(new Card(Suit.SPADE, Letter.TEN));
         cards.add(new Card(Suit.DIAMOND, Letter.TEN));
-        final Player player = new Player(cards, "player");
+        final Player player = new Player(cards, "player", Batting.of(1000D));
 
         //when
         //then
@@ -72,7 +73,8 @@ class CardDistributorTest {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
         List<String> names = List.of("player1", "player2");
-        Players players = Players.from(names);
+        List<Double> battings = List.of(1000D, 2000D);
+        Players players = Players.from(names, battings);
 
         //when
         cardDistributor.giveInitCards(players);
@@ -87,7 +89,7 @@ class CardDistributorTest {
     public void testInitGiveCardToOne() {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
-        final Player player = new Player(Cards.makeEmpty(), "player");
+        final Player player = new Player(Cards.makeEmpty(), "player", Batting.of(1000D));
 
         //when
         cardDistributor.giveInitCards(player);
@@ -103,7 +105,7 @@ class CardDistributorTest {
         cardDistributor = new CardDistributor(new RandomCardGenerator());
         final Cards cards = Cards.makeEmpty();
         cards.add(new Card(Suit.SPADE, Letter.ACE));
-        final Player player = new Player(cards, "player");
+        final Player player = new Player(cards, "player", Batting.of(1000D));
 
         //when
         //then
