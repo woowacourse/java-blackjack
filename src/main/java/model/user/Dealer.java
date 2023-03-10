@@ -30,8 +30,8 @@ public class Dealer implements Receivable {
         user.receiveCard(card);
     }
 
-    public boolean isBust() {
-        return user.isBust();
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
     }
 
     @Override

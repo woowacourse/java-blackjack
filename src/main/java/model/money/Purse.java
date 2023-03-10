@@ -3,6 +3,7 @@ package model.money;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.user.Dealer;
 import model.user.Player;
 
 public class Purse {
@@ -25,6 +26,13 @@ public class Purse {
         final Money currentMoney = purses.get(player);
         final Money addedMoney = currentMoney.add(money);
         purses.put(player, addedMoney);
+    }
+
+    public void calculateMoney(Player player, Dealer dealer) {
+        final Money money = getMoney(player);
+        if (player.isBlackJack() && dealer.isNotBlackJack()) {
+            purses.put(player, money.blackJack());
+        }
     }
 
     public Money getMoney(final Player player) {
