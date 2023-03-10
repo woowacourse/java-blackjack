@@ -6,7 +6,7 @@ import static domain.Status.*;
 
 public abstract class User {
     public static int NUMBER_OF_FIRST_CARDS = 2;
-    private static final Score BLACKJACK_SCORE = new Score(21);
+    public static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Hand hand;
     private Status status;
@@ -52,7 +52,7 @@ public abstract class User {
     }
 
     private void updateStatus() {
-        if (isBusted()) {
+        if (score().isBusted()) {
             status = BUST;
             return;
         }
@@ -66,12 +66,9 @@ public abstract class User {
         }
     }
 
-    private boolean isBusted() {
-        return score().isGreaterThan(BLACKJACK_SCORE);
-    }
-
     private boolean isBlackjack() {
-        return hand.size() == NUMBER_OF_FIRST_CARDS && score().equals(BLACKJACK_SCORE);
+        return hand.size() == NUMBER_OF_FIRST_CARDS
+                && score().equals(BLACKJACK_SCORE);
     }
 
     public Score score() {

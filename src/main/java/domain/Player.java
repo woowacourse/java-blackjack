@@ -17,9 +17,8 @@ public class Player extends User {
         this.name = name;
     }
 
-    @Override
     public boolean canHit() {
-        return score().getValue() < PLAYER_HIT_LIMIT;
+        return score().isLessThan(PLAYER_HIT_LIMIT);
     }
 
     @Override
