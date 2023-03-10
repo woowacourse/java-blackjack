@@ -130,7 +130,7 @@ classDiagram
 
 ### BettingAmount
 - 베팅 금액 정보를 가지고 있는 객체
-- [ ] 올바른 베팅 금액인지 검증한다.
+- [x] 올바른 베팅 금액인지 검증한다.
 - [ ] 베팅 금액을 반환한다.
 
 ### Deck (Interface)
