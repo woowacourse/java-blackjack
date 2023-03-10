@@ -42,4 +42,11 @@ public class Participants {
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
+
+    public Player getPlayerByName(Name playerName) {
+        return (Player) participants.stream()
+                .filter(participant -> participant.isSameName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 플레이어가 없습니다."));
+    }
 }

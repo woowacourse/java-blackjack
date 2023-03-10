@@ -14,11 +14,11 @@ public class Bet {
     }
 
     public static Bet of(int bet) {
-        validateBat(bet);
+        validateBet(bet);
         return new Bet(bet);
     }
 
-    private static void validateBat(int bet) {
+    private static void validateBet(int bet) {
         if (bet <= MINIMUM_BET || bet >= MAXIMUM_BET) {
             throw new IllegalArgumentException(
                     "[ERROR] 배팅금은 " + decimalFormat.format(MINIMUM_BET) + "보다 크거나 " + decimalFormat.format(MAXIMUM_BET)

@@ -39,4 +39,8 @@ public abstract class Participant {
     public abstract List<Card> getStartCards();
 
     public abstract boolean canDrawCard();
+
+    public boolean isSameName(Name name) {
+        return Objects.equals(this.name, name);
+    }
 }

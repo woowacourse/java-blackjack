@@ -5,11 +5,11 @@ import blackjack.domain.Name;
 
 public class PlayerGameResult {
     private final String name;
-    private final int result;
+    private final int profit;
 
-    public PlayerGameResult(String name, int result) {
+    public PlayerGameResult(String name, int profit) {
         this.name = name;
-        this.result = result;
+        this.profit = profit;
     }
 
     public static PlayerGameResult of(Name name, Bet bet) {
@@ -20,7 +20,7 @@ public class PlayerGameResult {
         return name;
     }
 
-    public int getResult() {
-        return result;
+    public int getProfit() {
+        return profit;
     }
 }
