@@ -30,10 +30,6 @@ public abstract class Participant {
         return this.hand.totalScore();
     }
 
-    public void receive(Card card) {
-        this.hand = this.hand.add(card);
-    }
-
     public boolean isBust() {
         return this.hand.isBust();
     }
