@@ -19,6 +19,10 @@ public final class Score {
         return value > MAX_VALUE;
     }
 
+    public boolean isBlackjack() {
+        return value == MAX_VALUE;
+    }
+
     public boolean isSameScore(final Score score) {
         return score.value == value;
     }
