@@ -55,10 +55,10 @@ public class BlackJackGameController {
     }
 
     private Players setUpPlayers() {
-        return new Players(readUsersName());
+        return new Players(readPlayersName());
     }
 
-    private List<String> readUsersName() {
+    private List<String> readPlayersName() {
         outputView.printInputPlayerNamesMessage();
         return inputView.readPlayerNames();
     }
