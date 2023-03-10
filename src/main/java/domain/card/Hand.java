@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int INIT_GIVE_CARD_COUNT = 2;
+    private static final Score BLACKJACK = new Score(21);
+    
     private final List<Card> cards;
 
     public Hand() {
@@ -40,7 +43,15 @@ public class Hand {
     public boolean isBust() {
         return getTotalScore().isBust();
     }
-
+    
+    public boolean isNotEnoughInitCardsCount() {
+        return cards.size() < INIT_GIVE_CARD_COUNT;
+    }
+    
+    public boolean isBlackJack() {
+        return getTotalScore().isSameTo(BLACKJACK);
+    }
+    
     public List<Card> getCards() {
         return cards;
     }

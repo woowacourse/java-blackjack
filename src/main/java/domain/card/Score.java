@@ -38,7 +38,7 @@ public class Score {
         return this.score > otherScore.score;
     }
     
-    private boolean isSameTo(Score otherScore) {
+    public boolean isSameTo(Score otherScore) {
         return this.score == otherScore.score;
     }
     

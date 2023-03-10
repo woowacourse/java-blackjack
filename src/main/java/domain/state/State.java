@@ -16,4 +16,12 @@ public abstract class State {
     protected Hand getHand() {
         return hand;
     }
+    
+    protected boolean isNotEnoughInitCardsCount() {
+        return hand.isNotEnoughInitCardsCount();
+    }
+    
+    protected boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 }
