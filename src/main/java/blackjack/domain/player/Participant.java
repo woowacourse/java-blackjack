@@ -21,6 +21,6 @@ public final class Participant extends Player {
 
     @Override
     public boolean isInPlaying() {
-        return HandsState.from(super.getScore()) == HandsState.IN_PLAY;
+        return HandsState.from(cards.calculateScore()) == HandsState.IN_PLAY;
     }
 }

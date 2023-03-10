@@ -18,6 +18,6 @@ public final class Dealer extends Player {
 
     @Override
     public boolean isInPlaying() {
-        return getScore() < DEALER_STAY_NUMBER;
+        return cards.calculateScore() < DEALER_STAY_NUMBER;
     }
 }

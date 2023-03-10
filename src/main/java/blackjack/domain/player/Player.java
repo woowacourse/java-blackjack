@@ -11,7 +11,7 @@ public abstract class Player {
     private static final int NUM_CARDS_FOR_BLACKJACK = 2;
 
     private final String name;
-    private final Cards cards;
+    protected final Cards cards;
 
     Player(final String name, final Cards cards) {
         validateBlank(name);
