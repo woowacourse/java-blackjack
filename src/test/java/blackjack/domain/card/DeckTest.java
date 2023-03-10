@@ -44,4 +44,14 @@ public class DeckTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("덱에 카드가 존재하지 않은 상태에서 카드를 뽑을 때, 에러가 발생해야 한다.")
+    void throwExceptionWhenNotExistCardInDeck() {
+        final Deck deck = Deck.from(List.of());
+
+        assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 카드가 존재하지 않아 드로우를 할 수 없습니다.");
+    }
 }
