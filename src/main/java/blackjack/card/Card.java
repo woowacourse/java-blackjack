@@ -16,6 +16,10 @@ public final class Card {
         return denomination.getScore();
     }
 
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }
