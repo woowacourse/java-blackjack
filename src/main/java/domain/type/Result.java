@@ -38,7 +38,7 @@ public enum Result {
     }
 
     private static boolean isDefeat(final Player player, final Dealer dealer) {
-        return player.isBust() && dealer.getScore().moreThan(player.getScore());
+        return player.isBust() || dealer.getScore().moreThan(player.getScore());
     }
 
     private static boolean winnable(final Player player, final Dealer dealer) {
