@@ -6,8 +6,6 @@ import blackjack.domain.participant.Participants;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.game.WinTieLose.*;
-
 public final class ResultGame {
 
     private final Map<Participant, WinTieLose> playersResult;
@@ -29,18 +27,8 @@ public final class ResultGame {
 
         final Score dealerScore = dealer.getScore();
         for (final Participant player : players) {
-            playersResult.put(player, getPlayerResult(player.getScore(), dealerScore));
+            playersResult.put(player, WinTieLose.resultPlayer(player.getScore(), dealerScore));
         }
-    }
-
-    private WinTieLose getPlayerResult(final Score playerScore, final Score dealerScore) {
-        if ((playerScore.isBust() && dealerScore.isBust()) || playerScore.isEqualsTo(dealerScore)) {
-            return TIE;
-        }
-        if (playerScore.isHit() && (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore))) {
-            return WIN;
-        }
-        return LOSE;
     }
 
     public int getDealerCount(final WinTieLose expected) {

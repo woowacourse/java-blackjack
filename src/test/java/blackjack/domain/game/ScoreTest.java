@@ -59,7 +59,7 @@ class ScoreTest {
         final Score originalScore = Score.from(21);
         final Score otherScore = Score.from(21);
 
-        Assertions.assertThat(originalScore.isEqualsTo(otherScore)).isTrue();
+        Assertions.assertThat(originalScore.isEqualTo(otherScore)).isTrue();
     }
 
     @Test

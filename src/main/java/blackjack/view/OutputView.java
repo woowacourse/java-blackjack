@@ -24,7 +24,7 @@ public class OutputView {
     private static final String LOSE_MESSAGE = "패";
     private static final String ERROR_PREFIX_MESSAGE = "[ERROR] ";
 
-    public void printInitialHandOutMessage(final Participants participants) {
+    public void printInitialCards(final Participants participants) {
         System.out.println(getParticipantsList(participants) + GIVE_TWO_CARD_MESSAGE);
 
         final Participant dealer = participants.getDealer();
@@ -72,7 +72,7 @@ public class OutputView {
         System.out.println(NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 
-    public void printParticipantsResult(final Participants participants, final ResultGame resultGame) {
+    public void printResult(final Participants participants, final ResultGame resultGame) {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
 

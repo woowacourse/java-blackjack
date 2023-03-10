@@ -36,7 +36,7 @@ public final class Score {
         return value > other.value;
     }
 
-    public boolean isEqualsTo(final Score other) {
+    public boolean isEqualTo(final Score other) {
         return value == other.value;
     }
 

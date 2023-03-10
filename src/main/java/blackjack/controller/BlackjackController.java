@@ -29,9 +29,13 @@ public final class BlackjackController {
         final Participants participants = makeParticipants();
         final Deck deck = Deck.createTrump();
 
-        startGame(participants, deck);
+        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
+        outputView.printInitialCards(participants);
+
         hitParticipants(participants, deck);
-        displayAllResult(participants);
+        outputView.printAllCardsAndScore(participants);
+
+        outputView.printResult(participants, ResultGame.from(new HashMap<>(), participants));
     }
 
     private Participants makeParticipants() {
@@ -41,16 +45,9 @@ public final class BlackjackController {
         return Participants.of(dealer, playerNames);
     }
 
-    private void startGame(final Participants participants, final Deck deck) {
-        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
-
-        outputView.printInitialHandOutMessage(participants);
-    }
-
     private void hitParticipants(final Participants participants, final Deck deck) {
         hitPlayers(participants, deck);
         hitDealer(participants, deck);
-        displayParticipantsCardsAndScore(participants);
     }
 
     private void hitPlayers(final Participants participants, final Deck deck) {
@@ -81,15 +78,5 @@ public final class BlackjackController {
             outputView.printDealerDrawCard();
             dealer.drawCard(deck.draw());
         }
-    }
-
-    private void displayParticipantsCardsAndScore(final Participants participants) {
-        outputView.printAllCardsAndScore(participants);
-    }
-
-    private void displayAllResult(final Participants participants) {
-        final ResultGame resultGame = ResultGame.from(new HashMap<>(), participants);
-
-        outputView.printParticipantsResult(participants, resultGame);
     }
 }

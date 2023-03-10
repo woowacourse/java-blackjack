@@ -12,6 +12,16 @@ public enum WinTieLose {
         this.value = value;
     }
 
+    public static WinTieLose resultPlayer(final Score playerScore, final Score dealerScore) {
+        if ((playerScore.isBust() && dealerScore.isBust()) || playerScore.isEqualTo(dealerScore)) {
+            return TIE;
+        }
+        if (playerScore.isHit() && (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore))) {
+            return WIN;
+        }
+        return LOSE;
+    }
+
     public WinTieLose reverse() {
         if (equals(WIN)) {
             return LOSE;
