@@ -11,8 +11,13 @@ public class Profit {
         this.profit = profit;
     }
     
-    public static Profit from(Bet bet) {
-        return new Profit(bet.getBet());
+    
+    public static Profit create(final Bet bet, final ResultStatus status) {
+        return new Profit((int) (bet.getBet() * status.getWeight()));
+    }
+    
+    public Profit add(final Profit profit) {
+        return new Profit(this.profit + profit.profit);
     }
     
     @Override
@@ -36,7 +41,4 @@ public class Profit {
         return this.profit;
     }
     
-    public Profit calculateProfitFromBetAndResult(final ResultStatus resultStatus) {
-        return new Profit((int) (this.profit * resultStatus.getWeight()));
-    }
 }
