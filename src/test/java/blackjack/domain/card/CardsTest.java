@@ -22,4 +22,22 @@ public class CardsTest {
         cards.add(card);
         assertThat(cards.getCards()).containsExactly(card);
     }
+
+    @DisplayName("Cards에 Ace 카드가 있다면 True를 반환할 수 있다.")
+    @Test
+    void Should_True_When_HasAce() {
+        Cards cards = new Cards();
+        Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+        cards.add(card);
+        assertThat(cards.hasAce()).isTrue();
+    }
+
+    @DisplayName("Cards에 Ace 카드가 없다면 False를 반환할 수 있다.")
+    @Test
+    void Should_False_When_HasNoAce() {
+        Cards cards = new Cards();
+        Card card = new Card(CardNumber.TEN, CardSymbol.HEARTS);
+        cards.add(card);
+        assertThat(cards.hasAce()).isFalse();
+    }
 }

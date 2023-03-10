@@ -16,6 +16,11 @@ public class Cards {
         cards.add(card);
     }
 
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.isAce());
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
