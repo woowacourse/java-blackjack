@@ -31,11 +31,11 @@ public class Purse {
 
     public void calculateMoney(final Player player, final Dealer dealer) {
         final State state = player.judgeResult(dealer);
-        final Bet bet = getMoney(player);
+        final Bet bet = findMoneyByPlayer(player);
         purses.put(player, bet.calculateMoney(state));
     }
 
-    public Bet getMoney(final Player player) {
+    public Bet findMoneyByPlayer(final Player player) {
         return purses.get(player);
     }
 }
