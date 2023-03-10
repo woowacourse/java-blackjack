@@ -1,11 +1,10 @@
 package domain.game;
 
+import domain.money.Profit;
 import domain.user.Player;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameResult {
     
@@ -15,7 +14,13 @@ public class GameResult {
         this.resultCacheMap.put(player, resultStatus);
     }
     
-    public HashMap<ResultStatus, Integer> generateDealerResult() {
+    public Map<String, Profit> generatePlayerProfitResult() {
+        Map<String, Profit> playerProfitResult = new HashMap<>();
+        
+        return playerProfitResult;
+    }
+    
+    public Map<ResultStatus, Integer> generateDealerResult() {
         HashMap<ResultStatus, Integer> dealerResult = new HashMap<>();
         dealerResult.put(ResultStatus.WIN, 0);
         dealerResult.put(ResultStatus.DRAW, 0);

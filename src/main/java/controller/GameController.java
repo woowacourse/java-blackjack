@@ -8,8 +8,8 @@ import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
 import domain.user.Player;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import view.InputView;
 import view.OutputView;
@@ -80,7 +80,7 @@ public class GameController {
         final Participants participants = game.getParticipants();
         OutputView.printParticipantsNameCardsAndScore(participants);
         GameResult gameResult = game.generateGameResult();
-        HashMap<ResultStatus, Integer> dealerResult = gameResult.generateDealerResult();
+        Map<ResultStatus, Integer> dealerResult = gameResult.generateDealerResult();
         OutputView.printDealerGameResult(dealerResult);
         OutputView.printPlayersGameResult(gameResult.getResultMap());
     }

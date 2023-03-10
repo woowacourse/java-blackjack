@@ -5,8 +5,9 @@ import domain.Card.CardCollection;
 import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
-import java.util.HashMap;
+import domain.user.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -31,7 +32,7 @@ public class OutputView {
     }
     
     
-    public static void printDealerGameResult(HashMap<ResultStatus, Integer> dealerResult) {
+    public static void printDealerGameResult(Map<ResultStatus, Integer> dealerResult) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         int winCount = dealerResult.get(ResultStatus.WIN);
         int loseCount = dealerResult.get(ResultStatus.LOSE);
