@@ -90,3 +90,6 @@
 - [x] 돈을 가진다.
 - [x] 돈을 더 받을 수 있다.
 - [x] 돈을 지출할 수 있다.
+
+# 궁금했던 점
+1. `Dealer`의 `settingCards(Players players)`를 구현하기 위해 `players.distributeHands()`를 구현했습니다. 또, `players.distributeHands()`를 구현하기 위해 `player.receiveHand(Card card)`를 구현했습니다. 그러다보니 추상화 계층 하위에 있는 메서드를 모두 테스트해야하나? 라는 고민이 생겼습니다.
