@@ -4,12 +4,15 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DealerNotFoundException;
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
+import blackjack.domain.player.exception.InvalidChallengerNumberException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
+
+    private static final int CHALLENGER_MAX_COUNT = 10;
 
     private final List<Player> players;
 
@@ -18,13 +21,24 @@ public class Players {
     }
 
     public static Players from(final List<String> names) {
-        validateDuplicatedNames(names);
+        validate(names);
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         names.stream()
                 .map(Challenger::new)
                 .forEach(players::add);
         return new Players(players);
+    }
+
+    private static void validate(final List<String> names) {
+        validateChallengerCount(names);
+        validateDuplicatedNames(names);
+    }
+
+    private static void validateChallengerCount(final List<String> names) {
+        if (names.size() > CHALLENGER_MAX_COUNT) {
+            throw new InvalidChallengerNumberException();
+        }
     }
 
     private static void validateDuplicatedNames(final List<String> names) {

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
 import java.util.List;
+
+import blackjack.domain.player.exception.InvalidChallengerNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,13 @@ class PlayersTest {
     void checking_player_name_duplicated() {
         assertThrows(DuplicatedPlayerNameException.class,
                 () -> Players.from(List.of("pobi", "pobi")));
+    }
+
+    @Test
+    @DisplayName("도전자의 숫자가 10명이 초과되면 예외가 발생한다.")
+    void over_challenger_number() {
+        assertThrows(InvalidChallengerNumberException.class,
+                () -> Players.from(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")));
     }
 
     @Test
