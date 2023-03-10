@@ -2,23 +2,35 @@ package domain.card;
 
 import domain.participant.Score;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
 
     private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
+    private static final int INITIAL_CARDS_SIZE = 2;
     private final List<Card> cards;
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this.cards = Collections.emptyList();
     }
 
-    public void receiveInitialCards(final List<Card> initialCards) {
-        cards.addAll(initialCards);
+    public Cards(final List<Card> cards) {
+        this.cards = Collections.unmodifiableList(cards);
     }
 
-    public void receiveCard(Card card) {
-        this.cards.add(card);
+    public Cards receiveInitialCards(final List<Card> initialCards) {
+        if (initialCards.size() == INITIAL_CARDS_SIZE) {
+            List<Card> newCards = new ArrayList<>(initialCards);
+            return new Cards(newCards);
+        }
+        throw new IllegalArgumentException("처음 받는 카드는 2장이어야 합니다.");
+    }
+
+    public Cards receiveCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Cards(newCards);
     }
 
     public boolean isBust() {

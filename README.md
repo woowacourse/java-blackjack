@@ -49,7 +49,7 @@
 
 ```mermaid
 graph TD
-Ready(Ready) --> BlackJack[BlackJack]
+Ready[Ready] --> BlackJack[BlackJack]
 Ready --> Hit[Hit]
 Hit --> |y| Hit
 Hit --> |n| Stand[Stand]

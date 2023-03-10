@@ -2,13 +2,12 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
-    private final Cards cards;
+    private Cards cards;
 
     public Participant(final Name name) {
         this.name = name;
@@ -18,11 +17,11 @@ public abstract class Participant {
     abstract boolean isHittable();
 
     public void receiveInitialCards(List<Card> cards) {
-        this.cards.receiveInitialCards(cards);
+        this.cards = this.cards.receiveInitialCards(cards);
     }
 
     public void receiveCard(Card card) {
-        this.cards.receiveCard(card);
+        this.cards = this.cards.receiveCard(card);
     }
 
     public Score calculateScore() {
