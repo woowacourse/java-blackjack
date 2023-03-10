@@ -1,5 +1,6 @@
 package blackjack.player;
 
+import static blackjack.Fixtures.BET_AMOUNT_10000;
 import static blackjack.domain.game.WinningResult.LOSE;
 import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
@@ -34,11 +35,11 @@ class PlayersTest {
     @Test
     void cannotHaveSameName() {
         Players players = new Players();
-        Player rosie = new Player(new Name("로지"));
-        Player rosy = new Player(new Name("로지"));
+        Player rosie = new Player(new Name("로지"), BET_AMOUNT_10000);
+        Player rosy = new Player(new Name("로지"), BET_AMOUNT_10000);
         Players newPlayers = players.add(rosie);
 
-        assertThatThrownBy(()-> newPlayers.add(rosy))
+        assertThatThrownBy(() -> newPlayers.add(rosy))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -47,7 +48,7 @@ class PlayersTest {
     void addPlayer() {
         //given
         Players players = new Players();
-        Player player = new Player(new Name("로지"));
+        Player player = new Player(new Name("로지"), BET_AMOUNT_10000);
         //when
         Players newPlayers = players.add(player);
         //then
@@ -61,7 +62,7 @@ class PlayersTest {
         //given
         Deck deck = new Deck(new ShuffledCardsGenerator());
         Players players = new Players();
-        Player player = new Player(new Name("로지"));
+        Player player = new Player(new Name("로지"), BET_AMOUNT_10000);
         Players newPlayers = players.add(player);
         //when
         newPlayers.hitFirstCards(deck);
@@ -73,7 +74,7 @@ class PlayersTest {
     @DisplayName("플레이어의 이름과 승패결과를 가져올 수 있다.")
     void getWinningResult() {
         Dealer dealer = new Dealer();
-        Player player = new Player(new Name("폴로"));
+        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
         player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
         Players players = new Players().add(player);
 
@@ -91,7 +92,7 @@ class PlayersTest {
         void winWhenScoreIsHigher() {
             //given
             Players players = new Players();
-            Player player = new Player(new Name("폴로"));
+            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
             Players newPlayers = players.add(player);
 
             Dealer dealer = new Dealer();
@@ -108,7 +109,7 @@ class PlayersTest {
         void winWhenDealerBust() {
             //given
             Players players = new Players();
-            Player player = new Player(new Name("폴로"));
+            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
             Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 
@@ -127,7 +128,7 @@ class PlayersTest {
         void loseWhenLowerScore() {
             //given
             Players players = new Players();
-            Player player = new Player(new Name("폴로"));
+            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
             Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
@@ -144,7 +145,7 @@ class PlayersTest {
         void loseWhenPlayerBust() {
             //given
             Players players = new Players();
-            Player player = new Player(new Name("폴로"));
+            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
             Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
@@ -163,7 +164,7 @@ class PlayersTest {
         void tieWhenSameScore() {
             //given
             Players players = new Players();
-            Player player = new Player(new Name("폴로"));
+            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
             Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 

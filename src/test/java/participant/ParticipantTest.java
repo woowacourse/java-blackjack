@@ -18,17 +18,6 @@ class ParticipantTest {
     @Test
     void hitCards() {
         Participant participant = new Participant(new Name("소니"), new Hand()) {
-            @Override
-            public void win() {
-            }
-
-            @Override
-            public void lose() {
-            }
-
-            @Override
-            public void tie() {
-            }
         };
 
         List<Card> cards =  List.of(new Card(CardNumber.ACE, Pattern.SPADE), new Card(CardNumber.EIGHT, Pattern.CLOVER));

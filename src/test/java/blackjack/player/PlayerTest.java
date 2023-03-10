@@ -1,5 +1,6 @@
 package blackjack.player;
 
+import static blackjack.Fixtures.BET_AMOUNT_10000;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,8 +27,7 @@ class PlayerTest {
     @DisplayName("플레이어를 생성한다.")
     void createPlayer() {
         Name name = new Name("폴로");
-
-        assertThatCode(() -> new Player(name))
+        assertThatCode(() -> new Player(name, BET_AMOUNT_10000))
                 .doesNotThrowAnyException();
     }
 
@@ -35,15 +35,15 @@ class PlayerTest {
     @DisplayName("플레이어의 이름이 '딜러'일 때 예외가 발생한다.")
     void cannotCreateSameName() {
         Name name = new Name("딜러");
-
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, BET_AMOUNT_10000))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     void hit() {
-        Player player = new Player(new Name("폴로"));
+        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
+
         Card card = new Card(CardNumber.ACE, Pattern.HEART);
 
         assertThatCode(() -> player.hit(card))
@@ -53,7 +53,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 받은 카드의 점수 합계를 구할 수 있다")
     void calculateScore() {
-        Player player = new Player(new Name("폴로"));
+        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
         Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
         Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
         Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
@@ -67,7 +67,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 현재 가지고 있는 카드를 반환할수 있다.")
     void showCards() {
-        Player player = new Player(new Name("폴로"));
+        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
         Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
         Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
         Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
@@ -81,7 +81,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 자신의 버스트 여부를 반환할 수 있다.")
     void isBust() {
-        Player player = new Player(new Name("폴로"));
+        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
         player.hit(new Card(CardNumber.KING, Pattern.HEART));
         player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
         player.hit(new Card(CardNumber.KING, Pattern.SPADE));
@@ -92,7 +92,7 @@ class PlayerTest {
     @Test
     @DisplayName("딜러와 승패를 가르는 기능")
     void compareTo() {
-        Player player = new Player(new Name("로지"));
+        Player player = new Player(new Name("로지"), BET_AMOUNT_10000);
         Dealer dealer = new Dealer();
         WinningResult result = player.combat(dealer);
         assertThat(result).isEqualTo(WinningResult.TIE);
@@ -106,7 +106,7 @@ class PlayerTest {
         @Test
         void hitCardWhenNotBust() {
             //given
-            Player soni = new Player(new Name("소니"));
+            Player soni = new Player(new Name("소니"), BET_AMOUNT_10000);
             soni.hit(List.of(new Card(CardNumber.KING, Pattern.DIAMOND), new Card(CardNumber.KING, Pattern.CLOVER)));
             Card twoHeart = new Card(CardNumber.TWO, Pattern.HEART);
             Deck deck = new Deck(() -> {
@@ -125,7 +125,7 @@ class PlayerTest {
         @Test
         void dontHitWhenDecisionIsNo() {
             //given
-            Player polo = new Player(new Name("폴로"));
+            Player polo = new Player(new Name("폴로"), BET_AMOUNT_10000);
             //when
             polo.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name) -> AddCardOrNot.NO, (player) -> {
             });
@@ -137,7 +137,7 @@ class PlayerTest {
         @Test
         void dontHitWhenPlayerIsBust() {
             //given
-            Player rosie = new Player(new Name("로지"));
+            Player rosie = new Player(new Name("로지"), BET_AMOUNT_10000);
             List<Card> already = List.of(new Card(CardNumber.KING, Pattern.DIAMOND),
                     new Card(CardNumber.KING, Pattern.CLOVER),
                     new Card(CardNumber.KING, Pattern.HEART));
@@ -153,7 +153,7 @@ class PlayerTest {
         @Test
         void canHitWhenPlayerIsBlackjack() {
             //given
-            Player kiara = new Player(new Name("키아라"));
+            Player kiara = new Player(new Name("키아라"), BET_AMOUNT_10000);
             List<Card> already = List.of(new Card(CardNumber.TEN, Pattern.CLOVER),
                     new Card(CardNumber.ACE, Pattern.HEART));
             kiara.hit(already);

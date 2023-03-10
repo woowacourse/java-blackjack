@@ -6,6 +6,7 @@ import static blackjack.domain.game.WinningResult.WIN;
 import static blackjack.domain.participant.dealer.Dealer.DEALER_NAME;
 import static blackjack.domain.participant.player.AddCardOrNot.NO;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Hand;
@@ -15,11 +16,14 @@ import blackjack.domain.participant.Score;
 
 public class Player extends Participant {
 
-    public Player(Name name) {
+    private final BetAmount betAmount;
+
+    public Player(Name name, BetAmount betAmount) {
         super(name, new Hand());
-        if (name.getValue().equals(DEALER_NAME)){
+        if (name.getValue().equals(DEALER_NAME)) {
             throw new IllegalArgumentException("플레이어의 이름은 '딜러'일 수 없습니다.");
         }
+        this.betAmount = betAmount;
     }
 
     public WinningResult combat(Participant dealer) {

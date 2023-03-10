@@ -1,5 +1,6 @@
 package blackjack.blackjacGameTest;
 
+import static blackjack.Fixtures.BET_AMOUNT_10000;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -38,7 +39,7 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어를 만들고 플레이어즈에 추가할 수 있다")
     void addPlayer() {
-        Player polo = new Player(new Name("폴로"));
+        Player polo = new Player(new Name("폴로"), BET_AMOUNT_10000);
         blackjackGame.addPlayer(polo);
 
         assertThat(blackjackGame).extracting("players")
@@ -57,8 +58,8 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어들에게 카드를 두 장씩 줄 수 있다.")
     void supplyCardsToPlayers() {
-        Player player1 = new Player(new Name("폴로"));
-        Player player2 = new Player(new Name("로지"));
+        Player player1 = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        Player player2 = new Player(new Name("로지"), BET_AMOUNT_10000);
         blackjackGame.addPlayer(player1);
         blackjackGame.addPlayer(player2);
 

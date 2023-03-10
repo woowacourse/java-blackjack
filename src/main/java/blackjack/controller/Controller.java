@@ -2,13 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResultDto;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.player.AddCardOrNot;
-import blackjack.domain.participant.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -35,7 +33,7 @@ public class Controller {
     private void setGame() {
         List<String> names = inputView.readPlayerNames();
         for (String name : names) {
-            blackjackGame.addPlayer(new Player(new Name(name)));
+//            blackjackGame.addPlayer(new Player(new Name(name), ));
         }
         blackjackGame.supplyCardsToDealer();
         blackjackGame.supplyCardsToPlayers();
