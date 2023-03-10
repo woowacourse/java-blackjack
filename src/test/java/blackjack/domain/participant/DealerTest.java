@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Letter;
-import blackjack.domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static blackjack.domain.CardConstant.*;
 
 public class DealerTest {
 
@@ -16,8 +16,8 @@ public class DealerTest {
     void canHitTest() {
         //given
         final Dealer dealer = Dealer.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.SIX);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
+        final Card card1 = CLOVER_SIX;
+        final Card card2 = DIAMOND_JACK;
 
         //when
         dealer.drawCard(card1);
@@ -32,12 +32,10 @@ public class DealerTest {
     void cantHitTest() {
         //given
         final Dealer dealer = Dealer.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.SEVEN);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
 
         //when
-        dealer.drawCard(card1);
-        dealer.drawCard(card2);
+        dealer.drawCard(HEART_SEVEN);
+        dealer.drawCard(DIAMOND_JACK);
 
         //then
         Assertions.assertThat(dealer.isHit()).isFalse();

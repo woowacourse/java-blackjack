@@ -3,6 +3,8 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.CardConstant.DIAMOND_ACE;
+import static blackjack.domain.CardConstant.SPACE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -31,7 +33,7 @@ public class CardTest {
     @Test
     @DisplayName("카드가 에이스인지 확인하는 테스트")
     void isAceTest() {
-        final Card card = Card.of(Shape.DIAMOND, Letter.ACE);
+        final Card card = DIAMOND_ACE;
 
         assertThat(card.isAce()).isTrue();
     }
@@ -39,7 +41,7 @@ public class CardTest {
     @Test
     @DisplayName("카드가 에이스가 아닌지 확인하는 테스트")
     void isNotAceTest() {
-        final Card card = Card.of(Shape.DIAMOND, Letter.EIGHT);
+        final Card card = SPACE_TWO;
 
         assertThat(card.isAce()).isFalse();
     }

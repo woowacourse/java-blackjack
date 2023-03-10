@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.domain.CardConstant.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -22,11 +23,10 @@ public class HandTest {
     void addCardsTest() {
         // given
         final Hand cards = Hand.from(new ArrayList<>());
-        final Card card = Card.of(Shape.CLOVER, Letter.ACE);
-        final List<Card> expectedCards = List.of(card);
+        final List<Card> expectedCards = List.of(CLOVER_ACE);
 
         // when
-        cards.add(card);
+        cards.add(CLOVER_ACE);
 
         // that
         assertThat(expectedCards).isEqualTo(cards.getCards());
@@ -37,13 +37,11 @@ public class HandTest {
     void calculateTotalScoreTest() {
         // given
         final Hand cards = Hand.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.ACE);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
         final Score expected = Score.from(21);
 
         // when
-        cards.add(card1);
-        cards.add(card2);
+        cards.add(CLOVER_ACE);
+        cards.add(DIAMOND_JACK);
 
         // that
         assertThat(cards.getScore()).isEqualTo(expected);
@@ -54,15 +52,13 @@ public class HandTest {
     void getCardsTest() {
         // given
         final Hand cards = Hand.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.ACE);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
 
         // when
-        cards.add(card1);
-        cards.add(card2);
+        cards.add(CLOVER_ACE);
+        cards.add(DIAMOND_JACK);
 
         // that
-        assertThat(cards.getCards()).contains(card1, card2);
+        assertThat(cards.getCards()).contains(CLOVER_ACE, DIAMOND_JACK);
     }
 
     @Test
@@ -70,13 +66,11 @@ public class HandTest {
     void calculateTotalOver21Test() {
         // given
         final Hand cards = Hand.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.ACE);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.ACE);
         final Score expected = Score.from(12);
 
         // when
-        cards.add(card1);
-        cards.add(card2);
+        cards.add(CLOVER_ACE);
+        cards.add(DIAMOND_ACE);
 
         // that
         assertThat(cards.getScore()).isEqualTo(expected);
@@ -87,17 +81,13 @@ public class HandTest {
     void calculateTotalOver21Test2() {
         // given
         final Hand cards = Hand.from(new ArrayList<>());
-        final Card card1 = Card.of(Shape.CLOVER, Letter.ACE);
-        final Card card2 = Card.of(Shape.DIAMOND, Letter.JACK);
-        final Card card3 = Card.of(Shape.CLOVER, Letter.ACE);
-        final Card card4 = Card.of(Shape.CLOVER, Letter.NINE);
         final Score expected = Score.from(21);
 
         // when
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        cards.add(CLOVER_ACE);
+        cards.add(SPACE_ACE);
+        cards.add(DIAMOND_JACK);
+        cards.add(DIAMOND_NINE);
 
         // that
         assertThat(cards.getScore()).isEqualTo(expected);

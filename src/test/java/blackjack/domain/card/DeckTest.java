@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.domain.CardConstant.DIAMOND_JACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,7 +23,7 @@ public class DeckTest {
     @Test
     @DisplayName("중복된 카드를 주입하면 에러를 반환한다")
     void throwExceptionWhenDuplicateCard() {
-        final List<Card> cards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.JACK));
+        final List<Card> cards = List.of(DIAMOND_JACK, DIAMOND_JACK);
 
         assertThatThrownBy(() -> Deck.from(cards))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -33,7 +34,7 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     void drawCardTest() {
         //given
-        final Deck deck = Deck.from(List.of(Card.of(Shape.DIAMOND, Letter.JACK)));
+        final Deck deck = Deck.from(List.of(DIAMOND_JACK));
         final Card expected = Card.of(Shape.DIAMOND, Letter.JACK);
 
         //when
