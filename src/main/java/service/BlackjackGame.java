@@ -26,11 +26,11 @@ public final class BlackjackGame {
         return new BlackjackGame(deck);
     }
 
-    public static BlackjackGame from() {
-        return BlackjackGame.from(Deck.from(new RandomCardGenerator()));
+    public static BlackjackGame create() {
+        return new BlackjackGame((Deck.from(new RandomCardGenerator())));
     }
 
-    public void distributeInitialCards(final Participants participants,final Dealer dealer) {
+    public void distributeInitialCards(final Participants participants, final Dealer dealer) {
         dealer.takeCard(deck.distributeCard());
         participants.getParticipants()
                 .forEach(this::distributeTwoCards);
