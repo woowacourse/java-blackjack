@@ -14,7 +14,7 @@ public class HandTest {
     @Test
     @DisplayName("Hand 를 생성한다.")
     void createCardsSuccess() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.TWO), Card.of(Shape.HEART, Letter.ACE));
 
         Hand hand = new Hand(initialCards);
 
@@ -24,7 +24,7 @@ public class HandTest {
     @Test
     @DisplayName("Player 의 카드 점수를 계산한다.")
     void calculateCardScorePlayer() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.TWO), Card.of(Shape.HEART, Letter.ACE));
         Score limit = Score.from(21);
         Score expectedScore = Score.from(13);
 
@@ -36,7 +36,7 @@ public class HandTest {
     @Test
     @DisplayName("Player 의 Ace 를 2개 낮춰야 하는 경우 카드 점수를 계산한다.")
     void calculateCardScoreWhenAceDecreaseTwice() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK),new Card(Shape.HEART, Letter.ACE));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.ACE), Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.HEART, Letter.ACE));
         Score limit = Score.from(21);
         Score expectedScore = Score.from(12);
 
@@ -48,7 +48,7 @@ public class HandTest {
     @Test
     @DisplayName("Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealer() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.NINE));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.ACE), Card.of(Shape.DIAMOND, Letter.NINE));
         Score limit = Score.from(16);
         Score expectedScore = Score.from(10);
 
@@ -60,7 +60,7 @@ public class HandTest {
     @Test
     @DisplayName("블랙잭일 때 Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealerWhenBlackJack() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.ACE), Card.of(Shape.DIAMOND, Letter.JACK));
         Score limit = Score.from(16);
         Score expectedScore = Score.from(21);
 
@@ -72,11 +72,11 @@ public class HandTest {
     @Test
     @DisplayName("참여자가 가지고 있는 첫 번째 카드를 반환한다.")
     void getFirstCardOfParticipant() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
+        List<Card> initialCards = List.of(Card.of(Shape.DIAMOND, Letter.TWO), Card.of(Shape.HEART, Letter.ACE));
 
         Hand hand = new Hand(initialCards);
 
-        assertThat(hand.getFirstCard()).isEqualTo(new Card(Shape.DIAMOND, Letter.TWO));
+        assertThat(hand.getFirstCard()).isEqualTo(Card.of(Shape.DIAMOND, Letter.TWO));
     }
 
 }

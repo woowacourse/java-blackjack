@@ -17,8 +17,8 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
-        cards.add(new Card(Shape.DIAMOND, Letter.TWO));
-        cards.add(new Card(Shape.CLOVER, Letter.JACK));
+        cards.add(Card.of(Shape.DIAMOND, Letter.TWO));
+        cards.add(Card.of(Shape.CLOVER, Letter.JACK));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class DealerTest {
     void pickNewCard() {
         Dealer dealer = new Dealer(new Hand(cards));
 
-        dealer.pick(new Card(Shape.DIAMOND, Letter.NINE));
+        dealer.pick(Card.of(Shape.DIAMOND, Letter.NINE));
 
         assertThat(dealer.getCardList().size()).isEqualTo(3);
     }
@@ -36,7 +36,7 @@ public class DealerTest {
     void bustDealer() {
         Dealer dealer = new Dealer(new Hand(cards));
 
-        dealer.pick(new Card(Shape.HEART, Letter.QUEEN));
+        dealer.pick(Card.of(Shape.HEART, Letter.QUEEN));
 
         assertThat(dealer.isBust()).isTrue();
     }
@@ -46,7 +46,7 @@ public class DealerTest {
     void notBustDealer() {
         Dealer dealer = new Dealer(new Hand(cards));
 
-        dealer.pick(new Card(Shape.HEART, Letter.ACE));
+        dealer.pick(Card.of(Shape.HEART, Letter.ACE));
 
         assertThat(dealer.isBust()).isFalse();
     }
@@ -56,7 +56,7 @@ public class DealerTest {
     void noMoreCard() {
         Dealer dealer = new Dealer(new Hand(cards));
 
-        dealer.pick(new Card(Shape.HEART, Letter.FIVE));
+        dealer.pick(Card.of(Shape.HEART, Letter.FIVE));
 
         assertThat(dealer.isMoreCardAble()).isFalse();
     }
@@ -66,7 +66,7 @@ public class DealerTest {
     void isMoreCardAble() {
         Dealer dealer = new Dealer(new Hand(cards));
 
-        dealer.pick(new Card(Shape.HEART, Letter.FOUR));
+        dealer.pick(Card.of(Shape.HEART, Letter.FOUR));
 
         assertThat(dealer.isMoreCardAble()).isTrue();
     }
@@ -78,7 +78,7 @@ public class DealerTest {
 
         Card card = dealer.showOneCard();
 
-        assertThat(card).isEqualTo(new Card(Shape.DIAMOND, Letter.TWO));
+        assertThat(card).isEqualTo(Card.of(Shape.DIAMOND, Letter.TWO));
     }
 
 }

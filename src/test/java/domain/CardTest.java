@@ -15,7 +15,7 @@ public class CardTest {
         Shape diamond = Shape.DIAMOND;
         Letter two = Letter.TWO;
 
-        Card card = new Card(diamond, two);
+        Card card = Card.of(diamond, two);
 
         assertThat(card.getShape()).isEqualTo(Shape.DIAMOND);
         assertThat(card.getLetter().getExpression()).isEqualTo("2");
@@ -28,9 +28,21 @@ public class CardTest {
         Shape shape = Shape.DIAMOND;
         Letter letter = Letter.ACE;
 
-        Card card = new Card(shape, letter);
+        Card card = Card.of(shape, letter);
 
         assertThat(card.isAce()).isTrue();
+    }
+
+    @Test
+    @DisplayName("같은 구조의 Card는 캐싱된 Card가 반환된다.")
+    void createCardWithCache() {
+        Shape shape = Shape.DIAMOND;
+        Letter letter = Letter.KING;
+
+        Card firstCard = Card.of(shape, letter);
+        Card secondCard = Card.of(shape, letter);
+
+        assertThat(firstCard).isSameAs(secondCard);
     }
 
 }

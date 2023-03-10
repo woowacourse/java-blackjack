@@ -37,7 +37,7 @@ public class CardDistributorTest {
     @DisplayName("초기 분배할 수 있는 카드가 남아있지 않다면 예외가 발생한다")
     void exceptionWhenNoMoreCardToRun() {
         ArrayList<Card> cards = new ArrayList<>() {{
-            add(new Card(Shape.CLOVER, Letter.ACE));
+            add(Card.of(Shape.CLOVER, Letter.ACE));
         }};
         CardDistributor cardDistributor = new CardDistributor(cards);
 
@@ -50,7 +50,7 @@ public class CardDistributorTest {
     @DisplayName("카드 분배기에 분배 가능한 카드가 남아있는지 확인한다.")
     void checkCardDistributorHasCardLeft() {
         ArrayList<Card> cards = new ArrayList<>() {{
-            add(new Card(Shape.CLOVER, Letter.ACE));
+            add(Card.of(Shape.CLOVER, Letter.ACE));
         }};
         CardDistributor cardDistributor = new CardDistributor(cards);
 
@@ -61,7 +61,7 @@ public class CardDistributorTest {
     @DisplayName("카드 분배기에 분배 가능한 카드가 없는지 확인한다.")
     void checkCardDistributorNoCardLeft() {
         ArrayList<Card> cards = new ArrayList<>() {{
-            add(new Card(Shape.CLOVER, Letter.ACE));
+            add(Card.of(Shape.CLOVER, Letter.ACE));
         }};
         CardDistributor cardDistributor = new CardDistributor(cards);
 

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import type.Letter;
 import type.Shape;
@@ -8,10 +10,19 @@ public class Card {
 
     private final Shape shape;
     private final Letter letter;
+    private static final Map<String, Card> CACHE = new HashMap<>();
 
-    public Card(Shape shape, Letter letter) {
+    private Card(Shape shape, Letter letter) {
         this.shape = shape;
         this.letter = letter;
+    }
+
+    public static Card of(Shape shape, Letter letter) {
+        return CACHE.computeIfAbsent(toKeyString(shape, letter), k -> new Card(shape, letter));
+    }
+
+    private static String toKeyString(Shape shape, Letter letter) {
+        return shape.getName() + letter.getExpression();
     }
 
     public Shape getShape() {

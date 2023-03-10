@@ -23,12 +23,12 @@ public class ResultTest {
     @BeforeEach
     void setUp() {
         List<Card> dealerCards = new ArrayList<>() {{
-            add(new Card(Shape.CLOVER, Letter.JACK));
-            add(new Card(Shape.HEART, Letter.EIGHT));
+            add(Card.of(Shape.CLOVER, Letter.JACK));
+            add(Card.of(Shape.HEART, Letter.EIGHT));
         }};
         playerCards = new ArrayList<>() {{
-            add(new Card(Shape.HEART, Letter.JACK));
-            add(new Card(Shape.CLOVER, Letter.EIGHT));
+            add(Card.of(Shape.HEART, Letter.JACK));
+            add(Card.of(Shape.CLOVER, Letter.EIGHT));
         }};
         dealer = new Dealer(new Hand(dealerCards));
         names = List.of("aa");
@@ -137,19 +137,19 @@ public class ResultTest {
     }
 
     private void makePlayersBust() {
-        players.getPlayers().get(0).pick(new Card(Shape.HEART, Letter.KING));
+        players.getPlayers().get(0).pick(Card.of(Shape.HEART, Letter.KING));
     }
 
     private List<Card> makeBlackjackCards() {
-        return List.of(new Card(Shape.HEART, Letter.KING), new Card(Shape.HEART, Letter.ACE));
+        return List.of(Card.of(Shape.HEART, Letter.KING), Card.of(Shape.HEART, Letter.ACE));
     }
 
     private Card getParticipantWinCard() {
-        return new Card(Shape.HEART, Letter.TWO);
+        return Card.of(Shape.HEART, Letter.TWO);
     }
 
     private Card getParticipantBustCard() {
-        return new Card(Shape.HEART, Letter.NINE);
+        return Card.of(Shape.HEART, Letter.NINE);
     }
 
     private Players createGamePlayers(List<String> playerNames, List<Card> cards) {
