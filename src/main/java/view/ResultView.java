@@ -9,7 +9,7 @@ public class ResultView {
 
     public static final String JOIN_DELIMITER = ", ";
     private static final int OPEN_CARD_INDEX = 0;
-    private static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
+    private static final String FINAL_PROFIT_MESSAGE = "\n## 최종 수익";
 
     public static void printInitMessage(List<String> playerNames) {
         String names = String.join(JOIN_DELIMITER, playerNames);
@@ -29,10 +29,10 @@ public class ResultView {
         System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
     }
 
-    public static void printFinalFightResult(Map<String, String> finalFightResults) {
-        System.out.println(FINAL_RESULT_MESSAGE);
-        for (String participantName : finalFightResults.keySet()) {
-            System.out.println(participantName + ": " + finalFightResults.get(participantName));
+    public static void printFinalProfit(Map<String, String> finalProfitByPlayer) {
+        System.out.println(FINAL_PROFIT_MESSAGE);
+        for (String participantName : finalProfitByPlayer.keySet()) {
+            System.out.println(participantName + ": " + finalProfitByPlayer.get(participantName));
         }
     }
 }
