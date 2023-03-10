@@ -16,9 +16,7 @@ public class DeckTest {
     void createAllCardTest() {
         final Deck deck = Deck.createTrump();
 
-        for (int i = 0; i < 52; i++) {
-            Assertions.assertThatNoException().isThrownBy(deck::draw);
-        }
+        Assertions.assertThat(deck.size()).isEqualTo(52);
     }
 
     @Test

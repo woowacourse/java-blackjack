@@ -64,4 +64,8 @@ public final class Deck {
     private boolean isEmpty() {
         return cards.empty();
     }
+
+    public int size() {
+        return cards.size();
+    }
 }
