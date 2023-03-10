@@ -1,6 +1,5 @@
 package view;
 
-import domain.model.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -32,8 +31,15 @@ public class InputView {
         }
     }
 
-    public static boolean inputPlayerHitOrStand(final Player player) {
-        System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, player.getName());
+    // public static boolean inputPlayerHitOrStand(final Player player) {
+    //     System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, player.getName());
+    //     String input = SCANNER.nextLine();
+    //     checkLetter(input, YES, NO);
+    //     return input.equals(YES);
+    // }
+    //
+   public static boolean inputPlayerHitOrStand(final NameCardScoreDto nameCardScore) {
+        System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, nameCardScore.getName());
         String input = SCANNER.nextLine();
         checkLetter(input, YES, NO);
         return input.equals(YES);
