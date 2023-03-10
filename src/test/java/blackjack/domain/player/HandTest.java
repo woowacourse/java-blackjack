@@ -13,20 +13,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-class UserCardsTest {
+class HandTest {
 
     @Test
     @DisplayName("addCard()는 카드를 하나씩 추가한다.")
     void test_() {
         // given
-        PlayerCards playerCards = new PlayerCards();
+        Hand hand = new Hand();
 
         // when
         Card card = new Card(CardNumber.FIVE, CardSymbol.HEART);
-        playerCards.addCard(card);
+        hand.addCard(card);
 
         // then
-        Assertions.assertThat(playerCards.getPlayerCards()).hasSize(1);
+        Assertions.assertThat(hand.getPlayerCards()).hasSize(1);
     }
 
     @ParameterizedTest
@@ -34,11 +34,11 @@ class UserCardsTest {
     @DisplayName("updateCardScore() 는 점수를 업데이트 한다.")
     void calculate_player_cards_score(List<Card> cards, int expectedTotalScore) {
         // given & when
-        PlayerCards playerCards = new PlayerCards();
-        cards.forEach(playerCards::addCard);
-        playerCards.updateTotalScore();
+        Hand hand = new Hand();
+        cards.forEach(hand::addCard);
+        hand.updateTotalScore();
         // then
-        Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
+        Assertions.assertThat(hand.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 
     private static Stream<Arguments> provideCards() {
@@ -57,11 +57,11 @@ class UserCardsTest {
     @DisplayName("updateCardScore() 는 점수를 업데이트 한다.")
     void calculate_player_cards_score_with_ace(List<Card> cards, int expectedTotalScore) {
         // given & when
-        PlayerCards playerCards = new PlayerCards();
-        cards.forEach(playerCards::addCard);
-        playerCards.updateTotalScore();
+        Hand hand = new Hand();
+        cards.forEach(hand::addCard);
+        hand.updateTotalScore();
 
         // then
-        Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
+        Assertions.assertThat(hand.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 }
