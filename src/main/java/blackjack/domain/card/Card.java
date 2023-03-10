@@ -11,7 +11,7 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
-    public List<Integer> getScore() {
+    public int getScore() {
         return cardNumber.getScore();
     }
 

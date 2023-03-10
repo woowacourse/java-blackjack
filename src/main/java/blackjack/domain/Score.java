@@ -37,7 +37,7 @@ public class Score {
 
     private static int getTotalScore(List<Card> cards) {
         return cards.stream()
-                .mapToInt(card -> Collections.min(card.getScore()))
+                .mapToInt(card -> card.getScore())
                 .sum();
     }
 
