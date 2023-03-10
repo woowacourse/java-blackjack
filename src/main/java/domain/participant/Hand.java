@@ -11,6 +11,8 @@ import domain.score.TotalSumValues;
 public class Hand {
 
     private static final int INIT_VALUE_FOR_ADD = 0;
+    private static final int BLACKJACK_VALUE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -47,6 +49,10 @@ public class Hand {
         return cards.stream()
                 .map(Card::getValue)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isBlackjack() {
+        return calculateOptimalCardValueSum() == BLACKJACK_VALUE && cards.size() == BLACKJACK_SIZE;
     }
 
     public int getSize() {
