@@ -24,8 +24,8 @@
 
 ## Participant
 ### Participant
-- [ ] `Hand`와 `Money`를 가진다.
-- [ ] 카드를 받을 수 있다.
+- [x] `Hand`와 `Money`를 가진다.
+- [x] 카드를 받을 수 있다.
 - [ ] 돈을 받을 수 있다.
 
 ### Dealer
@@ -45,6 +45,7 @@
 - [x] `Card`들을 가진다.
 - [x] 가지고 있는 `Card`들의 총점을 계산할 수 있다.
   - [x] `Card`가 Ace라면 1 또는 11로 계산할 수 있다.
+- [x] `Card`를 추가로 가질 수 있다.
 
 ### Card
 - [x] `Denomination`을 가진다.

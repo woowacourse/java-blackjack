@@ -9,18 +9,18 @@ import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 import java.util.List;
 
-class HandTest {
+final class HandTest {
 
-    private final List<Card> cards = List.of(
-            new Card(ACE, HEART),
-            new Card(TWO, DIAMOND));
+    private final List<Card> cards = new ArrayList<>(
+            List.of(new Card(ACE, HEART),
+                    new Card(TWO, DIAMOND))
+    );
     private Hand hand;
 
     @BeforeEach
@@ -77,5 +77,13 @@ class HandTest {
         ));
 
         assertThat(hand.totalScore()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("새로운 카드를 한 장 추가로 받는다.")
+    void addTest() {
+        Hand newHand = this.hand.add(new Card(TWO, CLOVER));
+
+        assertThat(newHand.getHand().size()).isEqualTo(3);
     }
 }

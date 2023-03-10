@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class Hand {
@@ -29,11 +30,20 @@ public final class Hand {
     }
 
     private boolean canPlusScore(final int sum) {
-        return containsAce() && sum <= BLACKJACK_SCORE - MAKE_MORE_SCORE;
+        return containsAce() && (sum + MAKE_MORE_SCORE <= BLACKJACK_SCORE);
+    }
+
+    public Hand add(Card card) {
+        this.hand.add(card);
+        return new Hand(this.hand);
     }
 
     private boolean containsAce() {
         return this.hand.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 }
