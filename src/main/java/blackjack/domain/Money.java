@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public final class Money {
 
     static final String SUBTRACT_ERROR_MESSAGE = "현재 금액보다 더 큰 금액을 뺄 수는 없습니다.";
@@ -23,5 +25,18 @@ public final class Money {
 
     public int getMoney() {
         return money;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money1 = (Money) o;
+        return money == money1.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }
