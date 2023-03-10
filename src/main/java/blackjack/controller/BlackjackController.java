@@ -15,6 +15,8 @@ import java.util.List;
 
 public class BlackjackController {
 
+    private static final int INITIAL_DRAW_CARD_COUNT = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -40,7 +42,7 @@ public class BlackjackController {
     }
 
     private void startGame(final Participants participants, final Deck deck) {
-        participants.draw(deck, 2);
+        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
 
         outputView.printInitialHandOutMessage(participants);
     }
