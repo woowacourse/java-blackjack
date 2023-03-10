@@ -33,6 +33,14 @@ public class BlackJackGame {
         return users.getPlayerNames();
     }
 
+
+    public boolean isContinuous(final Name playerName) {
+        if (isBlackJackScore(playerName) || isPlayerBust(playerName)) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean isPlayerBust(final Name name) {
         return users.isPlayerBust(name);
     }

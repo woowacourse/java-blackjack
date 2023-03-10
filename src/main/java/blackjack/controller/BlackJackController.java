@@ -29,7 +29,6 @@ public class BlackJackController {
 
     private BlackJackGame initBlackJackGame() {
         try {
-            outputView.printPlayerNameRequestMessage();
             final List<String> playerNames = inputView.readPlayerNames();
             return new BlackJackGame(playerNames, new RandomDeckGenerator());
         } catch (IllegalArgumentException e) {
@@ -60,29 +59,21 @@ public class BlackJackController {
 
     private void playPlayerTurn(final BlackJackGame blackJackGame, final Name playerName) {
         DrawOrStay drawOrStay = DrawOrStay.DRAW;
-        while (drawOrStay.isDraw() && isContinuous(playerName, blackJackGame)) {
-            outputView.printDrawCardRequestMessage(playerName.getValue());
-            drawOrStay = repeatUntilReadValidateDrawInput();
+        while (drawOrStay.isDraw() && blackJackGame.isContinuous(playerName)) {
+            drawOrStay = repeatUntilReadValidateDrawInput(playerName);
             blackJackGame.playPlayer(playerName, drawOrStay);
             final CardGroup playerCardGroup = blackJackGame.getCardGroupBy(playerName);
             outputView.printUserNameAndCardGroup(playerName.getValue(), ViewRenderer.renderCardGroup(playerCardGroup));
         }
     }
 
-    private DrawOrStay repeatUntilReadValidateDrawInput() {
+    private DrawOrStay repeatUntilReadValidateDrawInput(final Name playerName) {
         try {
-            return DrawOrStay.from(inputView.readDrawOrStay());
+            return DrawOrStay.from(inputView.readDrawOrStay(playerName.getValue()));
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
-            return repeatUntilReadValidateDrawInput();
+            return repeatUntilReadValidateDrawInput(playerName);
         }
-    }
-
-    private boolean isContinuous(final Name playerName, final BlackJackGame blackJackGame) {
-        if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isPlayerBust(playerName)) {
-            return false;
-        }
-        return true;
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame) {

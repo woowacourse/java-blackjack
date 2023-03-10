@@ -5,10 +5,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String PLAYER_NAME_REQUEST_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
     private static final String INITIAL_STATUS_INFO_MESSAGE_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String CARD_INFO_MESSAGE_FORMAT = "%s카드: %s";
-    private static final String DRAW_CARD_REQUEST_MESSAGE_FORMAT = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_DRAW_INFO_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
             + System.lineSeparator();
     private static final String USER_NAME_AND_CARD_RESULT_MESSAGE_FORMAT = "%s카드: %s";
@@ -17,10 +15,6 @@ public class OutputView {
     private static final String PLAYERS_WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
     private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
     private static final String DELIMITER = ", ";
-
-    public void printPlayerNameRequestMessage() {
-        System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
-    }
 
     public void printFirstCardGroupInfoMessage(final List<String> playerNames) {
         printLineBreak();
@@ -31,11 +25,6 @@ public class OutputView {
     public void printUserNameAndCardGroup(String name, List<String> cardNames) {
         System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, name
                 , String.join(DELIMITER, cardNames)));
-    }
-
-
-    public void printDrawCardRequestMessage(final String playerName) {
-        System.out.println(String.format(DRAW_CARD_REQUEST_MESSAGE_FORMAT, playerName));
     }
 
     public void printDealerDrawInfoMessage() {
