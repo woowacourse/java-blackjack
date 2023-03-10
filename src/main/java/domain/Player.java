@@ -15,11 +15,6 @@ public class Player {
     public Player(final String name, final Cards cards) {
         this.name = name;
         this.cards = cards;
-        this.score = makeScore(cards);
-    }
-
-    private Score makeScore(final Cards cards) {
-        return Score.of(cards);
     }
 
     public static Player from(final String name) {
@@ -28,11 +23,15 @@ public class Player {
 
     public void addCard(final Card card) {
         cards.add(card);
-        score = makeScore(cards);
     }
 
     public boolean canReceiveCard() {
+        updateScore();
         return !score.isBust();
+    }
+
+    protected void updateScore() {
+        score = Score.of(cards);
     }
 
     public String getName() {
@@ -44,6 +43,7 @@ public class Player {
     }
 
     public Score getScore() {
+        updateScore();
         return score;
     }
 }
