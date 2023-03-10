@@ -3,8 +3,8 @@ package blackjackgame.domain;
 import java.util.Arrays;
 
 public enum DrawCommand {
-    DRAW("y"),
-    STOP("n");
+    HIT("y"),
+    STAY("n");
 
     private final String command;
 
