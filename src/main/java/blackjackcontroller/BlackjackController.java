@@ -2,7 +2,7 @@ package blackjackcontroller;
 
 import java.util.List;
 
-import betting.BettingTable;
+import betting.PlayersBettingTable;
 import betting.Reward;
 import blackjackgame.BlackjackGame;
 import deck.CardsGenerator;
@@ -34,8 +34,8 @@ public class BlackjackController {
     private BlackjackGame initializeGame(CardsGenerator cardsGenerator) {
         Participants participants = new Participants(new Dealer(), new Players());
         Deck deck = new Deck(cardsGenerator);
-        BettingTable bettingTable = new BettingTable();
-        return new BlackjackGame(participants, deck, bettingTable);
+        PlayersBettingTable playersBettingTable = new PlayersBettingTable();
+        return new BlackjackGame(participants, deck, playersBettingTable);
     }
 
     public void run() {

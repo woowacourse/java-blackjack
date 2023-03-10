@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import betting.BettingAmount;
-import betting.BettingTable;
+import betting.PlayersBettingTable;
 import blackjack.fixedcaradsgenerator.FixedCardsGenerator;
 import blackjackgame.BlackjackGame;
 import blackjackgame.Result;
@@ -38,7 +38,7 @@ class BlackjackGameTest {
     Players players;
     Participants participants;
     Deck deck;
-    BettingTable bettingTable;
+    PlayersBettingTable playersBettingTable;
 
     @BeforeEach
     void setUp() {
@@ -52,9 +52,9 @@ class BlackjackGameTest {
         deck = new Deck(fixedCardsGenerator);
         dealer = new Dealer();
         players = new Players();
-        bettingTable = new BettingTable();
+        playersBettingTable = new PlayersBettingTable();
         participants = new Participants(dealer, players);
-        blackjackGame = new BlackjackGame(participants, deck, bettingTable);
+        blackjackGame = new BlackjackGame(participants, deck, playersBettingTable);
     }
 
     @Test
@@ -135,7 +135,7 @@ class BlackjackGameTest {
         );
 
         Deck fixedDeck = new Deck(new FixedCardsGenerator(cards));
-        blackjackGame = new BlackjackGame(participants, fixedDeck, bettingTable);
+        blackjackGame = new BlackjackGame(participants, fixedDeck, playersBettingTable);
 
         Player player1 = new Player(new Name("폴로"));
         players.add(player1);
@@ -233,7 +233,7 @@ class BlackjackGameTest {
 
             blackjackGame.saveBetAmount("폴로", 10000);
 
-            BettingAmount amount = bettingTable.getBettingAmountByPlayer(player);
+            BettingAmount amount = playersBettingTable.getBettingAmountByPlayer(player);
             assertThat(amount.getAmount()).isEqualTo(10000);
         }
     }

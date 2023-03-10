@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import participants.Name;
 import participants.Player;
 
-class BettingTableTest {
-    BettingTable bettingTable;
+class PlayersBettingTableTest {
+    PlayersBettingTable playersBettingTable;
 
     @BeforeEach
     void setUp() {
-        bettingTable = new BettingTable();
+        playersBettingTable = new PlayersBettingTable();
     }
 
     @Test
@@ -23,9 +23,9 @@ class BettingTableTest {
         Player player = new Player(new Name("폴로"));
         BettingAmount bettingAmount = new BettingAmount(1000);
 
-        bettingTable.saveBet(player, bettingAmount);
+        playersBettingTable.saveBet(player, bettingAmount);
 
-        assertThat(bettingTable.getBettingAmountByPlayer(player)).isEqualTo(bettingAmount);
+        assertThat(playersBettingTable.getBettingAmountByPlayer(player)).isEqualTo(bettingAmount);
     }
 
     @Test
@@ -35,9 +35,9 @@ class BettingTableTest {
         BettingAmount bettingAmount = new BettingAmount(1000);
         player.win();
 
-        bettingTable.saveBet(player, bettingAmount);
+        playersBettingTable.saveBet(player, bettingAmount);
 
-        assertThat(bettingTable.calculateDealerReward()).isEqualTo(-1000);
+        assertThat(playersBettingTable.calculateDealerReward()).isEqualTo(-1000);
     }
 
     @Test
@@ -53,10 +53,10 @@ class BettingTableTest {
         player2.winBlackjack();
         player3.lose();
 
-        bettingTable.saveBet(player1, bettingAmount1);
-        bettingTable.saveBet(player2, bettingAmount2);
-        bettingTable.saveBet(player3, bettingAmount3);
+        playersBettingTable.saveBet(player1, bettingAmount1);
+        playersBettingTable.saveBet(player2, bettingAmount2);
+        playersBettingTable.saveBet(player3, bettingAmount3);
 
-        assertThat(bettingTable.calculateDealerReward()).isEqualTo(-12300);
+        assertThat(playersBettingTable.calculateDealerReward()).isEqualTo(-12300);
     }
 }

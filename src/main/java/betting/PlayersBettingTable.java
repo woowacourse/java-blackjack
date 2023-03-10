@@ -6,7 +6,7 @@ import java.util.Map;
 
 import participants.Player;
 
-public class BettingTable {
+public class PlayersBettingTable {
     public static final int NEGATIVE_UNIT = -1;
     private final Map<Player, BettingAmount> bettingMap = new LinkedHashMap<>();
 

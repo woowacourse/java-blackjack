@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import betting.BettingAmount;
-import betting.BettingTable;
+import betting.PlayersBettingTable;
 import betting.Reward;
 import deck.Deck;
 import dto.BettingResultDto;
@@ -27,12 +27,12 @@ public class BlackjackGame {
     private static final int FIRST_DRAW_COUNT = 2;
     private final Participants participants;
     private final Deck deck;
-    private final BettingTable bettingTable;
+    private final PlayersBettingTable playersBettingTable;
 
-    public BlackjackGame(Participants participants, Deck deck, BettingTable bettingTable) {
+    public BlackjackGame(Participants participants, Deck deck, PlayersBettingTable playersBettingTable) {
         this.participants = participants;
         this.deck = deck;
-        this.bettingTable = bettingTable;
+        this.playersBettingTable = playersBettingTable;
     }
 
     public void addPlayers(List<String> names) {
@@ -134,15 +134,15 @@ public class BlackjackGame {
 
     public void saveBetAmount(String name, int betAmount) {
         Player player = participants.findPlayerByName(new Name(name));
-        bettingTable.saveBet(player, new BettingAmount(betAmount));
+        playersBettingTable.saveBet(player, new BettingAmount(betAmount));
     }
 
     public Reward getDealerRewardResult() {
-        return new Reward(bettingTable.calculateDealerReward());
+        return new Reward(playersBettingTable.calculateDealerReward());
     }
 
     public BettingResultsDto getPlayersResultDto() {
-        List<BettingResultDto> bettingResults = getBettingResults(bettingTable.getBettingMap());
+        List<BettingResultDto> bettingResults = getBettingResults(playersBettingTable.getBettingMap());
         return new BettingResultsDto(bettingResults);
     }
 
