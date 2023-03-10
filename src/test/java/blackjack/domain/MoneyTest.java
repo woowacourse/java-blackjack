@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Money.SUBTRACT_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,14 +21,6 @@ class MoneyTest {
         Money newMoney = money.add(new Money(10000));
 
         assertThat(newMoney.getMoney()).isEqualTo(10000);
-    }
-
-    @Test
-    @DisplayName("현재 금액보다 큰 수를 빼면 예외가 발생한다.")
-    void subtractTest_exception() {
-        assertThatIllegalArgumentException().isThrownBy(
-                () -> money.subtract(new Money(10000))
-        ).withMessage(SUBTRACT_ERROR_MESSAGE);
     }
 
     @Test

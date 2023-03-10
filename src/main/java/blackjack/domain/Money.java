@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public final class Money {
 
-    static final String SUBTRACT_ERROR_MESSAGE = "현재 금액보다 더 큰 금액을 뺄 수는 없습니다.";
-
     private final int money;
 
     public Money(final int money) {
@@ -17,9 +15,7 @@ public final class Money {
     }
 
     public Money subtract(final Money money) {
-        if (this.money < money.money) {
-            throw new IllegalArgumentException(SUBTRACT_ERROR_MESSAGE);
-        }
+        // 최종 수익을 구할 때 마이너스가 나올 수 있기에, 음수 검증 생략
         return new Money(this.money - money.money);
     }
 
