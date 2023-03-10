@@ -22,6 +22,10 @@ public abstract class Participant {
         this.hand = this.hand.add(card);
     }
 
+    public void receiveHand(final Hand hand) {
+        this.hand = hand;
+    }
+
     public void receiveMoney(final Money money) {
         this.money = this.money.add(money);
     }
