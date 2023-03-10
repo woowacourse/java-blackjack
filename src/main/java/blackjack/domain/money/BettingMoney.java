@@ -11,6 +11,10 @@ public class BettingMoney {
         this.money = Integer.parseInt(money);
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     private void validateNullOrBlank(final String money) {
         if (money == null || money.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 null이나 공백이면 안됩니다.");
