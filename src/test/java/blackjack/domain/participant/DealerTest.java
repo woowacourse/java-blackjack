@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,12 +15,10 @@ public class DealerTest {
     void canHitTest() {
         //given
         final Dealer dealer = Dealer.from(new ArrayList<>());
-        final Card card1 = CLOVER_SIX;
-        final Card card2 = DIAMOND_JACK;
 
         //when
-        dealer.drawCard(card1);
-        dealer.drawCard(card2);
+        dealer.drawCard(CLOVER_SIX);
+        dealer.drawCard(DIAMOND_JACK);
 
         //then
         Assertions.assertThat(dealer.isHit()).isTrue();

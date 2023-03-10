@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static blackjack.domain.CardConstant.DIAMOND_ACE;
 import static blackjack.domain.CardConstant.SPACE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class CardTest {
 

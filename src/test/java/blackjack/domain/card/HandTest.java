@@ -9,7 +9,6 @@ import java.util.List;
 
 import static blackjack.domain.CardConstant.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class HandTest {
 

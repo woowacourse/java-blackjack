@@ -15,7 +15,6 @@ import java.util.Map;
 
 import static blackjack.domain.CardConstant.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class ResultGameTest {
     private Dealer dealer;
