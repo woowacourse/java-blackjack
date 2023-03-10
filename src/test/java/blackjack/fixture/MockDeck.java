@@ -6,12 +6,12 @@ import blackjack.domain.card.Deck;
 import java.util.ArrayDeque;
 import java.util.List;
 
-public class DeckMock extends Deck {
-    public static DeckMock create(final List<Card> cards) {
-        return new DeckMock(cards);
+public class MockDeck extends Deck {
+    public static MockDeck create(final List<Card> cards) {
+        return new MockDeck(cards);
     }
 
-    private DeckMock(final List<Card> cards) {
+    private MockDeck(final List<Card> cards) {
         super.cards = new ArrayDeque<>(cards);
     }
 
