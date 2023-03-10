@@ -27,8 +27,8 @@
 - [x] `Hand`와 `Money`를 가진다.
 
 ### Dealer
-- [ ] 딜러라는 이름을 가진다.
-- [ ] `Bank`와 `Deck`을 가진다.
+- [x] 딜러라는 이름을 가진다.
+- [x] `Bank`와 `Deck`을 가진다.
 
 ### Players
 - [x] `Player`들을 가진다.
