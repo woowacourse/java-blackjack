@@ -1,5 +1,7 @@
 package card;
 
+import java.util.Objects;
+
 public class Score {
     public static final int MAX_SCORE = 21;
     public static final int LIMIT_ADDITIONAL_SCORE = 11;
@@ -40,5 +42,22 @@ public class Score {
 
     public boolean isBiggerThan(Score compared) {
         return this.score > compared.score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

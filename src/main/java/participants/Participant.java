@@ -72,7 +72,7 @@ public abstract class Participant {
         if (other.isBust()) {
             return true;
         }
-        return this.calculateScore().getScore() > other.calculateScore().getScore();
+        return this.calculateScore().isBiggerThan(other.calculateScore());
     }
 
     private boolean isLoseTo(Participant other) {
@@ -85,11 +85,11 @@ public abstract class Participant {
         if (other.isBust()) {
             return false;
         }
-        return other.calculateScore().getScore() > this.calculateScore().getScore();
+        return other.calculateScore().isBiggerThan(this.calculateScore());
     }
 
     private boolean isDrawTo(Participant other) {
-        return this.calculateScore().getScore() == other.calculateScore().getScore() && !this.isBust();
+        return other.calculateScore().equals(this.calculateScore()) && !this.isBust();
     }
 
     protected abstract void winBlackjack();
