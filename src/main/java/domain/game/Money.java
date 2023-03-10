@@ -1,11 +1,17 @@
 package domain.game;
 
+import java.math.BigDecimal;
+
 public class Money {
 
-    private final int amount;
+    private final BigDecimal amount;
 
     public Money(final int amount) {
         validateAmount(amount);
+        this.amount = BigDecimal.valueOf(amount);
+    }
+
+    public Money(final BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -15,7 +21,11 @@ public class Money {
         }
     }
 
-    public int getAmount() {
+    public Money multiplyProfitWeight(final BigDecimal weight) {
+        return new Money(this.amount.multiply(weight));
+    }
+
+    public BigDecimal getAmount() {
         return amount;
     }
 }
