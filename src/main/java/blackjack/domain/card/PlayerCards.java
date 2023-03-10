@@ -21,26 +21,22 @@ public class PlayerCards {
     }
 
     public int getScore() {
-        int score = 0;
-        for (Card card : cards) {
-            CardNumber cardNumber = card.getNumber();
-            score += cardNumber.getScore();
+        int handleAceScore = getTotalScore() + 10;
+        if (hasAce() && ScoreState.of(handleAceScore).isNotBust()) {
+            return handleAceScore;
         }
-        return handleAce(score);
+        return getTotalScore();
     }
 
-    private int handleAce(int score) {
-        for (Card card : cards) {
-            score = getTotalScore(score, card);
-        }
-        return score;
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
-    private int getTotalScore(int score, Card card) {
-        if (card.isAce() && ScoreState.of(score).isBust()) {
-            score -= 10;
-        }
-        return score;
+    private int getTotalScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     @Override

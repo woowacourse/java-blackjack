@@ -32,16 +32,20 @@ public class Card {
         return List.copyOf(CACHE);
     }
 
+    public boolean isAce() {
+        return this.cardNumber.isAce();
+    }
+
+    public int getScore() {
+        return cardNumber.getScore();
+    }
+
     public CardSuit getSuit() {
         return cardSuit;
     }
 
     public CardNumber getNumber() {
         return cardNumber;
-    }
-
-    public boolean isAce() {
-        return this.cardNumber.isAce();
     }
 
     @Override
