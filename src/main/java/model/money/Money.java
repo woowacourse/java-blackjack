@@ -1,7 +1,9 @@
 package model.money;
 
+import static model.card.State.*;
+
 import java.util.Objects;
-import model.user.Result;
+import model.card.State;
 
 public class Money {
 
@@ -21,12 +23,20 @@ public class Money {
         return new Money(this.money + money.money);
     }
 
-    public Money calculateMoney(Result result) {
-        if (result == Result.WIN) {
+    public Money calculateMoney(State result) {
+        if (result == BLACKJACK) {
+            return blackJack();
+        }
+
+        return judge(result);
+    }
+
+    private Money judge(State result) {
+        if (result == WIN) {
             return this;
         }
 
-        if (result == Result.LOSE) {
+        if (result == LOSE) {
             return lose();
         }
 
@@ -38,7 +48,7 @@ public class Money {
     }
 
     private Money draw() {
-        return new Money(0);
+        return zero;
     }
 
     public Money blackJack() {

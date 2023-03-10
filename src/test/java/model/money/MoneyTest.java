@@ -1,8 +1,9 @@
 package model.money;
 
-import static model.user.Result.LOSE;
-import static model.user.Result.TIE;
-import static model.user.Result.WIN;
+import static model.card.State.BLACKJACK;
+import static model.card.State.LOSE;
+import static model.card.State.TIE;
+import static model.card.State.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +42,19 @@ public class MoneyTest {
     @Nested
     @DisplayName("Result에 따라 돈을 계산한다")
     class calculateByResult {
+
+        @Test
+        @DisplayName("게임이 블랙잭이면 블랙잭 머니로 바뀐다.")
+        void whenBlackGame_thenReturnBlackMoney() {
+            // given
+            final Money money = new Money(10_000);
+
+            // when
+            final Money lose = money.calculateMoney(BLACKJACK);
+
+            // then
+            assertThat(lose).isEqualTo(new Money(15_000));
+        }
 
         @Test
         @DisplayName("게임에서 질 경우 돈의 값이 마이너스로 바뀐다.")
