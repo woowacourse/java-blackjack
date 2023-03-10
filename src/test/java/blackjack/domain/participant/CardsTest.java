@@ -36,7 +36,7 @@ class CardsTest {
         Cards deck = new Cards();
         deck.addCard(new CourtCard(Pattern.SPADE, "K"));
         deck.addCard(new StandardCard(Pattern.SPADE, "4"));
-        Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(14);
+        Assertions.assertThat(deck.calculateScore()).isEqualTo(14);
     }
 
     @Test
@@ -46,7 +46,7 @@ class CardsTest {
         deck.addCard(new CourtCard(Pattern.SPADE, "J"));
         deck.addCard(new CourtCard(Pattern.SPADE, "Q"));
 
-        Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(30);
+        Assertions.assertThat(deck.calculateScore()).isEqualTo(30);
     }
 
 
@@ -59,7 +59,7 @@ class CardsTest {
             deck.addCard(new CourtCard(Pattern.SPADE, "K"));
             deck.addCard(new StandardCard(Pattern.SPADE, "4"));
             deck.addCard(new AceCard(Pattern.HEART));
-            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(15);
+            Assertions.assertThat(deck.calculateScore()).isEqualTo(15);
         }
 
         @Test
@@ -69,7 +69,7 @@ class CardsTest {
             deck.addCard(new StandardCard(Pattern.SPADE, "4"));
             deck.addCard(new AceCard(Pattern.HEART));
 
-            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(17);
+            Assertions.assertThat(deck.calculateScore()).isEqualTo(17);
         }
 
         @Test
@@ -81,7 +81,7 @@ class CardsTest {
             deck.addCard(new StandardCard(Pattern.SPADE, "4"));
             deck.addCard(new AceCard(Pattern.DIAMOND));
 
-            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(19);
+            Assertions.assertThat(deck.calculateScore()).isEqualTo(19);
         }
 
         @Test
@@ -93,7 +93,7 @@ class CardsTest {
             deck.addCard(new CourtCard(Pattern.SPADE, "J"));
             deck.addCard(new AceCard(Pattern.CLUB));
 
-            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(23);
+            Assertions.assertThat(deck.calculateScore()).isEqualTo(23);
         }
     }
 }

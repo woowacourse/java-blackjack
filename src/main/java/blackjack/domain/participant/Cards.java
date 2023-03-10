@@ -40,24 +40,24 @@ public class Cards {
             .collect(Collectors.toList());
     }
 
-    public int calculateScore(Cards deck) {
-        int commonSum = calculateStandardAndCourtCardScore(deck);
-        List<AceCard> aceCards = extractAceCards(deck);
+    public int calculateScore() {
+        int commonSum = calculateStandardAndCourtCardScore();
+        List<AceCard> aceCards = extractAceCards();
         int aceCardCount = aceCards.size();
         int aceSum = calculateAceCardScore(commonSum, aceCardCount);
         return commonSum + aceSum;
     }
 
 
-    private int calculateStandardAndCourtCardScore(Cards deck) {
-        return deck.getCards().stream()
+    private int calculateStandardAndCourtCardScore() {
+        return cards.stream()
                 .filter((card) -> card.getValue() != MAX_ACE_VALUE)
                 .mapToInt(Card::getValue)
                 .sum();
     }
 
-    private List<AceCard> extractAceCards(Cards deck) {
-        return deck.getCards().stream()
+    private List<AceCard> extractAceCards() {
+        return cards.stream()
                 .filter((card) -> card.getValue() == MAX_ACE_VALUE)
                 .map((card) -> (AceCard) card)
                 .collect(Collectors.toList());

@@ -26,7 +26,7 @@ abstract public class Participant {
     }
 
     public int calculateScore() {
-        return cards.calculateScore(cards);
+        return cards.calculateScore();
     }
 
     public Name getName() {
