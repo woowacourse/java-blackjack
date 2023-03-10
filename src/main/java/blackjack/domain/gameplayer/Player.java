@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Player implements Person {
+public class Player implements User {
     public static final Score hitUpperBound = Score.of(21);
 
     private final Name name;

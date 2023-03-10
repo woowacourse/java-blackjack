@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Dealer implements Person {
+public class Dealer implements User {
     public static final Score hitUpperBound = Score.of(17);
 
     private final List<Card> cards;
