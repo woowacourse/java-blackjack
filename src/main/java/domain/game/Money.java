@@ -21,11 +21,11 @@ public class Money {
         }
     }
 
-    public Money multiplyProfitWeight(final BigDecimal weight) {
-        return new Money(this.amount.multiply(weight));
+    public Money multiply(final BigDecimal amount) {
+        return new Money(this.amount.multiply(amount));
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public int getAmount() {
+        return amount.intValue();
     }
 }

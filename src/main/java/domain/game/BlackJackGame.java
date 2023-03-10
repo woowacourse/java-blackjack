@@ -7,6 +7,7 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import domain.result.WinningResult;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackJackGame {
 
@@ -32,6 +33,14 @@ public final class BlackJackGame {
         return new WinningResult(participants);
     }
 
+    public void addBet(final Player player, final Money money) {
+        this.bets.addBet(player, money);
+    }
+
+    public Map<Player, Money> finalBets() {
+        return bets.calculateBets(makeResult());
+    }
+
     public Participants getParticipants() {
         return participants;
     }
@@ -42,9 +51,5 @@ public final class BlackJackGame {
 
     public Dealer getDealer() {
         return participants.getDealer();
-    }
-
-    public void addBet(final Player player, final Money money) {
-        this.bets.addBet(player, money);
     }
 }

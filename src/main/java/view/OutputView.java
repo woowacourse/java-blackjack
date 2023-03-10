@@ -1,6 +1,8 @@
 package view;
 
 import domain.card.Card;
+import domain.game.BlackJackGame;
+import domain.game.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -63,6 +65,7 @@ public final class OutputView {
             System.out.printf(finalFormat, formatCardState(player), player.getScore());
         }
         System.out.println();
+        System.out.println();
     }
 
     private String formatCardState(final Participant participant) {
@@ -75,6 +78,7 @@ public final class OutputView {
 
     public void printFillDealerCards() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
+        System.out.println();
     }
 
     public void printResult(final WinningResult winningResult) {
@@ -126,5 +130,15 @@ public final class OutputView {
             return "무";
         }
         return "패";
+    }
+
+    public void printBets(final BlackJackGame blackJackGame) {
+        Map<Player, Money> finalBets = blackJackGame.finalBets();
+        for (Player player : blackJackGame.getPlayers()) {
+            Money playerBet = finalBets.get(player);
+            System.out.printf("%s: %d" + System.lineSeparator(),
+                    player.getName(),
+                    playerBet.getAmount());
+        }
     }
 }

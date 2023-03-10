@@ -5,12 +5,12 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Score;
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class WinningResult {
 
-    private final Map<Player, WinningStatus> playersResult = new HashMap<>();
+    private final Map<Player, WinningStatus> playersResult = new LinkedHashMap<>();
 
     public WinningResult(final Participants participants) {
         computeWinningResult(participants);

@@ -5,14 +5,13 @@ import domain.participant.Score;
 import domain.status.Status;
 import domain.status.end.BlackJack;
 import domain.status.intermediate.Hit;
-import java.util.Collections;
 
 public final class Ready extends InitialStatus {
 
     @Override
     public Status initialDraw(final Cards cards) {
         Score score = cards.calculateScore();
-        if (score.isBlackJack()) {
+        if (score.isMax()) {
             return new BlackJack(cards);
         }
         return new Hit(cards);

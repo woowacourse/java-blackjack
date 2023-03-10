@@ -20,6 +20,9 @@ public final class Hit extends IntermediateStatus {
         if (newCards.isBust()) {
             return new Bust(newCards);
         }
+        if (newCards.calculateScore().isMax()) {
+            return new Stand(newCards);
+        }
         return new Hit(newCards);
     }
 

@@ -35,13 +35,13 @@ public final class InputView {
         throw new IllegalArgumentException("y과 n 중 입력해 주세요!");
     }
 
-    public int readBettingMoney(final String name) {
+    public int readBet(final String name) {
         System.out.printf("%s의 배팅 금액은?" + System.lineSeparator(), name);
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException exception) {
             System.out.println("숫자만 입력해 주세요.");
-            return readBettingMoney(name);
+            return readBet(name);
         }
     }
 }

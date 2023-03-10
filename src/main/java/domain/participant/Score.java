@@ -24,7 +24,7 @@ public final class Score {
         return this.addBonus().isSmallerOrEqualsTo(MAX);
     }
 
-    public boolean isBlackJack() {
+    public boolean isMax() {
         return this.isEquals(MAX);
     }
 

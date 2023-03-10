@@ -15,4 +15,8 @@ public final class Player extends Participant {
     public boolean isHittable() {
         return calculateScore().isSmallerThan(BUST_BOUNDARY_EXCLUSIVE);
     }
+
+    public void selectStand() {
+        this.status = status.selectStand();
+    }
 }

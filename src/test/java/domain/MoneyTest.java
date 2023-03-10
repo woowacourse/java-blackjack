@@ -27,7 +27,7 @@ class MoneyTest {
     @Test
     void multiplyProfitWeight() {
         Money weightedMoney = new Money(100)
-                .multiplyProfitWeight(new BlackJack(new Cards()).profitWeight());
+                .multiply(new BlackJack(new Cards()).profitWeight());
         assertThat(weightedMoney.getAmount()).isEqualTo(BigDecimal.valueOf(150.0));
     }
 }

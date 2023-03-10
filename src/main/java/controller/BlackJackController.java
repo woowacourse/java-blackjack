@@ -1,10 +1,10 @@
 package controller;
 
-import domain.game.BlackJackGame;
-import domain.game.Money;
 import domain.PlayerCommand;
 import domain.card.CardDeck;
 import domain.card.shuffler.CardsShuffler;
+import domain.game.BlackJackGame;
+import domain.game.Money;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -36,7 +36,7 @@ public final class BlackJackController {
 
     private void playGame(final BlackJackGame blackJackGame) {
         for (Player player : blackJackGame.getPlayers()) {
-            Money money = new Money(inputView.readBettingMoney(player.getName()));
+            Money money = new Money(inputView.readBet(player.getName()));
             blackJackGame.addBet(player, money);
         }
 
@@ -64,6 +64,10 @@ public final class BlackJackController {
 
     private void distributeByCommand(final BlackJackGame blackJackGame, final Player player,
                                      final PlayerCommand command) {
+        if (command.isStand()) {
+            player.selectStand();
+        }
+
         if (command.isHit()) {
             blackJackGame.giveCardTo(player);
         }
@@ -84,6 +88,6 @@ public final class BlackJackController {
     private void showResult(final BlackJackGame blackJackGame) {
         outputView.printFinalState(blackJackGame.getParticipants());
 
-        outputView.printResult(blackJackGame.makeResult());
+        outputView.printBets(blackJackGame);
     }
 }

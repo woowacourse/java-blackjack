@@ -4,12 +4,13 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.status.Status;
 import domain.status.initial.Ready;
+import java.math.BigDecimal;
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
-    private Status status;
+    protected Status status;
 
     public Participant(final Name name) {
         this.name = name;
@@ -37,6 +38,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return status.isBust();
+    }
+
+    public BigDecimal profitRate() {
+        return status.profitWeight();
     }
 
     public String getName() {
