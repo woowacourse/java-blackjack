@@ -1,4 +1,6 @@
-package domain.model;
+package domain;
+
+import domain.card.Cards;
 
 public class Dealer extends Player {
 

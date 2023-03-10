@@ -1,6 +1,8 @@
-package domain.model;
+package domain;
 
-import domain.type.Denomination;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
 
 public class Score {
 

@@ -1,7 +1,8 @@
-package domain.model;
+package domain;
 
-import domain.type.Denomination;
-import domain.type.Suit;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;

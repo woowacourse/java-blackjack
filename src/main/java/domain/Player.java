@@ -1,7 +1,10 @@
-package domain.model;
+package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.card.Card;
+import domain.card.Cards;
 
 public class Player {
 

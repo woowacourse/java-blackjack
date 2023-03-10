@@ -1,6 +1,4 @@
-package domain.model;
-
-import domain.type.Denomination;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;

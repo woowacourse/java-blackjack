@@ -1,9 +1,12 @@
-package domain.model;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.type.Denomination;
-import domain.type.Suit;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
+import domain.card.Suit;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

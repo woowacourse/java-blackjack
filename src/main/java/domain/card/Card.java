@@ -1,7 +1,5 @@
-package domain.model;
+package domain.card;
 
-import domain.type.Denomination;
-import domain.type.Suit;
 import java.util.Objects;
 
 public class Card {
