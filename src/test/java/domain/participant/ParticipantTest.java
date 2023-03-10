@@ -22,7 +22,7 @@ class ParticipantTest {
 
         participant.takeCard(card1);
         participant.takeCard(card2);
-        List<Card> handCards = participant.getHandCards().getCards();
+        List<Card> handCards = participant.getHandCards();
 
         assertThat(handCards.size()).isEqualTo(2);
         assertThat(handCards).contains(card1, card2);

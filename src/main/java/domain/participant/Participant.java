@@ -1,5 +1,7 @@
 package domain.participant;
 
+import java.util.List;
+
 import domain.card.Card;
 
 public abstract class Participant {
@@ -20,8 +22,12 @@ public abstract class Participant {
         return name.getValue();
     }
 
-    public Hand getHandCards() {
+    public Hand getHand() {
         return hand;
+    }
+
+    public List<Card> getHandCards() {
+        return hand.getCards();
     }
 
     public int getSize() {
