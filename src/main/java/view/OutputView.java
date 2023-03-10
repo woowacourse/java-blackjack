@@ -4,9 +4,7 @@ import domain.deck.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
-import domain.result.Outcome;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -16,6 +14,10 @@ public final class OutputView {
 
     public void printInputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public void printInitBetMoney(final Player player) {
+        System.out.printf("%n%s 배팅 금액은?%n", player.getName());
     }
 
     public void printHitTwice(final Players players) {
@@ -79,41 +81,25 @@ public final class OutputView {
         System.out.printf("%s 카드: %s - 결과: %s%n", name, toStringCards(cards), score);
     }
 
-    public void printGameResult(final EnumMap<Outcome, Integer> dealerResult, final Map<String, Outcome> playerResults) {
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayerResults(playerResults);
+    public void printGameResult(final int dealerProfit, final Map<String, Integer> playerBetMoneyResults) {
+        System.out.println("## 최종 수익");
+        printDealerResult(dealerProfit);
+        printPlayerResults(playerBetMoneyResults);
     }
 
-    private void printDealerResult(final EnumMap<Outcome, Integer> dealerResult) {
-        printGameEachResult(
-                "딜러",
-                dealerResult.get(Outcome.WIN),
-                dealerResult.get(Outcome.DRAW),
-                dealerResult.get(Outcome.LOSE)
-        );
+    private void printDealerResult(final int dealerProfit) {
+        System.out.printf("딜러: %s%n", dealerProfit);
     }
 
-    private void printPlayerResults(final Map<String, Outcome> playerResults) {
-        playerResults.keySet().forEach(name ->
-                printPlayerResult(playerResults, name)
-        );
+    private void printPlayerResults(final Map<String, Integer> playerResults) {
+        playerResults.keySet()
+                .forEach(name -> {
+                    printEachPlayerResult(name, playerResults.get(name));
+                });
     }
 
-    private void printPlayerResult(final Map<String, Outcome> playerResults, final String name) {
-        if (playerResults.get(name).equals(Outcome.WIN)) {
-            printGameEachResult(name, 1, 0, 0);
-        }
-        if (playerResults.get(name).equals(Outcome.DRAW)) {
-            printGameEachResult(name, 0, 1, 0);
-        }
-        if (playerResults.get(name).equals(Outcome.LOSE)) {
-            printGameEachResult(name, 0, 0, 1);
-        }
-    }
-
-    private void printGameEachResult(final String name, final int win, final int draw, final int lose) {
-        System.out.printf("%s: %s승 %s무 %s패%n", name, win, draw, lose);
+    private void printEachPlayerResult(final String name, final int profit) {
+        System.out.printf("%s: %s%n", name, profit);
     }
 
     public void printEmptyLine() {
