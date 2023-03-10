@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.ParticipantCards;
+import blackjack.domain.card.Deck;
 
 public class Player extends Participant {
-    public Player(final ParticipantCards cards, final String name) {
-        super(cards, name);
+    public Player(final Deck deck, final String name) {
+        super(deck, name);
     }
 
     @Override
