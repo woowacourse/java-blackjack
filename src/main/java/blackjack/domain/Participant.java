@@ -1,10 +1,11 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
-    protected final Name name;
-    protected final Cards cards;
+    private final Name name;
+    private final Cards cards;
 
     protected Participant(String name, List<Card> cards) {
         this.name = new Name(name);
