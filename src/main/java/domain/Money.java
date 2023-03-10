@@ -7,16 +7,19 @@ public class Money {
 
     private final int value;
 
-    private Money(int value) {
+    public Money(int value) {
+        validate(value);
         this.value = value;
     }
 
-    public static Money of(int value) {
-        if (value <= NATURAL_NUMBER_BOUND) {
+    private void validate(int value) {
+        if (isNotNaturalNumber(value)) {
             throw new IllegalArgumentException(MONEY_BOUND_ERROR_MESSAGE);
         }
+    }
 
-        return new Money(value);
+    private boolean isNotNaturalNumber(int value) {
+        return value <= NATURAL_NUMBER_BOUND;
     }
 
     public int getValue() {

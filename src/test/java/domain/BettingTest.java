@@ -15,7 +15,7 @@ public class BettingTest {
     void getBettingMoney() {
         BettingDto bettingDto = new BettingDto();
         Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        bettingDto.putPlayerAndMoney(player, Money.of(10000));
+        bettingDto.putPlayerAndMoney(player, new Money(10000));
 
         Betting betting = new Betting(bettingDto.getBetting());
         int money = betting.getMoneyFromPlayerName(player.getName());

@@ -51,7 +51,7 @@ public class BlackJackController {
     private Betting getBetting(Players players) {
         BettingDto bettingDto = new BettingDto();
         for (Player player : players.getPlayers()) {
-            bettingDto.putPlayerAndMoney(player, Money.of(inputView.requestBettingMoney(player.getNameValue())));
+            bettingDto.putPlayerAndMoney(player, new Money(inputView.requestBettingMoney(player.getNameValue())));
         }
         return new Betting(bettingDto.getBetting());
     }

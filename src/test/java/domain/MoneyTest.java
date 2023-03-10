@@ -14,7 +14,7 @@ public class MoneyTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1})
     void createMoneyFail(int input) {
-        Assertions.assertThatThrownBy(() -> Money.of(input))
+        Assertions.assertThatThrownBy(() -> new Money(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("1 이상의 금액만 배팅이 가능합니다.");
     }
@@ -22,7 +22,7 @@ public class MoneyTest {
     @Test
     @DisplayName("금액을 정상적으로 생성한다.")
     void createMoneySuccess() {
-        Money money = Money.of(10000);
+        Money money = new Money(10000);
 
         assertThat(money.getValue()).isEqualTo(10000);
     }
