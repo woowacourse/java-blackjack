@@ -2,27 +2,31 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.generator.RandomDeckGenerator;
+import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
-import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
+import blackjack.dto.ProfitResult;
 import blackjack.util.RepeatValidator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BackJackController {
+public class BlackJackController {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
         BlackJackGame blackJackGame = initBlackJackGame();
+        bettingPlayers(blackJackGame);
         printInitialStatus(blackJackGame);
         playPlayerTurn(blackJackGame);
         playDealerTurn(blackJackGame);
+        blackJackGame.judgeResults();
         printCardResult(blackJackGame);
-        printGameResult(blackJackGame);
+        printProfit(blackJackGame);
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -32,6 +36,20 @@ public class BackJackController {
             outputView.printLineBreak();
             return new BlackJackGame(names, new RandomDeckGenerator());
         });
+    }
+
+    private void bettingPlayers(BlackJackGame blackJackGame) {
+        final List<String> playerNames = blackJackGame.getPlayerNames();
+
+        for (String name : playerNames) {
+            RepeatValidator.runUntilValidate(() -> bettingPlayer(blackJackGame, name));
+        }
+    }
+
+    private void bettingPlayer(final BlackJackGame blackJackGame, final String name) {
+        outputView.printPlayerBettingAmountRequestMessage(name);
+        final int amount = inputView.readBettingMoneyAmount();
+        blackJackGame.bet(name, amount);
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
@@ -77,8 +95,13 @@ public class BackJackController {
         outputView.printLineBreak();
     }
 
-    private void printGameResult(BlackJackGame blackJackGame) {
-        final List<FinalResult> finalResults = blackJackGame.getFinalResults();
-        outputView.printFinalResult(finalResults);
+    private void printProfit(final BlackJackGame blackJackGame) {
+        final List<ProfitResult> profitResults = new ArrayList<>();
+        profitResults.add(new ProfitResult(Dealer.DEALER_NAME_CODE, blackJackGame.getDealerProfitAmount()));
+
+        for (String name : blackJackGame.getPlayerNames()) {
+            profitResults.add(new ProfitResult(name, blackJackGame.getPlayerProfitAmount(name)));
+        }
+        outputView.printProfitResult(profitResults);
     }
 }

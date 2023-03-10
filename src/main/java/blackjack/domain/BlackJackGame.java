@@ -8,26 +8,26 @@ import blackjack.domain.result.Score;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardAndScoreResult;
-import blackjack.dto.DealerFinalResult;
-import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
-import blackjack.dto.PlayerFinalResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 public class BlackJackGame {
 
     private final Deck deck;
     private final Users users;
+    private final ProfitCalculator profitCalculator;
 
     public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
         this.deck = new Deck(deckGenerator);
         this.users = new Users(playerNames, deck);
+        profitCalculator = new ProfitCalculator();
+    }
+
+    public void bet(final String name, final int amount) {
+        profitCalculator.bet(name, amount);
     }
 
     public HoldingCards getHandholdingCards(String name) {
@@ -73,21 +73,25 @@ public class BlackJackGame {
         return results;
     }
 
-    public List<FinalResult> getFinalResults() {
-        final Map<String, GameResult> playerResults = users.getGameResult();
-        final Map<GameResult, Long> dealerWinningResult = playerResults.values().stream()
-                .collect(groupingBy(GameResult::reverseWinningStatus, counting()));
-
-        final List<FinalResult> results = new ArrayList<>();
-        results.add(new DealerFinalResult(Dealer.DEALER_NAME_CODE, dealerWinningResult));
-        for (Map.Entry<String, GameResult> entry : playerResults.entrySet()) {
-            results.add(new PlayerFinalResult(entry.getKey(), entry.getValue()));
-        }
-        return results;
-    }
-
     public boolean isPossibleToDraw(final String name) {
         final Score userScore = users.getScore(name);
         return !userScore.isBust() && !userScore.isMaxNumber();
     }
+
+    public void judgeResults() {
+        final Map<String, GameResult> playerResults = users.getGameResult();
+        playerResults.entrySet().stream()
+                .forEach(resultEntry ->
+                        profitCalculator.putGameResult(resultEntry.getKey(), resultEntry.getValue())
+                );
+    }
+
+    public int getDealerProfitAmount() {
+        return profitCalculator.calculateDealerProfit();
+    }
+
+    public int getPlayerProfitAmount(final String name) {
+        return profitCalculator.calculateProfit(name);
+    }
+
 }

@@ -23,4 +23,21 @@ public class RepeatValidator {
             return null;
         }
     }
+
+    public static void runUntilValidate(InputFunction expression) {
+        boolean isSuccess = false;
+        do {
+            isSuccess = tryInputFunction(expression);
+        } while (!isSuccess);
+    }
+
+    private static boolean tryInputFunction(final InputFunction expression) {
+        try {
+            expression.run();
+            return true;
+        } catch (IllegalArgumentException exception) {
+            ErrorOutputView.printError(exception);
+            return false;
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class Users {
 
     private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
+
     private final List<User> users;
 
     public Users(List<String> playerNames, Deck deck) {

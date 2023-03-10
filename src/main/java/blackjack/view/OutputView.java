@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
-import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
 import blackjack.dto.ProfitResult;
 
@@ -18,8 +17,6 @@ public class OutputView {
     private static final String DRAW_CARD_REQUEST_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_DRAW_INFO_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_RESULT_MESSAGE_FORMAT = CARD_INFO_MESSAGE_FORMAT + " - 결과: %d";
-    private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
-    private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
     private static final String PROFIT_INFO_MESSAGE = "## 최종 수익";
     private static final String PROFIT_RESULT_MESSAGE_FORMAT = "%s: %d";
     private static final String DEALER_NAME = "딜러";
@@ -82,14 +79,6 @@ public class OutputView {
         for (ProfitResult result : profitResults) {
             System.out.println(String.format(PROFIT_RESULT_MESSAGE_FORMAT,
                     dealerNameConvertor(result.getName()), result.getProfitAmount()));
-        }
-    }
-
-    public void printFinalResult(final List<FinalResult> finalResults) {
-        System.out.println(WINNING_RESULT_INFO_MESSAGE);
-        for (FinalResult finalResult : finalResults) {
-            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, dealerNameConvertor(finalResult.getName()),
-                    ViewRenderer.renderFinalResult(finalResult)));
         }
     }
 
