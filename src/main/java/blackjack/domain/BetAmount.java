@@ -14,6 +14,15 @@ public class BetAmount {
         this.value = value;
     }
 
+    public static final BetAmount of(String value) {
+        try {
+            int parsed = Integer.parseInt(value);
+            return new BetAmount(parsed);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("올바른 숫자 형태가 아닙니다.");
+        }
+    }
+
 
     public int getValue() {
         return value;
