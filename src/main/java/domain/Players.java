@@ -60,4 +60,10 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
     }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                      .map(Player::name)
+                      .collect(toUnmodifiableList());
+    }
 }

@@ -4,7 +4,9 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -23,16 +25,26 @@ public class BlackjackController {
         dealCardsToDealer(blackjackGame);
 
         outputView.printHandsWithScore(toHandScoreDtos(blackjackGame.getParticipants()));
-        outputView.printWinLossInfo(blackjackGame.getPlayersOutcome());
+        outputView.printEarningsInfo(blackjackGame.getPlayersEarnings());
     }
 
     private BlackjackGame startGame() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.setParticipants(inputView.readPlayerNames());
+        setBettingAmounts(blackjackGame);
         blackjackGame.dealFirstHands(new RandomShuffleStrategy());
 
         outputView.printInitialHands(toHandDtos(blackjackGame.getParticipants()));
         return blackjackGame;
+    }
+
+    private void setBettingAmounts(final BlackjackGame blackjackGame) {
+        Map<String, Integer> bettingAmounts = new HashMap<>();
+        List<String> playerNames = blackjackGame.getPlayerNames();
+        for (String name : playerNames) {
+            bettingAmounts.put(name, inputView.readBettingAmount(name));
+        }
+        blackjackGame.makeBet(bettingAmounts);
     }
 
     private void dealCardsToPlayers(BlackjackGame blackjackGame) {

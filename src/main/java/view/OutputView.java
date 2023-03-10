@@ -2,12 +2,11 @@ package view;
 
 import controller.HandDto;
 import controller.HandScoreDto;
-import domain.PlayerOutcome;
 
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String NAME_CARD_DELIMITER = ":";
@@ -55,9 +54,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printHandsWithScore(List<HandScoreDto> participantDtosWithScore) {
-        for (HandScoreDto participantDtoWithScore : participantDtosWithScore) {
-            System.out.println(generateCardsAndScore(participantDtoWithScore));
+    public void printHandsWithScore(List<HandScoreDto> handScoreDtos) {
+        for (HandScoreDto handScoreDto : handScoreDtos) {
+            System.out.println(generateCardsAndScore(handScoreDto));
         }
     }
 
@@ -68,22 +67,22 @@ public class OutputView {
         return String.format("%s - 결과: %d", generateCardsInfo(name, cards), score);
     }
 
-    public void printWinLossInfo(Map<String, PlayerOutcome> playerOutcomes) {
-        System.out.println("## 최종 승패");
-//        Map<PlayerOutcome, Long> dealerOutcome = generateDealerOutcome(playerOutcomes);
-//        printDealerOutcome(dealerOutcome);
-//        playerOutcomes.forEach((name, outcome) -> System.out.println(name + ": " + outcome.value()));
+    public void printEarningsInfo(Map<String, Integer> playerEarnings) {
+        System.out.println("## 최종 수익");
+        printDealerEarning(playerEarnings);
+        playerEarnings.forEach((name, earning) -> System.out.println(name + ": " + earning));
     }
 
-//    private Map<PlayerOutcome, Long> generateDealerOutcome(Map<String, PlayerOutcome> playerOutcomes) {
-//        return playerOutcomes.values()
-//                             .stream()
-//                             .collect(groupingBy(PlayerOutcome::oppositeOutcome, counting()));
-//    }
+    private void printDealerEarning(Map<String, Integer> playerEarnings) {
+        int dealerEarning = calculateDealerEarning(playerEarnings);
+        System.out.println("딜러: " + dealerEarning);
+    }
 
-    private void printDealerOutcome(Map<PlayerOutcome, Long> dealerOutcome) {
-        System.out.print("딜러:");
-        dealerOutcome.forEach((outcome, count) -> System.out.print(" " + count + outcome.value()));
-        System.out.println();
+    private int calculateDealerEarning(Map<String, Integer> playerOutcomes) {
+        return playerOutcomes.values()
+                             .stream()
+                             .mapToInt(Integer::intValue)
+                             .sum() * -1;
+
     }
 }

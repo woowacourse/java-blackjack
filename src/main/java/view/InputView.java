@@ -30,4 +30,9 @@ public class InputView {
         return scanner.nextLine()
                       .trim();
     }
+
+    public Integer readBettingAmount(final String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

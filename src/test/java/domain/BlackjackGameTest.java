@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static domain.PlayerOutcome.LOSS;
-import static domain.PlayerOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -21,6 +19,7 @@ class BlackjackGameTest {
             //given
             BlackjackGame blackjackGame = new BlackjackGame();
             blackjackGame.setParticipants(List.of("포이", "에밀"));
+            blackjackGame.makeBet(Map.of("포이", 1000, "에밀", 1000));
             blackjackGame.dealFirstHands((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.JACK));
@@ -32,12 +31,12 @@ class BlackjackGameTest {
             });
 
             //when
-            Map<String, PlayerOutcome> outcome = blackjackGame.getPlayersOutcome();
+            Map<String, Integer> outcome = blackjackGame.getPlayersEarnings();
 
             //then
             assertAll(
-                    () -> assertThat(outcome).containsEntry("포이", WIN),
-                    () -> assertThat(outcome).containsEntry("에밀", LOSS)
+                    () -> assertThat(outcome).containsEntry("포이", 1000),
+                    () -> assertThat(outcome).containsEntry("에밀", -1000)
             );
         }
     }

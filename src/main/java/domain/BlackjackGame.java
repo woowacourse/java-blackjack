@@ -12,10 +12,15 @@ public class BlackjackGame {
     private Players players;
     private Dealer dealer;
     private Deck deck;
+    private BettingInfo playerBettingInfo;
 
     public void setParticipants(List<String> playerNames) {
         players = Players.from(playerNames);
         dealer = new Dealer();
+    }
+
+    public void makeBet(final Map<String, Integer> bettingAmounts) {
+        playerBettingInfo = new BettingInfo(bettingAmounts);
     }
 
     public void dealFirstHands(ShuffleStrategy shuffleStrategy) {
@@ -54,8 +59,12 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public Map<String, GameOutcome> getPlayersOutcome() {
-        return dealer.battleWith(players);
+    public List<String> getPlayerNames() {
+        return players.getPlayerNames();
+    }
+
+    public Map<String, Integer> getPlayersEarnings() {
+        return playerBettingInfo.getEarnings(dealer.battleWith(players));
     }
 
     public List<Participant> getParticipants() {
