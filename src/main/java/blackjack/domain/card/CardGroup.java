@@ -19,6 +19,10 @@ public class CardGroup {
         cards.add(secondCard);
     }
 
+    public CardGroup(final Deck deck) {
+        this(deck.draw(), deck.draw());
+    }
+
     public void add(final Card newCard) {
         cards.add(newCard);
     }

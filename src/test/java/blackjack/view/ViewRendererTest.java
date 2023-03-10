@@ -1,5 +1,9 @@
 package blackjack.view;
 
+import static java.util.Map.entry;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
@@ -7,15 +11,10 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Map.entry;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ViewRendererTest {
 
@@ -25,7 +24,7 @@ class ViewRendererTest {
         final CardGroup cardGroup = new CardGroup(new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.DIAMOND, CardNumber.TWO));
 
-        List<String> renderedCardNames = ViewRenderer.renderCardGroup(cardGroup);
+        final List<String> renderedCardNames = ViewRenderer.renderCardGroup(cardGroup);
 
         assertThat(renderedCardNames).contains("A스페이드", "2다이아몬드");
     }

@@ -12,10 +12,6 @@ public class Deck {
         this.cards = new LinkedList<>(deckGenerator.generate());
     }
 
-    public CardGroup drawFirstCardGroup() {
-        return new CardGroup(draw(), draw());
-    }
-
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(DECK_EMPTY_EXCEPTION_MESSAGE);

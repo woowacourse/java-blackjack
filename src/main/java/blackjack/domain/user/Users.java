@@ -19,7 +19,7 @@ public class Users {
     private final Players players;
 
     public Users(final List<String> playerNames, final Deck deck) {
-        dealer = new Dealer(deck.drawFirstCardGroup());
+        dealer = new Dealer(new CardGroup(deck));
         this.players = new Players(playerNames, deck);
     }
 

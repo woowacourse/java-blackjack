@@ -23,7 +23,7 @@ public class Players {
         validateNumberOfPlayerOverLimit(playerNames);
         validatePlayerHasDuplicate(playerNames);
         this.players = playerNames.stream()
-                .map(name -> new Player(name, deck.drawFirstCardGroup()))
+                .map(name -> new Player(name, new CardGroup(deck)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
