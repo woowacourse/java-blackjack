@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 public enum GameResultMessage {
     WIN(GameResult.WIN, "승"),
-    LOSE(GameResult.LOSE, "패");
+    LOSE(GameResult.LOSE, "패"),
+    TIE(GameResult.TIE, "무");
 
     private static final Map<GameResult, GameResultMessage> GAME_RESULT_MESSAGE = Arrays.stream(values())
             .collect(Collectors.toMap(GameResultMessage::getGameResult, Function.identity()));

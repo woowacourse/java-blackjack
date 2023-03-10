@@ -10,8 +10,12 @@ import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackGameTest {
 
@@ -28,22 +32,45 @@ class BlackjackGameTest {
         assertThat(player.getCards()).hasSize(2);
     }
 
-    @Test
-    @DisplayName("게임 승패를 반환한다")
-    void getGameResultTest() {
+    @MethodSource("blackjackGameCardSource")
+    @ParameterizedTest
+    @DisplayName("게임 진행 후 결과를 반환한다")
+    void getGameResultTest(List<Card> cards, GameResult expect) {
         List<String> names = List.of("jamie");
         Participants participants = Participants.from(names);
-        List<Card> cards = new ArrayList<>(
-                List.of(
-                        new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
-                        new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING)
-                ));
-        BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
+        BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(new ArrayList<>(cards)));
+
         blackjackGame.dealOutCard();
 
         BlackjackResult result = blackjackGame.getResult();
-
         Player player = participants.getPlayers().get(0);
-        assertThat(result.get(player)).isEqualTo(GameResult.LOSE);
+
+        assertThat(result.get(player)).isEqualTo(expect);
+    }
+
+    static Stream<Arguments> blackjackGameCardSource() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.ACE),
+                                new Card(CardSuit.SPADE, CardNumber.SIX),
+                                new Card(CardSuit.CLUB, CardNumber.SIX)
+                        ), GameResult.WIN),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.SEVEN),
+                                new Card(CardSuit.SPADE, CardNumber.TEN),
+                                new Card(CardSuit.DIAMOND, CardNumber.SEVEN)
+                        ), GameResult.TIE),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.ACE),
+                                new Card(CardSuit.CLUB, CardNumber.TEN)
+                        ), GameResult.LOSE)
+        );
     }
 }

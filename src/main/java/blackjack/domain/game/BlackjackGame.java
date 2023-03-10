@@ -44,7 +44,7 @@ public class BlackjackGame {
     public BlackjackResult getResult() {
         Map<Player, GameResult> result = participants.getPlayers().stream()
                 .collect(Collectors.toMap(player -> player,
-                        player -> GameResult.of(player, participants.getDealer()),
+                        player -> of(player, participants.getDealer()),
                         (o1, o2) -> o1,
                         LinkedHashMap::new));
         return new BlackjackResult(result);
@@ -56,5 +56,21 @@ public class BlackjackGame {
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    private GameResult of(Player player, Dealer dealer) {
+        if (player.getState().isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.getState().isBust()) {
+            return GameResult.WIN;
+        }
+        if (player.getScore() == dealer.getScore()) {
+            return GameResult.TIE;
+        }
+        if (player.getScore() > dealer.getScore()) {
+            return GameResult.WIN;
+        }
+        return GameResult.LOSE;
     }
 }

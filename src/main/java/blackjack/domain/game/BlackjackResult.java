@@ -12,6 +12,10 @@ public class BlackjackResult {
         this.blackjackResult = blackjackResult;
     }
 
+    public int getTieCount() {
+        return blackjackResult.size() - getDealerLoseCount() - getDealerWinCount();
+    }
+
     public int getDealerWinCount() {
         return Collections.frequency(blackjackResult.values(), GameResult.LOSE);
     }

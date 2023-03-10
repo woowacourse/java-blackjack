@@ -22,7 +22,7 @@ public class OutputView {
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패" + LINE_SEPARATOR;
+    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패" + LINE_SEPARATOR;
     private static final String PLAYER_RESULT_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String DELIMITER = ", ";
 
@@ -73,7 +73,8 @@ public class OutputView {
 
     public void printGameResult(BlackjackResult result) {
         System.out.println(RESULT_MESSAGE);
-        System.out.printf(DEALER_RESULT_FORMAT, result.getDealerWinCount(), result.getDealerLoseCount());
+        System.out.printf(DEALER_RESULT_FORMAT, result.getDealerWinCount(), result.getTieCount(),
+                result.getDealerLoseCount());
         for (Player player : result.getPlayer()) {
             GameResult gameResult = result.get(player);
             System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), getGameResultMessage(gameResult));
