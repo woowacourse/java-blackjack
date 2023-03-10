@@ -21,6 +21,16 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public int receiveBettingMoney(String playerName) {
+        System.out.println("\n" + playerName + "의 배팅 금액은?");
+        String input = getInput();
+
+        isBlank(input);
+        validateDigit(input);
+
+        return Integer.parseInt(input);
+    }
+
     public Boolean askReceiveMoreCard(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 " + YES_ANSWER_ABOUT_ONE_MORE_CARD
                 + ", 아니오는 " + NO_ANSWER_ABOUT_ONE_MORE_CARD + ")");
@@ -47,6 +57,15 @@ public class InputView {
             throw new IllegalArgumentException(
                     "[ERROR] 예는 " + YES_ANSWER_ABOUT_ONE_MORE_CARD
                             + ", 아니오는 " + NO_ANSWER_ABOUT_ONE_MORE_CARD + "을 입력해주세요.");
+        }
+    }
+
+    private void validateDigit(String input) {
+        boolean isDigit = input.chars()
+                .allMatch(Character::isDigit);
+
+        if (!isDigit) {
+            throw new IllegalArgumentException("[ERROR] 정수만 입력 가능합니다.");
         }
     }
 }
