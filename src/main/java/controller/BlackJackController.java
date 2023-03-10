@@ -45,7 +45,8 @@ public class BlackJackController {
 
     private Map<Name, BettingMoney> betting(final List<Name> gamblerNames) {
         return gamblerNames.stream()
-                .collect(toMap(identity(),
+                .collect(toMap(
+                        identity(),
                         name -> withExceptionHandle(() -> BettingMoney.of(InputView.readBettingMoney(name))),
                         (a, b) -> b,
                         LinkedHashMap::new

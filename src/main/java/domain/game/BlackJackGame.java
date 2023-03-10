@@ -87,8 +87,10 @@ public class BlackJackGame {
 
     public Map<Participant, Revenue> revenue() {
         final Map<Participant, Revenue> participantRevenue = gamblers.stream()
-                .collect(toMap(identity(),
-                        dealer::compete));
+                .collect(toMap(
+                        identity(),
+                        dealer::compete
+                ));
 
         Revenue dealerRevenue = Revenue.total(participantRevenue.values()).reverse();
         participantRevenue.put(dealer, dealerRevenue);
