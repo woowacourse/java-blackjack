@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.controller.HitCommand;
+import blackjack.domain.HitCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
