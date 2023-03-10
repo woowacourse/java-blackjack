@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,11 +20,12 @@ class OrderTest {
         assertThat(order.getValue()).isEqualTo(input);
     }
 
-    @Test
-    @DisplayName("y를 입력하면 YES가 나오는지 테스트")
-    void isYESTest() {
-        final Order order = Order.YES;
+    @ParameterizedTest
+    @CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
+    @DisplayName("입력값에 따라 isYES 메서드의 반환값이 다른지 테스트")
+    void isYESTest(final String input, final boolean expected) {
+        final Order order = Order.from(input);
 
-        assertThat(order.isYES()).isTrue();
+        assertThat(order.isYES()).isEqualTo(expected);
     }
 }
