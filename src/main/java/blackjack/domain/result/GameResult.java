@@ -15,14 +15,4 @@ public enum GameResult {
     public int calculateProfit(int betAmount) {
         return (int) (betAmount * profitRate);
     }
-
-    public GameResult reverseWinningStatus() {
-        if (this.equals(NORMAL_WIN) || this.equals(BLACKJACK_WIN)) {
-            return LOSE;
-        }
-        if (this.equals(LOSE)) {
-            return GameResult.NORMAL_WIN;
-        }
-        return this;
-    }
 }
