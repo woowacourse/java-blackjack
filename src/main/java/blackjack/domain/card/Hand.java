@@ -60,12 +60,12 @@ public final class Hand {
 
     public Result compareTo(final Hand anotherHand) {
         if (this.isBust()) {
-            return compareToBust(anotherHand);
+            return checkBust(anotherHand);
         }
         return compareScoreTo(anotherHand);
     }
 
-    private Result compareToBust(final Hand anotherHand) {
+    private Result checkBust(final Hand anotherHand) {
         if (anotherHand.isBust()) {
             return DRAW;
         }
