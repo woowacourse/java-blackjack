@@ -10,10 +10,10 @@ import domain.money.Bet;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import view.InputView;
 import view.OutputView;
+import view.ProfitView;
 
 public class GameController {
     
@@ -105,21 +105,18 @@ public class GameController {
     }
     
     
-    private void endGame(Game game) {
-        final Participants participants = game.getParticipants();
-        OutputView.printParticipantsNameCardsAndScore(participants);
+    private void endGameWithStatus(Game game) {
+        OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
         GameResult gameResult = game.generateGameResult();
-        Map<ResultStatus, Integer> dealerResult = gameResult.getDealerResult();
-        OutputView.printDealerGameResult(dealerResult);
+        OutputView.printDealerGameResult(gameResult.getDealerResult());
         OutputView.printPlayersGameResult(gameResult.getResultMap());
     }
     
-    private String readPlayerNamesUntilValid() {
-        try {
-            return InputView.readPlayerNames();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return this.readPlayerNamesUntilValid();
-        }
+    private void endGameWithProfit(Game game, GameBet gameBet) {
+        OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
+        GameProfit gameProfit = GameProfit.create(gameBet, game.generateGameResult());
+        ProfitView.printProfitResult();
+        ProfitView.printDealerProfitResult(game.getDealer().getName(), gameProfit.getDealerProfit());
+        ProfitView.printGameProfit(gameProfit.getProfitMap());
     }
 }
