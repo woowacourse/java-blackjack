@@ -15,12 +15,16 @@ import static view.OutputView.printSingleGambler;
 
 public class Blackjack {
 
+    public Blackjack(Players players, Dealer dealer){
+        play(players, dealer);
+    }
+
     private Result result;
 
-    public void play(Players players, Dealer dealer) {
+    public Result play(Players players, Dealer dealer) {
         hitOrStandByPlayers(players);
         hitOrStandByDealer(dealer);
-        createResult(players, dealer);
+        return createResult(players, dealer);
     }
 
     private void hitOrStandByPlayers(Players players) {
@@ -42,7 +46,7 @@ public class Blackjack {
         }
     }
 
-    public void hitOrStandByPlayer(Player player, boolean isHit) {
+    private void hitOrStandByPlayer(Player player, boolean isHit) {
         playerHit(player, isHit);
         printSingleGambler(player);
     }
@@ -71,8 +75,9 @@ public class Blackjack {
         printDealerHitMessage();
     }
 
-    public void createResult(Players players, Dealer dealer) {
-        result = new Result(players, dealer);
+    public Result createResult(Players players, Dealer dealer) {
+        this.result = new Result(players, dealer);
+        return result;
     }
 
     public Map<Gambler, Integer> getResult() {

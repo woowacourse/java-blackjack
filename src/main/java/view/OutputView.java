@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.Gambler;
 import domain.Player;
 import domain.Players;
+import domain.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,11 +92,12 @@ public class OutputView {
         System.out.print(SCORE_GUIDE_MESSAGE + gambler.getScore());
     }
 
-    public static void printResult(Map<Gambler, Integer> result) {
+    public static void printResult(Result result) {
         System.out.println(NEW_LINE + RESULT_GUIDE_MESSAGE);
+        Map<Gambler, Integer> map = result.getResult();
 
-        for (Map.Entry<Gambler, Integer> resultEntry : result.entrySet()) {
-            printDealerResult(resultEntry, result.size());
+        for (Map.Entry<Gambler, Integer> resultEntry : map.entrySet()) {
+            printDealerResult(resultEntry, map.size());
             printPlayersResult(resultEntry);
         }
     }
