@@ -25,7 +25,7 @@ class CardDeckTest {
     @Test
     void 카드를_종류별로_값_별로_한장씩_모두_가진_채로_생성한다() {
         // given
-        CardDeck cardDeck = CardDeck.shuffledFullCardDeck(new RandomCardShuffler());
+        CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
         // when
         final Map<CardShape, List<Card>> result = cardDeck.cards()

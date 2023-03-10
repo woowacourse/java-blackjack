@@ -1,9 +1,6 @@
 package domain.card;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.stream;
@@ -17,10 +14,10 @@ public class CardDeck {
         this.cards = new ArrayDeque<>(cards);
     }
 
-    public static CardDeck shuffledFullCardDeck(final CardShuffler cardShuffler) {
+    public static CardDeck shuffledFullCardDeck() {
         final List<Card> cards = makeTotalCards();
-        final List<Card> shuffled = cardShuffler.shuffle(cards);
-        return new CardDeck(shuffled);
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
     }
 
     private static List<Card> makeTotalCards() {

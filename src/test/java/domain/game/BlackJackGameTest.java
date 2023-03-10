@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.card.BlackJackScore;
 import domain.card.CardDeck;
-import domain.card.RandomCardShuffler;
 import domain.player.*;
 import org.junit.jupiter.api.*;
 
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("BlackJackGame 은")
 class BlackJackGameTest {
 
-    private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck(new RandomCardShuffler());
+    private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
     @Test
     void 기본_세팅_시_참여자의_이름과_배팅_금액과_게임에서_사용할_카드_덱을_받아_딜러와_참여자들을_생성한다() {
