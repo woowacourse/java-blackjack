@@ -43,6 +43,12 @@ public class Players {
         players.forEach((player) -> player.initHit(deck));
     }
 
+    public void bet(List<Integer> amounts) {
+        for (int index = 0; index < players.size(); index++) {
+            players.get(index).bet(amounts.get(index));
+        }
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

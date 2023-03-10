@@ -53,4 +53,8 @@ public class BlackJackGame {
     public Map<String, Long> getDealerResult(List<Result> results) {
         return referee.countDealerResult(results);
     }
+
+    public void bet(Players players, List<Integer> amounts) {
+        players.bet(amounts);
+    }
 }
