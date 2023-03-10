@@ -21,11 +21,13 @@ public class OutputView {
     }
 
     private void printPlayersInformation(Map<String, List<String>> players, List<String> playersName) {
-        for (int i = 0; i < players.size(); i++) {
+        int playerSize = players.size();
+        for (int i = 0; i < playerSize; i++) {
             System.out.println(playersName.get(i)
                     + ": "
                     + String.join(DELIMITER, players.get(playersName.get(i))));
         }
+        System.out.println();
     }
 
     public void printCards(String name, List<String> cards) {
@@ -43,7 +45,8 @@ public class OutputView {
 
     public void printPlayerResult(Map<String, List<String>> players, List<Integer> calculateScore) {
         List<String> playersName = new ArrayList<>(players.keySet());
-        for (int i = 0; i < players.size(); i++) {
+        int playerSize = players.size();
+        for (int i = 0; i < playerSize; i++) {
             System.out.println(playersName.get(i)
                     + ": "
                     + String.join(DELIMITER, players.get(playersName.get(i)))

@@ -74,13 +74,13 @@
     - [x] Deck class 필드 변경
     - [x] Dealer, Player class calculateScore 메소드 로직 변경
     - [x] hasACE 메소드 위치 변경
-    - [ ] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경
+    - [x] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경
     - [x] Person interface -> abstract class로 변경
     - [x] 결과 타입에 대한 enum class 추가
     - [x] view 호출하는 로직 단순화
     - [x] List<Card>를 필드로 가지는 Hand 생성
     - [x] Deck shuffle 메소드 전략 패턴을 통해 실행될 수 있도록 변경
-    - [ ] for문 내부에서 size() 호출하는 로직 변경
+    - [x] for문 내부에서 size() 호출하는 로직 변경
 
 
 - TODO
