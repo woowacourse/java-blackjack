@@ -25,7 +25,7 @@ class GamePlayerTest {
     @DisplayName("딜러에게 카드를 나눠주는 메소드 테스트")
     @Test
     void Should_Success_When_GiveCardToDealer() {
-        gamePlayer.addCardToDealer(new Card(CardNumber.ACE, CardSymbol.HEARTS));
+        gamePlayer.dealerHit(new Card(CardNumber.ACE, CardSymbol.HEARTS));
 
         assertThat(gamePlayer.getDealer().getAllCards().get(0).getCardNumberToString()).isEqualTo("A");
     }
@@ -34,7 +34,7 @@ class GamePlayerTest {
     @Test
     void Should_Success_When_GiveCardToPlayer() {
         int secondPlayerIndex = 1;
-        gamePlayer.addCardToPlayerByIndex(secondPlayerIndex, new Card(CardNumber.ACE, CardSymbol.HEARTS));
+        gamePlayer.playerHit(secondPlayerIndex, new Card(CardNumber.ACE, CardSymbol.HEARTS));
 
         assertThat(gamePlayer.getPlayers().getPlayer(secondPlayerIndex).getAllCards().get(0)
                 .getCardNumberToString()).isEqualTo("A");

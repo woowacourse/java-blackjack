@@ -26,23 +26,15 @@ public class GamePlayer {
 
     private void initializeDealer(List<Card> cards) {
         for (Card card : cards) {
-            addCardToDealer(card);
+            dealerHit(card);
         }
     }
 
     private void initializePlayer(List<Card> cards) {
         for (int i = 0; i < players.count(); i++) {
-            addCardToPlayerByIndex(i, cards.get(i * 2));
-            addCardToPlayerByIndex(i, cards.get(i * 2 + 1));
+            playerHit(i, cards.get(i * 2));
+            playerHit(i, cards.get(i * 2 + 1));
         }
-    }
-
-    public void addCardToDealer(Card card) {
-        dealer.addCard(card);
-    }
-
-    public void addCardToPlayerByIndex(int i, Card card) {
-        players.addCardToPlayer(i, card);
     }
 
     public Dealer getDealer() {
