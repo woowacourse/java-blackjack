@@ -37,7 +37,7 @@ public class InputView {
         return RECEIVE_CARD_COMMAND.equals(input);
     }
 
-    public static int getBatingMoney(String playerName) {
+    public static int getBattingMoney(String playerName) {
         printBatingMoney(playerName);
         int money = 0;
         try {

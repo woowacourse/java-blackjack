@@ -31,6 +31,10 @@ public class Dealer {
         user.receiveCard(card);
     }
 
+    public boolean isBlackJack() {
+        return getCardTotalValue() == 21;
+    }
+
     public String getName() {
         return user.getName();
     }
@@ -39,7 +43,4 @@ public class Dealer {
         return user.getHand();
     }
 
-    public boolean isBlackJack() {
-        return getCardTotalValue() == 21;
-    }
 }

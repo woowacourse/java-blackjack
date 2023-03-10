@@ -50,10 +50,10 @@ class ParticipantsTest {
 
         // when, then
         assertAll(
-                () -> assertThat(participants.getFinalResult()).containsExactly(LOSE),
+                () -> assertThat(participants.getPlayersFinalResult()).containsExactly(LOSE),
                 () -> {
                     bebe.receiveCard(new Card(CLOVER, TWO));
-                    assertThat(participants.getFinalResult()).containsExactly(WIN);
+                    assertThat(participants.getPlayersFinalResult()).containsExactly(WIN);
                 });
     }
 
@@ -70,7 +70,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(participants.getFinalResult()).containsExactly(LOSE);
+        assertThat(participants.getPlayersFinalResult()).containsExactly(LOSE);
     }
 
     @Test
@@ -84,7 +84,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, THREE));
 
         // when, then
-        assertThat(participants.getFinalResult()).containsExactly(LOSE);
+        assertThat(participants.getPlayersFinalResult()).containsExactly(LOSE);
     }
 
     @Test
@@ -98,7 +98,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(SPADE, KING));
 
         // when, then
-        assertThat(participants.getFinalResult()).containsExactly(WIN);
+        assertThat(participants.getPlayersFinalResult()).containsExactly(WIN);
     }
 
     @DisplayName("receiveInitialCards가 두 장의 카드를 주는지 확인한다.")
@@ -114,23 +114,41 @@ class ParticipantsTest {
         );
     }
 
-    @DisplayName("게임의 결과를 계산해 딜러의 수익을 구한다.")
+    @DisplayName("딜러가 게임 승리시 수익을 반환한다.")
     @Test
-    void getDealerProfit() {
+    void getDealerWinProfit() {
         // given
         dealer.receiveCard(new Card(SPADE, FIVE));
         bebe.receiveCard(new Card(SPADE, FOUR));
 
         // when, then
-        assertAll(
-                () -> Assertions.assertThat(participants.getDealerProfit())
-                        .isEqualTo(1000),
-                () -> {
-                    bebe.receiveCard(new Card(CLOVER, ACE));
-                    Assertions.assertThat(participants.getDealerProfit())
-                            .isEqualTo(-1000);
-                }
-        );
+        Assertions.assertThat(participants.getDealerProfit()).isEqualTo(1000);
+    }
+
+    @DisplayName("딜러가 게임 패배시 수익 반환한다.")
+    @Test
+    void getDealerLoseProfit() {
+        // given
+        dealer.receiveCard(new Card(SPADE, THREE));
+        bebe.receiveCard(new Card(SPADE, ACE));
+
+        // when, then
+        Assertions.assertThat(participants.getDealerProfit()).isEqualTo(-1000);
+    }
+
+    @DisplayName("플레이어가 블랙잭일 때는 딜러에게 베팅 금액의 1.5배를 받는다.")
+    @Test
+    void getPlayerIsBlackJackProfit() {
+        // given
+        dealer.receiveCard(new Card(CLOVER, KING));
+        bebe.receiveCard(new Card(DIAMOND, ACE));
+        bebe.receiveCard(new Card(DIAMOND, JACK));
+
+        // when
+        participants.ifPlayerIsBlackJackReceiveMoney();
+
+        // then
+        Assertions.assertThat(bebe.getMoney()).isEqualTo(1500);
     }
 
     @DisplayName("플레이어가 처음 받은 패에서 블랙잭이면 딜러에게 배팅 금액의 1.5배를 받는다.")
@@ -141,7 +159,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, JACK));
 
         // when
-        participants.ifPlayerBlackJackReceiveMoney();
+        participants.ifPlayerIsBlackJackReceiveMoney();
 
         // then
         Assertions.assertThat(bebe.getMoney()).isEqualTo(1500);

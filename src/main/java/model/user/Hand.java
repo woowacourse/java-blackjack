@@ -5,6 +5,8 @@ import model.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.joining;
+
 public class Hand {
 
     private static final int BUST_NUMBER = 21;
@@ -49,4 +51,5 @@ public class Hand {
     public List<Card> getCards() {
         return this.cards;
     }
+
 }

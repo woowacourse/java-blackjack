@@ -30,7 +30,9 @@ public enum Score {
         if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
             return LOSE;
         }
-        if (userTotalValue > BUST_NUMBER) return LOSE;
+        if (userTotalValue > BUST_NUMBER) {
+            return LOSE;
+        }
         return WIN;
     }
 
@@ -38,7 +40,9 @@ public enum Score {
         if (dealerTotalValue == userTotalValue) {
             return TIE;
         }
-        if (dealerTotalValue < userTotalValue) return WIN;
+        if (dealerTotalValue < userTotalValue) {
+            return WIN;
+        }
         return LOSE;
     }
 }

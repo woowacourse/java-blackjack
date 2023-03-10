@@ -14,7 +14,7 @@ public class BlackJackController {
 
     public void start() {
         final Deck deck = new Deck();
-        final Participants participants = getParticipants();
+        final Participants participants = getParticipantsAndBattingMoney();
         final Dealer dealer = participants.getDealer();
 
         proceed(deck, participants, dealer);
@@ -23,9 +23,9 @@ public class BlackJackController {
         OutputView.printGameResult(participants);
     }
 
-    private Participants getParticipants() {
+    private Participants getParticipantsAndBattingMoney() {
         List<Player> players = InputView.getPlayersName().stream()
-                .map(playerName -> Player.from(playerName, InputView.getBatingMoney(playerName)))
+                .map(playerName -> Player.from(playerName, InputView.getBattingMoney(playerName)))
                 .collect(Collectors.toList());
         return Participants.from(players);
     }

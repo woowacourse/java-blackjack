@@ -6,6 +6,8 @@ import model.card.Deck;
 public class Player {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
+    private static final int BLACK_JACK_NUMBER = 21;
+    private static final double BLACK_JACK_WEIGHT = 1.5;
 
     private final User user;
     private long money;
@@ -58,10 +60,11 @@ public class Player {
     }
 
     public boolean isBlackJack() {
-        return getCardTotalValue() == 21;
+        return getCardTotalValue() == BLACK_JACK_NUMBER;
     }
 
     public void receiveMoney() {
-        this.money *= 1.5;
+        this.money *= BLACK_JACK_WEIGHT;
     }
+
 }

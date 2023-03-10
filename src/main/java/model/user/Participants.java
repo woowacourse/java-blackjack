@@ -20,7 +20,7 @@ public class Participants {
         return new Participants(players, new Dealer());
     }
 
-    public List<Score> getFinalResult() {
+    public List<Score> getPlayersFinalResult() {
         return createFinalResultWithoutDealer(dealer.getCardTotalValue());
     }
 
@@ -33,20 +33,24 @@ public class Participants {
     public void receiveInitialCards(final Deck deck) {
         players.forEach(player -> player.receiveInitialCards(deck));
         dealer.receiveInitialCards(deck);
-        ifPlayerBlackJackReceiveMoney();
+        ifPlayerIsBlackJackReceiveMoney();
     }
 
-    public void ifPlayerBlackJackReceiveMoney() {
-        boolean dealerResult = dealer.isBlackJack();
+    public void ifPlayerIsBlackJackReceiveMoney() {
+        boolean dealerIsBlackjack = dealer.isBlackJack();
         for (Player player : players) {
-            if (player.isBlackJack() && !dealerResult) {
+            if (canReceiveTwiceBattingMoney(dealerIsBlackjack, player)) {
                 player.receiveMoney();
             }
         }
     }
 
+    private static boolean canReceiveTwiceBattingMoney(boolean dealerIsBlackjack, Player player) {
+        return player.isBlackJack() && !dealerIsBlackjack;
+    }
+
     public int getDealerProfit() {
-        List<Score> finalResult = getFinalResult();
+        List<Score> finalResult = getPlayersFinalResult();
         int dealerMoney = 0;
         for (int i = 0, size = finalResult.size(); i < size; i++) {
             Player player = players.get(i);
