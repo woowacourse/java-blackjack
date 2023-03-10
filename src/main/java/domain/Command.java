@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Command {
     YES("y"),
-    No("n");
+    NO("n");
 
     private final String command;
 
