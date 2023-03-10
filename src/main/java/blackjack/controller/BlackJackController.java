@@ -41,8 +41,7 @@ public class BlackJackController {
         Card dealerFirstCard = blackJackGame.getDealerFirstCard();
         OutputView.showDealerFirstCard(dealerFirstCard);
 
-        List<Player> players = blackJackGame.getPlayers();
-        players.forEach(OutputView::showPlayerCard);
+        blackJackGame.getPlayers().forEach(OutputView::showPlayerCard);
     }
 
     private void hitOrStay(Player player) {
