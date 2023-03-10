@@ -53,7 +53,7 @@ public class BlackjackController {
 
     private void playEachPlayer(Player player, BlackjackGame blackjackGame) {
         GameCommand command = GameCommand.PLAY;
-        while (!player.isBust() && command.isPlay()) {
+        while (player.canHit() && command.isPlay()) {
             command = getCommand(player);
             giveCard(player, blackjackGame, command);
             outputView.printPlayerCards(player.getName(), player.getCardNames());
