@@ -64,6 +64,6 @@ public class CardAreaFixture {
     }
 
     public static CardArea withTwoCard(final CardValue first, final CardValue second) {
-        return new CardArea(new Card(DIAMOND, first), new Card(DIAMOND, second));
+        return CardArea.initialWithTwoCard(new Card(DIAMOND, first), new Card(DIAMOND, second));
     }
 }

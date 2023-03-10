@@ -26,7 +26,7 @@ class CardAreaTest {
     @Test
     void 카드를_두장만_받아서_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new CardArea(
+        assertDoesNotThrow(() -> CardArea.initialWithTwoCard(
                 new Card(DIAMOND, TWO),
                 new Card(DIAMOND, TWO)
         ));

@@ -35,7 +35,7 @@ public class CardDeck {
     }
 
     public CardArea createCardArea() {
-        return new CardArea(draw(), draw());
+        return CardArea.initialWithTwoCard(draw(), draw());
     }
 
     public Card draw() {

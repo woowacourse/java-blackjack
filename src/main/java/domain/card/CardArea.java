@@ -12,8 +12,12 @@ public class CardArea {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public CardArea(final Card firstCard, final Card secondCard) {
+    private CardArea(final Card firstCard, final Card secondCard) {
         cards.addAll(List.of(firstCard, secondCard));
+    }
+
+    public static CardArea initialWithTwoCard(final Card firstCard, final Card secondCard) {
+        return new CardArea(firstCard, secondCard);
     }
 
     public void addCard(final Card card) {
