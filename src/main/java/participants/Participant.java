@@ -6,7 +6,7 @@ import java.util.Objects;
 import card.Card;
 
 public class Participant {
-    private static final int BUST_SCORE = 22;
+    public static final int MAX_SCORE = 21;
     protected final Name name;
     protected final Hand hand;
 
@@ -28,7 +28,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() >= BUST_SCORE;
+        return hand.calculateScore() > MAX_SCORE;
     }
 
     public Name getName() {

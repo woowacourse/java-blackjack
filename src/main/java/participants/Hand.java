@@ -8,7 +8,6 @@ import card.Card;
 public class Hand {
     public static final int ACE_ADDITIONAL_SCORE = 10;
     public static final int LIMIT_ADDITIONAL_SCORE = 11;
-    public static final int BLACK_JACK = 21;
     public static final int BLACK_JACK_CARD_COUNT = 2;
     private final List<Card> cards = new ArrayList<>();
 
@@ -47,6 +46,6 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACK_JACK && cards.size() == BLACK_JACK_CARD_COUNT;
+        return calculateScore() == Participant.MAX_SCORE && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 }
