@@ -60,7 +60,7 @@ public class OutputView {
     }
 
     private static String toCardName(Card card) {
-        return NumberWord.toWord(card.getNumber()) + SymbolWord.toWord(card.getSymbol());
+        return card.getNumber().getWord() + card.getSymbol().getWord();
     }
 
     public static void showDealerHitMessage() {
