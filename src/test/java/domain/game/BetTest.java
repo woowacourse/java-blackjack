@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BetTest {
 
-    @DisplayName("100,000,000이하의 베팅 금액은 허용된다.")
+    @DisplayName("100,000,000이하의 배팅 금액은 허용된다.")
     @ParameterizedTest
     @ValueSource(ints = {99_999_999, 100_000_000})
     void validBet(int value) {
         assertDoesNotThrow(() -> Bet.of(value));
     }
 
-    @DisplayName("100,000,000초과의 베팅 금액은 예외가 발생한다.")
+    @DisplayName("100,000,000초과의 배팅 금액은 예외가 발생한다.")
     @Test
     void invalidBet() {
         assertThatThrownBy(() -> Bet.of(100_000_001))
@@ -37,7 +37,7 @@ class BetTest {
                 .hasMessage("100,000,000초과의 베팅은 할 수 없습니다.");
     }
 
-    @DisplayName("블랙잭이면 베팅한 금액의 1.5배의 수익률을 가진다.")
+    @DisplayName("블랙잭이면 배팅한 금액의 1.5배의 수익률을 가진다.")
     @Test
     void bonus() {
         final Bet bet = Bet.of(10_000);
@@ -46,7 +46,7 @@ class BetTest {
                 .isEqualTo(15_000);
     }
 
-    @DisplayName("버스트가 나면 베팅한 금액을 모두 잃고 수익률을 계산한다.")
+    @DisplayName("버스트가 나면 배팅한 금액을 모두 잃고 수익률을 계산한다.")
     @Test
     void bust() {
         final Bet bet = Bet.of(10_000);
@@ -95,6 +95,11 @@ class BetTest {
         void betProfitTest() {
             betProfitCheck(player1, 1500);
             betProfitCheck(player2, 2000);
+        }
+
+        @Test
+        void name() {
+
         }
 
         private void gamePointCheck(final Participant participant, final int gamePoint) {

@@ -55,7 +55,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void playerTakeCardTest(int value) {
-        player.takeCard(new ShuffledDeck(), value);
+        player.takeInitialCards(new ShuffledDeck(), value);
 
         assertThat(player)
                 .extracting("cards")

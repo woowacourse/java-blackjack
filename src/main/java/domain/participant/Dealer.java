@@ -11,7 +11,7 @@ public final class Dealer extends Participant {
 
     public static final GamePoint STANDARD_OF_NEED_MORE_CARD = GamePoint.of(16);
 
-    protected Dealer(final Name name) {
+    private Dealer(final Name name) {
         super(name);
     }
 

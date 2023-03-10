@@ -40,6 +40,10 @@ public final class Bet {
         this.isBlackJack = true;
     }
 
+    public int getBet() {
+        return bet;
+    }
+
     public int getProfit() {
         if (isBusted) {
             return -bet;

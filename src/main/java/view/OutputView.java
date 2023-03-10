@@ -109,25 +109,29 @@ public final class OutputView {
 
     public void printFinalResult(final Dealer dealer, GameResult gameResult) {
         System.out.println("\n## 최종 수익");
-        printDealerResult(dealer, gameResult.getDealerResult());
-        printPlayersResult(gameResult.getPlayerResult());
+        printDealerResult(dealer, gameResult.getResult());
+        printPlayersResult(gameResult.getResult());
     }
 
-    private void printDealerResult(final Dealer dealer, final Map<Result, Integer> gameResult) {
-        StringBuilder result = new StringBuilder();
-        for (Map.Entry<Result, Integer> entry : gameResult.entrySet()) {
-            result.append(String.format(
-                            "%d%s ",
-                            entry.getValue(),
-                            TranslationUtil.translateResult(entry.getKey())
-                    )
-            );
+    private void printDealerResult(final Dealer dealer, final Map<Result, List<Player>> gameResult) {
+        int result = 0;
+        for (Map.Entry<Result, List<Player>> entry : gameResult.entrySet()) {
+            if (Result.WIN == entry.getKey()) {
+                for (Player player : entry.getValue()) {
+                    result -= Result.WIN.calculateProfit(player.getBet());
+                }
+            }
+            if (Result.LOSE == entry.getKey()) {
+                for (Player player : entry.getValue()) {
+                    result -= Result.LOSE.calculateProfit(player.getBet());
+                }
+            }
         }
         System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), result);
     }
 
-    private void printPlayersResult(final Map<Result, List<Player>> playerResult) {
-        for (Map.Entry<Result, List<Player>> entry : playerResult.entrySet()) {
+    private void printPlayersResult(final Map<Result, List<Player>> gameResult) {
+        for (Map.Entry<Result, List<Player>> entry : gameResult.entrySet()) {
             printPlayerResult(entry);
         }
     }
@@ -138,7 +142,7 @@ public final class OutputView {
             System.out.printf(
                     FINAL_RESULT_FORMAT,
                     player.getName().getValue(),
-                    TranslationUtil.translateResult(entry.getKey())
+                    entry.getKey().calculateProfit(player.getBet())
             );
         }
     }

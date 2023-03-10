@@ -10,12 +10,12 @@ public final class Player extends Participant {
 
     private final Bet bet;
 
-    protected Player(final Name name, final int bet) {
+    private Player(final Name name, final int bet) {
         super(name);
         this.bet = Bet.of(bet);
     }
 
-    protected Player(final Name name, final Cards cards, final int bet) {
+    private Player(final Name name, final Cards cards, final int bet) {
         super(name, cards);
         this.bet = Bet.of(bet);
     }
@@ -30,26 +30,18 @@ public final class Player extends Participant {
         return new Player(name, cards, bet);
     }
 
-    public void takeCard(final DeckStrategy deck, final int count) {
+    public void takeInitialCards(final DeckStrategy deck, final int count) {
         for (int i = 0; i < count; i++) {
             this.cards = cards.add(deck.drawCard());
         }
-        checkBetProfit();
-    }
-
-    public void takeCard(final Card card) {
-        this.cards = cards.add(card);
-        checkBetProfit();
-    }
-
-    private void checkBetProfit() {
-        // 블랙잭인지 버스트인지 확인해서 배팅 금액을 조정해야 함
-        // 배팅 금액을 조정하든가, 수익률을 따로 필드로 두고 조정해야 함
-        if (isBusted()) {
-            bet.applyBust();
-        }
         if (isBlackJack() && cards.isSameCount(2)) {
             bet.applyBlackJack();
+        }
+    }
+    public void takeCard(final Card card) {
+        this.cards = cards.add(card);
+        if (isBusted()) {
+            bet.applyBust();
         }
     }
 
@@ -60,8 +52,8 @@ public final class Player extends Participant {
         }
     }
 
-    public Bet getBet() {
-        return bet;
+    public int getBet() {
+        return bet.getBet();
     }
 
     public boolean hasLowerThan(final GamePoint gamePoint) {

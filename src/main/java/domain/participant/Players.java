@@ -43,7 +43,7 @@ public final class Players {
 
     public void takeCard(final DeckStrategy deck, final int count) {
         for (Player player : players) {
-            player.takeCard(deck, count);
+            player.takeInitialCards(deck, count);
         }
     }
 

@@ -45,9 +45,6 @@ public final class TranslationUtil {
         if (point == 0) {
             return "버스트";
         }
-        if (point == 21) {
-            return "블랙잭";
-        }
         return String.valueOf(point);
     }
 
