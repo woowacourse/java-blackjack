@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.Player;
 import domain.PlayerName;
 import domain.Players;
+import game.Blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,10 @@ public class EntityCreator {
             player.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
         }
         return player;
+    }
+
+    public static Blackjack createBlackjack(Players players, Dealer dealer){
+       return new Blackjack(players, dealer);
     }
 
     public Dealer getDealer() {

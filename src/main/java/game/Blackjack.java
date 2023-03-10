@@ -1,25 +1,20 @@
 package game;
 
 import domain.Dealer;
-import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
 
-import java.util.Map;
-
-import static view.InputView.printErrorMessage;
-import static view.InputView.readIsHit;
-import static view.OutputView.printDealerHitMessage;
-import static view.OutputView.printSingleGambler;
+import static controller.Controller.getIsHit;
+import static controller.Controller.printDealerHit;
+import static controller.Controller.printHitOrStandByPlayer;
 
 public class Blackjack {
-
-    public Blackjack(Players players, Dealer dealer){
-        play(players, dealer);
-    }
-
     private Result result;
+
+    public Blackjack(Players players, Dealer dealer) {
+        this.result = play(players, dealer);
+    }
 
     public Result play(Players players, Dealer dealer) {
         hitOrStandByPlayers(players);
@@ -33,22 +28,14 @@ public class Blackjack {
             do {
                 isHit = getIsHit(player);
                 hitOrStandByPlayer(player, isHit);
+                printHitOrStandByPlayer(player);
             } while (isHit && isPickAble(player));
         }
-    }
 
-    private boolean getIsHit(Player player) {
-        try {
-            return readIsHit(player);
-        } catch (RuntimeException exception) {
-            printErrorMessage(exception);
-            return getIsHit(player);
-        }
     }
 
     private void hitOrStandByPlayer(Player player, boolean isHit) {
         playerHit(player, isHit);
-        printSingleGambler(player);
     }
 
     private boolean isPickAble(Player player) {
@@ -67,12 +54,12 @@ public class Blackjack {
     private void hitOrStandByDealer(Dealer dealer) {
         while (dealer.isDealerHit()) {
             dealerHit(dealer);
+            printDealerHit();
         }
     }
 
     private void dealerHit(Dealer dealer) {
         dealer.pickCard();
-        printDealerHitMessage();
     }
 
     public Result createResult(Players players, Dealer dealer) {
@@ -80,7 +67,7 @@ public class Blackjack {
         return result;
     }
 
-    public Map<Gambler, Integer> getResult() {
-        return result.getResult();
+    public Result getResult() {
+        return result;
     }
 }

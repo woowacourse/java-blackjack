@@ -9,7 +9,7 @@ public class Application {
         Players players = entityCreator.getPlayers();
         Dealer dealer = entityCreator.getDealer();
 
-        Controller controller = new Controller(players, dealer);
+        Controller controller = new Controller();
         controller.playGame(players, dealer);
     }
 }

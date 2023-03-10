@@ -1,14 +1,12 @@
 package controller;
 
 import domain.Dealer;
-import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
 import game.Blackjack;
 
-import java.util.Map;
-
+import static controller.EntityCreator.createBlackjack;
 import static view.InputView.printErrorMessage;
 import static view.InputView.readIsHit;
 import static view.OutputView.printDealerHitMessage;
@@ -20,19 +18,32 @@ import static view.OutputView.printSingleGambler;
 
 
 public class Controller {
-    private final Blackjack blackjack;
-
-    public Controller(Players players, Dealer dealer) {
-        this.blackjack = new Blackjack(players, dealer);
-    }
 
     public void playGame(Players players, Dealer dealer) {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
-        final Result result = blackjack.play(players, dealer);
+        Blackjack blackjack = createBlackjack(players,dealer);
+        Result result = blackjack.getResult();
 
         printScores(players, dealer);
         printResult(result);
+    }
+
+    public static boolean getIsHit(Player player) {
+        try {
+            return readIsHit(player);
+        } catch (RuntimeException exception) {
+            printErrorMessage(exception);
+            return getIsHit(player);
+        }
+    }
+
+    public static void printHitOrStandByPlayer(Player player) {
+        printSingleGambler(player);
+    }
+
+    public static void printDealerHit() {
+        printDealerHitMessage();
     }
 }
