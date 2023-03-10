@@ -22,12 +22,20 @@ public class Card {
         return suit.name() + letter.name();
     }
 
+    public boolean isAce() {
+        return letter.isAce();
+    }
+
     public Suit getCardSuit() {
         return suit;
     }
 
     public Letter getCardLetter() {
         return letter;
+    }
+
+    public int getScore() {
+        return letter.getScore();
     }
 
     @Override
