@@ -41,4 +41,20 @@ public class ScoreTest {
 
         assertThat(score.calculateAdditionalScore().getScore()).isEqualTo(12);
     }
+
+    @Test
+    @DisplayName("점수가 16점 이하이면 true를 반환한다.")
+    void isUnderScore() {
+        Score score = new Score(12);
+
+        assertThat(score.isUnderScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수가 16점 초과이면 false를 반환한다.")
+    void isUnderScoreFalse() {
+        Score score = new Score(17);
+
+        assertThat(score.isUnderScore()).isFalse();
+    }
 }
