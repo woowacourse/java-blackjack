@@ -17,4 +17,16 @@ class BetAmountTest {
         Assertions.assertThat(betAmount.getValue()).isEqualTo(10000);
     }
 
+    @Test
+    void throwExceptionWhenValueIsLessThan() {
+        Assertions.assertThatThrownBy(() -> new BetAmount(1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+    @Test
+    void throwExceptionWhenValueIsGreaterThan() {
+        Assertions.assertThatThrownBy(() -> new BetAmount(120000))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
