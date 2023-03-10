@@ -1,22 +1,22 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.PlayingCards;
+import domain.card.Hand;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Player {
-    private final PlayingCards playingCards;
+    private final Hand hand;
     private final PlayerName name;
 
     protected Player(String name) {
-        this.playingCards = new PlayingCards();
+        this.hand = new Hand();
         this.name = new PlayerName(name);
     }
     
     public void addCard(Card card) {
-        playingCards.addCard(card);
+        hand.addCard(card);
     }
     
     public GameResult battleResult(Player otherPlayer) {
@@ -54,15 +54,15 @@ public abstract class Player {
     }
     
     public int getTotalScore() {
-        return playingCards.getTotalScore();
+        return hand.getTotalScore();
     }
     
     public boolean isBurst() {
-        return playingCards.isBurst(getTotalScore());
+        return hand.isBurst(getTotalScore());
     }
     
     public List<Card> getCards() {
-        return playingCards.getCards();
+        return hand.getCards();
     }
     
     public String getName() {
@@ -76,11 +76,11 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(playingCards, player.playingCards) && Objects.equals(name, player.name);
+        return Objects.equals(hand, player.hand) && Objects.equals(name, player.name);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(playingCards, name);
+        return Objects.hash(hand, name);
     }
 }
