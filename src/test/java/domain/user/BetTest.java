@@ -16,51 +16,35 @@ class BetTest {
     }
 
     @Test
-    @DisplayName("상대의 원금을 통해 수익을 계산할 수 있다")
+    @DisplayName("수익은 1배씩 발생한다")
     void takeRevenueFromTestWhenNormalCase() {
         Bet bet = new Bet(1000);
-        Bet otherBet = new Bet(1000);
 
-        bet.takeRevenueFrom(otherBet);
+        bet.addRevenue();
 
         assertThat(bet.getRevenue()).isEqualTo(1000);
     }
 
     @Test
-    @DisplayName("수익을 얻는 경우, 상대의 수익은 그만큼 감소한다")
+    @DisplayName("수익은 1.5배씩 발생한다")
     void takeRevenueFromTestAboutDecrease() {
         Bet bet = new Bet(1000);
-        Bet otherBet = new Bet(1000);
 
-        bet.takeRevenueFrom(otherBet);
+        bet.addBonusRevenue();
 
-        assertThat(otherBet.getRevenue()).isEqualTo(-1000);
+        assertThat(bet.getRevenue()).isEqualTo(1500);
     }
 
     @Test
-    @DisplayName("여러 곳에서 수익을 얻을 수 있다")
+    @DisplayName("다른 Bet의 수익만큼을 감소시킬 수 있다")
     void takeRevenueFromTestFromManyBet() {
         Bet bet = new Bet(1000);
         Bet otherBet = new Bet(3000);
-        Bet anotherBet = new Bet(2000);
 
-        bet.takeRevenueFrom(otherBet);
-        bet.takeRevenueFrom(anotherBet);
+        otherBet.addRevenue();
+        bet.payFor(otherBet);
 
-        assertThat(bet.getRevenue()).isEqualTo(5000);
-    }
-
-    @Test
-    @DisplayName("수익을 얻고, 다시 잃을 수 있다")
-    void takeRevenueFromTestWhenTakeAndGive() {
-        Bet bet = new Bet(1000);
-        Bet otherBet = new Bet(3000);
-        Bet anotherBet = new Bet(2000);
-
-        bet.takeRevenueFrom(otherBet);
-        anotherBet.takeRevenueFrom(bet);
-
-        assertThat(bet.getRevenue()).isEqualTo(2000);
+        assertThat(bet.getRevenue()).isEqualTo(-3000);
     }
 }
 

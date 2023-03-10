@@ -16,17 +16,23 @@ public class Bet {
         this.credit += amount;
     }
 
-    public void takeRevenueFrom(final Bet otherBet) { // TODO: REVENUE 객체 분리
-        this.revenue += otherBet.credit;
-        otherBet.revenue -= otherBet.credit;
+    public void addRevenue() {
+        revenue += credit;
     }
 
-    public void takeBonusRevenueFrom(final Bet otherBet) {
-        otherBet.revenue -= otherBet.credit * REVENUE_BONUS_RATE;
-        this.revenue += otherBet.credit * REVENUE_BONUS_RATE;
+    public void addBonusRevenue() {
+        revenue += credit * REVENUE_BONUS_RATE;
+    }
+
+    public void payFor(final Bet otherBet) {
+        revenue -= otherBet.revenue;
     }
 
     public int getRevenue() {
         return revenue;
+    }
+
+    public void decreaseRevenue() {
+        revenue -= credit;
     }
 }

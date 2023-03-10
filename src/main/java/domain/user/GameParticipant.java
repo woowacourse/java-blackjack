@@ -21,7 +21,7 @@ public class GameParticipant {
 
     private List<Player> makePlayersWithName(final List<String> playerNames) {
         return playerNames.stream()
-                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
+                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList()), 0))
                 .collect(Collectors.toList());
     }
 
@@ -57,16 +57,23 @@ public class GameParticipant {
         players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
     }
 
-    public void updateBetAmountByGameResult(final Map<Player, GameResult> record) {
-        record.entrySet().stream()
-                .filter(entry -> !entry.getKey().isBlackjack() && !dealer.isBlackjack())
-                .filter(entry -> entry.getValue() == GameResult.WIN)
-                .forEach(entry -> entry.getKey().takeRevenueFrom(dealer));
+    public void updateBetAmountByGameResult() {
+        Map<Player, GameResult> record = makeGameResultForAllPlayer();
+
+        // Player가 이기면, 기본 1배, 블랙잭 시 1.5배의 수익을 얻는다
+        // 딜러의 수익은 -(플레이어의 수익)이 된다
 
         record.entrySet().stream()
-                .filter(entry -> !entry.getKey().isBlackjack() && !dealer.isBlackjack())
+                .filter(entry -> entry.getValue() == GameResult.WIN)
+                .map(Map.Entry::getKey)
+                .forEach(Player::increaseRevenue);
+
+        record.entrySet().stream()
                 .filter(entry -> entry.getValue() == GameResult.LOSE)
-                .forEach(entry -> dealer.takeRevenueFrom(entry.getKey()));
+                .map(Map.Entry::getKey)
+                .forEach(Player::decreaseRevenue);
+
+        record.keySet().forEach(dealer::payFor);
     }
 
     public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {

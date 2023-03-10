@@ -40,6 +40,10 @@ public class BlackjackGame {
         player.draw(deck.serve());
     }
 
+    public void updateBetAmount() {
+        gameParticipant.updateBetAmountByGameResult();
+    }
+
     public Map<Player, GameResult> getGameResultForAllPlayer() {
         return gameParticipant.makeGameResultForAllPlayer();
     }

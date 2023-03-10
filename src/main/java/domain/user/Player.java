@@ -38,16 +38,25 @@ public class Player {
         return cardPool.isSumSameAsLimit();
     }
 
-    public void takeRevenueFrom(final Player otherPlayer) {
+    public void increaseRevenue() {
         if (isBlackjack()) {
-            bet.takeBonusRevenueFrom(otherPlayer.bet);
+            bet.addBonusRevenue();
             return;
         }
-        bet.takeRevenueFrom(otherPlayer.bet);
+        bet.addRevenue();
     }
 
-    public void addBetAmount(int amount) {
-        this.bet.addAmount(amount);
+    public void decreaseRevenue() {
+        bet.decreaseRevenue();
+    }
+
+    public void addAmount(int amount) {
+        bet.addAmount(amount);
+    }
+
+    //TODO: Player 추상클래스 분리 혹은 조합
+    public void payFor(Player otherPlayer) {
+        bet.payFor(otherPlayer.bet);
     }
 
     public int getRevenue() {

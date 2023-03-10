@@ -35,16 +35,28 @@ public class BlackJackController {
     }
 
     private void startGame() {
+        GameParticipant gameParticipant = blackjackGame.getGameParticipant();
+
+        for (Player player : gameParticipant.getPlayers()) {
+            int amount = inputView.inputBetAmount(player.getPlayerName().getName());
+            player.addAmount(amount);
+        }
         blackjackGame.startHit();
 
-        GameParticipant gameParticipant = blackjackGame.getGameParticipant();
         outputView.printPlayersInfoWhenGameStarted(gameParticipant.getDealer(), gameParticipant.getPlayers());
 
         letPlayerChoiceWhetherHit(gameParticipant.getPlayers());
+
+        blackjackGame.updateBetAmount();
         outputView.printGameScore(gameParticipant.getDealer(), gameParticipant.getPlayers());
 
         outputView.printDealerRecord(gameParticipant.getDealer(), blackjackGame.getDealerRecord());
         outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
+
+        System.out.println(gameParticipant.getDealer().getRevenue());
+        for (Player player : gameParticipant.getPlayers()) {
+            System.out.println(player.getRevenue());
+        }
     }
 
     private void letPlayerChoiceWhetherHit(List<Player> players) {
