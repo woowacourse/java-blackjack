@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.*;
-import blackjack.fixture.DeckMock;
+import blackjack.fixture.MockDeck;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("생성시에 카드가 두 장이 아닐 경우 예외가 발생한다.")
     void throwExceptionWhenCardsHasSizeLowerThan1() {
-        final Deck deck = DeckMock.create(Collections.emptyList());
+        final Deck deck = MockDeck.create(Collections.emptyList());
 
         assertThatThrownBy(() -> new ParticipantCards(deck))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -48,7 +48,7 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("생성시에 카드가 중복될 경우 예외가 발생한다.")
     void throwExceptionWhenInitialCardsDuplicated() {
-        final Deck deck = DeckMock.create(List.of(
+        final Deck deck = MockDeck.create(List.of(
                 new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.SPADE, CardNumber.ACE)
         ));
@@ -71,7 +71,7 @@ class ParticipantCardsTest {
     @MethodSource("calculateDummy")
     @DisplayName("가지고 있는 카드의 합을 계산한다.")
     void calculate(final List<Card> cards, final int expectedSum) {
-        final Deck deck = DeckMock.create(cards);
+        final Deck deck = MockDeck.create(cards);
         final ParticipantCards participantCards = new ParticipantCards(deck);
         final int cardSum = participantCards.getMaxValueNearBlackJack();
 

@@ -13,16 +13,10 @@ public abstract class ParticipantCardsFixture {
         newCards.add(one);
         newCards.add(two);
 
-        final Deck deck = DeckMock.create(newCards);
+        final Deck deck = MockDeck.create(newCards);
         final ParticipantCards participantCards = new ParticipantCards(deck);
         cards.forEach(participantCards::receive);
 
-        return participantCards;
-    }
-
-    public static ParticipantCards create(final Deck deck, final List<Card> cards) {
-        ParticipantCards participantCards = new ParticipantCards(deck);
-        cards.forEach(participantCards::receive);
         return participantCards;
     }
 }

@@ -6,14 +6,12 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -23,10 +21,8 @@ class BettingResultsTest {
     @DisplayName("생성한다.")
     void create() {
         final Deck deck = new CardDeck();
-        final ParticipantCards playerCards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-        final ParticipantCards dealerCards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-        final Player player = new Player(playerCards, "헤나");
-        final Dealer dealer = new Dealer(dealerCards);
+        final Player player = new Player(deck, "헤나");
+        final Dealer dealer = new Dealer(deck);
         final Map<Participant, Money> bettingResults = new LinkedHashMap<>();
         bettingResults.put(player, Money.ZERO);
 
@@ -37,8 +33,7 @@ class BettingResultsTest {
     @DisplayName("배팅 결과가 비어있을 경우 예외가 발생한다.")
     void throwExceptionWhenBettingResultsIsEmpty() {
         final Deck deck = new CardDeck();
-        final ParticipantCards dealerCards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-        final Dealer dealer = new Dealer(dealerCards);
+        final Dealer dealer = new Dealer(deck);
         final Map<Participant, Money> bettingResults = new LinkedHashMap<>();
 
         assertThatThrownBy(() -> new BettingResults(bettingResults, dealer))
@@ -51,13 +46,9 @@ class BettingResultsTest {
     void getPlayerBettingResults(final int moneyValueOne, final int moneyValueTwo) {
         // given
         final Deck deck = new CardDeck();
-        final ParticipantCards participantCards1 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-        final ParticipantCards participantCards2 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-        final ParticipantCards dealerCards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
-
-        final Player player1 = new Player(participantCards1, "헤나");
-        final Player player2 = new Player(participantCards2, "시카");
-        final Dealer dealer = new Dealer(dealerCards);
+        final Player player1 = new Player(deck, "헤나");
+        final Player player2 = new Player(deck, "시카");
+        final Dealer dealer = new Dealer(deck);
 
         final Map<Participant, Money> playersBetting = new LinkedHashMap<>();
         playersBetting.put(player1, new Money(moneyValueOne));

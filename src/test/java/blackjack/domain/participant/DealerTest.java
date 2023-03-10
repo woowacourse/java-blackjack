@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.*;
-import blackjack.domain.game.ParticipantCards;
 import blackjack.domain.game.ResultType;
-import blackjack.fixture.ParticipantCardsFixture;
+import blackjack.fixture.MockDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,18 +20,18 @@ class DealerTest {
     @DisplayName("생성한다.")
     void create() {
         final Deck deck = new CardDeck();
-        final ParticipantCards participantCards = new ParticipantCards(deck);
 
-        assertThatNoException().isThrownBy(() -> new Dealer(participantCards));
+        assertThatNoException().isThrownBy(() -> new Dealer(deck));
     }
 
     @ParameterizedTest
     @MethodSource("isHittableDummy")
     @DisplayName("딜러가 카드를 뽑을 수 있는지 확인한다.")
-    void isHittable(final Card cardOne, final Card cardTwo, final List<Card> additionalCards, final boolean expected) {
-        Participant player = new Dealer(ParticipantCardsFixture.create(cardOne, cardTwo, additionalCards));
+    void isHittable(final List<Card> cards, final boolean expected) {
+        final Deck deck = MockDeck.create(cards);
+        final Participant dealer = new Dealer(deck);
 
-        assertThat(player.isHittable()).isEqualTo(expected);
+        assertThat(dealer.isHittable()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -47,11 +46,13 @@ class DealerTest {
             final List<Card> dealerAdditionalCards,
             final ResultType expectedResult
     ) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.create(playerCard1, playerCard2, playerAdditionalCards);
-        ParticipantCards dealerCards = ParticipantCardsFixture.create(dealerCard1, dealerCard2, dealerAdditionalCards);
+        final Deck playerDeck = MockDeck.create(List.of(playerCard1, playerCard2));
+        final Deck dealerDeck = MockDeck.create(List.of(dealerCard1, dealerCard2));
 
-        Player player = new Player(participantsCards, "베로");
-        Dealer dealer = new Dealer(dealerCards);
+        final Player player = new Player(playerDeck, "베로");
+        playerAdditionalCards.forEach(player::hit);
+        final Dealer dealer = new Dealer(dealerDeck);
+        dealerAdditionalCards.forEach(dealer::hit);
 
         assertThat(dealer.judgeResult(player)).isEqualTo(expectedResult);
     }
@@ -59,30 +60,22 @@ class DealerTest {
     static Stream<Arguments> isHittableDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        // 히트 가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        // 딜러 5점, 히트 가능
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.THREE),
-                                new Card(CardShape.HEART, CardNumber.EIGHT)
+                                new Card(CardShape.DIAMOND, CardNumber.TWO),
+                                new Card(CardShape.DIAMOND, CardNumber.THREE)
                         ), true),
                 Arguments.arguments(
-                        // 히트 불가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        // 딜러 16점, 히트 가능
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.FOUR)
-                        ), false),
+                                new Card(CardShape.DIAMOND, CardNumber.ACE),
+                                new Card(CardShape.DIAMOND, CardNumber.FIVE)
+                        ), true),
                 Arguments.arguments(
-                        // 히트 불가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        // 딜러 17점, 히트 불가능
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.QUEEN),
-                                new Card(CardShape.HEART, CardNumber.JACK),
-                                new Card(CardShape.DIAMOND, CardNumber.THREE)
+                                new Card(CardShape.DIAMOND, CardNumber.KING),
+                                new Card(CardShape.DIAMOND, CardNumber.SEVEN)
                         ), false)
         );
     }
