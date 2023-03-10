@@ -14,7 +14,7 @@ public class InitGameSetter {
         for (String playerName : playerNames) {
             List<Card> initCards = new ArrayList<>();
             drawTwoCard(deck, initCards);
-            generatedPlayers.add(new Player(new Name(playerName), new HandCards(initCards)));
+            generatedPlayers.add(new Player(new Name(playerName), new Hand(initCards)));
         }
         return new Players(generatedPlayers);
     }
@@ -22,7 +22,7 @@ public class InitGameSetter {
     public static Dealer generateDealer(Deck deck) {
         List<Card> initCards = new ArrayList<>();
         drawTwoCard(deck, initCards);
-        return new Dealer(new HandCards(initCards));
+        return new Dealer(new Hand(initCards));
     }
 
     private static void drawTwoCard(Deck deck, List<Card> initCards) {

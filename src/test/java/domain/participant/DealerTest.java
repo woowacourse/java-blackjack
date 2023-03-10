@@ -3,15 +3,10 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
-import domain.betting.BettingMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.profit.FinalProfit;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +17,7 @@ public class DealerTest {
 
     @BeforeEach
     void init() {
-        dealer = new Dealer(new HandCards(Collections.emptyList()));
+        dealer = new Dealer(new Hand(Collections.emptyList()));
     }
 
     @Test

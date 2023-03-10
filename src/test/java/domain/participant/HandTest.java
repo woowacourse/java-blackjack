@@ -3,7 +3,6 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import domain.card.Card;
@@ -14,24 +13,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HandCardsTest {
+class HandTest {
 
-    private HandCards handCards;
+    private Hand hand;
 
     @BeforeEach
     void init() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Suit.CLOVER, Denomination.JACK));
         cards.add(new Card(Suit.CLOVER, Denomination.TWO));
-        this.handCards = new HandCards(cards);
+        this.hand = new Hand(cards);
     }
 
     @Test
     @DisplayName("카드를 받아서 손패에 추가한다.")
     void addHandCards() {
         Card cardToAdd = new Card(Suit.SPADE, Denomination.ACE);
-        handCards.addCard(cardToAdd);
-        List<Card> afterAddCards = handCards.getCards();
+        hand.addCard(cardToAdd);
+        List<Card> afterAddCards = hand.getCards();
 
         Assertions.assertThat(afterAddCards.size()).isEqualTo(3);
         Assertions.assertThat(afterAddCards).contains(cardToAdd);
@@ -42,11 +41,11 @@ class HandCardsTest {
     void getOptimalSumValueWhenAceContain() {
         // given
         Card card = new Card(Suit.DIAMOND, Denomination.ACE);
-        handCards.addCard(card);
+        hand.addCard(card);
 
         // when, then
-        assertThat(handCards.calculateOptimalCardValueSum()).isEqualTo(13);
-        assertThat(handCards.calculateOptimalCardValueSum()).isNotEqualTo(22);
+        assertThat(hand.calculateOptimalCardValueSum()).isEqualTo(13);
+        assertThat(hand.calculateOptimalCardValueSum()).isNotEqualTo(22);
     }
 
     @Test
@@ -54,10 +53,10 @@ class HandCardsTest {
     void getOptimalSumValueWhenAceNotContain() {
         // given
         Card card = new Card(Suit.DIAMOND, Denomination.THREE);
-        handCards.addCard(card);
+        hand.addCard(card);
 
         // when, then
-        assertThat(handCards.calculateOptimalCardValueSum()).isEqualTo(15);
+        assertThat(hand.calculateOptimalCardValueSum()).isEqualTo(15);
     }
 
 }

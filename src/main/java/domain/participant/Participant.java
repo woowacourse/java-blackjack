@@ -1,32 +1,30 @@
 package domain.participant;
 
-import java.util.List;
-
 import domain.card.Card;
 
 public abstract class Participant {
 
     protected Name name;
-    protected HandCards handCards;
+    protected Hand hand;
 
-    public Participant(Name name, HandCards handCards) {
+    public Participant(Name name, Hand hand) {
         this.name = name;
-        this.handCards = handCards;
+        this.hand = hand;
     }
 
     public void takeCard(Card card) {
-        handCards.addCard(card);
+        hand.addCard(card);
     }
 
     public String getName() {
         return name.getValue();
     }
 
-    public List<Card> getHandCards() {
-        return handCards.getCards();
+    public Hand getHandCards() {
+        return hand;
     }
 
     public int getSize() {
-        return handCards.getSize();
+        return hand.getSize();
     }
 }

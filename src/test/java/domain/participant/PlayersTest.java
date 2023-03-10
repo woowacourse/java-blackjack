@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
 import domain.card.Card;
@@ -19,7 +17,7 @@ class PlayersTest {
     void getPlayerNames() {
         List<Card> cards1 = List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.TEN));
         List<Card> cards2 = List.of(new Card(Suit.CLOVER, Denomination.NINE), new Card(Suit.SPADE, Denomination.SEVEN));
-        List<Player> gamePlayers = List.of(new Player(new Name("seongha"), new HandCards(cards1)), new Player(new Name("dino"), new HandCards(cards2)));
+        List<Player> gamePlayers = List.of(new Player(new Name("seongha"), new Hand(cards1)), new Player(new Name("dino"), new Hand(cards2)));
 
         Players players = new Players(gamePlayers);
 
@@ -32,8 +30,8 @@ class PlayersTest {
     void findPlayerByPlayerName() {
         List<Card> cards1 = List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.TEN));
         List<Card> cards2 = List.of(new Card(Suit.CLOVER, Denomination.NINE), new Card(Suit.SPADE, Denomination.SEVEN));
-        Player player1 = new Player(new Name("seongha"), new HandCards(cards1));
-        Player player2 = new Player(new Name("dino"), new HandCards(cards2));
+        Player player1 = new Player(new Name("seongha"), new Hand(cards1));
+        Player player2 = new Player(new Name("dino"), new Hand(cards2));
         List<Player> gamePlayers = List.of(player1, player2);
 
         Players players = new Players(gamePlayers);
@@ -47,8 +45,8 @@ class PlayersTest {
     void findPlayerByPlayerNameNotFoundPlayer() {
         List<Card> cards1 = List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.TEN));
         List<Card> cards2 = List.of(new Card(Suit.CLOVER, Denomination.NINE), new Card(Suit.SPADE, Denomination.SEVEN));
-        Player player1 = new Player(new Name("seongha"), new HandCards(cards1));
-        Player player2 = new Player(new Name("dino"), new HandCards(cards2));
+        Player player1 = new Player(new Name("seongha"), new Hand(cards1));
+        Player player2 = new Player(new Name("dino"), new Hand(cards2));
         List<Player> gamePlayers = List.of(player1, player2);
 
         Players players = new Players(gamePlayers);

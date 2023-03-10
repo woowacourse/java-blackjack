@@ -7,11 +7,11 @@ public class Dealer extends Participant {
     private static final int LIMIT_HIT_VALUE = 17;
 
 
-    public Dealer(HandCards handCards) {
-        super(new Name(Constants.DEALER_NAME), handCards);
+    public Dealer(Hand hand) {
+        super(new Name(Constants.DEALER_NAME), hand);
     }
 
     public boolean canHit() {
-        return handCards.calculateOptimalCardValueSum() < LIMIT_HIT_VALUE;
+        return hand.calculateOptimalCardValueSum() < LIMIT_HIT_VALUE;
     }
 }

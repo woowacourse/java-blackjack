@@ -17,7 +17,7 @@ public class PlayerTest {
 
     @BeforeEach
     void init() {
-        this.player = new Player(new Name("seongha"), new HandCards(Collections.emptyList()));
+        this.player = new Player(new Name("seongha"), new Hand(Collections.emptyList()));
     }
 
     @Test

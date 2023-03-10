@@ -8,13 +8,13 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.score.TotalSumValues;
 
-public class HandCards {
+public class Hand {
 
     private static final int INIT_VALUE_FOR_ADD = 0;
 
     private final List<Card> cards;
 
-    public HandCards(final List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
