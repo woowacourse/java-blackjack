@@ -7,10 +7,9 @@ import java.util.stream.Collectors;
 public class Referee {
 
     private final List<Double> winningMoneys;
-    private List<Result> results;
 
     public Referee(CardDeck dealerDeck, List<CardDeck> playersDeck, List<Money> moneys) {
-        results = generateResult(dealerDeck, playersDeck);
+        List<Result> results = generateResult(dealerDeck, playersDeck);
 
         winningMoneys = new ArrayList<>();
         for (int i = 0; i < playersDeck.size(); i++) {
@@ -28,22 +27,33 @@ public class Referee {
         Score dealerScore = dealerDeck.calculateScore();
         Score playerScore = playerDeck.calculateScore();
 
-        if (playerDeck.isBlackJack()) {
-            if (dealerDeck.isBlackJack()) {
-                return Result.DRAW;
-            }
-            return Result.BLACKJACK;
-        }
-        if (dealerDeck.isBlackJack() || playerScore.isMoreThan(Score.BLACKJACK_SCORE)) {
-            return Result.LOSE;
-        }
-        if (dealerScore.isMoreThan(Score.BLACKJACK_SCORE) || playerScore.isMoreThan(dealerScore)) {
-            return Result.WIN;
-        }
-        if (playerScore.equals(dealerScore)) {
+        return judgeResult(dealerDeck, playerDeck, dealerScore, playerScore);
+    }
+
+    private Result judgeResult(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
+        Score playerScore) {
+        if (isDraw(dealerDeck, playerDeck, dealerScore, playerScore)) {
             return Result.DRAW;
         }
+        if (playerDeck.isBlackJack()) {
+            return Result.BLACKJACK;
+        }
+        if (isWin(dealerScore, playerScore)) {
+            return Result.WIN;
+        }
         return Result.LOSE;
+    }
+
+    private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
+        Score playerScore) {
+        return
+            (!playerScore.isBurst() && !dealerDeck.isBlackJack() && playerScore.equals(dealerScore))
+                || (dealerDeck.isBlackJack() && playerDeck.isBlackJack());
+    }
+
+    private boolean isWin(Score dealerScore, Score playerScore) {
+        return !playerScore.isBurst() && (dealerScore.isBurst()
+            || playerScore.isMoreThan(dealerScore));
     }
 
     public Double calculateDealerWinningMoney() {
