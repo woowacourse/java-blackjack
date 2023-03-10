@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
@@ -55,8 +56,8 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(SPADE, SEVEN));
 
-        final Player player1 = new Player("pobi");
-        final Player player2 = new Player("wony");
+        final Player player1 = new Player("pobi", BETTING_MONEY_1000);
+        final Player player2 = new Player("wony", BETTING_MONEY_1000);
         player1.take(new Card(CLUB, QUEEN));
         player1.take(new Card(CLUB, SIX));
         player2.take(new Card(DIAMOND, QUEEN));

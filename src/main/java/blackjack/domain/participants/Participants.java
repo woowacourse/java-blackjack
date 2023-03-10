@@ -4,7 +4,6 @@ import blackjack.domain.result.JudgeResult;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -17,32 +16,30 @@ public class Participants {
         this.players = new Players(players);
     }
 
-    public static Participants of(final String dealerName, final List<String> playerNames) {
-        validatePlayerNames(dealerName, playerNames);
-        final List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-        return new Participants(new Dealer(dealerName), players);
+    public static Participants of(final Dealer dealer, final List<Player> players) {
+        validatePlayerNames2(dealer, players);
+        return new Participants(dealer, players);
     }
 
-    private static void validatePlayerNames(final String dealerName, final List<String> playerNames) {
-        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+    private static void validatePlayerNames2(final Dealer dealer, final List<Player> players) {
+        final List<String> names = players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+        final String dealerName = dealer.getName();
+        if (names.size() != new HashSet<>(names).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
-        if (playerNames.contains(dealerName)) {
+        if (names.contains(dealerName)) {
             throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + dealerName + ")과 중복될 수 없습니다.");
         }
     }
 
-    public Participant findParticipantByName(final String participantName) {
-        if (Objects.equals(participantName, dealer.getName())) {
-            return dealer;
-        }
-        return players.findPlayerBy(participantName);
-    }
-
     public Map<String, JudgeResult> collectPlayerJudgeResults() {
         return dealer.judgeAllPlayersResult(players);
+    }
+
+    public List<Player> findHitAblePlayers() {
+        return players.findHitAblePlayers();
     }
 
     public Dealer dealer() {

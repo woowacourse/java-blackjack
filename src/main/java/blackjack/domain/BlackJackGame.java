@@ -1,9 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
 import blackjack.dto.TotalGameResult;
@@ -18,9 +18,10 @@ public class BlackJackGame {
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(final DeckGenerator deckGenerator, final String dealerName, final List<String> playerNames) {
+
+    public BlackJackGame(final DeckGenerator deckGenerator, final Dealer dealer, final List<Player> players) {
         this.deck = deckGenerator.generate();
-        this.participants = Participants.of(dealerName, playerNames);
+        this.participants = Participants.of(dealer, players);
     }
 
     public void handOut() {
@@ -28,12 +29,11 @@ public class BlackJackGame {
         deck.handCardsTo(participants.players(), INITIAL_HAND_OUT_COUNT);
     }
 
-    public void hitByName(final String participantName) {
-        final Participant participant = participants.findParticipantByName(participantName);
-        hit(participant);
+    public List<Player> getHitAblePlayers() {
+        return participants.findHitAblePlayers();
     }
 
-    private void hit(final Participant participant) {
+    public void hit(final Participant participant) {
         deck.handCardsTo(participant, HIT_CARD_COUNT);
     }
 
@@ -54,16 +54,6 @@ public class BlackJackGame {
         participants.players()
                 .forEach(player -> handStatuses.add(player.toHandStatus()));
         return handStatuses;
-    }
-
-    public List<Card> openCardsByName(final String participantName) {
-        final Participant participant = participants.findParticipantByName(participantName);
-        return participant.cards();
-    }
-
-    public boolean isAbleToHit(final String participantName) {
-        final Participant participant = participants.findParticipantByName(participantName);
-        return participant.isAbleToHit();
     }
 
     public List<HandResult> openHandResults() {

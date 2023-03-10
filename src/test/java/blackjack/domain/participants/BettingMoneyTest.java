@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BettingMoneyTest {
 
-    @DisplayName("베팅 금액은 0 이상이어야 한다.")
+    @DisplayName("베팅 금액이 0 이하이면 예외를 발생시킨다.")
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     void should_ThrowException_When_AmountIsUnder0(final int amount) {

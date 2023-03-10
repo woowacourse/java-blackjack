@@ -28,12 +28,8 @@ public class OutputView {
         handStatuses.forEach(OutputView::showPlayerCard);
     }
 
-    private static void showPlayerCard(final HandStatus handStatus) {
+    public static void showPlayerCard(final HandStatus handStatus) {
         System.out.printf(KEY_VALUE_FORMAT, handStatus.getParticipantName(), joinAllCardNames(handStatus.getCards()));
-    }
-
-    public static void showPlayerCard(final String playerName, final List<Card> playerCard) {
-        System.out.printf(KEY_VALUE_FORMAT, playerName, joinAllCardNames(playerCard));
     }
 
     private static String joinAllCardNames(final List<Card> cards) {

@@ -4,8 +4,11 @@ import blackjack.dto.HandStatus;
 
 public class Player extends Participant {
 
-    public Player(final String name) {
+    private final BettingMoney bettingMoney;
+
+    public Player(final String name, final BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override

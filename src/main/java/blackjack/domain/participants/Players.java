@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -21,11 +22,10 @@ public class Players {
         }
     }
 
-    public Player findPlayerBy(final String playerName) {
+    public List<Player> findHitAblePlayers() {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
+                .filter(Player::isAbleToHit)
+                .collect(Collectors.toList());
     }
 
     public List<Player> players() {
