@@ -57,4 +57,12 @@ public class ScoreTest {
 
         assertThat(score.isUnderScore()).isFalse();
     }
+
+    @Test
+    @DisplayName("점수가 21점 초과이면 true 반환한다.")
+    void isOverMaxScore() {
+        Score score = new Score(22);
+
+        assertThat(score.isOverMaxScore()).isTrue();
+    }
 }

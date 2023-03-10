@@ -30,6 +30,10 @@ public class Score {
         return score <= UNDER_SCORE;
     }
 
+    public boolean isOverMaxScore() {
+        return score > MAX_SCORE;
+    }
+
     public int getScore() {
         return score;
     }
