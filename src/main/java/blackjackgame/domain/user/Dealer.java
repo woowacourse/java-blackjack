@@ -19,8 +19,8 @@ public class Dealer extends User {
     }
 
     @Override
-    public void receiveCards(List<Card> receivedCards) {
-        super.receiveCards(receivedCards);
+    public void receiveCards(List<Card> cards) {
+        super.receiveCards(cards);
         status = score.calculateDealerStatus();
     }
 
