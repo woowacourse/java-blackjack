@@ -39,7 +39,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return cards.getGamePoint().isBlackJack();
+        return cards.isBlackJack();
     }
 
     public Name getName() {

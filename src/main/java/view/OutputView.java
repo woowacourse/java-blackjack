@@ -128,7 +128,7 @@ public final class OutputView {
             System.out.printf(
                     FINAL_RESULT_FORMAT,
                     player.getName().getValue(),
-                    entry.getKey().calculateProfit(player.getBet())
+                    entry.getKey().calculateProfit(player)
             );
         }
     }

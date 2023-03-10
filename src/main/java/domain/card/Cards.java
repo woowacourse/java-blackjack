@@ -1,6 +1,7 @@
 package domain.card;
 
 import domain.game.GamePoint;
+import domain.game.GameResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,10 @@ public final class Cards {
         List<Card> cardList = new ArrayList<>(cards);
         cardList.add(card);
         return new Cards(cardList);
+    }
+
+    public boolean isBlackJack() {
+        return gamePoint.isSameAs(GamePoint.of(21)) && cards.size() == 2 ;
     }
 
     public boolean isBusted() {

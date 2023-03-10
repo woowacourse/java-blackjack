@@ -34,28 +34,28 @@ public class GameResult {
     private int updateDealerProfit() {
         int result = 0;
         for (Map.Entry<Result, List<Player>> entry : playerResult.entrySet()) {
-            result = checkProfit(result, entry);
-            result = checkLoss(result, entry);
+            result += checkProfit(entry);
+            result -= checkLoss(entry);
         }
         return result;
     }
 
-    private static int checkProfit(int result, final Map.Entry<Result, List<Player>> entry) {
+    private static int checkProfit(final Map.Entry<Result, List<Player>> entry) {
         if (Result.LOSE == entry.getKey()) {
             return -entry.getValue().stream()
-                    .mapToInt(player -> Result.LOSE.calculateProfit(player.getBet()))
+                    .mapToInt(Result.LOSE::calculateProfit)
                     .sum();
         }
-        return result;
+        return 0;
     }
 
-    private static int checkLoss(int result, final Map.Entry<Result, List<Player>> entry) {
+    private static int checkLoss(final Map.Entry<Result, List<Player>> entry) {
         if (Result.WIN == entry.getKey()) {
-            return -entry.getValue().stream()
-                    .mapToInt(player -> Result.WIN.calculateProfit(player.getBet()))
+            return entry.getValue().stream()
+                    .mapToInt(Result.WIN::calculateProfit)
                     .sum();
         }
-        return result;
+        return 0;
     }
 
     public Map<Result, List<Player>> getResult() {
