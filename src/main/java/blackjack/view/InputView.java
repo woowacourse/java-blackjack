@@ -23,4 +23,14 @@ public class InputView {
     public static void closeScanner() {
         scanner.close();
     }
+
+    public static int readBettingMoney(String name) {
+        System.out.println("\n" + name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 양의 정수만 입력 가능합니다.");
+        }
+    }
 }

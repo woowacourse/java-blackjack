@@ -2,12 +2,13 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.DeckMaker;
-import blackjack.dto.GameResultDto;
 import blackjack.dto.PersonStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.toList;
@@ -32,13 +33,30 @@ public class BlackJackController {
     }
 
     public void run() {
+        Map<String, Integer> bettingMoney = getBettingMoney(blackjackGame.getPlayersName());
         blackjackGame.drawInitCard();
         printInitStatus(blackjackGame.getParticipantsInit());
         drawMoreCardForPlayers(blackjackGame.getPlayersName());
         InputView.closeScanner();
         drawMoreCardForDealer();
         printAllStatus();
-        printGameResult();
+        printGameResult(blackjackGame.getParticipantsProfit(bettingMoney));
+    }
+
+    private Map<String, Integer> getBettingMoney(List<String> playersName) {
+        Map<String, Integer> bettingMoney = new HashMap<>();
+        for (String name : playersName) {
+            int money = repeat(() -> validate(InputView.readBettingMoney(name)));
+            bettingMoney.put(name, money);
+        }
+        return bettingMoney;
+    }
+
+    private int validate(int value) {
+        if (value > 0) {
+            return value;
+        }
+        throw new IllegalArgumentException("[ERROR] 양의 정수만 입력 가능합니다.");
     }
 
     private void printInitStatus(List<PersonStatusDto> personStatusDtos) {
@@ -104,15 +122,11 @@ public class BlackJackController {
         OutputView.printPersonStatus(name, personStatusDto.getCards(), score);
     }
 
-    private void printGameResult() {
+    private void printGameResult(Map<String, Double> participantsProfit) {
         OutputView.printGameEndMessage();
 
-        GameResultDto dealerGameResultDto = blackjackGame.getDelearGameResultDto();
-        OutputView.printDealerResult(dealerGameResultDto.getDealerGameResult());
-
-        for (String name : blackjackGame.getPlayersName()) {
-            GameResultDto playerGameResultDto = blackjackGame.getPlayerGameResultDto(name);
-            OutputView.printPlayerResult(name, playerGameResultDto.getPlayerGameResult());
+        for (String name : blackjackGame.getParticipantsName()) {
+            OutputView.printProfitResult(name, participantsProfit.get(name));
         }
     }
 }
