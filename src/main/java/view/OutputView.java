@@ -80,13 +80,12 @@ public final class OutputView {
     }
 
     public void printAdditionalCardCount(final int cardCount, final boolean haveAdditionalCard) {
-        if (!haveAdditionalCard) {
-            System.out.println("\n딜러는 17 이상이라 카드를 받지 못했습니다.\n");
-        }
         if (haveAdditionalCard) {
             System.out.printf("\n딜러는 16 이하라 %d장의 카드를 더 받았습니다.\n", cardCount);
+            System.out.print(System.lineSeparator());
+            return;
         }
-        System.out.print(System.lineSeparator());
+        System.out.println("\n딜러는 17 이상이라 카드를 받지 못했습니다.\n");
     }
 
     public void printStatus(final Dealer dealer, final Players players) {

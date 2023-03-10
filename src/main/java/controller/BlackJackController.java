@@ -8,7 +8,6 @@ import domain.participant.Name;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,13 +53,13 @@ public final class BlackJackController {
     private void getPlayersDecision(final BlackJack blackJack) {
         final Players participants = blackJack.getPlayers();
         for (Player participant : participants.getPlayers()) {
-            getPlayerDecision(participant, blackJack);
+            getPlayerDecision(blackJack, participant);
         }
     }
 
-    private void getPlayerDecision(final Player player, final BlackJack blackJack) {
+    private void getPlayerDecision(final BlackJack blackJack, final Player player) {
         while (!blackJack.isBusted(player) && wantMoreCard(player)) {
-            blackJack.drawCard(player);
+            blackJack.giveCard(player);
             outputView.printPlayerCards(player);
         }
     }
@@ -75,10 +74,7 @@ public final class BlackJackController {
 
     private void getDealerResult(final BlackJack blackJack) {
         final int cardCount = blackJack.getAdditionalCardCount();
-        if (cardCount == 0) {
-            outputView.printAdditionalCardCount(cardCount, false);
-            return;
-        }
-        outputView.printAdditionalCardCount(cardCount, true);
+        final boolean haveAdditionalCard = cardCount > 0;
+        outputView.printAdditionalCardCount(cardCount, haveAdditionalCard);
     }
 }

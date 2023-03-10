@@ -70,4 +70,13 @@ public final class Bet {
     public int hashCode() {
         return Objects.hash(bet);
     }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "bet=" + bet +
+                ", isBlackJack=" + isBlackJack +
+                ", isBusted=" + isBusted +
+                '}';
+    }
 }

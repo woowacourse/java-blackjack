@@ -39,7 +39,7 @@ public final class BlackJack {
         return participant.isBusted();
     }
 
-    public void drawCard(final Player player) {
+    public void giveCard(final Player player) {
         player.takeCard(deck.drawCard());
     }
 

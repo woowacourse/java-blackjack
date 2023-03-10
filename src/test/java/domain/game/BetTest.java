@@ -78,8 +78,8 @@ class BetTest {
         @DisplayName("플레이어들은 각각 배팅 금액을 가지고 있다.")
         @Test
         void playerBetTest() {
-            assertThat(player1.getBet()).isEqualTo(Bet.of(1000));
-            assertThat(player2.getBet()).isEqualTo(Bet.of(2000));
+            assertThat(player1.getBet()).isEqualTo(1000);
+            assertThat(player2.getBet()).isEqualTo(2000);
         }
 
         @DisplayName("플레이어들과 딜러의 초기 점수를 확인한다.")
@@ -90,18 +90,6 @@ class BetTest {
             gamePointCheck(dealer, 15);
         }
 
-        @DisplayName("플레이어들의 초기 수익률을 구한다.")
-        @Test
-        void betProfitTest() {
-            betProfitCheck(player1, 1500);
-            betProfitCheck(player2, 2000);
-        }
-
-        @Test
-        void name() {
-
-        }
-
         private void gamePointCheck(final Participant participant, final int gamePoint) {
             assertThat(participant)
                     .extracting("cards")
@@ -109,13 +97,5 @@ class BetTest {
                     .extracting("gamePoint")
                     .isEqualTo(gamePoint);
         }
-
-        private void betProfitCheck(final Player player, final int profit) {
-            assertThat(player)
-                    .extracting("bet")
-                    .extracting("Profit")
-                    .isEqualTo(profit);
-        }
     }
-
 }
