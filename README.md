@@ -25,8 +25,6 @@
 ## Participant
 ### Participant
 - [x] `Hand`와 `Money`를 가진다.
-- [x] 카드를 받을 수 있다.
-- [ ] 돈을 받을 수 있다.
 
 ### Dealer
 - [ ] 딜러라는 이름을 가진다.
