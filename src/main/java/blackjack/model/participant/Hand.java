@@ -46,7 +46,7 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return List.copyOf(cards);
     }
 
     public int size(){
