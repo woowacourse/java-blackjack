@@ -5,13 +5,12 @@ import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
-import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.player.CardDecisionStrategy;
 import blackjack.domain.participant.player.CardDisplayStrategy;
 import blackjack.domain.participant.player.Player;
-import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.domain.participant.player.Players;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     private Players players;
@@ -57,16 +56,9 @@ public class BlackjackGame {
         return players.getPlayerResults();
     }
 
-    public void calculateWinning() {
-        players.calculateWinning(dealer);
-    }
-
-    public DealerWinningDto getDealerWinningResult() {
-        return DealerWinningDto.from(dealer);
-    }
-
-    public List<PlayerWinningDto> getPlayerWinningResults() {
-        return players.getWinningResults();
+    public GameResultDto calculateWinning() {
+        Map<Player, WinningResult> playerToResult = players.calculateWinning(dealer);
+        return GameResultDto.of(playerToResult);
     }
 
     public DealerFirstCardDto getDealerFirstOpen() {

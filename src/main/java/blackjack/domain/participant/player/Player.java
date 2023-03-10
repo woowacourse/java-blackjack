@@ -14,7 +14,6 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Score;
 
 public class Player extends Participant {
-    private WinningResult winningResult;
 
     public Player(Name name) {
         super(name, new Hand());
@@ -23,12 +22,7 @@ public class Player extends Participant {
         }
     }
 
-    public void combat(Participant dealer) {
-        WinningResult winningResult = decideResultByComparingTo(dealer);
-        winningResult.applyTo(this, dealer);
-    }
-
-    private WinningResult decideResultByComparingTo(Participant dealer) {
+    public WinningResult combat(Participant dealer) {
         Score score = calculateScore();
         Score otherScore = dealer.calculateScore();
         if (isBust()) {
@@ -44,20 +38,14 @@ public class Player extends Participant {
     }
 
     public void win() {
-        winningResult = WinningResult.WIN;
     }
 
     public void lose() {
-        winningResult = WinningResult.LOSE;
     }
 
     public void tie() {
-        winningResult = WinningResult.TIE;
     }
 
-    public WinningResult getResult() {
-        return winningResult;
-    }
 
     public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy,
                                       CardDisplayStrategy cardDisplayStrategy) {

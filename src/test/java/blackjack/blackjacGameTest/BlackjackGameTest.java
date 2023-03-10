@@ -1,8 +1,5 @@
 package blackjack.blackjacGameTest;
 
-import static blackjack.domain.game.WinningResult.LOSE;
-import static blackjack.domain.game.WinningResult.TIE;
-import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -11,15 +8,12 @@ import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.dealer.Dealer;
-import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.Arrays;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -83,9 +77,11 @@ class BlackjackGameTest {
         @Test
         @DisplayName("언더 스코어가 아니면 카드를 주지 않는다.")
         void doesNotSupply() {
-            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.SPADE), new Card(CardNumber.KING, Pattern.HEART)));
+            dealer.hit(
+                    Arrays.asList(new Card(CardNumber.KING, Pattern.SPADE), new Card(CardNumber.KING, Pattern.HEART)));
             int beforeSize = dealer.showCards().size();
-            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {
+            });
             int afterSize = dealer.showCards().size();
 
             assertThat(afterSize).isEqualTo(beforeSize);
@@ -94,30 +90,14 @@ class BlackjackGameTest {
         @Test
         @DisplayName("언더 스코어 이면 카드를 받는다.")
         void supply() {
-            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.HEART), new Card(CardNumber.SIX, Pattern.DIAMOND)));
+            dealer.hit(
+                    Arrays.asList(new Card(CardNumber.KING, Pattern.HEART), new Card(CardNumber.SIX, Pattern.DIAMOND)));
             int beforeSize = dealer.showCards().size();
-            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {
+            });
             int afterSize = dealer.showCards().size();
 
             assertThat(afterSize - beforeSize).isEqualTo(1);
         }
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 결과를 반환할 수 있다.")
-    void getDealerWinningResult() {
-        dealer.win();
-        dealer.win();
-        dealer.lose();
-        dealer.tie();
-
-        DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
-        Name name = dealerWinningResult.getName();
-        Map<WinningResult, Integer> dealerResult = dealerWinningResult.getResultToCount();
-
-        assertThat(name.getValue()).isEqualTo("딜러");
-        assertThat(dealerResult.get(WIN)).isEqualTo(2);
-        assertThat(dealerResult.get(LOSE)).isEqualTo(1);
-        assertThat(dealerResult.get(TIE)).isEqualTo(1);
     }
 }

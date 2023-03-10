@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.PlayerWinningDto;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
-import blackjack.domain.participant.player.PlayerWinningDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
