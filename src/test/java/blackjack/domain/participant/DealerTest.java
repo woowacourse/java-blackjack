@@ -40,4 +40,12 @@ class DealerTest {
                 () -> dealer.settingCards(players)
         );
     }
+
+    @Test
+    @DisplayName("스스로 2장의 카드를 세팅한다.")
+    void settingSelfTest() {
+        dealer.settingSelf();
+
+        assertThat(dealer.getHand().size()).isEqualTo(2);
+    }
 }

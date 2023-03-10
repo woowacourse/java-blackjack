@@ -19,6 +19,11 @@ public final class BlackjackGame {
         this.dealer.saveBettingMoney(player, money);
     }
 
+    public void settingGame() {
+        dealer.settingCards(players);
+        dealer.settingSelf();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

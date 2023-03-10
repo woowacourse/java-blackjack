@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 public final class Dealer extends Participant {
 
     private static final String name = "딜러";
+    private static final int INIT_CARD_COUNT = 2;
 
     private final Bank bank;
     private final Deck deck;
@@ -32,6 +33,12 @@ public final class Dealer extends Participant {
                 .collect(toList());
 
         players.distributeHands(hands);
+    }
+
+    public void settingSelf() {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            this.receiveCard(deck.drawCard());
+        }
     }
 
     public String getName() {
