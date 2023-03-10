@@ -7,6 +7,7 @@ import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
+import blackjackgame.domain.user.User;
 import blackjackgame.domain.user.dto.NameDto;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,11 +37,11 @@ public class BlackJackGame {
         }
     }
 
-    public void drawOneMoreCard(Player player) {
-        player.receiveCard(cards.drawCard());
+    public void hit(User user) {
+        user.receiveCard(cards.drawCard());
     }
 
-    public void drawDealerCardUntilSatisfyingMinimumScore() {
+    public void hitUntilSatisfyingDealerMinimumScore() {
         while (DealerStatus.UNDER_MIN_SCORE.equals(dealer.getStatus())) {
             dealer.receiveCard(cards.drawCard());
         }

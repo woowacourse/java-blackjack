@@ -62,7 +62,7 @@ class BlackJackGameTest {
     void drawDealerCardUntilSatisfyingConditionTest() {
         List<Card> expectedCards = List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK, SpadeCard.SPADE_FIVE);
 
-        blackJackGame.drawDealerCardUntilSatisfyingMinimumScore();
+        blackJackGame.hitUntilSatisfyingDealerMinimumScore();
 
         assertThat(dealer.cards()).isEqualTo(expectedCards);
     }

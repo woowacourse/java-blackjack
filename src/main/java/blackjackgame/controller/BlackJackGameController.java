@@ -72,7 +72,7 @@ public class BlackJackGameController {
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (player.isLessThanBustScore() && isHitCommandEntered(player)) {
-            blackJackGame.drawOneMoreCard(player);
+            blackJackGame.hit(player);
             printDrawResult(player);
         }
         if (player.isLessThanBustScore()) {
@@ -94,7 +94,7 @@ public class BlackJackGameController {
     }
 
     private void progressDealerTurn(BlackJackGame blackJackGame) {
-        blackJackGame.drawDealerCardUntilSatisfyingMinimumScore();
+        blackJackGame.hitUntilSatisfyingDealerMinimumScore();
 
         int dealerDrawCount = blackJackGame.getDealerExtraDrawCount();
         if (dealerDrawCount > 0) {
