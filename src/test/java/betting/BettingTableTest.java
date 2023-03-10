@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import participants.Name;
 import participants.Player;
 
-class BettingMapTest {
-    BettingMap bettingMap;
+class BettingTableTest {
+    BettingTable bettingTable;
 
     @BeforeEach
     void setUp() {
-        bettingMap = new BettingMap();
+        bettingTable = new BettingTable();
     }
 
     @Test
@@ -23,9 +23,9 @@ class BettingMapTest {
         Player player = new Player(new Name("폴로"));
         BettingAmount bettingAmount = new BettingAmount(1000);
 
-        bettingMap.saveBet(player, bettingAmount);
+        bettingTable.saveBet(player, bettingAmount);
 
-        assertThat(bettingMap.getBettingAmountByPlayer(player)).isEqualTo(bettingAmount);
+        assertThat(bettingTable.getBettingAmountByPlayer(player)).isEqualTo(bettingAmount);
     }
 
     @Test
@@ -35,9 +35,9 @@ class BettingMapTest {
         BettingAmount bettingAmount = new BettingAmount(1000);
         player.win();
 
-        bettingMap.saveBet(player, bettingAmount);
+        bettingTable.saveBet(player, bettingAmount);
 
-        assertThat(bettingMap.calculateDealerReward()).isEqualTo(-1000);
+        assertThat(bettingTable.calculateDealerReward()).isEqualTo(-1000);
     }
 
     @Test
@@ -53,10 +53,10 @@ class BettingMapTest {
         player2.winBlackjack();
         player3.lose();
 
-        bettingMap.saveBet(player1, bettingAmount1);
-        bettingMap.saveBet(player2, bettingAmount2);
-        bettingMap.saveBet(player3, bettingAmount3);
+        bettingTable.saveBet(player1, bettingAmount1);
+        bettingTable.saveBet(player2, bettingAmount2);
+        bettingTable.saveBet(player3, bettingAmount3);
 
-        assertThat(bettingMap.calculateDealerReward()).isEqualTo(-12300);
+        assertThat(bettingTable.calculateDealerReward()).isEqualTo(-12300);
     }
 }
