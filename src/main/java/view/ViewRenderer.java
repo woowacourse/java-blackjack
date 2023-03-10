@@ -43,41 +43,41 @@ public class ViewRenderer {
 		RESULT_TO_STRING.put(ResultState.LOSS, "패");
 	}
 
-	private static String stringifyCard(Card card) {
+	private static String stringifyCard(final Card card) {
 		return DENOMINATION_TO_STRING.get(card.getDenomination()) + SUIT_TO_STRING.get(card.getSuit());
 	}
 
-	public static List<NameCardScoreDto> toNameCardScore(List<Player> players) {
-		List<NameCardScoreDto> nameCardScores = new ArrayList<>();
+	public static List<NameCardScoreDto> toNameCardScore(final List<Player> players) {
+		final List<NameCardScoreDto> nameCardScores = new ArrayList<>();
 		players.forEach(player -> nameCardScores.add(toNameCardScore(player)));
 		return nameCardScores;
 	}
 
-	public static NameCardScoreDto toNameCardScore(Player player) {
+	public static NameCardScoreDto toNameCardScore(final Player player) {
 		String score = Integer.toString(player.getScore().getValue());
 		return new NameCardScoreDto(player.getName(), toCards(player), score);
 	}
 
-	private static List<String> toCards(Player player) {
+	private static List<String> toCards(final Player player) {
 		return player.getCards().stream()
 			.map(ViewRenderer::stringifyCard)
 			.collect(Collectors.toUnmodifiableList());
 	}
 
-	public static List<SingleResultDto> toSingleResults(List<PlayerResult> playerPlayerResults) {
-		List<SingleResultDto> nameResults = new ArrayList<>();
+	public static List<SingleResultDto> toSingleResults(final List<PlayerResult> playerPlayerResults) {
+		final List<SingleResultDto> nameResults = new ArrayList<>();
 		for (PlayerResult playerResult : playerPlayerResults) {
 			nameResults.add(new SingleResultDto(playerResult.getName(), RESULT_TO_STRING.get(playerResult.getResultState())));
 		}
 		return nameResults;
 	}
 
-	public static MultiResultsDto toMultiResults(DealerResult result) {
+	public static MultiResultsDto toMultiResults(final DealerResult result) {
 		return new MultiResultsDto(result.getName(), listify(result.getResult()));
 	}
 
-	private static List<String> listify(Map<ResultState, Integer> resultCounts) {
-		List<String> listified = new ArrayList<>();
+	private static List<String> listify(final Map<ResultState, Integer> resultCounts) {
+		final List<String> listified = new ArrayList<>();
 		resultCounts.keySet().stream()
 			.filter(state -> resultCounts.get(state) != 0)
 			.forEach(state -> listified.add(resultCounts.get(state) + RESULT_TO_STRING.get(state)));

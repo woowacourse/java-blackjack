@@ -6,7 +6,7 @@ import domain.card.Denomination;
 
 public class Score {
 
-    private static final int BLACK_JACK = 21;
+    private static final int MEANINGFUL_SCORE_MAX = 21;
     private static final int ACE_SUB_NUMBER = 1;
 
     private final int value;
@@ -36,7 +36,7 @@ public class Score {
     }
 
     private static int changeToAceSub(int score) {
-        if (score > BLACK_JACK) {
+        if (score > MEANINGFUL_SCORE_MAX) {
             score -= Denomination.ACE.getNumber();
             score += ACE_SUB_NUMBER;
         }
@@ -44,7 +44,7 @@ public class Score {
     }
 
     public boolean isBust() {
-        return value > BLACK_JACK;
+        return value > MEANINGFUL_SCORE_MAX;
     }
 
     public int getValue() {

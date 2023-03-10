@@ -27,7 +27,7 @@ public class DealerResult {
 		return new DealerResult(dealerResult);
 	}
 
-	private static int countResultState(final List<PlayerResult> playerPlayerResults, final  ResultState state) {
+	private static int countResultState(final List<PlayerResult> playerPlayerResults, final ResultState state) {
 		return (int) playerPlayerResults.stream()
 			.filter(playerResult -> playerResult.getResultState() == state)
 			.count();

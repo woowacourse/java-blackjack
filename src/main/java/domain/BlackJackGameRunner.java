@@ -62,7 +62,7 @@ public class BlackJackGameRunner {
         return players.get(playerPassedHitStageCount);
     }
 
-    public void handlePlayerHit(boolean hit) {
+    public void handlePlayerHit(final boolean hit) {
         assertGameOnPlayersHitStage();
         Player player = getCurrentPlayerOnHitStage();
         if (hit) {
