@@ -32,6 +32,7 @@
 ![흐름도](./FlowChart.png)
 
 - 1단계 흐름도
+
 ```mermaid
 flowchart TB
   A[참여자 이름 입력&유효성 검사]-->C;
@@ -55,15 +56,76 @@ flowchart TB
 
 ```
 
+- 2단계
+
+```mermaid
+flowchart TB
+  A[참여자 이름 입력&유효성 검사]-->B;
+  B{참여자 수만큼 반복}-->|do|Z;
+  Z[참여자의 배팅 금액 입력&유효성 검사]-->B;
+  B-->|break|C;
+  C[카드 분배 로직]-->D;
+  D[초기 카드 상태 출력]-->X;
+  
+  X{참여자 수만큼 반복}-->|do|F;
+  F{카드 받을지 입력받는다.}-->|y를 입력받은 경우|H;
+  H[hit]-->I;
+  I[현재 카드 목록 출력]-->F;
+  F-->|n을 입력받거나 Burst된 경우|X
+  X-->|break|Y;
+  Y{Dealer의 점수가 17점이 될 때까지 반복}-->|17점을 초과하지 않았을 때|L;
+  L[hit]-->M;
+  M[딜러가 hit했다는 메세지 출력]-->Y;
+  Y-->|17점을 초과한 경우|N;
+  
+  N[승패 판단 로직]-->Q;
+  Q[수익금 연산 로직]-->O;
+  O[모든 참여자들의 카드 목록 출력]-->P;
+  P[최종 수익금 출력];
+```
+
 ```mermaid
 classDiagram
-Dealer-->Participants
-Player-->Participants
+Participants<|--Dealer
+Participants<|--Player
 Player--*Players
 Name--*Player
 CardDeck--*Player
 Card--*CardDeck
 Card--*CardPool
+class Referee
+class Score
+class Money
+Pattern--*Card
+Denomination--*Card
+CardPicker<|..RandomCardPicker
+CardPicker<|..StubCardPicker
+
+<<interface>> CardPicker
+
+class Result{
+    <<enumeration>>
+    WIN
+    DRAW
+    LOSE
+    BLACKJACK
+}
+class Pattern{
+    <<enumeration>>
+    HEART
+    SPADE
+    CLUB
+    DIAMOND
+}
+class Denomination{
+    <<enumeration>>
+    ACE
+    TWO
+    ...
+    JACK
+    QUEEN
+    KING
+}
 
 ```
 
