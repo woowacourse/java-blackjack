@@ -118,7 +118,7 @@ class HandTest {
         }
 
         @Test
-        @DisplayName("블랙잭인 경우 true를 반환한다.")
+        @DisplayName("블랙잭이 아닌 경우 false를 반환한다.")
         void isBlackjackFalse() {
             hand = new Hand();
             Card card = new Card(Rank.ACE, Suit.HEART);

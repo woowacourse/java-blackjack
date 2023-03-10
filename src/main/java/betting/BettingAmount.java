@@ -25,7 +25,7 @@ public class BettingAmount {
 
     private void validateAmount(int amount) {
         if (amount < MIN_AMOUNT_UNIT || amount > MAX_AMOUNT_UNIT) {
-            throw new IllegalArgumentException("100이상의 정수만 입력 가능합니다.");
+            throw new IllegalArgumentException("100 이상 100,000 이하의 정수만 입력 가능합니다.");
         }
     }
 

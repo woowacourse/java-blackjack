@@ -27,7 +27,7 @@ class BettingAmountTest {
     void createFailNegative(int amount) {
         assertThatThrownBy(() -> new BettingAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("100이상의 정수만 입력 가능합니다.");
+                .hasMessage("100 이상 100,000 이하의 정수만 입력 가능합니다.");
     }
 
     @Test
