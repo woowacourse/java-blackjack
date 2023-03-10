@@ -23,7 +23,7 @@ public class Participants {
     }
 
     public List<Cards> getPlayerCards() {
-        return players.getCardss();
+        return players.getCards();
     }
 
     public Players getPlayers() {

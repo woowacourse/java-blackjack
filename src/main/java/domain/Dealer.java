@@ -12,8 +12,8 @@ public class Dealer extends Participant {
 
     private final CardBox cardBox;
 
-    public Dealer(final CardBox cardBox, final Cards cardss) {
-        super(new Name(DEALER_DEFAULT_NAME), cardss);
+    public Dealer(final CardBox cardBox, final Cards cards) {
+        super(new Name(DEALER_DEFAULT_NAME), cards);
         this.cardBox = cardBox;
     }
 

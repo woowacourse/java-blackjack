@@ -45,7 +45,7 @@ public class Players {
         return players.get(index).isNotBurst();
     }
 
-    public List<Cards> getCardss() {
+    public List<Cards> getCards() {
         return players.stream()
                 .map(Player::getCards)
                 .collect(Collectors.toList());

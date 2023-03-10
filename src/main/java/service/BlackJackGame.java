@@ -52,8 +52,7 @@ public class BlackJackGame {
         CardBox cardBox = new CardBox();
         List<Card> cards = new ArrayList<>();
         cards.add(cardBox.get());
-        Cards cardss = new Cards(cards);
-        return new Dealer(cardBox, cardss);
+        return new Dealer(cardBox, new Cards(cards));
     }
 
     private Players initPlayers(final Dealer dealer, final List<Name> names) {
