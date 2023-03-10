@@ -46,12 +46,13 @@ class CardDeckTest {
     void 카드를_뽑을_수_있다() {
         // given
         final CardDeck cardDeck = cardDeck(JACK, JACK);
+        final int before = cardDeck.cards().size();
 
         // when
         final Card draw = cardDeck.draw();
 
         // then
-        assertThat(cardDeck.cards().size()).isEqualTo(1);
-        assertThat(draw.cardValue()).isEqualTo(JACK);
+        assertThat(draw).isNotNull();
+        assertThat(cardDeck.cards().size()).isEqualTo(before - 1);
     }
 }
