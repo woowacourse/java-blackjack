@@ -46,12 +46,6 @@ public class Players implements Iterable<Player> {
                 .count();
     }
 
-    public void addCardToPlayer(Player player, Card card) {
-        players.stream()
-                .filter(player::equals)
-                .forEach(x -> x.addCard(card));
-    }
-
     public List<String> getPlayersName() {
         return players.stream()
                 .map(Player::showName)
