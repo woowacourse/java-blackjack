@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ProfitCalculator;
 import blackjack.domain.result.Score;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardAndScore;
