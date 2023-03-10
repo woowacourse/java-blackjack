@@ -16,6 +16,7 @@ import static domain.Fixtures.SEVEN_HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -37,19 +38,19 @@ class WinningResultTest {
         Participants participants = new Participants(names);
 
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitialCards(List.of(JACK_SPADE, JACK_CLOVER));
+        dealer.receiveInitialCards(new Cards(List.of(JACK_SPADE, JACK_CLOVER)));
 
         gitJjang = participants.getPlayers().get(0);
-        gitJjang.receiveInitialCards(List.of(KING_SPADE, KING_HEART));
+        gitJjang.receiveInitialCards(new Cards(List.of(KING_SPADE, KING_HEART)));
 
         irene = participants.getPlayers().get(1);
-        irene.receiveInitialCards(List.of(KING_CLOVER, KING_DIAMOND));
+        irene.receiveInitialCards(new Cards(List.of(KING_CLOVER, KING_DIAMOND)));
 
         poo = participants.getPlayers().get(2);
-        poo.receiveInitialCards(List.of(QUEEN_SPADE, QUEEN_HEART));
+        poo.receiveInitialCards(new Cards(List.of(QUEEN_SPADE, QUEEN_HEART)));
 
         kyle = participants.getPlayers().get(3);
-        kyle.receiveInitialCards(List.of(QUEEN_CLOVER, QUEEN_DIAMOND));
+        kyle.receiveInitialCards(new Cards(List.of(QUEEN_CLOVER, QUEEN_DIAMOND)));
 
         gitJjang.receiveCard(ACE_CLOVER); // K, K, A => 21
         poo.receiveCard(ACE_HEART); // Q, Q, A => 21

@@ -2,8 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.status.initial.Ready;
 import domain.status.Status;
+import domain.status.initial.Ready;
 import java.util.List;
 
 public abstract class Participant {
@@ -25,8 +25,8 @@ public abstract class Participant {
 
     abstract boolean isHittable();
 
-    public void receiveInitialCards(List<Card> cards) {
-        this.cards = this.cards.receiveInitialCards(cards);
+    public void receiveInitialCards(Cards cards) {
+        this.cards = cards;
     }
 
     public void receiveCard(Card card) {

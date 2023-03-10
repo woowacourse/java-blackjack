@@ -6,6 +6,7 @@ import static domain.Fixtures.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Shape;
 import domain.card.Value;
 import java.util.List;
@@ -20,7 +21,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        List<Card> initialCards = List.of(TWO_SPADE, FOUR_HEART);
+        Cards initialCards = new Cards(List.of(TWO_SPADE, FOUR_HEART));
         mango = new Participant(new Name("망고")) {
             @Override
             boolean isHittable() {

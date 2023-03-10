@@ -8,7 +8,7 @@ import static domain.Fixtures.TEN_HEART;
 import static domain.Fixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
+import domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,11 +22,11 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         gitJjang = new Player(new Name("깃짱"));
-        List<Card> gitJjangCards = List.of(KING_HEART, THREE_SPADE);
+        Cards gitJjangCards = new Cards(List.of(KING_HEART, THREE_SPADE));
         gitJjang.receiveInitialCards(gitJjangCards);
 
         kyle = new Player(new Name("카일"));
-        List<Card> kyleCards = List.of(FOUR_HEART, ACE_CLOVER);
+        Cards kyleCards = new Cards(List.of(FOUR_HEART, ACE_CLOVER));
         kyle.receiveInitialCards(kyleCards);
     }
 

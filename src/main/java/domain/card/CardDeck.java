@@ -22,8 +22,8 @@ public final class CardDeck {
                 .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
-    public List<Card> giveInitialCards() {
-        return List.of(getCard(), getCard());
+    public Cards giveInitialCards() {
+        return new Cards(List.of(getCard(), getCard()));
     }
 
     public Card getCard() {
