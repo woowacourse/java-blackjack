@@ -56,4 +56,46 @@ class ParticipantMoneyTest {
         assertThat(actual)
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("add()는 호출하면, 합친 베팅 금액이 반환된다.")
+    void add_whenCall_thenReturnSumMoney() {
+        // given
+        final ParticipantMoney expected = ParticipantMoney.create(30000);
+
+        // when
+        ParticipantMoney actual = participantMoney.add(ParticipantMoney.create(20000));
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("subtract()는 호출하면, 뺀 베팅 금액이 반환된다.")
+    void subtract_whenCall_thenReturnSubtractedMoney() {
+        // given
+        final ParticipantMoney expected = ParticipantMoney.create(5000);
+
+        // when
+        ParticipantMoney actual = participantMoney.subtract(ParticipantMoney.create(5000));
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("multiply()는 호출하면, 곱한 베팅 금액이 반환된다.")
+    void multiply_whenCall_thenReturnSumMoney() {
+        // given
+        final ParticipantMoney expected = ParticipantMoney.create(15000);
+
+        // when
+        ParticipantMoney actual = participantMoney.multiply(1.5);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }

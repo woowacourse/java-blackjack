@@ -42,6 +42,18 @@ public class ParticipantMoney {
         }
     }
 
+    public ParticipantMoney add(final ParticipantMoney participantMoney) {
+        return new ParticipantMoney(this.money + participantMoney.money);
+    }
+
+    public ParticipantMoney subtract(final ParticipantMoney participantMoney) {
+        return new ParticipantMoney(this.money - participantMoney.money);
+    }
+
+    public ParticipantMoney multiply(final double multiplier) {
+        return new ParticipantMoney(this.money * multiplier);
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) return true;
