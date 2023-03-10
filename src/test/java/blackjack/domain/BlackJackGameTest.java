@@ -59,10 +59,10 @@ class BlackJackGameTest {
 
         Card spadeTen = new Card(Shape.SPADE, Number.TEN);
         Card spadeJack = new Card(Shape.SPADE, Number.JACK);
-        Card spadeQueen = new Card(Shape.SPADE, Number.QUEEN);
+        Card spadeTwo = new Card(Shape.SPADE, Number.TWO);
 
         ditoo.pickStartCards(spadeTen, spadeJack);
-        ditoo.pick(spadeQueen);
+        ditoo.pick(spadeTwo);
 
         assertThat(blackJackGame.canPick(ditoo)).isFalse();
     }
@@ -72,8 +72,9 @@ class BlackJackGameTest {
     void dealer_pick_card_when_under_or_equals_to_16() {
         Player dealer = blackJackGame.getDealer();
 
-        Card card = new Card(Shape.HEART, Number.NINE);
-        dealer.pick(card);
+        Card heartNine = new Card(Shape.HEART, Number.NINE);
+        Card heartSeven = new Card(Shape.HEART, Number.SEVEN);
+        dealer.pickStartCards(heartNine, heartSeven);
 
         assertThat(blackJackGame.isDealerCanPick()).isTrue();
     }
@@ -84,8 +85,8 @@ class BlackJackGameTest {
         Player dealer = blackJackGame.getDealer();
 
         Card heartNine = new Card(Shape.HEART, Number.NINE);
-        Card heartTen = new Card(Shape.HEART, Number.TEN);
-        dealer.pickStartCards(heartNine, heartTen);
+        Card heartEight = new Card(Shape.HEART, Number.EIGHT);
+        dealer.pickStartCards(heartNine, heartEight);
 
         assertThat(blackJackGame.isDealerCanPick()).isFalse();
     }
