@@ -48,7 +48,7 @@ class PurseTest {
         purse.addMoney(bebe, new Bet(10_000));
 
         // then
-        assertThat(purse.getMoney(bebe)).isEqualTo(new Bet(10_000));
+        assertThat(purse.findMoneyByPlayer(bebe)).isEqualTo(new Bet(10_000));
     }
 
     @Test
@@ -67,7 +67,7 @@ class PurseTest {
         purse.calculateMoney(bebe, dealer);
 
         // then
-        assertThat(purse.getMoney(bebe)).isEqualTo(new Bet(15_000));
+        assertThat(purse.findMoneyByPlayer(bebe)).isEqualTo(new Bet(15_000));
     }
 
     @Test
@@ -86,6 +86,6 @@ class PurseTest {
         purse.calculateMoney(bebe, dealer);
 
         // then
-        assertThat(purse.getMoney(bebe)).isEqualTo(new Bet(0));
+        assertThat(purse.findMoneyByPlayer(bebe)).isEqualTo(new Bet(0));
     }
 }
