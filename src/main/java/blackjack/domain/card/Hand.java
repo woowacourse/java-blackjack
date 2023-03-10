@@ -69,7 +69,7 @@ public final class Hand {
         if (anotherHand.isBust()) {
             return DRAW;
         }
-        return WIN;
+        return LOSE;
     }
 
     private Result compareScoreTo(final Hand anotherHand) {
