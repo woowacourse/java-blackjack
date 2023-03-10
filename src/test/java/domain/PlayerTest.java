@@ -16,20 +16,20 @@ class PlayerTest {
 
     @ParameterizedTest(name = "점수를 계산한다")
     @CsvSource({"DIAMOND,8,SPADE,K,18", "DIAMOND,10,SPADE,5,15"})
-    void a(Suit suit1, String letter1, Suit suit2, String letter2, int score) {
+    void a(Suit suit1, String denomination1, Suit suit2, String denomination2, int score) {
         var player = new Player("조이", List.of(
-                new Card(suit1, letter1),
-                new Card(suit2, letter2)));
+                new Card(suit1, denomination1),
+                new Card(suit2, denomination2)));
 
         assertThat(player.score()).isEqualTo(new Score(score));
     }
 
     @ParameterizedTest(name = "A는 무조건 플레이어에게 유리하게 계산한다")
     @CsvSource({"DIAMOND,J,SPADE,10,21", "DIAMOND,7,SPADE,3,21", "DIAMOND,A,SPADE,A,13"})
-    void b(Suit suit1, String letter1, Suit suit2, String letter2, int score) {
+    void b(Suit suit1, String denomination1, Suit suit2, String denomination2, int score) {
         var player = new Player("조이", List.of(
-                new Card(suit1, letter1),
-                new Card(suit2, letter2),
+                new Card(suit1, denomination1),
+                new Card(suit2, denomination2),
                 new Card(SPADE, "A")));
 
         assertThat(player.score()).isEqualTo(new Score(score));
@@ -37,11 +37,11 @@ class PlayerTest {
 
     @ParameterizedTest(name = "점수가 21을 초과하는지 확인한다")
     @CsvSource({"DIAMOND,8,SPADE,K,BUST", "DIAMOND,10,SPADE,5,PLAYING"})
-    void c(Suit suit1, String letter1, Suit suit2, String letter2, Status status) {
+    void c(Suit suit1, String denomination1, Suit suit2, String denomination2, Status status) {
         var player = new Player("조이");
         player.addCard(new Card(HEART, "5"));
-        player.addCard(new Card(suit1, letter1));
-        player.addCard(new Card(suit2, letter2));
+        player.addCard(new Card(suit1, denomination1));
+        player.addCard(new Card(suit2, denomination2));
 
         assertThat(player.status()).isEqualTo(status);
     }
