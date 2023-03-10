@@ -8,6 +8,10 @@ import domain.card.Denomination;
 
 public class TotalSumValues {
 
+    private static final int SPECIAL_VALUE = 1;
+    private static final int ANOTHER_SPECIAL_VALUE = 11;
+    private static final int LIMIT_VALUE = 22;
+
     private final List<Integer> values;
 
     public TotalSumValues(final List<Integer> values) {
@@ -16,15 +20,15 @@ public class TotalSumValues {
 
     public TotalSumValues addValuesToAllElement(TotalSumValues totalSumValues, List<Integer> addValues) {
         for (Integer addValue : addValues) {
-            totalSumValues = getTotalSumValuesByAceExistence(totalSumValues, addValue);
+            totalSumValues = getTotalSumValuesBySpecialValueExistence(totalSumValues, addValue);
         }
         return totalSumValues;
     }
 
-    private TotalSumValues getTotalSumValuesByAceExistence(TotalSumValues totalSumValues, Integer addValue) {
-        if (addValue == Denomination.ACE_VALUE) {
-            TotalSumValues totalSumValuesWithAceValue = addValueToAllElement(totalSumValues, Denomination.ACE_VALUE);
-            TotalSumValues totalSumValuesWithAnotherAceValue = addValueToAllElement(totalSumValues, Denomination.ANOTHER_ACE_VALUE);
+    private TotalSumValues getTotalSumValuesBySpecialValueExistence(TotalSumValues totalSumValues, Integer addValue) {
+        if (addValue == SPECIAL_VALUE) {
+            TotalSumValues totalSumValuesWithAceValue = addValueToAllElement(totalSumValues, SPECIAL_VALUE);
+            TotalSumValues totalSumValuesWithAnotherAceValue = addValueToAllElement(totalSumValues, ANOTHER_SPECIAL_VALUE);
             totalSumValues = totalSumValuesWithAceValue.merge(totalSumValuesWithAnotherAceValue);
 
         }
@@ -44,6 +48,19 @@ public class TotalSumValues {
     private TotalSumValues merge(TotalSumValues toMergeTotalSumValues) {
         values.addAll(toMergeTotalSumValues.values);
         return new TotalSumValues(values);
+    }
+
+    public Integer getLessThanLimitMaxValue() {
+        return this.values.stream()
+                .filter(value -> value < LIMIT_VALUE)
+                .max(Integer::compare)
+                .orElse(LIMIT_VALUE);
+    }
+
+    public int getMaxValue() {
+        return this.values.stream()
+                .max(Integer::compare)
+                .orElse(LIMIT_VALUE);
     }
 
     public List<Integer> getValues() {

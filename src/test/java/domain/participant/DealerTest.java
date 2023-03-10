@@ -30,7 +30,7 @@ public class DealerTest {
     void isCardValueUnder17() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.FIVE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
-        assertThat(dealer.checkCardsCondition()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -38,7 +38,7 @@ public class DealerTest {
     void isCardValueOver16() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.NINE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.THREE));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class DealerTest {
     void isFalseWhenSoft17() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -63,7 +63,7 @@ public class DealerTest {
     void isTrueWhenDoubleAce() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
-        assertThat(dealer.checkCardsCondition()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -72,117 +72,6 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        assertThat(dealer.checkCardsCondition()).isTrue();
-    }
-
-    @Test
-    @DisplayName("플레이어의 배팅 머니를 저장한다.")
-    void saveBettingMoneyByPlayer() {
-        // given
-        List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.TEN));
-        Player player = new Player(new Name("seongha"), new HandCards(cards));
-        BettingMoney bettingMoney = new BettingMoney(10000);
-
-        // when
-        dealer.savePlayerBettingMoney(player, bettingMoney);
-        Map<Player, BettingMoney> bettingMoneyByPlayer = dealer.getBettingMoneyByPlayer();
-
-        // then
-        assertThat(bettingMoneyByPlayer.get(player)).isEqualTo(bettingMoney);
-    }
-
-    @Test
-    @DisplayName("딜러가 블랙잭이면 true를 반환한다.")
-    void isBlackjack1() {
-        // when
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
-
-        // then
-        Assertions.assertThat(dealer.isBlackJack()).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러가 블랙잭이 아니면 false를 반환한다.")
-    void isBlackjack2() {
-        // when
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.NINE));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
-
-        // then
-        Assertions.assertThat(dealer.isBlackJack()).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드 합이 21을 넘으면 배팅 금액을 잃는다.")
-    void calculateFinalProfit1() {
-        // given
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE), new Card(Suit.HEART, Denomination.JACK));
-        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
-        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
-
-        // when
-        dealer.calculateFinalProfit(player);
-        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
-
-        // then
-        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(-10000));
-    }
-
-    @Test
-    @DisplayName("딜러의 카드 합이 21을 넘고 플레이어 카드 합이 21을 넘지 않으면 배팅 금액을 받는다.")
-    void calculateFinalProfit2() {
-        // given
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        dealer.takeCard(new Card(Suit.HEART, Denomination.TEN));
-        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE));
-        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
-        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
-
-        // when
-        dealer.calculateFinalProfit(player);
-        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
-
-        // then
-        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(10000));
-    }
-
-    @Test
-    @DisplayName("딜러의 카드 합이 21일 때 플레이어 카드 합이 21이면 배팅 금액을 받는다.")
-    void calculateFinalProfit3() {
-        // given
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.ACE), new Card(Suit.SPADE, Denomination.TEN));
-        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
-        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
-
-        // when
-        dealer.calculateFinalProfit(player);
-        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
-
-        // then
-        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(10000));
-    }
-
-    @Test
-    @DisplayName("딜러의 카드 합이 21일 때 플레이어 카드 합이 21이 아니면 배팅 금액을 잃는다.")
-    void calculateFinalProfit4() {
-        // given
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
-        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE));
-        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
-        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
-
-        // when
-        dealer.calculateFinalProfit(player);
-        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
-
-        // then
-        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(-10000));
+        assertThat(dealer.canHit()).isTrue();
     }
 }

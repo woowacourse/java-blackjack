@@ -45,7 +45,7 @@ public class Participants {
     }
 
     public boolean canDealerDrawCard() {
-        return dealer.checkCardsCondition();
+        return dealer.canHit();
     }
 
     public List<String> getPlayerNames() {
@@ -53,7 +53,7 @@ public class Participants {
     }
 
     public int getDealerCardValueSum() {
-        return dealer.getOptimalCardValueSum();
+        return dealer.handCards.calculateOptimalCardValueSum();
     }
 
     public List<Player> getRawPlayers() {

@@ -3,7 +3,6 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
-import java.util.List;
 
 import domain.card.Card;
 import domain.card.Denomination;
@@ -26,7 +25,7 @@ public class PlayerTest {
     void isCardValueBelow21() {
         player.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         player.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
-        assertThat(player.checkCardsCondition()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
@@ -35,6 +34,6 @@ public class PlayerTest {
         player.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         player.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
         player.takeCard(new Card(Suit.DIAMOND, Denomination.EIGHT));
-        assertThat(player.checkCardsCondition()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 }

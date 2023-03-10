@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
+import domain.card.Denomination;
+import domain.score.TotalSumValues;
 
 public class HandCards {
+
+    private static final int INIT_VALUE_FOR_ADD = 0;
 
     private final List<Card> cards;
 
@@ -18,7 +22,28 @@ public class HandCards {
         cards.add(card);
     }
 
-    public List<Integer> getValues() {
+    public int calculateOptimalCardValueSum() {
+        List<Integer> initValues = new ArrayList<>();
+        initValues.add(INIT_VALUE_FOR_ADD);
+        TotalSumValues initTotalSumValues = new TotalSumValues(initValues);
+        List<Integer> handCardValues = getCardValues();
+        TotalSumValues totalSumValues = initTotalSumValues.addValuesToAllElement(initTotalSumValues, handCardValues);
+
+        return getCardValueSumMax(totalSumValues, handCardValues);
+    }
+
+    private int getCardValueSumMax(TotalSumValues totalValues, List<Integer> handCardValues) {
+        int maxSumValue = 0;
+        if (handCardValues.contains(Denomination.ACE_VALUE)) {
+            maxSumValue = totalValues.getLessThanLimitMaxValue();
+        }
+        if (!handCardValues.contains(Denomination.ACE_VALUE)) {
+            maxSumValue = totalValues.getMaxValue();
+        }
+        return maxSumValue;
+    }
+
+    private List<Integer> getCardValues() {
         return cards.stream()
                 .map(Card::getValue)
                 .collect(Collectors.toList());
