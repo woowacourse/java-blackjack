@@ -50,6 +50,10 @@ public class Dealer extends Participant {
         }
     }
 
+    public boolean isBlackJack() {
+        return this.getOptimalCardValueSum() == 21 && this.handCards.getSize() == 2;
+    }
+
     public Map<Player, BettingMoney> getBettingMoneyByPlayer() {
         return Map.copyOf(bettingMoneyByPlayer);
     }

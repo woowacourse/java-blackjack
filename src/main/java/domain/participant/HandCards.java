@@ -24,6 +24,10 @@ public class HandCards {
                 .collect(Collectors.toList());
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

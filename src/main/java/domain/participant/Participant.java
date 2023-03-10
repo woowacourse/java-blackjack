@@ -92,4 +92,8 @@ public abstract class Participant {
     public List<Card> getHandCards() {
         return handCards.getCards();
     }
+
+    public int getSize() {
+        return handCards.getSize();
+    }
 }
