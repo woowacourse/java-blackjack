@@ -9,6 +9,10 @@ import blackjack.model.state.State;
 
 public class Player extends Participant {
 
+    private static final int LOSE_MONEY = -1;
+    private static final int GET_NOTHING = 0;
+    private static final int GET_MONEY = 1;
+
     private final BetAmount betAmount;
 
     public Player(Name name, BetAmount betAmount, State currentState) {
@@ -27,18 +31,22 @@ public class Player extends Participant {
         }
     }
 
-    public int getProfit(Dealer dealer) {
+    public int getProfit(Result result) {
         if (!isFinished()) {
             throw new IllegalStateException("게임이 끝나지 않아 수익을 알 수 없습니다.");
         }
 
-        if (getResult(dealer).equals(Result.WIN)) {
-            return (int) (betAmount.getBetAmount() * ((FinalState) currentState).getProfitWeight());
+        if (result.equals(Result.WIN)) {
+            return GET_MONEY * getIncreasedBetAmount();
         }
-        if (getResult(dealer).equals(Result.TIE)) {
-            return 0;
+        if (result.equals(Result.TIE)) {
+            return GET_NOTHING;
         }
-        return -1 * (int) (betAmount.getBetAmount() * ((FinalState) currentState).getProfitWeight());
+        return LOSE_MONEY * getIncreasedBetAmount();
+    }
+
+    private int getIncreasedBetAmount() {
+        return (int) (betAmount.getBetAmount() * ((FinalState) currentState).getProfitWeight());
     }
 
     private Result getResult(Dealer dealer) {
