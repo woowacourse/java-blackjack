@@ -30,12 +30,9 @@ public class InputView {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         String input = scanner.nextLine();
-        if (input.equals(HIT_COMMAND)) {
-            return true;
+        if (!input.equals(HIT_COMMAND) && !input.equals(STAY_COMMAND)) {
+            throw new IllegalArgumentException(PLAYER_INTENTION_ERROR_MESSAGE);
         }
-        if (input.equals(STAY_COMMAND)) {
-            return false;
-        }
-        throw new IllegalArgumentException(PLAYER_INTENTION_ERROR_MESSAGE);
+        return input.equals(HIT_COMMAND);
     }
 }
