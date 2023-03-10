@@ -5,14 +5,14 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerCards {
+public class Hand {
     private static final int ACE_VALUE_GAP = 10;
     private static final int LIMIT_SCORE = 21;
 
     private final List<Card> playerCards;
     private TotalScore totalScore;
 
-    public PlayerCards() {
+    public Hand() {
         this.playerCards = new ArrayList<>();
         this.totalScore = new TotalScore(0);
     }

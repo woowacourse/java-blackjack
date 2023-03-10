@@ -14,8 +14,8 @@ class PlayerTest {
     void total_score_under_21() {
         // given & when
         Player player = new Player(new Name("merry"));
-        player.playerCards.addCard(new Card(CardNumber.ACE, CardSymbol.HEART));
-        player.playerCards.addCard(new Card(CardNumber.FIVE, CardSymbol.HEART));
+        player.hand.addCard(new Card(CardNumber.ACE, CardSymbol.HEART));
+        player.hand.addCard(new Card(CardNumber.FIVE, CardSymbol.HEART));
 
         // then
         Assertions.assertThat(player.isUnderLimit()).isTrue();

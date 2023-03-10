@@ -14,6 +14,6 @@ public class Player extends User {
 
     @Override
     public boolean isUnderLimit() {
-        return playerCards.getTotalScore() < SCORE_LIMIT;
+        return hand.getTotalScore() < SCORE_LIMIT;
     }
 }
