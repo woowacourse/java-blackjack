@@ -1,16 +1,5 @@
 package model.user;
 
-import model.card.Card;
-import model.card.Deck;
-import model.card.RandomShuffleMaker;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
 import static model.card.Shape.CLOVER;
 import static model.card.Shape.DIAMOND;
 import static model.card.Shape.SPADE;
@@ -26,6 +15,16 @@ import static model.user.Result.TIE;
 import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+import java.util.Map;
+import model.card.Card;
+import model.card.Deck;
+import model.card.RandomShuffleMaker;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
 
