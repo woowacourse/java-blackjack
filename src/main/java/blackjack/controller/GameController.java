@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ResultDto;
+import blackjack.model.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
 import blackjack.model.result.Result;
@@ -10,6 +11,7 @@ import blackjack.model.state.PlayerInitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,9 +36,13 @@ public class GameController {
     }
 
     private Participants initializeParticipants() {
-        List<Player> players = inputView.readNames().stream()
-                .map(name -> new Player(new Name(name), new PlayerInitialState(new Hand())))
-                .collect(Collectors.toList());
+        List<String> playerNames = inputView.readNames();
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Name name = new Name(playerName);
+            BetAmount betAmount = new BetAmount(inputView.readBetAmount(playerName));
+            players.add(new Player(name, betAmount, new PlayerInitialState(new Hand())));
+        }
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         return new Participants(dealer, players);
     }

@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
 import blackjack.model.state.PlayerDrawState;
@@ -7,8 +8,11 @@ import blackjack.model.state.State;
 
 public class Player extends Participant {
 
-    public Player(Name name, State currentState) {
+    private final BetAmount betAmount;
+
+    public Player(Name name, BetAmount betAmount, State currentState) {
         super(name, currentState);
+        this.betAmount = betAmount;
     }
 
     @Override
