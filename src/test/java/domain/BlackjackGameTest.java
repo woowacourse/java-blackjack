@@ -5,21 +5,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlackjackGameTest {
     private Dealer dealer;
     private Players players;
     private CardDeck cardDeck;
+    private Queue<Card> initalCardDeck = new LinkedList<>();
 
     @BeforeEach
     void set() {
         dealer = new Dealer();
         players = new Players("pobi,jason");
-        CardGenerator cardGenerator = new CardGenerator();
-        cardDeck = new CardDeck(cardGenerator.generate());
+        for (CardNumber cardNumber : CardNumber.values()) {
+            initalCardDeck.add(new Card(cardNumber, CardPattern.SPADE));
+        }
+        cardDeck = new CardDeck(initalCardDeck);
     }
 
     @Test
@@ -47,25 +48,26 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어가 추가 카드를 받는다.")
-    void distributeByYesCommandTest() {
+    @DisplayName("플레이어의 최종 승패 결과를 가져온다.")
+    void calculatePlayerWinOrLoseTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-        Player player = new Player("pobi");
+        blackjackGame.distributeInitialCard();
 
-        blackjackGame.selectByPlayer(player, Command.YES);
-
-        Assertions.assertThat(player.getCardsSum()).isEqualTo(11);
+        Map<String, ResultType> playerResult = new LinkedHashMap<>();
+        playerResult.put("pobi", ResultType.LOSE);
+        playerResult.put("jason", ResultType.LOSE);
+        Assertions.assertThat(blackjackGame.getGameResult().getPlayerResult()).isEqualTo(playerResult);
     }
 
     @Test
-    @DisplayName("플레이어가 추가 카드를 받지 않는다.")
-    void distributeByNoCommandTest() {
+    @DisplayName("딜러의 최종 승패 결과를 가져온다.")
+    void calculateDealerWinOrLoseTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-        Player player = new Player("pobi");
+        blackjackGame.distributeInitialCard();
 
-        blackjackGame.selectByPlayer(player, Command.No);
-
-        Assertions.assertThat(player.getCardsSum()).isEqualTo(0);
+        Map<String, List<ResultType>> dealerResult = new LinkedHashMap<>();
+        dealerResult.put(dealer.getName(), List.of(ResultType.WIN, ResultType.WIN));
+        Assertions.assertThat(blackjackGame.getGameResult().getDealerResult()).isEqualTo(dealerResult);
     }
 
 }
