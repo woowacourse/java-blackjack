@@ -3,12 +3,12 @@ package blackjack.view;
 import static java.text.MessageFormat.format;
 
 import blackjack.constants.ErrorCode;
-import blackjack.domain.BlackjackResult;
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.game.BlackjackResult;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
+import blackjack.domain.player.Player;
 import blackjack.view.message.CardMessageConvertor;
 import blackjack.view.message.ErrorCodeMessage;
 import blackjack.view.message.GameResultMessage;

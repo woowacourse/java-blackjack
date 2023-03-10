@@ -2,7 +2,7 @@ package blackjack.view.message;
 
 
 import blackjack.constants.ErrorCode;
-import blackjack.domain.GameResult;
+import blackjack.domain.game.GameResult;
 import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package blackjack.view.message;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 
 public class CardMessageConvertor {
 

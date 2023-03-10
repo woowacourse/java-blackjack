@@ -1,13 +1,13 @@
 package blackjack.controller;
 
 import blackjack.controller.exception.InvalidCommandException;
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackResult;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.card.exception.NoMoreCardException;
 import blackjack.domain.exception.CustomException;
-import blackjack.domain.exception.NoMoreCardException;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.BlackjackResult;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participants;
+import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
