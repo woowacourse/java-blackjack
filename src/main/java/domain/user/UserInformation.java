@@ -9,8 +9,8 @@ public class UserInformation {
         this.bettingAmount = bettingAmount;
     }
 
-    public static UserInformation of(UserName userName, int bettingAmountInput) {
-        return new UserInformation(userName, new BettingAmount(bettingAmountInput));
+    public static UserInformation from(UserName userName, int bettingAmount) {
+        return new UserInformation((userName), new BettingAmount(bettingAmount));
     }
 
     public String getNameValue() {

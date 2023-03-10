@@ -19,9 +19,9 @@ public final class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame of(List<String> nameValues, int deckCount) {
+    public static BlackjackGame of(Map<String, Integer> playerBettingAmountTable, int deckCount) {
         validateDeckCount(deckCount);
-        return new BlackjackGame(Participants.from(nameValues), ShuffledDeck.createByCount(deckCount));
+        return new BlackjackGame(Participants.from(playerBettingAmountTable), ShuffledDeck.createByCount(deckCount));
     }
 
     private static void validateDeckCount(int deckCount) {

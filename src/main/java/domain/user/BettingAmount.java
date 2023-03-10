@@ -1,7 +1,7 @@
 package domain.user;
 
 public class BettingAmount {
-    private static final int LOWER_LIMIT = 1_000;
+    private static final int LOWER_LIMIT = 0;
     private static final int UPPER_LIMIT = 100_000_000;
 
     private final int value;

@@ -11,7 +11,7 @@ public class BlackjackController {
     private final BlackjackGame blackjackGame;
 
     public BlackjackController() {
-        this.blackjackGame = repeat(() -> BlackjackGame.of(InputView.readPlayersName(), InputView.readDeckCount()));
+        this.blackjackGame = repeat(() -> BlackjackGame.of(InputView.readPlayersNameAndBettingAmount(), InputView.readDeckCount()));
     }
 
     public void run() {

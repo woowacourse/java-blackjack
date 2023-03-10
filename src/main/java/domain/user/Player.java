@@ -3,18 +3,16 @@ package domain.user;
 import domain.card.Hand;
 
 public final class Player extends User {
-
-    public Player(String nameValue) {
-        this(new PlayerName(nameValue), new Hand());
-    }
-
-    public Player(String nameValue, Hand hand) {
-        this(new PlayerName(nameValue), hand);
-    }
-
-    public Player(PlayerName playerName, Hand hand) {
-        super.userName = playerName;
+    public Player(UserInformation userInformation, Hand hand) {
+        super.userInformation = userInformation;
         super.hand = hand;
+    }
+
+    public static Player of(String nameValue, int bettingAmountValue) {
+        return new Player(
+                UserInformation.from(new PlayerName(nameValue), bettingAmountValue),
+                new Hand()
+        );
     }
 
     @Override

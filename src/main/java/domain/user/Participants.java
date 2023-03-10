@@ -17,8 +17,8 @@ public final class Participants {
         this.dealer = dealer;
     }
 
-    public static Participants from(List<String> nameValues) {
-        return new Participants(Players.from(nameValues), new Dealer());
+    public static Participants from(Map<String, Integer> playerBettingAmountTable) {
+        return new Participants(Players.from(playerBettingAmountTable), new Dealer());
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {
