@@ -34,7 +34,10 @@ public class OutputView {
         List<String> playerNames = initialHoldingCards.stream()
                 .map(HoldingCards::getName)
                 .collect(Collectors.toUnmodifiableList());
-        printInitialStatusInfoMessage(playerNames);
+
+        printInitialStatusInfoMessage(playerNames.stream()
+                .filter(name -> !name.equals(Dealer.DEALER_NAME_CODE))
+                .collect(Collectors.toUnmodifiableList()));
 
         for (HoldingCards cards : initialHoldingCards) {
             printCards(cards);
