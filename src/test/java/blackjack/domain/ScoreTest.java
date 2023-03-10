@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class ScoreTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewScore() {
-        assertDoesNotThrow(() -> Score.from(new ArrayList<>()));
+        assertDoesNotThrow(() -> Score.from(new Cards()));
     }
 
     @DisplayName("A를 가지고 있을 때 플레이어의 점수 합이 11을 초과하면 A는 1점으로 간주한다.(9, 2, ace)")
@@ -28,8 +29,13 @@ public class ScoreTest {
         Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(12);
     }
 
@@ -41,8 +47,13 @@ public class ScoreTest {
         Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(21);
     }
 
@@ -54,8 +65,13 @@ public class ScoreTest {
         Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(13);
     }
 
@@ -68,8 +84,14 @@ public class ScoreTest {
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
         Card card4 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3, card4));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(14);
     }
 
@@ -83,8 +105,15 @@ public class ScoreTest {
         Card card4 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
         Card card5 = new Card(CardNumber.SEVEN, CardSymbol.CLUBS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3, card4, card5));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(21);
     }
 
@@ -98,8 +127,15 @@ public class ScoreTest {
         Card card4 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
         Card card5 = new Card(CardNumber.EIGHT, CardSymbol.CLUBS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3, card4, card5));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(12);
     }
 
@@ -110,8 +146,12 @@ public class ScoreTest {
         Card card1 = new Card(CardNumber.ACE, CardSymbol.SPADES);
         Card card2 = new Card(CardNumber.TEN, CardSymbol.DIAMONDS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(21);
     }
 
@@ -123,8 +163,13 @@ public class ScoreTest {
         Card card2 = new Card(CardNumber.TEN, CardSymbol.DIAMONDS);
         Card card3 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
 
+        Cards cards = new Cards();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
         // when, then
-        Score score = Score.from(List.of(card1, card2, card3));
+        Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(30);
     }
 }

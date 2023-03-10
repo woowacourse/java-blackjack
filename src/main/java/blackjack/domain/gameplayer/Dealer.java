@@ -2,6 +2,7 @@ package blackjack.domain.gameplayer;
 
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,10 +11,10 @@ import java.util.List;
 public class Dealer implements User {
     public static final Score hitUpperBound = Score.of(17);
 
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Dealer() {
-        this.cards = new ArrayList<>();
+        this.cards = new Cards();
     }
 
     @Override
@@ -34,10 +35,10 @@ public class Dealer implements User {
 
     @Override
     public List<Card> showCards() {
-        return List.of(cards.get(0));
+        return List.of(cards.getOneCard());
     }
 
     public List<Card> showAllCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }

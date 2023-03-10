@@ -63,6 +63,6 @@ public class CardsTest {
         cards.add(card2);
 
         // when, then
-        assertThat(cards.calculateScore()).isEqualTo(Score.of(11));
+        assertThat(cards.calculateScore()).isEqualTo(11);
     }
 }

@@ -23,11 +23,14 @@ public class Cards {
                 .anyMatch(card -> card.isAce());
     }
 
-    public Score calculateScore() {
-        int score = cards.stream()
+    public int calculateScore() {
+        return cards.stream()
                 .mapToInt(card -> card.getScore())
                 .sum();
-        return Score.of(score);
+    }
+
+    public Card getOneCard() {
+        return cards.get(0);
     }
 
     public List<Card> getCards() {

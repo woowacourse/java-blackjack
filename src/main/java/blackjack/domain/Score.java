@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Score {
         this.score = score;
     }
 
-    public static Score from(List<Card> cards) {
+    public static Score from(Cards cards) {
         int totalScore = getTotalScore(cards);
 
         if (totalScore <= MAX_ACE_SCORE && hasACE(cards)) {
@@ -31,15 +32,12 @@ public class Score {
         return new Score(score);
     }
 
-    private static boolean hasACE(List<Card> cards) {
-        return cards.stream()
-                .anyMatch(card -> card.isAce());
+    private static boolean hasACE(Cards cards) {
+        return cards.hasAce();
     }
 
-    private static int getTotalScore(List<Card> cards) {
-        return cards.stream()
-                .mapToInt(card -> card.getScore())
-                .sum();
+    private static int getTotalScore(Cards cards) {
+        return cards.calculateScore();
     }
 
     public boolean isLessThan(Score other) {
