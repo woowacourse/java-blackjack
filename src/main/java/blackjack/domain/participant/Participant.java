@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.ParticipantCards;
 
 import java.util.List;
@@ -11,6 +12,11 @@ public abstract class Participant {
 
     protected Participant(final ParticipantCards cards, final String name) {
         this.cards = cards;
+        this.name = new Name(name);
+    }
+
+    protected Participant(final Deck deck, final String name) {
+        this.cards = new ParticipantCards(deck);
         this.name = new Name(name);
     }
 

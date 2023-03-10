@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.ParticipantCards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.ResultType;
 
 import static blackjack.domain.game.ResultType.*;
@@ -10,8 +10,8 @@ public class Dealer extends Participant {
     private static final int BLACK_JACK_NUMBER = 21;
     private static final String DEFAULT_NAME = "딜러";
 
-    public Dealer(final ParticipantCards cards) {
-        super(cards, DEFAULT_NAME);
+    public Dealer(final Deck deck) {
+        super(deck, DEFAULT_NAME);
     }
 
     @Override
