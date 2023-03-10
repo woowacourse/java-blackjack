@@ -54,6 +54,8 @@ class CardTableTest {
 
         final Dealer dealer = new Dealer();
 
+        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+
         //when
         final Map<Participant, Money> gameResultMoney =
                 cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
@@ -78,6 +80,8 @@ class CardTableTest {
         dealer.hit(new Card(SPADE, JACK));
         dealer.hit(new Card(SPADE, QUEEN));
 
+        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+
         //when
         final Map<Participant, Money> gameResultMoney =
                 cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
@@ -95,6 +99,9 @@ class CardTableTest {
     void test_determineParticipantsBettingMoney_both_not_bust(
             final Participant participant, final Dealer dealer,
             final Money resultBettingMoney) throws Exception {
+
+        //given
+        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
 
         //when
         final Map<Participant, Money> gameResultMoney =
