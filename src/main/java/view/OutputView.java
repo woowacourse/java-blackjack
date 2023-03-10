@@ -1,7 +1,9 @@
 package view;
 
+import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.BettingResults;
 import domain.result.Results;
 import domain.result.Score;
 import java.util.ArrayList;
@@ -88,5 +90,13 @@ public class OutputView {
             sb.append(participantResult.get(2)).append(Score.LOSE.getValue());
         }
         return sb;
+    }
+
+    public static void printFinalProceeds(Players players, Dealer dealer, BettingResults bettingResults) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + bettingResults.getParticipantBet(dealer).getAmount());
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + ": " + bettingResults.getParticipantBet(player).getAmount());
+        }
     }
 }

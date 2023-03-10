@@ -51,7 +51,7 @@ public class Results {
         }
         if (playerWinOrLose == 0) {
             draw(results.get(player.getName()), results.get(dealer.getName()));
-            drawBetting(player, dealer);
+            drawBetting(player);
         }
     }
 
@@ -82,7 +82,7 @@ public class Results {
         bettingResults.plusBettingResult(player, -(2 * bettingResults.getParticipantBet(player).getAmount()));
     }
 
-    private void drawBetting(Player player, Dealer dealer) {
+    private void drawBetting(Player player) {
         bettingResults.plusBettingResult(player, -bettingResults.getParticipantBet(player).getAmount());
     }
 

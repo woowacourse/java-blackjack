@@ -22,6 +22,7 @@ public class BlackJackApplication {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
         endPhase(betting, players, dealer);
+        OutputView.printFinalProceeds(players, dealer, betting);
     }
 
     private static void startPhase(Players players, Dealer dealer, BlackJackGame blackJackGame) {
