@@ -1,12 +1,12 @@
 package domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class MoneyTest {
 
@@ -15,7 +15,7 @@ public class MoneyTest {
     void generateMoney() {
         int money = 1000;
 
-        Assertions.assertDoesNotThrow(() -> new Money(money));
+        assertDoesNotThrow(() -> new Money(money));
     }
 
     @ParameterizedTest

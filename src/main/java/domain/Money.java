@@ -7,11 +7,11 @@ public class Money {
     private final int money;
 
     public Money(int money) {
-        validateNonPositiveNumber();
+        validateNonPositiveNumber(money);
         this.money = money;
     }
 
-    private void validateNonPositiveNumber() {
+    private void validateNonPositiveNumber(int money) {
         if (money < MINIMUM_BETTING_MONEY) {
             throw new IllegalArgumentException("[ERROR] 음수 또는 0을 입력할 수 없습니다.");
         }
