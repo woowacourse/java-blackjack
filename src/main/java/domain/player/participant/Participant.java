@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Participant extends Player {
 
-    private BetResultState betResultState;
     private final Money money;
+    private BetResultState betResultState;
 
     public Participant(final Name name, final Money money) {
         super(name);

@@ -2,7 +2,6 @@ package domain.player.dealer;
 
 import domain.Score;
 import domain.card.Card;
-import domain.hand.Hand;
 import domain.player.Name;
 import domain.player.Player;
 

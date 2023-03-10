@@ -83,19 +83,20 @@ public class BlackJackController {
     }
 
     private void printPlayersMoneyBoard(final CardTable cardTable, final List<Participant> participants,
-                                               final Dealer dealer) {
+                                        final Dealer dealer) {
         printParticipantsMoneyBoard(cardTable, participants, dealer);
         printDealerMoneyBoard(cardTable, participants, dealer);
     }
 
     private void printParticipantsMoneyBoard(final CardTable cardTable, final List<Participant> participants,
-                                  final Dealer dealer) {
-        final Map<Participant, Money> participantsResult = cardTable.determineParticipantsBettingMoney(participants, dealer);
+                                             final Dealer dealer) {
+        final Map<Participant, Money> participantsResult = cardTable.determineParticipantsBettingMoney(participants,
+                                                                                                       dealer);
         OutputView.showBettingMoneyBoard(participantsResult);
     }
 
     private void printDealerMoneyBoard(final CardTable cardTable, final List<Participant> participants,
-                                              final Dealer dealer) {
+                                       final Dealer dealer) {
         final Money money = cardTable.determineDealerMoney(participants, dealer);
         OutputView.showDealerMoneyBoard(money);
     }

@@ -22,8 +22,12 @@ public class Card {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Card)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
         final Card card = (Card) o;
         return cardShape == card.cardShape && cardValue == card.cardValue;
     }

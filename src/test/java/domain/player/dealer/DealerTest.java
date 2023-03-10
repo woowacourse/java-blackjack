@@ -2,9 +2,6 @@ package domain.player.dealer;
 
 import domain.card.Card;
 import domain.card.CardShape;
-import domain.player.Name;
-import domain.player.participant.Money;
-import domain.player.participant.Participant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,7 +13,6 @@ import java.util.List;
 import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.SIX;
 import static domain.card.CardValue.TEN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

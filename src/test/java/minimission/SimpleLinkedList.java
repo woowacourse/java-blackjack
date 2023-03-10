@@ -158,7 +158,7 @@ public class SimpleLinkedList implements SimpleList {
     @Override
     public void clear() {
 
-        for (Node current = head; current != null;) {
+        for (Node current = head; current != null; ) {
             Node next = current.next;
             current.value = null;
             current.next = null;
