@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.player.exception.DuplicatedPlayerNameException;
+import blackjack.exception.DuplicatedPlayerNameException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,15 +43,17 @@ public class Players {
         }
     }
 
-    public List<Player> getChallengers() {
+    public List<Challenger> getChallengers() {
         return players.stream()
                 .filter(player -> !player.isDealer())
+                .map(player -> (Challenger) player)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return players.stream()
                 .filter(player -> player.isDealer())
+                .map(player -> (Dealer) player)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }

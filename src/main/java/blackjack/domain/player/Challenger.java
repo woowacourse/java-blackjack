@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.exception.InvalidPlayerNameException;
+import blackjack.exception.InvalidPlayerNameException;
 
 public class Challenger extends Player {
 
@@ -19,7 +19,7 @@ public class Challenger extends Player {
 
     @Override
     public Boolean canPick() {
-        return holdingCards.getSum() <= BLACKJACK_POINT;
+        return hand.getSum() <= BLACKJACK_POINT;
     }
 
     @Override

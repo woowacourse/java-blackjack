@@ -1,25 +1,27 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.ResultMap;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public class BlackJackGame {
     private final CardDeck cardDeck;
     private final Players players;
+    private final List<Money> betAmounts;
 
-    private BlackJackGame(CardDeck cardDeck, Players players) {
+    private BlackJackGame(CardDeck cardDeck, Players players, List<Money> betAmounts) {
         this.cardDeck = cardDeck;
         this.players = players;
+        this.betAmounts = betAmounts;
     }
 
-    public static BlackJackGame from(List<String> names) {
+    public static BlackJackGame from(Players players, List<Money> betAmounts) {
         CardDeck cardDeck = CardDeck.create();
-        Players players = Players.from(names);
-        return new BlackJackGame(cardDeck, players);
+        return new BlackJackGame(cardDeck, players, betAmounts);
     }
 
     public void handOutStartCards() {
@@ -31,15 +33,15 @@ public class BlackJackGame {
         player.pickCard(pickedCard);
     }
 
-    public ResultMap makeResult() {
-        return ResultMap.from(players);
+    public GameResult makeResult() {
+        return GameResult.from(players, betAmounts);
     }
 
     public Player getDealer() {
         return players.getDealer();
     }
 
-    public List<Player> getChallengers() {
+    public List<Challenger> getChallengers() {
         return players.getChallengers();
     }
 }
