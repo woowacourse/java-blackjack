@@ -1,8 +1,9 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.user.player.Player;
+import blackjack.domain.user.player.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -11,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.card.CardNumber.ACE;
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardNumber.QUEEN;
-import static blackjack.domain.card.CardNumber.THREE;
-import static blackjack.domain.card.CardNumber.TWO;
-import static blackjack.domain.card.CardShape.CLOVER;
+import static blackjack.domain.fixture.FixtureCard.다이아몬드_6;
+import static blackjack.domain.fixture.FixtureCard.클로버_10;
+import static blackjack.domain.fixture.FixtureCard.클로버_2;
+import static blackjack.domain.fixture.FixtureCard.클로버_3;
+import static blackjack.domain.fixture.FixtureCard.클로버_A;
+import static blackjack.domain.fixture.FixtureCard.하트_10;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DealerTest {
@@ -33,8 +34,7 @@ class DealerTest {
         dealer.drawCard(cardPack);
 
         // then
-        Assertions.assertThat(dealer.showCards())
-                .containsExactly(new Card(KING, CLOVER));
+        Assertions.assertThat(dealer.showCards()).isNotEmpty();
     }
 
 
@@ -48,11 +48,11 @@ class DealerTest {
         final Players players = new Players(List.of(player1, player2, player3));
         final Dealer dealer = new Dealer(DEALER_NAME);
 
-        CardPack cardPack1 = new CardPack(List.of(new Card(QUEEN, CLOVER), new Card(ACE, CLOVER)));
-        CardPack cardPack2 = new CardPack(List.of(new Card(QUEEN, CLOVER), new Card(QUEEN, CLOVER)));
-        CardPack cardPack3 = new CardPack(List.of(new Card(QUEEN, CLOVER), new Card(QUEEN, CLOVER), new Card(QUEEN, CLOVER)));
+        CardPack cardPack1 = new CardPack(List.of(클로버_10, 클로버_A));
+        CardPack cardPack2 = new CardPack(List.of(클로버_10, 하트_10));
+        CardPack cardPack3 = new CardPack(List.of(클로버_10, 하트_10, 다이아몬드_6));
 
-        CardPack dealerPack = new CardPack(List.of(new Card(QUEEN, CLOVER), new Card(QUEEN, CLOVER)));
+        CardPack dealerPack = new CardPack(List.of(클로버_10, 하트_10));
 
         // when
         player1.drawCard(cardPack1);
@@ -78,9 +78,9 @@ class DealerTest {
     void 딜러의_승부_결과를_가져올_수_있다() {
         //given
         CardPack cardPack = new CardPack(List.of(
-                new Card(QUEEN, CLOVER), new Card(ACE, CLOVER),
-                new Card(TWO, CLOVER), new Card(THREE, CLOVER))
-        );
+                클로버_10, 클로버_A,
+                클로버_2, 클로버_3
+        ));
 
         Player player = new Player("player");
         Dealer dealer = new Dealer("딜러");

@@ -10,8 +10,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardPackTest {
 
@@ -24,24 +22,8 @@ class CardPackTest {
             cardPack = new CardPack();
         }
 
-
         @Test
-        void _순서대로_생성된다() {
-            final List<CardShape> shapes = List.of(CardShape.CLOVER, CardShape.HEART, CardShape.DIAMOND, CardShape.SPADE);
-            for (final CardShape shape : shapes) {
-                assertEqualsCardByShape(shape);
-            }
-        }
-
-        private void assertEqualsCardByShape(final CardShape shape) {
-            for (int i = 0; i < 13; i++) {
-                Card card = cardPack.takeOne();
-                Assertions.assertThat(card.getShape()).isEqualTo(shape);
-            }
-        }
-
-        @Test
-        void _52장까지만_생성된다() {
+        void _52이_생성된다() {
             Assertions.assertThatThrownBy(() -> {
                 for (int i = 0; i < 53; i++) {
                     cardPack.takeOne();

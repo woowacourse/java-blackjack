@@ -1,8 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.Score;
+import blackjack.domain.user.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

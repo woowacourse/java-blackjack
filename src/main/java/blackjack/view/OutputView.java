@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.game.Money;
 import blackjack.domain.user.Score;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
@@ -77,18 +78,14 @@ public class OutputView {
         return String.valueOf(score.getValue());
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerResult, final Map<String, GameResult> playerScore) {
-        System.out.println("## 최종 승패");
+    public void printGameResult(final Map<String, Money> dealerMoney, final Map<String, Money> playerMoney) {
+        System.out.println("## 최종 수익");
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (final GameResult score : dealerResult.keySet()) {
-            final Integer count = dealerResult.get(score);
-            stackResult(stringBuilder, score, count);
+        for (final String dealerName : dealerMoney.keySet()) {
+            System.out.println(dealerName + DELIMITER_COLON + dealerMoney.get(dealerName).getValue());
         }
 
-        System.out.println(DEALER_DEFAULT_NAME + DELIMITER_COLON + stringBuilder);
-
-        playerScore.keySet().forEach(userName -> System.out.println(userName + DELIMITER_COLON + playerScore.get(userName).getView()));
+        playerMoney.keySet().forEach(userName -> System.out.println(userName + DELIMITER_COLON + playerMoney.get(userName).getValue()));
     }
 
     private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {

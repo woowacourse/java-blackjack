@@ -1,9 +1,9 @@
-package blackjack.domain.user;
+package blackjack.domain.user.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.Money;
+import blackjack.domain.user.Participant;
+import blackjack.domain.user.Score;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ public class Player {
     private static final String DEALER_NAME = "딜러";
 
     private final Participant participant;
-    private Money money;
 
     public Player(final String name) {
         validateName(name);
@@ -48,14 +47,6 @@ public class Player {
 
     public void drawCard(final CardPack cardPack) {
         participant.drawCard(cardPack);
-    }
-
-    public void betMoney(final Money money) {
-        this.money = money;
-    }
-    
-    public int getProfit(GameResult result) {
-        return money.getProfit(result);
     }
 
     public List<Card> showCards() {

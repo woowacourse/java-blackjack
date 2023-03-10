@@ -15,6 +15,12 @@ public class Cards {
         this.score = new Score();
     }
 
+    Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+        this.score = new Score();
+        score.calculateScore(this);
+    }
+
     public void add(Card card) {
         cards.add(card);
         score.calculateScore(this);

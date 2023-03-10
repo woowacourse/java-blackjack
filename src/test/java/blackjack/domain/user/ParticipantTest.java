@@ -1,8 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.cardpack.NoviceShuffleStrategy;
 import org.assertj.core.api.Assertions;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static blackjack.domain.fixture.FixtureCard.스페이드_A;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ParticipantTest {
@@ -28,6 +28,6 @@ class ParticipantTest {
         // then
         List<Card> userCards = participant.showCards();
         Assertions.assertThat(userCards.get(0))
-                .isEqualTo(new Card(CardNumber.ACE, CardShape.SPADE));
+                .isEqualTo(스페이드_A);
     }
 }

@@ -1,6 +1,8 @@
-package blackjack.domain.user;
+package blackjack.domain.user.player;
 
 import blackjack.domain.game.GameResult;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Score;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,10 +46,10 @@ public class Players {
         }
     }
 
-    public Map<String, GameResult> toResults(Dealer dealer) {
+    public Map<Player, GameResult> toResults(Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
-                        Player::getName,
+                        player -> player,
                         player -> {
                             Score score = player.getScore();
                             return dealer.declareGameResult(score.getValue());

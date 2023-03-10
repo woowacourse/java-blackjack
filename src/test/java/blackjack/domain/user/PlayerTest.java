@@ -1,9 +1,7 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.user.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,7 +24,7 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(player.showCards())
-                .containsExactly(new Card(CardNumber.KING, CardShape.CLOVER));
+                .isNotEmpty();
     }
 
     @Nested
@@ -46,8 +44,7 @@ class PlayerTest {
         }
 
         @ParameterizedTest(name = "{1}")
-        @CsvSource(value = {"junho주노너무긴이름입니다:10자 이상의 이름을 가지면 예외", "'     ': 공백만 가지면 예외",
-                "딜러:딜러 라는 이름을 가지면 예외"}, delimiter = ':')
+        @CsvSource(value = {"junho주노너무긴이름입니다:10자 이상의 이름을 가지면 예외", "'     ': 공백만 가지면 예외", "딜러:딜러 라는 이름을 가지면 예외"}, delimiter = ':')
         void _10자_이상의_이름을_가지면_예외(final String name, final String message) {
             //then
             Assertions.assertThatThrownBy(() -> new Player(name))

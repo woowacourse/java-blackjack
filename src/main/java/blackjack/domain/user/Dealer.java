@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.user.player.Players;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -19,8 +20,11 @@ public class Dealer {
     }
 
     public GameResult declareGameResult(final int playerScore) {
-        Score score = participant.getScore();
+        Score score = this.getScore();
         int dealerScore = score.getValue();
+        if (score.isBust()) {
+            return GameResult.LOSE;
+        }
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
