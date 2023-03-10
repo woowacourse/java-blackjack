@@ -34,15 +34,9 @@ public final class Player extends Participant {
         for (int i = 0; i < count; i++) {
             this.hand = hand.add(deck.drawCard());
         }
-        if (isBlackJack() && hand.isSameCount(2)) {
-            bet.applyBlackJack();
-        }
     }
     public void takeCard(final Card card) {
         this.hand = hand.add(card);
-        if (isBusted()) {
-            bet.applyBust();
-        }
     }
 
     private static void validateName(final Name name) {

@@ -19,7 +19,7 @@ public class ParticipantsFinalResult {
         updateGameResult(GameResult.WIN, players.findPlayerGreaterThan(dealerPoint));
         updateGameResult(GameResult.DRAW, players.findPlayerSameAs(dealerPoint));
         updateGameResult(GameResult.LOSE, players.findPlayersLowerThan(dealerPoint));
-        dealerProfit = updateDealerProfit();
+        this.dealerProfit = updateDealerProfit();
     }
 
     public static ParticipantsFinalResult of(final Dealer dealer, final Players players) {

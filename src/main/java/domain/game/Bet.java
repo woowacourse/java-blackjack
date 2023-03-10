@@ -9,8 +9,6 @@ public final class Bet {
     public static final double BONUS_RATE = 1.5;
 
     private final int bet;
-    private boolean isBlackJack = false;
-    private boolean isBusted = false;
 
     private Bet(final int bet) {
         validatePrice(bet);
@@ -32,25 +30,7 @@ public final class Bet {
         }
     }
 
-    public void applyBust() {
-        this.isBusted = true;
-    }
-
-    public void applyBlackJack() {
-        this.isBlackJack = true;
-    }
-
     public int getBet() {
-        return bet;
-    }
-
-    public int getProfit() {
-        if (isBusted) {
-            return -bet;
-        }
-        if (isBlackJack) {
-            return  (int) (bet * BONUS_RATE);
-        }
         return bet;
     }
 
@@ -75,8 +55,6 @@ public final class Bet {
     public String toString() {
         return "Bet{" +
                 "bet=" + bet +
-                ", isBlackJack=" + isBlackJack +
-                ", isBusted=" + isBusted +
                 '}';
     }
 }

@@ -7,6 +7,9 @@ import java.util.List;
 
 public final class Hand {
 
+    public static final GamePoint BLACKJACK_POINT = GamePoint.of(21);
+    public static final int BLACKJACK_CARD_COUNT = 2;
+
     private final List<Card> cards;
     private final GamePoint gamePoint;
 
@@ -26,7 +29,8 @@ public final class Hand {
     }
 
     public boolean isBlackJack() {
-        return gamePoint.isSameAs(GamePoint.of(21)) && cards.size() == 2 ;
+        return gamePoint.isSameAs(BLACKJACK_POINT)
+                && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public boolean isBusted() {

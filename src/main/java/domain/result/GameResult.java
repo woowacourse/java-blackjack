@@ -15,6 +15,9 @@ public enum GameResult {
     DRAW {
         @Override
         public int calculateProfit(final Player player) {
+            if (player.isBusted()) {
+                return -player.getBet();
+            }
             return 0;
         }
     },
