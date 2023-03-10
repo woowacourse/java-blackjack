@@ -12,6 +12,10 @@ public final class Card {
         this.suit = suit;
     }
 
+    public int score() {
+        return denomination.getScore();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

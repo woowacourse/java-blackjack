@@ -48,6 +48,7 @@
 ### Card
 - [x] `Denomination`을 가진다.
 - [x] `Suit`를 가진다.
+- [x] 점수를 반환한다.
 
 ### Denomination
 - [x] 카드의 숫자를 가진다.
