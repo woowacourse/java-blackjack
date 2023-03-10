@@ -7,6 +7,7 @@ import java.util.List;
 public class Hand {
     private static final int BUST_LOWER_BOUND = 22;
     public static final int ADDITIONAL_SCORE_OF_ACE = 10;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Deque<Card> cards;
 
@@ -16,6 +17,14 @@ public class Hand {
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK_SCORE && cards.size() == 2;
+    }
+
+    public boolean isBust() {
+        return calculateScore() >= BUST_LOWER_BOUND;
     }
 
     public int calculateScore() {
