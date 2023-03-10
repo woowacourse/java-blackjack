@@ -14,7 +14,7 @@ public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러가 16이하라 한장의 카드를 더 받았습니다.";
     private static final String BLACKJACK_MARK = " (블랙잭)";
     private static final String SCORE_RESULT_FORMAT = "%s: %s - 결과: %s\n";
-    private static final String WINNING_RESULT_MESSAGE = "## 최종 승패";
+    private static final String PROFIT_RESULT_MESSAGE = "## 최종 수익";
     private static final String DEALER_WINNING_RESULT_FORMAT = "딜러: %d승 %d무 %d패\n";
 
     private static OutputView instance;
@@ -59,16 +59,13 @@ public class OutputView {
         System.out.printf(SCORE_RESULT_FORMAT, name, hand, result);
     }
 
-    public void printWinningResultMessage() {
+    public void printProfitResultMessage() {
         System.out.println();
-        System.out.println(WINNING_RESULT_MESSAGE);
+        System.out.println(PROFIT_RESULT_MESSAGE);
     }
 
-    public void printDealerWinningResult(long win, long tie, long lose) {
-        System.out.printf(DEALER_WINNING_RESULT_FORMAT, win, tie, lose);
-    }
-
-    public void printPlayerWinningResult(ResultDto result) {
-        System.out.println(result.getName() + DELIMITER_COLON + result.getResult());
+    public void printProfitResult(ResultDto result) {
+        System.out.printf(result.getName() + DELIMITER_COLON + result.getProfit());
+        System.out.println();
     }
 }

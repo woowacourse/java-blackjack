@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class BustState extends State {
+public class BustState extends FinalState {
 
     public BustState(Hand hand) {
         super(hand);
@@ -17,6 +17,11 @@ public class BustState extends State {
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public double getProfitWeight() {
+        return 1;
     }
 
 }

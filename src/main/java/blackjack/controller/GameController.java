@@ -77,7 +77,7 @@ public class GameController {
 
     private void finish(Participants participants) {
         printFinalCardStatus(participants);
-        printWinningResult(participants.getPlayerResult());
+        printProfitResult(participants.getDealer(), participants.getPlayerProfitResult());
     }
 
     private void printFinalCardStatus(Participants participants) {
@@ -88,16 +88,14 @@ public class GameController {
         }
     }
 
-    private void printWinningResult(Map<Player, Result> playerResult) {
-        outputView.printWinningResultMessage();
+    private void printProfitResult(Dealer dealer, Map<Player, Integer> profitResult) {
+        outputView.printProfitResultMessage();
 
-        long dealerWin = playerResult.values().stream().filter(value -> value.equals(Result.LOSE)).count();
-        long dealerTie = playerResult.values().stream().filter(value -> value.equals(Result.TIE)).count();
-        long dealerLose = playerResult.values().stream().filter(value -> value.equals(Result.WIN)).count();
-        outputView.printDealerWinningResult(dealerWin, dealerTie, dealerLose);
+        int dealerProfit = profitResult.values().stream().mapToInt(value -> value).sum() * -1;
+        outputView.printProfitResult(ResultDto.of(dealer, dealerProfit));
 
-        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
-            outputView.printPlayerWinningResult(ResultDto.of(entry.getKey(), entry.getValue()));
+        for (Map.Entry<Player, Integer> entry : profitResult.entrySet()) {
+            outputView.printProfitResult(ResultDto.of(entry.getKey(), entry.getValue()));
         }
     }
 

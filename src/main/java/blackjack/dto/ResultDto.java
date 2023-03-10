@@ -1,27 +1,26 @@
 package blackjack.dto;
 
-import blackjack.model.participant.Player;
-import blackjack.model.result.Result;
+import blackjack.model.participant.Participant;
 
 public class ResultDto {
 
     private final String name;
-    private final String result;
+    private final String profit;
 
-    public ResultDto(String name, String result) {
+    public ResultDto(String name, String profit) {
         this.name = name;
-        this.result = result;
+        this.profit = profit;
     }
 
-    public static ResultDto of(Player player, Result result) {
-        return new ResultDto(player.getName(), result.getResult());
+    public static ResultDto of(Participant participant, int profit) {
+        return new ResultDto(participant.getName(), Integer.toString(profit));
     }
 
     public String getName() {
         return name;
     }
 
-    public String getResult() {
-        return result;
+    public String getProfit() {
+        return profit;
     }
 }

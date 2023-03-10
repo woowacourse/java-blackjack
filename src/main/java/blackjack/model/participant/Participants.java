@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
 
@@ -84,13 +83,12 @@ public class Participants {
         return hitCount;
     }
 
-    //todo 수익 계산
-    public Map<Player, Result> getPlayerResult() {
-        Map<Player, Result> playerResult = new HashMap<>();
+    public Map<Player, Integer> getPlayerProfitResult() {
+        Map<Player, Integer> playerEarningsResult = new HashMap<>();
         for (Player player : players) {
-            playerResult.put(player, player.getResult(dealer));
+            playerEarningsResult.put(player, player.getProfit(dealer));
         }
-        return playerResult;
+        return playerEarningsResult;
     }
 
 }
