@@ -70,6 +70,7 @@ public final class BlackjackController {
 
     private boolean isMoreHit(final Participant player) {
         final Order order = Order.from(inputView.readOrderCard(player.getName()));
+
         return order.isYES();
     }
 

@@ -21,5 +21,4 @@ public class WinTieLoseTest {
         assertThat(WinTieLose.TIE.reverse()).isEqualTo(WinTieLose.TIE);
         assertThat(WinTieLose.LOSE.reverse()).isEqualTo(WinTieLose.WIN);
     }
-
 }

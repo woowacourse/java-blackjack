@@ -49,6 +49,7 @@ public final class Deck {
 
     private boolean isDuplicateCard(final List<Card> cards) {
         final Set<Card> uniqueCards = new HashSet<>(cards);
+
         return uniqueCards.size() != cards.size();
     }
 

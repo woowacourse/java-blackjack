@@ -44,6 +44,7 @@ public final class Participants {
 
     private boolean isDuplicateName(final List<String> names) {
         final HashSet<String> uniqueNames = new HashSet<>(names);
+
         return uniqueNames.size() != names.size();
     }
 

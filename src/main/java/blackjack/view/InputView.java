@@ -22,6 +22,7 @@ public class InputView {
     public List<String> readPlayers() {
         System.out.println(NEW_LINE + INPUT_PLAYERS_MESSAGE);
         final String input = scanner.nextLine();
+
         return parseNames(input);
     }
 
@@ -33,6 +34,7 @@ public class InputView {
 
     public String readOrderCard(final String name) {
         System.out.println(NEW_LINE + String.format(INPUT_ORDER_CARD_MESSAGE, name));
+
         return scanner.nextLine();
     }
 }

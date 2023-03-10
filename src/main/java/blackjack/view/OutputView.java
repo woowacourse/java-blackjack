@@ -29,6 +29,7 @@ public class OutputView {
 
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
+
         printDealerNameAndCard(dealer, dealer.getCard(0));
         players.forEach(this::printParticipantNameAndCards);
     }
