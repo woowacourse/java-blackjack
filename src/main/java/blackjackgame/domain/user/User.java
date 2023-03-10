@@ -19,8 +19,8 @@ public abstract class User {
         score.setScore(hands);
     }
 
-    public void receiveCards(List<Card> receivedhands) {
-        hands.add(receivedhands);
+    public void receiveCards(List<Card> cards) {
+        hands.add(cards);
         score.setScore(hands);
     }
 
