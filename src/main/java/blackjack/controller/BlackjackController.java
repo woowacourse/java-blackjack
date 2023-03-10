@@ -9,7 +9,6 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.PlayersFactory;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Result;
 import blackjack.view.InputView;
@@ -45,7 +44,7 @@ public class BlackjackController {
 
     private Participants makeParticipants() {
         List<String> playersName = inputView.receivePlayersName();
-        Players players = PlayersFactory.from(playersName);
+        Players players = Players.from(playersName);
 
         return new Participants(new Dealer(new Participant(Cards.generateEmptyCards())), players);
     }

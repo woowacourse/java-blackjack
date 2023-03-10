@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersFactoryTest {
+public class PlayersTest {
 
     @Test
     @DisplayName("입력된 참가자의 수가 2명 미만인 경우 예외 발생")
@@ -17,9 +17,9 @@ public class PlayersFactoryTest {
         List<String> names = List.of("a");
 
         // expect
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                PlayersFactory.from(names)
-        ).withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Players.from(names))
+                .withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
     }
 
     @Test
@@ -29,9 +29,9 @@ public class PlayersFactoryTest {
         List<String> names = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9");
 
         // expect
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                PlayersFactory.from(names)
-        ).withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Players.from(names))
+                .withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PlayersFactoryTest {
         List<String> names = List.of("milli", "doggy");
 
         // when
-        Players players = PlayersFactory.from(names);
+        Players players = Players.from(names);
 
         // then
         assertAll(

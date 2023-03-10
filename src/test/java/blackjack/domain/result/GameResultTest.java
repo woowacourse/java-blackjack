@@ -12,7 +12,6 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.PlayersFactory;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        Players players = PlayersFactory.from(List.of("a", "b", "c"));
+        Players players = Players.from(List.of("a", "b", "c"));
         Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
         participants = new Participants(dealer, players);
 
