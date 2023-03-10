@@ -3,6 +3,8 @@ package domain;
 import java.util.Objects;
 
 public class Score {
+    private static final Score ZERO = new Score(0);
+
     private static final Score ACE_BONUS = new Score(10);
     private static final Score BUST_LIMIT = new Score(21);
 
@@ -22,6 +24,14 @@ public class Score {
             return new Score(ACE_BONUS.value + value);
         }
         return this;
+    }
+
+    public static Score zero() {
+        return ZERO;
+    }
+
+    public Score sum(Score other) {
+        return new Score(this.value + other.value);
     }
 
     public boolean isGreaterThan(Score other) {

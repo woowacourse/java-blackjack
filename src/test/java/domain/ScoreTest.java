@@ -33,4 +33,21 @@ class ScoreTest {
         assertThat(score.isGreaterThan(new Score(other)))
                 .isEqualTo(isGreaterThan);
     }
+
+    @Test
+    @DisplayName("값을 0으로 하는 Score를 반환한다.")
+    void test_zero() {
+        Score score = Score.zero();
+
+        assertThat(score).isEqualTo(new Score(0));
+    }
+
+    @ParameterizedTest(name = "Score 의 값을 더한 결과를 출력한다.")
+    @CsvSource({"1,4", "5,7", "3,8"})
+    void test_zero(int score1, int score2) {
+        Score score = new Score(score1);
+
+        assertThat(score.sum(new Score(score2)))
+                .isEqualTo(new Score(score1 + score2));
+    }
 }

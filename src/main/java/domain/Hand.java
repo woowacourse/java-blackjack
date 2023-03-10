@@ -31,10 +31,9 @@ public class Hand {
     }
 
     private Score sum() {
-        return new Score(cards.stream()
+        return cards.stream()
                 .map(Card::score)
-                .mapToInt(Score::getValue)
-                .sum());
+                .reduce(Score.zero(), Score::sum);
     }
 
     public void add(Card card) {
