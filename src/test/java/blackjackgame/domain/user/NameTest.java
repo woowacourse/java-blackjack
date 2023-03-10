@@ -21,10 +21,4 @@ class NameTest {
     void blankTest(String input) {
         assertThrows(IllegalArgumentException.class, () -> new Name(input));
     }
-
-    @DisplayName("\"딜러\"로 설정하면 예외가 발생한다.")
-    @Test
-    void invalidNameTest() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("딜러"));
-    }
 }

@@ -11,7 +11,7 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (name == null || name.isBlank() || name.equals("딜러")) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_NAME_FORMAT.getMessage());
         }
     }

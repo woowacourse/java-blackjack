@@ -6,11 +6,13 @@ import java.util.List;
 
 public abstract class User {
     private final List<Card> cards;
+    private final Name name;
     protected final Score score;
 
-    public User() {
-        cards = new ArrayList<>();
-        score = new Score();
+    public User(Name name) {
+        this.cards = new ArrayList<>();
+        this.score = new Score();
+        this.name = name;
     }
 
     public void receiveCard(Card card) {
@@ -27,11 +29,13 @@ public abstract class User {
         return cards;
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     public int getScore() {
         return score.getScore();
     }
 
     public abstract UserStatus getStatus();
-
-    public abstract String getName();
 }

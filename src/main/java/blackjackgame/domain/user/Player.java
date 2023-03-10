@@ -4,12 +4,10 @@ import blackjackgame.domain.card.Card;
 import java.util.List;
 
 public class Player extends User {
-    private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
 
     public Player(Name name) {
-        super();
-        this.name = name;
+        super(name);
     }
 
     @Override
@@ -31,10 +29,5 @@ public class Player extends User {
     @Override
     public UserStatus getStatus() {
         return status;
-    }
-
-    @Override
-    public String getName() {
-        return name.getName();
     }
 }

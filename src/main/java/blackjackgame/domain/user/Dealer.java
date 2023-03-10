@@ -8,6 +8,10 @@ public class Dealer extends User {
 
     private DealerStatus status = DealerStatus.UNDER_MIN_SCORE;
 
+    public Dealer() {
+        super(new Name(DEALER_NAME));
+    }
+
     @Override
     public void receiveCard(Card card) {
         super.receiveCard(card);
