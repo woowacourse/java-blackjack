@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Bank;
 import blackjack.domain.Money;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import java.util.List;
@@ -13,6 +14,7 @@ public final class Dealer extends Participant {
 
     private static final String name = "딜러";
     private static final int INIT_CARD_COUNT = 2;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final Bank bank;
     private final Deck deck;
@@ -39,6 +41,15 @@ public final class Dealer extends Participant {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             this.receiveCard(deck.drawCard());
         }
+    }
+
+    public Card showOneCard() {
+        List<Card> hand = this.getHand();
+
+        if (hand.isEmpty()) {
+            throw new IllegalStateException("딜러의 손에는 카드가 존재하지 않습니다.");
+        }
+        return hand.get(FIRST_CARD_INDEX);
     }
 
     public String getName() {

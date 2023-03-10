@@ -1,9 +1,16 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import blackjack.domain.Money;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,5 +54,21 @@ class DealerTest {
         dealer.settingSelf();
 
         assertThat(dealer.getHand().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("카드가 존재하지 않는다면 예외가 발생한다.")
+    void showOneCardTest_no_card() {
+        assertThatIllegalStateException().isThrownBy(
+                () -> dealer.showOneCard()
+        ).withMessage("딜러의 손에는 카드가 존재하지 않습니다.");
+    }
+    
+    @Test
+    @DisplayName("한 장의 카드를 반환한다.")
+    void showOneCardTest() {
+        dealer.receiveCard(new Card(ACE, HEART));
+
+        assertThat(dealer.showOneCard()).isEqualTo(new Card(ACE, HEART));
     }
 }
