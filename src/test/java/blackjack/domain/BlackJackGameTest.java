@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BlackJackGameTest {
 
-    static BlackJackGame blackJackGame;
+    private static BlackJackGame blackJackGame;
 
     @BeforeEach
     void setUp() {

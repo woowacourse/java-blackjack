@@ -6,7 +6,7 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.result.GameResult;
 
 public class BlackJackGame {
-    public static final int INITIAL_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Deck deck;
     private final Participants participants;
