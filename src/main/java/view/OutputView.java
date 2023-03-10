@@ -5,7 +5,6 @@ import domain.Card.CardCollection;
 import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
-import domain.user.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,7 +72,7 @@ public class OutputView {
                 + card.getCardShape().getName();
     }
     
-    public static void printPlayersGameResult(final Map<Player, ResultStatus> resultMap) {
+    public static void printPlayersGameResult(final Map<Playable, ResultStatus> resultMap) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         resultMap.forEach((player, result) -> {
             StringBuilder stringBuilder = new StringBuilder();
@@ -91,6 +90,7 @@ public class OutputView {
     }
     
     public static void printParticipantsNameCardsAndScore(final Participants participants) {
+        System.out.println();
         participants.forEach((participant) -> OutputView.printNameCardsScore(participant.getName(),
                 participant.getCards(), participant.getScore()));
         System.out.println();

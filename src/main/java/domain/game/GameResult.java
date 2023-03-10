@@ -1,15 +1,15 @@
 package domain.game;
 
-import domain.user.Player;
+import domain.user.Playable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
     
-    private final Map<Player, ResultStatus> resultMap = new HashMap<>();
+    private final Map<Playable, ResultStatus> resultMap = new HashMap<>();
     
-    public void accumulate(Player player, ResultStatus resultStatus) {
+    public void accumulate(Playable player, ResultStatus resultStatus) {
         this.resultMap.put(player, resultStatus);
     }
     
@@ -32,11 +32,11 @@ public class GameResult {
         return dealerResult;
     }
     
-    public ResultStatus getPlayerResult(Player player) {
+    public ResultStatus getPlayerResult(Playable player) {
         return this.resultMap.get(player);
     }
     
-    public Map<Player, ResultStatus> getResultMap() {
+    public Map<Playable, ResultStatus> getResultMap() {
         return Collections.unmodifiableMap(this.resultMap);
     }
 }
