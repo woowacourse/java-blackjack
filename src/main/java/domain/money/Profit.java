@@ -1,18 +1,23 @@
 package domain.money;
 
+import domain.game.ResultStatus;
 import java.util.Objects;
 
 public class Profit {
     
-    private final int profit;
+    private final int base;
     
-    public Profit(int profit) {
-        this.profit = profit;
+    private Profit(final int base) {
+        this.base = base;
+    }
+    
+    public static Profit from(Bet bet) {
+        return new Profit(bet.getBet());
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(this.profit);
+        return Objects.hash(this.base);
     }
     
     @Override
@@ -23,7 +28,11 @@ public class Profit {
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
-        final Profit profit1 = (Profit) o;
-        return this.profit == profit1.profit;
+        final Profit profit = (Profit) o;
+        return this.base == profit.base;
+    }
+    
+    public Profit calculateProfitFromBetAndResult(final ResultStatus resultStatus) {
+        return new Profit((int) (this.base * resultStatus.getWeight()));
     }
 }

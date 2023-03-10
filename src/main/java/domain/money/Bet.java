@@ -1,6 +1,5 @@
 package domain.money;
 
-import domain.game.ResultStatus;
 import java.util.Objects;
 
 public class Bet {
@@ -23,9 +22,6 @@ public class Bet {
         return this.bet;
     }
     
-    public Profit calculateProfitFromResult(final ResultStatus resultStatus) {
-        return new Profit((int) (this.bet * resultStatus.getWeight()));
-    }
     
     @Override
     public int hashCode() {
