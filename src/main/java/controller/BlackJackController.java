@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Answer;
 import domain.Betting;
 import domain.Card;
 import domain.CardDistributor;
@@ -102,12 +103,11 @@ public class BlackJackController {
     }
 
     private void requestPlayerMoreCard(CardDistributor cardDistributor, Player player) {
-         boolean isCardRequested = true;
+         Answer isCardRequested = Answer.MORE_CARD;
 
-        while (player.isMoreCardAble() && isCardRequested) {
-            String answer = inputView.askMoreCard(player.getNameValue());
-            validate(answer);
-            isCardRequested = isNoStop(cardDistributor, player, answer);
+        while (player.isMoreCardAble() && isCardRequested.isMoreCard()) {
+            isCardRequested = Answer.from(inputView.askMoreCard(player.getNameValue()));
+            proceedOnce(cardDistributor, player, isCardRequested);
         }
     }
 
@@ -121,13 +121,12 @@ public class BlackJackController {
         return !(answer.equals(MORE_CARD) || answer.equals(CARD_STOP));
     }
 
-    private boolean isNoStop(CardDistributor cardDistributor, Player player, String answer) {
-        if (answer.equals(MORE_CARD)) {
+    private void proceedOnce(CardDistributor cardDistributor, Player player, Answer answer) {
+        if (answer.isMoreCard()) {
             player.pick(cardDistributor.distribute());
         }
 
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
-        return answer.equals(MORE_CARD);
     }
 
 }

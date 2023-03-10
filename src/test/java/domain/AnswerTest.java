@@ -28,5 +28,10 @@ public class AnswerTest {
                 .hasMessageContaining("y 나 n 만을 입력해주세요.");
     }
 
+    @Test
+    @DisplayName("카드를 더 받는 상태인지 확인한다.")
+    void isMoreCard() {
+        assertThat(Answer.MORE_CARD.isMoreCard()).isTrue();
+    }
 
 }

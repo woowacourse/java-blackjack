@@ -20,4 +20,8 @@ public enum Answer {
                 .orElseThrow(() -> new IllegalArgumentException("y 나 n 만을 입력해주세요."));
     }
 
+    public boolean isMoreCard() {
+        return this == MORE_CARD;
+    }
+
 }
