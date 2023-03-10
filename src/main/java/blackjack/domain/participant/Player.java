@@ -1,7 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.Bet;
+import blackjack.domain.card.Card;
+import blackjack.domain.GameResult;
+import blackjack.domain.Score;
 import java.util.List;
 
 public class Player extends Participant {

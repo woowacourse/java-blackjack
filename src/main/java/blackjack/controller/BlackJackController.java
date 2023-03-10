@@ -4,11 +4,12 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Bet;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Name;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.dto.PlayerNamesResponse;

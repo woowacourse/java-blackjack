@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Participant {

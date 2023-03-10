@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.Bet;
-import blackjack.domain.Name;
+import blackjack.domain.participant.Name;
 
 public class PlayerGameResult {
     private final String name;

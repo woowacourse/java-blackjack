@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import blackjack.domain.Bet;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

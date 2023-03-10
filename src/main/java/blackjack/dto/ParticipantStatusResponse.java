@@ -2,8 +2,8 @@ package blackjack.dto;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Card;
-import blackjack.domain.Participant;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Participant;
 import java.util.List;
 
 public class ParticipantStatusResponse {

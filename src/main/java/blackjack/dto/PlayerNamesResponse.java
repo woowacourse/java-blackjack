@@ -3,7 +3,7 @@ package blackjack.dto;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Name;
+import blackjack.domain.participant.Name;
 import java.util.List;
 
 public class PlayerNamesResponse {

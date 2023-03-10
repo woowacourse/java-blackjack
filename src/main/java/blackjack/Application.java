@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackJackController;
-import blackjack.controller.ShuffledDeckGenerator;
+import blackjack.domain.card.ShuffledDeckGenerator;
 
 public class Application {
     public static void main(String[] args) {

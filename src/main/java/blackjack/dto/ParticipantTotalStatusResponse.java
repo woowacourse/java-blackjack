@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Participant;
+import blackjack.domain.participant.Participant;
 
 public class ParticipantTotalStatusResponse {
     private final ParticipantStatusResponse participantStatusResponse;
