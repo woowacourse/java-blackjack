@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Hand {
-    public static final int UPPER_LIMIT_TO_ADD = 11;
-    public static final int ACE_BONUS = 10;
+    private static final int UPPER_LIMIT_TO_ADD = 11;
+    private static final int ACE_BONUS = 10;
+    private static final int INITIAL_COUNT = 2;
     private final List<Card> cards;
 
     public Hand(){
@@ -32,5 +33,9 @@ public final class Hand {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isInitialState() {
+        return this.cards.size() == INITIAL_COUNT;
     }
 }

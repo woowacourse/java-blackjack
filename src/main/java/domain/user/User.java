@@ -21,7 +21,7 @@ abstract public class User {
     }
 
     public boolean isBlackjack() {
-        return hand.calculateScore() == BLACKJACK_SCORE;
+        return hand.calculateScore() == BLACKJACK_SCORE && hand.isInitialState();
     }
 
     public void addCard(Card card) {

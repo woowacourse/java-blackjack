@@ -50,7 +50,12 @@ public final class Participants {
         return result.calculateWinningAmount(player.getBettingAmountValue());
     }
 
+    //TODO 딜러만 블랙잭인 경우 체크 및 구현
+    //TODO 로직 개선
     private Result calculateResult(Player player) {
+        if (isBlackjackOnly(player)) {
+            return Result.BLACKJACK;
+        }
         if (player.isBust()) {
             return Result.LOSE;
         }
@@ -61,6 +66,10 @@ public final class Participants {
             return Result.DRAW;
         }
         return Result.LOSE;
+    }
+
+    private boolean isBlackjackOnly(Player player) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
     public boolean hitOrStayByDealer(Deck deck) {

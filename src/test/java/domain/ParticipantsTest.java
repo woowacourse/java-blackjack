@@ -112,7 +112,7 @@ class ParticipantsTest {
         // when
         AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
         // then
-        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(-1000);
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(-1_000);
     }
 
     @DisplayName("플레이어가 bust이면 베팅 금액만큼의 돈을 잃는다.")
@@ -131,7 +131,7 @@ class ParticipantsTest {
         // when
         AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
         // then
-        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(-1000);
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(-1_000);
     }
 
     @DisplayName("플레이어가 딜러보다 점수가 높으면 베팅 금액만큼의 돈을 얻는다.")
@@ -149,7 +149,7 @@ class ParticipantsTest {
         // when
         AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
         // then
-        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(1000);
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(1_000);
     }
 
     @DisplayName("플레이어와 딜러가 같은 점수이면 베팅 금액을 돌려받는다.")
@@ -187,6 +187,44 @@ class ParticipantsTest {
         // when
         AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
         // then
-        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(1000);
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(1_000);
+    }
+
+    @DisplayName("플레이어만 블랙잭이면 베팅 금액의 1.5배에 해당하는 금액을 딜러에게 받는다.")
+    @Test
+    void 플레이어_블랙잭() {
+        // given
+        Player player = Player.of("Player", 1_000);
+        Dealer dealer = new Dealer();
+        Participants participants = new Participants(new Players(List.of(player)), dealer);
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
+                new Card(Suit.CLOVER, Rank.ACE), // Player에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.KING), // Player에게 주어지는 카드 1
+                new Card(Suit.CLOVER, Rank.KING), // 딜러에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.SIX) // 딜러에게 주어지는 카드 1
+        )));
+        // when
+        AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
+        // then
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(1_500);
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 플레이어는 베팅 금액을 돌려받는다.")
+    @Test
+    void 플레이어_딜러_블랙잭() {
+        // given
+        Player player = Player.of("Player", 1_000);
+        Dealer dealer = new Dealer();
+        Participants participants = new Participants(new Players(List.of(player)), dealer);
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
+                new Card(Suit.CLOVER, Rank.ACE), // Player에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.KING), // Player에게 주어지는 카드 1
+                new Card(Suit.CLOVER, Rank.ACE), // 딜러에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.KING) // 딜러에게 주어지는 카드 1
+        )));
+        // when
+        AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();
+        // then
+        assertThat(allWinningAmountDto.getPlayerNameWinningAmounts().get(player.getNameValue())).isEqualTo(0);
     }
 }
