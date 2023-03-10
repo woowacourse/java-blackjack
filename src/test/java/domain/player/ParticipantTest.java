@@ -3,7 +3,6 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardArea;
 import domain.card.CardDeck;
-import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -63,7 +62,7 @@ class ParticipantTest {
     void hit_시_카드를_추가한다() {
         // when
         final int beforeSize = cardArea.cards().size();
-        participant.hit(CardDeckFixture.cardDeck(TEN));
+        participant.hit(CardDeck.shuffledFullCardDeck());
 
         // then
         assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);

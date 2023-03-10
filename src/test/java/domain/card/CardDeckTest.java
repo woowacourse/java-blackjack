@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static domain.card.CardValue.JACK;
 import static domain.card.CardValue.values;
-import static domain.fixture.CardDeckFixture.cardDeck;
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,7 +43,7 @@ class CardDeckTest {
     @Test
     void 카드를_뽑을_수_있다() {
         // given
-        final CardDeck cardDeck = cardDeck(JACK, JACK);
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final int before = cardDeck.cards().size();
 
         // when

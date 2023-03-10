@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.CardArea;
+import domain.card.CardDeck;
 import domain.fixture.CardAreaFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import static domain.card.CardValue.JACK;
 import static domain.card.CardValue.TEN;
 import static domain.fixture.CardAreaFixture.*;
-import static domain.fixture.CardDeckFixture.cardDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,6 +64,7 @@ class DealerTest {
     @Nested
     @DisplayName("hitOrStay() 테스트")
     class HitOrStayForGamblerTest {
+        CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
         @Test
         void 딜러의_카드가_16_점_이하이면_항상_Hit_을_더_해야한다() {
@@ -71,7 +72,7 @@ class DealerTest {
             final Dealer dealer = new Dealer(equal16CardArea());
 
             // when & then
-            assertThat(dealer.hitOrStay(cardDeck(TEN))).isTrue();
+            assertThat(dealer.hitOrStay(cardDeck)).isTrue();
         }
 
         @Test
@@ -80,7 +81,7 @@ class DealerTest {
             final Dealer dealer = new Dealer(over16CardArea());
 
             // when & then
-            assertThat(dealer.hitOrStay(cardDeck(TEN))).isFalse();
+            assertThat(dealer.hitOrStay(cardDeck)).isFalse();
         }
     }
 }

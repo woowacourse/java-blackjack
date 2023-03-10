@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.BlackJackScore;
 import domain.card.Card;
 import domain.card.CardArea;
+import domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,7 +21,6 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.TEN;
 import static domain.card.CardValue.TWO;
 import static domain.fixture.CardAreaFixture.*;
-import static domain.fixture.CardDeckFixture.cardDeck;
 import static domain.fixture.GamblerFixture.gamblerWithMoneyAndCardArea;
 import static domain.fixture.GamblerFixture.코다;
 import static domain.player.GameResult.*;
@@ -76,6 +76,7 @@ class GamblerTest {
     @Nested
     @DisplayName("hitOrStay() 테스트")
     class HitOrStayForGamblerTest {
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
         @Test
         void 받을_수_있으며_Hit_을_원한다면_카드를_제공한다() {
@@ -85,7 +86,7 @@ class GamblerTest {
             코다.changeState(HitState.HIT);
 
             // when
-            코다.hitOrStay(cardDeck(TEN));
+            코다.hitOrStay(cardDeck);
 
             // then
             assertThat(코다.score()).isNotEqualTo(before);
@@ -99,7 +100,7 @@ class GamblerTest {
             코다.changeState(HitState.STAY);
 
             // when
-            코다.hitOrStay(cardDeck(TEN));
+            코다.hitOrStay(cardDeck);
 
             // then
             assertThat(코다.score()).isEqualTo(before);
@@ -113,7 +114,7 @@ class GamblerTest {
             코다.changeState(HitState.HIT);
 
             // when
-            코다.hitOrStay(cardDeck(TEN));
+            코다.hitOrStay(cardDeck);
 
             // then
             assertThat(코다.score()).isEqualTo(before);
