@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Deck {
+public final class Deck {
 
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 카드가 존재합니다.";
     private static final String NOT_EXIST_CARD_IN_DECK_ERROR_MESSAGE = "덱에 카드가 존재하지 않아 드로우를 할 수 없습니다.";

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     private static final int DEALER_HIT_SCORE = 16;
 

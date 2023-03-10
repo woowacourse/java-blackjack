@@ -5,7 +5,7 @@ import blackjack.domain.game.Score;
 import java.util.List;
 import java.util.Objects;
 
-public class Hand {
+public final class Hand {
 
     private static final int ZERO = 0;
     private static final int ACE_NUMBER_DIFFERENCE = 10;

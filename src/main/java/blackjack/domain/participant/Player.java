@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private Player(final Name name, final List<Card> cards) {
         super(name, cards);

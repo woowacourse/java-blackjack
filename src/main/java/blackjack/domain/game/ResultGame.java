@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static blackjack.domain.game.WinTieLose.*;
 
-public class ResultGame {
+public final class ResultGame {
 
     private final Map<Participant, WinTieLose> playersResult;
 

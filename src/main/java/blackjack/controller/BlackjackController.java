@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private static final int INITIAL_DRAW_CARD_COUNT = 2;
 

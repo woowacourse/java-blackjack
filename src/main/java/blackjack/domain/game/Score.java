@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     private static final int BLACKJACK = 21;
 

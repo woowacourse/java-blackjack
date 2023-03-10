@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Name {
+public final class Name {
 
     private static final Pattern NAME_FORMAT = Pattern.compile("[a-zA-Z]+");
     private static final int NAME_MIN_LENGTH = 2;
