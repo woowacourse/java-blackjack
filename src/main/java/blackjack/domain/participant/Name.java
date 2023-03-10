@@ -8,9 +8,9 @@ public class Name {
     private static final Pattern NAME_FORMAT = Pattern.compile("[a-zA-Z]+");
     private static final int NAME_MIN_LENGTH = 2;
     private static final int NAME_MAX_LENGTH = 5;
-    private static final String DEALER_NAME = "딜러";
     private static final String NAME_FORMAT_ERROR_MESSAGE = "사람 이름은 영문자만 가능합니다.";
     private static final String NAME_LENGTH_ERROR_MESSAGE = "참가자 이름은 2글자 이상 5글자 이하만 가능합니다.";
+    public static final String DEALER_NAME = "딜러";
 
     private final String value;
 
