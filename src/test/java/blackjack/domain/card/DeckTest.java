@@ -1,11 +1,13 @@
 package blackjack.domain.card;
 
+import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
 
@@ -24,4 +26,13 @@ class DeckTest {
         assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
     }
 
+    @Test
+    @DisplayName("덱이 비어있는데 뽑으려고 하는 경우 IllegalStateException 예외처리")
+    void drawEmptyDeckTest() {
+        final Deck deck = new Deck(new TestNonShuffledDeckGenerator(Collections.emptyList()));
+
+        assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage(Deck.DECK_EMPTY_EXCEPTION_MESSAGE);
+    }
 }
