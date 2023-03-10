@@ -16,6 +16,10 @@ public final class Card {
         return new Card(cardShape, cardNumber);
     }
 
+    public static Card of(final Card card) {
+        return new Card(card.cardShape, card.cardNumber);
+    }
+
     public boolean isSameAs(int value) {
         return cardNumber.getValue() == value;
     }

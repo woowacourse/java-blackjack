@@ -30,6 +30,10 @@ public final class Player extends Participant {
         return new Player(name, hand, bet);
     }
 
+    public static Player of(final Player player) {
+        return new Player(player.getName(), player.getBet());
+    }
+
     public void takeInitialCards(final DeckStrategy deck, final int count) {
         for (int i = 0; i < count; i++) {
             this.hand = hand.add(deck.drawCard());
@@ -46,10 +50,6 @@ public final class Player extends Participant {
         }
     }
 
-    public int getBet() {
-        return bet.getBet();
-    }
-
     public boolean hasLowerThan(final GamePoint gamePoint) {
         return calculatePoint().isLowerThan(gamePoint);
     }
@@ -60,5 +60,9 @@ public final class Player extends Participant {
 
     public boolean hasGreaterThan(final GamePoint gamePoint) {
         return calculatePoint().isGreaterThan(gamePoint);
+    }
+
+    public int getBet() {
+        return bet.getBet();
     }
 }

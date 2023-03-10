@@ -3,6 +3,7 @@ package domain.participant;
 import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public final class Players {
     private final List<Player> players;
 
     private Players(final List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public static Players create(final List<Name> names, final List<Integer> bets) {
@@ -66,6 +67,8 @@ public final class Players {
     }
 
     public List<Player> getPlayers() {
-        return List.copyOf(players);
+        return players.stream()
+                .map(Player::of)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

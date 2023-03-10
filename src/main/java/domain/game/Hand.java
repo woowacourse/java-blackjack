@@ -4,6 +4,7 @@ import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Hand {
 
@@ -42,7 +43,9 @@ public final class Hand {
     }
 
     public List<Card> getCards() {
-        return List.copyOf(cards);
+        return cards.stream()
+                .map(Card::of)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Card getFirstCard() {
