@@ -2,7 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gameResult.BlackjackResult;
+import blackjack.domain.gameResult.ResultReader;
+import blackjack.domain.gameResult.WinningResult;
+import blackjack.domain.money.Revenue;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -13,6 +15,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -28,7 +31,8 @@ public class BlackjackController {
         Participants participants = generateParticipants();
         CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         Cards cards = Cards.generator(cardPickerGenerator);
-        BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
+        ResultReader resultReader = new ResultReader();
+        BlackjackGame blackjackGame = new BlackjackGame(participants, cards, resultReader);
 
         gameSetting(blackjackGame);
         playersHitCard(blackjackGame);
@@ -80,8 +84,12 @@ public class BlackjackController {
         for(Participant player : blackjackGame.getParticipants().getParticipants()) {
             outputView.printTotalCardsAndScore(player);
         }
-        BlackjackResult blackjackResult = blackjackGame.generateBlackjackResult();
-        outputView.printDealerWinORLose(blackjackResult.getDealerResult());
-        outputView.printPlayerWinORLose(blackjackResult.getPlayerResult());
+
+        Map<Player, WinningResult> blackjackResult = blackjackGame.generateBlackjackResult();
+        Map<Player, Revenue> playerRevenue = blackjackGame.generatePlayersRevenue(blackjackResult);
+        int dealerRevenue = blackjackGame.generateDealerRevenue(playerRevenue);
+
+        outputView.printDealerRevenue(dealerRevenue);
+        outputView.printPlayerRevenue(playerRevenue);
     }
 }

@@ -1,9 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.money.Revenue;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.gameResult.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,16 +59,13 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerWinORLose(List<WinningResult> dealerResult) {
-        System.out.print("딜러: ");
-        System.out.print(ViewWinningResult.WIN.winCount(dealerResult) + ViewWinningResult.WIN.getName());
-        System.out.print(ViewWinningResult.PUSH.pushCount(dealerResult) + ViewWinningResult.PUSH.getName());
-        System.out.println(ViewWinningResult.LOSE.loseCount(dealerResult) + ViewWinningResult.LOSE.getName());
+    public void printDealerRevenue(int dealerRevenue) {
+        System.out.println("딜러: "+ dealerRevenue);
     }
 
-    public void printPlayerWinORLose(Map<Player, WinningResult> playerResult) {
-        for (Participant player : playerResult.keySet()) {
-            System.out.println(player.getName() + " : " + ViewWinningResult.findWinningResult(playerResult.get(player)).getName());
+    public void printPlayerRevenue(Map<Player, Revenue> playerRevenue) {
+        for (Participant player : playerRevenue.keySet()) {
+            System.out.println(player.getName() + " : " + playerRevenue.get(player).getRevenue());
         }
     }
 
