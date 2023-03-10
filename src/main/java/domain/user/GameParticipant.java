@@ -60,19 +60,26 @@ public class GameParticipant {
     public void updateBetAmountByGameResult() {
         Map<Player, GameResult> record = makeGameResultForAllPlayer();
 
-        // Player가 이기면, 기본 1배, 블랙잭 시 1.5배의 수익을 얻는다
-        // 딜러의 수익은 -(플레이어의 수익)이 된다
+        increasePlayerRevenueWhenWin(record);
+        decreasePlayerRevenueWhenLose(record);
+        startSettlement(record);
+    }
 
+    private static void increasePlayerRevenueWhenWin(final Map<Player, GameResult> record) {
         record.entrySet().stream()
                 .filter(entry -> entry.getValue() == GameResult.WIN)
                 .map(Map.Entry::getKey)
                 .forEach(Player::increaseRevenue);
+    }
 
+    private static void decreasePlayerRevenueWhenLose(final Map<Player, GameResult> record) {
         record.entrySet().stream()
                 .filter(entry -> entry.getValue() == GameResult.LOSE)
                 .map(Map.Entry::getKey)
                 .forEach(Player::decreaseRevenue);
+    }
 
+    private void startSettlement(final Map<Player, GameResult> record) {
         record.keySet().forEach(dealer::payFor);
     }
 

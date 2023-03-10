@@ -18,24 +18,12 @@ public class Player {
         cardPool.add(card);
     }
 
+    public void addAmount(int amount) {
+        bet.addAmount(amount);
+    }
+
     public int sumCardPool() {
         return cardPool.sumCardNumbers();
-    }
-
-    public boolean isBurst() {
-        return cardPool.isSumExceedLimit();
-    }
-
-    public PlayerName getPlayerName() {
-        return playerName;
-    }
-
-    public CardPool getCardPool() {
-        return cardPool;
-    }
-
-    public boolean isBlackjack() {
-        return cardPool.isSumSameAsLimit();
     }
 
     public void increaseRevenue() {
@@ -49,14 +37,25 @@ public class Player {
     public void decreaseRevenue() {
         bet.decreaseRevenue();
     }
-
-    public void addAmount(int amount) {
-        bet.addAmount(amount);
-    }
-
     //TODO: Player 추상클래스 분리 혹은 조합
     public void payFor(Player otherPlayer) {
         bet.payFor(otherPlayer.bet);
+    }
+
+    public boolean isBurst() {
+        return cardPool.isSumExceedLimit();
+    }
+
+    public boolean isBlackjack() {
+        return cardPool.isSumSameAsLimit();
+    }
+
+    public PlayerName getPlayerName() {
+        return playerName;
+    }
+
+    public CardPool getCardPool() {
+        return cardPool;
     }
 
     public int getRevenue() {

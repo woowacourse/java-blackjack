@@ -24,15 +24,15 @@ public class Bet {
         revenue += credit * REVENUE_BONUS_RATE;
     }
 
+    public void decreaseRevenue() {
+        revenue -= credit;
+    }
+
     public void payFor(final Bet otherBet) {
         revenue -= otherBet.revenue;
     }
 
     public int getRevenue() {
         return revenue;
-    }
-
-    public void decreaseRevenue() {
-        revenue -= credit;
     }
 }
