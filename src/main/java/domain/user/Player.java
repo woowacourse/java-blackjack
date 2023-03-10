@@ -85,7 +85,7 @@ public class Player implements Playable {
     
     @Override
     public int hashCode() {
-        return Objects.hash(this.name, this.hand);
+        return Objects.hash(this.name);
     }
     
     @Override
@@ -97,7 +97,7 @@ public class Player implements Playable {
             return false;
         }
         final Player player = (Player) o;
-        return this.name.equals(player.name) && this.hand.equals(player.hand);
+        return this.name.equals(player.name);
     }
     
     public boolean isBlackJack() {
