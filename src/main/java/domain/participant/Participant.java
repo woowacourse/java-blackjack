@@ -3,19 +3,16 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.status.Status;
-import domain.status.end.Bust;
 import domain.status.initial.Ready;
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
-    private Cards cards;
     private Status status;
 
     public Participant(final Name name) {
         this.name = name;
-        this.cards = new Cards();
         this.status = new Ready();
     }
 
@@ -27,17 +24,15 @@ public abstract class Participant {
     abstract boolean isHittable();
 
     public void receiveInitialCards(Cards cards) {
-        this.cards = cards;
         this.status = this.status.initialDraw(cards);
     }
 
     public void receiveCard(Card card) {
-        this.cards = this.cards.receiveCard(card);
         this.status = this.status.draw(card);
     }
 
     public Score calculateScore() {
-        return cards.calculateScore();
+        return status.calculateScore();
     }
 
     public boolean isBust() {
@@ -49,6 +44,7 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
+        Cards cards = status.cards();
         return List.copyOf(cards.getCards());
     }
 

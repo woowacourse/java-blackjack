@@ -13,9 +13,14 @@ public interface Status {
     Status selectStand();
 
     BigDecimal profitWeight();
+
     Cards cards();
 
-    default boolean isBust(){
+    default boolean isBust() {
         return false;
+    }
+
+    default Score calculateScore() {
+        return cards().calculateScore();
     }
 }

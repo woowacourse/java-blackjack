@@ -44,6 +44,10 @@ public final class Score {
         return this.value <= score.value;
     }
 
+    public boolean isSmallerThan(final Score score) {
+        return this.value < score.value;
+    }
+
     public int getValue() {
         return value;
     }
