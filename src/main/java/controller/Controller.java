@@ -5,7 +5,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Controller {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -41,9 +40,15 @@ public class Controller {
         Command command;
         do {
             command = Command.from(inputView.readCommand(player.getName()));
-            game.selectByPlayer(player, command);
+            selectByCommand(game, player, command);
             outputView.printPlayerCardsInfo(player);
         } while (!player.isOverBlackJack() && command.equals(Command.YES));
+    }
+
+    private void selectByCommand(BlackjackGame game, Player player, Command command) {
+        if (command.equals(Command.YES)) {
+            game.distributePlayer(player);
+        }
     }
 
     private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
