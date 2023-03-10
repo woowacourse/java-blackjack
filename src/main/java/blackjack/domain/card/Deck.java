@@ -1,33 +1,31 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class Cards {
+public final class Deck {
 
     private static final int CARD_TOTAL_SIZE = 48;
 
-    private static List<Card> cards;
-    private static final Cards CARDS = new Cards();
+    private static Stack<Card> cards;
+    private static final Deck DECK = new Deck();
 
-    private Cards() {
+    private Deck() {
     }
 
-    public static Cards initializeCards() {
-        CARDS.createCards();
-        CARDS.shuffleCards();
-        return CARDS;
+    public static Deck initializeCards() {
+        DECK.createCards();
+        DECK.shuffleCards();
+        return DECK;
     }
 
     private void createCards() {
-        List<Card> createCards = Arrays.stream(CardSymbol.values())
+        Stack<Card> newCards = Arrays.stream(CardSymbol.values())
                 .flatMap(cardSymbol -> Arrays.stream(CardNumber.values())
                         .map(cardNumber -> new Card(cardNumber, cardSymbol)))
-                .collect(Collectors.toList());
-        validate(createCards);
-        cards = createCards;
+                .collect(Collectors.toCollection(Stack::new));
+        validate(newCards);
+        cards = newCards;
     }
 
     private void validate(List<Card> cards) {
@@ -40,7 +38,14 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
-    public List<Card> getCards() {
+    public Stack<Card> getCards() {
         return cards;
+    }
+
+    public Card draw() {
+        if (cards.isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return cards.pop();
     }
 }
