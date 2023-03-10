@@ -46,8 +46,8 @@
   - [ ] Card가 Ace라면 1 또는 11로 계산할 수 있다.
 
 ### Card
-- [ ] `Denomination`을 가진다.
-- [ ] `Suit`를 가진다.
+- [x] `Denomination`을 가진다.
+- [x] `Suit`를 가진다.
 
 ### Denomination
 - [x] 카드의 숫자를 가진다.
