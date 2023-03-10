@@ -1,7 +1,11 @@
 package balckjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ScoreTest {
 
@@ -11,22 +15,11 @@ class ScoreTest {
         Assertions.assertThat(score).isInstanceOf(Score.class);
     }
 
-    @Test
-    void testAddAceScore() {
-        Score score = new Score(6);
-        Assertions.assertThat(score.addAceScore(3).getValue()).isEqualTo(19);
-    }
-
-    @Test
-    void testAddAceScore2() {
-        Score score = new Score(18);
-        Assertions.assertThat(score.addAceScore(3).getValue()).isEqualTo(21);
-    }
-
-    @Test
-    void testAddAceScore3() {
-        Score score = new Score(19);
-        Assertions.assertThat(score.addAceScore(3).getValue()).isEqualTo(22);
+    @ParameterizedTest
+    @CsvSource(value = {"18:21", "19:22", "6:19"}, delimiter = ':')
+    void testAddAceScore(int input, int expected) {
+        Score score = new Score(input);
+        Assertions.assertThat(score.addAceScore(3).getValue()).isEqualTo(expected);
     }
 
     @Test
