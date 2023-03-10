@@ -43,6 +43,8 @@
 ### Players
 - [x] `Player`들을 가진다.
   - [x] 최소 2명에서 최대 8명만 가질 수 있다.
+- [ ] `Player`들에게 카드를 2장씩 나눠준다.
+  - [ ] 받은 `Hand`와 `Players`의 수가 다르면 예외를 발생한다.
 
 ### Player
 - [ ] `Participant`를 상속한다.

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +21,27 @@ public final class Players {
         if (players.size() < MIN_PLAYERS_COUNT || players.size() > MAX_PLAYERS_COUNT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_ERROR_MESSAGE + players);
         }
+    }
+
+    public void distributeHands(final List<Hand> hands) {
+        validateCardsSize(hands);
+
+        for (int i = 0; i < hands.size(); i++) {
+            Hand hand = hands.get(i);
+            Player player = players.get(i);
+
+            player.receiveHand(hand);
+        }
+    }
+
+    private void validateCardsSize(final List<Hand> cards) {
+        if (cards.size() != players.size()) {
+            throw new IllegalArgumentException("세팅 카드와 플레이어의 수가 일치하지 않습니다.");
+        }
+    }
+
+    public int size() {
+        return players.size();
     }
 
     public List<Player> getPlayers() {
