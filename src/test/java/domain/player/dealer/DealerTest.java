@@ -50,19 +50,6 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("faceUpFirstCard() : 딜러는 첫 번째 카드만을 보여줍니다.")
-    void test_faceUpFirstCard() throws Exception {
-        //given
-        final Dealer dealer = new Dealer();
-
-        dealer.hit(new Card(CardShape.CLOVER, TEN));
-        dealer.hit(new Card(CardShape.CLOVER, SEVEN));
-
-        // when & then
-        assertEquals(dealer.faceUpFirstCard(), new Card(CardShape.CLOVER, TEN));
-    }
-
-    @Test
     @DisplayName("faceUpFirstDeal() : 딜러는 처음 받은 카드 중 첫 번재 카드만 보여줘야한다.")
     void test_faceUpFirstDeal() throws Exception {
         // given

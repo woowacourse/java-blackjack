@@ -1,6 +1,5 @@
 package view;
 
-import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Player;
@@ -65,13 +64,11 @@ public class OutputView {
     }
 
     public static void showStateOf(final Dealer dealer) {
-        final Card card = dealer.faceUpFirstCard();
-
-        System.out.println(getPlayerName(dealer)
-                                   + COLON
-                                   + VALUE_MESSAGE_MAP.get(card.cardValue())
-                                   + SHAPE_MESSAGE_MAP.get(card.cardShape())
-        );
+        dealer.faceUpFirstDeal()
+              .forEach(card -> System.out.println(getPlayerName(dealer)
+                                                          + COLON
+                                                          + VALUE_MESSAGE_MAP.get(card.cardValue())
+                                                          + SHAPE_MESSAGE_MAP.get(card.cardShape())));
     }
 
     public static void showStateOf(final List<? extends Player> participants) {

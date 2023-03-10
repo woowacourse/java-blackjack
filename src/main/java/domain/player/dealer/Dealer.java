@@ -22,10 +22,6 @@ public class Dealer extends Player {
         return score().isLessEqualThan(new Score(DEALER_LIMIT_SCORE));
     }
 
-    public Card faceUpFirstCard() {
-        return hand.firstCard();
-    }
-
     @Override
     public List<Card> faceUpFirstDeal() {
         return List.of(hand.firstCard());
