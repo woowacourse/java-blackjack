@@ -1,54 +1,59 @@
 package domain.participant;
 
-import domain.game.BettingMoney;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantMoneyTest {
 
-    private Participant dealer;
-    private Map<Participant, BettingMoney> playerInfo;
+    private ParticipantMoney participantMoney;
 
     @BeforeEach
     void init() {
-        dealer = Dealer.createDealer();
-        playerInfo = new LinkedHashMap<>(Map.ofEntries(Map.entry(Player.create("pobi"), BettingMoney.create("10000")),
-                Map.entry(Player.create("crong"), BettingMoney.create("20000"))));
+        participantMoney = ParticipantMoney.create("10000");
+    }
+
+    @ParameterizedTest(name = "create()는 호출하면 ParticipantMoney를 생성한다.")
+    @ValueSource(strings = {"1000", "100000000"})
+    void create_whenCall_thenSuccess(final String money) {
+        ParticipantMoney participantMoney = assertDoesNotThrow(() -> ParticipantMoney.create(money));
+        assertThat(participantMoney)
+                .isInstanceOf(ParticipantMoney.class);
+    }
+
+    @ParameterizedTest(name = "create()는 정수 값이 아닌 금액이 주어지면, 예외를 반환한다.")
+    @ValueSource(strings = {"string", "!#@($", "", "12wow34"})
+    void create_givenInvalidTypeMoney_thenFail(final String money) {
+        assertThatThrownBy(() -> ParticipantMoney.create(money))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 정수 값이어야 합니다.");
+    }
+
+    @ParameterizedTest(name = "create()는 1000원 미만, 100,000,000원 초과를 베팅하면 예외를 발생시킨다")
+    @ValueSource(strings = {"999", "100000001"})
+    void create_givenInvalidBettingMoney_thenFail(final String bettingMoney) {
+        assertThatThrownBy(() -> ParticipantMoney.create(bettingMoney))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 1,000원 이상, 100,000,000원 이하여야 합니다.");
     }
 
     @Test
-    @DisplayName("create()는 호출하면, 참가자들의 베팅 금액 정보를 생성한다")
-    void create_whenCall_thenSuccess() {
-        final ParticipantMoney participantMoney = assertDoesNotThrow(() -> ParticipantMoney.create(dealer, playerInfo));
-        assertThat(participantMoney).isExactlyInstanceOf(ParticipantMoney.class);
-    }
-
-    @Test
-    @DisplayName("getPlayerMoney()는 호출하면, 플레이어의 베팅 금액 정보를 반환한다.")
-    void getPlayerMoney_whenCall_thenReturnPlayerMoneyInfo() {
+    @DisplayName("zero()는 호출하면 0원에 대한 참가자의 돈이 반환된다.")
+    void zero_whenCall_thenReturnZeroMoney() {
         // given
-        final ParticipantMoney participantMoney = ParticipantMoney.create(dealer, playerInfo);
-        final Map<Participant, BettingMoney> expected = makePlayerBettingInfo();
+        final ParticipantMoney expected = ParticipantMoney.create(0);
 
         // when
-        final Map<Participant, BettingMoney> actual = participantMoney.getPlayerMoney();
+        ParticipantMoney actual = ParticipantMoney.zero();
 
         // then
         assertThat(actual)
                 .isEqualTo(expected);
-    }
-
-    private Map<Participant, BettingMoney> makePlayerBettingInfo() {
-        final Map<Participant, BettingMoney> expected = new LinkedHashMap<>();
-        expected.put(Player.create("pobi"), BettingMoney.create("10000"));
-        expected.put(Player.create("crong"), BettingMoney.create("20000"));
-        return expected;
     }
 }

@@ -1,61 +1,61 @@
 package domain.participant;
 
-import domain.game.BettingMoney;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import static domain.participant.Participant.DEALER_NAME;
 
 public class ParticipantMoney {
-    private final Map<Participant, BettingMoney> participantMoneys;
+    private static final int MIN_MONEY = 1_000;
+    private static final int MAX_MONEY = 100_000_000;
 
-    private ParticipantMoney(final Map<Participant, BettingMoney> participantMoneys) {
-        this.participantMoneys = participantMoneys;
+    private final double money;
+
+    private ParticipantMoney(final double money) {
+        this.money = money;
     }
 
-    public static ParticipantMoney create(final Participant dealer, final Map<Participant, BettingMoney> playerInfo) {
-        final Map<Participant, BettingMoney> participantBettingInfo = makeParticipantMoneys(dealer, playerInfo);
-        return new ParticipantMoney(participantBettingInfo);
+    public static ParticipantMoney create(final String money) {
+        int validMoney = validType(money);
+        validateRange(validMoney);
+        return new ParticipantMoney(validMoney);
     }
 
-    private static Map<Participant, BettingMoney> makeParticipantMoneys(final Participant dealer,
-                                                                        final Map<Participant, BettingMoney> players) {
-        final Map<Participant, BettingMoney> participantMoneys = new LinkedHashMap<>();
-        participantMoneys.put(dealer, BettingMoney.zero());
-        participantMoneys.putAll(players);
-        return participantMoneys;
+    public static ParticipantMoney create(final double money) {
+        return new ParticipantMoney(money);
     }
 
-    public Map<Participant, BettingMoney> getPlayerMoney() {
-        return participantMoneys.keySet()
-                .stream()
-                .filter(participant -> !DEALER_NAME.isSame(participant.getName()))
-                .collect(Collectors.toMap(Function.identity(), participantMoneys::get,
-                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
+    public static ParticipantMoney zero() {
+        return new ParticipantMoney(0);
+    }
+
+    private static int validType(final String money) {
+        int validMoney;
+        try {
+            validMoney = Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 정수 값이어야 합니다.");
+        }
+        return validMoney;
+    }
+
+    private static void validateRange(final int money) {
+        if (money < MIN_MONEY || money > MAX_MONEY) {
+            throw new IllegalArgumentException("베팅 금액은 1,000원 이상, 100,000,000원 이하여야 합니다.");
+        }
     }
 
     @Override
     public boolean equals(final Object target) {
-        if (this == target) {
-            return true;
-        }
-        if (!(target instanceof ParticipantMoney)) {
-            return false;
-        }
-        ParticipantMoney money = (ParticipantMoney) target;
-        return Objects.equals(participantMoneys, money.participantMoneys);
+        if (this == target) return true;
+        if (target == null || getClass() != target.getClass()) return false;
+        final ParticipantMoney that = (ParticipantMoney) target;
+        return money == that.money;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(participantMoneys);
+        return Objects.hash(money);
     }
 
-    public Map<Participant, BettingMoney> getParticipantMoney() {
-        return new LinkedHashMap<>(participantMoneys);
+    public double getMoney() {
+        return money;
     }
 }
