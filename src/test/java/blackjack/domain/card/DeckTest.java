@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 class DeckTest {
 
@@ -40,5 +41,13 @@ class DeckTest {
         deck.drawCard();
 
         assertThat(deck.getDeck().size()).isEqualTo(51);
+    }
+
+    @Test
+    @DisplayName("deck에서 두 장의 카드를 뽑는다.")
+    void drawTwoCard() {
+        List<Card> cards = deck.drawTwoCard();
+
+        assertThat(cards.size()).isEqualTo(2);
     }
 }

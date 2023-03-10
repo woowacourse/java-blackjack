@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public final class Deck {
@@ -33,6 +35,10 @@ public final class Deck {
         deck.remove(drawCard);
 
         return drawCard;
+    }
+
+    public List<Card> drawTwoCard() {
+        return new ArrayList<>(List.of(drawCard(), drawCard()));
     }
 
     public Set<Card> getDeck() {
