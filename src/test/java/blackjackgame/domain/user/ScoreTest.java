@@ -1,8 +1,12 @@
 package blackjackgame.domain.user;
 
+import static blackjackgame.domain.Fixtures.aceAceAceAce;
+import static blackjackgame.domain.Fixtures.aceKing;
+import static blackjackgame.domain.Fixtures.aceThreeFour;
+import static blackjackgame.domain.Fixtures.eightNine;
+import static blackjackgame.domain.Fixtures.jackKingAce;
+
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.card.CloverCard;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -19,12 +23,11 @@ class ScoreTest {
     void calculateScoreTest() {
         Score score = new Score();
         Hands hands = new Hands();
-        hands.add(new ArrayList<>(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR,
-                CloverCard.CLOVER_FIVE)));
+        hands.add(eightNine);
 
         score.setScore(hands);
 
-        Assertions.assertThat(score.getScore()).isEqualTo(14);
+        Assertions.assertThat(score.getScore()).isEqualTo(17);
     }
 
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
@@ -41,12 +44,8 @@ class ScoreTest {
 
     static Stream<Arguments> calculateScoreWithAceCase_greaterThan21() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN,
-                        CloverCard.CLOVER_EIGHT), 16),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE,
-                        CloverCard.CLOVER_EIGHT), 20),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
-                        CloverCard.CLOVER_NINE), 21)
+                Arguments.of(aceAceAceAce, 14),
+                Arguments.of(jackKingAce, 21)
         );
     }
 
@@ -64,9 +63,8 @@ class ScoreTest {
 
     static Stream<Arguments> calculateScoreWithAceCase_lessThan22() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN), 18),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN), 21),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_THREE), 14)
+                Arguments.of(aceKing, 21),
+                Arguments.of(aceThreeFour, 18)
         );
     }
 }

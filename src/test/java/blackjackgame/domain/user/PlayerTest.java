@@ -1,5 +1,6 @@
 package blackjackgame.domain.user;
 
+import static blackjackgame.domain.Fixtures.jackKingNine;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjackgame.domain.card.Card;
@@ -35,9 +36,7 @@ class PlayerTest {
     void calculateStatusTest() {
         Player player = new Player(new Name("플레이어"));
 
-        player.receiveCard(CloverCard.CLOVER_TEN);
-        player.receiveCard(CloverCard.CLOVER_KING);
-        player.receiveCard(CloverCard.CLOVER_QUEEN);
+        player.receiveCards(jackKingNine);
         UserStatus result = player.getStatus();
 
         assertThat(player.getScore()).isGreaterThan(21);
