@@ -32,4 +32,11 @@ public class Participant {
             hit(cardPicker);
         }
     }
+
+    public boolean isBlackJack() {
+        return cardDeck.isBlackJack();
+    }
+    public boolean isBust(){
+        return cardDeck.calculateScore().isBust();
+    }
 }

@@ -15,6 +15,8 @@ class RefereeTest {
     private List<CardDeck> players;
     private List<CardDeck> playersHaveBlackJack;
 
+    private List<Money> moneys;
+
     @BeforeEach
     void init() {
         dealer20 = new CardDeck();
@@ -64,15 +66,13 @@ class RefereeTest {
 
         players = List.of(player1, player2, player3, player4);
         playersHaveBlackJack = List.of(playerBlackJack, player2, player3, player4);
+        moneys = List.of(new Money(1000.0), new Money(1000.0), new Money(1500.0),
+            new Money(2000.0));
     }
 
     @Test
     void testCommonResult() {
-        //int dealerScore = 20;
-        //List<Integer> playerScores = List.of(21, 9, 20, 30);
-        //List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE);
-        Referee referee = new Referee(dealer20, players,
-            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        Referee referee = new Referee(dealer20, players, moneys);
         List<Double> playerWinningMoney = referee.calculateWinningMoneys();
         Double dealerWinningMoney = referee.calculateDealerWinningMoney();
         Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1000.0, -1000.0, 0.0, -2000.0));
@@ -80,58 +80,42 @@ class RefereeTest {
     }
 
     @Test
-    void testDealerBurstResult() {
-        //int dealerScore = 23;
-        //List<Integer> playerScores = List.of(21, 9, 20, 30);
-        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
-
-        Referee referee = new Referee(dealer23, players,
-            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+    void testDealerBustResult() {
+        Referee referee = new Referee(dealer23, players, moneys);
         List<Double> playerWinningMoney = referee.calculateWinningMoneys();
         Double dealerWinningMoney = referee.calculateDealerWinningMoney();
-        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1000.0, 1000.0, 1500.0, -2000.0));
+        Assertions.assertThat(playerWinningMoney)
+            .isEqualTo(List.of(1000.0, 1000.0, 1500.0, -2000.0));
         Assertions.assertThat(dealerWinningMoney).isEqualTo(-1500.0);
     }
 
     @Test
     void testIncludeBlackJackPlayerResult() {
-        //int dealerScore = 23;
-        //List<Integer> playerScores = List.of(21, 9, 20, 30);
-        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
-
-        Referee referee = new Referee(dealer23, playersHaveBlackJack,
-            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        Referee referee = new Referee(dealer23, playersHaveBlackJack, moneys);
         List<Double> playerWinningMoney = referee.calculateWinningMoneys();
         Double dealerWinningMoney = referee.calculateDealerWinningMoney();
-        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1500.0, 1000.0, 1500.0, -2000.0));
+        Assertions.assertThat(playerWinningMoney)
+            .isEqualTo(List.of(1500.0, 1000.0, 1500.0, -2000.0));
         Assertions.assertThat(dealerWinningMoney).isEqualTo(-2000.0);
     }
 
     @Test
     void testDealerBlackJackResult() {
-        //int dealerScore = 21;
-        //List<Integer> playerScores = List.of(21, 9, 20, 30);
-        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
-
-        Referee referee = new Referee(dealerBlackJack, players,
-            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        Referee referee = new Referee(dealerBlackJack, players, moneys);
         List<Double> playerWinningMoney = referee.calculateWinningMoneys();
         Double dealerWinningMoney = referee.calculateDealerWinningMoney();
-        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(-1000.0, -1000.0, -1500.0, -2000.0));
+        Assertions.assertThat(playerWinningMoney)
+            .isEqualTo(List.of(-1000.0, -1000.0, -1500.0, -2000.0));
         Assertions.assertThat(dealerWinningMoney).isEqualTo(5500.0);
     }
 
     @Test
     void testDealerAndPlayerBlackJackResult() {
-        //int dealerScore = 21;
-        //List<Integer> playerScores = List.of(21, 9, 20, 30);
-        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
-
-        Referee referee = new Referee(dealerBlackJack, playersHaveBlackJack,
-            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        Referee referee = new Referee(dealerBlackJack, playersHaveBlackJack, moneys);
         List<Double> playerWinningMoney = referee.calculateWinningMoneys();
         Double dealerWinningMoney = referee.calculateDealerWinningMoney();
-        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(0.0, -1000.0, -1500.0, -2000.0));
+        Assertions.assertThat(playerWinningMoney)
+            .isEqualTo(List.of(0.0, -1000.0, -1500.0, -2000.0));
         Assertions.assertThat(dealerWinningMoney).isEqualTo(4500.0);
     }
 

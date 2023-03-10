@@ -47,12 +47,16 @@ public class Score {
         return new Score(value + score.value);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return value > BLACKJACK_SCORE.value;
     }
 
     public boolean isMoreThan(Score score) {
         return value > score.value;
+    }
+
+    public boolean canDealerHit(){
+         return value<= DEALER_HIT_NUMBER;
     }
 
     @Override

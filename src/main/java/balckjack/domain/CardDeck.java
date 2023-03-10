@@ -25,19 +25,22 @@ public class CardDeck {
     }
 
     public Score calculateScore() {
-        Score standardSum = new Score(
-            cards.stream().filter(card -> !card.isAce()).mapToInt(Card::getValue).sum());
+        Score totalScore = new Score(sumStandardScore());
         int aceCount = findAceCount();
         if (aceCount > 0) {
-            return standardSum.addAceScore(aceCount);
+            return totalScore.addAceScore(aceCount);
         }
-        return standardSum;
+        return totalScore;
+    }
+
+    private int sumStandardScore() {
+        return cards.stream().filter(card -> !card.isAce()).mapToInt(Card::getValue).sum();
     }
 
     private int findAceCount() {
-        return Math.toIntExact(cards.stream()
+        return (int) cards.stream()
             .filter(Card::isAce)
-            .count());
+            .count();
     }
 
     public boolean isBlackJack() {

@@ -3,14 +3,13 @@ package balckjack.view;
 import balckjack.domain.Card;
 import balckjack.domain.CardDeck;
 import balckjack.domain.Dealer;
+import balckjack.domain.Money;
 import balckjack.domain.Participant;
 import balckjack.domain.Player;
 import balckjack.domain.Players;
 import balckjack.domain.Referee;
-import balckjack.domain.Result;
 import balckjack.domain.Score;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -91,8 +90,8 @@ public class OutputView {
         }
     }
 
-    public static void printBurstMessage() {
-        System.out.println(">>>Burst<<< 너~무 아쉬워요:( ");
+    public static void printBustMessage() {
+        System.out.println(">>>Bust<<< 너~무 아쉬워요:( ");
     }
 
     public static void printErrorMessage(Exception e) {

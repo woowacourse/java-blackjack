@@ -38,7 +38,7 @@ class ScoreTest {
     @Test
     void calculateScore() {
         Score score = new Score(22);
-        Assertions.assertThat(score.isBurst()).isTrue();
+        Assertions.assertThat(score.isBust()).isTrue();
     }
 
     @Test

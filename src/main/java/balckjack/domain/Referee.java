@@ -47,12 +47,12 @@ public class Referee {
     private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
         Score playerScore) {
         return
-            (!playerScore.isBurst() && !dealerDeck.isBlackJack() && playerScore.equals(dealerScore))
+            (!playerScore.isBust() && !dealerDeck.isBlackJack() && playerScore.equals(dealerScore))
                 || (dealerDeck.isBlackJack() && playerDeck.isBlackJack());
     }
 
     private boolean isWin(Score dealerScore, Score playerScore) {
-        return !playerScore.isBurst() && (dealerScore.isBurst()
+        return !playerScore.isBust() && (dealerScore.isBust()
             || playerScore.isMoreThan(dealerScore));
     }
 

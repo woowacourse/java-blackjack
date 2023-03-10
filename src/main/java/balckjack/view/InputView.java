@@ -16,14 +16,14 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputMoneys(String name) {
+    public static Double inputMoneys(String name) {
         System.out.println();
         System.out.println(String.format("%s의 배팅 금액은?", name));
         String money = scanner.nextLine();
         if (!NUMBER.matcher(money).matches()) {
             throw new IllegalArgumentException("입력은 숫자여야 합니다");
         }
-        return Integer.parseInt(money);
+        return Double.parseDouble(money);
     }
 
     public static String inputReply(String name) {

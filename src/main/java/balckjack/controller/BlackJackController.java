@@ -55,7 +55,7 @@ public class BlackJackController {
 
     private void tryPlayersTurn(CardPicker cardPicker, Players players) {
         for (Player player : players.getPlayers()) {
-            if (player.getCardDeck().isBlackJack()) {
+            if (player.isBlackJack()) {
                 continue;
             }
             tryPlayerTurn(player, cardPicker);
@@ -63,7 +63,7 @@ public class BlackJackController {
     }
 
     private void tryPlayerTurn(Player player, CardPicker cardPicker) {
-        if (isContinueHit(player, cardPicker) && !isBurst(player)) {
+        if (isContinueHit(player, cardPicker) && !isBust(player)) {
             tryPlayerTurn(player, cardPicker);
         }
     }
@@ -82,9 +82,9 @@ public class BlackJackController {
             OutputView::printErrorMessage);
     }
 
-    private boolean isBurst(Player player) {
-        if (player.getCardDeck().calculateScore().isBurst()) {
-            OutputView.printBurstMessage();
+    private boolean isBust(Player player) {
+        if (player.isBust()) {
+            OutputView.printBustMessage();
             return true;
         }
         return false;
