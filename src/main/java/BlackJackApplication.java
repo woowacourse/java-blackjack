@@ -22,7 +22,6 @@ public class BlackJackApplication {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
         endPhase(betting, players, dealer);
-        OutputView.printFinalProceeds(players, dealer, betting);
     }
 
     private static void startPhase(Players players, Dealer dealer, BlackJackGame blackJackGame) {
@@ -130,7 +129,7 @@ public class BlackJackApplication {
     private static void printFinalFightResult(BettingResults bettingResults, Players players, Dealer dealer) {
         Results resultCalculator = new Results(bettingResults, players, dealer);
         resultCalculator.executeGame(players, dealer);
-        OutputView.printFinalFightResult(resultCalculator);
+        OutputView.printFinalProceeds(players, dealer, bettingResults);
     }
 
 }

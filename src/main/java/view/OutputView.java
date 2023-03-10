@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.BettingResults;
-import domain.result.Results;
 import domain.result.Score;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,23 +50,6 @@ public class OutputView {
         System.out.println(name + ": " + cardName.get(0));
     }
 
-    public static void printFinalFightResult(Results resultCalculator) {
-        System.out.println("\n## 최종 승패");
-        for (String result : getFinalFightResults(resultCalculator.getResults())) {
-            System.out.println(result);
-        }
-    }
-
-    private static List<String> getFinalFightResults(Map<String, Map<Score, Integer>> results) {
-        List<String> finalFightResults = new ArrayList<>();
-        for (String name : results.keySet()) {
-            List<Integer> participantResult = getResultsByName(results, name);
-            StringBuilder sb = getResultCount(name, participantResult);
-            finalFightResults.add(sb.toString());
-        }
-        return finalFightResults;
-    }
-
     public static List<Integer> getResultsByName(Map<String, Map<Score, Integer>> gameResults, String name) {
         Map<Score, Integer> resultsMapName = gameResults.get(name);
         ArrayList<Integer> results = new ArrayList<>();
@@ -78,22 +60,8 @@ public class OutputView {
         return results;
     }
 
-    private static StringBuilder getResultCount(String name, List<Integer> participantResult) {
-        StringBuilder sb = new StringBuilder(name + ": ");
-        if (participantResult.get(0) != 0) {
-            sb.append(participantResult.get(0)).append(Score.WIN.getValue());
-        }
-        if (participantResult.get(1) != 0) {
-            sb.append(participantResult.get(1)).append(Score.DRAW.getValue());
-        }
-        if (participantResult.get(2) != 0) {
-            sb.append(participantResult.get(2)).append(Score.LOSE.getValue());
-        }
-        return sb;
-    }
-
     public static void printFinalProceeds(Players players, Dealer dealer, BettingResults bettingResults) {
-        System.out.println("## 최종 수익");
+        System.out.println("\n## 최종 수익");
         System.out.println("딜러: " + bettingResults.getParticipantBet(dealer).getAmount());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + ": " + bettingResults.getParticipantBet(player).getAmount());

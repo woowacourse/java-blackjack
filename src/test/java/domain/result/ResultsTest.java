@@ -16,13 +16,6 @@ import org.junit.jupiter.api.Test;
 import view.OutputView;
 
 public class ResultsTest {
-
-    public static final Player dino = new Player(new Name("dino"));
-    public static final Player SUNGHA = new Player(new Name("sungha"));
-    public static final Player POBI = new Player(new Name("pobi"));
-    public static final Dealer dealer = new Dealer();
-    public static final BettingResults BETTING_RESULT = new BettingResults();
-
     @Test
     @DisplayName("대결 시 승패 여부가 올바르게 저장된다.")
     void shouldSuccessSaveFightWinOrLoseResult() {
