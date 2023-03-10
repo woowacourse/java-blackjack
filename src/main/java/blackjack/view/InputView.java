@@ -26,7 +26,7 @@ public class InputView {
 
     public static boolean checkPlayerAdditionalHit(final String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        final String playerAdditionalHit = scanner.nextLine();
+        final String playerAdditionalHit = scanner.next();
         if (!PLAYER_HIT_REGEX.matcher(playerAdditionalHit).matches()) {
             throw new IllegalArgumentException("y 또는 n만 입력할 수 있습니다.");
         }
