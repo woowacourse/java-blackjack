@@ -1,18 +1,17 @@
 package model.user;
 
-import static model.card.Shape.CLOVER;
-import static model.card.Shape.DIAMOND;
+import static model.card.CardFixture.DIAMOND_ACE;
+import static model.card.CardFixture.DIAMOND_FIVE;
+import static model.card.CardFixture.DIAMOND_JACK;
+import static model.card.CardFixture.DIAMOND_KING;
+import static model.card.CardFixture.DIAMOND_NINE;
+import static model.card.CardFixture.DIAMOND_SEVEN;
+import static model.card.CardFixture.DIAMOND_SIX;
+import static model.card.CardFixture.DIAMOND_TEN;
+import static model.card.CardFixture.DIAMOND_THREE;
+import static model.card.CardFixture.DIAMOND_TWO;
 import static model.card.Shape.SPADE;
-import static model.card.Value.ACE;
-import static model.card.Value.FIVE;
-import static model.card.Value.JACK;
 import static model.card.Value.KING;
-import static model.card.Value.NINE;
-import static model.card.Value.SEVEN;
-import static model.card.Value.SIX;
-import static model.card.Value.TEN;
-import static model.card.Value.THREE;
-import static model.card.Value.TWO;
 import static model.user.Result.LOSE;
 import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,8 +40,8 @@ class PlayerTest {
     @Test
     void receiveCardTest() {
         // given
-        Card spadeFive = new Card(SPADE, FIVE);
-        Card cloverAce = new Card(CLOVER, ACE);
+        Card spadeFive = DIAMOND_FIVE;
+        Card cloverAce = DIAMOND_ACE;
 
         player.receiveCard(spadeFive);
         player.receiveCard(cloverAce);
@@ -66,8 +65,8 @@ class PlayerTest {
 
     private static Stream<Arguments> initialCard() {
         return Stream.of(
-                Arguments.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX), new Card(DIAMOND, FIVE), Boolean.TRUE),
-                Arguments.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN), new Card(DIAMOND, FIVE), Boolean.FALSE)
+                Arguments.of(DIAMOND_TEN, DIAMOND_SIX, DIAMOND_FIVE, Boolean.TRUE),
+                Arguments.of(DIAMOND_TEN, DIAMOND_SEVEN, DIAMOND_FIVE, Boolean.FALSE)
         );
     }
 
@@ -77,9 +76,9 @@ class PlayerTest {
         // given
         int dealerTotalValue = 23;
 
-        player.receiveCard(new Card(SPADE, JACK));
-        player.receiveCard(new Card(DIAMOND, JACK));
-        player.receiveCard(new Card(CLOVER, TWO));
+        player.receiveCard(DIAMOND_JACK);
+        player.receiveCard(DIAMOND_KING);
+        player.receiveCard(DIAMOND_TWO);
 
         // when, then
         assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
@@ -91,9 +90,9 @@ class PlayerTest {
         // given
         int dealerTotalValue = 10;
 
-        player.receiveCard(new Card(SPADE, JACK));
-        player.receiveCard(new Card(DIAMOND, NINE));
-        player.receiveCard(new Card(CLOVER, THREE));
+        player.receiveCard(DIAMOND_JACK);
+        player.receiveCard(DIAMOND_NINE);
+        player.receiveCard(DIAMOND_THREE);
 
         // when, then
         assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(LOSE);

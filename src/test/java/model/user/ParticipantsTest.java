@@ -1,15 +1,13 @@
 package model.user;
 
-import static model.card.Shape.CLOVER;
-import static model.card.Shape.DIAMOND;
+import static model.card.CardFixture.DIAMOND_JACK;
+import static model.card.CardFixture.DIAMOND_KING;
+import static model.card.CardFixture.DIAMOND_NINE;
+import static model.card.CardFixture.DIAMOND_THREE;
+import static model.card.CardFixture.DIAMOND_TWO;
 import static model.card.Shape.SPADE;
 import static model.card.Value.FIVE;
 import static model.card.Value.FOUR;
-import static model.card.Value.JACK;
-import static model.card.Value.KING;
-import static model.card.Value.NINE;
-import static model.card.Value.THREE;
-import static model.card.Value.TWO;
 import static model.user.Result.LOSE;
 import static model.user.Result.TIE;
 import static model.user.Result.WIN;
@@ -50,22 +48,22 @@ class ParticipantsTest {
         assertAll(
                 () -> assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE),
                 () -> {
-            bebe.receiveCard(new Card(CLOVER, TWO));
-            assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(WIN);
-        });
+                    bebe.receiveCard(DIAMOND_TWO);
+                    assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(WIN);
+                });
     }
 
     @Test
     @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 지는 결과가 반환된다.")
     void whenOverBothBustNumber_thenReturnLose() {
         // given
-        dealer.receiveCard(new Card(SPADE, KING));
-        dealer.receiveCard(new Card(DIAMOND, KING));
-        dealer.receiveCard(new Card(CLOVER, THREE));
+        dealer.receiveCard(DIAMOND_KING);
+        dealer.receiveCard(DIAMOND_KING);
+        dealer.receiveCard(DIAMOND_THREE);
 
-        bebe.receiveCard(new Card(SPADE, JACK));
-        bebe.receiveCard(new Card(DIAMOND, JACK));
-        bebe.receiveCard(new Card(CLOVER, TWO));
+        bebe.receiveCard(DIAMOND_JACK);
+        bebe.receiveCard(DIAMOND_JACK);
+        bebe.receiveCard(DIAMOND_TWO);
 
         // when, then
         assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE);
@@ -75,11 +73,11 @@ class ParticipantsTest {
     @DisplayName("딜러가 21이하이고 플레이어는 21초과이면 플레이어의 패배가 반환된다.")
     void whenPlayerBurstReturnFalse() {
         // given
-        dealer.receiveCard(new Card(SPADE, KING));
+        dealer.receiveCard(DIAMOND_KING);
 
-        bebe.receiveCard(new Card(SPADE, JACK));
-        bebe.receiveCard(new Card(DIAMOND, NINE));
-        bebe.receiveCard(new Card(CLOVER, THREE));
+        bebe.receiveCard(DIAMOND_JACK);
+        bebe.receiveCard(DIAMOND_NINE);
+        bebe.receiveCard(DIAMOND_THREE);
 
         // when, then
         assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE);
@@ -89,11 +87,11 @@ class ParticipantsTest {
     @DisplayName("딜러가 21초과이고 플레이어는 21이하이면 플레이어의 승리가 반환된다.")
     void whenDealerBurstReturnTrue() {
         // given
-        dealer.receiveCard(new Card(SPADE, JACK));
-        dealer.receiveCard(new Card(DIAMOND, NINE));
-        dealer.receiveCard(new Card(CLOVER, THREE));
+        dealer.receiveCard(DIAMOND_JACK);
+        dealer.receiveCard(DIAMOND_NINE);
+        dealer.receiveCard(DIAMOND_THREE);
 
-        bebe.receiveCard(new Card(SPADE, KING));
+        bebe.receiveCard(DIAMOND_KING);
 
         // when, then
         assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(WIN);
@@ -120,8 +118,8 @@ class ParticipantsTest {
         @DisplayName("딜러가 플레이어의 결과보다 크면 딜러의 결과로 승리가 반환된다.")
         void givenDealerMoreValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
             // given
-            dealer.receiveCard(new Card(DIAMOND, KING));
-            bebe.receiveCard(new Card(DIAMOND, NINE));
+            dealer.receiveCard(DIAMOND_KING);
+            bebe.receiveCard(DIAMOND_NINE);
 
             // when
             final Map<Result, Long> result = participants.findDealerFinalResult();
@@ -134,8 +132,8 @@ class ParticipantsTest {
         @DisplayName("딜러가 플레이어의 결과와 같으면 딜러의 결과로 승리가 반환된다.")
         void givenDealerSameValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
             // given
-            dealer.receiveCard(new Card(DIAMOND, KING));
-            bebe.receiveCard(new Card(DIAMOND, JACK));
+            dealer.receiveCard(DIAMOND_KING);
+            bebe.receiveCard(DIAMOND_JACK);
 
             // when
             final Map<Result, Long> result = participants.findDealerFinalResult();
@@ -148,8 +146,8 @@ class ParticipantsTest {
         @DisplayName("딜러가 플레이어의 결과보다 작으면 딜러의 결과로 승리가 반환된다.")
         void givenDealerLessValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
             // given
-            dealer.receiveCard(new Card(DIAMOND, NINE));
-            bebe.receiveCard(new Card(DIAMOND, JACK));
+            dealer.receiveCard(DIAMOND_NINE);
+            bebe.receiveCard(DIAMOND_JACK);
 
             // when
             final Map<Result, Long> result = participants.findDealerFinalResult();
