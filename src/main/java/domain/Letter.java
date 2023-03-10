@@ -32,7 +32,7 @@ public enum Letter {
         return letter;
     }
 
-    public int score() {
-        return score;
+    public Score score() {
+        return new Score(score);
     }
 }

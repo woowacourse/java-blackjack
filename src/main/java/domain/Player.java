@@ -17,7 +17,7 @@ public abstract class Player {
         hand = hand.hit(drawnCard);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return hand.score();
     }
 

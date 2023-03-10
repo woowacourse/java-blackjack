@@ -28,7 +28,7 @@ public class HandTest extends AbstractTestFixture {
     void test_score(String letter1, String letter2, int score) {
         var hand = new Hand(createCards(letter1, letter2));
 
-        assertThat(hand.score()).isEqualTo(score);
+        assertThat(hand.score()).isEqualTo(new Score(score));
     }
 
     static Stream<Arguments> test_score_with_a() {
@@ -44,15 +44,7 @@ public class HandTest extends AbstractTestFixture {
     void test_score_with_a(int score, List<Card> cards) {
         var hand = new Hand(cards);
 
-        assertThat(hand.score()).isEqualTo(score);
-    }
-
-    @ParameterizedTest(name = "패가 Bust인지 알 수 있다.")
-    @CsvSource({"K,true", "A,false"})
-    void test_is_bust(String additionalLetter, boolean isBust) {
-        var hand = new Hand(createCards("J", "Q", additionalLetter));
-
-        assertThat(hand.isBust()).isEqualTo(isBust);
+        assertThat(hand.score()).isEqualTo(new Score(score));
     }
 
     static Stream<Arguments> test_is_winner_against_other() {

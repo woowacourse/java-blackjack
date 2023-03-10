@@ -23,18 +23,18 @@ public class Hand {
         return new Hand(hitCards);
     }
 
-    public int score() {
-        int scoreSum = sumScoreOf(cards);
-        if (hasAIn(cards) && canAddTenTo(scoreSum)) {
-            scoreSum = scoreSum + 10;
+    public Score score() {
+        Score scoreSum = sumScoreOf(cards);
+        if (hasAIn(cards) && scoreSum.canAddBonus()) {
+            return scoreSum.addBonus();
         }
         return scoreSum;
     }
 
-    private int sumScoreOf(Set<Card> cards) {
+    private Score sumScoreOf(Set<Card> cards) {
         return cards.stream()
-                .mapToInt(Card::score)
-                .sum();
+                .map(Card::score)
+                .reduce(new Score(), Score::add);
     }
 
     private boolean hasAIn(Set<Card> cards) {
@@ -42,37 +42,25 @@ public class Hand {
                 .anyMatch(Card::isA);
     }
 
-    private boolean canAddTenTo(int score) {
-        return score + 10 <= 21;
-    }
-
-    public boolean isBust() {
-        return score() > 21;
-    }
-
     public boolean isDrawAgainst(Hand other) {
-        if (this.isBust() && other.isBust()) {
+        Score score = this.score();
+        Score otherScore = other.score();
+        if (score.isBust() && otherScore.isBust()) {
             return true;
         }
-        return this.hasSameScoreWith(other);
+        return score.isSameWith(otherScore);
     }
 
     public boolean isWinnerAgainst(Hand other) {
-        if (this.isBust()) {
+        Score score = this.score();
+        Score otherScore = other.score();
+        if (score.isBust()) {
             return false;
         }
-        return other.isBust() || this.hasScoreGreaterThan(other);
+        return otherScore.isBust() || score.isGreaterThan(otherScore);
     }
 
     public Set<Card> cards() {
         return new HashSet<>(cards);
-    }
-
-    private boolean hasSameScoreWith(Hand other) {
-        return score() == other.score();
-    }
-
-    private boolean hasScoreGreaterThan(Hand other) {
-        return score() > other.score();
     }
 }
