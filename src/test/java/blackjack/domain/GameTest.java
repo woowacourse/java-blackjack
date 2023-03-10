@@ -4,7 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.Deck;
-import blackjack.domain.gameplayer.*;
+import blackjack.domain.gameplayer.Dealer;
+import blackjack.domain.gameplayer.Name;
+import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

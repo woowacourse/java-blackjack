@@ -1,7 +1,5 @@
 package blackjack.domain.gameplayer;
 
-import blackjack.domain.card.Card;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;

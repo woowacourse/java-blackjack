@@ -2,16 +2,14 @@ package blackjack.domain.gameplayer;
 
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
-import java.util.List;
+public abstract class BlackJackParticipant implements User {
 
-public class BlackJackParticipant implements User {
+    protected final Cards cards;
 
-    private final List<Card> cards;
-
-    public BlackJackParticipant() {
-        this.cards = new ArrayList<>();
+    public BlackJackParticipant(Cards cards) {
+        this.cards = cards;
     }
 
     @Override
@@ -20,17 +18,7 @@ public class BlackJackParticipant implements User {
     }
 
     @Override
-    public List<Card> showCards() {
-        return null;
-    }
-
-    @Override
-    public boolean canContinue() {
-        return false;
-    }
-
-    @Override
     public Score calculateScore() {
-        return null;
+        return Score.from(cards);
     }
 }

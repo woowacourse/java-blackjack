@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
 public class Card {
     private final CardSymbol cardSymbol;
     private final CardNumber cardNumber;
