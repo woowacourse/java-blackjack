@@ -3,6 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.BetAmount;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
+import blackjack.model.result.Result;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.PlayerInitialState;
@@ -96,11 +97,12 @@ class PlayerTest {
                 player.play(cardDeck);
                 dealer.play(cardDeck);
                 player.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBust()).isTrue();
                 assertThat(dealer.isBust()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+                assertThat(player.getProfit(result)).isEqualTo(-10000);
             }
 
             @Test
@@ -116,11 +118,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBust()).isTrue();
                 assertThat(dealer.isStand()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+                assertThat(player.getProfit(result)).isEqualTo(-10000);
             }
 
             @Test
@@ -136,11 +139,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBust()).isTrue();
                 assertThat(dealer.isBlackjack()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+                assertThat(player.getProfit(result)).isEqualTo(-10000);
             }
         }
 
@@ -160,11 +164,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 dealer.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBlackjack()).isTrue();
                 assertThat(dealer.isBust()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(15000);
+                assertThat(player.getProfit(result)).isEqualTo(15000);
             }
 
             @Test
@@ -179,11 +184,12 @@ class PlayerTest {
                 // when
                 dealer.play(cardDeck);
                 player.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBlackjack()).isTrue();
                 assertThat(dealer.isStand()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(15000);
+                assertThat(player.getProfit(result)).isEqualTo(15000);
             }
 
             @Test
@@ -198,11 +204,12 @@ class PlayerTest {
                 // when
                 dealer.play(cardDeck);
                 player.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isBlackjack()).isTrue();
                 assertThat(dealer.isBlackjack()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(0);
+                assertThat(player.getProfit(result)).isEqualTo(0);
             }
 
         }
@@ -224,11 +231,12 @@ class PlayerTest {
                 player.play(cardDeck);
                 player.changeToStand();
                 dealer.play(cardDeck);
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isStand()).isTrue();
                 assertThat(dealer.isBust()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(10000);
+                assertThat(player.getProfit(result)).isEqualTo(10000);
             }
 
             @Test
@@ -244,11 +252,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.changeToStand();
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isStand()).isTrue();
                 assertThat(dealer.isBlackjack()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+                assertThat(player.getProfit(result)).isEqualTo(-10000);
             }
 
             @Test
@@ -264,11 +273,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.changeToStand();
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isStand()).isTrue();
                 assertThat(dealer.isStand()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(-10000);
+                assertThat(player.getProfit(result)).isEqualTo(-10000);
             }
 
             @Test
@@ -284,11 +294,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.changeToStand();
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isStand()).isTrue();
                 assertThat(dealer.isStand()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(10000);
+                assertThat(player.getProfit(result)).isEqualTo(10000);
             }
 
             @Test
@@ -304,11 +315,12 @@ class PlayerTest {
                 dealer.play(cardDeck);
                 player.play(cardDeck);
                 player.changeToStand();
+                Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
                 assertThat(player.isStand()).isTrue();
                 assertThat(dealer.isStand()).isTrue();
-                assertThat(player.getProfit(dealer)).isEqualTo(0);
+                assertThat(player.getProfit(result)).isEqualTo(0);
             }
         }
     }
