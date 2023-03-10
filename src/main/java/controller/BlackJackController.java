@@ -1,6 +1,5 @@
 package controller;
 
-import common.ExecuteContext;
 import domain.BlackJackGameRunner;
 import domain.CardGenerator;
 import domain.Player;
@@ -34,7 +33,7 @@ public class BlackJackController {
     }
 
     private BlackJackGameRunner initGameRunner() {
-        return ExecuteContext.workWithExecuteStrategy(() ->
+        return ExecuteContext.RetryIfThrowsException(() ->
             BlackJackGameRunner.of(cardGenerator, InputView.inputNames()));
     }
 
@@ -48,7 +47,7 @@ public class BlackJackController {
     private void givePlayerAdditionalCard() {
         while (runner.isGameOnPlayersHitStage()) {
             Player player = runner.getCurrentPlayerOnHitStage();
-            boolean hit = ExecuteContext.workWithExecuteStrategy(() ->
+            boolean hit = ExecuteContext.RetryIfThrowsException(() ->
                 InputView.inputPlayerHitOrStand(ViewRenderer.toNameCardScore(player)));
             runner.handlePlayerHit(hit);
             OutputView.printCards(ViewRenderer.toNameCardScore(player));
