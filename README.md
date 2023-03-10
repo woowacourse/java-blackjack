@@ -38,7 +38,7 @@
 - [ ] `Participant`를 상속한다.
 - [x] 딜러라는 이름을 가진다.
 - [x] `Bank`와 `Deck`을 가진다.
-- [ ] `Player`에게 카드를 한 장 준다. 
+- [x] `Players`에게 2장의 카드를 세팅한다.
 
 ### Players
 - [x] `Player`들을 가진다.

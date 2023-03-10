@@ -1,8 +1,13 @@
 package blackjack.domain.participant;
 
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.Bank;
 import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public final class Dealer extends Participant {
 
@@ -19,6 +24,14 @@ public final class Dealer extends Participant {
 
     public void saveBettingMoney(final Player player, final Money money) {
         this.bank.betMoney(player, money);
+    }
+
+    public void settingCards(final Players players) {
+        List<Hand> hands = IntStream.range(0, players.size())
+                .mapToObj(x -> new Hand(deck.drawTwoCard()))
+                .collect(toList());
+
+        players.distributeHands(hands);
     }
 
     public String getName() {
