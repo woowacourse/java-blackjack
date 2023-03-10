@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJack;
+import blackjack.domain.game.BlackJack;
 import blackjack.domain.RandomDeck;
 import blackjack.domain.dto.DtoParser;
 import blackjack.domain.user.Name;

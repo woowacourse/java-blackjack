@@ -1,7 +1,7 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.BlackJack;
-import blackjack.domain.Result;
+import blackjack.domain.game.BlackJack;
+import blackjack.domain.game.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
