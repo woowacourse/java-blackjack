@@ -13,13 +13,17 @@ public enum WinTieLose {
     }
 
     public static WinTieLose resultPlayer(final Score playerScore, final Score dealerScore) {
-        if ((playerScore.isBust() && dealerScore.isBust()) || playerScore.isEqualTo(dealerScore)) {
+        if (bothBust(playerScore, dealerScore) || playerScore.isEqualTo(dealerScore)) {
             return TIE;
         }
         if (playerScore.isHit() && (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore))) {
             return WIN;
         }
         return LOSE;
+    }
+
+    private static boolean bothBust(final Score scoreFirst, final Score scoreSecond) {
+        return scoreFirst.isBust() && scoreSecond.isBust();
     }
 
     public WinTieLose reverse() {
