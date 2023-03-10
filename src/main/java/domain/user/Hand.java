@@ -33,9 +33,9 @@ public class Hand {
     }
 
     private Score score() {
-        return new Score(cards.stream()
-                .mapToInt(Card::score)
-                .sum());
+        return cards.stream()
+                .map(Card::score)
+                .reduce(Score.min(), Score::sum);
     }
 
     private int countAce() {
@@ -46,7 +46,7 @@ public class Hand {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getDenomination() == Denomination.ACE);
+                .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

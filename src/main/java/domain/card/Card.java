@@ -18,8 +18,12 @@ public class Card {
         return new Card(suit, denomination);
     }
 
-    public int score() {
-        return denomination.value();
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
+    public Score score() {
+        return new Score(denomination.value());
     }
 
     public Suit getSuit() {
