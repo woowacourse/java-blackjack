@@ -13,10 +13,6 @@ public final class Cards {
 
     private final List<Card> cards;
 
-    public Cards() {
-        this(new ArrayList<>());
-    }
-
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
