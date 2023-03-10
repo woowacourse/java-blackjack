@@ -15,16 +15,16 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> playerNames) {
-        validatePlayerNames(playerNames);
-        List<Player> players = playerNames.stream()
+    public static Players from(List<String> playersName) {
+        validatePlayersName(playersName);
+        List<Player> players = playersName.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
         return new Players(players);
     }
 
-    private static void validatePlayerNames(List<String> playerNames) {
-        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+    private static void validatePlayersName(List<String> playersName) {
+        if (playersName.size() != new HashSet<>(playersName).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }

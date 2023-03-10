@@ -13,8 +13,8 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants of(List<String> playerNames) {
-        Players players = Players.from(playerNames);
+    public static Participants of(List<String> playersName) {
+        Players players = Players.from(playersName);
         return new Participants(players);
     }
 
