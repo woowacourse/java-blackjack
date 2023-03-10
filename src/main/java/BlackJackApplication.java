@@ -21,7 +21,7 @@ public class BlackJackApplication {
         betting.initParticipantBet(dealer, new Money());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
-        endPhase(players, dealer);
+        endPhase(betting, players, dealer);
     }
 
     private static void startPhase(Players players, Dealer dealer, BlackJackGame blackJackGame) {
@@ -30,11 +30,11 @@ public class BlackJackApplication {
         OutputView.printInitPlayerCards(players);
     }
 
-    private static void endPhase(Players players, Dealer dealer) {
+    private static void endPhase(BettingResults bettingResults, Players players, Dealer dealer) {
         askEachPlayers(players);
         dealerExecute(dealer);
         printFinalGameStatus(players, dealer);
-        printFinalFightResult(players, dealer);
+        printFinalFightResult(bettingResults, players, dealer);
     }
 
     private static Players generatePlayers(BettingResults betting) {
@@ -126,8 +126,8 @@ public class BlackJackApplication {
         }
     }
 
-    private static void printFinalFightResult(Players players, Dealer dealer) {
-        Results resultCalculator = new Results(players, dealer);
+    private static void printFinalFightResult(BettingResults bettingResults, Players players, Dealer dealer) {
+        Results resultCalculator = new Results(bettingResults, players, dealer);
         resultCalculator.executeGame(players, dealer);
         OutputView.printFinalFightResult(resultCalculator);
     }

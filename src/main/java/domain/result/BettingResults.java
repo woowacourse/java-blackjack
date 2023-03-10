@@ -16,6 +16,10 @@ public class BettingResults {
         bettingResults.put(participant, money);
     }
 
+    public void plusBettingResult(Participant participant, int changeMoney) {
+        bettingResults.get(participant).plusAmount(changeMoney);
+    }
+
     public Money getParticipantBet(Participant participant) {
         return bettingResults.get(participant);
     }

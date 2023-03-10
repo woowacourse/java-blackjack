@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 
 public class Results {
     private final Map<String, Map<Score, Integer>> results;
+    private final BettingResults bettingResults;
 
-    public Results(Players players, Dealer dealer) {
+    public Results(BettingResults bettingResults, Players players, Dealer dealer) {
+        this.bettingResults = bettingResults;
         this.results = new LinkedHashMap<>();
         results.put(dealer.getName(), initResults());
         for (Player player : players.getPlayers()) {
@@ -31,8 +33,9 @@ public class Results {
     }
 
     private void dealerBustCase(Players players, Dealer dealer) {
-        for(Player player: players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             playerWin(results.get(player.getName()), results.get(dealer.getName()));
+            playerWinBetting(player, dealer);
         }
     }
 
@@ -40,12 +43,15 @@ public class Results {
         int playerWinOrLose = player.getHandCards().checkBust() - dealer.getHandCards().checkBust();
         if (playerWinOrLose > 0) {
             playerWin(results.get(player.getName()), results.get(dealer.getName()));
+            playerWinBetting(player, dealer);
         }
         if (playerWinOrLose < 0) {
             dealerWin(results.get(player.getName()), results.get(dealer.getName()));
+            playerLoseBetting(player, dealer);
         }
         if (playerWinOrLose == 0) {
             draw(results.get(player.getName()), results.get(dealer.getName()));
+            drawBetting(player, dealer);
         }
     }
 
@@ -62,6 +68,22 @@ public class Results {
     private void draw(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
         playerResult.computeIfPresent(Score.DRAW, (k, v) -> v + 1);
         dealerResult.computeIfPresent(Score.DRAW, (k, v) -> v + 1);
+    }
+
+    private void playerWinBetting(Player player, Dealer dealer) {
+        if (player.getHandCards().isBlackJack()) {
+            bettingResults.plusBettingResult(player, bettingResults.getParticipantBet(player).getAmount() / 2);
+        }
+        bettingResults.plusBettingResult(dealer, -bettingResults.getParticipantBet(player).getAmount());
+    }
+
+    private void playerLoseBetting(Player player, Dealer dealer) {
+        bettingResults.plusBettingResult(dealer, bettingResults.getParticipantBet(player).getAmount());
+        bettingResults.plusBettingResult(player, -(2 * bettingResults.getParticipantBet(player).getAmount()));
+    }
+
+    private void drawBetting(Player player, Dealer dealer) {
+        bettingResults.plusBettingResult(player, -bettingResults.getParticipantBet(player).getAmount());
     }
 
     private Map<Score, Integer> initResults() {

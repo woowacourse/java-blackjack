@@ -41,6 +41,10 @@ public class HandCards {
         return maxSum;
     }
 
+    public boolean isBlackJack() {
+        return calculateScore() == 21 && cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
