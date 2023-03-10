@@ -4,16 +4,14 @@ import domain.card.Card;
 
 public class Player {
 
-    private static final int DEFAULT_BET_AMOUNT = 0;
-
     private final PlayerName playerName;
     private final CardPool cardPool;
     private final Bet bet;
 
-    public Player(final String playerName, final CardPool cardPool) {
+    public Player(final String playerName, final CardPool cardPool, final int betAmount) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
-        this.bet = new Bet(DEFAULT_BET_AMOUNT);
+        this.bet = new Bet(betAmount);
     }
 
     public void draw(final Card card) {
@@ -50,5 +48,9 @@ public class Player {
 
     public void addBetAmount(int amount) {
         this.bet.addAmount(amount);
+    }
+
+    public int getRevenue() {
+        return bet.getRevenue();
     }
 }
