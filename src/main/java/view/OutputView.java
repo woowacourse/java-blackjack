@@ -1,7 +1,6 @@
 package view;
 
 import domain.deck.Card;
-import domain.game.Outcome;
 import domain.player.Name;
 import java.util.List;
 import java.util.Map;
@@ -55,22 +54,6 @@ public class OutputView {
 
     public static void printEmptyLine() {
         System.out.println();
-    }
-
-    private static void printEachPlayerResult(final Map<Name, Outcome> result, final Name name) {
-        if (result.get(name).equals(Outcome.WIN)) {
-            printGameEachResult(name.getName(), 1, 0, 0);
-        }
-        if (result.get(name).equals(Outcome.DRAW)) {
-            printGameEachResult(name.getName(), 0, 1, 0);
-        }
-        if (result.get(name).equals(Outcome.LOSE)) {
-            printGameEachResult(name.getName(), 0, 0, 1);
-        }
-    }
-
-    private static void printGameEachResult(final String playerName, final int win, final int draw, final int lose) {
-        System.out.printf("%s: %s승 %s무 %s패%n", playerName, win, draw, lose);
     }
 
     public static void printInputAmount(final Name name) {
