@@ -25,8 +25,6 @@ public class BlackJackController {
 
     private static final String MORE_CARD = "y";
     private static final String CARD_STOP = "n";
-    private static final String DELIMITER = ",";
-    private static final int LIMIT_REMOVED = -1;
     private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
 
     private final InputView inputView;
@@ -38,7 +36,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> playerNames = requestPlayerName();
+        List<String> playerNames = inputView.requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardsMaker.generate());
         Players players = Players.of(playerNames, cardDistributor);
         Betting betting = getBetting(players);
@@ -131,10 +129,6 @@ public class BlackJackController {
 
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
         return answer.equals(MORE_CARD);
-    }
-
-    private List<String> requestPlayerName() {
-        return Arrays.asList(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED));
     }
 
 }
