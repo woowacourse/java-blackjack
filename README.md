@@ -46,7 +46,7 @@ classDiagram
     class Cards {
         -List~Card~ cards
         +addCard(Card card)
-        +getScore()
+        +calculateScore()
     }
     class Card {
         -Suit suit

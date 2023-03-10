@@ -18,14 +18,14 @@ public class Cards {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
         if (hasAce()) {
             score = calculateAce(score);
         }
-        return new Score(score, isBlackjack(score));
+        return new Score(score);
     }
 
     private boolean hasAce() {
@@ -40,8 +40,8 @@ public class Cards {
         return score;
     }
 
-    private boolean isBlackjack(int score) {
-        return score == MAX_SCORE && cards.size() == BLACKJACK_REQUIRE_COUNT;
+    public boolean isBlackjack() {
+        return calculateScore().isMaxScore() && cards.size() == BLACKJACK_REQUIRE_COUNT;
     }
 
     public List<Card> getCards() {

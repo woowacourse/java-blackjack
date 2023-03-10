@@ -16,7 +16,7 @@ public abstract class Participant {
     }
 
     public Score getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     public Name getName() {
@@ -25,6 +25,10 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    protected boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
     public abstract boolean isPlayer();

@@ -26,13 +26,13 @@ public class Player extends Participant {
     public GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
+        if (this.isBlackjack() && !dealer.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
         return getGameResult(dealerScore, myScore);
     }
 
     private GameResult getGameResult(Score dealerScore, Score myScore) {
-        if (isBlackjack(myScore, dealerScore)) {
-            return GameResult.BLACKJACK;
-        }
         if (dealerScore.isWinTo(myScore)) {
             return GameResult.LOSE;
         }
@@ -45,10 +45,6 @@ public class Player extends Participant {
     public Bet matchGameWithBet(Dealer dealer) {
         GameResult gameResult = matchGame(dealer);
         return bet.calculateResult(gameResult);
-    }
-
-    private boolean isBlackjack(Score myScore, Score dealerScore) {
-        return myScore.isBlackjack() && !dealerScore.isBlackjack();
     }
 
     @Override

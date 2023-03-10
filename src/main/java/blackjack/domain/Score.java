@@ -6,11 +6,9 @@ public class Score {
     private static final int BUST_SCORE_BOUNDARY = 21;
 
     private final int score;
-    private final boolean isBlackjack;
 
-    public Score(int score, boolean isBlackjack) {
+    public Score(int score) {
         this.score = score;
-        this.isBlackjack = isBlackjack;
     }
 
     public boolean isWinTo(Score other) {
@@ -31,8 +29,8 @@ public class Score {
         return score;
     }
 
-    public boolean isBlackjack() {
-        return isBlackjack;
+    public boolean isMaxScore() {
+        return this.score == BUST_SCORE_BOUNDARY;
     }
 
     @Override
@@ -44,11 +42,11 @@ public class Score {
             return false;
         }
         Score score1 = (Score) o;
-        return score == score1.score && isBlackjack == score1.isBlackjack;
+        return score == score1.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, isBlackjack);
+        return Objects.hash(score);
     }
 }
