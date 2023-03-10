@@ -100,7 +100,7 @@ class PlayerTest {
             tori.addCard(card2);
             tori.addCard(card3);
 
-            assertThat(tori.isHit()).isFalse();
+            assertThat(tori.isHitPossible()).isFalse();
         }
 
         @DisplayName("딜러는 카드의 합이 21을 초과하지 않는다면 Hit 가능")
@@ -111,7 +111,7 @@ class PlayerTest {
             tori.addCard(card);
             tori.addCard(card2);
 
-            assertThat(tori.isHit()).isTrue();
+            assertThat(tori.isHitPossible()).isTrue();
         }
     }
 }

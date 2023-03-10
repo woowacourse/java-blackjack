@@ -59,6 +59,11 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
 
+        printFinalVictoryOrDefeatDealer(dealerResult);
+        printFinalVictoryOrDefeatPlayers(playerResult);
+    }
+
+    private void printFinalVictoryOrDefeatDealer(Map<String, Integer> dealerResult) {
         StringBuilder dealerResultMsg = new StringBuilder("딜러: ");
         for (String victoryOrDefeat : dealerResult.keySet()) {
             if (dealerResult.get(victoryOrDefeat) != ZERO) {
@@ -66,7 +71,9 @@ public class OutputView {
             }
         }
         System.out.println(dealerResultMsg);
+    }
 
+    private void printFinalVictoryOrDefeatPlayers(Map<String, String> playerResult) {
         for (String playerName : playerResult.keySet()) {
             System.out.println(playerName
                     + ": "

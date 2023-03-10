@@ -13,7 +13,7 @@ class GamePlayerTest {
 
     @BeforeEach
     void init() {
-        gamePlayer = new GamePlayer(Players.from(List.of("name1", "name2", "name3")), new Dealer());
+        gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("name1", "name2", "name3")));
     }
 
     @DisplayName("생성 테스트")
@@ -25,7 +25,7 @@ class GamePlayerTest {
     @DisplayName("딜러에게 카드를 나눠주는 메소드 테스트")
     @Test
     void Should_Success_When_GiveCardToDealer() {
-        gamePlayer.giveCardToDealer(new Card(CardNumber.ACE, CardSymbol.HEARTS));
+        gamePlayer.addCardToDealer(new Card(CardNumber.ACE, CardSymbol.HEARTS));
 
         assertThat(gamePlayer.getDealer().getAllCards().get(0).getCardNumberToString()).isEqualTo("A");
     }
@@ -34,7 +34,7 @@ class GamePlayerTest {
     @Test
     void Should_Success_When_GiveCardToPlayer() {
         int secondPlayerIndex = 1;
-        gamePlayer.giveCardToPlayerByIndex(secondPlayerIndex, new Card(CardNumber.ACE, CardSymbol.HEARTS));
+        gamePlayer.addCardToPlayerByIndex(secondPlayerIndex, new Card(CardNumber.ACE, CardSymbol.HEARTS));
 
         assertThat(gamePlayer.getPlayers().getPlayer(secondPlayerIndex).getAllCards().get(0)
                 .getCardNumberToString()).isEqualTo("A");

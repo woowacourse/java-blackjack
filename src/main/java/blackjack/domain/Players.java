@@ -33,10 +33,6 @@ public class Players {
         return playersScore;
     }
 
-    public boolean getPlayerIsHit(int i) {
-        return players.get(i).isHit();
-    }
-
     public void addCardToPlayer(int i, Card card) {
         players.get(i).addCard(card);
     }
@@ -47,17 +43,5 @@ public class Players {
 
     public int count() {
         return players.size();
-    }
-
-    public int getPlayerScoreByIndex(int i) {
-        return getPlayer(i).calculateScore();
-    }
-
-    public List<Card> showPlayerCardsByIndex(int i) {
-        return getPlayer(i).getAllCards();
-    }
-
-    public String showPlayerNameByIndex(int i) {
-        return getPlayer(i).getName();
     }
 }

@@ -17,11 +17,11 @@ public class Card {
         return CardNumber.scoreByNumber(cardNumber.number());
     }
 
-    public String getCardSymbolToString() {
-        return cardSymbol.symbol();
-    }
-
     public String getCardNumberToString() {
         return cardNumber.number();
+    }
+
+    public String getCardSymbolToString() {
+        return cardSymbol.symbol();
     }
 }

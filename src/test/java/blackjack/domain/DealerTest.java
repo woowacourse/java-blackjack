@@ -107,7 +107,7 @@ class DealerTest {
             dealer.addCard(card);
             dealer.addCard(card2);
 
-            assertThat(dealer.isHit()).isFalse();
+            assertThat(dealer.isHitPossible()).isFalse();
         }
 
         @DisplayName("딜러는 카드의 합이 17을 초과하지 않는다면 Hit 가능")
@@ -118,7 +118,7 @@ class DealerTest {
             dealer.addCard(card);
             dealer.addCard(card2);
 
-            assertThat(dealer.isHit()).isTrue();
+            assertThat(dealer.isHitPossible()).isTrue();
         }
     }
 }

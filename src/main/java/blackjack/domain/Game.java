@@ -10,7 +10,6 @@ public class Game {
     private Game(Deck deck, GamePlayer gamePlayer) {
         this.deck = deck;
         this.gamePlayer = gamePlayer;
-
         initializeGame();
     }
 
@@ -20,66 +19,55 @@ public class Game {
 
     private void initializeGame() {
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < gamePlayer.getPlayers().count() + 1; i++) {
+        int playersCount = getPlayersCount();
+        for (int i = 0; i < playersCount + 1; i++) {
             cards.add(deck.draw());
             cards.add(deck.draw());
         }
         gamePlayer.initializeGamePlayer(cards);
     }
 
-    public List<Integer> getPlayersScore() {
-        return gamePlayer.getPlayers().getPlayersScore();
+    public int getDealerScore() {
+        return gamePlayer.getDealer().calculateScore();
     }
 
-    public void playerHit(int i) {
-        gamePlayer.playerHit(i, deck.draw());
+    public List<Integer> getPlayersScore() {
+        return gamePlayer.getPlayers().getPlayersScore();
     }
 
     public void dealerHit() {
         gamePlayer.dealerHit(deck.draw());
     }
 
-    public boolean isPlayerHitPossibleByIndex(int i) {
-        return gamePlayer.isHitPlayerByIndex(i);
+    public void playerHit(int i) {
+        gamePlayer.playerHit(i, deck.draw());
     }
 
     public boolean isDealerHitPossible() {
-        return gamePlayer.isHitDealer();
+        return gamePlayer.getDealer().isHitPossible();
     }
 
-    public Players getPlayers() {
-        return gamePlayer.getPlayers();
+    public boolean isPlayerHitPossibleByIndex(int i) {
+        return gamePlayer.getPlayers().getPlayer(i).isHitPossible();
     }
 
-    public Dealer getDealer() {
-        return gamePlayer.getDealer();
+    public String getPlayerNameByIndex(int i) {
+        return gamePlayer.getPlayers().getPlayer(i).getName();
     }
 
-    public String showPlayerNameByIndex(int i) {
-        return getPlayers().showPlayerNameByIndex(i);
+    public List<Card> getPlayerCardsByIndex(int i) {
+        return gamePlayer.getPlayers().getPlayer(i).getAllCards();
     }
 
-    public List<Card> showPlayerCardsByIndex(int i) {
-        return getPlayers().showPlayerCardsByIndex(i);
+    public Card getDealerFirstCard() {
+        return gamePlayer.getDealer().getFirstCard();
     }
 
-    public Card showDealerCards() {
-        return getDealer().getFirstCard();
-    }
-
-    public List<Card> showDealerAllCards() {
-        return getDealer().getAllCards();
+    public List<Card> getDealerAllCards() {
+        return gamePlayer.getDealer().getAllCards();
     }
 
     public int getPlayersCount() {
-        return getPlayers().count();
-    }
-
-    public int getDealerScore() {
-        return getDealer().calculateScore();
-    }
-
-    public int getPlayerScoreByIndex(int i) {
-        return getPlayers().getPlayerScoreByIndex(i);
+        return gamePlayer.getPlayers().count();
     }
 }

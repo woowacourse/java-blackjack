@@ -4,7 +4,7 @@ public class Dealer extends Person {
     private static final int DEALER_STOP_HIT_BOUND = 17;
 
     @Override
-    public boolean isHit() {
+    public boolean isHitPossible() {
         int totalScore = calculateScore();
         return totalScore < DEALER_STOP_HIT_BOUND;
     }

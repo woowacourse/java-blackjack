@@ -15,7 +15,7 @@ public class Player extends Person {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isHitPossible() {
         int totalScore = calculateScore();
         return totalScore < PLAYER_STOP_HIT_BOUND;
     }

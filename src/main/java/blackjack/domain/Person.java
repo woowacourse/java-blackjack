@@ -12,6 +12,8 @@ abstract class Person {
         this.hand = new Hand();
     }
 
+    abstract boolean isHitPossible();
+
     void addCard(Card card) {
         hand.add(card);
     }
@@ -23,8 +25,6 @@ abstract class Person {
         }
         return totalScore;
     }
-
-    abstract boolean isHit();
 
     List<Card> getAllCards() {
         return hand.getAllCards();

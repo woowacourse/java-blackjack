@@ -25,7 +25,7 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        Game game = Game.from(new GamePlayer(makePlayers(), new Dealer()));
+        Game game = Game.from(new GamePlayer(new Dealer(), makePlayers()));
 
         gameStart(game);
         gamePlay(game);
@@ -64,11 +64,11 @@ public class BlackJackGameController {
         while (game.isPlayerHitPossibleByIndex(i)) {
             String tryCommand = inputView.readTryCommand(playerName);
             if (!TryCommand.isHit(tryCommand)) {
-                outputView.printCards(playerName, cardsToPrintFormat(game.showPlayerCardsByIndex(i)));
+                outputView.printCards(playerName, cardsToPrintFormat(game.getPlayerCardsByIndex(i)));
                 break;
             }
             game.playerHit(i);
-            outputView.printCards(playerName, cardsToPrintFormat(game.showPlayerCardsByIndex(i)));
+            outputView.printCards(playerName, cardsToPrintFormat(game.getPlayerCardsByIndex(i)));
         }
     }
 
@@ -80,7 +80,7 @@ public class BlackJackGameController {
     }
 
     private void gameEnd(Game game) {
-        outputView.printDealerResult(cardsToPrintFormat(game.showDealerAllCards()), game.getDealerScore());
+        outputView.printDealerResult(cardsToPrintFormat(game.getDealerAllCards()), game.getDealerScore());
         outputView.printPlayerResult(playersToPrintFormat(game), game.getPlayersScore());
     }
 
@@ -91,20 +91,22 @@ public class BlackJackGameController {
 
     private Map<String, List<String>> playersToPrintFormat(Game game) {
         Map<String, List<String>> players = new LinkedHashMap<>();
-        for (int i = 0; i < game.getPlayersCount(); i++) {
-            String playerName = game.showPlayerNameByIndex(i);
-            List<String> cards = cardsToPrintFormat(game.showPlayerCardsByIndex(i));
+        int playersCount = game.getPlayersCount();
+        for (int i = 0; i < playersCount; i++) {
+            String playerName = game.getPlayerNameByIndex(i);
+            List<String> cards = cardsToPrintFormat(game.getPlayerCardsByIndex(i));
             players.put(playerName, cards);
         }
         return players;
     }
 
     private String dealerFirstCardToPrintFormat(Game game) {
-        return game.showDealerCards().getCardNumberToString() + game.showDealerCards().getCardSymbolToString();
+        return game.getDealerFirstCard().getCardNumberToString() + game.getDealerFirstCard().getCardSymbolToString();
     }
 
     private List<String> cardsToPrintFormat(List<Card> cards) {
-        return cards.stream().map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
+        return cards.stream()
+                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
                 .collect(Collectors.toList());
     }
 }

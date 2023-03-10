@@ -10,7 +10,6 @@ public class Name {
         this.name = name.trim();
     }
 
-
     public String getName() {
         return name;
     }
