@@ -47,6 +47,7 @@ classDiagram
         -List~Card~ cards
         +addCard(Card card)
         +calculateScore()
+        +isBlackjack()
     }
     class Card {
         -Suit suit
@@ -59,7 +60,6 @@ classDiagram
     }
     class Score {
         -int value
-        -boolean isBlackjack
         +isWinTo(Score other)
     }
     class Bet {
