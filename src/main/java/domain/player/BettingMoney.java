@@ -49,6 +49,6 @@ public class BettingMoney {
     }
 
     public Revenue revenue(final GameResult blackjackWin) {
-        return Revenue.of((int) blackjackWin.revenueRate() * amount);
+        return Revenue.of((int) (blackjackWin.revenueRate() * amount));
     }
 }

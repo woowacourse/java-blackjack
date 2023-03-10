@@ -3,10 +3,19 @@ package domain.player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.stream.Stream;
+
+import static domain.player.GameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -52,5 +61,36 @@ class BettingMoneyTest {
 
         // when & then
         assertThat(bettingMoney1).isEqualTo(bettingMoney2);
+    }
+
+    @Nested
+    class 게임_결과별로_베팅_금액에_대한_수익을_반환한다 {
+
+        @ParameterizedTest(name = "{0}인 경우 {1} 배를 얻는다")
+        @ArgumentsSource(ResultAndRateProvider.class)
+        void test(final GameResult result, final double rate) {
+            // given
+            final BettingMoney money = BettingMoney.of(1000);
+
+            // when
+            final Revenue revenue = money.revenue(result);
+
+            // then
+            assertThat(revenue.amount()).isEqualTo((int) (1000 * rate));
+        }
+
+    }
+
+    static class ResultAndRateProvider implements ArgumentsProvider {
+
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(
+                    Arguments.of(Named.of("블랙잭 승리", BLACKJACK_WIN), 1.5),
+                    Arguments.of(Named.of("승리 ", WIN), 1),
+                    Arguments.of(Named.of("무승부", DRAW), 0),
+                    Arguments.of(Named.of("패배", LOSE), -1)
+            );
+        }
     }
 }
