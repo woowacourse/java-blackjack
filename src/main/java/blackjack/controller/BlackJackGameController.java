@@ -25,10 +25,8 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        // 게임 세팅
         Game game = Game.from(new GamePlayer(makePlayers(), new Dealer()));
 
-        // 게임 시작 메시지 출력
         String dealerFirstCard = game.showDealerCards().getCardNumberToString()
                 + game.showDealerCards().getCardSymbolToString();
         Map<String, List<String>> players = playersToPrintFormat(game);
@@ -36,10 +34,8 @@ public class BlackJackGameController {
 
         outputView.printGameStartMessage(players, dealerFirstCard);
 
-        // 플레이어 Hit && 딜러 Hit
         int playersSize = players.size();
         for (int i = 0; i < playersSize; i++) {
-            // Hit를 할 수 있으면
             while (game.isPlayerHitPossibleByIndex(i)) {
                 String playerName = playersName.get(i);
                 String tryCommand = inputView.readTryCommand(playerName);
@@ -58,7 +54,11 @@ public class BlackJackGameController {
             game.dealerHit();
         }
 
-        finish(game);
+        outputView.printDealerResult(cardsToPrintFormat(game.showDealerAllCards()), game.getDealerScore());
+        outputView.printPlayerResult(playersToPrintFormat(game), game.getPlayersScore());
+
+        GameResult gameResult = new GameResult(game);
+        outputView.printFinalVictoryOrDefeat(gameResult.getDealerResult(), gameResult.getPlayersResult());
     }
 
     private Players makePlayers() {
@@ -84,16 +84,5 @@ public class BlackJackGameController {
         return cards.stream()
                 .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
                 .collect(Collectors.toList());
-    }
-
-    private void finish(Game game) {
-        outputView.printDealerResult(cardsToPrintFormat(game.showDealerAllCards()), game.getDealerScore());
-        outputView.printPlayerResult(playersToPrintFormat(game), game.getPlayersScore());
-
-        GameResult gameResult = new GameResult(game);
-
-        outputView.printEndMsg();
-        outputView.printDealerWinningResult(gameResult.getDealerResult());
-        outputView.printPlayerWinningResult(gameResult.getPlayerResult());
     }
 }

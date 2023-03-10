@@ -1,73 +1,99 @@
 package blackjack.domain;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private static final int BURST_NUMBER = 21;
+    private static final int BLACKJACK = 21;
 
     private final Map<String, Integer> dealerResult;
-    private final Map<String, String> playerResult;
+    private final Map<String, String> playersResult;
 
     public GameResult(Game game) {
         this.dealerResult = initializeDealerResult();
-        this.playerResult = new LinkedHashMap<>();
-        accumulationResult(game);
+        this.playersResult = new LinkedHashMap<>();
+        calculateVictoryOrDefeat(game);
     }
 
     private Map<String, Integer> initializeDealerResult() {
-        Map<String, Integer> dealerResult = new HashMap<>();
+        Map<String, Integer> dealerResult = new LinkedHashMap<>();
 
         dealerResult.put(ResultType.WIN.message(), 0);
         dealerResult.put(ResultType.LOSE.message(), 0);
         dealerResult.put(ResultType.DRAW.message(), 0);
+
         return dealerResult;
     }
 
-    private String getPlayerResultWhenDealerBurst(int dealerScore, int playerScore) {
-        if (playerScore > dealerScore) {
-            return ResultType.WIN.message();
-        }
-        if (playerScore < dealerScore) {
-            return ResultType.LOSE.message();
-        }
-        return ResultType.DRAW.message();
-    }
-
-    private String getPlayerResultWhenDealerNotBurst(int playerScore) {
-        if (playerScore <= BURST_NUMBER) {
-            return ResultType.WIN.message();
-        }
-        return ResultType.DRAW.message();
-    }
-
-    private void accumulationResult(Game game) {
-        int dealerScore = game.getDealerScore();
+    private void calculateVictoryOrDefeat(Game game) {
+        int dealerScore = game.getDealer().calculateScore();
 
         for (int i = 0; i < game.getPlayersCount(); i++) {
-            int playerScore = game.getPlayerScoreByIndex(i);
-            String playerWin = getPlayerWin(dealerScore, playerScore);
-            playerResult.put(game.showPlayerNameByIndex(i), playerWin);
-            dealerResult.put(playerWin, dealerResult.get(playerWin) + 1);
+            int playerScore = game.getPlayers().getPlayer(i).calculateScore();
+            String playerName = game.getPlayers().getPlayer(i).getName();
+
+            calculateVictoryOrDefeatByPlayerIndex(dealerScore, playerScore, playerName);
         }
     }
 
-    private String getPlayerWin(int dealerScore, int playerScore) {
-        if (dealerScore > BURST_NUMBER) {
-            return getPlayerResultWhenDealerNotBurst(playerScore);
+    private void calculateVictoryOrDefeatByPlayerIndex(int dealerScore, int playerScore, String playerName) {
+        if (playerScore == BLACKJACK) {
+            playerScoreIsBlackJack(dealerScore, playerName);
         }
-        if (playerScore <= BURST_NUMBER) {
-            return getPlayerResultWhenDealerBurst(dealerScore, playerScore);
+        if (playerScore < BLACKJACK) {
+            playerScoreLessThanBlackJack(dealerScore, playerScore, playerName);
         }
-        return ResultType.LOSE.message();
+        if (playerScore > BLACKJACK) {
+            playerLose(playerName);
+        }
+    }
+
+    private void playerScoreIsBlackJack(int dealerScore, String playerName) {
+        if (dealerScore == BLACKJACK) {
+            draw(playerName);
+        }
+        playerWin(playerName);
+    }
+
+    private void playerScoreLessThanBlackJack(int dealerScore, int playerScore, String playerName) {
+        if (dealerScore == BLACKJACK) {
+            playerLose(playerName);
+        }
+        if (dealerScore > BLACKJACK) {
+            playerWin(playerName);
+        }
+        if (dealerScore < BLACKJACK) {
+            dealerScoreLessThanBlackJack(dealerScore, playerScore, playerName);
+        }
+    }
+
+    private void dealerScoreLessThanBlackJack(int dealerScore, int playerScore, String playerName) {
+        if (dealerScore < playerScore) {
+            playerWin(playerName);
+        }
+        playerLose(playerName);
+    }
+
+    private void playerWin(String playerName) {
+        playersResult.put(playerName, ResultType.WIN.message());
+        dealerResult.put(ResultType.LOSE.message(), dealerResult.get(ResultType.LOSE.message()) + 1);
+    }
+
+    private void playerLose(String playerName) {
+        playersResult.put(playerName, ResultType.LOSE.message());
+        dealerResult.put(ResultType.WIN.message(), dealerResult.get(ResultType.WIN.message()) + 1);
+    }
+
+    private void draw(String playerName) {
+        playersResult.put(playerName, ResultType.DRAW.message());
+        dealerResult.put(ResultType.DRAW.message(), dealerResult.get(ResultType.DRAW.message()) + 1);
     }
 
     public Map<String, Integer> getDealerResult() {
         return dealerResult;
     }
 
-    public Map<String, String> getPlayerResult() {
-        return playerResult;
+    public Map<String, String> getPlayersResult() {
+        return playersResult;
     }
 }
