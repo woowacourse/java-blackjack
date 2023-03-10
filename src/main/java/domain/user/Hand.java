@@ -53,7 +53,7 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public Boolean isBust() {
-        return false;
+    public boolean isBust() {
+        return new Score(calculateScore()).isOverMax();
     }
 }

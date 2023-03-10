@@ -126,6 +126,7 @@ class HandTest {
         assertThat(hand.getCards()).contains(card);
     }
 
+    @DisplayName("카드의 숫자가 10, 10, 5 이면 버스트이다.")
     @Test
     void isBust() {
         Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
@@ -134,6 +135,17 @@ class HandTest {
         hand.add(Card.of(Suit.DIAMOND, Denomination.FIVE));
 
         assertThat(hand.isBust()).isTrue();
+    }
 
+    @DisplayName("카드의 숫자가 10, 10, ACE 이면 버스트가 아니다.")
+    @Test
+    void isNotBust() {
+        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
+                Card.of(Suit.CLOVER, Denomination.TEN),
+                Card.of(Suit.SPADE, Denomination.ACE)
+        ));
+
+
+        assertThat(hand.isBust()).isFalse();
     }
 }

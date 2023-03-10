@@ -30,6 +30,10 @@ public class Score {
         return value > other.value;
     }
 
+    public boolean isOverMax() {
+        return isMoreThan(max);
+    }
+
     public Score sum(Score other) {
         return new Score(value + other.value);
     }
