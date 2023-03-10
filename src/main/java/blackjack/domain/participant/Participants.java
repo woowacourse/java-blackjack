@@ -53,14 +53,14 @@ public class Participants {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Participant> getAll() {
-        return participants;
-    }
-
     public void draw(final Deck deck, final int count) {
         for (int i = 0; i < count; i++) {
             participants.forEach(participant -> participant.drawCard(deck.draw()));
         }
+    }
+
+    public List<Participant> getAll() {
+        return participants;
     }
 
     public Participant getDealer() {

@@ -24,10 +24,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public Score getScore() {
         final int aceCount = getAceCardCount();
         final Score score = originalScore();
@@ -70,6 +66,10 @@ public class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     @Override

@@ -12,10 +12,6 @@ public enum WinTieLose {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public WinTieLose reverse() {
         if (equals(WIN)) {
             return LOSE;
@@ -24,5 +20,9 @@ public enum WinTieLose {
             return TIE;
         }
         return WIN;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

@@ -16,16 +16,16 @@ public class Card {
         return new Card(shape, letter);
     }
 
+    public boolean isAce() {
+        return letter.isAce();
+    }
+
     public String getCardName() {
         return letter.getName() + shape.getValue();
     }
 
     public int getValue() {
         return letter.getValue();
-    }
-
-    public boolean isAce() {
-        return letter.isAce();
     }
 
     @Override
