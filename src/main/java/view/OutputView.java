@@ -2,7 +2,7 @@ package view;
 
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.ResultCalculator;
+import domain.result.Results;
 import domain.result.Score;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class OutputView {
         System.out.println(name + ": " + cardName.get(0));
     }
 
-    public static void printFinalFightResult(ResultCalculator resultCalculator) {
+    public static void printFinalFightResult(Results resultCalculator) {
         System.out.println("\n## 최종 승패");
         for (String result : getFinalFightResults(resultCalculator.getResults())) {
             System.out.println(result);

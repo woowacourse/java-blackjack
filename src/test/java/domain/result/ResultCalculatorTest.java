@@ -22,7 +22,7 @@ public class ResultCalculatorTest {
     @Test
     @DisplayName("대결 시 승패 여부가 올바르게 저장된다.")
     void shouldSuccessSaveFightWinOrLoseResult() {
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(PLAYER)), DEALER);
+        Results resultCalculator = new Results(new Players(List.of(PLAYER)), DEALER);
         PLAYER.drawCard(new Card("5다이아몬드", 5));
         PLAYER.drawCard(new Card("10다이아몬드", 10));
         DEALER.drawCard(new Card("3하트", 3));
@@ -41,7 +41,7 @@ public class ResultCalculatorTest {
     @Test
     @DisplayName("대결 시 무승부 여부가 올바르게 저장된다.")
     void shouldSuccessSaveFightDrawResult() {
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(PLAYER)), DEALER);
+        Results resultCalculator = new Results(new Players(List.of(PLAYER)), DEALER);
         PLAYER.drawCard(new Card("5다이아몬드", 5));
         PLAYER.drawCard(new Card("10다이아몬드", 10));
         DEALER.drawCard(new Card("10하트", 10));

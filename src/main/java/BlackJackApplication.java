@@ -1,12 +1,12 @@
 import domain.BlackJackGame;
 import domain.card.Deck;
-import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.ResultCalculator;
+import domain.result.BettingResults;
+import domain.result.Results;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -14,7 +14,7 @@ import view.OutputView;
 
 public class BlackJackApplication {
     public static void main(String[] args) {
-        Betting betting = new Betting();
+        BettingResults betting = new BettingResults();
         Players players = generatePlayers(betting);
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
@@ -35,21 +35,25 @@ public class BlackJackApplication {
         printFinalFightResult(players, dealer);
     }
 
-    private static Players generatePlayers(Betting betting) {
+    private static Players generatePlayers(BettingResults betting) {
         try {
             List<String> playerNames = InputView.inputPlayerNames();
             List<Player> players = new ArrayList<>();
-            for (String playerName : playerNames) {
-                Name name = new Name(playerName);
-                Money playerBet = readMoney(name);
-                Player player = new Player(name);
-                players.add(player);
-                betting.setParticipantBet(player, playerBet);
-            }
+            initPlayerResult(betting, playerNames, players);
             return new Players(players);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             return generatePlayers(betting);
+        }
+    }
+
+    private static void initPlayerResult(BettingResults betting, List<String> playerNames, List<Player> players) {
+        for (String playerName : playerNames) {
+            Name name = new Name(playerName);
+            Money playerBet = readMoney(name);
+            Player player = new Player(name);
+            players.add(player);
+            betting.setParticipantBet(player, playerBet);
         }
     }
 
@@ -121,7 +125,7 @@ public class BlackJackApplication {
     }
 
     private static void printFinalFightResult(Players players, Dealer dealer) {
-        ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
+        Results resultCalculator = new Results(players, dealer);
         resultCalculator.executeGame(players, dealer);
         OutputView.printFinalFightResult(resultCalculator);
     }

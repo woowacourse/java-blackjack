@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ResultCalculator {
+public class Results {
     private final Map<String, Map<Score, Integer>> results;
 
-    public ResultCalculator(Players players, Dealer dealer) {
+    public Results(Players players, Dealer dealer) {
         this.results = new LinkedHashMap<>();
         results.put(dealer.getName(), initResults());
         for (Player player : players.getPlayers()) {
