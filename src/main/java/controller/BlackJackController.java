@@ -3,8 +3,10 @@ package controller;
 import domain.model.Dealer;
 import domain.model.Player;
 import domain.model.Players;
+import domain.model.Profit;
 import domain.service.BlackJackGame;
 import domain.vo.Result;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 import view.IOView;
@@ -26,11 +28,13 @@ public class BlackJackController {
         getPlayerAdditionalCard(players);
         getDealerAdditionalCard(dealer);
         printTotalCardState(dealer, players);
-        printResult(dealer, players);
+        printProfits(dealer, players);
     }
 
     private Players getPlayers() {
-        return Players.from(ioView.inputNames());
+        List<String> names = ioView.inputNames();
+        List<Double> battings = ioView.inputBattings(names);
+        return Players.from(names, battings);
     }
 
     private void giveInitialCards(final Dealer dealer, final Players players) {
@@ -73,5 +77,11 @@ public class BlackJackController {
         ioView.printDealerResult(dealerResult);
         final Map<Player, Result> playerResult = blackJackGame.makePlayersResult(dealer, players);
         ioView.printResult(playerResult);
+    }
+
+    private void printProfits(final Dealer dealer, final Players players) {
+        final List<Profit> profits = blackJackGame.calculatePlayersProfit(players, dealer);
+        final Profit dealerProfit = Profit.makeDealerProfitFrom(profits);
+        ioView.printProfits(dealerProfit, profits, players.getNames());
     }
 }

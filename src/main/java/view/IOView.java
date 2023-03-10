@@ -1,12 +1,15 @@
 package view;
 
 import common.ExecuteContext;
+import common.ExecuteStrategy;
 import domain.model.Card;
 import domain.model.Dealer;
 import domain.model.Participant;
 import domain.model.Player;
 import domain.model.Players;
+import domain.model.Profit;
 import domain.vo.Result;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +26,7 @@ public class IOView {
     private static final String INPUT_NAMES_REQUEST_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_CARD_INTENT_REQUEST_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String INPUT_CHECK_LETTER_ERROR_MESSAGE = "허용되지 않는 입력입니다.";
+    private static final String INPUT_BATTING_REQUEST_MESSAGE = "%s의 배팅 금액은?";
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String NEW_LINE = "\n";
@@ -37,6 +41,8 @@ public class IOView {
     private static final String RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
     private static final String DEALER_NAME = "딜러";
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String NOT_NUMBER_ERROR_MESSAGE = "숫자만 입력할 수 있습니다.";
+    private static final String PROFIT_MESSAGE = "## 최종 수익";
 
     public List<String> inputNames() {
         return ExecuteContext.workWithExecuteStrategy(() -> {
@@ -72,6 +78,25 @@ public class IOView {
             .orElseThrow(() -> new IllegalArgumentException(INPUT_CHECK_LETTER_ERROR_MESSAGE));
     }
 
+    public List<Double> inputBattings(final List<String> names) {
+        final List<Double> battings = new ArrayList<>();
+        names.stream()
+            .<ExecuteStrategy<Boolean>>map(name -> () -> {
+                System.out.printf(NEW_LINE + INPUT_BATTING_REQUEST_MESSAGE + NEW_LINE, name);
+                return battings.add(getBatting());
+            })
+            .forEach(ExecuteContext::workWithExecuteStrategy);
+        return battings;
+    }
+
+    private double getBatting() {
+        try {
+            return Double.parseDouble(scanner.nextLine());
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException(NOT_NUMBER_ERROR_MESSAGE);
+        }
+    }
+
 
     public void printInitialCards(final Dealer dealer, final Players players) {
         printCardsMessage(players);
@@ -102,7 +127,7 @@ public class IOView {
     }
 
     private String stringifyCard(final Participant participant) {
-        final StringJoiner stringJoiner = new StringJoiner(DELIMITER  + " ");
+        final StringJoiner stringJoiner = new StringJoiner(DELIMITER + " ");
         participant.getCards()
             .stream()
             .map(this::makeCardView)
@@ -141,6 +166,14 @@ public class IOView {
         playerResults.keySet()
             .stream()
             .map(player -> player.getName() + COLON + stringifyResult(playerResults.get(player)))
+            .forEach(System.out::println);
+    }
+
+    public void printProfits(final Profit dealerProfit, final List<Profit> profits, final List<String> names) {
+        System.out.println(NEW_LINE + PROFIT_MESSAGE);
+        System.out.println(DEALER_NAME + ": " + (int) dealerProfit.getValue());
+        IntStream.range(0, names.size())
+            .mapToObj(index -> names.get(index) + ": " + (int) profits.get(index).getValue())
             .forEach(System.out::println);
     }
 
