@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +13,7 @@ class BlackjackGameTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 3, 10})
     void 올바르지_않은_덱의_개수(int inputDeckCount) {
-        Map<String, Integer> playerBettingAmountTable = new HashMap<>() {{
+        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>() {{
             put("Player1", 1_000);
             put("Player2", 2_000);
         }};

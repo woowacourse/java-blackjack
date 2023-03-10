@@ -3,6 +3,7 @@ package domain.user;
 import domain.Result;
 import domain.card.Deck;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +33,21 @@ public final class Participants {
         }
     }
 
-    public Map<Player, Result> calculateAllResults() {
-        Map<Player, Result> resultsOfPlayers = new HashMap<>();
-        this.getPlayers().forEach(player -> resultsOfPlayers.put(player, calculateResult(player)));
-        return resultsOfPlayers;
+    public AllWinningAmountDto calculateWinningAmountOfAllPlayers() {
+        int winningAmountOfDealer= 0;
+        Map<String, Integer> playerWinningAmounts = new LinkedHashMap<>();
+        for (Player player : this.getPlayers()) {
+            int winningAmountOfPlayer = calculateWinningAmount(player);
+            playerWinningAmounts.put(player.getNameValue(), winningAmountOfPlayer);
+            winningAmountOfDealer -= winningAmountOfPlayer;
+
+        }
+        return new AllWinningAmountDto(winningAmountOfDealer, playerWinningAmounts);
+    }
+
+    private int calculateWinningAmount(Player player) {
+        Result result = calculateResult(player);
+        return result.calculateWinningAmount(player.getBettingAmountValue());
     }
 
     private Result calculateResult(Player player) {

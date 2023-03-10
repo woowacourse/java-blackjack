@@ -2,7 +2,7 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ class PlayersTest {
     @Test
     @DisplayName("Player들을 반환한다.")
     void 플레이어들_반환() {
-        Map<String, Integer> playerBettingAmountTable = new HashMap<>() {{
+        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>() {{
             put("Player1", 1_000);
             put("Player2", 2_000);
         }};

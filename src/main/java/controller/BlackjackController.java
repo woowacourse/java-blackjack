@@ -1,7 +1,9 @@
 package controller;
 
 import domain.BlackjackGame;
+import domain.user.AllWinningAmountDto;
 import domain.user.Player;
+import java.util.Map;
 import java.util.function.Supplier;
 import ui.InputView;
 import ui.OutputView;
@@ -32,7 +34,7 @@ public class BlackjackController {
 
     private void announceResult() {
         OutputView.printCardsStatusWithScore(this.blackjackGame.getDealer(), this.blackjackGame.getPlayers());
-        OutputView.printResults(this.blackjackGame.calculateAllResults());
+        OutputView.printWinningAmountsOfAllPlayers(this.blackjackGame.calculateAllWinningAmounts());
     }
 
     private void giveCardUntilImpossible(Player player, BlackjackGame blackjackGame) {

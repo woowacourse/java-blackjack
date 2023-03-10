@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Deck;
 import domain.card.ShuffledDeck;
+import domain.user.AllWinningAmountDto;
 import domain.user.Dealer;
 import domain.user.Participants;
 import domain.user.Player;
@@ -40,8 +41,8 @@ public final class BlackjackGame {
         return this.participants.hitOrStayByDealer(this.deck);
     }
 
-    public Map<Player, Result> calculateAllResults() {
-        return this.participants.calculateAllResults();
+    public AllWinningAmountDto calculateAllWinningAmounts() {
+        return this.participants.calculateWinningAmountOfAllPlayers();
     }
 
     public void hitBy(Player player) {

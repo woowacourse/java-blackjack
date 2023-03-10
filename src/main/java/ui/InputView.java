@@ -1,6 +1,6 @@
 package ui;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import util.ExceptionCounter;
 import domain.user.Player;
@@ -19,7 +19,7 @@ public class InputView {
         List<String> nameInputs = Arrays.stream(SCANNER.nextLine().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
-        Map<String, Integer> playerBettingAmountTable = new HashMap<>();
+        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>();
         nameInputs.forEach(nameInput ->
                 playerBettingAmountTable.put(nameInput, readPlayerBettingAmountOf(nameInput))
         );
