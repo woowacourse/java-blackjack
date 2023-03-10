@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int ACE_BOTH_SCORE_DIFFERENCE = 10;
-    
     private final List<Card> cards;
 
     public Hand() {
@@ -17,22 +14,17 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getTotalScore() {
-        int totalScore = calculateTotalScore();
-
-        if (containsAce() && aceElevenScoreCase(totalScore) <= BLACKJACK_SCORE) {
-            return totalScore + ACE_BOTH_SCORE_DIFFERENCE;
+    public Score getTotalScore() {
+        Score totalScore = score();
+        if (containsAce()) {
+            return totalScore.plusTenIfNotBust();
         }
-
+        
         return totalScore;
     }
     
-    private int aceElevenScoreCase(int totalScore) {
-        return totalScore + 10;
-    }
-    
-    public boolean isBust(int totalScore) {
-        return totalScore > BLACKJACK_SCORE;
+    private Score score() {
+        return new Score(calculateTotalScore());
     }
     
     private int calculateTotalScore() {
@@ -40,9 +32,13 @@ public class Hand {
                 .mapToInt(Card::getScore)
                 .sum();
     }
-
+    
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return getTotalScore().isBust();
     }
 
     public List<Card> getCards() {

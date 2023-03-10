@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Score;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private static final int INIT_GIVE_CARD_COUNT = 2;
-    private static final int DEALER_GIVE_CARD_STATE_MAX_SCORE = 16;
+    private static final Score DEALER_GIVE_CARD_STATE_MAX_SCORE = new Score(16);
     
     private final Deck deck;
     private final List<Player> players;
@@ -56,7 +57,8 @@ public class BlackJackGame {
     }
 
     public boolean shouldDealerGetCard() {
-        return getDealer().getTotalScore() <= DEALER_GIVE_CARD_STATE_MAX_SCORE;
+        Score dealerTotalScore = getDealer().getTotalScore();
+        return dealerTotalScore.isLessThenOrEqualTo(DEALER_GIVE_CARD_STATE_MAX_SCORE);
     }
 
     public void giveDealerCard() {

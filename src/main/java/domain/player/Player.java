@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.card.Score;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,8 +25,8 @@ public abstract class Player {
             return decideGameResultWithBust(otherPlayer);
         }
         
-        int totalScore = getTotalScore();
-        int totalScoreOfOtherPlayer = otherPlayer.getTotalScore();
+        Score totalScore = getTotalScore();
+        Score totalScoreOfOtherPlayer = otherPlayer.getTotalScore();
         return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
     }
     
@@ -41,24 +42,24 @@ public abstract class Player {
         return GameResult.WIN;
     }
     
-    private GameResult decideGameResultWithScore(int totalScore, int totalScoreOfOtherPlayer) {
-        if (totalScore > totalScoreOfOtherPlayer) {
+    private GameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
+        if (totalScore.isOverThen(totalScoreOfOtherPlayer)) {
             return GameResult.WIN;
         }
         
-        if (totalScore < totalScoreOfOtherPlayer) {
+        if (totalScore.isLessThen(totalScoreOfOtherPlayer)) {
             return GameResult.LOSE;
         }
         
         return GameResult.DRAW;
     }
     
-    public int getTotalScore() {
-        return hand.getTotalScore();
+    public boolean isBust() {
+        return hand.isBust();
     }
     
-    public boolean isBust() {
-        return hand.isBust(getTotalScore());
+    public Score getTotalScore() {
+        return hand.getTotalScore();
     }
     
     public List<Card> getCards() {

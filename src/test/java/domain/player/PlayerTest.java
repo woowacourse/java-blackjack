@@ -48,7 +48,7 @@ class PlayerTest {
         dealer.addCard(new Card(Shape.HEART, Number.FIVE));
         dealer.addCard(new Card(Shape.DIAMOND, number));
         
-        assertThat(dealer.getTotalScore()).isEqualTo(totalScore);
+        assertThat(dealer.getTotalScore().getScore()).isEqualTo(totalScore);
     }
     
     @DisplayName("버스트인지 확인")

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ListStudy {
     @Test
     public void arrayList() {
-        SimpleList values = new SimpleLinkedList();
+        SimpleList values = new SimpleArrayList();
 
         values.add("first");
         values.add("second");
