@@ -12,7 +12,9 @@ class CardTest {
         CardNumber number = CardNumber.THREE;
         CardSymbol symbol = CardSymbol.HEART;
 
+        Card card = new Card(number, symbol);
         // then
-        Assertions.assertThatNoException().isThrownBy(() -> new Card(number, symbol));
+        Assertions.assertThat(card.getCardNumber()).isEqualTo(number);
+        Assertions.assertThat(card.getSymbol()).isEqualTo(symbol.getSymbol());
     }
 }
