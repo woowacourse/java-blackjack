@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class Players {
@@ -19,5 +20,9 @@ public final class Players {
         if (players.size() < MIN_PLAYERS_COUNT || players.size() > MAX_PLAYERS_COUNT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_ERROR_MESSAGE + players);
         }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
