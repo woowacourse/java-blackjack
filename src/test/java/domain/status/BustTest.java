@@ -2,6 +2,7 @@ package domain.status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.status.end.Bust;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 

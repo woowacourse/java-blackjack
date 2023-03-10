@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.status.Ready;
+import domain.status.initial.Ready;
 import domain.status.Status;
 import java.util.List;
 

@@ -1,7 +1,10 @@
-package domain.status;
+package domain.status.intermediate;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.status.Status;
+import domain.status.end.Bust;
+import domain.status.end.Stand;
 
 public class Hit implements Status {
 

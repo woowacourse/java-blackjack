@@ -5,6 +5,7 @@ import static domain.Fixtures.QUEEN_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Cards;
+import domain.status.end.Stand;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;

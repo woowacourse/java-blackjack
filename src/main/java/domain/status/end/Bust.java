@@ -1,4 +1,4 @@
-package domain.status;
+package domain.status.end;
 
 import java.math.BigDecimal;
 

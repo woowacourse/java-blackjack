@@ -1,7 +1,10 @@
-package domain.status;
+package domain.status.initial;
 
 import domain.card.Cards;
 import domain.participant.Score;
+import domain.status.Status;
+import domain.status.end.BlackJack;
+import domain.status.intermediate.Hit;
 
 public class Ready implements Status {
     public Status firstDraw(final Cards cards) {

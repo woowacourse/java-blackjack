@@ -7,6 +7,9 @@ import static domain.Fixtures.KING_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Cards;
+import domain.status.end.BlackJack;
+import domain.status.initial.Ready;
+import domain.status.intermediate.Hit;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
