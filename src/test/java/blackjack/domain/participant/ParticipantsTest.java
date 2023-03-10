@@ -27,12 +27,25 @@ class ParticipantsTest {
     void extractDealerTest() {
         //given
         List<String> playerNames = List.of("ako", "maco");
-        Participants participants = Participants.generate(List.of("pobi", "ako"), List.of("1000", "1000"));
+        Participants participants = Participants.generate(playerNames, List.of("1000", "1000"));
 
         //when
         Dealer result = participants.extractDealer();
 
         //then
         assertThat(result.getName()).isEqualTo("딜러");
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름을 반환한다.")
+    void getPlayersName() {
+        //given
+        List<String> playerNames = List.of("ako", "maco");
+        Participants participants = Participants.generate(playerNames, List.of("1000", "1000"));
+        //when
+        List<String> participantsName = participants.getParticipantsName();
+
+        //then
+        assertThat(participantsName.containsAll(playerNames)).isTrue();
     }
 }
