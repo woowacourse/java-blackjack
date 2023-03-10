@@ -55,7 +55,7 @@ class PlayerTest {
             //then
             assertThatThrownBy(() -> player.play(cardDeck))
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("버스트 상태에서는 카드를 더 뽑을 수 없습니다.");
+                    .hasMessage("카드를 더 뽑을 수 없습니다.");
         }
 
         @Test
@@ -72,7 +72,7 @@ class PlayerTest {
             //then
             assertThatThrownBy(() -> player.play(cardDeck))
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
+                    .hasMessage("카드를 더 뽑을 수 없습니다.");
         }
     }
 

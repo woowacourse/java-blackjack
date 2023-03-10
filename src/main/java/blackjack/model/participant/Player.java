@@ -37,15 +37,15 @@ public class Player extends Participant {
         }
 
         if (result.equals(Result.WIN)) {
-            return GET_MONEY * getIncreasedBetAmount();
+            return GET_MONEY * reflectWeightOnBetAmount();
         }
         if (result.equals(Result.TIE)) {
             return GET_NOTHING;
         }
-        return LOSE_MONEY * getIncreasedBetAmount();
+        return LOSE_MONEY * reflectWeightOnBetAmount();
     }
 
-    private int getIncreasedBetAmount() {
+    private int reflectWeightOnBetAmount() {
         return (int) (betAmount.getBetAmount() * ((FinalState) currentState).getProfitWeight());
     }
 }

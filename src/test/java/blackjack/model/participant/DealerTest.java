@@ -64,7 +64,7 @@ class DealerTest {
         //then
         assertThatThrownBy(() -> dealer.play(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("스탠드 상태에서는 카드를 더 뽑을 수 없습니다.");
+                .hasMessage("카드를 더 뽑을 수 없습니다.");
     }
 
     @Test
