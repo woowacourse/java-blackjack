@@ -21,20 +21,20 @@ public final class Runner {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = retryOnError(this::startGame);
-        initGame(blackjackGame);
+        final BlackjackGame blackjackGame = retryOnError(this::joinGame);
+        startGame(blackjackGame);
         playGame(blackjackGame);
         judgeGameResult(blackjackGame);
     }
 
-    private BlackjackGame startGame() {
+    private BlackjackGame joinGame() {
         final List<String> participantNames = this.inputView.readPlayerNames();
         this.outputView.printSetupGame(participantNames);
 
         return BlackjackGame.from(participantNames, new RandomCardGenerator());
     }
 
-    private void initGame(final BlackjackGame blackjackGame) {
+    private void startGame(final BlackjackGame blackjackGame) {
         blackjackGame.drawCards();
         this.outputView.printPlayerCards(blackjackGame.getPlayers());
     }
