@@ -34,7 +34,8 @@ public class Player implements Receivable {
         return user.getCardTotalValue();
     }
 
-    private boolean isBlackJack() {
+    @Override
+    public boolean isBlackJack() {
         return user.isBlackJack();
     }
 

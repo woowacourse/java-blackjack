@@ -1,9 +1,14 @@
 package model.money;
 
+import static model.card.CardFixture.DIAMOND_ACE;
+import static model.card.CardFixture.DIAMOND_JACK;
+import static model.card.CardFixture.DIAMOND_KING;
+import static model.card.CardFixture.DIAMOND_NINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
+import model.user.Dealer;
 import model.user.Player;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +19,13 @@ class PurseTest {
 
     private Player bebe;
     private Player ethan;
+    private Dealer dealer;
+
     private Purse purse;
 
     @BeforeEach
     void init() {
+        dealer = new Dealer();
         bebe = new Player("bebe");
         ethan = new Player("ethan");
         final List<Player> players = List.of(bebe, ethan);
@@ -41,5 +49,24 @@ class PurseTest {
 
         // then
         assertThat(purse.getMoney(bebe)).isEqualTo(new Money(10_000));
+    }
+
+    @Test
+    @DisplayName("블랙잭이면 돈이 1.5배로 바뀐다.")
+    void whenBlackJack_thenChangeMultipleMoney() {
+        // given
+        purse.addMoney(bebe, new Money(10_000));
+
+        bebe.receiveCard(DIAMOND_KING);
+        bebe.receiveCard(DIAMOND_ACE);
+
+        dealer.receiveCard(DIAMOND_JACK);
+        dealer.receiveCard(DIAMOND_NINE);
+
+        // when
+        purse.calculateMoney(bebe, dealer);
+
+        // then
+        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(15_000));
     }
 }

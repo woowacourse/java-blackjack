@@ -1,9 +1,11 @@
 package model.user;
 
+import static model.card.CardFixture.DIAMOND_ACE;
 import static model.card.CardFixture.DIAMOND_KING;
 import static model.card.CardFixture.DIAMOND_SEVEN;
 import static model.card.CardFixture.DIAMOND_SIX;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.stream.Stream;
 import model.card.Card;
@@ -52,5 +54,19 @@ class DealerTest {
 
         // when, then
         assertThat(dealer.getHand().getCards()).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 아닌지 확인한다")
+    void blackJackTest() {
+        // given
+        dealer.receiveCard(DIAMOND_KING);
+        dealer.receiveCard(DIAMOND_ACE);
+
+        // when, then
+        assertAll(
+                () -> assertThat(dealer.isBlackJack()).isTrue(),
+                () -> assertThat(dealer.isNotBlackJack()).isFalse()
+        );
     }
 }
