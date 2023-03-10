@@ -18,8 +18,7 @@ public class BlackJackController {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames,
             OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
-        final List<Money> moneys = Repeater.repeatIfError(() -> inputMoneys(players),
-            OutputView::printErrorMessage);
+        final List<Money> moneys = inputMoneys(players);
 
         initializeGame(cardPicker, players, dealer);
         playGame(cardPicker, players, dealer);
