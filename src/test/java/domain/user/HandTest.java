@@ -15,7 +15,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드 풀에 카드가 저장된다")
-    void makeCardPoolTest() {
+    void makeHandTest() {
         List<Card> cards = List.of(
                 Card.of(Suit.CLOVER, Denomination.EIGHT),
                 Card.of(Suit.DIAMOND, Denomination.ACE),
@@ -30,7 +30,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드가 없을때에는 합이 0이다")
-    void sumCardPoolWhenCardsNotExist() {
+    void sumHandWhenCardsNotExist() {
         List<Card> cards = Collections.emptyList();
 
         Hand hand = new Hand(cards);
@@ -41,7 +41,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드가 있을때에는 합이 카드 값에 따라 결정된다")
-    void sumCardPoolWhenCardsExist() {
+    void sumHandWhenCardsExist() {
         List<Card> cards = List.of(
                 Card.of(Suit.CLOVER, Denomination.FIVE),
                 Card.of(Suit.HEART, Denomination.EIGHT)
