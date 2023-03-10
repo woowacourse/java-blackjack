@@ -3,7 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.fixture.ParticipantCardsFixture;
+import blackjack.domain.card.Deck;
+import blackjack.fixture.MockDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,7 +20,9 @@ class PlayerTest {
     @MethodSource("isHittableDummy")
     @DisplayName("플레이어가 카드를 뽑을 수 있는지 확인한다.")
     void isHittable(final Card cardOne, final Card cardTwo, final List<Card> additionalCards, final boolean expected) {
-        Participant player = new Player(ParticipantCardsFixture.create(cardOne, cardTwo, additionalCards), "베로");
+        final Deck deck = MockDeck.create(List.of(cardOne, cardTwo));
+        final Player player = new Player(deck, "헤나");
+        additionalCards.forEach(player::hit);
 
         assertThat(player.isHittable()).isEqualTo(expected);
     }
