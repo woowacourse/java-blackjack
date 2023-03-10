@@ -6,12 +6,6 @@ import org.junit.jupiter.api.Test;
 class ScoreTest {
 
     @Test
-    void createInstance() {
-        Score score = new Score();
-        Assertions.assertThat(score).isInstanceOf(Score.class);
-    }
-
-    @Test
     void createInstanceWithValue() {
         Score score = new Score(4);
         Assertions.assertThat(score).isInstanceOf(Score.class);

@@ -10,12 +10,7 @@ public class Score {
     private static final Score maxAceValue = new Score(11);
     private static final Score minAceValue = new Score(1);
 
-
     private final int value;
-
-    public Score() {
-        this.value = 0;
-    }
 
     public Score(final int value) {
         this.value = value;
