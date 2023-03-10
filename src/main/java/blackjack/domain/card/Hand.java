@@ -1,5 +1,10 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.Result.DRAW;
+import static blackjack.domain.Result.LOSE;
+import static blackjack.domain.Result.WIN;
+
+import blackjack.domain.Result;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +56,30 @@ public final class Hand {
 
     public boolean isBlackjack() {
         return hand.size() == BLACKJACK_SIZE && totalScore() == BLACKJACK_SCORE;
+    }
+
+    public Result compareTo(final Hand anotherHand) {
+        if (this.isBust()) {
+            return compareToBust(anotherHand);
+        }
+        return compareScoreTo(anotherHand);
+    }
+
+    private Result compareToBust(final Hand anotherHand) {
+        if (anotherHand.isBust()) {
+            return DRAW;
+        }
+        return WIN;
+    }
+
+    private Result compareScoreTo(final Hand anotherHand) {
+        if (this.totalScore() > anotherHand.totalScore()) {
+            return WIN;
+        }
+        if (this.totalScore() < anotherHand.totalScore()) {
+            return LOSE;
+        }
+        return DRAW;
     }
 
     public List<Card> getHand() {
