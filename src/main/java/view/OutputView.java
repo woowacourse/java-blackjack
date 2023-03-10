@@ -41,10 +41,10 @@ public final class OutputView {
         List<Player> players = participants.getPlayers();
 
         Card dealerCard = dealer.getCards().get(0);
-        String dealerCardDisplay = String.format("%s: %s%s", dealer.getName(),
+        System.out.printf("%s: %s%s" + System.lineSeparator(),
+                dealer.getName(),
                 valueDisplay.findDisplayOf(dealerCard.getValue()),
                 shapeDisplay.findDisplayOf(dealerCard.getShape()));
-        System.out.println(dealerCardDisplay);
 
         for (Player player : players) {
             printSingleState(player);
@@ -65,7 +65,6 @@ public final class OutputView {
             System.out.printf(finalFormat, formatCardState(player), player.getScore());
         }
         System.out.println();
-        System.out.println();
     }
 
     private String formatCardState(final Participant participant) {
@@ -78,7 +77,6 @@ public final class OutputView {
 
     public void printFillDealerCards() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
-        System.out.println();
     }
 
     public void printResult(final WinningResult winningResult) {
@@ -133,7 +131,15 @@ public final class OutputView {
     }
 
     public void printBets(final BlackJackGame blackJackGame) {
-        Map<Player, Money> finalBets = blackJackGame.finalBets();
+        System.out.println("## 최종 수익");
+
+        Dealer dealer = blackJackGame.getDealer();
+        Money dealerProfit = blackJackGame.dealerProfit();
+        System.out.printf("%s: %d" + System.lineSeparator(),
+                dealer.getName(),
+                dealerProfit.getAmount());
+
+        Map<Player, Money> finalBets = blackJackGame.playersProfit();
         for (Player player : blackJackGame.getPlayers()) {
             Money playerBet = finalBets.get(player);
             System.out.printf("%s: %d" + System.lineSeparator(),

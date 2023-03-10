@@ -37,8 +37,12 @@ public final class BlackJackGame {
         this.bets.addBet(player, money);
     }
 
-    public Map<Player, Money> finalBets() {
+    public Map<Player, Money> playersProfit() {
         return bets.calculatePlayersProfit(makeResult());
+    }
+
+    public Money dealerProfit() {
+        return bets.calculateDealerProfit(makeResult());
     }
 
     public Participants getParticipants() {
