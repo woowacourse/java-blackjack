@@ -2,7 +2,7 @@ package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
-import blackjack.model.state.DrawState;
+import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.State;
 
 public class Player extends Participant {
@@ -17,8 +17,8 @@ public class Player extends Participant {
     }
 
     public void changeToStand() {
-        if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).transitToStandState();
+        if (currentState instanceof PlayerDrawState) {
+            this.currentState = ((PlayerDrawState) currentState).transitToStandState();
         }
     }
 

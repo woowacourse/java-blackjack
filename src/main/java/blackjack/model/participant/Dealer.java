@@ -3,7 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DealerDrawState;
-import blackjack.model.state.DrawState;
+import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.State;
 
 public class Dealer extends Participant {
@@ -18,10 +18,6 @@ public class Dealer extends Participant {
     @Override
     public void play(CardDeck cardDeck) {
         this.currentState = currentState.draw(cardDeck);
-        if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).transitToDealerDrawState();
-            this.currentState = ((DealerDrawState) currentState).tryStateTransition();
-        }
     }
 
     public Card getFirstCard() {

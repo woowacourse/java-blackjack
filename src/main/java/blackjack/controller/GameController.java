@@ -5,7 +5,8 @@ import blackjack.dto.ResultDto;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
 import blackjack.model.result.Result;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -38,9 +39,9 @@ public class GameController {
 
     private Participants initializeParticipants() {
         List<Player> players = inputView.readNames().stream()
-                .map(name -> new Player(new Name(name), new InitialState(new Hand())))
+                .map(name -> new Player(new Name(name), new PlayerInitialState(new Hand())))
                 .collect(Collectors.toList());
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         return new Participants(dealer, players);
     }
 

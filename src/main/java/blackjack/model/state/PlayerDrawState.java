@@ -3,14 +3,18 @@ package blackjack.model.state;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class DrawState extends State {
-    public DrawState(Hand hand) {
+public class PlayerDrawState extends State {
+    public PlayerDrawState(Hand hand) {
         super(hand);
     }
 
     @Override
     public State draw(CardDeck cardDeck) {
         hand.add(cardDeck.pick());
+        return tryStateTransition();
+    }
+
+    private State tryStateTransition() {
         if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }
@@ -23,10 +27,6 @@ public class DrawState extends State {
 
     public State transitToStandState() {
         return new StandState(hand);
-    }
-
-    public State transitToDealerDrawState() {
-        return new DealerDrawState(hand);
     }
 
     @Override
