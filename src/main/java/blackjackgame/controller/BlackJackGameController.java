@@ -90,7 +90,7 @@ public class BlackJackGameController {
     }
 
     private void printDrawResult(Player player) {
-        outputView.printPlayerDrawResult(player.getName(), player.getCards());
+        outputView.printPlayerDrawResult(player.getName(), player.cards());
     }
 
     private void progressDealerTurn(BlackJackGame blackJackGame) {
@@ -104,8 +104,8 @@ public class BlackJackGameController {
 
     private void printUsersCardResult(BlackJackGame blackJackGame) {
         Map<User, List<Card>> userResult = new LinkedHashMap<>();
-        userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().getCards());
-        blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.getCards()));
+        userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().cards());
+        blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.cards()));
         outputView.printUsersCardResult(userResult);
     }
 

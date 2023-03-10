@@ -25,11 +25,11 @@ public class Dealer extends User {
     }
 
     public Card getFirstCard() {
-        return getCards().get(0);
+        return cards().get(0);
     }
 
     public int getExtraDrawCount(int initialCardCount) {
-        return getCards().size() - initialCardCount;
+        return cards().size() - initialCardCount;
     }
 
     @Override

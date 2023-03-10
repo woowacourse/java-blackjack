@@ -2,6 +2,7 @@ package blackjackgame.domain.user;
 
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CloverCard;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -17,10 +18,11 @@ class ScoreTest {
     @Test
     void calculateScoreTest() {
         Score score = new Score();
-        List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR,
-                CloverCard.CLOVER_FIVE);
+        Hands hands = new Hands();
+        hands.add(new ArrayList<>(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR,
+                CloverCard.CLOVER_FIVE)));
 
-        score.setScore(cards);
+        score.setScore(hands);
 
         Assertions.assertThat(score.getScore()).isEqualTo(14);
     }
@@ -29,8 +31,10 @@ class ScoreTest {
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase_greaterThan21")
     void calculateScoreWithAceTest_greaterThan21(List<Card> cards, int expected) {
+        Hands hands = new Hands();
+        hands.add(cards);
         Score score = new Score();
-        score.setScore(cards);
+        score.setScore(hands);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
@@ -50,8 +54,10 @@ class ScoreTest {
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase_lessThan22")
     void calculateScoreWithAceTest_lessThan22(List<Card> cards, int expected) {
+        Hands hands = new Hands();
+        hands.add(cards);
         Score score = new Score();
-        score.setScore(cards);
+        score.setScore(hands);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }

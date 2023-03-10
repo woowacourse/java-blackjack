@@ -17,8 +17,8 @@ public class Score {
         this.score = 0;
     }
 
-    public void setScore(List<Card> cards) {
-        List<Integer> numbers = convertCardsToNumbers(cards);
+    public void setScore(Hands hands) {
+        List<Integer> numbers = convertCardsToNumbers(hands.getCards());
         int aceCount = countOfAce(numbers);
         int totalScore = sum(numbers);
 

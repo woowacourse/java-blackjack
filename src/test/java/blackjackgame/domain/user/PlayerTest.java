@@ -15,14 +15,14 @@ class PlayerTest {
     void generatePlayerTest_noCard() {
         Player player = new Player(new Name("플레이어"));
 
-        assertThat(player.getCards()).isEmpty();
+        assertThat(player.cards()).isEmpty();
     }
 
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
     @Test
     void receiveCardTest() {
         Player player = new Player(new Name("플레이어"));
-        List<Card> cards = player.getCards();
+        List<Card> cards = player.cards();
         int initialPlayerCardsSize = cards.size();
 
         player.receiveCard(CloverCard.CLOVER_FOUR);

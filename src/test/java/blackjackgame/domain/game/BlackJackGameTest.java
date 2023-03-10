@@ -39,22 +39,22 @@ class BlackJackGameTest {
     @DisplayName("블랙잭 게임 생성 당시 플레이어와 딜러는 카드를 가지고 있지 않다.")
     @Test
     void defaultCardTest() {
-        assertThat(player.getCards().size()).isEqualTo(0);
-        assertThat(dealer.getCards().size()).isEqualTo(0);
+        assertThat(player.cards().size()).isEqualTo(0);
+        assertThat(dealer.cards().size()).isEqualTo(0);
     }
 
     @DisplayName("플레이어와 딜러의 기본 카드 2장을 뽑는다.")
     @Test
     void drawDefaultCardTest() {
-        int dealerInitialCardsSize = dealer.getCards().size();
-        int playerInitialCardsSize = player.getCards().size();
+        int dealerInitialCardsSize = dealer.cards().size();
+        int playerInitialCardsSize = player.cards().size();
 
         blackJackGame.drawDefaultCard();
 
-        assertThat(dealer.getCards().size()).isEqualTo(dealerInitialCardsSize + 2);
-        assertThat(player.getCards().size()).isEqualTo(playerInitialCardsSize + 2);
-        assertThat(dealer.getCards()).isEqualTo(List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK));
-        assertThat(player.getCards()).isEqualTo(List.of(SpadeCard.SPADE_FIVE, DiamondCard.DIAMOND_SEVEN));
+        assertThat(dealer.cards().size()).isEqualTo(dealerInitialCardsSize + 2);
+        assertThat(player.cards().size()).isEqualTo(playerInitialCardsSize + 2);
+        assertThat(dealer.cards()).isEqualTo(List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK));
+        assertThat(player.cards()).isEqualTo(List.of(SpadeCard.SPADE_FIVE, DiamondCard.DIAMOND_SEVEN));
     }
 
     @DisplayName("딜러는 합산 점수가 17 이상이 될 때까지 카드를 뽑는다")
@@ -64,7 +64,7 @@ class BlackJackGameTest {
 
         blackJackGame.drawDealerCardUntilSatisfyingMinimumScore();
 
-        assertThat(dealer.getCards()).isEqualTo(expectedCards);
+        assertThat(dealer.cards()).isEqualTo(expectedCards);
     }
 
     @DisplayName("플레이어만 버스트일 경우, 딜러가 승리한다.")

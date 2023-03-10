@@ -1,0 +1,30 @@
+package blackjackgame.domain.user;
+
+import blackjackgame.domain.card.Card;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Hands {
+    private final List<Card> cards;
+
+    public Hands() {
+        this.cards = new ArrayList<>(Collections.emptyList());
+    }
+
+    public void add(Card receivedCard) {
+        cards.add(receivedCard);
+    }
+
+    public void add(List<Card> receivedCards) {
+        cards.addAll(receivedCards);
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+}
