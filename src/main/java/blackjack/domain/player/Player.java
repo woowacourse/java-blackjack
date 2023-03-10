@@ -27,7 +27,7 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return getTotalPoint().isBlackjack();
+        return getTotalPoint().isBlackjack() && holdingCards.isInitialSize();
     }
 
     public boolean moreScoreThan(final Player targetPlayer) {

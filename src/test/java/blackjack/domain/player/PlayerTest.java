@@ -136,11 +136,24 @@ class PlayerTest {
 
     @Test
     @DisplayName("카드가 2장이고, 20점이면 블랙잭이 아니다")
-    void is_not_blackjack_when_not_21() {
+    void not_blackjack_when_score_is_not_21() {
         Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
         Card heartKing = new Card(Shape.HEART, Number.KING);
 
         player.pickStartCards(heartQueen, heartKing);
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드가 3장이고, 21점이면 블랙잭이 아니다")
+    void not_blackjack_when_card_count_is_not_2() {
+        Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
+        Card heartFour = new Card(Shape.HEART, Number.FOUR);
+        Card heartSeven = new Card(Shape.HEART, Number.SEVEN);
+
+        player.pickStartCards(heartQueen, heartFour);
+        player.pick(heartSeven);
 
         assertThat(player.isBlackjack()).isFalse();
     }
