@@ -18,5 +18,5 @@ public class BlackjackState extends State {
     public boolean isFinished() {
         return true;
     }
-    
+
 }

@@ -2,8 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.state.DealerDrawState;
-import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.State;
 
 public class Dealer extends Participant {

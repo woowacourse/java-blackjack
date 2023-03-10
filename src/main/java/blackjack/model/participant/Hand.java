@@ -4,7 +4,6 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -29,19 +28,19 @@ public class Hand {
         int score = cards.stream()
                 .mapToInt(card -> card.getNumber().getScore())
                 .sum();
-        if(hasAceCard() && isNotBustEvenIfTakeBonusScore(score)){
+        if (hasAceCard() && isNotBustEvenIfTakeBonusScore(score)) {
             return score + BONUS_SCORE;
         }
         return score;
     }
 
-    private boolean hasAceCard(){
+    private boolean hasAceCard() {
         return cards.stream()
                 .map(Card::getNumber)
                 .anyMatch(cardNumber -> cardNumber.equals(CardNumber.ACE));
     }
 
-    private boolean isNotBustEvenIfTakeBonusScore(int score){
+    private boolean isNotBustEvenIfTakeBonusScore(int score) {
         return score + BONUS_SCORE <= BLACKJACK_NUMBER;
     }
 
@@ -49,7 +48,7 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 }

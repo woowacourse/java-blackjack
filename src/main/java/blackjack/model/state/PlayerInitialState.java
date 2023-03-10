@@ -28,7 +28,6 @@ public class PlayerInitialState extends State {
         return new PlayerDrawState(hand);
     }
 
-
     private boolean isScoreHigherBlackjackNumber() {
         return hand.getScore() == BLACKJACK_NUMBER;
     }

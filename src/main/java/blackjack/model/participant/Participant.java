@@ -24,7 +24,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        if(isFinished()){
+        if (isFinished()) {
             FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
             return FinishedState.BLACKJACK.equals(state);
         }
@@ -32,7 +32,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        if(isFinished()){
+        if (isFinished()) {
             FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
             return FinishedState.BUST.equals(state);
         }
@@ -40,7 +40,7 @@ public abstract class Participant {
     }
 
     public boolean isStand() {
-        if(isFinished()){
+        if (isFinished()) {
             FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
             return FinishedState.STAND.equals(state);
         }

@@ -3,7 +3,6 @@ package blackjack.dto;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
-import blackjack.model.participant.Hand;
 import blackjack.model.participant.Participant;
 
 import java.util.Collections;

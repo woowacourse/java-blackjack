@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.result.Result;
 
