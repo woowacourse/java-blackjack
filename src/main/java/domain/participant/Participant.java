@@ -27,10 +27,12 @@ public abstract class Participant {
 
     public void receiveInitialCards(Cards cards) {
         this.cards = cards;
+        this.status = this.status.initialDraw(cards);
     }
 
     public void receiveCard(Card card) {
         this.cards = this.cards.receiveCard(card);
+        this.status = this.status.draw(card);
     }
 
     public Score calculateScore() {
