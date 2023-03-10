@@ -7,12 +7,12 @@ import java.util.stream.Stream;
 public class Deck {
 
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 카드가 존재합니다.";
-    public static final List<Card> CARDS;
+    public static final List<Card> TRUMP;
 
     private final Stack<Card> cards;
 
     static {
-        CARDS = Stream.of(Shape.values())
+        TRUMP = Stream.of(Shape.values())
                 .flatMap(shape -> Stream.of(Letter.values())
                         .map(letter -> Card.of(shape, letter)))
                 .collect(Collectors.toList());
@@ -30,9 +30,9 @@ public class Deck {
     }
 
     public static Deck createAllCard() {
-        Collections.shuffle(CARDS);
+        Collections.shuffle(TRUMP);
 
-        return new Deck(CARDS);
+        return new Deck(TRUMP);
     }
 
     private void validate(final List<Card> cards) {
