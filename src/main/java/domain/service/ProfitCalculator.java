@@ -2,7 +2,7 @@ package domain.service;
 
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Profit;
+import domain.vo.Profit;
 import domain.type.Result;
 
 public class ProfitCalculator {

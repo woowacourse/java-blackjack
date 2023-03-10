@@ -1,6 +1,5 @@
-package domain.model;
+package domain.vo;
 
-import domain.vo.Batting;
 import java.util.List;
 
 public class Profit {

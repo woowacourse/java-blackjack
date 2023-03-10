@@ -7,7 +7,7 @@ import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
 import domain.model.Players;
-import domain.model.Profit;
+import domain.vo.Profit;
 import domain.type.Letter;
 import domain.type.Suit;
 import domain.vo.Batting;

@@ -3,7 +3,7 @@ package view;
 import domain.model.Dealer;
 import domain.model.Player;
 import domain.model.Players;
-import domain.model.Profit;
+import domain.vo.Profit;
 import java.util.List;
 
 public class IOView {

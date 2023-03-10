@@ -3,7 +3,7 @@ package domain.service;
 import domain.model.Dealer;
 import domain.model.Participant;
 import domain.model.Players;
-import domain.model.Profit;
+import domain.vo.Profit;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

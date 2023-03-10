@@ -3,7 +3,7 @@ package controller;
 import domain.model.Dealer;
 import domain.model.Player;
 import domain.model.Players;
-import domain.model.Profit;
+import domain.vo.Profit;
 import domain.service.BlackJackGame;
 import java.util.List;
 import java.util.stream.IntStream;
