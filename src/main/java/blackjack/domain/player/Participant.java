@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 public final class Participant extends Player {
 
     private static final int MAX_NAME_LENGTH = 10;
+    public static final int IN_PLAY = 21;
 
     private final String name;
     private final BetAmount betAmount;
@@ -44,6 +45,6 @@ public final class Participant extends Player {
 
     @Override
     public boolean isInPlaying() {
-        return HandsState.from(cards.calculateScore()) == HandsState.IN_PLAY;
+        return cards.calculateScore() < IN_PLAY;
     }
 }

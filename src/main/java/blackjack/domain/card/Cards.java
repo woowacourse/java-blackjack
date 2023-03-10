@@ -8,6 +8,7 @@ public final class Cards {
 
     private static final int ACE_ADDITIONAL_SCORE = 10;
     private static final int MAX_SCORE = 21;
+    public static final int BLACKJACK_CARD_COUNT_CONDITION = 2;
 
     private final List<Card> cards;
 
@@ -22,7 +23,7 @@ public final class Cards {
     public int calculateScore() {
         final int score = sumScore();
 
-        if (hasAce() && plusTenIfNotBust(score)) {
+        if (hasAce() && isBurstAfterSumTen(score)) {
             return score + ACE_ADDITIONAL_SCORE;
         }
         return score;
@@ -39,20 +40,25 @@ public final class Cards {
                 .anyMatch(this::isAce);
     }
 
+    public boolean isBust() {
+        return calculateScore() > MAX_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore() == MAX_SCORE
+                && cards.size() == BLACKJACK_CARD_COUNT_CONDITION;
+    }
+
     private boolean isAce(final Card card) {
         return card.getNumber() == Number.ACE;
     }
 
-    private boolean plusTenIfNotBust(final int sum) {
+    private boolean isBurstAfterSumTen(final int sum) {
         return sum + ACE_ADDITIONAL_SCORE <= MAX_SCORE;
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    public int getCardsSize() {
-        return cards.size();
     }
 
     public List<String> getCardNames() {

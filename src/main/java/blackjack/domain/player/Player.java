@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Player {
 
-    private static final int NUM_CARDS_FOR_BLACKJACK = 2;
-
     protected final Cards cards;
 
     Player(final Cards cards) {
@@ -20,12 +18,11 @@ public abstract class Player {
     public abstract String getName();
 
     public boolean isBust() {
-        return HandsState.from(cards.calculateScore()) == HandsState.BUST;
+        return cards.isBust();
     }
 
     public boolean isBlackJack() {
-        return HandsState.from(cards.calculateScore()) == HandsState.MAX_SCORE
-                && cards.getCardsSize() == NUM_CARDS_FOR_BLACKJACK;
+        return cards.isBlackJack();
     }
 
     public List<String> getCardNames() {
