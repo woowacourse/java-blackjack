@@ -3,7 +3,6 @@ package view;
 import domain.deck.Card;
 import domain.game.Outcome;
 import domain.player.Name;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -58,28 +57,6 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final EnumMap<Outcome, Integer> dealerResult,
-                                       final Map<Name, Outcome> playerResult) {
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayerResult(playerResult);
-    }
-
-    private static void printDealerResult(final EnumMap<Outcome, Integer> dealerResult) {
-        printGameEachResult(
-                "딜러",
-                dealerResult.get(Outcome.LOSE),
-                dealerResult.get(Outcome.DRAW),
-                dealerResult.get(Outcome.WIN)
-        );
-    }
-
-    private static void printPlayerResult(final Map<Name, Outcome> result) {
-        result.keySet().forEach(name ->
-                printEachPlayerResult(result, name)
-        );
-    }
-
     private static void printEachPlayerResult(final Map<Name, Outcome> result, final Name name) {
         if (result.get(name).equals(Outcome.WIN)) {
             printGameEachResult(name.getName(), 1, 0, 0);
@@ -98,5 +75,14 @@ public class OutputView {
 
     public static void printInputAmount(final Name name) {
         System.out.printf("%s의 베팅 금액은?%n", name.getName());
+    }
+
+    public static void printProfitResult(final Map<Name, Integer> profits) {
+        System.out.println("## 최종 수익");
+        profits.forEach(OutputView::printProfit);
+    }
+
+    private static void printProfit(final Name name, final Integer profit) {
+        System.out.printf("%s: %d%n", name.getName(), profit);
     }
 }

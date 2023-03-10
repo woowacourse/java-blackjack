@@ -27,6 +27,12 @@ public class MainController {
         drawCardsDealer();
 
         outputCardResult();
+        outputProfitResult();
+    }
+
+    private void outputProfitResult() {
+        OutputView.printEmptyLine();
+        OutputView.printProfitResult(blackJackGame.calculateProfits());
     }
 
     private List<Name> inputNames() {
