@@ -216,8 +216,8 @@ class BlackJackServiceTest {
     }
 
     @Test
-    @DisplayName("딜러, 플레이어 둘다 BUST라면, 플레이어는 배팅 금액을 그대로 돌려 받는다.")
-    void calculate_account_if_dealer_and_player_bust() {
+    @DisplayName("딜러, 플레이어 둘다 BUST라면, 딜러의 승리이다.")
+    void calculate_account_if_dealer_and_player_bust_dealer_win() {
         // given
         Card card1 = new Card(Type.CLUB, Value.EIGHT);
         Card card2 = new Card(Type.SPADE, Value.EIGHT);
@@ -234,7 +234,30 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(givenAccount);
+        assertThat(dealer.getAccount()).isEqualTo(1000);
+        assertThat(player.getAccount()).isEqualTo(-givenAccount);
+    }
+
+    @Test
+    @DisplayName("딜러, 플레이어 둘다 블랙잭이라면, 플레이어는 배팅금을 돌려받는다.")
+    void calculate_account_if_dealer_and_player_black_jack() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.ACE);
+        Card card2 = new Card(Type.SPADE, Value.KING);
+        List<Card> givenCards = List.of(card1, card2);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        int givenAccount = 1000;
+        Dealer dealer = new Dealer(drawnCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), drawnCards);
+        Players players = new Players(List.of(player));
+
+        // when
+        blackJackService.calculateGameResults(dealer, players);
+
+        // then
+        assertThat(dealer.getAccount()).isEqualTo(0);
+        assertThat(player.getAccount()).isEqualTo(1000);
     }
 
     @Test

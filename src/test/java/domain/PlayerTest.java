@@ -84,7 +84,8 @@ class PlayerTest {
     void losing_all_account_when_player_bust() {
         // given
         int givenAccount = 1000;
-        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), new DrawnCards(new ArrayList<>()));
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)),
+                new DrawnCards(new ArrayList<>()));
 
         // when
         player.bustAccount();
@@ -106,5 +107,29 @@ class PlayerTest {
 
         // then
         assertThat(player.getAccount()).isEqualTo(givenMoney + winningPrice);
+    }
+
+    @Test
+    @DisplayName("뽑은 카드가 블랙잭인지 확인한다.")
+    void check_is_black_jack() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.ACE);
+        Card card2 = new Card(Type.SPADE, Value.KING);
+        List<Card> givenCards = List.of(card1, card2);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        Player player = new Player(
+                new Status(
+                        new Name("pobi"),
+                        new Account(1000)
+                ),
+                drawnCards
+        );
+
+        // when
+        boolean isBlackjack = player.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isTrue();
     }
 }

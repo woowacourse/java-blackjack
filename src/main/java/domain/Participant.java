@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_NUMBER = 21;
+    private static final int BLACK_JACK_NUMBER = 21;
 
     protected final Status status;
     protected final DrawnCards drawnCards;
@@ -28,7 +28,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return drawnCards.calculateScore() > BUST_NUMBER;
+        return drawnCards.calculateScore() > BLACK_JACK_NUMBER;
     }
 
     public String getName() {
@@ -43,4 +43,7 @@ public abstract class Participant {
         return status.getAccount();
     }
 
+    public boolean isBlackjack() {
+        return calculateCardScore() == BLACK_JACK_NUMBER && drawnCards.isCardsSizeBlackjack();
+    }
 }

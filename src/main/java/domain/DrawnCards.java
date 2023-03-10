@@ -7,6 +7,7 @@ public class DrawnCards {
 
     private static final int GAP_OF_ACE_NUMBER = 10;
     private static final int BUST_NUMBER = 21;
+    private static final int SIZE_OF_BLACK_JACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -43,5 +44,9 @@ public class DrawnCards {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isCardsSizeBlackjack() {
+        return cards.size() == SIZE_OF_BLACK_JACK_COUNT;
     }
 }

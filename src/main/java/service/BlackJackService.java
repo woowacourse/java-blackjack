@@ -83,7 +83,12 @@ public class BlackJackService {
     }
 
     private void calculateAccount(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return;
+        }
+
         if (isAllParticipantBust(player, dealer)) {
+            winDealer(player, dealer);
             return;
         }
 
@@ -92,7 +97,7 @@ public class BlackJackService {
             return;
         }
 
-        winDealer(player, dealer, player.getAccount());
+        winDealer(player, dealer);
     }
 
     private boolean isPlayerWin(final Player player, final Dealer dealer) {
@@ -105,9 +110,8 @@ public class BlackJackService {
         dealer.loseGame(playerAccount);
     }
 
-    private void winDealer(final Player player, final Dealer dealer, final int playerAccount) {
-        player.bustAccount();
-        dealer.winGame(playerAccount);
+    private void winDealer(final Player player, final Dealer dealer) {
+        dealer.winGame(player.bustAccount());
     }
 
     private boolean isAllParticipantBust(final Player player, final Dealer dealer) {
