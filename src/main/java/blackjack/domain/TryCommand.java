@@ -14,9 +14,9 @@ public enum TryCommand {
         this.hit = hit;
     }
 
-    public static boolean hit(String input) {
+    public static boolean isHit(String inputCommand) {
         return Arrays.stream(values())
-                .filter(tryCommand -> tryCommand.command.equals(input))
+                .filter(tryCommand -> tryCommand.command.equals(inputCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."))
                 .hit();
