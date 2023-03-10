@@ -4,6 +4,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
 import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
+import blackjack.dto.ProfitResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,8 @@ public class OutputView {
     private static final String CARD_RESULT_MESSAGE_FORMAT = CARD_INFO_MESSAGE_FORMAT + " - 결과: %d";
     private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
     private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
+    private static final String PROFIT_INFO_MESSAGE = "## 최종 수익";
+    private static final String PROFIT_RESULT_MESSAGE_FORMAT = "%s: %d";
     private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
 
@@ -71,6 +74,14 @@ public class OutputView {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
                     dealerNameConvertor(result.getName()), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),
                     result.getScoreValue()));
+        }
+    }
+
+    public void printProfitResult(final List<ProfitResult> profitResults) {
+        System.out.println(PROFIT_INFO_MESSAGE);
+        for (ProfitResult result : profitResults) {
+            System.out.println(String.format(PROFIT_RESULT_MESSAGE_FORMAT,
+                    dealerNameConvertor(result.getName()), result.getProfitAmount()));
         }
     }
 
