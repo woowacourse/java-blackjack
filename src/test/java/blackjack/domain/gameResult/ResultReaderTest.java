@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
@@ -20,7 +21,7 @@ class ResultReaderTest {
     void checkDealerWin1() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE));
@@ -49,7 +50,7 @@ class ResultReaderTest {
     void checkDealerWin2() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE));
@@ -80,7 +81,7 @@ class ResultReaderTest {
     void checkDealerWin3() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.ACE, CardSuit.SPADE));
@@ -111,7 +112,7 @@ class ResultReaderTest {
     void checkDealerDraw1() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.EIGHT, CardSuit.SPADE));
@@ -142,7 +143,7 @@ class ResultReaderTest {
     void checkDealerDraw2() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE),
@@ -174,7 +175,7 @@ class ResultReaderTest {
     void checkDealerDraw3() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.ACE, CardSuit.SPADE));
@@ -204,7 +205,7 @@ class ResultReaderTest {
     void checkDealerLose1() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE));
@@ -234,7 +235,7 @@ class ResultReaderTest {
     void checkDealerLose2() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE),
@@ -265,7 +266,7 @@ class ResultReaderTest {
     void checkDealerLose3() {
         //given
         Dealer dealer = new Dealer(new ParticipantName("딜러"), new Hand());
-        Player player = new Player(new ParticipantName("아코"), new Hand());
+        Player player = generatePlayer();
         List<Card> dealerCards = List.of(
             new Card(CardNumber.TEN, CardSuit.SPADE),
             new Card(CardNumber.NINE, CardSuit.SPADE),
@@ -289,5 +290,9 @@ class ResultReaderTest {
         //then
         assertThat(dealerRsult).isEqualTo(WinningResult.LOSE);
         assertThat(playerResult).isEqualTo(WinningResult.WIN);
+    }
+
+    private Player generatePlayer() {
+        return new Player(new ParticipantName("아코"), new Hand(), new BettingMoney("1000"));
     }
 }
