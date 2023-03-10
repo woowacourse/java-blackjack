@@ -49,11 +49,15 @@
 
 ```mermaid
 graph TD
-Ready[Ready] --> BlackJack[BlackJack]
+Ready(Ready) --> BlackJack[BlackJack]
 Ready --> Hit[Hit]
 Hit --> |y| Hit
 Hit --> |n| Stand[Stand]
 Hit --> Bust[Bust]
+End(End) --> BlackJack
+End --> Stand
+End --> Bust
+Playing(Playing) --> Hit
 ```
 
 - 게임 중 상태: `Hit`
