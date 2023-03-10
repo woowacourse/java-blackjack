@@ -13,8 +13,7 @@ public class GameResult {
         this.resultMap.put(player, resultStatus);
     }
     
-    
-    public Map<ResultStatus, Integer> generateDealerResult() {
+    public Map<ResultStatus, Integer> getDealerResult() {
         HashMap<ResultStatus, Integer> dealerResult = new HashMap<>();
         dealerResult.put(ResultStatus.WIN, 0);
         dealerResult.put(ResultStatus.DRAW, 0);
@@ -31,6 +30,10 @@ public class GameResult {
             }
         }
         return dealerResult;
+    }
+    
+    public ResultStatus getPlayerResult(Player player) {
+        return this.resultMap.get(player);
     }
     
     public Map<Player, ResultStatus> getResultMap() {

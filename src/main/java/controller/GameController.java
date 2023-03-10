@@ -80,7 +80,7 @@ public class GameController {
         final Participants participants = game.getParticipants();
         OutputView.printParticipantsNameCardsAndScore(participants);
         GameResult gameResult = game.generateGameResult();
-        Map<ResultStatus, Integer> dealerResult = gameResult.generateDealerResult();
+        Map<ResultStatus, Integer> dealerResult = gameResult.getDealerResult();
         OutputView.printDealerGameResult(dealerResult);
         OutputView.printPlayersGameResult(gameResult.getResultMap());
     }

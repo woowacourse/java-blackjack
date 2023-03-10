@@ -13,6 +13,7 @@ public class Game {
     
     private final Deck deck;
     
+    
     public Game(final String participantNames, final Deck deck) {
         this.participants = Participants.of(participantNames);
         this.deck = deck;
@@ -30,13 +31,21 @@ public class Game {
     }
     
     public GameResult generateGameResult() {
-        Dealer dealer = this.participants.getDealer();
-        List<Player> players = this.participants.getPlayers();
+        Dealer dealer = this.getDealer();
+        List<Player> players = this.getPlayers();
         GameResult gameResult = new GameResult();
         for (Player player : players) {
             gameResult.accumulate(player, this.comparePlayerWithDealer(player, dealer));
         }
         return gameResult;
+    }
+    
+    public Dealer getDealer() {
+        return this.participants.getDealer();
+    }
+    
+    public List<Player> getPlayers() {
+        return this.participants.getPlayers();
     }
     
     private ResultStatus comparePlayerWithDealer(Player player, Dealer dealer) {
@@ -58,13 +67,6 @@ public class Game {
         return ResultStatus.of(false, true, false);
     }
     
-    public List<Player> getPlayers() {
-        return this.participants.getPlayers();
-    }
-    
-    public Dealer getDealer() {
-        return this.participants.getDealer();
-    }
     
     public Participants getParticipants() {
         return this.participants;

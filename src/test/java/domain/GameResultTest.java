@@ -29,7 +29,7 @@ public class GameResultTest {
         Participants participants = Participants.of("echo,split");
         GameResult gameResult = new GameResult();
         gameResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
-        Map<ResultStatus, Integer> dealerResultMap = gameResult.generateDealerResult();
+        Map<ResultStatus, Integer> dealerResultMap = gameResult.getDealerResult();
         Assertions.assertThat(dealerResultMap.get(ResultStatus.LOSE)).isEqualTo(1);
         Assertions.assertThat(dealerResultMap.get(ResultStatus.DRAW)).isEqualTo(0);
         Assertions.assertThat(dealerResultMap.get(ResultStatus.WIN)).isEqualTo(0);
