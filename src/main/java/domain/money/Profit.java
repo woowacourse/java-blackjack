@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Profit {
     
-    private final int base;
+    private final int profit;
     
-    private Profit(final int base) {
-        this.base = base;
+    private Profit(final int profit) {
+        this.profit = profit;
     }
     
     public static Profit from(Bet bet) {
@@ -17,7 +17,7 @@ public class Profit {
     
     @Override
     public int hashCode() {
-        return Objects.hash(this.base);
+        return Objects.hash(this.profit);
     }
     
     @Override
@@ -29,10 +29,14 @@ public class Profit {
             return false;
         }
         final Profit profit = (Profit) o;
-        return this.base == profit.base;
+        return this.profit == profit.profit;
+    }
+    
+    public int getProfit() {
+        return this.profit;
     }
     
     public Profit calculateProfitFromBetAndResult(final ResultStatus resultStatus) {
-        return new Profit((int) (this.base * resultStatus.getWeight()));
+        return new Profit((int) (this.profit * resultStatus.getWeight()));
     }
 }

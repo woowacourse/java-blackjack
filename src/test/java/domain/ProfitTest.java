@@ -9,19 +9,13 @@ import org.junit.jupiter.api.Test;
 
 class ProfitTest {
     
-    @Test
-    @DisplayName("수익 생성 테스트")
-    void create() {
-        Profit profit = new Profit(1000);
-        Assertions.assertThat(profit).isEqualTo(new Profit(1000));
-    }
     
     @Test
     @DisplayName("수익 정적 팩토리 메서드 테스트")
     void createFromBet() {
         Bet bet = new Bet(1000);
         Profit profit = Profit.from(bet);
-        Assertions.assertThat(profit).isEqualTo(new Profit(1000));
+        Assertions.assertThat(profit.getProfit()).isEqualTo(1000);
     }
     
     
@@ -31,12 +25,12 @@ class ProfitTest {
         Bet bet = new Bet(1000);
         Profit profit = Profit.from(bet);
         Profit calculatedProfit = profit.calculateProfitFromBetAndResult(ResultStatus.WIN);
-        Assertions.assertThat(calculatedProfit).isEqualTo(new Profit(1000));
+        Assertions.assertThat(calculatedProfit.getProfit()).isEqualTo(1000);
         Profit calculatedProfit2 = profit.calculateProfitFromBetAndResult(ResultStatus.WIN_BLACKJACK);
-        Assertions.assertThat(calculatedProfit2).isEqualTo(new Profit(1500));
+        Assertions.assertThat(calculatedProfit2.getProfit()).isEqualTo(1500);
         Profit calculatedProfit3 = profit.calculateProfitFromBetAndResult(ResultStatus.DRAW);
-        Assertions.assertThat(calculatedProfit3).isEqualTo(new Profit(0));
+        Assertions.assertThat(calculatedProfit3.getProfit()).isEqualTo(0);
         Profit calculatedProfit4 = profit.calculateProfitFromBetAndResult(ResultStatus.LOSE);
-        Assertions.assertThat(calculatedProfit4).isEqualTo(new Profit(-1000));
+        Assertions.assertThat(calculatedProfit4.getProfit()).isEqualTo(-1000);
     }
 }
