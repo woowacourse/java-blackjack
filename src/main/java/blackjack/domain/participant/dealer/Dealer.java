@@ -21,14 +21,4 @@ public class Dealer extends Participant {
     public boolean isUnderScore() {
         return hand.calculateScore().getValue() < DEALER_MIN_SCORE;
     }
-
-    public void lose() {
-    }
-
-    public void win() {
-    }
-
-    public void tie() {
-    }
-
 }

@@ -37,16 +37,6 @@ public class Player extends Participant {
         return LOSE;
     }
 
-    public void win() {
-    }
-
-    public void lose() {
-    }
-
-    public void tie() {
-    }
-
-
     public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy,
                                       CardDisplayStrategy cardDisplayStrategy) {
         while (!isBust()) {

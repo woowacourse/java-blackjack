@@ -35,11 +35,4 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
-
-
-    public abstract void win();
-
-    public abstract void lose();
-
-    public abstract void tie();
 }
