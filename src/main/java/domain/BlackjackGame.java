@@ -31,7 +31,7 @@ public class BlackjackGame {
     }
 
     public void playByAction(Participant participant, BlackjackAction blackjackAction) {
-        assertParticipation(participant);
+        validateParticipated(participant);
 
         if (isAbleToContinue(participant, blackjackAction)) {
             handOutCardTo(participant);
@@ -39,7 +39,7 @@ public class BlackjackGame {
     }
 
     public boolean isAbleToContinue(Participant participant, BlackjackAction blackjackAction) {
-        assertParticipation(participant);
+        validateParticipated(participant);
 
         return participant.isAbleToReceiveCard()
                 && blackjackAction == BlackjackAction.HIT;
@@ -52,7 +52,7 @@ public class BlackjackGame {
         }
     }
 
-    private void assertParticipation(Participant participant) {
+    private void validateParticipated(Participant participant) {
         if (blackjackParticipants.getAllParticipants().contains(participant)) {
             return;
         }
@@ -61,7 +61,7 @@ public class BlackjackGame {
     }
 
     public int getParticipantHitCardCount(Participant participant) {
-        assertParticipation(participant);
+        validateParticipated(participant);
         return participant.getCurrentCardAmount() - INITIAL_CARD_AMOUNT;
     }
 
