@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.player.exception.InvalidMoneyAmountException;
+import blackjack.domain.player.exception.InvalidMoneyUnitException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,13 @@ class MoneyTest {
             assertThatCode(() -> Money.from(value))
                     .doesNotThrowAnyException();
         }
+    }
+
+    @Test
+    @DisplayName("10원 단위가 아닌 경우 예외가 발생한다")
+    void invalid_money_unit_exception() {
+        assertThrows(InvalidMoneyUnitException.class,
+                () -> Money.from(2023)
+        );
     }
 }

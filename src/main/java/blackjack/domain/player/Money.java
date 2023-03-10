@@ -1,9 +1,11 @@
 package blackjack.domain.player;
 
 import blackjack.domain.player.exception.InvalidMoneyAmountException;
+import blackjack.domain.player.exception.InvalidMoneyUnitException;
 
 public final class Money {
 
+    private static final int UNIT = 10;
     private static final int MIN_AMOUNT = 1_000;
     private static final int MAX_AMOUNT = 1_000_000;
 
@@ -20,13 +22,24 @@ public final class Money {
     }
 
     public static Money from(int amount) {
-        validateAmount(amount);
+        validate(amount);
         return new Money(amount);
+    }
+
+    private static void validate(int amount) {
+        validateAmount(amount);
+        validateUnit(amount);
     }
 
     private static void validateAmount(int amount) {
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
             throw new InvalidMoneyAmountException();
+        }
+    }
+
+    private static void validateUnit(int amount) {
+        if (amount % UNIT != 0) {
+            throw new InvalidMoneyUnitException();
         }
     }
 
