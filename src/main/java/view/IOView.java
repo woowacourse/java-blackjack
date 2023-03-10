@@ -8,12 +8,9 @@ import domain.model.Participant;
 import domain.model.Player;
 import domain.model.Players;
 import domain.model.Profit;
-import domain.vo.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -34,11 +31,7 @@ public class IOView {
     private static final String COLON = ": ";
     private static final String DEALER_RECEIVE_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_STATE_RESULT_SIGN = " - 결과: ";
-    private static final String VICTORY = "승";
-    private static final String DRAW = "무";
-    private static final String DEFEAT = "패";
     private static final String CARD = " 카드";
-    private static final String RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
     private static final String DEALER_NAME = "딜러";
     private static final Scanner scanner = new Scanner(System.in);
     private static final String NOT_NUMBER_ERROR_MESSAGE = "숫자만 입력할 수 있습니다.";
@@ -157,49 +150,11 @@ public class IOView {
             + participant.getScore().getValue());
     }
 
-    public void printDealerResult(final Result dealerResult) {
-        System.out.println(RESULT_MESSAGE);
-        System.out.println(DEALER_NAME + COLON + stringifyResult(dealerResult));
-    }
-
-    public void printResult(final Map<Player, Result> playerResults) {
-        playerResults.keySet()
-            .stream()
-            .map(player -> player.getName() + COLON + stringifyResult(playerResults.get(player)))
-            .forEach(System.out::println);
-    }
-
     public void printProfits(final Profit dealerProfit, final List<Profit> profits, final List<String> names) {
         System.out.println(NEW_LINE + PROFIT_MESSAGE);
         System.out.println(DEALER_NAME + ": " + (int) dealerProfit.getValue());
         IntStream.range(0, names.size())
             .mapToObj(index -> names.get(index) + ": " + (int) profits.get(index).getValue())
             .forEach(System.out::println);
-    }
-
-    private String stringifyResult(final Result result) {
-        final Map<String, Integer> resultHistory = new LinkedHashMap<>();
-        resultHistory.put(VICTORY, result.getVictory());
-        resultHistory.put(DRAW, result.getDraw());
-        resultHistory.put(DEFEAT, result.getDefeat());
-        if (result.getVictory() + result.getDraw() + result.getDefeat() == 1) {
-            return stringifyOneResultHistory(resultHistory);
-        }
-        return stringifyResultHistory(resultHistory);
-    }
-
-    private String stringifyResultHistory(final Map<String, Integer> resultHistory) {
-        final StringJoiner stringJoiner = new StringJoiner(" ");
-        resultHistory.keySet().stream()
-            .filter(result -> resultHistory.get(result) != 0)
-            .forEach(result -> stringJoiner.add(resultHistory.get(result) + result));
-        return stringJoiner.toString();
-    }
-
-    private String stringifyOneResultHistory(final Map<String, Integer> resultHistory) {
-        return resultHistory.keySet().stream()
-            .filter(result -> resultHistory.get(result) != 0)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
     }
 }

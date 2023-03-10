@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 class BlackJackGameTest {
 
     private final BlackJackGame blackJackGame = new BlackJackGame(new CardDistributor(new RandomCardGenerator()),
-        new BlackJackResultMaker(), new ProfitCalculator());
+        new ProfitCalculator());
 
     @Test
     @DisplayName("카드 한장 주기 테스트")

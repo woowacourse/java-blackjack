@@ -1,6 +1,5 @@
 import controller.BlackJackController;
 import domain.service.BlackJackGame;
-import domain.service.BlackJackResultMaker;
 import domain.service.CardDistributor;
 import domain.service.ProfitCalculator;
 import domain.service.RandomCardGenerator;
@@ -17,7 +16,7 @@ public class Application {
     }
 
     private static BlackJackGame makeBlackJackGame() {
-        return new BlackJackGame(makeCardDistributor(), new BlackJackResultMaker(), new ProfitCalculator());
+        return new BlackJackGame(makeCardDistributor(), new ProfitCalculator());
     }
 
     private static CardDistributor makeCardDistributor() {

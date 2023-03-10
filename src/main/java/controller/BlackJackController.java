@@ -5,9 +5,7 @@ import domain.model.Player;
 import domain.model.Players;
 import domain.model.Profit;
 import domain.service.BlackJackGame;
-import domain.vo.Result;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 import view.IOView;
 
@@ -70,13 +68,6 @@ public class BlackJackController {
 
     private void printTotalCardState(final Dealer dealer, final Players players) {
         ioView.printTotalCardState(dealer, players);
-    }
-
-    private void printResult(final Dealer dealer, final Players players) {
-        final Result dealerResult = blackJackGame.makeDealerResult(dealer, players);
-        ioView.printDealerResult(dealerResult);
-        final Map<Player, Result> playerResult = blackJackGame.makePlayersResult(dealer, players);
-        ioView.printResult(playerResult);
     }
 
     private void printProfits(final Dealer dealer, final Players players) {

@@ -34,10 +34,9 @@ public class Profit {
     }
 
     public static Profit makeDealerProfitFrom(final List<Profit> playerProfits) {
-        double sum = 0D;
-        for (Profit playerProfit : playerProfits) {
-            sum += playerProfit.getValue();
-        }
+        double sum = playerProfits.stream()
+            .mapToDouble(Profit::getValue)
+            .sum();
         return new Profit(sum * NUMBER_TO_MULTIPLE_DEALER_PROFIT);
     }
 
