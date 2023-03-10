@@ -17,12 +17,12 @@ public class Profit {
     }
 
 
-    public static Profit win(final Batting batting) {
-        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
+    public static Profit blackJackVictory(final Batting batting) {
+        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
     }
 
-    public static Profit blackJackWin(final Batting batting) {
-        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
+    public static Profit victory(final Batting batting) {
+        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
     }
 
     public static Profit defeat(final Batting batting) {

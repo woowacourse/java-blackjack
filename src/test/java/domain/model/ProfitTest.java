@@ -15,12 +15,12 @@ class ProfitTest {
 
     @Test
     @DisplayName("win 생성 테스트")
-    public void testWinCreate() {
+    public void testVictoryCreate() {
         //given
         final Batting batting = Batting.of(10D);
 
         //when
-        final Profit profit = Profit.win(batting);
+        final Profit profit = Profit.victory(batting);
 
         //then
         assertThat(profit.getValue()).isEqualTo(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
@@ -28,12 +28,12 @@ class ProfitTest {
 
     @Test
     @DisplayName("blackJackWin 생성 테스트")
-    public void testBlackJackWinCreate() {
+    public void testBlackJackVictoryCreate() {
         //given
         final Batting batting = Batting.of(10D);
 
         //when
-        final Profit profit = Profit.blackJackWin(batting);
+        final Profit profit = Profit.blackJackVictory(batting);
 
         //then
         assertThat(profit.getValue()).isEqualTo(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
