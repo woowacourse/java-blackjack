@@ -53,14 +53,6 @@ public class Game {
         return players;
     }
 
-    public List<String> showPlayersName() {
-        return players.getPlayersName();
-    }
-
-    public Score getDealerScore() {
-        return dealer.calculateScore();
-    }
-
     public Dealer getDealer() {
         return dealer;
     }

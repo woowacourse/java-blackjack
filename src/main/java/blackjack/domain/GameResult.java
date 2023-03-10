@@ -30,7 +30,7 @@ public class GameResult {
     }
 
     private void accumulationResult(Game game) {
-        Score dealerScore = game.getDealerScore();
+        Score dealerScore = game.getDealer().calculateScore();
 
         for (Player player : game.getPlayers()) {
             Score playerScore = player.calculateScore();
