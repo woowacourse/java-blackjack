@@ -45,4 +45,17 @@ class PlayerCardsTest {
 
         assertThat(playerCards.getScore()).isEqualTo(12);
     }
+
+    @Test
+    @DisplayName("에이스로 10점이 추가되어 계산되는 경우")
+    void addTenScoreByAceTest() {
+        PlayerCards playerCards = new PlayerCards();
+        Card one = new Card(CardSuit.SPADE, CardNumber.ACE);
+        Card two = new Card(CardSuit.HEART, CardNumber.TEN);
+
+        playerCards.add(one);
+        playerCards.add(two);
+
+        assertThat(playerCards.getScore()).isEqualTo(21);
+    }
 }

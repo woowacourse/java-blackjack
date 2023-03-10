@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -13,6 +14,14 @@ public class PlayerTest {
         Player player = Player.from("boxster");
 
         assertThat(player.getName()).isEqualTo("boxster");
+    }
+
+    @Test
+    @DisplayName("이름이 딜러라면 플레이어 생성 시 예외를 반환한다")
+    void exceptionPlayerTest() {
+        assertThatThrownBy(() -> Player.from("딜러"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러라는 이름은 사용할 수 없습니다.");
     }
 
     @Test
