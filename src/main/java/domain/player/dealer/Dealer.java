@@ -2,8 +2,11 @@ package domain.player.dealer;
 
 import domain.Score;
 import domain.card.Card;
+import domain.hand.Hand;
 import domain.player.Name;
 import domain.player.Player;
+
+import java.util.List;
 
 public class Dealer extends Player {
 
@@ -21,5 +24,10 @@ public class Dealer extends Player {
 
     public Card faceUpFirstCard() {
         return hand.firstCard();
+    }
+
+    @Override
+    public List<Card> faceUpFirstDeal() {
+        return List.of(hand.firstCard());
     }
 }

@@ -48,11 +48,15 @@ public class Hand {
         return calculate().isBust();
     }
 
+    public boolean isBlackjack() {
+        return calculate().isBlackjack();
+    }
+
     public Card firstCard() {
         return cards.get(0);
     }
 
-    public boolean isBlackjack() {
-        return calculate().isBlackjack();
+    public Card secondCard() {
+        return cards.get(1);
     }
 }

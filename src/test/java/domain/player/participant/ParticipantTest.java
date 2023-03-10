@@ -1,8 +1,11 @@
 package domain.player.participant;
 
 import domain.card.Card;
+import domain.card.CardShape;
+import domain.hand.Hand;
 import domain.player.Name;
 import domain.player.dealer.Dealer;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static domain.card.CardShape.CLOVER;
@@ -17,6 +21,7 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.KING;
+import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.TEN;
 import static domain.card.CardValue.THREE;
 import static domain.card.CardValue.TWO;
@@ -177,6 +182,24 @@ class ParticipantTest {
                 Arguments.of(participant3, dealer3, Money.wons(1000)),
                 Arguments.of(participant4, dealer4, Money.wons(1000)),
                 Arguments.of(participant5, dealer5, Money.wons(-5000))
+        );
+    }
+
+    @Test
+    @DisplayName("faceUpFirstDeal() : participant는 처음 받은 카드 두 장을 모두 보여줘야한다.")
+    void test_faceUpFirstDeal() throws Exception {
+        // given
+        final Participant participant = new Participant(new Name("name1"), Money.wons(0));
+        participant.hit(new Card(CardShape.CLOVER, TEN));
+        participant.hit(new Card(CardShape.CLOVER, SEVEN));
+
+        // when
+        final List<Card> cards = participant.faceUpFirstDeal();
+
+        // then
+        Assertions.assertThat(cards).containsExactly(
+                new Card(CardShape.CLOVER, TEN),
+                new Card(CardShape.CLOVER, SEVEN)
         );
     }
 }

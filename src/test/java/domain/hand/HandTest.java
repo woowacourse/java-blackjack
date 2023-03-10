@@ -192,7 +192,8 @@ class HandTest {
     }
 
     @Test
-    void 딜러는_첫_장만_보여줄_수_있다() {
+    @DisplayName("firstCard() : 처음 카드를 받을 때, 첫 번째 카드를 보여줄 수 있다.")
+    void test_firstCard() {
         // given
         final Hand hand = new Hand();
 
@@ -201,6 +202,19 @@ class HandTest {
 
         // when & then
         assertEquals(hand.firstCard(), new Card(CardShape.CLOVER, TEN));
+    }
+
+    @Test
+    @DisplayName("secondCard() : 처음 카드를 받을 때, 두 번째 카드를 보여줄 수 있다.")
+    void test_secondCard() throws Exception {
+        // given
+        final Hand hand = new Hand();
+
+        hand.addCard(new Card(CardShape.CLOVER, TEN));
+        hand.addCard(new Card(CardShape.CLOVER, SEVEN));
+
+        // when & then
+        assertEquals(hand.secondCard(), new Card(CardShape.CLOVER, SEVEN));
     }
 
     @ParameterizedTest

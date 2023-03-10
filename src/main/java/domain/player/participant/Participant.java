@@ -1,5 +1,6 @@
 package domain.player.participant;
 
+import domain.card.Card;
 import domain.player.Name;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
@@ -7,6 +8,8 @@ import domain.player.participant.betresult.BetResultState;
 import domain.player.participant.betresult.BreakEvenState;
 import domain.player.participant.betresult.LoseState;
 import domain.player.participant.betresult.WinState;
+
+import java.util.List;
 
 public class Participant extends Player {
 
@@ -65,5 +68,10 @@ public class Participant extends Player {
             return;
         }
         betResultState = new BreakEvenState();
+    }
+
+    @Override
+    public List<Card> faceUpFirstDeal() {
+        return List.of(hand.firstCard(), hand.secondCard());
     }
 }

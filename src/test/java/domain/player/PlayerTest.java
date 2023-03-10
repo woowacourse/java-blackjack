@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static domain.card.CardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -23,6 +25,11 @@ class PlayerTest {
         public boolean canHit() {
             return false;
         }
+
+        @Override
+        public List<Card> faceUpFirstDeal() {
+            return null;
+        }
     };
 
     @Test
@@ -38,6 +45,11 @@ class PlayerTest {
             @Override
             public boolean canHit() {
                 return false;
+            }
+
+            @Override
+            public List<Card> faceUpFirstDeal() {
+                return null;
             }
         });
     }

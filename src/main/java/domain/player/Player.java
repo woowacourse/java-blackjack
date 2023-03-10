@@ -4,6 +4,8 @@ import domain.Score;
 import domain.hand.Hand;
 import domain.card.Card;
 
+import java.util.List;
+
 public abstract class Player {
 
     protected final Hand hand;
@@ -39,4 +41,6 @@ public abstract class Player {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+
+    public abstract List<Card> faceUpFirstDeal();
 }
