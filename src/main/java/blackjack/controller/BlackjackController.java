@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.gameResult.BlackjackResult;
 import blackjack.domain.card.Cards;
+import blackjack.domain.gameResult.BlackjackResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -11,6 +11,8 @@ import blackjack.util.CardPickerGenerator;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackjackController {
 
@@ -23,7 +25,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Participants participants = Participants.generate(inputView.readPlayerName());
+        Participants participants = generateParticipants();
         CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         Cards cards = Cards.generator(cardPickerGenerator);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
@@ -32,6 +34,16 @@ public class BlackjackController {
         playersHitCard(blackjackGame);
         dealerHitCard(blackjackGame);
         printResult(blackjackGame);
+    }
+
+    private Participants generateParticipants() {
+        List<String> participantsName = inputView.readPlayerName();
+        List<String> participantsBettingMoney = new ArrayList<>();
+
+        for (String participantName : participantsName) {
+            participantsBettingMoney.add(inputView.readBettingMoney(participantName));
+        }
+        return Participants.generate(participantsName, participantsBettingMoney);
     }
 
     private void gameSetting(final BlackjackGame blackjackGame) {

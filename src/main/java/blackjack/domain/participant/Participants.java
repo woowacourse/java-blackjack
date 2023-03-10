@@ -16,11 +16,14 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants generate(List<String> playersName) {
+    public static Participants generate(List<String> playersName, List<String> bettingMoney) {
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer(new ParticipantName(DEALER_NAME), new Hand()));
-        for (String playerName : playersName) {
-            participants.add(new Player(new ParticipantName(playerName), new Hand(), new BettingMoney("1000")));
+        for (int i = 0, end = playersName.size(); i < end; i++) {
+            participants.add(new Player(new ParticipantName(
+                playersName.get(i).trim()),
+                new Hand(),
+                new BettingMoney(bettingMoney.get(i))));
         }
         return new Participants(participants);
     }
