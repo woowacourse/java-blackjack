@@ -3,42 +3,29 @@ package domain.result;
 import domain.player.Dealer;
 import domain.player.Players;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class GameResult {
 
-    private final Dealer dealer;
-    private final Players players;
+    public GameResult() {
 
-    public GameResult(Dealer dealer, Players players) {
-        this.dealer = dealer;
-        this.players = players;
     }
 
-    public EnumMap<Outcome, Integer> makeDealerResult() {
-        EnumMap<Outcome, Integer> dealerResult = initDealerResult();
-        Map<String, Outcome> playerResults = makePlayerResults();
+    public Map<String, Integer> makePlayerBetMoneyResults(final Dealer dealer, final Players players) {
+        Map<String, Outcome> playerResults = makePlayerResults(dealer, players);
+        Map<String, Integer> playerBetMoneyResults = new LinkedHashMap<>();
 
-        playerResults.values()
-                .forEach(outcome -> {
-                    Outcome dealerOutcome = Outcome.reverseOutcome(outcome);
-                    dealerResult.put(dealerOutcome, dealerResult.get(dealerOutcome) + 1);
+        players.getPlayers()
+                .forEach(player -> {
+                    Outcome outcome = playerResults.get(player.getName());
+                    player.getBet().calculateBetByOutcome(outcome, player.isBlackJack());
+                    playerBetMoneyResults.put(player.getName(), player.getBet().getMoney());
                 });
-        return dealerResult;
+        return playerBetMoneyResults;
     }
 
-    private EnumMap<Outcome, Integer> initDealerResult() {
-        EnumMap<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            dealerResult.put(outcome, 0);
-        }
-        return dealerResult;
-    }
-
-    public Map<String, Outcome> makePlayerResults() {
+    public Map<String, Outcome> makePlayerResults(final Dealer dealer, final Players players) {
         Map<String, Outcome> playerResults = new LinkedHashMap<>();
         players.getPlayers()
                 .forEach((player ->
@@ -48,5 +35,14 @@ public final class GameResult {
                         )
                 ));
         return playerResults;
+    }
+
+    public int calculateDealerBetMoneyResult(final Map<String, Integer> results) {
+        Map<String, Integer> playerBetMoneyResults = results;
+        Integer sum = playerBetMoneyResults.values()
+                .stream()
+                .reduce(0, Integer::sum);
+
+        return sum * (-1);
     }
 }

@@ -4,10 +4,8 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.result.GameResult;
-import domain.result.Outcome;
 import view.OutputView;
 
-import java.util.EnumMap;
 import java.util.Map;
 
 public class ResultController {
@@ -19,10 +17,8 @@ public class ResultController {
     }
 
     public void run(final Dealer dealer, final Players players) {
-        GameResult gameResult = new GameResult(dealer, players);
         printCardAndScore(dealer, players);
-        printGameResult(gameResult);
-
+        printGameResult(dealer, players);
     }
 
     private void printCardAndScore(final Dealer dealer, final Players players) {
@@ -44,9 +40,11 @@ public class ResultController {
         outputView.printPlayerCardAndScore(player);
     }
 
-    private void printGameResult(final GameResult gameResult) {
-        EnumMap<Outcome, Integer> dealerResult = gameResult.makeDealerResult();
-        Map<String, Outcome> playerResults = gameResult.makePlayerResults();
-        outputView.printGameResult(dealerResult, playerResults);
+    private void printGameResult(final Dealer dealer, final Players players) {
+        GameResult gameResult = new GameResult();
+        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(dealer, players);
+        int dealerProfit = gameResult.calculateDealerBetMoneyResult(playerBetMoneyResults);
+
+        outputView.printGameResult(dealerProfit, playerBetMoneyResults);
     }
 }

@@ -2,6 +2,7 @@ package controller;
 
 import domain.deck.Deck;
 import domain.player.Dealer;
+import domain.player.Player;
 import domain.player.Players;
 import view.InputView;
 import view.OutputView;
@@ -23,6 +24,7 @@ public class MainController {
         Players players = makePlayers(names);
         Dealer dealer = new Dealer();
         Deck deck = makeDeck();
+        initBetMoney(players);
 
         hitTwice(dealer, players, deck);
 
@@ -43,6 +45,13 @@ public class MainController {
         Deck deck = new Deck();
         deck.shuffleDeck();
         return deck;
+    }
+
+    private void initBetMoney(final Players players) {
+        for(Player player : players.getPlayers()) {
+            outputView.printInitBetMoney(player);
+            player.initBet(inputView.readBetMoney());
+        }
     }
 
     private void hitTwice(final Dealer dealer, final Players players, final Deck deck) {
