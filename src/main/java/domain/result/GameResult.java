@@ -1,8 +1,8 @@
-package domain.game;
+package domain.result;
 
 import domain.participant.Player;
 
-public enum Result {
+public enum GameResult {
     WIN {
         @Override
         public int calculateProfit(final Player player) {

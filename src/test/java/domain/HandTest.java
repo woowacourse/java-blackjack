@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardNumber;
-import domain.card.Cards;
+import domain.game.Hand;
 import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class CardsTest {
+public class HandTest {
 
     @Test
     @DisplayName("Cards는 카드들의 리스트로 이루어져 있다.")
@@ -23,7 +23,7 @@ public class CardsTest {
                 Card.of(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.of(CardShape.HEART, CardNumber.of(3))
         );
-        assertDoesNotThrow(() -> Cards.create(data));
+        assertDoesNotThrow(() -> Hand.create(data));
     }
 
     @Test
@@ -34,12 +34,12 @@ public class CardsTest {
                 Card.of(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.of(CardShape.HEART, CardNumber.of(3))
         );
-        final Cards cards = Cards.create(data);
-        assertThat(cards).extracting("cards", collection(List.class))
+        final Hand hand = Hand.create(data);
+        assertThat(hand).extracting("cards", collection(List.class))
                 .size().isSameAs(3);
 
         final Card card = Card.of(CardShape.HEART, CardNumber.of(1));
-        assertThat(cards.add(card)).extracting("cards", collection(List.class))
+        assertThat(hand.add(card)).extracting("cards", collection(List.class))
                 .size().isSameAs(4);
     }
 
@@ -51,15 +51,15 @@ public class CardsTest {
                 Card.of(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.of(CardShape.HEART, CardNumber.of(3))
         );
-        final Cards cards = Cards.create(data);
-        assertThat(cards)
+        final Hand hand = Hand.create(data);
+        assertThat(hand)
                 .extracting("gamePoint")
                 .extracting("gamePoint")
                 .isSameAs(16);
 
         final Card card = Card.of(CardShape.HEART, CardNumber.of(5));
 
-        assertThat(cards.add(card))
+        assertThat(hand.add(card))
                 .extracting("gamePoint")
                 .extracting("gamePoint")
                 .isSameAs(21);
@@ -73,7 +73,7 @@ public class CardsTest {
                 Card.of(CardShape.HEART, CardNumber.of(10)),
                 Card.of(CardShape.HEART, CardNumber.of(10))
         );
-        final Cards cards = Cards.create(data);
-        assertThat(cards.isBusted()).isTrue();
+        final Hand hand = Hand.create(data);
+        assertThat(hand.isBusted()).isTrue();
     }
 }

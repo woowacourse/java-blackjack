@@ -1,29 +1,28 @@
-package domain.card;
+package domain.game;
 
-import domain.game.GamePoint;
-import domain.game.GameResult;
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Cards {
+public final class Hand {
 
     private final List<Card> cards;
     private final GamePoint gamePoint;
 
-    private Cards(final List<Card> cards) {
+    private Hand(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
         this.gamePoint = GamePoint.create(cards);
     }
 
-    public static Cards create(final List<Card> cards) {
-        return new Cards(cards);
+    public static Hand create(final List<Card> cards) {
+        return new Hand(cards);
     }
 
-    public Cards add(final Card card) {
+    public Hand add(final Card card) {
         List<Card> cardList = new ArrayList<>(cards);
         cardList.add(card);
-        return new Cards(cardList);
+        return new Hand(cardList);
     }
 
     public boolean isBlackJack() {

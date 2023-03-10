@@ -1,10 +1,10 @@
 package view;
 
 import domain.game.GamePoint;
-import domain.game.GameResult;
-import domain.game.Result;
+import domain.result.ParticipantsFinalResult;
+import domain.result.GameResult;
 import domain.card.Card;
-import domain.card.Cards;
+import domain.game.Hand;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -58,8 +58,8 @@ public final class OutputView {
                 getCardStringOf(participant.getCards()));
     }
 
-    private String getCardStringOf(final Cards cards) {
-        return cards.getCards().stream()
+    private String getCardStringOf(final Hand hand) {
+        return hand.getCards().stream()
                 .map(this::makeCardString)
                 .collect(Collectors.joining(DELIMITER));
     }
@@ -106,23 +106,23 @@ public final class OutputView {
         return TranslationUtil.translatePoint(point);
     }
 
-    public void printFinalResult(final Dealer dealer, GameResult gameResult) {
+    public void printFinalResult(final Dealer dealer, ParticipantsFinalResult participantsFinalResult) {
         System.out.println("\n## 최종 수익");
-        printDealerResult(dealer, gameResult);
-        printPlayersResult(gameResult.getResult());
+        printDealerResult(dealer, participantsFinalResult);
+        printPlayersResult(participantsFinalResult.getResult());
     }
 
-    private void printDealerResult(final Dealer dealer, final GameResult gameResult) {
-        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), gameResult.getDealerProfit());
+    private void printDealerResult(final Dealer dealer, final ParticipantsFinalResult participantsFinalResult) {
+        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), participantsFinalResult.getDealerProfit());
     }
 
-    private void printPlayersResult(final Map<Result, List<Player>> gameResult) {
-        for (Map.Entry<Result, List<Player>> entry : gameResult.entrySet()) {
+    private void printPlayersResult(final Map<GameResult, List<Player>> gameResult) {
+        for (Map.Entry<GameResult, List<Player>> entry : gameResult.entrySet()) {
             printPlayerResult(entry);
         }
     }
 
-    private void printPlayerResult(final Map.Entry<Result, List<Player>> entry) {
+    private void printPlayerResult(final Map.Entry<GameResult, List<Player>> entry) {
         final List<Player> players = entry.getValue();
         for (Player player : players) {
             System.out.printf(

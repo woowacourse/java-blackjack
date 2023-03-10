@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.deck.DeckStrategy;
 import domain.game.Bet;
 import domain.game.GamePoint;
-import domain.card.Cards;
+import domain.game.Hand;
 
 public final class Player extends Participant {
 
@@ -15,8 +15,8 @@ public final class Player extends Participant {
         this.bet = Bet.of(bet);
     }
 
-    private Player(final Name name, final Cards cards, final int bet) {
-        super(name, cards);
+    private Player(final Name name, final Hand hand, final int bet) {
+        super(name, hand);
         this.bet = Bet.of(bet);
     }
 
@@ -25,21 +25,21 @@ public final class Player extends Participant {
         return new Player(name, bet);
     }
 
-    public static Player create(final Name name, final Cards cards, final int bet) {
+    public static Player create(final Name name, final Hand hand, final int bet) {
         validateName(name);
-        return new Player(name, cards, bet);
+        return new Player(name, hand, bet);
     }
 
     public void takeInitialCards(final DeckStrategy deck, final int count) {
         for (int i = 0; i < count; i++) {
-            this.cards = cards.add(deck.drawCard());
+            this.hand = hand.add(deck.drawCard());
         }
-        if (isBlackJack() && cards.isSameCount(2)) {
+        if (isBlackJack() && hand.isSameCount(2)) {
             bet.applyBlackJack();
         }
     }
     public void takeCard(final Card card) {
-        this.cards = cards.add(card);
+        this.hand = hand.add(card);
         if (isBusted()) {
             bet.applyBust();
         }

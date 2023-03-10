@@ -1,10 +1,7 @@
 package domain.participant;
 
-import domain.deck.DeckStrategy;
-import domain.game.Bet;
 import domain.game.GamePoint;
-import domain.card.Card;
-import domain.card.Cards;
+import domain.game.Hand;
 
 import java.util.Collections;
 
@@ -14,32 +11,32 @@ public abstract class Participant {
     protected static final String DEALER_NAME = "딜러";
 
     private final Name name;
-    protected Cards cards;
+    protected Hand hand;
 
     protected Participant(final Name name) {
         this.name = name;
-        this.cards = Cards.create(Collections.emptyList());
+        this.hand = Hand.create(Collections.emptyList());
     }
 
-    protected Participant(final Name name, final Cards cards) {
+    protected Participant(final Name name, final Hand hand) {
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
     public GamePoint calculatePoint() {
-        return cards.getGamePoint();
+        return hand.getGamePoint();
     }
 
     public boolean isBusted() {
-        return cards.isBusted();
+        return hand.isBusted();
     }
 
     public boolean isBlackJack() {
-        return cards.isBlackJack();
+        return hand.isBlackJack();
     }
 
     public Name getName() {

@@ -4,7 +4,7 @@ import domain.deck.ShuffledDeck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.game.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class PlayerTest {
                 Card.of(CardShape.HEART, CardNumber.of(1)),
                 Card.of(CardShape.HEART, CardNumber.of(2))
         );
-        player = Player.create(Name.of("HK"), Cards.create(initialData), 10_000);
+        player = Player.create(Name.of("HK"), Hand.create(initialData), 10_000);
     }
 
     @DisplayName("플레이어는 '딜러'라는 이름을 가지면 예외가 발생한다.")

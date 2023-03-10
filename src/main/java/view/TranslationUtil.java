@@ -1,6 +1,6 @@
 package view;
 
-import domain.game.Result;
+import domain.result.GameResult;
 import domain.card.CardShape;
 
 public final class TranslationUtil {
@@ -48,14 +48,14 @@ public final class TranslationUtil {
         return String.valueOf(point);
     }
 
-    public static String translateResult(final Result result) {
-        if (result == Result.WIN) {
+    public static String translateResult(final GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
             return "승";
         }
-        if (result == Result.DRAW) {
+        if (gameResult == GameResult.DRAW) {
             return "무";
         }
-        if (result == Result.LOSE) {
+        if (gameResult == GameResult.LOSE) {
             return "패";
         }
         throw new AssertionError();
