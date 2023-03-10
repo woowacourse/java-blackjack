@@ -33,6 +33,12 @@ public class ParticipantInfo {
         participantInfo.put(participant, EarningRate.LOSE.calculateMoney(participantMoney));
     }
 
+    public void updateDealerMoney(final Participant player) {
+        final Participant dealer = findDealerInfo();
+        final ParticipantMoney dealerMoney = participantInfo.get(dealer);
+        participantInfo.put(dealer, dealerMoney.add(participantInfo.get(player)));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
