@@ -63,6 +63,7 @@ public class BlackjackController {
         for (Player player : players) {
             runPlayerTurn(blackjackGame, player);
         }
+        InputView.closeScanner();
     }
 
     private void runPlayerTurn(BlackjackGame blackjackGame, Player player) {
