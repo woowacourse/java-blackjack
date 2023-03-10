@@ -10,6 +10,7 @@ import domain.betting.BettingMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.profit.FinalProfit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,5 +88,78 @@ public class DealerTest {
 
         // then
         assertThat(bettingMoneyByPlayer.get(player)).isEqualTo(bettingMoney);
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드 합이 21을 넘으면 배팅 금액을 잃는다.")
+    void calculateFinalProfit1() {
+        // given
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE), new Card(Suit.HEART, Denomination.JACK));
+        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
+        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
+
+        // when
+        dealer.calculateFinalProfit(player);
+        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
+
+        // then
+        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(-10000));
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 합이 21을 넘고 플레이어 카드 합이 21을 넘지 않으면 배팅 금액을 받는다.")
+    void calculateFinalProfit2() {
+        // given
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        dealer.takeCard(new Card(Suit.HEART, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE));
+        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
+        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
+
+        // when
+        dealer.calculateFinalProfit(player);
+        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
+
+        // then
+        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(10000));
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 합이 21일 때 플레이어 카드 합이 21이면 배팅 금액을 받는다.")
+    void calculateFinalProfit3() {
+        // given
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.ACE), new Card(Suit.SPADE, Denomination.TEN));
+        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
+        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
+
+        // when
+        dealer.calculateFinalProfit(player);
+        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
+
+        // then
+        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(10000));
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 합이 21일 때 플레이어 카드 합이 21이 아니면 배팅 금액을 잃는다.")
+    void calculateFinalProfit4() {
+        // given
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.SIX), new Card(Suit.SPADE, Denomination.NINE));
+        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
+        dealer.savePlayerBettingMoney(player, new BettingMoney(10000));
+
+        // when
+        dealer.calculateFinalProfit(player);
+        Map<Player, FinalProfit> finalProfitByPlayer = dealer.getFinalProfitByPlayer();
+
+        // then
+        assertThat(finalProfitByPlayer.get(player)).isEqualTo(new FinalProfit(-10000));
     }
 }
