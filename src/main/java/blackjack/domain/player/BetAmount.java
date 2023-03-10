@@ -3,6 +3,7 @@ package blackjack.domain.player;
 public final class BetAmount {
 
     public static final int MIN_BET_AMOUNT = 1000;
+
     public final int amount;
 
     private BetAmount(int amount) {
