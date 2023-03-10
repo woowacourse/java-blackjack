@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-public class Bet {
+public class BettingMoney {
 
     private final int value;
 
-    public Bet(final int value) {
+    public BettingMoney(final int value) {
         validateBettingMoney(value);
         this.value = value;
     }
