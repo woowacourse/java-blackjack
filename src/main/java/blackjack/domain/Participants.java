@@ -4,8 +4,6 @@ import java.util.List;
 
 public class Participants {
 
-    private static final int INITIAL_HAND_OUT_COUNT = 2;
-
     private final Dealer dealer = new Dealer();
     private final Players players;
 
@@ -19,14 +17,8 @@ public class Participants {
     }
 
     public void handInitialCards(Deck deck) {
-        handInitialCardsToDealer(deck);
+        dealer.handInitialCards(deck);
         players.handInitialCards(deck);
-    }
-
-    private void handInitialCardsToDealer(Deck deck) {
-        for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
-            dealer.take(deck.draw());
-        }
     }
 
     public GameResult getGameResult() {

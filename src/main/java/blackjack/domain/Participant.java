@@ -10,6 +10,11 @@ public abstract class Participant {
         hand.add(card);
     }
 
+    public void handInitialCards(Deck deck) {
+        take(deck.draw());
+        take(deck.draw());
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }

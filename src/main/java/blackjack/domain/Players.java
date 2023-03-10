@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final int INITIAL_HAND_OUT_COUNT = 2;
-
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -30,15 +28,7 @@ public class Players {
     }
 
     public void handInitialCards(Deck deck) {
-        for (Player player : players) {
-            handInitialCardsToPlayer(player, deck);
-        }
-    }
-
-    private void handInitialCardsToPlayer(Player player, Deck deck) {
-        for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
-            player.take(deck.draw());
-        }
+        players.forEach(player -> player.handInitialCards(deck));
     }
 
     public List<String> getPlayersName() {
