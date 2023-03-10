@@ -34,6 +34,7 @@ public class BlackjackController {
         Participants participants = makeParticipants();
         Deck deck = new Deck();
 
+        bettingMoney(participants.getPlayers());
         setInitCards(deck, participants);
 
         turnOfPlayers(participants.getPlayers(), deck);
@@ -58,6 +59,13 @@ public class BlackjackController {
         outputView.printDistributeCardsMessage(getPlayerNames(participants.getPlayers()));
         outputView.printDealerInitCards(getDealersCards(participants.getDealer()));
         outputView.printPlayersInitCards(getPlayersCards(participants.getPlayers()));
+    }
+
+    private void bettingMoney(final List<Player> players) {
+        for (Player player : players) {
+            int receiveBettingMoney = inputView.receiveBettingMoney(player.getName());
+            player.betting(receiveBettingMoney);
+        }
     }
 
     private void turnOfPlayers(final List<Player> players, final Deck deck) {
@@ -140,7 +148,7 @@ public class BlackjackController {
 
         for (Player player : players) {
             playersCards.put(player.getName(),
-                    player.getCards().stream()
+                    player.showInitCards().stream()
                             .map(Card::getCardInfo)
                             .collect(Collectors.toList()));
         }

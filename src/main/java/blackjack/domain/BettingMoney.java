@@ -11,6 +11,10 @@ public class BettingMoney {
         this.bettingMoney = bettingMoney;
     }
 
+    public static BettingMoney init() {
+        return new BettingMoney(MIN_BETTING_MONEY);
+    }
+
     private void validateRange(int bettingMoney) {
         if (bettingMoney < MIN_BETTING_MONEY) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 " + MIN_BETTING_MONEY + "원 이상이여야 합니다.");
