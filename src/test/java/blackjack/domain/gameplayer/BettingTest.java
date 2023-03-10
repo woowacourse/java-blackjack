@@ -13,21 +13,21 @@ class BettingTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Success_When_Create() {
-        assertDoesNotThrow(() -> new Betting(1000));
+        assertDoesNotThrow(() -> Betting.of(1000));
     }
 
     @DisplayName("배팅 금액은 1 ~ 30만원까지 입력받을 수 있다._성공")
     @ParameterizedTest
     @ValueSource(ints = {1, 300000})
     void Shuold_Success_When_InputBettingBetween0And300000(int betting) {
-        assertDoesNotThrow(() -> new Betting(betting));
+        assertDoesNotThrow(() -> Betting.of(betting));
     }
 
     @DisplayName("배팅 금액은 1 ~ 30만원까지 입력받을 수 있다._실패")
     @ParameterizedTest
     @ValueSource(ints = {0, 300001})
     void Shuold_ThrowException_When_InputBettingNotBetween0And300000(int betting) {
-        Assertions.assertThatThrownBy(() -> new Betting(betting))
+        Assertions.assertThatThrownBy(() -> Betting.of(betting))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액은 0원부터 30만원까지 입력받을 수 있습니다.");
     }
