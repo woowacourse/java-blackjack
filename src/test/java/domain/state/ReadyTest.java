@@ -25,7 +25,7 @@ class ReadyTest {
     
     @Test
     @DisplayName("스코어가 21을 넘지 않은 경우 카드를 뽑을 수 있다.")
-    void running_state() {
+    void hit_state() {
         final State state = ready
                 .draw(new Card(Shape.HEART, Number.QUEEN))
                 .draw(new Card(Shape.HEART, Number.JACK));

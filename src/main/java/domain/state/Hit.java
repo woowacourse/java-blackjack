@@ -11,6 +11,10 @@ public class Hit extends State {
     @Override
     public State draw(Card card) {
         getHand().addCard(card);
+        if (getHand().isBust()) {
+            return new Bust(getHand());
+        }
+        
         return this;
     }
 }
