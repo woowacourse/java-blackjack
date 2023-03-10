@@ -38,7 +38,7 @@ class DealerTest {
         dealer.hit(card2);
         dealer.hit(card3);
 
-        assertThat(dealer.calculateScore()).isEqualTo(15);
+        assertThat(dealer.calculateScore().getScore()).isEqualTo(15);
     }
 
     @Test

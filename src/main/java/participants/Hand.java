@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import card.Card;
+import card.Score;
 
 public class Hand {
-    public static final int ACE_ADDITIONAL_SCORE = 10;
-    public static final int LIMIT_ADDITIONAL_SCORE = 11;
     public static final int BLACK_JACK_CARD_COUNT = 2;
     private final List<Card> cards = new ArrayList<>();
 
@@ -19,18 +18,15 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
+    public Score calculateScore() {
+        int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        if (canAddTen(score)) {
-            score += ACE_ADDITIONAL_SCORE;
+        Score score = new Score(sum);
+        if(containAce()) {
+            return score.calculateAdditionalScore();
         }
         return score;
-    }
-
-    private boolean canAddTen(int score) {
-        return containAce() && score <= LIMIT_ADDITIONAL_SCORE;
     }
 
     private boolean containAce() {
@@ -46,6 +42,6 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == Participant.MAX_SCORE && cards.size() == BLACK_JACK_CARD_COUNT;
+        return calculateScore().isMaxScore() && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 }

@@ -42,7 +42,7 @@ class HandTest {
         hand.add(card);
         hand.add(card2);
 
-        int score = hand.calculateScore();
+        int score = hand.calculateScore().getScore();
 
         assertThat(score).isEqualTo(10);
     }
@@ -86,7 +86,7 @@ class HandTest {
             hand.add(card);
             hand.add(card1);
 
-            int score = hand.calculateScore();
+            int score = hand.calculateScore().getScore();
             assertThat(score).isEqualTo(13);
         }
 
@@ -101,7 +101,7 @@ class HandTest {
             hand.add(card1);
             hand.add(card2);
 
-            int score = hand.calculateScore();
+            int score = hand.calculateScore().getScore();
             assertThat(score).isEqualTo(16);
         }
 

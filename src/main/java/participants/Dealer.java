@@ -20,7 +20,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isUnderScore() {
-        return hand.calculateScore() <= UNDER_SCORE;
+        return hand.calculateScore().isUnderScore();
     }
 
     public void lose() {

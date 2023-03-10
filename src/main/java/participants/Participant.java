@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import card.Card;
+import card.Score;
 
 public class Participant {
-    public static final int MAX_SCORE = 21;
     protected final Name name;
     protected final Hand hand;
 
@@ -19,7 +19,7 @@ public class Participant {
         hand.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return hand.calculateScore();
     }
 
@@ -28,7 +28,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > MAX_SCORE;
+        return hand.calculateScore().isOverMaxScore();
     }
 
     public Name getName() {

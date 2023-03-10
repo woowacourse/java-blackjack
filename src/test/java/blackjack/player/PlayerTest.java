@@ -30,7 +30,7 @@ class PlayerTest {
 
         player.hit(card);
 
-        assertThat(player.calculateScore()).isEqualTo(2);
+        assertThat(player.calculateScore().getScore()).isEqualTo(2);
     }
 
     @Test
@@ -44,7 +44,7 @@ class PlayerTest {
         player.hit(card2);
         player.hit(card3);
 
-        assertThat(player.calculateScore()).isEqualTo(15);
+        assertThat(player.calculateScore().getScore()).isEqualTo(15);
     }
 
     @Test

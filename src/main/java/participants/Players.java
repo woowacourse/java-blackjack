@@ -68,7 +68,7 @@ public class Players {
     }
 
     private boolean isDraw(Dealer dealer, Player player) {
-        return dealer.calculateScore() == player.calculateScore() && !player.isBust();
+        return dealer.calculateScore().getScore() == player.calculateScore().getScore() && !player.isBust();
     }
 
     private boolean isDealerWinPlayer(Dealer dealer, Player player) {
@@ -81,7 +81,7 @@ public class Players {
         if (dealer.isBust()) {
             return false;
         }
-        return dealer.calculateScore() > player.calculateScore();
+        return dealer.calculateScore().getScore() > player.calculateScore().getScore();
     }
 
     private boolean isPlayerWinDealer(Dealer dealer, Player player) {
@@ -91,7 +91,7 @@ public class Players {
         if (dealer.isBust()) {
             return true;
         }
-        return player.calculateScore() > dealer.calculateScore();
+        return player.calculateScore().getScore() > dealer.calculateScore().getScore();
     }
 
     public List<PlayerWinningDto> getWinningResults() {
