@@ -4,7 +4,7 @@ import blackjack.domain.Bank;
 import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     private static final String name = "딜러";
 
