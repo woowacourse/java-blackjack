@@ -31,7 +31,6 @@ public class Blackjack {
                 printHitOrStandByPlayer(player);
             } while (isHit && isPickAble(player));
         }
-
     }
 
     private void hitOrStandByPlayer(Player player, boolean isHit) {

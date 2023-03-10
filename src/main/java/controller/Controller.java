@@ -19,7 +19,7 @@ import static view.OutputView.printSingleGambler;
 
 public class Controller {
 
-    public void playGame(Players players, Dealer dealer) {
+    public void playBlackjack(Players players, Dealer dealer) {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
@@ -29,6 +29,7 @@ public class Controller {
         printScores(players, dealer);
         printResult(result);
     }
+
 
     public static boolean getIsHit(Player player) {
         try {

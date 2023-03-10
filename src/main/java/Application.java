@@ -10,6 +10,6 @@ public class Application {
         Dealer dealer = entityCreator.getDealer();
 
         Controller controller = new Controller();
-        controller.playGame(players, dealer);
+        controller.playBlackjack(players, dealer);
     }
 }

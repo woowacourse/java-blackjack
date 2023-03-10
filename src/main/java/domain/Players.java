@@ -18,11 +18,6 @@ public class Players {
         validatePlayers(playerNames);
         this.players = players;
     }
-//
-//    public Players(List<String> playerNames) {
-//        validatePlayers(playerNames);
-//        this.players = createPlayers(playerNames);
-//    }
 
     private List<String> getPlayerNames(List<Player> players) {
         List<String> playerNames = new ArrayList<>();
