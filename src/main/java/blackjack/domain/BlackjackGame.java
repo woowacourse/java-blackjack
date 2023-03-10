@@ -24,6 +24,10 @@ public final class BlackjackGame {
         dealer.settingSelf();
     }
 
+    public boolean canDealerDraw() {
+        return dealer.canDraw();
+    }
+
     public void drawDealer() {
         dealer.drawIfLowerOrEquals16();
     }

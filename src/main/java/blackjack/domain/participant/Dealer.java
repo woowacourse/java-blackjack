@@ -56,6 +56,10 @@ public final class Dealer extends Participant {
         return hand.get(FIRST_CARD_INDEX);
     }
 
+    public boolean canDraw() {
+        return this.totalScore() <= CAN_DRAW_SCORE;
+    }
+
     public void drawIfLowerOrEquals16() {
         while (this.totalScore() <= CAN_DRAW_SCORE) {
             this.receiveCard(deck.drawCard());
