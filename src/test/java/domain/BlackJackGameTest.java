@@ -3,6 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +17,7 @@ public class BlackJackGameTest {
     @ValueSource(ints = {1, 2})
     @DisplayName("참가자에게 올바르게 카드를 준다.")
     void shouldSuccessDistributeCard(int num) {
-        Players players = new Players(List.of("dino", "sungha"));
+        Players players = new Players(List.of(new Player(new Name("dino")), new Player(new Name("sungha"))));
         BlackJackGame blackJackGame = new BlackJackGame(players, new Dealer());
         blackJackGame.distributeCard(players.getPlayers().get(0), num);
 

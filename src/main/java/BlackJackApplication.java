@@ -1,15 +1,21 @@
 import domain.BlackJackGame;
 import domain.card.Deck;
+import domain.participant.Betting;
 import domain.participant.Dealer;
+import domain.participant.Money;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.ResultCalculator;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackApplication {
     public static void main(String[] args) {
-        Players players = generatePlayers();
+        Betting betting = new Betting();
+        Players players = generatePlayers(betting);
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
@@ -29,12 +35,31 @@ public class BlackJackApplication {
         printFinalFightResult(players, dealer);
     }
 
-    private static Players generatePlayers() {
+    private static Players generatePlayers(Betting betting) {
         try {
-            return new Players(InputView.inputPlayerNames());
+            List<String> playerNames = InputView.inputPlayerNames();
+            List<Player> players = new ArrayList<>();
+            for (String playerName : playerNames) {
+                Name name = new Name(playerName);
+                Money playerBet = readMoney(name);
+                Player player = new Player(name);
+                players.add(player);
+                betting.setParticipantBet(player, playerBet);
+            }
+            return new Players(players);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            return generatePlayers();
+            return generatePlayers(betting);
+        }
+    }
+
+    private static Money readMoney(Name name) {
+        try {
+            String s = InputView.inputBettingAmount(name);
+            return new Money(s);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readMoney(name);
         }
     }
 

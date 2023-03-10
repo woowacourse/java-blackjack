@@ -1,5 +1,6 @@
 package view;
 
+import domain.participant.Name;
 import domain.participant.ReceiveValidate;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String INPUT_PLAYER_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String INPUT_BETTING_AMOUNT_MESSAGE = "의 베팅 금액은?";
     public static final String INPUT_EMPTY_ERROR_MESSAGE = "[ERROR] 입력값이 존재하지 않습니다.";
     public static final String SPLITTER = ",";
 
@@ -25,6 +27,13 @@ public class InputView {
 
     public static boolean inputReceiveOrNot() {
         return ReceiveValidate.checkReceivable(SCANNER.nextLine());
+    }
+
+    public static String inputBettingAmount(Name name) {
+        printMessage("\n" + name.getValue() + INPUT_BETTING_AMOUNT_MESSAGE);
+        String input = SCANNER.nextLine();
+        validateBlank(input);
+        return input;
     }
 
     public static void printMessage(String message) {

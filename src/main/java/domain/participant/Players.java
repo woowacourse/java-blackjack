@@ -7,11 +7,8 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        this.players = playerNames.stream()
-                .map(Name::new)
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
     public void initDistribute() {
