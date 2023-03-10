@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 class BlackjackGameTest {
 
     @Test
-    void 딜러보다_점수가_크다면_배팅_금악만큼_수익이다() {
+    void 딜러보다_점수가_크다면_배팅_금만큼_수익이다() {
         // given
         BlackjackGame blackjackGame = BlackjackGame.of(List.of("둘리"));
         Player player = blackjackGame.getPlayers().get(0);
