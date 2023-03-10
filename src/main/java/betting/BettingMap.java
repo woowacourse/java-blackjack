@@ -1,5 +1,6 @@
 package betting;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class BettingMap {
     }
 
     public Map<Player, BettingAmount> getBettingMap() {
-        return bettingMap;
+        return Collections.unmodifiableMap(bettingMap);
     }
 
     public int calculateDealerReward() {
