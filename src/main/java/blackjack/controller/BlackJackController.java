@@ -44,9 +44,8 @@ public class BlackJackController {
     private void bet(Players players) {
         List<Challenger> challengers = players.getChallengers();
         List<Money> betAmounts = new ArrayList<>();
-        for (Challenger challenger : challengers) {
-            betEachPlayer(challenger, betAmounts);
-        }
+        challengers.stream()
+                .forEach(challenger -> betEachPlayer(challenger, betAmounts));
         blackJackGame = BlackJackGame.from(players, betAmounts);
     }
 
@@ -158,19 +157,16 @@ public class BlackJackController {
 
     private static List<String> makeCardInfo(List<Card> inputCards) {
         List<String> cardInfo = new ArrayList<>();
-        for (Card card : inputCards) {
-            cardInfo.add(card.getSymbol().getName() + card.getShape().getName());
-        }
+        inputCards.stream()
+                .forEach(card -> cardInfo.add(card.getSymbol().getName() + card.getShape().getName()));
         return cardInfo;
     }
 
     private ChallengerResultDto makeChallengerResultDto(GameResult gameResult, List<Challenger> challengers) {
         Map<String, Integer> nameAndResult = new LinkedHashMap<>();
         nameAndResult.put(Dealer.NAME, gameResult.getDealerRevenue().getValue());
-        for (Player challenger : challengers) {
-            Money revenue = gameResult.getChallengerRevenue(challenger);
-            nameAndResult.put(challenger.getName(), revenue.getValue());
-        }
+        challengers.stream()
+                .forEach(challenger -> nameAndResult.put(challenger.getName(), gameResult.getChallengerRevenue(challenger).getValue()));
         return new ChallengerResultDto(nameAndResult);
     }
 }
