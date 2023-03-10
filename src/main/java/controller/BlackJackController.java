@@ -41,15 +41,19 @@ public class BlackJackController {
         List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardsMaker.generate());
         Players players = Players.of(playerNames, cardDistributor);
-        BettingDto bettingDto = new BettingDto();
-        for (Player player : players.getPlayers()) {
-            bettingDto.putPlayerAndMoney(player, Money.of(inputView.requestBettingMoney(player.getNameValue())));
-        }
-        Betting betting = new Betting(bettingDto.getBetting());
+        Betting betting = getBetting(players);
         Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
         end(players, dealer, betting);
+    }
+
+    private Betting getBetting(Players players) {
+        BettingDto bettingDto = new BettingDto();
+        for (Player player : players.getPlayers()) {
+            bettingDto.putPlayerAndMoney(player, Money.of(inputView.requestBettingMoney(player.getNameValue())));
+        }
+        return new Betting(bettingDto.getBetting());
     }
 
     private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {

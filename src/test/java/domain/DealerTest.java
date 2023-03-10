@@ -72,13 +72,13 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드 중 첫번째 카드를 보여준다.")
+    @DisplayName("딜러의 카드 중 두번째 카드를 보여준다.")
     void showOneCard() {
         Dealer dealer = new Dealer(new Cards(cards));
 
         Card card = dealer.showOneCard();
 
-        assertThat(card.getLetterScore()).isEqualTo(2);
+        assertThat(card.getLetterScore()).isEqualTo(10);
     }
 
     @Test

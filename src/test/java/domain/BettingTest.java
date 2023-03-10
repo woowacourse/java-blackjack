@@ -18,7 +18,7 @@ public class BettingTest {
         bettingDto.putPlayerAndMoney(player, Money.of(10000));
 
         Betting betting = new Betting(bettingDto.getBetting());
-        int money = betting.getPlayerMoney(player);
+        int money = betting.getMoneyFromPlayerName(player.getName());
 
         assertThat(money).isEqualTo(10000);
     }
