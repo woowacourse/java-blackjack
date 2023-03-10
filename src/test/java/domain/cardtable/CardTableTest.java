@@ -30,6 +30,7 @@ import static domain.card.CardValue.TEN;
 import static domain.card.CardValue.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CardTableTest {
 
@@ -151,7 +152,7 @@ class CardTableTest {
     }
 
     @ParameterizedTest
-    @MethodSource("determineFinalMatchResult")
+    @MethodSource("determineFirstMatchResult")
     @DisplayName("[first match] determineParticipantsBettingMoney() : 첫 두장에서 결과가 결정되면, 다시 계산하지 않고 그 결과 그대로 배당을 받는다.")
     void test_determineParticipantsBettingMoney_finish_before_final_match(final List<Participant> participants,
                                                                           final Dealer dealer,
@@ -171,7 +172,7 @@ class CardTableTest {
         );
     }
 
-    static Stream<Arguments> determineFinalMatchResult() {
+    static Stream<Arguments> determineFirstMatchResult() {
 
         // 딜러, 참여자 모두 블랙잭 O
         final Participant participant1 = new Participant(new Name("name1"), Money.wons(10000));
@@ -205,6 +206,23 @@ class CardTableTest {
                 Arguments.of(List.of(participant2), dealer2, Money.wons(15000)),
                 Arguments.of(List.of(participant3), dealer3, Money.wons(-10000))
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("determineFirstMatchResult")
+    @DisplayName("determineDealerMoney() : 딜러가 얻은 금액은 참여자가 모두 잃은 금액과 같다.")
+    void test_determineDealerMoney(final List<Participant> participants,
+                                   final Dealer dealer,
+                                   final Money resultMoney) throws Exception {
+        //given
+        cardTable.matchAfterFirstDeal(participants, dealer);
+        cardTable.matchAfterFirstDeal(participants, dealer);
+
+        //when
+        final Money dealerMoney = cardTable.determineDealerMoney(participants, dealer);
+
+        //then
+        assertEquals(dealerMoney, resultMoney.lose());
     }
 
     @Test
