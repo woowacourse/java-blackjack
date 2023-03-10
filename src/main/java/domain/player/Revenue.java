@@ -1,5 +1,6 @@
 package domain.player;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public class Revenue {
@@ -26,12 +27,10 @@ public class Revenue {
         return new Revenue((int) (money.amount() * 1.5));
     }
 
-    public static Revenue zero() {
-        return new Revenue(0);
-    }
-
-    public Revenue minus(final Revenue revenue) {
-        return new Revenue(amount - revenue.amount());
+    public static Revenue total(final Collection<Revenue> revenues) {
+        return new Revenue(revenues.stream()
+                .mapToInt(Revenue::amount)
+                .sum());
     }
 
     @Override
@@ -49,5 +48,9 @@ public class Revenue {
 
     public int amount() {
         return amount;
+    }
+
+    public Revenue reverse() {
+        return new Revenue(-amount);
     }
 }

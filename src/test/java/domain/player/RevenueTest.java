@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static domain.player.Revenue.defaultWin;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,20 +75,33 @@ public class RevenueTest {
         assertThat(blackJackWin.amount()).isEqualTo(revenueAmount);
     }
 
+    private Revenue revenue(final int amount) {
+        return defaultWin(BettingMoney.of(amount));
+    }
+
     @Test
-    void Revenue_끼리는_뺄_수_있다() {
+    void Revenue_의_총_합을_구할_수_있다() {
         // given
         final Revenue revenue1 = revenue(1000);
         final Revenue revenue2 = revenue(3000);
+        final Revenue revenue3 = revenue(5000);
 
         // when
-        final Revenue result = revenue1.minus(revenue2);
+        final Revenue result = Revenue.total(List.of(revenue1, revenue2, revenue3));
 
         // then
-        assertThat(result.amount()).isEqualTo(-2000);
+        assertThat(result.amount()).isEqualTo(9000);
     }
 
-    private Revenue revenue(final int amount) {
-        return defaultWin(BettingMoney.of(amount));
+    @Test
+    void Revenue_의_부호를_반전시킬_수_있다() {
+        // given
+        final Revenue revenue = revenue(1000);
+
+        // when
+        final Revenue reverse = revenue.reverse();
+
+        // then
+        assertThat(reverse.amount()).isEqualTo(-1000);
     }
 }
