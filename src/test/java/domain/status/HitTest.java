@@ -26,7 +26,7 @@ class HitTest {
     void drawHit() {
         Cards cards = new Cards(List.of(TEN_CLOVER, TEN_HEART));
         Hit hit = new Hit(cards);
-        assertThat(hit.draw(ACE_CLOVER)).isInstanceOf(Hit.class);
+        assertThat(hit.draw(ACE_CLOVER)).isInstanceOf(Stand.class);
     }
 
     @Test

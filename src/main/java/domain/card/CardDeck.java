@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
@@ -11,8 +12,12 @@ public final class CardDeck {
 
     private final Deque<Card> cards;
 
+    public CardDeck(List<Card> cards, CardsShuffler shuffler) {
+        this.cards = shuffler.shuffleCards(new ArrayDeque<>(cards));
+    }
+
     public CardDeck(CardsShuffler shuffler) {
-        this.cards = shuffler.shuffleCards(initializeCards());
+        this(new ArrayList<>(initializeCards()), shuffler);
     }
 
     private static Deque<Card> initializeCards() {

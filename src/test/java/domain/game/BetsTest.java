@@ -1,7 +1,16 @@
 package domain.game;
 
 import static domain.Fixtures.ACE_HEART;
+import static domain.Fixtures.FOUR_HEART;
+import static domain.Fixtures.KING_CLOVER;
+import static domain.Fixtures.KING_SPADE;
+import static domain.Fixtures.NINE_DIAMOND;
+import static domain.Fixtures.QUEEN_SPADE;
+import static domain.Fixtures.SEVEN_HEART;
+import static domain.Fixtures.TEN_CLOVER;
 import static domain.Fixtures.THREE_SPADE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.card.CardDeck;
@@ -11,6 +20,7 @@ import domain.participant.Player;
 import domain.result.WinningResult;
 import domain.shuffler.FixedCardsShuffler;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class BetsTest {
@@ -25,13 +35,13 @@ class BetsTest {
     }
 
     @Test
-    void calculateBets() {
+    void standBustTest() {
         Participants participants = new Participants(List.of("깃짱", "이리내"));
         participants.distributeInitialCards(new CardDeck(new FixedCardsShuffler()));
 
-        Dealer dealer = participants.getDealer(); // score: 20
         Player gitJjang = participants.getPlayers().get(0); // score: 20
         Player irene = participants.getPlayers().get(1); // score: 20
+        Dealer dealer = participants.getDealer(); // score: 20
 
         Bets bets = new Bets();
         bets.addBet(gitJjang, new Money(1000));
@@ -41,6 +51,66 @@ class BetsTest {
         irene.receiveCard(THREE_SPADE); // score: 23 (bust)
 
         WinningResult winningResult = new WinningResult(participants);
-        System.out.println(bets.calculateBets(winningResult));
+        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+
+        assertAll(
+                () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1000)),
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(-10000))
+        );
+    }
+
+    @Test
+    void blackJackDrawTest() {
+        Participants participants = new Participants(List.of("깃짱", "이리내"));
+        participants.distributeInitialCards(
+                new CardDeck(List.of(KING_CLOVER, QUEEN_SPADE, SEVEN_HEART, NINE_DIAMOND, ACE_HEART, KING_SPADE),
+                        new FixedCardsShuffler()));
+
+        Player gitJjang = participants.getPlayers().get(0); // score: 21 (BlackJack)
+        Player irene = participants.getPlayers().get(1); // score: 16
+        Dealer dealer = participants.getDealer(); // score: 20
+
+        Bets bets = new Bets();
+        bets.addBet(gitJjang, new Money(1000));
+        bets.addBet(irene, new Money(10000));
+
+        irene.receiveCard(FOUR_HEART); // score: 20 (hit) => draw
+        irene.selectStand();
+
+        WinningResult winningResult = new WinningResult(participants);
+        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+
+        assertAll(
+                () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1500)),
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(0))
+        );
+    }
+
+
+    @Test
+    void dealerBustTest() {
+        Participants participants = new Participants(List.of("깃짱", "이리내"));
+        participants.distributeInitialCards(
+                new CardDeck(List.of(KING_CLOVER, THREE_SPADE, SEVEN_HEART, NINE_DIAMOND, ACE_HEART, KING_SPADE),
+                        new FixedCardsShuffler()));
+
+        Player gitJjang = participants.getPlayers().get(0); // score: 21 (BlackJack)
+        Player irene = participants.getPlayers().get(1); // score: 16
+        Dealer dealer = participants.getDealer(); // score: 13
+
+        Bets bets = new Bets();
+        bets.addBet(gitJjang, new Money(1000));
+        bets.addBet(irene, new Money(10000));
+
+        dealer.receiveCard(TEN_CLOVER);
+        irene.selectStand();
+
+        WinningResult winningResult = new WinningResult(participants);
+        Map<Player, Money> weightedBets = bets.calculateBets(winningResult);
+
+        assertAll(
+                () -> assertThat(weightedBets.get(gitJjang)).isEqualTo(new Money(1500)),
+                () -> assertThat(weightedBets.get(irene)).isEqualTo(new Money(10000))
+        );
     }
 }

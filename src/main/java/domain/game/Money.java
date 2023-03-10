@@ -1,24 +1,18 @@
 package domain.game;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Money {
 
     private final BigDecimal amount;
 
     public Money(final int amount) {
-        validateAmount(amount);
         this.amount = BigDecimal.valueOf(amount);
     }
 
     public Money(final BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    private static void validateAmount(final int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("베팅 금액을 1원 이상 설정해 주세요");
-        }
+        this(amount.intValue());
     }
 
     public Money multiply(final BigDecimal amount) {
@@ -27,6 +21,23 @@ public class Money {
 
     public int getAmount() {
         return amount.intValue();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Money money = (Money) o;
+        return Objects.equals(amount, money.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 
     @Override
