@@ -21,7 +21,6 @@ public class Users {
         return new Users(dealer, players);
     }
 
-
     public void hitCardByName(final String name, final Card card) {
         findByName(name).hit(card);
     }

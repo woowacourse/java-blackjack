@@ -12,15 +12,15 @@ public abstract class User {
         hand.addCard(card);
     }
 
-    public final Hand getCards() {
-        return hand;
-    }
-
     public abstract boolean isHittable();
 
     public abstract boolean isDealer();
 
     public abstract boolean isPlayer();
+
+    public final Hand getCards() {
+        return hand;
+    }
 
     public final Score getScore() {
         return hand.getSumOfScores();

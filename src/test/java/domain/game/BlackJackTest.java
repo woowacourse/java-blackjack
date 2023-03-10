@@ -15,23 +15,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackTest {
+public class BlackjackTest {
     private Users users;
-    private BlackJack blackJack;
+    private Blackjack blackJack;
 
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, new DefaultDeckGenerator().generateDeck());
+        blackJack = Blackjack.of(users, new DefaultDeckGenerator().generateDeck());
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
         users = Users.from(List.of("hongo", "kiara"));
-        //blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        //blackJack = Blackjack.of(users, new ZeroIndexGenerator());
 
-        BlackJack blackJack = BlackJack.of(users, new DefaultDeckGenerator().generateDeck());
+        Blackjack blackJack = Blackjack.of(users, new DefaultDeckGenerator().generateDeck());
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13

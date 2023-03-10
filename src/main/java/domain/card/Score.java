@@ -38,6 +38,10 @@ public class Score {
         return !scoreAddedAceOffSet.isBust();
     }
 
+    public boolean isBlackjackScore() {
+        return this.equals(BLACK_JACK_SCORE);
+    }
+
     public int getValue() {
         return value;
     }

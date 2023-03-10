@@ -32,6 +32,10 @@ public class Hand {
         return getSumOfScores().isAddable();
     }
 
+    public boolean isBlackjack() {
+        return getSumOfScores().isBlackjackScore() && cards.size() == 2;
+    }
+
     public Card get(final int index) {
         return cards.get(index);
     }

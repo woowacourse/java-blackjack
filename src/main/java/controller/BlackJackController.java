@@ -4,7 +4,7 @@ import domain.HitCommand;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
-import domain.game.BlackJack;
+import domain.game.Blackjack;
 import domain.game.Result;
 import domain.user.Player;
 import domain.user.Users;
@@ -14,7 +14,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private BlackJack blackJack;
+    private Blackjack blackJack;
 
     public void run() {
         try {
@@ -29,7 +29,7 @@ public class BlackJackController {
     private void initGame() {
         List<String> playerNames = InputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, new RandomDeckGenerator().generateDeck());
+        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck());
         printInitMessages(playerNames);
     }
 
