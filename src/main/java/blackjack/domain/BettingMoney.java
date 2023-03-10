@@ -16,4 +16,12 @@ public class BettingMoney {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 " + MIN_BETTING_MONEY + "원 이상이여야 합니다.");
         }
     }
+
+    public long getBlackjackPrize() {
+        return Math.round(bettingMoney * 1.5);
+    }
+
+    public long getPrize() {
+        return bettingMoney;
+    }
 }
