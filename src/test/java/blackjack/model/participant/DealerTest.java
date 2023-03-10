@@ -5,7 +5,8 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
 import blackjack.model.state.DealerDrawState;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class DealerTest {
         Card card1 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2);
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new PlayerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -43,7 +44,7 @@ class DealerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.THREE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2, card3);
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -83,7 +84,7 @@ class DealerTest {
         Card card3 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2, card3, card4);
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -102,7 +103,7 @@ class DealerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2, card3);
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -120,7 +121,7 @@ class DealerTest {
         Card card1 = Card.of(CardSuit.HEART, CardNumber.ACE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.KING);
         List<Card> cards = List.of(card1, card2);
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when

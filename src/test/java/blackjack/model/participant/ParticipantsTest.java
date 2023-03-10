@@ -4,7 +4,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +22,9 @@ class ParticipantsTest {
     @DisplayName("다음으로 hit 또는 stand 입력을 받을 플레이어가 남아있는지 확인한다.")
     void has_nex_player() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
@@ -49,9 +50,9 @@ class ParticipantsTest {
     @DisplayName("다음으로 hit 또는 stand 입력을 받을 플레이어를 반환할 때 Blackjack 상태의 플레이어는 건너뛰고 반환한다.")
     void get_next_player() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
@@ -73,9 +74,9 @@ class ParticipantsTest {
     @DisplayName("증복된 이름을 가진 플레이어가 있을 경우 예외처리한다.")
     void validate_duplicated_name() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("이리내"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
 
         //when
         List<Player> players = new ArrayList<>(List.of(player1, player2));
@@ -89,7 +90,7 @@ class ParticipantsTest {
     @DisplayName("플레이어가 0명일 경우 예외처리한다.")
     void validate_player_count() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
 
         //when
         List<Player> players = new ArrayList<>();
@@ -103,9 +104,9 @@ class ParticipantsTest {
     @DisplayName("딜러와 플레이어는 처음에 카드를 2개씩 받는다.")
     void distribute_two_cards_to_each_participant() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
         Participants participants = new Participants(dealer, List.of(player1, player2));
         CardDeck cardDeck = new CardDeck();
 

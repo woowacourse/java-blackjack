@@ -5,7 +5,8 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
 import blackjack.model.participant.*;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -34,8 +35,8 @@ class ResultTest {
                 Card card5 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
                 Card card6 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5, card6));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -64,8 +65,8 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -94,8 +95,8 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -130,8 +131,8 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -158,8 +159,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -185,8 +186,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -219,8 +220,8 @@ class ResultTest {
                 Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.SIX);
                 Card card5 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -248,8 +249,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.ACE);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -277,8 +278,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -301,8 +302,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.SEVEN);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when
@@ -325,8 +326,8 @@ class ResultTest {
                 Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.NINE);
                 Card card4 = Card.of(CardSuit.SPADE, CardNumber.TEN);
                 CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
-                Dealer dealer = new Dealer(new InitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new InitialState(new Hand()));
+                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+                Player player = new Player(new Name("이리내"), new PlayerInitialState(new Hand()));
                 Participants participants = new Participants(dealer, List.of(player));
 
                 //when

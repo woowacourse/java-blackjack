@@ -4,8 +4,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
-import blackjack.model.state.DrawState;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.PlayerDrawState;
+import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ class PlayerTest {
     @DisplayName("게임을 시작하면 플레이어는 두 장씩의 카드를 지급받는다.")
     void player_initial_state_draw() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState(new Hand()));
+        Player player = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         List<Card> cards = List.of(card1, card2);
@@ -44,7 +44,7 @@ class PlayerTest {
         Card card3 = Card.of(CardSuit.HEART, CardNumber.NINE);
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card4, card3);
-        Player player = new Player(new Name("도치"), new DrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
+        Player player = new Player(new Name("도치"), new PlayerDrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -64,7 +64,7 @@ class PlayerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.KING);
         List<Card> cards = List.of(card1, card2, card3);
-        Player player = new Player(new Name("도치"), new InitialState(new Hand()));
+        Player player = new Player(new Name("도치"), new PlayerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
