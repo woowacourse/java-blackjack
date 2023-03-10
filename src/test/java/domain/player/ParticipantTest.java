@@ -4,7 +4,11 @@ import domain.card.Card;
 import domain.card.CardArea;
 import domain.card.CardDeck;
 import domain.fixture.CardDeckFixture;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -40,7 +44,7 @@ class ParticipantTest {
     };
 
     @Test
-    void 이름과_area_가진다() {
+    void 이름과_area_를_가진다() {
         // when & then
         assertDoesNotThrow(() -> new Participant(코다이름(), equal16CardArea()) {
             @Override

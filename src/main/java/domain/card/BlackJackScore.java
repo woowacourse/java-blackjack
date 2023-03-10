@@ -16,14 +16,14 @@ public class BlackJackScore {
         this.value = value;
     }
 
+    public static BlackJackScore of(final int value) {
+        return new BlackJackScore(value);
+    }
+
     private void validateNegative(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("점수는 음수일 수 없습니다.");
         }
-    }
-
-    public static BlackJackScore of(final int value) {
-        return new BlackJackScore(value);
     }
 
     public boolean isBlackJackScore() {

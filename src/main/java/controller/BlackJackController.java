@@ -20,8 +20,6 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackJackController {
 
-
-
     public void run() {
         final BlackJackGame blackJackGame = setUpGame();
         hitOrStayForGamblers(blackJackGame);

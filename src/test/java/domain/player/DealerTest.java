@@ -3,7 +3,12 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardArea;
 import domain.fixture.CardAreaFixture;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -65,6 +70,16 @@ class DealerTest {
         );
     }
 
+    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2}이다")
+    @MethodSource("playerAndDealerAndResult")
+    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final Revenue actualRevenue) {
+        // when
+        final Revenue revenue = dealer.compete(gambler);
+
+        // then
+        assertThat(revenue).isEqualTo(actualRevenue);
+    }
+
     static Stream<Arguments> playerAndDealerAndResult() {
         // given
         final CardArea cardArea = withTwoCard(TEN, TEN);
@@ -117,16 +132,6 @@ class DealerTest {
                         Named.of("블랙잭 승리", blackJackWin(money))
                 )
         );
-    }
-
-    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2}이다")
-    @MethodSource("playerAndDealerAndResult")
-    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final Revenue actualRevenue) {
-        // when
-        final Revenue revenue = dealer.compete(gambler);
-
-        // then
-        assertThat(revenue).isEqualTo(actualRevenue);
     }
 
     @Nested

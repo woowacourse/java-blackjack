@@ -15,6 +15,10 @@ public class BettingMoney {
         this.amount = amount;
     }
 
+    public static BettingMoney of(final int amount) {
+        return new BettingMoney(amount);
+    }
+
     private void validateZero(final int amount) {
         if (amount < MINIMUM_BATTING_AMOUNT) {
             throw new IllegalArgumentException("배팅 금액은 최소 " + MINIMUM_BATTING_AMOUNT + "원 이상입니다");
@@ -25,10 +29,6 @@ public class BettingMoney {
         if (amount % AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException("배팅 금액은 " + AMOUNT_UNIT + "단위여야 합니다.");
         }
-    }
-
-    public static BettingMoney of(final int amount) {
-        return new BettingMoney(amount);
     }
 
     public int amount() {

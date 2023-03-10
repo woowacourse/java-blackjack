@@ -1,9 +1,9 @@
 package controller;
 
-import domain.player.Revenue;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Participant;
+import domain.player.Revenue;
 
 import java.util.ArrayList;
 import java.util.List;

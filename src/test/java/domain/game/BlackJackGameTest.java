@@ -2,8 +2,18 @@ package domain.game;
 
 import domain.card.BlackJackScore;
 import domain.card.CardDeck;
-import domain.player.*;
-import org.junit.jupiter.api.*;
+import domain.player.BettingMoney;
+import domain.player.Dealer;
+import domain.player.Gambler;
+import domain.player.HitState;
+import domain.player.Name;
+import domain.player.Participant;
+import domain.player.Revenue;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +33,10 @@ class BlackJackGameTest {
 
     private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
+    private static Map<Name, BettingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
+        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10000)));
+    }
+
     @Test
     void 기본_세팅_시_참여자의_이름과_배팅_금액과_게임에서_사용할_카드_덱을_받아_딜러와_참여자들을_생성한다() {
         // given
@@ -36,8 +50,28 @@ class BlackJackGameTest {
         assertThat(blackJackGame.dealer()).isNotNull();
     }
 
-    private static Map<Name, BettingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
-        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10000)));
+    @Test
+    void 참가자별_수익을_낼_수_있다() {
+        // given
+
+        // 말랑 - 20(무), 콩떡 - 30(패), 코다 - 21(승)
+        // 딜러 - 20
+        final Gambler 말랑 = 말랑(equal20CardArea());
+        final Gambler 콩떡 = 콩떡(over21CardArea());
+        final Gambler 코다 = 코다(equal21CardAreaNonBlackJack());
+        final Dealer dealer = new Dealer(equal20CardArea());
+
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, cardDeck);
+
+        // when
+        final Map<Participant, Revenue> revenue = blackJackGame.revenue();
+
+        // then
+        assertThat(revenue).contains(
+                entry(말랑, Revenue.draw(말랑.battingMoney())),
+                entry(콩떡, Revenue.lose(콩떡.battingMoney())),
+                entry(코다, Revenue.defaultWin(코다.battingMoney()))
+        );
     }
 
     @Nested
@@ -72,30 +106,6 @@ class BlackJackGameTest {
             assertThat(dealer.score()).isEqualTo(before);
             assertThat(result).isFalse();
         }
-    }
-
-    @Test
-    void 참가자별_수익을_낼_수_있다() {
-        // given
-
-        // 말랑 - 20(무), 콩떡 - 30(패), 코다 - 21(승)
-        // 딜러 - 20
-        final Gambler 말랑 = 말랑(equal20CardArea());
-        final Gambler 콩떡 = 콩떡(over21CardArea());
-        final Gambler 코다 = 코다(equal21CardAreaNonBlackJack());
-        final Dealer dealer = new Dealer(equal20CardArea());
-
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, cardDeck);
-
-        // when
-        final Map<Participant, Revenue> revenue = blackJackGame.revenue();
-
-        // then
-        assertThat(revenue).contains(
-                entry(말랑, Revenue.draw(말랑.battingMoney())),
-                entry(콩떡, Revenue.lose(콩떡.battingMoney())),
-                entry(코다, Revenue.defaultWin(코다.battingMoney()))
-        );
     }
 
     @Nested
