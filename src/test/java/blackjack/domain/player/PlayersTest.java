@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
+
+import java.util.Collections;
 import java.util.List;
 
 import blackjack.domain.player.exception.InvalidChallengerNumberException;
@@ -24,6 +26,13 @@ class PlayersTest {
     void over_challenger_number() {
         assertThrows(InvalidChallengerNumberException.class,
                 () -> Players.from(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")));
+    }
+
+    @Test
+    @DisplayName("도전자의 숫자가 1명 미만이면 예외가 발생한다.")
+    void under_challenger_number() {
+        assertThrows(InvalidChallengerNumberException.class,
+                () -> Players.from(Collections.emptyList()));
     }
 
     @Test

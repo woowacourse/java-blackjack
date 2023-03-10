@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class Players {
 
     private static final int CHALLENGER_MAX_COUNT = 10;
+    private static final int CHALLENGER_MIN_COUNT = 1;
 
     private final List<Player> players;
 
@@ -36,7 +37,7 @@ public class Players {
     }
 
     private static void validateChallengerCount(final List<String> names) {
-        if (names.size() > CHALLENGER_MAX_COUNT) {
+        if (names.size() > CHALLENGER_MAX_COUNT || names.size() < CHALLENGER_MIN_COUNT) {
             throw new InvalidChallengerNumberException();
         }
     }
