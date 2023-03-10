@@ -53,7 +53,7 @@ public class Participants {
     }
 
     public int getDealerCardValueSum() {
-        return dealer.hand.calculateOptimalCardValueSum();
+        return dealer.calculateOptimalCardValueSum();
     }
 
     public List<Player> getRawPlayers() {

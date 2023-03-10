@@ -18,6 +18,10 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
+    public int calculateOptimalCardValueSum() {
+        return hand.calculateOptimalCardValueSum();
+    }
+
     public String getName() {
         return name.getValue();
     }

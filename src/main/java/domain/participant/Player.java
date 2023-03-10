@@ -9,6 +9,6 @@ public class Player extends Participant {
     }
 
     public boolean canHit() {
-        return hand.calculateOptimalCardValueSum() <= LIMIT_HIT_VALUE;
+        return this.calculateOptimalCardValueSum() <= LIMIT_HIT_VALUE;
     }
 }
