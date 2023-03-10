@@ -35,6 +35,10 @@ public class Hand {
         return sumScore() < SUM_MAXIMUM_BEFORE_BUST;
     }
 
+    public boolean hasBlackJackScore() {
+        return sumScore() == SUM_MAXIMUM_BEFORE_BUST && cards.size() == 2;
+    }
+
     private int countACE() {
         return (int) cards.stream()
                 .filter(Card::isACE)
