@@ -45,6 +45,21 @@
 - [x] Ace는 11로 계산하되, 합계가 21이 넘는 경우 1로 계산한다.
 - [x] 모든 딜러와 플레이어는 점수가 21을 초과하면 `Bust` 된다.
 
+#### `Status` 관리하기
+
+```mermaid
+Ready[Ready] --> BlackJack[BlackJack]
+Ready --> Hit[Hit]
+Hit --> |y| Hit
+Hit --> |n| Stand[Stand]
+Hit --> Bust[Bust]
+```
+
+- 게임 중 상태: `Hit`
+    - 새로운 카드를 받거나, 그만 받기(`Stand`)를 선택할 수 있음
+- 게임 종료 상태: `BlackJack`, `Stand`, `Bust`
+    - profit rate 반환
+
 #### 결과 출력
 
 - [x] 딜러가 `Bust`되지 않은 경우
