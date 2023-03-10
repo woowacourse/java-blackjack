@@ -16,8 +16,11 @@ public class ResultGame {
         this.playersResult = playersResult;
     }
 
-    public static ResultGame from(final Map<Participant, WinTieLose> playersResult) {
-        return new ResultGame(playersResult);
+    public static ResultGame from(final Map<Participant, WinTieLose> playersResult, final Participants participants) {
+        ResultGame resultGame = new ResultGame(playersResult);
+        resultGame.calculateResult(participants);
+
+        return resultGame;
     }
 
     public void calculateResult(final Participants participants) {

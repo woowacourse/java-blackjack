@@ -87,9 +87,8 @@ public class BlackjackController {
     }
 
     private void displayAllResult(final Participants participants) {
-        final ResultGame resultGame = ResultGame.from(new HashMap<>());
+        final ResultGame resultGame = ResultGame.from(new HashMap<>(), participants);
 
-        resultGame.calculateResult(participants);
         outputView.printParticipantsResult(participants, resultGame);
     }
 }
