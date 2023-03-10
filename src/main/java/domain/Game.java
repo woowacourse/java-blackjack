@@ -4,6 +4,7 @@ import java.util.List;
 
 import static domain.Status.BUST;
 import static domain.Status.STAY;
+import static domain.User.NUMBER_OF_FIRST_CARDS;
 
 public class Game {
 
@@ -15,8 +16,8 @@ public class Game {
         this.deck = deck;
     }
 
-    public void dealTwoCards() {
-        for (int i = 0; i < 2; i++) {
+    public void dealCardsInFirstTurn() {
+        for (int i = 0; i < NUMBER_OF_FIRST_CARDS; i++) {
             users.dealCardsFrom(deck);
         }
     }

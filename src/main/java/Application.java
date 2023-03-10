@@ -34,7 +34,7 @@ public class Application {
 
     private static void start(Game game) {
         Users users = game.getUsers();
-        game.dealTwoCards();
+        game.dealCardsInFirstTurn();
         outputView.printCardsFrom(users);
     }
 
