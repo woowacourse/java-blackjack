@@ -35,7 +35,7 @@
 - [x] 첫 `Hand`를 받는다.
 
 ### Dealer
-- [ ] `Participant`를 상속한다.
+- [x] `Participant`를 상속한다.
 - [x] 딜러라는 이름을 가진다.
 - [x] `Bank`와 `Deck`을 가진다.
 - [x] `Players`에게 2장의 카드를 세팅한다.
@@ -47,7 +47,7 @@
   - [ ] 받은 `Hand`와 `Players`의 수가 다르면 예외를 발생한다.
 
 ### Player
-- [ ] `Participant`를 상속한다.
+- [x] `Participant`를 상속한다.
 - [x] 이름을 가진다.
 
 ---
