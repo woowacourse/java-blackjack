@@ -79,45 +79,13 @@ public class OutputView {
             String.format("%s카드: %s - 결과 : %s", participant.getName().getValue(), cards, score));
     }
 
-    private static String convertScoreToString(int number) {
-        String score = String.valueOf(number);
-        if (score.equals("-1")) {
-            score = "Burst";
-        }
-        return score;
-    }
-
-    public static void printResult(Map<String, Long> dealerResult, Dealer dealer, Players players,
-        List<Result> results) {
-        System.out.println("## 최종 승패");
+    public static void printResult(Double dealerWinningMoney,List<Double> playerWinnningMoneys, Dealer dealer, Players players) {
+        System.out.println("## 최종 수익");
         List<String> names = players.getPlayerNames();
-
-        printDealerResult(dealerResult, dealer);
-        System.out.println();
-
+        System.out.println(String.format("%s: %d", dealer.getName().getValue(), dealerWinningMoney.longValue()));
         for (int i = 0; i < names.size(); i++) {
-            System.out.println(String.format("%s: %s", names.get(i), results.get(i)));
+            System.out.println(String.format("%s: %d", names.get(i), playerWinnningMoneys.get(i).longValue()));
         }
-    }
-
-    private static void printDealerResult(Map<String, Long> dealerResult, Dealer dealer) {
-        System.out.print(String.format("%s: ", dealer.getName().getValue()));
-        for (Result result : Result.values()) {
-            if (dealerResult.containsKey(result)) {
-                Long count = dealerResult.get(result);
-                System.out.print(String.format("%d%s ", count, reverse(result)));
-            }
-        }
-    }
-
-    private static Result reverse(Result result) {
-        if (result == Result.WIN) {
-            return Result.LOSE;
-        }
-        if (result == Result.LOSE) {
-            return Result.WIN;
-        }
-        return result;
     }
 
     public static void printBurstMessage() {

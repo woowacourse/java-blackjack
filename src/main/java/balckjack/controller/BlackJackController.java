@@ -1,10 +1,10 @@
 package balckjack.controller;
 
 import balckjack.domain.Dealer;
+import balckjack.domain.Money;
 import balckjack.domain.Player;
 import balckjack.domain.Players;
 import balckjack.domain.Referee;
-import balckjack.domain.Result;
 import balckjack.strategy.CardPicker;
 import balckjack.util.Repeater;
 import balckjack.view.InputView;
@@ -21,7 +21,8 @@ public class BlackJackController {
         initializeGame(cardPicker, players, dealer);
         tryPlayersTurn(cardPicker, players);
         tryDealerTurn(cardPicker, dealer);
-        final Referee referee = new Referee(dealer,players);
+        final Referee referee = new Referee(dealer.getCardDeck(), players.getPlayersDeck(),
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
         reportResult(players, dealer, referee);
     }
 
@@ -82,9 +83,8 @@ public class BlackJackController {
     }
 
     private void reportResult(Players players, Dealer dealer, Referee referee) {
-        List<Result> results = referee.getResults();
         OutputView.printFinalCardDeck(dealer, players, referee);
-        OutputView.printResult(referee.countDealerResult(results), dealer, players,
-            results);
+        OutputView.printResult(referee.calculateDealerWinningMoney(),
+            referee.calculateWinningMoneys(), dealer, players);
     }
 }

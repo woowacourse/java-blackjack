@@ -58,6 +58,12 @@ public class Players {
             .collect(Collectors.toList());
     }
 
+    public List<CardDeck> getPlayersDeck() {
+        return players.stream()
+            .map(Player::getCardDeck)
+            .collect(Collectors.toList());
+    }
+
     public void initHit(CardPicker cardPicker) {
         players.forEach(player -> player.distributeCards(cardPicker));
     }

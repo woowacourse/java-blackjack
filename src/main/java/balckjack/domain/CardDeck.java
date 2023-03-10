@@ -22,13 +22,10 @@ public class CardDeck {
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
 
     public Score calculateScore() {
-        Score standardSum = new Score(cards.stream().filter(card->!card.isAce()).mapToInt(Card::getValue).sum());
+        Score standardSum = new Score(
+            cards.stream().filter(card -> !card.isAce()).mapToInt(Card::getValue).sum());
         int aceCount = findAceCount();
         if (aceCount > 0) {
             return standardSum.addAceScore(aceCount);
@@ -42,4 +39,11 @@ public class CardDeck {
             .count());
     }
 
+    public int findCardsCount() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

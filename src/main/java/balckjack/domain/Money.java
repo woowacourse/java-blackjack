@@ -4,7 +4,7 @@ public class Money {
 
     private final int value;
 
-    Money(int value) {
+    public Money(int value) {
         validateMoney(value);
         this.value = value;
     }

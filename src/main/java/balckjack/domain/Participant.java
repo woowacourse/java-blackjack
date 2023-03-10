@@ -2,7 +2,7 @@ package balckjack.domain;
 
 import balckjack.strategy.CardPicker;
 
-abstract public class Participant {
+public class Participant {
 
     private static final int INIT_CARD_COUNT = 2;
 

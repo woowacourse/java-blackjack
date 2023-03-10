@@ -1,103 +1,138 @@
 package balckjack.domain;
 
-import helper.StubCardPicker;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
 
-    
-    @Test
-    void testResult() {
+    private CardDeck dealer20;
+    private CardDeck dealer21;
+    private CardDeck dealer23;
+    private CardDeck dealerBlackJack;
 
-        //int dealerScore = 20;
-        //List<Integer> playerScores = List.of(21, 9, 20, -1);
+    private List<CardDeck> players;
+    private List<CardDeck> playersHaveBlackJack;
 
-        Participant dealer = new Dealer();
-        Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new Card(Pattern.CLOVER, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.FOUR);
-        Card card3 = new Card(Pattern.CLOVER, Denomination.SIX);
+    @BeforeEach
+    void init() {
+        dealer20 = new CardDeck();
 
-        dealer.hit(new StubCardPicker(card1));
-        dealer.hit(new StubCardPicker(card2));
-        dealer.hit(new StubCardPicker(card3));
+        dealer20.addCard(new Card(Pattern.CLOVER, Denomination.TEN));
+        dealer20.addCard(new Card(Pattern.CLOVER, Denomination.JACK));
 
-        Card card4 = new Card(Pattern.SPADE, Denomination.TEN);
-        Card card5 = new Card(Pattern.SPADE, Denomination.ACE);
-        players.getPlayers().get(0).hit(new StubCardPicker(card4));
-        players.getPlayers().get(0).hit(new StubCardPicker(card5));
+        dealer21 = new CardDeck();
 
-        Card card7 = new Card(Pattern.CLOVER, Denomination.NINE);
-        players.getPlayers().get(1).hit(new StubCardPicker(card7));
+        dealer21.addCard(new Card(Pattern.CLOVER, Denomination.TEN));
+        dealer21.addCard(new Card(Pattern.CLOVER, Denomination.FOUR));
+        dealer21.addCard(new Card(Pattern.CLOVER, Denomination.SEVEN));
 
-        Card card8 = new Card(Pattern.HEART, Denomination.TEN);
-        Card card9 = new Card(Pattern.HEART, Denomination.FOUR);
-        Card card10 = new Card(Pattern.HEART, Denomination.SIX);
+        dealer23 = new CardDeck();
 
-        players.getPlayers().get(2).hit(new StubCardPicker(card8));
-        players.getPlayers().get(2).hit(new StubCardPicker(card9));
-        players.getPlayers().get(2).hit(new StubCardPicker(card10));
+        dealer23.addCard(new Card(Pattern.CLOVER, Denomination.TEN));
+        dealer23.addCard(new Card(Pattern.CLOVER, Denomination.FOUR));
+        dealer23.addCard(new Card(Pattern.CLOVER, Denomination.JACK));
 
-        Card card11 = new Card(Pattern.HEART, Denomination.TEN);
-        Card card12 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card13 = new Card(Pattern.DIAMOND, Denomination.KING);
+        dealerBlackJack = new CardDeck();
 
-        players.getPlayers().get(3).hit(new StubCardPicker(card11));
-        players.getPlayers().get(3).hit(new StubCardPicker(card12));
-        players.getPlayers().get(3).hit(new StubCardPicker(card13));
+        dealerBlackJack.addCard(new Card(Pattern.CLOVER, Denomination.TEN));
+        dealerBlackJack.addCard(new Card(Pattern.CLOVER, Denomination.ACE));
 
-        List<Result> result = new Referee(dealer, players).getResults();
-        Assertions.assertThat(result)
-            .isEqualTo(List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE));
+        CardDeck player1 = new CardDeck();
+        CardDeck player2 = new CardDeck();
+        CardDeck player3 = new CardDeck();
+        CardDeck player4 = new CardDeck();
+        CardDeck playerBlackJack = new CardDeck();
+
+        player1.addCard(new Card(Pattern.SPADE, Denomination.EIGHT));
+        player1.addCard(new Card(Pattern.SPADE, Denomination.ACE));
+        player1.addCard(new Card(Pattern.SPADE, Denomination.TWO));
+
+        player2.addCard(new Card(Pattern.CLOVER, Denomination.NINE));
+
+        player3.addCard(new Card(Pattern.HEART, Denomination.TEN));
+        player3.addCard(new Card(Pattern.HEART, Denomination.FOUR));
+        player3.addCard(new Card(Pattern.HEART, Denomination.SIX));
+
+        player4.addCard(new Card(Pattern.HEART, Denomination.TEN));
+        player4.addCard(new Card(Pattern.DIAMOND, Denomination.TEN));
+        player4.addCard(new Card(Pattern.DIAMOND, Denomination.KING));
+
+        playerBlackJack.addCard(new Card(Pattern.SPADE, Denomination.TEN));
+        playerBlackJack.addCard(new Card(Pattern.SPADE, Denomination.ACE));
+
+        players = List.of(player1, player2, player3, player4);
+        playersHaveBlackJack = List.of(playerBlackJack, player2, player3, player4);
     }
 
     @Test
-    void testTwoBurstResult() {
+    void testCommonResult() {
+        //int dealerScore = 20;
+        //List<Integer> playerScores = List.of(21, 9, 20, 30);
+        //List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE);
+        Referee referee = new Referee(dealer20, players,
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        List<Double> playerWinningMoney = referee.calculateWinningMoneys();
+        Double dealerWinningMoney = referee.calculateDealerWinningMoney();
+        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1000.0, -1000.0, 0.0, -2000.0));
+        Assertions.assertThat(dealerWinningMoney).isEqualTo(2000.0);
+    }
 
-        //int dealerScore = -1;
-        //List<Integer> playerScores = List.of(21, 9, 20, -1);
+    @Test
+    void testDealerBurstResult() {
+        //int dealerScore = 23;
+        //List<Integer> playerScores = List.of(21, 9, 20, 30);
+        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
 
-        Participant dealer = new Dealer();
-        Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new Card(Pattern.CLOVER, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.FOUR);
-        Card card3 = new Card(Pattern.CLOVER, Denomination.NINE);
+        Referee referee = new Referee(dealer23, players,
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        List<Double> playerWinningMoney = referee.calculateWinningMoneys();
+        Double dealerWinningMoney = referee.calculateDealerWinningMoney();
+        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1000.0, 1000.0, 1500.0, -2000.0));
+        Assertions.assertThat(dealerWinningMoney).isEqualTo(-1500.0);
+    }
 
-        dealer.hit(new StubCardPicker(card1));
-        dealer.hit(new StubCardPicker(card2));
-        dealer.hit(new StubCardPicker(card3));
+    @Test
+    void testIncludeBlackJackPlayerResult() {
+        //int dealerScore = 23;
+        //List<Integer> playerScores = List.of(21, 9, 20, 30);
+        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
 
-        Card card4 = new Card(Pattern.SPADE, Denomination.TEN);
-        Card card5 = new Card(Pattern.SPADE, Denomination.ACE);
-        players.getPlayers().get(0).hit(new StubCardPicker(card4));
-        players.getPlayers().get(0).hit(new StubCardPicker(card5));
+        Referee referee = new Referee(dealer23, playersHaveBlackJack,
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        List<Double> playerWinningMoney = referee.calculateWinningMoneys();
+        Double dealerWinningMoney = referee.calculateDealerWinningMoney();
+        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(1500.0, 1000.0, 1500.0, -2000.0));
+        Assertions.assertThat(dealerWinningMoney).isEqualTo(-2000.0);
+    }
 
-        Card card7 = new Card(Pattern.CLOVER, Denomination.NINE);
-        players.getPlayers().get(1).hit(new StubCardPicker(card7));
+    @Test
+    void testDealerBlackJackResult() {
+        //int dealerScore = 21;
+        //List<Integer> playerScores = List.of(21, 9, 20, 30);
+        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
 
-        Card card8 = new Card(Pattern.HEART, Denomination.TEN);
-        Card card9 = new Card(Pattern.HEART, Denomination.FOUR);
-        Card card10 = new Card(Pattern.HEART, Denomination.SIX);
+        Referee referee = new Referee(dealerBlackJack, players,
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        List<Double> playerWinningMoney = referee.calculateWinningMoneys();
+        Double dealerWinningMoney = referee.calculateDealerWinningMoney();
+        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(-1000.0, -1000.0, -1500.0, -2000.0));
+        Assertions.assertThat(dealerWinningMoney).isEqualTo(5500.0);
+    }
 
-        players.getPlayers().get(2).hit(new StubCardPicker(card8));
-        players.getPlayers().get(2).hit(new StubCardPicker(card9));
-        players.getPlayers().get(2).hit(new StubCardPicker(card10));
+    @Test
+    void testDealerAndPlayerBlackJackResult() {
+        //int dealerScore = 21;
+        //List<Integer> playerScores = List.of(21, 9, 20, 30);
+        //List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE);
 
-        Card card11 = new Card(Pattern.HEART, Denomination.TEN);
-        Card card12 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card13 = new Card(Pattern.DIAMOND, Denomination.KING);
-
-        players.getPlayers().get(3).hit(new StubCardPicker(card11));
-        players.getPlayers().get(3).hit(new StubCardPicker(card12));
-        players.getPlayers().get(3).hit(new StubCardPicker(card13));
-
-        List<Result> result = new Referee(dealer, players).getResults();
-        Assertions.assertThat(result)
-            .isEqualTo(List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE));
+        Referee referee = new Referee(dealerBlackJack, playersHaveBlackJack,
+            List.of(new Money(1000), new Money(1000), new Money(1500), new Money(2000)));
+        List<Double> playerWinningMoney = referee.calculateWinningMoneys();
+        Double dealerWinningMoney = referee.calculateDealerWinningMoney();
+        Assertions.assertThat(playerWinningMoney).isEqualTo(List.of(0.0, -1000.0, -1500.0, -2000.0));
+        Assertions.assertThat(dealerWinningMoney).isEqualTo(4500.0);
     }
 
 
