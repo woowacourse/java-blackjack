@@ -3,9 +3,10 @@ package controller;
 import domain.Card.Deck;
 import domain.game.Game;
 import domain.game.GameAction;
+import domain.game.GameBet;
+import domain.game.GameProfit;
 import domain.game.GameResult;
-import domain.game.ResultStatus;
-import domain.user.Participants;
+import domain.money.Bet;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
@@ -18,9 +19,37 @@ public class GameController {
     
     public void run() {
         Game game = new Game(this.readPlayerNamesUntilValid(), this.getShuffledDeck());
+        GameBet gameBet = this.collectBets(game);
         this.startGame(game);
         this.runGame(game);
-        this.endGame(game);
+//        this.endGameWithStatus(game);
+        this.endGameWithProfit(game, gameBet);
+    }
+    
+    private GameBet collectBets(final Game game) {
+        GameBet gameBet = new GameBet();
+        for (Playable player : game.getPlayers()) {
+            gameBet.accumulate(player, this.readBetUntilValid(player.getName()));
+        }
+        return gameBet;
+    }
+    
+    private Bet readBetUntilValid(final String name) {
+        try {
+            return new Bet(InputView.readBet(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.readBetUntilValid(name);
+        }
+    }
+    
+    private String readPlayerNamesUntilValid() {
+        try {
+            return InputView.readPlayerNames();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.readPlayerNamesUntilValid();
+        }
     }
     
     private Deck getShuffledDeck() {
