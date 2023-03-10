@@ -56,7 +56,16 @@ public class BlackJackGameController {
         int playersSize = playersToPrintFormat(game).size();
         for (int i = 0; i < playersSize; i++) {
             String playerName = playersName.get(i);
+            tryPlayerHitOrStand(game, i, playerName);
+        }
+    }
+
+    private void tryPlayerHitOrStand(Game game, int i, String playerName) {
+        try {
             playerHitOrStand(game, playerName, i);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            tryPlayerHitOrStand(game, i, playerName);
         }
     }
 
