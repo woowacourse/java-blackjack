@@ -150,12 +150,12 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("플레이어 해쉬맵을 가져오는 테스트")
-    void getPlayersResultTest(){
+    void getPlayersResultTest() {
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
 
         Assertions.assertThat(resultGame.getPlayersResult().keySet())
                 .contains(participants.getPlayers().get(0)
-                        ,participants.getPlayers().get(1));
+                        , participants.getPlayers().get(1));
     }
 }

@@ -33,8 +33,8 @@ public class Participant {
         return limitNumber(this.cards.calculateTotalScore());
     }
 
-    private int limitNumber(int totalScore){
-        if(totalScore> MAX_NUMBER){
+    private int limitNumber(int totalScore) {
+        if (totalScore > MAX_NUMBER) {
             return Integer.MIN_VALUE;
         }
         return totalScore;

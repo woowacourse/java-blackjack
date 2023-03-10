@@ -29,7 +29,8 @@ public class ResultGame {
     public HashMap<Player, WinTieLose> getPlayersResult() {
         return this.playersResult;
     }
-    private void put(Player player){
-        playersResult.put(player,dealer.compareScoreWith(player.getTotalScore()));
+
+    private void put(Player player) {
+        playersResult.put(player, dealer.compareScoreWith(player.getTotalScore()));
     }
 }

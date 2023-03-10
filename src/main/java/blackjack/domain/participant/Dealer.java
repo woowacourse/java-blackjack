@@ -24,16 +24,28 @@ public class Dealer extends Participant {
         this.getCards().forEach(Card::openCard);
     }
 
-    public WinTieLose compareScoreWith(int playerScore){
-        if (playerScore==this.getTotalScore()) {
+    public WinTieLose compareScoreWith(int playerScore) {
+        if (isTie(playerScore)) {
             return WinTieLose.TIE;
         }
-        if (playerScore>this.getTotalScore()) {
+        if (isWin(playerScore)) {
             return WinTieLose.WIN;
         }
-        if (playerScore<this.getTotalScore()) {
+        if (isLose(playerScore)) {
             return WinTieLose.LOSE;
         }
         throw new NullPointerException(NON_CASE);
+    }
+
+    private boolean isLose(int playerScore) {
+        return playerScore < this.getTotalScore();
+    }
+
+    private boolean isWin(int playerScore) {
+        return playerScore > this.getTotalScore();
+    }
+
+    private boolean isTie(int playerScore) {
+        return playerScore == this.getTotalScore();
     }
 }
