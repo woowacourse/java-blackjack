@@ -33,11 +33,6 @@ public class Card {
         return Objects.hash(suit, denomination);
     }
 
-    @Override
-    public String toString() {
-        return denomination.getSign() + suit.getName();
-    }
-
     public Suit getSuit() {
         return suit;
     }
