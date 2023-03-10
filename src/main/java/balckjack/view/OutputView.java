@@ -27,7 +27,8 @@ public class OutputView {
         final String displayCards = convertCardDeckString(dealer.getCardDeck(),
             DEALER_DISPLAY_COUNT);
 
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames);
+        System.out.println();
         printParticipantsCardDeck(players, playerNames, dealerName, displayCards);
         System.out.println();
     }
@@ -43,7 +44,8 @@ public class OutputView {
 
     private static void printParticipantsCardDeck(Players players, List<String> playerNames,
         String dealerName, String displayCards) {
-        System.out.println(String.format("%s: %s", dealerName, displayCards));
+        System.out.printf("%s: %s", dealerName, displayCards);
+        System.out.println();
 
         for (int index = 0; index < playerNames.size(); index++) {
             printParticipantCardDeck(players.getPlayers().get(index));
@@ -51,8 +53,9 @@ public class OutputView {
     }
 
     public static void printParticipantCardDeck(Player player) {
-        System.out.println(String.format("%s카드: %s", player.getName().getValue(),
-            convertCardDeckString(player.getCardDeck())));
+        System.out.printf("%s카드: %s", player.getName().getValue(),
+            convertCardDeckString(player.getCardDeck()));
+        System.out.println();
     }
 
     public static void printDealerPickMessage(Dealer dealer) {

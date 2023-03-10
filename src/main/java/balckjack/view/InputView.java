@@ -18,7 +18,8 @@ public class InputView {
 
     public static Double inputMoneys(String name) {
         System.out.println();
-        System.out.println(String.format("%s의 배팅 금액은?", name));
+        System.out.printf("%s의 배팅 금액은?", name);
+        System.out.println();
         String money = scanner.nextLine();
         if (!NUMBER.matcher(money).matches()) {
             throw new IllegalArgumentException("입력은 숫자여야 합니다");
@@ -27,7 +28,8 @@ public class InputView {
     }
 
     public static String inputReply(String name) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
+        System.out.println();
         return scanner.nextLine();
     }
 }
