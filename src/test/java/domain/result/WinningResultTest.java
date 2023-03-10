@@ -16,9 +16,6 @@ import static domain.Fixtures.SEVEN_HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Card;
-import domain.card.Shape;
-import domain.card.Value;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;

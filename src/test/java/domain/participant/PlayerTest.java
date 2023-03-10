@@ -9,8 +9,6 @@ import static domain.Fixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Shape;
-import domain.card.Value;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

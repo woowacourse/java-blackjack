@@ -2,16 +2,25 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.status.Ready;
+import domain.status.Status;
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
     private Cards cards;
+    private Status status;
 
     public Participant(final Name name) {
         this.name = name;
         this.cards = new Cards();
+        this.status = new Ready();
+    }
+
+    public Participant(final Name name, final Status status) {
+        this.name = name;
+        this.status = status;
     }
 
     abstract boolean isHittable();
