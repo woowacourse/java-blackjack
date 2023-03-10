@@ -30,7 +30,7 @@ public class InputView {
     private static List<String> splitInputByDelimiter(String input) {
         return Arrays.stream(input.split(DELIMITER))
                 .map(String::trim)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     public static boolean inputPlayerChoice(String name) {

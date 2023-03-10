@@ -44,10 +44,11 @@ public class Players {
     }
 
     public List<Challenger> getChallengers() {
-        return players.stream()
+        List<Challenger> challengers = players.stream()
                 .filter(player -> !player.isDealer())
                 .map(player -> (Challenger) player)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
+        return new ArrayList<>(challengers);
     }
 
     public Dealer getDealer() {
