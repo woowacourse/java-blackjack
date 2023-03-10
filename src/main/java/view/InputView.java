@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public final class InputView {
 
-    private static final InputView instance = new InputView();
+    private static final InputView INSTANCE = new InputView();
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
     }
 
     public static InputView getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
 
