@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.generator.RandomDeckGenerator;
-import blackjack.domain.user.Dealer;
-import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.CardAndScore;
 import blackjack.dto.HoldingCards;
+import blackjack.dto.NameCardAndScore;
 import blackjack.dto.ProfitResult;
 import blackjack.util.RepeatValidator;
 import blackjack.view.InputView;
@@ -12,6 +12,8 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static blackjack.domain.user.Dealer.DEALER_NAME_CODE;
 
 public class BlackJackController {
 
@@ -53,7 +55,16 @@ public class BlackJackController {
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
-        outputView.printInitialHoldingCards(blackJackGame.getInitialHoldingCards());
+        final List<HoldingCards> initialHoldingCards = new ArrayList<>();
+        initialHoldingCards.add(new HoldingCards(
+                DEALER_NAME_CODE,
+                blackJackGame.getInitialHoldingCards(DEALER_NAME_CODE))
+        );
+        for (String name : blackJackGame.getPlayerNames()) {
+            initialHoldingCards.add(new HoldingCards(name, blackJackGame.getInitialHoldingCards(name)));
+        }
+
+        outputView.printInitialHoldingCards(initialHoldingCards);
         outputView.printLineBreak();
     }
 
@@ -68,8 +79,8 @@ public class BlackJackController {
     private void playFor(BlackJackGame blackJackGame, String name) {
         while (isContinuous(name, blackJackGame)) {
             blackJackGame.playPlayer(name);
-            final HoldingCards handholdingCards = blackJackGame.getHandholdingCards(name);
-            outputView.printCards(handholdingCards);
+            final HoldingCards holdingCards = new HoldingCards(name, blackJackGame.getHandholdingCards(name));
+            outputView.printCards(holdingCards);
         }
     }
 
@@ -90,14 +101,26 @@ public class BlackJackController {
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
-        final List<CardAndScoreResult> cardAndScoreResult = blackJackGame.getCardAndScoreResult();
-        outputView.printCardAndScoreResult(cardAndScoreResult);
+        final List<NameCardAndScore> cardAndScoreResults = getCardResults(blackJackGame);
+
+        outputView.printCardAndScoreResult(cardAndScoreResults);
         outputView.printLineBreak();
+    }
+
+    private static List<NameCardAndScore> getCardResults(final BlackJackGame blackJackGame) {
+        final List<NameCardAndScore> cardAndScoreResults = new ArrayList<>();
+        final CardAndScore dealerCardAndScore = blackJackGame.getCardAndScore(DEALER_NAME_CODE);
+        cardAndScoreResults.add(new NameCardAndScore(DEALER_NAME_CODE, dealerCardAndScore.getCards(), dealerCardAndScore.getScore()));
+        for (String name : blackJackGame.getPlayerNames()) {
+            final CardAndScore cardAndScore = blackJackGame.getCardAndScore(name);
+            cardAndScoreResults.add(new NameCardAndScore(name, cardAndScore.getCards(), cardAndScore.getScore()));
+        }
+        return cardAndScoreResults;
     }
 
     private void printProfit(final BlackJackGame blackJackGame) {
         final List<ProfitResult> profitResults = new ArrayList<>();
-        profitResults.add(new ProfitResult(Dealer.DEALER_NAME_CODE, blackJackGame.getDealerProfitAmount()));
+        profitResults.add(new ProfitResult(DEALER_NAME_CODE, blackJackGame.getDealerProfitAmount()));
 
         for (String name : blackJackGame.getPlayerNames()) {
             profitResults.add(new ProfitResult(name, blackJackGame.getPlayerProfitAmount(name)));

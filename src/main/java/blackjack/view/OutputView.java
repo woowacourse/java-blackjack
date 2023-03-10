@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.Dealer;
-import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.NameCardAndScore;
 import blackjack.dto.HoldingCards;
 import blackjack.dto.ProfitResult;
 
@@ -66,8 +66,8 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printCardAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
-        for (CardAndScoreResult result : cardAndScoreResult) {
+    public void printCardAndScoreResult(final List<NameCardAndScore> nameCardAndScore) {
+        for (NameCardAndScore result : nameCardAndScore) {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
                     dealerNameConvertor(result.getName()), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),
                     result.getScoreValue()));

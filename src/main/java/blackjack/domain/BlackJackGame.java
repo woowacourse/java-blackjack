@@ -5,12 +5,9 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Users;
-import blackjack.dto.CardAndScoreResult;
-import blackjack.dto.HoldingCards;
+import blackjack.dto.CardAndScore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,27 +23,20 @@ public class BlackJackGame {
         profitCalculator = new ProfitCalculator();
     }
 
+    public List<String> getPlayerNames() {
+        return users.getPlayerNames();
+    }
+
     public void bet(final String name, final int amount) {
         profitCalculator.bet(name, amount);
     }
 
-    public HoldingCards getHandholdingCards(String name) {
-        final List<Card> hands = users.getHandholdingCards(name);
-        return new HoldingCards(name, hands);
+    public List<Card> getInitialHoldingCards(final String name) {
+        return users.getInitialHoldingCards(name);
     }
 
-    public List<HoldingCards> getInitialHoldingCards() {
-        final List<HoldingCards> initialHoldingCards = new ArrayList<>();
-
-        initialHoldingCards.add(new HoldingCards(Dealer.DEALER_NAME_CODE, users.getInitialHoldingCards(Dealer.DEALER_NAME_CODE)));
-        for (String name : users.getPlayerNames()) {
-            initialHoldingCards.add(new HoldingCards(name, users.getInitialHoldingCards(name)));
-        }
-        return initialHoldingCards;
-    }
-
-    public List<String> getPlayerNames() {
-        return users.getPlayerNames();
+    public List<Card> getHandholdingCards(String name) {
+        return users.getHandholdingCards(name);
     }
 
     public int playDealerTurn() {
@@ -62,15 +52,8 @@ public class BlackJackGame {
         users.drawCard(userName, deck);
     }
 
-    public List<CardAndScoreResult> getCardAndScoreResult() {
-        final List<CardAndScoreResult> results = new ArrayList<>();
-
-        results.add(new CardAndScoreResult(Dealer.DEALER_NAME_CODE,
-                users.getHandholdingCards(Dealer.DEALER_NAME_CODE), users.getScore(Dealer.DEALER_NAME_CODE)));
-        for (String name : users.getPlayerNames()) {
-            results.add(new CardAndScoreResult(name, users.getHandholdingCards(name), users.getScore(name)));
-        }
-        return results;
+    public CardAndScore getCardAndScore(final String name) {
+        return new CardAndScore(users.getHandholdingCards(name), users.getScore(name));
     }
 
     public boolean isPossibleToDraw(final String name) {
@@ -93,5 +76,4 @@ public class BlackJackGame {
     public int getPlayerProfitAmount(final String name) {
         return profitCalculator.calculateProfit(name);
     }
-
 }

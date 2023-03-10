@@ -5,13 +5,13 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class CardAndScoreResult {
+public class NameCardAndScore {
 
     private final String name;
     private final List<Card> cards;
     private final int scoreValue;
 
-    public CardAndScoreResult(final String name, final List<Card> cards, final Score score) {
+    public NameCardAndScore(final String name, final List<Card> cards, final Score score) {
         this.name = name;
         this.cards = List.copyOf(cards);
         this.scoreValue = score.getValue();
