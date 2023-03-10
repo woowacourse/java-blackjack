@@ -41,4 +41,8 @@ public abstract class Participant {
     public String getName() {
         return name.getValue();
     }
+
+    public boolean isBust() {
+        return getState().isBust();
+    }
 }

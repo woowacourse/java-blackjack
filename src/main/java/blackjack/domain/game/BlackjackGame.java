@@ -27,11 +27,19 @@ public class BlackjackGame {
     }
 
     public void dealOutCard() {
+        dealOutPlayerCard();
+        dealOutDealerCard();
+    }
+
+    private void dealOutDealerCard() {
+        Dealer dealer = participants.getDealer();
+        dealer.addCards(pickTwice());
+    }
+
+    private void dealOutPlayerCard() {
         for (Player player : participants.getPlayers()) {
             player.addCards(pickTwice());
         }
-        Dealer dealer = participants.getDealer();
-        dealer.addCards(pickTwice());
     }
 
     private List<Card> pickTwice() {
@@ -59,10 +67,10 @@ public class BlackjackGame {
     }
 
     private GameResult of(Player player, Dealer dealer) {
-        if (player.getState().isBust()) {
+        if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealer.getState().isBust()) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
         if (player.getScore() == dealer.getScore()) {
