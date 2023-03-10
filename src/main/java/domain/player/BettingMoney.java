@@ -47,4 +47,8 @@ public class BettingMoney {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    public Revenue revenue(final GameResult blackjackWin) {
+        return Revenue.of((int) blackjackWin.revenueRate() * amount);
+    }
 }

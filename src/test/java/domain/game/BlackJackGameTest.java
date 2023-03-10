@@ -69,9 +69,9 @@ class BlackJackGameTest {
 
         // then
         assertThat(revenue).contains(
-                entry(말랑, DRAW.revenue(말랑.battingMoney())),
-                entry(콩떡, LOSE.revenue(콩떡.battingMoney())),
-                entry(코다, WIN.revenue(코다.battingMoney()))
+                entry(말랑, 말랑.bettingMoney().revenue(DRAW)),
+                entry(콩떡, 콩떡.bettingMoney().revenue(LOSE)),
+                entry(코다, 코다.bettingMoney().revenue(WIN))
         );
     }
 

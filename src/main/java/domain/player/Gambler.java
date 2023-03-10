@@ -3,6 +3,8 @@ package domain.player;
 import domain.card.CardArea;
 import domain.card.CardDeck;
 
+import static domain.player.GameResult.*;
+
 public class Gambler extends Participant {
 
     private final BettingMoney bettingMoney;
@@ -14,7 +16,7 @@ public class Gambler extends Participant {
         this.bettingMoney = bettingMoney;
     }
 
-    public BettingMoney battingMoney() {
+    public BettingMoney bettingMoney() {
         return bettingMoney;
     }
 
@@ -42,5 +44,33 @@ public class Gambler extends Participant {
 
     public boolean isBlackJack() {
         return cardArea.isBlackJack();
+    }
+
+    public Revenue compete(final Dealer dealer) {
+        if (isWin(dealer)) {
+            return revenueForWinner();
+        }
+        if (isLose(dealer)) {
+            return bettingMoney.revenue(LOSE);
+        }
+        return bettingMoney.revenue(DRAW);
+    }
+
+    private boolean isWin(final Dealer dealer) {
+        if (isBust()) {
+            return false;
+        }
+        return dealer.isBust() || isLargerScoreThan(dealer);
+    }
+
+    private Revenue revenueForWinner() {
+        if (isBlackJack()) {
+            return bettingMoney.revenue(BLACKJACK_WIN);
+        }
+        return bettingMoney.revenue(WIN);
+    }
+
+    private boolean isLose(final Dealer dealer) {
+        return isBust() || dealer.isLargerScoreThan(this);
     }
 }

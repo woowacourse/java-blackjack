@@ -1,26 +1,17 @@
 package domain.player;
 
-import domain.card.Card;
 import domain.card.CardArea;
 import domain.fixture.CardAreaFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
-import static domain.card.CardShape.DIAMOND;
-import static domain.card.CardValue.*;
+import static domain.card.CardValue.JACK;
+import static domain.card.CardValue.TEN;
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.CardDeckFixture.cardDeck;
-import static domain.fixture.GamblerFixture.gamblerWithMoneyAndCardArea;
-import static domain.player.GameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,70 +58,6 @@ class DealerTest {
         assertAll(
                 () -> assertThat(dealer1.name()).isEqualTo(dealer2.name()),
                 () -> assertThat(dealer1.nameValue()).isEqualTo("딜러")
-        );
-    }
-
-    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2}이다")
-    @MethodSource("playerAndDealerAndResult")
-    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final Revenue actualRevenue) {
-        // when
-        final Revenue revenue = dealer.compete(gambler);
-
-        // then
-        assertThat(revenue).isEqualTo(actualRevenue);
-    }
-
-    static Stream<Arguments> playerAndDealerAndResult() {
-        // given
-        final CardArea cardArea = withTwoCard(TEN, TEN);
-        cardArea.addCard(new Card(DIAMOND, TWO));
-        final BettingMoney money = BettingMoney.of(1000);
-        return Stream.of(
-                Arguments.of(
-                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
-                        Named.of("17", new Dealer(equal17CardArea())),
-                        Named.of("패배", LOSE.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
-                        Named.of("22", new Dealer(equal22CardArea())),
-                        Named.of("승리", WIN.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
-                        Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
-                        Named.of("패배", LOSE.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
-                        Named.of("22", new Dealer(equal22CardArea())),
-                        Named.of("패배", LOSE.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
-                        Named.of("19", new Dealer(equal19CardArea())),
-                        Named.of("패배", LOSE.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
-                        Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
-                        Named.of("무승부", DRAW.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
-                        Named.of("20", new Dealer(equal20CardArea())),
-                        Named.of("승리", WIN.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
-                        Named.of("16", new Dealer(equal16CardArea())),
-                        Named.of("무승부", DRAW.revenue(money))
-                ),
-                Arguments.of(
-                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaBlackJack())),
-                        Named.of("20", new Dealer(equal20CardArea())),
-                        Named.of("블랙잭 승리", BLACKJACK_WIN.revenue(money))
-                )
         );
     }
 

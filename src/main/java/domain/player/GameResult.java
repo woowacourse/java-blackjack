@@ -14,7 +14,7 @@ public enum GameResult {
         this.revenueRate = revenueRate;
     }
 
-    public Revenue revenue(final BettingMoney bettingMoney) {
-        return Revenue.of((int) (revenueRate * bettingMoney.amount()));
+    public double revenueRate() {
+        return revenueRate;
     }
 }
