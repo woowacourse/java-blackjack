@@ -1,7 +1,10 @@
 package model.user;
 
+import static model.card.State.*;
+
 import model.card.Card;
 import model.card.Deck;
+import model.card.State;
 
 public class Player implements Receivable {
 
@@ -34,8 +37,33 @@ public class Player implements Receivable {
         return user.getCardTotalValue();
     }
 
-    public Result judgeResult(Dealer dealer) {
-        return judgeResult(dealer.calculateTotalValue());
+    public State judgeResult(Dealer dealer) {
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return TIE;
+        }
+
+        if (isBlackJack()) {
+            return BLACKJACK;
+        }
+
+        if (dealer.isBlackJack()) {
+            return LOSE;
+        }
+
+        return judgeState(dealer.calculateTotalValue());
+    }
+
+    private State judgeState(int dealerTotalValue) {
+        final int playerTotalValue = calculateTotalValue();
+
+        if (playerTotalValue > dealerTotalValue) {
+            return WIN;
+        }
+
+        if (playerTotalValue == dealerTotalValue) {
+            return TIE;
+        }
+        return LOSE;
     }
 
     @Override

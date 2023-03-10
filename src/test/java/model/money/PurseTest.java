@@ -86,6 +86,6 @@ class PurseTest {
         purse.calculateMoney(bebe, dealer);
 
         // then
-        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(10_000));
+        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(0));
     }
 }

@@ -13,7 +13,6 @@ import static model.card.CardFixture.DIAMOND_TWO;
 import static model.card.Shape.SPADE;
 import static model.card.Value.KING;
 import static model.user.Result.LOSE;
-import static model.user.Result.TIE;
 import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +20,7 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Deck;
 import model.card.RandomShuffleMaker;
+import model.card.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -129,6 +129,20 @@ class PlayerTest {
     class JudgeResultWithDealer {
 
         @Test
+        @DisplayName("플레이어가 블랙잭이면 BLACKJACK을 반환한다.")
+        void judgeResultBlackJack() {
+            // given
+            player.receiveCard(DIAMOND_KING);
+            player.receiveCard(DIAMOND_ACE);
+
+            dealer.receiveCard(DIAMOND_SIX);
+            dealer.receiveCard(DIAMOND_TEN);
+
+            // when, then
+            assertThat(player.judgeResult(dealer)).isEqualTo(State.BLACKJACK);
+        }
+
+        @Test
         @DisplayName("플레이어가 이기면 WIN을 반환한다.")
         void judgeResultWin() {
             // given
@@ -138,11 +152,8 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_SIX);
             dealer.receiveCard(DIAMOND_TEN);
 
-            // when
-            final Result result = player.judgeResult(dealer);
-
-            // then
-            assertThat(result).isEqualTo(WIN);
+            // when, then
+            assertThat(player.judgeResult(dealer)).isEqualTo(State.WIN);
         }
 
         @Test
@@ -155,11 +166,8 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_SIX);
             dealer.receiveCard(DIAMOND_TEN);
 
-            // when
-            final Result result = player.judgeResult(dealer);
-
-            // then
-            assertThat(result).isEqualTo(TIE);
+            // when, then
+            assertThat(player.judgeResult(dealer)).isEqualTo(State.TIE);
         }
 
         @Test
@@ -172,11 +180,8 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_SEVEN);
             dealer.receiveCard(DIAMOND_TEN);
 
-            // when
-            final Result result = player.judgeResult(dealer);
-
-            // then
-            assertThat(result).isEqualTo(LOSE);
+            // when, then
+            assertThat(player.judgeResult(dealer)).isEqualTo(State.LOSE);
         }
     }
 }
