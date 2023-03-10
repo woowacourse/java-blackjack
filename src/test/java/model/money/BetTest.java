@@ -1,9 +1,9 @@
 package model.money;
 
-import static model.user.GameState.BLACKJACK;
-import static model.user.GameState.LOSE;
-import static model.user.GameState.TIE;
-import static model.user.GameState.WIN;
+import static model.card.State.BLACKJACK;
+import static model.card.State.LOSE;
+import static model.card.State.TIE;
+import static model.card.State.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet lose = bet.calculateBet(BLACKJACK);
+            final Bet lose = bet.calculateMoney(BLACKJACK);
 
             // then
             assertThat(lose).isEqualTo(new Bet(15_000));
@@ -63,7 +63,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet lose = bet.calculateBet(LOSE);
+            final Bet lose = bet.calculateMoney(LOSE);
 
             // then
             assertThat(lose).isEqualTo(new Bet(-10_000));
@@ -76,7 +76,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet tie = bet.calculateBet(TIE);
+            final Bet tie = bet.calculateMoney(TIE);
 
             // then
             assertThat(tie).isEqualTo(new Bet(0));
@@ -89,7 +89,7 @@ public class BetTest {
             final Bet bet = new Bet(10_000);
 
             // when
-            final Bet tie = bet.calculateBet(WIN);
+            final Bet tie = bet.calculateMoney(WIN);
 
             // then
             assertThat(tie).isEqualTo(new Bet(10_000));

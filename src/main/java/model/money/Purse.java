@@ -9,33 +9,33 @@ import model.user.Player;
 
 public class Purse {
 
-    private final Map<Player, Money> purses;
+    private final Map<Player, Bet> purses;
 
-    private Purse(final Map<Player, Money> purses) {
+    private Purse(final Map<Player, Bet> purses) {
         this.purses = purses;
     }
 
     public static Purse create(final List<Player> players) {
-        final Map<Player, Money> purses = new LinkedHashMap<>();
+        final Map<Player, Bet> purses = new LinkedHashMap<>();
         for (Player player : players) {
-            purses.put(player, Money.zero());
+            purses.put(player, Bet.zero());
         }
         return new Purse(purses);
     }
 
-    public void addMoney(final Player player, final Money money) {
-        final Money currentMoney = purses.get(player);
-        final Money addedMoney = currentMoney.add(money);
-        purses.put(player, addedMoney);
+    public void addMoney(final Player player, final Bet bet) {
+        final Bet currentBet = purses.get(player);
+        final Bet addedBet = currentBet.add(bet);
+        purses.put(player, addedBet);
     }
 
     public void calculateMoney(final Player player, final Dealer dealer) {
         final State state = player.judgeResult(dealer);
-        final Money money = getMoney(player);
-        purses.put(player, money.calculateMoney(state));
+        final Bet bet = getMoney(player);
+        purses.put(player, bet.calculateMoney(state));
     }
 
-    public Money getMoney(final Player player) {
+    public Bet getMoney(final Player player) {
         return purses.get(player);
     }
 }

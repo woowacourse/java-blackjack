@@ -1,21 +1,18 @@
 package model.money;
 
+import static model.card.State.*;
+
 import java.util.Objects;
-import model.user.GameState;
+import model.card.State;
 
 public class Bet {
 
-    private static final double MULTIPLE_VALUE = 1.5;
     private static final Bet zero = new Bet(0);
 
     private final long money;
 
     public Bet(final long money) {
         this.money = money;
-    }
-
-    public Bet(String bet) {
-        this(Long.parseLong(bet));
     }
 
     public static Bet zero() {
@@ -26,20 +23,20 @@ public class Bet {
         return new Bet(this.money + bet.money);
     }
 
-    public Bet calculateBet(final GameState gameState) {
-        if (gameState.isBlackJack()) {
+    public Bet calculateMoney(State result) {
+        if (result == BLACKJACK) {
             return blackJack();
         }
 
-        return judgeFinalBet(gameState);
+        return judge(result);
     }
 
-    private Bet judgeFinalBet(final GameState gameState) {
-        if (gameState.isWin()) {
+    private Bet judge(State result) {
+        if (result == WIN) {
             return this;
         }
 
-        if (gameState.isLose()) {
+        if (result == LOSE) {
             return lose();
         }
 
@@ -55,7 +52,7 @@ public class Bet {
     }
 
     public Bet blackJack() {
-        return new Bet((long) (money * MULTIPLE_VALUE));
+        return new Bet((long) (money * 1.5));
     }
 
     @Override
@@ -76,9 +73,5 @@ public class Bet {
         return "Money{" +
                 "money=" + money +
                 '}';
-    }
-
-    public Long getMoney() {
-        return money;
     }
 }
