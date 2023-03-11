@@ -1,14 +1,9 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,18 +41,6 @@ public class Users {
 
     public void drawDealer(final Card card) {
         dealer.drawCard(card);
-    }
-
-    public Map<Name, WinningStatus> getPlayersWinningResults() {
-        return players.getWinningResult(dealer);
-    }
-
-    public Map<WinningStatus, Long> getDealerWinningResults() {
-        return getPlayersWinningResults()
-                .values()
-                .stream()
-                .collect(collectingAndThen(groupingBy(WinningStatus::opposite, counting()),
-                        Collections::unmodifiableMap));
     }
 
     public void drawCard(final Name userName, final Card card) {

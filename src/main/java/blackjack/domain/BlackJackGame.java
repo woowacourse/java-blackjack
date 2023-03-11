@@ -6,7 +6,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.Users;
 import java.util.Collections;
@@ -82,13 +81,4 @@ public class BlackJackGame {
     public Map<Name, CardResult> getUserNameAndCardResults() {
         return users.getUserNameAndCardResults();
     }
-
-    public Map<Name, WinningStatus> getPlayersWinningResults() {
-        return users.getPlayersWinningResults();
-    }
-
-    public Map<WinningStatus, Long> getDealerWinningResult() {
-        return users.getDealerWinningResults();
-    }
-
 }

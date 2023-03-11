@@ -13,7 +13,6 @@ import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
 import java.util.Collections;
 import java.util.List;
@@ -136,26 +135,6 @@ class BlackJackGameTest {
             softly.assertThat(philip.getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
             softly.assertThat(philip.getScore().getValue()).isEqualTo(19);
-        });
-    }
-
-    @Test
-    @DisplayName("플레이어들의 승리 여부 반환 테스트")
-    void getWinningResultTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue(),
-                TEST_PLAYER_NAME2.getValue()),
-                new TestNonShuffledDeckGenerator(testCards));
-
-        final Map<Name, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
-        final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
-
-        assertThat(userNameAndCardResults.get(DEALER_NAME).getScore().getValue()).isEqualTo(21);
-        assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getScore().getValue()).isEqualTo(19);
-        assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME2).getScore().getValue()).isEqualTo(13);
-
-        assertSoftly(softly -> {
-            softly.assertThat(winningResult.get(TEST_PLAYER_NAME1)).isEqualTo(WinningStatus.LOSE);
-            softly.assertThat(winningResult.get(TEST_PLAYER_NAME2)).isEqualTo(WinningStatus.LOSE);
         });
     }
 

@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.result.Score;
-import blackjack.domain.result.WinningStatus;
 
 public class Player extends User {
 
@@ -31,28 +30,6 @@ public class Player extends User {
 
     public boolean isDrawable() {
         return getScore().isDrawAble();
-    }
-
-    public WinningStatus calculateWinningStatus(final Dealer dealer) {
-        if (isBust()) {
-            return WinningStatus.LOSE;
-        }
-        if (dealer.isBust()) {
-            return WinningStatus.WIN;
-        }
-        return compareByScore(dealer);
-    }
-
-    private WinningStatus compareByScore(final Dealer dealer) {
-        final Score playerScore = getScore();
-        final Score dealerScore = dealer.getScore();
-        if (dealerScore.isBigger(playerScore)) {
-            return WinningStatus.LOSE;
-        }
-        if (playerScore.isEqual(dealerScore)) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.WIN;
     }
 
     public Double calculateProfitRate(final Dealer dealer) {

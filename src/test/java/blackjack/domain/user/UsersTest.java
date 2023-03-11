@@ -13,7 +13,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -130,25 +129,6 @@ class UsersTest {
         assertThat(players).containsExactly(TEST_PLAYER_NAME1);
     }
 
-    /*
-    딜러: 21
-    필립: 19
-    홍실: 13
-     */
-    @Test
-    @DisplayName("플레이어들의 승리 여부 반환 테스트")
-    void getWinningResultTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
-                new Deck(new TestNonShuffledDeckGenerator(testCards)));
-
-        Map<Name, WinningStatus> winningResult = users.getPlayersWinningResults();
-
-        assertSoftly(softly -> {
-            softly.assertThat(winningResult.get(TEST_PLAYER_NAME1)).isEqualTo(WinningStatus.LOSE);
-            softly.assertThat(winningResult.get(TEST_PLAYER_NAME2)).isEqualTo(WinningStatus.LOSE);
-        });
-    }
-
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
@@ -167,16 +147,5 @@ class UsersTest {
             softly.assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getScore().getValue())
                     .isEqualTo(19);
         });
-    }
-
-    @Test
-    @DisplayName("딜러의 승무패 결과를 반환하는 기능 테스트")
-    void getDealerWinningResultsTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
-                new Deck(new TestNonShuffledDeckGenerator(testCards)));
-        final Map<WinningStatus, Long> dealerWinningResults = users.getDealerWinningResults();
-
-        assertThat(dealerWinningResults.get(WinningStatus.WIN))
-                .isEqualTo(2);
     }
 }

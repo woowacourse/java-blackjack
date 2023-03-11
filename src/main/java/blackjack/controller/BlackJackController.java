@@ -5,7 +5,6 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -27,7 +26,6 @@ public class BlackJackController {
         playDealerTurn(blackJackGame);
         printUserNameAndCardResults(blackJackGame);
         printUserNameAndProfits(blackJackGame);
-        printUserWinningResults(blackJackGame);
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -114,12 +112,5 @@ public class BlackJackController {
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
                 .renderUserNameAndCardResults(userNameAndCardResults);
         outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
-    }
-
-    private void printUserWinningResults(final BlackJackGame blackJackGame) {
-        final Map<WinningStatus, Long> dealerWinningResult = blackJackGame.getDealerWinningResult();
-        outputView.printDealerWinningResult(ViewRenderer.renderDealerWinningResult(dealerWinningResult));
-        final Map<Name, WinningStatus> playersWinningResult = blackJackGame.getPlayersWinningResults();
-        outputView.printPlayersWinningResults(ViewRenderer.renderPlayersWinningResults(playersWinningResult));
     }
 }

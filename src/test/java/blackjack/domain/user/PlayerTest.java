@@ -8,7 +8,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.result.WinningStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -75,57 +74,6 @@ class PlayerTest {
         final User player = new Player(name, initialCardGroup);
 
         assertThat(player.getFirstOpenCardGroup().getCards()).containsExactly(cardKing, cardEight);
-    }
-
-    @Nested
-    @DisplayName("딜러와 플레이어의 카드를 비교하여, WinningStatus를 반환하는 기능 테스트")
-    class calculateWinningStatusTest {
-
-        @Test
-        @DisplayName("플레이어가 bust일 때 패배가 반환")
-        void comparePlayerTestIfDealerBustPlayerBust() {
-            final Dealer dealer = new Dealer(bustCardGroup);
-            final Player player = new Player(TEST_PLAYER_NAME, bustCardGroup);
-
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
-        }
-
-        @Test
-        @DisplayName("딜러가 bust 플레이어가 bust가 아닐 때 승리가 반환")
-        void comparePlayerTestIfDealerBustPlayerNonBust() {
-            final Dealer dealer = new Dealer(bustCardGroup);
-            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
-
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
-        }
-
-        @Test
-        @DisplayName("딜러와 플레이어가 bust가 아니고, score가 동일할 때 무승부 반환")
-        void comparePlayerEqualScore() {
-            final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
-            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
-
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.TIE);
-        }
-
-        @Test
-        @DisplayName("딜러와 플레이어가 bust가 아니고, 플레이어의 스코어가 더 클 때 승리 반환")
-        void comparePlayerIfPlayerScoreBiggerThanDealer() {
-            final Dealer dealer = new Dealer(new CardGroup
-                    (new Card(CardShape.HEART, CardNumber.FIVE), new Card(CardShape.CLOVER, CardNumber.EIGHT)));
-            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
-
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
-        }
-
-        @Test
-        @DisplayName("딜러와 플레이어는 버스트가 아니고 플레이어의 점수가 딜러보다 낮은 경우 패배 반환")
-        void comparePlayerIfPlayerScoreSmallerThanDealer() {
-            final Dealer dealer = new Dealer(new CardGroup(cardKing, cardKing));
-            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
-
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
-        }
     }
 
     @Nested
