@@ -29,7 +29,7 @@ class BlackJackGameTest {
         Players players = new Players(new Names(List.of("민트")), List.of(new Bet(5000)));
         player = players.getPlayers().get(0);
         dealer = new Dealer();
-        Cards cards = new Cards(() -> new ArrayList<>(List.of(
+        Cards cards = new Cards((int deckCount) -> new ArrayList<>(List.of(
                 CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK, SpadeCard.SPADE_FIVE,
                 DiamondCard.DIAMOND_SEVEN, HeartCard.HEART_ACE, CloverCard.CLOVER_SIX, CloverCard.CLOVER_EIGHT,
                 DiamondCard.DIAMOND_NINE, HeartCard.HEART_SEVEN

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int DECK_COUNT = 1;
     private static final int CARD_ON_TOP_INDEX = 0;
 
     private final List<Card> cards;
 
     public Cards(CardsGenerator cardsGenerator) {
-        this.cards = cardsGenerator.generate();
+        this.cards = cardsGenerator.generate(DECK_COUNT);
     }
 
     public Card drawCard() {

@@ -26,7 +26,7 @@ class CardsTest {
     @DisplayName("가장 위에 있는 카드를 뽑고, 덱에서 없앤다.")
     @Test
     void drawCardTest() {
-        Cards cards = new Cards(() -> new ArrayList<>(
+        Cards cards = new Cards((int deckCount) -> new ArrayList<>(
                 List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK, SpadeCard.SPADE_FOUR, DiamondCard.DIAMOND_SEVEN)
         ));
 
