@@ -70,6 +70,46 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("Player가 블랙잭이고, 딜러는 아니라면 WIN이다")
+    void makePlayerRecordWhenBlackjackPlayerWin() {
+        CardPool playerCardPool = new CardPool(
+                List.of(new Card(CardType.CLOVER, CardNumber.SIX),
+                        new Card(CardType.SPADE, CardNumber.ACE),
+                        new Card(CardType.SPADE, CardNumber.FOUR)
+                )
+        );
+        CardPool dealerCardPool = new CardPool(
+                List.of(new Card(CardType.CLOVER, CardNumber.FIVE))
+        );
+
+        Player player = new Player("플레이어", playerCardPool, 0);
+        Dealer dealer = new Dealer( dealerCardPool);
+
+        assertThat(GameResult.makePlayerRecord(player, dealer))
+                .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("Dealer가 블랙잭이고, Player는 아니라면 LOSE이다")
+    void makePlayerRecordWhenBlackjackPlayerLose() {
+        CardPool playerCardPool = new CardPool(
+                List.of(new Card(CardType.CLOVER, CardNumber.SIX))
+        );
+        CardPool dealerCardPool = new CardPool(
+                List.of(new Card(CardType.CLOVER, CardNumber.SIX),
+                        new Card(CardType.SPADE, CardNumber.ACE),
+                        new Card(CardType.SPADE, CardNumber.FOUR)
+                )
+        );
+
+        Player player = new Player("플레이어", playerCardPool, 0);
+        Dealer dealer = new Dealer( dealerCardPool);
+
+        assertThat(GameResult.makePlayerRecord(player, dealer))
+                .isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
     @DisplayName("Dealer는 Player가 이기면 1패가 적립된다.")
     void makeDealerRecordWhenLose() {
         Player player = new Player("플레이어", new CardPool(Collections.emptyList()), 0);
