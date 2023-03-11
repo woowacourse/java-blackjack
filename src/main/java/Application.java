@@ -1,4 +1,8 @@
 import domain.*;
+import domain.card.Deck;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Users;
 import view.InputView;
 import view.OutputView;
 

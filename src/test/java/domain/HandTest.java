@@ -1,11 +1,13 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Hand;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.Suit.HEART;
+import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Suit;
+import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.Suit.HEART;
-import static domain.Suit.SPADE;
+import static domain.card.Suit.HEART;
+import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class PlayerTest {

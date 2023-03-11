@@ -1,6 +1,10 @@
 package view;
 
 import domain.*;
+import domain.card.Card;
+import domain.user.Player;
+import domain.user.User;
+import domain.user.Users;
 
 import java.util.List;
 import java.util.stream.Collectors;

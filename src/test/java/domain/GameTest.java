@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.user.Dealer;
+import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Suit.HEART;
-import static domain.Suit.SPADE;
+import static domain.card.Suit.HEART;
+import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 

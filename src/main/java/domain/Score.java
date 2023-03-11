@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Score {
     private static final Score ZERO = new Score(0);
-
     private static final Score ACE_BONUS = new Score(10);
     private static final Score BUST_LIMIT = new Score(21);
 

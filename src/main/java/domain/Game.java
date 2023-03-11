@@ -1,10 +1,13 @@
 package domain;
 
+import domain.card.Deck;
+import domain.user.*;
+
 import java.util.List;
 
 import static domain.Status.BUST;
 import static domain.Status.STAY;
-import static domain.User.NUMBER_OF_FIRST_CARDS;
+import static domain.user.User.NUMBER_OF_FIRST_CARDS;
 
 public class Game {
 

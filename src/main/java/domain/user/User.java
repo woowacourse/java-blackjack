@@ -1,4 +1,10 @@
-package domain;
+package domain.user;
+
+import domain.Result;
+import domain.Score;
+import domain.Status;
+import domain.card.Card;
+import domain.card.Hand;
 
 import java.util.List;
 
@@ -46,7 +52,7 @@ public abstract class User {
         return score().equals(other.score());
     }
 
-    void addCard(Card card) {
+    public void addCard(Card card) {
         hand.add(card);
         updateStatus();
     }

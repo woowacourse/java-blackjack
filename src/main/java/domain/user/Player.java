@@ -1,4 +1,7 @@
-package domain;
+package domain.user;
+
+import domain.card.Card;
+import domain.card.Hand;
 
 import java.util.ArrayList;
 import java.util.List;

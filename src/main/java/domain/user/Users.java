@@ -1,4 +1,7 @@
-package domain;
+package domain.user;
+
+import domain.card.Deck;
+import domain.Result;
 
 import java.util.ArrayList;
 import java.util.List;
