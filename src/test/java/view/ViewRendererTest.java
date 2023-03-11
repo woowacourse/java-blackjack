@@ -1,5 +1,6 @@
 package view;
 
+import static domain.TestData.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -9,10 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.result.DealerResult;
 import domain.result.PlayerResult;
-import domain.card.Card;
 import domain.Player;
-import domain.card.Denomination;
-import domain.card.Suit;
 
 class ViewRendererTest {
 
@@ -23,7 +21,7 @@ class ViewRendererTest {
 
 		NameCardScoreDto nameCardScoreDto = ViewRenderer.toNameCardScore(player);
 
-		assertThat(nameCardScoreDto.getName()).isEqualTo("player");
+		assertThat(nameCardScoreDto.getName()).isEqualTo("playerScore21");
 		assertThat(nameCardScoreDto.getCards().get(0)).isEqualTo("A다이아몬드");
 		assertThat(nameCardScoreDto.getCards().get(1)).isEqualTo("10하트");
 		assertThat(nameCardScoreDto.getScore()).isEqualTo("21");
@@ -59,30 +57,4 @@ class ViewRendererTest {
 		assertThat(multiResults.getResults().get(1)).isEqualTo("1패");
 	}
 
-	private static Player getScore19Player() {
-		List<Card> cards = List.of(
-			new Card(Suit.DIAMOND, Denomination.NINE),
-			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("player");
-		cards.forEach(player::addCard);
-		return player;
-	}
-
-	private static Player getScore21Player() {
-		List<Card> cards = List.of(
-			new Card(Suit.DIAMOND, Denomination.ACE),
-			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("player");
-		cards.forEach(player::addCard);
-		return player;
-	}
-
-	private static Player getScore20Player() {
-		List<Card> cards = List.of(
-			new Card(Suit.DIAMOND, Denomination.TEN),
-			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("player");
-		cards.forEach(player::addCard);
-		return player;
-	}
 }
