@@ -27,6 +27,10 @@ public class PlayerInfo {
         public PlayerInfo build() {
             return new PlayerInfo(this);
         }
+
+        public String getName() {
+            return name.getName();
+        }
     }
 
     public String getName() {
