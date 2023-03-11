@@ -96,4 +96,31 @@ class HandTest {
         // when, then
         assertThat(hand.isBlackjack()).isTrue();
     }
+
+    @Test
+    @DisplayName("버스트인 경우 true를 반환한다.")
+    void isBust1() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        cards.add(new Card(Suit.CLOVER, Denomination.FIVE));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트가 아닌 경우 false를 반환한다.")
+    void isBust2() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isBust()).isFalse();
+    }
 }
