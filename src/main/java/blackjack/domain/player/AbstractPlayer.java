@@ -5,8 +5,8 @@ import blackjack.domain.card.Hand;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    protected final Name name;
-    protected final Hand hand;
+    private final Name name;
+    private final Hand hand;
 
     protected AbstractPlayer(final Name name, final Hand hand) {
         this.name = name;
@@ -53,6 +53,10 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public final Name name() {
         return name;
+    }
+
+    protected Hand hand() {
+        return hand;
     }
 
     @Override

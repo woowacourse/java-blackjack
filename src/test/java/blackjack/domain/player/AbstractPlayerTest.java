@@ -29,7 +29,7 @@ public class AbstractPlayerTest {
         player = new AbstractPlayer(Name.from("허브"), new Hand()) {
             @Override
             public boolean isDrawable() {
-                return hand.isPlayable();
+                return hand().isPlayable();
             }
 
             @Override

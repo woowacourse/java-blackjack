@@ -123,7 +123,7 @@ public final class Players {
         final Map<Name, Result> result = new LinkedHashMap<>();
         final Dealer dealer = getDealer();
         for (Player player : gamblers()) {
-            result.put(player.name(), player.play(dealer.hand));
+            result.put(player.name(), player.play(dealer.hand()));
         }
         return result;
     }

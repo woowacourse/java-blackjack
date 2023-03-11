@@ -14,7 +14,7 @@ public final class Gambler extends AbstractPlayer {
 
     @Override
     public boolean isDrawable() {
-        return hand.isPlayable();
+        return hand().isPlayable();
     }
 
     @Override
