@@ -80,4 +80,14 @@ public class Profit {
         }
         profit.put(player, player.getBettingMoney().loseBettingPrize());
     }
+
+    public Money getDealerProfit(Map<Player, Money> playersProfit) {
+        int dealerProfit = 0;
+
+        for (Money money : playersProfit.values()) {
+            dealerProfit += money.getMoney() * (-1);
+        }
+
+        return new Money(dealerProfit);
+    }
 }

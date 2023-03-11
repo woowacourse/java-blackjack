@@ -37,7 +37,7 @@ class ProfitTest {
 
     private void bettingMoney() {
         participants.getPlayers().get(0).betting(10000);
-        participants.getPlayers().get(1).betting(10000);
+        participants.getPlayers().get(1).betting(20000);
     }
 
     private void settingPlayer2() {
@@ -102,5 +102,21 @@ class ProfitTest {
 
         Map<Player, Money> playersProfit = profit.makePlayersProfit();
         assertThat(playersProfit.get(participants.getPlayers().get(0))).isEqualTo(new Money(10000));
+    }
+
+    @Test
+    @DisplayName("딜러의 수익을 계산한다")
+    void getDealerProfit() {
+        // player1 점수 : 27 (버스트)
+        participants.getPlayers().get(0).receiveCard(new Card(Number.EIGHT, Pattern.CLUB));
+        participants.getPlayers().get(0).receiveCard(new Card(Number.TEN, Pattern.CLUB));
+        participants.getPlayers().get(0).receiveCard(new Card(Number.NINE, Pattern.CLUB));
+        // dealer 점수 : 19
+        participants.getDealer().receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
+        participants.getDealer().receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
+
+        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Money dealerProfit = profit.getDealerProfit(playersProfit);
+        assertThat(dealerProfit).isEqualTo(new Money(-10000));
     }
 }
