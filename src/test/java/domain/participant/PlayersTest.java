@@ -23,39 +23,6 @@ class PlayersTest {
                 .isThrownBy(() -> new Players(expected));
     }
 
-    @DisplayName("플레이어의 수가 4명 초과하면 예외를 반환한다.")
-    @Test
-    void create_fail_by_players_size_over() {
-        // given
-        List<Player> expected = createPlayers("pobi", "neo", "ori", "jay", "odo");
-        // when && then
-        assertThatThrownBy(() -> new Players(expected))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
-    }
-
-    @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
-    @Test
-    void create_fail_by_players_size_under() {
-        // given
-        List<Player> expected = createPlayers();
-        // when && then
-        assertThatThrownBy(() -> new Players(expected))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
-    }
-
-    @DisplayName("플레이어의 이름이 중복되면 예외를 반환한다.")
-    @Test
-    void create_fail_by_duplicated_name() {
-        //given
-        List<Player> expected = createPlayers("pobi", "pobi");
-        //when && then
-        assertThatThrownBy(() -> new Players(expected))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
-    }
-
     @DisplayName("해당하는 이름과 일치하는 플레이어를 찾는다.")
     @Test
     void find_player_by_name() {
