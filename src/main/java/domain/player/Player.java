@@ -21,29 +21,9 @@ public abstract class Player {
         state = state.draw(card);
     }
     
-    public GameResult battleResult(Player otherPlayer) {
-        if (isBust() || otherPlayer.isBust()) {
-            return decideGameResultWithBust(otherPlayer);
-        }
-        
-        Score totalScore = getTotalScore();
-        Score totalScoreOfOtherPlayer = otherPlayer.getTotalScore();
-        return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
-    }
+    public abstract GameResult battleResult(Player otherPlayer);
     
-    private GameResult decideGameResultWithBust(Player otherPlayer) {
-        if (isBust() && otherPlayer.isBust()) {
-            return GameResult.DRAW;
-        }
-        
-        if (isBust()) {
-            return GameResult.LOSE;
-        }
-        
-        return GameResult.WIN;
-    }
-    
-    private GameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
+    protected GameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
         if (totalScore.isOverThen(totalScoreOfOtherPlayer)) {
             return GameResult.WIN;
         }

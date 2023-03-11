@@ -40,37 +40,22 @@ class PlayerTest {
         );
     }
     
-    @DisplayName("총 점수 구하기")
-    @ParameterizedTest(name = "number : {0}, totalScore : {1}")
-    @CsvSource(value = {"FIVE,21", "SIX,12"})
-    void getTotalScore(Number number, int totalScore) {
-        dealer.draw(new Card(Shape.HEART, Number.ACE));
-        dealer.draw(new Card(Shape.HEART, Number.FIVE));
-        dealer.draw(new Card(Shape.DIAMOND, number));
-        
-        assertThat(dealer.getTotalScore().getScore()).isEqualTo(totalScore);
-    }
-    
-    @DisplayName("버스트인지 확인")
-    @ParameterizedTest(name = "number : {0}, isBust : {1}")
-    @CsvSource(value = {"FIVE,false", "SIX,true"})
-    void isBust(Number number, boolean isBust) {
+    @Test
+    @DisplayName("딜러와 참가자가 모두 버스트인 경우 딜러 1승, 참가자 패가 반환된다.")
+    void battleResult_dealerWin_participantLose() {
+        dealer.draw(new Card(Shape.HEART, Number.KING));
         dealer.draw(new Card(Shape.HEART, Number.QUEEN));
-        dealer.draw(new Card(Shape.HEART, Number.SIX));
-        dealer.draw(new Card(Shape.DIAMOND, number));
+        dealer.draw(new Card(Shape.HEART, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.KING));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
         
-        assertThat(dealer.isBust()).isEqualTo(isBust);
-    }
-    
-    @Test
-    @DisplayName("딜러인 경우 true반환")
-    void isDealer_true() {
-        assertThat(dealer.isDealer()).isTrue();
-    }
-    
-    @Test
-    @DisplayName("딜러인 경우 false반환")
-    void isDealer_false() {
-        assertThat(abel.isDealer()).isFalse();
+        GameResult dealerGameResult = dealer.battleResult(abel);
+        GameResult abelGameResult = abel.battleResult(dealer);
+        
+        assertAll(
+                () -> assertThat(dealerGameResult).isEqualTo(GameResult.WIN),
+                () -> assertThat(abelGameResult).isEqualTo(GameResult.LOSE)
+        );
     }
 }

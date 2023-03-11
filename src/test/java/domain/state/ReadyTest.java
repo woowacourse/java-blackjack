@@ -1,7 +1,6 @@
 package domain.state;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.Number;
 import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
