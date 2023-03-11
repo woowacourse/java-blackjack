@@ -1,23 +1,22 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.exception.InvalidPlayerNameException;
+import blackjack.dto.ChallengerMoneyDto;
 
 public class Challenger extends Player {
 
-    private static final String INVALID_NAME = "딜러";
     private static final int MAXIMUM_POINT_TO_PICK = 21;
 
-    private final String name;
+    private final ChallengerName name;
+    private final Money money;
 
     public Challenger(final String name) {
-        validateName(name);
-        this.name = name;
+        this.name = new ChallengerName(name);
+        this.money = Money.zero();
     }
 
-    private void validateName(final String name) {
-        if (name.equals(INVALID_NAME)) {
-            throw new InvalidPlayerNameException();
-        }
+    public Challenger(final ChallengerMoneyDto challengerMoneyDto) {
+        this.name = challengerMoneyDto.getChallenger().name;
+        this.money = challengerMoneyDto.getMoney();
     }
 
     @Override
@@ -38,6 +37,6 @@ public class Challenger extends Player {
 
     @Override
     public String getName() {
-        return name;
+        return name.getName();
     }
 }
