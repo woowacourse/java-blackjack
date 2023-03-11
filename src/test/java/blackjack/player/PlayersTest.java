@@ -1,6 +1,8 @@
 package blackjack.player;
 
 import static blackjack.Fixtures.BET_AMOUNT_10000;
+import static blackjack.Fixtures.PLAYER_WITH_10000;
+import static blackjack.Fixtures.PLAYER_WITH_20000;
 import static blackjack.domain.game.WinningResult.LOSE;
 import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
@@ -9,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.Fixtures;
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
@@ -95,6 +98,8 @@ class PlayersTest {
             //given
             Players players = new Players();
             Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
+            player.hit(Fixtures.CARDS_SUM_15);
+            player.hit(new Card(CardNumber.TWO, Pattern.HEART));
             Players newPlayers = players.add(player);
 
             Dealer dealer = new Dealer();
@@ -175,6 +180,18 @@ class PlayersTest {
             Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
             //then
             assertThat(playerToResult.get(player)).isEqualTo(TIE);
+        }
+    }
+
+    @Nested
+    @DisplayName("최종 수익을 계산하는 기능")
+    class CalculateEachPrize {
+        @DisplayName("결과에 모든 플레이어가 포함되어있다.")
+        @Test
+        void containsAllPlayer() {
+            Players players = new Players().add(PLAYER_WITH_10000).add(PLAYER_WITH_20000);
+            Map<Player, Money> playerToPrize = players.calculateEachPrize(new Dealer());
+            assertThat(playerToPrize.keySet()).contains(PLAYER_WITH_10000, PLAYER_WITH_20000);
         }
     }
 }

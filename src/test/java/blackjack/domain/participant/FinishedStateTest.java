@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
+import static blackjack.Fixtures.BET_AMOUNT_10000;
 import static blackjack.Fixtures.BLACKJACK_CARDS;
 import static blackjack.Fixtures.CARDS_OF_BUST;
 import static blackjack.Fixtures.CARDS_SUM_15;
 import static blackjack.Fixtures.PLAYER_WITH_10000;
 
-import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
@@ -96,7 +96,7 @@ class FinishedStateTest {
 
             @BeforeEach
             void setUp() {
-                player = new Player(new Name("플레이어"), new Money(10000));
+                player = new Player(new Name("플레이어"), BET_AMOUNT_10000);
                 player.hit(CARDS_SUM_15);
                 dealer = new Dealer();
             }

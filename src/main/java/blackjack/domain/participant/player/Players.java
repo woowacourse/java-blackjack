@@ -1,5 +1,10 @@
 package blackjack.domain.participant.player;
 
+import static blackjack.domain.participant.FinishedState.BLACK_JACK;
+import static blackjack.domain.participant.FinishedState.BUST;
+import static blackjack.domain.participant.FinishedState.STAY;
+
+import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.ParticipantCardsDto;
@@ -67,5 +72,25 @@ public class Players {
         return players.stream()
                 .map(ParticipantCardsDto::from)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static double getEarningRate(Player player, Dealer dealer) {
+        if (player.isBlackjack()) {
+            return BLACK_JACK.getEarningRate(player, dealer);
+        }
+        if (player.isBust()) {
+            return BUST.getEarningRate(player, dealer);
+        }
+        return STAY.getEarningRate(player, dealer);
+    }
+
+    public Map<Player, Money> calculateEachPrize(Dealer dealer) {
+        return players.stream()
+                .collect(Collectors.toMap(player -> player, player -> calculatePrize(player, dealer)));
+    }
+
+    private Money calculatePrize(Player player, Dealer dealer) {
+        double earningRate = getEarningRate(player, dealer);
+        return player.getBetAmount().product(earningRate);
     }
 }
