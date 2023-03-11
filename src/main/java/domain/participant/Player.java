@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.ExceptionCode;
+import view.ExceptionMessage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Player extends Participant {
 
     public static Player create(Name name, BetAmount betAmount) {
         if (name.getName().equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ExceptionCode.PLAYER_INVALID_NAME.getExceptionCode());
+            throw new IllegalArgumentException(ExceptionMessage.NAME_IS_DEALER.getMessage());
         }
         return new Player(name, betAmount);
     }

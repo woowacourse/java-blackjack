@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.ExceptionCode;
 import domain.card.Deck;
+import view.ExceptionMessage;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,7 +34,7 @@ public class Participants {
         return participants.stream()
                 .filter(participant -> participant.getClass().equals(Dealer.class))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(ExceptionCode.NO_DEALER.getExceptionCode())
+                .orElseThrow(() -> new IllegalStateException(ExceptionMessage.NO_DEALER.getMessage())
                 );
     }
 

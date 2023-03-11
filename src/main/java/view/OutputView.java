@@ -1,6 +1,5 @@
 package view;
 
-import domain.ExceptionCode;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -66,10 +65,7 @@ public class OutputView {
     }
 
     public static void printExceptionMessage(IllegalArgumentException e) {
-        final ExceptionCode exceptionCode = ExceptionCode.getExceptionCodeName(e.getMessage());
-        final String exceptionMessage = ExceptionMessage.getExceptionMessage(exceptionCode);
-
-        System.out.println(exceptionMessage);
+        System.out.println(e.getMessage());
     }
 
     private static void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
