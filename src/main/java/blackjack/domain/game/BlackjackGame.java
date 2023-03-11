@@ -11,7 +11,7 @@ import blackjack.domain.participant.player.CardDecisionStrategy;
 import blackjack.domain.participant.player.CardDisplayStrategy;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,17 +54,19 @@ public class BlackjackGame {
 
     public List<ParticipantPrizeDto> calculatePrize() {
         Map<Player, Money> playerMoneyMap = players.calculateEachPrize(dealer);
-        Money dealerPrize = calculateDealerPrize(playerMoneyMap);
-        Map<Participant, Money> prize = new HashMap<>();
-        prize.put(dealer, dealerPrize);
+        Map<Participant, Money> prize = new LinkedHashMap<>();
+        prize.put(dealer, calculateDealerPrize(playerMoneyMap));
         prize.putAll(playerMoneyMap);
+
         return prize.entrySet().stream()
                 .map(ParticipantPrizeDto::of)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private Money calculateDealerPrize(Map<Player, Money> playerMoneyMap) {
-        int sumOfPlayerPrize = playerMoneyMap.values().stream().mapToInt(Money::getValue).sum();
+        int sumOfPlayerPrize = playerMoneyMap.values().stream()
+                .mapToInt(Money::getValue)
+                .sum();
         return new Money(sumOfPlayerPrize)
                 .product(-1);
     }

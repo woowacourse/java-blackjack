@@ -10,6 +10,8 @@ import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,13 +58,14 @@ public class Players {
                 .map(ParticipantResultDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
+
     public List<ParticipantCardsDto> getPlayerCards() {
         return players.stream()
                 .map(ParticipantCardsDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static double getEarningRate(Player player, Dealer dealer) {
+    private double getEarningRate(Player player, Dealer dealer) {
         if (player.isBlackjack()) {
             return BLACK_JACK.getEarningRate(player, dealer);
         }
@@ -73,8 +76,11 @@ public class Players {
     }
 
     public Map<Player, Money> calculateEachPrize(Dealer dealer) {
-        return players.stream()
-                .collect(Collectors.toMap(player -> player, player -> calculatePrize(player, dealer)));
+        Map<Player, Money> playerToPrize = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToPrize.put(player, calculatePrize(player, dealer));
+        }
+        return Collections.unmodifiableMap(playerToPrize);
     }
 
     private Money calculatePrize(Player player, Dealer dealer) {
