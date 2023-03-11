@@ -43,7 +43,7 @@ public class Dealer implements Decidable {
         return score.isLessOrEquals(new Score(DEALER_MIN_RECEIVE_CARD));
     }
 
-    public List<Card> getCards() {
+    public List<Card> getHand() {
         return participant.getHand();
     }
 

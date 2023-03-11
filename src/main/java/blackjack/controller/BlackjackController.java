@@ -113,7 +113,7 @@ public class BlackjackController {
         List<Score> scores = getPlayersScore(players);
         Dealer dealer = participants.getDealer();
 
-        outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
+        outputView.printDealerFinalCards(getCurrentCards(dealer.getHand()), dealer.calculateTotalScore());
         outputView.printPlayerFinalCards(getPlayersCards(players), scores);
 
         showProfit(participants);
