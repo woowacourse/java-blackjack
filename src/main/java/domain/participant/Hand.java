@@ -13,6 +13,7 @@ public class Hand {
     private static final int INIT_VALUE_FOR_ADD = 0;
     private static final int BLACKJACK_VALUE = 21;
     private static final int BLACKJACK_SIZE = 2;
+    private static final int MIN_BUST_VALUE = 22;
 
     private final List<Card> cards;
 
@@ -53,6 +54,10 @@ public class Hand {
 
     public boolean isBlackjack() {
         return calculateOptimalCardValueSum() == BLACKJACK_VALUE && cards.size() == BLACKJACK_SIZE;
+    }
+
+    public boolean isBust() {
+        return calculateOptimalCardValueSum() >= MIN_BUST_VALUE;
     }
 
     public int getSize() {
