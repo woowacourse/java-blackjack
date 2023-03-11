@@ -6,8 +6,8 @@ import domain.user.Users;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application {
     private static final InputView inputView = new InputView();
@@ -31,9 +31,18 @@ public class Application {
     }
 
     private static List<Player> createPlayersWith(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            players.add(createPlayer(playerName));
+        }
+
+        return players;
+    }
+
+    private static Player createPlayer(String playerName) {
+        int bettingAmount = inputView.enterBettingAmount(playerName);
+        return new Player(playerName, new Money(bettingAmount));
     }
 
     private static void start(Game game) {

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Money;
 import domain.card.Card;
 import domain.card.Hand;
 
@@ -10,14 +11,16 @@ public class Player extends User {
     private static final int PLAYER_HIT_LIMIT = 21;
 
     private final String name;
+    private final Money money;
 
-    public Player(String name) {
-        this(name, new ArrayList<>());
+    public Player(String name, Money bettingAmount) {
+        this(name, new ArrayList<>(), bettingAmount);
     }
 
-    public Player(String name, List<Card> cards) {
+    public Player(String name, List<Card> cards, Money bettingAmount) {
         super(new Hand(cards));
         this.name = name;
+        this.money = bettingAmount;
     }
 
     public boolean canHit() {
