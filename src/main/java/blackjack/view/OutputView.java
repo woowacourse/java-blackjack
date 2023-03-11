@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String INIT_FORMAT = LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR;
-    private static final String DEARER_CARDS_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -28,21 +27,28 @@ public class OutputView {
 
     public void printInitCards(Participants participants) {
         System.out.printf(INIT_FORMAT, String.join(DELIMITER, participants.getPlayerNames()));
-        printDealerInitCard(participants.getDealer());
+        printParticipantInitCard(participants.getDealer());
         for (Player player : participants.getPlayers()) {
-            printPlayerCards(player);
+            printParticipantInitCard(player);
         }
         System.out.println();
     }
 
-    private void printDealerInitCard(Dealer dealer) {
-        System.out.printf(DEARER_CARDS_FORMAT, dealer.getName(),
-                CardMessageConvertor.convert(dealer.getCards().get(0)));
+    private void printParticipantInitCard(Participant participant) {
+        String cardNames = getParticipantInitCardsView(participant);
+        System.out.printf(PLAYER_CARDS_FORMAT, participant.getName(), cardNames);
     }
 
-    public void printPlayerCards(Player player) {
-        String cardNames = getParticipantCardsView(player);
-        System.out.printf(PLAYER_CARDS_FORMAT, player.getName(), cardNames);
+    public void printPlayerCards(Participant participant) {
+        String cardNames = getParticipantCardsView(participant);
+        System.out.printf(PLAYER_CARDS_FORMAT, participant.getName(), cardNames);
+    }
+
+    private String getParticipantInitCardsView(Participant participant) {
+        return participant.getFirstCard()
+                .stream()
+                .map(CardMessageConvertor::convert)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     public void printDealerState() {
@@ -65,7 +71,7 @@ public class OutputView {
     }
 
     private String getParticipantCardsView(Participant participant) {
-        return participant.getCards()
+        return participant.getAllCards()
                 .stream()
                 .map(CardMessageConvertor::convert)
                 .collect(Collectors.joining(DELIMITER));

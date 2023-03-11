@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
 import blackjack.domain.game.ScoreState;
+import blackjack.domain.vo.Score;
 import java.util.List;
 
 public abstract class Participant {
@@ -18,6 +19,8 @@ public abstract class Participant {
 
     public abstract boolean isDrawable();
 
+    public abstract List<Card> getFirstCard();
+
     public void addCard(Card card) {
         playerCards.add(card);
     }
@@ -30,11 +33,11 @@ public abstract class Participant {
         return ScoreState.of(playerCards.getScore());
     }
 
-    public List<Card> getCards() {
+    public List<Card> getAllCards() {
         return playerCards.toList();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return playerCards.getScore();
     }
 

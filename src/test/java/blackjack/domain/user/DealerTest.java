@@ -16,11 +16,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 class DealerTest {
 
     @Test
+    @DisplayName("이름이 딜러인 dealer 객체를 생성한다")
+    void createDealerNameTest() {
+        Dealer dealer = new Dealer();
+
+        assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
     @DisplayName("딜러를 생성하면 빈 카드들이 생성된다.")
     void createDealerTest() {
         Dealer dealer = new Dealer();
 
-        assertThat(dealer.getCards()).isEmpty();
+        assertThat(dealer.getAllCards()).isEmpty();
     }
 
     @Test
@@ -31,7 +39,7 @@ class DealerTest {
 
         dealer.addCard(card);
 
-        assertThat(dealer.getCards()).contains(new Card(CardSuit.HEART, CardNumber.ACE));
+        assertThat(dealer.getAllCards()).contains(new Card(CardSuit.HEART, CardNumber.ACE));
     }
 
     @Test
@@ -39,13 +47,12 @@ class DealerTest {
     void showFirstCardTest() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardSuit.HEART, CardNumber.ACE);
-        Card card2 = new Card(CardSuit.HEART, CardNumber.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardNumber.ACE);
 
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.getCards()).contains(new Card(CardSuit.HEART, CardNumber.ACE),
-                new Card(CardSuit.HEART, CardNumber.ACE));
+        assertThat(dealer.getFirstCard()).containsExactly(new Card(CardSuit.HEART, CardNumber.ACE));
     }
 
     @ParameterizedTest

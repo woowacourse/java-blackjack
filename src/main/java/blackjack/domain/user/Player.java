@@ -1,7 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.constants.ErrorCode;
+import blackjack.domain.card.Card;
 import blackjack.domain.user.exception.ReservedPlayerNameException;
+import java.util.List;
 
 public class Player extends Participant {
 
@@ -19,5 +21,10 @@ public class Player extends Participant {
     @Override
     public boolean isDrawable() {
         return this.getState().isNotBust();
+    }
+
+    @Override
+    public List<Card> getFirstCard() {
+        return List.copyOf(getAllCards().subList(0, 2));
     }
 }

@@ -33,7 +33,7 @@ public class PlayerTest {
 
         player.addCard(card);
 
-        assertThat(player.getCards()).contains(card);
+        assertThat(player.getAllCards()).contains(card);
     }
 
     @ParameterizedTest
@@ -74,5 +74,19 @@ public class PlayerTest {
     void reservedWordCreateException() {
         assertThatThrownBy(() -> new Player("딜러"))
                 .isInstanceOf(ReservedPlayerNameException.class);
+    }
+
+    @Test
+    @DisplayName("플레이어의 첫 카드는 두장이다")
+    void getFirstPlayerCards() {
+        Player player = new Player("박스터");
+        player.addCards(List.of(
+                new Card(CardSuit.HEART, CardNumber.ACE),
+                new Card(CardSuit.CLUB, CardNumber.SIX),
+                new Card(CardSuit.SPADE, CardNumber.TEN)
+        ));
+
+        assertThat(player.getFirstCard()).hasSize(2);
+        ;
     }
 }

@@ -1,5 +1,8 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import java.util.List;
+
 public class Dealer extends Participant {
 
     public Dealer() {
@@ -8,6 +11,10 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return this.getState().isHit();
+        return getState().isHit();
+    }
+
+    public List<Card> getFirstCard() {
+        return List.of(getAllCards().get(0));
     }
 }

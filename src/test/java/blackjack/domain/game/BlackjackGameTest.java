@@ -29,7 +29,7 @@ class BlackjackGameTest {
         blackjackGame.dealOutCard();
 
         Player player = participants.getPlayers().get(0);
-        assertThat(player.getCards()).hasSize(2);
+        assertThat(player.getAllCards()).hasSize(2);
     }
 
     @MethodSource("blackjackGameCardSource")
