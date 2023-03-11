@@ -52,6 +52,35 @@ public class Participants {
         dealer.drawCard(deck.draw());
     }
 
+    public List<PlayerName> getPlayerNames() {
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public int getPlayerScore(final PlayerName playerName) {
+        return getPlayer(playerName).getScore();
+    }
+
+    public Hand getPlayerHand(final PlayerName playerName) {
+        return getPlayer(playerName).getHand();
+    }
+
+    public boolean isDrawablePlayer(final PlayerName playerName) {
+        return getPlayer(playerName).isDrawable();
+    }
+
+    private Player getPlayer(final PlayerName playerName) {
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
+    }
+
     public String getDealerName() {
         return getDealer().getName();
     }
@@ -62,6 +91,10 @@ public class Participants {
 
     public Hand getDealerHand() {
         return getDealer().getHand();
+    }
+
+    public Hand getDealerHiddenHand() {
+        return getDealer().getHiddenHand();
     }
 
     public int getDealerAdditionalDrawScore() {
@@ -82,34 +115,5 @@ public class Participants {
                 .map(Dealer.class::cast)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러는 존재해야 합니다."));
-    }
-
-    public List<PlayerName> getPlayerNames() {
-        return participants.stream()
-                .filter(participant -> !participant.isDealer())
-                .map(Player.class::cast)
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public boolean isDrawablePlayer(final PlayerName playerName) {
-        return getPlayer(playerName).isDrawable();
-    }
-
-    public int getPlayerScore(final PlayerName playerName) {
-        return getPlayer(playerName).getScore();
-    }
-
-    public Hand getPlayerHand(final PlayerName playerName) {
-        return getPlayer(playerName).getHand();
-    }
-
-    private Player getPlayer(final PlayerName playerName) {
-        return participants.stream()
-                .filter(participant -> !participant.isDealer())
-                .map(Player.class::cast)
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 }

@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.BettingTable;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
@@ -102,8 +101,7 @@ public class BlackJackGame {
     }
 
     public Hand getDealerHiddenHand() {
-        final List<Card> cards = participants.getDealerHand().getCards();
-        return new Hand(cards.subList(0, cards.size() - 1));
+        return participants.getDealerHiddenHand();
     }
 
     public boolean isDealerAdditionalDrawn() {
