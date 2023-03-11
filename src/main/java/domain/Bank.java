@@ -5,14 +5,20 @@ import java.util.Map;
 
 public class Bank {
 
+    private static final Money BET_MINIMUM = Money.of(100);
+
     private final Map<User, Money> deposits = new HashMap<>();
     private Money bankProfit = Money.of(0);
 
     public void bet(User user, Money money) {
-        if (money.isLessThan(Money.of(100))) {
+        validateMinimum(money);
+        deposit(user, money);
+    }
+
+    private void validateMinimum(Money money) {
+        if (money.isLessThan(BET_MINIMUM)) {
             throw new IllegalArgumentException("100원 이상 배팅해야 합니다");
         }
-        deposit(user, money);
     }
 
     public void evaluate(User user, Result result) {
