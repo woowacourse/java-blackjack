@@ -6,13 +6,11 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
-import blackjack.domain.gameplayer.Dealer;
-import blackjack.domain.gameplayer.Name;
-import blackjack.domain.gameplayer.Player;
-import blackjack.domain.gameplayer.Players;
+import blackjack.domain.gameplayer.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,27 +39,47 @@ public class BlackJackGameController {
 
     private Game initGame() {
         Deck deck = initDeck();
-        return new Game(deck, new Dealer(), new Players(initPlayers()));
-    }
-
-    private List<Player> initPlayers() {
-        try {
-            List<String> playersName = inputView.readPlayersName();
-            return generatePlayers(playersName);
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]" + e.getMessage());
-            return initPlayers();
-        }
-    }
-
-    private List<Player> generatePlayers(List<String> playersName) {
-        return playersName.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList());
+        List<Name> names = initNames();
+        return new Game(deck, new Dealer(), new Players(initPlayers(names)));
     }
 
     private Deck initDeck() {
         return DeckFactory.createDeck(DeckType.BLACKJACK);
+    }
+
+    private List<Name> initNames() {
+        try {
+            List<String> playersName = inputView.readPlayersName();
+            return generateName(playersName);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR]" + e.getMessage());
+            return initNames();
+        }
+    }
+
+    private List<Name> generateName(List<String> playersName) {
+        return playersName.stream()
+                .map(name -> new Name(name))
+                .collect(Collectors.toList());
+    }
+
+    private List<Player> initPlayers(List<Name> names) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            Player player = generatePlayer(name);
+            players.add(player);
+        }
+        return players;
+    }
+
+    private Player generatePlayer(Name name) {
+        try {
+            int betting = inputView.readBetting(name.getName());
+            return new Player(name, Betting.of(betting));
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR]" + e.getMessage());
+            return generatePlayer(name);
+        }
     }
 
     private void play(Game game) {
