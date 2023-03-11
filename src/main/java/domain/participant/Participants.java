@@ -55,7 +55,7 @@ public final class Participants {
     }
 
     public Map<Participant, GameResult> calculatePlayerGameResult() {
-        final Participant dealer = participants.get(DEALER_ORDER);
+        final Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
         final int totalParticipantSize = participants.size();
         final List<Participant> players = participants.subList(PLAYER_START_INDEX, totalParticipantSize);
 
