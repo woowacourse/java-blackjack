@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class RankTest {
 
-    @ParameterizedTest(name = "에이스인지 확인한다. 입력값: {0}, 결과: {1}")
+    @ParameterizedTest(name = "에이스인지 확인한다. 입력: {0}, 결과: {1}")
     @CsvSource({"ACE, true", "JACK, false"})
     void 에이스인지_확인한다(final Rank rank, final boolean result) {
         assertThat(rank.isAce()).isEqualTo(result);

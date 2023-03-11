@@ -1,14 +1,11 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.SIX;
-import static blackjack.domain.card.Shape.CLOVER;
 import static blackjack.util.CardFixtures.ACE_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.util.CardFixtures;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -42,8 +39,8 @@ public class DealerTest {
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), true),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER)), false)
+                Arguments.of(CardFixtures.valueOf(16), true),
+                Arguments.of(CardFixtures.valueOf(17), false)
         );
     }
 

@@ -1,23 +1,15 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Shape.HEART;
 import static blackjack.domain.player.Result.BLACKJACK_WIN;
 import static blackjack.domain.player.Result.LOSE;
 import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
+import static blackjack.util.CardFixtures.ACE_HEART;
 import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.EIGHT_SPADE;
-import static blackjack.util.CardFixtures.JACK_CLOVER;
-import static blackjack.util.CardFixtures.JACK_HEART;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.KING_SPADE;
-import static blackjack.util.CardFixtures.SEVEN_SPADE;
-import static blackjack.util.CardFixtures.SIX_SPADE;
-import static blackjack.util.CardFixtures.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Result;
+import blackjack.util.CardFixtures;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -33,7 +25,7 @@ public class HandTest {
 
     @Test
     void 카드를_입력받아_핸드를_생성한다() {
-        final List<Card> cards = List.of(ACE_SPADE, JACK_SPADE);
+        final List<Card> cards = CardFixtures.BLACKJACK;
 
         final Hand hand = new Hand(cards);
 
@@ -53,18 +45,17 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), PUSH),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, JACK_HEART), BLACKJACK_WIN),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), BLACKJACK_WIN),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, ACE_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), List.of(JACK_SPADE, ACE_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, EIGHT_SPADE), WIN),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), PUSH),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, JACK_HEART), LOSE),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), WIN),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(JACK_SPADE, SEVEN_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(JACK_SPADE, SIX_SPADE, KING_SPADE),
-                        LOSE)
+                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.BLACKJACK, PUSH),
+                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.valueOf(20), BLACKJACK_WIN),
+                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.valueOf(21), BLACKJACK_WIN),
+                Arguments.of(CardFixtures.valueOf(20), CardFixtures.BLACKJACK, LOSE),
+                Arguments.of(CardFixtures.BUST, CardFixtures.BLACKJACK, LOSE),
+                Arguments.of(CardFixtures.valueOf(20), CardFixtures.valueOf(18), WIN),
+                Arguments.of(CardFixtures.valueOf(20), CardFixtures.valueOf(20), PUSH),
+                Arguments.of(CardFixtures.valueOf(17), CardFixtures.valueOf(20), LOSE),
+                Arguments.of(CardFixtures.valueOf(17), CardFixtures.BUST, WIN),
+                Arguments.of(CardFixtures.BUST, CardFixtures.valueOf(17), LOSE),
+                Arguments.of(CardFixtures.BUST, CardFixtures.BUST, LOSE)
         );
     }
 
@@ -72,7 +63,7 @@ public class HandTest {
     void 카드가_추가된다() {
         final Hand hand = new Hand();
 
-        hand.add(new Card(ACE, HEART));
+        hand.add(ACE_HEART);
 
         assertThat(hand.getSymbols()).containsExactly("A하트");
     }
@@ -87,9 +78,9 @@ public class HandTest {
 
     static Stream<Arguments> isPlayableSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), false),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART, TWO_SPADE), false),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), true)
+                Arguments.of(CardFixtures.BLACKJACK, false),
+                Arguments.of(CardFixtures.BUST, false),
+                Arguments.of(CardFixtures.valueOf(20), true)
         );
     }
 
@@ -104,7 +95,7 @@ public class HandTest {
 
     @Test
     void 카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Hand hand = new Hand(List.of(ACE_SPADE));
+        final Hand hand = new Hand(CardFixtures.valueOf(19));
 
         hand.stay();
 

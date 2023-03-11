@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class CardTest {
 
-    @ParameterizedTest(name = "에이스인지 확인한다. 입력값: {0}, 결과: {1}")
+    @ParameterizedTest(name = "에이스인지 확인한다. 입력: {0}, 결과: {1}")
     @CsvSource({"ACE, true", "THREE, false"})
     void 에이스인지_확인하다(final Rank rank, final boolean result) {
         final Card card = new Card(rank, Shape.DIAMOND);

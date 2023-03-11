@@ -4,16 +4,9 @@ import static blackjack.domain.card.State.BLACKJACK;
 import static blackjack.domain.card.State.BUST;
 import static blackjack.domain.card.State.PLAY;
 import static blackjack.domain.card.State.STOP;
-import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.FOUR_SPADE;
-import static blackjack.util.CardFixtures.JACK_CLOVER;
-import static blackjack.util.CardFixtures.JACK_HEART;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.KING_HEART;
-import static blackjack.util.CardFixtures.KING_SPADE;
-import static blackjack.util.CardFixtures.SIX_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.util.CardFixtures;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -36,10 +29,10 @@ public class StateTest {
 
     static Stream<Arguments> calculateStateSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), BLACKJACK),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), BUST),
-                Arguments.of(List.of(ACE_SPADE, FOUR_SPADE, SIX_SPADE), STOP),
-                Arguments.of(List.of(KING_SPADE, KING_HEART), PLAY)
+                Arguments.of(CardFixtures.BLACKJACK, BLACKJACK),
+                Arguments.of(CardFixtures.BUST, BUST),
+                Arguments.of(CardFixtures.valueOf(21), STOP),
+                Arguments.of(CardFixtures.valueOf(20), PLAY)
         );
     }
 }

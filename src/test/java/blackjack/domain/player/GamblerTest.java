@@ -1,15 +1,10 @@
 package blackjack.domain.player;
 
-import static blackjack.util.CardFixtures.FOUR_SPADE;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.SEVEN_SPADE;
-import static blackjack.util.CardFixtures.SIX_HEART;
-import static blackjack.util.CardFixtures.SIX_SPADE;
-import static blackjack.util.CardFixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.util.CardFixtures;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -46,9 +41,9 @@ public class GamblerTest {
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, SIX_HEART), false),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, FOUR_SPADE), false),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, THREE_SPADE), true)
+                Arguments.of(CardFixtures.BUST, false),
+                Arguments.of(CardFixtures.valueOf(21), false),
+                Arguments.of(CardFixtures.valueOf(20), true)
         );
     }
 

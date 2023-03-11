@@ -76,7 +76,7 @@ public class CardsTest {
         assertThat(result).containsExactly("5스페이드", "A클로버");
     }
 
-    @ParameterizedTest(name = "블랙잭인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @ParameterizedTest(name = "블랙잭인지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isBlackjackSource")
     void 블랙잭인지_확인한다(final List<Card> cards, final boolean result) {
         final Cards sut = new Cards(cards);
@@ -94,7 +94,7 @@ public class CardsTest {
         );
     }
 
-    @ParameterizedTest(name = "버스트인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @ParameterizedTest(name = "버스트인지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isBustSource")
     void 버스트인지_확인한다(final List<Card> cards, final boolean result) {
         final Cards sut = new Cards(cards);
@@ -111,7 +111,7 @@ public class CardsTest {
         );
     }
 
-    @ParameterizedTest(name = "결과값이 블랙잭 점수인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @ParameterizedTest(name = "결과값이 블랙잭 점수인지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isBlackjackScoreSource")
     void 결과값이_블랙잭_점수인지_확인한다(final List<Card> cards, final boolean result) {
         final Cards sut = new Cards(cards);
