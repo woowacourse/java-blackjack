@@ -1,6 +1,7 @@
 package domain.profit;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import domain.participant.Participant;
@@ -12,7 +13,7 @@ public class FinalProfitByParticipant {
     private final Map<Participant, FinalProfit> finalProfitByParticipant;
 
     public FinalProfitByParticipant() {
-        this.finalProfitByParticipant = new HashMap<>();
+        this.finalProfitByParticipant = new LinkedHashMap<>();
     }
 
     public void putParticipantFinalProfit(Participant participant, FinalProfit finalProfit) {
