@@ -1,8 +1,8 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.game.BlackJack;
-import blackjack.domain.game.Result;
+import blackjack.domain.Settlement;
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BlackJack;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
@@ -60,50 +60,23 @@ public class DtoParser {
         return new UserDto(dealer.getName().getValue(), makeCardToDto(dealer.openCards()));
     }
 
-    public static GameResultDto getGameResultDto(final BlackJack blackJack) {
-        return new GameResultDto(enrollUser(blackJack), getDealerResultDto(blackJack.getDealerResult()), getDealerNameValue(blackJack));
+    public static GameResultDto getGameResultDto(final Settlement settlement) {
+        final LinkedHashMap<String, Integer> nameAndProfit = new LinkedHashMap<>();
+        enrollDealerProfit(nameAndProfit, settlement);
+        enrollUserProfit(nameAndProfit, settlement);
+        return new GameResultDto(nameAndProfit);
     }
 
-    private static String getDealerNameValue(final BlackJack blackJack) {
-        final Dealer dealer = blackJack.getDealer();
-        final Name name = dealer.getName();
-        return name.getValue();
+    private static void enrollDealerProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
+        nameAndProfit.put("딜러", settlement.getDealerProfit());
     }
 
-    private static Map<ResultDto, Integer> getDealerResultDto(final Map<Result, Integer> dealerResult) {
-        final Map<ResultDto, Integer> returnMap = new HashMap<>();
-        for (Result result : dealerResult.keySet()) {
-            if (dealerResult.get(result) != 0) {
-                returnMap.put(getDtoOfResult(result), dealerResult.get(result));
-            }
-        }
-        return returnMap;
-    }
-
-    private static Map<String, ResultDto> enrollUser(BlackJack blackJack) {
-        final Map<String, ResultDto> result = new LinkedHashMap<>();
-        enroll(result, blackJack.getUserOf(Result.WIN), Result.WIN);
-        enroll(result, blackJack.getUserOf(Result.LOSE), Result.LOSE);
-        enroll(result, blackJack.getUserOf(Result.DRAW), Result.DRAW);
-        return result;
-    }
-
-    private static void enroll(final Map<String, ResultDto> board, final List<User> users, final Result result) {
-        for (User user : users) {
-            board.put(user.getName().getValue(), getDtoOfResult(result));
+    private static void enrollUserProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
+        final Map<Name, Integer> profit = settlement.getProfit();
+        for (Name name : profit.keySet()) {
+            nameAndProfit.put(name.getValue(), profit.get(name));
         }
     }
 
-    private static ResultDto getDtoOfResult(final Result result) {
-        if (result == Result.WIN) {
-            return new ResultDto("승");
-        }
-        if (result == Result.DRAW) {
-            return new ResultDto("무승부");
-        }
-        if (result == Result.LOSE) {
-            return new ResultDto("패");
-        }
-        throw new IllegalArgumentException();
-    }
+
 }
