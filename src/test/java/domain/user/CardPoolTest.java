@@ -3,7 +3,6 @@ package domain.user;
 import domain.CardFixtures;
 import domain.card.Card;
 import domain.card.CardNumber;
-import domain.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,7 @@ class CardPoolTest {
                 CardFixtures.ofNumber(CardNumber.EIGHT),
                 CardFixtures.ofNumber(CardNumber.ACE),
                 CardFixtures.ofNumber(CardNumber.KING)
-                );
+        );
 
         CardPool cardPool = new CardPool(cards);
 
@@ -112,7 +111,7 @@ class CardPoolTest {
     }
 
     @Test
-    @DisplayName("카드 숫자의 합이 21이하이면 false를 반환한다.")
+    @DisplayName("카드 숫자의 합이 21이하이면 false를 반환한다")
     void isSumExceedWhenUnderCardPointLimit() {
         List<Card> cards = List.of(
                 CardFixtures.ofNumber(CardNumber.ACE)
@@ -125,7 +124,7 @@ class CardPoolTest {
     }
 
     @Test
-    @DisplayName("카드 숫자의 합이 21을 넘으면 true를 반환한다.")
+    @DisplayName("카드 숫자의 합이 21을 넘으면 true를 반환한다")
     void isSumExceedWhenOverCardPointLimit() {
         List<Card> cards = List.of(
                 CardFixtures.ofNumber(CardNumber.JACK),

@@ -1,9 +1,7 @@
 package domain.game;
 
 import domain.CardFixtures;
-import domain.card.Card;
 import domain.card.CardNumber;
-import domain.card.CardType;
 import domain.user.CardPool;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -30,7 +28,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool, 0);
-        Dealer dealer = new Dealer( dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.LOSE);
@@ -47,7 +45,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool, 0);
-        Dealer dealer = new Dealer( dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.DRAW);
@@ -64,7 +62,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool, 0);
-        Dealer dealer = new Dealer( dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.WIN);
@@ -84,7 +82,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool, 0);
-        Dealer dealer = new Dealer( dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.WIN);
@@ -104,7 +102,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool, 0);
-        Dealer dealer = new Dealer( dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.LOSE);

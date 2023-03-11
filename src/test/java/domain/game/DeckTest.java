@@ -4,13 +4,9 @@ import domain.CardFixtures;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardType;
-import domain.game.Deck;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
