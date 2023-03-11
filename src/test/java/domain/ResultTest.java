@@ -7,24 +7,31 @@ import org.junit.jupiter.api.Test;
 
 class ResultTest {
 
-    @DisplayName("한국어로 된 결과 텍스트 반환 - 승")
+    @DisplayName("승에 해당하는 경우 배팅 금액의 1배를 반환한다.")
     @Test
-    void 한국어_승_반환() {
+    void 승리_베팅금액_반환() {
         Result result = Result.WIN;
-        assertThat(result.getKoreanText()).isEqualTo("승");
+        assertThat(result.calculateWinningAmount(1_000)).isEqualTo(1_000);
     }
 
-    @DisplayName("한국어로 된 결과 텍스트 반환 - 무")
+    @DisplayName("패에 해당하는 경우 배팅 금액의 1배를 반환한다.")
     @Test
-    void 한국어_무_반환() {
-        Result result = Result.DRAW;
-        assertThat(result.getKoreanText()).isEqualTo("무");
-    }
-
-    @DisplayName("한국어로 된 결과 텍스트 반환 - 패")
-    @Test
-    void 한국어_패_반환() {
+    void 패배_베팅금액_반환() {
         Result result = Result.LOSE;
-        assertThat(result.getKoreanText()).isEqualTo("패");
+        assertThat(result.calculateWinningAmount(1_000)).isEqualTo(-1_000);
+    }
+
+    @DisplayName("무승부에 해당하는 경우 배팅 금액의 1배를 반환한다.")
+    @Test
+    void 무승부_베팅금액_반환() {
+        Result result = Result.DRAW;
+        assertThat(result.calculateWinningAmount(1_000)).isEqualTo(0);
+    }
+
+    @DisplayName("블랙잭에 해당하는 경우 배팅 금액의 1배를 반환한다.")
+    @Test
+    void 블랙잭_베팅금액_반환() {
+        Result result = Result.BLACKJACK;
+        assertThat(result.calculateWinningAmount(1_000)).isEqualTo(1_500);
     }
 }

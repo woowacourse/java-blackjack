@@ -12,7 +12,8 @@ public enum Result {
         this.odds = odds;
     }
 
+    //TODO Result 테스트 미통과 해결
     public int calculateWinningAmount(int bettingAmountValue) {
-        return (int) odds * bettingAmountValue;
+        return (int) (odds * bettingAmountValue);
     }
 }

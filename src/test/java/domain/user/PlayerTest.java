@@ -72,11 +72,10 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player가 가진 카드의 점수의 합이 블랙잭이면 true를 반환한다.")
+    @DisplayName("Player가 가진 카드가 블랙잭이면 true를 반환한다.")
     void 카드_블랙잭_인지_확인() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.SPADE, Rank.ACE));
-        hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(UserInformation.from(new PlayerName("name"), 1_000), hand);
         assertThat(player.isBlackjack()).isTrue();
