@@ -23,6 +23,14 @@ public class Money {
         return new Money(this.amount - other.amount);
     }
 
+    public Money multiply(double times) {
+        return new Money((int) (this.amount * times));
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -32,7 +32,6 @@ class MoneyTest {
                 .isEqualTo(new Money(result));
     }
 
-
     @ParameterizedTest(name = "두 money의 차를 구한다.")
     @CsvSource({"1_000,2_000,-1_000", "4_000,2_000,2_000"})
     void test_subtract(int number1, int number2, int result) {
@@ -40,6 +39,15 @@ class MoneyTest {
 
         assertThat(money.subtract(new Money(number2)))
                 .isEqualTo(new Money(result));
+    }
+
+    @ParameterizedTest(name = "money에 배수를 곱한다.")
+    @CsvSource({"1000, 1.5", "2000, -1", "3000, 1"})
+    void test_multiply(int number, double times) {
+        Money money = new Money(number);
+
+        assertThat(money.multiply(times))
+                .isEqualTo(new Money((int) (number * times)));
     }
 
 }
