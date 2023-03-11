@@ -86,4 +86,20 @@ public class HandTest extends AbstractTestFixture {
 
         assertThat(hand.isDrawAgainst(other)).isEqualTo(isDraw);
     }
+
+    static Stream<Arguments> test_is_blackjack() {
+        return Stream.of(
+                Arguments.of(true, List.of("K", "A")),
+                Arguments.of(false, List.of("K", "J", "A"))
+        );
+    }
+
+    @DisplayName("블랙잭인지 알 수 있다")
+    @ParameterizedTest(name = "{1}가 블랙잭인가? {0}")
+    @MethodSource
+    void test_is_blackjack(boolean isBlackjack, List<String> cards) {
+        var hand = new Hand(createCards(cards));
+
+        assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
+    }
 }

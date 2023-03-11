@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Hand {
 
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final Set<Card> cards;
 
     public Hand() {
@@ -58,6 +60,13 @@ public class Hand {
             return false;
         }
         return otherScore.isBust() || score.isGreaterThan(otherScore);
+    }
+
+    public boolean isBlackjack() {
+        if (cards.size() == BLACKJACK_CARD_SIZE) {
+            return score().isSameWith(Score.BLACKJACK);
+        }
+        return false;
     }
 
     public Set<Card> cards() {

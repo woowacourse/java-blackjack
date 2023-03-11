@@ -14,6 +14,12 @@ public abstract class AbstractTestFixture {
                 .collect(Collectors.toList());
     }
 
+    static List<Card> createCards(List<String> cards) {
+        return cards.stream()
+                .map(AbstractTestFixture::parse)
+                .collect(Collectors.toList());
+    }
+
     private static Card parse(String card) {
         String[] cardInfo = card.split("-");
         if (cardInfo.length > 1) {
