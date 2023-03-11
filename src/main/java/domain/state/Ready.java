@@ -1,11 +1,16 @@
 package domain.state;
 
 import domain.card.Card;
+import domain.game.Score;
 import domain.user.Hand;
 
 import java.util.List;
 
 public class Ready implements State {
+    @Override
+    public Score score() {
+        throw new IllegalStateException("점수가 없습니다.");
+    }
 
     @Override
     public State draw(Card card) {

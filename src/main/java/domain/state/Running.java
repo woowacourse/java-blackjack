@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.card.Card;
+import domain.game.Score;
 import domain.user.Hand;
 
 import java.util.List;
@@ -11,6 +12,11 @@ public abstract class Running implements State {
 
     public Running(Hand hand) {
         this.hand = hand;
+    }
+
+    @Override
+    public Score score() {
+        return hand.score();
     }
 
     @Override
