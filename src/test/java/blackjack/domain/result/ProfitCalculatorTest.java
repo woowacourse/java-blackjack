@@ -1,9 +1,9 @@
 package blackjack.domain.result;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -11,19 +11,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfitCalculatorTest {
 
-    @ParameterizedTest(name = "게임 결과 : {0}")
-    @DisplayName("플래이어의 게임 결과에 따라 수익을 계산한다")
-    @CsvSource(value = {"BLACKJACK_WIN,1500", "NORMAL_WIN,1000", "TIE,0", "LOSE,-1000"})
-    void playerProfitTest(final GameResult result, final int expectedProfit) {
-        final ProfitCalculator profitCalculator = new ProfitCalculator();
-        final String name = "test";
-        final int betAmount = 1000;
+    @Nested
+    @DisplayName("플레이어의 게임 결과에 따라 수익을 계산한다.")
+    class PlayerProfitTest {
 
-        profitCalculator.bet(name, betAmount);
-        profitCalculator.putGameResult(name, result);
-        final int actualProfit = profitCalculator.calculateProfit(name);
+        private final String name = "test";
+        private ProfitCalculator profitCalculator;
 
-        assertThat(actualProfit).isEqualTo(expectedProfit);
+        @BeforeEach
+        void setup() {
+            profitCalculator = new ProfitCalculator();
+            int betAmount = 1000;
+
+            profitCalculator.bet(name, betAmount);
+        }
+
+        @Test
+        @DisplayName("블랙잭 승리시 배팅 금액의 1.5배의 수익을 얻는다")
+        void blackjackWinTest() {
+            final int expectedProfit = 1500;
+
+            final int actualProfit = getActualProfit(GameResult.BLACKJACK_WIN);
+
+            assertThat(actualProfit).isEqualTo(expectedProfit);
+        }
+
+        @Test
+        @DisplayName("일반 승리시 배팅 금액과 같은 수익을 얻는다")
+        void normalWinTest() {
+            final int expectedProfit = 1000;
+
+            final int actualProfit = getActualProfit(GameResult.NORMAL_WIN);
+
+            assertThat(actualProfit).isEqualTo(expectedProfit);
+        }
+
+        @Test
+        @DisplayName("동점시 배팅 금액만 돌려받고 수익을 얻지 못한다")
+        void tieTest() {
+            final int expectedProfit = 0;
+
+            final int actualProfit = getActualProfit(GameResult.TIE);
+
+            assertThat(actualProfit).isEqualTo(expectedProfit);
+        }
+
+        @Test
+        @DisplayName("패배시 배팅 금액을 잃어 배팅 금액만큼 손해를 본다")
+        void loseTest() {
+            final int expectedProfit = -1000;
+
+            final int actualProfit = getActualProfit(GameResult.LOSE);
+
+            assertThat(actualProfit).isEqualTo(expectedProfit);
+        }
+
+        private int getActualProfit(final GameResult blackjackWin) {
+            profitCalculator.putGameResult(name, blackjackWin);
+            return profitCalculator.calculateProfit(name);
+        }
     }
 
     @Test
