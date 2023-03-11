@@ -60,6 +60,15 @@ class ParticipantsTest {
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
 
+    @Test
+    void 승무패확인후_수익률을_반환한다() {
+        Dealer dealer = readDealer();
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
+
+        assertThat(participants.getProfits()).containsExactly(-1.0, 0.0);
+    }
+
     Dealer readDealer() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(HEART, A));

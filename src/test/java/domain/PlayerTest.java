@@ -39,6 +39,16 @@ class PlayerTest {
         assertThat(player.addCard(new Card(HEART, FOUR))).isTrue();
     }
 
+    @Test
+    void 자신의_카드뭉치가_블랙잭임을_확인한다() {
+        Name name = getName();
+        Cards cards = getCards();
+
+        Player player = new Player(name, cards);
+
+        assertThat(player.isBlackJack()).isFalse();
+    }
+
     private static Cards getCards() {
         List<Card> cardsByCardBox = new ArrayList<>();
         cardsByCardBox.add(new Card(HEART, A));

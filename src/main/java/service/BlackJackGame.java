@@ -43,7 +43,7 @@ public class BlackJackGame {
     }
 
     private void printGameResult(final Bank bank, final Participants participants) {
-        outputView.printGameResult(participants.getPlayerNames(), bank.getProfitMonies());
+        outputView.printGameResult(participants.getPlayerNames(), bank.getCalculatedProfitMonies());
     }
 
     private void calculateProfitMoneyOfPlayer(final Bank bank, final List<Player> players, final List<Double> profits) {

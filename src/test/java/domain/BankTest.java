@@ -63,4 +63,10 @@ public class BankTest {
         );
     }
 
+    @Test
+    void test() {
+        Bank bank = new Bank(of(우가, 빙봉), of(만원, 이만원));
+
+        assertThat(bank.getCalculatedProfitMonies()).containsExactly(10000, 20000);
+    }
 }

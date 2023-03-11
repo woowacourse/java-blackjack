@@ -19,4 +19,7 @@ public class PlayerFixture {
 
     public static final Player 빙봉 = new Player(new Name("빙봉"),
             new Cards(List.of(new Card(Shape.HEART, CardInfo.A), new Card(Shape.HEART, CardInfo.TEN))));
+
+    public static final Player 하마드 = new Player(new Name("하마드"),
+            new Cards(List.of(new Card(Shape.HEART, CardInfo.NINE), new Card(Shape.HEART, CardInfo.THREE))));
 }

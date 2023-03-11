@@ -49,7 +49,7 @@ public class Bank {
         accountBook.put(player, money.calculateMoneyByProfit(profit));
     }
 
-    public List<Integer> getProfitMonies() {
+    public List<Integer> getCalculatedProfitMonies() {
         return accountBook.values().stream()
                 .map(money -> money.money)
                 .collect(Collectors.toList());
