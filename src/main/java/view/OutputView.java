@@ -13,6 +13,7 @@ public class OutputView {
     private static final String PARTICIPANT_HAND_SUM = "%s 카드: %s - 결과: %s\n";
     private static final String INIT_FINISHIED_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String BUST_MESSAGE = "버스트";
+    private static final String BLACKJACK_MESSAGE = "블랙잭";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
 
     private static final String RESULT_TAG = "## 최종 수익";
@@ -41,6 +42,10 @@ public class OutputView {
         List<String> cardNames = new ArrayList<>();
         summariseParticipantHand(player.getCards(), cardNames);
         String cards = String.join(DELIMITER, cardNames);
+        if (player.isBlackjack()) {
+            System.out.printf((PARTICIPANT_HAND_SUM), player.getName(), cards, BLACKJACK_MESSAGE);
+            return;
+        }
         if (isBust) {
             System.out.printf((PARTICIPANT_HAND_SUM), player.getName(), cards, BUST_MESSAGE);
             return;
