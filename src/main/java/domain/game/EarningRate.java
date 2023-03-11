@@ -4,6 +4,7 @@ import domain.participant.ParticipantMoney;
 
 public enum EarningRate {
     BONUS(MoneyMultiplier.create(1.5)),
+    WIN(MoneyMultiplier.create(1)),
     LOSE(MoneyMultiplier.create(-1));
 
     private final MoneyMultiplier multiplier;
