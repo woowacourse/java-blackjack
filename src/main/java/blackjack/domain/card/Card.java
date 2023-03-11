@@ -16,7 +16,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.letter.isLetterAce();
+        return this.letter.isAce();
     }
 
     public Shape getShape() {

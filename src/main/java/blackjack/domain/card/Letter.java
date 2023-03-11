@@ -23,7 +23,7 @@ public enum Letter {
         this.value = value;
     }
 
-    public boolean isLetterAce() {
+    public boolean isAce() {
         return this.equals(ACE);
     }
 
