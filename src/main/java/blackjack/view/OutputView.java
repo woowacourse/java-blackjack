@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.dto.ParticipantProfitResponse;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
-import blackjack.dto.PlayerGameResult;
 import blackjack.dto.PlayerNamesResponse;
-import blackjack.dto.TotalGameResultResponse;
+import java.util.List;
 
 public class OutputView {
     private static final int DEALER_DRAW_BOUNDARY = 16;
@@ -44,11 +44,10 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printTotalGameResult(TotalGameResultResponse totalGameResultResponse) {
+    public static void printTotalGameResult(List<ParticipantProfitResponse> responses) {
         System.out.println(LINE_SEPARATOR + "## 최종 수익");
-        System.out.println("딜러 수익: " + totalGameResultResponse.getDealerProfit());
-        for (PlayerGameResult playerGameResult : totalGameResultResponse.getPlayerGameResults()) {
-            System.out.println(playerGameResult.getName() + ": " + playerGameResult.getProfit());
+        for (ParticipantProfitResponse response : responses) {
+            System.out.println(response.getName() + ": " + response.getProfit());
         }
     }
 }

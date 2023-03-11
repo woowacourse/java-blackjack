@@ -4,12 +4,15 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Bet;
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.ParticipantProfits;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ParticipantProfitResponse;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.dto.PlayerNamesResponse;
@@ -30,7 +33,7 @@ public class BlackJackController {
     private BlackJackGame setupGame(DeckGenerator deckGenerator) {
         BlackJackGame blackJackGame = repeat(() -> createBlackJackGame(deckGenerator));
         OutputView.printStartDrawCardMessage(PlayerNamesResponse.of(blackJackGame.getPlayerNames()));
-        printAllParticipantStatues(blackJackGame.getStartStatusResponse());
+        printAllParticipantStatues(blackJackGame.getParticipants());
         return blackJackGame;
     }
 
@@ -58,17 +61,17 @@ public class BlackJackController {
         return repeat(() -> Bet.of(InputView.readPlayerBet(playerName)));
     }
 
-    private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
-        for (ParticipantStatusResponse response : participantStatusResponse) {
-            OutputView.printParticipantStatus(response);
+    private void printAllParticipantStatues(List<Participant> participants) {
+        for (Participant participant : participants) {
+            OutputView.printParticipantStatus(ParticipantStatusResponse.ofStart(participant));
         }
     }
 
     private void playGame(BlackJackGame blackJackGame) {
-        List<Name> playerNames = blackJackGame.getPlayerNames();
-        for (Name playerName : playerNames) {
-            repeat(() -> drawMoreCard(playerName, blackJackGame));
-            OutputView.printParticipantStatus(getPlayerStatusByName(blackJackGame, playerName));
+        List<Player> players = blackJackGame.getPlayers();
+        for (Player player : players) {
+            repeat(() -> drawMoreCard(player, blackJackGame));
+            OutputView.printParticipantStatus(ParticipantStatusResponse.of(player));
         }
         OutputView.printDealerDrawCardMessage(blackJackGame.drawMoreCardForDealer());
     }
@@ -82,29 +85,34 @@ public class BlackJackController {
         }
     }
 
-    private void drawMoreCard(Name playerName, BlackJackGame blackJackGame) {
-        while (decideDraw(playerName.getName())) {
-            blackJackGame.drawMoreCardForPlayer(playerName);
-            OutputView.printParticipantStatus(getPlayerStatusByName(blackJackGame, playerName));
+    private void drawMoreCard(Player player, BlackJackGame blackJackGame) {
+        while (decideDraw(player.getName())) {
+            blackJackGame.drawMoreCardForPlayer(player);
+            OutputView.printParticipantStatus(ParticipantStatusResponse.of(player));
         }
     }
 
-    private boolean decideDraw(String playerName) {
-        return InputView.readDrawCardDecision(playerName);
-    }
-
-    private ParticipantStatusResponse getPlayerStatusByName(BlackJackGame blackJackGame, Name playerName) {
-        return blackJackGame.getPlayerStatusByName(playerName);
+    private boolean decideDraw(Name playerName) {
+        return InputView.readDrawCardDecision(playerName.getName());
     }
 
     private void finishGame(BlackJackGame blackJackGame) {
-        printAllTotalStatues(blackJackGame.getAllParticipantTotalResponse());
-        OutputView.printTotalGameResult(blackJackGame.getTotalGameResult());
+        List<Participant> participants = blackJackGame.getParticipants();
+        printAllTotalStatues(participants);
+        ParticipantProfits participantProfits = blackJackGame.getParticipantProfits();
+        OutputView.printTotalGameResult(getParticipantProfitResponses(participantProfits));
     }
 
-    private void printAllTotalStatues(List<ParticipantTotalStatusResponse> responses) {
-        for (ParticipantTotalStatusResponse response : responses) {
-            OutputView.printParticipantTotalStatus(response);
+    private void printAllTotalStatues(List<Participant> participants) {
+        for (Participant participant : participants) {
+            OutputView.printParticipantTotalStatus(ParticipantTotalStatusResponse.of(participant));
         }
+    }
+
+    private List<ParticipantProfitResponse> getParticipantProfitResponses(ParticipantProfits participantProfits) {
+        return participantProfits.getParticipantProfits().stream()
+                .map(participantProfit -> new ParticipantProfitResponse(
+                        participantProfit.getParticipantName(), participantProfit.getProfit()))
+                .collect(toList());
     }
 }
