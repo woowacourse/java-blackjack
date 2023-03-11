@@ -1,14 +1,11 @@
 package controller;
 
-import domain.Cards;
 import domain.Dealer;
 import domain.Player;
-import domain.PlayerName;
 import domain.Players;
 import domain.Result;
 import game.Blackjack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static view.InputView.printErrorMessage;
@@ -24,54 +21,35 @@ import static view.OutputView.printSingleGambler;
 
 public class Controller {
 
-    public static boolean getIsHit(Player player) {
+    public void playBlackjack() {
+        Blackjack blackjack = new Blackjack(getValidPlayerNames());
+        Players players = blackjack.getPlayers();
+        Dealer dealer = blackjack.getDealer();
+
+        printInitialPickGuideMessage(players);
+        printGamblersCards(players, dealer);
+
+        Result result = playBlackjack(players, dealer, blackjack);
+        printScores(players, dealer);
+        printResult(result);
+    }
+
+    public boolean getIsHit(Player player) {
         try {
-            return readIsHit(player);
+            return readIsHit(player.getName());
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
             return getIsHit(player);
         }
     }
 
-    public static void printHitOrStandByPlayer(Player player) {
-        printSingleGambler(player);
-    }
-
-    public static void printDealerHit() {
-        printDealerHitMessage();
-    }
-
-    public void playBlackjack() {
-        Players players = getValidPlayerNames();
-        Dealer dealer = new Dealer(new Cards(new ArrayList<>()));
-
-        printInitialPickGuideMessage(players);
-        printGamblersCards(players, dealer);
-
-        Blackjack blackjack = new Blackjack(players, dealer);
-        Result result = playBlackjack(players, dealer, blackjack);
-
-        printScores(players, dealer);
-        printResult(result);
-    }
-
-    private Players getValidPlayerNames() {
+    private List<String> getValidPlayerNames() {
         try {
-            List<String> playerNames = readPlayerNames();
-            List<Player> player = getPlayerList(playerNames);
-            return new Players(player);
+            return readPlayerNames();
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
             return getValidPlayerNames();
         }
-    }
-
-    private List<Player> getPlayerList(List<String> list) {
-        List<Player> player = new ArrayList<>();
-        for (String playerName : list) {
-            player.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
-        }
-        return player;
     }
 
     private Result playBlackjack(Players players, Dealer dealer, Blackjack blackjack) {
@@ -88,19 +66,19 @@ public class Controller {
             do {
                 isHit = getIsHit(player);
                 blackjack.hitOrStandByPlayer(player, isHit);
-                printHitOrStandByPlayer(player);
-            } while (isHit && isPickAble2(player));
+                printSingleGambler(player);
+            } while (isHit && isPickAble(player));
         }
     }
 
-    private boolean isPickAble2(Player player) {
+    private boolean isPickAble(Player player) {
         return !player.isBustedGambler();
     }
 
     public void hitOrStandByDealer(Dealer dealer, Blackjack blackjack) {
         while (dealer.isDealerHit()) {
             blackjack.hitOrStandByDealer(dealer);
-            printDealerHit();
+            printDealerHitMessage();
         }
     }
 }

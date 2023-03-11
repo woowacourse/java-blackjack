@@ -1,7 +1,5 @@
 package view;
 
-import domain.Player;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -31,8 +29,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean readIsHit(Player player) {
-        System.out.println(NEW_LINE + player.getName() + STAND_GUIDE_MESSAGE);
+    public static boolean readIsHit(String playerName) {
+        System.out.println(NEW_LINE + playerName + STAND_GUIDE_MESSAGE);
 
         String input = scanner.nextLine().strip();
         validateStand(input);
