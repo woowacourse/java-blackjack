@@ -40,7 +40,7 @@ public class Deck {
         try {
             return unusedCards.remove();
         } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("더이상 뽑을 카드가 없습니다.");
+            throw new IllegalStateException("더이상 뽑을 카드가 없습니다.");
         }
     }
 }
