@@ -27,11 +27,6 @@ public class Player extends BlackJackParticipant {
         this.betting = this.betting.changeBetting(betting);
     }
 
-    public boolean isBust() {
-        Score totalScore = calculateScore();
-        return totalScore.isGreaterThan(hitUpperBound);
-    }
-
     public String showName() {
         return name.getName();
     }
