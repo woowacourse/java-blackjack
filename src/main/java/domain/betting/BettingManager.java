@@ -41,7 +41,9 @@ public class BettingManager {
         if (playerHand.isBust()) {
             saveLoseProfit(player, bettingMoney);
         }
-        saveProfitWhenPlayerStay(player, dealer, bettingMoney);
+        if (playerHand.isStay()) {
+            saveProfitWhenPlayerStay(player, dealer, bettingMoney);
+        }
     }
 
     private void saveBlackjackProfit(Player player, BettingMoney bettingMoney) {
