@@ -42,10 +42,22 @@ public class CardDeck {
             .count();
     }
 
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
     public boolean isBlackJack() {
         Score score = calculateScore();
         int count = cards.size();
         return score.isMax() && count == BLACKJACK_CARD_COUNT;
+    }
+
+    public boolean isEqualScore(CardDeck deck) {
+        return calculateScore().equals(deck.calculateScore());
+    }
+
+    public boolean isMoreThan(CardDeck deck) {
+        return calculateScore().isMoreThan(deck.calculateScore());
     }
 
     public List<Card> getCards() {

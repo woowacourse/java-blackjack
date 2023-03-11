@@ -16,44 +16,35 @@ public class Referee {
 
     private List<Result> initializeResults(CardDeck dealerDeck, List<CardDeck> playersDeck) {
         return playersDeck.stream()
-            .map((deck) -> compareScore(dealerDeck, deck))
+            .map((deck) -> judgeResult(dealerDeck, deck))
             .collect(Collectors.toList());
     }
 
-    private Result compareScore(CardDeck dealerDeck, CardDeck playerDeck) {
-        Score dealerScore = dealerDeck.calculateScore();
-        Score playerScore = playerDeck.calculateScore();
-
-        return judgeResult(dealerDeck, playerDeck, dealerScore, playerScore);
-    }
-
-    private Result judgeResult(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
-        Score playerScore) {
-        if (isDraw(dealerDeck, playerDeck, dealerScore, playerScore)) {
+    private Result judgeResult(CardDeck dealerDeck, CardDeck playerDeck) {
+        if (isDraw(dealerDeck, playerDeck)) {
             return Result.DRAW;
         }
         if (playerDeck.isBlackJack()) {
             return Result.BLACKJACK;
         }
-        if (isWin(dealerScore, playerScore)) {
+        if (isWin(dealerDeck, playerDeck)) {
             return Result.WIN;
         }
         return Result.LOSE;
     }
 
-    private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
-        Score playerScore) {
+    private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck) {
         return
-            (!playerScore.isBust()
+            (!playerDeck.isBust()
                 && !dealerDeck.isBlackJack()
                 && !playerDeck.isBlackJack()
-                && playerScore.equals(dealerScore))
+                && playerDeck.isEqualScore(dealerDeck))
                 || (dealerDeck.isBlackJack() && playerDeck.isBlackJack());
     }
 
-    private boolean isWin(Score dealerScore, Score playerScore) {
-        return !playerScore.isBust() && (dealerScore.isBust()
-            || playerScore.isMoreThan(dealerScore));
+    private boolean isWin(CardDeck dealerDeck, CardDeck playerDeck) {
+        return !playerDeck.isBust() && (dealerDeck.isBust()
+            || playerDeck.isMoreThan(dealerDeck));
     }
 
     public Double calculateDealerWinningMoney() {
