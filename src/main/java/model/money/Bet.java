@@ -14,6 +14,10 @@ public class Bet {
         this.money = money;
     }
 
+    public Bet(String bet) {
+        this(Long.parseLong(bet));
+    }
+
     public static Bet zero() {
         return zero;
     }

@@ -1,19 +1,17 @@
 package controller;
 
-import java.util.Arrays;
 import model.card.Deck;
 import model.money.Bet;
 import model.money.Purse;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
+import model.user.Result;
 import ui.input.InputView;
 import ui.input.ReceiveCommand;
-import ui.output.BlackJackGameResponse;
-import ui.output.HandResponse;
 import ui.output.OutputView;
-import ui.output.PurseResponse;
-import ui.output.UserResponse;
+
+import java.util.Arrays;
 
 public class BlackJackController {
 
@@ -31,8 +29,16 @@ public class BlackJackController {
         final Purse purse = Purse.create(participants.getPlayers());
 
         betMoney(participants, purse);
-        distributeCards(deck, dealer, participants);
-        printResult(dealer, participants, purse);
+
+        divideFirstCard(deck, participants);
+
+        outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
+
+        divideCard(deck, participants, dealer);
+        outputView.printScoreBoard(BlackJackGameResponse.create(participants));
+
+        outputView.printFinalResult(new DealerResultResponse(participants.findDealerFinalResult(), Result.values()),
+                new PlayerResultResponses(participants.findPlayerFinalResult()));
     }
 
     private Participants getParticipants(final Dealer dealer) {
@@ -46,24 +52,9 @@ public class BlackJackController {
         }
     }
 
-    private void distributeCards(Deck deck, Dealer dealer, Participants participants) {
-        distributeInitialCards(deck, participants);
-        distributeMoreCards(deck, dealer, participants);
-    }
-
-    private void distributeInitialCards(Deck deck, Participants participants) {
-        divideFirstCard(deck, participants);
-        outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
-    }
-
     private void divideFirstCard(final Deck deck, final Participants participants) {
         outputView.printDivideTwoCard(BlackJackGameResponse.create(participants));
         participants.receiveInitialCards(deck);
-    }
-
-    private void distributeMoreCards(Deck deck, Dealer dealer, Participants participants) {
-        divideCard(deck, participants, dealer);
-        outputView.printScoreBoard(BlackJackGameResponse.create(participants));
     }
 
     private void divideCard(final Deck deck, final Participants participants, final Dealer dealer) {
@@ -113,16 +104,5 @@ public class BlackJackController {
             dealer.receiveCard(deck.pick());
             outputView.printReceiveCardForDealer();
         }
-    }
-
-    private void printResult(Dealer dealer, Participants participants, Purse purse) {
-        purse.calculateMoneyAll(participants.getPlayers(), dealer);
-        printBetResult(dealer, purse);
-    }
-
-    private void printBetResult(Dealer dealer, Purse purse) {
-        outputView.printBetResult();
-        outputView.printDealerBetResult(dealer.getName(), purse.getTotalBet());
-        outputView.printPlayerBetResult(PurseResponse.create(purse.getPursesAll()));
     }
 }
