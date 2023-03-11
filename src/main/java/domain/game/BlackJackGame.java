@@ -1,36 +1,27 @@
 package domain.game;
 
-import java.util.LinkedHashMap;
+import static java.util.stream.Collectors.*;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.ShuffleStrategy;
-import domain.people.Dealer;
-import domain.people.Participant;
 import domain.people.Participants;
 import domain.people.Player;
 
 public class BlackJackGame {
 
-    private static final int INITIAL_CARD_COUNT = 2;
-    private static final int BUST_BOUNDARY_VALUE = 21;
-    private static final int BUST_HAND_VALUE = 0;
+    private static final int INIT_HAND_COUNT = 2;
     private static final String HIT_REQUEST = "y";
-    private static final String DEALER_NAME = new Dealer().getName();
 
     private final Deck deck;
     private final Participants participants;
-    private boolean isPlayerTurnsOngoing;
-    private int currentPlayerIndex;
 
     private BlackJackGame(List<String> names, ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
         this.participants = createParticipants(names);
-        this.isPlayerTurnsOngoing = true;
-        this.currentPlayerIndex = 0;
     }
 
     public static BlackJackGame from(List<String> names, ShuffleStrategy shuffleStrategy) {
@@ -42,76 +33,54 @@ public class BlackJackGame {
     }
 
     public void dealCardsToParticipants() {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            deal(deck, participants.getParticipants());
+        for (int i = 0; i < INIT_HAND_COUNT; i++) {
+            deal();
         }
     }
 
-    public void deal(Deck deck, List<Participant> participants) {
-        for (Participant participant : participants) {
-            participant.receiveCard(deck.draw());
+    private void deal() {
+        participants.getDealer().receiveCard(deck.draw());
+        for (Player player : participants.getPlayers()) {
+            player.receiveCard(deck.draw());
         }
     }
 
     public List<String> fetchPlayerNames() {
-        return fetchPlayers().stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
+        return participants.getPlayers().stream()
+            .map(Player::fetchPlayerName)
+            .collect(toList());
     }
 
-    private List<Player> fetchPlayers() {
-        return participants.findPlayers();
+    public List<String> fetchParticipantNames() {
+        List<String> participantNames = new ArrayList<>();
+        participantNames.add(participants.getDealer().getName());
+        participantNames.addAll(fetchPlayerNames());
+        return participantNames;
     }
 
-    public Map<String, List<String>> fetchParticipantsInitHands() {
-        Map<String, List<String>> participantsHands = fetchParticipantsHands();
-        List<String> dealerHand = participantsHands.get(DEALER_NAME);
-        List<String> dealerFirstCard = dealerHand.subList(0, 1);
-        participantsHands.replace(DEALER_NAME, dealerFirstCard);
-        return participantsHands;
-    }
-
-    public Map<String, List<String>> fetchParticipantsHands() {
-        Map<String, List<String>> participantsHands = new LinkedHashMap<>();
-        fetchDealerHand(participantsHands);
-        fetchPlayersHand(participantsHands);
-        return participantsHands;
-    }
-
-    private void fetchDealerHand(Map<String, List<String>> participantsHands) {
-        List<Card> dealerHand = participants.findDealer().fetchHand();
-        participantsHands.put(DEALER_NAME, dealerHand.stream()
-            .map(Card::getName)
-            .collect(Collectors.toList()));
-    }
-
-    private void fetchPlayersHand(Map<String, List<String>> participantsHands) {
-        for (Participant participant : fetchPlayers()) {
-            String playerName = participant.getName();
-            List<String> playerHand = participant.fetchHand().stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
-            participantsHands.put(playerName, playerHand);
+    public List<String> fetchParticipantInitHand(String participantName) {
+        List<String> participantHand = fetchParticipantHand(participantName);
+        if (participantName.equals(participants.getDealer().getName())) {
+            participantHand = participantHand.subList(0, 1);
         }
+        return new ArrayList<>(participantHand);
     }
 
-    public boolean isPlayerTurnsOngoing() {
-        return isPlayerTurnsOngoing;
+    public List<String> fetchParticipantHand(String participantName) {
+        if (participantName.equals(participants.getDealer().getName())) {
+            return participants.getDealer().fetchHand().stream().map(Card::toString).collect(toList());
+        }
+        List<Card> participantHand = participants.findPlayer(participantName).orElseThrow().fetchHand();
+        return participantHand.stream().
+            map(Card::toString).
+            collect(toList());
     }
 
-    public String fetchCurrentPlayerName() {
-        return fetchPlayers().get(currentPlayerIndex).getName();
-    }
-
-    public void hitOrStay(String hitRequest) {
+    public void hitOrStay(String hitRequest, String playerName) {
         if (isHit(hitRequest)) {
-            fetchPlayers().get(currentPlayerIndex).receiveCard(deck.draw());
-            return;
-        }
-
-        currentPlayerIndex++;
-        if (currentPlayerIndex == fetchPlayers().size()) {
-            isPlayerTurnsOngoing = false;
+            participants.findPlayer(playerName).
+                orElseThrow().
+                receiveCard(deck.draw());
         }
     }
 
@@ -120,67 +89,67 @@ public class BlackJackGame {
     }
 
     public boolean shouldDealerHit() {
-        return participants.findDealer().shouldHit();
+        return participants.getDealer().shouldHit();
     }
 
     public void dealerHit() {
-        participants.findDealer().receiveCard(deck.draw());
+        participants.getDealer().receiveCard(deck.draw());
     }
 
-    public Map<String, String> fetchParticipantScores() {
-        Map<String, String> scores = new LinkedHashMap<>();
-        for (Participant participant : participants.getParticipants()) {
-            judgeBust(scores, participant);
+    public int fetchParticipantScore(String name) {
+        if (name.equals(participants.getDealer().getName())) {
+            return participants.getDealer().fetchHandValue();
         }
-
-        return scores;
+        return participants.findPlayer(name).orElseThrow().fetchHandValue(INIT_HAND_COUNT);
     }
 
-    private void judgeBust(Map<String, String> scores, Participant participant) {
-        int handValue = participant.fetchHandValue();
-        if (handValue > BUST_BOUNDARY_VALUE) {
-            scores.put(participant.getName(), String.valueOf(BUST_HAND_VALUE));
-            return;
-        }
-        scores.put(participant.getName(), String.valueOf(handValue));
+    // public Map<String, String> calculatePlayerResults() {
+    //     Dealer dealer = participants.getDealer();
+    //     Map<String, String> playerResults = new LinkedHashMap<>();
+    //     for (Player player : fetchPlayers()) {
+    //         compareHandValue(dealer, playerResults, player);
+    //     }
+    //
+    //     return playerResults;
+    // }
+
+    // private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
+    //     int playerHandValue = player.fetchHandValue();
+    //     int dealerHandValue = dealer.fetchHandValue();
+    //     int handValueGap = playerHandValue - dealerHandValue;
+    //
+    //     int playerHandCount = player.fetchHand().size();
+    //     int dealerHandCount = dealer.fetchHand().size();
+    //     int handCountGap = playerHandCount - dealerHandCount;
+    //
+    //     playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
+    // }
+
+    public int getInitHandCount() {
+        return INIT_HAND_COUNT;
     }
 
-    public Map<String, String> calculatePlayerResults() {
-        Dealer dealer = participants.findDealer();
-        Map<String, String> playerResults = new LinkedHashMap<>();
-        for (Player player : fetchPlayers()) {
-            compareHandValue(dealer, playerResults, player);
-        }
-
-        return playerResults;
+    public boolean hasBlackJack(String playerName) {
+        Player player = participants.findPlayer(playerName).orElseThrow();
+        return player.hasBlackJack(INIT_HAND_COUNT);
     }
 
-    private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
-        int playerHandValue = player.fetchParticipantHandValue();
-        int dealerHandValue = dealer.fetchParticipantHandValue();
-        int handValueGap = playerHandValue - dealerHandValue;
-
-        int playerHandCount = player.fetchHand().size();
-        int dealerHandCount = dealer.fetchHand().size();
-        int handCountGap = playerHandCount - dealerHandCount;
-
-        playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
+    public List<String> fetchNoBlackJackPlayerNames() {
+        return participants.getPlayers().stream().
+            filter(player -> !player.hasBlackJack(INIT_HAND_COUNT)).
+            map(Player::fetchPlayerName).
+            collect(toList());
     }
 
-    public Map<String, Integer> calculateDealerResults(Map<String, String> playerResults) {
-        return playerResults.values().stream()
-            .collect(Collectors.groupingBy(
-                result -> {
-                    if (result.equals(Result.LOSE.getResult())) {
-                        return Result.WIN.getResult();
-                    }
-                    if (result.equals(Result.TIE.getResult())) {
-                        return Result.TIE.getResult();
-                    }
-                    return Result.LOSE.getResult();
-                },
-                LinkedHashMap::new,
-                Collectors.summingInt(result -> 1))
-            );
+    public boolean isBust(String playerName) {
+        return participants.findPlayer(playerName).orElseThrow().isBust();
+    }
+
+    public boolean isTurnOver(String hitRequest) {
+        return !hitRequest.equals(HIT_REQUEST);
+    }
+
+    public String fetchDealerName() {
+        return participants.getDealer().getName();
     }
 }

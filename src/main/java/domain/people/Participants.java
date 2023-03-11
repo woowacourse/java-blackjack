@@ -2,27 +2,29 @@ package domain.people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import view.ErrorMessage;
 
 public class Participants {
     private static final int MINIMUM_PLAYER_COUNT = 1;
     private static final int MAXIMUM_PLAYER_COUNT = 7;
-    private final List<Participant> participants;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(List<Participant> participants) {
-        this.participants = participants;
+    private Participants(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public static Participants from(List<String> names) {
         validate(names);
-        List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer());
+        List<Player> participants = new ArrayList<>();
 
         for (String name : names) {
             participants.add(new Player(name));
         }
-        return new Participants(participants);
+        return new Participants(new Dealer(), participants);
     }
 
     private static void validate(List<String> names) {
@@ -42,30 +44,17 @@ public class Participants {
         }
     }
 
-    public Dealer findDealer() {
-        Participant dealer = participants.stream()
-            .filter(participant -> participant.equals(new Dealer()))
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_DEALER.getMessage())
-            );
-        return (Dealer)dealer;
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public List<Player> findPlayers() {
-        List<Player> players = new ArrayList<>();
-        for (Participant participant : participants) {
-            addParticipantIfPlayer(players, participant);
-        }
+    public List<Player> getPlayers() {
         return players;
     }
 
-    private void addParticipantIfPlayer(List<Player> players, Participant participant) {
-        if (!participant.equals(new Dealer())) {
-            players.add((Player)participant);
-        }
-    }
-
-    public List<Participant> getParticipants() {
-        return participants;
+    public Optional<Player> findPlayer(String participantName) {
+        return players.stream().
+            filter(player -> player.fetchPlayerName().equals(participantName)).
+            findAny();
     }
 }

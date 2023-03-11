@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Map;
 
 import domain.card.RandomShuffleStrategy;
 import domain.game.BlackJackGame;
@@ -9,7 +8,7 @@ import view.OutputView;
 public class Application {
     public static void main(String[] args) {
         BlackJackGame blackJackGame = initGame();
-
+        bet(blackJackGame);
         deal(blackJackGame);
         play(blackJackGame);
         showResults(blackJackGame);
@@ -25,37 +24,77 @@ public class Application {
         }
     }
 
+    private static void bet(BlackJackGame blackJackGame) {
+        List<String> playerNames = blackJackGame.fetchPlayerNames();
+
+        for (String name : playerNames) {
+            Long betAmount = readBetAmount(name);
+            // blackJackGame.assignBetAmount(name, betAmount);
+        }
+    }
+
+    private static Long readBetAmount(String currentPlayerName) {
+        try {
+            return InputView.requestBetAmount(currentPlayerName);
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e);
+            return readBetAmount(currentPlayerName);
+        }
+    }
+
     private static void deal(BlackJackGame blackJackGame) {
         blackJackGame.dealCardsToParticipants();
-        List<String> playersNames = blackJackGame.fetchPlayerNames();
-        OutputView.printDealFinishMessage(playersNames);
+
+        List<String> playerNames = blackJackGame.fetchPlayerNames();
+        OutputView.printDealFinishMessage(playerNames, blackJackGame.getInitHandCount());
 
         printInitialHands(blackJackGame);
+        printBlackJackPlayer(blackJackGame);
     }
 
     private static void printInitialHands(BlackJackGame blackJackGame) {
-        for (Map.Entry<String, List<String>> participantHand : blackJackGame.fetchParticipantsInitHands().entrySet()) {
-            OutputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
+        List<String> participantNames = blackJackGame.fetchParticipantNames();
+        for (String participantName : participantNames) {
+            OutputView.printParticipantCard(participantName, blackJackGame.fetchParticipantInitHand(participantName));
         }
         OutputView.printEmptyLine();
     }
 
-    private static void play(BlackJackGame blackJackGame) {
+    private static void printBlackJackPlayer(BlackJackGame blackJackGame) {
+        List<String> playerNames = blackJackGame.fetchPlayerNames();
+        for (String playerName : playerNames) {
+            printIfBlackJack(blackJackGame, playerName);
+        }
+    }
 
+    private static void printIfBlackJack(BlackJackGame blackJackGame, String playerName) {
+        if (blackJackGame.hasBlackJack(playerName)) {
+            OutputView.printPlayerHasBlackJack(playerName);
+        }
+    }
+
+    private static void play(BlackJackGame blackJackGame) {
         playPlayerTurns(blackJackGame);
         playDealerTurn(blackJackGame);
     }
 
     private static void playPlayerTurns(BlackJackGame blackJackGame) {
-        while (blackJackGame.isPlayerTurnsOngoing()) {
-            String currentPlayer = blackJackGame.fetchCurrentPlayerName();
-            String hitRequest = readDrawingCardRequest(currentPlayer);
+        List<String> playerNames = blackJackGame.fetchNoBlackJackPlayerNames();
 
-            blackJackGame.hitOrStay(hitRequest);
-
-            List<String> currentPlayerHand = blackJackGame.fetchParticipantsHands().get(currentPlayer);
-            OutputView.printParticipantCard(currentPlayer, currentPlayerHand);
+        for (String playerName : playerNames) {
+            playTurn(blackJackGame, playerName);
+            printIfBust(blackJackGame, playerName);
         }
+    }
+
+    private static void playTurn(BlackJackGame blackJackGame, String playerName) {
+        String hitRequest;
+        do {
+            hitRequest = readDrawingCardRequest(playerName);
+            blackJackGame.hitOrStay(hitRequest, playerName);
+            List<String> playerHand = blackJackGame.fetchParticipantHand(playerName);
+            OutputView.printParticipantCard(playerName, playerHand);
+        } while (!blackJackGame.isBust(playerName) && !blackJackGame.isTurnOver(hitRequest));
     }
 
     private static String readDrawingCardRequest(String currentPlayer) {
@@ -67,8 +106,14 @@ public class Application {
         }
     }
 
+    private static void printIfBust(BlackJackGame blackJackGame, String playerName) {
+        if (blackJackGame.isBust(playerName)) {
+            OutputView.printPlayerIsBust(playerName);
+        }
+    }
+
     private static void playDealerTurn(BlackJackGame blackJackGame) {
-        while (blackJackGame.shouldDealerHit()) {
+        if (blackJackGame.shouldDealerHit()) {
             blackJackGame.dealerHit();
             OutputView.printDealerPickCardMessage();
         }
@@ -76,24 +121,32 @@ public class Application {
 
     private static void showResults(BlackJackGame blackJackGame) {
         printScores(blackJackGame);
-        printResults(blackJackGame);
+        // printResults(blackJackGame);
     }
 
     private static void printScores(BlackJackGame blackJackGame) {
-        for (Map.Entry<String, String> participantScore : blackJackGame.fetchParticipantScores().entrySet()) {
-            OutputView.printParticipantHandValue(participantScore.getKey(),
-                blackJackGame.fetchParticipantsHands().get(participantScore.getKey()), participantScore.getValue());
+        String dealerName = blackJackGame.fetchDealerName();
+        printParticipantScore(blackJackGame, dealerName);
+
+        for (String name : blackJackGame.fetchPlayerNames()) {
+            printParticipantScore(blackJackGame, name);
         }
     }
 
-    private static void printResults(BlackJackGame blackJackGame) {
-        OutputView.printResultInfo();
-
-        Map<String, String> playerResults = blackJackGame.calculatePlayerResults();
-        Map<String, Integer> dealerResults = blackJackGame.calculateDealerResults(playerResults);
-        OutputView.printDealerResult(dealerResults);
-        for (Map.Entry<String, String> playerResult : playerResults.entrySet()) {
-            OutputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
-        }
+    private static void printParticipantScore(BlackJackGame blackJackGame, String name) {
+        OutputView.printParticipantHandValue(
+            name,
+            blackJackGame.fetchParticipantHand(name),
+            blackJackGame.fetchParticipantScore(name));
     }
+
+    // private static void printResults(BlackJackGame blackJackGame) {
+    //     OutputView.printResultInfo();
+    //     blackJackGame.calculateResult();
+    //     OutputView.printResult(blackJackGame.fetchDealerName(),
+    //         blackJackGame.fetchParticipantResult(blackJackGame.fetchDealerName()));
+    //     for (String name : blackJackGame.fetchParticipantNames()) {
+    //         OutputView.printResult(name, blackJackGame.fetchParticipantResult(name));
+    //     }
+    // }
 }
