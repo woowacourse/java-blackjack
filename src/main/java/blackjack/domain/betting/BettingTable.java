@@ -1,19 +1,13 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import java.util.Map;
 
 public class BettingTable {
 
-    private final Map<Player, Betting> expectedProfit;
+    private final Map<PlayerName, Betting> bettingTable;
 
-    public BettingTable(final Map<Player, Betting> expectedProfit) {
-        this.expectedProfit = expectedProfit;
-    }
-
-    private void validateExistPlayer(final Player player) {
-        if (!expectedProfit.containsKey(player)) {
-            throw new IllegalArgumentException("베팅하지 않은 플레이어입니다.");
-        }
+    public BettingTable(final Map<PlayerName, Betting> bettingTable) {
+        this.bettingTable = bettingTable;
     }
 }

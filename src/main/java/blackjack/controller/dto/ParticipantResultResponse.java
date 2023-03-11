@@ -1,8 +1,6 @@
-package blackjack.view.dto;
+package blackjack.controller.dto;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 
 public class ParticipantResultResponse {
 
@@ -14,13 +12,8 @@ public class ParticipantResultResponse {
         this.profit = profit;
     }
 
-    public static ParticipantResultResponse forPlayer(final Player player, final BlackJackGame blackJackGame) {
-        return new ParticipantResultResponse(player.getName(), 0);
-    }
-
     public static ParticipantResultResponse forDealer(final BlackJackGame blackJackGame) {
-        final Dealer dealer = blackJackGame.getDealer();
-        return new ParticipantResultResponse(dealer.getName(), 0);
+        return new ParticipantResultResponse(blackJackGame.getDealerName(), 0);
     }
 
     public String getName() {

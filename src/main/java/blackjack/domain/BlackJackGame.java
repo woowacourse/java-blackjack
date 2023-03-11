@@ -2,11 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.betting.BettingTable;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Result;
+import blackjack.domain.participant.PlayerName;
 import java.util.List;
 
 public class BlackJackGame {
@@ -28,29 +26,32 @@ public class BlackJackGame {
         participants.drawCard(deck, INITIAL_DRAW_COUNT);
     }
 
-    public void dealCard(final Participant participant) {
-        participant.drawCard(deck.draw());
+    public void dealCard(final PlayerName playerName) {
+        participants.drawCardForPlayer(playerName, deck);
     }
 
-    public void applyPlayersProfit() {
-        final Dealer dealer = getDealer();
-        final List<Player> players = getPlayers();
-
-        for (final Player player : players) {
-            final Result result = dealer.showResult(player.getScore());
-        }
+    public int showPlayerScore(final PlayerName playerName) {
+        return participants.getPlayerScore(playerName);
     }
 
-    public List<Player> getPlayers() {
-        return participants.getPlayers();
+    public Hand showPlayerHand(final PlayerName playerName) {
+        return participants.getPlayerHand(playerName);
     }
 
-    public Dealer getDealer() {
-        return participants.getDealer();
+    public boolean isDrawablePlayer(final PlayerName playerName) {
+        return participants.isDrawablePlayer(playerName);
     }
 
-    public List<Participant> getParticipants() {
-        return participants.getParticipants();
+    public String getDealerName() {
+        return participants.getDealerName();
+    }
+
+    public List<PlayerName> getPlayerNames() {
+        return participants.getPlayerNames();
+    }
+
+    public Hand getDealerHiddenHand() {
+        return participants.getDealerHiddenHand();
     }
 
     public int getInitialDrawCount() {

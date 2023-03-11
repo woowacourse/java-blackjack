@@ -11,19 +11,18 @@ public class Player extends Participant {
         this.name = new PlayerName(name);
     }
 
+    public PlayerName getName() {
+        return name;
+    }
+
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotalScore() < BLACK_JACK_SCORE;
+        return hand.calculateTotalScore() < BLACK_JACK_SCORE;
     }
 
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public String getName() {
-        return name.getValue();
     }
 
     @Override

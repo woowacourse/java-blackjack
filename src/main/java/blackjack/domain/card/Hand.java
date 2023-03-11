@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int ACE_BONUS = 10;
     private static final int MAXIMUM_UPDATABLE_SCORE = 21;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public Hand() {
         this(new ArrayList<>());
     }
 
-    public Cards(final List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void addCard(final Card card) {
-        cards.add(card);
+    public Hand addCard(final Card card) {
+        final List<Card> originHand = new ArrayList<>(cards);
+        originHand.add(card);
+        return new Hand(originHand);
     }
 
     public int calculateTotalScore() {

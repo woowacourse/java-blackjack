@@ -20,16 +20,6 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
 
-    @Test
-    void 이름을_확인한다() {
-        final Player player = new Player("dazzle");
-        player.drawCard(new Card(QUEEN, CLOVER));
-        player.drawCard(new Card(QUEEN, HEART));
-        //20점
-
-        assertThat(player.getName()).isEqualTo("dazzle");
-    }
-
     @Nested
     class isDrawable_메소드는 {
 

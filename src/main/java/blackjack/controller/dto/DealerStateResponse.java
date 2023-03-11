@@ -1,4 +1,4 @@
-package blackjack.view.dto;
+package blackjack.controller.dto;
 
 public class DealerStateResponse {
 

@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +48,20 @@ public class Participants {
         }
     }
 
-    public Dealer getDealer() {
+    public void drawCardForPlayer(final PlayerName playerName, final Deck deck) {
+        final Player player = getPlayer(playerName);
+        player.drawCard(deck.draw());
+    }
+
+    public String getDealerName() {
+        return getDealer().getName();
+    }
+
+    public Hand getDealerHiddenHand() {
+        return getDealer().getHiddenHand();
+    }
+
+    private Dealer getDealer() {
         return participants.stream()
                 .filter(Participant::isDealer)
                 .map(Dealer.class::cast)
@@ -56,14 +69,32 @@ public class Participants {
                 .orElseThrow(() -> new IllegalStateException("딜러는 존재해야 합니다."));
     }
 
-    public List<Player> getPlayers() {
+    public List<PlayerName> getPlayerNames() {
         return participants.stream()
                 .filter(participant -> !participant.isDealer())
                 .map(Player.class::cast)
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
+    public boolean isDrawablePlayer(final PlayerName playerName) {
+        return getPlayer(playerName).isDrawable();
+    }
+
+    public int getPlayerScore(final PlayerName playerName) {
+        return getPlayer(playerName).getScore();
+    }
+
+    public Hand getPlayerHand(final PlayerName playerName) {
+        return getPlayer(playerName).getHand();
+    }
+
+    private Player getPlayer(final PlayerName playerName) {
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 }

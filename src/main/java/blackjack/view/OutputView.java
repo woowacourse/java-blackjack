@@ -2,10 +2,10 @@ package blackjack.view;
 
 import static java.text.MessageFormat.format;
 
-import blackjack.view.dto.CardsResponse;
-import blackjack.view.dto.DealerStateResponse;
-import blackjack.view.dto.ParticipantResponse;
-import blackjack.view.dto.ParticipantResultResponse;
+import blackjack.controller.dto.CardsResponse;
+import blackjack.controller.dto.DealerStateResponse;
+import blackjack.controller.dto.ParticipantResponse;
+import blackjack.controller.dto.ParticipantResultResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +37,7 @@ public class OutputView {
 
     private String formattedCardsWithoutScore(final ParticipantResponse participant) {
         final CardsResponse cards = participant.getCardsResponse();
-        final List<String> cardInfos = cards.getCardInfos();
+        final List<String> cardInfos = cards.createCardInfos();
         return format("{0}카드: {1}", participant.getName(), formattedCardInfos(cardInfos));
     }
 
@@ -58,7 +58,7 @@ public class OutputView {
 
     private void printCardsWithScore(final ParticipantResponse participant) {
         final CardsResponse cards = participant.getCardsResponse();
-        final int totalScore = cards.getTotalScore();
+        final int totalScore = cards.getScore();
         System.out.println(
                 format("{0} - {1}", formattedCardsWithoutScore(participant), formattedScore(totalScore)));
     }

@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -33,25 +32,5 @@ class ParticipantsTest {
         );
 
         assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void 딜러를_확인한다() {
-        final Dealer dealer = new Dealer();
-        final List<Player> players = List.of(new Player("toney"), new Player("dazzle"));
-        final Participants participants = new Participants(dealer, players);
-
-        assertThat(participants.getDealer()).isEqualTo(dealer);
-    }
-
-    @Test
-    void 플레이어를_확인한다() {
-        final Dealer dealer = new Dealer();
-        final Player firstPlayer = new Player("toney");
-        final Player secondPlayer = new Player("dazzle");
-        final List<Player> players = List.of(firstPlayer, secondPlayer);
-        final Participants participants = new Participants(dealer, players);
-
-        assertThat(participants.getPlayers()).containsExactly(firstPlayer, secondPlayer);
     }
 }

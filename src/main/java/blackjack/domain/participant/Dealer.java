@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -18,21 +19,20 @@ public class Dealer extends Participant {
     }
 
     private boolean isDrawableCardCount() {
-        return cards.count() <= BLACK_JACK_CARD_COUNT;
+        return hand.count() <= BLACK_JACK_CARD_COUNT;
     }
 
     private boolean isDrawableScore() {
-        return cards.calculateTotalScore() <= MAXIMUM_DRAWABLE_SCORE;
+        return hand.calculateTotalScore() <= MAXIMUM_DRAWABLE_SCORE;
+    }
+
+    public String getName() {
+        return NAME;
     }
 
     @Override
     public boolean isDealer() {
         return true;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
     }
 
     public Result showResult(final int score) {
@@ -49,8 +49,9 @@ public class Dealer extends Participant {
         return Result.DRAW;
     }
 
-    public List<Card> getHiddenCards() {
-        return getCards().subList(0, cards.count() - 1);
+    public Hand getHiddenHand() {
+        final List<Card> cards = getHand().getCards();
+        return new Hand(cards.subList(0, cards.size() - 1));
     }
 
     public int getMaximumDrawableScore() {
