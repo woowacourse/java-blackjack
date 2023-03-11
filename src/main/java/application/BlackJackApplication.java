@@ -17,7 +17,8 @@ public class BlackJackApplication {
     private final OutputView outputView;
     private final BlackJackGameGenerator blackJackGameGenerator;
 
-    public BlackJackApplication(InputView inputView, OutputView outputView,
+    public BlackJackApplication(InputView inputView,
+                                OutputView outputView,
                                 BlackJackGameGenerator blackJackGameGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;

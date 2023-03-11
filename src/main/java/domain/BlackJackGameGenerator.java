@@ -18,10 +18,10 @@ public class BlackJackGameGenerator {
 
     public BlackJackGame create(InputView inputView,
                                 OutputView outputView) {
-
         Players players = createPlayers(inputView, outputView);
         Dealer dealer = ParticipantGenerator.createEmptyCardDealer();
         CardDeck cardDeck = CardDeckGenerator.create();
+
         return new BlackJackGame(players, dealer, cardDeck);
     }
 
