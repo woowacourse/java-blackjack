@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.CardFixture.CLOVER_ACE;
-import static blackjack.domain.card.CardFixture.SPADE_ACE;
 import static blackjack.domain.card.CardResponseFixture.CLOVER_ACE_RESPONSE;
 import static blackjack.domain.card.CardResponseFixture.SPADE_ACE_RESPONSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.NotShuffledDeckFactory;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,9 @@ class ParticipantTest {
                 return true;
             }
         };
-        participant.drawInitialCard(SPADE_ACE, CLOVER_ACE);
+        final NotShuffledDeckFactory deckFactory = new NotShuffledDeckFactory();
+        final Deck deck = deckFactory.generate();
+        participant.drawInitialCard(deck);
     }
 
     @Test

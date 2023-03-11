@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardResponse;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.dto.CardResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class Participants {
 
     public void distributeInitialCards(final Deck deck) {
         players.distributeInitialCards(deck);
-        dealer.drawInitialCard(deck.popCard(), deck.popCard());
+        dealer.drawInitialCard(deck);
     }
 
     public boolean isPlayerDrawable(final String playerName) {
