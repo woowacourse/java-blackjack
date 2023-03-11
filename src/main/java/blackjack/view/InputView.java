@@ -36,4 +36,8 @@ public class InputView {
             return inputPlayerMoney(playerName);
         }
     }
+
+    public void printInputError(final Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
