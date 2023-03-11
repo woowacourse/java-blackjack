@@ -26,6 +26,15 @@ public class MoneyTest {
         assertThat(money.add(other)).isEqualTo(Money.of(1246));
     }
 
+    @Test
+    @DisplayName("금액끼리 뺄 수 있다")
+    void test_sub_money() {
+        var money = Money.of(500);
+        var other = Money.of(500);
+
+        assertThat(money.sub(other)).isEqualTo(Money.of(0));
+    }
+
     @ParameterizedTest(name = "배당을 지급할 수 있다")
     @CsvSource({"1,2468", "1.5,3085"})
     void test_distribute_dividend(double dividend, int expectedValue) {

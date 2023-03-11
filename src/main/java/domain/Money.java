@@ -23,6 +23,10 @@ public class Money {
         return new Money(value + other.value);
     }
 
+    public Money sub(Money other) {
+        return new Money(value - other.value);
+    }
+
     public Money distribute(double dividend) {
         return new Money(value + (int)(value * dividend));
     }
