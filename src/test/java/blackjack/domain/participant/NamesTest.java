@@ -24,7 +24,7 @@ class NamesTest {
 
     @Test
     void 이름이_목록이_null_이면_예외() {
-        assertThatThrownBy(() -> Players.from(null))
+        assertThatThrownBy(() -> new Names(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("사용자 이름이 입력되지 않았습니다");
     }
@@ -32,7 +32,7 @@ class NamesTest {
     @ParameterizedTest
     @MethodSource("provideNames")
     void 이름의_수가_0부터_5까지만_가능하다(final List<String> playerNames) {
-        assertThatThrownBy(() -> Players.from(playerNames))
+        assertThatThrownBy(() -> new Names(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("사용자 수는 1 이상 5 이하여야 합니다. 현재 : " + playerNames.size() + " 명입니다");
     }
@@ -41,7 +41,7 @@ class NamesTest {
     void 이름이_이름이_중복되면_예외() {
         final List<String> playerNames = List.of("pobi", "pobi", "honux", "wannte", "디디");
 
-        assertThatThrownBy(() -> Players.from(playerNames))
+        assertThatThrownBy(() -> new Names(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("사용자의 이름이 중복됩니다.");
     }
