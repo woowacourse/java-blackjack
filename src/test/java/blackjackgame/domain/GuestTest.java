@@ -11,7 +11,8 @@ class GuestTest {
     void Should_PickOneCard_When_ScoreUnder21() {
         Card spade5 = new Card(Symbol.SPADE, CardValue.FIVE);
         Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        Player guest = new Guest(new Name("name"), spade5, clover8);
+        Hand hand = new Hand(spade5, clover8);
+        Player guest = new Guest(new Name("name"), hand);
 
         assertThat(guest.canHit()).isEqualTo(true);
     }
@@ -21,9 +22,10 @@ class GuestTest {
     void Should_PickOneCard_When_ScoreIs21() {
         Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
         Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
+        Hand hand = new Hand(spadeJ, cloverK);
         Card heartA = new Card(Symbol.HEART, CardValue.ACE);
 
-        Player guest = new Guest(new Name("name"), spadeJ, cloverK);
+        Player guest = new Guest(new Name("name"), hand);
         guest.addCard(heartA);
 
         assertThat(guest.canHit()).isEqualTo(false);
@@ -34,9 +36,10 @@ class GuestTest {
     void Should_PickOneCard_When_ScoreOver21() {
         Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
         Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
+        Hand hand = new Hand(spadeJ, cloverK);
         Card heartK = new Card(Symbol.HEART, CardValue.KING);
 
-        Player guest = new Guest(new Name("name"), spadeJ, cloverK);
+        Player guest = new Guest(new Name("name"), hand);
         guest.addCard(heartK);
 
         assertThat(guest.canHit()).isEqualTo(false);

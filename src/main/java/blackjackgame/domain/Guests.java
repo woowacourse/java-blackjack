@@ -22,7 +22,7 @@ public class Guests {
         validateDuplicate(playerNames);
 
         return playerNames.stream()
-                .map(playerName -> new Guest(new Name(playerName), deck.pickOne(), deck.pickOne()))
+                .map(playerName -> new Guest(new Name(playerName), new Hand(deck.pickOne(), deck.pickOne())))
                 .collect(Collectors.toUnmodifiableList());
     }
 

@@ -38,11 +38,11 @@ public class Result {
     }
 
     private boolean isBlackJack(Player player) {
-        return player.getScore() == BLACKJACK_MAX_SCORE && player.getCards().size() == 2;
+        return player.getScore() == BLACKJACK_MAX_SCORE && player.getHand().size() == 2;
     }
 
     private GameOutcome judgeResultWhenGuestBlackJack(Dealer dealer) {
-        if (dealer.getScore() == BLACKJACK_MAX_SCORE && dealer.getCards().size() == 2) {
+        if (dealer.getScore() == BLACKJACK_MAX_SCORE && dealer.getHand().size() == 2) {
             return DRAW;
         }
         return BLACKJACK_WIN;

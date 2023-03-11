@@ -19,8 +19,8 @@ class PlayerTest {
     void Should_ReturnException_When_initHandHasNotTwoCards() {
         Card spade5 = new Card(Symbol.SPADE, CardValue.FIVE);
         Card heart8 = new Card(Symbol.HEART, CardValue.EIGHT);
-        Player player = new Dealer(spade5, heart8);
-        List<Card> playerCards = player.getCards();
+        Player player = new Dealer(new Hand(spade5, heart8));
+        List<Card> playerCards = player.getHand();
 
         Assertions.assertThat(playerCards).containsExactlyInAnyOrder(spade5, heart8);
     }
@@ -30,7 +30,7 @@ class PlayerTest {
     @ParameterizedTest(name = "딜러가 가진 카드의 합은 {1}이다.")
     @MethodSource("cardDummy")
     void Should_ReturnScore_When_Request(final Card firstCard, final Card secondCard, final List<Card> hitCards, final int expected) {
-        Player player = new Dealer(firstCard, secondCard);
+        Player player = new Dealer(new Hand(firstCard, secondCard));
         for (Card card : hitCards) {
             player.addCard(card);
         }
@@ -45,10 +45,10 @@ class PlayerTest {
         Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
         Card heartQ = new Card(Symbol.HEART, CardValue.QUEEN);
 
-        Player player = new Guest(new Name("pobi"), spade5, clover8);
+        Player player = new Guest(new Name("pobi"), new Hand(spade5, clover8));
         player.addCard(heartQ);
 
-        assertThat(player.getCards().size()).isEqualTo(3);
+        Assertions.assertThat(player.getHand()).hasSize(3);
     }
 
     static Stream<Arguments> cardDummy() {

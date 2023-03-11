@@ -1,16 +1,12 @@
 package blackjackgame.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int MAX_BASIC_SCORE = 11;
+    private final Hand hand;
 
-    private final List<Card> cards;
-
-    public Player(final Card firstCard, final Card secondCard) {
-        this.cards = new ArrayList<>(List.of(firstCard, secondCard));
+    public Player(final Hand hand) {
+        this.hand = hand;
     }
 
     public abstract boolean canHit();
@@ -18,33 +14,14 @@ public abstract class Player {
     public abstract String getName();
 
     public int getScore() {
-        int totalScore = getBasicScore();
-        boolean hasAce = findAce();
-
-        if (hasAce && totalScore <= MAX_BASIC_SCORE) {
-            totalScore += ACE_BONUS_SCORE;
-        }
-        return totalScore;
+        return hand.getScore();
     }
 
-    private boolean findAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getValue().equals(CardValue.ACE.getValue()));
+    public void addCard(Card card) {
+        hand.addCard(card);
     }
 
-    private int getBasicScore() {
-        int basicScore = 0;
-        for (final Card card : cards) {
-            basicScore += card.getScore();
-        }
-        return basicScore;
-    }
-
-    public void addCard(final Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public List<Card> getHand() {
+        return hand.getCards();
     }
 }

@@ -12,7 +12,8 @@ class DealerTest {
     void Should_PickOneCard_When_ScoreUnder16() {
         Card spade5 = new Card(Symbol.SPADE, CardValue.FIVE);
         Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        Player dealer = new Dealer(spade5, clover8);
+        Hand hand = new Hand(spade5, clover8);
+        Player dealer = new Dealer(hand);
 
         assertThat(dealer.canHit()).isEqualTo(true);
     }
@@ -22,7 +23,8 @@ class DealerTest {
     void Should_PickOneCard_When_ScoreOver17() {
         Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
         Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
-        Player dealer = new Dealer(spadeJ, cloverK);
+        Hand hand = new Hand(spadeJ, cloverK);
+        Player dealer = new Dealer(hand);
 
         assertThat(dealer.canHit()).isEqualTo(false);
     }

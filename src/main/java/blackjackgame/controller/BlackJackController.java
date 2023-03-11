@@ -19,7 +19,7 @@ public class BlackJackController {
     public void run() {
         final Deck deck = new Deck();
         final Guests guests = generateGuests(deck);
-        final Dealer dealer = new Dealer(deck.pickOne(), deck.pickOne());
+        final Dealer dealer = new Dealer(new Hand(deck.pickOne(), deck.pickOne()));
         Map<Guest, BettingMoney> guestBettingMoney = askGuestsBettingMoney(guests);
         printFirstHand(guests, dealer);
 
@@ -59,10 +59,10 @@ public class BlackJackController {
     }
 
     private void printFirstHand(final Guests guests, final Dealer dealer) {
-        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
+        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()));
         outputView.printLineSeparator();
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
             outputView.printLineSeparator();
         }
     }
@@ -86,7 +86,7 @@ public class BlackJackController {
         if (addCardRequest == AddCardRequest.YES) {
             guest.addCard(deck.pickOne());
         }
-        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
+        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
@@ -99,12 +99,12 @@ public class BlackJackController {
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
         outputView.printLineSeparator();
-        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
+        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()));
         outputView.printScore(dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
             outputView.printLineSeparator();
-            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
             outputView.printScore(guest.getScore());
         }
     }

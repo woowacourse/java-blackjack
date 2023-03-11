@@ -6,7 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int MAX_BASIC_SCORE = 11;
     private static final int ACE_BONUS_SCORE = 10;
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Hand(final Card firstCard, final Card secondCard) {
         this.cards = new ArrayList<>(List.of(firstCard, secondCard));

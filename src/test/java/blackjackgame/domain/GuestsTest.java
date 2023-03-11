@@ -50,7 +50,7 @@ class GuestsTest {
 
         assertThat(guests.size()).isEqualTo(inputNames.size());
         guests.forEach(guest -> {
-                    assertThat(guest.getCards().size()).isEqualTo(2);
+                    assertThat(guest.getHand().size()).isEqualTo(2);
                 }
         );
     }
