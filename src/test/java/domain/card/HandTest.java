@@ -1,9 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.card.Number;
-import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,5 +80,40 @@ class HandTest {
         hand.addCard(new Card(Shape.CLOVER, Number.ACE));
         
         assertThat(hand.getTotalScore().getScore()).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("카드의 개수가 2장 미만인 경우 true 반환")
+    void isNotEnoughInitCardsCount() {
+        hand.addCard(new Card(Shape.HEART, Number.ACE));
+        
+        assertThat(hand.isNotEnoughInitCardsCount()).isTrue();
+    }
+    
+    @Test
+    @DisplayName("카드의 개수가 2장 이상인 경우 false 반환")
+    void isEnoughInitCardsCount() {
+        hand.addCard(new Card(Shape.HEART, Number.ACE));
+        hand.addCard(new Card(Shape.HEART, Number.KING));
+        
+        assertThat(hand.isNotEnoughInitCardsCount()).isFalse();
+    }
+    
+    @Test
+    @DisplayName("스코어가 21이면 true 반환")
+    void is21() {
+        hand.addCard(new Card(Shape.HEART, Number.ACE));
+        hand.addCard(new Card(Shape.HEART, Number.KING));
+        
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+    
+    @Test
+    @DisplayName("스코어가 21이 아니면 false 반환")
+    void isNot21() {
+        hand.addCard(new Card(Shape.HEART, Number.QUEEN));
+        hand.addCard(new Card(Shape.HEART, Number.KING));
+        
+        assertThat(hand.isBlackJack()).isFalse();
     }
 }

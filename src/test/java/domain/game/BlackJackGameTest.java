@@ -63,7 +63,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame("여우", cards -> deck);
         blackJackGame.giveTwoCardToPlayers();
 
-        assertThat(blackJackGame.shouldDealerGetCard()).isTrue();
+        assertThat(blackJackGame.isDealerFinished()).isFalse();
     }
 
     @Test
@@ -77,7 +77,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame("여우", cards -> deck);
         blackJackGame.giveTwoCardToPlayers();
 
-        assertThat(blackJackGame.shouldDealerGetCard()).isFalse();
+        assertThat(blackJackGame.isDealerFinished()).isTrue();
     }
 
     @Test

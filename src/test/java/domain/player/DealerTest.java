@@ -46,4 +46,22 @@ class DealerTest {
         
         assertThat(dealer.getTotalScore().getScore()).isEqualTo(totalScore);
     }
+    
+    @Test
+    @DisplayName("스코어가 17 이상인 경우 true 반환")
+    void isFinished() {
+        dealer.draw(new Card(Shape.HEART, Number.EIGHT));
+        dealer.draw(new Card(Shape.HEART, Number.NINE));
+        
+        assertThat(dealer.isFinished()).isTrue();
+    }
+    
+    @Test
+    @DisplayName("스코어가 16 이하인 경우 false 반환")
+    void isNotFinished() {
+        dealer.draw(new Card(Shape.HEART, Number.EIGHT));
+        dealer.draw(new Card(Shape.HEART, Number.SEVEN));
+        
+        assertThat(dealer.isFinished()).isFalse();
+    }
 }
