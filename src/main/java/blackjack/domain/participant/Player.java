@@ -46,7 +46,7 @@ public final class Player implements Decidable {
     @Override
     public boolean canDraw() {
         Score score = participant.calculateTotalScore();
-        return score.isLessOrEquals(new Score(PLAYER_MAX_RECEIVE_CARD));
+        return score.canDraw(new Score(PLAYER_MAX_RECEIVE_CARD));
     }
 
     public List<Card> getHand() {

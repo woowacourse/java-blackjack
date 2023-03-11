@@ -29,15 +29,15 @@ public final class Score {
         return value == BLACKJACK_SCORE_CONDITION;
     }
 
-    public boolean isLessOrEquals(final Score other) {
+    public boolean canDraw(final Score other) {
         return value <= other.value;
     }
 
-    public boolean isLess(final Score other) {
+    public boolean isLose(final Score other) {
         return value < other.value;
     }
 
-    public boolean isEquals(final Score other) {
+    public boolean isDraw(final Score other) {
         return value == other.value;
     }
 

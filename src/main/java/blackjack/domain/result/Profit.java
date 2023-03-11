@@ -5,7 +5,6 @@ import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -75,11 +74,11 @@ public final class Profit {
     }
 
     private void compareScore(final Score dealerScore, final Player player) {
-        if (dealerScore.isLess(player.calculateTotalScore())) {
+        if (dealerScore.isLose(player.calculateTotalScore())) {
             profit.put(player, player.getBettingMoney().getBettingPrize());
             return;
         }
-        if (dealerScore.isEquals(player.calculateTotalScore())) {
+        if (dealerScore.isDraw(player.calculateTotalScore())) {
             return;
         }
         profit.put(player, player.getBettingMoney().loseBettingPrize());
