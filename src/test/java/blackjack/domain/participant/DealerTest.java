@@ -65,7 +65,7 @@ class DealerTest {
 
         GameResult gameResult = dealer.judgeGameResult(players);
         DealerResult dealerResult = gameResult.getDealerResult();
-        assertThat(dealerResult.getDealerResult()).isEqualTo(5000);
+        assertThat(dealerResult.getBenefit()).isEqualTo(5000);
 
         List<PlayerResult> results = gameResult.getPlayersResult();
 

@@ -4,13 +4,13 @@ import blackjack.domain.bet.Money;
 
 public class DealerResult {
 
-    private int dealerResult = 0;
+    private int benefit = 0;
 
     public void add(Money dealerBenefit) {
-        dealerResult += dealerBenefit.getValue();
+        benefit += dealerBenefit.getValue();
     }
 
-    public int getDealerResult() {
-        return dealerResult;
+    public int getBenefit() {
+        return benefit;
     }
 }

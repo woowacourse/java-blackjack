@@ -70,7 +70,7 @@ public class OutputView {
     }
 
     private static void showDealerResult(DealerResult dealerResult) {
-        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, dealerResult.getDealerResult());
+        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, dealerResult.getBenefit());
     }
 
     private static void showPlayersResult(List<PlayerResult> playersResult) {

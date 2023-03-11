@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class BetManagerTest {
 
     @Test
-    void addTest() {
+    void should_Return_SameValue_When_add_Money() {
         BetManager betManager = new BetManager();
         Player playerA = new Player("a");
         betManager.add(playerA, new Money(10000));
