@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.response.CardResponse;
+import blackjack.domain.participant.dto.CardResponse;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;

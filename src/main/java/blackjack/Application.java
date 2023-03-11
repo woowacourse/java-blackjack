@@ -2,7 +2,6 @@ package blackjack;
 
 import static blackjack.controller.DomainConverter.convertCard;
 import static blackjack.controller.DomainConverter.convertCards;
-import static blackjack.controller.DomainConverter.convertPlayersCards;
 import static blackjack.controller.DomainConverter.getPlayerCards;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
@@ -50,7 +49,7 @@ public class Application {
 
         outputView.printFinalStatusOfDealer(blackJackGame.getDealerScore(),
                 convertCards(blackJackGame.getDealerCards()));
-        outputView.printFinalStatusOfPlayers(convertPlayersCards(blackJackGame.getPlayersCards()),
+        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCards(),
                 blackJackGame.getPlayersScores());
         outputView.printFinalMoney(blackJackGame.calculatePlayersMoney());
     }

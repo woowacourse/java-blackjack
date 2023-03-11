@@ -4,8 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Players;
-import blackjack.response.CardResponse;
-import java.util.LinkedHashMap;
+import blackjack.domain.participant.dto.CardResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -34,19 +33,9 @@ public class DomainConverter {
                 ));
     }
 
-    static List<CardResponse> generateCardResponses(final List<Card> cards) {
+    private static List<CardResponse> generateCardResponses(final List<Card> cards) {
         return cards.stream()
                 .map(CardResponse::from)
                 .collect(Collectors.toList());
-    }
-
-    public static Map<String, List<CardResponse>> convertPlayersCards(final Map<String, List<Card>> playersCards) {
-        return playersCards.keySet().stream()
-                .collect(toMap(
-                        Function.identity(),
-                        name -> generateCardResponses(playersCards.get(name)),
-                        (a, b) -> a,
-                        LinkedHashMap::new
-                ));
     }
 }
