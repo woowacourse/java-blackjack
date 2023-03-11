@@ -5,13 +5,28 @@ public class PlayerInfo {
     private final Name name;
     private final BetAmount betAmount;
 
-    private PlayerInfo(final Name name, final BetAmount betAmount) {
-        this.name = name;
-        this.betAmount = betAmount;
+    private PlayerInfo(PlayerInfoBuilder playerInfoBuilder) {
+        this.name = playerInfoBuilder.name;
+        this.betAmount = playerInfoBuilder.betAmount;
     }
 
-    public static PlayerInfo of(String name, int betAmount) {
-        return new PlayerInfo(Name.of(name), BetAmount.from(betAmount));
+    public static class PlayerInfoBuilder {
+
+        private final Name name;
+        private BetAmount betAmount;
+
+        public PlayerInfoBuilder(final String name) {
+            this.name = Name.of(name);
+        }
+
+        public PlayerInfoBuilder setBetAmount(int betAmount) {
+            this.betAmount = BetAmount.from(betAmount);
+            return this;
+        }
+
+        public PlayerInfo build() {
+            return new PlayerInfo(this);
+        }
     }
 
     public String getName() {
