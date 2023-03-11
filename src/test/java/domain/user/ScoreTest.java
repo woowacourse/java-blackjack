@@ -1,5 +1,7 @@
 package domain.user;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import domain.card.Card;
 import domain.card.CloverCard;
 import java.util.List;
@@ -11,8 +13,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("블랙잭 게임 점수는 ")
+@DisplayName("블랙잭 카드 점수는 ")
 class ScoreTest {
+    @Test
+    @DisplayName("카드의 denomination 값을 이용해 계산한다.")
+    void createTest() {
+        assertDoesNotThrow(() -> new Score(CloverCard.CLOVER_EIGHT.getScore()));
+    }
+
     @Test
     @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 계산할 수 있다.")
     void calculateScoreTest() {
