@@ -33,6 +33,9 @@ public class Hand {
         return value;
     }
 
+    public boolean isBlackjack() {
+        return hand.size() == 2 && calculateValue() == 21;
+    }
     private int countAceCard(int aceCount, final Card card) {
         if (isAce(card)) {
             aceCount += 1;
