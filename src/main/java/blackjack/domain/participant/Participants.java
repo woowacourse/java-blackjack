@@ -72,6 +72,10 @@ public class Participants {
         return getDealer().isAdditionalDrawn();
     }
 
+    public boolean isDrawableDealer() {
+        return getDealer().isDrawable();
+    }
+
     private Dealer getDealer() {
         return participants.stream()
                 .filter(Participant::isDealer)

@@ -7,7 +7,6 @@ public class Player extends Participant {
     private final PlayerName name;
 
     public Player(final String name) {
-        super();
         this.name = new PlayerName(name);
     }
 

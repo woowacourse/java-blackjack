@@ -39,7 +39,9 @@ public class BlackJackGame {
     }
 
     public void dealCardForDealer() {
-        participants.drawCardForDealer(deck);
+        if (participants.isDrawableDealer()) {
+            participants.drawCardForDealer(deck);
+        }
     }
 
     public int getPlayerProfit(final PlayerName playerName) {

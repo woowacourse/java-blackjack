@@ -9,10 +9,6 @@ public class Dealer extends Participant {
     private static final String NAME = "딜러";
     private static final int MAXIMUM_DRAWABLE_SCORE = 16;
 
-    public Dealer() {
-        super();
-    }
-
     public Hand getHiddenHand() {
         final List<Card> cards = getHand().getCards();
         return new Hand(cards.subList(0, cards.size() - 1));
