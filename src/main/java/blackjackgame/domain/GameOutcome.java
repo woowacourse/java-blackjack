@@ -1,31 +1,22 @@
 package blackjackgame.domain;
 
 public enum GameOutcome implements RevenueCalculator {
-    BLACKJACK_WIN("승") {
-        public int calculate(final int money) {
-            return (int) (money * 1.5);
-        }
-    },
-    WIN("승") {
-        public int calculate(final int money) {
-            return money;
-        }
-    },
-    LOSE("패") {
-        public int calculate(final int money) {
-            return money * -1;
-        }
-    },
-    DRAW("무") {
-        public int calculate(final int money) {
-            return 0;
-        }
-    };
+    BLACKJACK_WIN("승", (money -> (int) (money * 1.5))),
+    WIN("승", money -> money),
+    LOSE("패", money -> money * -1),
+    DRAW("무", money -> 0);
 
     private final String outcome;
+    private final RevenueCalculator revenueCalculator;
 
-    GameOutcome(final String outcome) {
+    GameOutcome(final String outcome, RevenueCalculator revenueCalculator) {
         this.outcome = outcome;
+        this.revenueCalculator = revenueCalculator;
+    }
+
+    @Override
+    public int calculateRevenue(int money) {
+        return revenueCalculator.calculateRevenue(money);
     }
 
     public String getOutcome() {

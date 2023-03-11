@@ -9,7 +9,7 @@ public class BettingMoney {
         this.money = money;
     }
 
-    private void isMoreThanThousand(int money) {
+    private void isMoreThanThousand(final int money) {
         if (money < MIN_BETTING_MONEY) {
             throw new IllegalArgumentException("베팅 금액은 최소 1000원 이상이어야 합니다.");
         }
@@ -19,7 +19,7 @@ public class BettingMoney {
         return new BettingMoney(money);
     }
 
-    public int getRevenue(final GameOutcome gameOutcome) {
-        return gameOutcome.calculate(money);
+    public int money() {
+        return money;
     }
 }
