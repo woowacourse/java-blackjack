@@ -1,17 +1,30 @@
 package blackjackgame.domain.game;
 
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN {
+        @Override
+        public int calculateProfit(int betAmount) {
+            return betAmount;
+        }
+    },
+    WIN_BLACKJACK {
+        @Override
+        public int calculateProfit(int betAmount) {
+            return (int) (betAmount * 1.5);
+        }
+    },
+    DRAW {
+        @Override
+        public int calculateProfit(int betAmount) {
+            return 0;
+        }
+    },
+    LOSE {
+        @Override
+        public int calculateProfit(int betAmount) {
+            return -betAmount;
+        }
+    };
 
-    private final String result;
-
-    Result(String result) {
-        this.result = result;
-    }
-
-    public String getResult() {
-        return result;
-    }
+    public abstract int calculateProfit(int betAmount);
 }
