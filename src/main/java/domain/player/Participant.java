@@ -6,26 +6,33 @@ import java.util.List;
 
 public final class Participant {
 
-    private final Name name;
+    private final PlayerInfo playerInfo;
     private final Hand hand;
 
-    public Participant(final Name name, final Hand hand) {
-        this.name = name;
+    public Participant(final PlayerInfo playerInfo, final Hand hand) {
+        this.playerInfo = playerInfo;
         this.hand = hand;
     }
 
-    public static Participant of(final String name) {
+    public static Participant of(final String name, final int betAmount) {
         validateImpersonate(name);
 
-        return new Participant(Name.of(name), Hand.create());
+        return new Participant(PlayerInfo.of(name, betAmount), Hand.create());
     }
 
+    public void takeCard(final Card card) {
+        hand.takeCard(card);
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 
     public boolean isHit(boolean wantHit) {
         return canHit() && wantHit;
     }
 
-    public boolean canHit() {
+    private boolean canHit() {
         return score().isUnderMaxScore();
     }
 
@@ -33,19 +40,6 @@ public final class Participant {
         if (name.equals("딜러")) {
             throw new IllegalArgumentException("참가자의 이름은 딜러가 될 수 없습니다.");
         }
-    }
-
-
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public void takeCard(final Card card) {
-        hand.takeCard(card);
-    }
-
-    public List<Card> getHand() {
-        return hand.getCards();
     }
 
     public Score score() {
@@ -56,7 +50,15 @@ public final class Participant {
         return score().getScore();
     }
 
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+
     public String getName() {
-        return name.getName();
+        return playerInfo.getName();
+    }
+
+    public int getBetAmount() {
+        return playerInfo.getBetAmount();
     }
 }
