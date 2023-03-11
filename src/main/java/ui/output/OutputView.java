@@ -1,16 +1,12 @@
 package ui.output;
 
+import static java.util.stream.Collectors.joining;
+
 import controller.BlackJackGameResponse;
 import controller.CardResponse;
-import controller.DealerResultResponse;
 import controller.HandResponse;
-import controller.PlayerResultResponses;
 import controller.UserResponse;
-
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String DIVIDE_CARDS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
@@ -83,35 +79,5 @@ public class OutputView {
         return cardResponses.stream()
                 .map(cardResponse -> cardResponse.getName() + cardResponse.getShape())
                 .collect(joining(", "));
-    }
-
-    public void printFinalResult(final DealerResultResponse dealerResponse, final PlayerResultResponses playerResponse) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        printDealerFinalResult(dealerResponse);
-        printPlayersFinalResult(playerResponse);
-    }
-
-    private void printDealerFinalResult(final DealerResultResponse dealerResponse) {
-        printDealerResult(dealerResponse.getDealerResults(), dealerResponse.getPrintOrder());
-        System.out.print(System.lineSeparator());
-    }
-
-    private void printDealerResult(final Map<String, Long> dealerResult, final List<String> printOrder) {
-        System.out.print("딜러: ");
-        for (String resultName : printOrder) {
-            printDealerFinalResult(dealerResult, resultName);
-        }
-    }
-
-    private static void printDealerFinalResult(final Map<String, Long> dealerResult, final String resultName) {
-        if (dealerResult.containsKey(resultName)) {
-            System.out.printf("%s%s ", dealerResult.get(resultName), resultName);
-        }
-    }
-
-    private void printPlayersFinalResult(final PlayerResultResponses playerResponses) {
-        final Map<String, String> playerResultResponses = playerResponses.getPlayerResultResponses();
-        playerResultResponses.keySet()
-                .forEach(playerName -> System.out.printf("%s: %s%n", playerName, playerResultResponses.get(playerName)));
     }
 }

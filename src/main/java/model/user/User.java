@@ -26,11 +26,6 @@ public class User {
         return hand.getTotalValue();
     }
 
-    public Result judgeResult(int dealerTotalValue) {
-        final int playerTotalValue = calculateTotalValue();
-        return Result.judge(dealerTotalValue, playerTotalValue);
-    }
-
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
