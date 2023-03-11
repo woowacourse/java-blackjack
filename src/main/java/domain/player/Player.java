@@ -36,6 +36,7 @@ public abstract class Player {
     public List<Card> getCards() {
         return state.getCards();
     }
+    
     public void drawStop() {
         state = state.drawStop();
     }

@@ -86,7 +86,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
         blackJackGame.giveTwoCardToPlayers();
 
-        blackJackGame.giveDealerCard();
+        blackJackGame.giveCard(blackJackGame.getDealer());
 
         assertThat(blackJackGame.getDealer().getCards()).contains(new Card(Shape.DIAMOND, Number.SEVEN));
     }

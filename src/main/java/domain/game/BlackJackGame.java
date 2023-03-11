@@ -44,25 +44,21 @@ public class BlackJackGame {
 
     private void giveTwoCardToPerPlayer(Player player) {
         for (int divideCardCount = 0; divideCardCount < INIT_GIVE_CARD_COUNT; divideCardCount++) {
-            player.draw(findAnyOneCard());
+            player.draw(draw());
         }
     }
 
-    private Card findAnyOneCard() {
+    private Card draw() {
         return deck.draw();
     }
 
     public void giveCard(Player player) {
-        player.draw(deck.draw());
+        player.draw(draw());
     }
 
     public boolean shouldDealerGetCard() {
         Score dealerTotalScore = getDealer().getTotalScore();
         return dealerTotalScore.isLessThenOrEqualTo(DEALER_GIVE_CARD_STATE_MAX_SCORE);
-    }
-
-    public void giveDealerCard() {
-        getDealer().draw(findAnyOneCard());
     }
     
     public Player getDealer() {

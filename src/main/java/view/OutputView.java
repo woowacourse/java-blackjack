@@ -7,10 +7,7 @@ import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.Player;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -85,8 +82,9 @@ public class OutputView {
         System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
     }
 
-    public static void printBustMessage(String name) {
-        System.out.printf("%s님은 더이상 카드를 뽑을 수 없습니다.%n", name);
+    public static void printFinishedMessage(String name) {
+        System.out.printf("%n%s님은 더이상 카드를 뽑을 수 없습니다.%n", name);
+        
     }
 
     public static void printGiveDealerCardMessage() {
