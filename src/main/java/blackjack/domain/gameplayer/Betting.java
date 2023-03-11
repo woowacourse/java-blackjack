@@ -43,6 +43,10 @@ public class Betting {
         return this.equals(defaultBetting);
     }
 
+    public Betting addBetting(int betting) {
+        return Betting.of(this.betting + betting);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

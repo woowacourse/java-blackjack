@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -43,6 +44,12 @@ class BettingTest {
     @DisplayName("배팅 금액을 설정하지 않은 경우에는 금액을 바꿀 수 있다.")
     @Test
     void Should_Success_When_ChangeBettingBeforeBet() {
-        assertDoesNotThrow(() -> Betting.defaultBetting.changeBetting(1000));
+        assertThat(Betting.defaultBetting.changeBetting(1000)).isEqualTo(Betting.of(1000));
+    }
+
+    @DisplayName("배팅 금액을 더할 수 있다.")
+    @Test
+    void Should_Success_When_AddBetting() {
+        assertThat(Betting.defaultBetting.addBetting(3000).addBetting(200)).isEqualTo(Betting.of(3200));
     }
 }
