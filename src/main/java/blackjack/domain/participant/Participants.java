@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.List;
+import java.util.Map;
 
 public class Participants {
 
@@ -49,5 +50,9 @@ public class Participants {
 
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
+    }
+
+    public Map<String, Integer> calculatePlayersScore() {
+        return players.calculatePlayersScore();
     }
 }

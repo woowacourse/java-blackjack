@@ -90,10 +90,7 @@ public class BlackJackGame {
     }
 
     public Map<String, Integer> getPlayersScores() {
-        final Map<String, Integer> playerScores = new LinkedHashMap<>();
-        participants.getPlayers().getPlayers()
-                .forEach(player -> playerScores.put(player.getName(), player.currentScore()));
-        return playerScores;
+        return participants.calculatePlayersScore();
     }
 
     public void addPlayerMoney(final String playerName, final int inputPlayerMoney) {

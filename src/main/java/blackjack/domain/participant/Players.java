@@ -3,7 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.exception.PlayerNotFoundException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -91,7 +93,21 @@ public class Players {
                 .orElseThrow(PlayerNotFoundException::new);
     }
 
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Map<String, Integer> calculatePlayersScore() {
+        final Map<String, Integer> playerScore = new LinkedHashMap<>();
+        for (final Player player : players) {
+            playerScore.put(player.getName(), player.currentScore());
+        }
+        return playerScore;
     }
 }
