@@ -11,19 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Players {
+class Players {
 
-    private static final int MAX_PLAYER_COUNT = 5;
-    private static final int MIN_PLAYER_COUNT = 1;
-    private static final String OVER_RANGE_MESSAGE =
-            "사용자 수는 " + MIN_PLAYER_COUNT + " 이상 " + MAX_PLAYER_COUNT + " 이하여야 합니다. 현재 : %s 명입니다";
     private final List<Player> players;
 
     private Players(final List<Player> players) {
         this.players = players;
     }
 
-    public static Players from(final List<String> playerNames, final List<Integer> bettingMoneys) {
+    static Players from(final List<String> playerNames, final List<Integer> bettingMoneys) {
         validatePlayerNames(playerNames);
         validateSize(playerNames, bettingMoneys);
         final List<Player> players = createPlayers(playerNames, bettingMoneys);
@@ -44,7 +40,7 @@ public class Players {
         return players;
     }
 
-    public static void validatePlayerNames(final List<String> playerNames) {
+    private static void validatePlayerNames(final List<String> playerNames) {
         new Names(playerNames);
     }
 
@@ -56,7 +52,7 @@ public class Players {
         }
     }
 
-    public List<String> getPlayerNames() {
+    List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
@@ -78,32 +74,11 @@ public class Players {
         targetPlayer.drawCard(card);
     }
 
-    public Player findPlayerByName(final String name) {
-        return players.stream()
-                .filter(player -> player.hasName(name))
-                .findFirst()
-                .orElseThrow(PlayerNotFoundException::new);
-    }
-
-    public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public int getPlayerProfit(final String name, final double rate) {
-        return players.stream()
-                .filter(player -> player.hasName(name))
-                .findFirst()
-                .map(player -> player.calculateProfit(rate))
-                .orElseThrow(PlayerNotFoundException::new);
-    }
-
-    public List<Player> getPlayers() {
+    List<Player> getPlayers() {
         return players;
     }
 
-    public List<CardResponse> getPlayerCards(final String playerName) {
+    List<CardResponse> getPlayerCards(final String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()

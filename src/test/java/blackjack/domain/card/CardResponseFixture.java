@@ -8,8 +8,6 @@ public class CardResponseFixture {
             new Card(Shape.SPADE, Symbol.ACE));
     public static final CardResponse CLOVER_ACE_RESPONSE = CardResponse.from(
             new Card(Shape.CLOVER, Symbol.ACE));
-    public static final CardResponse HEART_EIGHT_RESPONSE = CardResponse.from(
+    static final CardResponse HEART_EIGHT_RESPONSE = CardResponse.from(
             new Card(Shape.HEART, Symbol.EIGHT));
-    public static final CardResponse DIAMOND_TEN_RESPONSE = CardResponse.from(
-            new Card(Shape.DIAMOND, Symbol.TEN));
 }

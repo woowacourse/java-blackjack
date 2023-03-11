@@ -11,7 +11,7 @@ public class Participants {
     private final Players players;
     private final Dealer dealer;
 
-    public Participants(final Players players, final Dealer dealer) {
+    private Participants(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
@@ -22,7 +22,7 @@ public class Participants {
 
     //이런 방식으로 검증을 하게 되면, 생성자에서 검증을 하기에, 로직상은 문제가 없지만
     //new Names().validate()와 같이 호출하는 것이 직관적일 수도 있을 것 같은데 어떤 방향이 좋으신가요?
-    //애그리거트 루트로 생각하다보니, 여기에 검증하는 작업을 넣었는데, 생성하는 쪽에서 검증하는 것이 불가능하기에 static으로 작성하게 되었습니다
+    //애그리거트 루트로 생각하다보니, 여기에 검증하는 작업을 넣었는데, 생성하는 쪽에서 검증하는 것이 불가능하기에 static 으로 작성하게 되었습니다
     public static void validatePlayerNames(final List<String> playerNames) {
         new Names(playerNames);
     }
