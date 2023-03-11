@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Number;
+import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Participant;
 import java.util.List;
@@ -17,9 +17,9 @@ class ParticipantTest {
     @DisplayName("초기 카드는 2장이어야 한다.")
     void validateCardsSize() {
         Cards cards = new Cards(List.of(
-            new Card(Suit.CLOVER, Number.FIVE),
-            new Card(Suit.CLOVER, Number.SIX),
-            new Card(Suit.CLOVER, Number.A)));
+            new Card(Suit.CLOVER, Denomination.FIVE),
+            new Card(Suit.CLOVER, Denomination.SIX),
+            new Card(Suit.CLOVER, Denomination.A)));
 
         Participant participant = new Participant("roy") {
             @Override

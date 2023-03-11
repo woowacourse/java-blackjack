@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Number;
+import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final Cards basicCards = new Cards(
-        List.of(new Card(Suit.CLOVER, Number.FIVE), new Card(Suit.CLOVER, Number.SIX)));
+        List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.CLOVER, Denomination.SIX)));
 
     @Test
     @DisplayName("player 이름이 5자를 초과하면 예외가 발생한다 ")
@@ -34,7 +34,7 @@ public class PlayerTest {
         //given
         String name = "hoy";
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Number.FIVE), new Card(Suit.CLOVER, Number.SIX)));
+            List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.CLOVER, Denomination.SIX)));
         //when
         Player player = new Player(name, cards);
         //then
@@ -47,7 +47,7 @@ public class PlayerTest {
         //given
         String name = "hoy";
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Number.J), new Card(Suit.CLOVER, Number.A)));
+            List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.CLOVER, Denomination.A)));
         //when
         Player player = new Player(name, cards);
         //then

@@ -6,7 +6,6 @@ import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Players;
-import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -61,20 +60,20 @@ public class OutputView {
             getAllCardsNames(participant), participant.getCards().getScore());
     }
 
-    public static void printWinOrLose(DealerScore dealerScore, List<PlayerScore> results) {
-        printDealerWinOrLose(dealerScore);
+    public static void printWinOrLose(DealerResult dealerResult, PlayerResults results) {
+        printDealerWinOrLose(dealerResult);
         printPlayersWinOrLose(results);
     }
 
-    private static void printDealerWinOrLose(DealerScore dealerScore) {
+    private static void printDealerWinOrLose(DealerResult dealerResult) {
         System.out.printf("딜러: %d%s %d%s %d%s%n",
-            dealerScore.getWin(), Converter.of(GameResult.WIN),
-            dealerScore.getLose(), Converter.of(GameResult.LOSE),
-            dealerScore.getDraw(), Converter.of(GameResult.DRAW));
+            dealerResult.getWin(), Converter.of(GameResult.WIN),
+            dealerResult.getLose(), Converter.of(GameResult.LOSE),
+            dealerResult.getDraw(), Converter.of(GameResult.DRAW));
     }
 
-    private static void printPlayersWinOrLose(List<PlayerScore> results) {
-        for (PlayerScore result : results) {
+    private static void printPlayersWinOrLose(PlayerResults results) {
+        for (PlayerResult result : results) {
             System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
         }
     }

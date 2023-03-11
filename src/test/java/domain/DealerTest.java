@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Number;
+import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import java.util.List;
@@ -18,7 +18,7 @@ public class DealerTest {
     void canAddCardTrue() {
         //given 
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Number.FIVE), new Card(Suit.CLOVER, Number.SIX)));
+            List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.CLOVER, Denomination.SIX)));
 
         //when
         Dealer dealer = new Dealer(cards);
@@ -32,7 +32,7 @@ public class DealerTest {
     void canAddCardFalse() {
         //given
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Number.A), new Card(Suit.CLOVER, Number.SIX)));
+            List.of(new Card(Suit.CLOVER, Denomination.A), new Card(Suit.CLOVER, Denomination.SIX)));
 
         //when
         Dealer dealer = new Dealer(cards);
