@@ -1,16 +1,20 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.FOUR;
-import static blackjack.domain.Number.THREE;
-import static blackjack.domain.Number.TWO;
-import static blackjack.domain.Symbol.DIAMOND;
-import static blackjack.domain.Symbol.HEART;
-import static blackjack.domain.Symbol.SPADE;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.FOUR;
+import static blackjack.domain.card.Number.THREE;
+import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Symbol.DIAMOND;
+import static blackjack.domain.card.Symbol.HEART;
+import static blackjack.domain.card.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.MockDeckGenerator;
+import blackjack.domain.participant.Participants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

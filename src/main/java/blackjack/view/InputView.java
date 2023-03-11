@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Money;
+import blackjack.domain.bet.Money;
 
 public class InputView {
 
