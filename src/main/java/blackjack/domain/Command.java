@@ -11,7 +11,7 @@ public enum Command {
     }
 
     public static boolean isHit(String command) {
-        return HIT.getCommand() == command;
+        return HIT.getCommand().equals(command);
     }
 
     private String getCommand() {
