@@ -10,6 +10,7 @@ import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -33,8 +34,8 @@ public class BlackjackController {
     private BlackjackGame initBlackjackGame() {
         Deck deck = Deck.create(new RandomCardPickerGenerator());
         List<String> playersName = inputPlayerName();
-        BlackjackGame blackjackGame = BlackjackGame.of(playersName, deck);
-        return blackjackGame;
+        List<String> playerAmount = creatPlayerAmount(playersName);
+        return BlackjackGame.of(playersName, deck);
     }
 
     private void hitFirstSetting(final BlackjackGame blackjackGame) {
@@ -68,6 +69,14 @@ public class BlackjackController {
         outputView.printAllWinORLose(blackjackGameResult);
     }
 
+    private List<String> creatPlayerAmount(List<String> playersName) {
+        List<String> playerAmount = new ArrayList<>();
+        for (String name : playersName) {
+            playerAmount.add(inputPlayerAmount(name));
+        }
+        return playerAmount;
+    }
+
     private List<String> inputPlayerName() {
         try {
             return inputView.readPlayerName();
@@ -75,6 +84,15 @@ public class BlackjackController {
             System.out.println(e.getMessage());
         }
         return inputPlayerName();
+    }
+
+    private String inputPlayerAmount(String name) {
+        try {
+            return inputView.readPlayerAmount(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return inputView.readPlayerAmount(name);
     }
 
     private String inputHitCommand(final Player player) {
