@@ -18,6 +18,14 @@ public class Money {
         return new Money((int) (rate * value));
     }
 
+    public Money opposite() {
+        return new Money(-1 * value);
+    }
+
+    public Money sum(final Money money) {
+        return new Money(this.value + money.value);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
