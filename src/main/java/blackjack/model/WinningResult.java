@@ -15,19 +15,8 @@ public class WinningResult {
         this.betting = betting;
     }
 
-    public WinningResult(int win, int draw, int lose) {
-        this.win = win;
-        this.draw = draw;
-        this.lose = lose;
-        this.betting = 0;
-    }
-
     public WinningResult() {
         this(0, 0, 0, 0);
-    }
-
-    public WinningResult win(int betting) {
-        return new WinningResult(win + 1, draw, lose, betting);
     }
 
     public WinningResult win(int betting, boolean isBlackjack) {
@@ -47,10 +36,6 @@ public class WinningResult {
 
     public WinningResult merge(WinningResult other) {
         return new WinningResult(win + other.win, draw + other.draw, lose + other.lose, betting + other.betting);
-    }
-
-    public List<Integer> getResult() {
-        return List.of(win, draw, lose);
     }
 
     public int getWin() {

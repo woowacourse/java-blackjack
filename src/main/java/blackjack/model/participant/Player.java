@@ -15,7 +15,6 @@ public class Player extends Participant {
     public static final int FIRST_CARD = 0;
     public static final int SECOND_CARD = 1;
 
-
     public Player(Name name, HandCard handCard, int betting) {
         super(name, handCard, betting);
     }

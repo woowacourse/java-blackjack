@@ -70,7 +70,7 @@ public class BlackjackGame {
     }
 
     public Map<String, List<String>> getDealerNameHand() {
-        return getScoreResult(dealer.getCardUnit());
+        return getScoreResult(dealer.getNameHandCard());
     }
 
     public Map<String, List<String>> getDealerFirstDistributed() {

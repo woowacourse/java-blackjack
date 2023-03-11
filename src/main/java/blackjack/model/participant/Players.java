@@ -58,11 +58,7 @@ public class Players {
     }
 
     public Map<String, List<Card>> getHandCardsById(int playerId) {
-        return getPlayerById(playerId).getCardUnit();
-    }
-
-    public int getPlayerCount() {
-        return players.size();
+        return getPlayerById(playerId).getNameHandCard();
     }
 
     public List<String> getPlayerNames() {
@@ -73,12 +69,6 @@ public class Players {
 
     public String getNameById(int playerId) {
         return getPlayerById(playerId).getName();
-    }
-
-    private Player getPlayerById(int playerId) {
-        return players.stream().filter(p -> p.isEqualId(playerId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 
     public int getIdByName(String name) {
@@ -102,5 +92,11 @@ public class Players {
         return players.stream()
                 .map(Participant::getId)
                 .collect(Collectors.toList());
+    }
+
+    private Player getPlayerById(int playerId) {
+        return players.stream().filter(p -> p.isEqualId(playerId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 }

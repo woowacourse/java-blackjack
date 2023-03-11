@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Participant {
+    public static final int BLACKJACK_CARD_COUNT = 2;
     private static int CURRENT_MAX_ID = 0;
     public static final int BLACKJACK_NUMBER = 21;
 
@@ -65,7 +66,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return (handcard.size() == 2) && handcard.isScoreEqual(BLACKJACK_NUMBER);
+        return (handcard.size() == BLACKJACK_CARD_COUNT) && handcard.isScoreEqual(BLACKJACK_NUMBER);
     }
 
     protected boolean isBust() {
@@ -76,7 +77,7 @@ public abstract class Participant {
         return handcard.getCards();
     }
 
-    public Map<String, List<Card>> getCardUnit() {
+    public Map<String, List<Card>> getNameHandCard() {
         Map<String, List<Card>> cardUnit = new HashMap<>();
         cardUnit.put(getName(), getCards());
         return cardUnit;
