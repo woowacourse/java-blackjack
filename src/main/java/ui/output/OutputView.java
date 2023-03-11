@@ -2,11 +2,6 @@ package ui.output;
 
 import static java.util.stream.Collectors.joining;
 
-import controller.BlackJackGameResponse;
-import controller.CardResponse;
-import controller.HandResponse;
-import controller.PurseResponse;
-import controller.UserResponse;
 import java.util.List;
 import java.util.Map;
 

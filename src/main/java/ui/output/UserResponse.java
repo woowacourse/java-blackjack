@@ -1,4 +1,4 @@
-package controller;
+package ui.output;
 
 import java.util.List;
 

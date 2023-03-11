@@ -1,4 +1,4 @@
-package controller;
+package ui.output;
 
 import model.card.Card;
 

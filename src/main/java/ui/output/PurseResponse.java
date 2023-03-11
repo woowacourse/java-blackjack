@@ -1,4 +1,4 @@
-package controller;
+package ui.output;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
