@@ -9,11 +9,11 @@ public class BlackJackRule {
     private static final int BUST_POINT = 21;
 
     public int calculatePlayerProfit(final Player player, final Dealer dealer) {
-        final ResultType result = calculateDealerResult(dealer, player);
+        final ResultType result = calculatePlayerResult(dealer, player);
         return (int) (player.calculateProfit(result.getPlayerProfit()) * result.getPlayerProfit());
     }
 
-    private ResultType calculateDealerResult(final Dealer dealer, final Player player) {
+    private ResultType calculatePlayerResult(final Dealer dealer, final Player player) {
         if (dealer.hasBlackJack()) {
             return playWithBlackjack(player);
         }
@@ -27,7 +27,7 @@ public class BlackJackRule {
         if (player.hasBlackJack()) {
             return ResultType.TIE;
         }
-        return ResultType.BLACKJACK_WIN;
+        return ResultType.BLACKJACK_LOSE;
     }
 
     private ResultType playWithBust(final Player player) {
@@ -35,18 +35,18 @@ public class BlackJackRule {
             return ResultType.TIE;
         }
         if (player.hasBlackJack()) {
-            return ResultType.BLACKJACK_LOSE;
+            return ResultType.BLACKJACK_WIN;
         }
-        return ResultType.LOSE;
+        return ResultType.WIN;
     }
 
     private ResultType playWithScore(final Dealer dealer, final Player player) {
         if (player.hasBlackJack()) {
-            return ResultType.BLACKJACK_LOSE;
+            return ResultType.BLACKJACK_WIN;
         }
         if (player.currentScore() > BUST_POINT || dealer.currentScore() > player.currentScore()) {
-            return ResultType.WIN;
+            return ResultType.LOSE;
         }
-        return ResultType.LOSE;
+        return ResultType.WIN;
     }
 }
