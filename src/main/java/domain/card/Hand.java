@@ -9,4 +9,8 @@ public class Hand {
     public Hand() {
         cards = new ArrayList<>();
     }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
 }
