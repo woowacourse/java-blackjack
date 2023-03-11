@@ -14,7 +14,7 @@ public class UserTest {
     static class UserImplement extends User {
 
         @Override
-        public boolean isHittable() {
+        public boolean isDrawable() {
             return true;
         }
     }

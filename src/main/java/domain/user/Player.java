@@ -4,7 +4,7 @@ import domain.money.BettingAmount;
 
 public class Player extends User {
 
-    private static final int BLACK_JACK_SCORE = 21;
+    private static final int DRAWABLE_LIMIT_SCORE = 21;
 
     private final PlayerName name;
     private BettingAmount bettingAmount;
@@ -26,8 +26,12 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isHittable() {
-        return cards.isUnder(BLACK_JACK_SCORE);
+    public boolean isDrawable() {
+        if (!state.isDrawable()) {
+            return false;
+        }
+        int score = state.getScore();
+        return score < DRAWABLE_LIMIT_SCORE;
     }
 
     public String getName() {

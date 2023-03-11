@@ -7,8 +7,9 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BLACK_JACK_SCORE = 21;
+    private static final int MAX_SCORE = 21;
     private static final int ACE_OFFSET = 10;
+    public static final int CARD_INITIALIZED_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -24,10 +25,6 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public Card getFirstCard() {
-        return cards.get(0);
-    }
-
     public int getSumOfScores() {
         int sumOfScores = cards.stream()
             .map(Card::getScore)
@@ -36,7 +33,7 @@ public class Cards {
     }
 
     private int addAceOffset(int sumOfScores) {
-        if (isContainAce() && sumOfScores + ACE_OFFSET <= BLACK_JACK_SCORE) {
+        if (isContainAce() && sumOfScores + ACE_OFFSET <= MAX_SCORE) {
             return sumOfScores + Cards.ACE_OFFSET;
         }
         return sumOfScores;
@@ -48,5 +45,17 @@ public class Cards {
 
     public boolean isUnder(int score) {
         return getSumOfScores() < score;
+    }
+
+    public boolean isBust() {
+        return getSumOfScores() > MAX_SCORE;
+    }
+
+    public boolean isMaxScore() {
+        return getSumOfScores() == MAX_SCORE;
+    }
+
+    public boolean isInitCompleted() {
+        return cards.size() >= CARD_INITIALIZED_SIZE;
     }
 }

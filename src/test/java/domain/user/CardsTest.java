@@ -6,15 +6,19 @@ import static domain.card.Denomination.FOUR;
 import static domain.card.Denomination.SIX;
 import static domain.card.Denomination.THREE;
 import static domain.card.Denomination.TWO;
+import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
 
@@ -28,7 +32,7 @@ public class CardsTest {
     @DisplayName("card를 추가한다")
     @Test
     void addCard() {
-        Card card1 = Card.of(Denomination.TWO, Suits.HEART);
+        Card card1 = Card.of(Denomination.TWO, HEART);
         Card card2 = Card.of(Denomination.THREE, Suits.DIAMOND);
         cards.addCard(card1);
         cards.addCard(card2);
@@ -71,7 +75,32 @@ public class CardsTest {
 
     private void addCards(List<Denomination> denominations) {
         for (Denomination denomination : denominations) {
-            cards.addCard(Card.of(denomination, Suits.HEART));
+            cards.addCard(Card.of(denomination, HEART));
         }
+    }
+
+    @DisplayName("카드가 2장보다 적으면 초기화 완료되지 않은 상태이다")
+    @ParameterizedTest
+    @MethodSource("initNotCompletedParameters")
+    void checkInitCompleted_False(List<Denomination> denominations) {
+        addCards(denominations);
+
+        assertThat(cards.isInitCompleted()).isFalse();
+    }
+
+    static Stream<List<Denomination>> initNotCompletedParameters() {
+        return Stream.of(
+            List.of(),
+            List.of(TWO)
+        );
+    }
+
+    @DisplayName("카드가 2장 이상이면 초기화 왼료된 상태이다.")
+    @Test
+    void checkInitCompleted_True() {
+        cards.addCard(Card.of(ACE, HEART));
+        cards.addCard(Card.of(TWO, HEART));
+
+        assertThat(cards.isInitCompleted()).isTrue();
     }
 }

@@ -54,7 +54,7 @@ public class BlackJackGame {
 
     public Card getDealerCardWithHidden() {
         Dealer dealer = users.getDealer();
-        return dealer.getCardWithHidden();
+        return dealer.getFirstCard();
     }
 
     public List<String> getPlayerNames() {

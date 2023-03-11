@@ -58,7 +58,7 @@ public class Controller {
 
     private void askPlayerHitCommand(final Player player, final BlackJackGame blackJackGame) {
         String playerName = player.getName();
-        while (player.isHittable() && inputView.askHitCommand(playerName)) {
+        while (player.isDrawable() && inputView.askHitCommand(playerName)) {
             blackJackGame.giveCard(playerName);
             outputView.printEachPlayerCards(playerName, player.getCards());
         }

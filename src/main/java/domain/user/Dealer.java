@@ -1,17 +1,23 @@
 package domain.user;
 
 import domain.card.Card;
+import java.util.List;
 
 public class Dealer extends User {
 
-    private static final int UNDER_OVER_SCORE = 17;
+    private static final int DRAWABLE_LIMIT_SCORE = 17;
 
     @Override
-    public boolean isHittable() {
-        return cards.isUnder(UNDER_OVER_SCORE);
+    public boolean isDrawable() {
+        if (!state.isDrawable()) {
+            return false;
+        }
+        int score = state.getScore();
+        return score < DRAWABLE_LIMIT_SCORE;
     }
 
-    public Card getCardWithHidden() {
-        return cards.getFirstCard();
+    public Card getFirstCard() {
+        List<Card> cards = state.getCards();
+        return cards.get(0);
     }
 }

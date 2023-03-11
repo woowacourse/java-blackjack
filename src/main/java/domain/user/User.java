@@ -1,23 +1,33 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.user.state.Ready;
+import domain.user.state.State;
 import java.util.List;
 
 public abstract class User {
 
-    protected final Cards cards = new Cards();
+    protected final State state;
+
+    public User() {
+        this.state = new Ready();
+    }
 
     public void hit(Card card) {
-        cards.addCard(card);
+        state.draw(card);
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return state.getCards();
     }
 
-    public abstract boolean isHittable();
+    public abstract boolean isDrawable();
 
     public int getScore() {
-        return cards.getSumOfScores();
+        return state.getScore();
+    }
+
+    public State getState() {
+        return state;
     }
 }
