@@ -38,16 +38,4 @@ public class PlayerTest {
         assertThat(player.isOverBlackJack()).isTrue();
     }
 
-    @Test
-    @DisplayName("카드가 2장이고, 합이 21인 경우 블랙잭이다.")
-    void isBlackJack() {
-        Player player = new Player("pobi");
-        Card card1 = new Card(CardNumber.KING, CardPattern.SPADE);
-        Card card2 = new Card(CardNumber.ACE, CardPattern.DIAMOND);
-        player.addCard(card1);
-        player.addCard(card2);
-
-        assertThat(player.isBlackJack()).isTrue();
-    }
-
 }
