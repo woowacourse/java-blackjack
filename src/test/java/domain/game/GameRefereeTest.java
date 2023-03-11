@@ -31,7 +31,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createDealerBlackJackShuffler());
+        final GameManager gameManager = GameManager.create(createDealerBlackJackShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -49,7 +49,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createPlayerBlackJackShuffler());
+        final GameManager gameManager = GameManager.create(createPlayerBlackJackShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -67,7 +67,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createBustShuffler());
+        final GameManager gameManager = GameManager.create(createBustShuffler(), participantInfo);
         gameManager.handFirstCards();
         gameManager.handCard(player);
         gameManager.handCard(dealer);
@@ -87,7 +87,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createDealerHighScoreShuffler());
+        final GameManager gameManager = GameManager.create(createDealerHighScoreShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -106,7 +106,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createDealerBlackJackShuffler());
+        final GameManager gameManager = GameManager.create(createDealerBlackJackShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -124,7 +124,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createPlayerBlackJackShuffler());
+        final GameManager gameManager = GameManager.create(createPlayerBlackJackShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -142,7 +142,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createPlayerHighScoreShuffler());
+        final GameManager gameManager = GameManager.create(createPlayerHighScoreShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -160,7 +160,7 @@ class GameRefereeTest {
         final Participant player = Player.create("pobi");
         final Participant dealer = Participant.createDealer();
         final Map<Participant, ParticipantMoney> participantInfo = makeParticipantInfo(player, dealer);
-        final GameManager gameManager = GameManager.create(participantInfo, createAllBlackJackShuffler());
+        final GameManager gameManager = GameManager.create(createAllBlackJackShuffler(), participantInfo);
         gameManager.handFirstCards();
 
         // when
@@ -170,7 +170,7 @@ class GameRefereeTest {
         assertThat(isAllBlackJack)
                 .isTrue();
     }
-    
+
     private Map<Participant, ParticipantMoney> makeParticipantInfo(final Participant player,
                                                                    final Participant dealer) {
         final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
