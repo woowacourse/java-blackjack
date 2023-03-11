@@ -7,7 +7,7 @@ public class BlackJackResult {
     private final String name;
     private final double account;
 
-    public BlackJackResult(final String name, final double account) {
+    private BlackJackResult(final String name, final double account) {
         this.name = name;
         this.account = account;
     }

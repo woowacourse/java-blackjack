@@ -11,7 +11,7 @@ public class ParticipantResult {
     private final List<String> drawnCards;
     private final int score;
 
-    public ParticipantResult(final String name, final List<String> drawnCards, final int score) {
+    private ParticipantResult(final String name, final List<String> drawnCards, final int score) {
         this.name = name;
         this.drawnCards = drawnCards;
         this.score = score;
