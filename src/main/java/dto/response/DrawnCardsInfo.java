@@ -1,7 +1,8 @@
 package dto.response;
 
+import static java.util.stream.Collectors.toList;
+
 import domain.card.Card;
-import java.util.ArrayList;
 import java.util.List;
 import view.CardNameRender;
 
@@ -16,17 +17,11 @@ public class DrawnCardsInfo {
     }
 
     public static DrawnCardsInfo toDto(final String playerName, List<Card> drawnCards) {
-        List<String> cardInfos = new ArrayList<>();
+        List<String> cardsInfo = drawnCards.stream()
+                .map(CardNameRender::render)
+                .collect(toList());
 
-        for (Card drawnCard : drawnCards) {
-            cardInfos.add(renderCardName(drawnCard));
-        }
-
-        return new DrawnCardsInfo(playerName, cardInfos);
-    }
-
-    private static String renderCardName(Card drawnCard) {
-        return CardNameRender.renderValue(drawnCard.getValue()) + CardNameRender.renderType(drawnCard.getType());
+        return new DrawnCardsInfo(playerName, cardsInfo);
     }
 
     public String getName() {
