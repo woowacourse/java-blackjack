@@ -10,9 +10,9 @@ public abstract class Participant {
     private static final int BUST_BOUNDARY_VALUE = 21;
 
     private final Hand hand;
-    private final String name;
+    private final Name name;
 
-    public Participant(List<Card> cards, String name) {
+    public Participant(List<Card> cards, Name name) {
         this.hand = new Hand(cards);
         this.name = name;
     }
@@ -34,7 +34,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public boolean isBust() {
