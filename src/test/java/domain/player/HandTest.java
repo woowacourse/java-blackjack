@@ -1,19 +1,20 @@
-package domain.card;
+package domain.player;
 
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
     @Test
     @DisplayName("getCards하면 입력받은 카드 전부를 리스트로 반환한다.")
     void getCardsTest() {
         //given
-        final Hand hand = Hand.from(0);
+        final Hand hand = Hand.create();
 
         final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -31,7 +32,7 @@ class HandTest {
     @DisplayName("한장의 카드가 주어지면 카드 랭크만큼의 스코어를 리턴한다.")
     void givenCard_thenSumScore() {
         //given
-        final Hand hand = Hand.from(0);
+        final Hand hand = Hand.create();
 
         //when
         final Card spadeEight = Card.of(Suit.SPADE, Rank.EIGHT);
@@ -46,7 +47,7 @@ class HandTest {
     @DisplayName("여러장의 카드를 받으면, 카드 랭크만큼의 합만큼 스코어를 리턴한다")
     void takeCards_thenAddSum() {
         //given
-        final Hand hand = Hand.from(0);
+        final Hand hand = Hand.create();
 
         final List<Rank> ranks = List.of(Rank.FIVE, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -66,7 +67,7 @@ class HandTest {
         @DisplayName("점수 총합이 11이하면 ace의 값을 11로 계산한다")
         void givenAceAndUnderElevenScore_thenAceScoreEleven() {
             //given
-            final Hand hand = Hand.from(0);
+            final Hand hand = Hand.create();
 
             //when
             final List<Rank> ranks = List.of(Rank.ACE, Rank.TWO, Rank.THREE);
@@ -84,7 +85,7 @@ class HandTest {
         @DisplayName("점수 총합이 12이상이면 ace의 값을 1로 계산한다")
         void givenAceAndOverTwelveScore_thenAceScoreOne() {
             //given
-            final Hand hand = Hand.from(0);
+            final Hand hand = Hand.create();
 
             //when
             final List<Rank> ranks = List.of(Rank.ACE, Rank.FIVE, Rank.SIX);

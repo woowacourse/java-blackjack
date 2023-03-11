@@ -1,4 +1,4 @@
-package domain.card;
+package domain.player;
 
 import java.util.Objects;
 
@@ -16,6 +16,10 @@ public final class Score {
 
     public static Score from(final int score) {
         return new Score(score);
+    }
+
+    public Score add(final int score) {
+        return new Score(this.score + score);
     }
 
     public boolean isUnderThan(final int compare) {

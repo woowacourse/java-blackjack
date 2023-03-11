@@ -1,11 +1,25 @@
 package domain.card;
 
+import domain.player.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
+
+    @Test
+    @DisplayName("스코어에 더할 값을 입력해주면 총합의 스코어를 반환한다")
+    void addScore_returnNewScore() {
+        //given
+        final Score score = Score.from(0);
+
+        //when
+        final Score newScore = score.add(11);
+
+        //then
+        assertThat(newScore).isEqualTo(Score.from(0 + 11));
+    }
 
     @Test
     @DisplayName("스코어가 22 미만이면 true를 반환한다")
