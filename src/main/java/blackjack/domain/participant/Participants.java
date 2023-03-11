@@ -72,6 +72,10 @@ public class Participants {
         return getPlayer(playerName).isDrawable();
     }
 
+    public boolean isBlackJackPlayer(final PlayerName playerName) {
+        return getPlayer(playerName).isBlackJack();
+    }
+
     private Player getPlayer(final PlayerName playerName) {
         return participants.stream()
                 .filter(participant -> !participant.isDealer())
