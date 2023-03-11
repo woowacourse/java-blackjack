@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -10,12 +11,14 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestNonShuffledDeckGenerator;
+import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -174,5 +177,18 @@ class BlackJackGameTest {
             softly.assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getScore().getValue())
                     .isEqualTo(19);
         });
+    }
+
+    @Test
+    @DisplayName("플레이어가 돈을 배팅하는 기능 추가")
+    void betPlayerTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+                new RandomDeckGenerator());
+
+        blackJackGame.betPlayer(TEST_PLAYER_NAME1, 10000);
+
+        assertThat(blackJackGame).extracting("deposit")
+                .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
+                .containsExactly(entry(TEST_PLAYER_NAME1, new Money(10000)));
     }
 }
