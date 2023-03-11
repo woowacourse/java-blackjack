@@ -27,16 +27,8 @@ public class BlackJackController {
         final Purse purse = Purse.create(participants.getPlayers());
 
         betMoney(participants, purse);
-
-        divideFirstCard(deck, participants);
-
-        outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
-
-        divideCard(deck, participants, dealer);
-        outputView.printScoreBoard(BlackJackGameResponse.create(participants));
-
-        purse.calculateMoneyAll(participants.getPlayers(), dealer);
-        printBetResult(dealer, purse);
+        distributeCards(deck, dealer, participants);
+        printResult(dealer, participants, purse);
     }
 
     private Participants getParticipants(final Dealer dealer) {
@@ -50,9 +42,24 @@ public class BlackJackController {
         }
     }
 
+    private void distributeCards(Deck deck, Dealer dealer, Participants participants) {
+        distributeInitialCards(deck, participants);
+        distributeMoreCards(deck, dealer, participants);
+    }
+
+    private void distributeInitialCards(Deck deck, Participants participants) {
+        divideFirstCard(deck, participants);
+        outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
+    }
+
     private void divideFirstCard(final Deck deck, final Participants participants) {
         outputView.printDivideTwoCard(BlackJackGameResponse.create(participants));
         participants.receiveInitialCards(deck);
+    }
+
+    private void distributeMoreCards(Deck deck, Dealer dealer, Participants participants) {
+        divideCard(deck, participants, dealer);
+        outputView.printScoreBoard(BlackJackGameResponse.create(participants));
     }
 
     private void divideCard(final Deck deck, final Participants participants, final Dealer dealer) {
@@ -102,6 +109,11 @@ public class BlackJackController {
             dealer.receiveCard(deck.pick());
             outputView.printReceiveCardForDealer();
         }
+    }
+
+    private void printResult(Dealer dealer, Participants participants, Purse purse) {
+        purse.calculateMoneyAll(participants.getPlayers(), dealer);
+        printBetResult(dealer, purse);
     }
 
     private void printBetResult(Dealer dealer, Purse purse) {
