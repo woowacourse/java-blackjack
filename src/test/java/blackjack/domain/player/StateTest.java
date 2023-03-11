@@ -1,8 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.player.State.*;
+import static blackjack.util.CardFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -46,11 +45,11 @@ public class StateTest {
 
     @ParameterizedTest
     @MethodSource("calculateStateSource")
-    void Cards를_받아_상태를_반환한다(final List<Rank> ranks, final State state) {
+    void Cards를_받아_상태를_반환한다(final List<Card> testCards, final State state) {
         final Cards cards = new Cards();
 
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
+        for (Card card : testCards) {
+            cards.add(card);
         }
 
         assertThat(calculateState(cards)).isEqualTo(state);
@@ -58,10 +57,10 @@ public class StateTest {
 
     static Stream<Arguments> calculateStateSource() {
         return Stream.of(
-                Arguments.of(List.of(Rank.ACE, Rank.JACK), BLACKJACK),
-                Arguments.of(List.of(Rank.JACK, Rank.JACK, Rank.JACK), BUST),
-                Arguments.of(List.of(Rank.ACE, Rank.FOUR, Rank.SIX), STOP),
-                Arguments.of(List.of(Rank.KING, Rank.KING), PLAY)
+                Arguments.of(List.of(ACE_DIAMOND, JACK_SPADE), BLACKJACK),
+                Arguments.of(List.of(JACK_SPADE, KING_SPADE, QUEEN_SPADE), BUST),
+                Arguments.of(List.of(ACE_DIAMOND, FOUR_SPADE, SIX_SPADE), STOP),
+                Arguments.of(List.of(KING_SPADE, QUEEN_SPADE), PLAY)
         );
     }
 }

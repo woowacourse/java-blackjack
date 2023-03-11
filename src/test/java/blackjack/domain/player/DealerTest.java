@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Shape;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,8 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.Rank.*;
-import static blackjack.domain.card.Shape.*;
+import static blackjack.util.CardFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -33,28 +31,13 @@ public class DealerTest {
     void 게임_시작_시_카드를_뽑는다() {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, DIAMOND)
+                ACE_DIAMOND,
+                JACK_SPADE
         ));
 
         dealer.initialDraw(deck);
 
-        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J다이아몬드");
-    }
-
-    @Test
-    void 카드를_뽑는다() {
-        final Dealer dealer = Dealer.create();
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
-                new Card(THREE, SPADE)
-        ));
-        dealer.initialDraw(deck);
-
-        dealer.draw(deck);
-
-        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J클로버", "3스페이드");
+        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J스페이드");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
@@ -69,9 +52,24 @@ public class DealerTest {
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(FIVE, CLOVER)), true),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER)), false)
+                Arguments.of(List.of(JACK_SPADE, FIVE_SPADE), true),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), false)
         );
+    }
+
+    @Test
+    void 카드를_뽑는다() {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(List.of(
+                ACE_DIAMOND,
+                JACK_SPADE,
+                THREE_SPADE
+        ));
+        dealer.initialDraw(deck);
+
+        dealer.draw(deck);
+
+        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J스페이드", "3스페이드");
     }
 
     @Test
@@ -85,7 +83,7 @@ public class DealerTest {
     void 점수를_반환한다() {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, Shape.DIAMOND)
+                ACE_SPADE
         ));
         dealer.draw(deck);
 
@@ -105,7 +103,7 @@ public class DealerTest {
     void 딜러의_카드수를_반환한다() {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND)
+                ACE_DIAMOND
         ));
 
         dealer.draw(deck);
@@ -126,8 +124,8 @@ public class DealerTest {
     void 첫번째_카드를_반환한다() {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER)
+                ACE_DIAMOND,
+                JACK_SPADE
         ));
         dealer.initialDraw(deck);
 
@@ -149,8 +147,8 @@ public class DealerTest {
 
     public static Stream<Arguments> isBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), false),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(ACE, CLOVER)), true)
+                Arguments.of(List.of(JACK_SPADE, SIX_SPADE), false),
+                Arguments.of(List.of(JACK_SPADE, ACE_SPADE), true)
         );
     }
 
@@ -167,8 +165,8 @@ public class DealerTest {
 
     public static Stream<Arguments> isBustSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(THREE, CLOVER), new Card(TWO, CLOVER)), false),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(QUEEN, CLOVER), new Card(KING, CLOVER)), true)
+                Arguments.of(List.of(JACK_SPADE, EIGHT_SPADE, TWO_SPADE), false),
+                Arguments.of(List.of(JACK_SPADE, QUEEN_SPADE, KING_SPADE), true)
         );
     }
 }
