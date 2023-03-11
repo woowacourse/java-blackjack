@@ -27,6 +27,11 @@ public class Player extends Participant {
         }
     }
 
+    public Bet matchGameWithBet(Dealer dealer) {
+        GameResult gameResult = matchGame(dealer);
+        return bet.calculateResult(gameResult);
+    }
+
     private GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
@@ -44,11 +49,6 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
-    }
-
-    public Bet matchGameWithBet(Dealer dealer) {
-        GameResult gameResult = matchGame(dealer);
-        return bet.calculateResult(gameResult);
     }
 
     @Override
