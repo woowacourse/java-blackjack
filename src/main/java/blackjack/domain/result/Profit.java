@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Profit {
@@ -19,7 +20,7 @@ public class Profit {
     }
 
     private void initProfit() {
-        profit = new HashMap<>();
+        profit = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
             profit.put(player, Money.init());
         }
