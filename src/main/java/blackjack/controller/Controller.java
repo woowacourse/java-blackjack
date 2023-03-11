@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BetAmount;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResultDto;
+import blackjack.domain.game.ParticipantPrizeDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantCardsDto;
@@ -30,7 +31,7 @@ public class Controller {
         showFirstDraw();
         supplyAdditionalCards();
         showFinalCards();
-        showWinningResult();
+        showPrize();
     }
 
     private void setGame() {
@@ -74,5 +75,10 @@ public class Controller {
     private void showWinningResult() {
         GameResultDto gameResultDto = blackjackGame.calculateWinning();
         outputView.printWinningResults(gameResultDto.getDealerResult(), gameResultDto.getPlayerToResult());
+    }
+
+    private void showPrize() {
+        List<ParticipantPrizeDto> participantsPrize = blackjackGame.calculatePrize();
+        outputView.printFinalPrize(participantsPrize);
     }
 }

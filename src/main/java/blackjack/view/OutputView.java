@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.ParticipantPrizeDto;
 import blackjack.domain.game.PlayerWinningDto;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
@@ -65,5 +66,10 @@ public class OutputView {
         return dealerWinningResult.getResultToCount().keySet().stream()
                 .map(result -> dealerWinningResult.getResultToCount().get(result) + result.getLabel()).collect(
                         Collectors.joining(" "));
+    }
+
+    public void printFinalPrize(List<ParticipantPrizeDto> prizes) {
+        System.out.println("\n## 최종 수익");
+        prizes.forEach(prize -> System.out.printf("%s: %d\n", prize.getParticipantName(), prize.getPrizeAmount()));
     }
 }
