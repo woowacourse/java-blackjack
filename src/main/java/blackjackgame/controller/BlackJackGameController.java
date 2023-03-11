@@ -6,11 +6,15 @@ import blackjackgame.domain.card.Cards;
 import blackjackgame.domain.card.ShuffledCardsGenerator;
 import blackjackgame.domain.game.BlackJackGame;
 import blackjackgame.domain.game.Result;
+import blackjackgame.domain.user.Bet;
 import blackjackgame.domain.user.Dealer;
+import blackjackgame.domain.user.Name;
+import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
 import blackjackgame.domain.user.dto.NameDto;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +45,7 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards(new ShuffledCardsGenerator());
         Dealer dealer = new Dealer();
-        Players players = repeatForValidInput(this::setUpPlayers);
+        Players players = setUpPlayers();
         return new BlackJackGame(players, dealer, cards);
     }
 
@@ -55,12 +59,24 @@ public class BlackJackGameController {
     }
 
     private Players setUpPlayers() {
-        return new Players(readPlayersName());
+        Names playerNames = repeatForValidInput(this::setUpPlayerNames);
+        List<Bet> playerBets = repeatForValidInput(() -> setUpPlayerBets(playerNames));
+        return new Players(playerNames, playerBets);
     }
 
-    private List<String> readPlayersName() {
+    private Names setUpPlayerNames() {
         outputView.printInputPlayerNamesMessage();
-        return inputView.readPlayerNames();
+        List<String> playerNames = inputView.readPlayerNames();
+        return new Names(playerNames);
+    }
+
+    private List<Bet> setUpPlayerBets(Names playerNames) {
+        List<Bet> playerBetAmounts = new ArrayList<>();
+        for (Name playerName : playerNames.getNames()) {
+            outputView.printInputPlayerBetAmountMessage(playerName.getName());
+            playerBetAmounts.add(new Bet(inputView.readPlayerBetAmount()));
+        }
+        return playerBetAmounts;
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
