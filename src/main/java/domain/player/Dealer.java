@@ -3,8 +3,14 @@ package domain.player;
 import domain.card.Score;
 
 public class Dealer extends Player {
-    public Dealer() {
+    private static final Player dealer = new Dealer();
+    
+    private Dealer() {
         super("딜러");
+    }
+    
+    public static Player getInstance() {
+        return dealer;
     }
     
     @Override
