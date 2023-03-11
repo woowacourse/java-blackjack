@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.info;
 
 public class PlayerInfo {
 

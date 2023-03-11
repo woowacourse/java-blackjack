@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.hand;
 
 import java.util.Objects;
 

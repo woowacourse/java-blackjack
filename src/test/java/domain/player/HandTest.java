@@ -1,6 +1,8 @@
 package domain.player;
 
 import domain.card.*;
+import domain.player.hand.Hand;
+import domain.player.hand.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,8 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.player.hand.Hand;
+import domain.player.hand.Score;
 
 import java.util.List;
 

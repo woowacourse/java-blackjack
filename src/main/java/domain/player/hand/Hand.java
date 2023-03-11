@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.hand;
 
 import domain.card.Card;
 import domain.card.Cards;
