@@ -30,6 +30,10 @@ public class User {
         return hand.isBlackJack();
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public String getName() {
         return this.name;
     }

@@ -30,6 +30,10 @@ public class Dealer implements Receivable {
         user.receiveCard(card);
     }
 
+    public boolean isBust() {
+        return user.isBust();
+    }
+
     @Override
     public boolean isBlackJack() {
         return user.isBlackJack();

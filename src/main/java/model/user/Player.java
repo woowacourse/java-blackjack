@@ -36,11 +36,31 @@ public class Player implements Receivable {
     }
 
     public GameState judgeResult(final Dealer dealer) {
+        if (isBust() || dealer.isBust()) {
+            return judgeBustState(dealer);
+        }
+
         if (isBlackJack() || dealer.isBlackJack()) {
             return judgeBlackJack(dealer);
         }
 
         return judgeState(dealer.calculateTotalValue());
+    }
+
+    private GameState judgeBustState(final Dealer dealer) {
+        if (isBust() && dealer.isBust()) {
+            return LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return WIN;
+        }
+
+        return LOSE;
+    }
+
+    private boolean isBust() {
+        return user.isBust();
     }
 
     private GameState judgeBlackJack(final Dealer dealer) {
