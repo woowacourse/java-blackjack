@@ -21,7 +21,6 @@ public class ParticipantResult {
     public static ParticipantResult toDto(final String playerName,
                                           final List<Card> drawnCards,
                                           final int score) {
-
         List<String> cardsInfo = drawnCards.stream()
                 .map(CardNameRender::render)
                 .collect(toList());

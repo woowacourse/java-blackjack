@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class ParticipantGeneratorTest {
 
-
     @DisplayName("딜러 생성에 성공한다.")
     @Test
     void create_dealer_success() {
