@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,8 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pickStartCards(card1, card2);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pick(card1);
 
         assertThat(player.moreScoreThan(targetPlayer)).isTrue();
@@ -104,7 +106,8 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pick(card1);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pickStartCards(card1, card2);
 
         assertThat(player.moreScoreThan(targetPlayer)).isFalse();
@@ -117,7 +120,8 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pickStartCards(card1, card2);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pickStartCards(card1, card2);
 
         assertThat(player.isSameScore(targetPlayer)).isTrue();

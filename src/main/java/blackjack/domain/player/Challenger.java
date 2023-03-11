@@ -9,14 +9,13 @@ public class Challenger extends Player {
     private final ChallengerName name;
     private final Money money;
 
-    public Challenger(final String name) {
-        this.name = new ChallengerName(name);
-        this.money = Money.zero();
-    }
-
     public Challenger(final ChallengerNameAndMoneyDto challengerNameAndMoneyDto) {
         this.name = challengerNameAndMoneyDto.getChallengerName();
         this.money = challengerNameAndMoneyDto.getMoney();
+    }
+
+    public Money getMoney() {
+        return money;
     }
 
     @Override

@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
-import blackjack.domain.player.exception.InvalidPlayerNameException;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,22 +14,15 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChallengerTest {
-
-    @Test
-    @DisplayName("이름이 '딜러'인 경우 예외가 발생한다")
-    void validate_name() {
-        assertThrows(InvalidPlayerNameException.class,
-                () -> new Challenger("딜러"));
-    }
 
     @ParameterizedTest
     @MethodSource("provideCards")
     @DisplayName("가진 카드의 합이 21 초과인지 확인한다")
     void checking_sum_is_over_21(List<Card> cards, boolean expected) {
-        Player player = new Challenger("neo");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("neo"), Money.from(1000));
+        Player player = new Challenger(dto);
         for (Card card : cards) {
             player.pick(card);
         }
@@ -56,7 +49,8 @@ class ChallengerTest {
     @Test
     @DisplayName("도전자는 딜러가 아니다")
     void challenger_is_not_dealer() {
-        Challenger challenger = new Challenger("ditoo");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
+        Player challenger = new Challenger(dto);
 
         assertThat(challenger.isChallenger()).isTrue();
         assertThat(challenger.isDealer()).isFalse();
