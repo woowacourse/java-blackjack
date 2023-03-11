@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(0);
+                .isEqualTo(new Score(0));
     }
 
     @Test
@@ -50,7 +51,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(13);
+                .isEqualTo(new Score(13));
     }
 
     @Test
@@ -65,7 +66,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(14);
+                .isEqualTo(new Score(14));
     }
 
     @Test
@@ -81,7 +82,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(14);
+                .isEqualTo(new Score(14));
     }
 
     @Test
@@ -96,7 +97,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(20);
+                .isEqualTo(new Score(20));
     }
 
     @Test
@@ -112,7 +113,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateScore())
-                .isEqualTo(20);
+                .isEqualTo(new Score(20));
     }
 
     @Test
@@ -128,7 +129,7 @@ class HandTest {
 
     @DisplayName("카드의 숫자가 10, 10, 5 이면 버스트이다.")
     @Test
-    void isBust() {
+    void isBust_TenTenFive_True() {
         Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
                 Card.of(Suit.CLOVER, Denomination.TEN)));
 
@@ -137,14 +138,25 @@ class HandTest {
         assertThat(hand.isBust()).isTrue();
     }
 
+    @DisplayName("카드의 숫자가 ACE, 10, 5, 10 이면 버스트이다.")
+    @Test
+    void isBust_AceTenFiveTen_True() {
+        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.ACE),
+                Card.of(Suit.CLOVER, Denomination.TEN)));
+
+        hand.add(Card.of(Suit.DIAMOND, Denomination.FIVE));
+        hand.add(Card.of(Suit.DIAMOND, Denomination.TEN));
+
+        assertThat(hand.isBust()).isTrue();
+    }
+
     @DisplayName("카드의 숫자가 10, 10, ACE 이면 버스트가 아니다.")
     @Test
-    void isNotBust() {
+    void isBust_TenTenAce_False() {
         Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
                 Card.of(Suit.CLOVER, Denomination.TEN),
                 Card.of(Suit.SPADE, Denomination.ACE)
         ));
-
 
         assertThat(hand.isBust()).isFalse();
     }

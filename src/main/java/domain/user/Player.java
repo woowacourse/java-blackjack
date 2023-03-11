@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Score;
 
 public class Player {
 
@@ -16,7 +17,7 @@ public class Player {
         hand.add(card);
     }
 
-    public int sumHand() {
+    public Score sumHand() {
         return hand.calculateScore();
     }
 

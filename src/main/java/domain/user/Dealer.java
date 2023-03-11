@@ -1,14 +1,16 @@
 package domain.user;
 
+import domain.game.Score;
+
 public class Dealer extends Player {
 
-    private static final int DEALER_HIT_LIMIT = 16;
+    private static final Score DEALER_HIT_LIMIT = new Score(16);
 
     public Dealer(String playerName, Hand hand) {
         super(playerName, hand);
     }
 
     public boolean canHit() {
-        return sumHand() <= DEALER_HIT_LIMIT;
+        return sumHand().isLessThanOrEqual(DEALER_HIT_LIMIT);
     }
 }

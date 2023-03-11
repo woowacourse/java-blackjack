@@ -1,17 +1,13 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Denomination;
 import domain.game.Score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
-
-    private static final int BLACKJACK_NUMBER = 21;
-    private static final int BLACKJACK_CARD_SIZE = 2;
-    private static final int MIN_ACE = 1;
 
     private final List<Card> cards;
 
@@ -23,13 +19,13 @@ public class Hand {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         Score score = score();
         if (hasAce()) {
-            score = score.minusTenIfNotBust();
+            score = score.minusTenIfBust();
         }
 
-        return score.value();
+        return score;
     }
 
     private Score score() {
@@ -38,22 +34,36 @@ public class Hand {
                 .reduce(Score.min(), Score::sum);
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(card -> card.getDenomination() == Denomination.ACE)
-                .count();
-    }
-
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return calculateScore().isOverMax();
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public boolean isBust() {
-        return new Score(calculateScore()).isOverMax();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hand hand = (Hand) o;
+        return Objects.equals(cards, hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
+    }
+
+    @Override
+    public String toString() {
+        return "Hand{" +
+                "cards=" + cards +
+                '}';
     }
 }

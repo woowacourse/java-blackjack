@@ -18,7 +18,7 @@ public class Score {
         return min;
     }
 
-    public Score minusTenIfNotBust() {
+    public Score minusTenIfBust() {
         if (isMoreThan(max)) {
             return sub(aceSubtraction);
         }
@@ -46,6 +46,10 @@ public class Score {
         return value;
     }
 
+    public boolean isLessThanOrEqual(Score other) {
+        return value <= other.value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,5 +61,12 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "value=" + value +
+                '}';
     }
 }
