@@ -12,7 +12,7 @@ public enum PlayerGameResult {
         this.benefitRatio = benefitRatio;
     }
 
-    public int calculateRatio(int betAmount) {
+    public int calculateBenefit(int betAmount) {
         return (int) (this.benefitRatio * betAmount);
     }
 }

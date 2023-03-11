@@ -44,7 +44,7 @@ public class BetAmount {
     }
 
     public static BetAmount calculateProfit(PlayerGameResult playerGameResult, BetAmount betAmount) {
-        return BetAmount.from(playerGameResult.calculateRatio(betAmount.getMoney()));
+        return BetAmount.from(playerGameResult.calculateBenefit(betAmount.getMoney()));
     }
 
     public int getMoney() {

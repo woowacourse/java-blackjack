@@ -50,7 +50,7 @@ public class BlackjackGame {
         Map<Player, Integer> betResult = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
             PlayerGameResult playerGameResult = getPlayerGameResult(player);
-            int reward = playerGameResult.calculateRatio(player.getBetAmount());
+            int reward = playerGameResult.calculateBenefit(player.getBetAmount());
             betResult.put(player, reward);
         }
 
