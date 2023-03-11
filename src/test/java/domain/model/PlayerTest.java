@@ -158,4 +158,22 @@ class PlayerTest {
         //then
         assertThat(result).isTrue();
     }
+
+    @Test
+    @DisplayName("21점이지만 2장이 아니어서 블랙잭이 아닌 경우 테스트")
+    public void testIsNotBlackJackWhenScore21ButNot2Cards() {
+        //given
+        final Cards blackJackCards = new Cards(Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.SPADE, Letter.TEN),
+            new Card(Suit.SPADE, Letter.ACE)
+        ));
+        final Player player = new Player(blackJackCards, "test", Bet.of(1000D));
+
+        //when
+        boolean result = player.isNotBlackJack();
+
+        //then
+        assertThat(result).isTrue();
+    }
 }
