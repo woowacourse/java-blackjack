@@ -62,7 +62,7 @@ public class OutputView {
         printPlayerMessage(player, generateFirstCardMessages(player));
     }
 
-    public void printPlayerResult(final Player player) {
+    public void printPlayerGameResult(final Player player) {
         printPlayerMessage(player, generateCardMessages(player) + generateScoreMessage(player));
     }
 

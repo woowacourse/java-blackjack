@@ -35,7 +35,7 @@ public class BlackjackGameTest {
 
     private BlackjackGame generateBlackjackGame(final List<String> names) {
         final Players players = Players.from(names);
-        return new BlackjackGame(players, new BettingSystem(new HashMap<>()));
+        return new BlackjackGame(players, new BettingZone(new HashMap<>()));
     }
 
     @Test

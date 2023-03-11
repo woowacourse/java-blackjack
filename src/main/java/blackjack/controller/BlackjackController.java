@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
-import blackjack.domain.game.BettingSystem;
+import blackjack.domain.game.BettingZone;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
@@ -28,23 +28,30 @@ public class BlackjackController {
 
     public void run() {
         final BlackjackGame blackjackGame = generateBlackjackGame();
-
-        initialDraw(blackjackGame);
-        draw(blackjackGame);
-        printPlayerResult(blackjackGame);
-        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBet();
-        outputView.printGameResult(betMoneyMap);
+        drawInitialCards(blackjackGame);
+        drawAdditionalCards(blackjackGame);
+        printPlayerGameResult(blackjackGame);
+        printPlayerProfit(blackjackGame);
     }
 
     private BlackjackGame generateBlackjackGame() {
         final Players players = repeatUntilGetValidInput(inputView::readPlayers);
-        final BettingSystem bettingSystem = generateBettingSystem(players);
-        return new BlackjackGame(players, bettingSystem);
+        final BettingZone bettingZone = generateBettingZone(players);
+        return new BlackjackGame(players, bettingZone);
     }
 
-    private BettingSystem generateBettingSystem(final Players players) {
-        final List<Player> gamePlayers = players.getPlayers();
-        final LinkedHashMap<Player, Money> betMoneyByPlayers = gamePlayers.stream()
+    private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return repeatUntilGetValidInput(supplier);
+        }
+    }
+
+    private BettingZone generateBettingZone(final Players players) {
+        final List<Player> allPlayers = players.getPlayers();
+        final LinkedHashMap<Player, Money> betMoneyByPlayers = allPlayers.stream()
                 .filter(player -> !player.isDealer())
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -52,15 +59,15 @@ public class BlackjackController {
                         (betMoney, betMoney2) -> betMoney,
                         LinkedHashMap::new
                 ));
-        return new BettingSystem(betMoneyByPlayers);
+        return new BettingZone(betMoneyByPlayers);
     }
 
-    private void initialDraw(final BlackjackGame blackjackGame) {
+    private void drawInitialCards(final BlackjackGame blackjackGame) {
         blackjackGame.drawInitialCards(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
-    private void draw(final BlackjackGame blackjackGame) {
+    private void drawAdditionalCards(final BlackjackGame blackjackGame) {
         final List<Player> players = blackjackGame.getPlayers();
         for (Player player : players) {
             drawByGambler(blackjackGame, player);
@@ -81,19 +88,15 @@ public class BlackjackController {
         return player.isDrawable() && !player.isDealer();
     }
 
-    private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return repeatUntilGetValidInput(supplier);
+    private void printPlayerGameResult(final BlackjackGame blackjackGame) {
+        final List<Player> players = blackjackGame.getPlayers();
+        for (final Player player : players) {
+            outputView.printPlayerGameResult(player);
         }
     }
 
-    private void printPlayerResult(final BlackjackGame blackjackGame) {
-        final List<Player> players = blackjackGame.getPlayers();
-        for (final Player player : players) {
-            outputView.printPlayerResult(player);
-        }
+    private void printPlayerProfit(final BlackjackGame blackjackGame) {
+        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBet();
+        outputView.printGameResult(betMoneyMap);
     }
 }

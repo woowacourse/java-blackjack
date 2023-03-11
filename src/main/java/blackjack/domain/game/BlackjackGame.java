@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class BlackjackGame {
     private final Players players;
-    private final BettingSystem bettingSystem;
+    private final BettingZone bettingZone;
 
-    public BlackjackGame(final Players players, final BettingSystem bettingSystem) {
+    public BlackjackGame(final Players players, final BettingZone bettingZone) {
         this.players = players;
-        this.bettingSystem = bettingSystem;
+        this.bettingZone = bettingZone;
     }
 
     public void drawInitialCards(Deck deck) {
@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     public Map<Player, Money> calculateBet() {
-        return bettingSystem.getProfitResult(players.play());
+        return bettingZone.getProfitByPlayers(players.play());
     }
 
     public List<Player> getPlayers() {

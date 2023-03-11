@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class BettingSystemTest {
+public class BettingZoneTest {
 
     @Test
     void 겜블러의_수입을_반환한다() {
@@ -25,9 +25,9 @@ public class BettingSystemTest {
         for (Player player : players.getPlayers()) {
             betMoneyByPlayer.put(player, Money.createMoneyForBetting(10000));
         }
-        final BettingSystem bettingSystem = new BettingSystem(betMoneyByPlayer);
+        final BettingZone bettingZone = new BettingZone(betMoneyByPlayer);
 
-        final BlackjackGame blackjackGame = new BlackjackGame(players, bettingSystem);
+        final BlackjackGame blackjackGame = new BlackjackGame(players, bettingZone);
         blackjackGame.drawInitialCards(new FixedDeck(List.of(
                 ACE_DIAMOND,
                 JACK_SPADE,
@@ -37,7 +37,7 @@ public class BettingSystemTest {
                 QUEEN_SPADE
         )));
 
-        assertThat(bettingSystem.getProfitResult(blackjackGame.play()).values())
+        assertThat(bettingZone.getProfitByPlayers(blackjackGame.play()).values())
                 .extracting(Money::getAmount)
                 .containsExactly(-10000, -10000);
     }
