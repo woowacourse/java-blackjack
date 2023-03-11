@@ -162,4 +162,98 @@ class RefereeTest {
         // then
         assertThat(betResult).isEqualTo(-1000);
     }
+    
+    @Test
+    @DisplayName("참가자가 19, 딜러 버스트면 배팅 금액 그대로 반환")
+    void participant19_dealerBust() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        dealer.draw(new Card(Shape.HEART, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.NINE));
+        abel.drawStop();
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(1000);
+    }
+    
+    @Test
+    @DisplayName("참가자가 19, 딜러 18이면 배팅 금액 그대로 반환")
+    void participant19_dealer18() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.EIGHT));
+        dealer.drawStop();
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.NINE));
+        abel.drawStop();
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(1000);
+    }
+    
+    @Test
+    @DisplayName("참가자가 19, 딜러 19이면 0원 반환")
+    void participant19_dealer19() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.NINE));
+        dealer.drawStop();
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.NINE));
+        abel.drawStop();
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isZero();
+    }
+    
+    @Test
+    @DisplayName("참가자가 19, 딜러 20이면 -배팅 금액 반환")
+    void participant19_dealer20() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.JACK));
+        dealer.drawStop();
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.NINE));
+        abel.drawStop();
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(-1000);
+    }
+    
+    @Test
+    @DisplayName("참가자가 19, 딜러 블랙잭이면 -배팅 금액 반환")
+    void participant19_dealerBlackjack() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.ACE));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.NINE));
+        abel.drawStop();
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(-1000);
+    }
 }
