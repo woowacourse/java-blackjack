@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class BettingTest {
+class BettingTableTest {
 
     @Nested
     class addBonus_메서드는 {
@@ -31,9 +31,9 @@ class BettingTest {
             final Player player = new Player("toney");
 
             final Map<Player, Profit> expectedProfit = new HashMap<>();
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThatThrownBy(() -> betting.addBonus(player)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> bettingTable.addBonus(player)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -44,10 +44,10 @@ class BettingTest {
 
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(player, new Profit(10000));
-            final Betting betting = new Betting(expectedProfit);
-            betting.addBonus(player);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
+            bettingTable.addBonus(player);
 
-            assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(15000);
+            assertThat(bettingTable.getPlayerProfit(player).getValue()).isEqualTo(15000);
         }
     }
 
@@ -59,9 +59,9 @@ class BettingTest {
             final Player player = new Player("toney");
 
             final Map<Player, Profit> expectedProfit = new HashMap<>();
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThatThrownBy(() -> betting.updateByResult(player, WIN)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> bettingTable.updateByResult(player, WIN)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Nested
@@ -73,10 +73,10 @@ class BettingTest {
 
                 final Map<Player, Profit> expectedProfit = new HashMap<>();
                 expectedProfit.put(player, new Profit(10000));
-                final Betting betting = new Betting(expectedProfit);
-                betting.updateByResult(player, WIN);
+                final BettingTable bettingTable = new BettingTable(expectedProfit);
+                bettingTable.updateByResult(player, WIN);
 
-                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(10000);
+                assertThat(bettingTable.getPlayerProfit(player).getValue()).isEqualTo(10000);
             }
 
             @Test
@@ -85,10 +85,10 @@ class BettingTest {
 
                 final Map<Player, Profit> expectedProfit = new HashMap<>();
                 expectedProfit.put(player, new Profit(10000));
-                final Betting betting = new Betting(expectedProfit);
-                betting.updateByResult(player, DRAW);
+                final BettingTable bettingTable = new BettingTable(expectedProfit);
+                bettingTable.updateByResult(player, DRAW);
 
-                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(0);
+                assertThat(bettingTable.getPlayerProfit(player).getValue()).isEqualTo(0);
             }
 
             @Test
@@ -97,10 +97,10 @@ class BettingTest {
 
                 final Map<Player, Profit> expectedProfit = new HashMap<>();
                 expectedProfit.put(player, new Profit(10000));
-                final Betting betting = new Betting(expectedProfit);
-                betting.updateByResult(player, LOSE);
+                final BettingTable bettingTable = new BettingTable(expectedProfit);
+                bettingTable.updateByResult(player, LOSE);
 
-                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(-10000);
+                assertThat(bettingTable.getPlayerProfit(player).getValue()).isEqualTo(-10000);
             }
         }
     }
@@ -113,9 +113,9 @@ class BettingTest {
             final Player player = new Player("toney");
 
             final Map<Player, Profit> expectedProfit = new HashMap<>();
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThatThrownBy(() -> betting.getPlayerProfit(player)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> bettingTable.getPlayerProfit(player)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -124,9 +124,9 @@ class BettingTest {
 
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(player, new Profit(10000));
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(10000);
+            assertThat(bettingTable.getPlayerProfit(player).getValue()).isEqualTo(10000);
         }
     }
 
@@ -141,9 +141,9 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(firstPlayer, new Profit(20000));
             expectedProfit.put(secondPlayer, new Profit(-10000));
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThat(betting.getDealerProfit().getValue()).isEqualTo(-10000);
+            assertThat(bettingTable.getDealerProfit().getValue()).isEqualTo(-10000);
         }
 
         @Test
@@ -154,9 +154,9 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(firstPlayer, new Profit(-20000));
             expectedProfit.put(secondPlayer, new Profit(10000));
-            final Betting betting = new Betting(expectedProfit);
+            final BettingTable bettingTable = new BettingTable(expectedProfit);
 
-            assertThat(betting.getDealerProfit().getValue()).isEqualTo(10000);
+            assertThat(bettingTable.getDealerProfit().getValue()).isEqualTo(10000);
         }
     }
 }

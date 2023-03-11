@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.BettingTable;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,14 +49,14 @@ public class Participants {
         }
     }
 
-    public void receiveBlackJackBonus(final Betting betting) {
+    public void receiveBlackJackBonus(final BettingTable bettingTable) {
         final List<Player> players = getPlayers();
-        players.forEach(player -> calculateBlackJackBonus(player, betting));
+        players.forEach(player -> calculateBlackJackBonus(player, bettingTable));
     }
 
-    private void calculateBlackJackBonus(final Player player, final Betting betting) {
+    private void calculateBlackJackBonus(final Player player, final BettingTable bettingTable) {
         if (player.isBlackJack()) {
-            betting.addBonus(player);
+            bettingTable.addBonus(player);
         }
     }
 

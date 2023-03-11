@@ -4,13 +4,13 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Result;
 import java.util.Map;
 
-public class Betting {
+public class BettingTable {
 
     private static final int BONUS_PERCENT = 50;
 
     private final Map<Player, Profit> expectedProfit;
 
-    public Betting(final Map<Player, Profit> expectedProfit) {
+    public BettingTable(final Map<Player, Profit> expectedProfit) {
         this.expectedProfit = expectedProfit;
     }
 
