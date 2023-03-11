@@ -44,7 +44,7 @@ class ParticipantTest {
             assertThat(participant.getState()).isInstanceOf(Blackjack.class);
         }
 
-        @DisplayName("TEN, TEN, FIVE를 hit하면 Blackjack상태이다")
+        @DisplayName("TEN, TEN, FIVE를 hit하면 Bust상태이다")
         @Test
         void hit_aceTen_Bust() {
             Participant participant = new Participant("maco");
