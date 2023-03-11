@@ -41,6 +41,10 @@ public class Cards {
         return getSum() >= BLACK_JACK;
     }
 
+    public boolean isBlackJack() {
+        return getSum() == BLACK_JACK && cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return cards;
     }

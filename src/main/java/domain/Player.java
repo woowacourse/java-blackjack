@@ -19,6 +19,10 @@ public class Player {
         return cards.isOverBlackJack();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public String getName() {
         return name.getName();
     }
@@ -31,7 +35,5 @@ public class Player {
         return cards.getSum();
     }
 
-    public boolean isBlackJack() {
-        return getCardsSum() == 21 && getCards().size() == 2;
-    }
+
 }
