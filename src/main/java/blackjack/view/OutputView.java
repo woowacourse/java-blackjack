@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.gameplayer.BlackJackParticipant;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
@@ -26,10 +27,17 @@ public class OutputView {
 
     public void printStart(Players players, Dealer dealer) {
         printStartMessage(players.getPlayersName());
-        printDealerCards(dealer, System.lineSeparator());
+        System.out.print(DEALER_MESSAGE);
+        printBlackJackParticipantCards(dealer, System.lineSeparator());
         for (Player player : players) {
-            printPlayerCards(player, System.lineSeparator());
+            printPlayerName(player);
+            printBlackJackParticipantCards(player, System.lineSeparator());
         }
+    }
+
+    public void printPlayerName(Player player) {
+        String name = player.showName();
+        System.out.print(name + CARD_MESSAGE);
     }
 
     private void printStartMessage(List<String> names) {
@@ -42,18 +50,9 @@ public class OutputView {
         System.out.println(names.get(lastIndex) + INIT_END_MESSAGE);
     }
 
-    public void printPlayerCards(Player player, String end) {
-        String name = player.showName();
+    public void printBlackJackParticipantCards(BlackJackParticipant player, String end) {
         List<Card> cards = player.showCards();
         int lastIndex = cards.size() - 1;
-        System.out.print(name + CARD_MESSAGE);
-        printCards(cards, end, lastIndex);
-    }
-
-    private void printDealerCards(Dealer dealer, String end) {
-        List<Card> cards = dealer.showAllCards();
-        int lastIndex = cards.size() - 1;
-        System.out.print(DEALER_MESSAGE);
         printCards(cards, end, lastIndex);
     }
 
@@ -73,13 +72,14 @@ public class OutputView {
 
     public void printDealerResult(Dealer dealer) {
         int score = dealer.calculateScore().getScore();
-        System.out.println();
-        printDealerCards(dealer, EMPTY);
+        System.out.println(DEALER_MESSAGE);
+        printBlackJackParticipantCards(dealer, EMPTY);
         System.out.println(RESULT_MESSAGE + score);
     }
 
     public void printPlayerResult(Player player) {
-        printPlayerCards(player, EMPTY);
+        printPlayerName(player);
+        printBlackJackParticipantCards(player, EMPTY);
         int score = player.calculateScore().getScore();
         System.out.println(RESULT_MESSAGE + score);
     }
