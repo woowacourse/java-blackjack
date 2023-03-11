@@ -6,9 +6,10 @@ import blackjack.domain.participant.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResultGame {
-    private final HashMap<Player, WinTieLose> playersResult;
+    private final Map<Player, WinTieLose> playersResult;
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -26,7 +27,7 @@ public class ResultGame {
         return playersResult.get(player);
     }
 
-    public HashMap<Player, WinTieLose> getPlayersResult() {
+    public Map<Player, WinTieLose> getPlayersResult() {
         return this.playersResult;
     }
 

@@ -20,6 +20,18 @@ public class ParticipantsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자들이 존재하지 않습니다.");
     }
+    @Test
+    @DisplayName("플레이어가 9명 이상일때 에러 테스트")
+    void validatePlayerCountsFail(){
+        Assertions.assertThatThrownBy(()->new Participants(new Dealer(),List.of("1","2","3","4","5","6","7","8","9")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참여자는 8명 이하여야 합니다.");
+    }
+    @Test
+    @DisplayName("플레이어가 9명 이상일때 에러 테스트")
+    void validatePlayerCountsSuccess(){
+        Assertions.assertThatNoException().isThrownBy(()->new Participants(new Dealer(),List.of("1","2","3","4","5","6","7","8")));
+    }
 
     @Test
     @DisplayName("딜러를 반환하는 테스트")

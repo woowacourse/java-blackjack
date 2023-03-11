@@ -5,17 +5,26 @@ import java.util.stream.Collectors;
 
 public class Participants {
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
+    private static final String PLAYERS_COUNT_LIMIT_MASSAGE = "참여자는 8명 이하여야 합니다.";
+    private static final int PLAYERS_COUNT_LIMIT = 8;
 
     private final Dealer dealer;
     private final List<Player> players;
 
     public Participants(final Dealer dealer, List<String> players) {
-        validateEmptyNames(players);
-
+        validate(players);
         this.dealer = dealer;
         this.players = makePlayer(players);
     }
-
+    private void validate(List<String> players){
+        validatePlayerLimit(players);
+        validateEmptyNames(players);
+    }
+    private void validatePlayerLimit(List<String> players){
+        if(players.size()> PLAYERS_COUNT_LIMIT){
+            throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
+        }
+    }
     private void validateEmptyNames(final List<String> players) {
         players.forEach(Participants::checkNameIsEmpty);
     }

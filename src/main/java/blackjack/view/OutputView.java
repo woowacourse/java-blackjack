@@ -33,16 +33,14 @@ public class OutputView {
 
 
     public void outputParticipantCards(ParticipantsDto participantsDto) {
-        outputPlayerCard(DEALER_NAME, participantsDto.getDealerCards());
-        changeLine();
+        System.out.println(playerNameAndCards(DEALER_NAME,participantsDto.getDealerCards()));;
         participantsDto.getParticipantsMap().forEach((name, cards) -> {
-            outputPlayerCard(name, cards);
-            changeLine();
+            System.out.println(playerNameAndCards(name,cards));
         });
     }
 
     public void outputPlayerCard(final String name, final CardsDto cards) {
-        System.out.print(playerNameAndCards(name,cards));
+        System.out.println(playerNameAndCards(name,cards));
     }
     private String playerNameAndCards(final String name, final CardsDto cards){
         return name + PLAYER_SCORE_DELIMITER +
@@ -61,14 +59,15 @@ public class OutputView {
     }
 
     public void outputCardsAndScore(ParticipantsDto participantsDto) {
+        changeLine();
         System.out.print(playerNameAndCards(DEALER_NAME,participantsDto.getDealerCards()));
         outputScore(participantsDto.getDealerCards().getTotalScore());
         changeLine();
         participantsDto.getParticipantsMap().forEach((name, cards) -> {
-            outputPlayerCard(name, cards);
+            System.out.print(playerNameAndCards(name,cards));
             outputScore(cards.getTotalScore());
-            changeLine();
         });
+        changeLine();
         changeLine();
     }
     private void outputScore(final int score) {
