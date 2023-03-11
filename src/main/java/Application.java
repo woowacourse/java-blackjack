@@ -21,20 +21,20 @@ public class Application {
     public static void main(String[] args) {
         Participants participants = Participants.of(INPUT_VIEW.readNames());
         Game game = new Game(participants, new Deck());
-        bet(game);
+        placeBet(game);
         start(game);
         play(game);
         showCardsAndScores(game);
         showResultsOf(game);
     }
 
-    private static void bet(Game game) {
+    private static void placeBet(Game game) {
         for (User user : game.getUsers()) {
-            bet(game, user);
+            placeBet(game, user);
         }
     }
 
-    private static void bet(Game game, User user) {
+    private static void placeBet(Game game, User user) {
         IllegalArgumentExceptionHandler.handleByRepeating(() -> {
             int betAmount = INPUT_VIEW.askBetAmount(user.getName());
             Money money = Money.of(betAmount);
