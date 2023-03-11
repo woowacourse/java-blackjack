@@ -23,13 +23,13 @@ public class InputView {
     }
 
     public static Command askToTake(String playerName) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         String keyword = scanner.nextLine();
         return Command.of(keyword);
     }
 
     public static int askBetMoney(String playerName) {
-        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
         return Integer.parseInt(scanner.nextLine());
     }
 }
