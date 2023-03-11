@@ -40,14 +40,6 @@ class GameRefereeTest {
                 .isTrue();
     }
 
-    private LinkedHashMap<Participant, ParticipantMoney> makeParticipantInfo(final Participant player,
-                                                                             final Participant dealer) {
-        return new LinkedHashMap<>(Map.ofEntries(
-                Map.entry(dealer, ParticipantMoney.zero()),
-                Map.entry(player, ParticipantMoney.create(10000))
-        ));
-    }
-
     @Test
     @DisplayName("FIRST_TURN_PLAYER_WIN은 호출하면 첫 턴에 플레이어가 승리한지 확인한다.")
     void FIRST_TURN_PLAYER_WIN_whenCall_thenReturnIsPlayerWin() {
@@ -157,5 +149,13 @@ class GameRefereeTest {
         // then
         assertThat(isDealerWin)
                 .isTrue();
+    }
+
+    private Map<Participant, ParticipantMoney> makeParticipantInfo(final Participant player,
+                                                                   final Participant dealer) {
+        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
+        participantInfo.put(dealer, ParticipantMoney.zero());
+        participantInfo.put(player, ParticipantMoney.create(10000));
+        return participantInfo;
     }
 }
