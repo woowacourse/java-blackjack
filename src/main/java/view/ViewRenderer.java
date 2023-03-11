@@ -54,7 +54,7 @@ public class ViewRenderer {
 	}
 
 	public static NameCardScoreDto toNameCardScore(final Player player) {
-		String score = Integer.toString(player.getScore().getValue());
+		String score = Integer.toString(player.getScore());
 		return new NameCardScoreDto(player.getName(), toCards(player), score);
 	}
 

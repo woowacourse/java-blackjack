@@ -45,8 +45,8 @@ public class PlayerStatus {
 		return new ArrayList<>(cards.getCards());
 	}
 
-	public Score getScore() {
-		return score;
+	public int getScore() {
+		return score.getValue();
 	}
 
 	public int getBet() {

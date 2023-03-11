@@ -38,7 +38,7 @@ public class Player {
         return status.getCards();
     }
 
-    public Score getScore() {
+    public int getScore() {
         return status.getScore();
     }
 

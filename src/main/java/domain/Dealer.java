@@ -11,6 +11,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canReceiveCard() {
-        return super.getScore().getValue() <= MIN_SCORE_THRESHOLD;
+        return super.getScore() <= MIN_SCORE_THRESHOLD;
     }
 }
