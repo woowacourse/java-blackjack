@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.deck.TestDeckForThreeParticipant;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
