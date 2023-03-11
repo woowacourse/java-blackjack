@@ -24,21 +24,6 @@ public class Money {
         }
     }
 
-    public Money winMoney(final boolean isBlackjack) {
-        if (isBlackjack) {
-            return new Money((int) (amount * 2.5));
-        }
-        return new Money(amount * 2);
-    }
-
-    public Money loseMoney() {
-        return this.subtract(this);
-    }
-
-    public Money subtract(final Money money) {
-        return new Money(this.amount - money.amount);
-    }
-
     public Money calculateProfit(final double payoutRatio) {
         return new Money((int) (this.amount * payoutRatio));
     }

@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,36 +30,6 @@ public class MoneyTest {
         assertThatThrownBy(() -> Money.createMoneyForBetting(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Money.INVALID_BETTING_AMOUNT_RANGE_MESSAGE + money);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"true, 2500", "false, 2000"})
-    void 이긴_배팅_금액을_얻는다(final boolean isBlackjack, final int expectedMoney) {
-        final Money money = Money.createMoneyForBetting(1000);
-
-        final Money winMoney = money.winMoney(isBlackjack);
-
-        assertThat(winMoney.getAmount()).isEqualTo(expectedMoney);
-    }
-
-    @Test
-    void 진_배팅_금액을_얻는다() {
-        final Money money = Money.createMoneyForBetting(1000);
-
-        final Money loseMoney = money.loseMoney();
-
-        assertThat(loseMoney.getAmount()).isEqualTo(0);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"10000, 5000, 5000", "5000, 10000, -5000"})
-    void 뺄셈_결과를_반환한다(final int original, final int afterGame, final int expectedDifference) {
-        final Money originalMoney = Money.createMoneyForBetting(original);
-        final Money afterGameMoney = Money.createMoneyForBetting(afterGame);
-
-        final Money income = afterGameMoney.subtract(originalMoney);
-
-        assertThat(income).isEqualTo(Money.createMoneyForBetting(expectedDifference));
     }
 
     @ParameterizedTest
