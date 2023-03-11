@@ -64,4 +64,12 @@ class PlayerTest {
         assertThat(player.canHit()).isEqualTo(canHit);
     }
 
+    @ParameterizedTest(name = "사용자의 응답에 따라 사용자의 상태는 STAY가 된다.")
+    @CsvSource({"false, STAY", "true,PLAYING"})
+    void test_updateStatusToStay(boolean isYes, Status status) {
+        player.updateStatusToStay(isYes);
+
+        assertThat(player.status()).isEqualTo(status);
+    }
+
 }
