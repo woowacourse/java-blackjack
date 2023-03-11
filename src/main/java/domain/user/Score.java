@@ -16,6 +16,10 @@ public class Score {
         calculate(cards);
     }
 
+    public Score(int score) {
+        this.score = score;
+    }
+
     public void calculate(List<Card> cards) {
         List<Integer> numbers = convertCardsToNumbers(cards);
         int aceCount = countOfAce(numbers);
