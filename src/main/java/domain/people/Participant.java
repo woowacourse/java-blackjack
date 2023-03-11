@@ -1,14 +1,13 @@
 package domain.people;
 
 import java.util.List;
-import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Hand;
 
 public class Participant {
-    private static final int BUST_BOUNDARY_VALUE = 21;
-    private static final int BUST_HAND_VALUE = 0;
+    private static final int BLACKJACK_VALUE = 21;
+    public static final int BUST_HAND_VALUE = 0;
 
     private final Hand hand;
     private final String name;
@@ -22,16 +21,8 @@ public class Participant {
         hand.addCard(card);
     }
 
-    public int fetchParticipantHandValue() {
-        int participantHandValue = fetchHandValue();
-        if (participantHandValue > BUST_BOUNDARY_VALUE) {
-            participantHandValue = BUST_HAND_VALUE;
-        }
-        return participantHandValue;
-    }
-
     public int fetchHandValue() {
-        return hand.calculateValue();
+        return hand.calculateHandValue();
     }
 
     public List<Card> fetchHand() {
@@ -42,18 +33,7 @@ public class Participant {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Participant that = (Participant)o;
-        return Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public boolean isBust() {
+        return hand.isBust();
     }
 }
