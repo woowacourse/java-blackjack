@@ -21,12 +21,18 @@ public class HandCards {
 
     public int calculateScore() {
         int scoreSum = ZERO_SCORE;
-        boolean hasAce = false;
         for (Card card : cards) {
             scoreSum += card.getValue();
+        }
+        return getAceCase(aceCheck(), scoreSum);
+    }
+
+    private boolean aceCheck() {
+        boolean hasAce = false;
+        for (Card card : cards) {
             hasAce = hasAce || card.isAce();
         }
-        return getAceCase(hasAce, scoreSum);
+        return hasAce;
     }
 
     private int getAceCase(boolean hasAce, int scoreSum) {
