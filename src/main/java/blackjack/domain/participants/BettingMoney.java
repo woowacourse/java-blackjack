@@ -2,6 +2,8 @@ package blackjack.domain.participants;
 
 public class BettingMoney {
 
+    public static final int MIN = 1000;
+
     private final int amount;
 
     public BettingMoney(final int amount) {
@@ -10,8 +12,8 @@ public class BettingMoney {
     }
 
     private void validate(final int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("베팅 금액은 0보다 큰 수여야 합니다.");
+        if (amount < MIN) {
+            throw new IllegalArgumentException("베팅 금액은 1000원 이상이어야 합니다.");
         }
     }
 
