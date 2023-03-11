@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,6 +37,16 @@ class HandTest {
                 Arguments.of(List.of(new Card(ACE, SPADE), new Card(QUEEN, HEART), new Card(TEN, CLOVER)), 21),
                 Arguments.of(List.of(new Card(ACE, SPADE), new Card(ACE, HEART)), 12)
         );
+    }
+
+    @Test
+    void 카드를_추가한다() {
+        final List<Card> cards = List.of(new Card(ACE, SPADE), new Card(TWO, HEART));
+        final Hand hand = new Hand(cards);
+
+        final Hand newHand = hand.addCard(new Card(QUEEN, CLOVER));
+
+        assertThat(newHand.count()).isEqualTo(3);
     }
 
     @ParameterizedTest

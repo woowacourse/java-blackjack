@@ -11,33 +11,6 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardTest {
 
-    @Test
-    void 문양_이름을_확인한다() {
-        final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
-
-        assertThat(card.getSuitName()).isEqualTo("스페이드");
-    }
-
-    @Test
-    void 숫자_이름을_확인한다() {
-        final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
-
-        assertThat(card.getNumberName()).isEqualTo("A");
-    }
-
-    @Test
-    void 숫자_점수를_확인한다() {
-        final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
-
-        assertThat(card.getScore()).isEqualTo(1);
-    }
-
     @Nested
     class isAce_메서드는 {
 
@@ -58,5 +31,32 @@ class CardTest {
 
             assertThat(card.isAce()).isFalse();
         }
+    }
+
+    @Test
+    void 숫자_점수를_확인한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.ACE;
+        final Card card = new Card(number, suit);
+
+        assertThat(card.getScore()).isEqualTo(1);
+    }
+
+    @Test
+    void 숫자_이름을_확인한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.ACE;
+        final Card card = new Card(number, suit);
+
+        assertThat(card.getNumberName()).isEqualTo("A");
+    }
+
+    @Test
+    void 문양_이름을_확인한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.ACE;
+        final Card card = new Card(number, suit);
+
+        assertThat(card.getSuitName()).isEqualTo("스페이드");
     }
 }

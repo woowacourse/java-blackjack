@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -213,5 +214,16 @@ class DealerTest {
 
             assertThat(dealer.isBlackJack()).isFalse();
         }
+    }
+
+    @Test
+    void 딜러의_마지막_카드는_확인할_수_없다() {
+        final Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(SEVEN, HEART));
+        dealer.drawCard(new Card(NINE, DIAMOND));
+
+        final Hand hand = dealer.getHiddenHand();
+
+        assertThat(hand.count()).isEqualTo(1);
     }
 }

@@ -13,28 +13,6 @@ public class Dealer extends Participant {
         super();
     }
 
-    @Override
-    public boolean isDrawable() {
-        return isDrawableCardCount() && isDrawableScore();
-    }
-
-    private boolean isDrawableCardCount() {
-        return hand.count() <= BLACK_JACK_CARD_COUNT;
-    }
-
-    private boolean isDrawableScore() {
-        return hand.calculateTotalScore() <= MAXIMUM_DRAWABLE_SCORE;
-    }
-
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
     public Result showResult(final int score) {
         final int dealerScore = getScore();
         if (score > BLACK_JACK_SCORE) {
@@ -54,7 +32,29 @@ public class Dealer extends Participant {
         return new Hand(cards.subList(0, cards.size() - 1));
     }
 
+    public String getName() {
+        return NAME;
+    }
+
     public int getMaximumDrawableScore() {
         return MAXIMUM_DRAWABLE_SCORE;
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return isDrawableCardCount() && isDrawableScore();
+    }
+
+    private boolean isDrawableCardCount() {
+        return hand.count() <= BLACK_JACK_CARD_COUNT;
+    }
+
+    private boolean isDrawableScore() {
+        return hand.calculateTotalScore() <= MAXIMUM_DRAWABLE_SCORE;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
     }
 }

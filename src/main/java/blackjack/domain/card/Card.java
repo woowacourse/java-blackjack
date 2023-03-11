@@ -18,11 +18,11 @@ public class Card {
         return number.getScore();
     }
 
-    public String getNumberName() {
-        return number.getName();
-    }
-
     public String getSuitName() {
         return suit.getName();
+    }
+
+    public String getNumberName() {
+        return number.getName();
     }
 }

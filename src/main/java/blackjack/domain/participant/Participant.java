@@ -33,7 +33,7 @@ public abstract class Participant {
         return hand;
     }
 
-    public abstract boolean isDrawable();
-
     public abstract boolean isDealer();
+
+    public abstract boolean isDrawable();
 }
