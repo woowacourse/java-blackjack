@@ -4,7 +4,6 @@ import domain.card.Deck;
 import domain.card.RandomShuffleStrategy;
 import domain.participant.*;
 import domain.result.GameResult;
-import domain.result.Result;
 import view.InputView;
 import view.OutputView;
 
@@ -138,11 +137,13 @@ public class BlackJackController {
     }
 
     private void showParticipantsWinningStatus(final GameResult gameResult) {
-        Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResult.getDealerStatus(playerResults);
-        OutputView.printDealerResult(dealerResults);
-        for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
-            OutputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
+        int dealerPrize = 0;
+
+        Map<Participant, Integer> playersPrize = gameResult.getPlayerStatus();
+        for (Map.Entry<Participant, Integer> playerPrize : playersPrize.entrySet()) {
+            dealerPrize += playerPrize.getValue() * -1;
         }
+
+        OutputView.printParticipantsPrize(dealerPrize, playersPrize);
     }
 }
