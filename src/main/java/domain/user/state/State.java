@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class State {
 
+    public static final String NOT_TERMINATED_YET = "게임 종료 전입니다.";
+
     protected Cards cards;
 
     protected State() {
@@ -19,15 +21,25 @@ public abstract class State {
 
     public abstract State draw(Card card);
 
-    public abstract boolean isDrawable();
+    public boolean isDrawable() {
+        return true;
+    }
 
-    public abstract State stay();
+    public State stay() {
+        throw new IllegalStateException("게임 시작 전입니다.");
+    }
 
-    public abstract Winning match(State dealer);
+    public Winning match(State dealer) {
+        throw new IllegalStateException(NOT_TERMINATED_YET);
+    }
 
-    public abstract boolean isBlackJack();
+    public boolean isBlackJack() {
+        throw new IllegalStateException(NOT_TERMINATED_YET);
+    }
 
-    public abstract boolean isBust();
+    public boolean isBust() {
+        throw new IllegalStateException(NOT_TERMINATED_YET);
+    }
 
     public List<Card> getCards() {
         return cards.getCards();
