@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class MoneyTest {
 
     @Test
-    @DisplayName("금액은 음수로 생성할 수 없다")
+    @DisplayName("원금은 음수로 생성할 수 없다")
     void test_money_is_not_negative() {
         assertThatThrownBy(() -> Money.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -59,5 +59,15 @@ public class MoneyTest {
         var other = Money.of(otherValue);
 
         assertThat(money.isLessThan(other)).isEqualTo(isLess);
+    }
+
+    @Test
+    @DisplayName("원금 대비 수익을 알 수 있다.")
+    void test_calculateProfit() {
+        var money = Money.of(1234);
+        money = money.add(money.multiply(1.2));
+        money = money.add(Money.of(750));
+
+        assertThat(money.getProfit()).isEqualTo(2230);
     }
 }

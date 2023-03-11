@@ -2,9 +2,15 @@ package domain;
 
 public class Money {
 
+    private final int principal;
     private final int value;
 
     private Money(int value) {
+        this(value, value);
+    }
+
+    private Money(int principal, int value) {
+        this.principal = principal;
         this.value = value;
     }
 
@@ -15,20 +21,20 @@ public class Money {
 
     private static void validateNotNegative(int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("금액은 음수로 생성할 수 없습니다");
+            throw new IllegalArgumentException("원금은 음수로 생성할 수 없습니다");
         }
     }
 
     public Money add(Money other) {
-        return new Money(value + other.value);
+        return new Money(principal, value + other.value);
     }
 
     public Money sub(Money other) {
-        return new Money(value - other.value);
+        return new Money(principal, value - other.value);
     }
 
     public Money multiply(double multiplier) {
-        return new Money((int)(value * multiplier));
+        return new Money(principal, (int)(value * multiplier));
     }
 
     public boolean isLessThan(Money other) {
@@ -50,5 +56,9 @@ public class Money {
     @Override
     public int hashCode() {
         return value;
+    }
+
+    public int getProfit() {
+        return value - principal;
     }
 }
