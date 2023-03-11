@@ -6,7 +6,7 @@ public class Bet {
     private final int amount;
     private int profit = PROFIT_INITIAL_VALUE;
 
-    Bet(int amount) {
+    public Bet(int amount) {
         validateBetAmount(amount);
         this.amount = amount;
     }
