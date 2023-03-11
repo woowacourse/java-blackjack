@@ -10,6 +10,7 @@ import blackjack.view.outputWord.DenominationWord;
 import blackjack.view.outputWord.JudgeResultWord;
 import blackjack.view.outputWord.SuitWord;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -75,5 +76,9 @@ public class OutputView {
 
     public static void showInputErrorMessage(final String message) {
         System.out.printf(INPUT_ERROR_MESSAGE_FORMAT, message);
+    }
+
+    public static void showTotalProfitResult(final Map<String, Integer> totalProfitResult) {
+        totalProfitResult.forEach((name, profit) -> System.out.printf(KEY_VALUE_FORMAT, name, profit));
     }
 }
