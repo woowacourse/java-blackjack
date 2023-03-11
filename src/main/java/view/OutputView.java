@@ -2,8 +2,8 @@ package view;
 
 import domain.*;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -14,6 +14,7 @@ public class OutputView {
     private static final String DEALER_RESULT_MESSAGE = "%s: %d승 %d무 %d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String SPLIT_DELIMITER = ", ";
+    public static final String FINAL_PROFIT_MESSAGE = "## 최종 수익";
 
     public String namimgCard(Card card) {
         return card.getCardNumber().getName() + card.getCardPattern().getPattern();
@@ -58,20 +59,14 @@ public class OutputView {
         }
     }
 
-    public void printWinnerResult(GameResult gameResult) {
+    public void printWinnerResult(Dealer dealer, BettingTable bettingTable) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        String dealerName = gameResult.getDealerResult().keySet().stream()
-                .findFirst()
-                .get();
-        List<ResultType> dealerResult = gameResult.getDealerResult().get(dealerName);
-        System.out.printf(DEALER_RESULT_MESSAGE, dealerName,
-                Collections.frequency(dealerResult, ResultType.WIN),
-                Collections.frequency(dealerResult, ResultType.DRAW),
-                Collections.frequency(dealerResult, ResultType.LOSE));
-        for (String playerName : gameResult.getPlayerResult().keySet()) {
+        System.out.println(FINAL_PROFIT_MESSAGE);
+        Map<String, Money> result = bettingTable.getBettingTable();
+        System.out.println(dealer.getName() +": " + -bettingTable.sum());
+        for (String playerName : result.keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, playerName,
-                    gameResult.getPlayerResult().get(playerName).getResultType());
+                    result.get(playerName).getMoney());
         }
     }
 

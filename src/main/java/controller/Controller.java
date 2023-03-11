@@ -16,13 +16,30 @@ public class Controller {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.readPlayerNames());
+        BettingTable bettingTable = createBettingTable(players);
         BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardDeckGenerator().generate()));
+
+        startGame(dealer, players, game);
+
+        outputView.printCardsResult(dealer, players);
+        bettingTable.calculate(game.getGameResult().getPlayerResult());
+        outputView.printWinnerResult(dealer, bettingTable);
+    }
+
+    private void startGame(Dealer dealer, Players players, BlackjackGame game) {
         game.shuffleCardDeck();
         distributeInitialCard(dealer, players, game);
         selectAdditionalCard(players, game);
         addWhenUnderStandard(dealer, game);
-        outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getGameResult());
+    }
+
+    private BettingTable createBettingTable(Players players) {
+        BettingTable bettingTable = new BettingTable();
+        for (Player player : players.getPlayers()) {
+            String playerName = player.getName();
+            bettingTable.add(playerName, new Money(inputView.readBettingMoney(playerName)));
+        }
+        return bettingTable;
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
