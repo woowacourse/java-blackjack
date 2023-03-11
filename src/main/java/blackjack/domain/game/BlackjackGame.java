@@ -61,6 +61,6 @@ public class BlackjackGame {
     }
 
     public List<String> getParticipantsName() {
-        return Collections.unmodifiableList(participants.getParticipantsName());
+        return Collections.unmodifiableList(participants.findParticipantsName());
     }
 }

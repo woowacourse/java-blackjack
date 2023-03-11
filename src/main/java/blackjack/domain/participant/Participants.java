@@ -41,7 +41,7 @@ public class Participants {
                 .get();
     }
 
-    public List<String> getParticipantsName() {
+    public List<String> findParticipantsName() {
         return participants.stream()
             .map(participant -> participant.getParticipantName().getName())
             .collect(Collectors.toUnmodifiableList());
