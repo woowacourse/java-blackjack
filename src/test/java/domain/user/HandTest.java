@@ -1,8 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suit;
 import domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
+import static domain.Fixtures.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class HandTest {
@@ -18,9 +17,9 @@ class HandTest {
     @DisplayName("카드 풀에 카드가 저장된다")
     void makeHandTest() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.EIGHT),
-                Card.of(Suit.DIAMOND, Denomination.ACE),
-                Card.of(Suit.HEART, Denomination.KING)
+                CLOVER_EIGHT,
+                DIAMOND_ACE,
+                HEART_KING
         );
 
         Hand hand = new Hand(cards);
@@ -44,8 +43,8 @@ class HandTest {
     @DisplayName("카드가 있을때에는 합이 카드 값에 따라 결정된다")
     void sumHandWhenCardsExist() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.FIVE),
-                Card.of(Suit.HEART, Denomination.EIGHT)
+                CLOVER_FIVE,
+                HEART_EIGHT
         );
 
         Hand hand = new Hand(cards);
@@ -58,9 +57,9 @@ class HandTest {
     @DisplayName("에이스카드는 나머지 카드의 합이 10보다 크면 1로 결정된다")
     void decideAceSumOver() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.FIVE),
-                Card.of(Suit.HEART, Denomination.EIGHT),
-                Card.of(Suit.CLOVER, Denomination.ACE)
+                CLOVER_FIVE,
+                CLOVER_EIGHT,
+                CLOVER_ACE
         );
 
         Hand hand = new Hand(cards);
@@ -73,9 +72,9 @@ class HandTest {
     @DisplayName("에이스카드가 먼저 뽑혀도 나머지 카드의 합이 10보다 크면 1로 결정된다")
     void decideAceSumOverWhenFirstDraw() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.ACE),
-                Card.of(Suit.CLOVER, Denomination.FIVE),
-                Card.of(Suit.HEART, Denomination.EIGHT)
+                CLOVER_ACE,
+                CLOVER_FIVE,
+                HEART_EIGHT
 
         );
 
@@ -89,9 +88,9 @@ class HandTest {
     @DisplayName("에이스카드는 나머지 카드의 합이 10보다 작으면 11로 결정된다")
     void decideAceSumUnder() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.FIVE),
-                Card.of(Suit.HEART, Denomination.FOUR),
-                Card.of(Suit.CLOVER, Denomination.ACE)
+                CLOVER_FIVE,
+                HEART_FOUR,
+                CLOVER_ACE
         );
 
         Hand hand = new Hand(cards);
@@ -104,10 +103,10 @@ class HandTest {
     @DisplayName("에이스가 2장 이상일 때 카드의 합은 21을 넘지 않는 가장 큰 수로 결정된다.")
     void decideDoubleAceSumUnder() {
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Denomination.ACE),
-                Card.of(Suit.SPADE, Denomination.ACE),
-                Card.of(Suit.CLOVER, Denomination.FOUR),
-                Card.of(Suit.HEART, Denomination.FOUR)
+                CLOVER_ACE,
+                SPADE_ACE,
+                CLOVER_FOUR,
+                HEART_FOUR
         );
 
         Hand hand = new Hand(cards);
@@ -120,7 +119,7 @@ class HandTest {
     @DisplayName("카드가 잘 들어가는지 테스트한다.")
     void addTest() {
         Hand hand = new Hand(Collections.emptyList());
-        Card card = Card.of(Suit.CLOVER, Denomination.FOUR);
+        Card card = CLOVER_FOUR;
 
         hand.add(card);
 
@@ -130,10 +129,10 @@ class HandTest {
     @DisplayName("카드의 숫자가 10, 10, 5 이면 버스트이다.")
     @Test
     void isBust_TenTenFive_True() {
-        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.TEN)));
+        Hand hand = new Hand(List.of(DIAMOND_TEN,
+                CLOVER_TEN));
 
-        hand.add(Card.of(Suit.DIAMOND, Denomination.FIVE));
+        hand.add(DIAMOND_FIVE);
 
         assertThat(hand.isBust()).isTrue();
     }
@@ -141,11 +140,11 @@ class HandTest {
     @DisplayName("카드의 숫자가 ACE, 10, 5, 10 이면 버스트이다.")
     @Test
     void isBust_AceTenFiveTen_True() {
-        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.ACE),
-                Card.of(Suit.CLOVER, Denomination.TEN)));
+        Hand hand = new Hand(List.of(DIAMOND_ACE,
+                CLOVER_TEN));
 
-        hand.add(Card.of(Suit.DIAMOND, Denomination.FIVE));
-        hand.add(Card.of(Suit.DIAMOND, Denomination.TEN));
+        hand.add(DIAMOND_FIVE);
+        hand.add(DIAMOND_TEN);
 
         assertThat(hand.isBust()).isTrue();
     }
@@ -153,11 +152,18 @@ class HandTest {
     @DisplayName("카드의 숫자가 10, 10, ACE 이면 버스트가 아니다.")
     @Test
     void isBust_TenTenAce_False() {
-        Hand hand = new Hand(List.of(Card.of(Suit.DIAMOND, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.TEN),
-                Card.of(Suit.SPADE, Denomination.ACE)
+        Hand hand = new Hand(List.of(DIAMOND_TEN,
+                CLOVER_TEN,
+                SPADE_ACE
         ));
 
         assertThat(hand.isBust()).isFalse();
+    }
+
+    @Test
+    void isBlackjack() {
+        Hand hand = new Hand(SPADE_ACE, SPADE_TEN);
+
+        assertThat(hand.isBlackjack()).isTrue();
     }
 }

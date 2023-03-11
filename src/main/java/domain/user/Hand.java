@@ -15,6 +15,14 @@ public class Hand {
         this.cards = new ArrayList<>(cards);
     }
 
+    public Hand(Card card) {
+        this.cards = new ArrayList<>(List.of(card));
+    }
+
+    public Hand(Card card1, Card card2) {
+            this.cards = new ArrayList<>(List.of(card1, card2));
+    }
+
     public void add(Card card) {
         cards.add(card);
     }
@@ -45,6 +53,10 @@ public class Hand {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isBlackjack() {
+        return score().isMax() && cards.size() == 2;
     }
 
     @Override

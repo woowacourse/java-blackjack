@@ -50,6 +50,10 @@ public class Score {
         return value <= other.value;
     }
 
+    public boolean isMax() {
+        return max.equals(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
