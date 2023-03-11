@@ -2,19 +2,20 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.Score;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
 import domain.strategy.ShuffleStrategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private static final int INIT_GIVE_CARD_COUNT = 2;
-    private static final Score DEALER_GIVE_CARD_STATE_MAX_SCORE = new Score(16);
     
     private final Deck deck;
     private final List<Player> players;
