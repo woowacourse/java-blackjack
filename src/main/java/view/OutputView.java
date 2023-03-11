@@ -44,66 +44,23 @@ public class OutputView {
         System.out.println(name + "카드: " + cardsMessage + " - 결과 : " + cardSum);
     }
 
-    public void printWinningResult(final List<Integer> winningResult, final List<String> namesCopy) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-
-        printDealerResult(winningResult);
-
-        for (int i = 0; i < winningResult.size(); i++) {
-            printResult(winningResult, namesCopy, i);
+    public void printGameResult(final List<String> namesCopy, final List<Integer> monies) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        printDealerResult(monies);
+        for (int index = 0; index < namesCopy.size(); index++) {
+            System.out.println(namesCopy.get(index) + ": " + monies.get(index));
         }
     }
 
-    private static void printDealerResult(final List<Integer> winningResult) {
-        int[] result = getDealerResult(winningResult);
-        StringBuilder sb = makeStringOfDealerResult(result);
-        System.out.println("딜러: " + sb);
+    private void printDealerResult(final List<Integer> monies) {
+        int sum = sumDealerResult(monies);
+        System.out.println("딜러: " + (sum * -1));
     }
 
-    private static StringBuilder makeStringOfDealerResult(final int[] result) {
-        StringBuilder sb = new StringBuilder();
-        if (result[0] != 0) {
-            sb.append(result[0]).append("승 ");
-        }
-        if (result[1] != 0) {
-            sb.append(result[1]).append("무 ");
-        }
-        if (result[2] != 0) {
-            sb.append(result[2]).append("패");
-        }
-        return sb;
-    }
-
-    private static void printResult(final List<Integer> winningResult, final List<String> namesCopy, final int i) {
-        System.out.print(namesCopy.get(i) + ": ");
-        if (winningResult.get(i) == 1) {
-            System.out.print("패" + NEW_LINE);
-        }
-        if (winningResult.get(i) == 0) {
-            System.out.print("무" + NEW_LINE);
-        }
-        if (winningResult.get(i) == -1) {
-            System.out.print("승" + NEW_LINE);
-        }
-    }
-
-    private static int[] getDealerResult(final List<Integer> winningResult) {
-        int[] result = new int[3];
-
-        winningResult.forEach(integer -> makeDealerResult(result, integer));
-        return result;
-    }
-
-    private static void makeDealerResult(final int[] result, final Integer integer) {
-        if (integer == 1) {
-            result[0] = result[0] + 1;
-            return;
-        }
-        if (integer == 0) {
-            result[1] = result[1] + 1;
-            return;
-        }
-        result[2] = result[2] + 1;
+    private int sumDealerResult(final List<Integer> monies) {
+        return monies.stream()
+                .mapToInt(i -> i)
+                .sum();
     }
 
     public void newLine() {

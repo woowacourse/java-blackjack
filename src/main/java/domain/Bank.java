@@ -1,8 +1,9 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author 우가
@@ -19,7 +20,7 @@ public class Bank {
     }
 
     private Map<Player, Money> makeAccountBook(final List<Player> players, final List<Money> monies) {
-        HashMap<Player, Money> accountBook = new HashMap<>();
+        Map<Player, Money> accountBook = new LinkedHashMap<>();
         for (int i = 0; i < players.size(); i++) {
             accountBook.put(players.get(i), monies.get(i));
         }
@@ -46,5 +47,11 @@ public class Bank {
     public void multiplyInterestOfPlayer(final Player player, final double profit) {
         Money money = accountBook.get(player);
         accountBook.put(player, money.calculateMoneyByProfit(profit));
+    }
+
+    public List<Integer> getProfitMonies() {
+        return accountBook.values().stream()
+                .map(money -> money.money)
+                .collect(Collectors.toList());
     }
 }

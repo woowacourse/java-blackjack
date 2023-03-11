@@ -2,7 +2,6 @@ package service;
 
 import domain.Bank;
 import domain.BettingMoney;
-import domain.BlackJackWinningResult;
 import domain.Card;
 import domain.CardBox;
 import domain.Cards;
@@ -33,13 +32,24 @@ public class BlackJackGame {
         Bank bank = makeBank(participants);
 
         printInitGameMessage(participants);
-
         askPlayerMoreDrawCard(participants);
-
         drawDealerCardByMinimumCondition(participants.getDealer());
 
+        List<Double> profits = participants.getProfits();
+        calculateProfitMoneyOfPlayer(bank, participants.getPlayersToList(), profits);
         printCardResult(participants);
-        printWinningResult(participants);
+
+        printGameResult(bank, participants);
+    }
+
+    private void printGameResult(final Bank bank, final Participants participants) {
+        outputView.printGameResult(participants.getPlayerNames(), bank.getProfitMonies());
+    }
+
+    private void calculateProfitMoneyOfPlayer(final Bank bank, final List<Player> players, final List<Double> profits) {
+        for (int index = 0; index < players.size(); index++) {
+            bank.multiplyInterestOfPlayer(players.get(index), profits.get(index));
+        }
     }
 
     private Bank makeBank(final Participants participants) {
@@ -51,7 +61,6 @@ public class BlackJackGame {
     }
 
     private List<BettingMoney> askPlayersBettingMoney(final Participants participants) {
-        Dealer dealer = participants.getDealer();
         List<BettingMoney> bettingMonies = new ArrayList<>();
         for (final Player player : participants.getPlayersToList()) {
             outputView.printPlayerNameForBetting(player.getName());
@@ -156,10 +165,5 @@ public class BlackJackGame {
         return playerNames.stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
-    }
-
-    private void printWinningResult(final Participants participants) {
-        List<Player> players = participants.getPlayersToList();
-        List<BlackJackWinningResult> result = participants.getBlackJackWinningResult();
     }
 }

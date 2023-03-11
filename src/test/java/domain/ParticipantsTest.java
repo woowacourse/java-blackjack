@@ -1,6 +1,5 @@
 package domain;
 
-import static domain.BlackJackWinningResult.DRAW;
 import static domain.CardInfo.A;
 import static domain.CardInfo.TEN;
 import static domain.Shape.HEART;
@@ -59,15 +58,6 @@ class ParticipantsTest {
         Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
-    }
-
-    @Test
-    void 참가자들끼리의_우승결과를_반환한다() {
-        Dealer dealer = readDealer();
-        Players players = readPlayers();
-        Participants participants = new Participants(dealer, players);
-
-        assertThat(participants.getBlackJackWinningResult()).containsExactly(BlackJackWinningResult.WIN, DRAW);
     }
 
     Dealer readDealer() {
