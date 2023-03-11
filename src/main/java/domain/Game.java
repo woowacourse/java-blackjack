@@ -7,10 +7,12 @@ public class Game {
 
     private final Deck deck;
     private final Participants participants;
+    private final Bank bank;
 
     public Game(Participants participants, Deck deck) {
         this.participants = participants;
         this.deck = deck;
+        this.bank = new Bank();
     }
 
     public void dealTwice() {
@@ -22,6 +24,10 @@ public class Game {
     public void dealTo(Player player) {
         Player foundPlayer = participants.find(player);
         foundPlayer.drawFrom(deck);
+    }
+
+    public void bet(User user, Money money) {
+        bank.bet(user, money);
     }
 
     public Result getResultOf(User user) {
@@ -36,6 +42,10 @@ public class Game {
         return users.stream()
                 .map(dealer::competeWith)
                 .collect(Collectors.toList());
+    }
+
+    public Money getPrizeOf(User user) {
+        return bank.withdrawDepositOf(user);
     }
 
     public List<User> getUsers() {

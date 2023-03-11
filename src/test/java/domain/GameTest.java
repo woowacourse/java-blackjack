@@ -57,4 +57,16 @@ public class GameTest extends AbstractTestFixture {
 
         assertThat(game.getDealerResults()).containsOnly(Result.DRAW, Result.WIN);
     }
+
+    @Test
+    @DisplayName("배팅할 수 있다")
+    void test_bet() {
+        var user = new User("조이", createCards("J", "K"));
+        var dealer = new Dealer(createCards("K", "9"));
+        var game = createGameFrom(dealer, user);
+
+        game.bet(user, Money.of(500));
+
+        assertThat(game.getPrizeOf(user)).isEqualTo(Money.of(500));
+    }
 }
