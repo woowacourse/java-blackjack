@@ -1,8 +1,7 @@
 package domain.participant;
 
-import domain.BetAmount;
-import domain.card.Deck;
 import domain.ExceptionCode;
+import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,21 +10,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
-    private static final int MINIMUM_PLAYER_COUNT = 1;
-    private static final int MAXIMUM_PLAYER_COUNT = 7;
 
     private final List<Participant> participants;
-
 
     private Participants(List<Participant> participants) {
         this.participants = participants;
     }
 
-    public static Participants from(List<String> names) {
-        validate(names);
+    public static Participants from(List<Player> players) {
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
-        names.forEach(name -> participants.add(Player.create(name, new BetAmount(1000))));
+        participants.addAll(players);
         return new Participants(participants);
     }
 
@@ -62,23 +57,6 @@ public class Participants {
             participantsHandValue.put(participant, participant.getHandValue());
         }
         return participantsHandValue;
-    }
-
-    private static void validate(List<String> names) {
-        validateNumberOfNames(names);
-        validateNoDuplication(names);
-    }
-
-    private static void validateNumberOfNames(List<String> names) {
-        if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
-            throw new IllegalArgumentException(ExceptionCode.OUT_OF_RANGE_PLAYER_COUNT.getExceptionCode());
-        }
-    }
-
-    private static void validateNoDuplication(List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException(ExceptionCode.DUPLICATE_PLAYERS_NAME.getExceptionCode());
-        }
     }
 
     private void addParticipantIfPlayer(List<Participant> players, Participant participant) {
