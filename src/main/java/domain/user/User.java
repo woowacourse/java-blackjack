@@ -1,6 +1,5 @@
 package domain.user;
 
-import domain.Result;
 import domain.Score;
 import domain.Status;
 import domain.card.Card;
@@ -25,32 +24,6 @@ public abstract class User {
     abstract boolean canHit();
 
     public abstract String getName();
-
-    public Result compare(User other) {
-        if (isDraw(other)) {
-            return Result.DRAW;
-        }
-        if (isWon(other)) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
-    }
-
-    private boolean isWon(User other) {
-        if (status == BUST) {
-            return false;
-        }
-
-        return score().isGreaterThan(other.score()) || other.status == BUST;
-    }
-
-    private boolean isDraw(User other) {
-        if (status == BUST && other.status == BUST) {
-            return true;
-        }
-
-        return score().equals(other.score());
-    }
 
     public void addCard(Card card) {
         hand.add(card);

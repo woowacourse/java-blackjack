@@ -32,7 +32,6 @@ public class Game {
         user.addCard(deck.drawCard());
     }
 
-
     public boolean canHitByDealerScore() {
         return canHitByPlayerScore(users.dealer());
     }

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Referee;
 import domain.card.Deck;
 import domain.Result;
 
@@ -24,15 +25,16 @@ public class Users {
     }
 
     public Result getUserResult(User user) {
-        return user.compare(dealer);
+        return Referee.getResult(user, dealer);
     }
 
     public List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();
 
         for (Player player : players) {
-            results.add(dealer.compare(player));
+            results.add(Referee.getResult(dealer, player));
         }
+
         return results;
     }
 
