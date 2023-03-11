@@ -6,9 +6,6 @@ import domain.card.Card;
 import domain.card.Hand;
 
 public class Participant {
-    private static final int BLACKJACK_VALUE = 21;
-    public static final int BUST_HAND_VALUE = 0;
-
     private final Hand hand;
     private final String name;
 
@@ -21,19 +18,19 @@ public class Participant {
         hand.addCard(card);
     }
 
-    public int fetchHandValue() {
-        return hand.calculateHandValue();
-    }
-
     public List<Card> fetchHand() {
         return hand.getHand();
     }
 
-    public String getName() {
-        return name;
+    public int fetchHandValue() {
+        return hand.calculateHandValue();
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public String getName() {
+        return name;
     }
 }

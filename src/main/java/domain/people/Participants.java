@@ -44,17 +44,17 @@ public class Participants {
         }
     }
 
+    public Optional<Player> findPlayer(String participantName) {
+        return players.stream().
+            filter(player -> player.fetchPlayerName().equals(participantName)).
+            findAny();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public Optional<Player> findPlayer(String participantName) {
-        return players.stream().
-            filter(player -> player.fetchPlayerName().equals(participantName)).
-            findAny();
     }
 }

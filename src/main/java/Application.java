@@ -35,6 +35,7 @@ public class Application {
 
     private static Long readBetAmount(String currentPlayerName) {
         try {
+            OutputView.printEmptyLine();
             return InputView.requestBetAmount(currentPlayerName);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);

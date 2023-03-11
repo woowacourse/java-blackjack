@@ -45,17 +45,21 @@ public class BlackJackGame {
         }
     }
 
+    public List<String> fetchParticipantNames() {
+        List<String> participantNames = new ArrayList<>();
+        participantNames.add(participants.getDealer().getName());
+        participantNames.addAll(fetchPlayerNames());
+        return participantNames;
+    }
+
     public List<String> fetchPlayerNames() {
         return participants.getPlayers().stream()
             .map(Player::fetchPlayerName)
             .collect(toList());
     }
 
-    public List<String> fetchParticipantNames() {
-        List<String> participantNames = new ArrayList<>();
-        participantNames.add(participants.getDealer().getName());
-        participantNames.addAll(fetchPlayerNames());
-        return participantNames;
+    public String fetchDealerName() {
+        return participants.getDealer().getName();
     }
 
     public List<String> fetchParticipantInitHand(String participantName) {
@@ -70,6 +74,7 @@ public class BlackJackGame {
         if (participantName.equals(participants.getDealer().getName())) {
             return participants.getDealer().fetchHand().stream().map(Card::toString).collect(toList());
         }
+
         List<Card> participantHand = participants.findPlayer(participantName).orElseThrow().fetchHand();
         return participantHand.stream().
             map(Card::toString).
@@ -103,28 +108,6 @@ public class BlackJackGame {
         return participants.findPlayer(name).orElseThrow().fetchHandValue(INIT_HAND_COUNT);
     }
 
-    // public Map<String, String> calculatePlayerResults() {
-    //     Dealer dealer = participants.getDealer();
-    //     Map<String, String> playerResults = new LinkedHashMap<>();
-    //     for (Player player : fetchPlayers()) {
-    //         compareHandValue(dealer, playerResults, player);
-    //     }
-    //
-    //     return playerResults;
-    // }
-
-    // private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
-    //     int playerHandValue = player.fetchHandValue();
-    //     int dealerHandValue = dealer.fetchHandValue();
-    //     int handValueGap = playerHandValue - dealerHandValue;
-    //
-    //     int playerHandCount = player.fetchHand().size();
-    //     int dealerHandCount = dealer.fetchHand().size();
-    //     int handCountGap = playerHandCount - dealerHandCount;
-    //
-    //     playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
-    // }
-
     public int getInitHandCount() {
         return INIT_HAND_COUNT;
     }
@@ -148,8 +131,25 @@ public class BlackJackGame {
     public boolean isTurnOver(String hitRequest) {
         return !hitRequest.equals(HIT_REQUEST);
     }
+    // public Map<String, String> calculatePlayerResults() {
+    //     Dealer dealer = participants.getDealer();
+    //     Map<String, String> playerResults = new LinkedHashMap<>();
+    //     for (Player player : fetchPlayers()) {
+    //         compareHandValue(dealer, playerResults, player);
+    //     }
+    //
+    //     return playerResults;
+    // }
 
-    public String fetchDealerName() {
-        return participants.getDealer().getName();
-    }
+    // private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
+    //     int playerHandValue = player.fetchHandValue();
+    //     int dealerHandValue = dealer.fetchHandValue();
+    //     int handValueGap = playerHandValue - dealerHandValue;
+    //
+    //     int playerHandCount = player.fetchHand().size();
+    //     int dealerHandCount = dealer.fetchHand().size();
+    //     int handCountGap = playerHandCount - dealerHandCount;
+    //
+    //     playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
+    // }
 }

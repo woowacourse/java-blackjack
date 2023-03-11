@@ -12,7 +12,6 @@ public class Hand {
 
     public Hand(List<Card> cards) {
         this.hand = cards;
-
     }
 
     public void addCard(Card card) {
@@ -20,14 +19,14 @@ public class Hand {
     }
 
     public int calculateHandValue() {
-        int value = calculateValue();
+        int value = calculateHandValueWithoutBust();
         if (isBust()) {
             value = 0;
         }
         return value;
     }
 
-    private int calculateValue() {
+    private int calculateHandValueWithoutBust() {
         int aceCount = countAce();
         int value = sumValue();
 
@@ -41,6 +40,12 @@ public class Hand {
             .count();
     }
 
+    private int sumValue() {
+        return hand.stream()
+            .mapToInt(Card::fetchValue)
+            .sum();
+    }
+
     private int chooseAceValue(int value, int aceCount) {
         while (value > BUST_BOUNDARY_VALUE && aceCount > 0) {
             value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
@@ -49,14 +54,8 @@ public class Hand {
         return value;
     }
 
-    private int sumValue() {
-        return hand.stream()
-            .mapToInt(Card::fetchValue)
-            .sum();
-    }
-
     public boolean isBust() {
-        return calculateValue() > BUST_BOUNDARY_VALUE;
+        return calculateHandValueWithoutBust() > BUST_BOUNDARY_VALUE;
     }
 
     public List<Card> getHand() {

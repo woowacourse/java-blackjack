@@ -12,6 +12,6 @@ public enum InvalidNames {
     }
 
     public static boolean isInvalidNames(String name) {
-        return Arrays.stream(InvalidNames.values()).anyMatch(invalidName -> invalidName.name().equals(name));
+        return Arrays.stream(InvalidNames.values()).anyMatch(invalidName -> invalidName.name.equals(name));
     }
 }

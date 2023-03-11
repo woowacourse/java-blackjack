@@ -1,7 +1,5 @@
 package domain.people;
 
-import static domain.people.Participant.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

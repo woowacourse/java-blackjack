@@ -50,8 +50,17 @@ public class OutputView {
         System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, value);
     }
 
-    public static void printEmptyLine() {
-        System.out.println();
+    public static void printPlayerHasBlackJack(String playerName) {
+        System.out.printf(PLAYER_IS_BLACKJACK, playerName);
+    }
+
+    public static void printPlayerIsBust(String playerName) {
+        System.out.printf(PLAYER_IS_BUST, playerName);
+    }
+
+    public static void printResultInfo() {
+        printEmptyLine();
+        System.out.println(RESULT_TAG);
     }
 
     public static void printDealerResult(Map<String, Integer> results) {
@@ -68,20 +77,11 @@ public class OutputView {
         System.out.println(stringBuilder.append(name).append(RESULT_FORMAT).append(result));
     }
 
-    public static void printResultInfo() {
-        printEmptyLine();
-        System.out.println(RESULT_TAG);
+    public static void printEmptyLine() {
+        System.out.println();
     }
 
     public static void printExceptionMessage(IllegalArgumentException e) {
         System.out.println(e.getMessage());
-    }
-
-    public static void printPlayerHasBlackJack(String playerName) {
-        System.out.printf(PLAYER_IS_BLACKJACK, playerName);
-    }
-
-    public static void printPlayerIsBust(String playerName) {
-        System.out.printf(PLAYER_IS_BUST, playerName);
     }
 }

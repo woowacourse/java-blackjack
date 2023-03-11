@@ -10,19 +10,13 @@ public class Dealer {
     private static final int DEALER_MINIMUM_VALUE = 17;
 
     private final Participant participant;
+
     public Dealer() {
         participant = new Participant(new ArrayList<>(), DEALER_NAME);
     }
 
     public void receiveCard(Card card) {
         participant.receiveCard(card);
-    }
-    public boolean shouldHit() {
-        return participant.fetchHandValue() < DEALER_MINIMUM_VALUE;
-    }
-
-    public String getName() {
-        return DEALER_NAME;
     }
 
     public List<Card> fetchHand() {
@@ -31,5 +25,13 @@ public class Dealer {
 
     public int fetchHandValue() {
         return participant.fetchHandValue();
+    }
+
+    public boolean shouldHit() {
+        return participant.fetchHandValue() < DEALER_MINIMUM_VALUE;
+    }
+
+    public String getName() {
+        return DEALER_NAME;
     }
 }
