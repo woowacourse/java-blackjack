@@ -11,4 +11,8 @@ public class Deposit {
     public void betting(final Name playerName, final Money money) {
         deposit.put(playerName, money);
     }
+
+    public Money getProfit(final Name playerName, final Double profitRate) {
+        return deposit.get(playerName).multiply(profitRate);
+    }
 }

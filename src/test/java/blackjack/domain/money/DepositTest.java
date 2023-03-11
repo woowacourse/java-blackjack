@@ -23,4 +23,15 @@ class DepositTest {
                 .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
                 .contains(entry(TEST_PLAYER_NAME1, new Money(1000)));
     }
+
+    @Test
+    @DisplayName("플레이어 이름과 수익률을 입력하면 수익금을 반환하는 기능 테스트")
+    void getProfitTest() {
+        final Deposit deposit = new Deposit();
+
+        deposit.betting(TEST_PLAYER_NAME1, new Money(1000));
+        final Money profit = deposit.getProfit(TEST_PLAYER_NAME1, 1.5);
+
+        assertThat(profit.getValue()).isEqualTo(1500);
+    }
 }
