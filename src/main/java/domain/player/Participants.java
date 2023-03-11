@@ -4,8 +4,9 @@ import domain.card.Deck;
 import util.HitOrStay;
 import util.Notice;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -36,7 +37,10 @@ public class Participants {
     }
 
     private static boolean isDuplicate(final List<Participant> participants) {
-        final int uniqueNameCount = new HashSet<>(participants).size();
+        final Set<String> uniqueName = participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toSet());
+        final int uniqueNameCount = uniqueName.size();
         return uniqueNameCount < participants.size();
     }
 
