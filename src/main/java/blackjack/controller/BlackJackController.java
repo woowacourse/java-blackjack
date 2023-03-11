@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.BettingTable;
-import blackjack.domain.betting.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -52,8 +52,8 @@ public class BlackJackController {
     }
 
     private BettingTable createBettingTable(final List<Player> players) {
-        final Map<Player, Profit> betting = new HashMap<>();
-        players.forEach(player -> betting.put(player, new Profit(inputView.readBetting(player.getName()))));
+        final Map<Player, Betting> betting = new HashMap<>();
+        players.forEach(player -> betting.put(player, new Betting(inputView.readBetting(player.getName()))));
         return new BettingTable(betting);
     }
 

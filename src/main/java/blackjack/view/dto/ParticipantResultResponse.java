@@ -15,12 +15,12 @@ public class ParticipantResultResponse {
     }
 
     public static ParticipantResultResponse forPlayer(final Player player, final BlackJackGame blackJackGame) {
-        return new ParticipantResultResponse(player.getName(), blackJackGame.returnPlayerProfit(player).getValue());
+        return new ParticipantResultResponse(player.getName(), 0);
     }
 
     public static ParticipantResultResponse forDealer(final BlackJackGame blackJackGame) {
         final Dealer dealer = blackJackGame.getDealer();
-        return new ParticipantResultResponse(dealer.getName(), blackJackGame.returnDealerProfit().getValue());
+        return new ParticipantResultResponse(dealer.getName(), 0);
     }
 
     public String getName() {

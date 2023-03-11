@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.betting.BettingTable;
-import blackjack.domain.betting.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -27,7 +26,6 @@ public class BlackJackGame {
 
     public void initialDraw() {
         participants.drawCard(deck, INITIAL_DRAW_COUNT);
-        participants.receiveBlackJackBonus(bettingTable);
     }
 
     public void dealCard(final Participant participant) {
@@ -40,16 +38,7 @@ public class BlackJackGame {
 
         for (final Player player : players) {
             final Result result = dealer.showResult(player.getScore());
-            bettingTable.updateByResult(player, result);
         }
-    }
-
-    public Profit returnPlayerProfit(final Player player) {
-        return bettingTable.getPlayerProfit(player);
-    }
-
-    public Profit returnDealerProfit() {
-        return bettingTable.getDealerProfit();
     }
 
     public List<Player> getPlayers() {

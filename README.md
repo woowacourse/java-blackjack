@@ -55,9 +55,9 @@ graph TD
     InputView --> Parser
     BlackJackGame --> Participants
     BlackJackGame --> Deck
-    BlackJackGame --> Betting
+    BlackJackGame --> BettingTable
     Participants --> Participant
-    Betting --> Profit
+    BettingTable --> Betting
     Participant --> Player
     Participant --> Dealer
     Participant --> Cards
@@ -112,19 +112,16 @@ graph TD
 - [x] 카드를 추가한다.
 - [x] 카드 개수를 확인한다.
 
-### 베팅
+### 베팅 테이블
 
 - [x] 플레이어가 블랙잭 보너스를 획득한다.
 - [x] 플레이어가 결과에 따라 수익을 업데이트한다.
 - [x] 딜러의 수익을 확인한다.
 - [x] 플레이어의 수익을 확인한다.
 
-### 수익
+### 베팅
 
-- [x] 수익에 퍼센트를 적용한다.
-- [x] 수익이 사라진다.
-- [x] 수익이 지출로 변한다.
-    - 수익이 양수일 때 음수가 되고, 수익이 음수일 때 유지한다.
+- [ ] 베팅 금액은 100원 이상, 100만 원 이하까지 가능하다.
 
 ### 입력
 
