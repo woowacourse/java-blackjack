@@ -105,6 +105,20 @@ class ProfitTest {
     }
 
     @Test
+    @DisplayName("플레이어들의 수익을 계산한다 - 딜러와 점수가 같은 경우")
+    void makePlayersProfit_sameScore() {
+        // player1 점수 : 18
+        participants.getPlayers().get(0).receiveCard(new Card(Number.EIGHT, Pattern.CLUB));
+        participants.getPlayers().get(0).receiveCard(new Card(Number.TEN, Pattern.CLUB));
+        // dealer 점수 : 18
+        participants.getDealer().receiveCard(new Card(Number.EIGHT, Pattern.DIAMOND));
+        participants.getDealer().receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
+
+        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        assertThat(playersProfit.get(participants.getPlayers().get(0))).isEqualTo(new Money(0));
+    }
+
+    @Test
     @DisplayName("딜러의 수익을 계산한다")
     void getDealerProfit() {
         // player1 점수 : 27 (버스트)

@@ -78,6 +78,9 @@ public class Profit {
             profit.put(player, player.getBettingMoney().getBettingPrize());
             return;
         }
+        if (dealerScore.isEquals(player.calculateTotalScore())) {
+            return;
+        }
         profit.put(player, player.getBettingMoney().loseBettingPrize());
     }
 
