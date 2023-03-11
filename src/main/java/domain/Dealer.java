@@ -8,6 +8,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int DEALER_DRAW_LIMIT_SCORE = 16;
+    private static final double GAME_LOSE_RATIO = 0.5;
 
     public Dealer(final DrawnCards drawnCards) {
         super(new Status(new Name(Message.DEALER_NAME.getMessage()), new Account(0)), drawnCards);
@@ -32,8 +33,8 @@ public class Dealer extends Participant {
         this.status.winGame(playerAccount);
     }
 
-    public void loseGame(final double playerAccount) {
-        int loseMoney = (int) (playerAccount * 0.5);
+    public void loseGame(final int playerAccount) {
+        int loseMoney = (int) (playerAccount * GAME_LOSE_RATIO);
         status.loseGame(loseMoney);
     }
 }
