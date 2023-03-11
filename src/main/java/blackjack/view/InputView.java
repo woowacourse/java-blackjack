@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,5 +19,16 @@ public class InputView {
     public String readTryCommand(String name) {
         System.out.println(name + READ_TRY_COMMAND_MSG);
         return scanner.nextLine();
+    }
+
+    public int readBetting(String name) {
+        try {
+            System.out.println(name + "의 배팅 금액은?");
+            String input = scanner.nextLine();
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            System.out.println("[ERROR]: " + "배팅 금액은 숫자여야합니다.");
+            return readBetting(name);
+        }
     }
 }
