@@ -37,13 +37,12 @@ class PlayerTest {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
         Player player = new Player(new Name("플레이어"), firstTurnCards);
-        List<Card> cards = player.getCards();
 
         //when
         player.receiveCard(CloverCard.CLOVER_FOUR);
 
         //then
-        assertThat(cards.size()).isEqualTo(3);
+        assertThat(player.getCards().size()).isEqualTo(3);
     }
 
     @ParameterizedTest(name = "{2} 상태값을 확인할 수 있다.")

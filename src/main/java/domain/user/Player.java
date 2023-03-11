@@ -3,7 +3,6 @@ package domain.user;
 import domain.card.Card;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Player extends User {
     private final Name name;
@@ -16,7 +15,7 @@ public class Player extends User {
 
     @Override
     protected void checkBustByScore() {
-        if (score.getScore() > BLACKJACK) {
+        if (hand.calculateScore().isOverMax()) {
             status = PlayerStatus.BUST;
         }
     }

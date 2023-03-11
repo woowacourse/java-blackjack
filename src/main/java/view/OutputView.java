@@ -60,7 +60,8 @@ public class OutputView {
             String cards = cardsByUser.getValue().stream()
                     .map(Card::getSymbol)
                     .collect(Collectors.joining(", "));
-            int score = cardsByUser.getKey().getScore();
+            // TODO: 도메인에 의존하는 부분 제거하기
+            int score = cardsByUser.getKey().getScore().getScore();
 
             System.out.println(name + "카드 : " + cards + " - 결과: " + score);
         }

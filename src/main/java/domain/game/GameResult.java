@@ -51,7 +51,7 @@ public class GameResult {
     }
 
     private void compareScore(Dealer dealer, Player player) {
-        if (dealer.getScore() >= player.getScore()) {
+        if (player.getScore().isLessThanOrEqual(dealer.getScore())) {
             dealerWin(player);
             return;
         }

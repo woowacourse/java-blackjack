@@ -14,11 +14,13 @@ public class Dealer extends User {
 
     @Override
     protected void checkBustByScore() {
-        if (score.getScore() > BLACKJACK) {
+        // TODO : hand 메서드 기능 구현 후 수정하기
+        if (hand.calculateScore().isOverMax()) {
             status = DealerStatus.BUST;
             return;
         }
-        if (score.getScore() <= 16) {
+        // TODO : 16 스코어 값 분리하기
+        if (hand.calculateScore().isLessThanOrEqual(new Score(16))) {
             status = DealerStatus.UNDER_SEVENTEEN;
             return;
         }
