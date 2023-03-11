@@ -1,17 +1,17 @@
 package controller;
 
 import domain.card.Deck;
-import domain.result.GameResult;
 import domain.card.RandomShuffleStrategy;
+import domain.participant.*;
+import domain.result.GameResult;
 import domain.result.Result;
-import domain.participant.Participant;
-import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -24,7 +24,8 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = makeParticipants();
+        Names names = makeNames();
+        Participants participants = makeParticipants(names);
 
         dealInitialCards(deck, participants);
         OutputView.printPlayersName(participants.getPlayersName());
@@ -36,12 +37,24 @@ public class BlackJackController {
         showResults(gameResult);
     }
 
-    private Participants makeParticipants() {
+    private Names makeNames() {
         try {
-            return Participants.from(InputView.requestNames());
+            List<Name> names = InputView.requestNames();
+            return new Names(names);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
-            return makeParticipants();
+            return makeNames();
+        }
+    }
+    private Participants makeParticipants(Names names) {
+        try {
+            List<Player> players = names.getNames().stream()
+                    .map(name -> Player.create(name, InputView.requestBetAmount(name)))
+                    .collect(Collectors.toList());
+            return Participants.from(players);
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e);
+            return makeParticipants(names);
         }
     }
 
