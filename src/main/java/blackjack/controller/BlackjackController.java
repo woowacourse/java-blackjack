@@ -105,7 +105,7 @@ public final class BlackjackController {
     }
 
     private void decide(final Name gamblerName, final BlackjackCommand command) {
-        if (command.isHit()) {
+        if (command == BlackjackCommand.HIT) {
             blackjackGame.drawTo(gamblerName, ShuffledDeck.getInstance());
             return;
         }
