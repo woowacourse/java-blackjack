@@ -21,20 +21,20 @@ public class Dealer extends Participant {
         return sumOfCards() < ADD_CARD_MINIMUM_CONDITION;
     }
 
-    public int checkWinningResult(final Player player) {
+    public BlackJackWinningResult checkWinningResult(final Player player) {
         int sumOfDealerCards = this.sumOfCards();
         int sumOfPlayerCards = player.sumOfCards();
         return compareDealerToPlayer(sumOfDealerCards, sumOfPlayerCards);
     }
 
-    private int compareDealerToPlayer(final int sumOfDealerCards, final int sumOfPlayerCards) {
+    private BlackJackWinningResult compareDealerToPlayer(final int sumOfDealerCards, final int sumOfPlayerCards) {
         if (sumOfPlayerCards > BURST_CONDITION) {
-            return 1;
+            return BlackJackWinningResult.from(1);
         }
         if (sumOfDealerCards > BURST_CONDITION) {
-            return -1;
+            return BlackJackWinningResult.from(-1);
         }
 
-        return Integer.compare(sumOfDealerCards, sumOfPlayerCards);
+        return BlackJackWinningResult.from(Integer.compare(sumOfDealerCards, sumOfPlayerCards));
     }
 }

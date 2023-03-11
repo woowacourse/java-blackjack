@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.BlackJackWinningResult.LOSE;
+import static domain.BlackJackWinningResult.WIN;
 import static domain.CardInfo.*;
 import static domain.Shape.CLOVER;
 import static domain.Shape.HEART;
@@ -63,7 +65,7 @@ class DealerTest {
     }
 
     @Test
-    void 플레이어가_버스트일때_딜러상관없이_1반환() {
+    void 플레이어가_버스트일때_딜러상관없이_WIN반환() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(HEART, A));
 
@@ -71,20 +73,20 @@ class DealerTest {
         Player player = new Player(new Name("우가"), new Cards(List.of(new Card(HEART, TEN), new Card(SPADE, TEN),
                 new Card(CLOVER, TEN))));
 
-        assertThat(dealer.checkWinningResult(player)).isEqualTo(1);
+        assertThat(dealer.checkWinningResult(player)).isEqualTo(WIN);
 
         cards.add(new Card(HEART, TEN));
 
-        assertThat(dealer.checkWinningResult(player)).isEqualTo(1);
+        assertThat(dealer.checkWinningResult(player)).isEqualTo(WIN);
 
         cards.add(new Card(HEART, TEN));
         cards.add(new Card(HEART, TEN));
 
-        assertThat(dealer.checkWinningResult(player)).isEqualTo(1);
+        assertThat(dealer.checkWinningResult(player)).isEqualTo(WIN);
     }
 
     @Test
-    void 플레이어가_버스트가_아니고_딜러가_버스트일때_마이너스1반환() {
+    void 플레이어가_버스트가_아니고_딜러가_버스트일때_LOSE반환() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(HEART, A));
         cards.add(new Card(HEART, TEN));
@@ -94,6 +96,6 @@ class DealerTest {
         Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
         Player player = new Player(new Name("우가"), new Cards(List.of(new Card(HEART, TEN))));
 
-        assertThat(dealer.checkWinningResult(player)).isEqualTo(-1);
+        assertThat(dealer.checkWinningResult(player)).isEqualTo(LOSE);
     }
 }

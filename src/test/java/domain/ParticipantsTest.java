@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.BlackJackWinningResult.DRAW;
 import static domain.CardInfo.A;
 import static domain.CardInfo.TEN;
 import static domain.Shape.HEART;
@@ -66,7 +67,7 @@ class ParticipantsTest {
         Players players = readPlayers();
         Participants participants = new Participants(dealer, players);
 
-        assertThat(participants.getWinningResult()).containsExactly(1, 0);
+        assertThat(participants.getBlackJackWinningResult()).containsExactly(BlackJackWinningResult.WIN, DRAW);
     }
 
     Dealer readDealer() {

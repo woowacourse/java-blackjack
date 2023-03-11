@@ -1,6 +1,7 @@
 package service;
 
 import domain.BettingMoney;
+import domain.BlackJackWinningResult;
 import domain.Card;
 import domain.CardBox;
 import domain.Cards;
@@ -147,6 +148,7 @@ public class BlackJackGame {
     }
 
     private void printWinningResult(final Participants participants) {
-        outputView.printWinningResult(participants.getWinningResult(), participants.getPlayerNames());
+        List<Player> players = participants.getPlayersToList();
+        List<BlackJackWinningResult> result = participants.getBlackJackWinningResult();
     }
 }

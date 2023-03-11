@@ -26,8 +26,8 @@ public class Participants {
         return players.getCards();
     }
 
-    public List<Integer> getWinningResult() {
-        List<Integer> winningResult = new ArrayList<>();
+    public List<BlackJackWinningResult> getBlackJackWinningResult() {
+        List<BlackJackWinningResult> winningResult = new ArrayList<>();
         for (int index = 0; index < players.size(); index++) {
             winningResult.add(dealer.checkWinningResult(players.getPlayer(index)));
         }
