@@ -21,9 +21,9 @@ public class BettingSystemTest {
     @Test
     void 겜블러의_수입을_반환한다() {
         final Players players = Players.from(List.of("후추", "허브"));
-        Map<Player, BetMoney> betMoneyByPlayer = new HashMap<>();
+        Map<Player, Money> betMoneyByPlayer = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            betMoneyByPlayer.put(player, BetMoney.createBetMoney(10000));
+            betMoneyByPlayer.put(player, Money.createMoneyForBetting(10000));
         }
         final BettingSystem bettingSystem = new BettingSystem(betMoneyByPlayer);
 
@@ -38,7 +38,7 @@ public class BettingSystemTest {
         )));
 
         assertThat(bettingSystem.getProfitResult(blackjackGame.play()).values())
-                .extracting(BetMoney::getAmount)
+                .extracting(Money::getAmount)
                 .containsExactly(-10000, -10000);
     }
 }

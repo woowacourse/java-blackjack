@@ -12,13 +12,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class BetMoneyTest {
+public class MoneyTest {
 
 
     @ParameterizedTest(name = "배팅 금액을 생성한다. 입력 값: {0}")
     @ValueSource(ints = {1000, 100000000})
     void 베팅_금액을_생성한다(final int money) {
-        final BetMoney betMoney = BetMoney.createBetMoney(money);
+        final Money betMoney = Money.createMoneyForBetting(money);
 
         final int value = betMoney.getAmount();
 
@@ -28,26 +28,26 @@ public class BetMoneyTest {
     @ParameterizedTest(name = "금액이 1,000 미만 100,000,000 초과이면 예외를 던진다. 입력 값: {0}")
     @ValueSource(ints = {999, 100000001})
     void 금액이_1000_미만_100000000_초과이면_예외를_던진다(final int money) {
-        assertThatThrownBy(() -> BetMoney.createBetMoney(money))
+        assertThatThrownBy(() -> Money.createMoneyForBetting(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(BetMoney.INVALID_ACCOUNT_RANGE_MESSAGE + money);
+                .hasMessage(Money.INVALID_BETTING_AMOUNT_RANGE_MESSAGE + money);
     }
 
     @ParameterizedTest
     @CsvSource({"true, 2500", "false, 2000"})
     void 이긴_배팅_금액을_얻는다(final boolean isBlackjack, final int expectedMoney) {
-        final BetMoney betMoney = BetMoney.createBetMoney(1000);
+        final Money money = Money.createMoneyForBetting(1000);
 
-        final BetMoney winMoney = betMoney.winMoney(isBlackjack);
+        final Money winMoney = money.winMoney(isBlackjack);
 
         assertThat(winMoney.getAmount()).isEqualTo(expectedMoney);
     }
 
     @Test
     void 진_배팅_금액을_얻는다() {
-        final BetMoney betMoney = BetMoney.createBetMoney(1000);
+        final Money money = Money.createMoneyForBetting(1000);
 
-        final BetMoney loseMoney = betMoney.loseMoney();
+        final Money loseMoney = money.loseMoney();
 
         assertThat(loseMoney.getAmount()).isEqualTo(0);
     }
@@ -55,11 +55,11 @@ public class BetMoneyTest {
     @ParameterizedTest
     @CsvSource({"10000, 5000, 5000", "5000, 10000, -5000"})
     void 뺄셈_결과를_반환한다(final int original, final int afterGame, final int expectedDifference) {
-        final BetMoney originalMoney = BetMoney.createBetMoney(original);
-        final BetMoney afterGameMoney = BetMoney.createBetMoney(afterGame);
+        final Money originalMoney = Money.createMoneyForBetting(original);
+        final Money afterGameMoney = Money.createMoneyForBetting(afterGame);
 
-        final BetMoney income = afterGameMoney.subtract(originalMoney);
+        final Money income = afterGameMoney.subtract(originalMoney);
 
-        assertThat(income).isEqualTo(BetMoney.createBetMoney(expectedDifference));
+        assertThat(income).isEqualTo(Money.createMoneyForBetting(expectedDifference));
     }
 }

@@ -2,41 +2,41 @@ package blackjack.domain.game;
 
 import java.util.Objects;
 
-public class BetMoney {
-    static final String INVALID_ACCOUNT_RANGE_MESSAGE = "배팅 금액은 1,000 이상 100,000,000 이하여야 합니다. 입력값 :";
+public class Money {
+    static final String INVALID_BETTING_AMOUNT_RANGE_MESSAGE = "배팅 금액은 1,000 이상 100,000,000 이하여야 합니다. 입력값 :";
     private static final int MINIMUM_AMOUNT = 1_000;
     private static final int MAXIMUM_AMOUNT = 100_000_000;
 
     private final int amount;
 
-    private BetMoney(final int amount) {
+    private Money(final int amount) {
         this.amount = amount;
     }
 
-    public static BetMoney createBetMoney(final int amount) {
-        validateAmountRange(amount);
-        return new BetMoney(amount);
+    public static Money createMoneyForBetting(final int amount) {
+        validateBettingAmountRange(amount);
+        return new Money(amount);
     }
 
-    private static void validateAmountRange(final int amount) {
+    private static void validateBettingAmountRange(final int amount) {
         if (amount < MINIMUM_AMOUNT || amount > MAXIMUM_AMOUNT) {
-            throw new IllegalArgumentException(INVALID_ACCOUNT_RANGE_MESSAGE + amount);
+            throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_RANGE_MESSAGE + amount);
         }
     }
 
-    public BetMoney winMoney(final boolean isBlackjack) {
+    public Money winMoney(final boolean isBlackjack) {
         if (isBlackjack) {
-            return new BetMoney((int) (amount * 2.5));
+            return new Money((int) (amount * 2.5));
         }
-        return new BetMoney(amount * 2);
+        return new Money(amount * 2);
     }
 
-    public BetMoney loseMoney() {
+    public Money loseMoney() {
         return this.subtract(this);
     }
 
-    public BetMoney subtract(final BetMoney betMoney) {
-        return new BetMoney(this.amount - betMoney.amount);
+    public Money subtract(final Money money) {
+        return new Money(this.amount - money.amount);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class BetMoney {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final BetMoney betMoney = (BetMoney) o;
-        return amount == betMoney.amount;
+        final Money money = (Money) o;
+        return amount == money.amount;
     }
 
     @Override

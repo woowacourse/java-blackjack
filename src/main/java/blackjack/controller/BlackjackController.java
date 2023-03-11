@@ -1,9 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
-import blackjack.domain.game.BetMoney;
 import blackjack.domain.game.BettingSystem;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
@@ -32,7 +32,7 @@ public class BlackjackController {
         initialDraw(blackjackGame);
         draw(blackjackGame);
         printPlayerResult(blackjackGame);
-        final Map<Player, BetMoney> betMoneyMap = blackjackGame.calculateBet();
+        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBet();
         outputView.printGameResult(betMoneyMap);
     }
 
@@ -44,11 +44,11 @@ public class BlackjackController {
 
     private BettingSystem generateBettingSystem(final Players players) {
         final List<Player> gamePlayers = players.getPlayers();
-        final LinkedHashMap<Player, BetMoney> betMoneyByPlayers = gamePlayers.stream()
+        final LinkedHashMap<Player, Money> betMoneyByPlayers = gamePlayers.stream()
                 .filter(player -> !player.isDealer())
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> BetMoney.createBetMoney(repeatUntilGetValidInput(() -> inputView.readBetMoney(player))),
+                        player -> Money.createMoneyForBetting(repeatUntilGetValidInput(() -> inputView.readBetMoney(player))),
                         (betMoney, betMoney2) -> betMoney,
                         LinkedHashMap::new
                 ));

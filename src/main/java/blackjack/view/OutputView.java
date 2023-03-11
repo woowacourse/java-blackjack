@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.game.BetMoney;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
@@ -70,12 +70,12 @@ public class OutputView {
         return format(PLAYER_SCORE_MESSAGE_FORMAT, player.calculateScore());
     }
 
-    public void printGameResult(final Map<Player, BetMoney> betMoneyByPlayer) {
+    public void printGameResult(final Map<Player, Money> betMoneyByPlayer) {
         System.out.println(GAME_RESULT_MESSAGE);
 
         final int dealerProfit = -betMoneyByPlayer.values()
                 .stream()
-                .mapToInt(BetMoney::getAmount)
+                .mapToInt(Money::getAmount)
                 .sum();
 
         System.out.println(String.format(GAME_RESULT_DEALER_MESSAGE_FORMAT, dealerProfit));

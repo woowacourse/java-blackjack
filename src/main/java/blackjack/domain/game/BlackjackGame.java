@@ -39,7 +39,7 @@ public class BlackjackGame {
         return players.play();
     }
 
-    public Map<Player, BetMoney> calculateBet() {
+    public Map<Player, Money> calculateBet() {
         return bettingSystem.getProfitResult(players.play());
     }
 
