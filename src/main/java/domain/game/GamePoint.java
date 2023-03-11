@@ -41,7 +41,7 @@ public final class GamePoint {
 
     private int calculateMaxPoint(final List<Card> cards) {
         return cards.stream()
-                .mapToInt(GamePoint::transform)
+                .mapToInt(this::transform)
                 .sum();
     }
 
@@ -51,14 +51,14 @@ public final class GamePoint {
                 .count();
     }
 
-    private static int calculateBust(final int point) {
+    private int calculateBust(final int point) {
         if (point > BLACK_JACK) {
             return BUST;
         }
         return point;
     }
 
-    private static int transform(Card card) {
+    private int transform(Card card) {
         if (card.isSameAs(ACE)) {
             return ACE_UPPER;
         }
