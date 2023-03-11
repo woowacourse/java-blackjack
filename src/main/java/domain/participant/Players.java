@@ -67,8 +67,6 @@ public final class Players {
     }
 
     public List<Player> getPlayers() {
-        return players.stream()
-                .map(Player::of)
-                .collect(Collectors.toUnmodifiableList());
+        return List.copyOf(players);
     }
 }

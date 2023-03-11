@@ -24,9 +24,11 @@ public final class Hand {
     }
 
     public Hand add(final Card card) {
-        List<Card> cardList = new ArrayList<>(cards);
-        cardList.add(card);
-        return new Hand(cardList);
+        List<Card> result = cards.stream()
+                .map(Card::of)
+                .collect(Collectors.toList());
+        result.add(card);
+        return create(result);
     }
 
     public boolean isBlackJack() {
