@@ -1,10 +1,10 @@
-package domain.deck;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.CardShape;
-import domain.card.CardValue;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.stream;
@@ -35,11 +35,15 @@ public class CardDeck {
                 .map(value -> new Card(shape, value));
     }
 
-    public List<Card> cards() {
-        return new ArrayList<>(cards);
+    public CardArea createCardArea() {
+        return CardArea.initialWithTwoCard(draw(), draw());
     }
 
     public Card draw() {
         return this.cards.pollFirst();
+    }
+
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 }

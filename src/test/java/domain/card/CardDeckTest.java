@@ -1,8 +1,5 @@
-package domain.deck;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.CardShape;
-import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static domain.card.CardValue.values;
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,14 +34,14 @@ class CardDeckTest {
         for (final CardShape cardShape : result.keySet()) {
             final Set<Card> cards = new HashSet<>(result.get(cardShape));
 
-            assertEquals(cards.size(), CardValue.values().length);
+            assertEquals(cards.size(), values().length);
         }
 
         assertEquals(result.size(), CardShape.values().length);
     }
 
     @Test
-    void 카드를_한_장씩_꺼낼_수_있다() {
+    void 카드를_뽑을_수_있다() {
         // given
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final int before = cardDeck.cards().size();

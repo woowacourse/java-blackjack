@@ -1,12 +1,14 @@
 package domain.player;
 
-import domain.area.CardArea;
+import domain.card.BlackJackScore;
 import domain.card.Card;
+import domain.card.CardArea;
+import domain.card.CardDeck;
 
 public class Dealer extends Participant {
 
     private static final Name DEALER_NAME = Name.of("딜러");
-    private static final int DEALER_SHOULD_HIT_INCLUDE_VALUE = 16;
+    private static final BlackJackScore DEALER_DONT_HIT_SCORE = BlackJackScore.of(17);
 
     public Dealer(final CardArea cardArea) {
         super(DEALER_NAME, cardArea);
@@ -14,26 +16,19 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return cardArea.calculate() <= DEALER_SHOULD_HIT_INCLUDE_VALUE;
+        return DEALER_DONT_HIT_SCORE.isLargerThan(score());
+    }
+
+    @Override
+    public boolean hitOrStay(final CardDeck cardDeck) {
+        if (canHit()) {
+            hit(cardDeck);
+            return true;
+        }
+        return false;
     }
 
     public Card firstCard() {
         return cardArea.firstCard();
-    }
-
-    public DealerCompeteResult compete(final Participant participant) {
-        if (participant.isBurst()) {
-            return DealerCompeteResult.WIN;
-        }
-        if (isBurst()) {
-            return DealerCompeteResult.LOSE;
-        }
-        if (participant.score() > score()) {
-            return DealerCompeteResult.LOSE;
-        }
-        if (participant.score() == score()) {
-            return DealerCompeteResult.DRAW;
-        }
-        return DealerCompeteResult.WIN;
     }
 }

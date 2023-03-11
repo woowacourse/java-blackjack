@@ -1,7 +1,11 @@
 package techcourse;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,12 +71,6 @@ public class Missions {
     @DisplayName("미션 5")
     class Mission5 {
 
-        class Printer {
-        }
-
-        class LaserPrinter extends Printer {
-        }
-
         @Test
         void 리스트의_값을_다른_리스트로_복사하는_메서드를_구현해본다() {
             // given
@@ -86,6 +84,12 @@ public class Missions {
 
             // then
             Assertions.assertThat(printers.get(0)).isEqualTo(laserPrinter);
+        }
+
+        class Printer {
+        }
+
+        class LaserPrinter extends Printer {
         }
     }
 }

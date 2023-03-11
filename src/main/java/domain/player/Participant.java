@@ -1,7 +1,8 @@
 package domain.player;
 
-import domain.area.CardArea;
-import domain.card.Card;
+import domain.card.BlackJackScore;
+import domain.card.CardArea;
+import domain.card.CardDeck;
 
 public abstract class Participant {
 
@@ -25,17 +26,23 @@ public abstract class Participant {
         return name.value();
     }
 
-    public boolean isBurst() {
-        return cardArea.isBurst();
-    }
-
-    public void hit(final Card card) {
-        cardArea.addCard(card);
+    public boolean isBust() {
+        return cardArea.isBust();
     }
 
     public abstract boolean canHit();
 
-    public int score() {
+    public BlackJackScore score() {
         return cardArea.calculate();
+    }
+
+    protected boolean isLargerScoreThan(final Participant participant) {
+        return score().isLargerThan(participant.score());
+    }
+
+    public abstract boolean hitOrStay(final CardDeck cardDeck);
+
+    protected void hit(final CardDeck cardDeck) {
+        cardArea.addCard(cardDeck.draw());
     }
 }

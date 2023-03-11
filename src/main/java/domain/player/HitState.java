@@ -12,6 +12,7 @@ public enum HitState {
         }
         return STAY;
     }
+
     public boolean isHit() {
         return this == HIT;
     }

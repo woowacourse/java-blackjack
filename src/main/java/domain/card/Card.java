@@ -12,16 +12,20 @@ public class Card {
         this.cardValue = cardValue;
     }
 
+    public boolean isAce() {
+        return cardValue.isAce();
+    }
+
     public CardShape cardShape() {
         return cardShape;
     }
 
     public CardValue cardValue() {
-        return this.cardValue;
+        return cardValue;
     }
 
     public int defaultScore() {
-        return this.cardValue.value();
+        return cardValue.value();
     }
 
     @Override
@@ -35,9 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardShape, cardValue);
-    }
-
-    public boolean isAce() {
-        return cardValue.isAce();
     }
 }

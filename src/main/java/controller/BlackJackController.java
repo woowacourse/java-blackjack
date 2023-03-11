@@ -1,61 +1,85 @@
 package controller;
 
-import domain.deck.CardDeck;
+import domain.card.CardDeck;
 import domain.game.BlackJackGame;
+import domain.player.BettingMoney;
+import domain.player.Gambler;
 import domain.player.HitState;
 import domain.player.Name;
-import domain.player.Player;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class BlackJackController {
 
     public void run() {
-        final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
-        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
-        hitOrStayForParticipants(blackJackGame);
+        final BlackJackGame blackJackGame = setUpGame();
+        hitOrStayForGamblers(blackJackGame);
         hitOrStayForDealer(blackJackGame);
-        OutputView.showGameStatistic(new GameStatisticResponse(
-                blackJackGame.dealer(),
-                blackJackGame.participants(),
-                blackJackGame.statistic()));
+        statistic(blackJackGame);
     }
 
     private BlackJackGame setUpGame() {
-        final List<Name> participantNames = withExceptionHandle(this::createParticipantNames);
+        final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
+        final Map<Name, BettingMoney> gamblerBettingMoneyMap = betting(gamblerNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        return BlackJackGame.defaultSetting(cardDeck, participantNames);
+        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBettingMoneyMap);
+        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
+        return blackJackGame;
     }
 
-    private List<Name> createParticipantNames() {
+    private List<Name> createGamblerNames() {
         return InputView.readParticipantsName()
                 .stream()
                 .map(Name::of)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
-    private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
-        while (blackJackGame.existCanHitParticipant()) {
-            final Player canHitPlayer = blackJackGame.findCanHitParticipant();
-            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitPlayer));
-            blackJackGame.hitOrStayForParticipant(canHitPlayer, hitState);
-            OutputView.showPlayerCardAreaState(canHitPlayer);
+    private Map<Name, BettingMoney> betting(final List<Name> gamblerNames) {
+        return gamblerNames.stream()
+                .collect(toMap(
+                        identity(),
+                        name -> withExceptionHandle(() -> BettingMoney.of(InputView.readBettingMoney(name))),
+                        (a, b) -> b,
+                        LinkedHashMap::new
+                ));
+    }
+
+    private void hitOrStayForGamblers(final BlackJackGame blackJackGame) {
+        while (blackJackGame.existCanHitGambler()) {
+            final Gambler canHitGambler = blackJackGame.findCanHitGambler();
+            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitGambler));
+            blackJackGame.hitOrStayForGambler(canHitGambler, hitState);
+            OutputView.showGamblerCardAreaState(canHitGambler);
         }
     }
 
-    private HitState inputHitOrStay(final Player player) {
-        return HitState.hitWhenBooleanIsTrue(InputView.readWantHit(player));
+    private HitState inputHitOrStay(final Gambler gambler) {
+        return HitState.hitWhenBooleanIsTrue(InputView.readWantHit(gambler));
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
-        while (blackJackGame.isDealerShouldMoreHit()) {
+        while (blackJackGame.hitForDealerWhenShouldMoreHit()) {
             OutputView.printDealerOneMoreCard();
-            blackJackGame.hitForDealer();
         }
+    }
+
+    private void statistic(final BlackJackGame blackJackGame) {
+        OutputView.showGameStatistic(
+                new GameStatisticResponse(
+                        blackJackGame.dealer(),
+                        blackJackGame.gamblers(),
+                        blackJackGame.revenue()
+                )
+        );
     }
 
     private <T> T withExceptionHandle(final Supplier<T> supplier) {
