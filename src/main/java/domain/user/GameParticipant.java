@@ -67,14 +67,14 @@ public class GameParticipant {
 
     private static void increasePlayerRevenueWhenWin(final Map<Player, GameResult> record) {
         record.entrySet().stream()
-                .filter(entry -> entry.getValue() == GameResult.WIN)
+                .filter(entry -> entry.getValue().isWin())
                 .map(Map.Entry::getKey)
                 .forEach(Player::increaseRevenue);
     }
 
     private static void decreasePlayerRevenueWhenLose(final Map<Player, GameResult> record) {
         record.entrySet().stream()
-                .filter(entry -> entry.getValue() == GameResult.LOSE)
+                .filter(entry -> entry.getValue().isLose())
                 .map(Map.Entry::getKey)
                 .forEach(Player::decreaseRevenue);
     }

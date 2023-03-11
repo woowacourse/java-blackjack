@@ -47,4 +47,12 @@ public enum GameResult {
     private static int countGameResult(final Collection<GameResult> gameResults, final GameResult gameResultType) {
         return Collections.frequency(gameResults, gameResultType);
     }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
 }
