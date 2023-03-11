@@ -19,7 +19,15 @@ public class Hand {
         hand.add(card);
     }
 
-    public int calculateValue() {
+    public int calculateHandValue() {
+        int value = calculateValue();
+        if (isBust()) {
+            value = 0;
+        }
+        return value;
+    }
+
+    private int calculateValue() {
         int aceCount = countAce();
         int value = sumValue();
 
@@ -42,9 +50,13 @@ public class Hand {
     }
 
     private int sumValue() {
-        return  hand.stream()
-            .mapToInt(Card::getValue)
+        return hand.stream()
+            .mapToInt(Card::fetchValue)
             .sum();
+    }
+
+    public boolean isBust() {
+        return calculateValue() > BUST_BOUNDARY_VALUE;
     }
 
     public List<Card> getHand() {
