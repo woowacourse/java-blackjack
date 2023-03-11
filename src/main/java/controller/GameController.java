@@ -41,10 +41,16 @@ public final class GameController {
     }
 
     private Participants makeParticipants() {
-        return InputProcessHandler.repeat(inputView::readParticipantNames,
-                outputView::guideParticipantsName,
-                Participants::create,
-                outputView::printExceptionMessage);
+        try {
+            outputView.guideParticipantsName();
+
+            final List<String> playersName = inputView.readParticipantNames();
+
+            return Participants.create(playersName);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return makeParticipants();
+        }
     }
 
     private void startGame(final GameManager gameManager) {
@@ -59,15 +65,20 @@ public final class GameController {
 
         for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
             final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
-            Integer betAmount = readBetAmount(playerName);
+            final int betAmount = readBetAmount(playerName);
             gameManager.bet(playerOrder, betAmount);
         }
     }
 
-    private Integer readBetAmount(final String playerName) {
-        return InputProcessHandler.repeat(inputView::readPlayerBetAmount,
-                () -> outputView.guideBetAmount(playerName),
-                outputView::printExceptionMessage);
+    private int readBetAmount(final String playerName) {
+        try {
+            outputView.guideBetAmount(playerName);
+
+            return inputView.readPlayerBetAmount();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return readBetAmount(playerName);
+        }
     }
 
     private void printTotalParticipantStartCards(final GameManager gameManager) {
@@ -105,10 +116,16 @@ public final class GameController {
     }
 
     private DrawCardCommand readDrawable(final String playerName) {
-        return InputProcessHandler.repeat(inputView::readDrawCardCommand,
-                () -> outputView.guideDrawCard(playerName),
-                DrawCardCommandSelector::findDrawable,
-                outputView::printExceptionMessage);
+        try {
+            outputView.guideDrawCard(playerName);
+
+            final String command = inputView.readDrawCardCommand();
+
+            return DrawCardCommandSelector.findDrawable(command);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return readDrawable(playerName);
+        }
     }
 
     private boolean canDrawCard(final GameManager gameManager, final int playerOrder, final DrawCardCommand command) {
