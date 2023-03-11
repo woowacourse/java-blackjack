@@ -91,6 +91,9 @@ public class BlackJackGameController {
     }
 
     private void playGame(final BlackJackGame blackJackGame) {
+        if (blackJackGame.getParticipants().getDealer().isBlackJack()) {
+            return;
+        }
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
     }
