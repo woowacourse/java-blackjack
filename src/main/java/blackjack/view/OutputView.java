@@ -41,7 +41,7 @@ public class OutputView {
 
     private void printStartMessage(List<String> names) {
         int lastIndex = names.size() - 1;
-        System.out.println(INIT_START_MESSAGE);
+        System.out.print(INIT_START_MESSAGE);
         for (int i = 0; i < lastIndex; i++) {
             System.out.print(names.get(i) + CARD_DELIMITER);
         }
@@ -72,7 +72,7 @@ public class OutputView {
 
     private void printDealerResult(Dealer dealer) {
         int score = dealer.calculateScore().getScore();
-        System.out.print(DEALER_MESSAGE);
+        System.out.print(DEALER_MESSAGE + RESULT_DELIMITER);
         printCards(dealer.showAllCards(), EMPTY);
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
