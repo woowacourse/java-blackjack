@@ -1,17 +1,22 @@
 package domain.money;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Money {
 
-    private final int value;
+    private final BigDecimal value;
 
     protected Money(int value) {
-        this.value = value;
+        this.value = new BigDecimal(value);
+    }
+
+    public static Money valueOf(int value) {
+        return new Money(value);
     }
 
     public int getValue() {
-        return value;
+        return value.intValue();
     }
 
     @Override
@@ -23,7 +28,7 @@ public class Money {
             return false;
         }
         Money that = (Money) o;
-        return value == that.value;
+        return value.intValue() == that.value.intValue();
     }
 
     @Override
