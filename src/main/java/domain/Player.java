@@ -30,4 +30,8 @@ public class Player {
     public int getCardsSum() {
         return cards.getSum();
     }
+
+    public boolean isBlackJack() {
+        return getCardsSum() == 21 && getCards().size() == 2;
+    }
 }

@@ -33,4 +33,9 @@ public class Dealer {
     public int getCardsSum() {
         return player.getCardsSum();
     }
+
+    public boolean isBlackJack() {
+        return player.isBlackJack();
+    }
+
 }
