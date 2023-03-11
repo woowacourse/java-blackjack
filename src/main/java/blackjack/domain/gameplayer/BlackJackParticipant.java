@@ -6,6 +6,8 @@ import blackjack.domain.card.Cards;
 
 public abstract class BlackJackParticipant implements User {
 
+    private static final int BLACKJACK_SIZE = 2;
+
     protected final Cards cards;
     protected final Score bustUpperBound = Score.of(21);
 
@@ -18,7 +20,7 @@ public abstract class BlackJackParticipant implements User {
     }
 
     public boolean isBlackJack() {
-        return cards.getSize() == 2 && calculateScore().isEqualTo(bustUpperBound);
+        return cards.getSize() == BLACKJACK_SIZE && calculateScore().isEqualTo(bustUpperBound);
     }
 
     @Override
