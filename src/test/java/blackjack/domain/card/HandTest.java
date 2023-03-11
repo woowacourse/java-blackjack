@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Number.JACK;
-import static blackjack.domain.card.Number.QUEEN;
-import static blackjack.domain.card.Number.TEN;
-import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.TEN;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;

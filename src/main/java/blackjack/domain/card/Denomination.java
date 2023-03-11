@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Number {
+public enum Denomination {
 
     ACE("A", 1),
     TWO("2", 2),
@@ -19,7 +19,7 @@ public enum Number {
     private final String name;
     private final int score;
 
-    Number(final String name, final int score) {
+    Denomination(final String name, final int score) {
         this.name = name;
         this.score = score;
     }

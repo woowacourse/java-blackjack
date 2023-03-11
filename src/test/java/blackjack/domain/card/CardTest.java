@@ -17,8 +17,8 @@ class CardTest {
         @Test
         void 카드가_에이스라면_true_반환한다() {
             final Suit suit = Suit.SPADE;
-            final Number number = Number.ACE;
-            final Card card = new Card(number, suit);
+            final Denomination denomination = Denomination.ACE;
+            final Card card = new Card(denomination, suit);
 
             assertThat(card.isAce()).isTrue();
         }
@@ -26,8 +26,8 @@ class CardTest {
         @Test
         void 카드가_에이스가_아니라면_false_반환한다() {
             final Suit suit = Suit.SPADE;
-            final Number number = Number.TEN;
-            final Card card = new Card(number, suit);
+            final Denomination denomination = Denomination.TEN;
+            final Card card = new Card(denomination, suit);
 
             assertThat(card.isAce()).isFalse();
         }
@@ -36,8 +36,8 @@ class CardTest {
     @Test
     void 숫자_점수를_확인한다() {
         final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
+        final Denomination denomination = Denomination.ACE;
+        final Card card = new Card(denomination, suit);
 
         assertThat(card.getScore()).isEqualTo(1);
     }
@@ -45,8 +45,8 @@ class CardTest {
     @Test
     void 숫자_이름을_확인한다() {
         final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
+        final Denomination denomination = Denomination.ACE;
+        final Card card = new Card(denomination, suit);
 
         assertThat(card.getNumberName()).isEqualTo("A");
     }
@@ -54,8 +54,8 @@ class CardTest {
     @Test
     void 문양_이름을_확인한다() {
         final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
-        final Card card = new Card(number, suit);
+        final Denomination denomination = Denomination.ACE;
+        final Card card = new Card(denomination, suit);
 
         assertThat(card.getSuitName()).isEqualTo("스페이드");
     }

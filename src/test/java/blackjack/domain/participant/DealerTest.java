@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Number.FIVE;
-import static blackjack.domain.card.Number.NINE;
-import static blackjack.domain.card.Number.QUEEN;
-import static blackjack.domain.card.Number.SEVEN;
-import static blackjack.domain.card.Number.SIX;
-import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.FIVE;
+import static blackjack.domain.card.Denomination.NINE;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.SIX;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;

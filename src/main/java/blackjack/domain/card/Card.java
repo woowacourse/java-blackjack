@@ -2,20 +2,20 @@ package blackjack.domain.card;
 
 public class Card {
 
-    private final Number number;
+    private final Denomination denomination;
     private final Suit suit;
 
-    public Card(final Number number, final Suit suit) {
-        this.number = number;
+    public Card(final Denomination denomination, final Suit suit) {
+        this.denomination = denomination;
         this.suit = suit;
     }
 
     public boolean isAce() {
-        return number == Number.ACE;
+        return denomination == Denomination.ACE;
     }
 
     public int getScore() {
-        return number.getScore();
+        return denomination.getScore();
     }
 
     public String getSuitName() {
@@ -23,6 +23,6 @@ public class Card {
     }
 
     public String getNumberName() {
-        return number.getName();
+        return denomination.getName();
     }
 }
