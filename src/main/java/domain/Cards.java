@@ -38,7 +38,7 @@ public class Cards {
     }
 
     public boolean isOverBlackJack() {
-        return getSum() >= BLACK_JACK;
+        return getSum() > BLACK_JACK;
     }
 
     public boolean isBlackJack() {
