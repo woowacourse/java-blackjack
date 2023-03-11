@@ -1,26 +1,27 @@
 package blackjack.dto;
 
-import blackjack.domain.player.Player;
-import blackjack.domain.result.Rank;
+import blackjack.domain.player.Challenger;
+import blackjack.domain.player.Money;
 import blackjack.domain.result.Result;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChallengerResultDto {
 
-    private final Map<String, String> nameAndRanks;
+    private final Map<String, Integer> nameAndProfits;
 
-    public ChallengerResultDto(Result result, List<Player> challengers) {
-        Map<String, String> nameAndRanks = new LinkedHashMap<>();
-        for (Player challenger : challengers) {
-            Rank challengerResult = result.getChallengerResult(challenger);
-            nameAndRanks.put(challenger.getName(), challengerResult.getLabel());
+    public ChallengerResultDto(Result result, List<Challenger> challengers) {
+        Map<String, Integer> nameAndProfits = new LinkedHashMap<>();
+        for (Challenger challenger : challengers) {
+            Money challengerProfit = result.getChallengerProfit(challenger);
+            nameAndProfits.put(challenger.getName(), challengerProfit.getAmount());
         }
-        this.nameAndRanks = nameAndRanks;
+        this.nameAndProfits = nameAndProfits;
     }
 
-    public Map<String, String> getNameAndRanks() {
-        return nameAndRanks;
+    public Map<String, Integer> getNameAndProfits() {
+        return nameAndProfits;
     }
 }

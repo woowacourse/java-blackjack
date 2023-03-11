@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MoneyTest {
 
-    @Test
-    @DisplayName("배팅 전 돈은 0원이다")
-    void initial_money() {
-        assertThat(Money.zero().getAmount()).isZero();
+    @ParameterizedTest
+    @CsvSource(value = {"1,1000", "1.5,1500", "0,0", "-1,-1000"})
+    @DisplayName("배팅 금액 곱셈 테스트")
+    void initial_money(double rate, int expected) {
+        Money money = Money.from(1000);
+        assertThat(Money.multiply(money, rate).getAmount()).isEqualTo(expected);
     }
 
     @Nested

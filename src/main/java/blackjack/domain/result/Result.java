@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.player.Challenger;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -9,18 +11,19 @@ import java.util.Map;
 
 public class Result {
 
-    private final Map<Player, Rank> results;
+    private final Map<Player, Money> results;
 
-    private Result(final Map<Player, Rank> results) {
+    private Result(final Map<Player, Money> results) {
         this.results = results;
     }
 
     public static Result from(final Players players) {
-        Map<Player, Rank> results = new LinkedHashMap<>();
+        Map<Player, Money> results = new LinkedHashMap<>();
         Player dealer = players.getDealer();
-        for (Player challenger : players.getChallengers()) {
+        for (Challenger challenger : players.getChallengers()) {
             Rank rank = makePlayerResult(dealer, challenger);
-            results.put(challenger, rank);
+            Money profit = calculateProfit(challenger, rank);
+            results.put(challenger, profit);
         }
         return new Result(results);
     }
@@ -50,18 +53,37 @@ public class Result {
         if (challenger.isBust()) {
             return Rank.DRAW;
         }
+        return getRankWhenChallengerWin(challenger);
+    }
+
+    private static Rank getRankWhenChallengerWin(final Player challenger) {
+        if (challenger.isBlackjack()) {
+            return Rank.BLACKJACK;
+        }
         return Rank.WIN;
     }
 
     private static Rank getRankWhenBothNotBust(final Player dealer, final Player challenger) {
         if (challenger.moreScoreThan(dealer)) {
-            return Rank.WIN;
+            return getRankWhenChallengerWin(challenger);
         }
         return Rank.LOSE;
     }
 
-    public Rank getChallengerResult(final Player player) {
+    private static Money calculateProfit(Challenger challenger, Rank rank) {
+        Money bettingMoney = challenger.getMoney();
+        return Money.multiply(bettingMoney, rank.getRateOfReturn());
+    }
+
+    public Money getChallengerProfit(final Player player) {
         return results.get(player);
+    }
+
+    public Money getDealerProfit() {
+        Money challengersProfit = results.values()
+                .stream()
+                .reduce(Money.zero(), Money::sum);
+        return Money.multiply(challengersProfit, -1);
     }
 
     public int getDealerWinCount() {

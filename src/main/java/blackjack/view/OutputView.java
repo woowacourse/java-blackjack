@@ -145,7 +145,7 @@ public class OutputView {
     }
 
     private static void printChallengersFinalRank(ChallengerResultDto challengerResultDto) {
-        Map<String, String> nameAndRanks = challengerResultDto.getNameAndRanks();
+        Map<String, Integer> nameAndRanks = challengerResultDto.getNameAndProfits();
         for (String name : nameAndRanks.keySet()) {
             System.out.println(name + PLAYER_NAME_AND_CARDS_PARTITION + nameAndRanks.get(name));
         }

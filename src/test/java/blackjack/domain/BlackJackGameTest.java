@@ -3,11 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.domain.player.Challenger;
 import blackjack.domain.player.ChallengerName;
 import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.Score;
 import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -109,7 +109,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("도전자를 선택하는 기능 대한 테스트")
     void get_challengers() {
-        List<Player> challengers = blackJackGame.getChallengers();
+        List<Challenger> challengers = blackJackGame.getChallengers();
 
         challengers.forEach(challenger -> assertThat(challenger.isChallenger()).isTrue());
     }

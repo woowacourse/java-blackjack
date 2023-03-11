@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.player.Challenger;
 import blackjack.domain.player.ChallengerName;
 import blackjack.domain.player.ChallengerNames;
 import blackjack.domain.player.Money;
@@ -83,7 +84,7 @@ public class BlackJackController {
     }
 
     private List<PlayerStatusDto> makeChallengersStartStatus() {
-        List<Player> challengers = blackJackGame.getChallengers();
+        List<Challenger> challengers = blackJackGame.getChallengers();
         return challengers.stream()
                 .map(PlayerStatusDto::from)
                 .collect(Collectors.toUnmodifiableList());
@@ -146,7 +147,7 @@ public class BlackJackController {
     }
 
     private List<PlayerStatusWithPointDto> makeChallengersWithPointStatus() {
-        List<Player> challengers = blackJackGame.getChallengers();
+        List<Challenger> challengers = blackJackGame.getChallengers();
         return challengers.stream()
                 .map(PlayerStatusWithPointDto::from)
                 .collect(Collectors.toUnmodifiableList());

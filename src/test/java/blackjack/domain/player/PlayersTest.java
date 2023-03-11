@@ -23,7 +23,7 @@ class PlayersTest {
     @Test
     @DisplayName("challenger만 반환하는지 테스트")
     void return_challengers() {
-        List<Player> challengers = players.getChallengers();
+        List<Challenger> challengers = players.getChallengers();
 
         challengers.forEach(challenger ->
                 assertThat(challenger).isInstanceOf(Challenger.class));

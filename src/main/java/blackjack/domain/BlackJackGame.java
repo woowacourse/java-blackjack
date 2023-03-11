@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
@@ -55,7 +56,7 @@ public class BlackJackGame {
         return players.getDealer();
     }
 
-    public List<Player> getChallengers() {
+    public List<Challenger> getChallengers() {
         return players.getChallengers();
     }
 }

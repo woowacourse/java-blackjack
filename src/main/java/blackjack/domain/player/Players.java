@@ -34,16 +34,18 @@ public class Players {
         }
     }
 
-    public List<Player> getChallengers() {
-        List<Player> challengers = players.stream()
+    public List<Challenger> getChallengers() {
+        List<Challenger> challengers = players.stream()
                 .filter(Player::isChallenger)
+                .map(player -> (Challenger) player)
                 .collect(Collectors.toUnmodifiableList());
         return new ArrayList<>(challengers);
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
+                .map(player -> (Dealer) player)
                 .findFirst()
                 .orElseThrow(DealerNotFoundException::new);
     }
