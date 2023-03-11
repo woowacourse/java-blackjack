@@ -33,6 +33,10 @@ public abstract class Participant {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public boolean isBlackJack(){
+        return cards.size() == 2 && score.getScore() == 21;
+    }
+
     public List<String> getCardNames() {
         return cards.stream()
                 .map(Card::getCardName)
