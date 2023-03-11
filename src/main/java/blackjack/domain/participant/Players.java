@@ -2,8 +2,8 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.Money;
-import blackjack.domain.Result;
+import blackjack.domain.money.Money;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Hand;
 import java.util.Collections;
 import java.util.List;

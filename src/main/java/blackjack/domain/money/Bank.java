@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.money;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.WIN;
 
+import blackjack.domain.result.Result;
 import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.HashMap;

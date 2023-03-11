@@ -3,9 +3,9 @@ package blackjack.domain.participant;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.Bank;
-import blackjack.domain.Money;
-import blackjack.domain.Result;
+import blackjack.domain.money.Bank;
+import blackjack.domain.money.Money;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;

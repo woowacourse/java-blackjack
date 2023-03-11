@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Bank;
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.Money;
+import blackjack.domain.money.Bank;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;

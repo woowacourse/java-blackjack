@@ -1,7 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 public enum Result {
     WIN,
     DRAW,
-    LOSE;
+    LOSE
 }

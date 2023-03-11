@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import java.util.Collections;
 import java.util.List;
 

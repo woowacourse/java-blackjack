@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.Result;
 import java.util.Map;
 
 public final class BlackjackGame {
