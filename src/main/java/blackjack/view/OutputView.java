@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.gameplayer.BlackJackParticipant;
@@ -101,7 +102,16 @@ public class OutputView {
         System.out.println(dealerResultMsg);
     }
 
-    public void printBettingResult(Map<BlackJackParticipant, Integer> bettingResult) {
+    public void printBettingResult(GameResult gameResult) {
+        int dealerBettingResults = gameResult.getDealerBettingResults();
+        printBlackJackParticipantsBettingResult(DEALER_MESSAGE, dealerBettingResults);
+        Map<Player, Integer> playerBettingResults = gameResult.getPlayerBettingResults();
+        for (Player player : playerBettingResults.keySet()) {
+            printBlackJackParticipantsBettingResult(player.showName(), playerBettingResults.get(player));
+        }
+    }
 
+    private void printBlackJackParticipantsBettingResult(String name, int betting) {
+        System.out.println(name + RESULT_DELIMITER + betting);
     }
 }
