@@ -1,9 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.user.AllWinningAmountDto;
 import domain.user.Player;
-import java.util.Map;
 import java.util.function.Supplier;
 import ui.InputView;
 import ui.OutputView;
@@ -13,7 +11,8 @@ public class BlackjackController {
     private final BlackjackGame blackjackGame;
 
     public BlackjackController() {
-        this.blackjackGame = repeat(() -> BlackjackGame.of(InputView.readPlayersNameAndBettingAmount(), InputView.readDeckCount()));
+        this.blackjackGame = repeat(() ->
+                BlackjackGame.of(InputView.readPlayersNameAndBettingAmount(), InputView.readDeckCount()));
     }
 
     public void run() {
@@ -21,7 +20,7 @@ public class BlackjackController {
         play();
         announceResult();
     }
-    
+
     private void initialize() {
         this.blackjackGame.initializeGame();
         OutputView.printCardsStatus(this.blackjackGame.getDealer(), this.blackjackGame.getPlayers());

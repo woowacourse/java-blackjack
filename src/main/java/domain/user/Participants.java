@@ -38,7 +38,7 @@ public final class Participants {
     }
 
     public AllWinningAmountDto calculateWinningAmountOfAllPlayers() {
-        int winningAmountOfDealer= 0;
+        int winningAmountOfDealer = 0;
         Map<String, Integer> playerWinningAmounts = new LinkedHashMap<>();
         for (Player player : this.getPlayers()) {
             int winningAmountOfPlayer = calculateWinningAmount(player);

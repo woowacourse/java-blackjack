@@ -1,9 +1,9 @@
 package domain;
 
 public enum Result {
-    WIN( 1),
-    LOSE( -1),
-    DRAW( 0),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
     BLACKJACK(1.5);
 
     private final double odds;

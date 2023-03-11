@@ -20,8 +20,8 @@ public final class Dealer extends User {
         super.hand = hand;
     }
 
-        @Override
-        public boolean canAdd() {
+    @Override
+    public boolean canAdd() {
         return super.calculateScore() <= UPPER_LIMIT_TO_DRAW;
     }
 }
