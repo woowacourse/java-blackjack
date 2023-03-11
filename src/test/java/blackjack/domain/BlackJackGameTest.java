@@ -210,4 +210,18 @@ class BlackJackGameTest {
             softly.assertThat(player2Profit.getValue()).isEqualTo(-2_000);
         });
     }
+
+    @Test
+    @DisplayName("딜러의 수익금을 반환하는 기능 추가")
+    void getDealerProfit() {
+        final BlackJackGame blackJackGame = new BlackJackGame(
+                List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
+                new TestNonShuffledDeckGenerator(testCards));
+        blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);
+        blackJackGame.betPlayer(TEST_PLAYER_NAME2, 2_000);
+
+        final Money dealerProfit = blackJackGame.getDealerProfit();
+
+        assertThat(dealerProfit.getValue()).isEqualTo(3_000);
+    }
 }

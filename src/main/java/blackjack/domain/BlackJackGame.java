@@ -75,6 +75,13 @@ public class BlackJackGame {
         return Collections.unmodifiableMap(playerNameAndProfits);
     }
 
+    public Money getDealerProfit() {
+        return getPlayerNameAndProfits().values()
+                .stream()
+                .map(Money::opposite)
+                .reduce(new Money(0), Money::sum);
+    }
+
     public Map<Name, CardResult> getUserNameAndCardResults() {
         return users.getUserNameAndCardResults();
     }
