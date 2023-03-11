@@ -17,11 +17,11 @@ public abstract class State {
     public abstract State draw(Card card);
     public abstract double calculateProfit(int betAmount);
     
-    protected Score score() {
+    public Score score() {
         return hand.getTotalScore();
     }
     
-    protected List<Card> getCards() {
+    public List<Card> getCards() {
         return hand.getCards();
     }
     

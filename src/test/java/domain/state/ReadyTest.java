@@ -16,7 +16,7 @@ class ReadyTest {
     
     @BeforeEach
     void setUp() {
-        ready = new Ready(new Hand());
+        ready = new Ready();
     }
     
     @Test

@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.Hand;
 
 public class Ready extends Running {
-    Ready(Hand hand) {
-        super(hand);
+    public Ready() {
+        super(new Hand());
     }
     
     @Override

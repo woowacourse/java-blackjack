@@ -1,23 +1,24 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.Score;
+import domain.state.Ready;
+import domain.state.State;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Player {
-    private final Hand hand;
+    private State state;
     private final PlayerName name;
 
     protected Player(String name) {
-        this.hand = new Hand();
+        this.state = new Ready();
         this.name = new PlayerName(name);
     }
     
     public void draw(Card card) {
-        hand.addCard(card);
+        state = state.draw(card);
     }
     
     public GameResult battleResult(Player otherPlayer) {
@@ -55,15 +56,15 @@ public abstract class Player {
     }
     
     public boolean isBust() {
-        return hand.isBust();
+        return state.score().isBust();
     }
     
     public Score getTotalScore() {
-        return hand.getTotalScore();
+        return state.score();
     }
     
     public List<Card> getCards() {
-        return hand.getCards();
+        return state.getCards();
     }
     
     public String getName() {
@@ -77,11 +78,11 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(hand, player.hand) && Objects.equals(name, player.name);
+        return Objects.equals(state, player.state) && Objects.equals(name, player.name);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(hand, name);
+        return Objects.hash(state, name);
     }
 }
