@@ -15,10 +15,10 @@ public class OutputView {
 
     private static final String INIT_END_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String INIT_START_MESSAGE = "딜러와 ";
-    private static final String CARD_MESSAGE = "카드: ";
-    private static final String DEALER_MESSAGE = "딜러: ";
+    private static final String CARD_MESSAGE = "카드";
+    private static final String DEALER_MESSAGE = "딜러";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String RESULT_MESSAGE = " - 결과: ";
+    private static final String RESULT_MESSAGE = " - 결과";
     private static final String FINAL_START_MESSAGE = "## 최종 승패";
     private static final String RESULT_DELIMITER = ": ";
     private static final String CARD_DELIMITER = ", ";
@@ -28,7 +28,7 @@ public class OutputView {
 
     public void printStart(Players players, Dealer dealer) {
         printStartMessage(players.getPlayersName());
-        System.out.print(DEALER_MESSAGE);
+        System.out.print(DEALER_MESSAGE + RESULT_DELIMITER);
         printCards(dealer.showCards(), System.lineSeparator());
         for (Player player : players) {
             printPlayerName(player);
@@ -38,7 +38,7 @@ public class OutputView {
 
     public void printPlayerName(Player player) {
         String name = player.showName();
-        System.out.print(name + CARD_MESSAGE);
+        System.out.print(name + CARD_MESSAGE + RESULT_DELIMITER);
     }
 
     private void printStartMessage(List<String> names) {
@@ -69,14 +69,14 @@ public class OutputView {
         int score = dealer.calculateScore().getScore();
         System.out.println(DEALER_MESSAGE);
         printCards(dealer.showAllCards(), EMPTY);
-        System.out.println(RESULT_MESSAGE + score);
+        System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
 
     public void printPlayerResult(Player player) {
         printPlayerName(player);
         printCards(player.showCards(), EMPTY);
         int score = player.calculateScore().getScore();
-        System.out.println(RESULT_MESSAGE + score);
+        System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
 
     public void printMessage() {
