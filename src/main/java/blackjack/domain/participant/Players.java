@@ -2,8 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.dto.CardResponse;
+import blackjack.domain.card.dto.CardResponse;
 import blackjack.domain.participant.exception.PlayerNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,40 +23,29 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> playerNames) {
+    public static Players from(final List<String> playerNames, final List<Integer> bettingMoneys) {
         validatePlayerNames(playerNames);
-        final List<Player> players = createPlayers(playerNames);
+        validateSize(playerNames, bettingMoneys);
+        final List<Player> players = createPlayers(playerNames, bettingMoneys);
         return new Players(players);
     }
 
-    private static List<Player> createPlayers(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-    }
-
-    private static void validatePlayerNames(final List<String> playerNames) {
-        validateNull(playerNames);
-        validatePlayerCount(playerNames);
-        validateDuplicate(playerNames);
-    }
-
-    private static void validateNull(final List<String> playerNames) {
-        if (playerNames == null) {
-            throw new IllegalArgumentException("사용자 이름이 입력되지 않았습니다");
+    private static void validateSize(final List<String> playerNames, final List<Integer> bettingMoneys) {
+        if (playerNames.size() != bettingMoneys.size()) {
+            throw new IllegalArgumentException("플레이어 이름과 베팅 금액의 수가 일치하지 않습니다.");
         }
     }
 
-    private static void validatePlayerCount(final List<String> playerNames) {
-        if (MIN_PLAYER_COUNT > playerNames.size() || playerNames.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException(String.format(OVER_RANGE_MESSAGE, playerNames.size()));
+    private static List<Player> createPlayers(final List<String> playerNames, final List<Integer> bettingMoneys) {
+        final List<Player> players = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(new Player(playerNames.get(i), bettingMoneys.get(i)));
         }
+        return players;
     }
 
-    private static void validateDuplicate(final List<String> playerNames) {
-        if (playerNames.stream().distinct().count() != playerNames.size()) {
-            throw new IllegalArgumentException("사용자의 이름이 중복됩니다.");
-        }
+    public static void validatePlayerNames(final List<String> playerNames) {
+        new Names(playerNames);
     }
 
     void distributeInitialCards(final Deck deck) {
@@ -113,13 +103,12 @@ public class Players {
         return playerScore;
     }
 
-    public Map<String, List<CardResponse>> getPlayersCards() {
+    Map<String, List<CardResponse>> getPlayersCards() {
         final Map<String, List<CardResponse>> playerCards = new HashMap<>();
-        players.forEach(player -> playerCards.put(player.getName(),
-                player.getCards()
-                        .stream()
-                        .map(CardResponse::from)
-                        .collect(Collectors.toList())));
+        for (final Player player : players) {
+            playerCards.put(player.getName(),
+                    player.getCards());
+        }
         return playerCards;
     }
 }
