@@ -84,10 +84,6 @@ public class BlackjackGame {
         return nameAndHandCard(dealer.firstDistributedCard());
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
     public String getDealerScoreResult(String blackjackMessage) {
         String scoreResult = Integer.toString(dealer.cardScore().getScore());
         if (dealer.isBlackjack()) {

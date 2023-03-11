@@ -8,11 +8,14 @@ import blackjack.model.participant.Dealer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameController {
 
     public static final String BLACKJACK_MESSAGE = " (블랙잭!!)";
+    public static final String DEALER_NAME = "딜러";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -23,7 +26,7 @@ public class GameController {
     }
 
     public void run() {
-        BlackjackGame game = new BlackjackGame(new Players(inputView.readNames()), new Dealer());
+        BlackjackGame game = new BlackjackGame(initializingPlayers(), new Dealer());
         CardDeck cardDeck = new CardDeck();
 
         distributeFirstCards(game, cardDeck);
@@ -31,7 +34,16 @@ public class GameController {
         playHitOrStand(game, cardDeck);
 
         printScoreResults(game);
-        printWinningResult(game);
+        printProfitResult(game);
+    }
+
+    private Players initializingPlayers() {
+        List<String> playerNames = inputView.readNames();
+        Map<String, Integer> playerBetting = new HashMap<>();
+        for (String name : playerNames) {
+            playerBetting.put(name, inputView.readBetting(name));
+        }
+        return new Players(playerBetting);
     }
 
     private void distributeFirstCards(BlackjackGame game, CardDeck cardDeck) {
@@ -70,14 +82,15 @@ public class GameController {
         }
     }
 
-    private void printWinningResult(BlackjackGame game) {
+    private void printProfitResult(BlackjackGame game) {
         Map<String, WinningResult> results = game.participantProfits();
+        outputView.printProfitResultMessage();
 
-        outputView.printWinningResultMessage();
-        outputView.printDealerWinningResult(results.remove(game.getDealerName()).getResult());
+        WinningResult dealerResult = results.remove(DEALER_NAME);
+        outputView.printProfitResult(DEALER_NAME, dealerResult.getBetting());
         for (Map.Entry<String, WinningResult> playerResult : results.entrySet()) {
             WinningResult playerWinning = playerResult.getValue();
-            outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getResult());
+            outputView.printProfitResult(playerResult.getKey(), playerWinning.getBetting());
         }
     }
 }

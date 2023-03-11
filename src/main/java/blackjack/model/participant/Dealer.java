@@ -9,17 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static blackjack.controller.GameController.DEALER_NAME;
+
 public class Dealer extends Participant {
 
     public static final int DEALER_HIT_NUMBER = 16;
     public static final int FIRST_CARD = 0;
 
     public Dealer() {
-        super(new Name("딜러"));
+        super(new Name(DEALER_NAME));
     }
 
     public Dealer(HandCard handCard) {
-        super(new Name("딜러"), handCard, 0);
+        super(new Name(DEALER_NAME), handCard, 0);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Dealer extends Participant {
         Map<String, WinningResult> playerResults = new HashMap<>();
         WinningResult totalResult = new WinningResult();
 
-        for (int playerId: players.getPlayerIds()) {
+        for (int playerId : players.getPlayerIds()) {
             WinningResult playerResult = players.getWinningResultById(playerId, this.cardScore());
             playerResults.put(players.getNameById(playerId), playerResult);
             totalResult = totalResult.merge(players.getWinningResultById(playerId, this.cardScore()));
