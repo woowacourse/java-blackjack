@@ -61,7 +61,7 @@ class ParticipantCardTest {
                 .isSameAs(card);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeCards")
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
     void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
         // given
@@ -75,7 +75,7 @@ class ParticipantCardTest {
                 .isEqualTo(Score.create(expected));
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBustCard")
     @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
     void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
@@ -89,7 +89,7 @@ class ParticipantCardTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBlackJackCard")
     @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
     void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
