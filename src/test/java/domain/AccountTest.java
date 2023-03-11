@@ -18,7 +18,7 @@ public class AccountTest {
         account.bust(givenAccount);
 
         // then
-        assertThat(account.account()).isEqualTo(givenAccount * -1);
+        assertThat(account.getAccount()).isEqualTo(givenAccount * -1);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AccountTest {
         account.addAccount(givenWinningMoney);
 
         // then
-        assertThat(account.account()).isEqualTo(givenAccount + givenWinningMoney);
+        assertThat(account.getAccount()).isEqualTo(givenAccount + givenWinningMoney);
     }
 
     @Test
@@ -48,6 +48,6 @@ public class AccountTest {
         account.subAccount(givenLosingMoney);
 
         // then
-        assertThat(account.account()).isEqualTo(givenAccount - givenLosingMoney);
+        assertThat(account.getAccount()).isEqualTo(givenAccount - givenLosingMoney);
     }
 }
