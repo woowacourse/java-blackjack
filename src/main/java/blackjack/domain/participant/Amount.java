@@ -15,15 +15,15 @@ public class Amount {
     public static final int MIN_AMOUNT = 1000;
     public static final int MAX_AMOUNT = 100000;
 
-    private BigDecimal amount;
+    private final BigDecimal amount;
 
     public Amount(String amount) {
         validateAmount(amount);
         this.amount = new BigDecimal(amount);
     }
 
-    public void calculateAmountByResult(WinningResult winningResult) {
-        this.amount = amount.multiply(winningResult.getMagnification());
+    public BigDecimal calculateAmountByResult(WinningResult winningResult) {
+        return amount.multiply(winningResult.getMagnification());
     }
 
     public BigDecimal getAmount() {

@@ -1,8 +1,12 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.game.WinningResult;
+
+import java.math.BigDecimal;
+
 public class Player extends Participant {
 
-    private Amount amount;
+    private final Amount amount;
 
     private static final int BLACKJACK_MAX_NUMBER = 21;
 
@@ -12,8 +16,16 @@ public class Player extends Participant {
         this.amount = amount;
     }
 
+    public BigDecimal calculateAmountByGameResult(WinningResult winningResult) {
+        return amount.calculateAmountByResult(winningResult);
+    }
+
     @Override
     public boolean decideHit() {
         return calculateCardNumber() < BLACKJACK_MAX_NUMBER;
+    }
+
+    public BigDecimal getAmount() {
+        return amount.getAmount();
     }
 }
