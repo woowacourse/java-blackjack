@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.command.DrawCommand;
+import domain.command.Command;
 import domain.message.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class CommandTest {
     void create_success(final String command) {
         // when & then
         assertThatNoException()
-                .isThrownBy(() -> new DrawCommand(command));
+                .isThrownBy(() -> Command.fromCommand(command));
     }
 
     @DisplayName("입력 값이 정상적이지 않은 경우 예외를 발생시킨다.")
@@ -27,7 +27,7 @@ class CommandTest {
     @ValueSource(strings = {"a", "b", " "})
     void create_fail(final String command) {
         // when & then
-        assertThatThrownBy(() -> new DrawCommand(command))
+        assertThatThrownBy(() -> Command.fromCommand(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.COMMAND_NOT_PERMITTED.getMessage());
     }
@@ -37,10 +37,10 @@ class CommandTest {
     void returns_true_when_input_is_draw_command() {
         // given
         String givenInput = "y";
-        DrawCommand drawCommand = new DrawCommand(givenInput);
+        Command command = Command.fromCommand(givenInput);
 
         // when
-        boolean expectedResult = drawCommand.isDraw();
+        boolean expectedResult = command == Command.DRAW;
 
         // then
         assertThat(expectedResult).isTrue();
@@ -51,10 +51,10 @@ class CommandTest {
     void returns_true_when_input_is_stop_command() {
         // given
         String givenInput = "n";
-        DrawCommand drawCommand = new DrawCommand(givenInput);
+        Command command = Command.fromCommand(givenInput);
 
         // when
-        boolean expectedResult = drawCommand.isStop();
+        boolean expectedResult = command == Command.STOP;
 
         // then
         assertThat(expectedResult).isTrue();
