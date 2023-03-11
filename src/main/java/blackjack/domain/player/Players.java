@@ -3,17 +3,13 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DealerNotFoundException;
-import blackjack.domain.player.exception.DuplicatedPlayerNameException;
-import blackjack.domain.player.exception.InvalidChallengerNumberException;
+import blackjack.dto.ChallengerMoneyDto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-
-    private static final int CHALLENGER_MAX_COUNT = 10;
-    private static final int CHALLENGER_MIN_COUNT = 1;
 
     private final List<Player> players;
 
@@ -22,7 +18,6 @@ public class Players {
     }
 
     public static Players from(final List<String> names) {
-        validate(names);
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         names.stream()
@@ -31,25 +26,13 @@ public class Players {
         return new Players(players);
     }
 
-    private static void validate(final List<String> names) {
-        validateChallengerCount(names);
-        validateDuplicatedNames(names);
-    }
-
-    private static void validateChallengerCount(final List<String> names) {
-        if (names.size() > CHALLENGER_MAX_COUNT || names.size() < CHALLENGER_MIN_COUNT) {
-            throw new InvalidChallengerNumberException();
-        }
-    }
-
-    private static void validateDuplicatedNames(final List<String> names) {
-        long distinctNameCount = names.stream()
-                .distinct()
-                .count();
-
-        if (names.size() != distinctNameCount) {
-            throw new DuplicatedPlayerNameException();
-        }
+    public static Players of(final List<ChallengerMoneyDto> challengerMoneyDtos) {
+        List<Player> players = new ArrayList<>();
+        players.add(new Dealer());
+        challengerMoneyDtos.stream()
+                .map(Challenger::new)
+                .forEach(players::add);
+        return new Players(players);
     }
 
     public void pickStartCards(final CardDeck cardDeck) {
