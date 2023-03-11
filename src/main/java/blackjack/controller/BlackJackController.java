@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.RandomDeckGenerator;
+import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
@@ -25,6 +26,7 @@ public class BlackJackController {
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
         printUserNameAndCardResults(blackJackGame);
+        printUserNameAndProfits(blackJackGame);
         printUserWinningResults(blackJackGame);
     }
 
@@ -97,6 +99,14 @@ public class BlackJackController {
             outputView.printDealerDrawInfoMessage();
             blackJackGame.drawDealer();
         }
+    }
+
+    private void printUserNameAndProfits(final BlackJackGame blackJackGame) {
+        final Map<Name, Money> playerNameAndProfits = blackJackGame.getPlayerNameAndProfits();
+        final Money dealerProfit = blackJackGame.getDealerProfit();
+        final Map<String, Integer> renderedUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(
+                playerNameAndProfits, dealerProfit);
+        outputView.printUsersProfits(renderedUserNameAndProfit);
     }
 
     private void printUserNameAndCardResults(BlackJackGame blackJackGame) {

@@ -14,6 +14,8 @@ public class OutputView {
     private static final String DEALER_WINNING_RESULT_MESSAGE_FORMAT = "%d%s";
     private static final String PLAYERS_WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
     private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
+    private static final String PROFIT_RESULT_INFO_MESSAGE = "## 최종 수익";
+    private static final String USER_PROFIT_RESULT_MESSAGE_FORMAT = "%s: %d";
     private static final String DELIMITER = ", ";
 
     public void printFirstCardGroupInfoMessage(final List<String> playerNames) {
@@ -49,6 +51,14 @@ public class OutputView {
         for (String name : playersWinningResults.keySet()) {
             System.out.println(
                     String.format(PLAYERS_WINNING_RESULT_MESSAGE_FORMAT, name, playersWinningResults.get(name)));
+        }
+    }
+
+    public void printUsersProfits(final Map<String, Integer> usersProfits) {
+        printLineBreak();
+        System.out.println(PROFIT_RESULT_INFO_MESSAGE);
+        for (final String userName : usersProfits.keySet()) {
+            System.out.println(String.format(USER_PROFIT_RESULT_MESSAGE_FORMAT, userName, usersProfits.get(userName)));
         }
     }
 

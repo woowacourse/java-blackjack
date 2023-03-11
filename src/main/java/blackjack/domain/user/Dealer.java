@@ -5,7 +5,7 @@ import blackjack.domain.result.Score;
 
 public class Dealer extends User {
 
-    static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
     private static final int FIRST_OPEN_CARD_COUNT = 1;
     private static final int DRAW_LIMIT_SCORE = 16;
 
