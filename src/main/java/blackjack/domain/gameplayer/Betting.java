@@ -47,6 +47,10 @@ public class Betting {
         return Betting.of(this.betting + betting);
     }
 
+    public int getBettingMoney() {
+        return betting;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
