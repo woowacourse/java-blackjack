@@ -17,12 +17,12 @@ public final class Score {
         return new Score(this.score - score.score);
     }
 
-    public boolean isOverThen(final Score compareScore) {
+    public boolean isMoreThen(final Score compareScore) {
         return this.score > compareScore.score;
     }
 
     public boolean isBust() {
-        return this.isOverThen(max);
+        return this.isMoreThen(max);
     }
 
     public Score minusIfBust() {
@@ -49,5 +49,4 @@ public final class Score {
     public int hashCode() {
         return Objects.hash(score);
     }
-
 }

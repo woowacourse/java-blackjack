@@ -49,4 +49,16 @@ class ScoreTest {
         //then
         assertThat(result).isEqualTo(new Score(12));
     }
+
+    @Test
+    void 점수는_다른_점수보다_큰지_검사할_수_있다() {
+        //given
+        Score score1 = new Score(22);
+        Score score2 = new Score(10);
+
+        //when
+        final boolean result = score1.isMoreThen(score2);
+        //then
+        assertThat(result).isEqualTo(true);
+    }
 }
