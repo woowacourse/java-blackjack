@@ -19,10 +19,10 @@ public class PlayerTest {
         cardsByCardBox.add(new Card("A하트", 11));
         cardsByCardBox.add(new Card("3하트", 3));
         Cards cards = new Cards(cardsByCardBox);
+        Betting betting = new Betting(10000, 0);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(cards, name, betting);
 
-        assertThat(player.sumOfPlayerCards()).isEqualTo(cards.sumOfCards());
+        assertThat(player.sumOfParticipantCards()).isEqualTo(cards.sumOfCards());
     }
-
 }

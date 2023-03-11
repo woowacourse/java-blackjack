@@ -1,32 +1,23 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardBoxTest {
 
-    @Test
-    void CARDBOX를_생성하면_총_52장의_카드가_생성된다(){
-        //given
-        CardBox cardBox = new CardBox();
-        int cardNumberOfCardBox = cardBox.cardBox.size();
-        //then
-        assertThat(cardNumberOfCardBox).isEqualTo(52);
+    @ParameterizedTest
+    @ValueSource(ints = {-1,52})
+    void 카드박스에서_카드추출시_0부터_52사이의_위치값을_입력하지_않으면_에러발생(int index){
+        assertThatThrownBy(
+            () -> CardBox.get(index)
+        ).isInstanceOf(IllegalArgumentException.class);
     }
-
-    @Test
-    void CardBox에서_꺼낸_Card는_CardBox에서_삭제된다(){
-        //given
-        CardBox cardBox = new CardBox();
-        //when
-        Card card = cardBox.get(5);
-        //then
-        assertThat(cardBox.cardBox.contains(card)).isFalse();
-    }
-
 }
