@@ -5,29 +5,26 @@ import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
 import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Player;
-import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
 import blackjackgame.domain.user.dto.NameDto;
-import java.util.HashMap;
+import blackjackgame.domain.user.dto.ProfitDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
-    private static final int RESULT_INITIAL_VALUE = 0;
 
     private final Players players;
     private final Dealer dealer;
     private final Cards cards;
-    private final Map<NameDto, Result> resultByUserNames;
 
     public BlackJackGame(Players players, Dealer dealer, Cards cards) {
         this.players = players;
         this.dealer = dealer;
         this.cards = cards;
-        this.resultByUserNames = new LinkedHashMap<>();
     }
 
     public void drawDefaultCard() {
@@ -64,39 +61,21 @@ public class BlackJackGame {
         return setUpResult;
     }
 
+   public Map<NameDto, ProfitDto> getBetResult() {
+       FinalResult finalResult = new FinalResult(players, dealer);
+       Map<User, ProfitDto> betResultByUser = finalResult.getBetResultByPlayer();
+
+       Map<NameDto, ProfitDto> betResultByName = new LinkedHashMap<>();
+       for (Entry<User, ProfitDto> betResutByUserEntry : betResultByUser.entrySet()) {
+           String userName = betResutByUserEntry.getKey().getName();
+           betResultByName.put(new NameDto(userName), betResutByUserEntry.getValue());
+       }
+
+       return betResultByName;
+   }
+
     public int getDealerExtraDrawCount() {
         return dealer.getExtraDrawCount(INITIAL_CARD_COUNT);
-    }
-
-    public Map<NameDto, Result> getPlayerFinalResult() {
-        return resultByUserNames;
-    }
-
-    public Map<Result, Integer> getDealerFinalResult() {
-        Map<Result, Integer> playerCountByDealerResult = new HashMap<>();
-        initDealerResult(playerCountByDealerResult);
-        for (Result playerResult : resultByUserNames.values()) {
-            Result dealerResult = convertPlayerResultToDealerResult(playerResult);
-            playerCountByDealerResult.put(dealerResult, playerCountByDealerResult.getOrDefault(dealerResult,
-                    RESULT_INITIAL_VALUE) + 1);
-        }
-        return playerCountByDealerResult;
-    }
-
-    private void initDealerResult(Map<Result, Integer> playerCountByResult) {
-        playerCountByResult.put(Result.WIN, RESULT_INITIAL_VALUE);
-        playerCountByResult.put(Result.DRAW, RESULT_INITIAL_VALUE);
-        playerCountByResult.put(Result.LOSE, RESULT_INITIAL_VALUE);
-    }
-
-    private Result convertPlayerResultToDealerResult(Result playerResult) {
-        if (playerResult == Result.WIN) {
-            return Result.LOSE;
-        }
-        if (playerResult == Result.LOSE) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
     }
 
     public Dealer getDealer() {
