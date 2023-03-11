@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    public static final String DEALER_CARD_CONDITION_FORMAT = "%s: %s%n";
-    public static final String PARTICIPANT_CARD_CONDITION_FORMAT = "%s카드: %s%n";
+    
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String PLAYER_PROFIT_STATUS_FORMAT = "%s: %.0f" + NEW_LINE;
+    private static final String PLAYER_CARD_STATUS_FORMAT = "%s 카드: %s";
     
     private OutputView() {
         throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
@@ -32,7 +33,7 @@ public class OutputView {
         Player dealer = blackJackGame.getDealer();
         List<String> participantsNames = parseParticipantsNames(blackJackGame);
         
-        System.out.printf("%n%s와 %s에게 2장을 나누어주었습니다.%n",
+        System.out.printf(NEW_LINE + "%s와 %s에게 2장을 나누어주었습니다." + NEW_LINE,
                 dealer.getName(),
                 String.join(", ", participantsNames));
     }
@@ -50,12 +51,12 @@ public class OutputView {
 
     private static void printDealerCardCondition(Player dealer) {
         Card card = dealer.getCards().get(0);
-        printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
+        printPlayerCardCondition(dealer, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardInformation(card));
     }
 
     public static void printParticipantCardCondition(List<Player> participants) {
         for (Player participant : participants) {
-            printPlayerCardCondition(participant, PARTICIPANT_CARD_CONDITION_FORMAT, parseCardsInformation(participant.getCards()));
+            printPlayerCardCondition(participant, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardsInformation(participant.getCards()));
         }
     }
 
@@ -71,7 +72,7 @@ public class OutputView {
         
         Shape shape = card.getShape();
         String shapeDescription = shape.getSymbol();
-        return numberDescription.concat(shapeDescription);
+        return numberDescription + shapeDescription;
     }
 
     private static void printPlayerCardCondition(Player player, String format, String cardsDisplay) {
@@ -79,63 +80,40 @@ public class OutputView {
     }
 
     public static void printAddCardGuide(String name) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, name);
     }
 
     public static void printFinishedMessage(String name) {
-        System.out.printf("%n%s님은 더이상 카드를 뽑을 수 없습니다.%n", name);
+        System.out.printf(NEW_LINE + "%s님은 더이상 카드를 뽑을 수 없습니다." + NEW_LINE, name);
         
     }
 
     public static void printGiveDealerCardMessage() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printPlayersFinalInformation(List<Player> players) {
         println("");
         for (Player player : players) {
-            printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
+            printPlayerCardCondition(player, PLAYER_CARD_STATUS_FORMAT, parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore().getScore());
         }
     }
 
     public static void printPlayersGameResults(BlackJackGame blackJackGame, Referee referee) {
-        println("\n## 최종 수익");
-//        printDealerGameResult(referee);
-//        printParticipantsGameResult(blackJackGame, referee);
+        println(NEW_LINE + "## 최종 수익");
+        println(parsePlayersResult(blackJackGame, referee));
     }
-
-//    private static void printDealerGameResult(Referee referee) {
-//        System.out.printf("딜러: %s%n", parseDealerGameResultDisplay(referee));
-//    }
-//
-//    private static String parseDealerGameResultDisplay(Referee referee) {
-//        Map<ParticipantGameResult, Integer> dealerGameResults = referee.dealerGameResults();
-//
-//        return Arrays.stream(ParticipantGameResult.values())
-//                .filter(Predicate.not(gameResult -> OutputView.isGameResultCountZero(gameResult, dealerGameResults)))
-//                .map(gameResult -> dealerGameResults.get(gameResult) + gameResult.getSymbol())
-//                .collect(Collectors.joining(" "));
-//
-//    }
-//
-//    private static boolean isGameResultCountZero(ParticipantGameResult participantGameResult, Map<ParticipantGameResult, Integer> dealerGameResults) {
-//        return dealerGameResults.getOrDefault(participantGameResult, 0) == 0;
-//    }
-//
-//    private static void printParticipantsGameResult(BlackJackGame blackJackGame, Referee referee) {
-//        List<Player> participants = blackJackGame.getParticipants();
-//        Map<Player, ParticipantGameResult> participantsGameResults = referee.participantsGameResults();
-//
-//        participants.stream()
-//                .map(participant -> parseParticipantGameResultDisplay(participant, participantsGameResults))
-//                .forEach(OutputView::println);
-//    }
-//
-//    private static String parseParticipantGameResultDisplay(Player participant, Map<Player, ParticipantGameResult> participantsGameResults) {
-//        ParticipantGameResult participantGameResult = participantsGameResults.get(participant);
-//        return String.format("%s: %s", participant.getName(), participantGameResult.getSymbol());
-//    }
+    
+    private static String parsePlayersResult(BlackJackGame blackJackGame, Referee referee) {
+        return blackJackGame.getPlayers().stream()
+                .map(player -> parsePlayerGameResult(player, referee))
+                .collect(Collectors.joining(NEW_LINE));
+    }
+    
+    private static String parsePlayerGameResult(Player player, Referee referee) {
+        return String.format(PLAYER_PROFIT_STATUS_FORMAT, player.getName(), referee.getPlayerBetAmount(player));
+    }
 
     public static void println(String message) {
         System.out.println(message);
