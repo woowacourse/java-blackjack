@@ -44,24 +44,26 @@ class DealerTest {
         playerC.take(new Card(HEART, SEVEN));
         playerC.take(new Card(DIAMOND, JACK));
 
+        dealer.addPlayerBetMoney(playerA, 10000);
+        dealer.addPlayerBetMoney(playerB, 20000);
+        dealer.addPlayerBetMoney(playerC, 30000);
+
         GameResult gameResult = dealer.judgeGameResult(players);
         DealerResult dealerResult = gameResult.getDealerResult();
-        assertThat(dealerResult.getCount(WinResult.WIN)).isEqualTo(1);
-        assertThat(dealerResult.getCount(WinResult.PUSH)).isEqualTo(1);
-        assertThat(dealerResult.getCount(WinResult.LOSE)).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult()).isEqualTo(10000);
 
         List<PlayerResult> results = gameResult.getPlayersResult();
 
         PlayerResult resultA = results.get(0);
         assertThat(resultA.getName()).isEqualTo("a");
-        assertThat(resultA.getWinResult()).isEqualTo(WinResult.WIN);
+        assertThat(resultA.getBenefit()).isEqualTo(10000);
 
         PlayerResult resultB = results.get(1);
         assertThat(resultB.getName()).isEqualTo("b");
-        assertThat(resultB.getWinResult()).isEqualTo(WinResult.LOSE);
+        assertThat(resultB.getBenefit()).isEqualTo(-20000);
 
         PlayerResult resultC = results.get(2);
         assertThat(resultC.getName()).isEqualTo("c");
-        assertThat(resultC.getWinResult()).isEqualTo(WinResult.PUSH);
+        assertThat(resultC.getBenefit()).isEqualTo(0);
     }
 }

@@ -15,7 +15,7 @@ public class BetManager {
         betManager.put(player, betMoney);
     }
 
-    public Map<Player, Integer> getBetManager() {
-        return betManager;
+    public int getBetMoney(Player player) {
+        return betManager.get(player);
     }
 }

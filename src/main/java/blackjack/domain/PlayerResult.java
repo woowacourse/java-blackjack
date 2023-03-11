@@ -3,18 +3,18 @@ package blackjack.domain;
 public class PlayerResult {
 
     private final String name;
-    private final WinResult winResult;
+    private final int benefit;
 
-    public PlayerResult(String name, WinResult winResult) {
+    public PlayerResult(String name, int benefit) {
         this.name = name;
-        this.winResult = winResult;
+        this.benefit = benefit;
     }
 
     public String getName() {
         return name;
     }
 
-    public WinResult getWinResult() {
-        return winResult;
+    public int getBenefit() {
+        return benefit;
     }
 }

@@ -74,15 +74,12 @@ public class OutputView {
     }
 
     private static void showDealerResult(DealerResult dealerResult) {
-        int win = dealerResult.getCount(WinResult.WIN);
-        int push = dealerResult.getCount(WinResult.PUSH);
-        int lose = dealerResult.getCount(WinResult.LOSE);
-        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toDealerWinResult(win, push, lose));
+        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, dealerResult.getDealerResult());
     }
 
     private static void showPlayersResult(List<PlayerResult> playersResult) {
         for (PlayerResult result : playersResult) {
-            System.out.printf(KEY_VALUE_FORMAT, result.getName(), toWord(result.getWinResult()));
+            System.out.printf(KEY_VALUE_FORMAT, result.getName(), result.getBenefit());
         }
     }
 
