@@ -1,7 +1,7 @@
 package service;
 
 import domain.card.CardDeck;
-import domain.command.DrawCommand;
+import domain.command.Command;
 import domain.participants.Dealer;
 import domain.participants.Participant;
 import domain.participants.Player;
@@ -23,14 +23,14 @@ public class CalculatorService {
         }
     }
 
-    public void drawCard(final Player player, final CardDeck cardDeck, final DrawCommand drawCommand) {
-        if (canDrawMore(player, drawCommand)) {
+    public void drawCard(final Player player, final CardDeck cardDeck, final Command command) {
+        if (canDrawMore(player, command)) {
             player.pickCard(cardDeck.draw());
         }
     }
 
-    public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
-        return player.canDrawMore() && drawCommand.isDraw();
+    public boolean canDrawMore(final Player player, final Command command) {
+        return player.canDrawMore() && command == Command.DRAW;
     }
 
     public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {

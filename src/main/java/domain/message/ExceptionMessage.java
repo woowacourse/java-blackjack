@@ -2,9 +2,6 @@ package domain.message;
 
 public enum ExceptionMessage {
 
-    DRAW_COMMAND("y"),
-    STOP_COMMAND("n"),
-    
     COMMAND_NOT_PERMITTED("y혹은 n을 입력해주세요."),
     PLAYER_INVALID_NUMBERS("플레이어의 수는 최소 1명, 최대 4명입니다."),
     PLAYER_NAME_NOT_DUPLICATED("참여자의 이름은 중복이 되면 안됩니다."),

@@ -3,7 +3,7 @@ package controller;
 import static java.util.stream.Collectors.toList;
 
 import domain.card.CardDeck;
-import domain.command.DrawCommand;
+import domain.command.Command;
 import domain.participants.Account;
 import domain.participants.Dealer;
 import domain.participants.Name;
@@ -93,19 +93,19 @@ public class BlackJackController {
     }
 
     private void drawPlayerCards(final Player player, final CardDeck cardDeck) {
-        DrawCommand drawCommand;
+        Command command;
         do {
-            drawCommand = getMoreDrawCardCommand(player.getName());
-            calculatorService.drawCard(player, cardDeck, drawCommand);
+            command = getMoreDrawCardCommand(player.getName());
+            calculatorService.drawCard(player, cardDeck, command);
             outputView.printPlayerCardInfo(blackJackResultService.drawCards(player));
-        } while (calculatorService.canDrawMore(player, drawCommand));
+        } while (calculatorService.canDrawMore(player, command));
     }
 
-    private DrawCommand getMoreDrawCardCommand(final String name) {
+    private Command getMoreDrawCardCommand(final String name) {
         try {
             String rawCommand = inputView.readChoiceOfDrawCard(name);
-            DrawCommand drawCommand = new DrawCommand(rawCommand);
-            return drawCommand;
+            Command command = Command.fromCommand(rawCommand);
+            return command;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return getMoreDrawCardCommand(name);
