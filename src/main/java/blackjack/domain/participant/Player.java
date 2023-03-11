@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BettingMoney;
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import java.util.List;
@@ -13,13 +13,13 @@ public class Player implements Decidable {
 
     private final String name;
     private final Participant participant;
-    private BettingMoney bettingMoney;
+    private Money bettingMoney;
 
     public Player(Participant participant, String name) {
         validateNameLength(name);
         this.name = name;
         this.participant = participant;
-        this.bettingMoney = BettingMoney.init();
+        this.bettingMoney = Money.init();
     }
 
     private void validateNameLength(final String name) {
@@ -47,7 +47,7 @@ public class Player implements Decidable {
     }
 
     public void betting(int bettingMoney) {
-        this.bettingMoney = new BettingMoney(bettingMoney);
+        this.bettingMoney = new Money(bettingMoney);
     }
 
     @Override
