@@ -6,8 +6,7 @@ import blackjack.domain.player.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static blackjack.domain.player.Result.LOSE;
-import static blackjack.domain.player.Result.WIN;
+import static blackjack.domain.player.Result.*;
 
 public class BettingSystem {
     private final Map<Player, BetMoney> betMoneyByPlayer;
@@ -27,7 +26,7 @@ public class BettingSystem {
 
     private BetMoney getIncome(final Player player, final Result result) {
         final BetMoney betMoney = betMoneyByPlayer.get(player);
-        if (result == WIN) {
+        if (result == WIN || result == BLACKJACK) {
             final BetMoney resultMoney = betMoney.winMoney(player.isBlackjack());
             return resultMoney.subtract(betMoney);
         }

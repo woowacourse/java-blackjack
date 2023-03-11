@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
+import static blackjack.domain.player.Result.*;
+
 public class Hand {
     private final Cards cards;
     private State state;
@@ -30,26 +32,26 @@ public class Hand {
 
     private Result playWithBlackjack(final Hand other) {
         if (other.state.isBlackjack()) {
-            return Result.PUSH;
+            return PUSH;
         }
-        return Result.WIN;
+        return BLACKJACK;
     }
 
     private Result playWithBust(final Hand other) {
         if (other.state.isBust()) {
-            return Result.PUSH;
+            return PUSH;
         }
-        return Result.LOSE;
+        return LOSE;
     }
 
     private Result playWithScore(final Hand other) {
         if (other.state.isBust() || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
-            return Result.WIN;
+            return WIN;
         }
         if (other.state.isNotBust() && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
-            return Result.LOSE;
+            return LOSE;
         }
-        return Result.PUSH;
+        return PUSH;
     }
 
 

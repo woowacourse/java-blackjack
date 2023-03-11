@@ -19,6 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("NonAsciiCharacters")
 public class HandTest {
 
+    @Test
+    void 카드를_넣는다() {
+        final Hand hand = new Hand();
+
+        hand.add(ACE_SPADE);
+
+        assertThat(hand.getCardLetters()).containsExactly("A스페이드");
+    }
+
     @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
     @MethodSource("playBlackjackSource")
     void 승패를_구한다(final List<Card> cards, final List<Card> dealerCards, final Result expectedResult) {
@@ -32,17 +41,17 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(KING_SPADE, QUEEN_SPADE), BLACKJACK),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(QUEEN_SPADE, SIX_SPADE, TEN_SPADE), BLACKJACK),
+                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, EIGHT_SPADE), WIN),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(KING_SPADE, SIX_SPADE, QUEEN_SPADE), WIN),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_DIAMOND, KING_SPADE), PUSH),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(KING_SPADE, QUEEN_SPADE), WIN),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(QUEEN_SPADE, SIX_SPADE, TEN_SPADE), WIN),
+                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(QUEEN_SPADE, FIVE_SPADE, TEN_SPADE), PUSH),
+                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), PUSH),
                 Arguments.of(List.of(JACK_SPADE, TEN_SPADE), List.of(KING_SPADE, ACE_SPADE), LOSE),
                 Arguments.of(List.of(JACK_SPADE, KING_SPADE, QUEEN_SPADE), List.of(TEN_SPADE, ACE_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, EIGHT_SPADE), WIN),
-                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), PUSH),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(KING_SPADE, SIX_SPADE, QUEEN_SPADE), WIN),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(QUEEN_SPADE, SIX_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(QUEEN_SPADE, FIVE_SPADE, TEN_SPADE), PUSH)
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(QUEEN_SPADE, SIX_SPADE), LOSE)
         );
     }
 
@@ -52,15 +61,6 @@ public class HandTest {
             hand.add(card);
         }
         return hand;
-    }
-
-    @Test
-    void 카드를_넣는다() {
-        final Hand hand = new Hand();
-
-        hand.add(ACE_SPADE);
-
-        assertThat(hand.getCardLetters()).containsExactly("A스페이드");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")
@@ -88,7 +88,7 @@ public class HandTest {
     }
 
     @Test
-    void 상태를_STOP으로_바꾼다() {
+    void 상태를_STAY로_바꾼다() {
         final Hand hand = new Hand();
 
         hand.stay();
