@@ -6,40 +6,15 @@ import java.util.Objects;
 
 public class Player implements Playable {
     
-    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
-    public static final String EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있습니다.";
     public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
-    public static final String INVALID_DEALER_NAME_USAGE_ERROR_MESSAGE = "딜러는 플레이어가 될 수 없습니다.";
-    public static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 1자 이상 5자 이하여야 합니다.";
-    public static final String DEALER_NAME = "딜러";
-    private final String name;
+    private final PlayerName name;
     
     private Hand hand = new Hand();
     
     public Player(final String name) {
-        this.validateBlank(name);
-        this.validateDealerName(name);
-        this.validateNameLength(name);
-        this.name = name;
+        this.name = new PlayerName(name);
     }
     
-    private void validateBlank(final String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_NAME_ERROR_MESSAGE);
-        }
-    }
-    
-    private void validateDealerName(final String name) {
-        if (name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(INVALID_DEALER_NAME_USAGE_ERROR_MESSAGE);
-        }
-    }
-    
-    private void validateNameLength(final String name) {
-        if (name.length() > 5 || name.length() < 1) {
-            throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
-        }
-    }
     
     @Override
     public void addCard(final Card card) {
@@ -80,7 +55,7 @@ public class Player implements Playable {
     }
     
     public String getName() {
-        return this.name;
+        return this.name.getValue();
     }
     
     @Override

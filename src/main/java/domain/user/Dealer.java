@@ -5,9 +5,8 @@ import domain.card.Hand;
 
 public class Dealer implements Playable {
     
-    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
     public static final int DEALER_DRAWABLE_BOUNDARY = 17;
-    private final String name = "딜러";
+    private final String name = DEALER_NAME;
     private Hand hand = new Hand();
     
     @Override
@@ -17,7 +16,7 @@ public class Dealer implements Playable {
     
     @Override
     public Hand getReadyCards() {
-        if (this.hand.size() != 2) {
+        if (this.hand.size() != INITIAL_HAND_SIZE) {
             throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
         return new Hand().add(this.hand.get(0));
