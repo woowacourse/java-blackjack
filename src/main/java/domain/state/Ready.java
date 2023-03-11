@@ -12,6 +12,11 @@ public class Ready implements State {
     }
 
     @Override
+    public State stay() {
+        throw new IllegalStateException("게임을 멈출 수 없는 상태입니다.");
+    }
+
+    @Override
     public List<Card> cards() {
         throw new IllegalStateException("카드가 없습니다.");
     }
