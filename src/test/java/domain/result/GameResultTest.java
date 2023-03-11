@@ -45,6 +45,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("플레이어가 블랙잭으로 이길 경우 1.5배의 수익이 발생한다.")
     void playerWinBlackjack() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.ACE));
@@ -59,6 +60,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("동점일 경우 수익은 0원이다.")
     void playerDrawBlackjack() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.ACE));
@@ -69,10 +71,11 @@ class GameResultTest {
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
         Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
-        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(0);
     }
 
     @Test
+    @DisplayName("게임에서 질 경우 수익은 -1배다.")
     void playerLoseBust() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
@@ -88,6 +91,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("패의 합이 같아 게임에서 비길 경우 수익은 0원이다.")
     void playerDrawHandValue() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
@@ -98,10 +102,11 @@ class GameResultTest {
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
         Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
-        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(0);
     }
 
     @Test
+    @DisplayName("패의 합으로 게임을 이길 경우 수익은 1배다.")
     void playerWinHandValue() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
@@ -116,6 +121,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("패의 합으로 게임에서 질 경우, 수익은 -1배다.")
     void playerLoseHandValue() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.NINE));
@@ -130,6 +136,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("패의 합이 같고, 카드 수로 이길 경우 수익은 1배다.")
     void playerWinHandCount() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
@@ -145,6 +152,7 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("패의 합이 같고, 카드 수로 질 경우 수익은 -1배다.")
     void playerLoseHandCount() {
         leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
         leo.receiveCard(new Card(Suit.HEART,Rank.EIGHT));

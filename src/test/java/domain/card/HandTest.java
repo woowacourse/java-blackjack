@@ -28,6 +28,7 @@ class HandTest {
     }
 
     @Test
+    @DisplayName("처음 2장을 받은 hand에 카드를 한 장 받으면 hand는 카드 3장을 가지고 있다.")
     void addCard() {
         hand.addCard(new Card(Suit.CLOVER, Rank.FIVE));
         assertThat(hand.getCardNames().size()).isEqualTo(3);
@@ -42,12 +43,14 @@ class HandTest {
 
     @ParameterizedTest
     @MethodSource("cardProvider")
+    @DisplayName("현재 hand에 있는 카드들의 합을 반환한다.")
     void calculateValue(Card card, int handValue) {
         hand.addCard(card);
         assertThat(hand.calculateValue()).isEqualTo(handValue);
     }
 
     @Test
+    @DisplayName("처음 받은 2장의 합이 21이면 블랙잭이다.")
     void blackjackTest() {
         Hand newHand = new Hand(List.of(
                 new Card(Suit.CLOVER, Rank.KING),
@@ -57,6 +60,7 @@ class HandTest {
     }
 
     @Test
+    @DisplayName("카드 합이 21이어도, 2장 초과면 블랙잭이 아니다.")
     void notBlackjackTest() {
         Hand newHand = new Hand(List.of(
                 new Card(Suit.CLOVER, Rank.KING),

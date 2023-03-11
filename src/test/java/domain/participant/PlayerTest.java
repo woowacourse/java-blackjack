@@ -19,13 +19,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PlayerTest {
     private Participant player;
 
-    private static Stream<Arguments> cardProvider() {
-        return Stream.of(
-                Arguments.of(new Card(Suit.CLOVER, Rank.TEN), true),
-                Arguments.of(new Card(Suit.HEART, Rank.NINE), false)
-        );
-    }
-
     @BeforeEach
     void setUp() {
         player = Player.create(new Name("Leo"), new BetAmount(new BigDecimal(1000)));
@@ -41,6 +34,7 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어가 카드를 받을 경우 hand크기가 1증가한다.")
     void receiveCard() {
         player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
         assertThat(player.getCardNames().size()).isEqualTo(3);
@@ -55,8 +49,16 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("현재 hand의 합을 계산한다.")
     void getHandValue() {
         assertThat(player.getHandValue()).isEqualTo(12);
     }
 
+
+    private static Stream<Arguments> cardProvider() {
+        return Stream.of(
+                Arguments.of(new Card(Suit.CLOVER, Rank.TEN), true),
+                Arguments.of(new Card(Suit.HEART, Rank.NINE), false)
+        );
+    }
 }

@@ -1,12 +1,14 @@
 package domain.participant;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 class NamesTest {
     @Test
+    @DisplayName("참가자 이름에 중복이 있을 경우 예외가 발생한다.")
     void duplicateNames() {
         Assertions.assertThatThrownBy(() ->
                         new Names(List.of(new Name("leo"), new Name("leo"))))
@@ -15,6 +17,7 @@ class NamesTest {
     }
 
     @Test
+    @DisplayName("참가자가 7명을 초과할 경우 예외가 발생한다.")
     void overRangeNamesCount() {
         Assertions.assertThatThrownBy(() ->
                     new Names(
@@ -27,6 +30,7 @@ class NamesTest {
     }
 
     @Test
+    @DisplayName("참가자가 한 명도 없을 경우 예외가 발생한다.")
     void zeroNames() {
         Assertions.assertThatThrownBy(() -> new Names(List.of()))
                 .isInstanceOf(IllegalArgumentException.class);
