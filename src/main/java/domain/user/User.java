@@ -72,6 +72,12 @@ public abstract class User {
         }
     }
 
+    public void updateStatusToStay(boolean isYes) {
+        if (!isYes) {
+            status = STAY;
+        }
+    }
+
     private boolean isBlackjack() {
         return hand.size() == NUMBER_OF_FIRST_CARDS
                 && score().equals(BLACKJACK_SCORE);

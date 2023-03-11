@@ -65,10 +65,13 @@ public class Application {
     }
 
     private static void dealAnotherCardIfHit(Game game, Player player) {
-        if (inputView.askForAnotherCard(player.getName())) {
+        boolean isYes = inputView.askForAnotherCard(player.getName());
+
+        if (isYes) {
             game.dealCard(player);
             outputView.printPlayerCards(player);
         }
+        game.updateStatusToStay(isYes, player);
     }
 
     private static void dealCardToDealer(Game game) {

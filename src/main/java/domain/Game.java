@@ -5,8 +5,7 @@ import domain.user.*;
 
 import java.util.List;
 
-import static domain.Status.BUST;
-import static domain.Status.STAY;
+import static domain.Status.*;
 import static domain.user.User.NUMBER_OF_FIRST_CARDS;
 
 public class Game {
@@ -41,7 +40,7 @@ public class Game {
     public boolean canHitByPlayerScore(User user) {
         Status status = user.status();
 
-        return status != STAY && status != BUST;
+        return status == PLAYING;
     }
 
     public void dealCardToDealer() {
@@ -50,6 +49,10 @@ public class Game {
         if (dealer.canHit()) {
             dealer.addCard(deck.drawCard());
         }
+    }
+
+    public void updateStatusToStay(boolean isYes, Player player) {
+        player.updateStatusToStay(isYes);
     }
 
     public List<Player> getPlayers() {
