@@ -17,7 +17,7 @@ public class TotalProfitCalculator {
     }
 
     private void add(final Dealer dealer, final Player player) {
-        final int playerProfit = dealer.calculateBettingMoney(player);
+        final int playerProfit = dealer.computeProfitOf(player);
         totalProfitByParticipant.put(player.getName(), playerProfit);
         totalProfitByParticipant.put(dealer.getName(),
                 totalProfitByParticipant.getOrDefault(dealer.getName(), 0) + playerProfit * (-1));

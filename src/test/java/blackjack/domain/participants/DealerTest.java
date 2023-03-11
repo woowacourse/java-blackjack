@@ -65,9 +65,9 @@ class DealerTest {
         final Player pushPlayer =
                 new Player("losePlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SEVEN)), BETTING_MONEY_1000);
 
-        assertThat(dealer.calculateBettingMoney(blackjackWinPlayer)).isEqualTo(1500);
-        assertThat(dealer.calculateBettingMoney(winPlayer)).isEqualTo(1000);
-        assertThat(dealer.calculateBettingMoney(losePlayer)).isEqualTo(-1000);
-        assertThat(dealer.calculateBettingMoney(pushPlayer)).isEqualTo(0);
+        assertThat(dealer.computeProfitOf(blackjackWinPlayer)).isEqualTo(1500);
+        assertThat(dealer.computeProfitOf(winPlayer)).isEqualTo(1000);
+        assertThat(dealer.computeProfitOf(losePlayer)).isEqualTo(-1000);
+        assertThat(dealer.computeProfitOf(pushPlayer)).isEqualTo(0);
     }
 }

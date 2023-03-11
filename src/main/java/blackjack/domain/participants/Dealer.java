@@ -18,8 +18,7 @@ public class Dealer extends Participant {
         super(name, cards);
     }
 
-    // TODO player가 스스로 하는 게 낫지 않을까?
-    public int calculateBettingMoney(final Player player) {
+    public int computeProfitOf(final Player player) {
         final JudgeResult playerResult = judge(player);
         return playerResult.profit(player.getBettingMoney());
 
