@@ -38,9 +38,8 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             Result playerResult = ResultReferee.getPlayerResult(player, dealer);
-            playersResults.put(player, playerResult);
-
             Result dealerResult = ResultReferee.getOpponentResult(playerResult);
+            playersResults.put(player, playerResult);
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
 
             calculatePrize(dealer, player, playerResult);
@@ -48,20 +47,24 @@ public class GameResult {
     }
 
     private void calculatePrize(Dealer dealer, Player player, Result playerResult) {
-        int playerBetting = player.getBetting().getBettingMoney();
+        int playerBetting = calculatePlayerBetting(player.getBetting().getBettingMoney(), playerResult);
         int dealerBetting = bettingResults.get(dealer);
-        if (playerResult.equals(Result.BLACKJACK)) {
-            playerBetting = (int) (playerBetting * 2.5);
-        }
-        if (playerResult.equals(Result.WIN)) {
-            playerBetting = playerBetting * 2;
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            playerBetting = playerBetting * -1;
-        }
 
         bettingResults.put(player, playerBetting);
         bettingResults.put(dealer, dealerBetting-playerBetting);
+    }
+
+    private static int calculatePlayerBetting(int playerBetting, Result playerResult) {
+        if (playerResult.equals(Result.BLACKJACK)) {
+            return (int) (playerBetting * 2.5);
+        }
+        if (playerResult.equals(Result.WIN)) {
+            return playerBetting * 2;
+        }
+        if (playerResult.equals(Result.LOSE)) {
+            return playerBetting * -1;
+        }
+        return playerBetting;
     }
 
     public Map<Result, Integer> getDealerResults() {
