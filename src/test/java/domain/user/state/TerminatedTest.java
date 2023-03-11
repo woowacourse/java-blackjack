@@ -43,6 +43,6 @@ class TerminatedTest {
     void stayException() {
         assertThatThrownBy(state::stay)
             .isInstanceOf(IllegalStateException.class)
-            .hasMessage("이미 게임 완료되었습니다.");
+            .hasMessage("이미 종료되었습니다.");
     }
 }

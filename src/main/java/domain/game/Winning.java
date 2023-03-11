@@ -1,18 +1,18 @@
 package domain.game;
 
 public enum Winning {
-    BLACKJACK("블랙잭"),
-    LOSE("패"),
-    PUSH("무"),
-    WIN("승");
+    BLACKJACK(1.5),
+    LOSE(-1),
+    PUSH(0),
+    WIN(1);
 
-    private final String name;
+    private final double profitRate;
 
-    Winning(String name) {
-        this.name = name;
+    Winning(double profitRate) {
+        this.profitRate = profitRate;
     }
-    
-    public String getName() {
-        return this.name;
+
+    public double getProfitRate() {
+        return profitRate;
     }
 }

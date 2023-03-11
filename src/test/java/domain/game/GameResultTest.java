@@ -24,17 +24,24 @@ public class GameResultTest {
         createUsers();
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
+        betting(players);
         giveCardToUsers(players, dealer);
         stayUsers(players, dealer);
     }
 
     void createUsers() {
-        users = Users.from(List.of("hongo", "kiara", "ash"));
+        users = Users.from(List.of("hongo", "kiara", "ash", "woowa"));
+    }
+
+    void betting(List<Player> players) {
+        for (Player player : players) {
+            player.betting(1000);
+        }
     }
 
     void stayUsers(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            player.stay();
+        for (int i = 0; i < 3; i++) {
+            players.get(i).stay();
         }
         dealer.stay();
     }
@@ -46,6 +53,8 @@ public class GameResultTest {
         giveCard(players.get(1), Denomination.TEN);
         giveCard(players.get(2), Denomination.EIGHT);
         giveCard(players.get(2), Denomination.TEN);
+        giveCard(players.get(3), Denomination.ACE);
+        giveCard(players.get(3), Denomination.JACK);
         giveCard(dealer, Denomination.SEVEN);
         giveCard(dealer, Denomination.TEN);
     }
@@ -59,14 +68,15 @@ public class GameResultTest {
     void calculateWinnings() {
         GameResult gameResult = GameResult.of(users);
 
-        Map<String, Winning> winnings = gameResult.getPlayerResults();
+        Map<String, Integer> profits = gameResult.getPlayerProfits();
 
-        assertThat(winnings)
+        assertThat(profits)
             .containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                    "hongo", Winning.LOSE,
-                    "kiara", Winning.PUSH,
-                    "ash", Winning.WIN)
+                    "hongo", -1000,
+                    "kiara", 0,
+                    "ash", 1000,
+                    "woowa", 1500)
             );
     }
 
@@ -75,12 +85,8 @@ public class GameResultTest {
     void calculateDealerResult() {
         GameResult gameResult = GameResult.of(users);
 
-        Map<Winning, Integer> dealerResult = gameResult.getDealerResult();
+        int dealerProfit = gameResult.getDealerProfit();
 
-        assertThat(dealerResult)
-            .containsEntry(Winning.WIN, 1)
-            .containsEntry(Winning.PUSH, 1)
-            .containsEntry(Winning.LOSE, 1);
+        assertThat(dealerProfit).isEqualTo(-1500);
     }
-
 }

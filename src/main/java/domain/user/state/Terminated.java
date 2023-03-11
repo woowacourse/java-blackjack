@@ -21,6 +21,6 @@ public abstract class Terminated extends State {
 
     @Override
     public State stay() {
-        throw new IllegalStateException("이미 게임 완료되었습니다.");
+        throw new IllegalStateException("이미 종료되었습니다.");
     }
 }

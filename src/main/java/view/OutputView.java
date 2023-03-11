@@ -2,7 +2,6 @@ package view;
 
 import domain.card.Card;
 import domain.game.GameResult;
-import domain.game.Winning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ public class OutputView {
     }
 
     public void printDealerCardWithScore(final List<Card> cards, final int score) {
+        System.out.println();
         printCardWithScore("딜러 ", cards, score);
     }
 
@@ -56,30 +56,21 @@ public class OutputView {
 
     public void printGameResult(final GameResult gameResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerResult(gameResult.getDealerResult());
-        printPlayerResults(gameResult.getPlayerResults());
+        System.out.println("## 최종 수익");
+        printDealerProfit(gameResult.getDealerProfit());
+        printPlayerProfits(gameResult.getPlayerProfits());
     }
 
-    private void printDealerResult(final Map<Winning, Integer> dealerResult) {
-        StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-        for (Winning winning : dealerResult.keySet()) {
-            int count = dealerResult.getOrDefault(winning, 0);
-            dealerResultMessage.append(getDealerEachResult(winning.getName(), count));
-        }
-        System.out.println(dealerResultMessage);
+    private void printDealerProfit(final int dealerProfit) {
+        printEachProfit("딜러", dealerProfit);
     }
 
-    private String getDealerEachResult(final String winning, final int count) {
-        if (count != 0) {
-            return count + winning + " ";
-        }
-        return "";
+    private void printPlayerProfits(final Map<String, Integer> playerProfits) {
+        playerProfits.forEach(this::printEachProfit);
     }
 
-    private void printPlayerResults(final Map<String, Winning> playerResults) {
-        playerResults.forEach((playerName, winning) ->
-            System.out.println(playerName + ": " + winning.getName()));
+    private void printEachProfit(final String name, final int profit) {
+        System.out.println(name + ": " + profit);
     }
 
     public void printDealerHitMessage() {

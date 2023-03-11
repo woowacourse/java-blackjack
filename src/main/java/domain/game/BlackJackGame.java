@@ -43,16 +43,20 @@ public class BlackJackGame {
         users.stayByName(playerName);
     }
 
+    public void stayDealer() {
+        users.stayDealer();
+    }
+
     public void giveCard(String playerName) {
         users.hitCardByName(playerName, deck.pickCard());
     }
 
     public void giveCardToDealer() {
         Dealer dealer = users.getDealer();
-        dealer.hit(deck.pickCard());
-        if (!dealer.isDrawable()) {
-            dealer.stay();
+        if (dealer.isDrawable()) {
+            dealer.hit(deck.pickCard());
         }
+
     }
 
     public GameResult getResult() {

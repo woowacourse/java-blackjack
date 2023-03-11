@@ -5,18 +5,23 @@ import java.util.Objects;
 
 public class Money {
 
-    private final BigDecimal value;
+    private final int value;
 
     protected Money(int value) {
-        this.value = new BigDecimal(value);
+        this.value = value;
     }
 
     public static Money valueOf(int value) {
         return new Money(value);
     }
 
+    public int multiply(double profitRate) {
+        BigDecimal result = BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(profitRate));
+        return result.intValue();
+    }
+
     public int getValue() {
-        return value.intValue();
+        return value;
     }
 
     @Override
@@ -28,7 +33,7 @@ public class Money {
             return false;
         }
         Money that = (Money) o;
-        return value.intValue() == that.value.intValue();
+        return value == that.value;
     }
 
     @Override
