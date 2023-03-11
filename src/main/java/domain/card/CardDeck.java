@@ -1,11 +1,11 @@
 package domain.card;
 
 import java.util.Collections;
-import java.util.Stack;
+import java.util.LinkedList;
 
 public class CardDeck {
 
-    private final Stack<Card> initPool = new Stack<>();
+    private final LinkedList<Card> cardDeck = new LinkedList<>();
 
     {
         init();
@@ -18,16 +18,16 @@ public class CardDeck {
     }
 
     private void initNumber(Suit suit) {
-        for (Number number : Number.values()) {
-            initPool.add(new Card(suit, number));
+        for (Denomination denomination : Denomination.values()) {
+            cardDeck.add(new Card(suit, denomination));
         }
     }
 
     public void shuffle() {
-        Collections.shuffle(initPool);
+        Collections.shuffle(cardDeck);
     }
 
     public Card pick() {
-        return initPool.pop();
+        return cardDeck.pollLast();
     }
 }
