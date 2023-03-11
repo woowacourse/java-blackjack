@@ -25,8 +25,10 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = initBlackjackGame();
+
         hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
+
         BlackjackGameResult blackjackGameResult = blackjackGame.generatePlayersResult(new BlackJackReferee());
         printResult(blackjackGame, blackjackGameResult);
     }
