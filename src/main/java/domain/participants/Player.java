@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    private static final double WINNING_RATIO = 1.5;
+    private static final double WINNING_RATIO = 0.5;
     private static final int BUST_NUMBER = 21;
 
     public Player(final Status status, final DrawnCards drawnCards) {
@@ -31,7 +31,7 @@ public class Player extends Participant {
     }
 
     public void winGame() {
-        int winningPrice = (int) (status.getAccount() * (WINNING_RATIO - 1));
+        int winningPrice = (int) (status.getAccount() * WINNING_RATIO);
         status.winGame(winningPrice);
     }
 
