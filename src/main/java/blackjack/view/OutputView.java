@@ -16,6 +16,7 @@ public class OutputView {
     private static final String OPEN_CARD_MESSAGE_FORMAT = "%n%s와 %s에게 2장을 나누었습니다.%n";
     private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT = "%s는 16 이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String CARD_RESULTS_FORMAT = "%s 카드: %s - 결과: %d%n";
+    private static final String TOTAL_PROFIT_HEADER = "## 최종 수익";
     private static final String INPUT_ERROR_MESSAGE_FORMAT = "%n[입력 오류] %s%n";
 
     public static void showOpenCards(final String dealerName, final List<String> playerNames,
@@ -59,6 +60,8 @@ public class OutputView {
     }
 
     public static void showTotalProfitResult(final Map<String, Integer> totalProfitResult) {
+        System.out.println();
+        System.out.println(TOTAL_PROFIT_HEADER);
         totalProfitResult.forEach((name, profit) -> System.out.printf(KEY_VALUE_FORMAT, name, profit));
     }
 }

@@ -24,7 +24,7 @@ public class InputView {
     }
 
     public static int askBettingAmount(final String playerName) {
-        System.out.printf("%s의 베팅 금액은?", playerName);
+        System.out.printf("%s의 베팅 금액은?" + System.lineSeparator(), playerName);
         final String line = scanner.nextLine();
         return parseInteger(line);
     }
