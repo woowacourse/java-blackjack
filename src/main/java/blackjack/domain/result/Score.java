@@ -5,26 +5,41 @@ import java.util.Map;
 
 public class Score {
 
-    private static final Map<Integer, Score> SCORE_CACHE_MAP = new HashMap<>();
+    private static final Map<Integer, Score> NON_BLACKJACK_SCORE_CACHE_MAP = new HashMap<>();
+    private static final Score BLACKJACK = new Score(21, ScoreStatus.BLACKJACK);
     private static final int BLACK_JACK_VALUE = 21;
     private static final int ACE_OFFSET = -10;
 
+    private final ScoreStatus status;
     private final int value;
 
-    private Score(final int value) {
+    private Score(final int value, final ScoreStatus status) {
         this.value = value;
+        this.status = status;
     }
 
     public static Score from(final int value) {
-        return SCORE_CACHE_MAP.computeIfAbsent(value, Score::new);
+        return generateScore(value);
     }
 
-    public static Score calculateScore(int totalValue, int aceCount) {
+    public static Score calculateScore(int totalValue, int aceCount, int cardGroupSize) {
+        if (totalValue == BLACK_JACK_VALUE && cardGroupSize == 2) {
+            return BLACKJACK;
+        }
         while (totalValue > BLACK_JACK_VALUE && aceCount > 0) {
             totalValue += ACE_OFFSET;
             aceCount--;
         }
-        return SCORE_CACHE_MAP.computeIfAbsent(totalValue, Score::new);
+        return generateScore(totalValue);
+    }
+
+    private static Score generateScore(final int totalValue) {
+        if (totalValue > BLACK_JACK_VALUE) {
+            return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
+                    value -> new Score(value, ScoreStatus.BUST));
+        }
+        return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
+                value -> new Score(value, ScoreStatus.DRAW_AVAILABLE));
     }
 
     public int getValue() {
@@ -32,7 +47,7 @@ public class Score {
     }
 
     public boolean isBust() {
-        return value > BLACK_JACK_VALUE;
+        return status == ScoreStatus.BUST;
     }
 
     public boolean isBlackJackScore() {

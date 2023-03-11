@@ -28,7 +28,7 @@ public class CardGroup {
     }
 
     public Score getScore() {
-        return Score.calculateScore(getTotalValue(), getAceCount());
+        return Score.calculateScore(getTotalValue(), getAceCount(), cards.size());
     }
 
     private int getTotalValue() {
