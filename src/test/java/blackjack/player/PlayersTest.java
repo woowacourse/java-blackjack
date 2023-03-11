@@ -3,21 +3,13 @@ package blackjack.player;
 import static blackjack.Fixtures.BET_AMOUNT_10000;
 import static blackjack.Fixtures.PLAYER_WITH_10000;
 import static blackjack.Fixtures.PLAYER_WITH_20000;
-import static blackjack.domain.game.WinningResult.LOSE;
-import static blackjack.domain.game.WinningResult.TIE;
-import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.Fixtures;
 import blackjack.domain.Money;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.ShuffledCardsGenerator;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.Player;
@@ -73,114 +65,6 @@ class PlayersTest {
         newPlayers.hitFirstCards(deck);
         //then
         assertThat(player.showCards()).hasSize(2);
-    }
-
-    @Test
-    @DisplayName("플레이어의 이름과 승패결과를 가져올 수 있다.")
-    void getWinningResult() {
-        Dealer dealer = new Dealer();
-        Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-        player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
-        Players players = new Players().add(player);
-
-        Map<Player, WinningResult> playerToResult = players.calculateWinning(dealer);
-
-        assertThat(playerToResult.get(player)).isEqualTo(WIN);
-    }
-
-    @Nested
-    @DisplayName("승패를 계산하는 기능")
-    class CalculateWinning {
-
-        @Test
-        @DisplayName("플레이어의 점수가 딜러의 점수보다 높고 플레이어가 버스트가 아니면 WIN을 반환한다.")
-        void winWhenScoreIsHigher() {
-            //given
-            Players players = new Players();
-            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-            player.hit(Fixtures.CARDS_SUM_15);
-            player.hit(new Card(CardNumber.TWO, Pattern.HEART));
-            Players newPlayers = players.add(player);
-
-            Dealer dealer = new Dealer();
-            dealer.hit(Fixtures.CARDS_SUM_15);
-            //when
-            Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
-            //then
-            assertThat(playerToResult.get(player)).isEqualTo(WIN);
-        }
-
-        @Test
-        @DisplayName("딜러가 버스트이고 플레이어가 버스트가 아니면 WIN을 반환한다.")
-        void winWhenDealerBust() {
-            //given
-            Players players = new Players();
-            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-            Players newPlayers = players.add(player);
-            Dealer dealer = new Dealer();
-
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            dealer.hit(new Card(CardNumber.KING, Pattern.CLOVER));
-            //when
-            Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
-            //then
-            assertThat(playerToResult.get(player)).isEqualTo(WIN);
-        }
-
-        @Test
-        @DisplayName("딜러보다 점수가 낮고 딜러가 버스트가 아니면 LOSE를 반환한다")
-        void loseWhenLowerScore() {
-            //given
-            Players players = new Players();
-            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-            Players newPlayers = players.add(player);
-            Dealer dealer = new Dealer();
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            //when
-            Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
-            //then
-            assertThat(playerToResult.get(player)).isEqualTo(LOSE);
-        }
-
-        @Test
-        @DisplayName("플레이어가 버스트이면 LOSE를 반환한다")
-        void loseWhenPlayerBust() {
-            //given
-            Players players = new Players();
-            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-            Players newPlayers = players.add(player);
-            Dealer dealer = new Dealer();
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            player.hit(new Card(CardNumber.JACK, Pattern.CLOVER));
-            player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            //when
-            Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
-            //then
-            assertThat(playerToResult.get(player)).isEqualTo(LOSE);
-        }
-
-        @Test
-        @DisplayName("플레이어와 딜러의 점수가 같고 버스트가 아닌 경우 TIE를 반환한다.")
-        void tieWhenSameScore() {
-            //given
-            Players players = new Players();
-            Player player = new Player(new Name("폴로"), BET_AMOUNT_10000);
-            Players newPlayers = players.add(player);
-            Dealer dealer = new Dealer();
-
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            //when
-            Map<Player, WinningResult> playerToResult = newPlayers.calculateWinning(dealer);
-            //then
-            assertThat(playerToResult.get(player)).isEqualTo(TIE);
-        }
     }
 
     @Nested

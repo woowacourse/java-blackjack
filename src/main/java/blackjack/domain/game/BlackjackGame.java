@@ -52,33 +52,6 @@ public class BlackjackGame {
         }
     }
 
-    public ParticipantResultDto getDealerResult() {
-        return ParticipantResultDto.from(dealer);
-    }
-
-    public List<ParticipantResultDto> getPlayerResults() {
-        return players.getPlayerResults();
-    }
-
-    public GameResultDto calculateWinning() {
-        Map<Player, WinningResult> playerToResult = players.calculateWinning(dealer);
-        return GameResultDto.of(playerToResult);
-    }
-
-    public DealerFirstCardDto getDealerFirstOpen() {
-        return DealerFirstCardDto.from(dealer);
-    }
-
-    public List<ParticipantCardsDto> getPlayersCards() {
-        return players.getPlayerCards();
-    }
-
-    private static Money calculateDealerPrize(Map<Player, Money> playerMoneyMap) {
-        int sumOfPlayerPrize = playerMoneyMap.values().stream().mapToInt(Money::getValue).sum();
-        return new Money(sumOfPlayerPrize)
-                .product(-1);
-    }
-
     public List<ParticipantPrizeDto> calculatePrize() {
         Map<Player, Money> playerMoneyMap = players.calculateEachPrize(dealer);
         Money dealerPrize = calculateDealerPrize(playerMoneyMap);
@@ -89,4 +62,27 @@ public class BlackjackGame {
                 .map(ParticipantPrizeDto::of)
                 .collect(Collectors.toList());
     }
+
+    private Money calculateDealerPrize(Map<Player, Money> playerMoneyMap) {
+        int sumOfPlayerPrize = playerMoneyMap.values().stream().mapToInt(Money::getValue).sum();
+        return new Money(sumOfPlayerPrize)
+                .product(-1);
+    }
+
+    public ParticipantResultDto getDealerResult() {
+        return ParticipantResultDto.from(dealer);
+    }
+
+    public List<ParticipantResultDto> getPlayerResults() {
+        return players.getPlayerResults();
+    }
+
+    public DealerFirstCardDto getDealerFirstOpen() {
+        return DealerFirstCardDto.from(dealer);
+    }
+
+    public List<ParticipantCardsDto> getPlayersCards() {
+        return players.getPlayerCards();
+    }
+
 }

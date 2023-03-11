@@ -3,10 +3,10 @@ package blackjack.player;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
-import blackjack.domain.participant.Score;
 import blackjack.domain.participant.dealer.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

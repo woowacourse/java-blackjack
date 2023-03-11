@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant.player;
+
+import blackjack.domain.Money;
 
 public class BetAmount {
 

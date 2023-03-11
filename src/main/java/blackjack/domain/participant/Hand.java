@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;

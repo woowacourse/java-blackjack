@@ -2,11 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.ParticipantPrizeDto;
-import blackjack.domain.game.PlayerWinningDto;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
-import blackjack.domain.participant.dealer.DealerWinningDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,23 +49,6 @@ public class OutputView {
                 result.getName().getValue() + " 카드: " + result.getCards().stream().map(Card::toString).collect(
                         Collectors.joining(", ")) + " - 결과: " + result.getScore());
     }
-
-    public void printWinningResults(DealerWinningDto dealerWinningResult, List<PlayerWinningDto> playerWinningResults) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        String parsedDealerWinningResult = parseDealerWinningResult(dealerWinningResult);
-        System.out.println(dealerWinningResult.getName().getValue() + ": " + parsedDealerWinningResult);
-
-        playerWinningResults.forEach(playerWinningDto -> System.out.println(
-                playerWinningDto.getName().getValue() + ": " + playerWinningDto.getResult().getLabel()));
-    }
-
-    private String parseDealerWinningResult(DealerWinningDto dealerWinningResult) {
-        return dealerWinningResult.getResultToCount().keySet().stream()
-                .map(result -> dealerWinningResult.getResultToCount().get(result) + result.getLabel()).collect(
-                        Collectors.joining(" "));
-    }
-
     public void printFinalPrize(List<ParticipantPrizeDto> prizes) {
         System.out.println("\n## 최종 수익");
         prizes.forEach(prize -> System.out.printf("%s: %d\n", prize.getParticipantName(), prize.getPrizeAmount()));

@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.domain.BetAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.player.BetAmount;
 import blackjack.domain.participant.player.Player;
 import java.util.List;
 

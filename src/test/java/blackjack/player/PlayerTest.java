@@ -6,14 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Score;
-import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.AddCardOrNot;
 import blackjack.domain.participant.player.Player;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
@@ -88,16 +86,6 @@ class PlayerTest {
 
         assertThat(player.isBust()).isTrue();
     }
-
-    @Test
-    @DisplayName("딜러와 승패를 가르는 기능")
-    void compareTo() {
-        Player player = new Player(new Name("로지"), BET_AMOUNT_10000);
-        Dealer dealer = new Dealer();
-        WinningResult result = player.combat(dealer);
-        assertThat(result).isEqualTo(WinningResult.TIE);
-    }
-
 
     @DisplayName("추가 카드를 받는 기능")
     @Nested
