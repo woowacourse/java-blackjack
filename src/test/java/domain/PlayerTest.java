@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.stream.Stream;
 
@@ -30,9 +30,16 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.create("Leo", new BetAmount(1000));
+        player = Player.create(new Name("Leo"), new BetAmount(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TWO));
         player.receiveCard(new Card(Suit.DIAMOND, Rank.KING));
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
+    void validateNoDealer() {
+        assertThatThrownBy(() -> Player.create(new Name("딜러"), new BetAmount(1500)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -54,27 +61,4 @@ class PlayerTest {
         assertThat(player.getHandValue()).isEqualTo(12);
     }
 
-    @ParameterizedTest(name = "플레이어의 이름은 null이거나 공백일 수 없다.")
-    @NullAndEmptySource
-    void validatePlayerNameTest(String name) {
-        assertThatThrownBy(() -> Player.create(name, new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
-    void validateNoDealer() {
-        assertThatThrownBy(() -> Player.create("딜러", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("플레이어의 이름에 쉼표(,)가 포함 될 수 없다.")
-    void validateNoComma() {
-        assertThatThrownBy(() -> Player.create("이,름", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("플레이어의 이름의 길이가 10이상이 될 수 없다.")
-    void validateNameLength() {
-        assertThatThrownBy(() -> Player.create("이건 열 글자 넘는.", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
-    }
 }
