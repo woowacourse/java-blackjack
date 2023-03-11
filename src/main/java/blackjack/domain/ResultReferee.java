@@ -10,7 +10,7 @@ public class ResultReferee {
             return Result.LOSE;
         }
         if (player.isBlackJack()) {
-            return getResultWhenPlayerBlackJack(dealer);
+            return getPlayerResultWhenPlayerBlackJack(dealer);
         }
         if (dealer.isBust()) {
             return Result.WIN;
@@ -30,7 +30,7 @@ public class ResultReferee {
         return Result.LOSE;
     }
 
-    private static Result getResultWhenPlayerBlackJack(Dealer dealer) {
+    private static Result getPlayerResultWhenPlayerBlackJack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return Result.DRAW;
         }
