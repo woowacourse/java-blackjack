@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.CardCollection;
+import domain.card.Hand;
 import java.util.Objects;
 
 public class Player implements Playable {
@@ -14,7 +14,7 @@ public class Player implements Playable {
     public static final String DEALER_NAME = "딜러";
     private final String name;
     
-    private CardCollection hand = new CardCollection();
+    private Hand hand = new Hand();
     
     public Player(final String name) {
         this.validateBlank(name);
@@ -47,7 +47,7 @@ public class Player implements Playable {
     }
     
     @Override
-    public CardCollection getReadyCards() {
+    public Hand getReadyCards() {
         if (this.hand.size() != 2) {
             throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
@@ -55,7 +55,7 @@ public class Player implements Playable {
     }
     
     @Override
-    public CardCollection getCards() {
+    public Hand getCards() {
         return this.hand;
     }
     

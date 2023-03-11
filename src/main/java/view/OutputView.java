@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.card.CardCollection;
+import domain.card.Hand;
 import domain.result.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
@@ -58,7 +58,7 @@ public class OutputView {
         System.out.println();
     }
     
-    public static void printNameAndCards(String name, CardCollection cards) {
+    public static void printNameAndCards(String name, Hand cards) {
         String formattedNameAndCards = name
                 + ": "
                 + cards.stream()
@@ -96,7 +96,7 @@ public class OutputView {
         System.out.println();
     }
     
-    public static void printNameCardsScore(String name, CardCollection cards, int score) {
+    public static void printNameCardsScore(String name, Hand cards, int score) {
         String formattedNameAndScore = name
                 + ": "
                 + cards.stream()

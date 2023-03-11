@@ -5,15 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class CardCollection implements Iterable<Card> {
+public class Hand implements Iterable<Card> {
     
     private final List<Card> cards;
     
-    public CardCollection() {
+    public Hand() {
         this(new ArrayList<>());
     }
     
-    private CardCollection(List<Card> cards) {
+    private Hand(List<Card> cards) {
         this.cards = cards;
     }
     
@@ -32,10 +32,10 @@ public class CardCollection implements Iterable<Card> {
         return this.cards.stream().anyMatch(domain.card.Card::isAce);
     }
     
-    public CardCollection add(Card card) {
+    public Hand add(Card card) {
         List<Card> newCards = new ArrayList<>(this.cards);
         newCards.add(card);
-        return new CardCollection(newCards);
+        return new Hand(newCards);
     }
     
     public int size() {

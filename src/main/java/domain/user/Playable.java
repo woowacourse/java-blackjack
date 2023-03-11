@@ -1,15 +1,15 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.CardCollection;
+import domain.card.Hand;
 
 public interface Playable {
     
     void addCard(Card card);
     
-    CardCollection getReadyCards();
+    Hand getReadyCards();
     
-    CardCollection getCards();
+    Hand getCards();
     
     boolean isAbleToDraw();
     
