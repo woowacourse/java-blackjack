@@ -44,18 +44,6 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 첫 번째 카드를 받을 수 있다.")
-    void getDealersFirstCardTest() {
-        final Card firstCard = new Card(Shape.HEART, CardNumber.TEN);
-        final List<Card> data = List.of(
-                firstCard,
-                new Card(Shape.HEART, CardNumber.SIX)
-        );
-        final Dealer dealer = new Dealer(data);
-        assertThat(dealer.getFirstCard()).isEqualTo(firstCard);
-    }
-
-    @Test
     @DisplayName("현재 카드의 합이 16이하이면 카드를 더 받을 수 있다.")
     void canReceiveTest() {
         final List<Card> data = List.of(

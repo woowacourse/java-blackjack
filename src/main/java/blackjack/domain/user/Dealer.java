@@ -24,10 +24,6 @@ public class Dealer implements Player {
         }
     }
 
-    public Card getFirstCard() {
-        return cards.getFirstCard();
-    }
-
     public List<Card> openCards() {
         return cards.getCards();
     }
@@ -39,7 +35,6 @@ public class Dealer implements Player {
         }
         this.cards = cards.add(card);
     }
-
 
     @Override
     public boolean canReceive() {

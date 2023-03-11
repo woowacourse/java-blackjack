@@ -35,10 +35,6 @@ public class Cards {
         return cards;
     }
 
-    public Card getFirstCard() {
-        return cards.get(0);
-    }
-
     public GamePoint getPoint() {
         return new GamePoint(cards);
     }

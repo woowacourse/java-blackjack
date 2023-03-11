@@ -78,18 +78,4 @@ public class CardsTest {
         final Cards cards = new Cards(data);
         assertThat(cards.isBust()).isTrue();
     }
-
-    @Test
-    @DisplayName("카드 뭉치의 첫 번째 카드를 반환한다.")
-    void getFirstCardTest() {
-        final Card firstCard = new Card(Shape.HEART, CardNumber.TEN);
-        final List<Card> data = List.of(
-                firstCard,
-                new Card(Shape.HEART, CardNumber.TEN),
-                new Card(Shape.HEART, CardNumber.TEN)
-        );
-        final Cards cards = new Cards(data);
-        assertThat(cards.getFirstCard()).isEqualTo(firstCard);
-
-    }
 }

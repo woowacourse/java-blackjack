@@ -13,7 +13,9 @@ import java.util.*;
 public class DtoParser {
 
     public static InitialStatusDto getInitializeDto(BlackJack blackJack) {
-        return new InitialStatusDto(getCardDto(blackJack.getDealer().getFirstCard()), makeUsersDto(blackJack.getUsers()));
+        final List<Card> dealerCards = blackJack.getDealer().getCards().getCards();
+        final Card firstDelaerCard = dealerCards.get(0);
+        return new InitialStatusDto(getCardDto(firstDelaerCard), makeUsersDto(blackJack.getUsers()));
     }
 
     private static List<UserDto> makeUsersDto(final Users users) {
