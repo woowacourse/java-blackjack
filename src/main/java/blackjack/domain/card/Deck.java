@@ -2,15 +2,12 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Stack;
 
 public final class Deck {
 
-    private static final int INITIAL_CAPACITY = 52;
-
-    private final Set<Card> deck = new HashSet<>(INITIAL_CAPACITY);
+    private final Stack<Card> deck = new Stack<>();
 
     public Deck() {
         init();
@@ -20,6 +17,7 @@ public final class Deck {
         for (Denomination denomination : Denomination.values()) {
             fillCards(denomination);
         }
+        Collections.shuffle(deck);
     }
 
     private void fillCards(final Denomination denomination) {
@@ -29,19 +27,17 @@ public final class Deck {
     }
 
     public Card drawCard() {
-        Card drawCard = deck.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("현재 남아있는 카드가 존재하지 않습니다."));
-        deck.remove(drawCard);
-
-        return drawCard;
+        if (deck.isEmpty()) {
+            throw new IllegalStateException("현재 남아있는 카드가 존재하지 않습니다.");
+        }
+        return deck.pop();
     }
 
     public List<Card> drawTwoCard() {
         return new ArrayList<>(List.of(drawCard(), drawCard()));
     }
 
-    public Set<Card> getDeck() {
-        return Collections.unmodifiableSet(deck);
+    public List<Card> getDeck() {
+        return List.copyOf(deck);
     }
 }
