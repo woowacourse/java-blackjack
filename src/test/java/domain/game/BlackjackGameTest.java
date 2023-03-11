@@ -50,7 +50,7 @@ public class BlackjackGameTest {
     }
 
     @Test
-    void bustDraw() {
+    void bustDraw_Throw() {
         final var hit = BlackjackGame.start(
                 Card.of(Suit.SPADE, Denomination.TEN),
                 Card.of(Suit.HEART, Denomination.TEN)
