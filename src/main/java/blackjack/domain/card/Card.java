@@ -20,8 +20,12 @@ public final class Card {
         return this.number == Number.ACE;
     }
 
-    public String getCardInfo() {
-        return "" + number.getState() + pattern.getName();
+    public Number getCardNumber() {
+        return number;
+    }
+
+    public Pattern getCardPattern() {
+        return pattern;
     }
 
     @Override

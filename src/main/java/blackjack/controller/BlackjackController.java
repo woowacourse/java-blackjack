@@ -135,7 +135,7 @@ public final class BlackjackController {
 
     private List<String> getDealersCards(final Dealer dealer) {
         return dealer.showInitCards().stream()
-                .map(Card::getCardInfo)
+                .map(card -> makeCardInfo(card))
                 .collect(Collectors.toList());
     }
 
@@ -145,7 +145,7 @@ public final class BlackjackController {
         for (Player player : players) {
             playersCards.put(player.getName(),
                     player.showInitCards().stream()
-                            .map(Card::getCardInfo)
+                            .map(card -> makeCardInfo(card))
                             .collect(Collectors.toList()));
         }
 
@@ -160,8 +160,12 @@ public final class BlackjackController {
 
     private List<String> getCurrentCards(final List<Card> cards) {
         return cards.stream()
-                .map(Card::getCardInfo)
+                .map(card -> makeCardInfo(card))
                 .collect(Collectors.toList());
+    }
+
+    private String makeCardInfo(Card card) {
+        return card.getCardNumber().getState() + card.getCardPattern().getName();
     }
 
     private Map<String, Integer> getProfit(final Map<Player, Money> playersProfit, final Money dealerProfit,
