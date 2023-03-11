@@ -3,12 +3,14 @@ package blackjack.domain.gameplayer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayerTest {
@@ -132,5 +134,29 @@ class PlayerTest {
 
         // when, then
         assertThat(tori.showCards()).containsAll(List.of(card, card2, card3));
+    }
+
+    @DisplayName("플레이어의 배팅 금액을 아직 결정하지 않은 경우에는 이를 결정할 수 있다.")
+    @Test
+    void Should_Success_When_ChangeBetting() {
+        // given
+        Player tori = new Player(new Name("tori"));
+        tori.bet(2000);
+
+        // when, then
+        assertThat(tori.getBetting()).isEqualTo(Betting.of(2000));
+    }
+
+    @DisplayName("플레이어의 배팅 금액을 이미 결정한 경우에는 배팅금액을 다시 결정할 경우에 예외를 던진다.")
+    @Test
+    void Should_ThrowException_When_ChangeBetting() {
+        // given
+        Player tori = new Player(new Name("tori"));
+        tori.bet(2000);
+
+        // when, then
+        assertThatThrownBy(() -> tori.bet(3000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅 금액을 변경할 수 없습니다.");
     }
 }

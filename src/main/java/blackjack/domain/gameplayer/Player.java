@@ -11,7 +11,7 @@ public class Player extends BlackJackParticipant {
     public static final Score hitUpperBound = Score.of(21);
 
     private final Name name;
-    private final Betting betting;
+    private Betting betting;
 
     public Player(Name name, Betting betting) {
         super(new Cards());
@@ -49,5 +49,13 @@ public class Player extends BlackJackParticipant {
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
+    }
+
+    public void bet(int betting) {
+        this.betting = this.betting.changeBetting(betting);
+    }
+
+    public Betting getBetting() {
+        return betting;
     }
 }
