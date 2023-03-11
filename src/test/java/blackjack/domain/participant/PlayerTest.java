@@ -24,8 +24,8 @@ class PlayerTest {
     @Test
     @DisplayName("카드 새로 뽑을 수 있는지 판단 - 성공")
     void isAbleToReceiveTest() {
-        assertThat(player.isAbleToReceive()).isTrue();
         assertThat(player.getScore()).isEqualTo(21);
+        assertThat(player.isAbleToReceive()).isTrue();
     }
 
     @Test
@@ -33,7 +33,7 @@ class PlayerTest {
     void isAbleToReceiveFailTest() {
         player.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
 
-        assertThat(player.isAbleToReceive()).isFalse();
         assertThat(player.getScore()).isEqualTo(22);
+        assertThat(player.isAbleToReceive()).isFalse();
     }
 }
