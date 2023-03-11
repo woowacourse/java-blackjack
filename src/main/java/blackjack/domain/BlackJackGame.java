@@ -7,7 +7,7 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ProfitCalculator;
 import blackjack.domain.result.Score;
 import blackjack.domain.user.Users;
-import blackjack.dto.CardAndScore;
+import blackjack.dto.domain.CardAndScore;
 
 import java.util.List;
 import java.util.Map;

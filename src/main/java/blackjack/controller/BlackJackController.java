@@ -2,10 +2,10 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.generator.RandomDeckGenerator;
-import blackjack.dto.CardAndScore;
-import blackjack.dto.HoldingCards;
-import blackjack.dto.NameCardAndScore;
-import blackjack.dto.ProfitResult;
+import blackjack.dto.domain.CardAndScore;
+import blackjack.dto.view.HoldingCards;
+import blackjack.dto.view.CardAndScoreResult;
+import blackjack.dto.view.ProfitResult;
 import blackjack.util.RepeatValidator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -101,19 +101,19 @@ public class BlackJackController {
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
-        final List<NameCardAndScore> cardAndScoreResults = getCardResults(blackJackGame);
+        final List<CardAndScoreResult> cardAndScoreResults = getCardResults(blackJackGame);
 
         outputView.printCardAndScoreResult(cardAndScoreResults);
         outputView.printLineBreak();
     }
 
-    private static List<NameCardAndScore> getCardResults(final BlackJackGame blackJackGame) {
-        final List<NameCardAndScore> cardAndScoreResults = new ArrayList<>();
+    private static List<CardAndScoreResult> getCardResults(final BlackJackGame blackJackGame) {
+        final List<CardAndScoreResult> cardAndScoreResults = new ArrayList<>();
         final CardAndScore dealerCardAndScore = blackJackGame.getCardAndScore(DEALER_NAME_CODE);
-        cardAndScoreResults.add(new NameCardAndScore(DEALER_NAME_CODE, dealerCardAndScore.getCards(), dealerCardAndScore.getScore()));
+        cardAndScoreResults.add(new CardAndScoreResult(DEALER_NAME_CODE, dealerCardAndScore.getCards(), dealerCardAndScore.getScore()));
         for (String name : blackJackGame.getPlayerNames()) {
             final CardAndScore cardAndScore = blackJackGame.getCardAndScore(name);
-            cardAndScoreResults.add(new NameCardAndScore(name, cardAndScore.getCards(), cardAndScore.getScore()));
+            cardAndScoreResults.add(new CardAndScoreResult(name, cardAndScore.getCards(), cardAndScore.getScore()));
         }
         return cardAndScoreResults;
     }

@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Score;

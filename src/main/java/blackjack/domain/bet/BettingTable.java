@@ -17,25 +17,25 @@ public class BettingTable {
         table = new HashMap<>();
     }
 
-    public void bet(final String name, final Money money) {
-        validateRange(money);
-        validateUnitAmount(money);
-        table.put(name, money);
+    public void bet(final String userName, final Money bettingMoney) {
+        validateRange(bettingMoney);
+        validateUnitAmount(bettingMoney);
+        table.put(userName, bettingMoney);
     }
 
-    private void validateUnitAmount(final Money money) {
-        if (money.getAmount() % UNIT_AMOUNT != 0) {
+    private void validateUnitAmount(final Money bettingMoney) {
+        if (bettingMoney.getAmount() % UNIT_AMOUNT != 0) {
             throw new IllegalArgumentException(UNIT_AMOUNT_EXCEPTION_TEST);
         }
     }
 
-    private void validateRange(final Money money) {
-        if (money.getAmount() < MIN_AMOUNT || money.getAmount() > MAX_AMOUNT) {
+    private void validateRange(final Money bettingMoney) {
+        if (bettingMoney.getAmount() < MIN_AMOUNT || bettingMoney.getAmount() > MAX_AMOUNT) {
             throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
         }
     }
 
-    public Money get(final String name) {
-        return table.getOrDefault(name, new Money(0));
+    public Money get(final String userName) {
+        return table.getOrDefault(userName, new Money(0));
     }
 }
