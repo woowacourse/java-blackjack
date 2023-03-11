@@ -1,6 +1,6 @@
-package model.card;
+package model.user;
 
-public enum State {
+public enum GameState {
     BLACKJACK,
     TIE,
     WIN,

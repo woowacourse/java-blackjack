@@ -1,9 +1,9 @@
 package model.money;
 
-import static model.card.State.BLACKJACK;
-import static model.card.State.LOSE;
-import static model.card.State.TIE;
-import static model.card.State.WIN;
+import static model.user.GameState.BLACKJACK;
+import static model.user.GameState.LOSE;
+import static model.user.GameState.TIE;
+import static model.user.GameState.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;

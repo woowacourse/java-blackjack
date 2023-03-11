@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Deck;
 import model.card.RandomShuffleMaker;
-import model.card.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -92,7 +91,7 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_TEN);
 
             // when, then
-            assertThat(player.judgeResult(dealer)).isEqualTo(State.BLACKJACK);
+            assertThat(player.judgeResult(dealer)).isEqualTo(GameState.BLACKJACK);
         }
 
         @Test
@@ -106,7 +105,7 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_TEN);
 
             // when, then
-            assertThat(player.judgeResult(dealer)).isEqualTo(State.WIN);
+            assertThat(player.judgeResult(dealer)).isEqualTo(GameState.WIN);
         }
 
         @Test
@@ -120,7 +119,7 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_TEN);
 
             // when, then
-            assertThat(player.judgeResult(dealer)).isEqualTo(State.TIE);
+            assertThat(player.judgeResult(dealer)).isEqualTo(GameState.TIE);
         }
 
         @Test
@@ -134,7 +133,7 @@ class PlayerTest {
             dealer.receiveCard(DIAMOND_TEN);
 
             // when, then
-            assertThat(player.judgeResult(dealer)).isEqualTo(State.LOSE);
+            assertThat(player.judgeResult(dealer)).isEqualTo(GameState.LOSE);
         }
     }
 }
