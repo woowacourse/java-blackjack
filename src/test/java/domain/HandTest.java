@@ -51,6 +51,25 @@ class HandTest {
         assertThat(hand.calculateValue()).isEqualTo(handValue);
     }
 
+    @Test
+    void blackjackTest() {
+        Hand newHand = new Hand(List.of(
+                new Card(Suit.CLOVER, Rank.KING),
+                new Card(Suit.CLOVER, Rank.ACE))
+        );
+        assertThat(newHand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void notBlackjackTest() {
+        Hand newHand = new Hand(List.of(
+                new Card(Suit.CLOVER, Rank.KING),
+                new Card(Suit.CLOVER, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.SIX))
+        );
+        assertThat(newHand.isBlackjack()).isFalse();
+    }
+
     private static Stream<Arguments> cardProvider() {
         return Stream.of(
                 Arguments.of(new Card(Suit.CLOVER, Rank.ACE), 16),
