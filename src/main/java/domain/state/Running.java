@@ -34,4 +34,9 @@ public abstract class Running implements State {
     public List<Card> cards() {
         return hand.getCards();
     }
+
+    @Override
+    public Hand hand() {
+        return hand;
+    }
 }

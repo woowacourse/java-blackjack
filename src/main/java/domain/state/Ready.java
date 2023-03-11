@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.card.Card;
+import domain.user.Hand;
 
 import java.util.List;
 
@@ -18,6 +19,11 @@ public class Ready implements State {
 
     @Override
     public List<Card> cards() {
+        throw new IllegalStateException("카드가 없습니다.");
+    }
+
+    @Override
+    public Hand hand() {
         throw new IllegalStateException("카드가 없습니다.");
     }
 }

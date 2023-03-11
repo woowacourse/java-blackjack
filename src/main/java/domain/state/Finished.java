@@ -27,4 +27,9 @@ public abstract class Finished implements State {
     public List<Card> cards() {
         return hand.getCards();
     }
+
+    @Override
+    public Hand hand() {
+        return hand;
+    }
 }
