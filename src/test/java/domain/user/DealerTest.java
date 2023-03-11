@@ -47,7 +47,7 @@ public class DealerTest {
 
     private void addCards(List<Denomination> denominations) {
         for (Denomination denomination : denominations) {
-            dealer.hit(new Card(denomination, Suits.HEART));
+            dealer.hit(Card.of(denomination, Suits.HEART));
         }
     }
 }

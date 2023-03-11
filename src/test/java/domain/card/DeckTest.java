@@ -3,6 +3,7 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.shuffler.SequentialCardShuffler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,7 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     @Test
     void pickCard() {
-        Deck deck = Deck.from(cards -> {
-        });
+        Deck deck = Deck.from(new SequentialCardShuffler());
 
         Card card1 = deck.pickCard();
         Card card2 = deck.pickCard();

@@ -23,8 +23,8 @@ public class UserTest {
     @Test
     void hit() {
         User user = new UserImplement();
-        Card card1 = new Card(Denomination.TWO, Suits.HEART);
-        Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
+        Card card1 = Card.of(Denomination.TWO, Suits.HEART);
+        Card card2 = Card.of(Denomination.THREE, Suits.DIAMOND);
         user.hit(card1);
         user.hit(card2);
         List<Card> cards = user.getCards();

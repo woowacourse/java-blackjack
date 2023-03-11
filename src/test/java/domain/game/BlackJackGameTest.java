@@ -3,6 +3,7 @@ package domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.shuffler.SequentialCardShuffler;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
@@ -79,8 +80,7 @@ public class BlackJackGameTest {
     @Test
     void getPlayerToScore() {
         createUsers();
-        blackJackGame = BlackJackGame.of(users, cards -> {
-        });
+        blackJackGame = BlackJackGame.of(users, new SequentialCardShuffler());
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13

@@ -68,7 +68,7 @@ public class UsersTest {
     @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
     @Test
     void hitCardByName() {
-        users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
+        users.hitCardByName("hongo", Card.of(Denomination.JACK, Suits.HEART));
         Player player = users.getPlayers().get(0);
         assertThat(player.getScore()).isEqualTo(10);
     }
@@ -76,7 +76,7 @@ public class UsersTest {
     @DisplayName("이름으로 카드추가시 해당 이름의 플레이어가 없을시 예외처리한다")
     @Test
     void hitCardByName_noSuchName_exception() {
-        assertThatThrownBy(() -> users.hitCardByName("error", new Card(Denomination.JACK, Suits.HEART)))
+        assertThatThrownBy(() -> users.hitCardByName("error", Card.of(Denomination.JACK, Suits.HEART)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
     }
@@ -104,10 +104,10 @@ public class UsersTest {
         // player1 : X          => 0
         // player2 : 7          => 7
         // player3 : 10, 10, 1  => 21
-        users.hitCardByName("ash", new Card(Denomination.SEVEN, Suits.DIAMOND));
-        users.hitCardByName("kiara", new Card(Denomination.JACK, Suits.DIAMOND));
-        users.hitCardByName("kiara", new Card(Denomination.QUEEN, Suits.DIAMOND));
-        users.hitCardByName("kiara", new Card(Denomination.ACE, Suits.DIAMOND));
+        users.hitCardByName("ash", Card.of(Denomination.SEVEN, Suits.DIAMOND));
+        users.hitCardByName("kiara", Card.of(Denomination.JACK, Suits.DIAMOND));
+        users.hitCardByName("kiara", Card.of(Denomination.QUEEN, Suits.DIAMOND));
+        users.hitCardByName("kiara", Card.of(Denomination.ACE, Suits.DIAMOND));
 
         List<Player> hittablePlayers = users.getHittablePlayers();
         assertThat(hittablePlayers)

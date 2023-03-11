@@ -35,7 +35,7 @@ public class GameResultTest {
     }
 
     void giveCardToPlayer(User user, Denomination denomination) {
-        user.hit(new Card(denomination, Suits.DIAMOND));
+        user.hit(Card.of(denomination, Suits.DIAMOND));
     }
 
     @DisplayName("플레이어의 결과를 계산한다")

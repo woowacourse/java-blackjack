@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 public class CardsTest {
 
-
     private Cards cards;
 
     @BeforeEach
@@ -29,8 +28,8 @@ public class CardsTest {
     @DisplayName("card를 추가한다")
     @Test
     void addCard() {
-        Card card1 = new Card(Denomination.TWO, Suits.HEART);
-        Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
+        Card card1 = Card.of(Denomination.TWO, Suits.HEART);
+        Card card2 = Card.of(Denomination.THREE, Suits.DIAMOND);
         cards.addCard(card1);
         cards.addCard(card2);
 
@@ -72,7 +71,7 @@ public class CardsTest {
 
     private void addCards(List<Denomination> denominations) {
         for (Denomination denomination : denominations) {
-            cards.addCard(new Card(denomination, Suits.HEART));
+            cards.addCard(Card.of(denomination, Suits.HEART));
         }
     }
 }
