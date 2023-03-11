@@ -10,6 +10,7 @@ public class InputView {
     private static final String HIT_COMMAND = "y";
     private static final String STAY_COMMAND = "n";
     private static final String PLAYER_INTENTION_ERROR_MESSAGE = "y 혹은 n 만 입력 가능 합니다.";
+    public static final String BETTING_AMOUNT_TYPE_ERROR_MESSAGE = "베팅 금액은 양의 정수만 입력가능합니다.";
 
     public static InputView getInstance() {
         return INSTANCE;
@@ -34,5 +35,18 @@ public class InputView {
             throw new IllegalArgumentException(PLAYER_INTENTION_ERROR_MESSAGE);
         }
         return input.equals(HIT_COMMAND);
+    }
+
+    public int readBetAmount(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+
+        String input = scanner.nextLine();
+
+        try {
+            return Integer.parseInt(input);
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(BETTING_AMOUNT_TYPE_ERROR_MESSAGE);
+        }
     }
 }

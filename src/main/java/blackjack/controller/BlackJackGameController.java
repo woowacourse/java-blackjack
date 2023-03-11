@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.betting.BettingAreas;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -10,6 +12,7 @@ import blackjack.util.Retryable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,7 +28,10 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(generateParticipants());
+        Participants participants = generateParticipants();
+        BettingAreas bettingAreas = generateBettingAreas(participants.getPlayers());
+        BlackJackGame blackJackGame = new BlackJackGame(participants, bettingAreas);
+
         startGame(blackJackGame);
         playGame(blackJackGame);
         closeGame(blackJackGame);
@@ -37,6 +43,24 @@ public class BlackJackGameController {
 
     private List<String> requestPlayerNames() {
         return inputView.readPlayerNames();
+    }
+
+    private BettingAreas generateBettingAreas(final List<Player> players){
+        Map<Player, BettingAmount> bettingAreas = new HashMap<>();
+
+        players.forEach(player ->
+            bettingAreas.put(player, generateBettingAmount(player.getName()))
+        );
+
+        return new BettingAreas(bettingAreas);
+    }
+
+    private BettingAmount generateBettingAmount(String playerName){
+        return Retryable.retryWhenException(() -> new BettingAmount(requestBettingAmount(playerName)));
+    }
+
+    private int requestBettingAmount(String playerName){
+        return inputView.readBetAmount(playerName);
     }
 
     private void startGame(final BlackJackGame blackJackGame) {
