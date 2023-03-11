@@ -17,7 +17,7 @@ class DealerTest {
     
     @BeforeEach
     void setUp() {
-        dealer = Dealer.getInstance();
+        dealer = new Dealer();
     }
     
     @Test

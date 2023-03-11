@@ -55,7 +55,7 @@ public abstract class Player {
     public abstract ParticipantGameResult battleResult(Player otherPlayer);
     
     public abstract boolean isDealer();
-    public abstract double calculateProfit(int betAmount);
+    public abstract double calculateProfit(double betAmount);
     
     public void drawStop() {
         state = state.drawStop();

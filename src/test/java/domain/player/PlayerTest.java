@@ -18,7 +18,7 @@ class PlayerTest {
     
     @BeforeEach
     void setUp() {
-        dealer = Dealer.getInstance();
+        dealer = new Dealer();
         abel = new Participant("Abel");
     }
     

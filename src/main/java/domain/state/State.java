@@ -15,7 +15,8 @@ public abstract class State {
     }
     
     public abstract State draw(Card card);
-    public abstract double calculateProfit(int betAmount);
+    public abstract double calculateProfit(double betAmount);
+    public abstract State drawStop();
     
     public Score score() {
         return hand.getTotalScore();
@@ -36,6 +37,4 @@ public abstract class State {
     protected boolean isBlackJack() {
         return hand.isBlackJack();
     }
-    
-    public abstract State drawStop();
 }

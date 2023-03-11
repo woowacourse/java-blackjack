@@ -32,7 +32,7 @@ public class Participant extends Player {
     }
     
     @Override
-    public double calculateProfit(int betAmount) {
+    public double calculateProfit(double betAmount) {
         return getState().calculateProfit(betAmount);
     }
 }

@@ -3,14 +3,8 @@ package domain.player;
 import domain.card.Score;
 
 public class Dealer extends Player {
-    private static final Player dealer = new Dealer();
-    
-    private Dealer() {
+    public Dealer() {
         super("딜러");
-    }
-    
-    public static Player getInstance() {
-        return dealer;
     }
     
     @Override
@@ -38,7 +32,7 @@ public class Dealer extends Player {
     }
     
     @Override
-    public double calculateProfit(int betAmount) {
+    public double calculateProfit(double betAmount) {
         throw new IllegalStateException("딜러는 수익률 계산을 할 수 없습니다.");
     }
 }

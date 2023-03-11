@@ -8,7 +8,7 @@ public class Stay extends Finished {
     }
     
     @Override
-    public double calculateProfit(int betAmount) {
+    public double calculateProfit(double betAmount) {
         return betAmount;
     }
 }
