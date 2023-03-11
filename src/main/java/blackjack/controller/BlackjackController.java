@@ -66,6 +66,9 @@ public class BlackjackController {
         for (Participant participant : blackjackGame.getParticipants()) {
             outputView.printTotalCardsAndScore(participant);
         }
+        outputView.printFinalRevenueStatement();
+        outputView.printDealerProceeds(blackjackGameResult.calculateDealerPrizeByGameResult());
+        outputView.printPlayersProceeds(blackjackGameResult.calculatePlayersPrizeByGameResult());
     }
 
     private List<String> creatPlayerAmount(List<String> playersName) {

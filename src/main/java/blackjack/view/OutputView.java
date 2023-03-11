@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.game.BlackjackGameResult;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -59,6 +59,21 @@ public class OutputView {
 
     public void printHitDealerCount(Dealer dealer) {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
+    }
+
+    public void printFinalRevenueStatement() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printDealerProceeds(BigDecimal dealerProceeds) {
+        System.out.println("딜러: " + dealerProceeds);
+    }
+
+    public void printPlayersProceeds(Map<Player, BigDecimal> playerResult) {
+        for (Player player : playerResult.keySet()) {
+            System.out.println(player.getName()+": "+playerResult.get(player));
+        }
+
     }
 
     private void printFirstDealerCards(final Dealer dealer) {
