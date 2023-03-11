@@ -30,4 +30,8 @@ public class Bank {
     private void applyExpense(Money money) {
         bankProfit = bankProfit.sub(money);
     }
+
+    public Money getProfit() {
+        return bankProfit;
+    }
 }

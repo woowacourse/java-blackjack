@@ -48,4 +48,11 @@ public abstract class AbstractTestFixture {
         var participants = createParticipantsFrom(dealer, users);
         return new Game(participants, new Deck());
     }
+
+    static Money createMoney(int value) {
+        if (value < 0) {
+            return Money.of(-value).profit(-2);
+        }
+        return Money.of(value);
+    }
 }

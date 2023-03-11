@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class BankTest {
+public class BankTest extends AbstractTestFixture{
 
     @Test
     @DisplayName("배팅을 할 수 있다")
@@ -41,5 +41,17 @@ public class BankTest {
         bank.bet(user, Money.of(500));
 
         assertThat(bank.pay(user, result)).isEqualTo(Money.of(expectedValue));
+    }
+
+    @DisplayName("뱅크 수익을 알 수 있다")
+    @ParameterizedTest(name = "{0}이면 {1}원이 수익이다")
+    @CsvSource({"BLACKJACK,-750", "WIN,-500", "LOSE,500", "DRAW,0"})
+    void test_bank_profit(Result result, int expectedValue) {
+        var bank = new Bank();
+        var user = new User("gd");
+        bank.bet(user, Money.of(500));
+        bank.pay(user, result);
+
+        assertThat(bank.getProfit()).isEqualTo(createMoney(expectedValue));
     }
 }
