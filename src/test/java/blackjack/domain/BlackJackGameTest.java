@@ -191,4 +191,23 @@ class BlackJackGameTest {
                 .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
                 .containsExactly(entry(TEST_PLAYER_NAME1, new Money(10000)));
     }
+
+    @Test
+    @DisplayName("플레이어의 이름과 수익금들을 반환하는 기능 추가")
+    void getPlayerNameAndProfitRates() {
+        final BlackJackGame blackJackGame = new BlackJackGame(
+                List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
+                new TestNonShuffledDeckGenerator(testCards));
+        blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);
+        blackJackGame.betPlayer(TEST_PLAYER_NAME2, 2_000);
+
+        final Map<Name, Money> playerNameAndProfits = blackJackGame.getPlayerNameAndProfits();
+        final Money player1Profit = playerNameAndProfits.get(TEST_PLAYER_NAME1);
+        final Money player2Profit = playerNameAndProfits.get(TEST_PLAYER_NAME2);
+
+        assertSoftly(softly -> {
+            softly.assertThat(player1Profit.getValue()).isEqualTo(-1_000);
+            softly.assertThat(player2Profit.getValue()).isEqualTo(-2_000);
+        });
+    }
 }

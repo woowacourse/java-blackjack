@@ -10,8 +10,11 @@ import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.Users;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackJackGame {
 
@@ -58,6 +61,18 @@ public class BlackJackGame {
         if (drawOrStay.isDraw()) {
             users.drawCard(userName, deck);
         }
+    }
+
+    public Map<Name, Money> getPlayerNameAndProfits() {
+        final Map<Name, Money> playerNameAndProfits = new LinkedHashMap<>();
+        final Map<Name, Double> playerNameAndProfitRates = users.getPlayerNameAndProfitRates();
+
+        for (final Entry<Name, Double> nameAndProfit : playerNameAndProfitRates.entrySet()) {
+            playerNameAndProfits.put(nameAndProfit.getKey(),
+                    deposit.getProfit(nameAndProfit.getKey(), nameAndProfit.getValue()));
+        }
+
+        return Collections.unmodifiableMap(playerNameAndProfits);
     }
 
     public Map<Name, CardResult> getUserNameAndCardResults() {
