@@ -10,7 +10,7 @@ import domain.model.Players;
 import domain.vo.Profit;
 import domain.type.Letter;
 import domain.type.Suit;
-import domain.vo.Batting;
+import domain.vo.Bet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -27,7 +27,7 @@ class BlackJackGameTest {
     public void testGiveCard() {
         //given
         final Cards cards = Cards.makeEmpty();
-        final Player player = new Player(cards, "test", Batting.of(5));
+        final Player player = new Player(cards, "test", Bet.of(5));
 
         //when
         blackJackGame.giveCard(player);
@@ -63,7 +63,7 @@ class BlackJackGameTest {
     @DisplayName("플레이어들 손익 계산 테스트")
     public void testCalculatePlayersProfit() {
         //given
-        final Player player = new Player(Cards.makeEmpty(), "test", Batting.of(1000D));
+        final Player player = new Player(Cards.makeEmpty(), "test", Bet.of(1000D));
         player.addCard(new Card(Suit.CLUB, Letter.TEN));
         final Players players = new Players(List.of(player));
         final Dealer dealer = new Dealer(Cards.makeEmpty());

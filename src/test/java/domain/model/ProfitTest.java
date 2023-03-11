@@ -2,7 +2,7 @@ package domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.vo.Batting;
+import domain.vo.Bet;
 import domain.vo.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,39 +18,39 @@ class ProfitTest {
     @DisplayName("win 생성 테스트")
     public void testVictoryCreate() {
         //given
-        final Batting batting = Batting.of(10D);
+        final Bet bet = Bet.of(10D);
 
         //when
-        final Profit profit = Profit.victory(batting);
+        final Profit profit = Profit.victory(bet);
 
         //then
-        assertThat(profit.getValue()).isEqualTo(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
+        assertThat(profit.getValue()).isEqualTo(bet.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
     }
 
     @Test
     @DisplayName("blackJackWin 생성 테스트")
     public void testBlackJackVictoryCreate() {
         //given
-        final Batting batting = Batting.of(10D);
+        final Bet bet = Bet.of(10D);
 
         //when
-        final Profit profit = Profit.blackJackVictory(batting);
+        final Profit profit = Profit.blackJackVictory(bet);
 
         //then
-        assertThat(profit.getValue()).isEqualTo(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
+        assertThat(profit.getValue()).isEqualTo(bet.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
     }
 
     @Test
     @DisplayName("defeat 생성 테스트")
     public void testDefeatCreate() {
         //given
-        final Batting batting = Batting.of(10D);
+        final Bet bet = Bet.of(10D);
 
         //when
-        final Profit profit = Profit.defeat(batting);
+        final Profit profit = Profit.defeat(bet);
 
         //then
-        assertThat(profit.getValue()).isEqualTo(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_DEFEAT);
+        assertThat(profit.getValue()).isEqualTo(bet.getValue() * NUMBER_TO_MULTIPLE_WHEN_DEFEAT);
     }
 
     @Test

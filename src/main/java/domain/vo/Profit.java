@@ -13,16 +13,16 @@ public class Profit {
     }
 
 
-    public static Profit blackJackVictory(final Batting batting) {
-        return new Profit(batting.getValue() * Result.BLACKJACK_VICTORY.getRate());
+    public static Profit blackJackVictory(final Bet bet) {
+        return new Profit(bet.getValue() * Result.BLACKJACK_VICTORY.getRate());
     }
 
-    public static Profit victory(final Batting batting) {
-        return new Profit(batting.getValue() * Result.VICTORY.getRate());
+    public static Profit victory(final Bet bet) {
+        return new Profit(bet.getValue() * Result.VICTORY.getRate());
     }
 
-    public static Profit defeat(final Batting batting) {
-        return new Profit(batting.getValue() * Result.DEFEAT.getRate());
+    public static Profit defeat(final Bet bet) {
+        return new Profit(bet.getValue() * Result.DEFEAT.getRate());
     }
 
     public static Profit draw() {

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.vo.Batting;
+import domain.vo.Bet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -64,13 +64,13 @@ class PlayersTest {
     public void testSet() {
         //given
         Players players = Players.from(List.of("test1", "test2", "test3"), List.of(1000D, 2000D, 3000D));
-        Player player = new Player(Cards.makeEmpty(), "player", Batting.of(1D));
+        Player player = new Player(Cards.makeEmpty(), "player", Bet.of(1D));
 
         //when
         players.set(1, player);
 
         //then
         assertThat(player.getName()).isEqualTo(players.get(1).getName());
-        assertThat(player.getBatting().getValue()).isEqualTo(1D);
+        assertThat(player.getBet().getValue()).isEqualTo(1D);
     }
 }

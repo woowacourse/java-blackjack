@@ -1,12 +1,12 @@
 package domain.vo;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BattingTest {
+class BetTest {
 
     @Test
     @DisplayName("음수일 경우 생성 테스트")
@@ -17,7 +17,7 @@ class BattingTest {
         //when
         //then
         assertThatThrownBy(() -> {
-            Batting of = Batting.of(value);
+            Bet of = Bet.of(value);
         })
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -30,6 +30,6 @@ class BattingTest {
 
         //when
         //then
-        Assertions.assertDoesNotThrow(() -> Batting.of(value));
+        assertDoesNotThrow(() -> Bet.of(value));
     }
 }

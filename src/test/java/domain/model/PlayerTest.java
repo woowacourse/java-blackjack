@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.type.Letter;
 import domain.type.Suit;
-import domain.vo.Batting;
+import domain.vo.Bet;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -19,11 +19,11 @@ class PlayerTest {
         //given
         final Cards cards = Cards.makeEmpty();
         final String name = "test";
-        final Batting batting = Batting.of(1000D);
+        final Bet bet = Bet.of(1000D);
 
         //when
         //then
-        assertDoesNotThrow(() -> new Player(cards, name, batting));
+        assertDoesNotThrow(() -> new Player(cards, name, bet));
     }
 
     @Test
@@ -33,7 +33,7 @@ class PlayerTest {
         final Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.NINE));
         final Cards cards = new Cards(cardSet);
-        final Player player = new Player(cards, "player", Batting.of(1000D));
+        final Player player = new Player(cards, "player", Bet.of(1000D));
 
         //when
         player.addCard(new Card(Suit.DIAMOND, Letter.NINE));
@@ -50,7 +50,7 @@ class PlayerTest {
         final Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.TEN));
         final Cards cards = new Cards(cardSet);
-        final Player player = new Player(cards, "player", Batting.of(1000D));
+        final Player player = new Player(cards, "player", Bet.of(1000D));
 
         //when
         player.addCard(new Card(Suit.SPADE, Letter.TEN));
@@ -69,7 +69,7 @@ class PlayerTest {
             new Card(Suit.SPADE, Letter.TEN),
             new Card(Suit.CLUB, Letter.ACE));
         final Cards bustedCards = new Cards(cardSet);
-        final Player player = new Player(bustedCards, "test", Batting.of(1000D));
+        final Player player = new Player(bustedCards, "test", Bet.of(1000D));
 
         //when
         final boolean result = player.canReceiveCard();
@@ -87,7 +87,7 @@ class PlayerTest {
             new Card(Suit.SPADE, Letter.TEN),
             new Card(Suit.CLUB, Letter.ACE));
         final Cards notBustedCards = new Cards(cardSet);
-        final Player player = new Player(notBustedCards, "test", Batting.of(1000D));
+        final Player player = new Player(notBustedCards, "test", Bet.of(1000D));
 
         //when
         final boolean result = player.canNotReceiveCard();
@@ -103,7 +103,7 @@ class PlayerTest {
         final Set<Card> cardSet = Set.of(
             new Card(Suit.CLUB, Letter.ACE));
         final Cards cards = new Cards(cardSet);
-        final Player player = new Player(cards, "test", Batting.of(1000D));
+        final Player player = new Player(cards, "test", Bet.of(1000D));
 
         //when
         final boolean result = player.cardsIsNotEmpty();
@@ -116,7 +116,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드가 비었음을 테스트")
     public void testCardsIsNotEmptyFalse() {
         //given
-        final Player player = new Player(Cards.makeEmpty(), "test", Batting.of(1000D));
+        final Player player = new Player(Cards.makeEmpty(), "test", Bet.of(1000D));
 
         //when
         final boolean result = player.cardsIsNotEmpty();
@@ -133,7 +133,7 @@ class PlayerTest {
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.ACE)
         ));
-        final Player player = new Player(blackJackCards, "test", Batting.of(1000D));
+        final Player player = new Player(blackJackCards, "test", Bet.of(1000D));
 
         //when
         boolean result = player.isBlackJack();
@@ -150,7 +150,7 @@ class PlayerTest {
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN)
         ));
-        final Player player = new Player(blackJackCards, "test", Batting.of(1000D));
+        final Player player = new Player(blackJackCards, "test", Bet.of(1000D));
 
         //when
         boolean result = player.isNotBlackJack();

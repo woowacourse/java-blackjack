@@ -9,7 +9,7 @@ import domain.model.Player;
 import domain.vo.Profit;
 import domain.type.Letter;
 import domain.type.Suit;
-import domain.vo.Batting;
+import domain.vo.Bet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,13 +26,13 @@ class ProfitCalculatorTest {
     public void testCalculatePlayerProfitWhenIsBust() {
         //given
         final double value = 100D;
-        final Batting batting = Batting.of(value);
+        final Bet bet = Bet.of(value);
         final Cards bustedCards = new Cards(Set.of(
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN),
             new Card(Suit.SPADE, Letter.TWO)
         ));
-        final Player player = new Player(bustedCards, "test", batting);
+        final Player player = new Player(bustedCards, "test", bet);
         final Dealer dealer = new Dealer(Cards.makeEmpty());
 
         //when
@@ -47,12 +47,12 @@ class ProfitCalculatorTest {
     public void testCalculatePlayerProfitWhenIsBlackJack() {
         //given
         final double value = 100D;
-        final Batting batting = Batting.of(value);
+        final Bet bet = Bet.of(value);
         final Cards blackJackCards = new Cards(Set.of(
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.ACE)
         ));
-        final Player player = new Player(blackJackCards, "test", batting);
+        final Player player = new Player(blackJackCards, "test", bet);
         final Dealer dealer = new Dealer(Cards.makeEmpty());
 
         //when
@@ -67,7 +67,7 @@ class ProfitCalculatorTest {
     public void testCalculatePlayerProfitWhenIsNormalWin() {
         //given
         final double value = 100D;
-        final Batting batting = Batting.of(value);
+        final Bet bet = Bet.of(value);
         final Cards playerCards = new Cards(Set.of(
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN)
@@ -76,7 +76,7 @@ class ProfitCalculatorTest {
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.NINE)
         ));
-        final Player player = new Player(playerCards, "test", batting);
+        final Player player = new Player(playerCards, "test", bet);
         final Dealer dealer = new Dealer(dealerCards);
 
         //when
@@ -91,7 +91,7 @@ class ProfitCalculatorTest {
     public void testCalculatePlayerProfitWhenIsNormalDefeat() {
         //given
         final double value = 100D;
-        final Batting batting = Batting.of(value);
+        final Bet bet = Bet.of(value);
         final Cards playerCards = new Cards(Set.of(
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.NINE)
@@ -100,7 +100,7 @@ class ProfitCalculatorTest {
             new Card(Suit.CLUB, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN)
         ));
-        final Player player = new Player(playerCards, "test", batting);
+        final Player player = new Player(playerCards, "test", bet);
         final Dealer dealer = new Dealer(dealerCards);
 
         //when
