@@ -27,7 +27,7 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         Players players = Players.from(List.of("a", "b", "c"));
-        Dealer dealer = new Dealer(new Participant(Hand.generateEmptyCards()));
+        Dealer dealer = new Dealer();
         participants = new Participants(dealer, players);
 
         // player1 점수 : 20

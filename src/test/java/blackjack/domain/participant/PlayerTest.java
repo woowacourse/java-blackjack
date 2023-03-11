@@ -20,7 +20,7 @@ public class PlayerTest {
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new Player(new Participant(Hand.generateEmptyCards()), name)
+                new Player(name)
         ).withMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
     }
 
@@ -28,7 +28,7 @@ public class PlayerTest {
     @DisplayName("카드를 새로 받는 기능 테스트")
     void addCardTest() {
         // given
-        Player player = new Player(new Participant(Hand.generateEmptyCards()), "doggy");
+        Player player = new Player("doggy");
 
         // when
         player.receiveCard(new Card(Number.ACE, Pattern.HEART));
@@ -41,7 +41,7 @@ public class PlayerTest {
     @DisplayName("갖고 있는 카드의 총점 계산")
     void calculateTotalScore() {
         // given
-        Player player = new Player(new Participant(Hand.generateEmptyCards()), "doggy");
+        Player player = new Player("doggy");
 
         // when
         player.receiveCard(new Card(Number.Q, Pattern.CLUB));
@@ -55,7 +55,7 @@ public class PlayerTest {
     @DisplayName("갖고 있는 카드가 버스트인지 확인")
     void isBust() {
         // given
-        Player player = new Player(new Participant(Hand.generateEmptyCards()), "doggy");
+        Player player = new Player("doggy");
 
         // when
         player.receiveCard(new Card(Number.Q, Pattern.CLUB));

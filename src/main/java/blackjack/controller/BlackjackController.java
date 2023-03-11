@@ -2,11 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -48,7 +46,7 @@ public class BlackjackController {
         List<String> playersName = inputView.receivePlayersName();
         Players players = Players.from(playersName);
 
-        return new Participants(new Dealer(new Participant(Hand.generateEmptyCards())), players);
+        return new Participants(new Dealer(), players);
     }
 
     private void setInitCards(final Deck deck, final Participants participants) {
@@ -125,7 +123,7 @@ public class BlackjackController {
         Profit profit = new Profit(participants);
         Map<Player, Money> playersProfit = profit.makePlayersProfit();
         Money dealerProfit = profit.getDealerProfit(playersProfit);
-        Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit);
+        Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit, participants.getDealer());
         outputView.printProfit(participantsProfit);
     }
 
@@ -166,10 +164,11 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private Map<String, Integer> getProfit(final Map<Player, Money> playersProfit, final Money dealerProfit) {
+    private Map<String, Integer> getProfit(final Map<Player, Money> playersProfit, final Money dealerProfit,
+                                           final Dealer dealer) {
         Map<String, Integer> profit = new LinkedHashMap<>();
 
-        profit.put("딜러", dealerProfit.getMoney());
+        profit.put(dealer.getName(), dealerProfit.getMoney());
         for (Player player : playersProfit.keySet()) {
             profit.put(player.getName(), playersProfit.get(player).getMoney());
         }

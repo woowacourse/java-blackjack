@@ -21,7 +21,7 @@ public class Players {
         validateLength(names);
 
         List<Player> players = names.stream()
-                .map(name -> new Player(new Participant(Hand.generateEmptyCards()), name))
+                .map(Player::new)
                 .collect(Collectors.toList());
 
         return new Players(players);

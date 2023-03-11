@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Dealer dealer = new Dealer(new Participant(Hand.generateEmptyCards()));
+    private final Dealer dealer = new Dealer();
 
     @BeforeEach
     void setUp() {
