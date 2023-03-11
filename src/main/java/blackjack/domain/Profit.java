@@ -22,13 +22,7 @@ public class Profit {
     }
 
     public Profit calculateProfit(final Result result) {
-        if (result.equals(Result.BLACKJACK)) {
-            return new Profit((int) (this.value * 1.5));
-        }
-        if (result.equals(Result.LOSE)) {
-            return new Profit(-this.value);
-        }
-        return new Profit(this.value);
+        return new Profit((int) (this.value * result.getRate()));
     }
 
     public static Profit dealerProfit(final int dealerProfit) {
