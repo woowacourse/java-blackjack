@@ -7,6 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
 import blackjack.domain.gameplayer.*;
+import blackjack.utils.LogType;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -51,8 +52,8 @@ public class BlackJackGameController {
         try {
             List<String> playersName = inputView.readPlayersName();
             return generateName(playersName);
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]" + e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
             return initNames();
         }
     }
@@ -76,8 +77,8 @@ public class BlackJackGameController {
         try {
             int betting = inputView.readBetting(name.getName());
             return new Player(name, Betting.of(betting));
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]" + e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
             return generatePlayer(name);
         }
     }
@@ -100,7 +101,7 @@ public class BlackJackGameController {
         try {
             return player.canContinue() && isCommandHit(player);
         } catch (IllegalArgumentException exception) {
-            System.out.println("[ERROR] " + exception.getMessage());
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
             return isCheckPlayerCommand(player);
         }
     }
