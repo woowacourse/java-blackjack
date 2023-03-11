@@ -1,11 +1,13 @@
 package service;
 
+import domain.Bank;
 import domain.BettingMoney;
 import domain.BlackJackWinningResult;
 import domain.Card;
 import domain.CardBox;
 import domain.Cards;
 import domain.Dealer;
+import domain.Money;
 import domain.Name;
 import domain.Participants;
 import domain.Player;
@@ -28,8 +30,7 @@ public class BlackJackGame {
 
     public void run() {
         Participants participants = makeParticipants();
-
-        askPlayersBettingMoney(participants);
+        Bank bank = makeBank(participants);
 
         printInitGameMessage(participants);
 
@@ -41,12 +42,22 @@ public class BlackJackGame {
         printWinningResult(participants);
     }
 
-    private void askPlayersBettingMoney(final Participants participants) {
+    private Bank makeBank(final Participants participants) {
+        List<BettingMoney> bettingMonies = askPlayersBettingMoney(participants);
+        List<Money> monies = bettingMonies.stream()
+                .map(bettingMoney -> (Money) bettingMoney)
+                .collect(Collectors.toList());
+        return new Bank(participants.getPlayersToList(), monies);
+    }
+
+    private List<BettingMoney> askPlayersBettingMoney(final Participants participants) {
         Dealer dealer = participants.getDealer();
+        List<BettingMoney> bettingMonies = new ArrayList<>();
         for (final Player player : participants.getPlayersToList()) {
             outputView.printPlayerNameForBetting(player.getName());
-            BettingMoney bettingMoney = getBettingMoney();
+            bettingMonies.add(getBettingMoney());
         }
+        return bettingMonies;
     }
 
     private BettingMoney getBettingMoney() {
