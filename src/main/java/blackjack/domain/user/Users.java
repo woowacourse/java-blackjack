@@ -71,6 +71,10 @@ public class Users {
         return Collections.unmodifiableMap(userNameAndResults);
     }
 
+    public Map<Name, Double> getPlayerNameAndProfitRates() {
+        return players.getPlayerNameAndProfitRates(dealer);
+    }
+
     public boolean isDrawable(final Name playerName) {
         return players.isDrawable(playerName);
     }

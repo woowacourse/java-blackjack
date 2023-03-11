@@ -83,6 +83,13 @@ public class Players {
         return Collections.unmodifiableMap(playerNameAndCardResults);
     }
 
+    public Map<Name, Double> getPlayerNameAndProfitRates(final Dealer dealer) {
+        final Map<Name, Double> playerNameAndProfitRates = new LinkedHashMap<>();
+        players.forEach(player -> playerNameAndProfitRates.put(player.getName(),
+                player.calculateProfitRate(dealer)));
+        return Collections.unmodifiableMap(playerNameAndProfitRates);
+    }
+
     public boolean isDrawable(final Name playerName) {
         return players.stream()
                 .filter(player -> player.isSameName(playerName))

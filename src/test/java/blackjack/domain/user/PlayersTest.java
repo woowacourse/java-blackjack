@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
@@ -53,5 +54,22 @@ public class PlayersTest {
         final List<String> playerNames = List.of(TEST_PLAYER_NAME_1.getValue(), TEST_PLAYER_NAME_1.getValue());
 
         assertThatThrownBy(() -> new Players(playerNames, new Deck(new RandomDeckGenerator())));
+    }
+
+    @Test
+    @DisplayName("플레이어들의 이름과 수익률을 반환하는 기능 테스트")
+    void getPlayerNameAndProfitRates() {
+        final Players players = new Players(List.of(TEST_PLAYER_NAME_1.getValue(), TEST_PLAYER_NAME_2.getValue()),
+                new Deck(new TestNonShuffledDeckGenerator(testCards)));
+        final Dealer dealer = new Dealer(new CardGroup(
+                new Card(CardShape.SPADE, CardNumber.TEN),
+                new Card(CardShape.DIAMOND, CardNumber.TEN)));
+
+        final Map<Name, Double> playerNameAndProfitRates = players.getPlayerNameAndProfitRates(dealer);
+
+        assertSoftly(softly -> {
+            softly.assertThat(playerNameAndProfitRates.get(TEST_PLAYER_NAME_1)).isEqualTo(1.5);
+            softly.assertThat(playerNameAndProfitRates.get(TEST_PLAYER_NAME_2)).isEqualTo(-1);
+        });
     }
 }
