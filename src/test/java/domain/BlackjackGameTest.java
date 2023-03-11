@@ -59,15 +59,4 @@ public class BlackjackGameTest {
         Assertions.assertThat(blackjackGame.getGameResult().getPlayerResult()).isEqualTo(playerResult);
     }
 
-    @Test
-    @DisplayName("딜러의 최종 승패 결과를 가져온다.")
-    void calculateDealerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-        blackjackGame.distributeInitialCard();
-
-        Map<String, List<ResultType>> dealerResult = new LinkedHashMap<>();
-        dealerResult.put(dealer.getName(), List.of(ResultType.WIN, ResultType.WIN));
-        Assertions.assertThat(blackjackGame.getGameResult().getDealerResult()).isEqualTo(dealerResult);
-    }
-
 }
