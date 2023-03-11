@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Deck {
+public final class Deck {
 
     private final Set<Card> drawnCards = new HashSet<>();
 
@@ -18,7 +18,7 @@ public class Deck {
         }
     }
 
-    public boolean containsCard(Card card) {
+    public boolean containsCard(final Card card) {
         return drawnCards.contains(card);
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private static final int NUMBER_OF_SETTING_CARDS = 2;
 
@@ -95,7 +95,7 @@ public class BlackjackController {
         return true;
     }
 
-    private void printBustMessage(Player player) {
+    private void printBustMessage(final Player player) {
         if (!player.canDraw()) {
             outputView.printBustMessage();
         }

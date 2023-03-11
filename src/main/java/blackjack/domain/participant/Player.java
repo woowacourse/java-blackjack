@@ -6,19 +6,19 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
-public class Player implements Decidable {
+public final class Player implements Decidable {
 
     private static final int PLAYER_MAX_RECEIVE_CARD = 21;
 
     private final Participant participant;
     private Money bettingMoney;
 
-    public Player(String name) {
+    public Player(final String name) {
         this.participant = new Participant(Hand.generateEmptyCards(), name);
         this.bettingMoney = Money.init();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         participant.receiveCard(card);
     }
 
@@ -34,7 +34,7 @@ public class Player implements Decidable {
         return participant.isBlackjack();
     }
 
-    public void betting(int bettingMoney) {
+    public void betting(final int bettingMoney) {
         this.bettingMoney = new Money(bettingMoney);
     }
 

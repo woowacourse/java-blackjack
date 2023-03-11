@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Number number;
     private final Pattern pattern;

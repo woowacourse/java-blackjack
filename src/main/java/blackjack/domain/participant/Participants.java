@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.List;
 
-public class Participants {
+public final class Participants {
 
     private final Dealer dealer;
     private final Players players;
@@ -21,14 +21,14 @@ public class Participants {
         }
     }
 
-    private void receiveToPlayers(Deck deck) {
+    private void receiveToPlayers(final Deck deck) {
         for (Player player : players.getPlayers()) {
             Card drawnCard = deck.drawCard();
             player.receiveCard(drawnCard);
         }
     }
 
-    private void receiveToDealer(Deck deck) {
+    private void receiveToDealer(final Deck deck) {
         Card drawnCard = deck.drawCard();
         dealer.receiveCard(drawnCard);
     }

@@ -2,14 +2,14 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
 
     private final int value;
 
-    public Score(int value) {
+    public Score(final int value) {
         this.value = value;
     }
 
@@ -29,20 +29,20 @@ public class Score {
         return value == BLACKJACK_SCORE_CONDITION;
     }
 
-    public boolean isLessOrEquals(Score other) {
+    public boolean isLessOrEquals(final Score other) {
         return value <= other.value;
     }
 
-    public boolean isLess(Score other) {
+    public boolean isLess(final Score other) {
         return value < other.value;
     }
 
-    public boolean isEquals(Score other) {
+    public boolean isEquals(final Score other) {
         return value == other.value;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

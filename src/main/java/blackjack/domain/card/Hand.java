@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
 
     private static final int BLACKJACK_SIZE = 2;
 
@@ -47,7 +47,7 @@ public class Hand {
         return score.isBlackjack() && hand.size() == BLACKJACK_SIZE;
     }
 
-    public Hand add(Card card) {
+    public Hand add(final Card card) {
         final List<Card> newHand = new ArrayList<>(hand);
         newHand.add(card);
 

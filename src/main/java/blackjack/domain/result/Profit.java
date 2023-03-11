@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Profit {
+public final class Profit {
 
     private final Participants participants;
     private Map<Player, Money> profit;
 
-    public Profit(Participants participants) {
+    public Profit(final Participants participants) {
         this.participants = participants;
         initProfit();
     }
@@ -36,21 +36,21 @@ public class Profit {
         return profit;
     }
 
-    private void changePlayersProfit(Dealer dealer, Player player) {
+    private void changePlayersProfit(final Dealer dealer, final Player player) {
         if (hasState(dealer, player)) {
             return;
         }
         compareScore(dealer.calculateTotalScore(), player);
     }
 
-    private boolean hasState(Dealer dealer, Player player) {
+    private boolean hasState(final Dealer dealer, final Player player) {
         if (isPlayerBlackjack(dealer, player)) {
             return true;
         }
         return isBust(dealer, player);
     }
 
-    private boolean isPlayerBlackjack(Dealer dealer, Player player) {
+    private boolean isPlayerBlackjack(final Dealer dealer, final Player player) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             profit.put(player, player.getBettingMoney().getBlackjackPrize());
             return true;
@@ -62,7 +62,7 @@ public class Profit {
         return false;
     }
 
-    private boolean isBust(Dealer dealer, Player player) {
+    private boolean isBust(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             profit.put(player, player.getBettingMoney().loseBettingPrize());
             return true;
@@ -85,7 +85,7 @@ public class Profit {
         profit.put(player, player.getBettingMoney().loseBettingPrize());
     }
 
-    public Money getDealerProfit(Map<Player, Money> playersProfit) {
+    public Money getDealerProfit(final Map<Player, Money> playersProfit) {
         int dealerProfit = 0;
 
         for (Money money : playersProfit.values()) {

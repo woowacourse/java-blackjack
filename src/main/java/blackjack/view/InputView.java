@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final String DELIMITER_WITH_BLANK = "\\s*,\\s*";
     private static final String YES_ANSWER_ABOUT_ONE_MORE_CARD = "y";
@@ -22,7 +22,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public int receiveBettingMoney(String playerName) {
+    public int receiveBettingMoney(final String playerName) {
         System.out.println("\n" + playerName + "의 배팅 금액은?");
         String input = getInput();
 
@@ -33,7 +33,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public Boolean askReceiveMoreCard(String playerName) {
+    public Boolean askReceiveMoreCard(final String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 " + YES_ANSWER_ABOUT_ONE_MORE_CARD
                 + ", 아니오는 " + NO_ANSWER_ABOUT_ONE_MORE_CARD + ")");
         String input = getInput();
@@ -48,7 +48,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    private void isBlank(String input) {
+    private void isBlank(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 공백은 입력할 수 없습니다.");
         }
@@ -62,7 +62,7 @@ public class InputView {
         }
     }
 
-    private void validateDigit(String input) {
+    private void validateDigit(final String input) {
         boolean isDigit = input.chars()
                 .allMatch(Character::isDigit);
 
@@ -71,7 +71,7 @@ public class InputView {
         }
     }
 
-    private void validatePositive(int input) {
+    private void validatePositive(final int input) {
         if (input < MIN_BETTING_MONEY) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 " + MIN_BETTING_MONEY + "원 이상이여야 합니다.");
         }

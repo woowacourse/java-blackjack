@@ -5,7 +5,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
-public class Participant {
+public final class Participant {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 5;
@@ -27,7 +27,7 @@ public class Participant {
         }
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hand = hand.add(card);
     }
 

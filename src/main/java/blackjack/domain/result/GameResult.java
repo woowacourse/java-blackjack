@@ -14,11 +14,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResult {
+public final class GameResult {
 
     private final Participants participants;
 
-    public GameResult(Participants participants) {
+    public GameResult(final Participants participants) {
         this.participants = participants;
     }
 
@@ -79,7 +79,7 @@ public class GameResult {
         return reversePlayersResult;
     }
 
-    private Result reverse(Result result) {
+    private Result reverse(final Result result) {
         if (result == WIN) {
             return LOSE;
         }
