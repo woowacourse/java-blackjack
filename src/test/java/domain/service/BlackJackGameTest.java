@@ -13,6 +13,7 @@ import domain.type.Suit;
 import domain.vo.Bet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,17 +24,70 @@ class BlackJackGameTest {
         new ProfitCalculator());
 
     @Test
-    @DisplayName("카드 한장 주기 테스트")
-    public void testGiveCard() {
+    @DisplayName("플레이어에게 카드 한장 주기 테스트")
+    public void testGiveCardToPlayer() {
         //given
         final Cards cards = Cards.makeEmpty();
         final Player player = new Player(cards, "test", Bet.of(5));
 
         //when
-        blackJackGame.giveCard(player);
+        boolean result = blackJackGame.giveCard(player);
 
         //then
+        assertThat(result).isTrue();
         assertThat(player.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("플레이어가 카드를 받을 수 없을 때 카드 주기 테스트")
+    public void testGiveCardToPlayerWhenCannotReceiveCard() {
+        //given
+        final Cards cards = new Cards(Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.SPADE, Letter.TEN),
+            new Card(Suit.DIAMOND, Letter.TWO)
+        ));
+        final Player player = new Player(cards, "test", Bet.of(5));
+
+        //when
+        boolean result = blackJackGame.giveCard(player);
+
+        //then
+        assertThat(result).isFalse();
+        assertThat(player.getCards().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("딜러에게 카드 한장 주기 테스트")
+    public void testGiveCardToDealer() {
+        //given
+        final Cards cards = Cards.makeEmpty();
+        final Dealer dealer = new Dealer(cards);
+
+        //when
+        boolean result = blackJackGame.giveCard(dealer);
+
+        //then
+        assertThat(result).isTrue();
+        assertThat(dealer.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 받을 수 없을 때 카드 주기 테스트")
+    public void testGiveCardToDealerWhenCannotReceiveCard() {
+        //given
+        final Cards cards = new Cards(Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.SPADE, Letter.SEVEN)
+        ));
+        final Dealer dealer = new Dealer(cards);
+
+        //when
+        boolean result = blackJackGame.giveCard(dealer);
+
+        //then
+        assertThat(result).isFalse();
+        assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
     @Test
