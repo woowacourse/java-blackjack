@@ -1,7 +1,7 @@
 package blackjack.service;
 
-import blackjack.domain.BlackJackRule;
-import blackjack.domain.ResultType;
+import blackjack.domain.blackjack.BlackJackRule;
+import blackjack.domain.blackjack.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;

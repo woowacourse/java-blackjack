@@ -6,7 +6,7 @@ import static blackjack.controller.DomainConverter.convertPlayersCards;
 import static blackjack.controller.DomainConverter.getPlayerCards;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
-import blackjack.domain.BlackJackRuleImpl;
+import blackjack.domain.blackjack.BlackJackRuleImpl;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.service.BlackJackGame;
 import blackjack.view.DrawCommand;

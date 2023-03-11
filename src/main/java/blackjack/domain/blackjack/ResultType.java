@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
 public enum ResultType {
     BLACKJACK_WIN(1.5) {
