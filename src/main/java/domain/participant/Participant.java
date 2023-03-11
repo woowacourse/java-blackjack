@@ -29,8 +29,12 @@ public abstract class Participant {
         return handCards.calculateScore();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return handCards.checkBust();
+    }
+
+    public boolean isBlackJack() {
+        return handCards.checkBlackJack();
     }
 
     abstract boolean isDrawable();

@@ -81,7 +81,7 @@ public class Results {
     }
 
     private void playerWinBetting(Player player, Dealer dealer) {
-        if (player.getHandCards().isBlackJack()) {
+        if (player.isBlackJack()) {
             bettingResults.plusBettingResult(player, bettingResults.getParticipantBet(player).getAmount() / 2);
         }
         bettingResults.plusBettingResult(dealer, -bettingResults.getParticipantBet(player).getAmount());

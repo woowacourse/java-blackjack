@@ -46,7 +46,7 @@ public class HandCards {
         return calculateScore() > MIN_BUST_NUMBER;
     }
 
-    public boolean isBlackJack() {
+    public boolean checkBlackJack() {
         return calculateScore() == MIN_BUST_NUMBER && cards.size() == INIT_CARD_SIZE;
     }
 
