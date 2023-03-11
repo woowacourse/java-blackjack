@@ -4,7 +4,6 @@ import blackjack.domain.card.Cards;
 
 import java.util.Objects;
 
-
 public class Score {
     private static final int MAX_ACE_SCORE = 11;
     private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;

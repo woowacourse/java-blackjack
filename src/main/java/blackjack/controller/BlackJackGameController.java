@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.Command;
 import blackjack.domain.Game;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
 import blackjack.domain.gameplayer.*;
+import blackjack.domain.result.GameResult;
 import blackjack.utils.LogType;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -27,21 +27,19 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        Game game = start();
+        Game game = init();
         play(game);
         finish(game);
     }
 
-    private Game start() {
-        Game game = initGame();
-        outputView.printStart(game.getPlayers(), game.getDealer());
-        return game;
-    }
-
-    private Game initGame() {
+    private Game init() {
         Deck deck = initDeck();
         List<Name> names = initNames();
-        return new Game(deck, new Dealer(), new Players(initPlayers(names)));
+        List<Player> players = initPlayers(names);
+        Game game = new Game(deck, new Dealer(), new Players(players));
+
+        outputView.printStart(game.getPlayers(), game.getDealer());
+        return game;
     }
 
     private Deck initDeck() {

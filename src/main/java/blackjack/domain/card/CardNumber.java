@@ -15,8 +15,6 @@ public enum CardNumber {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String INVALID_NUMBER_MESSAGE = "숫자를 찾을 수 없습니다.";
-
     private final String number;
     private final int score;
 
