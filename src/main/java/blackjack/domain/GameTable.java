@@ -16,4 +16,8 @@ public class GameTable {
     public Deck getDeck() {
         return deck;
     }
+
+    public BettingAreas getBettingAreas() {
+        return bettingAreas;
+    }
 }
