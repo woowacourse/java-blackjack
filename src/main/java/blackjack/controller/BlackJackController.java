@@ -6,6 +6,7 @@ import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.Money;
 import blackjack.domain.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
@@ -36,7 +37,7 @@ public class BlackJackController {
     }
 
     private void savePlayerBetMoney(Player player) {
-        int betMoney = InputView.askBetMoney(player.getName());
+        Money betMoney = InputView.askBetMoney(player.getName());
         Dealer dealer = blackJackGame.getDealer();
         dealer.addPlayerBetMoney(player, betMoney);
     }

@@ -4,8 +4,8 @@ public class DealerResult {
 
     private int dealerResult = 0;
 
-    public void add(int dealerBenefit) {
-        dealerResult += dealerBenefit;
+    public void add(Money dealerBenefit) {
+        dealerResult += dealerBenefit.getValue();
     }
 
     public int getDealerResult() {

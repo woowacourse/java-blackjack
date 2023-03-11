@@ -5,9 +5,9 @@ public class PlayerResult {
     private final String name;
     private final int benefit;
 
-    public PlayerResult(String name, int benefit) {
+    public PlayerResult(String name, Money benefit) {
         this.name = name;
-        this.benefit = benefit;
+        this.benefit = benefit.getValue();
     }
 
     public String getName() {

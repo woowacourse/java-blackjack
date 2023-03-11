@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class BetManager {
 
-    private final Map<Player, Integer> betManager;
+    private final Map<Player, Money> betManager;
 
     public BetManager() {
         betManager = new HashMap<>();
     }
 
-    public void add(Player player, int betMoney) {
+    public void add(Player player, Money betMoney) {
         betManager.put(player, betMoney);
     }
 
-    public int getBetMoney(Player player) {
+    public Money getBetMoney(Player player) {
         return betManager.get(player);
     }
 }

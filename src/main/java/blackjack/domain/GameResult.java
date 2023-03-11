@@ -13,9 +13,9 @@ public class GameResult {
         playersResult = new ArrayList<>();
     }
 
-    public void addResult(Player player, int playerBenefit) {
-        dealerResult.add(-playerBenefit);
-        playersResult.add(new PlayerResult(player.getName(), playerBenefit));
+    public void addResult(Player player, Money betMoney) {
+        dealerResult.add(betMoney.getNegative());
+        playersResult.add(new PlayerResult(player.getName(), betMoney));
     }
 
     public DealerResult getDealerResult() {

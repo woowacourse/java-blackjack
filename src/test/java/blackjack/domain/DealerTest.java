@@ -52,9 +52,9 @@ class DealerTest {
         Player playerC = players.getPlayers().get(2);
         playerC.handInitialCards(deck);
 
-        dealer.addPlayerBetMoney(playerA, 10000);
-        dealer.addPlayerBetMoney(playerB, 20000);
-        dealer.addPlayerBetMoney(playerC, 30000);
+        dealer.addPlayerBetMoney(playerA, new Money(10000));
+        dealer.addPlayerBetMoney(playerB, new Money(20000));
+        dealer.addPlayerBetMoney(playerC, new Money(30000));
 
         GameResult gameResult = dealer.judgeGameResult(players);
         DealerResult dealerResult = gameResult.getDealerResult();

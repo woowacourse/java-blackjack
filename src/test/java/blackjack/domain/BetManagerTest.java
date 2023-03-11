@@ -9,7 +9,7 @@ class BetManagerTest {
     void addTest() {
         BetManager betManager = new BetManager();
         Player playerA = new Player("a");
-        betManager.add(playerA, 10000);
-        Assertions.assertThat(betManager.getBetMoney(playerA)).isEqualTo(10000);
+        betManager.add(playerA, new Money(10000));
+        Assertions.assertThat(betManager.getBetMoney(playerA).getValue()).isEqualTo(10000);
     }
 }

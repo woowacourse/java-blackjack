@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import blackjack.domain.Money;
+
 public class InputView {
 
     private static final int SPLIT_LIMIT = -1;
@@ -28,8 +30,13 @@ public class InputView {
         return Command.of(keyword);
     }
 
-    public static int askBetMoney(String playerName) {
+    public static Money askBetMoney(String playerName) {
         System.out.printf("%n%s의 배팅 금액은?%n", playerName);
-        return Integer.parseInt(scanner.nextLine());
+        String value = scanner.nextLine();
+        try {
+            return new Money(Integer.parseInt(value));
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("배팅 금액은 숫자만 가능합니다.");
+        }
     }
 }

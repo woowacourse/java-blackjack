@@ -3,12 +3,10 @@ package blackjack.domain;
 public class Dealer extends Participant {
 
     private static final int CAN_HIT_LIMIT = 17;
-    private static final double BLACK_JACK_ADDITIONAL_BENEFIT = 1.5;
-    private static final int NO_BENEFIT = 0;
 
     private final BetManager betManager = new BetManager();
 
-    public void addPlayerBetMoney(Player player, int betMoney) {
+    public void addPlayerBetMoney(Player player, Money betMoney) {
         betManager.add(player, betMoney);
     }
 
@@ -19,11 +17,11 @@ public class Dealer extends Participant {
         return gameResult;
     }
 
-    private int getPlayerBenefit(Player player) {
-        int betMoney = betManager.getBetMoney(player);
+    private Money getPlayerBenefit(Player player) {
+        Money betMoney = betManager.getBetMoney(player);
 
         if (player.isBust()) {
-            return -betMoney;
+            return betMoney.getNegative();
         }
 
         if (isBust()) {
@@ -33,24 +31,24 @@ public class Dealer extends Participant {
         return compareSum(player, betMoney);
     }
 
-    private int compareSum(Player player, int betMoney) {
+    private Money compareSum(Player player, Money betMoney) {
         if (player.getSum() == getSum()) {
-            return NO_BENEFIT;
+            return Money.NO_BENEFIT;
         }
 
         if (player.getSum() > getSum()) {
             return checkBlackJackBenefit(player, betMoney);
         }
 
-        return -betMoney;
+        return betMoney.getNegative();
     }
 
-    private int checkBlackJackBenefit(Player player, int playerBenefit) {
+    private Money checkBlackJackBenefit(Player player, Money betMoney) {
         if (player.isBlackJack()) {
-            return (int) (BLACK_JACK_ADDITIONAL_BENEFIT * playerBenefit);
+            return betMoney.getBlackJackMoney();
         }
 
-        return playerBenefit;
+        return betMoney;
     }
 
     public Card getFirstCard() {
