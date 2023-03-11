@@ -23,6 +23,13 @@ public class Dealer extends Participant {
         return playerJudgeResults;
     }
 
+    // TODO player가 스스로 하는 게 낫지 않을까?
+    public int calculateBettingMoney(final Player player) {
+        final JudgeResult playerResult = judge(player);
+        return playerResult.profit(player.getBettingMoney());
+
+    }
+
     private JudgeResult judge(final Player player) {
         if (player.isBust()) {
             return JudgeResult.LOSE;
@@ -35,6 +42,7 @@ public class Dealer extends Participant {
         }
         return JudgeResult.matchWithoutBlackJackConsider(player.computeCardsScore(), computeCardsScore());
     }
+
 
     @Override
     public boolean isHitAble() {

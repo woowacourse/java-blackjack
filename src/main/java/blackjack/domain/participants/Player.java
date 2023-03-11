@@ -28,7 +28,7 @@ public class Player extends Participant {
         return new HandStatus(getName(), cards());
     }
 
-    public int getBettingAmount() {
-        return bettingMoney.getAmount();
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 }
