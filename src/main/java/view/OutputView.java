@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     private void printCardsAndScore(String name, Hand hand) {
-        System.out.println(name + "카드: " + joinDisplaysOf(hand.cards()) + " - 결과: " + hand.score());
+        System.out.println(name + "카드: " + joinDisplaysOf(hand.cards()) + " - 결과: " + hand.score().getScore());
     }
 
     public void printResult(String userName, Result result) {
