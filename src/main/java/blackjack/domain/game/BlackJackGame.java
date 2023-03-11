@@ -57,4 +57,12 @@ public class BlackJackGame {
     public void bet(Players players, List<Integer> amounts) {
         players.bet(amounts);
     }
+
+    public List<Integer> getPlayersProfit(Participant dealer, Players players) {
+        return referee.calculatePlayersProfit(referee.judgeResult(dealer, players), players);
+    }
+
+    public int getDealerProfit(Participant dealer, Players players) {
+        return getPlayersProfit(dealer, players).stream().mapToInt(value -> -value).sum();
+    }
 }
