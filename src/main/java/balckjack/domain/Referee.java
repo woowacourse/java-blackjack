@@ -47,7 +47,10 @@ public class Referee {
     private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck, Score dealerScore,
         Score playerScore) {
         return
-            (!playerScore.isBust() && !dealerDeck.isBlackJack() && playerScore.equals(dealerScore))
+            (!playerScore.isBust()
+                && !dealerDeck.isBlackJack()
+                && !playerDeck.isBlackJack()
+                && playerScore.equals(dealerScore))
                 || (dealerDeck.isBlackJack() && playerDeck.isBlackJack());
     }
 

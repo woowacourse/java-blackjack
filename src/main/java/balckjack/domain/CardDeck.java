@@ -6,7 +6,6 @@ import java.util.List;
 public class CardDeck {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
-
     private final List<Card> cards;
 
     public CardDeck() {
@@ -46,7 +45,7 @@ public class CardDeck {
     public boolean isBlackJack() {
         Score score = calculateScore();
         int count = cards.size();
-        return score.equals(Score.BLACKJACK_SCORE) && count == BLACKJACK_CARD_COUNT;
+        return score.isMax() && count == BLACKJACK_CARD_COUNT;
     }
 
     public List<Card> getCards() {

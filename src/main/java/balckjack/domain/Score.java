@@ -4,11 +4,10 @@ import java.util.Objects;
 
 public class Score {
 
-    public static final Score BLACKJACK_SCORE = new Score(21);
-
-    private static final int DEALER_HIT_NUMBER = 16;
-    private static final Score maxAceValue = new Score(11);
-    private static final Score minAceValue = new Score(1);
+    public static final int MAX_VALUE = 21;
+    private static final int DEALER_HIT_VALUE = 16;
+    private static final int MAX_ACE_SCORE = 11;
+    private static final int MIN_ACE_SCORE = 1;
 
     private final int value;
 
@@ -17,41 +16,41 @@ public class Score {
     }
 
     public Score addAceScore(int aceCount) {
-        Score score = new Score(value);
+        int score = value;
         for (int restCount = aceCount; restCount > 0; restCount--) {
-            Score aceScore = decideAceScore(score, restCount);
-            score = score.add(aceScore);
+            int aceScore = decideAceScore(score, restCount);
+            score += aceScore;
         }
-        return score;
+        return new Score(score);
     }
 
-    private Score decideAceScore(Score score, int restAceCount) {
+    private int decideAceScore(int score, int restAceCount) {
         if (canAceHasMaxValue(score, restAceCount)) {
-            return maxAceValue;
+            return MAX_ACE_SCORE;
         }
-        return minAceValue;
+        return MIN_ACE_SCORE;
     }
 
-    private boolean canAceHasMaxValue(Score score, int restAceCount) {
-        final int ACE_VALUE_GAP = maxAceValue.value - minAceValue.value;
-        return (BLACKJACK_SCORE.value - score.value) - restAceCount * minAceValue.value
+    private boolean canAceHasMaxValue(int score, int restAceCount) {
+        final int ACE_VALUE_GAP = MAX_ACE_SCORE - MIN_ACE_SCORE;
+        return (MAX_VALUE - score) - restAceCount * MIN_ACE_SCORE
             >= ACE_VALUE_GAP;
     }
 
-    private Score add(Score score) {
-        return new Score(value + score.value);
+    public boolean isMax() {
+        return value == MAX_VALUE;
     }
 
     public boolean isBust() {
-        return value > BLACKJACK_SCORE.value;
+        return value > MAX_VALUE;
     }
 
     public boolean isMoreThan(Score score) {
         return value > score.value;
     }
 
-    public boolean canDealerHit(){
-         return value<= DEALER_HIT_NUMBER;
+    public boolean canDealerHit() {
+        return value <= DEALER_HIT_VALUE;
     }
 
     @Override
