@@ -50,6 +50,9 @@ public class BlackJackGame {
     public void giveCardToDealer() {
         Dealer dealer = users.getDealer();
         dealer.hit(deck.pickCard());
+        if (!dealer.isDrawable()) {
+            dealer.stay();
+        }
     }
 
     public GameResult getResult() {

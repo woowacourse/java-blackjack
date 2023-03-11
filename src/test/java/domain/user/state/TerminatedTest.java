@@ -25,7 +25,6 @@ class TerminatedTest {
             .draw(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
     }
 
-
     @DisplayName("카드를 더 받으려 하면 예외를 반환한다.")
     @Test
     void drawException() {

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.game.Winning;
 import domain.money.BettingAmount;
 
 public class Player extends User {
@@ -17,8 +18,8 @@ public class Player extends User {
         this.bettingAmount = BettingAmount.valueOf(bettingAmount);
     }
 
-    public void stay() {
-        this.state = state.stay();
+    public Winning match(Dealer dealer) {
+        return state.match(dealer.getState());
     }
 
     public boolean isRightName(final String name) {

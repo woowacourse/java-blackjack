@@ -33,10 +33,9 @@ public class GameResult {
     private static Map<String, Winning> calculatePlayerResults(final Users users) {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
-        int dealerScore = dealer.getScore();
         Map<String, Winning> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            Winning playerResult = Winning.comparePlayerWithDealer(player.getScore(), dealerScore);
+            Winning playerResult = player.match(dealer);
             playerResults.put(player.getName(), playerResult);
         }
         return Collections.unmodifiableMap(playerResults);

@@ -24,17 +24,33 @@ public class GameResultTest {
         createUsers();
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
-        giveCardToPlayer(players.get(0), Denomination.SIX);
-        giveCardToPlayer(players.get(1), Denomination.FIVE);
-        giveCardToPlayer(players.get(2), Denomination.FOUR);
-        giveCardToPlayer(dealer, Denomination.FIVE);
+        giveCardToUsers(players, dealer);
+        stayUsers(players, dealer);
     }
 
     void createUsers() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
     }
 
-    void giveCardToPlayer(User user, Denomination denomination) {
+    void stayUsers(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            player.stay();
+        }
+        dealer.stay();
+    }
+
+    void giveCardToUsers(List<Player> players, Dealer dealer) {
+        giveCard(players.get(0), Denomination.SIX);
+        giveCard(players.get(0), Denomination.TEN);
+        giveCard(players.get(1), Denomination.SEVEN);
+        giveCard(players.get(1), Denomination.TEN);
+        giveCard(players.get(2), Denomination.EIGHT);
+        giveCard(players.get(2), Denomination.TEN);
+        giveCard(dealer, Denomination.SEVEN);
+        giveCard(dealer, Denomination.TEN);
+    }
+
+    void giveCard(User user, Denomination denomination) {
         user.hit(Card.of(denomination, Suits.DIAMOND));
     }
 
@@ -48,9 +64,9 @@ public class GameResultTest {
         assertThat(winnings)
             .containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                    "hongo", Winning.WIN,
+                    "hongo", Winning.LOSE,
                     "kiara", Winning.PUSH,
-                    "ash", Winning.LOSE)
+                    "ash", Winning.WIN)
             );
     }
 
