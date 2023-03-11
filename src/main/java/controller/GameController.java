@@ -5,7 +5,6 @@ import domain.game.GameManager;
 import domain.participant.Participant;
 import domain.participant.ParticipantInfo;
 import domain.participant.ParticipantMoney;
-import domain.participant.Player;
 import domain.participant.Players;
 import view.InputView;
 import view.OutputView;
@@ -35,15 +34,16 @@ public final class GameController {
         printFinalGameResult(gameManager, initParticipantInfo);
     }
 
-    private Players makePlayers() {
+    private List<Participant> makePlayers() {
         return inputView.getInputWithRetry(() -> {
-            List<String> playerNames = inputView.getPlayerNames();
-            return Players.create(playerNames);
+            final List<String> playerNames = inputView.getPlayerNames();
+            final Players players = Players.create(playerNames);
+            return players.getPlayers();
         });
     }
 
     private Map<Participant, ParticipantMoney> getParticipantInfo() {
-        final List<Player> players = makePlayers().getPlayers();
+        final List<Participant> players = makePlayers();
         final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
         participantInfo.put(Participant.createDealer(), ParticipantMoney.zero());
         for (Participant player : players) {
