@@ -1,11 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.gameplayer.Betting;
 import blackjack.domain.gameplayer.BlackJackParticipant;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,12 +12,15 @@ public class GameResult {
 
     private final Map<Result, Integer> dealerResults;
     private final Map<Player, Result> playersResults;
-    private final Map<BlackJackParticipant, Integer> bettingResults;
+    private final Map<Player, Integer> playerBettingResults;
+
+    private int dealerBettingResults;
 
     public GameResult(Game game) {
         this.dealerResults = initDealerResult();
         this.playersResults = new LinkedHashMap<>();
-        this.bettingResults = new LinkedHashMap<>();
+        this.playerBettingResults = new LinkedHashMap<>();
+        dealerBettingResults = 0;
         accumulationResult(game);
     }
 
@@ -34,7 +35,6 @@ public class GameResult {
 
     private void accumulationResult(Game game) {
         Dealer dealer = game.getDealer();
-        bettingResults.put(dealer, 0);
 
         for (Player player : game.getPlayers()) {
             Result playerResult = ResultReferee.getPlayerResult(player, dealer);
@@ -42,16 +42,15 @@ public class GameResult {
             playersResults.put(player, playerResult);
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
 
-            calculatePrize(dealer, player, playerResult);
+            calculatePrize(player, playerResult);
         }
     }
 
-    private void calculatePrize(Dealer dealer, Player player, Result playerResult) {
+    private void calculatePrize(Player player, Result playerResult) {
         int playerBetting = calculatePlayerBetting(player.getBetting().getBettingMoney(), playerResult);
-        int dealerBetting = bettingResults.get(dealer);
 
-        bettingResults.put(player, playerBetting);
-        bettingResults.put(dealer, dealerBetting-playerBetting);
+        playerBettingResults.put(player, playerBetting);
+        dealerBettingResults -= playerBetting;
     }
 
     private static int calculatePlayerBetting(int playerBetting, Result playerResult) {
@@ -75,7 +74,11 @@ public class GameResult {
         return playersResults;
     }
 
-    public Map<BlackJackParticipant, Integer> getBettingResults() {
-        return bettingResults;
+    public Map<Player, Integer> getPlayerBettingResults() {
+        return playerBettingResults;
+    }
+
+    public int getDealerBettingResults() {
+        return dealerBettingResults;
     }
 }

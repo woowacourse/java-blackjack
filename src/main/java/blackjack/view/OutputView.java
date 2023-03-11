@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.gameplayer.BlackJackParticipant;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
@@ -100,7 +101,7 @@ public class OutputView {
         System.out.println(dealerResultMsg);
     }
 
-    public void printBettingResult() {
+    public void printBettingResult(Map<BlackJackParticipant, Integer> bettingResult) {
 
     }
 }
