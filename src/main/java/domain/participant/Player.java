@@ -3,6 +3,7 @@ package domain.participant;
 import domain.BetAmount;
 import domain.ExceptionCode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Player extends Participant {
@@ -18,6 +19,11 @@ public class Player extends Participant {
             throw new IllegalArgumentException(ExceptionCode.PLAYER_INVALID_NAME.getExceptionCode());
         }
         return new Player(name, betAmount);
+    }
+
+    @Override
+    public int calculatePrize(BigDecimal width) {
+        return betAmount.calculatePrize(width);
     }
 
     @Override

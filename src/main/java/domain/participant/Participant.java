@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Hand;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public abstract class Participant {
@@ -40,6 +41,12 @@ public abstract class Participant {
     public boolean isBust() {
         return hand.calculateValue() > BUST_BOUNDARY_VALUE;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    abstract public int calculatePrize(BigDecimal width);
 
     abstract public boolean shouldHit();
 }
