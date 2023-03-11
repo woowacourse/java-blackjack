@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     
     private static final String NEW_LINE = System.lineSeparator();
-    private static final String PLAYER_PROFIT_STATUS_FORMAT = "%s: %.0f" + NEW_LINE;
+    private static final String PLAYER_PROFIT_STATUS_FORMAT = "%s: %.0f";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s 카드: %s";
     
     private OutputView() {
@@ -23,12 +23,16 @@ public class OutputView {
     public static void printParticipantNamesGuide() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
-
+    
+    public static void printParticipantBetAmountInputGuide(Player participant) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, participant.getName());
+    }
+    
     public static void printPlayersInformation(BlackJackGame blackJackGame) {
         printPlayerNames(blackJackGame);
         printPlayerCardConditions(blackJackGame);
     }
-
+    
     private static void printPlayerNames(BlackJackGame blackJackGame) {
         Player dealer = blackJackGame.getDealer();
         List<String> participantsNames = parseParticipantsNames(blackJackGame);
@@ -48,24 +52,24 @@ public class OutputView {
         printDealerCardCondition(blackJackGame.getDealer());
         printParticipantCardCondition(blackJackGame.getParticipants());
     }
-
+    
     private static void printDealerCardCondition(Player dealer) {
         Card card = dealer.getCards().get(0);
         printPlayerCardCondition(dealer, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardInformation(card));
     }
-
+    
     public static void printParticipantCardCondition(List<Player> participants) {
         for (Player participant : participants) {
             printPlayerCardCondition(participant, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardsInformation(participant.getCards()));
         }
     }
-
+    
     private static String parseCardsInformation(List<Card> cards) {
         return cards.stream()
                 .map(OutputView::parseCardInformation)
                 .collect(Collectors.joining(", "));
     }
-
+    
     private static String parseCardInformation(Card card) {
         Number number = card.getNumber();
         String numberDescription = number.getSymbol();
@@ -74,24 +78,24 @@ public class OutputView {
         String shapeDescription = shape.getSymbol();
         return numberDescription + shapeDescription;
     }
-
+    
     private static void printPlayerCardCondition(Player player, String format, String cardsDisplay) {
         System.out.printf(format, player.getName(), cardsDisplay);
     }
-
+    
     public static void printAddCardGuide(String name) {
         System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, name);
     }
-
+    
     public static void printFinishedMessage(String name) {
         System.out.printf(NEW_LINE + "%s님은 더이상 카드를 뽑을 수 없습니다." + NEW_LINE, name);
         
     }
-
+    
     public static void printGiveDealerCardMessage() {
         println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
-
+    
     public static void printPlayersFinalInformation(List<Player> players) {
         println("");
         for (Player player : players) {
@@ -99,7 +103,7 @@ public class OutputView {
             System.out.printf(" - 결과: %d%n", player.getTotalScore().getScore());
         }
     }
-
+    
     public static void printPlayersGameResults(BlackJackGame blackJackGame, Referee referee) {
         println(NEW_LINE + "## 최종 수익");
         println(parsePlayersResult(blackJackGame, referee));
@@ -114,7 +118,7 @@ public class OutputView {
     private static String parsePlayerGameResult(Player player, Referee referee) {
         return String.format(PLAYER_PROFIT_STATUS_FORMAT, player.getName(), referee.getPlayerBetAmount(player));
     }
-
+    
     public static void println(String message) {
         System.out.println(message);
     }

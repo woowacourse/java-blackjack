@@ -55,7 +55,17 @@ public class InputView {
             throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
         }
     }
-
+    
+    public static double inputBetAmount() {
+        try {
+            String betAmount = BUFFERED_READER.readLine();
+            return Integer.parseInt(betAmount);
+        } catch (IOException ioException) {
+            OutputView.println(ioException.getMessage());
+            return inputBetAmount();
+        }
+    }
+    
     public static <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();

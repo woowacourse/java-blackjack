@@ -18,8 +18,8 @@ public class Application {
         initializedBlackjackGame(blackJackGame);
     
         Referee referee = new Referee();
-        // TODO : 배팅 금액 입력 및 referee에 저장 기능 구현
         
+        settingPlayersBetAmount(blackJackGame, referee);
         giveCardToPlayers(blackJackGame);
         referee.saveBattleResults(blackJackGame);
         
@@ -34,6 +34,15 @@ public class Application {
     private void initializedBlackjackGame(BlackJackGame blackJackGame) {
         blackJackGame.giveTwoCardToPlayers();
         OutputView.printPlayersInformation(blackJackGame);
+    }
+    
+    private void settingPlayersBetAmount(BlackJackGame blackJackGame, Referee referee) {
+        List<Player> participants = blackJackGame.getParticipants();
+        for (Player participant : participants) {
+            OutputView.printParticipantBetAmountInputGuide(participant);
+            double betAmount = InputView.repeat(InputView::inputBetAmount);
+            referee.saveParticipantBetAmount(participant, betAmount);
+        }
     }
     
     private void giveCardToPlayers(BlackJackGame blackJackGame) {
