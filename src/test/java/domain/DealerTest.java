@@ -1,10 +1,10 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
 
@@ -14,64 +14,34 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    @DisplayName("21 이하일 경우 카드 추가를 테스트")
-    public void testAddCardWhenUnder21() {
-        //given
-        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.NINE));
-        Dealer dealer = new Dealer(cards);
-
-        //when
-        dealer.addCard(new Card(Suit.DIAMOND, Denomination.NINE));
-        dealer.addCard(new Card(Suit.SPADE, Denomination.THREE));
-
-        //then
-        assertThat(dealer.getScore().getValue()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("21 초과일 경우 카드 추가를 테스트")
-    public void testAddCardWhenOver21() {
-        //given
-        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.TEN));
-        Dealer dealer = new Dealer(cards);
-
-        //when
-        dealer.addCard(new Card(Suit.SPADE, Denomination.TEN));
-        dealer.addCard(new Card(Suit.SPADE, Denomination.ACE));
-
-        //then
-        assertThat(dealer.getScore().getValue()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("카드를 더 받을 수 있는지 테스트")
+    @DisplayName("딜러 16점에서의 카드를 더 받을 수 있는지 테스트")
     public void testCanReceiveCard() {
         //given
-        Cards cardsScore16 = Cards.of(
+        List<Card> cardsScore16 = List.of(
             new Card(Suit.SPADE, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SIX));
-        Dealer dealer = new Dealer(cardsScore16);
+        Dealer dealer = new Dealer();
 
         //when
-        boolean result = dealer.canReceiveCard();
+        cardsScore16.forEach(dealer::addCard);
 
         //then
-        assertTrue(result);
+        assertTrue(dealer.canReceiveCard());
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 없는지 테스트")
+    @DisplayName("딜러 17점에서의 카드를 더 받을 수 없는지 테스트")
     public void testCanNotReceiveCard() {
         //given
-        Cards cardsScore17 = Cards.of(
+        List<Card> cardsScore17 = List.of(
             new Card(Suit.SPADE, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SEVEN));
-        Dealer dealer = new Dealer(cardsScore17);
+        Dealer dealer = new Dealer();
 
         //when
-        boolean result = dealer.canReceiveCard();
+        cardsScore17.forEach(dealer::addCard);
 
         //then
-        assertFalse(result);
+        assertFalse(dealer.canReceiveCard());
     }
 }

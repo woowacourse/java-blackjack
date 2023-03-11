@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
 
@@ -18,10 +17,11 @@ class PlayerTest {
     @DisplayName("21 이하의 점수에서의 canReceiveCard 테스트")
     public void testScore21receivable() {
         //given
-        Cards cards = Cards.of(
+        List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.NINE));
-        Player player = new Player("player", cards);
+        Player player = new Player("player");
+        cards.forEach(player::addCard);
 
         //when
         player.addCard(new Card(Suit.SPADE, Denomination.THREE));
@@ -37,7 +37,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.NINE));
-        Player player = Player.from("player");
+        Player player = new Player("player");
         cards.forEach(player::addCard);
 
         //when
@@ -54,7 +54,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.ACE),
             new Card(Suit.SPADE, Denomination.TEN));
-        Player player = Player.from("player");
+        Player player = new Player("player");
 
         //when
         cards.forEach(player::addCard);
@@ -70,7 +70,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.ACE),
             new Card(Suit.SPADE, Denomination.NINE));
-        Player player = Player.from("player");
+        Player player = new Player("player");
         cards.forEach(player::addCard);
 
         //when

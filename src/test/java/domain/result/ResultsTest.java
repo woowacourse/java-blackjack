@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.Dealer;
 import domain.Player;
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
 
@@ -46,23 +45,29 @@ public class ResultsTest {
     }
 
     private static Player getScore19Player() {
-        Cards player2Cards = Cards.of(
+        List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.HEART, Denomination.TEN));
-        return new Player("playerScore19", player2Cards);
+        Player player = new Player("playerScore19");
+        cards.forEach(player::addCard);
+        return player;
     }
 
     private static Player getScore21Player() {
-        Cards player1Cards = Cards.of(
+        List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.TEN));
-        return new Player("playerScore21", player1Cards);
+        Player player = new Player("playerScore21");
+        cards.forEach(player::addCard);
+        return player;
     }
 
     private static Dealer getScore20Dealer() {
-        Cards dealerCards = Cards.of(
+        List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.HEART, Denomination.TEN));
-        return new Dealer(dealerCards);
+        Dealer dealer = new Dealer();
+        cards.forEach(dealer::addCard);
+        return dealer;
     }
 }

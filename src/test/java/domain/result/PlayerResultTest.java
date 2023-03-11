@@ -1,12 +1,13 @@
 package domain.result;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.Player;
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
 
@@ -37,16 +38,20 @@ class PlayerResultTest {
 	}
 
 	private static Player getScore19Player() {
-		Cards player2Cards = Cards.of(
+		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.NINE),
 			new Card(Suit.HEART, Denomination.TEN));
-		return new Player("playerScore19", player2Cards);
+		Player player = new Player("playerScore19");
+		cards.forEach(player::addCard);
+		return player;
 	}
 
 	private static Player getScore21Player() {
-		Cards player1Cards = Cards.of(
+		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.ACE),
 			new Card(Suit.HEART, Denomination.TEN));
-		return new Player("playerScore21", player1Cards);
+		Player player = new Player("playerScore21");
+		cards.forEach(player::addCard);
+		return player;
 	}
 }

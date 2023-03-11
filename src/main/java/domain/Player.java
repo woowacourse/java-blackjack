@@ -15,14 +15,10 @@ public class Player {
     private Score score;
     private boolean blackJack;
 
-    public Player(final String name, final Cards cards) {
+    public Player(final String name) {
         this.name = name;
-        this.cards = cards;
+        this.cards = Cards.empty();
         this.blackJack = false;
-    }
-
-    public static Player from(final String name) {
-        return new Player(name, Cards.empty());
     }
 
     public void addCard(final Card card) {

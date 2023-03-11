@@ -28,7 +28,7 @@ public class BlackJackGameRunner {
     public static BlackJackGameRunner of(final CardGenerator cardGenerator, final List<String> playerNames) {
         Dealer dealer = new Dealer();
         List<Player> players = playerNames.stream()
-            .map(Player::from)
+            .map(Player::new)
             .collect(Collectors.toList());
         return new BlackJackGameRunner(cardGenerator, dealer, players);
     }
@@ -89,6 +89,7 @@ public class BlackJackGameRunner {
         }
         return false;
     }
+
     private void giveCard(final Player player) {
         player.addCard(cardGenerator.generate());
     }

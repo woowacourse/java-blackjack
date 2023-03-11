@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import domain.result.DealerResult;
 import domain.result.PlayerResult;
 import domain.card.Card;
-import domain.card.Cards;
 import domain.Player;
 import domain.card.Denomination;
 import domain.card.Suit;
@@ -61,23 +60,29 @@ class ViewRendererTest {
 	}
 
 	private static Player getScore19Player() {
-		Cards player2Cards = Cards.of(
+		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.NINE),
 			new Card(Suit.HEART, Denomination.TEN));
-		return new Player("player", player2Cards);
+		Player player = new Player("player");
+		cards.forEach(player::addCard);
+		return player;
 	}
 
 	private static Player getScore21Player() {
-		Cards player1Cards = Cards.of(
+		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.ACE),
 			new Card(Suit.HEART, Denomination.TEN));
-		return new Player("player", player1Cards);
+		Player player = new Player("player");
+		cards.forEach(player::addCard);
+		return player;
 	}
 
 	private static Player getScore20Player() {
-		Cards dealerCards = Cards.of(
+		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.TEN),
 			new Card(Suit.HEART, Denomination.TEN));
-		return new Player("player", dealerCards);
+		Player player = new Player("player");
+		cards.forEach(player::addCard);
+		return player;
 	}
 }
