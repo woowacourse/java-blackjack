@@ -11,16 +11,12 @@ public class Player extends BlackJackParticipant {
     public static final Score hitUpperBound = Score.of(21);
 
     private final Name name;
-    private Betting betting;
+    private final Betting betting;
 
     public Player(Name name, Betting betting) {
         super(new Cards());
         this.name = name;
         this.betting = betting;
-    }
-
-    public void bet(int betting) {
-        this.betting = this.betting.changeBetting(betting);
     }
 
     public String showName() {

@@ -126,13 +126,4 @@ class PlayerTest {
         // when, then
         assertThat(player.showCards()).containsAll(List.of(card, card2, card3));
     }
-
-    @DisplayName("플레이어의 배팅 금액을 이미 결정한 경우에는 배팅금액을 다시 결정할 경우에 예외를 던진다.")
-    @Test
-    void Should_ThrowException_When_ChangeBetting() {
-        // given, when, then
-        assertThatThrownBy(() -> player.bet(3000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액을 변경할 수 없습니다.");
-    }
 }
