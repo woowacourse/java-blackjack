@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.CardFixtures;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardType;
@@ -16,8 +17,8 @@ class DealerTest {
     @DisplayName("17이면 히트가 아니다")
     void notHit() {
         Dealer dealer = new Dealer(new CardPool(List.of(
-                new Card(CardType.HEART, CardNumber.SIX),
-                new Card(CardType.HEART, CardNumber.ACE)
+                CardFixtures.ofNumber(CardNumber.SIX),
+                CardFixtures.ofNumber(CardNumber.ACE)
         )));
 
         assertThat(dealer.needsHit()).isFalse();
@@ -27,8 +28,8 @@ class DealerTest {
     @DisplayName("16이면 히트다")
     void isHit() {
         Dealer dealer = new Dealer( new CardPool(List.of(
-                new Card(CardType.HEART, CardNumber.FIVE),
-                new Card(CardType.HEART, CardNumber.ACE)
+                CardFixtures.ofNumber(CardNumber.FIVE),
+                CardFixtures.ofNumber(CardNumber.ACE)
         )));
 
         assertThat(dealer.needsHit()).isTrue();

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.CardFixtures;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardType;
@@ -19,8 +20,8 @@ class PlayerTest {
     void increaseRevenueWhenNotBlackjack() {
         CardPool cardPool = new CardPool(
                 List.of(
-                        new Card(CardType.SPADE, CardNumber.JACK),
-                        new Card(CardType.SPADE, CardNumber.FIVE)
+                        CardFixtures.ofNumber(CardNumber.JACK),
+                        CardFixtures.ofNumber(CardNumber.FIVE)
                 )
         );
         Player player = new Player("test", cardPool, 2000);
@@ -35,8 +36,8 @@ class PlayerTest {
     void increaseRevenueWhenBlackjack() {
         CardPool cardPool = new CardPool(
                 List.of(
-                        new Card(CardType.SPADE, CardNumber.JACK),
-                        new Card(CardType.SPADE, CardNumber.ACE)
+                        CardFixtures.ofNumber(CardNumber.JACK),
+                        CardFixtures.ofNumber(CardNumber.ACE)
                 )
         );
         Player player = new Player("test", cardPool, 2000);
