@@ -29,10 +29,10 @@ public class InputView {
     public static BetAmount requestBetAmount(Name name) {
         askInputBetAmount(name.getName());
         try {
-            int betAmount = scanner.nextInt();
+            int betAmount = Integer.parseInt(scanner.nextLine());
             return new BetAmount(betAmount);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("배팅 금액은 정수만 가능합니다.");
+            throw new IllegalArgumentException(ExceptionCode.TYPE_MISS_MATCH_BET_AMOUNT.getExceptionCode());
         }
     }
 
@@ -48,7 +48,7 @@ public class InputView {
     }
 
     private static void askInputBetAmount(String name) {
-        System.out.printf(String.format(ASK_INPUT_BET_AMOUNT_MESSAGE), name);
+        System.out.println(String.format(ASK_INPUT_BET_AMOUNT_MESSAGE, name));
     }
 
     private static void askDrawingCard(String name) {

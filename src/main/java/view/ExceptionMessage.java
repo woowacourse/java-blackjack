@@ -17,7 +17,9 @@ public enum ExceptionMessage {
     NAME_CONTAINS_COMMA(ExceptionCode.NOT_CONTAINS_COMMA_PLAYER_NAME,"이름에 쉼표(,)가 들어갈 수 없습니다."),
     INVALID_NAME_LENGTH(ExceptionCode.OUT_OF_RANGE_PLAYER_NAME_LENGTH,"이름의 길이는 10자 이하여야 합니다."),
     NO_DEALER(ExceptionCode.NO_DEALER,"딜러가 존재하지 않습니다."),
-    WRONG_ACCESS(ExceptionCode.WRONG_ACCESS, "플레이어가 접근할 수 없는 메서드입니다.");
+    WRONG_ACCESS(ExceptionCode.WRONG_ACCESS, "플레이어가 접근할 수 없는 메서드입니다."),
+    LEAK_BET_AMOUNT(ExceptionCode.LEAK_BET_AMOUNT, "배팅 금액은 최소 1000원 입니다."),
+    TYPE_MISS_MATCH_BET_AMOUNT(ExceptionCode.TYPE_MISS_MATCH_BET_AMOUNT, "배팅 금액은 정수만 가능합니다.");
 
     private final ExceptionCode exceptionCode;
     private final String message;
