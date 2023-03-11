@@ -30,19 +30,19 @@ public abstract class State {
     }
 
     public State stay() {
-        throw new IllegalStateException("게임 시작 전입니다.");
+        throw new UnsupportedOperationException("게임 시작 전입니다.");
     }
 
     public Winning match(State dealer) {
-        throw new IllegalStateException(NOT_TERMINATED_YET);
+        throw new UnsupportedOperationException(NOT_TERMINATED_YET);
     }
 
     public boolean isBlackJack() {
-        throw new IllegalStateException(NOT_TERMINATED_YET);
+        throw new UnsupportedOperationException(NOT_TERMINATED_YET);
     }
 
     public boolean isBust() {
-        throw new IllegalStateException(NOT_TERMINATED_YET);
+        throw new UnsupportedOperationException(NOT_TERMINATED_YET);
     }
 
     public List<Card> getCards() {

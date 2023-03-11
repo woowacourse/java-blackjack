@@ -59,7 +59,7 @@ class ReadyTest {
     @Test
     void stayException() {
         assertThatThrownBy(state::stay)
-            .isInstanceOf(IllegalStateException.class)
+            .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("게임 시작 전입니다.");
     }
 
@@ -67,7 +67,7 @@ class ReadyTest {
     @Test
     void match() {
         assertThatThrownBy(() -> state.match(new Ready()))
-            .isInstanceOf(IllegalStateException.class)
+            .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("게임 종료 전입니다.");
     }
 }
