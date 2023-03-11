@@ -10,6 +10,14 @@ public class FinalProfit {
         this.profit = profit;
     }
 
+    public FinalProfit add(FinalProfit finalProfit) {
+        return new FinalProfit(this.profit + finalProfit.profit);
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
