@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -45,7 +46,9 @@ public class Deck {
 
     public Card draw() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException("카드를 전부 사용했습니다.");
+            List<Card> cards = new ArrayList<>();
+            generateCards(null, null, cards);
+            this.deck.addAll(cards);
         }
         return deck.remove();
     }
