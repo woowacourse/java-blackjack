@@ -3,13 +3,10 @@ package blackjack.controller;
 import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.Money;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public final class BlackjackController {
 
@@ -47,18 +44,17 @@ public final class BlackjackController {
     }
 
     private void addBets() {
-        final Map<Name, Money> result = new LinkedHashMap<>();
-        for (final Name gambler : blackjackGame.getGamblerNames()) {
-            result.put(gambler, readBet(gambler));
+        for (final Name player : blackjackGame.getGamblerNames()) {
+            addBet(player);
         }
-        blackjackGame.addBets(result);
     }
 
-    private Money readBet(final Name gambler) {
+    private void addBet(final Name player) {
         retry.reset();
         while (retry.isRepeatable()) {
             try {
-                return Money.initialBet(inputView.readBet(gambler));
+                blackjackGame.addBet(player, inputView.readBet(player));
+                return;
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();

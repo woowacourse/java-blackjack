@@ -103,15 +103,15 @@ public class BlackjackGameTest {
     void 게임_결과를_반환한다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE);
         final BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.addPlayers(List.of("허브"));
-        final Name gambler = Name.from("허브");
-        blackjackGame.addBets(Map.of(gambler, Money.initialBet(1000)));
+        final Name player = Name.from("허브");
+        blackjackGame.addPlayers(List.of(player.getValue()));
+        blackjackGame.addBet(player, 1000);
         blackjackGame.initialDraw(deck);
 
         final Bets result = blackjackGame.play();
 
         final Map<Name, Money> bets = result.getBets();
-        assertThat(bets.get(gambler)).isEqualTo(Money.initialBet(1500));
+        assertThat(bets.get(player)).isEqualTo(Money.initialBet(1500));
     }
 
     @Test

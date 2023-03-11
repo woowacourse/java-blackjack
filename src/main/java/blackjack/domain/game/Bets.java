@@ -12,8 +12,8 @@ public final class Bets {
         bets = new LinkedHashMap<>();
     }
 
-    public void addBets(final Map<Name, Money> bets) {
-        this.bets.putAll(bets);
+    public void addBet(final Name player, final int amount) {
+        bets.put(player, Money.initialBet(amount));
     }
 
     public void calculateProfit(final Map<Name, Result> results) {
