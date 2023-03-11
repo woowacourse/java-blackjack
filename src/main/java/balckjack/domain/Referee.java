@@ -6,18 +6,15 @@ import java.util.stream.Collectors;
 
 public class Referee {
 
-    private final List<Double> winningMoneys;
+    private final List<Result> results;
+    private final List<Money> moneys;
 
     public Referee(CardDeck dealerDeck, List<CardDeck> playersDeck, List<Money> moneys) {
-        List<Result> results = generateResult(dealerDeck, playersDeck);
-
-        winningMoneys = new ArrayList<>();
-        for (int i = 0; i < playersDeck.size(); i++) {
-            winningMoneys.add(moneys.get(i).applyRate(results.get(i)));
-        }
+        this.results = initializeResults(dealerDeck, playersDeck);
+        this.moneys = moneys;
     }
 
-    private List<Result> generateResult(CardDeck dealerDeck, List<CardDeck> playersDeck) {
+    private List<Result> initializeResults(CardDeck dealerDeck, List<CardDeck> playersDeck) {
         return playersDeck.stream()
             .map((deck) -> compareScore(dealerDeck, deck))
             .collect(Collectors.toList());
@@ -60,10 +57,15 @@ public class Referee {
     }
 
     public Double calculateDealerWinningMoney() {
-        return -winningMoneys.stream().mapToDouble(Double::doubleValue).sum();
+        return -calculateWinningMoneys().stream().mapToDouble(Double::doubleValue).sum();
     }
 
     public List<Double> calculateWinningMoneys() {
+        List<Double> winningMoneys = new ArrayList<>();
+        for (int i = 0; i < moneys.size(); i++) {
+            winningMoneys.add(
+                moneys.get(i).applyRate(results.get(i)));
+        }
         return winningMoneys;
     }
 }
