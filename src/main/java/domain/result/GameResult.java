@@ -2,7 +2,7 @@ package domain.result;
 
 import domain.participant.Participant;
 
-import java.util.EnumMap;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,45 +26,50 @@ public class GameResult {
         return scores;
     }
 
-    public Map<Result, Integer> getDealerStatus(Map<Participant, Result> results) {
-        Map<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
+    public Map<Participant, Integer> getPlayerStatus() {
+        Map<Participant, Integer> playersPrize = new LinkedHashMap<>();
 
-        for (Result playerResult : results.values()) {
-            judgeResult(DealerWinningStatus, playerResult);
-        }
-        return DealerWinningStatus;
-    }
-
-    public Map<Participant, Result> getPlayerStatus() {
-        Map<Participant, Result> playerResults = new LinkedHashMap<>();
         for (Participant player : gameResult.keySet()) {
-            compareHandValue(playerResults, player);
-        }
+            if (player.isBlackjack()) {
+                playersPrize.put(player, calculatePrizeWhenPlayerBlackjack(player));
+                continue;
+            }
 
-        return playerResults;
+            Result result = compareHandValue(player);
+            playersPrize.put(player, player.calculatePrize(result.getWidth()));
+        }
+        return playersPrize;
     }
 
-    private void judgeResult(Map<Result, Integer> result, Result playerResult) {
-        if (playerResult.equals(Result.WIN)) {
-            result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
+    private int calculatePrizeWhenPlayerBlackjack(Participant player) {
+        if (dealer.isBlackjack()) {
+            return player.calculatePrize(new BigDecimal(1));
+
         }
-        if (playerResult.equals(Result.TIE)) {
-            result.put(Result.TIE, result.getOrDefault(Result.TIE, 0) + 1);
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
-        }
+        return player.calculatePrize(new BigDecimal(1.5));
     }
 
-    private void compareHandValue(Map<Participant, Result> playerResults, Participant player) {
+    private Result compareHandValue(Participant player) {
         int dealerHandValue = getParticipantHandValue(dealer);
         int playerHandValue = getParticipantHandValue(player);
 
         if (playerHandValue != dealerHandValue) {
-            playerResults.put(player, Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
-            return;
+            return Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue);
         }
-        compareAtTieValue(dealer, playerResults, player, playerHandValue);
+        return compareAtTieValue(dealer, player, playerHandValue);
+    }
+
+    private Result compareAtTieValue(Participant dealer,  Participant player, int playerHandValue) {
+        if (playerHandValue == BUST_HAND_VALUE) {
+            return Result.TIE;
+        }
+        return compareHandCount(dealer, player);
+    }
+
+    private Result compareHandCount(Participant dealer, Participant player) {
+        int playerHandCount = player.getCardNames().size();
+        int dealerHandCount = dealer.getCardNames().size();
+        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
     }
 
     private int getParticipantHandValue(Participant participant) {
@@ -74,16 +79,4 @@ public class GameResult {
         return participant.getHandValue();
     }
 
-    private void compareAtTieValue(Participant dealer, Map<Participant, Result> playerResults, Participant player, int playerHandValue) {
-        if (playerHandValue == BUST_HAND_VALUE) {
-            playerResults.put(player, Result.TIE);
-            return;
-        }
-        playerResults.put(player, compareHandCount(dealer, player));
-    }
-    private Result compareHandCount(Participant dealer, Participant player) {
-        int playerHandCount = player.getCardNames().size();
-        int dealerHandCount = dealer.getCardNames().size();
-        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
-    }
 }
