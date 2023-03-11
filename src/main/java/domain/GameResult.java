@@ -1,48 +1,40 @@
 package domain;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
     private static final int BLACK_JACK = 21;
-    private final Map<String, List<ResultType>> dealerResult;
     private final Map<String, ResultType> playerResult;
 
     public GameResult(Dealer dealer, Players players) {
-        this.dealerResult = new LinkedHashMap<>();
         this.playerResult = new LinkedHashMap<>();
         calculateResult(dealer, players);
     }
 
     private void calculateResult(Dealer dealer, Players players) {
-        List<ResultType> resultTypes = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            ResultType resultType = isPlayerWin(dealer.getCardsSum(), player.getCardsSum());
+            ResultType resultType = calculateResult(dealer, player);
             playerResult.put(player.getName(), resultType);
-            resultTypes.add(resultType.reverse());
         }
-        dealerResult.put(dealer.getName(), resultTypes);
     }
 
-    private ResultType isPlayerWin(int dealerSum, int playerSum) {
-        if (isWin(dealerSum, playerSum)) {
-            return ResultType.WIN;
+    public ResultType calculateResult(Dealer dealer, Player player) {
+        if (isBlackJack(dealer, player)) {
+            return ResultType.BLACKJACK;
         }
-        if (isLose(dealerSum, playerSum)) {
+        if (isLose(dealer.getCardsSum(), player.getCardsSum())) {
             return ResultType.LOSE;
         }
-        return ResultType.DRAW;
+        return ResultType.WIN;
     }
 
-    private boolean isWin(int dealerSum, int playerSum) {
-        return dealerSum > BLACK_JACK || dealerSum < playerSum;
+    private boolean isBlackJack(Dealer dealer, Player player) {
+        return player.isBlackJack() && !dealer.isBlackJack();
     }
 
     private boolean isLose(int dealerSum, int playerSum) {
-        return playerSum > BLACK_JACK || dealerSum > playerSum && dealerSum <= BLACK_JACK;
-    }
-
-    public Map<String, List<ResultType>> getDealerResult() {
-        return dealerResult;
+        return playerSum > BLACK_JACK || (dealerSum < BLACK_JACK && dealerSum >= playerSum);
     }
 
     public Map<String, ResultType> getPlayerResult() {

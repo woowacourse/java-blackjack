@@ -1,28 +1,20 @@
 package domain;
 
 public enum ResultType {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN,
+    BLACKJACK,
+    LOSE;
 
-    private String resultType;
+    private static final double BLACKAJACK_PROFIT_RATE = 1.5;
 
-    ResultType(String resultType) {
-        this.resultType = resultType;
-    }
-
-    public String getResultType() {
-        return resultType;
-    }
-
-    public ResultType reverse() {
-        if (this == ResultType.WIN) {
-            return ResultType.LOSE;
+    public Money calculateBetting(Money money) {
+        if (this == ResultType.BLACKJACK) {
+            return money.multiply(BLACKAJACK_PROFIT_RATE);
         }
         if (this == ResultType.LOSE) {
-            return ResultType.WIN;
+            return money.negative();
         }
-        return this;
+        return money;
     }
 
 }
