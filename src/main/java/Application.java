@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import domain.Dealer;
 import domain.Deck;
 import domain.Game;
+import domain.Money;
 import domain.Participants;
 import domain.Player;
 import domain.User;
@@ -19,11 +21,25 @@ public class Application {
     public static void main(String[] args) {
         Participants participants = Participants.of(INPUT_VIEW.readNames());
         Game game = new Game(participants, new Deck());
-
+        bet(game);
         start(game);
         play(game);
-        printCardsAndScores(game);
-        printResult(game);
+        showCardsAndScores(game);
+        showResultsOf(game);
+    }
+
+    private static void bet(Game game) {
+        for (User user : game.getUsers()) {
+            int betAmount = askBetAmount(user.getName());
+            game.bet(user, Money.of(betAmount));
+        }
+    }
+
+    private static int askBetAmount(String name) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
     }
 
     private static void start(Game game) {
@@ -41,12 +57,12 @@ public class Application {
         selectHitOrStand(game, game.getDealer());
     }
 
-    private static void printCardsAndScores(Game game) {
+    private static void showCardsAndScores(Game game) {
         List<Player> players = joinPlayers(game.getDealer(), game.getUsers());
         OUTPUT_VIEW.printCardsAndScores(createDtosOf(players));
     }
 
-    private static void printResult(Game game) {
+    private static void showResultsOf(Game game) {
         OUTPUT_VIEW.printDealerResults(game.getDealerResults());
         for (var user : game.getUsers()) {
             OUTPUT_VIEW.printResult(user.getName(), game.getResultOf(user));
