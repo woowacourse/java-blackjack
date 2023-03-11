@@ -2,8 +2,8 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Score;
-import domain.state.Ready;
-import domain.state.State;
+import domain.player.state.Ready;
+import domain.player.state.State;
 
 import java.util.List;
 import java.util.Objects;

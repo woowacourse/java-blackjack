@@ -1,9 +1,11 @@
-package domain.state;
+package domain.player.state;
 
 import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Number;
 import domain.card.Shape;
+import domain.player.state.State;
+import domain.player.state.Stay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
