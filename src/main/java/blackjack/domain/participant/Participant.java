@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPocket;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.dto.CardResponse;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public abstract class Participant {
         cardPocket = CardPocket.empty();
     }
 
-    void drawInitialCard(final Card first, final Card second) {
-        drawCard(first);
-        drawCard(second);
+    void drawInitialCard(final Deck deck) {
+        drawCard(deck.popCard());
+        drawCard(deck.popCard());
     }
 
     public boolean hasBlackJack() {
@@ -30,7 +31,7 @@ public abstract class Participant {
         return cardPocket.calculateScore();
     }
 
-    public List<CardResponse> getCards() {
+    List<CardResponse> getCards() {
         return cardPocket.getCards();
     }
 

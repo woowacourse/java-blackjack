@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardResponse;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.dto.CardResponse;
 import java.util.List;
 import java.util.Map;
 

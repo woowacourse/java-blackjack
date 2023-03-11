@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardResponse;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.dto.CardResponse;
 import blackjack.domain.participant.exception.PlayerNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
