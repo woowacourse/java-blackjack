@@ -67,7 +67,6 @@ public abstract class User {
     public List<Card> cards() {
         return hand.cards();
     }
-
 }
 
 

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-
     private static final int FIRST_INDEX = 0;
 
     private final List<Card> cards;
@@ -37,7 +36,6 @@ public class Deck {
 
     public Card drawCard() {
         validateDrawCard();
-
         return cards.remove(FIRST_INDEX);
     }
 
@@ -50,5 +48,4 @@ public class Deck {
     public List<Card> cards() {
         return new ArrayList<>(cards);
     }
-
 }

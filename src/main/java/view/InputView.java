@@ -84,5 +84,4 @@ public class InputView {
             throw new IllegalArgumentException("배팅 금액은 1,000 이상 100,000 이하로 입력해야합니다.");
         }
     }
-
 }

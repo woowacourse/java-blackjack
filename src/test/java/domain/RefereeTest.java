@@ -92,5 +92,4 @@ class RefereeTest {
 
         assertThat(getResult(player, dealer)).isEqualTo(LOSE);
     }
-
 }

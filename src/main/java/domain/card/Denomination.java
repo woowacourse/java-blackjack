@@ -45,5 +45,4 @@ public enum Denomination {
     public Score score() {
         return score;
     }
-
 }

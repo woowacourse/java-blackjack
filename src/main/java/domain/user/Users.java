@@ -11,7 +11,6 @@ import static domain.Referee.getResult;
 import static domain.RewardCalculator.calculate;
 
 public class Users {
-
     private final List<Player> players;
     private final Dealer dealer;
 

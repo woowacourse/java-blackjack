@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
-
     private final List<Card> cards = new ArrayList<>(List.of(
             new Card(HEART, "8"),
             new Card(HEART, "10"),
@@ -44,5 +43,4 @@ class HandTest {
 
         assertThat(hand.cards()).hasSize(4);
     }
-
 }

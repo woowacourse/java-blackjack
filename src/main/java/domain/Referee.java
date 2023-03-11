@@ -7,7 +7,6 @@ import static domain.Status.BLACKJACK;
 import static domain.Status.BUST;
 
 public class Referee {
-
     public static Result getResult(User user, User other) {
         return compare(user, other);
     }
@@ -54,5 +53,4 @@ public class Referee {
         }
         return WIN;
     }
-
 }

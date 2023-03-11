@@ -95,5 +95,4 @@ public class OutputView {
     private String getCardDisplay(Card card) {
         return card.letter() + card.suit().getName();
     }
-
 }

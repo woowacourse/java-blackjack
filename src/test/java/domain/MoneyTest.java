@@ -9,7 +9,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
-
     @Test
     @DisplayName("money를 생성한다.")
     void test_create() {
@@ -49,5 +48,4 @@ class MoneyTest {
         assertThat(money.multiply(times))
                 .isEqualTo(new Money((int) (number * times)));
     }
-
 }

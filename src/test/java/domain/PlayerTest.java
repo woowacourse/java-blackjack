@@ -14,7 +14,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.Assistant.addCards;
 
 class PlayerTest {
-
     private Player player;
 
     @BeforeEach
@@ -71,5 +70,4 @@ class PlayerTest {
 
         assertThat(player.status()).isEqualTo(status);
     }
-
 }

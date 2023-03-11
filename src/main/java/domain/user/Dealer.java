@@ -28,7 +28,6 @@ public class Dealer extends User {
     public String getName() {
         return DEALER_NAME;
     }
-
 }
 
 

@@ -7,7 +7,6 @@ import static domain.RewardCalculator.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class RewardCalculatorTest {
-
     @ParameterizedTest(name = "승리하면 배팅한 금액만큼 돈을 얻는다.")
     @CsvSource({"WIN, 2_000", "WIN, 3_000"})
     void test_calculate_win(Result result, int money) {

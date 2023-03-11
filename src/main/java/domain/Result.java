@@ -1,7 +1,6 @@
 package domain;
 
 public enum Result {
-
     DRAW(0),
     WIN(1),
     LOSE(-1),
@@ -16,5 +15,4 @@ public enum Result {
     public double times() {
         return times;
     }
-
 }

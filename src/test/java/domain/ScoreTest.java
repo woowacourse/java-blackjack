@@ -10,7 +10,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 class ScoreTest {
-
     @Test
     @DisplayName("Score 를 생성한다.")
     void test_create() {

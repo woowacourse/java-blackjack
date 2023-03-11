@@ -103,5 +103,4 @@ public class Application {
             outputView.printResult(name, money);
         }
     }
-
 }

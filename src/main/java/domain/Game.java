@@ -9,7 +9,6 @@ import static domain.Status.*;
 import static domain.user.User.NUMBER_OF_FIRST_CARDS;
 
 public class Game {
-
     private final Deck deck;
     private final Users users;
 
@@ -61,5 +60,4 @@ public class Game {
     public Users getUsers() {
         return users;
     }
-
 }

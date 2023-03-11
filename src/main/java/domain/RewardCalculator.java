@@ -6,5 +6,4 @@ public class RewardCalculator {
         double times = result.times();
         return money.multiply(times);
     }
-
 }

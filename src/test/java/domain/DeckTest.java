@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
-
     private Deck deck;
 
     @BeforeEach
@@ -52,5 +51,4 @@ class DeckTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드가 모두 소진됐습니다.");
     }
-
 }

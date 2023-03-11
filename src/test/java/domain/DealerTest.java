@@ -13,7 +13,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.Assistant.addCards;
 
 class DealerTest {
-
     private Dealer dealer;
 
     @BeforeEach
@@ -61,7 +60,4 @@ class DealerTest {
 
         assertThat(dealer.canHit()).isEqualTo(isOverSixteen);
     }
-
-
-
 }

@@ -16,7 +16,6 @@ import static utils.Assistant.addCards;
 
 
 public class GameTest {
-
     private List<Player> players;
     private Game game;
     private Dealer dealer;
@@ -117,5 +116,4 @@ public class GameTest {
 
         assertThat(dealer.score()).isEqualTo(new Score(17));
     }
-
 }
