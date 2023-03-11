@@ -123,4 +123,31 @@ class HandTest {
         // when, then
         assertThat(hand.isBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("스테이인 경우 true를 반환한다.")
+    void isStay1() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isStay()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스테이가 아닌 경우 false를 반환한다.")
+    void isStay2() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+        cards.add(new Card(Suit.DIAMOND, Denomination.EIGHT));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isStay()).isFalse();
+    }
 }
