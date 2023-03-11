@@ -6,7 +6,9 @@ import static domain.card.Denomination.SIX;
 import static domain.card.Denomination.TEN;
 import static domain.card.Denomination.TWO;
 import static domain.card.Suits.DIAMOND;
+import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,5 +64,33 @@ class RunningTest {
     @Test
     void canStay() {
         assertThat(state.stay()).isInstanceOf(Stay.class);
+    }
+
+
+    @DisplayName("딜러와 점수 비교시 예외가 발생한다.")
+    @Test
+    void match() {
+        State dealer = new Ready()
+            .draw(Card.of(ACE, HEART))
+            .draw(Card.of(TEN, HEART));
+        assertThatThrownBy(() -> state.match(dealer))
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 종료 전입니다.");
+    }
+
+    @DisplayName("블랙잭 확인시 예외가 발생한다.")
+    @Test
+    void isBlackJack() {
+        assertThatThrownBy(() -> state.isBlackJack())
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 종료 전입니다.");
+    }
+
+    @DisplayName("버스트 확인시 예외가 발생한다.")
+    @Test
+    void isBust() {
+        assertThatThrownBy(() -> state.isBust())
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 종료 전입니다.");
     }
 }

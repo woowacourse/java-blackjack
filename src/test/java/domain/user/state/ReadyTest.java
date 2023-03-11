@@ -2,8 +2,10 @@ package domain.user.state;
 
 import static domain.card.Denomination.ACE;
 import static domain.card.Denomination.JACK;
+import static domain.card.Denomination.TEN;
 import static domain.card.Denomination.TWO;
 import static domain.card.Suits.DIAMOND;
+import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -63,10 +65,29 @@ class ReadyTest {
             .hasMessage("게임 시작 전입니다.");
     }
 
-    @DisplayName("결과를 확인할시 예외가 발생한다.")
+    @DisplayName("딜러와 점수 비교시 예외가 발생한다.")
     @Test
     void match() {
-        assertThatThrownBy(() -> state.match(new Ready()))
+        State dealer = new Ready()
+            .draw(Card.of(ACE, HEART))
+            .draw(Card.of(TEN, HEART));
+        assertThatThrownBy(() -> state.match(dealer))
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 종료 전입니다.");
+    }
+
+    @DisplayName("블랙잭 확인시 예외가 발생한다.")
+    @Test
+    void isBlackJack() {
+        assertThatThrownBy(() -> state.isBlackJack())
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 종료 전입니다.");
+    }
+
+    @DisplayName("버스트 확인시 예외가 발생한다.")
+    @Test
+    void isBust() {
+        assertThatThrownBy(() -> state.isBust())
             .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("게임 종료 전입니다.");
     }

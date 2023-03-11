@@ -101,4 +101,16 @@ class StayTest {
 
         assertThat(state.match(dealer)).isSameAs(LOSE);
     }
+
+    @DisplayName("블랙잭이 아니다.")
+    @Test
+    void isBlackJack_False() {
+        assertThat(state.isBlackJack()).isFalse();
+    }
+
+    @DisplayName("버스트가 아니다.")
+    @Test
+    void isBust_False() {
+        assertThat(state.isBust()).isFalse();
+    }
 }

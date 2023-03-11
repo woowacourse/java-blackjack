@@ -58,4 +58,16 @@ class BustTest {
 
         assertThat(state.match(dealer)).isSameAs(LOSE);
     }
+
+    @DisplayName("블랙잭이 아니다.")
+    @Test
+    void isBlackJack_False() {
+        assertThat(state.isBlackJack()).isFalse();
+    }
+
+    @DisplayName("버스트가 맞다.")
+    @Test
+    void isBust_True() {
+        assertThat(state.isBust()).isTrue();
+    }
 }
