@@ -1,7 +1,7 @@
 package model.money;
 
 import java.util.Objects;
-import model.card.State;
+import model.user.GameState;
 
 public class Bet {
 
@@ -26,20 +26,20 @@ public class Bet {
         return new Bet(this.money + bet.money);
     }
 
-    public Bet calculateBet(State state) {
-        if (state.isBlackJack()) {
+    public Bet calculateBet(final GameState gameState) {
+        if (gameState.isBlackJack()) {
             return blackJack();
         }
 
-        return judgeFinalBet(state);
+        return judgeFinalBet(gameState);
     }
 
-    private Bet judgeFinalBet(State state) {
-        if (state.isWin()) {
+    private Bet judgeFinalBet(final GameState gameState) {
+        if (gameState.isWin()) {
             return this;
         }
 
-        if (state.isLose()) {
+        if (gameState.isLose()) {
             return lose();
         }
 
