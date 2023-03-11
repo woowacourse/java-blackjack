@@ -27,8 +27,8 @@ public class Money {
         return new Money(value - other.value);
     }
 
-    public Money profit(double dividend) {
-        return new Money(value + (int)(value * dividend));
+    public Money multiply(double multiplier) {
+        return new Money((int)(value * multiplier));
     }
 
     public boolean isLessThan(Money other) {

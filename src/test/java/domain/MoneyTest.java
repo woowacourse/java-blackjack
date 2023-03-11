@@ -35,20 +35,20 @@ public class MoneyTest {
         assertThat(money.sub(other)).isEqualTo(Money.of(0));
     }
 
-    @ParameterizedTest(name = "배당을 지급할 수 있다")
-    @CsvSource({"1,2468", "1.5,3085"})
+    @ParameterizedTest(name = "곱할 수 있다")
+    @CsvSource({"1,1234", "1.5,1851"})
     void test_distribute_dividend(double dividend, int expectedValue) {
         var money = Money.of(1234);
 
-        assertThat(money.profit(dividend)).isEqualTo(Money.of(expectedValue));
+        assertThat(money.multiply(dividend)).isEqualTo(Money.of(expectedValue));
     }
 
     @ParameterizedTest(name = "1원 이하는 절삭한다")
-    @CsvSource({"1.7,3331", "1.1,2591"})
+    @CsvSource({"1.7,2097", "1.1,1357"})
     void test_remove_points_under_unit(double dividend, int expectedValue) {
         var money = Money.of(1234);
 
-        assertThat(money.profit(dividend)).isEqualTo(Money.of(expectedValue));
+        assertThat(money.multiply(dividend)).isEqualTo(Money.of(expectedValue));
     }
 
     @DisplayName("다른 금액보다 작은지 알 수 있다")

@@ -51,7 +51,7 @@ public abstract class AbstractTestFixture {
 
     static Money createMoney(int value) {
         if (value < 0) {
-            return Money.of(-value).profit(-2);
+            return Money.of(-value).multiply(-1);
         }
         return Money.of(value);
     }
