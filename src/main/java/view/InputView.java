@@ -4,6 +4,7 @@ import domain.BetAmount;
 import domain.ExceptionCode;
 import domain.participant.Name;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +31,7 @@ public class InputView {
         askInputBetAmount(name.getName());
         try {
             int betAmount = Integer.parseInt(scanner.nextLine());
-            return new BetAmount(betAmount);
+            return new BetAmount(new BigDecimal(betAmount));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ExceptionCode.TYPE_MISS_MATCH_BET_AMOUNT.getExceptionCode());
         }
