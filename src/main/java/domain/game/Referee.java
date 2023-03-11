@@ -46,18 +46,10 @@ public class Referee {
         double profit = participant.calculateProfit(betAmount);
         
         if (participant.isBust() || dealer.isBust()) {
-            return decideGameResultWithBust(participant, profit);
+            return profit;
         }
         
         return decideGameResultWithScore(participantTotalScore, dealerTotalScore, profit);
-    }
-    
-    private double decideGameResultWithBust(Player participant, double profit) {
-        if (participant.isBust()) {
-            return -profit;
-        }
-        
-        return profit;
     }
     
     private double decideGameResultWithScore(Score participantTotalScore, Score dealerTotalScore, double profit) {

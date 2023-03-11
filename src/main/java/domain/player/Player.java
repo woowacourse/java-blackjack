@@ -57,6 +57,10 @@ public abstract class Player {
     public abstract boolean isDealer();
     public abstract double calculateProfit(int betAmount);
     
+    public void drawStop() {
+        state = state.drawStop();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

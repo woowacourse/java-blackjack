@@ -36,4 +36,6 @@ public abstract class State {
     protected boolean isBlackJack() {
         return hand.isBlackJack();
     }
+    
+    public abstract State drawStop();
 }

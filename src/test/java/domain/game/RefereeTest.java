@@ -108,4 +108,58 @@ class RefereeTest {
         // then
         assertThat(betResult).isEqualTo(1500);
     }
+    
+    @Test
+    @DisplayName("참가자가 버스트, 딜러 블랙잭이면 -배팅 금액 반환")
+    void participantBust_dealerBlackjack() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.ACE));
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.KING));
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(-1000);
+    }
+    
+    @Test
+    @DisplayName("참가자가 버스트, 딜러 Stay이면 -배팅 금액 반환")
+    void participantBust_dealerStay() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.KING));
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(-1000);
+    }
+    
+    @Test
+    @DisplayName("참가자가 버스트, 딜러 버스트면 -배팅 금액 반환")
+    void participantBust_dealerBust() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        abel.draw(new Card(Shape.DIAMOND, Number.JACK));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.KING));
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(-1000);
+    }
 }
