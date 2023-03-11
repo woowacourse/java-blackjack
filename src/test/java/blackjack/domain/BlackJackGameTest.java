@@ -83,6 +83,24 @@ class BlackJackGameTest {
         assertThat(cards).containsExactly(spadeAce, cloverTen, heartNine);
     }
 
+    /*
+    필립: blackjack
+    홍실: 19
+    딜러: 13
+     */
+    @Test
+    @DisplayName("플레이어 턴 진행 가능 여부 확인 테스트")
+    void isPossibleDrawTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
+                , new TestDeckGenerator(testCards));
+
+        assertSoftly(softly -> {
+            softly.assertThat(blackJackGame.isPossibleToDraw("필립")).isFalse();
+            softly.assertThat(blackJackGame.isPossibleToDraw("홍실")).isTrue();
+        });
+
+    }
+
     @Test
     @DisplayName("점수를 포함한 상태를 반환하는 기능 테스트")
     void getCardResult() {
