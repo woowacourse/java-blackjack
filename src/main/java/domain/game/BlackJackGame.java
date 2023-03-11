@@ -56,7 +56,6 @@ public class BlackJackGame {
         if (dealer.isDrawable()) {
             dealer.hit(deck.pickCard());
         }
-
     }
 
     public GameResult getResult() {
