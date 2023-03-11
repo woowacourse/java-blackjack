@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.Number;
+import domain.card.Denomination;
 import domain.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -20,11 +20,11 @@ class CardDeckTest {
         Suit[] suits = Suit.values();
         Suit lastSuit = suits[suits.length - 1];
 
-        Number[] numbers = Number.values();
-        Number lastNumber = numbers[numbers.length - 1];
+        Denomination[] denominations = Denomination.values();
+        Denomination lastDenomination = denominations[denominations.length - 1];
 
         //then
         Assertions.assertThat(cardDeck.pick())
-            .isEqualTo(new Card(lastSuit, lastNumber));
+            .isEqualTo(new Card(lastSuit, lastDenomination));
     }
 }

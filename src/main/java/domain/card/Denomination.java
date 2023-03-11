@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum Number {
+public enum Denomination {
     A(1),
     TWO(2),
     THREE(3),
@@ -17,7 +17,7 @@ public enum Number {
 
     private final int value;
 
-    Number(int value) {
+    Denomination(int value) {
         this.value = value;
     }
 
