@@ -1,6 +1,5 @@
 package blackjackgame.domain.user;
 
-import blackjackgame.view.ErrorMessage;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class Names {
 
     private void validateDuplication(List<String> playerNames) {
         if (hasDuplicatedName(playerNames)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_PLAYER_NAME_EXIST.getMessage());
+            throw new IllegalArgumentException("중복되는 플레이어 이름이 존재합니다.");
         }
     }
 
@@ -34,7 +33,7 @@ public class Names {
 
     private void validateSize(List<String> players) {
         if (players.size() > MAX_PLAYER_SIZE || players.size() < 1) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_SIZE.getMessage());
+            throw new IllegalArgumentException("게임을 시작하기 위해서는 최소 1명, 최대 5명의 플레이어가 필요합니다.");
         }
     }
 
