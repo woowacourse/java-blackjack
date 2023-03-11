@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
     private static final String ASK_INPUT_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -18,12 +17,9 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static List<Name> requestNames() {
+    public static List<String> requestNames() {
         askInputNames();
-        List<String> names = Arrays.asList(scanner.nextLine().split(DELIMITER, -1));
-        return names.stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
+        return Arrays.asList(scanner.nextLine().split(DELIMITER, -1));
     }
 
     public static BetAmount requestBetAmount(Name name) {

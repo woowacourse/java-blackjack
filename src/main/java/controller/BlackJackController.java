@@ -38,7 +38,9 @@ public class BlackJackController {
 
     private Names makeNames() {
         try {
-            List<Name> names = InputView.requestNames();
+            List<Name> names = InputView.requestNames().stream()
+                    .map(Name::new)
+                    .collect(Collectors.toList());
             return new Names(names);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
