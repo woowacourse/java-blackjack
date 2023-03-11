@@ -7,6 +7,7 @@ import domain.game.GameBet;
 import domain.money.Bet;
 import domain.result.ProfitResult;
 import domain.result.StatusResult;
+import domain.user.GameMember;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
@@ -18,7 +19,7 @@ import view.ProfitView;
 public class GameController {
     
     public void run() {
-        Game game = new Game(this.readPlayerNamesUntilValid(), this.getShuffledDeck());
+        Game game = new Game(this.generateGameMemberUntilValid(), this.getShuffledDeck());
         GameBet gameBet = this.collectBets(game);
         this.startGame(game);
         this.runGame(game);
@@ -29,26 +30,26 @@ public class GameController {
     private GameBet collectBets(final Game game) {
         GameBet gameBet = new GameBet();
         for (Playable player : game.getPlayers()) {
-            gameBet.accumulate(player, this.readBetUntilValid(player.getName()));
+            gameBet.accumulate(player, this.generateBetUntilValid(player.getName()));
         }
         return gameBet;
     }
     
-    private Bet readBetUntilValid(final String name) {
+    private Bet generateBetUntilValid(final String name) {
         try {
             return new Bet(InputView.readBet(name));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return this.readBetUntilValid(name);
+            return this.generateBetUntilValid(name);
         }
     }
     
-    private String readPlayerNamesUntilValid() {
+    private GameMember generateGameMemberUntilValid() {
         try {
-            return InputView.readPlayerNames();
+            return GameMember.of(InputView.readPlayerNames());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return this.readPlayerNamesUntilValid();
+            return this.generateGameMemberUntilValid();
         }
     }
     
@@ -80,8 +81,8 @@ public class GameController {
     }
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {
-        boolean isHit = this.readAnswerMoreCardUntilValid(player.getName());
-        if (GameAction.of(isHit) == GameAction.HIT) {
+        GameAction action = this.generateGameActionUntilValid(player.getName());
+        if (action == GameAction.HIT) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
             return true;
@@ -89,12 +90,12 @@ public class GameController {
         return false;
     }
     
-    private boolean readAnswerMoreCardUntilValid(String name) {
+    private GameAction generateGameActionUntilValid(String name) {
         try {
-            return InputView.readAnswerForMoreCard(name);
+            return GameAction.from(InputView.readAnswerForMoreCard(name));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return this.readAnswerMoreCardUntilValid(name);
+            return this.generateGameActionUntilValid(name);
         }
     }
     

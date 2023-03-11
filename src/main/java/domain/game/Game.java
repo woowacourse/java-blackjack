@@ -21,6 +21,11 @@ public class Game {
         this.deck = deck;
     }
     
+    public Game(final GameMember gameMember, final Deck deck) {
+        this.gameMember = gameMember;
+        this.deck = deck;
+    }
+    
     public void start() {
         for (Playable member : this.gameMember) {
             this.deal(member);
