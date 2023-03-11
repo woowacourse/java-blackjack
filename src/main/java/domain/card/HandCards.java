@@ -1,11 +1,14 @@
 package domain.card;
 
-import static domain.participant.Participant.MIN_BUST_NUMBER;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
+    private static final int MIN_BUST_NUMBER = 21;
+    private static final int ZERO_SCORE = 0;
+    private static final int INIT_CARD_SIZE = 2;
+    private static final int PLUS_ACE_COUNT = 10;
+
     private final List<Card> cards;
 
     public HandCards() {
@@ -17,7 +20,7 @@ public class HandCards {
     }
 
     public int calculateScore() {
-        int scoreSum = 0;
+        int scoreSum = ZERO_SCORE;
         boolean hasAce = false;
         for (Card card : cards) {
             scoreSum += card.getValue();
@@ -27,8 +30,8 @@ public class HandCards {
     }
 
     private int getAceCase(boolean hasAce, int scoreSum) {
-        if (hasAce && scoreSum + 10 <= 21) {
-            return scoreSum + 10;
+        if (hasAce && scoreSum + PLUS_ACE_COUNT <= MIN_BUST_NUMBER) {
+            return scoreSum + PLUS_ACE_COUNT;
         }
         return scoreSum;
     }
@@ -36,13 +39,13 @@ public class HandCards {
     public int checkBust() {
         int maxSum = calculateScore();
         if (maxSum > MIN_BUST_NUMBER) {
-            return 0;
+            return ZERO_SCORE;
         }
         return maxSum;
     }
 
     public boolean isBlackJack() {
-        return calculateScore() == 21 && cards.size() == 2;
+        return calculateScore() == MIN_BUST_NUMBER && cards.size() == INIT_CARD_SIZE;
     }
 
     public List<Card> getCards() {

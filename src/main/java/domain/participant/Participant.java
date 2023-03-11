@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
-    public static final int MIN_BUST_NUMBER = 21;
-
     private final Name name;
     private final HandCards handCards;
 

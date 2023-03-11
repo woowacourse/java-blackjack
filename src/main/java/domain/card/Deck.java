@@ -11,13 +11,13 @@ public class Deck {
     private static Stack<Card> makeDeck() {
         Stack<Card> stack = new Stack<>();
         for (Denomination denomination : Denomination.values()) {
-            loopSuits(stack, denomination);
+            makeCard(stack, denomination);
         }
         Collections.shuffle(stack);
         return stack;
     }
 
-    private static void loopSuits(Stack<Card> stack, Denomination denomination) {
+    private static void makeCard(Stack<Card> stack, Denomination denomination) {
         for (Suit suit : Suit.values()) {
             stack.add(new Card(denomination.getName() + suit.getValue(), denomination.getValue()));
         }
