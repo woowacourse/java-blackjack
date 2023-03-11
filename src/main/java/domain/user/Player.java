@@ -1,31 +1,29 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.game.Score;
+import domain.state.State;
 
 public class Player {
 
-    private final PlayerName playerName;
-    private final Hand hand;
+    private final Participant participant;
 
-    public Player(String playerName, Hand hand) {
-        this.playerName = new PlayerName(playerName);
-        this.hand = hand;
+    public Player(String PlayerName) {
+        this.participant = new Participant(PlayerName);
     }
 
-    public void draw(Card card) {
-        hand.add(card);
+    public State hit(Card card) {
+        return participant.hit(card);
     }
 
-    public Score sumHand() {
-        return hand.score();
+    public State stay() {
+        return participant.stay();
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
+    public Name getName() {
+        return participant.getName();
     }
 
-    public Hand getHand() {
-        return hand;
+    public State getState() {
+        return participant.getState();
     }
 }
