@@ -31,16 +31,10 @@ public final class Player extends Participant {
         playerBet = PlayerBet.create(betAmount);
     }
 
-    @Override
     public BigDecimal calculateBenefit(final GameResult gameResult) {
         final double prizeRatio = gameResult.prizeRatio();
 
         return playerBet.calculateBenefit(prizeRatio);
-    }
-
-    @Override
-    public GameResult calculateResult(final Participant participant) {
-        throw new UnsupportedOperationException("플레이어는 게임의 결과를 계산할 수 없습니다.");
     }
 
     @Override

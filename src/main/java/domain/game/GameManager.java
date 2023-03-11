@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.ParticipantOffset;
 import domain.participant.Participants;
+import domain.participant.Player;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -74,7 +75,9 @@ public final class GameManager {
         return participants.findPlayerCardsByOrder(playerOrder, ParticipantOffset.PLAYER);
     }
 
-    private BigDecimal calculateBenefit(final Participant player, final GameResult gameResult) {
+    private BigDecimal calculateBenefit(final Participant participant, final GameResult gameResult) {
+        final Player player = (Player) participant;
+
         return player.calculateBenefit(gameResult);
     }
 

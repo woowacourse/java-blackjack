@@ -159,12 +159,4 @@ class PlayerTest {
         assertThat(actual)
                 .isEqualTo(expected);
     }
-
-    @Test
-    @DisplayName("calculateResult()는 호출하면 예외가 발생한다.")
-    void calculateResult_whenCall_thenFail() {
-        assertThatThrownBy(() -> player.calculateResult(player))
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("플레이어는 게임의 결과를 계산할 수 없습니다.");
-    }
 }

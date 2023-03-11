@@ -29,10 +29,6 @@ public abstract class Participant {
         return participantScore.score();
     }
 
-    public abstract GameResult calculateResult(Participant participant);
-
-    public abstract BigDecimal calculateBenefit(final GameResult gameResult);
-
     public abstract boolean canDraw();
 
     public abstract List<Card> getStartCard();

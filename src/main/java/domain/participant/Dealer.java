@@ -17,14 +17,8 @@ public final class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    @Override
     public GameResult calculateResult(Participant player) {
         return calculateGameResult(this.participantCard, player.participantCard);
-    }
-
-    @Override
-    public BigDecimal calculateBenefit(final GameResult gameResult) {
-        throw new UnsupportedOperationException("딜러는 게임 결과에 따른 배당을 받을 수 없습니다.");
     }
 
     @Override
