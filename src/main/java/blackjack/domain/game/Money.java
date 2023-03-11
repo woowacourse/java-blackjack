@@ -7,7 +7,8 @@ import java.util.Objects;
 public final class Money {
     public static final Money ZERO = new Money(0);
     private static final int INITIAL_BET_LOWER_BOUND = 100;
-    static final String INVALID_INITIAL_BET_VALUE = "초기값은 " + INITIAL_BET_LOWER_BOUND + "이상이어야 합니다.";
+    private static final int INITIAL_BET_UPPER_BOUND = 10000;
+    private static final int BETTING_UNIT = 100;
 
     private final BigDecimal value;
 
@@ -16,14 +17,31 @@ public final class Money {
     }
 
     public static Money initialBet(final int value) {
-        validate(value);
+        validateRange(value);
+        validateBetUnit(value);
         return new Money(value);
     }
 
-    private static void validate(final int value) {
-        if (value < INITIAL_BET_LOWER_BOUND) {
-            throw new IllegalArgumentException(INVALID_INITIAL_BET_VALUE);
+    private static void validateRange(final int value) {
+        if (isInvalidRange(value)) {
+            throw new IllegalArgumentException(
+                    "베팅 금액은 " + INITIAL_BET_LOWER_BOUND + " 이상, " + INITIAL_BET_UPPER_BOUND + " 이하여야 합니다."
+            );
         }
+    }
+
+    private static boolean isInvalidRange(final int value) {
+        return value < INITIAL_BET_LOWER_BOUND || INITIAL_BET_UPPER_BOUND < value;
+    }
+
+    private static void validateBetUnit(final int value) {
+        if (isInvalidUnit(value)) {
+            throw new IllegalArgumentException("베팅은 100 단위로 할 수 있습니다.");
+        }
+    }
+
+    private static boolean isInvalidUnit(final int value) {
+        return value % BETTING_UNIT != 0;
     }
 
     public Money calculatePrize(final Result result) {

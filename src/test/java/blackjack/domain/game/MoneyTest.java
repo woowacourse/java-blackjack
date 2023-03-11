@@ -10,16 +10,25 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class MoneyTest {
 
     @Test
-    void 초기_베팅_금액이_100_보다_작은_경우_예외를_던진다() {
+    void 베팅_금액이_100_보다_작은_경우_예외를_던진다() {
         assertThatThrownBy(() -> Money.initialBet(99))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Money.INVALID_INITIAL_BET_VALUE);
+                .hasMessage("베팅 금액은 100 이상, 10000 이하여야 합니다.");
+    }
+
+    @ParameterizedTest(name = "베팅 금액이 100 단위가 아닌 경우 예외를 던진다. 입력: {0}")
+    @ValueSource(ints = {101, 150, 199})
+    void 베팅_금액이_100_단위가_아닌_경우_예외를_던진다(final int value) {
+        assertThatThrownBy(() -> Money.initialBet(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅은 100 단위로 할 수 있습니다.");
     }
 
     @ParameterizedTest(name = "Result를 입력받아 계산된 Money를 반환한다. 입력: {0}, 결과: {1}")
