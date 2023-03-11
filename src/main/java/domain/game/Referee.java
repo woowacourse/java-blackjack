@@ -1,16 +1,17 @@
 package domain.game;
 
-import domain.player.GameResult;
+import domain.card.Score;
+import domain.player.ParticipantGameResult;
 import domain.player.Player;
 
 import java.util.*;
 
 public class Referee {
-    private final Map<GameResult, Integer> dealerGameResults;
-    private final Map<Player, GameResult> participantsGameResults;
+    private final Map<ParticipantGameResult, Integer> dealerGameResults;
+    private final Map<Player, ParticipantGameResult> participantsGameResults;
     
     public Referee() {
-        dealerGameResults = new EnumMap<>(GameResult.class);
+        dealerGameResults = new EnumMap<>(ParticipantGameResult.class);
         participantsGameResults = new HashMap<>();
     }
     
@@ -23,19 +24,35 @@ public class Referee {
     
     private void savePlayersBattleResults(Player dealer, List<Player> participants) {
         for (Player participant : participants) {
-            GameResult dealerGameResult = dealer.battleResult(participant);
-            dealerGameResults.put(dealerGameResult, dealerGameResults.getOrDefault(dealerGameResult, 0) + 1);
+            ParticipantGameResult dealerParticipantGameResult = dealer.battleResult(participant);
+            dealerGameResults.put(dealerParticipantGameResult, dealerGameResults.getOrDefault(dealerParticipantGameResult, 0) + 1);
             
-            GameResult participantGameResult = participant.battleResult(dealer);
+            ParticipantGameResult participantGameResult = participant.battleResult(dealer);
             participantsGameResults.put(participant, participantGameResult);
         }
     }
     
-    public Map<Player, GameResult> participantsGameResults() {
+    public Map<Player, ParticipantGameResult> participantsGameResults() {
         return Collections.unmodifiableMap(participantsGameResults);
     }
     
-    public Map<GameResult, Integer> dealerGameResults() {
+    public Map<ParticipantGameResult, Integer> dealerGameResults() {
         return Collections.unmodifiableMap(dealerGameResults);
+    }
+    
+    public int decidePlayersBattleResults1(Player dealer, Player participant, int betAmount) {
+        return 0;
+    }
+    
+    private ParticipantGameResult decideGameResultWithScore(Score participantTotalScore, Score DealerTotalScore) {
+        if (participantTotalScore.isOverThen(DealerTotalScore)) {
+            return ParticipantGameResult.WIN;
+        }
+        
+        if (participantTotalScore.isLessThen(DealerTotalScore)) {
+            return ParticipantGameResult.LOSE;
+        }
+        
+        return ParticipantGameResult.DRAW;
     }
 }

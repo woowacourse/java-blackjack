@@ -25,18 +25,18 @@ class PlayerTest {
     @ParameterizedTest(name = "participantCardNumber : {0}, dealerResult : {1}, participantResult : {2}")
     @CsvSource(value = {"EIGHT,WIN,LOSE", "JACK,LOSE,WIN"})
     @DisplayName("딜러와 참가자가 배틀할 때, 딜러가 이긴 경우 딜러 1승, 참가자 패가 반환된다.")
-    void battleResult_dealerWin_participantLose(Number participantCardNumber, GameResult dealerResult, GameResult participantResult) {
+    void battleResult_dealerWin_participantLose(Number participantCardNumber, ParticipantGameResult dealerResult, ParticipantGameResult participantResult) {
         dealer.draw(new Card(Shape.HEART, Number.KING));
         dealer.draw(new Card(Shape.HEART, Number.NINE));
         abel.draw(new Card(Shape.HEART, Number.QUEEN));
         abel.draw(new Card(Shape.HEART, participantCardNumber));
     
-        GameResult dealerGameResult = dealer.battleResult(abel);
-        GameResult abelGameResult = abel.battleResult(dealer);
+        ParticipantGameResult dealerParticipantGameResult = dealer.battleResult(abel);
+        ParticipantGameResult abelParticipantGameResult = abel.battleResult(dealer);
         
         assertAll(
-                () -> assertThat(dealerGameResult).isEqualTo(dealerResult),
-                () -> assertThat(abelGameResult).isEqualTo(participantResult)
+                () -> assertThat(dealerParticipantGameResult).isEqualTo(dealerResult),
+                () -> assertThat(abelParticipantGameResult).isEqualTo(participantResult)
         );
     }
     
@@ -50,12 +50,12 @@ class PlayerTest {
         abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
         abel.draw(new Card(Shape.DIAMOND, Number.JACK));
         
-        GameResult dealerGameResult = dealer.battleResult(abel);
-        GameResult abelGameResult = abel.battleResult(dealer);
+        ParticipantGameResult dealerParticipantGameResult = dealer.battleResult(abel);
+        ParticipantGameResult abelParticipantGameResult = abel.battleResult(dealer);
         
         assertAll(
-                () -> assertThat(dealerGameResult).isEqualTo(GameResult.WIN),
-                () -> assertThat(abelGameResult).isEqualTo(GameResult.LOSE)
+                () -> assertThat(dealerParticipantGameResult).isEqualTo(ParticipantGameResult.WIN),
+                () -> assertThat(abelParticipantGameResult).isEqualTo(ParticipantGameResult.LOSE)
         );
     }
 }

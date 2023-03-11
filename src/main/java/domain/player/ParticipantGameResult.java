@@ -1,13 +1,13 @@
 package domain.player;
 
-public enum GameResult {
+public enum ParticipantGameResult {
     WIN("승"),
     LOSE("패"),
     DRAW("무");
     
     private final String symbol;
     
-    GameResult(String symbol) {
+    ParticipantGameResult(String symbol) {
         this.symbol = symbol;
     }
     

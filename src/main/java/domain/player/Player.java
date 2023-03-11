@@ -21,18 +21,16 @@ public abstract class Player {
         state = state.draw(card);
     }
     
-    public abstract GameResult battleResult(Player otherPlayer);
-    
-    protected GameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
+    protected ParticipantGameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
         if (totalScore.isOverThen(totalScoreOfOtherPlayer)) {
-            return GameResult.WIN;
+            return ParticipantGameResult.WIN;
         }
         
         if (totalScore.isLessThen(totalScoreOfOtherPlayer)) {
-            return GameResult.LOSE;
+            return ParticipantGameResult.LOSE;
         }
         
-        return GameResult.DRAW;
+        return ParticipantGameResult.DRAW;
     }
     
     public boolean isBust() {
@@ -51,7 +49,13 @@ public abstract class Player {
         return this.name.getName();
     }
     
+    protected State getState() {
+        return state;
+    }
+    public abstract ParticipantGameResult battleResult(Player otherPlayer);
+    
     public abstract boolean isDealer();
+    public abstract double calculateProfit(int betAmount);
     
     @Override
     public boolean equals(Object o) {

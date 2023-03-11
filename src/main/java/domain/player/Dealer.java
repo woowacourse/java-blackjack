@@ -8,14 +8,9 @@ public class Dealer extends Player {
     }
     
     @Override
-    public boolean isDealer() {
-        return true;
-    }
-    
-    @Override
-    public GameResult battleResult(Player participant) {
+    public ParticipantGameResult battleResult(Player participant) {
         if (isBust() || participant.isBust()) {
-            return decideGameResultWithBust();
+            return decideGameResultWithBust(participant);
         }
         
         Score totalScore = getTotalScore();
@@ -23,11 +18,21 @@ public class Dealer extends Player {
         return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
     }
     
-    private GameResult decideGameResultWithBust() {
-        if (isBust()) {
-            return GameResult.WIN;
+    private ParticipantGameResult decideGameResultWithBust(Player participant) {
+        if (participant.isBust()) {
+            return ParticipantGameResult.WIN;
         }
         
-        return GameResult.LOSE;
+        return ParticipantGameResult.LOSE;
+    }
+    
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+    
+    @Override
+    public double calculateProfit(int betAmount) {
+        throw new IllegalStateException("딜러는 수익률 계산을 할 수 없습니다.");
     }
 }

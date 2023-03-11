@@ -8,12 +8,7 @@ public class Participant extends Player {
     }
     
     @Override
-    public boolean isDealer() {
-        return false;
-    }
-    
-    @Override
-    public GameResult battleResult(Player dealer) {
+    public ParticipantGameResult battleResult(Player dealer) {
         if (isBust() || dealer.isBust()) {
             return decideGameResultWithBust();
         }
@@ -23,11 +18,21 @@ public class Participant extends Player {
         return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
     }
     
-    private GameResult decideGameResultWithBust() {
+    private ParticipantGameResult decideGameResultWithBust() {
         if (isBust()) {
-            return GameResult.LOSE;
+            return ParticipantGameResult.LOSE;
         }
         
-        return GameResult.WIN;
+        return ParticipantGameResult.WIN;
+    }
+    
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+    
+    @Override
+    public double calculateProfit(int betAmount) {
+        return getState().calculateProfit(betAmount);
     }
 }

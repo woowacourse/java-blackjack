@@ -5,7 +5,7 @@ import domain.card.Number;
 import domain.card.Shape;
 import domain.game.BlackJackGame;
 import domain.game.Referee;
-import domain.player.GameResult;
+import domain.player.ParticipantGameResult;
 import domain.player.Player;
 
 import java.util.Arrays;
@@ -113,31 +113,31 @@ public class OutputView {
     }
 
     private static String parseDealerGameResultDisplay(Referee referee) {
-        Map<GameResult, Integer> dealerGameResults = referee.dealerGameResults();
+        Map<ParticipantGameResult, Integer> dealerGameResults = referee.dealerGameResults();
     
-        return Arrays.stream(GameResult.values())
+        return Arrays.stream(ParticipantGameResult.values())
                 .filter(Predicate.not(gameResult -> OutputView.isGameResultCountZero(gameResult, dealerGameResults)))
                 .map(gameResult -> dealerGameResults.get(gameResult) + gameResult.getSymbol())
                 .collect(Collectors.joining(" "));
 
     }
 
-    private static boolean isGameResultCountZero(GameResult gameResult, Map<GameResult, Integer> dealerGameResults) {
-        return dealerGameResults.getOrDefault(gameResult, 0) == 0;
+    private static boolean isGameResultCountZero(ParticipantGameResult participantGameResult, Map<ParticipantGameResult, Integer> dealerGameResults) {
+        return dealerGameResults.getOrDefault(participantGameResult, 0) == 0;
     }
 
     private static void printParticipantsGameResult(BlackJackGame blackJackGame, Referee referee) {
         List<Player> participants = blackJackGame.getParticipants();
-        Map<Player, GameResult> participantsGameResults = referee.participantsGameResults();
+        Map<Player, ParticipantGameResult> participantsGameResults = referee.participantsGameResults();
         
         participants.stream()
                 .map(participant -> parseParticipantGameResultDisplay(participant, participantsGameResults))
                 .forEach(OutputView::println);
     }
 
-    private static String parseParticipantGameResultDisplay(Player participant, Map<Player, GameResult> participantsGameResults) {
-        GameResult gameResult = participantsGameResults.get(participant);
-        return String.format("%s: %s", participant.getName(), gameResult.getSymbol());
+    private static String parseParticipantGameResultDisplay(Player participant, Map<Player, ParticipantGameResult> participantsGameResults) {
+        ParticipantGameResult participantGameResult = participantsGameResults.get(participant);
+        return String.format("%s: %s", participant.getName(), participantGameResult.getSymbol());
     }
 
     public static void println(String message) {
