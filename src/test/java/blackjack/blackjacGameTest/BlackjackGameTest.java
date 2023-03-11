@@ -6,21 +6,20 @@ import static blackjack.Fixtures.CARDS_OF_BUST;
 import static blackjack.Fixtures.CARDS_SUM_17;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.ParticipantPrizeDto;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -90,9 +89,9 @@ class BlackjackGameTest {
         blackjackGame.addPlayer(blackjack);
         blackjackGame.addPlayer(bust);
 
-        Map<Participant, Money> prize = blackjackGame.calculatePrize();
+        List<ParticipantPrizeDto> prize = blackjackGame.calculatePrize();
 
-        assertThat(prize.keySet()).contains(dealer, blackjack, bust);
+        assertThat(prize.stream().map(ParticipantPrizeDto::getParticipantName)).contains("딜러", "폴로", "로지");
     }
 
     @Test
@@ -106,9 +105,12 @@ class BlackjackGameTest {
         bust.hit(CARDS_OF_BUST);
         blackjackGame.addPlayer(blackjack);
         blackjackGame.addPlayer(bust);
-
-        Map<Participant, Money> prize = blackjackGame.calculatePrize();
-        assertThat(prize.get(dealer)).isEqualTo(new Money(-5000));
+        //when
+        List<ParticipantPrizeDto> participantsPrize = blackjackGame.calculatePrize();
+        ParticipantPrizeDto dealerPrize = participantsPrize.stream()
+                .filter(dto -> dto.getParticipantName() == "딜러").findFirst().orElseThrow();
+        //then
+        assertThat(dealerPrize.getPrizeAmount()).isEqualTo(-5000);
     }
 
     @DisplayName("딜러에게 추가 카드를 주는 기능")

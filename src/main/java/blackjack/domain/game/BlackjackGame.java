@@ -14,6 +14,7 @@ import blackjack.domain.participant.player.Players;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private Players players;
@@ -78,12 +79,14 @@ public class BlackjackGame {
                 .product(-1);
     }
 
-    public Map<Participant, Money> calculatePrize() {
+    public List<ParticipantPrizeDto> calculatePrize() {
         Map<Player, Money> playerMoneyMap = players.calculateEachPrize(dealer);
         Money dealerPrize = calculateDealerPrize(playerMoneyMap);
         Map<Participant, Money> prize = new HashMap<>();
         prize.put(dealer, dealerPrize);
         prize.putAll(playerMoneyMap);
-        return prize;
+        return prize.entrySet().stream()
+                .map(ParticipantPrizeDto::of)
+                .collect(Collectors.toList());
     }
 }
