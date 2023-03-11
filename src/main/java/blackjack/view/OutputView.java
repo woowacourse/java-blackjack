@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.dto.ChallengerResultDto;
-import blackjack.dto.DealerResultDto;
+import blackjack.dto.ChallengerProfitDto;
+import blackjack.dto.DealerProfitDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerStatusWithPointDto;
 
@@ -14,10 +14,10 @@ public class OutputView {
     private static final String GIVE_START_CARD_COMPLETE_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String DEALER_CAN_PICK_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_CAN_NOT_PICK_MESSAGE = "딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.";
-    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 승패";
+    private static final String FINAL_PROFIT_HEADER_MESSAGE = "## 최종 수익";
     private static final String CARD = "카드";
     private static final String ITEM_DELIMITER = ", ";
-    private static final String PLAYER_NAME_AND_CARDS_PARTITION = ": ";
+    private static final String PLAYER_NAME_PARTITION = ": ";
     private static final String RESULT_PREFIX = " - 결과: ";
 
     public static void printErrorMessage(Exception exception) {
@@ -46,7 +46,7 @@ public class OutputView {
 
     private static void printDealerName(String name) {
         System.out.print(name);
-        System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
+        System.out.print(PLAYER_NAME_PARTITION);
     }
 
     private static void printOneCardFromDealer(String card) {
@@ -66,7 +66,7 @@ public class OutputView {
 
     public static void printChallengerStatus(PlayerStatusDto challenger) {
         System.out.print(challenger.getName() + CARD);
-        System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
+        System.out.print(PLAYER_NAME_PARTITION);
         String cards = String.join(ITEM_DELIMITER, challenger.getCards());
         System.out.print(cards);
     }
@@ -111,43 +111,22 @@ public class OutputView {
         System.out.println(RESULT_PREFIX + point);
     }
 
-    public static void printFinalRank(ChallengerResultDto challengerResultDto, DealerResultDto dealerResultDto) {
+    public static void printProfits(ChallengerProfitDto challengerProfitDto, DealerProfitDto dealerProfitDto) {
         System.out.println();
-        System.out.println(FINAL_RESULT_HEADER_MESSAGE);
-        printDealerFinalRank(dealerResultDto);
-        printChallengersFinalRank(challengerResultDto);
+        System.out.println(FINAL_PROFIT_HEADER_MESSAGE);
+        printDealerProfit(dealerProfitDto);
+        printChallengersProfit(challengerProfitDto);
     }
 
-    private static void printDealerFinalRank(DealerResultDto dealerResultDto) {
-        System.out.print(dealerResultDto.getName() + PLAYER_NAME_AND_CARDS_PARTITION);
-        printDealerWinCount(dealerResultDto);
-        printDealerDrawCount(dealerResultDto);
-        printDealerLoseCount(dealerResultDto);
-        System.out.println();
+    private static void printDealerProfit(DealerProfitDto dealerProfitDto) {
+        System.out.print(dealerProfitDto.getName() + PLAYER_NAME_PARTITION);
+        System.out.println(dealerProfitDto.getProfit());
     }
 
-    private static void printDealerWinCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getWinCount() != 0) {
-            System.out.print(dealerResultDto.getWinCount() + "승 ");
-        }
-    }
-
-    private static void printDealerDrawCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getDrawCount() != 0) {
-            System.out.print(dealerResultDto.getDrawCount() + "무 ");
-        }
-    }
-
-    private static void printDealerLoseCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getLoseCount() != 0) {
-            System.out.print(dealerResultDto.getLoseCount() + "패 ");
-        }
-    }
-
-    private static void printChallengersFinalRank(ChallengerResultDto challengerResultDto) {
-        Map<String, Integer> nameAndRanks = challengerResultDto.getNameAndProfits();
+    private static void printChallengersProfit(ChallengerProfitDto challengerProfitDto) {
+        Map<String, Integer> nameAndRanks = challengerProfitDto.getNameAndProfits();
         for (String name : nameAndRanks.keySet()) {
-            System.out.println(name + PLAYER_NAME_AND_CARDS_PARTITION + nameAndRanks.get(name));
+            System.out.println(name + PLAYER_NAME_PARTITION + nameAndRanks.get(name));
         }
     }
 }

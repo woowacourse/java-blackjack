@@ -5,7 +5,6 @@ import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -84,17 +83,5 @@ public class Result {
                 .stream()
                 .reduce(Money.zero(), Money::sum);
         return Money.multiply(challengersProfit, -1);
-    }
-
-    public int getDealerWinCount() {
-        return Collections.frequency(results.values(), Rank.LOSE);
-    }
-
-    public int getDealerDrawCount() {
-        return Collections.frequency(results.values(), Rank.DRAW);
-    }
-
-    public int getDealerLoseCount() {
-        return Collections.frequency(results.values(), Rank.WIN);
     }
 }

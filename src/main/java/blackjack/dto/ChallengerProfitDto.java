@@ -8,11 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChallengerResultDto {
+public class ChallengerProfitDto {
 
     private final Map<String, Integer> nameAndProfits;
 
-    public ChallengerResultDto(Result result, List<Challenger> challengers) {
+    public ChallengerProfitDto(Result result, List<Challenger> challengers) {
         Map<String, Integer> nameAndProfits = new LinkedHashMap<>();
         for (Challenger challenger : challengers) {
             Money challengerProfit = result.getChallengerProfit(challenger);

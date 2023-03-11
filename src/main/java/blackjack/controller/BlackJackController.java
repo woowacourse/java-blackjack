@@ -10,8 +10,8 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerNameAndMoneyDto;
-import blackjack.dto.ChallengerResultDto;
-import blackjack.dto.DealerResultDto;
+import blackjack.dto.ChallengerProfitDto;
+import blackjack.dto.DealerProfitDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerStatusWithPointDto;
 import blackjack.view.InputView;
@@ -132,7 +132,7 @@ public class BlackJackController {
 
     private void showResult() {
         showPoint();
-        showRank();
+        showProfits();
     }
 
     private void showPoint() {
@@ -153,10 +153,10 @@ public class BlackJackController {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private void showRank() {
+    private void showProfits() {
         Result result = blackJackGame.makeResult();
-        ChallengerResultDto challengerResultDto = new ChallengerResultDto(result, blackJackGame.getChallengers());
-        DealerResultDto dealerResultDto = new DealerResultDto(result, blackJackGame.getDealer());
-        OutputView.printFinalRank(challengerResultDto, dealerResultDto);
+        ChallengerProfitDto challengerProfitDto = new ChallengerProfitDto(result, blackJackGame.getChallengers());
+        DealerProfitDto dealerProfitDto = new DealerProfitDto(blackJackGame.getDealer(), result.getDealerProfit());
+        OutputView.printProfits(challengerProfitDto, dealerProfitDto);
     }
 }
