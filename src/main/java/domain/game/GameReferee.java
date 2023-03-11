@@ -8,7 +8,8 @@ public enum GameReferee {
     FIRST_TURN_DEALER_WIN(GameReferee::isFirstDealerWin),
     FIRST_TURN_PLAYER_WIN(GameReferee::isFirstPlayerWin),
     IS_DEALER_WIN(GameReferee::isDealerWin),
-    IS_PLAYER_WIN(GameReferee::isPlayerWin);
+    IS_PLAYER_WIN(GameReferee::isPlayerWin),
+    IS_ALL_BLACKJACK(GameReferee::isAllBlackJack);
 
     private final BiPredicate<Participant, Participant> referee;
 
@@ -33,6 +34,10 @@ public enum GameReferee {
     private static boolean isPlayerWin(final Participant dealer, final Participant player) {
         return player.isBlackJack()
                 || dealer.calculateScore() < player.calculateScore();
+    }
+
+    private static boolean isAllBlackJack(final Participant dealer, final Participant player) {
+        return player.isBlackJack() && dealer.isBlackJack();
     }
 
     public BiPredicate<Participant, Participant> getReferee() {
