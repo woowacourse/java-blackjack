@@ -12,4 +12,8 @@ public class Player extends Participant {
     public void bet(int amount) {
         this.amount = this.amount.updateAmount(amount);
     }
+
+    public Amount getAmount() {
+        return amount;
+    }
 }

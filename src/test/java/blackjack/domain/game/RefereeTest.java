@@ -109,4 +109,70 @@ class RefereeTest {
 
         Assertions.assertThat(results).isEqualTo(List.of(Result.BLACKJACK, Result.BLACKJACK));
     }
+
+    @Test
+    void calculatePlayersBlackJackProfit() {
+        Dealer dealer = new Dealer();
+        hit(dealer, List.of("7", "10"));
+        Players blackjackPlayers = new Players("무민,아마란스");
+        hitBlackJack(blackjackPlayers.getPlayers().get(0));
+        hitBlackJack(blackjackPlayers.getPlayers().get(1));
+        blackjackPlayers.bet(List.of(20000, 40000));
+
+        List<Integer> profits = referee.calculatePlayersProfit(referee.judgeResult(dealer,
+                blackjackPlayers), blackjackPlayers);
+
+        Assertions.assertThat(profits).isEqualTo(List.of(30000, 60000));
+    }
+
+    @Test
+    void calculatePlayersPlusProfit() {
+        Dealer dealer = new Dealer();
+        hit(dealer, List.of("7", "5"));
+        Players players = new Players("무민,아마란스");
+        Player score14Player = players.getPlayers().get(0);
+        Player score16Player = players.getPlayers().get(1);
+        hit(score14Player, List.of("8", "6"));
+        hit(score16Player, List.of("10", "6"));
+        players.bet(List.of(20000, 40000));
+
+        List<Integer> profits = referee.calculatePlayersProfit(referee.judgeResult(dealer,
+                players), players);
+
+        Assertions.assertThat(profits).isEqualTo(List.of(20000, 40000));
+    }
+
+    @Test
+    void calculatePlayersMinusProfit() {
+        Dealer dealer = new Dealer();
+        hit(dealer, List.of("7", "5"));
+        Players players = new Players("무민,아마란스");
+        Player score10Player = players.getPlayers().get(0);
+        Player score7Player = players.getPlayers().get(1);
+        hit(score10Player, List.of("6", "4"));
+        hit(score7Player, List.of("4", "3"));
+        players.bet(List.of(20000, 40000));
+
+        List<Integer> profits = referee.calculatePlayersProfit(referee.judgeResult(dealer,
+                players), players);
+
+        Assertions.assertThat(profits).isEqualTo(List.of(-20000, -40000));
+    }
+
+    @Test
+    void calculatePlayersNoneProfit() {
+        Dealer dealer = new Dealer();
+        hit(dealer, List.of("7", "5"));
+        Players players = new Players("무민,아마란스");
+        Player score12Player1 = players.getPlayers().get(0);
+        Player score12Player2 = players.getPlayers().get(1);
+        hit(score12Player1, List.of("8", "4"));
+        hit(score12Player2, List.of("10", "2"));
+        players.bet(List.of(20000, 40000));
+
+        List<Integer> profits = referee.calculatePlayersProfit(referee.judgeResult(dealer,
+                players), players);
+
+        Assertions.assertThat(profits).isEqualTo(List.of(0, 0));
+    }
 }
