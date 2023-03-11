@@ -8,16 +8,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    public static final Score bustLowerBound = Score.of(22);
-
     private static final int INIT_NUMBER = 0;
 
-    private final Map<Result, Integer> dealerResult;
-    private final Map<Player, Result> playerResult;
+    private final Map<Result, Integer> dealerResults;
+    private final Map<Player, Result> playersResults;
 
     public GameResult(Game game) {
-        this.dealerResult = initDealerResult();
-        this.playerResult = new LinkedHashMap<>();
+        this.dealerResults = initDealerResult();
+        this.playersResults = new LinkedHashMap<>();
         accumulationResult(game);
     }
 
@@ -34,18 +32,18 @@ public class GameResult {
         Dealer dealer = game.getDealer();
 
         for (Player player : game.getPlayers()) {
-            Result playerWin = ResultReferee.getPlayerResult(player, dealer);
-            Result dealerWin = ResultReferee.getOpponentResult(playerWin);
-            playerResult.put(player, playerWin);
-            dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
+            Result playerResult = ResultReferee.getPlayerResult(player, dealer);
+            Result dealerResult = ResultReferee.getOpponentResult(playerResult);
+            playersResults.put(player, playerResult);
+            dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
         }
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        return dealerResult;
+    public Map<Result, Integer> getDealerResults() {
+        return dealerResults;
     }
 
-    public Map<Player, Result> getPlayerResult() {
-        return playerResult;
+    public Map<Player, Result> getPlayersResults() {
+        return playersResults;
     }
 }
