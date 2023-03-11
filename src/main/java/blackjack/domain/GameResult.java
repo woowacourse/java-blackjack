@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 
 import java.util.HashMap;
@@ -30,22 +31,14 @@ public class GameResult {
     }
 
     private void accumulationResult(Game game) {
-        Score dealerScore = game.getDealer().calculateScore();
+        Dealer dealer = game.getDealer();
 
         for (Player player : game.getPlayers()) {
-            Score playerScore = player.calculateScore();
-            Result playerWin = getPlayerResult(dealerScore, player, playerScore);
-            Result dealerWin = Result.getOpponentResult(playerWin);
+            Result playerWin = ResultReferee.getPlayerResult(player, dealer);
+            Result dealerWin = ResultReferee.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
-    }
-
-    private Result getPlayerResult(Score dealerScore, Player player, Score playerScore) {
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-        return Result.getLeftResult(playerScore, dealerScore, bustLowerBound);
     }
 
     public Map<Result, Integer> getDealerResult() {
