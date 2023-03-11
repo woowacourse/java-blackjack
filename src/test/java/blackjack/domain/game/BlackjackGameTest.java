@@ -117,4 +117,14 @@ public class BlackjackGameTest {
         assertThat(blackjackGame.playDealer(dealer)).isFalse();
         assertThat(dealer.getCards().size()).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("딜러가 파산 이후 드로우 하는지 테스트")
+    void drawAfterDealerBust(){
+        BlackjackGame blackjackGame = new BlackjackGame(deck);
+        while(dealer.isNotBust()){
+            blackjackGame.drawCard(dealer);
+        }
+        assertThat(blackjackGame.playDealer(dealer)).isFalse();
+    }
 }

@@ -26,7 +26,7 @@ public class ParticipantsDto {
     }
 
     private void putParticipant(Participant participant) {
-        participantsMap.put(participant.getName(), new CardsDto(participant.getCards(), participant.getTotalScore()));
+        participantsMap.put(participant.getName(), new CardsDto(participant.getCards(), participant.getActualScore()));
     }
 
     public CardsDto getDealerCards() {

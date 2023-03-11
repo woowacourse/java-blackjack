@@ -42,10 +42,13 @@ public class OutputView {
     }
 
     public void outputPlayerCard(final String name, final CardsDto cards) {
-        System.out.print(name + PLAYER_SCORE_DELIMITER +
+        System.out.print(playerNameAndCards(name,cards));
+    }
+    private String playerNameAndCards(final String name, final CardsDto cards){
+        return name + PLAYER_SCORE_DELIMITER +
                 cards.getCards().stream()
                         .map(this::combineStringWith)
-                        .collect(Collectors.joining(PLAYER_DELIMITER)));
+                        .collect(Collectors.joining(PLAYER_DELIMITER));
     }
 
     private String combineStringWith(CardInfo cardInfo) {
@@ -58,7 +61,7 @@ public class OutputView {
     }
 
     public void outputCardsAndScore(ParticipantsDto participantsDto) {
-        outputPlayerCard(DEALER_NAME, participantsDto.getDealerCards());
+        System.out.print(playerNameAndCards(DEALER_NAME,participantsDto.getDealerCards()));
         outputScore(participantsDto.getDealerCards().getTotalScore());
         changeLine();
         participantsDto.getParticipantsMap().forEach((name, cards) -> {
@@ -68,7 +71,6 @@ public class OutputView {
         });
         changeLine();
     }
-
     private void outputScore(final int score) {
         System.out.print(RESULT_DELIMITER + score);
     }

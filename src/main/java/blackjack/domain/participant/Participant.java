@@ -28,6 +28,10 @@ public class Participant {
         return this.cards.getCards();
     }
 
+    public int getActualScore(){
+        return this.cards.calculateTotalScore();
+    }
+
 
     public int getTotalScore() {
         if(cards.isBlackjack()){

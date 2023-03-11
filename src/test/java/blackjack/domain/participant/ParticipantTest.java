@@ -22,7 +22,7 @@ public class ParticipantTest {
     void getTotalScoreTest() {
         // given
         Participant participant = new Participant(new Name("test"));
-        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card1 = new Card(Shape.CLOVER, Letter.TEN);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         int expected = card1.getScore() + card2.getScore();
         participant.drawCard(card1);
