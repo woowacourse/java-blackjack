@@ -1,13 +1,10 @@
 package domain.vo;
 
+import domain.type.Result;
 import java.util.List;
 
 public class Profit {
 
-    private static final double NUMBER_TO_MULTIPLE_WHEN_DEFEAT = -1D;
-    private static final double NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN = 1.5D;
-    private static final double NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN = 1D;
-    private static final double DRAW_VALUE = 0D;
     private static final int NUMBER_TO_MULTIPLE_DEALER_PROFIT = -1;
     private final double value;
 
@@ -17,19 +14,19 @@ public class Profit {
 
 
     public static Profit blackJackVictory(final Batting batting) {
-        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_BLACKJACK_WIN);
+        return new Profit(batting.getValue() * Result.BLACKJACK_VICTORY.getRate());
     }
 
     public static Profit victory(final Batting batting) {
-        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_NORMAL_WIN);
+        return new Profit(batting.getValue() * Result.VICTORY.getRate());
     }
 
     public static Profit defeat(final Batting batting) {
-        return new Profit(batting.getValue() * NUMBER_TO_MULTIPLE_WHEN_DEFEAT);
+        return new Profit(batting.getValue() * Result.DEFEAT.getRate());
     }
 
     public static Profit draw() {
-        return new Profit(DRAW_VALUE);
+        return new Profit(Result.DRAW.getRate());
     }
 
     public static Profit makeDealerProfitFrom(final List<Profit> playerProfits) {

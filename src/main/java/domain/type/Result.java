@@ -6,15 +6,17 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    BLACKJACK_VICTORY(Result::isBlackJackWin),
-    VICTORY(Result::isWin),
-    DRAW(Result::isDraw),
-    DEFEAT(Result::isDefeat),
+    BLACKJACK_VICTORY(1.5D, Result::isBlackJackWin),
+    VICTORY(1D, Result::isWin),
+    DRAW(0D, Result::isDraw),
+    DEFEAT(-1D, Result::isDefeat),
     ;
 
+    private final double rate;
     private final BiPredicate<Player, Dealer> condition;
 
-    Result(final BiPredicate<Player, Dealer> condition) {
+    Result(final double rate, final BiPredicate<Player, Dealer> condition) {
+        this.rate = rate;
         this.condition = condition;
     }
 
@@ -49,5 +51,9 @@ public enum Result {
 
     private static boolean bothBlackJack(final Player player, final Dealer dealer) {
         return player.isBlackJack() && dealer.isBlackJack();
+    }
+
+    public double getRate() {
+        return rate;
     }
 }
