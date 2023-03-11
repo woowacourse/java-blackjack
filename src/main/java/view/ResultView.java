@@ -29,8 +29,9 @@ public class ResultView {
         System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
     }
 
-    public static void printFinalProfit(Map<String, String> finalProfitByPlayer) {
+    public static void printFinalProfit(Double dealerFinalProfit, Map<String, Double> finalProfitByPlayer) {
         System.out.println(FINAL_PROFIT_MESSAGE);
+        System.out.println(Constants.DEALER_NAME + ": " + dealerFinalProfit);
         for (String participantName : finalProfitByPlayer.keySet()) {
             System.out.println(participantName + ": " + finalProfitByPlayer.get(participantName));
         }
