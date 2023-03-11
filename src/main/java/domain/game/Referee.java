@@ -32,22 +32,22 @@ public class Referee {
     private double decideParticipantProfit(Player dealer, Player participant, double betAmount) {
         Score participantTotalScore = participant.getTotalScore();
         Score dealerTotalScore = dealer.getTotalScore();
-        double profit = participant.calculateProfit(betAmount);
+        double participantProfit = participant.calculateProfit(betAmount);
         
         if (participant.isBust() || dealer.isBust()) {
-            return profit;
+            return participantProfit;
         }
         
-        return decideParticipantProfitWithScore(participantTotalScore, dealerTotalScore, profit);
+        return decideParticipantProfitWithScore(participantTotalScore, dealerTotalScore, participantProfit);
     }
     
-    private double decideParticipantProfitWithScore(Score participantTotalScore, Score dealerTotalScore, double profit) {
+    private double decideParticipantProfitWithScore(Score participantTotalScore, Score dealerTotalScore, double participantProfit) {
         if (participantTotalScore.isOverThen(dealerTotalScore)) {
-            return profit;
+            return participantProfit;
         }
         
         if (participantTotalScore.isLessThen(dealerTotalScore)) {
-            return -profit;
+            return -participantProfit;
         }
         
         return 0;
