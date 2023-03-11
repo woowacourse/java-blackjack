@@ -39,6 +39,10 @@ public class BlackJackGame {
         user.hit(deck.pickCard());
     }
 
+    public void stay(String playerName) {
+        users.stayByName(playerName);
+    }
+
     public void giveCard(String playerName) {
         users.hitCardByName(playerName, deck.pickCard());
     }

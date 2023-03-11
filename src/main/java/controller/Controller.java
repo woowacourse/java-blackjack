@@ -58,10 +58,22 @@ public class Controller {
 
     private void askPlayerHitCommand(final Player player, final BlackJackGame blackJackGame) {
         String playerName = player.getName();
-        while (player.isDrawable() && inputView.askHitCommand(playerName)) {
-            blackJackGame.giveCard(playerName);
+        boolean isDrawable = true;
+        while (isDrawable) {
+            boolean isHit = hitOrStay(playerName, blackJackGame);
+            isDrawable = isHit && player.isDrawable();
             outputView.printEachPlayerCards(playerName, player.getCards());
         }
+    }
+
+    private boolean hitOrStay(final String playerName, final BlackJackGame blackJackGame) {
+        boolean isHit = inputView.askHitCommand(playerName);
+        if (!isHit) {
+            blackJackGame.stay(playerName);
+            return false;
+        }
+        blackJackGame.giveCard(playerName);
+        return true;
     }
 
     private void giveCardToDealer(BlackJackGame blackJackGame) {

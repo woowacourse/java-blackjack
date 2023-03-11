@@ -17,6 +17,10 @@ public class Player extends User {
         this.bettingAmount = BettingAmount.valueOf(bettingAmount);
     }
 
+    public void stay() {
+        this.state = state.stay();
+    }
+
     public boolean isRightName(final String name) {
         return new PlayerName(name).equals(this.name);
     }

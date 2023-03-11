@@ -7,14 +7,14 @@ import java.util.List;
 
 public abstract class User {
 
-    protected final State state;
+    protected State state;
 
     public User() {
         this.state = new Ready();
     }
 
     public void hit(Card card) {
-        state.draw(card);
+        this.state = state.draw(card);
     }
 
     public List<Card> getCards() {

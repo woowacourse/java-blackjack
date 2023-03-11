@@ -18,4 +18,9 @@ public abstract class Terminated extends State {
     public boolean isDrawable() {
         return false;
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("이미 게임 완료되었습니다.");
+    }
 }

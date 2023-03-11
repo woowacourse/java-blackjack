@@ -25,7 +25,8 @@ public class Running extends State {
     public boolean isDrawable() {
         return true;
     }
-
+    
+    @Override
     public State stay() {
         return new Stay(cards);
     }

@@ -24,4 +24,9 @@ public class Ready extends State {
     public boolean isDrawable() {
         return true;
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("게임 시작 전입니다.");
+    }
 }

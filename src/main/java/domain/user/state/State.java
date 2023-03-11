@@ -20,6 +20,8 @@ public abstract class State {
 
     public abstract boolean isDrawable();
 
+    public abstract State stay();
+
     public List<Card> getCards() {
         return cards.getCards();
     }

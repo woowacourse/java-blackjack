@@ -53,15 +53,24 @@ public class Users {
     }
 
     public void hitCardByName(final String name, final Card card) {
-        Player player = players.get(name);
-        checkPlayerNotExist(player);
+        Player player = findPlayerByName(name);
         player.hit(card);
     }
 
+    public void stayByName(final String name) {
+        Player player = findPlayerByName(name);
+        player.stay();
+    }
+
     public void bettingByName(final String name, final int bettingAmount) {
+        Player player = findPlayerByName(name);
+        player.betting(bettingAmount);
+    }
+
+    private Player findPlayerByName(final String name) {
         Player player = players.get(name);
         checkPlayerNotExist(player);
-        player.betting(bettingAmount);
+        return player;
     }
 
     private void checkPlayerNotExist(Player player) {
