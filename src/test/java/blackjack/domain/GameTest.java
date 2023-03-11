@@ -4,10 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.Deck;
-import blackjack.domain.gameplayer.Dealer;
-import blackjack.domain.gameplayer.Name;
-import blackjack.domain.gameplayer.Player;
-import blackjack.domain.gameplayer.Players;
+import blackjack.domain.gameplayer.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +21,7 @@ class GameTest {
         // given
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName" + i)));
+            players.add(new Player(new Name("newName" + i), Betting.of(2000)));
         }
 
         Stack<Card> cards = new Stack<>();

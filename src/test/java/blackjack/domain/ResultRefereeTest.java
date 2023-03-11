@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
+import blackjack.domain.gameplayer.Betting;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Name;
 import blackjack.domain.gameplayer.Player;
@@ -31,7 +32,7 @@ class ResultRefereeTest {
 
     @BeforeEach
     void init() {
-        kong = new Player(new Name("tori"));
+        kong = new Player(new Name("tori"), Betting.of(2000));
         dealer = new Dealer();
     }
 

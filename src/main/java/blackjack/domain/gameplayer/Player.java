@@ -19,10 +19,6 @@ public class Player extends BlackJackParticipant {
         this.betting = betting;
     }
 
-    public Player(Name name) {
-        this(name, Betting.defaultBetting);
-    }
-
     public void bet(int betting) {
         this.betting = this.betting.changeBetting(betting);
     }
