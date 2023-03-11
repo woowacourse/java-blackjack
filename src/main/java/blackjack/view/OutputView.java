@@ -57,7 +57,7 @@ public class OutputView {
     }
 
     public static void printCardsWithSum(final List<Player> players, final Dealer dealer) {
-        System.out.println();
+        System.out.println(NEW_LINE);
         printParticipantCards("딜러", dealer.getCards());
         System.out.println(" - 결과: " + dealer.calculateSumOfRank());
         for (Player player : players) {

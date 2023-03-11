@@ -28,7 +28,16 @@ class ProfitTest {
         // when & then
         assertThatThrownBy(() -> Profit.of(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 양수여야 합니다.");
+                .hasMessage("베팅 금액은 1 이상이여야 합니다.");
+    }
+
+    @ParameterizedTest(name = "100,000,000을 초과할 경우 예외가 발생한다.")
+    @ValueSource(ints = {100_000_001})
+    void validateMaxNumber(int input) {
+        // when & then
+        assertThatThrownBy(() -> Profit.of(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 100,000,000 이하여야 합니다.");
     }
 
     @DisplayName("결과에 따라 수익이 정상적으로 생성된다.")
