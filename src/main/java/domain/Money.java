@@ -4,14 +4,18 @@ public class Money {
 
     private final int value;
 
-    public Money(int value) {
-        validateNotNegative(value);
+    private Money(int value) {
         this.value = value;
     }
 
-    private void validateNotNegative(int value) {
+    public static Money of(int value) {
+        validateNotNegative(value);
+        return new Money(value);
+    }
+
+    private static void validateNotNegative(int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("금액은 음수 일 수 없습니다");
+            throw new IllegalArgumentException("금액은 음수일 수 없습니다");
         }
     }
 
