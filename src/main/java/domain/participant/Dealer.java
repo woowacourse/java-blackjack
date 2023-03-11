@@ -33,7 +33,7 @@ public final class Dealer extends Participant {
         return calculatePoint().isLowerThan(STANDARD_OF_NEED_MORE_CARD) && !this.isBusted();
     }
 
-    public Hand getFirstCard() {
-        return Hand.create(List.of(hand.getFirstCard()));
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 }

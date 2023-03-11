@@ -58,6 +58,10 @@ public final class OutputView {
                 getCardStringOf(participant.getCards()));
     }
 
+    private String getCardStringOf(final Card hand) {
+        return makeCardString(hand);
+    }
+
     private String getCardStringOf(final Hand hand) {
         return hand.getCards().stream()
                 .map(this::makeCardString)
