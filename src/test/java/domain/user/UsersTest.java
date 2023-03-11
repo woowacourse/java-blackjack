@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.BettingMoney;
+import domain.bettingMoney.BettingMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Score;
