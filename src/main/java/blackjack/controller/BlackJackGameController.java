@@ -75,7 +75,7 @@ public class BlackJackGameController {
         while (isCheckPlayerCommand(player)) {
             game.giveCardTo(player);
             outputView.printPlayerName(player);
-            outputView.printBlackJackParticipantCards(player, LINE_SEPARATOR);
+            outputView.printCards(player.showCards(), LINE_SEPARATOR);
         }
     }
 
