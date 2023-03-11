@@ -5,7 +5,7 @@ package domain;
  * @version 1.0.0
  * @Created by 우가 on 2023/03/10
  */
-class Money {
+public class Money {
 
     private final int money;
 

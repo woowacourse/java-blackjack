@@ -109,4 +109,12 @@ public class OutputView {
     public void newLine() {
         System.out.print(NEW_LINE);
     }
+
+    public void printPlayerNameForBetting(final String playerName) {
+        System.out.println(playerName + "의 베팅 금액은?");
+    }
+
+    public void printErrorMessage(final String message) {
+        System.out.println(message);
+    }
 }

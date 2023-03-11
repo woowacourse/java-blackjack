@@ -30,4 +30,17 @@ public class InputView {
             throw new IllegalArgumentException("y 혹은 n 만 입력가능합니다.");
         }
     }
+
+    public int getBettingMoney() {
+        String input = scanner.nextLine();
+        return parseInteger(input);
+    }
+
+    private int parseInteger(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력해주세요.");
+        }
+    }
 }

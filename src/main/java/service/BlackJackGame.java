@@ -4,6 +4,7 @@ import domain.Card;
 import domain.CardBox;
 import domain.Cards;
 import domain.Dealer;
+import domain.Money;
 import domain.Name;
 import domain.Participants;
 import domain.Player;
@@ -26,14 +27,34 @@ public class BlackJackGame {
 
     public void run() {
         Participants participants = makeParticipants();
+
+        askPlayersBettingMoney(participants);
+
         printInitGameMessage(participants);
 
-        askPlayer(participants);
+        askPlayerMoreDrawCard(participants);
 
         drawDealerCardByMinimumCondition(participants.getDealer());
 
         printCardResult(participants);
         printWinningResult(participants);
+    }
+
+    private void askPlayersBettingMoney(final Participants participants) {
+        Dealer dealer = participants.getDealer();
+        for (final Player player : participants.getPlayersToList()) {
+            outputView.printPlayerNameForBetting(player.getName());
+            Money bettingMoney = getBettingMoney();
+        }
+    }
+
+    private Money getBettingMoney() {
+        try {
+            return new Money(inputView.getBettingMoney());
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return getBettingMoney();
+        }
     }
 
     private Participants makeParticipants() {
@@ -71,7 +92,7 @@ public class BlackJackGame {
         outputView.printCardsPerPlayer(participants.getPlayerNames(), participants.copiedPlayersCardsToList());
     }
 
-    private void askPlayer(final Participants participants) {
+    private void askPlayerMoreDrawCard(final Participants participants) {
         for (Player player : participants.getPlayersToList()) {
             drawCard(player, participants.getDealer());
         }
