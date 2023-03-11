@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.Number;
 import domain.Pattern;
+import domain.user.Score;
 
 public enum HeartCard implements Card {
     HEART_ACE(Pattern.HEART, Number.ACE),
@@ -32,7 +33,12 @@ public enum HeartCard implements Card {
     }
 
     @Override
-    public int getScore() {
-        return number.getScore();
+    public boolean isAce() {
+        return this.number == Number.ACE;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(number.getScore());
     }
 }

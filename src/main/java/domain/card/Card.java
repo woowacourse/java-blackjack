@@ -1,7 +1,11 @@
 package domain.card;
 
+import domain.user.Score;
+
 public interface Card {
-    int getScore();
+    Score getScore();
 
     String getSymbol();
+
+    boolean isAce();
 }
