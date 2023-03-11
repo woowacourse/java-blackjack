@@ -18,4 +18,8 @@ public class InputView {
         return SCANNER.next();
     }
 
+    public String getBet(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        return SCANNER.next();
+    }
 }

@@ -1,6 +1,8 @@
 package controller;
 
 import model.card.Deck;
+import model.money.Bet;
+import model.money.Purse;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
@@ -23,7 +25,11 @@ public class BlackJackController {
 
     public void init(final Deck deck) {
         final Dealer dealer = new Dealer();
-        final Participants participants = getParticipants(deck, dealer);
+        final Participants participants = getParticipants(dealer);
+        final Purse purse = Purse.create(participants.getPlayers());
+
+        betMoney(participants, purse);
+
         divideFirstCard(deck, participants);
 
         outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
@@ -35,8 +41,15 @@ public class BlackJackController {
                 new PlayerResultResponses(participants.findPlayerFinalResult()));
     }
 
-    private Participants getParticipants(final Deck deck, final Dealer dealer) {
+    private Participants getParticipants(final Dealer dealer) {
         return Participants.of(Arrays.asList(inputView.getPlayersName().split(",")), dealer);
+    }
+
+    private void betMoney(Participants participants, Purse purse) {
+        for (Player player : participants.getPlayers()) {
+            final Bet bet = new Bet(inputView.getBet(player.getName()));
+            purse.addMoney(player, bet);
+        }
     }
 
     private void divideFirstCard(final Deck deck, final Participants participants) {
