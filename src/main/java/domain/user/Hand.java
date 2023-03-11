@@ -28,12 +28,11 @@ public class Hand {
     }
 
     public Score score() {
-        Score score = sum();
         if (hasAce()) {
-            score = score.minusTenIfBust();
+            sum().minusTenIfBust();
         }
 
-        return score;
+        return sum();
     }
 
     private Score sum() {
