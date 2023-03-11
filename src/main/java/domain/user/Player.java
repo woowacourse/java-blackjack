@@ -31,6 +31,10 @@ public class Player extends User {
     public String getName() {
         return name;
     }
+
+    public Money getMoney() {
+        return money;
+    }
 }
 
 
