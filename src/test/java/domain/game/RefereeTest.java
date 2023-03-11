@@ -58,7 +58,7 @@ class RefereeTest {
     }
     
     @Test
-    @DisplayName("참가자 블랙잭, 딜러 블랙잭이면 무승부")
+    @DisplayName("참가자 블랙잭, 딜러 블랙잭이면 0 반환")
     void participantBlackjack_dealerBlackjack() {
         // given
         dealer.draw(new Card(Shape.HEART, Number.ACE));
@@ -68,9 +68,44 @@ class RefereeTest {
         int betAmount = 1000;
     
         // when
-        int betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isZero();
+    }
+    
+    @Test
+    @DisplayName("참가자 블랙잭, 딜러 점수가 더 낮으면 배팅 금액의 1.5배 반환")
+    void participantBlackjack_dealerNotBlackjack() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.ACE));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(1500);
+    }
+    
+    @Test
+    @DisplayName("참가자 블랙잭, 딜러 버스트면 배팅 금액의 1.5배 반환")
+    void participantBlackjack_dealerBust() {
+        // given
+        dealer.draw(new Card(Shape.HEART, Number.KING));
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+        abel.draw(new Card(Shape.DIAMOND, Number.ACE));
+        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
+        int betAmount = 1000;
+        
+        // when
+        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        
+        // then
+        assertThat(betResult).isEqualTo(1500);
     }
 }

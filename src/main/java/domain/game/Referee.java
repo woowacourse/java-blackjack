@@ -40,19 +40,35 @@ public class Referee {
         return Collections.unmodifiableMap(dealerGameResults);
     }
     
-    public int decidePlayersBattleResults1(Player dealer, Player participant, int betAmount) {
-        return 0;
+    public double decidePlayersBattleResults1(Player dealer, Player participant, int betAmount) {
+        Score participantTotalScore = participant.getTotalScore();
+        Score dealerTotalScore = dealer.getTotalScore();
+        double profit = participant.calculateProfit(betAmount);
+        
+        if (participant.isBust() || dealer.isBust()) {
+            return decideGameResultWithBust(participant, profit);
+        }
+        
+        return decideGameResultWithScore(participantTotalScore, dealerTotalScore, profit);
     }
     
-    private ParticipantGameResult decideGameResultWithScore(Score participantTotalScore, Score DealerTotalScore) {
-        if (participantTotalScore.isOverThen(DealerTotalScore)) {
-            return ParticipantGameResult.WIN;
+    private double decideGameResultWithBust(Player participant, double profit) {
+        if (participant.isBust()) {
+            return -profit;
         }
         
-        if (participantTotalScore.isLessThen(DealerTotalScore)) {
-            return ParticipantGameResult.LOSE;
+        return profit;
+    }
+    
+    private double decideGameResultWithScore(Score participantTotalScore, Score dealerTotalScore, double profit) {
+        if (participantTotalScore.isOverThen(dealerTotalScore)) {
+            return profit;
         }
         
-        return ParticipantGameResult.DRAW;
+        if (participantTotalScore.isLessThen(dealerTotalScore)) {
+            return -profit;
+        }
+        
+        return 0;
     }
 }
