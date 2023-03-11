@@ -29,20 +29,23 @@ public class OutputView {
         stringBuilder.append(CHANGE_LINE + DEALER_NAME + DEALER_ANDE_PLAYER_DELIMITER);
         stringBuilder.append(String.join(PLAYERS_DELIMITER, players) + GIVE_TWO_CARD_MASSAGE);
         System.out.println(stringBuilder);
+        changeLine();
     }
 
 
     public void outputParticipantCards(ParticipantsDto participantsDto) {
-        System.out.println(playerNameAndCards(DEALER_NAME,participantsDto.getDealerCards()));;
+        System.out.println(playerNameAndCards(DEALER_NAME, participantsDto.getDealerCards()));
+        ;
         participantsDto.getParticipantsMap().forEach((name, cards) -> {
-            System.out.println(playerNameAndCards(name,cards));
+            System.out.println(playerNameAndCards(name, cards));
         });
     }
 
     public void outputPlayerCard(final String name, final CardsDto cards) {
-        System.out.println(playerNameAndCards(name,cards));
+        System.out.println(playerNameAndCards(name, cards));
     }
-    private String playerNameAndCards(final String name, final CardsDto cards){
+
+    private String playerNameAndCards(final String name, final CardsDto cards) {
         return name + PLAYER_SCORE_DELIMITER +
                 cards.getCards().stream()
                         .map(this::combineStringWith)
@@ -60,16 +63,17 @@ public class OutputView {
 
     public void outputCardsAndScore(ParticipantsDto participantsDto) {
         changeLine();
-        System.out.print(playerNameAndCards(DEALER_NAME,participantsDto.getDealerCards()));
+        System.out.print(playerNameAndCards(DEALER_NAME, participantsDto.getDealerCards()));
         outputScore(participantsDto.getDealerCards().getTotalScore());
         changeLine();
         participantsDto.getParticipantsMap().forEach((name, cards) -> {
-            System.out.print(playerNameAndCards(name,cards));
+            System.out.print(playerNameAndCards(name, cards));
             outputScore(cards.getTotalScore());
+            changeLine();
         });
         changeLine();
-        changeLine();
     }
+
     private void outputScore(final int score) {
         System.out.print(RESULT_DELIMITER + score);
     }

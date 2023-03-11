@@ -16,15 +16,18 @@ public class Participants {
         this.dealer = dealer;
         this.players = makePlayer(players);
     }
-    private void validate(List<String> players){
+
+    private void validate(List<String> players) {
         validatePlayerLimit(players);
         validateEmptyNames(players);
     }
-    private void validatePlayerLimit(List<String> players){
-        if(players.size()> PLAYERS_COUNT_LIMIT){
+
+    private void validatePlayerLimit(List<String> players) {
+        if (players.size() > PLAYERS_COUNT_LIMIT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
         }
     }
+
     private void validateEmptyNames(final List<String> players) {
         players.forEach(Participants::checkNameIsEmpty);
     }

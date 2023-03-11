@@ -28,17 +28,18 @@ public class Participant {
         return this.cards.getCards();
     }
 
-    public int getActualScore(){
+    public int getActualScore() {
         return this.cards.calculateTotalScore();
     }
 
 
     public int getTotalScore() {
-        if(cards.isBlackjack()){
+        if (cards.isBlackjack()) {
             return Integer.MAX_VALUE;
         }
         return limitNumber(this.cards.calculateTotalScore());
     }
+
     private int limitNumber(int totalScore) {
         if (totalScore > MAX_NUMBER) {
             return Integer.MIN_VALUE;

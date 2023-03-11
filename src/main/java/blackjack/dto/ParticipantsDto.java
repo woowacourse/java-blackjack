@@ -15,7 +15,7 @@ public class ParticipantsDto {
     public ParticipantsDto(Participants participants) {
         participantsMap = new HashMap<>();
         Dealer dealer = participants.getDealer();
-        this.dealerCards = new CardsDto(dealer.getCards(), dealer.getTotalScore());
+        this.dealerCards = new CardsDto(dealer.getCards(), dealer.getActualScore());
         for (Player player : participants.getPlayers()) {
             putParticipant(player);
         }

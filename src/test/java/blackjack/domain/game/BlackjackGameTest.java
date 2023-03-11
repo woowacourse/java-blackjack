@@ -119,9 +119,9 @@ public class BlackjackGameTest {
 
     @Test
     @DisplayName("딜러가 파산 이후 드로우 하는지 테스트")
-    void drawAfterDealerBust(){
+    void drawAfterDealerBust() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
-        while(dealer.isNotBust()){
+        while (dealer.isNotBust()) {
             blackjackGame.drawCard(dealer);
         }
         assertThat(blackjackGame.playDealer(dealer)).isFalse();

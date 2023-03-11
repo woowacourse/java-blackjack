@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canNotHit() {
-        return getTotalScore() > 16||getTotalScore()<0;
+        return getTotalScore() > 16 || getTotalScore() < 0;
     }
 
     public void reverseAllExceptOne() {
