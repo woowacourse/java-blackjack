@@ -11,4 +11,8 @@ public enum Result {
     Result(final double payoutRatio) {
         this.payoutRatio = payoutRatio;
     }
+
+    public double getPayoutRatio() {
+        return payoutRatio;
+    }
 }
