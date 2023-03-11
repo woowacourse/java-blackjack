@@ -8,40 +8,40 @@ import java.util.stream.Collectors;
 
 public final class Card {
 
-    private static final Map<CardPattern, Map<Denomination, Card>> cache;
+    private static final Map<Shape, Map<Denomination, Card>> cache;
 
     static {
-        final List<CardPattern> cardPatterns = CardPattern.findAllCardPattern();
+        final List<Shape> shapes = Shape.findAllCardPattern();
         final List<Denomination> denominations = Denomination.findTotalCardNumber();
 
-        cache = makeCacheCards(cardPatterns, denominations);
+        cache = makeCacheCards(shapes, denominations);
     }
 
-    private final CardPattern pattern;
+    private final Shape pattern;
     private final Denomination number;
 
-    private Card(final CardPattern pattern, final Denomination number) {
+    private Card(final Shape pattern, final Denomination number) {
         this.pattern = pattern;
         this.number = number;
     }
 
-    private static Map<CardPattern, Map<Denomination, Card>> makeCacheCards(final List<CardPattern> cardPatterns,
+    private static Map<Shape, Map<Denomination, Card>> makeCacheCards(final List<Shape> shapes,
             final List<Denomination> denominations) {
-        return cardPatterns.stream()
+        return shapes.stream()
                 .collect(Collectors.toMap(Function.identity(),
                         pattern -> makeCacheCardNumbers(pattern, denominations)));
     }
 
-    private static Map<Denomination, Card> makeCacheCardNumbers(final CardPattern cardPattern,
+    private static Map<Denomination, Card> makeCacheCardNumbers(final Shape shape,
             final List<Denomination> denominations) {
         return denominations.stream()
                 .collect(Collectors.toMap(Function.identity(),
-                        number -> new Card(cardPattern, number)));
+                        number -> new Card(shape, number)));
     }
 
-    public static Card of(final CardPattern cardPattern, final Denomination denomination) {
+    public static Card of(final Shape shape, final Denomination denomination) {
         try {
-            final Map<Denomination, Card> cardNumbers = cache.get(cardPattern);
+            final Map<Denomination, Card> cardNumbers = cache.get(shape);
 
             return cardNumbers.get(denomination);
         } catch (NullPointerException e) {
@@ -57,7 +57,7 @@ public final class Card {
         return number.checkAce();
     }
 
-    public CardPattern getCardPattern() {
+    public Shape getCardPattern() {
         return pattern;
     }
 

@@ -3,11 +3,14 @@ package domain.card;
 import java.util.Arrays;
 import java.util.List;
 
-public enum CardPattern {
+public enum Shape {
 
-    HEART, SPADE, DIAMOND, CLOVER;
+    HEART,
+    SPADE,
+    DIAMOND,
+    CLOVER;
 
-    static List<CardPattern> findAllCardPattern() {
+    static List<Shape> findAllCardPattern() {
         return Arrays.asList(values());
     }
 }

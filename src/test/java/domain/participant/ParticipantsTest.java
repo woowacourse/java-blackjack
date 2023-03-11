@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.CardPattern;
+import domain.card.Shape;
 import domain.game.GameResult;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,7 +69,7 @@ class ParticipantsTest {
     @DisplayName("addCard() 테스트")
     class AddCardMethodTest {
 
-        private final Card card = Card.of(CardPattern.CLOVER, Denomination.QUEEN);
+        private final Card card = Card.of(Shape.CLOVER, Denomination.QUEEN);
 
         @ParameterizedTest(name = "addCard()는 플레이어의 순서와 카드를 전달하면 정상적으로 실행된다.")
         @ValueSource(ints = {0, 1, 2, 3})
@@ -116,7 +116,7 @@ class ParticipantsTest {
     @DisplayName("findPlayerCardsByOrder()은 플레이어 순서와 참가자 타입을 전달하면 가지고 있는 카드를 반환한다")
     void findPlayerCardsByOrder_givenOrderAndOffset_thenReturnParticipantCard() {
         // given
-        final Card card = Card.of(CardPattern.SPADE, Denomination.JACK);
+        final Card card = Card.of(Shape.SPADE, Denomination.JACK);
         participants.addCard(0, card, ParticipantOffset.PLAYER);
 
         // when

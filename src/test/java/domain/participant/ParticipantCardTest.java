@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.CardPattern;
+import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class ParticipantCardTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_whenSuccess() {
         // when
-        final Card card = Card.of(CardPattern.HEART, Denomination.ACE);
+        final Card card = Card.of(Shape.HEART, Denomination.ACE);
         participantCard.addCard(card);
 
         // then
@@ -49,7 +49,7 @@ class ParticipantCardTest {
     @DisplayName("getFirst()는 호출하면 참가자의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
-        final Card card = Card.of(CardPattern.HEART, Denomination.ACE);
+        final Card card = Card.of(Shape.HEART, Denomination.ACE);
         participantCard.addCard(card);
 
         // when
