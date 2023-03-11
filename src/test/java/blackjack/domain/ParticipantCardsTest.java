@@ -66,16 +66,6 @@ class ParticipantCardsTest {
         assertThat(cardSum).isEqualTo(expectedSum);
     }
 
-    @ParameterizedTest
-    @MethodSource("isBustDummy")
-    @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
-    void isBust(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, additionalCards);
-        boolean isBust = participantsCards.isBust();
-
-        assertThat(isBust).isEqualTo(expected);
-    }
-
     static Stream<Arguments> calculateDummy() {
         return Stream.of(
                 Arguments.arguments(List.of(
@@ -89,25 +79,35 @@ class ParticipantCardsTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("isBustDummy")
+    @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
+    void isBust(final List<Card> initialCards, final List<Card> additionalCards, final boolean expected) {
+        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(initialCards, additionalCards);
+        boolean isBust = participantsCards.isBust();
+
+        assertThat(isBust).isEqualTo(expected);
+    }
+
     static Stream<Arguments> isBustDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR)),
                         List.of(
                                 Card.of(Suit.DIAMOND, CardNumber.THREE),
                                 Card.of(Suit.HEART, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.THREE),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.THREE)),
                         List.of(
                                 Card.of(Suit.SPADE, CardNumber.ACE),
                                 Card.of(Suit.CLOVER, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR)),
                         List.of(
                                 Card.of(Suit.SPADE, CardNumber.ACE),
                                 Card.of(Suit.CLOVER, CardNumber.QUEEN),

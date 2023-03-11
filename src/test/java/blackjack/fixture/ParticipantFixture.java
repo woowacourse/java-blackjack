@@ -7,12 +7,12 @@ import blackjack.domain.card.ParticipantCards;
 import java.util.List;
 
 public abstract class ParticipantFixture {
-    public static Participant create(final Card one, final Card two, final List<Card> cards) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, cards);
+    public static Participant create(final List<Card> initialCards, final List<Card> cards) {
+        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(initialCards, cards);
         return new Participant(participantsCards, "pobi") {
             @Override
             public List<Card> initialOpen() {
-                return List.of(one, two);
+                return initialCards;
             }
 
             @Override

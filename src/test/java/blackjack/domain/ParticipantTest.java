@@ -17,7 +17,7 @@ class ParticipantTest {
     void getTotalPoint() {
         Card cardOne = Card.of(Suit.DIAMOND, CardNumber.SIX);
         Card cardTwo = Card.of(Suit.HEART, CardNumber.ACE);
-        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+        Participant participant = ParticipantFixture.create(List.of(cardOne, cardTwo), List.of());
         int totalPoint = participant.getTotalPoint();
 
         assertThat(totalPoint).isEqualTo(17);
@@ -28,7 +28,7 @@ class ParticipantTest {
     void hit() {
         Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
-        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+        Participant participant = ParticipantFixture.create(List.of(cardOne, cardTwo), List.of());
         int beforeHitPoint = participant.getTotalPoint();
         participant.hit(Card.of(Suit.SPADE, CardNumber.ACE));
         int afterHitPoint = participant.getTotalPoint();
@@ -41,7 +41,7 @@ class ParticipantTest {
     void open() {
         Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
-        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+        Participant participant = ParticipantFixture.create(List.of(cardOne, cardTwo), List.of());
 
         assertThat(participant.initialOpen()).containsAll(List.of(cardOne, cardTwo));
     }
