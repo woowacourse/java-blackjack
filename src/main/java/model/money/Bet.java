@@ -77,4 +77,8 @@ public class Bet {
                 "money=" + money +
                 '}';
     }
+
+    public Long getMoney() {
+        return money;
+    }
 }

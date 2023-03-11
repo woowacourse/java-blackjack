@@ -34,6 +34,9 @@ public class BlackJackController {
 
         divideCard(deck, participants, dealer);
         outputView.printScoreBoard(BlackJackGameResponse.create(participants));
+
+        purse.calculateMoneyAll(participants.getPlayers(), dealer);
+        printBetResult(dealer, purse);
     }
 
     private Participants getParticipants(final Dealer dealer) {
@@ -99,5 +102,11 @@ public class BlackJackController {
             dealer.receiveCard(deck.pick());
             outputView.printReceiveCardForDealer();
         }
+    }
+
+    private void printBetResult(Dealer dealer, Purse purse) {
+        outputView.printBetResult();
+        outputView.printDealerBetResult(dealer.getName(), purse.getTotalBet());
+        outputView.printPlayerBetResult(PurseResponse.create(purse.getPursesAll()));
     }
 }

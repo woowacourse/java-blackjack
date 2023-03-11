@@ -1,5 +1,6 @@
 package model.money;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,13 @@ public class Purse {
         purses.put(player, addedBet);
     }
 
-    public void calculateMoney(final Player player, final Dealer dealer) {
+    public void calculateMoneyAll(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            calculateMoney(player, dealer);
+        }
+    }
+
+    private void calculateMoney(final Player player, final Dealer dealer) {
         final State state = player.judgeResult(dealer);
         final Bet bet = findMoneyByPlayer(player);
         purses.put(player, bet.calculateBet(state));
@@ -37,5 +44,15 @@ public class Purse {
 
     public Bet findMoneyByPlayer(final Player player) {
         return purses.get(player);
+    }
+
+    public Map<Player, Bet> getPursesAll() {
+        return Collections.unmodifiableMap(new LinkedHashMap<>(purses));
+    }
+
+    public long getTotalBet() {
+        return purses.values().stream()
+                .mapToLong(Bet::getMoney)
+                .sum();
     }
 }
