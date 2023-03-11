@@ -1,11 +1,13 @@
 package domain.user;
 
-import domain.Referee;
+import domain.Money;
 import domain.card.Deck;
 import domain.Result;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static domain.Referee.getResult;
+import static domain.RewardCalculator.calculate;
 
 public class Users {
 
@@ -25,17 +27,24 @@ public class Users {
     }
 
     public Result getUserResult(User user) {
-        return Referee.getResult(user, dealer);
+        return getResult(user, dealer);
     }
 
-    public List<Result> getDealerResults() {
-        List<Result> results = new ArrayList<>();
+    public Money getDealerMoney() {
+        Money money = Money.zero();
 
         for (Player player : players) {
-            results.add(Referee.getResult(dealer, player));
+            money = money.add(getPlayerMoney(player));
         }
 
-        return results;
+        return money.multiply(-1);
+    }
+
+    private Money getPlayerMoney(Player player) {
+        Result result = getUserResult(player);
+        Money money = player.getMoney();
+
+        return calculate(result, money);
     }
 
     public List<Player> players() {

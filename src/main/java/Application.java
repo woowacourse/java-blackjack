@@ -1,4 +1,5 @@
-import domain.*;
+import domain.Game;
+import domain.Money;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -8,6 +9,8 @@ import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static domain.RewardCalculator.calculate;
 
 public class Application {
     private static final InputView inputView = new InputView();
@@ -87,10 +90,11 @@ public class Application {
         Users users = game.getUsers();
         outputView.printCardsAndScores(users);
         outputView.printResultNotice();
-        outputView.printDealerResults(users.getDealerResults());
+        outputView.printDealerResults(users.getDealerMoney());
         for (Player player : users.players()) {
             String name = player.getName();
-            outputView.printResult(name, users.getUserResult(player));
+            Money money = calculate(users.getUserResult(player), player.getMoney());
+            outputView.printResult(name, money);
         }
     }
 
