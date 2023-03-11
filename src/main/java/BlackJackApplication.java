@@ -64,7 +64,7 @@ public class BlackJackApplication {
             String inputBettingAmount = InputView.inputBettingAmount(name);
             return new Money(inputBettingAmount);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return readMoney(name);
         }
     }
@@ -76,7 +76,7 @@ public class BlackJackApplication {
 
 
     private static void askEachPlayers(Players players) {
-        System.out.println();
+        OutputView.printSpaceLine();
         for (Player player : players.getPlayers()) {
             askPlayerDistribute(player);
         }
@@ -84,7 +84,6 @@ public class BlackJackApplication {
 
     private static void dealerExecute(Dealer dealer) {
         while (dealer.isDrawable()) {
-            System.out.println();
             OutputView.printDealerReceivedMessage();
             dealer.getHandCards().takeCard(Deck.generateCard());
         }
@@ -115,7 +114,7 @@ public class BlackJackApplication {
     }
 
     private static void printFinalGameStatus(Players players, Dealer dealer) {
-        System.out.println();
+        OutputView.printSpaceLine();
         OutputView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.getScoreSum());
         printFinalPlayerResults(players);
     }
