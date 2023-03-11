@@ -36,14 +36,4 @@ public class ResultReferee {
         }
         return Result.BLACKJACK;
     }
-
-    public static Result getOpponentResult(Result result) {
-        if (result == Result.WIN || result == Result.BLACKJACK) {
-            return Result.LOSE;
-        }
-        if (result == Result.DRAW) {
-            return Result.DRAW;
-        }
-        return Result.WIN;
-    }
 }
