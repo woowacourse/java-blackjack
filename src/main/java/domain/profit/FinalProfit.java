@@ -14,6 +14,10 @@ public class FinalProfit {
         return new FinalProfit(this.profit + finalProfit.profit);
     }
 
+    public FinalProfit convertToNegative() {
+        return new FinalProfit(this.profit * -1);
+    }
+
     public double getProfit() {
         return profit;
     }
