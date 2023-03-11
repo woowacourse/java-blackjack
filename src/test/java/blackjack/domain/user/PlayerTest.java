@@ -24,17 +24,20 @@ class PlayerTest {
     private final String name = "test";
     private final Card cardKing = new Card(CardShape.SPADE, CardNumber.KING);
     private final Card cardEight = new Card(CardShape.CLOVER, CardNumber.EIGHT);
-    private CardGroup initialGroup;
+    private CardGroup initialCardGroup;
+    private CardGroup bustCardGroup;
 
     @BeforeEach
     void setUp() {
-        initialGroup = new CardGroup(cardKing, cardEight);
+        initialCardGroup = new CardGroup(cardKing, cardEight);
+        bustCardGroup = new CardGroup(cardKing, cardEight);
+        bustCardGroup.add(cardKing);
     }
 
     @Test
     @DisplayName("플레이어 초기화 테스트")
     void initTest() {
-        final User player = new Player(name, initialGroup);
+        final User player = new Player(name, initialCardGroup);
         assertSoftly(softly -> {
             softly.assertThat(player.getName().getValue()).isEqualTo(name);
             softly.assertThat(player.getCardGroups().getCards()).containsExactly(cardKing, cardEight);
@@ -44,7 +47,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 이름으로 '딜러'가 들어오는 경우 예외처리하는 기능 테스트")
     void throwExceptionWhenPlayerNameIsDealerName() {
-        assertThatThrownBy(() -> new Player(Dealer.DEALER_NAME, initialGroup)).isInstanceOf(
+        assertThatThrownBy(() -> new Player(Dealer.DEALER_NAME, initialCardGroup)).isInstanceOf(
                         IllegalArgumentException.class)
                 .hasMessage(Player.NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE);
     }
@@ -52,7 +55,7 @@ class PlayerTest {
     @Test
     @DisplayName("유저의 점수를 계산하는 기능 테스트")
     void getScoreTest() {
-        final User player = new Player(name, initialGroup);
+        final User player = new Player(name, initialCardGroup);
 
         assertThat(player.getScore().getValue())
                 .isEqualTo(cardKing.getNumber().getValue() + cardEight.getNumber().getValue());
@@ -62,7 +65,7 @@ class PlayerTest {
     @DisplayName("유저가 카드를 하나 뽑는 기능 테스트")
     void drawCardTest() {
         final Card card = new Card(CardShape.HEART, CardNumber.JACK);
-        final User player = new Player(name, initialGroup);
+        final User player = new Player(name, initialCardGroup);
         final Deck deck = new Deck(new TestNonShuffledDeckGenerator(List.of(card)));
 
         player.drawCard(deck);
@@ -73,20 +76,18 @@ class PlayerTest {
     @Test
     @DisplayName("첫 패 확인 테스트")
     void getInitialStatus() {
-        final User player = new Player(name, initialGroup);
+        final User player = new Player(name, initialCardGroup);
 
         assertThat(player.getFirstOpenCardGroup().getCards()).containsExactly(cardKing, cardEight);
     }
 
     @Nested
     @DisplayName("딜러와 플레이어의 카드를 비교하여, WinningStatus를 반환하는 기능 테스트")
-    class comparePlayerTest {
+    class calculateWinningStatusTest {
 
         @Test
-        @DisplayName("딜러가 bust 플레이어가 bust일 때 패배가 반환")
+        @DisplayName("플레이어가 bust일 때 패배가 반환")
         void comparePlayerTestIfDealerBustPlayerBust() {
-            final CardGroup bustCardGroup = initialGroup;
-            bustCardGroup.add(new Card(CardShape.CLOVER, CardNumber.FIVE));
             final Dealer dealer = new Dealer(bustCardGroup);
             final Player player = new Player(TEST_PLAYER_NAME, bustCardGroup);
 
@@ -96,10 +97,8 @@ class PlayerTest {
         @Test
         @DisplayName("딜러가 bust 플레이어가 bust가 아닐 때 승리가 반환")
         void comparePlayerTestIfDealerBustPlayerNonBust() {
-            final CardGroup bustCardGroup = new CardGroup(cardKing, cardEight);
-            bustCardGroup.add(new Card(CardShape.CLOVER, CardNumber.FIVE));
             final Dealer dealer = new Dealer(bustCardGroup);
-            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
@@ -108,7 +107,7 @@ class PlayerTest {
         @DisplayName("딜러와 플레이어가 bust가 아니고, score가 동일할 때 무승부 반환")
         void comparePlayerEqualScore() {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
-            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.TIE);
         }
@@ -118,7 +117,7 @@ class PlayerTest {
         void comparePlayerIfPlayerScoreBiggerThanDealer() {
             final Dealer dealer = new Dealer(new CardGroup
                     (new Card(CardShape.HEART, CardNumber.FIVE), new Card(CardShape.CLOVER, CardNumber.EIGHT)));
-            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
@@ -127,20 +126,94 @@ class PlayerTest {
         @DisplayName("딜러와 플레이어는 버스트가 아니고 플레이어의 점수가 딜러보다 낮은 경우 패배 반환")
         void comparePlayerIfPlayerScoreSmallerThanDealer() {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardKing));
-            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
+    }
+
+    @Nested
+    @DisplayName("플레이어의 수익률을 반환하는 기능 테스트")
+    class calculateProfitTest {
+
+        private final CardGroup blackjackGroup = new CardGroup(
+                new Card(CardShape.DIAMOND, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.TEN)
+        );
 
         @Test
-        @DisplayName("딜러는 버스트가 아니고, 플레이어는 버스트인 경우 패배 반환")
-        void comparePlayerIfDealerNonBustPlayerBust() {
-            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
-            final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
+        @DisplayName("플레이어가 bust이면 수익률은 -1이 반환된다")
+        void whenPlayerBust() {
+            final Player player = new Player(TEST_PLAYER_NAME, bustCardGroup);
+            final Dealer dealer = new Dealer(initialCardGroup);
 
-            player.drawCard(new Deck(new TestNonShuffledDeckGenerator(List.of(cardEight))));
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(-1);
+        }
 
-            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
+        @Test
+        @DisplayName("플레이어가 bust가 아니고 딜러가 bust일때 수익률은 1이 반환된다.")
+        void whenPlayerIsNotBustDealerIsBust() {
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
+            final Dealer dealer = new Dealer(bustCardGroup);
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(1);
+        }
+
+        @Test
+        @DisplayName("플레이어와 딜러 모두 블랙잭이면 수익률은 0가 반환된다.")
+        void whenPlayerAndDealerIsBlackjack() {
+            final Player player = new Player(TEST_PLAYER_NAME, blackjackGroup);
+            final Dealer dealer = new Dealer(blackjackGroup);
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("플레이어만 블랙잭인 경우 수익률은 1.5가 반환된다.")
+        void whenOnlyPlayerIsBlackjack() {
+            final Player player = new Player(TEST_PLAYER_NAME, blackjackGroup);
+            final Dealer dealer = new Dealer(initialCardGroup);
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(1.5);
+        }
+
+        @Test
+        @DisplayName("둘다 블랙잭, 버스트가 아니고, 플레이어의 점수가 크면, 수익률은 1이 반환된다.")
+        void whenPlayerScoreIsBiggerThanDealerScore() {
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
+            final Dealer dealer = new Dealer(new CardGroup(
+                    new Card(CardShape.DIAMOND, CardNumber.TWO),
+                    new Card(CardShape.SPADE, CardNumber.TWO)));
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(1);
+        }
+
+        @Test
+        @DisplayName("둘다 블랙잭 버스트가 아니고 점수가 동일하면, 수익률은 0이 반환된다.")
+        void whenPlayerScoreIsEqualToDealerScore() {
+            final Player player = new Player(TEST_PLAYER_NAME, initialCardGroup);
+            final Dealer dealer = new Dealer(initialCardGroup);
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("둘다 블랙잭 버스트가 아니고 플레이어의 점수가 작으면, 수익률은 -1이 반환된다.")
+        void whenPlayerScoreIsSmallerThanDealerScore() {
+            final Player player = new Player(TEST_PLAYER_NAME, new CardGroup(
+                    new Card(CardShape.DIAMOND, CardNumber.TWO),
+                    new Card(CardShape.SPADE, CardNumber.TWO)
+            ));
+            final Dealer dealer = new Dealer(initialCardGroup);
+
+            assertThat(player.calculateProfitRate(dealer))
+                    .isEqualTo(-1);
         }
     }
 }

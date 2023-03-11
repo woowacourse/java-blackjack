@@ -50,4 +50,40 @@ public class Player extends User {
         }
         return WinningStatus.WIN;
     }
+
+    public Double calculateProfitRate(final Dealer dealer) {
+        final Score playerScore = getScore();
+        final Score dealerScore = dealer.getScore();
+        if (playerScore.isBlackJack()) {
+            return calculateProfitRateWhenPlayerIsBlackJack(dealerScore);
+        }
+        if (playerScore.isBust()) {
+            return -1.0;
+        }
+        if (dealerScore.isBust()) {
+            return 1.0;
+        }
+        return calculateProfitRateByScoreValue(dealer);
+    }
+
+    private Double calculateProfitRateWhenPlayerIsBlackJack(final Score dealerScore) {
+        if (dealerScore.isBlackJack()) {
+            return 0.0;
+        }
+        return 1.5;
+    }
+
+    //TODO: 네이밍 고민해보기
+    private Double calculateProfitRateByScoreValue(final Dealer dealer) {
+        final Score playerScore = getScore();
+        final Score dealerScore = dealer.getScore();
+
+        if (playerScore.isBigger(dealerScore)) {
+            return 1.0;
+        }
+        if (playerScore.isEqual(dealerScore)) {
+            return 0.0;
+        }
+        return -1.0;
+    }
 }

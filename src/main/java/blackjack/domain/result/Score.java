@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class Score {
 
-    private static final Map<Integer, Score> NON_BLACKJACK_SCORE_CACHE_MAP = new HashMap<>();
-    private static final Score BLACKJACK = new Score(21, ScoreStatus.BLACKJACK);
     private static final int BLACK_JACK_VALUE = 21;
     private static final int ACE_OFFSET = -10;
+    private static final Score BLACKJACK = new Score(BLACK_JACK_VALUE, ScoreStatus.BLACKJACK);
+    private static final Map<Integer, Score> NON_BLACKJACK_SCORE_CACHE_MAP = new HashMap<>();
 
     private final ScoreStatus status;
     private final int value;
@@ -60,5 +60,9 @@ public class Score {
 
     public boolean isEqual(final Score score) {
         return value == score.value;
+    }
+
+    public boolean isBlackJack() {
+        return status == ScoreStatus.BLACKJACK;
     }
 }
