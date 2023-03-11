@@ -40,7 +40,7 @@ public class BlackJackGame {
     public int hitOrStayForDealer() {
         int hitCount = 0;
         final Dealer dealer = participants.dealer();
-        while (dealer.isAbleToHit()) {
+        while (dealer.isHitAble()) {
             hit(dealer);
             hitCount++;
         }

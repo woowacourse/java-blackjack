@@ -30,11 +30,14 @@ public class Dealer extends Participant {
         if (isBust()) {
             return JudgeResult.WIN;
         }
-        return JudgeResult.match(player.computeCardsScore(), computeCardsScore());
+        if (!isBlackJack() && player.isBlackJack()) {
+            return JudgeResult.BLACKJACK_WIN;
+        }
+        return JudgeResult.matchWithoutBlackJackConsider(player.computeCardsScore(), computeCardsScore());
     }
 
     @Override
-    public boolean isAbleToHit() {
+    public boolean isHitAble() {
         return computeCardsScore() < CARD_TAKE_LIMIT;
     }
 

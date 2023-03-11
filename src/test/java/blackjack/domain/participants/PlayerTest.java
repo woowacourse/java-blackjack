@@ -23,7 +23,7 @@ class PlayerTest {
     public static final BettingMoney BETTING_MONEY = new BettingMoney(1000);
     final Card CARD_FIRST = new Card(SPADE, JACK);
     final Card CARD_SECOND = new Card(DIAMOND, JACK);
-    
+
     @DisplayName("플레이어는 이름과 베팅 금액을 가진다.")
     @Test
     void should_NotThrowException_When_CreateWithNameAndBettingMoney() {
@@ -62,6 +62,6 @@ class PlayerTest {
         player.take(CARD_FIRST);
         player.take(CARD_SECOND);
 
-        assertThat(player.isAbleToHit()).isTrue();
+        assertThat(player.isHitAble()).isTrue();
     }
 }

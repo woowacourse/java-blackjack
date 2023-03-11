@@ -24,7 +24,7 @@ public class Players {
 
     public List<Player> findHitAblePlayers() {
         return players.stream()
-                .filter(Player::isAbleToHit)
+                .filter(Player::isHitAble)
                 .collect(Collectors.toList());
     }
 

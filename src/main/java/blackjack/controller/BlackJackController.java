@@ -68,7 +68,7 @@ public class BlackJackController {
     }
 
     private HitCommand refreshHitCommand(final Player player) {
-        if (player.isAbleToHit()) {
+        if (player.isHitAble()) {
             return InputHandler.retryForIllegalArgument(player.getName(), InputView::askToHit,
                     OutputView::showInputErrorMessage);
         }

@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
+import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
@@ -8,7 +9,9 @@ import static blackjack.domain.card.Denomination.SIX;
 import static blackjack.domain.card.Suit.CLUB;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.result.JudgeResult.BLACKJACK_WIN;
 import static blackjack.domain.result.JudgeResult.LOSE;
+import static blackjack.domain.result.JudgeResult.PUSH;
 import static blackjack.domain.result.JudgeResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -38,7 +41,7 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(CLUB, SIX));
 
-        assertThat(dealer.isAbleToHit()).isTrue();
+        assertThat(dealer.isHitAble()).isTrue();
     }
 
     @DisplayName("딜러의 카드 합이 17 이상이면 거짓을 반환한다.")
@@ -47,7 +50,7 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(CLUB, SEVEN));
 
-        assertThat(dealer.isAbleToHit()).isFalse();
+        assertThat(dealer.isHitAble()).isFalse();
     }
 
     @DisplayName("플레이어들을 전달받아 판정 결과들을 반환한다.")
@@ -56,15 +59,22 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(SPADE, SEVEN));
 
-        final Player player1 = new Player("pobi", BETTING_MONEY_1000);
-        final Player player2 = new Player("wony", BETTING_MONEY_1000);
-        player1.take(new Card(CLUB, QUEEN));
-        player1.take(new Card(CLUB, SIX));
-        player2.take(new Card(DIAMOND, QUEEN));
-        player2.take(new Card(DIAMOND, JACK));
+        final Player blackjackWinPlayer = new Player("blackjackWinPlayer",
+                List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                BETTING_MONEY_1000);
+        final Player winPlayer = new Player("winPlayer", List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)),
+                BETTING_MONEY_1000);
+        final Player losePlayer = new Player("losePlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SIX)),
+                BETTING_MONEY_1000);
+        final Player pushPlayer = new Player("pushPlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SEVEN)),
+                BETTING_MONEY_1000);
 
-        assertThat(dealer.judgeAllPlayersResult(new Players(List.of(player1, player2))))
-                .containsExactly(entry("pobi", LOSE), entry("wony", WIN));
+        assertThat(dealer.judgeAllPlayersResult(
+                new Players(List.of(blackjackWinPlayer, winPlayer, losePlayer, pushPlayer))))
+                .containsExactly(
+                        entry("blackjackWinPlayer", BLACKJACK_WIN), entry("winPlayer", WIN),
+                        entry("losePlayer", LOSE), entry("pushPlayer", PUSH)
+                );
     }
 
     @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
@@ -90,6 +100,6 @@ class DealerTest {
         dealer.take(card1);
         dealer.take(card2);
 
-        assertThat(dealer.isAbleToHit()).isTrue();
+        assertThat(dealer.isHitAble()).isTrue();
     }
 }

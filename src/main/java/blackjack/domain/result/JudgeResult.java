@@ -1,35 +1,45 @@
 package blackjack.domain.result;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.BiPredicate;
+import blackjack.domain.participants.BettingMoney;
 
 public enum JudgeResult {
 
-    WIN((self, counter) -> self > counter),
-    PUSH(Objects::equals),
-    LOSE((self, counter) -> self < counter);
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    PUSH(0),
+    LOSE(-1);
 
-    private final BiPredicate<Integer, Integer> scoreComparer;
+    private final double profitRate;
 
-    JudgeResult(final BiPredicate<Integer, Integer> scoreComparer) {
-        this.scoreComparer = scoreComparer;
+    JudgeResult(final double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public static JudgeResult match(final int selfScore, final int counterScore) {
-        return Arrays.stream(values())
-                .filter(result -> result.scoreComparer.test(selfScore, counterScore))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("판정 결과로 해당하는 값을 찾을 수 없습니다."));
-    }
-
-    public static JudgeResult counter(final JudgeResult judgeResult) {
-        if (judgeResult == WIN) {
+    // TODO score의 역할?
+    public static JudgeResult matchWithoutBlackJackConsider(final int selfScore, final int counterScore) {
+        if (selfScore > counterScore) {
+            return WIN;
+        }
+        if (selfScore < counterScore) {
             return LOSE;
         }
-        if (judgeResult == LOSE) {
+        return PUSH;
+    }
+
+    public JudgeResult counter() {
+        if (this == BLACKJACK_WIN) {
+            return LOSE;
+        }
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
             return WIN;
         }
         return PUSH;
+    }
+
+    public int profit(final BettingMoney bettingMoney) {
+        return (int) (profitRate * (bettingMoney.getAmount()));
     }
 }

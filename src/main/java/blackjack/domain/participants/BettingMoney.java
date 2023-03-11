@@ -14,4 +14,8 @@ public class BettingMoney {
             throw new IllegalArgumentException("베팅 금액은 0보다 큰 수여야 합니다.");
         }
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
