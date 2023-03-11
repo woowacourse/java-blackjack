@@ -8,7 +8,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(getCardNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 

@@ -24,9 +24,10 @@ public abstract class Participant {
 
     public void receiveCard(Card card) {
         cards.add(card);
+        score.calculateScore(getCardNumbers());
     }
 
-    protected List<CardNumber> getCardNumbers() {
+    private List<CardNumber> getCardNumbers() {
         return cards.stream()
                 .map(Card::getCardNumber)
                 .collect(Collectors.toUnmodifiableList());
