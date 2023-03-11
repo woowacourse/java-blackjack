@@ -5,7 +5,7 @@ import domain.card.Cards;
 import java.util.Objects;
 
 public class BlackjackScore {
-    private static final BlackjackScore MAX = new BlackjackScore(21);
+    private static final BlackjackScore MAX_SCORE = new BlackjackScore(21);
     private static final BlackjackScore ACE_GAP = new BlackjackScore(10);
 
     private final int value;
@@ -19,7 +19,7 @@ public class BlackjackScore {
     }
 
     public static BlackjackScore getMaxScore() {
-        return MAX;
+        return MAX_SCORE;
     }
 
     public static BlackjackScore from(Cards cards) {
@@ -32,7 +32,7 @@ public class BlackjackScore {
     }
 
     private static BlackjackScore applyAce(BlackjackScore blackjackScore, int aceCount) {
-        while (blackjackScore.isGreaterThan(MAX) && aceCount > 0) {
+        while (blackjackScore.isGreaterThan(MAX_SCORE) && aceCount > 0) {
             int subtractedValue = blackjackScore.value - ACE_GAP.value;
             blackjackScore = new BlackjackScore(subtractedValue);
             aceCount--;
