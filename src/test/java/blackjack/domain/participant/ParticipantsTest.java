@@ -78,4 +78,17 @@ class ParticipantsTest {
 
         assertThat(playerNames).containsExactly(new PlayerName("toney"), new PlayerName("dazzle"));
     }
+
+    @Test
+    void 딜러가_카드를_뽑는다() {
+        final Participants participants = new Participants(
+                new Dealer(),
+                List.of(new Player("toney"), new Player("dazzle"))
+        );
+        final Deck deck = Deck.createUsingTrump(1);
+
+        participants.drawCardForDealer(deck);
+
+        assertThat(participants.getDealerHand().count()).isEqualTo(1);
+    }
 }
