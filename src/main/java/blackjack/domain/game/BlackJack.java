@@ -56,7 +56,7 @@ public class BlackJack {
 
     public Map<Result, List<User>> getAllUsersResult() {
         final LinkedHashMap<Result, List<User>> resultOfUsers = new LinkedHashMap<>();
-        for(Result result : Result.values()){
+        for (Result result : Result.values()) {
             resultOfUsers.put(result, getUserOf(result));
         }
         return resultOfUsers;

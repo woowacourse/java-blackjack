@@ -44,10 +44,10 @@ public class BlackJackController {
     }
 
     private Stake getStakeOf(final Name name) {
-        try{
+        try {
             final int stake = inputView.getStakeOf(name.getValue());
             return new Stake(stake);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             outputView.printException(e);
             return getStakeOf(name);
         }

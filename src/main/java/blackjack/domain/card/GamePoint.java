@@ -4,9 +4,9 @@ import java.util.List;
 
 public class GamePoint implements Comparable<GamePoint> {
 
+    public static final int BLACK_JACK_POINT_VALUE = 22;
     private static final int BUST = 0;
     private static final int MAX_GAME_POINT_VALUE = 21;
-    public static final int BLACK_JACK_POINT_VALUE = 22;
     private static final int ACE_BONUS_VALUE = 10;
     private static final int BLACK_JAVCK_CARD_SIZE = 2;
     private final int gamePoint;

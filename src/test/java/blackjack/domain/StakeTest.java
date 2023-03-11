@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -29,7 +28,7 @@ public class StakeTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {101,102,999_999})
+    @ValueSource(ints = {101, 102, 999_999})
     @DisplayName("상금은 10으로 나누어 떨어져야한다.")
     void intValidMultipleTest(int value) {
         assertThatThrownBy(() -> new Stake(value))
