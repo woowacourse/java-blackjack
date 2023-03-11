@@ -20,6 +20,7 @@ public class BlackJackController {
 
     public void run() {
         final BlackJackGame blackJackGame = initBlackJackGame();
+        betPlayers(blackJackGame);
         printFirstOpenCardGroups(blackJackGame);
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
@@ -34,6 +35,21 @@ public class BlackJackController {
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
             return initBlackJackGame();
+        }
+    }
+
+    private void betPlayers(final BlackJackGame blackJackGame) {
+        for (final Name playerName : blackJackGame.getPlayerNames()) {
+            repeatUntilBetValidateMoney(blackJackGame, playerName);
+        }
+    }
+
+    private void repeatUntilBetValidateMoney(final BlackJackGame blackJackGame, final Name playerName) {
+        try {
+            final int betMoney = inputView.readPlayerBetMoney(playerName.getValue());
+            blackJackGame.betPlayer(playerName, betMoney);
+        } catch (IllegalArgumentException e) {
+            repeatUntilBetValidateMoney(blackJackGame, playerName);
         }
     }
 
