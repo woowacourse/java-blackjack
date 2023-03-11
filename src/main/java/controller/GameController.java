@@ -26,12 +26,22 @@ public final class GameController {
     public void start() {
         final Map<Participant, ParticipantMoney> initParticipantInfo = getParticipantInfo();
         final GameManager gameManager = makeGameManager(initParticipantInfo);
-        printFirstTurnResult(gameManager);
+        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
+        printFirstTurnResult(gameManager, participantInfo);
         gameManager.judgeFirstBettingResult();
-        drawPlayersCard(gameManager);
-        handleDealerCards(gameManager);
-        printCardResult(gameManager);
+        drawPlayersCard(gameManager, participantInfo);
+        handleDealerCards(gameManager, participantInfo);
+        printCardResult(participantInfo);
         printFinalGameResult(gameManager, initParticipantInfo);
+    }
+
+    private Map<Participant, ParticipantMoney> getParticipantInfo() {
+        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
+        participantInfo.put(Participant.createDealer(), ParticipantMoney.zero());
+        for (Participant player : makePlayers()) {
+            participantInfo.put(player, getPlayerBettingMoneys(player));
+        }
+        return participantInfo;
     }
 
     private List<Participant> makePlayers() {
@@ -40,16 +50,6 @@ public final class GameController {
             final Players players = Players.create(playerNames);
             return players.getPlayers();
         });
-    }
-
-    private Map<Participant, ParticipantMoney> getParticipantInfo() {
-        final List<Participant> players = makePlayers();
-        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
-        participantInfo.put(Participant.createDealer(), ParticipantMoney.zero());
-        for (Participant player : players) {
-            participantInfo.put(player, getPlayerBettingMoneys(player));
-        }
-        return participantInfo;
     }
 
     private ParticipantMoney getPlayerBettingMoneys(final Participant player) {
@@ -64,14 +64,12 @@ public final class GameController {
         return GameManager.create(cardRandomShuffler, participantInfo);
     }
 
-    private void printFirstTurnResult(final GameManager gameManager) {
+    private void printFirstTurnResult(final GameManager gameManager, final ParticipantInfo participantInfo) {
         gameManager.handFirstCards();
-        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
         outputView.printHandMessage(participantInfo.findDealerInfo(), participantInfo.findPlayerInfo());
     }
 
-    private void drawPlayersCard(final GameManager gameManager) {
-        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
+    private void drawPlayersCard(final GameManager gameManager, final ParticipantInfo participantInfo) {
         participantInfo.findPlayerInfo()
                 .forEach(player -> handleDrawCard(gameManager, player));
     }
@@ -133,9 +131,8 @@ public final class GameController {
         return player.isBust() || player.isBlackJack() || drawCardCommand.isDrawStop();
     }
 
-    private void handleDealerCards(final GameManager gameManager) {
+    private void handleDealerCards(final GameManager gameManager, final ParticipantInfo participantInfo) {
         OutputView.print(System.lineSeparator().trim());
-        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
         final Participant dealer = participantInfo.findDealerInfo();
         while (dealer.canGiveCard()) {
             gameManager.handCard(dealer);
@@ -143,8 +140,7 @@ public final class GameController {
         }
     }
 
-    private void printCardResult(final GameManager gameManager) {
-        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
+    private void printCardResult(final ParticipantInfo participantInfo) {
         final Participant dealer = participantInfo.findDealerInfo();
         final List<Participant> players = participantInfo.findPlayerInfo();
         printParticipantCardResult(dealer);
