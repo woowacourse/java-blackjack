@@ -11,12 +11,19 @@ import domain.type.Letter;
 import domain.type.Suit;
 import domain.vo.Bet;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDistributorTest {
 
     private CardDistributor cardDistributor;
+    private final CardGenerator cardGenerator = RandomCardGenerator.getInstance();
+
+    @BeforeEach
+    public void setUp() {
+        cardGenerator.reset();
+    }
 
     @Test
     @DisplayName("한명에게 특정 카드 배분을 테스트")
@@ -53,7 +60,7 @@ class CardDistributorTest {
     @DisplayName("버스트가 난 한명에게 특정 카드 배분 테스트")
     public void testGiveCardToBustedOne() {
         //given
-        cardDistributor = new CardDistributor(new RandomCardGenerator());
+        cardDistributor = new CardDistributor(cardGenerator);
         final Cards cards = Cards.makeEmpty();
         cards.add(new Card(Suit.CLUB, Letter.TEN));
         cards.add(new Card(Suit.SPADE, Letter.TEN));
@@ -71,7 +78,7 @@ class CardDistributorTest {
     @DisplayName("여러명에게 초기 카드 배분을 테스트")
     public void testInitGiveCardToAll() {
         //given
-        cardDistributor = new CardDistributor(new RandomCardGenerator());
+        cardDistributor = new CardDistributor(cardGenerator);
         List<String> names = List.of("player1", "player2");
         List<Double> battings = List.of(1000D, 2000D);
         Players players = Players.from(names, battings);
@@ -88,7 +95,7 @@ class CardDistributorTest {
     @DisplayName("한명에게 초기 카드 배분을 테스트")
     public void testInitGiveCardToOne() {
         //given
-        cardDistributor = new CardDistributor(new RandomCardGenerator());
+        cardDistributor = new CardDistributor(cardGenerator);
         final Player player = new Player(Cards.makeEmpty(), "player", Bet.of(1000D));
 
         //when
@@ -102,7 +109,7 @@ class CardDistributorTest {
     @DisplayName("초기 카드 배분 시 카드가 이미 있을 경우 테스트")
     public void testInitGiveCardWhenCardIsNotEmpty() {
         //given
-        cardDistributor = new CardDistributor(new RandomCardGenerator());
+        cardDistributor = new CardDistributor(cardGenerator);
         final Cards cards = Cards.makeEmpty();
         cards.add(new Card(Suit.SPADE, Letter.ACE));
         final Player player = new Player(cards, "player", Bet.of(1000D));

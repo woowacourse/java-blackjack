@@ -26,6 +26,6 @@ public class Application {
     }
 
     private static CardDistributor makeCardDistributor() {
-        return new CardDistributor(new RandomCardGenerator());
+        return new CardDistributor(RandomCardGenerator.getInstance());
     }
 }

@@ -18,7 +18,8 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    private final BlackJackGame blackJackGame = new BlackJackGame(new CardDistributor(new RandomCardGenerator()),
+    private final BlackJackGame blackJackGame = new BlackJackGame(
+        new CardDistributor(RandomCardGenerator.getInstance()),
         new ProfitCalculator());
 
     @Test
