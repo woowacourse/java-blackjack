@@ -33,11 +33,11 @@ public final class Dealer {
         return hand.isBust();
     }
 
-    public Card showCard() {
-        return getHand().get(FIRST);
+    public List<Card> showCard() {
+        return List.of(getCards().get(FIRST));
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCards() {
         return hand.getCards();
     }
 
