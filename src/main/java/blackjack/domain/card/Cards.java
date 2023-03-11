@@ -34,4 +34,8 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int getSize() {
+        return cards.size();
+    }
 }
