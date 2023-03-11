@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Deposit;
 import blackjack.domain.money.Money;
 import blackjack.domain.user.Name;
@@ -16,7 +17,7 @@ public class GameTable {
         this.deposit = new Deposit();
     }
 
-    public void betting(final Name playerName, final Money money) {
+    public void betting(final Name playerName, final BettingMoney money) {
         deposit.betting(playerName, money);
     }
 

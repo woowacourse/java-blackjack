@@ -17,11 +17,11 @@ class DepositTest {
     void battingTest() {
         final Deposit deposit = new Deposit();
 
-        deposit.betting(TEST_PLAYER_NAME1, new Money(1000));
+        deposit.betting(TEST_PLAYER_NAME1, new BettingMoney(1000));
 
         assertThat(deposit)
-                .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
-                .contains(entry(TEST_PLAYER_NAME1, new Money(1000)));
+                .extracting("deposit", InstanceOfAssertFactories.map(Name.class, BettingMoney.class))
+                .contains(entry(TEST_PLAYER_NAME1, new BettingMoney(1000)));
     }
 
     @Test
@@ -29,7 +29,7 @@ class DepositTest {
     void getProfitTest() {
         final Deposit deposit = new Deposit();
 
-        deposit.betting(TEST_PLAYER_NAME1, new Money(1000));
+        deposit.betting(TEST_PLAYER_NAME1, new BettingMoney(1000));
         final Money profit = deposit.getProfit(TEST_PLAYER_NAME1, 1.5);
 
         assertThat(profit.getValue()).isEqualTo(1500);

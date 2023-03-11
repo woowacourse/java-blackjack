@@ -11,6 +11,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestNonShuffledDeckGenerator;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.user.Name;
@@ -168,8 +169,8 @@ class BlackJackGameTest {
 
         assertThat(blackJackGame).extracting("gameTable")
                 .extracting("deposit")
-                .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
-                .containsExactly(entry(TEST_PLAYER_NAME1, new Money(10000)));
+                .extracting("deposit", InstanceOfAssertFactories.map(Name.class, BettingMoney.class))
+                .containsExactly(entry(TEST_PLAYER_NAME1, new BettingMoney(10000)));
     }
 
     @Test

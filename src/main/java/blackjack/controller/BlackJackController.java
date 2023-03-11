@@ -49,6 +49,7 @@ public class BlackJackController {
             final int betMoney = inputView.readPlayerBetMoney(playerName.getValue());
             blackJackGame.betPlayer(playerName, betMoney);
         } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
             repeatUntilBetValidateMoney(blackJackGame, playerName);
         }
     }

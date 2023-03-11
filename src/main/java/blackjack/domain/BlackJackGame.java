@@ -4,6 +4,7 @@ import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.user.Name;
@@ -34,7 +35,7 @@ public class BlackJackGame {
     }
 
     public void betPlayer(final Name playerName, final int betMoney) {
-        gameTable.betting(playerName, new Money(betMoney));
+        gameTable.betting(playerName, new BettingMoney(betMoney));
     }
 
     public List<Name> getPlayerNames() {

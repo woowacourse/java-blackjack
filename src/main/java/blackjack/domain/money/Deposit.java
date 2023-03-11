@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class Deposit {
 
-    private final Map<Name, Money> deposit = new HashMap<>();
+    private final Map<Name, BettingMoney> deposit = new HashMap<>();
 
-    public void betting(final Name playerName, final Money money) {
+    public void betting(final Name playerName, final BettingMoney money) {
         deposit.put(playerName, money);
     }
 

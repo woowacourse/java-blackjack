@@ -10,24 +10,24 @@ public class Money {
         this.value = value;
     }
 
-    public int getValue() {
+    public final int getValue() {
         return value;
     }
 
-    public Money multiply(final Double rate) {
+    public final Money multiply(final Double rate) {
         return new Money((int) (rate * value));
     }
 
-    public Money opposite() {
+    public final Money opposite() {
         return new Money(-1 * value);
     }
 
-    public Money sum(final Money money) {
+    public final Money sum(final Money money) {
         return new Money(this.value + money.value);
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -39,7 +39,7 @@ public class Money {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(value);
     }
 }
