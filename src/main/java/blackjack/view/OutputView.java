@@ -19,12 +19,10 @@ public class OutputView {
     private static final String DEALER_MESSAGE = "딜러";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_MESSAGE = " - 결과";
-    private static final String FINAL_START_MESSAGE = "## 최종 승패";
+    private static final String FINAL_START_MESSAGE = "## 최종 수익";
     private static final String RESULT_DELIMITER = ": ";
     private static final String CARD_DELIMITER = ", ";
-    private static final String BLANK = " ";
     private static final String EMPTY = "";
-    private static final int ZERO = 0;
 
     public void printStart(Players players, Dealer dealer) {
         printStartMessage(players.getPlayersName());
@@ -67,7 +65,7 @@ public class OutputView {
 
     public void printDealerResult(Dealer dealer) {
         int score = dealer.calculateScore().getScore();
-        System.out.println(DEALER_MESSAGE);
+        System.out.print(DEALER_MESSAGE);
         printCards(dealer.showAllCards(), EMPTY);
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
@@ -79,30 +77,8 @@ public class OutputView {
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
 
-    public void printMessage() {
-        System.out.println();
-        System.out.println(FINAL_START_MESSAGE);
-    }
-
-    public void printPlayerWinningResult(Map<Player, Result> playerResult) {
-        for (Player player : playerResult.keySet()) {
-            System.out.println(player.showName() + RESULT_DELIMITER + playerResult.get(player).getResult());
-        }
-    }
-
-    public void printDealerWinningResult(Map<Result, Integer> dealerResult) {
-        StringBuilder dealerResultMsg = new StringBuilder(DEALER_MESSAGE);
-        for (Result result : dealerResult.keySet()) {
-            if (dealerResult.get(result) != ZERO) {
-                dealerResultMsg.append(dealerResult.get(result))
-                        .append(result.getResult())
-                        .append(BLANK);
-            }
-        }
-        System.out.println(dealerResultMsg);
-    }
-
     public void printBettingResult(GameResult gameResult) {
+        System.out.println(FINAL_START_MESSAGE);
         int dealerBettingResults = gameResult.getDealerBettingResults();
         printBlackJackParticipantsBettingResult(DEALER_MESSAGE, dealerBettingResults);
         Map<Player, Integer> playerBettingResults = gameResult.getPlayerBettingResults();
