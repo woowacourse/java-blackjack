@@ -76,6 +76,26 @@ class ParticipantInfoTest {
     }
 
     @Test
+    @DisplayName("earnPlayerMoney()는 플레이어의 돈을 그대로 유지한다")
+    void earnPlayerMoney_givenPlayer_thenBonusPlayerMoney() {
+        // given
+        final Player targetPlayer = Player.create("pobi");
+        final ParticipantInfo participantInfo =
+                ParticipantInfo.create(makeOneParticipantInfo(targetPlayer, Participant.createDealer()));
+
+        // when
+        participantInfo.earnPlayerMoney(targetPlayer);
+
+        // then
+        final Map<Participant, ParticipantMoney> allParticipantInfo = participantInfo.getParticipantInfo();
+        final ParticipantMoney playerMoney = allParticipantInfo.get(targetPlayer);
+        final ParticipantMoney dealerMoney = allParticipantInfo.get(Participant.createDealer());
+
+        assertThat(playerMoney)
+                .isEqualTo(ParticipantMoney.create(10000));
+    }
+
+    @Test
     @DisplayName("earnPlayerBonusMoney()는 플레이어에게 보너스를 주고, 그만큼 딜러의 돈에서 제거한다.")
     void earnPlayerBonusMoney_givenPlayer_thenBonusPlayerMoney() {
         // given

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static domain.game.EarningRate.BONUS;
 import static domain.game.EarningRate.LOSE;
+import static domain.game.EarningRate.WIN;
 import static domain.participant.Participant.DEALER_NAME;
 
 public class ParticipantInfo {
@@ -51,6 +53,12 @@ public class ParticipantInfo {
         loseDealerMoney(player);
     }
 
+    public void earnPlayerMoney(final Participant player) {
+        loseDealerMoney(player);
+        final ParticipantMoney playerMoney = participantInfo.get(player);
+        participantInfo.put(player, WIN.calculateMoney(playerMoney));
+    }
+
     private void earnDealerMoney(final Participant player) {
         final Participant dealer = findDealerInfo();
         final ParticipantMoney dealerMoney = participantInfo.get(dealer);
@@ -82,5 +90,12 @@ public class ParticipantInfo {
 
     public Map<Participant, ParticipantMoney> getParticipantInfo() {
         return participantInfo;
+    }
+
+    public Map<String, ParticipantMoney> getParticipantInfoWithName() {
+        return participantInfo
+                .keySet().stream()
+                .collect(Collectors.toMap(Participant::getName, participantInfo::get,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }
