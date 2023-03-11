@@ -2,8 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,15 +16,16 @@ public class BetsTest {
 
     @Test
     void 베팅_결과를_계산한다() {
-        final Map<Player, Money> initialBets = new LinkedHashMap<>();
-        final Gambler herb = Gambler.create("허브");
-        final Gambler pepper = Gambler.create("후추");
-        initialBets.put(herb, Money.initialBet(1000));
-        initialBets.put(pepper, Money.initialBet(100));
+        final Map<Name, Money> initialBets = new LinkedHashMap<>();
+        initialBets.put(Name.from("허브"), Money.initialBet(1000));
+        initialBets.put(Name.from("후추"), Money.initialBet(100));
         final Bets bets = new Bets();
         bets.addBets(initialBets);
 
-        bets.calculateProfit(Map.of(herb, Result.BLACKJACK_WIN, pepper, Result.PUSH));
+        bets.calculateProfit(Map.of(
+                Name.from("허브"), Result.BLACKJACK_WIN,
+                Name.from("후추"), Result.PUSH)
+        );
 
         assertThat(bets.getBets().values())
                 .extracting(Money::getValue)
@@ -35,12 +35,12 @@ public class BetsTest {
     @Test
     void 베팅_결과를_반환한다() {
         final Bets bets = new Bets();
-        final Map<Player, Money> initialBets = new LinkedHashMap<>();
-        initialBets.put(Gambler.create("허브"), Money.initialBet(1000));
-        initialBets.put(Gambler.create("후추"), Money.initialBet(100));
+        final Map<Name, Money> initialBets = new LinkedHashMap<>();
+        initialBets.put(Name.from("허브"), Money.initialBet(1000));
+        initialBets.put(Name.from("후추"), Money.initialBet(100));
         bets.addBets(initialBets);
 
-        final Map<Player, Money> result = bets.getBets();
+        final Map<Name, Money> result = bets.getBets();
 
         assertThat(result.values())
                 .extracting(Money::getValue)
@@ -50,9 +50,9 @@ public class BetsTest {
     @Test
     void 딜러의_수익을_반환한다() {
         final Bets bets = new Bets();
-        final Map<Player, Money> initialBets = new LinkedHashMap<>();
-        initialBets.put(Gambler.create("허브"), Money.initialBet(1000));
-        initialBets.put(Gambler.create("후추"), Money.initialBet(100));
+        final Map<Name, Money> initialBets = new LinkedHashMap<>();
+        initialBets.put(Name.from("허브"), Money.initialBet(1000));
+        initialBets.put(Name.from("후추"), Money.initialBet(100));
         bets.addBets(initialBets);
 
         Money money = bets.getDealerProfit();

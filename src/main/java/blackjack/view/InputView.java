@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -31,8 +31,8 @@ public final class InputView {
                 .collect(toList());
     }
 
-    public int readBet(final Player player) {
-        System.out.println(player.getNameValue() + "의 배팅 금액은?");
+    public int readBet(final Name name) {
+        System.out.println(name.getValue() + "의 배팅 금액은?");
 
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -41,8 +41,8 @@ public final class InputView {
         }
     }
 
-    public String readCommand(final Player player) {
-        System.out.println(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public String readCommand(final Name name) {
+        System.out.println(name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         return scanner.nextLine();
     }

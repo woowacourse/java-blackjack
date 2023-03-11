@@ -26,6 +26,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -79,18 +80,6 @@ public class PlayersTest {
     }
 
     @Test
-    void 플레이어에게_카드를_뽑게한다() {
-        final Players players = Players.create();
-        players.addPlayers(List.of("후추"));
-        final Player player = players.getGamblers().get(0);
-        final Deck deck = new FixedDeck(JACK_SPADE);
-
-        players.drawTo(player, deck);
-
-        assertThat(player.getSymbols()).containsExactly("J스페이드");
-    }
-
-    @Test
     void 입력한_플레이어의_카드를_추가한다() {
         final Players players = Players.create();
         players.addPlayers(List.of("후추"));
@@ -98,8 +87,7 @@ public class PlayersTest {
 
         players.drawTo(Name.from("후추"), deck);
 
-        final Player player = players.getGamblers().get(0);
-        assertThat(player.getSymbols()).containsExactly("J스페이드");
+        assertThat(players.getSymbols(Name.from("후추"))).containsExactly("J스페이드");
     }
 
     @Test
@@ -109,8 +97,19 @@ public class PlayersTest {
 
         players.stay(Name.from("후추"));
 
-        final Player player = players.getGamblers().get(0);
-        assertThat(player.isDrawable()).isFalse();
+        assertThat(players.isDrawable(Name.from("후추"))).isFalse();
+    }
+
+    @ParameterizedTest(name = "입력한 이름을 가진 플레이어가 카드를 뽑을 수 있는 상태인지 확인한다. 후추의 상태: stay, 입력: {0}, 결과: {1}")
+    @CsvSource({"허브, true", "후추, false"})
+    void 입력한_이름을_가진_플레이어가_카드를_뽑을_수_있는_상태인지_확인한다(final String name, final boolean result) {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
+        players.stay(Name.from("후추"));
+
+        final boolean drawable = players.isDrawable(Name.from(name));
+
+        assertThat(drawable).isEqualTo(result);
     }
 
     @Test
@@ -122,17 +121,6 @@ public class PlayersTest {
 
         assertThat(result).extracting(Player::getNameValue)
                 .containsExactly("딜러", "후추", "허브");
-    }
-
-    @Test
-    void 겜블러를_반환한다() {
-        final Players players = Players.create();
-        players.addPlayers(List.of("후추", "허브"));
-
-        final List<Player> result = players.getGamblers();
-
-        assertThat(result).extracting(Player::getNameValue)
-                .containsExactly("후추", "허브");
     }
 
     @Test
@@ -167,13 +155,25 @@ public class PlayersTest {
     }
 
     @Test
+    void 입력한_플레이어의_패를_반환한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+        final Deck deck = new FixedDeck(ACE_DIAMOND);
+        players.drawTo(Name.from("후추"), deck);
+
+        final List<String> result = players.getSymbols(Name.from("후추"));
+
+        assertThat(result).containsExactly("A다이아몬드");
+    }
+
+    @Test
     void 게임_결과를_반환한다() {
         final Players players = Players.create();
         players.addPlayers(List.of("후추", "허브"));
         final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER);
         players.initialDraw(deck);
 
-        Map<Player, Result> result = players.play();
+        Map<Name, Result> result = players.play();
 
         assertThat(result.values()).containsExactly(WIN, PUSH);
     }

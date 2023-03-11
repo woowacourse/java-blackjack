@@ -83,10 +83,6 @@ public final class Players {
         }
     }
 
-    public void drawTo(final Player player, final Deck deck) {
-        player.draw(deck);
-    }
-
     public void drawTo(final Name name, final Deck deck) {
         final Player player = findPlayerBy(name);
         player.draw(deck);
@@ -108,18 +104,17 @@ public final class Players {
         player.stay();
     }
 
-    public Map<Player, Result> play() {
-        final Map<Player, Result> result = new LinkedHashMap<>();
-        for (Player player : getGamblers()) {
-            result.put(player, player.play(getDealer().hand));
-        }
+    public Map<Name, Result> play() {
+        final Map<Name, Result> result = new LinkedHashMap<>();
+        final Dealer dealer = getDealer();
+        players.stream().filter(player -> !player.isDealer())
+                .forEach(player -> result.put(player.name(), player.play(dealer.hand)));
         return result;
     }
 
-    public List<Player> getGamblers() {
-        return players.stream()
-                .filter(player -> !player.isDealer())
-                .collect(Collectors.toList());
+    public boolean isDrawable(final Name name) {
+        final Player player = findPlayerBy(name);
+        return player.isDrawable();
     }
 
     public Dealer getDealer() {
@@ -138,5 +133,10 @@ public final class Players {
                 .filter(player -> !player.isDealer())
                 .map(Player::name)
                 .collect(Collectors.toList());
+    }
+
+    public List<String> getSymbols(final Name name) {
+        final Player player = findPlayerBy(name);
+        return player.getSymbols();
     }
 }

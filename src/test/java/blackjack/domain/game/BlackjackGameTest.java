@@ -26,6 +26,7 @@ public class BlackjackGameTest {
     @Test
     void 플레이어가_게임에_참가한다() {
         final BlackjackGame blackjackGame = new BlackjackGame();
+
         blackjackGame.addPlayers(List.of("허브", "후추"));
 
         assertThat(blackjackGame.getPlayers())
@@ -64,26 +65,47 @@ public class BlackjackGameTest {
         blackjackGame.addPlayers(List.of("허브"));
         final Player player = blackjackGame.getPlayers().get(1);
 
-        blackjackGame.stay(player);
+        blackjackGame.stay(Name.from("허브"));
 
         assertThat(player.isDrawable()).isFalse();
     }
 
     @Test
-    void 게임_결과를_반환한다() {
-        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE, KING_SPADE);
+    void 해당_이름을_가진_플레이어가_소유하고_있는_카드의_값을_반환한다() {
+        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE);
         final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("허브"));
-        final int playerIndex = 1;
-        final Player player = blackjackGame.getPlayers().get(playerIndex);
-        final Map<Player, Money> initialBets = Map.of(player, Money.initialBet(1000));
-        blackjackGame.addBets(initialBets);
         blackjackGame.initialDraw(deck);
-        blackjackGame.drawToDealer(deck);
+
+        final List<String> result = blackjackGame.getGamblerCardSymbols(Name.from("허브"));
+
+        assertThat(result).containsExactly("A스페이드", "K스페이드");
+    }
+
+    @Test
+    void 해당_이름을_가진_플레이어가_드로우_가능한_상태인지_확인한다() {
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브"));
+        blackjackGame.stay(Name.from("허브"));
+
+        final boolean result = blackjackGame.isDrawable(Name.from("허브"));
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    void 게임_결과를_반환한다() {
+        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE);
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브"));
+        final Name gambler = Name.from("허브");
+        blackjackGame.addBets(Map.of(gambler, Money.initialBet(1000)));
+        blackjackGame.initialDraw(deck);
 
         final Bets result = blackjackGame.play();
 
-        assertThat(result.getBets().get(player).getValue()).isEqualTo(1500);
+        final Map<Name, Money> bets = result.getBets();
+        assertThat(bets.get(gambler)).isEqualTo(Money.initialBet(1500));
     }
 
     @Test
@@ -96,16 +118,6 @@ public class BlackjackGameTest {
         assertThat(players)
                 .extracting(Player::getNameValue)
                 .containsExactly("딜러", "허브", "후추");
-    }
-
-    @Test
-    void 겜블러의_이름을_반환한다() {
-        final BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.addPlayers(List.of("후추", "허브"));
-
-        final List<Name> result = blackjackGame.getGamblerNames();
-
-        assertThat(result).containsExactly(Name.from("후추"), Name.from("허브"));
     }
 
     @Test

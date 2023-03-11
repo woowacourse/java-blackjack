@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.player.Result;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public final class Money {
     public static final Money ZERO = new Money(0);
@@ -33,6 +34,23 @@ public final class Money {
     public Money minus(final Money other) {
         final BigDecimal result = value.subtract(other.value);
         return new Money(result.intValue());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Money money = (Money) o;
+        return Objects.equals(value, money.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     public int getValue() {

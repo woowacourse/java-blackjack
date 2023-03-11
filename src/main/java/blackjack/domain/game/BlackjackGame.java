@@ -21,7 +21,7 @@ public final class BlackjackGame {
         players.addPlayers(names);
     }
 
-    public void addBets(final Map<Player, Money> bets) {
+    public void addBets(final Map<Name, Money> bets) {
         this.bets.addBets(bets);
     }
 
@@ -37,12 +37,8 @@ public final class BlackjackGame {
         players.drawTo(name, deck);
     }
 
-    public void drawTo(final Player player, Deck deck) {
-        players.drawTo(player, deck);
-    }
-
-    public void stay(final Player player) {
-        players.stay(player);
+    public void stay(final Name name) {
+        players.stay(name);
     }
 
     public Bets play() {
@@ -50,12 +46,12 @@ public final class BlackjackGame {
         return bets;
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    public boolean isDrawable(final Name name) {
+        return players.isDrawable(name);
     }
 
-    public List<Player> getGambler() {
-        return players.getGamblers();
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
     public Dealer getDealer() {
@@ -64,5 +60,9 @@ public final class BlackjackGame {
 
     public List<Name> getGamblerNames() {
         return players.getGamblerNames();
+    }
+
+    public List<String> getGamblerCardSymbols(final Name name) {
+        return players.getSymbols(name);
     }
 }

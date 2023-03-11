@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.Money;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
@@ -43,17 +44,17 @@ public final class OutputView {
 
     private String generateInitialDrawMessage(final Player player) {
         if (player.isDealer()) {
-            return generatePlayerMessage(player, player.getSymbols().get(DEALER_OPEN_CARD_INDEX));
+            return generateCardMessage(player.name(), player.getSymbols().get(DEALER_OPEN_CARD_INDEX));
         }
-        return generatePlayerMessage(player, generateCardMessage(player));
+        return generateCardMessage(player.name(), generateCardMessage(player.getSymbols()));
     }
 
-    private String generatePlayerMessage(final Player player, final String message) {
-        return format("%s 카드: %s", player.getNameValue(), message);
+    private String generateCardMessage(final Name name, final String message) {
+        return format("%s 카드: %s", name.getValue(), message);
     }
 
-    private String generateCardMessage(final Player player) {
-        return String.join(DELIMITER, player.getSymbols());
+    private String generateCardMessage(final List<String> symbols) {
+        return String.join(DELIMITER, symbols);
     }
 
     public void printDealerDraw(final Dealer dealer) {
@@ -61,12 +62,14 @@ public final class OutputView {
         System.out.println(dealerDrawMessage.repeat(dealer.getCardCount() - INITIAL_DRAW_COUNT));
     }
 
-    public void printDrawResult(final Player player) {
-        System.out.println(generatePlayerMessage(player, generateCardMessage(player)));
+    public void printDrawResult(final Name name, final List<String> symbols) {
+        System.out.println(generateCardMessage(name, generateCardMessage(symbols)));
     }
 
     public void printPlayerResult(final Player player) {
-        System.out.println(generatePlayerMessage(player, generateCardMessage(player) + generateScoreMessage(player)));
+        System.out.println(generateCardMessage(player.name(),
+                generateCardMessage(player.getSymbols()) + generateScoreMessage(player)
+        ));
     }
 
     private String generateScoreMessage(final Player player) {
@@ -79,9 +82,9 @@ public final class OutputView {
         System.out.println(generateGameResultMessage(bets.getBets()));
     }
 
-    private String generateGameResultMessage(final Map<Player, Money> bets) {
+    private String generateGameResultMessage(final Map<Name, Money> bets) {
         return bets.keySet().stream()
-                .map(player -> String.format("%s: %s", player.getNameValue(), bets.get(player).getValue()))
+                .map(name -> String.format("%s: %s", name.getValue(), bets.get(name).getValue()))
                 .collect(Collectors.joining(NEW_LINE));
     }
 
