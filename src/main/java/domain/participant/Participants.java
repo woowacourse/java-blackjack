@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Deck;
+import domain.card.Deck;
 import domain.ExceptionCode;
 
 import java.util.ArrayList;

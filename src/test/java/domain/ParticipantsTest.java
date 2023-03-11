@@ -1,8 +1,11 @@
 package domain;
 
+import domain.card.*;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.result.GameResult;
+import domain.result.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +19,11 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 class ParticipantsTest {
 
     private Participants participants;
-    private Deck deck;
     private Participant leo;
 
     @BeforeEach
     void setUp() {
         participants = Participants.from(List.of("leo", "reo", "reoleo"));
-        deck = Deck.from((orderedDeck) -> orderedDeck);
         leo = participants.findPlayers().get(0);
     }
 

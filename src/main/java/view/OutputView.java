@@ -1,7 +1,7 @@
 package view;
 
-import domain.Card;
-import domain.Result;
+import domain.card.Card;
+import domain.result.Result;
 import domain.ExceptionCode;
 
 import java.util.ArrayList;

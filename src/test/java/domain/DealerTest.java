@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

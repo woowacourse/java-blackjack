@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import view.RankMessage;
 import view.SuitMessage;
