@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -62,6 +63,14 @@ public class OutputView {
         for (Player player : players) {
             printParticipantCards(player.getName(), player.getCards());
             System.out.println(" - 결과: " + player.calculateSumOfRank());
+        }
+    }
+
+    public static void printFinalProfit(final Profit dealerProfit, final Map<Player, Profit> playerProfit) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.getProfit());
+        for (final Player player : playerProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playerProfit.get(player).getProfit());
         }
     }
 

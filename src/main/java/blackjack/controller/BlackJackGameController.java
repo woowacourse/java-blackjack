@@ -137,6 +137,6 @@ public class BlackJackGameController {
         final Map<Player, Profit> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, playerBetting);
         final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(dealerResult.getDealerResult(), playerResult.getPlayerResults());
+        OutputView.printFinalProfit(dealerProfit, playerProfit);
     }
 }

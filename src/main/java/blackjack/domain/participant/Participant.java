@@ -40,7 +40,7 @@ public class Participant {
     }
 
     public boolean isUnderThanBoundary(final int number) {
-        return this.calculateSumOfRank() <= number;
+        return this.calculateSumOfRank() < number;
     }
 
     public boolean isBlackJack() {
