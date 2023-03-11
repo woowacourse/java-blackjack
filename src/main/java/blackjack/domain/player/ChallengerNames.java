@@ -45,4 +45,8 @@ public class ChallengerNames {
             throw new DuplicatedPlayerNameException();
         }
     }
+
+    public List<ChallengerName> getChallengerNames() {
+        return challengerNames;
+    }
 }

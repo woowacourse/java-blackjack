@@ -3,8 +3,12 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.domain.player.ChallengerName;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.domain.player.Score;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +25,10 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setup() {
-        blackJackGame = BlackJackGame.from(List.of("ditoo", "bada"));
+        ChallengerNameAndMoneyDto ditoo = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
+        ChallengerNameAndMoneyDto bada = new ChallengerNameAndMoneyDto(new ChallengerName("bada"), Money.from(1000));
+        Players players = Players.from(List.of(ditoo, bada));
+        blackJackGame = BlackJackGame.from(players);
     }
 
     @Test

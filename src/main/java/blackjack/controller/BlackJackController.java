@@ -2,8 +2,13 @@ package blackjack.controller;
 
 import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.player.ChallengerName;
+import blackjack.domain.player.ChallengerNames;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerStatusDto;
@@ -11,6 +16,7 @@ import blackjack.dto.PlayerStatusWithPointDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +33,36 @@ public class BlackJackController {
     }
 
     private void init() {
+        ChallengerNames challengerNames = initChallengerNames();
+        Players players = initPlayers(challengerNames);
+        blackJackGame = BlackJackGame.from(players);
+    }
+
+    private ChallengerNames initChallengerNames() {
         try {
             List<String> playerNames = InputView.inputPlayerNames();
-            blackJackGame = BlackJackGame.from(playerNames);
+            return ChallengerNames.from(playerNames);
         } catch (CustomException e) {
             OutputView.printErrorMessage(e);
-            init();
+            return initChallengerNames();
+        }
+    }
+
+    private Players initPlayers(ChallengerNames challengerNames) {
+        List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos = new ArrayList<>();
+        for (ChallengerName name : challengerNames.getChallengerNames()) {
+            makeChallengerMoneyDto(name);
+        }
+        return Players.from(challengerNameAndMoneyDtos);
+    }
+
+    private ChallengerNameAndMoneyDto makeChallengerMoneyDto(ChallengerName name) {
+        try {
+            int money = InputView.inputMoney(name.getName());
+            return new ChallengerNameAndMoneyDto(name, Money.from(money));
+        } catch (CustomException e) {
+            OutputView.printErrorMessage(e);
+            return makeChallengerMoneyDto(name);
         }
     }
 

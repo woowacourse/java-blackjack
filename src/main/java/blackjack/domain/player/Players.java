@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DealerNotFoundException;
-import blackjack.dto.ChallengerMoneyDto;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +17,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
+    public static Players from(final List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
-        names.stream()
-                .map(Challenger::new)
-                .forEach(players::add);
-        return new Players(players);
-    }
-
-    public static Players of(final List<ChallengerMoneyDto> challengerMoneyDtos) {
-        List<Player> players = new ArrayList<>();
-        players.add(new Dealer());
-        challengerMoneyDtos.stream()
+        challengerNameAndMoneyDtos.stream()
                 .map(Challenger::new)
                 .forEach(players::add);
         return new Players(players);

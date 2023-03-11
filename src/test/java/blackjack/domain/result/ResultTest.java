@@ -3,8 +3,11 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.domain.player.ChallengerName;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,7 +23,10 @@ class ResultTest {
     private Result result;
 
     void setPlayers() {
-        players = Players.from(List.of("ditoo", "bada", "oing"));
+        ChallengerNameAndMoneyDto ditoo = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
+        ChallengerNameAndMoneyDto bada = new ChallengerNameAndMoneyDto(new ChallengerName("bada"), Money.from(1000));
+        ChallengerNameAndMoneyDto oing = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        players = Players.from(List.of(ditoo, bada, oing));
         setBustedChallenger(players.getChallengers().get(0));
         setBlackjackChallenger(players.getChallengers().get(1));
         setLowPointChallenger(players.getChallengers().get(2));

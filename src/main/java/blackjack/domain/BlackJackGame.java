@@ -17,9 +17,8 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public static BlackJackGame from(List<String> names) {
+    public static BlackJackGame from(Players players) {
         CardDeck cardDeck = CardDeck.create();
-        Players players = Players.from(names);
         cardDeck.shuffle();
         return new BlackJackGame(cardDeck, players);
     }

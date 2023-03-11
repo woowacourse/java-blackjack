@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.dto.ChallengerMoneyDto;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 
 public class Challenger extends Player {
 
@@ -14,9 +14,9 @@ public class Challenger extends Player {
         this.money = Money.zero();
     }
 
-    public Challenger(final ChallengerMoneyDto challengerMoneyDto) {
-        this.name = challengerMoneyDto.getChallenger().name;
-        this.money = challengerMoneyDto.getMoney();
+    public Challenger(final ChallengerNameAndMoneyDto challengerNameAndMoneyDto) {
+        this.name = challengerNameAndMoneyDto.getChallengerName();
+        this.money = challengerNameAndMoneyDto.getMoney();
     }
 
     @Override
