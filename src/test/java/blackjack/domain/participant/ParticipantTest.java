@@ -1,5 +1,9 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.CardFixture.CLOVER_ACE;
+import static blackjack.domain.card.CardFixture.SPADE_ACE;
+import static blackjack.domain.card.CardResponseFixture.CLOVER_ACE_RESPONSE;
+import static blackjack.domain.card.CardResponseFixture.SPADE_ACE_RESPONSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -14,10 +18,6 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class ParticipantTest {
 
-    private final Card[] cards = new Card[]{
-            new Card(Shape.CLOVER, Symbol.ACE),
-            new Card(Shape.CLOVER, Symbol.ACE)
-    };
     private Participant participant;
 
     @BeforeEach
@@ -28,7 +28,7 @@ class ParticipantTest {
                 return true;
             }
         };
-        participant.drawInitialCard(cards[0], cards[1]);
+        participant.drawInitialCard(SPADE_ACE, CLOVER_ACE);
     }
 
     @Test
@@ -50,6 +50,7 @@ class ParticipantTest {
 
     @Test
     void 참가자는_자기가_가지고_있는_카드를_확인할_수_있다() {
-        assertThat(participant.getCards()).containsExactly(cards);
+        assertThat(participant.getCards())
+                .containsExactly(SPADE_ACE_RESPONSE, CLOVER_ACE_RESPONSE);
     }
 }
