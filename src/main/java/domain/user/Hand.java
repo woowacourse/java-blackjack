@@ -29,7 +29,7 @@ public class Hand {
 
     public Score score() {
         if (hasAce()) {
-            sum().minusTenIfBust();
+            return sum().minusTenIfBust();
         }
 
         return sum();
@@ -55,7 +55,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return sum().isMax() && cards.size() == 2;
+        return score().isMax() && cards.size() == 2;
     }
 
     @Override

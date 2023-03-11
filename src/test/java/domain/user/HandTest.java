@@ -152,7 +152,8 @@ class HandTest {
     @DisplayName("카드의 숫자가 10, 10, ACE 이면 버스트가 아니다.")
     @Test
     void isBust_TenTenAce_False() {
-        Hand hand = new Hand(List.of(DIAMOND_TEN,
+        Hand hand = new Hand(List.of(
+                DIAMOND_TEN,
                 CLOVER_TEN,
                 SPADE_ACE
         ));
