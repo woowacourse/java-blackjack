@@ -7,42 +7,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private static final int INIT_NUMBER = 0;
+    private static final double BLACKJACK_PRIZE_RATE = 2.5;
+    private static final int PLAYER_WIN_PRIZE_RATE = 2;
+    private static final int PLAYER_LOSE_PRIZE_RATE = -1;
 
-    private final Map<Result, Integer> dealerResults;
-    private final Map<Player, Result> playersResults;
     private final Map<Player, Integer> playerBettingResults;
 
     private int dealerBettingResults;
 
     public GameResult(Game game) {
-        this.dealerResults = initDealerResult();
-        this.playersResults = new LinkedHashMap<>();
         this.playerBettingResults = new LinkedHashMap<>();
         dealerBettingResults = 0;
         accumulationResult(game);
-    }
-
-    private static Map<Result, Integer> initDealerResult() {
-        Map<Result, Integer> dealerResult = new LinkedHashMap<>();
-
-        for (Result result : Result.values()) {
-            dealerResult.put(result, INIT_NUMBER);
-        }
-        return dealerResult;
-    }
-
-    private static int calculatePlayerBetting(int playerBetting, Result playerResult) {
-        if (playerResult.equals(Result.BLACKJACK)) {
-            return (int) (playerBetting * 2.5);
-        }
-        if (playerResult.equals(Result.WIN)) {
-            return playerBetting * 2;
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            return playerBetting * -1;
-        }
-        return playerBetting;
     }
 
     private void accumulationResult(Game game) {
@@ -50,10 +26,6 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             Result playerResult = ResultReferee.getPlayerResult(player, dealer);
-            Result dealerResult = ResultReferee.getOpponentResult(playerResult);
-            playersResults.put(player, playerResult);
-            dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
-
             calculatePrize(player, playerResult);
         }
     }
@@ -65,12 +37,17 @@ public class GameResult {
         dealerBettingResults -= playerBetting;
     }
 
-    public Map<Result, Integer> getDealerResults() {
-        return dealerResults;
-    }
-
-    public Map<Player, Result> getPlayersResults() {
-        return playersResults;
+    private int calculatePlayerBetting(int playerBetting, Result playerResult) {
+        if (playerResult.equals(Result.BLACKJACK)) {
+            return (int) (playerBetting * BLACKJACK_PRIZE_RATE);
+        }
+        if (playerResult.equals(Result.WIN)) {
+            return playerBetting * PLAYER_WIN_PRIZE_RATE;
+        }
+        if (playerResult.equals(Result.LOSE)) {
+            return playerBetting * PLAYER_LOSE_PRIZE_RATE;
+        }
+        return playerBetting;
     }
 
     public Map<Player, Integer> getPlayerBettingResults() {
