@@ -82,7 +82,6 @@ public class BlackJackController {
 
     private void endGame() {
         OutputView.showHandStatuses(blackJackGame.openHandResults());
-        OutputView.showTotalGameResult(blackJackGame.computeTotalGameResult());
         OutputView.showTotalProfitResult(blackJackGame.computeTotalProfitResult());
     }
 }

@@ -2,9 +2,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.result.JudgeResult;
 import blackjack.dto.HandStatus;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -13,14 +11,6 @@ public class Dealer extends Participant {
 
     public Dealer(final String name) {
         super(name);
-    }
-
-    public Map<String, JudgeResult> judgeAllPlayersResult(final Players players) {
-        final Map<String, JudgeResult> playerJudgeResults = new LinkedHashMap<>();
-        for (final Player player : players.players()) {
-            playerJudgeResults.put(player.getName(), judge(player));
-        }
-        return playerJudgeResults;
     }
 
     // TODO player가 스스로 하는 게 낫지 않을까?

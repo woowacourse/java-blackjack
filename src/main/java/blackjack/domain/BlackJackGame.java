@@ -6,7 +6,6 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
-import blackjack.dto.TotalGameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +64,8 @@ public class BlackJackGame {
         return handResults;
     }
 
-    public TotalGameResult computeTotalGameResult() {
-        final GameResultComputer gameResultComputer = new GameResultComputer(participants.collectPlayerJudgeResults());
-        return gameResultComputer.computeTotalResult();
-    }
-
     public Map<String, Integer> computeTotalProfitResult() {
-        final GameResultComputer gameResultComputer = new GameResultComputer(participants.collectPlayerJudgeResults());
-        return gameResultComputer.calculateProfitByParticipant(participants.dealer(), participants.players());
+        final TotalProfitCalculator totalProfitCalculator = new TotalProfitCalculator();
+        return totalProfitCalculator.calculateProfitByParticipant(participants.dealer(), participants.players());
     }
 }

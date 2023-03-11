@@ -1,9 +1,7 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.result.JudgeResult;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -32,10 +30,6 @@ public class Participants {
         if (names.contains(dealerName)) {
             throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + dealerName + ")과 중복될 수 없습니다.");
         }
-    }
-
-    public Map<String, JudgeResult> collectPlayerJudgeResults() {
-        return dealer.judgeAllPlayersResult(players);
     }
 
     public List<Player> findHitAblePlayers() {

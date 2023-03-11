@@ -1,20 +1,12 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
-import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.SIX;
 import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
-import static blackjack.domain.result.JudgeResult.BLACKJACK_WIN;
-import static blackjack.domain.result.JudgeResult.LOSE;
-import static blackjack.domain.result.JudgeResult.PUSH;
-import static blackjack.domain.result.JudgeResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.card.Card;
 import blackjack.dto.HandStatus;
@@ -53,30 +45,6 @@ class DealerTest {
         assertThat(dealer.isHitAble()).isFalse();
     }
 
-    @DisplayName("플레이어들을 전달받아 판정 결과들을 반환한다.")
-    @Test
-    void should_ReturnPlayerJudgeResults_When_Given_Players() {
-        dealer.take(new Card(SPADE, QUEEN));
-        dealer.take(new Card(SPADE, SEVEN));
-
-        final Player blackjackWinPlayer = new Player("blackjackWinPlayer",
-                List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
-                BETTING_MONEY_1000);
-        final Player winPlayer = new Player("winPlayer", List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)),
-                BETTING_MONEY_1000);
-        final Player losePlayer = new Player("losePlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SIX)),
-                BETTING_MONEY_1000);
-        final Player pushPlayer = new Player("pushPlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SEVEN)),
-                BETTING_MONEY_1000);
-
-        assertThat(dealer.judgeAllPlayersResult(
-                new Players(List.of(blackjackWinPlayer, winPlayer, losePlayer, pushPlayer))))
-                .containsExactly(
-                        entry("blackjackWinPlayer", BLACKJACK_WIN), entry("winPlayer", WIN),
-                        entry("losePlayer", LOSE), entry("pushPlayer", PUSH)
-                );
-    }
-
     @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
     @Test
     void should_OpenOnlyFirstCard_When_DealerOpenHandStatus() {
@@ -102,4 +70,6 @@ class DealerTest {
 
         assertThat(dealer.isHitAble()).isTrue();
     }
+
+    // TODO 해당 플레이어에게 주거나 받을 수익을 계산한다
 }
