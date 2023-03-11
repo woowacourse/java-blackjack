@@ -1,11 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.game.Hand;
 import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
-
-import java.util.List;
 
 public final class Dealer extends Participant {
 
