@@ -1,12 +1,12 @@
 package domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.card.Card;
 import domain.card.CloverCard;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +22,17 @@ class ScoreTest {
     }
 
     @Test
+    @DisplayName("합산할 수 있다.")
+    void sumTest() {
+        Score score1 = new Score(4);
+        Score score2 = new Score(6);
+
+        Score sumResult = score1.add(score2);
+
+        assertThat(sumResult).isEqualTo(new Score(10));
+    }
+
+    @Test
     @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 계산할 수 있다.")
     void calculateScoreTest() {
         //given
@@ -31,7 +42,7 @@ class ScoreTest {
         Score score = new Score(cards);
 
         //then
-        Assertions.assertThat(score.getScore()).isEqualTo(14);
+        assertThat(score.getScore()).isEqualTo(14);
     }
 
     @ParameterizedTest
@@ -40,7 +51,7 @@ class ScoreTest {
     void calculateScoreWithAceTest(List<Card> cards, int expected) {
         Score score = new Score(cards);
 
-        Assertions.assertThat(score.getScore()).isEqualTo(expected);
+        assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> calculateScoreWithAceCase() {
