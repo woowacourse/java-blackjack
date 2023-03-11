@@ -17,11 +17,11 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return sum == BLACK_JACK;
+        return getSum() == BLACK_JACK;
     }
 
     public boolean isBust() {
-        return sum > BLACK_JACK;
+        return getSum() > BLACK_JACK;
     }
 
     private boolean hasACE() {
@@ -30,11 +30,15 @@ public class Hand {
     }
 
     public int getSum() {
-        if (isBust() && hasACE()) {
+        if (isOverBlackJack() && hasACE()) {
             return sum - ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
+    }
+
+    private boolean isOverBlackJack() {
+        return sum > BLACK_JACK;
     }
 
     public List<Card> getCards() {

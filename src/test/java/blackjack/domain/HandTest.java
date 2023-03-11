@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import static blackjack.domain.Number.ACE;
+import static blackjack.domain.Number.FIVE;
 import static blackjack.domain.Number.JACK;
+import static blackjack.domain.Number.NINE;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,6 +13,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
+
+    @Test
+    void should_NotBust_When_HandHas_FIVE_NINE_ACE() {
+        Hand hand = new Hand();
+        Card card1 = new Card(SPADE, FIVE);
+        Card card2 = new Card(SPADE, NINE);
+        Card card3 = new Card(SPADE, ACE);
+        hand.add(card1);
+        hand.add(card2);
+        assertThat(hand.isBust()).isFalse();
+        hand.add(card3);
+        assertThat(hand.isBust()).isFalse();
+        assertThat(hand.getSum()).isEqualTo(15);
+    }
 
     @DisplayName("손패는 카드를 받으면 마지막 위치에 저장한다.")
     @Test
