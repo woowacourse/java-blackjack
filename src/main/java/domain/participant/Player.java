@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.BettingMoney;
 import domain.BlackJackResult;
 import domain.card.Card;
 import domain.card.DrawnCards;

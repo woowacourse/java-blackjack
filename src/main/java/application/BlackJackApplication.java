@@ -1,16 +1,8 @@
 package application;
 
-import domain.BettingMoney;
 import domain.BlackJackGame;
+import domain.BlackJackGameGenerator;
 import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardDeckGenerator;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Names;
-import domain.participant.ParticipantGenerator;
-import domain.participant.Player;
-import domain.participant.Players;
 import dto.response.BattingResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
@@ -23,64 +15,23 @@ public class BlackJackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final BlackJackGameGenerator blackJackGameGenerator;
 
-    public BlackJackApplication(InputView inputView, OutputView outputView) {
+    public BlackJackApplication(InputView inputView, OutputView outputView,
+                                BlackJackGameGenerator blackJackGameGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackJackGameGenerator = blackJackGameGenerator;
     }
 
     public void run() {
-        BlackJackGame blackJackGame = createBlackJackGame();
+        BlackJackGame blackJackGame = blackJackGameGenerator.create(inputView, outputView);
 
         splitCards(blackJackGame);
         drawCards(blackJackGame);
 
         printParticipantResults(blackJackGame);
         printBattingResults(blackJackGame);
-    }
-
-    private BlackJackGame createBlackJackGame() {
-        CardDeck cardDeck = CardDeckGenerator.create();
-        Dealer dealer = ParticipantGenerator.createEmptyCardDealer();
-        Players players = createPlayers();
-
-        return new BlackJackGame(players, dealer, cardDeck);
-    }
-
-    private Players createPlayers() {
-        Names names = createNames();
-
-        List<Player> rawPlayers = new ArrayList<>();
-
-        for (Name name : names.getNames()) {
-            BettingMoney bettingMoney = createBettingMoney(name.getName());
-            Player player = ParticipantGenerator.createEmptyCardPlayer(name, bettingMoney);
-            rawPlayers.add(player);
-        }
-
-        return new Players(rawPlayers);
-    }
-
-    private Names createNames() {
-        try {
-            List<String> rawNames = inputView.readPlayerNames();
-
-            return Names.from(rawNames);
-
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception.getMessage());
-            return createNames();
-        }
-    }
-
-    private BettingMoney createBettingMoney(String playerName) {
-        try {
-            int bettingMoney = inputView.readBettingMoneyByName(playerName);
-            return new BettingMoney(bettingMoney);
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception.getMessage());
-            return createBettingMoney(playerName);
-        }
     }
 
     private void splitCards(BlackJackGame blackJackGame) {

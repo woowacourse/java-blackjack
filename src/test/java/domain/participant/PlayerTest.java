@@ -2,7 +2,6 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BettingMoney;
 import domain.card.Card;
 import domain.card.CardType;
 import domain.card.CardValue;

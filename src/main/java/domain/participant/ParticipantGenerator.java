@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.BettingMoney;
 import domain.card.Card;
 import domain.card.DrawnCards;
 import java.util.ArrayList;
