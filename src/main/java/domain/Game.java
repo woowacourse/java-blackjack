@@ -30,6 +30,12 @@ public class Game {
         bank.bet(user, money);
     }
 
+    public void evaluate() {
+        for (User user : participants.getUsers()) {
+            bank.evaluate(user, getResultOf(user));
+        }
+    }
+
     public Result getResultOf(User user) {
         Player foundPlayer = participants.find(user);
         Dealer dealer = participants.getDealer();
