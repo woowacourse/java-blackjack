@@ -5,6 +5,8 @@ import domain.game.BlackJackGame;
 import domain.user.Player;
 import domain.user.Users;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -39,9 +41,9 @@ public class Controller {
     private BlackJackGame createBlackJackGame() {
         List<String> playerNames = inputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        for (String playerName : playerNames) {
-            int bettingAmount = inputView.askPlayerBettingAmount(playerName);
-            users.bettingByName(playerName, bettingAmount);
+        Map<String, Integer> playersBettingAmount = inputView.askPlayersBettingAmount(playerNames);
+        for (Entry<String, Integer> nameToBettingAmount : playersBettingAmount.entrySet()) {
+            users.bettingByName(nameToBettingAmount.getKey(), nameToBettingAmount.getValue());
         }
         return BlackJackGame.of(users, new RandomCardShuffler());
     }
