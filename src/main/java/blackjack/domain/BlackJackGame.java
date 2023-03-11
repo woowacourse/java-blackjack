@@ -18,11 +18,6 @@ public class BlackJackGame {
         this.players = new Players(inputNames);
     }
 
-    public void handOutCardTo(final Deck deck, final Participant participant) {
-        final Card card = deck.draw();
-        participant.receiveCard(card);
-    }
-
     public void handOutInitCards(final Deck deck) {
         handOutInitCardsTo(deck, dealer);
         players.getPlayers()
@@ -31,9 +26,13 @@ public class BlackJackGame {
 
     private void handOutInitCardsTo(final Deck deck, final Participant participant) {
         for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
-            final Card card = deck.draw();
-            participant.receiveCard(card);
+            handOutCardTo(deck, participant);
         }
+    }
+
+    public void handOutCardTo(final Deck deck, final Participant participant) {
+        final Card card = deck.draw();
+        participant.receiveCard(card);
     }
 
     public void calculateParticipantResult(final DealerResult dealerResult, final PlayerResult playerResult) {

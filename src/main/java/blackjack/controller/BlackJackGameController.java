@@ -25,16 +25,13 @@ public class BlackJackGameController {
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 
-        final Map<Player, Profit> playerBetting = new LinkedHashMap<>();
-        for (final Player player : players.getPlayers()) {
-            playerBetting.put(player, generateProfit(player));
-        }
+        final Map<Player, Profit> bettingMoney = generateBettingMoney(players);
 
         blackJackGame.handOutInitCards(deck);
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
 
         handOutHitCard(blackJackGame, players, dealer);
-        judgeGameResult(blackJackGame, players, dealer, playerBetting);
+        judgeGameResult(blackJackGame, players, dealer, bettingMoney);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -53,6 +50,14 @@ public class BlackJackGameController {
             OutputView.printErrorMessage(e.getMessage());
             return Optional.empty();
         }
+    }
+
+    private Map<Player, Profit> generateBettingMoney(final Players players) {
+        final Map<Player, Profit> bettingMoney = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            bettingMoney.put(player, generateProfit(player));
+        }
+        return bettingMoney;
     }
 
     private Profit generateProfit(final Player player) {
@@ -130,11 +135,12 @@ public class BlackJackGameController {
         }
     }
 
-    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> playerBetting) {
+    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> bettingMoney) {
         final DealerResult dealerResult = new DealerResult();
         final PlayerResult playerResult = new PlayerResult();
         blackJackGame.calculateParticipantResult(dealerResult, playerResult);
-        final Map<Player, Profit> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, playerBetting);
+
+        final Map<Player, Profit> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, bettingMoney);
         final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalProfit(dealerProfit, playerProfit);

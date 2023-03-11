@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Result;
-
 public class Profit {
 
     private final static int MAX_PROFIT = 100_000_000;
