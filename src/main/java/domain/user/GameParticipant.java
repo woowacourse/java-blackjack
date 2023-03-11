@@ -46,7 +46,15 @@ public class GameParticipant {
         return dealer.needsHit();
     }
 
-    public Map<Player, GameResult> makeGameResultForAllPlayer() {
+    public void updateBetAmountByGameResult() {
+        Map<Player, GameResult> record = makeGameResultForAllPlayer();
+
+        increasePlayerRevenueWhenWin(record);
+        decreasePlayerRevenueWhenLose(record);
+        startSettlement(record);
+    }
+
+    private Map<Player, GameResult> makeGameResultForAllPlayer() {
         Map<Player, GameResult> record = new HashMap<>();
         recordGameResult(record);
 
@@ -55,14 +63,6 @@ public class GameParticipant {
 
     private void recordGameResult(final Map<Player, GameResult> record) {
         players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
-    }
-
-    public void updateBetAmountByGameResult() {
-        Map<Player, GameResult> record = makeGameResultForAllPlayer();
-
-        increasePlayerRevenueWhenWin(record);
-        decreasePlayerRevenueWhenLose(record);
-        startSettlement(record);
     }
 
     private static void increasePlayerRevenueWhenWin(final Map<Player, GameResult> record) {
@@ -81,10 +81,6 @@ public class GameParticipant {
 
     private void startSettlement(final Map<Player, GameResult> record) {
         record.keySet().forEach(dealer::payFor);
-    }
-
-    public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {
-        return GameResult.makeDealerRecord(record);
     }
 
     public List<Player> getPlayers() {

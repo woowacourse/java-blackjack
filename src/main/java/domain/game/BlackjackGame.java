@@ -5,7 +5,6 @@ import domain.user.GameParticipant;
 import domain.user.Player;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -42,14 +41,6 @@ public class BlackjackGame {
 
     public void updateBetAmount() {
         gameParticipant.updateBetAmountByGameResult();
-    }
-
-    public Map<Player, GameResult> getGameResultForAllPlayer() {
-        return gameParticipant.makeGameResultForAllPlayer();
-    }
-
-    public Map<GameResult, Integer> getDealerRecord() {
-        return gameParticipant.getDealerRecord(getGameResultForAllPlayer());
     }
 
     public GameParticipant getGameParticipant() {
