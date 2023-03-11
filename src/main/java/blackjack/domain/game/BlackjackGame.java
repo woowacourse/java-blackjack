@@ -20,8 +20,8 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame of(List<String> playerName, Deck deck) {
-        return new BlackjackGame(Participants.from(playerName, new Dealer()), deck);
+    public static BlackjackGame of(List<String> playersName,List<String> playersAmount, Deck deck) {
+        return new BlackjackGame(Participants.from(playersName, playersAmount, new Dealer()), deck);
     }
 
     public BlackjackGameResult generatePlayersResult(BlackJackReferee referee) {

@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Amount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
@@ -24,7 +25,7 @@ class BlackJackRefereeTest {
         //given
         BlackJackReferee referee = new BlackJackReferee();
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("비버"));
+        Player player = new Player(new ParticipantName("비버"), new Amount("1000"));
         List<Card> dealerCards = List.of(
                 new Card(CardNumber.QUEEN, CardSuit.CLUB),
                 new Card(CardNumber.ACE, CardSuit.SPADE)
@@ -52,7 +53,7 @@ class BlackJackRefereeTest {
     void judgmentDealerBlackjack() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("비버"));
+        Player player = new Player(new ParticipantName("비버"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         List<Card> dealerCards = List.of(
                 new Card(CardNumber.FIVE, CardSuit.CLUB),
@@ -82,7 +83,7 @@ class BlackJackRefereeTest {
     void judgmentAllBlackjack() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("비버"));
+        Player player = new Player(new ParticipantName("비버"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         List<Card> dealerCards = List.of(
                 new Card(CardNumber.JACK, CardSuit.CLUB),
@@ -112,7 +113,7 @@ class BlackJackRefereeTest {
     void judgeWinner() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("홍실"));
+        Player player = new Player(new ParticipantName("홍실"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.TEN, CardSuit.DIAMOND));
         dealer.hit(new Card(CardNumber.TEN, CardSuit.DIAMOND));
@@ -132,7 +133,7 @@ class BlackJackRefereeTest {
     void judgeWinner2() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("홍실"));
+        Player player = new Player(new ParticipantName("홍실"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.TWO, CardSuit.SPADE));
         dealer.hit(new Card(CardNumber.TWO, CardSuit.SPADE));
@@ -152,7 +153,7 @@ class BlackJackRefereeTest {
     void judgeWinner3() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("홍실"));
+        Player player = new Player(new ParticipantName("홍실"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.NINE, CardSuit.SPADE));
         dealer.hit(new Card(CardNumber.EIGHT, CardSuit.SPADE));
@@ -172,7 +173,7 @@ class BlackJackRefereeTest {
     void judgeWinner4() {
         //given
         Dealer dealer = new Dealer();
-        Player player = new Player(new ParticipantName("홍실"));
+        Player player = new Player(new ParticipantName("홍실"), new Amount("1000"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.ACE, CardSuit.SPADE));
         dealer.hit(new Card(CardNumber.TEN, CardSuit.SPADE));

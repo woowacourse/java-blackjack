@@ -35,7 +35,7 @@ public class BlackjackController {
         Deck deck = Deck.create(new RandomCardPickerGenerator());
         List<String> playersName = inputPlayerName();
         List<String> playerAmount = creatPlayerAmount(playersName);
-        return BlackjackGame.of(playersName, deck);
+        return BlackjackGame.of(playersName, playerAmount, deck);
     }
 
     private void hitFirstSetting(final BlackjackGame blackjackGame) {
