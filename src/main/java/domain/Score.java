@@ -32,7 +32,7 @@ public class Score {
     }
 
     private static boolean canDecreaseScore(int inputValue, int limit, int aceCount) {
-        return inputValue != MAX_SCORE && aceCount != 0 && limit < inputValue;
+        return inputValue != MAX_SCORE && aceCount <= 0 && limit < inputValue;
     }
 
     public boolean isMaxScore() {
