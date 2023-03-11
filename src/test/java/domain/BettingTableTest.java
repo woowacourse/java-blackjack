@@ -20,7 +20,6 @@ public class BettingTableTest {
         playerResult.put("jason", ResultType.LOSE);
     }
 
-
     @Test
     @DisplayName("승패결과에 따라 배팅금액 결과를 계산한다.")
     void calculate() {
@@ -31,8 +30,9 @@ public class BettingTableTest {
         bettingTableResult.put("jason", new Money(-2000));
         Assertions.assertThat(bettingTable.getBettingTable()).isEqualTo(bettingTableResult);
     }
+
     @Test
-    @DisplayName("배팅테이블의 총 금액을 합산한다..")
+    @DisplayName("배팅테이블의 총 금액을 합산한다.")
     void sum() {
         Assertions.assertThat(bettingTable.sum()).isEqualTo(12000);
     }

@@ -35,5 +35,4 @@ public class Player {
         return cards.getSum();
     }
 
-
 }

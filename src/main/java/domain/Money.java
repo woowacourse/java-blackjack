@@ -9,7 +9,6 @@ public class Money {
         this.money = money;
     }
 
-
     public Money negative() {
         return new Money(-money);
     }

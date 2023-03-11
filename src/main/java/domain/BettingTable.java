@@ -18,14 +18,14 @@ public class BettingTable {
         }
     }
 
-    public Map<String, Money> getBettingTable() {
-        return bettingTable;
-    }
-
     public int sum() {
         return bettingTable.values().stream()
                 .mapToInt(Money::getMoney)
                 .sum();
+    }
+
+    public Map<String, Money> getBettingTable() {
+        return bettingTable;
     }
 
 }

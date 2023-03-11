@@ -5,21 +5,22 @@ import java.util.Map;
 
 public class GameResult {
     private static final int BLACK_JACK = 21;
+
     private final Map<String, ResultType> playerResult;
 
     public GameResult(Dealer dealer, Players players) {
         this.playerResult = new LinkedHashMap<>();
-        calculateResult(dealer, players);
+        calculateResultType(dealer, players);
     }
 
-    private void calculateResult(Dealer dealer, Players players) {
+    private void calculateResultType(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            ResultType resultType = calculateResult(dealer, player);
+            ResultType resultType = calculateResultType(dealer, player);
             playerResult.put(player.getName(), resultType);
         }
     }
 
-    public ResultType calculateResult(Dealer dealer, Player player) {
+    private ResultType calculateResultType(Dealer dealer, Player player) {
         if (isBlackJack(dealer, player)) {
             return ResultType.BLACKJACK;
         }
