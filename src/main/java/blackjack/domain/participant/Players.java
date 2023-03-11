@@ -91,8 +91,24 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public int getPlayerProfit(final String name, final double rate) {
+        return players.stream()
+                .filter(player -> player.hasName(name))
+                .findFirst()
+                .map(player -> player.calculateProfit(rate))
+                .orElseThrow(PlayerNotFoundException::new);
+    }
+
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<CardResponse> getPlayerCards(final String playerName) {
+        return players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findFirst()
+                .map(Player::getCards)
+                .orElseThrow(PlayerNotFoundException::new);
     }
 
     Map<String, Integer> calculatePlayersScore() {

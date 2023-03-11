@@ -13,7 +13,7 @@ public class BlackJackRule {
         return (int) (player.calculateProfit(result.getPlayerProfit()) * result.getPlayerProfit());
     }
 
-    public ResultType calculateDealerResult(final Dealer dealer, final Player player) {
+    private ResultType calculateDealerResult(final Dealer dealer, final Player player) {
         if (dealer.hasBlackJack()) {
             return playWithBlackjack(player);
         }
