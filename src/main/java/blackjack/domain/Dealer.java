@@ -3,6 +3,7 @@ package blackjack.domain;
 public class Dealer extends Participant {
 
     private static final int CAN_HIT_LIMIT = 17;
+    private static final double BLACK_JACK_ADDITIONAL_BENEFIT = 1.5;
     private static final int NO_BENEFIT = 0;
 
     private final BetManager betManager = new BetManager();
@@ -26,7 +27,7 @@ public class Dealer extends Participant {
         }
 
         if (isBust()) {
-            return betMoney;
+            return checkBlackJackBenefit(player, betMoney);
         }
 
         return compareSum(player, betMoney);
@@ -38,10 +39,18 @@ public class Dealer extends Participant {
         }
 
         if (player.getSum() > getSum()) {
-            return betMoney;
+            return checkBlackJackBenefit(player, betMoney);
         }
 
         return -betMoney;
+    }
+
+    private int checkBlackJackBenefit(Player player, int playerBenefit) {
+        if (player.isBlackJack()) {
+            return (int) (BLACK_JACK_ADDITIONAL_BENEFIT * playerBenefit);
+        }
+
+        return playerBenefit;
     }
 
     public Card getFirstCard() {

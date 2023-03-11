@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,24 +26,31 @@ class DealerTest {
     @DisplayName("합을 비교해 최종 승패를 결정한다.")
     @Test
     void should_Return_GameResult() {
-        Dealer dealer = new Dealer();
+        MockDeckGenerator mockDeckGenerator = new MockDeckGenerator(Lists.newArrayList(
+                new Card(SPADE, QUEEN),
+                new Card(CLUB, SEVEN),
+                new Card(HEART, QUEEN),
+                new Card(DIAMOND, ACE),
+                new Card(CLUB, THREE),
+                new Card(SPADE, KING),
+                new Card(HEART, SEVEN),
+                new Card(DIAMOND, JACK)
+        ));
+        Deck deck = mockDeckGenerator.generate();
 
-        dealer.take(new Card(SPADE, QUEEN));
-        dealer.take(new Card(CLUB, SEVEN));
+        Dealer dealer = new Dealer();
+        dealer.handInitialCards(deck);
 
         Players players = Players.from(List.of("a", "b", "c"));
 
         Player playerA = players.getPlayers().get(0);
-        playerA.take(new Card(HEART, QUEEN));
-        playerA.take(new Card(DIAMOND, ACE));
+        playerA.handInitialCards(deck);
 
         Player playerB = players.getPlayers().get(1);
-        playerB.take(new Card(CLUB, THREE));
-        playerB.take(new Card(SPADE, KING));
+        playerB.handInitialCards(deck);
 
         Player playerC = players.getPlayers().get(2);
-        playerC.take(new Card(HEART, SEVEN));
-        playerC.take(new Card(DIAMOND, JACK));
+        playerC.handInitialCards(deck);
 
         dealer.addPlayerBetMoney(playerA, 10000);
         dealer.addPlayerBetMoney(playerB, 20000);
@@ -50,13 +58,13 @@ class DealerTest {
 
         GameResult gameResult = dealer.judgeGameResult(players);
         DealerResult dealerResult = gameResult.getDealerResult();
-        assertThat(dealerResult.getDealerResult()).isEqualTo(10000);
+        assertThat(dealerResult.getDealerResult()).isEqualTo(5000);
 
         List<PlayerResult> results = gameResult.getPlayersResult();
 
         PlayerResult resultA = results.get(0);
         assertThat(resultA.getName()).isEqualTo("a");
-        assertThat(resultA.getBenefit()).isEqualTo(10000);
+        assertThat(resultA.getBenefit()).isEqualTo(15000);
 
         PlayerResult resultB = results.get(1);
         assertThat(resultB.getName()).isEqualTo("b");

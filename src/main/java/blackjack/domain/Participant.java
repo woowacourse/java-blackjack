@@ -5,6 +5,7 @@ import java.util.List;
 public abstract class Participant {
 
     protected final Hand hand = new Hand();
+    private boolean blackJack;
 
     public void take(Card card) {
         hand.add(card);
@@ -13,6 +14,7 @@ public abstract class Participant {
     public void handInitialCards(Deck deck) {
         take(deck.draw());
         take(deck.draw());
+        blackJack = hand.isBlackJack();
     }
 
     public boolean isBust() {
@@ -20,7 +22,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return hand.isBlackJack();
+        return blackJack;
     }
 
     public List<Card> getCards() {

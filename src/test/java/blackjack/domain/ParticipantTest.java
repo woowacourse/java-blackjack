@@ -3,11 +3,14 @@ package blackjack.domain;
 import static blackjack.domain.Number.ACE;
 import static blackjack.domain.Number.JACK;
 import static blackjack.domain.Number.KING;
+import static blackjack.domain.Number.NINE;
 import static blackjack.domain.Number.QUEEN;
+import static blackjack.domain.Number.TWO;
 import static blackjack.domain.Symbol.CLUB;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -48,5 +51,29 @@ class ParticipantTest {
         participant.take(new Card(CLUB, QUEEN));
 
         assertThat(participant.getSum()).isEqualTo(21);
+    }
+
+    @Test
+    void blackJackTest() {
+        Deck deck = new MockDeckGenerator(Lists.newArrayList(
+                new Card(SPADE, ACE),
+                new Card(SPADE, QUEEN)
+        )).generate();
+        Player player = new Player("a");
+        player.handInitialCards(deck);
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void notBlackJackTest() {
+        Deck deck = new MockDeckGenerator(Lists.newArrayList(
+                new Card(SPADE, TWO),
+                new Card(SPADE, NINE),
+                new Card(SPADE, QUEEN)
+        )).generate();
+        Player player = new Player("a");
+        player.handInitialCards(deck);
+        player.take(deck.draw());
+        assertThat(player.isBlackJack()).isFalse();
     }
 }
