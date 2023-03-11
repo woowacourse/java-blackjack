@@ -6,7 +6,6 @@ import blackjack.domain.card.CardSymbol;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Name;
 import blackjack.domain.gameplayer.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

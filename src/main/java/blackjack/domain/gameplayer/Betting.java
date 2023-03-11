@@ -4,13 +4,11 @@ import java.util.Objects;
 
 public class Betting {
 
+    public static final Betting defaultBetting = new Betting(0);
     private static final String INVALID_RANGE_MESSAGE = "배팅 금액은 0원부터 30만원까지 입력받을 수 있습니다.";
     private static final String INVALID_CHANGE_BETTING = "배팅 금액을 변경할 수 없습니다.";
     private static final int MAX_BOUND = 300000;
     private static final int MIN_BOUND = 1;
-
-    public static final Betting defaultBetting = new Betting(0);
-
     private final int betting;
 
     private Betting(int betting) {

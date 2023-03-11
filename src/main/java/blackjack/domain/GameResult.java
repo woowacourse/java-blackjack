@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.gameplayer.BlackJackParticipant;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 
@@ -33,6 +32,19 @@ public class GameResult {
         return dealerResult;
     }
 
+    private static int calculatePlayerBetting(int playerBetting, Result playerResult) {
+        if (playerResult.equals(Result.BLACKJACK)) {
+            return (int) (playerBetting * 2.5);
+        }
+        if (playerResult.equals(Result.WIN)) {
+            return playerBetting * 2;
+        }
+        if (playerResult.equals(Result.LOSE)) {
+            return playerBetting * -1;
+        }
+        return playerBetting;
+    }
+
     private void accumulationResult(Game game) {
         Dealer dealer = game.getDealer();
 
@@ -51,19 +63,6 @@ public class GameResult {
 
         playerBettingResults.put(player, playerBetting);
         dealerBettingResults -= playerBetting;
-    }
-
-    private static int calculatePlayerBetting(int playerBetting, Result playerResult) {
-        if (playerResult.equals(Result.BLACKJACK)) {
-            return (int) (playerBetting * 2.5);
-        }
-        if (playerResult.equals(Result.WIN)) {
-            return playerBetting * 2;
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            return playerBetting * -1;
-        }
-        return playerBetting;
     }
 
     public Map<Result, Integer> getDealerResults() {
