@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import static blackjack.domain.Fixtures.BLACKJACK_WIN_PLAYER;
-import static blackjack.domain.Fixtures.DEALER_17;
-import static blackjack.domain.Fixtures.LOSE_PLAYER;
-import static blackjack.domain.Fixtures.PUSH_PLAYER;
-import static blackjack.domain.Fixtures.WIN_PLAYER;
+import static blackjack.domain.ParticipantFixtures.BLACKJACK_WIN_PLAYER;
+import static blackjack.domain.ParticipantFixtures.DEALER_17;
+import static blackjack.domain.ParticipantFixtures.LOSE_PLAYER;
+import static blackjack.domain.ParticipantFixtures.PUSH_PLAYER;
+import static blackjack.domain.ParticipantFixtures.WIN_PLAYER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 

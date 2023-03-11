@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.result.JudgeResult.BLACKJACK_WIN;
 import static blackjack.domain.result.JudgeResult.LOSE;
 import static blackjack.domain.result.JudgeResult.PUSH;

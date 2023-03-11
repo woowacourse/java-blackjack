@@ -15,7 +15,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import java.util.List;
 
-public class Fixtures {
+public class ParticipantFixtures {
 
     public static final BettingMoney BETTING_MONEY_1000 = new BettingMoney(1000);
 

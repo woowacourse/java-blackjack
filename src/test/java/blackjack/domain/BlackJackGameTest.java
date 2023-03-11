@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participants.Dealer;

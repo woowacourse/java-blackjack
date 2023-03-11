@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.HEART;
