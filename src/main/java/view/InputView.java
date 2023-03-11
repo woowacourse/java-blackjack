@@ -50,19 +50,19 @@ public class InputView {
         }
     }
 
-    private static void validateNullOrBlank(String input) {
-        if (Objects.isNull(input) || input.isBlank()) {
-            throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
-        }
-    }
-    
     public static double inputBetAmount() {
         try {
             String betAmount = BUFFERED_READER.readLine();
+            validateNullOrBlank(betAmount);
             return Integer.parseInt(betAmount);
-        } catch (IOException ioException) {
-            OutputView.println(ioException.getMessage());
-            return inputBetAmount();
+        } catch (IOException | NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+    
+    private static void validateNullOrBlank(String input) {
+        if (Objects.isNull(input) || input.isBlank()) {
+            throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
         }
     }
     
