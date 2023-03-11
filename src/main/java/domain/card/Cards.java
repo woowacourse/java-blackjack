@@ -5,7 +5,7 @@ import java.util.List;
 public class Cards {
 
     public static final int BLACKJACK_NUMBER = 21;
-    public static final int ADDITIONAL_A_VALUE = 10;
+    private static final int ADDITIONAL_A_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -24,13 +24,13 @@ public class Cards {
     private int getSum() {
         return cards.stream()
             .map(Card::getNumber)
-            .mapToInt(Number::getValue)
+            .mapToInt(Denomination::getValue)
             .sum();
     }
 
     private boolean hasA() {
         return cards.stream()
-            .anyMatch(c -> c.is(Number.A));
+            .anyMatch(card -> card.is(Denomination.A));
     }
 
     private int calculateAValues(int sum) {

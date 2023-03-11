@@ -61,13 +61,13 @@ public class Application {
     }
 
     private void draw(CardDeck cardDeck, Player player) {
-        boolean isContinue = false;
-        while (player.canAddCard() && (isContinue = InputView.readYesOrNo(player.getName()))) {
+        boolean canContinue = false;
+        while (player.canAddCard() && (canContinue = InputView.readYesOrNo(player.getName()))) {
             player.hit(cardDeck.pick());
             OutputView.printCard(player);
 
         }
-        if (isContinue) {
+        if (canContinue) {
             return;
         }
         OutputView.printCard(player);

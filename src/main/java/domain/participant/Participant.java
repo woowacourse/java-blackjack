@@ -5,7 +5,7 @@ import domain.card.Cards;
 
 public abstract class Participant {
 
-    public static final int INITIAL_CARDS_SIZE = 2;
+    private static final int INITIAL_CARDS_SIZE = 2;
 
     final String name;
     Cards cards;

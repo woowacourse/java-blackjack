@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public class Players implements Iterable<Player> {
 
-    public static final int MAX_PLAYER_NUMBER = 5;
+    private static final int MAX_PLAYER_NUMBER = 5;
     private final List<Player> players;
 
     private Players(List<Player> players) {
