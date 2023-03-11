@@ -10,7 +10,7 @@ public class Hand {
 
     public Hand() {
         this.cards = new Cards();
-        this.state = State.PLAY;
+        this.state = State.HIT;
     }
 
     public void add(final Card card) {
@@ -62,7 +62,7 @@ public class Hand {
     }
 
     public void stay() {
-        state = State.STOP;
+        state = State.STAY;
     }
 
     public boolean isBlackjack() {
