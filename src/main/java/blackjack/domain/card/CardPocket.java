@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.dto.CardResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardPocket {
 
@@ -62,8 +64,10 @@ public class CardPocket {
         return score + VALUE_ACE;
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public List<CardResponse> getCards() {
+        return cards.stream()
+                .map(CardResponse::from)
+                .collect(Collectors.toList());
     }
 
     public boolean isBlackJack() {

@@ -1,15 +1,14 @@
 package blackjack.service;
 
-import blackjack.domain.blackjack.BlackJackRule;
 import blackjack.domain.blackjack.ResultType;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
+import blackjack.domain.card.dto.CardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.dto.CardResponse;
+import blackjack.domain.service.BlackJackRule;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class BlackJackGame {
             final List<String> playerNames,
             final DeckFactory deckFactory,
             final BlackJackRule blackJackRule) {
-        return new BlackJackGame(Players.from(playerNames), deckFactory, blackJackRule);
+        return new BlackJackGame(Players.from(playerNames, null), deckFactory, blackJackRule);
     }
 
     public void distributeInitialCard() {
@@ -59,7 +58,7 @@ public class BlackJackGame {
         return participants.getPlayerNames();
     }
 
-    public Card getDealerFirstCard() {
+    public CardResponse getDealerFirstCard() {
         return participants.getDealer().getFirstCard();
     }
 
@@ -68,7 +67,7 @@ public class BlackJackGame {
     }
 
 
-    public List<Card> getPlayerCards(final String playerName) {
+    public List<CardResponse> getPlayerCards(final String playerName) {
         return participants.findPlayerByName(playerName)
                 .getCards();
     }
@@ -78,7 +77,7 @@ public class BlackJackGame {
                 .currentScore();
     }
 
-    public List<Card> getDealerCards() {
+    public List<CardResponse> getDealerCards() {
         return participants.getDealer()
                 .getCards();
     }

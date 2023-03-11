@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.dto.CardResponse;
+import blackjack.domain.card.dto.CardResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +47,16 @@ public class Participants {
 
     public Players getPlayers() {
         return players;
+    }
+
+    //이런 방식으로 검증을 하게 되면, 생성자에서 검증을 하기에, 로직상은 문제가 없지만
+    //new Names().validate()와 같이 호출하는 것이 직관적일 수도 있을 것 같은데 어떤 방향이 좋으신가요?
+    public void validatePlayerNames(final List<String> playerNames) {
+        new Names(playerNames);
+    }
+
+    public void validateBettingMoney(final int amount) {
+        new BettingMoney(amount);
     }
 
     public List<String> getPlayerNames() {

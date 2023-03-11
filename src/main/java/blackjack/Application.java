@@ -1,12 +1,9 @@
 package blackjack;
 
-import static blackjack.controller.DomainConverter.convertCard;
-import static blackjack.controller.DomainConverter.convertCards;
-import static blackjack.controller.DomainConverter.getPlayerCards;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
-import blackjack.domain.blackjack.BlackJackRuleImpl;
 import blackjack.domain.card.ShuffledDeckFactory;
+import blackjack.domain.service.BlackJackRule;
 import blackjack.service.BlackJackGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
@@ -21,7 +18,7 @@ public class Application {
                 () -> BlackJackGame.of(
                         inputView.inputPlayerNames(),
                         new ShuffledDeckFactory(),
-                        new BlackJackRuleImpl()),
+                        new BlackJackRule()),
                 inputView::printInputError);
         for (final String playerName : blackJackGame.getPlayerNames()) {
             blackJackGame.addPlayerMoney(playerName, inputPlayerMoney(playerName, inputView));
@@ -29,8 +26,8 @@ public class Application {
 
         blackJackGame.distributeInitialCard();
         outputView.printInitialCards(
-                convertCard(blackJackGame.getDealerFirstCard()),
-                getPlayerCards(blackJackGame.getPlayers()));
+                blackJackGame.getDealerFirstCard(),
+                blackJackGame.getPlayersCards());
 
         for (final String playerName : blackJackGame.getPlayerNames()) {
             DrawCommand playerChoice = DrawCommand.DRAW;
@@ -39,7 +36,7 @@ public class Application {
                 if (playerChoice == DrawCommand.DRAW) {
                     blackJackGame.drawPlayerCard(playerName);
                 }
-                outputView.printCardStatusOfPlayer(playerName, convertCards(blackJackGame.getPlayerCards(playerName)));
+                outputView.printCardStatusOfPlayer(playerName, blackJackGame.getPlayerCards(playerName));
             }
         }
         while (blackJackGame.isDealerDrawable()) {
@@ -48,7 +45,7 @@ public class Application {
         }
 
         outputView.printFinalStatusOfDealer(blackJackGame.getDealerScore(),
-                convertCards(blackJackGame.getDealerCards()));
+                blackJackGame.getDealerCards());
         outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCards(),
                 blackJackGame.getPlayersScores());
         outputView.printFinalMoney(blackJackGame.calculatePlayersMoney());

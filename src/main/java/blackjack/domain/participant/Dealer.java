@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.dto.CardResponse;
 
 public class Dealer extends Participant {
 
@@ -12,7 +12,7 @@ public class Dealer extends Participant {
         return currentScore <= CARD_DRAW_POINT;
     }
 
-    public Card getFirstCard() {
+    public CardResponse getFirstCard() {
         return getCards().get(0);
     }
 }
