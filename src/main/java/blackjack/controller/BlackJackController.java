@@ -27,11 +27,18 @@ public class BlackJackController {
     }
 
     private void startGame() {
+        blackJackGame.getPlayers().forEach(this::savePlayerBetMoney);
         blackJackGame.handInitialCards();
         openInitialCards();
 
         blackJackGame.getPlayers().forEach(this::hitOrStay);
         hitOrStayForDealer(blackJackGame.getDealer());
+    }
+
+    private void savePlayerBetMoney(Player player) {
+        int betMoney = InputView.askBetMoney(player.getName());
+        Dealer dealer = blackJackGame.getDealer();
+        dealer.addPlayerBetMoney(player, betMoney);
     }
 
     private void openInitialCards() {
