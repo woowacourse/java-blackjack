@@ -2,6 +2,7 @@ package money;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.money.BetAmount;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

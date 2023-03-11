@@ -4,10 +4,13 @@ import domain.blackjack.BlackjackAction;
 import domain.blackjack.BlackjackGame;
 import domain.blackjack.DealerResult;
 import domain.card.DeckFactory;
+import domain.money.BetAmount;
 import domain.participant.Participant;
+import domain.participant.ParticipantName;
 import domain.participant.Player;
 import domain.participant.PlayerNames;
 import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
@@ -34,14 +37,30 @@ public class BlackjackController {
     }
 
     private BlackjackGame createBlackjackGame() {
-        Players players = retryOnInvalidUserInput(this::requestPlayers);
+        PlayerNames playerNames = retryOnInvalidUserInput(this::requestPlayerNames);
+        Players players = createPlayers(playerNames);
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
-    private Players requestPlayers() {
+    private PlayerNames requestPlayerNames() {
         List<String> playerNamesUserInput = inputView.requestPlayerNames();
-        PlayerNames playerNames = PlayerNames.from(playerNamesUserInput);
-        return Players.from(playerNames);
+        return PlayerNames.from(playerNamesUserInput);
+    }
+
+    private Players createPlayers(PlayerNames playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (ParticipantName playerName : playerNames.getNames()) {
+            String name = playerName.getName();
+            BetAmount betAmount = retryOnInvalidUserInput(() -> requestBetAmount(name));
+            players.add(Player.of(playerName, betAmount));
+        }
+
+        return new Players(players);
+    }
+
+    private BetAmount requestBetAmount(String name) {
+        String betAmountUserInput = inputView.requestBetAmount(name);
+        return BetAmount.from(betAmountUserInput);
     }
 
     private void playPlayersTurn(BlackjackGame blackjackGame) {

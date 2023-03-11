@@ -1,13 +1,12 @@
 package common;
 
 import domain.blackjack.BlackjackGame;
+import domain.money.BetAmount;
 import domain.participant.Dealer;
 import domain.card.DeckFactory;
 import domain.participant.Player;
 import domain.participant.ParticipantName;
-import domain.participant.PlayerNames;
 import domain.participant.Players;
-import java.util.List;
 
 public class TestDataGenerator {
 
@@ -17,8 +16,11 @@ public class TestDataGenerator {
      * @return BlackjackGame
      */
     public static BlackjackGame getShuffledBlackjackGame() {
-        PlayerNames playerNames = PlayerNames.from(List.of("pobi", "crong", "royce"));
-        Players players = Players.from(playerNames);
+        Players players = Players.of(
+                Player.of(new ParticipantName("pobi"), BetAmount.from(1000)),
+                Player.of(new ParticipantName("crong"), BetAmount.from(1000)),
+                Player.of(new ParticipantName("royce"), BetAmount.from(1000))
+        );
 
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
@@ -28,7 +30,7 @@ public class TestDataGenerator {
     }
 
     public static Player getPlayerWithName(String name) {
-        return Player.from(new ParticipantName(name));
+        return Player.of(new ParticipantName(name), BetAmount.from(1000));
     }
 
     public static Dealer getDealer() {

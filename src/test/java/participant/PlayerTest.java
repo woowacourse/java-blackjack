@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import common.TestDataGenerator;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.money.BetAmount;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
@@ -46,7 +47,7 @@ class PlayerTest {
     @Test
     void createPlayerNamesFailTestWithExistedName() {
         ParticipantName dealerName = ParticipantName.getDealerName();
-        assertThatThrownBy(() -> Player.from(dealerName))
+        assertThatThrownBy(() -> Player.of(dealerName, BetAmount.from(1000)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

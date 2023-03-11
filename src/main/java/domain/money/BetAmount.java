@@ -1,4 +1,4 @@
-package money;
+package domain.money;
 
 public class BetAmount {
     private static final String NOT_INTEGER = "배팅 금액은 정수만 가능합니다.";
@@ -10,6 +10,10 @@ public class BetAmount {
     private BetAmount(int amount) {
         validateMinAmount(amount);
         this.amount = amount;
+    }
+
+    public static BetAmount from(int amount) {
+        return new BetAmount(amount);
     }
 
     public static BetAmount from(String input) {

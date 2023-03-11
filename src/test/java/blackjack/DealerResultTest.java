@@ -7,6 +7,7 @@ import domain.blackjack.BlackjackGame;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.blackjack.DealerResult;
+import domain.money.BetAmount;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -29,9 +30,9 @@ class DealerResultTest {
 
     @BeforeEach
     void setUp() {
-        pobi = Player.from(new ParticipantName("pobi"));
-        crong = Player.from(new ParticipantName("crong"));
-        royce = Player.from(new ParticipantName("royce"));
+        pobi = Player.of(new ParticipantName("pobi"), BetAmount.from(1000));
+        crong = Player.of(new ParticipantName("crong"), BetAmount.from(1000));
+        royce = Player.of(new ParticipantName("royce"), BetAmount.from(1000));
     }
 
     @DisplayName("블랙잭 게임으로부터 딜러와 플레이어의 경합 결과가 생성된다.")
