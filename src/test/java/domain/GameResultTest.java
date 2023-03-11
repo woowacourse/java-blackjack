@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Name;
@@ -9,7 +8,6 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.result.GameResult;
-import domain.result.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,22 +16,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class GameResultTest {
 
     private Participants participants;
-    private Deck deck;
     private Participant leo;
+    private Participant dealer;
 
     @BeforeEach
     void setUp() {
-        participants = Participants.from(List.of(Player.create(new Name("leo"), new BetAmount(1500))));
-        deck = Deck.from((orderedDeck) -> orderedDeck);
+        participants = Participants.from(List.of(Player.create(new Name("leo"), new BetAmount(new BigDecimal(1000)))));
+        dealer = participants.findDealer();
         leo = participants.findPlayers().get(0);
     }
 
@@ -51,31 +48,120 @@ class GameResultTest {
         Assertions.assertThat(participantsBustStatus.get(leo)).isEqualTo(isBust);
     }
 
-    @ParameterizedTest
-    @MethodSource("dealerStatusCardProvider")
-    @DisplayName("딜러와 참가자의 패 정보를 확인해 딜러의 승무패를 반환한다.")
-    void getDealerStatus(Card card, Result result) {
-        final Participant dealer = participants.findDealer();
-        leo.receiveCard(new Card(Suit.CLOVER, Rank.KING));
-        dealer.receiveCard(card);
+    @Test
+    void playerWinBlackjack() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.ACE));
+
+        dealer.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        final Map<Result, Integer> dealerStatus = gameResult.getDealerStatus(gameResult.getPlayerStatus());
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
 
-        assertThat(dealerStatus.get(result)).isEqualTo(1);
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1500);
     }
 
     @Test
-    @DisplayName("플레이어의 게임 결과를 반환한다.")
-    void getPlayerResult() {
-        participants.deal(deck);
-        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(),
-                participants.findDealer());
-        Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
-        for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
-            assertThat(playerResult.getValue()).isEqualTo(Result.LOSE);
-        }
-        assertThat(playerResults.size()).isEqualTo(1);
+    void playerDrawBlackjack() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.ACE));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.ACE));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+    }
+
+    @Test
+    void playerLoseBust() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.TWO));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.ACE));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
+    }
+
+    @Test
+    void playerDrawHandValue() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.JACK));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+    }
+
+    @Test
+    void playerWinHandValue() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.NINE));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+    }
+
+    @Test
+    void playerLoseHandValue() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.NINE));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.TEN));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
+    }
+
+    @Test
+    void playerWinHandCount() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.SPADE,Rank.JACK));
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.EIGHT));
+        dealer.receiveCard(new Card(Suit.HEART,Rank.TWO));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
+    }
+
+    @Test
+    void playerLoseHandCount() {
+        leo.receiveCard(new Card(Suit.SPADE,Rank.KING));
+        leo.receiveCard(new Card(Suit.HEART,Rank.EIGHT));
+        leo.receiveCard(new Card(Suit.HEART,Rank.TWO));
+
+
+        dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
+        dealer.receiveCard(new Card(Suit.SPADE,Rank.JACK));
+
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+
+        Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
     }
 
     private static Stream<Arguments> bustStatusCardProvider() {
@@ -84,12 +170,5 @@ class GameResultTest {
                 Arguments.of(new Card(Suit.HEART, Rank.ACE), false)
         );
     }
-
-    private static Stream<Arguments> dealerStatusCardProvider() {
-        return Stream.of(
-                Arguments.of(new Card(Suit.CLOVER, Rank.TWO), Result.LOSE),
-                Arguments.of(new Card(Suit.HEART, Rank.QUEEN), Result.TIE),
-                Arguments.of(new Card(Suit.HEART, Rank.ACE), Result.WIN)
-        );
-    }
+    
 }
