@@ -40,6 +40,17 @@ public class BankTest extends AbstractTestFixture{
         assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(500));
     }
 
+    @Test
+    @DisplayName("인출 한 후에는 금액이 0이다")
+    void test_deposit_after_withdraw_is_zero() {
+        var bank = new Bank();
+        var user = new User("gd");
+        bank.bet(user, Money.of(500));
+        bank.withdrawDepositOf(user);
+
+        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(0));
+    }
+
     @DisplayName("결과에 따라 배당을 준다")
     @ParameterizedTest(name = "{0}이면 500원이 {1}원이 된다")
     @CsvSource({"BLACKJACK,1250", "WIN,1000", "LOSE,0", "DRAW,500"})
