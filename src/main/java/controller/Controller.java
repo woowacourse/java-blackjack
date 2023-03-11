@@ -58,7 +58,7 @@ public class Controller {
         do {
             command = Command.from(inputView.readCommand(player.getName()));
             selectByCommand(game, player, command);
-            outputView.printPlayerCardsInfo(player);
+            outputView.printPlayerCardsInformation(player);
         } while (!player.isOverBlackJack() && command.equals(Command.YES));
     }
 

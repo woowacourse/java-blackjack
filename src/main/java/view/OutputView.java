@@ -26,15 +26,15 @@ public class OutputView {
                 .collect(Collectors.joining(SPLIT_DELIMITER)));
         Card dealerCard = dealer.getCards().get(0);
         System.out.println(dealer.getName() + NAME_DELIMITER + namimgCard(dealerCard));
-        for (String key : players.getInfo().keySet()) {
-            List<Card> value = players.getInfo().get(key);
+        for (String key : players.getInformation().keySet()) {
+            List<Card> value = players.getInformation().get(key);
             System.out.println(key + "카드: " + value.stream()
                     .map(this::namimgCard)
                     .collect(Collectors.joining(SPLIT_DELIMITER)));
         }
     }
 
-    public void printPlayerCardsInfo(Player player) {
+    public void printPlayerCardsInformation(Player player) {
         System.out.println(player.getName() + "카드: " +
                 player.getCards().stream().
                         map(this::namimgCard).collect(Collectors.joining(", ")));
@@ -51,8 +51,8 @@ public class OutputView {
         System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards().stream()
                 .map(this::namimgCard)
                 .collect(Collectors.joining(SPLIT_DELIMITER)), dealer.getCardsSum());
-        for (String key : players.getInfo().keySet()) {
-            List<Card> value = players.getInfo().get(key);
+        for (String key : players.getInformation().keySet()) {
+            List<Card> value = players.getInformation().get(key);
             System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, key, value.stream()
                     .map(this::namimgCard)
                     .collect(Collectors.joining(SPLIT_DELIMITER)), players.getCardsSum(key));

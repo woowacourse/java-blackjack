@@ -44,7 +44,7 @@ public class BlackjackGameTest {
         Map<String, List<Card>> result = new LinkedHashMap<>();
         result.put("pobi", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
         result.put("jason", List.of(new Card(CardNumber.TWO, CardPattern.SPADE)));
-        Assertions.assertThat(players.getInfo()).usingRecursiveComparison().isEqualTo(result);
+        Assertions.assertThat(players.getInformation()).usingRecursiveComparison().isEqualTo(result);
     }
 
     @Test
