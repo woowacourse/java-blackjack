@@ -99,4 +99,8 @@ public class OutputView {
         }
         System.out.println(dealerResultMsg);
     }
+
+    public void printBettingResult() {
+
+    }
 }

@@ -18,13 +18,13 @@ public class GameResult {
 
     public GameResult(Game game) {
         this.dealerResults = initDealerResult();
-        this.playersResults = new HashMap<>();
-        this.bettingResults = new HashMap<>();
+        this.playersResults = new LinkedHashMap<>();
+        this.bettingResults = new LinkedHashMap<>();
         accumulationResult(game);
     }
 
     private static Map<Result, Integer> initDealerResult() {
-        Map<Result, Integer> dealerResult = new HashMap<>();
+        Map<Result, Integer> dealerResult = new LinkedHashMap<>();
 
         for (Result result : Result.values()) {
             dealerResult.put(result, INIT_NUMBER);
