@@ -60,6 +60,10 @@ public class Hand {
         return calculateOptimalCardValueSum() >= MIN_BUST_VALUE;
     }
 
+    public boolean isStay() {
+        return calculateOptimalCardValueSum() < BLACKJACK_VALUE;
+    }
+
     public int getSize() {
         return cards.size();
     }
