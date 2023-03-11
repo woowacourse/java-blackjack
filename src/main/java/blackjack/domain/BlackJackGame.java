@@ -17,7 +17,6 @@ import java.util.Map.Entry;
 
 public class BlackJackGame {
 
-    //TODO: deposit과 Deck 합치기
     private final Users users;
     private final GameTable gameTable;
 
