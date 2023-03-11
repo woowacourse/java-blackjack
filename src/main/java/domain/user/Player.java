@@ -18,7 +18,7 @@ public class Player {
     }
 
     public Score sumHand() {
-        return hand.calculateScore();
+        return hand.score();
     }
 
     public PlayerName getPlayerName() {

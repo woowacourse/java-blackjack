@@ -35,7 +35,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(0));
     }
 
@@ -49,7 +49,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(13));
     }
 
@@ -64,7 +64,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(14));
     }
 
@@ -80,7 +80,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(14));
     }
 
@@ -95,7 +95,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(20));
     }
 
@@ -111,7 +111,7 @@ class HandTest {
 
         Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore())
+        assertThat(hand.score())
                 .isEqualTo(new Score(20));
     }
 

@@ -27,8 +27,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public Score calculateScore() {
-        Score score = score();
+    public Score score() {
+        Score score = sum();
         if (hasAce()) {
             score = score.minusTenIfBust();
         }
@@ -36,7 +36,7 @@ public class Hand {
         return score;
     }
 
-    private Score score() {
+    private Score sum() {
         return cards.stream()
                 .map(Card::score)
                 .reduce(Score.min(), Score::sum);
@@ -48,7 +48,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore().isOverMax();
+        return score().isOverMax();
     }
 
     public List<Card> getCards() {
@@ -56,7 +56,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score().isMax() && cards.size() == 2;
+        return sum().isMax() && cards.size() == 2;
     }
 
     @Override
