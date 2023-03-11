@@ -39,7 +39,7 @@ public class BlackjackGameResultTest {
 
     @Test
     void 딜러_무승부_수를_반환한다() {
-        final BlackjackGameResult blackjackGameResult = generateBlackjackGameResult(Result.DRAW);
+        final BlackjackGameResult blackjackGameResult = generateBlackjackGameResult(Result.PUSH);
 
         assertThat(blackjackGameResult.calculateDealerDrawCount()).isEqualTo(2);
     }

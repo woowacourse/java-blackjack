@@ -19,7 +19,7 @@ public class BlackjackGameResult {
     }
 
     public int calculateDealerDrawCount() {
-        return Collections.frequency(result.values(), Result.DRAW);
+        return Collections.frequency(result.values(), Result.PUSH);
     }
 
     public int calculateDealerLoseCount() {

@@ -32,17 +32,17 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_DIAMOND, KING_SPADE), DRAW),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_DIAMOND, KING_SPADE), PUSH),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(KING_SPADE, QUEEN_SPADE), WIN),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(QUEEN_SPADE, SIX_SPADE, TEN_SPADE), WIN),
                 Arguments.of(List.of(JACK_SPADE, TEN_SPADE), List.of(KING_SPADE, ACE_SPADE), LOSE),
                 Arguments.of(List.of(JACK_SPADE, KING_SPADE, QUEEN_SPADE), List.of(TEN_SPADE, ACE_SPADE), LOSE),
                 Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, EIGHT_SPADE), WIN),
-                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), DRAW),
+                Arguments.of(List.of(JACK_SPADE, KING_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), PUSH),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(QUEEN_SPADE, TEN_SPADE), LOSE),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(KING_SPADE, SIX_SPADE, QUEEN_SPADE), WIN),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(QUEEN_SPADE, SIX_SPADE), LOSE),
-                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(QUEEN_SPADE, FIVE_SPADE, TEN_SPADE), DRAW)
+                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(QUEEN_SPADE, FIVE_SPADE, TEN_SPADE), PUSH)
         );
     }
 
