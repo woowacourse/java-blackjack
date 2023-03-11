@@ -10,6 +10,7 @@ import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class BlackJackGameController {
 
@@ -19,7 +20,7 @@ public class BlackJackGameController {
     private Deck deck;
 
     public void run() {
-        final BlackJackGame blackJackGame = generateBlackJackGame();
+        final BlackJackGame blackJackGame = readUntilValidate(this::generateBlackJackGame);
         deck = new Deck();
 
         final Dealer dealer = blackJackGame.getDealer();
@@ -35,47 +36,22 @@ public class BlackJackGameController {
     }
 
     private BlackJackGame generateBlackJackGame() {
-        Optional<BlackJackGame> blackJackGame;
-        do {
-            blackJackGame = checkValidBlackJackGame();
-        } while (blackJackGame.isEmpty());
-        return blackJackGame.get();
-    }
-
-    private Optional<BlackJackGame> checkValidBlackJackGame() {
-        try {
-            final String playerNames = InputView.readNames();
-            return Optional.of(new BlackJackGame(playerNames));
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return Optional.empty();
-        }
+        final String playerNames = InputView.readNames();
+        return new BlackJackGame(playerNames);
     }
 
     private Map<Player, Profit> generateBettingMoney(final Players players) {
         final Map<Player, Profit> bettingMoney = new LinkedHashMap<>();
         for (final Player player : players.getPlayers()) {
-            bettingMoney.put(player, generateProfit(player));
+            final Profit profit = readUntilValidate(() -> generateProfit(player));
+            bettingMoney.put(player, profit);
         }
         return bettingMoney;
     }
 
     private Profit generateProfit(final Player player) {
-        Optional<Profit> profit;
-        do {
-            profit = checkValidProfit(player);
-        } while (profit.isEmpty());
-        return profit.get();
-    }
-
-    private Optional<Profit> checkValidProfit(final Player player) {
-        try {
-            final int playerBetting = InputView.readBettingMoney(player.getName());
-            return Optional.of(Profit.of(playerBetting));
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return Optional.empty();
-        }
+        final int playerBetting = InputView.readBettingMoney(player.getName());
+        return Profit.of(playerBetting);
     }
 
     private void handOutHitCard(BlackJackGame blackJackGame, Players players, Dealer dealer) {
@@ -95,27 +71,8 @@ public class BlackJackGameController {
     private void handOutCardToEachPlayer(BlackJackGame blackJackGame, Player player) {
         boolean isYesCommand = true;
         while (player.isUnderThanBoundary(Participant.BUST_BOUNDARY) && isYesCommand) {
-            String gameCommand = generateGameCommand(player);
+            String gameCommand = readUntilValidate(() -> generateGameCommand(player));
             isYesCommand = handOutCardByCommand(blackJackGame, player, gameCommand);
-        }
-    }
-
-    private String generateGameCommand(Player player) {
-        Optional<String> gameCommand;
-        do {
-            gameCommand = checkValidGameCommand(player);
-        } while (gameCommand.isEmpty());
-        return gameCommand.get();
-    }
-
-    private Optional<String> checkValidGameCommand(Player player) {
-        try {
-            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
-            validateCorrectCommand(gameCommand);
-            return Optional.of(gameCommand);
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return Optional.empty();
         }
     }
 
@@ -127,6 +84,12 @@ public class BlackJackGameController {
         }
         OutputView.printParticipantCards(player.getName(), player.getCards());
         return false;
+    }
+
+    private String generateGameCommand(final Player player) {
+        final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
+        validateCorrectCommand(gameCommand);
+        return gameCommand;
     }
 
     private void validateCorrectCommand(final String gameCommand) {
@@ -144,5 +107,22 @@ public class BlackJackGameController {
         final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalProfit(dealerProfit, playerProfit);
+    }
+
+    private <T> T readUntilValidate(final Supplier<T> supplier) {
+        Optional<T> userInput;
+        do {
+            userInput = readUserInput(supplier);
+        } while (userInput.isEmpty());
+        return userInput.get();
+    }
+
+    private <T> Optional<T> readUserInput(final Supplier<T> supplier) {
+        try {
+            return Optional.of(supplier.get());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return Optional.empty();
+        }
     }
 }
