@@ -1,19 +1,45 @@
 package ui;
 
 import domain.user.Player;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import ui.dto.InputPlayerDTO;
 
 public class InputView {
     private static final String HIT = "y";
     private static final String STAND = "n";
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static List<String> readPlayersName() {
+    public static List<InputPlayerDTO> readPlayersInput() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return Arrays.stream(SCANNER.nextLine().split(",")).collect(Collectors.toList());
+        List<String> names = Arrays.stream(SCANNER.nextLine().split(",")).collect(Collectors.toList());
+        List<InputPlayerDTO> inputPlayerDTOs = new ArrayList<>();
+        for (String name : names) {
+            inputPlayerDTOs.add(new InputPlayerDTO(name, readBettingAmount(name)));
+        }
+        return inputPlayerDTOs;
+    }
+
+    private static Integer readBettingAmount(String name) {
+        String input = null;
+        do {
+            System.out.println("\n" + name + "의 베팅 금액은?");
+            input = SCANNER.nextLine();
+        } while (!validateIntentionBettingInput(input));
+        return Integer.parseInt(input);
+    }
+
+    private static boolean validateIntentionBettingInput(String input) {
+        try {
+            new InputPlayerDTO("name", Integer.parseInt(input));
+            return true;
+        } catch (Exception e) {
+            System.out.println("베팅 금액은 정수로 입력해야 합니다.");
+            return false;
+        }
     }
 
     public static boolean readWhetherDrawCardOrNot(Player player) {

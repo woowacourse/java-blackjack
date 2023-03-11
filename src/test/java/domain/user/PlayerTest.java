@@ -17,7 +17,7 @@ class PlayerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
         assertThat(player.calculateScore()).isEqualTo(12);
     }
 
@@ -25,7 +25,7 @@ class PlayerTest {
     @DisplayName("이름을 반환한다.")
     void 이름_반환() {
         String nameValue = "name";
-        Player player = new Player(nameValue);
+        Player player = new Player(nameValue, 10000);
         assertThat(player.getNameValue()).isEqualTo(nameValue);
     }
 
@@ -35,7 +35,7 @@ class PlayerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
         assertThat(player.canAdd()).isTrue();
     }
 
@@ -46,14 +46,14 @@ class PlayerTest {
         cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
         assertThat(player.canAdd()).isFalse();
     }
 
     @Test
     @DisplayName("카드를 저장한다.")
     void 카드_저장() {
-        Player player = new Player("name");
+        Player player = new Player("name", 10000);
         assertThat(player.calculateScore()).isEqualTo(0);
         player.addCard(new Card(Symbol.SPADE, CardNumber.TWO));
         assertThat(player.calculateScore()).isEqualTo(2);
@@ -66,7 +66,7 @@ class PlayerTest {
         cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
         assertThatThrownBy(() -> player.addCard(new Card(Symbol.SPADE, CardNumber.ACE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드 추가가 불가능하여 실행되지 않았습니다.");
@@ -78,7 +78,7 @@ class PlayerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
         assertThat(player.isBlackjack()).isFalse();
     }
 
@@ -88,7 +88,7 @@ class PlayerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
         cardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
 
         assertThat(player.isBlackjack()).isTrue();
     }
@@ -99,7 +99,7 @@ class PlayerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
         cardHand.add(new Card(Symbol.SPADE, CardNumber.NINE));
-        Player player = new Player("name", cardHand);
+        Player player = new Player("name", 10000, cardHand);
 
         assertThat(player.isBlackjack()).isFalse();
     }

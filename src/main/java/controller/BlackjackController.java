@@ -3,15 +3,23 @@ package controller;
 import domain.Participants;
 import domain.user.Dealer;
 import domain.user.Player;
+import java.util.List;
+import java.util.stream.Collectors;
 import ui.InputView;
 import ui.OutputView;
+import ui.dto.InputPlayerDTO;
 
 public class BlackjackController {
 
     private final Participants participants;
 
     public BlackjackController() {
-        this.participants = new Participants(InputView.readPlayersName());
+        List<InputPlayerDTO> playerDTOs = InputView.readPlayersInput();
+        this.participants = new Participants(playerDTOs.stream()
+                .map(inputPlayerDTO ->
+                        new Player(inputPlayerDTO.getName(),
+                                inputPlayerDTO.getBettingAmount()))
+                .collect(Collectors.toList()));
     }
 
     public void run() {
@@ -21,7 +29,7 @@ public class BlackjackController {
         addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
         participants.calculateAllResults();
-        OutputView.printResults(participants.getPlayerResults());
+        OutputView.printResults(participants.getPlayerRevenues());
     }
 
     private void addCardToDealerIfPossible() {

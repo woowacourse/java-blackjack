@@ -4,7 +4,7 @@ import domain.Card;
 import domain.CardHand;
 import domain.CardNumber;
 import domain.Deck;
-import domain.PlayerResults;
+import domain.PlayerRevenues;
 import domain.Result;
 import domain.Symbol;
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ public class Dealer extends AbstractUser {
     private final int INITIAL_CARDS_COUNT = 2;
 
     private final Deck deck;
-    private final PlayerResults playerResults;
+    private final PlayerRevenues playerRevenues;
 
     public Dealer() {
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
-        playerResults = new PlayerResults();
+        playerRevenues = new PlayerRevenues();
     }
 
     public Dealer(CardHand cardHand) {
         super(cardHand);
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
-        playerResults = new PlayerResults();
+        playerRevenues = new PlayerRevenues();
     }
 
     @Override
@@ -60,23 +60,54 @@ public class Dealer extends AbstractUser {
     }
 
     public void calculateAllResults(List<Player> users) {
-        users.forEach(player -> this.playerResults.save(player, calculatePlayerResult(player)));
+        users.forEach(player -> this.playerRevenues.save(player, calculatePlayerRevenue(player)));
     }
 
-    private Result calculatePlayerResult(AbstractUser user) {
-        if (user.isBust()) {
-            return Result.LOSE;
+    private Result calculatePlayerResult(Player player) {
+        if (this.isBust() || player.isBust()) {
+            throw new IllegalStateException("딜러 또는 플레이어가 bust 상태는 잘못된 상태입니다.");
         }
-        if (this.isBust() || user.calculateScore() > this.calculateScore()) {
+        if (player.calculateScore() > this.calculateScore()) {
             return Result.WIN;
         }
-        if (user.calculateScore() == this.calculateScore()) {
+        if (player.calculateScore() == this.calculateScore()) {
             return Result.DRAW;
         }
         return Result.LOSE;
     }
 
-    public PlayerResults getPlayerResults() {
-        return this.playerResults;
+    private Integer calculatePlayerRevenue(Player player) {
+        if (player.isBust()) {
+            return -player.getBettingAmount();
+        }
+        if (player.isBlackjack()) {
+            return calculateIfBlackjackPlayer(player);
+        }
+        if (this.isBust()) {
+            return player.getBettingAmount();
+        }
+        return calculateMatchDealerAndPlayer(player);
+    }
+
+    private Integer calculateIfBlackjackPlayer(Player player) {
+        if (this.isBlackjack()) {
+            return 0;
+        }
+        return (int) ((double) player.getBettingAmount() * 1.5);
+    }
+
+    private Integer calculateMatchDealerAndPlayer(Player player) {
+        Result result = calculatePlayerResult(player);
+        if (result == Result.WIN) {
+            return player.getBettingAmount();
+        }
+        if (result == Result.DRAW) {
+            return 0;
+        }
+        return -player.getBettingAmount();
+    }
+
+    public PlayerRevenues getPlayerRevenues() {
+        return this.playerRevenues;
     }
 }

@@ -5,8 +5,12 @@ public class BettingAmount {
 
     public BettingAmount(int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("베팅 금액은 음수가 될 수 없습니다.");
+            throw new IllegalStateException("베팅 금액은 음수가 될 수 없습니다.");
         }
         this.amount = amount;
+    }
+
+    public int getBettingAmount() {
+        return amount;
     }
 }

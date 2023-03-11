@@ -1,6 +1,6 @@
 package ui;
 
-import domain.PlayerResults;
+import domain.PlayerRevenues;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -57,17 +57,12 @@ public class OutputView {
         players.forEach(OutputView::printCardsStatusAndScoreOfPlayer);
     }
 
-    public static void printResults(PlayerResults playerResults) {
-        long dealerLose = playerResults.playerWinCount();
-        long dealerWin = playerResults.playerLoseCount();
-        long dealerDraws = playerResults.playerDrawCount();
+    public static void printResults(PlayerRevenues playerRevenues) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
-        if (dealerDraws > 0) {
-            System.out.printf(" %d무", dealerDraws);
-        }
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d", playerRevenues.dealerRevenue());
         System.out.println();
-        playerResults.getRepository().forEach((player, result) -> System.out.println(player.getNameValue() + ": " + MatchResultMapper.transformToPrintResult(result)));
+        playerRevenues.getRepository().forEach((player, result) -> System.out.println(
+                player.getNameValue() + ": " + playerRevenues.findByPlayer(player)));
     }
 }

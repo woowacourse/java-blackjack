@@ -10,9 +10,9 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(List<String> nameValues) {
+    public Participants(List<Player> players) {
         this.dealer = new Dealer();
-        this.players = new Players(nameValues);
+        this.players = new Players(players);
     }
 
     public void initGame() {
@@ -47,7 +47,7 @@ public class Participants {
         this.dealer.calculateAllResults(players.getPlayers());
     }
 
-    public PlayerResults getPlayerResults() {
-        return this.dealer.getPlayerResults();
+    public PlayerRevenues getPlayerRevenues() {
+        return this.dealer.getPlayerRevenues();
     }
 }
