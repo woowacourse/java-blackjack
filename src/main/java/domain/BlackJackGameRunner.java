@@ -1,8 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import domain.result.DealerResult;
 import domain.result.PlayerResult;
@@ -25,11 +25,16 @@ public class BlackJackGameRunner {
         this.playerPassedHitStageCount = 0;
     }
 
-    public static BlackJackGameRunner of(final CardGenerator cardGenerator, final List<String> playerNames) {
+    public static BlackJackGameRunner of(
+            final CardGenerator cardGenerator,
+            final List<String> playerNames,
+            final List<Integer> bets
+    ) {
         Dealer dealer = new Dealer();
-        List<Player> players = playerNames.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(new Player(playerNames.get(i), bets.get(i)));
+        }
         return new BlackJackGameRunner(cardGenerator, dealer, players);
     }
 

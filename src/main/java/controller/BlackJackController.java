@@ -33,8 +33,18 @@ public class BlackJackController {
     }
 
     private BlackJackGameRunner initGameRunner() {
-        return ExecuteContext.RetryIfThrowsException(() ->
-            BlackJackGameRunner.of(cardGenerator, InputView.inputNames()));
+        List<String> names = ExecuteContext.RetryIfThrowsException(InputView::inputNames);
+        List<Integer> bets = getBets(names);
+        return BlackJackGameRunner.of(cardGenerator, names, bets);
+    }
+
+    private List<Integer> getBets(List<String> names) {
+        List<Integer> bets = new ArrayList<>();
+        for (String name : names) {
+            int bet = ExecuteContext.RetryIfThrowsException(() -> InputView.inputBet(name));
+            bets.add(bet);
+        }
+        return bets;
     }
 
     private void giveInitialCards() {
