@@ -8,18 +8,18 @@ public abstract class BlackJackParticipant implements User {
     private static final int BLACKJACK_SIZE = 2;
 
     protected final Cards cards;
-    protected final Score bustUpperBound = Score.of(21);
+    protected final Score burstUpperBound = Score.of(21);
 
     public BlackJackParticipant(Cards cards) {
         this.cards = cards;
     }
 
-    public boolean isBust() {
-        return calculateScore().isGreaterThan(bustUpperBound);
+    public boolean isBurst() {
+        return calculateScore().isGreaterThan(burstUpperBound);
     }
 
     public boolean isBlackJack() {
-        return cards.getSize() == BLACKJACK_SIZE && calculateScore().isEqualTo(bustUpperBound);
+        return cards.getSize() == BLACKJACK_SIZE && calculateScore().isEqualTo(burstUpperBound);
     }
 
     @Override

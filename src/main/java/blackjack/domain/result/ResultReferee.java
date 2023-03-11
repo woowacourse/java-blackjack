@@ -7,19 +7,19 @@ import blackjack.domain.gameplayer.Score;
 public class ResultReferee {
 
     public static Result getPlayerResult(Player player, Dealer dealer) {
-        if (player.isBust()) {
+        if (player.isBurst()) {
             return Result.LOSE;
         }
         if (player.isBlackJack()) {
             return getPlayerResultWhenPlayerBlackJack(dealer);
         }
-        if (dealer.isBust()) {
+        if (dealer.isBurst()) {
             return Result.WIN;
         }
-        return getPlayerResultWhenParticipantsIsNotBust(player, dealer);
+        return getPlayerResultWhenParticipantsIsNotBurst(player, dealer);
     }
 
-    private static Result getPlayerResultWhenParticipantsIsNotBust(Player player, Dealer dealer) {
+    private static Result getPlayerResultWhenParticipantsIsNotBurst(Player player, Dealer dealer) {
         Score playerScore = player.calculateScore();
         Score dealerScore = dealer.calculateScore();
         if (playerScore.isGreaterThan(dealerScore)) {
