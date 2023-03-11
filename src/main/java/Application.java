@@ -55,6 +55,7 @@ public class Application {
             selectHitOrStand(game, user);
         }
         selectHitOrStand(game, game.getDealer());
+        game.evaluate();
     }
 
     private static void showCardsAndScores(Game game) {
