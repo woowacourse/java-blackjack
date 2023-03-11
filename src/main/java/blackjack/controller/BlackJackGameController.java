@@ -106,6 +106,10 @@ public class BlackJackGameController {
     }
 
     private void playEachPlayerTurn(final BlackJackGame blackJackGame, final Player player) {
+        if (player.isBlackJack()) {
+            return;
+        }
+
         final String playerName = player.getName();
         while (player.isAbleToReceive() && requestIsHit(playerName)) {
             blackJackGame.drawNewCard(player);
