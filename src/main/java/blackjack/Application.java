@@ -1,7 +1,5 @@
 package blackjack;
 
-import static blackjack.util.Repeater.repeatUntilNoException;
-
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.participant.Participants;
@@ -14,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Application {
 
@@ -83,5 +83,16 @@ public class Application {
     private static int inputPlayerMoney(final String playerName, final InputView inputView) {
         return repeatUntilNoException(
                 () -> inputView.inputPlayerMoney(playerName), inputView::printInputError);
+    }
+
+    private static <T> T repeatUntilNoException(final Supplier<T> supplier,
+            final Consumer<Exception> exceptionHandler) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (final IllegalArgumentException e) {
+                exceptionHandler.accept(e);
+            }
+        }
     }
 }
