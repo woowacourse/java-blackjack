@@ -2,7 +2,6 @@ package view;
 
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Players;
 import domain.vo.Profit;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class IOView {
         return inputView.inputBattings(names);
     }
 
-    public void printInitialCards(final Dealer dealer, final Players players) {
+    public void printInitialCards(final Dealer dealer, final List<Player> players) {
         outputView.printInitialCards(dealer, players);
     }
 
@@ -41,7 +40,7 @@ public class IOView {
         outputView.printDealerReceiveNotice();
     }
 
-    public void printTotalCardState(final Dealer dealer, final Players players) {
+    public void printTotalCardState(final Dealer dealer, final List<Player> players) {
         outputView.printTotalCardState(dealer, players);
     }
 

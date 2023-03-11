@@ -6,15 +6,13 @@ import domain.model.Card;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Players;
-import domain.vo.Profit;
 import domain.type.Letter;
 import domain.type.Suit;
 import domain.vo.Bet;
+import domain.vo.Profit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +20,25 @@ class BlackJackGameTest {
 
     private final BlackJackGame blackJackGame = new BlackJackGame(new CardDistributor(new RandomCardGenerator()),
         new ProfitCalculator());
+
+    @Test
+    @DisplayName("플레이어 생성 테스트")
+    public void testMakePlayers() {
+        //given
+        final List<String> names = new ArrayList<>();
+        final List<Double> bets = new ArrayList<>();
+        final int size = 10;
+        for (int i = 0; i < size; i++) {
+            names.add("test" + i);
+            bets.add((double) (i * 1000));
+        }
+
+        //when
+        blackJackGame.makePlayers(names, bets);
+
+        //then
+        assertThat(blackJackGame.getPlayers().size()).isEqualTo(size);
+    }
 
     @Test
     @DisplayName("플레이어에게 카드 한장 주기 테스트")
@@ -91,35 +108,12 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("초기 카드 두장 배분 테스트")
-    public void testGiveInitCards() {
-        //given
-        final Dealer dealer = new Dealer(Cards.makeEmpty());
-        final int size = 5;
-        final List<String> names = new ArrayList<>();
-        final List<Double> battings = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            names.add("test" + i);
-            battings.add((double) (i * 1000));
-        }
-        final Players players = Players.from(names, battings);
-
-        //when
-        blackJackGame.giveInitCards(dealer, players);
-
-        //then
-        assertThat(dealer.getCards().size()).isEqualTo(2);
-        IntStream.range(0, size)
-            .forEach(index -> assertThat(players.get(index).getCards().size()).isEqualTo(2));
-    }
-
-    @Test
     @DisplayName("플레이어들 손익 계산 테스트")
     public void testCalculatePlayersProfit() {
         //given
         final Player player = new Player(Cards.makeEmpty(), "test", Bet.of(1000D));
         player.addCard(new Card(Suit.CLUB, Letter.TEN));
-        final Players players = new Players(List.of(player));
+        final List<Player> players = List.of(player);
         final Dealer dealer = new Dealer(Cards.makeEmpty());
 
         //when

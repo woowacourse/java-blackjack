@@ -6,20 +6,27 @@ import domain.model.Players;
 import domain.vo.Profit;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BlackJackGame {
 
     private final CardDistributor cardDistributor;
     private final ProfitCalculator profitCalculator;
+    private final Dealer dealer;
+    private Players players;
 
     public BlackJackGame(final CardDistributor cardDistributor, final ProfitCalculator profitCalculator) {
         this.cardDistributor = cardDistributor;
         this.profitCalculator = profitCalculator;
+        dealer = Dealer.withEmptyCards();
     }
 
-    public Players makePlayers(final List<String> names, final List<Double> bets) {
-        return Players.from(names, bets);
+    public void makePlayers(final List<String> names, final List<Double> bets) {
+        this.players = Players.from(names, bets);
+    }
+
+    public void giveInitCards() {
+        cardDistributor.giveInitCards(dealer);
+        cardDistributor.giveInitCards(players);
     }
 
     public boolean giveCard(final Player player) {
@@ -38,22 +45,29 @@ public class BlackJackGame {
         return false;
     }
 
-    public void giveInitCards(final Dealer dealer, final Players players) {
-        cardDistributor.giveInitCards(dealer);
-        cardDistributor.giveInitCards(players);
-    }
-
-    public void setPlayers(final Players players, final Player player, final int index) {
-        players.set(index, player);
-    }
-
-    public List<Profit> calculatePlayersProfit(final Players players, final Dealer dealer) {
-        return IntStream.range(0, players.count())
-            .mapToObj(index -> profitCalculator.calculatePlayerProfit(players.get(index), dealer))
+    public List<Profit> calculatePlayersProfit(final List<Player> players, final Dealer dealer) {
+        return players.stream()
+            .map(player -> profitCalculator.calculatePlayerProfit(player, dealer))
             .collect(Collectors.toList());
     }
 
     public Profit calculateDealerProfit(final List<Profit> playerProfits) {
         return Profit.makeDealerProfitFrom(playerProfits);
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getNames();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setPlayers(final int index, final Player player) {
+        players.set(index, player);
     }
 }

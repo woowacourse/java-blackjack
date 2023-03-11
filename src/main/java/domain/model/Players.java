@@ -1,6 +1,7 @@
 package domain.model;
 
 import domain.vo.Bet;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,5 +62,9 @@ public class Players {
         final Player player = players.get(index);
         Set<Card> cards = new HashSet<>(player.getCards());
         return new Player(new Cards(cards), player.getName(), player.getBet());
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

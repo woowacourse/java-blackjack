@@ -2,7 +2,6 @@ package controller;
 
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Players;
 import domain.service.BlackJackGame;
 import domain.vo.Profit;
 import java.util.List;
@@ -20,34 +19,35 @@ public class BlackJackController {
     }
 
     public void play() {
-        final Players players = getPlayers();
-        final Dealer dealer = Dealer.withEmptyCards();
-        giveInitialCards(dealer, players);
-        getPlayerAdditionalCard(players);
-        getDealerAdditionalCard(dealer);
-        printTotalCardState(dealer, players);
-        printProfits(dealer, players);
+        makePlayers();
+        giveInitialCards();
+        giveAdditionalCard();
+        printTotalCardState();
+        printProfits();
     }
 
-    private Players getPlayers() {
+    private void makePlayers() {
         final List<String> names = ioView.inputNames();
         final List<Double> bets = ioView.inputBattings(names);
-        return blackJackGame.makePlayers(names, bets);
+        blackJackGame.makePlayers(names, bets);
     }
 
-    private void giveInitialCards(final Dealer dealer, final Players players) {
-        blackJackGame.giveInitCards(dealer, players);
-        ioView.printInitialCards(dealer, players);
+    private void giveInitialCards() {
+        blackJackGame.giveInitCards();
+        ioView.printInitialCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
     }
 
-    private void getPlayerAdditionalCard(final Players players) {
-        IntStream.range(0, players.count()).forEach(index -> {
-            final Player player = getPlayerAdditionalCard(players.get(index));
-            blackJackGame.setPlayers(players, player, index);
-        });
+    private void giveAdditionalCard() {
+        final List<Player> players = blackJackGame.getPlayers();
+        IntStream.range(0, players.size()).
+            forEach(index -> {
+                final Player player = givePlayerAdditionalCard(players.get(index));
+                blackJackGame.setPlayers(index, player);
+            });
+        giveDealerAdditionalCard(blackJackGame.getDealer());
     }
 
-    private Player getPlayerAdditionalCard(final Player player) {
+    private Player givePlayerAdditionalCard(final Player player) {
         while (getIntentReceiveCard(player) && blackJackGame.giveCard(player)) {
             ioView.printCard(player);
         }
@@ -58,19 +58,20 @@ public class BlackJackController {
         return ioView.inputCardIntent(player.getName());
     }
 
-    private void getDealerAdditionalCard(final Dealer dealer) {
+    private void giveDealerAdditionalCard(final Dealer dealer) {
         while (blackJackGame.giveCard(dealer)) {
             ioView.printDealerReceiveNotice();
         }
     }
 
-    private void printTotalCardState(final Dealer dealer, final Players players) {
-        ioView.printTotalCardState(dealer, players);
+    private void printTotalCardState() {
+        ioView.printTotalCardState(blackJackGame.getDealer(), blackJackGame.getPlayers());
     }
 
-    private void printProfits(final Dealer dealer, final Players players) {
-        final List<Profit> playerProfits = blackJackGame.calculatePlayersProfit(players, dealer);
+    private void printProfits() {
+        final List<Profit> playerProfits = blackJackGame.calculatePlayersProfit(blackJackGame.getPlayers(),
+            blackJackGame.getDealer());
         final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfits);
-        ioView.printProfits(dealerProfit, playerProfits, players.getNames());
+        ioView.printProfits(dealerProfit, playerProfits, blackJackGame.getPlayerNames());
     }
 }

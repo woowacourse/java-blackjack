@@ -4,7 +4,6 @@ import domain.model.Card;
 import domain.model.Dealer;
 import domain.model.Participant;
 import domain.model.Player;
-import domain.model.Players;
 import domain.vo.Profit;
 import java.util.List;
 import java.util.StringJoiner;
@@ -22,17 +21,16 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String PROFIT_MESSAGE = "## 최종 수익";
 
-    public void printInitialCards(final Dealer dealer, final Players players) {
+    public void printInitialCards(final Dealer dealer, final List<Player> players) {
         printCardsMessage(players);
         printFirstCard(dealer);
-        IntStream.range(0, players.count())
-            .mapToObj(players::get)
-            .forEach(this::printCard);
+        players.forEach(this::printCard);
     }
 
-    private void printCardsMessage(final Players players) {
+    private void printCardsMessage(final List<Player> players) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER + " ");
-        players.getNames()
+        players.stream()
+            .map(Player::getName)
             .forEach(stringJoiner::add);
         System.out.printf(PRINT_CARDS_MESSAGE + NEW_LINE, stringJoiner);
     }
@@ -67,13 +65,10 @@ public class OutputView {
         System.out.println(DEALER_RECEIVE_NOTICE);
     }
 
-    public void printTotalCardState(final Dealer dealer, final Players players) {
+    public void printTotalCardState(final Dealer dealer, final List<Player> players) {
         System.out.print(NEW_LINE);
         printPlayerCardState(dealer, DEALER_NAME);
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.get(i);
-            printPlayerCardState(player, player.getName());
-        }
+        players.forEach(player -> printPlayerCardState(player, player.getName()));
     }
 
     private void printPlayerCardState(final Participant participant, final String name) {
