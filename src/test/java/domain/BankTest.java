@@ -15,10 +15,9 @@ public class BankTest extends AbstractTestFixture{
     void test_bet() {
         var bank = new Bank();
         var user = new User("ㅎㅇ");
-
         bank.bet(user, Money.of(123));
 
-        assertThat(bank.pay(user, Result.WIN)).isEqualTo(Money.of(246));
+        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(123));
     }
 
     @Test
@@ -31,16 +30,26 @@ public class BankTest extends AbstractTestFixture{
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("결과에 따라 배당을 주어 반환한다")
-    @ParameterizedTest(name = "{0}이면 총 {1}원이 반환된다")
+    @Test
+    @DisplayName("인출할 수 있다")
+    void test_draw_deposit() {
+        var bank = new Bank();
+        var user = new User("gd");
+        bank.bet(user, Money.of(500));
+
+        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(500));
+    }
+
+    @DisplayName("결과에 따라 배당을 준다")
+    @ParameterizedTest(name = "{0}이면 500원이 {1}원이 된다")
     @CsvSource({"BLACKJACK,1250", "WIN,1000", "LOSE,0", "DRAW,500"})
     void test_pay_by_result(Result result, int expectedValue) {
         var bank = new Bank();
         var user = new User("gd");
-
         bank.bet(user, Money.of(500));
+        bank.evaluate(user, result);
 
-        assertThat(bank.pay(user, result)).isEqualTo(Money.of(expectedValue));
+        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(expectedValue));
     }
 
     @DisplayName("뱅크 수익을 알 수 있다")
@@ -50,7 +59,7 @@ public class BankTest extends AbstractTestFixture{
         var bank = new Bank();
         var user = new User("gd");
         bank.bet(user, Money.of(500));
-        bank.pay(user, result);
+        bank.evaluate(user, result);
 
         assertThat(bank.getProfit()).isEqualTo(createMoney(expectedValue));
     }
