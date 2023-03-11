@@ -8,11 +8,10 @@ import java.util.List;
 public class ParticipantResponses {
 
     public static List<ParticipantResponse> listOfPlayer(final BlackJackGame blackJackGame) {
-        final List<ParticipantResponse> participantResponses = new ArrayList<>();
+        final List<ParticipantResponse> players = new ArrayList<>();
         final List<PlayerName> playerNames = blackJackGame.getPlayerNames();
 
-        playerNames.forEach(
-                playerName -> participantResponses.add(ParticipantResponse.ofPlayer(playerName, blackJackGame)));
-        return participantResponses;
+        playerNames.forEach(playerName -> players.add(ParticipantResponse.ofPlayer(playerName, blackJackGame)));
+        return players;
     }
 }

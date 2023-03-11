@@ -51,9 +51,10 @@ public class OutputView {
         }
     }
 
-    public void printCardsWithScore(final List<ParticipantResponse> participants) {
+    public void printCardsWithScore(final ParticipantResponse dealer, final List<ParticipantResponse> players) {
         System.out.println();
-        participants.forEach(this::printCardsWithScore);
+        printCardsWithScore(dealer);
+        players.forEach(this::printCardsWithScore);
     }
 
     private void printCardsWithScore(final ParticipantResponse participant) {

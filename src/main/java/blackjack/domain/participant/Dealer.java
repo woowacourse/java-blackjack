@@ -13,20 +13,6 @@ public class Dealer extends Participant {
         super();
     }
 
-    public Result showResult(final int score) {
-        final int dealerScore = getScore();
-        if (score > BLACK_JACK_SCORE) {
-            return Result.LOSE;
-        }
-        if (dealerScore > BLACK_JACK_SCORE || dealerScore < score) {
-            return Result.WIN;
-        }
-        if (dealerScore > score) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
-    }
-
     public Hand getHiddenHand() {
         final List<Card> cards = getHand().getCards();
         return new Hand(cards.subList(0, cards.size() - 1));
@@ -38,6 +24,10 @@ public class Dealer extends Participant {
 
     public int getMaximumDrawableScore() {
         return MAXIMUM_DRAWABLE_SCORE;
+    }
+
+    public boolean isAdditionalDrawn() {
+        return hand.count() > 2;
     }
 
     @Override

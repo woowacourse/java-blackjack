@@ -42,23 +42,34 @@ public class Participants {
         }
     }
 
-    public void drawCard(final Deck deck, final int count) {
-        for (int i = 0; i < count; i++) {
-            participants.forEach(participant -> participant.drawCard(deck.draw()));
-        }
-    }
-
     public void drawCardForPlayer(final PlayerName playerName, final Deck deck) {
         final Player player = getPlayer(playerName);
         player.drawCard(deck.draw());
+    }
+
+    public void drawCardForDealer(final Deck deck) {
+        final Dealer dealer = getDealer();
+        dealer.drawCard(deck.draw());
     }
 
     public String getDealerName() {
         return getDealer().getName();
     }
 
-    public Hand getDealerHiddenHand() {
-        return getDealer().getHiddenHand();
+    public int getDealerScore() {
+        return getDealer().getScore();
+    }
+
+    public Hand getDealerHand() {
+        return getDealer().getHand();
+    }
+
+    public int getDealerAdditionalDrawScore() {
+        return getDealer().getMaximumDrawableScore();
+    }
+
+    public boolean isDealerAdditionalDrawn() {
+        return getDealer().isAdditionalDrawn();
     }
 
     private Dealer getDealer() {

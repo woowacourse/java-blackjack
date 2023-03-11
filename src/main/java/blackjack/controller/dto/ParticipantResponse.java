@@ -17,12 +17,18 @@ public class ParticipantResponse {
     }
 
     public static ParticipantResponse ofPlayer(final PlayerName playerName, final BlackJackGame blackJackGame) {
-        final int score = blackJackGame.showPlayerScore(playerName);
-        final Hand hand = blackJackGame.showPlayerHand(playerName);
+        final int score = blackJackGame.getPlayerScore(playerName);
+        final Hand hand = blackJackGame.getPlayerHand(playerName);
         return new ParticipantResponse(playerName.getValue(), CardsResponse.of(score, hand));
     }
 
-    public static ParticipantResponse ofDealerForHidden(final BlackJackGame blackJackGame) {
+    public static ParticipantResponse ofDealer(final BlackJackGame blackJackGame) {
+        final int score = blackJackGame.getDealerScore();
+        final Hand hand = blackJackGame.getDealerHand();
+        return new ParticipantResponse(blackJackGame.getDealerName(), CardsResponse.of(score, hand));
+    }
+
+    public static ParticipantResponse ofDealerWithHidden(final BlackJackGame blackJackGame) {
         final Hand hand = blackJackGame.getDealerHiddenHand();
         return new ParticipantResponse(blackJackGame.getDealerName(), CardsResponse.of(HIDDEN_SCORE, hand));
     }
