@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.utils.LogType;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,7 +31,7 @@ public class InputView {
             String input = scanner.nextLine();
             return Integer.parseInt(input);
         } catch (NumberFormatException exception) {
-            System.out.println("[ERROR]: " + INVALID_BETTING_MESSAGE);
+            LogType.ERROR_MESSAGE.log(INVALID_BETTING_MESSAGE);
             return readBetting(name);
         }
     }
