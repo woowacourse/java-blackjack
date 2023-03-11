@@ -53,12 +53,8 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(List<Integer> dealerResult, Map<String, String> result) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(DEALER_NAME + ": "
-                + dealerResult.get(0) + Result.WIN.getState() + " "
-                + dealerResult.get(1) + Result.DRAW.getState() + " "
-                + dealerResult.get(2) + Result.LOSE.getState() + " ");
+    public void printProfit(Map<String, Integer> result) {
+        System.out.println("\n## 최종 수익");
         for (String playerName : result.keySet()) {
             System.out.println(playerName + ": " + result.get(playerName));
         }

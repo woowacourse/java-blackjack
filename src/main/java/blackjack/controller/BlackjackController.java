@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -9,11 +10,11 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -117,18 +118,15 @@ public class BlackjackController {
         outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
         outputView.printPlayerFinalCards(getPlayersCards(players), scores);
 
-        showResult(participants);
+        showProfit(participants);
     }
 
-    private void showResult(final Participants participants) {
-        GameResult gameResult = new GameResult(participants);
-
-        Map<Player, Result> playerResult = gameResult.makePlayersResult();
-        Map<Player, Result> reversePlayerResult = gameResult.reverseResult(playerResult);
-        List<Integer> dealerResultCount = gameResult.getDealerResultCount(reversePlayerResult);
-
-        Map<String, String> playerResultWithName = getPlayerResult(playerResult);
-        outputView.printGameResult(dealerResultCount, playerResultWithName);
+    private void showProfit(final Participants participants) {
+        Profit profit = new Profit(participants);
+        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Money dealerProfit = profit.getDealerProfit(playersProfit);
+        Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit);
+        outputView.printProfit(participantsProfit);
     }
 
     private List<String> getPlayerNames(final List<Player> players) {
@@ -168,12 +166,14 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private Map<String, String> getPlayerResult(final Map<Player, Result> playerResult) {
-        Map<String, String> playerResultWithName = new HashMap<>();
+    private Map<String, Integer> getProfit(final Map<Player, Money> playersProfit, final Money dealerProfit) {
+        Map<String, Integer> profit = new LinkedHashMap<>();
 
-        for (Player player : playerResult.keySet()) {
-            playerResultWithName.put(player.getName(), playerResult.get(player).getState());
+        profit.put("딜러", dealerProfit.getMoney());
+        for (Player player : playersProfit.keySet()) {
+            profit.put(player.getName(), playersProfit.get(player).getMoney());
         }
-        return playerResultWithName;
+
+        return profit;
     }
 }
