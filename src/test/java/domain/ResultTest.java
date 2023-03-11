@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ResultTest {
 
     @Test
@@ -14,7 +16,7 @@ class ResultTest {
         //given
         List<String> playerNames = List.of("judy", "pobi");
         List<Player> players = getPlayers(playerNames);
-        Players playersEntity = new Players(players);
+        Players playersEntity = new Players(playerNames);
 
         Dealer dealer = new Dealer(
                 new Cards(
@@ -28,7 +30,7 @@ class ResultTest {
         int actual = map.get(dealer);
 
         //then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     private List<Player> getPlayers(List<String> playerNames) {

@@ -21,7 +21,7 @@ class PlayersTest {
         List<Player> players = getPlayers(playerNames);
 
         //then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레어이는 5명까지 참가 가능합니다.");
     }
@@ -42,7 +42,7 @@ class PlayersTest {
         List<Player> players = getPlayers(playerNames);
 
         //then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레이어 이름은 중복일 수 없습니다.");
     }
@@ -52,7 +52,7 @@ class PlayersTest {
         //given
         List<String> playerNames = List.of("judy", "kevin");
         List<Player> players = getPlayers(playerNames);
-        Players playersEntity = new Players(players);
+        Players playersEntity = new Players(playerNames);
 
         // when
         String[] expected = {"judy", "kevin"};

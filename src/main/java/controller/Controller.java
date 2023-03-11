@@ -55,9 +55,8 @@ public class Controller {
     private Result playBlackjack(Players players, Dealer dealer, Blackjack blackjack) {
         hitOrStandByPlayers(players, blackjack);
         hitOrStandByDealer(dealer, blackjack);
-        blackjack.createResult(players, dealer);
 
-        return blackjack.getResult();
+        return blackjack.createResult(players, dealer);
     }
 
     private void hitOrStandByPlayers(Players players, Blackjack blackjack) {

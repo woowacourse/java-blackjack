@@ -3,7 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -13,24 +12,22 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
-        List<String> playerNames = getPlayerNames(players);
+    public Players(List<String> playerNames) {
         validatePlayers(playerNames);
-        this.players = players;
-    }
-
-    private List<String> getPlayerNames(List<Player> players) {
-        List<String> playerNames = new ArrayList<>();
-
-        for (Player player : players) {
-            playerNames.add(player.getName());
-        }
-        return playerNames;
+        this.players = createPlayers(playerNames);
     }
 
     private void validatePlayers(List<String> playerNames) {
         validateSameName(playerNames);
         validateSize(playerNames);
+    }
+
+    private List<Player> createPlayers(List<String> list) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : list) {
+            players.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
+        }
+        return players;
     }
 
     private void validateSameName(List<String> playerNames) {
@@ -44,12 +41,6 @@ public class Players {
         if (playerNames.size() > MAX_PLAYERS_SIZE) {
             throw new IllegalArgumentException(SIZE_ERROR_GUIDE_MESSAGE);
         }
-    }
-
-    private List<Player> createPlayers(List<String> players) {
-        return players.stream()
-                .map(name -> new Player(new PlayerName(name), new Cards(new ArrayList<>())))
-                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
