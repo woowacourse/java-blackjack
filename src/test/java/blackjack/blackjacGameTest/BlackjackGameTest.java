@@ -108,7 +108,7 @@ class BlackjackGameTest {
         blackjackGame.addPlayer(bust);
 
         Map<Participant, Money> prize = blackjackGame.calculatePrize();
-        assertThat(prize.get(dealer)).isEqualTo(new Money(-15000));
+        assertThat(prize.get(dealer)).isEqualTo(new Money(-5000));
     }
 
     @DisplayName("딜러에게 추가 카드를 주는 기능")

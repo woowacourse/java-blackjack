@@ -75,7 +75,7 @@ class FinishedStateTest {
                 dealer = new Dealer();
             }
 
-            @DisplayName("딜러가 버스트가 아니면 0을 반환한다.")
+            @DisplayName("딜러가 버스트가 아니면 -1을 반환한다.")
             @Test
             void returnZeroWhenDealerIsNotBust() {
                 //given
@@ -83,7 +83,7 @@ class FinishedStateTest {
                 //when
                 double earningRate = finishedState.getEarningRate(player, dealer);
                 //then
-                Assertions.assertThat(earningRate).isEqualTo(0.0);
+                Assertions.assertThat(earningRate).isEqualTo(-1.0);
             }
         }
 
@@ -112,7 +112,7 @@ class FinishedStateTest {
                 Assertions.assertThat(earningRate).isEqualTo(1.0);
             }
 
-            @DisplayName("딜러가 버스트가 아니고 점수가 더 높으면 0을 반환한다.")
+            @DisplayName("딜러가 버스트가 아니고 점수가 더 높으면 -1을 반환한다.")
             @Test
             void returnZeroWhenDealerIsNotBustAndHasHigherScore() {
                 //given
@@ -121,7 +121,7 @@ class FinishedStateTest {
                 //when
                 double earningRate = finishedState.getEarningRate(player, dealer);
                 //then
-                Assertions.assertThat(earningRate).isEqualTo(0.0);
+                Assertions.assertThat(earningRate).isEqualTo(-1.0);
             }
 
             @DisplayName("딜러가 버스트가 아니고 점수가 더 낮으면 1을 반환한다.")

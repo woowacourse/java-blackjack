@@ -11,12 +11,12 @@ public enum FinishedState {
         }
         return 1.5;
     }),
-    BUST((player, dealer) -> 0.0),
+    BUST((player, dealer) -> -1.0),
     STAY((player, dealer) -> {
         if (dealer.isBust() || player.calculateScore().isHigherThan(dealer.calculateScore())) {
             return 1.0;
         }
-        return 0.0;
+        return -1.0;
     });
 
     private BiFunction<Player, Dealer, Double> earningRate;
