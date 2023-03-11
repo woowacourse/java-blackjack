@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -7,6 +7,8 @@ import blackjack.domain.gameplayer.Betting;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Name;
 import blackjack.domain.gameplayer.Player;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultReferee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

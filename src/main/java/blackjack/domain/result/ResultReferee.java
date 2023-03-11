@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Score;
 
 public class ResultReferee {
 

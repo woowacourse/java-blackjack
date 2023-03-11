@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Command;
 import blackjack.domain.Game;
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
