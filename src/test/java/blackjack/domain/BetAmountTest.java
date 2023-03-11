@@ -39,4 +39,15 @@ class BetAmountTest {
         assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("베팅 금액이 생성되면 멤버변수로 해당하는 값의 money를 가진다.")
+    @Test
+    void haveMoney() {
+        //given
+        int amount = 20000;
+        //when
+        BetAmount betAmount = new BetAmount(amount);
+        //then
+        assertThat(betAmount).hasFieldOrPropertyWithValue("amount", new Money(amount));
+    }
 }
