@@ -13,7 +13,7 @@ public interface Playable {
     
     boolean isAbleToDraw();
     
-    ParticipantStatus getStatus();
+    MemberStatus getStatus();
     
     int getScore();
     

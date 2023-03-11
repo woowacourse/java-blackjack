@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.user.Participants;
+import domain.user.GameMember;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.Map;
@@ -13,10 +13,10 @@ public class StatusResultTest {
     @Test
     @DisplayName("플레이어 게임 결과 테스트")
     void playerGameResultTest() {
-        Participants participants = Participants.of("echo,split");
+        GameMember gameMember = GameMember.of("echo,split");
         StatusResult statusResult = new StatusResult();
-        statusResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
-        Player player = participants.getPlayers().get(0);
+        statusResult.accumulate(gameMember.getPlayers().get(0), ResultStatus.WIN);
+        Player player = gameMember.getPlayers().get(0);
         Map<Playable, ResultStatus> resultMap = statusResult.getResultMap();
         Assertions.assertThat(resultMap.get(player)).isEqualTo(ResultStatus.WIN);
         
@@ -25,9 +25,9 @@ public class StatusResultTest {
     @Test
     @DisplayName("딜러 게임 결과 테스트")
     void dealerGameResultTest() {
-        Participants participants = Participants.of("echo,split");
+        GameMember gameMember = GameMember.of("echo,split");
         StatusResult statusResult = new StatusResult();
-        statusResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
+        statusResult.accumulate(gameMember.getPlayers().get(0), ResultStatus.WIN);
         Map<ResultStatus, Integer> dealerResultMap = statusResult.getDealerResult();
         Assertions.assertThat(dealerResultMap.get(ResultStatus.LOSE)).isEqualTo(1);
         Assertions.assertThat(dealerResultMap.get(ResultStatus.DRAW)).isEqualTo(0);

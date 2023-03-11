@@ -64,9 +64,9 @@ class PlayerTest {
         Player participant = new Player("echo");
         participant.addCard(new Card(CardNumber.TWO, CardShape.SPADE));
         participant.addCard(new Card(CardNumber.KING, CardShape.HEART));
-        Assertions.assertThat(participant.getStatus()).isEqualTo(ParticipantStatus.NOT_BUST);
+        Assertions.assertThat(participant.getStatus()).isEqualTo(MemberStatus.NOT_BUST);
         participant.addCard(new Card(CardNumber.KING, CardShape.DIAMOND));
-        Assertions.assertThat(participant.getStatus()).isEqualTo(ParticipantStatus.BUST);
+        Assertions.assertThat(participant.getStatus()).isEqualTo(MemberStatus.BUST);
         Assertions.assertThat(participant.isBust()).isTrue();
     }
 }

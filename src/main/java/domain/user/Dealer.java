@@ -34,8 +34,8 @@ public class Dealer implements Playable {
     }
     
     @Override
-    public ParticipantStatus getStatus() {
-        return ParticipantStatus.of(this.hand.calculateScore());
+    public MemberStatus getStatus() {
+        return MemberStatus.of(this.hand.calculateScore());
     }
     
     @Override

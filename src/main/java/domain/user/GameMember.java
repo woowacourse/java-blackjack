@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Participants implements Iterable<Playable> {
+public class GameMember implements Iterable<Playable> {
     
     private final Dealer dealer;
     private final List<Player> players;
     
-    private Participants(final Dealer dealer, final List<Player> players) {
+    private GameMember(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
     
-    public static Participants of(final String participantNames) {
+    public static GameMember of(final String participantNames) {
         String[] names = participantNames.split(",");
         List<Player> players = Arrays.stream(names)
                 .map(String::trim)
                 .map(Player::new)
                 .collect(Collectors.toList());
-        return new Participants(new Dealer(), players);
+        return new GameMember(new Dealer(), players);
     }
     
     public Dealer getDealer() {
@@ -36,17 +36,17 @@ public class Participants implements Iterable<Playable> {
     
     @Override
     public Iterator<Playable> iterator() {
-        return this.getParticipants().iterator();
+        return this.getGameMember().iterator();
     }
     
-    private List<Playable> getParticipants() {
-        ArrayList<Playable> participants = new ArrayList<>();
-        participants.add(this.dealer);
-        participants.addAll(this.players);
-        return participants;
+    private List<Playable> getGameMember() {
+        ArrayList<Playable> gameMember = new ArrayList<>();
+        gameMember.add(this.dealer);
+        gameMember.addAll(this.players);
+        return gameMember;
     }
     
     public Stream<Playable> stream() {
-        return this.getParticipants().stream();
+        return this.getGameMember().stream();
     }
 }

@@ -4,27 +4,27 @@ import domain.card.Deck;
 import domain.result.ResultStatus;
 import domain.result.StatusResult;
 import domain.user.Dealer;
-import domain.user.Participants;
+import domain.user.GameMember;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
 
 public class Game {
     
-    private final Participants participants;
+    private final GameMember gameMember;
     
     private final Deck deck;
     
     
     public Game(final String participantNames, final Deck deck) {
-        this.participants = Participants.of(participantNames);
+        this.gameMember = GameMember.of(participantNames);
         this.deck = deck;
     }
     
     public void start() {
-        for (Playable participant : this.participants) {
-            this.deal(participant);
-            this.deal(participant);
+        for (Playable member : this.gameMember) {
+            this.deal(member);
+            this.deal(member);
         }
     }
     
@@ -43,11 +43,11 @@ public class Game {
     }
     
     public Dealer getDealer() {
-        return this.participants.getDealer();
+        return this.gameMember.getDealer();
     }
     
     public List<Player> getPlayers() {
-        return this.participants.getPlayers();
+        return this.gameMember.getPlayers();
     }
     
     private ResultStatus comparePlayerWithDealer(Player player, Dealer dealer) {
@@ -70,7 +70,7 @@ public class Game {
     }
     
     
-    public Participants getParticipants() {
-        return this.participants;
+    public GameMember getParticipants() {
+        return this.gameMember;
     }
 }

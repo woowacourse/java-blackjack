@@ -1,13 +1,13 @@
 package domain.user;
 
-public enum ParticipantStatus {
+public enum MemberStatus {
     BUST,
     NOT_BUST,
     BLACKJACK;
     
     public static final int BLACKJACK_BOUNDARY = 21;
     
-    public static ParticipantStatus of(int score) {
+    public static MemberStatus of(int score) {
         if (score > BLACKJACK_BOUNDARY) {
             return BUST;
         }
