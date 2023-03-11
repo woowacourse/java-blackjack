@@ -33,7 +33,7 @@ public abstract class Participant {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return cards.size() == 2 && score.getScore() == 21;
     }
 

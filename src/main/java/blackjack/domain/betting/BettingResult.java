@@ -26,7 +26,8 @@ public class BettingResult {
         dealerBettingResult = 0;
 
         playersBettingResults.values().forEach(value ->
-                dealerBettingResult -= value);
+                dealerBettingResult -= value
+        );
 
         return dealerBettingResult;
     }
