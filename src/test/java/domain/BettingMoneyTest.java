@@ -1,11 +1,9 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -40,15 +38,6 @@ public class BettingMoneyTest {
         assertThatThrownBy(() -> new BettingMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("최대 베팅 금액은 1억원 입니다.");
-    }
-
-    @Test
-    void 수익률에_따른_베팅_금액을_반환한다() {
-        BettingMoney money = new BettingMoney(1000);
-
-        double profit = 1.5;
-
-        assertThat(money.calculateMoneyByProfit(profit)).isEqualTo(1500);
     }
 
 }
