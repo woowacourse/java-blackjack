@@ -63,14 +63,21 @@ public class OutputView {
         System.out.println(DEALER_HIT_MESSAGE);
     }
 
-    public void printDealerResult(Dealer dealer) {
+    public void printGameResult(Dealer dealer, Players players) {
+        printDealerResult(dealer);
+        for (Player player : players) {
+            printPlayerResult(player);
+        }
+    }
+
+    private void printDealerResult(Dealer dealer) {
         int score = dealer.calculateScore().getScore();
         System.out.print(DEALER_MESSAGE);
         printCards(dealer.showAllCards(), EMPTY);
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
 
-    public void printPlayerResult(Player player) {
+    private void printPlayerResult(Player player) {
         printPlayerName(player);
         printCards(player.showCards(), EMPTY);
         int score = player.calculateScore().getScore();
