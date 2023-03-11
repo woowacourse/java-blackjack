@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public enum Result {
     WIN(new BigDecimal(1)),
     LOSE(new BigDecimal(-1)),
-    TIE(new BigDecimal(1));
+    TIE(new BigDecimal(0));
 
     private final BigDecimal prizeRatio;
 
