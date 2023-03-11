@@ -34,8 +34,8 @@ public class OutputView {
     private static String toStringCards(final List<Card> cards) {
         final StringJoiner stringJoiner = new StringJoiner(", ");
         cards.forEach(card -> {
-            final String temp = card.rank() + card.suit();
-            stringJoiner.add(temp);
+            final String cardPhrase = card.rank() + card.suit();
+            stringJoiner.add(cardPhrase);
         });
         return stringJoiner.toString();
     }
