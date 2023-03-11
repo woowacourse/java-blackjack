@@ -9,13 +9,13 @@ public class Dealer extends Participant {
     private static final String NAME = "딜러";
     private static final int MAXIMUM_DRAWABLE_SCORE = 16;
 
+    public String getName() {
+        return NAME;
+    }
+
     public Hand getHiddenHand() {
         final List<Card> cards = getHand().getCards();
         return new Hand(cards.subList(0, cards.size() - 1));
-    }
-
-    public String getName() {
-        return NAME;
     }
 
     public int getMaximumDrawableScore() {
@@ -23,7 +23,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isAdditionalDrawn() {
-        return hand.count() > 2;
+        return hand.count() > BLACK_JACK_CARD_COUNT;
     }
 
     @Override
