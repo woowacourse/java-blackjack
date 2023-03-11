@@ -7,10 +7,7 @@ import blackjack.domain.user.Participant;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -49,37 +46,12 @@ public class BlackjackGame {
         return pick;
     }
 
-    public BlackjackResult getResult() {
-        Map<Player, GameResult> result = participants.getPlayers().stream()
-                .collect(Collectors.toMap(player -> player,
-                        player -> getGameResult(player, participants.getDealer()),
-                        (o1, o2) -> o1,
-                        LinkedHashMap::new));
-        return new BlackjackResult(result);
-    }
-
     public void drawCard(Participant participant) {
         participant.addCard(cardDeck.pick());
     }
 
-    private GameResult getGameResult(Player player, Dealer dealer) {
-        if (player.isBust()) {
-            return GameResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return GameResult.WIN;
-        }
-        return compareScore(player, dealer);
-    }
-
-    private GameResult compareScore(Player player, Dealer dealer) {
-        if (player.getScore().equals(dealer.getScore())) {
-            return GameResult.TIE;
-        }
-        if (player.getScore().isGreaterOrEqualsTo(dealer.getScore())) {
-            return GameResult.WIN;
-        }
-        return GameResult.LOSE;
+    public BlackjackResult getResult() {
+        return BlackjackResult.of(participants.getPlayers(), participants.getDealer());
     }
 
     public Participants getParticipants() {
