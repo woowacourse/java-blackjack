@@ -113,7 +113,7 @@ class BlackJackGameTest {
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
 
-        Player player = new Player(new Name("ori"), new DrawnCards(cards));
+        Player player = new Player(new Name("ori"), new DrawnCards(cards), new BettingMoney(1000));
         List<Player> players = createPlayers("pobi");
         players.add(player);
 
@@ -205,7 +205,7 @@ class BlackJackGameTest {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
-            players.add(new Player(new Name(name), new DrawnCards(cards)));
+            players.add(new Player(new Name(name), new DrawnCards(cards), new BettingMoney(1000)));
         }
 
         return players;

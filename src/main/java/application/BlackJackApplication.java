@@ -1,16 +1,15 @@
 package application;
 
-import static java.util.stream.Collectors.toList;
-
 import domain.BettingMoney;
-import domain.BlackJackBettingDeposit;
 import domain.BlackJackGame;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Names;
 import domain.participant.ParticipantGenerator;
+import domain.participant.Player;
 import domain.participant.Players;
 import dto.response.BattingResult;
 import dto.response.DrawnCardsInfo;
@@ -32,48 +31,52 @@ public class BlackJackApplication {
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
-        BlackJackBettingDeposit blackJackBettingDeposit = new BlackJackBettingDeposit();
 
-        betEachPlayer(blackJackGame, blackJackBettingDeposit);
         splitCards(blackJackGame);
         drawCards(blackJackGame);
 
         printParticipantResults(blackJackGame);
-        printBattingResults(blackJackGame, blackJackBettingDeposit);
+        printBattingResults(blackJackGame);
     }
 
     private BlackJackGame createBlackJackGame() {
         CardDeck cardDeck = CardDeckGenerator.create();
-        Dealer dealer = ParticipantGenerator.createDealer();
+        Dealer dealer = ParticipantGenerator.createEmptyCardDealer();
         Players players = createPlayers();
+
         return new BlackJackGame(players, dealer, cardDeck);
     }
 
     private Players createPlayers() {
+        Names names = createNames();
+
+        List<Player> rawPlayers = new ArrayList<>();
+
+        for (Name name : names.getNames()) {
+            BettingMoney bettingMoney = createBettingMoney(name.getName());
+            Player player = ParticipantGenerator.createEmptyCardPlayer(name, bettingMoney);
+            rawPlayers.add(player);
+        }
+
+        return new Players(rawPlayers);
+    }
+
+    private Names createNames() {
         try {
             List<String> rawNames = inputView.readPlayerNames();
 
-            List<Name> names = rawNames.stream()
-                    .map(Name::new)
-                    .collect(toList());
+            return Names.from(rawNames);
 
-            return ParticipantGenerator.createPlayers(names);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return createPlayers();
+            return createNames();
         }
     }
 
-    private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingDeposit blackJackBettingDeposit) {
-        for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = createBettingMoney(playerName);
-            blackJackBettingDeposit.betMoney(playerName, new BettingMoney(bettingMoney));
-        }
-    }
-
-    private int createBettingMoney(String playerName) {
+    private BettingMoney createBettingMoney(String playerName) {
         try {
-            return inputView.readBettingMoneyByName(playerName);
+            int bettingMoney = inputView.readBettingMoneyByName(playerName);
+            return new BettingMoney(bettingMoney);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return createBettingMoney(playerName);
@@ -168,12 +171,11 @@ public class BlackJackApplication {
         return ParticipantResult.toDto(dealerName, dealerCards, dealerScore);
     }
 
-    private void printBattingResults(BlackJackGame blackJackGame, BlackJackBettingDeposit blackJackBettingDeposit) {
+    private void printBattingResults(BlackJackGame blackJackGame) {
         List<BattingResult> battingResults = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
-            BettingMoney bettingMoney = blackJackBettingDeposit.findBetMoneyByName(playerName);
-            int result = blackJackGame.calculateBettingResult(playerName, bettingMoney);
+            int result = blackJackGame.calculateBettingResult(playerName);
             battingResults.add(new BattingResult(playerName, result));
         }
 

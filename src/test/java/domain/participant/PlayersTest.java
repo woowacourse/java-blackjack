@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.BettingMoney;
 import domain.card.Card;
 import domain.card.DrawnCards;
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ class PlayersTest {
     @Test
     void find_player_by_name() {
         //given
-        Player expected = new Player(new Name("ori"), new DrawnCards(new ArrayList<>()));
+        Player expected = new Player(
+                new Name("ori"), new DrawnCards(new ArrayList<>()), new BettingMoney(1000));
         List<Player> rawPlayers = createPlayers("pobi");
         rawPlayers.add(expected);
         Players players = new Players(rawPlayers);
@@ -53,7 +55,7 @@ class PlayersTest {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
-            players.add(new Player(new Name(name), new DrawnCards(cards)));
+            players.add(new Player(new Name(name), new DrawnCards(cards),new BettingMoney(1000)) );
         }
 
         return players;

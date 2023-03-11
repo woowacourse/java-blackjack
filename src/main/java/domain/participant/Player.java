@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BettingMoney;
 import domain.BlackJackResult;
 import domain.card.Card;
 import domain.card.DrawnCards;
@@ -10,8 +11,11 @@ public class Player extends Participant {
 
     private static final int BURST_NUMBER = 21;
 
-    public Player(final Name name, final DrawnCards drawnCards) {
+    private BettingMoney bettingMoney;
+
+    public Player(Name name, DrawnCards drawnCards, BettingMoney bettingMoney) {
         super(name, drawnCards);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override
@@ -24,27 +28,31 @@ public class Player extends Participant {
         return calculateScore() < BURST_NUMBER;
     }
 
-    public BlackJackResult calculateResult(Dealer dealer) {
+    public int calculatePrize(Dealer dealer) {
         if (isBlackJack()) {
             return calculateBlackJackCase(dealer);
         }
 
         if (isBurst()) {
-            return BlackJackResult.LOSE;
+            return calculateMoney(BlackJackResult.LOSE);
         }
 
         if (this.calculateScore() > dealer.calculateScore() || dealer.isBurst()) {
-            return BlackJackResult.WIN;
+            return calculateMoney(BlackJackResult.WIN);
         }
 
-        return BlackJackResult.LOSE;
+        return calculateMoney(BlackJackResult.LOSE);
     }
 
-    private static BlackJackResult calculateBlackJackCase(Dealer dealer) {
+    private int calculateBlackJackCase(Dealer dealer) {
         if (dealer.isBlackJack()) {
-            return BlackJackResult.EACH_BLACKJACK;
+            return calculateMoney(BlackJackResult.EACH_BLACKJACK);
         }
-        return BlackJackResult.BLACKJACK;
+        return calculateMoney(BlackJackResult.BLACKJACK);
+    }
+
+    private int calculateMoney(BlackJackResult result) {
+        return result.calculatePrize(bettingMoney.getMoney());
     }
 
     public boolean hasSameName(String name) {

@@ -63,10 +63,9 @@ public class BlackJackGame {
         return dealer.isDrawable();
     }
 
-    public int calculateBettingResult(String name, BettingMoney betMoney) {
+    public int calculateBettingResult(String name) {
         Player player = players.findPlayerByName(name);
-        BlackJackResult result = player.calculateResult(dealer);
-        return result.calculatePrize(betMoney.getMoney());
+        return player.calculatePrize(dealer);
     }
 
     public List<String> getPlayersName() {
