@@ -35,12 +35,12 @@ public abstract class Player {
         return state.score();
     }
     
-    public List<Card> getCards() {
-        return state.getCards();
-    }
-    
     public void drawStop() {
         state = state.drawStop();
+    }
+    
+    public List<Card> getCards() {
+        return state.getCards();
     }
     
     public String getName() {
