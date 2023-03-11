@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 
 import java.util.Objects;
@@ -16,6 +16,7 @@ public class Card {
     public Suit getSuit() {
         return suit;
     }
+
     public Number getNumber() {
         return number;
     }

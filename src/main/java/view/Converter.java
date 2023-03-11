@@ -1,27 +1,27 @@
 package view;
 
-import static domain.Number.A;
-import static domain.Number.EIGHT;
-import static domain.Number.FIVE;
-import static domain.Number.FOUR;
-import static domain.Number.J;
-import static domain.Number.K;
-import static domain.Number.NINE;
-import static domain.Number.Q;
-import static domain.Number.SEVEN;
-import static domain.Number.SIX;
-import static domain.Number.TEN;
-import static domain.Number.THREE;
-import static domain.Number.TWO;
-import static domain.Suit.CLOVER;
-import static domain.Suit.DIAMOND;
-import static domain.Suit.HEART;
-import static domain.Suit.SPADE;
+import static domain.card.Number.A;
+import static domain.card.Number.EIGHT;
+import static domain.card.Number.FIVE;
+import static domain.card.Number.FOUR;
+import static domain.card.Number.J;
+import static domain.card.Number.K;
+import static domain.card.Number.NINE;
+import static domain.card.Number.Q;
+import static domain.card.Number.SEVEN;
+import static domain.card.Number.SIX;
+import static domain.card.Number.TEN;
+import static domain.card.Number.THREE;
+import static domain.card.Number.TWO;
+import static domain.card.Suit.CLOVER;
+import static domain.card.Suit.DIAMOND;
+import static domain.card.Suit.HEART;
+import static domain.card.Suit.SPADE;
 
-import domain.Card;
 import domain.GameResult;
-import domain.Number;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Suit;
 import java.util.Map;
 
 public class Converter {
