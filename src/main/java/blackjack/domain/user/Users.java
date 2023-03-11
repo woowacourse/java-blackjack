@@ -59,16 +59,8 @@ public class Users {
                         Collections::unmodifiableMap));
     }
 
-    public boolean isPlayerBust(final Name name) {
-        return players.isPlayerBust(name);
-    }
-
     public void drawCard(final Name userName, final Deck deck) {
         players.drawCard(userName, deck);
-    }
-
-    public boolean isBlackJackScore(final Name name) {
-        return players.isBlackJackScore(name);
     }
 
     public Map<Name, CardResult> getUserNameAndCardResults() {
@@ -77,5 +69,9 @@ public class Users {
         final Map<Name, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
         userNameAndResults.putAll(playerNameAndResults);
         return Collections.unmodifiableMap(userNameAndResults);
+    }
+
+    public boolean isDrawable(final Name playerName) {
+        return players.isDrawable(playerName);
     }
 }

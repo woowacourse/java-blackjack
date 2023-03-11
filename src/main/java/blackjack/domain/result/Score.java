@@ -39,7 +39,7 @@ public class Score {
                     value -> new Score(value, ScoreStatus.BUST));
         }
         return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
-                value -> new Score(value, ScoreStatus.DRAW_AVAILABLE));
+                value -> new Score(value, ScoreStatus.DRAWABLE));
     }
 
     public int getValue() {
@@ -50,8 +50,8 @@ public class Score {
         return status == ScoreStatus.BUST;
     }
 
-    public boolean isBlackJackScore() {
-        return value == BLACK_JACK_VALUE;
+    public boolean isDrawAble() {
+        return status == ScoreStatus.DRAWABLE;
     }
 
     public boolean isBigger(final Score score) {

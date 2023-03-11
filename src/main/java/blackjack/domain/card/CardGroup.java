@@ -48,10 +48,6 @@ public class CardGroup {
         return getScore().isBust();
     }
 
-    public boolean isBlackJackScore() {
-        return getScore().isBlackJackScore();
-    }
-
     public CardGroup getSubCardGroup(int size) {
         final List<Card> subCardGroup = cards.stream()
                 .limit(size)

@@ -43,10 +43,7 @@ public class BlackJackGame {
     }
 
     public boolean isContinuous(final Name playerName) {
-        if (users.isBlackJackScore(playerName) || users.isPlayerBust(playerName)) {
-            return false;
-        }
-        return true;
+        return users.isDrawable(playerName);
     }
 
     public void drawDealer() {

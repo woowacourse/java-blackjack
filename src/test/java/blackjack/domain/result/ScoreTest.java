@@ -37,12 +37,4 @@ class ScoreTest {
 
         assertThat(score.isBust()).isTrue();
     }
-
-    @Test
-    @DisplayName("점수가 21인지 확인하는 기능 테스트")
-    void isBlackJackScore() {
-        final Score score = Score.calculateScore(21, 0, 1);
-
-        assertThat(score.isBlackJackScore()).isTrue();
-    }
 }

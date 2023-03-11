@@ -29,6 +29,10 @@ public class Player extends User {
         return getName().isSame(name);
     }
 
+    public boolean isDrawable() {
+        return getScore().isDrawAble();
+    }
+
     public WinningStatus calculateWinningStatus(final Dealer dealer) {
         if (isBust()) {
             return WinningStatus.LOSE;

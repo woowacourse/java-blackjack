@@ -68,14 +68,6 @@ public class Players {
         return Collections.unmodifiableMap(playerWinningResult);
     }
 
-    public boolean isPlayerBust(final Name name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .map(Player::isBust)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
-    }
-
     public void drawCard(final Name name, final Deck deck) {
         players.stream()
                 .filter(player -> player.isSameName(name))
@@ -84,18 +76,18 @@ public class Players {
                 .drawCard(deck);
     }
 
-    public boolean isBlackJackScore(final Name name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .map(Player::isBlackJackScore)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
-    }
-
     public Map<Name, CardResult> getPlayerNameAndCardResults() {
         final Map<Name, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndCardResults.put(player.getName(),
                 new CardResult(player.getCardGroups(), player.getScore())));
         return Collections.unmodifiableMap(playerNameAndCardResults);
+    }
+
+    public boolean isDrawable(final Name playerName) {
+        return players.stream()
+                .filter(player -> player.isSameName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
+                .isDrawable();
     }
 }
