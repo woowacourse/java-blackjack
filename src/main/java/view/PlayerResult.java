@@ -2,12 +2,12 @@ package view;
 
 import domain.GameResult;
 
-public class PlayerScore {
+public class PlayerResult {
 
     private final String name;
     private final GameResult gameResult;
 
-    public PlayerScore(String name, GameResult gameResult) {
+    public PlayerResult(String name, GameResult gameResult) {
         this.name = name;
         this.gameResult = gameResult;
     }

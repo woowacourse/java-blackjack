@@ -7,10 +7,11 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
-import view.DealerScore;
+import view.DealerResult;
 import view.InputView;
 import view.OutputView;
-import view.PlayerScore;
+import view.PlayerResult;
+import view.PlayerResults;
 
 public class Application {
 
@@ -75,18 +76,18 @@ public class Application {
 
     private void end(Dealer dealer, Players players) {
         OutputView.printResults(dealer, players);
-        List<PlayerScore> playerScores = judgePlayerScores(dealer, players);
-        DealerScore dealerScore = new DealerScore(playerScores);
-        OutputView.printWinOrLose(dealerScore, playerScores);
+        PlayerResults playerResults = judgePlayerScores(dealer, players);
+        DealerResult dealerResult = playerResults.getDealerResult();
+        OutputView.printWinOrLose(dealerResult, playerResults);
     }
 
-    private List<PlayerScore> judgePlayerScores(Dealer dealer, Players players) {
-        List<PlayerScore> playerScores = new ArrayList<>();
+    private PlayerResults judgePlayerScores(Dealer dealer, Players players) {
+        List<PlayerResult> playerResults = new ArrayList<>();
 
         for (Player player : players) {
             GameResult gameResult = Judge.of(dealer, player);
-            playerScores.add(new PlayerScore(player.getName(), gameResult));
+            playerResults.add(new PlayerResult(player.getName(), gameResult));
         }
-        return playerScores;
+        return new PlayerResults(playerResults);
     }
 }
