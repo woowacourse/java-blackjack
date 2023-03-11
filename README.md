@@ -60,12 +60,11 @@ graph TD
     BettingTable --> Betting
     Participant --> Player
     Participant --> Dealer
-    Participant --> Cards
+    Participant --> Hand
     Player --> PlayerName
-    Dealer --> Result
-    Cards --> Card
+    Hand --> Card
     Card --> Suit
-    Card --> Number
+    Card --> Denomination
 ```
 
 ## 기능 구현 목록
@@ -88,6 +87,7 @@ graph TD
 - [x] 블랙잭 게임 결과를 보여준다.
 - [x] 카드 패를 숨긴 채로 드러낸다.
 - [x] 카드를 뽑을 수 있는 점수를 확인한다.
+- [x] 카드를 추가적으로 뽑았는지 확인한다.
 
 ### 플레이어
 
@@ -116,6 +116,8 @@ graph TD
 - [x] 카드 개수를 확인한다.
 
 ### 베팅 테이블
+
+- [x] 플레이어의 베팅을 확인한다.
 
 ### 베팅
 
