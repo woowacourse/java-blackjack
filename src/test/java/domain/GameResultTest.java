@@ -57,7 +57,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.KING));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1500);
     }
@@ -71,7 +71,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.ACE));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
     }
@@ -86,7 +86,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.ACE));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
     }
@@ -100,7 +100,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.JACK));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
     }
@@ -114,7 +114,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.NINE));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
     }
@@ -128,7 +128,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.TEN));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
     }
@@ -143,7 +143,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART,Rank.TWO));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(1000);
     }
@@ -159,7 +159,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.SPADE,Rank.JACK));
 
         final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
-        Map<Participant, Integer> playerStatus = gameResult.getPlayerStatus();
+        Map<Participant, Integer> playerStatus = gameResult.calculatePlayersPrize();
 
         Assertions.assertThat(playerStatus.get(leo)).isEqualTo(-1000);
     }
@@ -170,5 +170,5 @@ class GameResultTest {
                 Arguments.of(new Card(Suit.HEART, Rank.ACE), false)
         );
     }
-    
+
 }

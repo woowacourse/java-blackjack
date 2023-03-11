@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class GameResult {
     private static final int BUST_HAND_VALUE = 0;
+    private static final BigDecimal BLACKJACK_RATIO = new BigDecimal(1.5);
     private final Map<Participant, Integer> gameResult;
     private final Participant dealer;
 
@@ -26,27 +27,30 @@ public class GameResult {
         return scores;
     }
 
-    public Map<Participant, Integer> getPlayerStatus() {
+    public Map<Participant, Integer> calculatePlayersPrize() {
         Map<Participant, Integer> playersPrize = new LinkedHashMap<>();
 
         for (Participant player : gameResult.keySet()) {
-            if (player.isBlackjack()) {
-                playersPrize.put(player, calculatePrizeWhenPlayerBlackjack(player));
-                continue;
-            }
-
-            Result result = compareHandValue(player);
-            playersPrize.put(player, player.calculatePrize(result.getPrizeRatio()));
+            calculatePlayerPrize(playersPrize, player);
         }
         return playersPrize;
     }
 
+    private void calculatePlayerPrize(Map<Participant, Integer> playersPrize, Participant player) {
+        if (player.isBlackjack()) {
+            playersPrize.put(player, calculatePrizeWhenPlayerBlackjack(player));
+            return;
+        }
+
+        Result result = compareHandValue(player);
+        playersPrize.put(player, player.calculatePrize(result.getPrizeRatio()));
+    }
+
     private int calculatePrizeWhenPlayerBlackjack(Participant player) {
         if (dealer.isBlackjack()) {
-            return player.calculatePrize(new BigDecimal(1));
-
+            return player.calculatePrize(Result.TIE.getPrizeRatio());
         }
-        return player.calculatePrize(new BigDecimal(1.5));
+        return player.calculatePrize(BLACKJACK_RATIO);
     }
 
     private Result compareHandValue(Participant player) {
