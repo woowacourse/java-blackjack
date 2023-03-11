@@ -61,7 +61,7 @@ public class AbstractPlayerTest {
     void 점수를_반환한다() {
         player.draw(new FixedDeck(ACE_SPADE));
 
-        assertThat(player.calculateScore()).isEqualTo(11);
+        assertThat(player.score()).isEqualTo(11);
     }
 
     @Test

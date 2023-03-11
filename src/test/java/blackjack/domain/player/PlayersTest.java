@@ -74,7 +74,7 @@ public class PlayersTest {
         players.initialDraw(deck);
 
         assertThat(players.getPlayers())
-                .extracting(Player::calculateScore)
+                .extracting(Player::score)
                 .containsExactly(21, 12, 18);
     }
 
@@ -87,7 +87,7 @@ public class PlayersTest {
         players.drawToDealer(deck);
 
         final Dealer dealer = players.getDealer();
-        assertThat(dealer.calculateScore()).isEqualTo(21);
+        assertThat(dealer.score()).isEqualTo(21);
     }
 
     @Test

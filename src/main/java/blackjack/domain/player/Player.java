@@ -14,7 +14,7 @@ public interface Player {
 
     void draw(final Deck deck);
 
-    int calculateScore();
+    int score();
 
     void stay();
 

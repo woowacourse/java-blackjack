@@ -15,16 +15,11 @@ public final class Players {
     private static final int COUNT_LOWER_BOUND = 1;
     private static final int COUNT_UPPER_BOUND = 6;
     private static final int DEALER_COUNT = 1;
-    private static final String INVALID_NAME_MESSAGE = "해당 이름을 가진 플레이어가 존재하지 않습니다.";
 
     private final List<Player> players;
 
     private Players(final List<Player> players) {
         this.players = new ArrayList<>(players);
-    }
-
-    public static Players from(final List<String> names) {
-        return new Players(generate(names));
     }
 
     public static Players create() {
@@ -62,15 +57,6 @@ public final class Players {
         return count < COUNT_LOWER_BOUND || COUNT_UPPER_BOUND < count;
     }
 
-    private static List<Player> generate(final List<String> names) {
-        final List<Player> players = new ArrayList<>();
-        players.add(Dealer.create());
-        for (String name : names) {
-            players.add(Gambler.create(name));
-        }
-        return players;
-    }
-
     public void initialDraw(final Deck deck) {
         for (Player player : players) {
             player.initialDraw(deck);
@@ -93,7 +79,7 @@ public final class Players {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_NAME_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어가 존재하지 않습니다."));
     }
 
     public void stay(final Name name) {

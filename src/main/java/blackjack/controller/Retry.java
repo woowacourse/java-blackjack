@@ -3,7 +3,6 @@ package blackjack.controller;
 public final class Retry {
 
     private static final int DEFAULT_COUNT = 5;
-    static final String FAIL_MESSAGE = "재입력 횟수를 초과하였습니다.";
 
     private int count;
 
@@ -28,6 +27,6 @@ public final class Retry {
     }
 
     public String getFailMessage() {
-        return FAIL_MESSAGE;
+        return "재입력 횟수를 초과하였습니다.";
     }
 }

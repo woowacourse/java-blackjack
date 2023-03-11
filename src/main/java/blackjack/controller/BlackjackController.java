@@ -36,7 +36,7 @@ public final class BlackjackController {
                 blackjackGame.addPlayers(inputView.readPlayers());
                 return;
             } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                outputView.printException(e.getMessage());
                 retry.decrease();
             }
         }
@@ -56,7 +56,7 @@ public final class BlackjackController {
                 blackjackGame.addBet(player, inputView.readBet(player));
                 return;
             } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                outputView.printException(e.getMessage());
                 retry.decrease();
             }
         }
@@ -88,7 +88,7 @@ public final class BlackjackController {
             try {
                 return BlackjackCommand.from(inputView.readCommand(player));
             } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                outputView.printException(e.getMessage());
                 retry.decrease();
             }
         }
@@ -105,6 +105,6 @@ public final class BlackjackController {
 
     private void play() {
         final Bets bets = blackjackGame.play();
-        outputView.printGameResult(bets);
+        outputView.printBetResult(bets);
     }
 }

@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final int calculateScore() {
+    public final int score() {
         return hand.score();
     }
 

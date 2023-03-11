@@ -16,5 +16,4 @@ class ResultTest {
     void 결과에_따른_베팅금액의_배율을_반환한다(final Result result, final double ratio) {
         assertThat(result.getRatio()).isEqualTo(ratio);
     }
-
 }

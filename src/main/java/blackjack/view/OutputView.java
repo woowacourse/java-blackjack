@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
-    private static OutputView instance = new OutputView();
+    private static OutputView INSTANCE = new OutputView();
     private static final String NEW_LINE = System.lineSeparator();
     private static final int INITIAL_DRAW_COUNT = 2;
     private static final int DEALER_OPEN_CARD_INDEX = 0;
@@ -22,7 +22,7 @@ public final class OutputView {
     }
 
     public static OutputView getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void printInitialDraw(final List<Player> players) {
@@ -71,22 +71,22 @@ public final class OutputView {
     }
 
     private String generateScoreMessage(final Player player) {
-        return format(" - 결과: %d", player.calculateScore());
+        return format(" - 결과: %d", player.score());
     }
 
-    public void printGameResult(final Bets bets) {
+    public void printBetResult(final Bets bets) {
         System.out.println(NEW_LINE + "## 최종 수익");
         System.out.println(String.format("%s: %s", "딜러", bets.getDealerProfit().getValue()));
-        System.out.println(generateGameResultMessage(bets.getBets()));
+        System.out.println(generateBetResultMessage(bets.getBets()));
     }
 
-    private String generateGameResultMessage(final Map<Name, Money> bets) {
+    private String generateBetResultMessage(final Map<Name, Money> bets) {
         return bets.keySet().stream()
                 .map(name -> String.format("%s: %s", name.getValue(), bets.get(name).getValue()))
                 .collect(Collectors.joining(NEW_LINE));
     }
 
-    public void printError(final String message) {
+    public void printException(final String message) {
         System.out.println("[ERROR] " + message);
     }
 }

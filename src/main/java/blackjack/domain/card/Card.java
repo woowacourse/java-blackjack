@@ -13,16 +13,16 @@ public final class Card {
         return rank.isAce();
     }
 
+    public int score() {
+        return rank.score();
+    }
+
     @Override
     public String toString() {
         return "Card{" +
                 "rank=" + rank +
                 ", shape=" + shape +
                 '}';
-    }
-
-    public int score() {
-        return rank.score();
     }
 
     public String getSymbol() {

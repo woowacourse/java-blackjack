@@ -25,14 +25,14 @@ public final class ShuffledDeck implements Deck {
         this.cards = cards;
     }
 
-    public static Deck getInstance() {
-        return DECK;
-    }
-
     @Override
     public Card draw() {
         final Card card = cards.removeFirst();
         cards.addLast(card);
         return card;
+    }
+
+    public static Deck getInstance() {
+        return DECK;
     }
 }

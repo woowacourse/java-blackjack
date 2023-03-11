@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public final class InputView {
-    private static InputView instance = new InputView();
+    private static InputView INSTANCE = new InputView();
     private static final String DELIMITER = ",";
     private static final int LIMIT = -1;
 
@@ -20,7 +20,7 @@ public final class InputView {
     }
 
     public static InputView getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public List<String> readPlayers() {
