@@ -41,7 +41,7 @@ public class BlackJackController {
 
         splitInitCardsToParticipants(players, dealer, cardDeck);
         drawCards(players, dealer, cardDeck);
-        printParticipantsCardsResults(players, dealer);
+        printParticipantsCardResultsWithScore(players, dealer);
         printParticipantAccountResults(players, dealer);
     }
 
@@ -119,8 +119,8 @@ public class BlackJackController {
         } while (calculatorService.canDealerDrawMore(dealer));
     }
 
-    private void printParticipantsCardsResults(final Players players, final Dealer dealer) {
-        outputView.printCardsResults(blackJackResultService.getParticipantsCardsResults(players, dealer));
+    private void printParticipantsCardResultsWithScore(final Players players, final Dealer dealer) {
+        outputView.printCardsResults(blackJackResultService.getParticipantsCardResultsWithScore(players, dealer));
     }
 
     private void printParticipantAccountResults(final Players players, final Dealer dealer) {

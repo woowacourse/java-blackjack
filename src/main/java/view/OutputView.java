@@ -1,8 +1,8 @@
 package view;
 
+import dto.CardsResultsWithScore;
 import dto.DrawnCardsInfo;
 import dto.ParticipantAccountResult;
-import dto.ParticipantResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +39,7 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardsResults(final List<ParticipantResult> results) {
+    public void printCardsResults(final List<CardsResultsWithScore> results) {
         System.out.println();
         results.stream()
                 .forEach(result -> System.out.println(

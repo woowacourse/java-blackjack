@@ -13,9 +13,9 @@ import domain.card.DrawnCards;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
+import dto.CardsResultsWithScore;
 import dto.DrawnCardsInfo;
 import dto.ParticipantAccountResult;
-import dto.ParticipantResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ class ResultServiceTest {
         Dealer dealer = new Dealer(createEmptyCards());
 
         // when
-        List<ParticipantResult> result = blackJackResultService.getParticipantsCardsResults(players, dealer);
+        List<CardsResultsWithScore> result = blackJackResultService.getParticipantsCardResultsWithScore(players, dealer);
 
         // then
         assertSoftly(softly -> {

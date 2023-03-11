@@ -3,9 +3,9 @@ package service;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
+import dto.CardsResultsWithScore;
 import dto.DrawnCardsInfo;
 import dto.ParticipantAccountResult;
-import dto.ParticipantResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,14 +34,14 @@ public class ResultService {
         return DrawnCardsInfo.toDto(player);
     }
 
-    public List<ParticipantResult> getParticipantsCardsResults(final Players players, final Dealer dealer) {
-        List<ParticipantResult> participantResults = new ArrayList<>();
-        participantResults.add(ParticipantResult.toDto(dealer));
+    public List<CardsResultsWithScore> getParticipantsCardResultsWithScore(final Players players, final Dealer dealer) {
+        List<CardsResultsWithScore> cardsResultWithScores = new ArrayList<>();
+        cardsResultWithScores.add(CardsResultsWithScore.toDto(dealer));
 
         players.stream()
-                .forEach(player -> participantResults.add(ParticipantResult.toDto(player)));
+                .forEach(player -> cardsResultWithScores.add(CardsResultsWithScore.toDto(player)));
 
-        return participantResults;
+        return cardsResultWithScores;
     }
 
     public List<ParticipantAccountResult> getParticipantAccountResults(final Players players, final Dealer dealer) {
