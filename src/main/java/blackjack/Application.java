@@ -23,7 +23,7 @@ public class Application {
                         inputView.inputPlayerNames(),
                         new ShuffledDeckFactory(),
                         new BlackJackRuleImpl()),
-                outputView::printError);
+                inputView::printInputError);
         for (final String playerName : blackJackGame.getPlayerNames()) {
             blackJackGame.addPlayerMoney(playerName, inputPlayerMoney(playerName, inputView));
         }

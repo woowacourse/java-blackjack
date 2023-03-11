@@ -93,10 +93,6 @@ public class OutputView {
         System.out.println(RESULT + score);
     }
 
-    public void printError(final Exception exception) {
-        System.out.println(exception.getMessage());
-    }
-
     public void printFinalMoney(final Map<String, Integer> calculatePlayersMoney) {
         System.out.println();
         System.out.println("## 최종 수익");
