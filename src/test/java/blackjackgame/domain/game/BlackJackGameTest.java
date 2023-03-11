@@ -1,25 +1,20 @@
 package blackjackgame.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
-import static blackjackgame.domain.Fixtures.*;
 
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
-import blackjackgame.domain.card.CardsGenerator;
 import blackjackgame.domain.card.CloverCard;
 import blackjackgame.domain.card.DiamondCard;
 import blackjackgame.domain.card.HeartCard;
 import blackjackgame.domain.card.SpadeCard;
 import blackjackgame.domain.user.Bet;
 import blackjackgame.domain.user.Dealer;
-import blackjackgame.domain.user.DealerStatus;
 import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
-import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +29,11 @@ class BlackJackGameTest {
         Players players = new Players(new Names(List.of("민트")), List.of(new Bet(5000)));
         player = players.getPlayers().get(0);
         dealer = new Dealer();
-        Cards cards = new Cards(new FixedCardsGenerator());
+        Cards cards = new Cards(() -> new ArrayList<>(List.of(
+                CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK, SpadeCard.SPADE_FIVE,
+                DiamondCard.DIAMOND_SEVEN, HeartCard.HEART_ACE, CloverCard.CLOVER_SIX, CloverCard.CLOVER_EIGHT,
+                DiamondCard.DIAMOND_NINE, HeartCard.HEART_SEVEN
+        )));
 
         blackJackGame = new BlackJackGame(players , dealer, cards);
     }
