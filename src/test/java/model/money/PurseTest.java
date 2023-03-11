@@ -64,7 +64,7 @@ class PurseTest {
         dealer.receiveCard(DIAMOND_NINE);
 
         // when
-        purse.calculateMoney(bebe, dealer);
+        purse.calculateMoneyAll(List.of(bebe), dealer);
 
         // then
         assertThat(purse.findMoneyByPlayer(bebe)).isEqualTo(new Bet(15_000));
@@ -83,7 +83,7 @@ class PurseTest {
         dealer.receiveCard(DIAMOND_ACE);
 
         // when
-        purse.calculateMoney(bebe, dealer);
+        purse.calculateMoneyAll(List.of(bebe), dealer);
 
         // then
         assertThat(purse.findMoneyByPlayer(bebe)).isEqualTo(new Bet(0));
