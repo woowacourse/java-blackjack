@@ -7,15 +7,14 @@ import java.util.List;
 
 public final class Dealer extends Participant {
 
-    private static final ParticipantName PARTICIPANT_DEALER_NAME = ParticipantName.create(DEALER_NAME);
-
     private static final int STANDARD_GIVEN_SCORE = 17;
 
-    private Dealer() {
+    private Dealer(final String name) {
+        super(name);
     }
 
     public static Dealer create() {
-        return new Dealer();
+        return new Dealer(DEALER_NAME);
     }
 
     @Override
@@ -64,10 +63,5 @@ public final class Dealer extends Participant {
     @Override
     public List<Card> getStartCard() {
         return List.of(participantCard.getFirstCard());
-    }
-
-    @Override
-    public String getName() {
-        return PARTICIPANT_DEALER_NAME.getName();
     }
 }

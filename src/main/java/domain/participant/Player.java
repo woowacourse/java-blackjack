@@ -9,19 +9,16 @@ public final class Player extends Participant {
 
     private static final int STANDARD_GIVEN_SCORE = 21;
 
-    private final PlayerInfo playerInfo;
+    private PlayerBet playerBet;
 
-    private Player(final PlayerInfo playerInfo) {
-        super();
-        this.playerInfo = playerInfo;
+    public Player(final String name) {
+        super(name);
     }
 
     public static Player create(final String name) {
         validatePlayerName(name);
 
-        final PlayerInfo playerInfo = PlayerInfo.create(name);
-
-        return new Player(playerInfo);
+        return new Player(name);
     }
 
     private static void validatePlayerName(final String name) {
@@ -31,12 +28,14 @@ public final class Player extends Participant {
     }
 
     public void bet(final int betAmount) {
-        playerInfo.bet(betAmount);
+        playerBet = PlayerBet.create(betAmount);
     }
 
     @Override
     public BigDecimal calculateBenefit(final GameResult gameResult) {
-        return playerInfo.calculateBenefit(gameResult);
+        final double prizeRatio = gameResult.prizeRatio();
+
+        return playerBet.calculateBenefit(prizeRatio);
     }
 
     @Override
@@ -52,10 +51,5 @@ public final class Player extends Participant {
     @Override
     public List<Card> getStartCard() {
         return getCard();
-    }
-
-    @Override
-    public String getName() {
-        return playerInfo.getName();
     }
 }

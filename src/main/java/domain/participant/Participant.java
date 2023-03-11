@@ -10,9 +10,12 @@ public abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
 
+    private final ParticipantName name;
     protected ParticipantCard participantCard;
 
-    protected Participant() {
+    protected Participant(final String name) {
+        this.name = ParticipantName.create(name);
+
         participantCard = ParticipantCard.create();
     }
 
@@ -32,11 +35,13 @@ public abstract class Participant {
 
     public abstract boolean canDraw();
 
+    public abstract List<Card> getStartCard();
+
     public final List<Card> getCard() {
         return List.copyOf(participantCard.getCards());
     }
 
-    public abstract List<Card> getStartCard();
-
-    public abstract String getName();
+    public String getName() {
+        return name.getName();
+    }
 }
