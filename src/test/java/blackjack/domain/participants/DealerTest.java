@@ -1,13 +1,14 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.Fixtures.BETTING_MONEY_1000;
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.Fixtures.BLACKJACK_WIN_PLAYER;
+import static blackjack.domain.Fixtures.DEALER_17;
+import static blackjack.domain.Fixtures.LOSE_PLAYER;
+import static blackjack.domain.Fixtures.PUSH_PLAYER;
+import static blackjack.domain.Fixtures.WIN_PLAYER;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.SIX;
 import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,21 +54,11 @@ class DealerTest {
     @DisplayName("전달받은 플레이어에게 주거나 받을 수익을 계산한다.")
     @Test
     void should_ReturnPlayerProfit_When_GivenPlayer() {
-        final Dealer dealer = new Dealer("딜러", List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
+        final Dealer dealer = DEALER_17;
 
-        final Player blackjackWinPlayer =
-                new Player("blackjackWinPlayer", List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
-                        BETTING_MONEY_1000);
-        final Player winPlayer =
-                new Player("winPlayer", List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), BETTING_MONEY_1000);
-        final Player losePlayer =
-                new Player("losePlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SIX)), BETTING_MONEY_1000);
-        final Player pushPlayer =
-                new Player("losePlayer", List.of(new Card(CLUB, QUEEN), new Card(CLUB, SEVEN)), BETTING_MONEY_1000);
-
-        assertThat(dealer.computeProfitOf(blackjackWinPlayer)).isEqualTo(1500);
-        assertThat(dealer.computeProfitOf(winPlayer)).isEqualTo(1000);
-        assertThat(dealer.computeProfitOf(losePlayer)).isEqualTo(-1000);
-        assertThat(dealer.computeProfitOf(pushPlayer)).isEqualTo(0);
+        assertThat(dealer.computeProfitOf(BLACKJACK_WIN_PLAYER)).isEqualTo(1500);
+        assertThat(dealer.computeProfitOf(WIN_PLAYER)).isEqualTo(1000);
+        assertThat(dealer.computeProfitOf(LOSE_PLAYER)).isEqualTo(-1000);
+        assertThat(dealer.computeProfitOf(PUSH_PLAYER)).isEqualTo(0);
     }
 }

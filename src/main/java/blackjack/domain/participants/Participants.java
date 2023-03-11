@@ -15,11 +15,11 @@ public class Participants {
     }
 
     public static Participants of(final Dealer dealer, final List<Player> players) {
-        validatePlayerNames2(dealer, players);
+        validatePlayerNames(dealer, players);
         return new Participants(dealer, players);
     }
 
-    private static void validatePlayerNames2(final Dealer dealer, final List<Player> players) {
+    private static void validatePlayerNames(final Dealer dealer, final List<Player> players) {
         final List<String> names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
