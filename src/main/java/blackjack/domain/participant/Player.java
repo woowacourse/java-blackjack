@@ -52,7 +52,7 @@ public class Player implements Decidable {
 
     @Override
     public List<Card> showInitCards() {
-        return participant.getCards();
+        return participant.getHand();
     }
 
     @Override
@@ -61,8 +61,8 @@ public class Player implements Decidable {
         return score.isLessOrEquals(new Score(PLAYER_MAX_RECEIVE_CARD));
     }
 
-    public List<Card> getCards() {
-        return participant.getCards();
+    public List<Card> getHand() {
+        return participant.getHand();
     }
 
     public String getName() {

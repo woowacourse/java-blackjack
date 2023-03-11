@@ -1,11 +1,10 @@
 package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Dealer;
@@ -15,7 +14,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +26,7 @@ class ProfitTest {
     @BeforeEach
     void setUp() {
         Players players = Players.from(List.of("a", "b"));
-        Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
+        Dealer dealer = new Dealer(new Participant(Hand.generateEmptyCards()));
         participants = new Participants(dealer, players);
         profit = new Profit(participants);
         bettingMoney();

@@ -1,35 +1,35 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
 public class Participant {
 
-    private Cards cards;
+    private Hand hand;
 
-    public Participant(final Cards cards) {
-        this.cards = cards;
+    public Participant(final Hand hand) {
+        this.hand = hand;
     }
 
     public void receiveCard(Card card) {
-        cards = cards.add(card);
+        hand = hand.add(card);
     }
 
     public Score calculateTotalScore() {
-        return this.cards.calculateScoreForBlackjack();
+        return this.hand.calculateScoreForBlackjack();
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public boolean isBlackjack() {
-        return cards.isBlackjack();
+        return hand.isBlackjack();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public List<Card> getHand() {
+        return hand.getHand();
     }
 }

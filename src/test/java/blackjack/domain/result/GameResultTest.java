@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Dealer;
@@ -27,7 +27,7 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         Players players = Players.from(List.of("a", "b", "c"));
-        Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
+        Dealer dealer = new Dealer(new Participant(Hand.generateEmptyCards()));
         participants = new Participants(dealer, players);
 
         // player1 점수 : 20

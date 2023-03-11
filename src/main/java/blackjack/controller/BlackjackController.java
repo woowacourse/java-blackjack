@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
@@ -48,7 +48,7 @@ public class BlackjackController {
         List<String> playersName = inputView.receivePlayersName();
         Players players = Players.from(playersName);
 
-        return new Participants(new Dealer(new Participant(Cards.generateEmptyCards())), players);
+        return new Participants(new Dealer(new Participant(Hand.generateEmptyCards())), players);
     }
 
     private void setInitCards(final Deck deck, final Participants participants) {
@@ -88,12 +88,12 @@ public class BlackjackController {
         Boolean answer = inputView.askReceiveMoreCard(player.getName());
 
         if (!answer) {
-            outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
+            outputView.printCurrentCards(player.getName(), getCurrentCards(player.getHand()));
             return false;
         }
 
         player.receiveCard(deck.drawCard());
-        outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
+        outputView.printCurrentCards(player.getName(), getCurrentCards(player.getHand()));
         return true;
     }
 

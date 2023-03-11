@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int BLACKJACK_SIZE = 2;
 
-    private final List<Card> cards;
+    private final List<Card> hand;
 
-    public Cards(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public Hand(final List<Card> hand) {
+        this.hand = new ArrayList<>(hand);
     }
 
-    public static Cards generateEmptyCards() {
-        return new Cards(new ArrayList<>());
+    public static Hand generateEmptyCards() {
+        return new Hand(new ArrayList<>());
     }
 
     public Score calculateScoreForBlackjack() {
@@ -27,13 +27,13 @@ public class Cards {
     }
 
     private Score calculate() {
-        return new Score(cards.stream()
+        return new Score(hand.stream()
                 .mapToInt(Card::convertToBlackjackScore)
                 .sum());
     }
 
     private boolean containsAce() {
-        return cards.stream()
+        return hand.stream()
                 .anyMatch(Card::isAce);
     }
 
@@ -44,17 +44,17 @@ public class Cards {
 
     public boolean isBlackjack() {
         Score score = calculateScoreForBlackjack();
-        return score.isBlackjack() && cards.size() == BLACKJACK_SIZE;
+        return score.isBlackjack() && hand.size() == BLACKJACK_SIZE;
     }
 
-    public Cards add(Card card) {
-        final List<Card> newCards = new ArrayList<>(cards);
-        newCards.add(card);
+    public Hand add(Card card) {
+        final List<Card> newHand = new ArrayList<>(hand);
+        newHand.add(card);
 
-        return new Cards(newCards);
+        return new Hand(newHand);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 }

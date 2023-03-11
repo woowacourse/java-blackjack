@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
+    private final Dealer dealer = new Dealer(new Participant(Hand.generateEmptyCards()));
 
     @BeforeEach
     void setUp() {

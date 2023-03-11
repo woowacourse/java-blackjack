@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Players {
         validateLength(names);
 
         List<Player> players = names.stream()
-                .map(name -> new Player(new Participant(Cards.generateEmptyCards()), name))
+                .map(name -> new Player(new Participant(Hand.generateEmptyCards()), name))
                 .collect(Collectors.toList());
 
         return new Players(players);

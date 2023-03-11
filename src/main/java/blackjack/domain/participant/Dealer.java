@@ -32,7 +32,7 @@ public class Dealer implements Decidable {
 
     @Override
     public List<Card> showInitCards() {
-        return List.of(participant.getCards().get(0));
+        return List.of(participant.getHand().get(0));
     }
 
     @Override
@@ -42,6 +42,6 @@ public class Dealer implements Decidable {
     }
 
     public List<Card> getCards() {
-        return participant.getCards();
+        return participant.getHand();
     }
 }
