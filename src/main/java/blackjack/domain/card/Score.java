@@ -25,6 +25,10 @@ public class Score {
         return value > BLACKJACK_SCORE_CONDITION;
     }
 
+    public boolean isBlackjack() {
+        return value == BLACKJACK_SCORE_CONDITION;
+    }
+
     public boolean isLessOrEquals(Score other) {
         return value <= other.value;
     }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_SIZE = 2;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -17,13 +19,11 @@ public class Cards {
     }
 
     public Score calculateScoreForBlackjack() {
-        Score score = calculate();
-
         if (containsAce()) {
-            return score.plusIfSoftHand();
+            return calculate().plusIfSoftHand();
         }
 
-        return score;
+        return calculate();
     }
 
     private Score calculate() {
@@ -38,8 +38,13 @@ public class Cards {
     }
 
     public boolean isBust() {
-        Score currentScore = calculateScoreForBlackjack();
-        return currentScore.isBust();
+        Score score = calculateScoreForBlackjack();
+        return score.isBust();
+    }
+
+    public boolean isBlackjack() {
+        Score score = calculateScoreForBlackjack();
+        return score.isBlackjack() && cards.size() == BLACKJACK_SIZE;
     }
 
     public Cards add(Card card) {
