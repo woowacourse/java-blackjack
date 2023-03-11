@@ -169,4 +169,28 @@ public class ScoreTest {
         Score score = Score.from(cards);
         assertThat(score.getScore()).isEqualTo(30);
     }
+
+    @DisplayName("점수가 동일한 경우에 true를 반환할 수 있다.")
+    @Test
+    void Should_Success_When_SameScore() {
+        // given
+        Card card1 = new Card(CardNumber.TEN, CardSymbol.SPADES);
+        Card card2 = new Card(CardNumber.TEN, CardSymbol.DIAMONDS);
+        Card card3 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
+        Card card4 = new Card(CardNumber.TEN, CardSymbol.HEARTS);
+
+        Cards cards1 = new Cards();
+        cards1.add(card1);
+        cards1.add(card2);
+
+        Cards cards2 = new Cards();
+        cards2.add(card3);
+        cards2.add(card4);
+
+        // when, then
+        Score score1 = Score.from(cards1);
+        Score score2 = Score.from(cards2);
+
+        assertThat(score1.isEqualTo(score2)).isTrue();
+    }
 }

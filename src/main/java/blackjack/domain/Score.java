@@ -45,6 +45,10 @@ public class Score {
         return this.score > other.score;
     }
 
+    public boolean isEqualTo(Score other) {
+        return this.score == other.score;
+    }
+
     public int getScore() {
         return score;
     }
