@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class BlackJackGame {
     private static final int DEFAULT_DEALER_PROFIT = 0;
+    private static final double BLACKJACK_PROFIT_WEIGHT = 1.5;
+
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -26,7 +28,7 @@ public class BlackJackGame {
 
     private static int calculateProfit(final Outcome outcome, final int amount) {
         if (outcome == Outcome.BLACKJACK) {
-            return (int) (amount * 1.5);
+            return (int) (amount * BLACKJACK_PROFIT_WEIGHT);
         }
         if (outcome == Outcome.DRAW) {
             return 0;
