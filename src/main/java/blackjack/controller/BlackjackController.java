@@ -73,29 +73,24 @@ public final class BlackjackController {
     }
 
     private void draw() {
-        for (final Name gamblerName : blackjackGame.getGamblerNames()) {
-            draw(gamblerName);
+        while (blackjackGame.isDrawable()) {
+            final Player player = blackjackGame.findDrawablePlayer();
+            final BlackjackCommand command = readCommand(player);
+            decide(player, command);
+            outputView.printPlayerDraw(player);
         }
         blackjackGame.drawToDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(blackjackGame.getDealer());
         for (final Player player : blackjackGame.getPlayers()) {
-            outputView.printPlayerResult(player);
+            outputView.printPlayerCardsWithScore(player);
         }
     }
 
-    private void draw(final Name gamblerName) {
-        while (blackjackGame.isDrawable(gamblerName)) {
-            final BlackjackCommand command = readCommand(gamblerName);
-            decide(gamblerName, command);
-            outputView.printDrawResult(gamblerName, blackjackGame.getGamblerCardSymbols(gamblerName));
-        }
-    }
-
-    private BlackjackCommand readCommand(final Name name) {
+    private BlackjackCommand readCommand(final Player player) {
         retry.reset();
         while (retry.isRepeatable()) {
             try {
-                return BlackjackCommand.from(inputView.readCommand(name));
+                return BlackjackCommand.from(inputView.readCommand(player));
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();
@@ -104,12 +99,12 @@ public final class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private void decide(final Name gamblerName, final BlackjackCommand command) {
+    private void decide(final Player player, final BlackjackCommand command) {
         if (command == BlackjackCommand.HIT) {
-            blackjackGame.drawTo(gamblerName, ShuffledDeck.getInstance());
+            blackjackGame.drawTo(player.name(), ShuffledDeck.getInstance());
             return;
         }
-        blackjackGame.stay(gamblerName);
+        blackjackGame.stay(player.name());
     }
 
     private void play() {

@@ -26,11 +26,11 @@ public final class OutputView {
     }
 
     public void printInitialDraw(final List<Player> players) {
-        System.out.println(NEW_LINE + generateNames(players) + "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.");
+        System.out.println(NEW_LINE + generateNameMessages(players) + "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.");
         System.out.println(generateInitialDrawMessages(players) + NEW_LINE);
     }
 
-    private String generateNames(final List<Player> players) {
+    private String generateNameMessages(final List<Player> players) {
         return players.stream()
                 .map(Player::getNameValue)
                 .collect(Collectors.joining(DELIMITER));
@@ -44,17 +44,17 @@ public final class OutputView {
 
     private String generateInitialDrawMessage(final Player player) {
         if (player.isDealer()) {
-            return generateCardMessage(player.name(), player.getSymbols().get(DEALER_OPEN_CARD_INDEX));
+            return generateCardMessage(player, player.getSymbols().get(DEALER_OPEN_CARD_INDEX));
         }
-        return generateCardMessage(player.name(), generateCardMessage(player.getSymbols()));
+        return generateCardMessage(player, generateSymbolMessage(player));
     }
 
-    private String generateCardMessage(final Name name, final String message) {
-        return format("%s 카드: %s", name.getValue(), message);
+    private String generateCardMessage(final Player player, final String message) {
+        return format("%s 카드: %s", player.getNameValue(), message);
     }
 
-    private String generateCardMessage(final List<String> symbols) {
-        return String.join(DELIMITER, symbols);
+    private String generateSymbolMessage(final Player player) {
+        return String.join(DELIMITER, player.getSymbols());
     }
 
     public void printDealerDraw(final Dealer dealer) {
@@ -62,14 +62,12 @@ public final class OutputView {
         System.out.println(dealerDrawMessage.repeat(dealer.getCardCount() - INITIAL_DRAW_COUNT));
     }
 
-    public void printDrawResult(final Name name, final List<String> symbols) {
-        System.out.println(generateCardMessage(name, generateCardMessage(symbols)));
+    public void printPlayerDraw(final Player player) {
+        System.out.println(generateCardMessage(player, generateSymbolMessage(player)));
     }
 
-    public void printPlayerResult(final Player player) {
-        System.out.println(generateCardMessage(player.name(),
-                generateCardMessage(player.getSymbols()) + generateScoreMessage(player)
-        ));
+    public void printPlayerCardsWithScore(final Player player) {
+        System.out.println(generateCardMessage(player, generateSymbolMessage(player) + generateScoreMessage(player)));
     }
 
     private String generateScoreMessage(final Player player) {

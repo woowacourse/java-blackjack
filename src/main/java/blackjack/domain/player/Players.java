@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public final class Players {
     private static final int COUNT_LOWER_BOUND = 1;
@@ -100,21 +101,35 @@ public final class Players {
         player.stay();
     }
 
-    public void stay(final Player player) {
-        player.stay();
+    public boolean isDrawable() {
+        return gamblers().stream()
+                .anyMatch(Player::isDrawable);
+    }
+
+    private List<Player> gamblers() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(toList());
+    }
+
+    public Player findDrawablePlayer() {
+        return gamblers().stream()
+                .filter(Player::isDrawable)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("카드를 뽑을 수 있는 플레이어가 존재하지 않습니다."));
     }
 
     public Map<Name, Result> play() {
         final Map<Name, Result> result = new LinkedHashMap<>();
         final Dealer dealer = getDealer();
-        players.stream().filter(player -> !player.isDealer())
-                .forEach(player -> result.put(player.name(), player.play(dealer.hand)));
+        for (Player player : gamblers()) {
+            result.put(player.name(), player.play(dealer.hand));
+        }
         return result;
     }
 
-    public boolean isDrawable(final Name name) {
-        final Player player = findPlayerBy(name);
-        return player.isDrawable();
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public Dealer getDealer() {
@@ -124,19 +139,10 @@ public final class Players {
                 .orElseThrow(() -> new NoSuchElementException("딜러가 존재하지 않습니다."));
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public List<Name> getGamblerNames() {
         return players.stream()
                 .filter(player -> !player.isDealer())
                 .map(Player::name)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> getSymbols(final Name name) {
-        final Player player = findPlayerBy(name);
-        return player.getSymbols();
+                .collect(toList());
     }
 }

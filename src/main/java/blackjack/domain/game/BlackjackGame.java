@@ -41,13 +41,17 @@ public final class BlackjackGame {
         players.stay(name);
     }
 
+    public boolean isDrawable() {
+        return players.isDrawable();
+    }
+
+    public Player findDrawablePlayer() {
+        return players.findDrawablePlayer();
+    }
+
     public Bets play() {
         bets.calculateProfit(players.play());
         return bets;
-    }
-
-    public boolean isDrawable(final Name name) {
-        return players.isDrawable(name);
     }
 
     public List<Player> getPlayers() {
@@ -60,9 +64,5 @@ public final class BlackjackGame {
 
     public List<Name> getGamblerNames() {
         return players.getGamblerNames();
-    }
-
-    public List<String> getGamblerCardSymbols(final Name name) {
-        return players.getSymbols(name);
     }
 }
