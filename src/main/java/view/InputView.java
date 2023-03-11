@@ -15,13 +15,26 @@ public class InputView {
 
     public boolean askForHit(String userName) {
         return IllegalArgumentExceptionHandler.handleByRepeating(() -> {
-                    System.out.println(userName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-                    String input = scanner.nextLine();
-                    return Command.from(input).isYes();
-                });
+            System.out.println(userName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            String input = scanner.nextLine();
+            return Command.from(input).isYes();
+        });
     }
 
     private List<String> splitWithComma(String input) {
         return Arrays.asList(input.split(","));
+    }
+
+    public int askBetAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        validateNumeric(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateNumeric(String input) {
+        if (!input.matches("\\d+")) {
+            throw new IllegalArgumentException("숫자를 입력해야 합니다");
+        }
     }
 }
