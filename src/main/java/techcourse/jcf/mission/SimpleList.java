@@ -32,16 +32,29 @@ public interface SimpleList<T> {
         }
         return number;
     }
-//
-//    static SimpleList<? extends Number> filterNegative(SimpleList<? extends Number> list) {
-//        SimpleList<? extends Number> result = new SimpleArrayList<>();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).intValue() >= 0) {
-//                result.add(list.get(i));
-//            }
-//        }
-//        return result;
-//    }
 
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<? extends T> list) {
+        SimpleList<T> result = new SimpleArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).doubleValue() >= 0) {
+                result.add(list.get(i));
+            }
+        }
+        return result;
+    }
 
+    static <T> void copy(SimpleList<? super T> list1, SimpleList<? super T> list2) {
+        for (int i = 0; i < list1.size(); i++) {
+            if (i > list2.size() - 1) {
+                list2.add((T) list1.get(i));
+            } else {
+                list2.set(i, (T) list1.get(i));
+            }
+        }
+        if (list2.size() > list1.size()) {
+            for (int i = list2.size() - 1; i >= list1.size(); i--) {
+                list2.remove(i);
+            }
+        }
+    }
 }

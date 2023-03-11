@@ -56,19 +56,62 @@ class SimpleArrayListTest {
         assertThat(doubleTotal).isEqualTo(1.2);
         assertThat(intTotal).isEqualTo(3);
     }
-//
-//    @Test
-//    @DisplayName("미션4")
-//    void mission4() {
-//        //given
-//        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
-//        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
-//
-//        //when
-//        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
-//        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
-//
-//        //then
-//    }
 
+    @Test
+    @DisplayName("미션4")
+    void mission4() {
+        //given
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2, -1, 3);
+
+        //when
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+        //then
+        assertThat(filteredDoubleValues.size()).isEqualTo(2);
+        assertThat(filteredIntValues.size()).isEqualTo(3);
+    }
+
+    class Printer {
+    }
+
+    class LaserPrinter extends Printer {
+    }
+
+    @Test
+    @DisplayName("미션5")
+    void mission5() {
+        //given
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        //when
+        SimpleList.copy(laserPrinters, printers);
+
+        //then
+        assertThat(printers.get(0) == laserPrinter).isTrue();
+    }
+
+    @Test
+    @DisplayName("미션5")
+    void mission6() {
+        //given
+        final var laserPrinter = new LaserPrinter();
+        final var Printer1 = new Printer();
+        final var Printer2 = new Printer();
+
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>(Printer1, Printer2);
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        //when
+        SimpleList.copy(laserPrinters, printers);
+
+        //then
+        assertThat(printers.get(0) == laserPrinter).isTrue();
+        assertThat(printers.size()).isEqualTo(1);
+    }
 }
