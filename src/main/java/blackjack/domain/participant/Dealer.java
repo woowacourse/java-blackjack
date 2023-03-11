@@ -16,7 +16,7 @@ public class Dealer extends Participant {
     }
 
     public void reverseAllExceptOne() {
-        this.getCards().forEach(Card::reverseCard);
+        this.getCards().forEach(Card::closeCard);
         this.getCards().get(0).openCard();
     }
 

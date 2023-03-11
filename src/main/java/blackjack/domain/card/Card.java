@@ -31,7 +31,7 @@ public class Card {
         return isOpen;
     }
 
-    public void reverseCard() {
+    public void closeCard() {
         this.isOpen = false;
     }
 

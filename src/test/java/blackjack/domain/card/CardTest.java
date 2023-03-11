@@ -73,7 +73,7 @@ public class CardTest {
     @DisplayName("카드를 뒤로 뒤집는 테스트")
     void reverseCardTest() {
         Card card = new Card(Shape.CLOVER, Letter.EIGHT);
-        card.reverseCard();
+        card.closeCard();
 
         assertThat(card.isOpen()).isFalse();
     }
@@ -82,7 +82,7 @@ public class CardTest {
     @DisplayName("카드를 앞으로 뒤집는 테스트")
     void openCardTest() {
         Card card = new Card(Shape.CLOVER, Letter.EIGHT);
-        card.reverseCard();
+        card.closeCard();
         card.openCard();
 
         assertThat(card.isOpen()).isTrue();
