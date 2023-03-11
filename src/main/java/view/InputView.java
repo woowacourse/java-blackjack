@@ -21,15 +21,15 @@ public class InputView {
         });
     }
 
-    private List<String> splitWithComma(String input) {
-        return Arrays.asList(input.split(","));
-    }
-
     public int askBetAmount(String name) {
         System.out.println(name + "의 배팅 금액은?");
         String input = scanner.nextLine();
         validateNumeric(input);
         return Integer.parseInt(input);
+    }
+
+    private List<String> splitWithComma(String input) {
+        return Arrays.asList(input.split(","));
     }
 
     private void validateNumeric(String input) {
