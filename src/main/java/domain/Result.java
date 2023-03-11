@@ -2,7 +2,7 @@ package domain;
 
 public enum Result {
 
-    DRAW(0), WIN(1), BLACKJACK(1.5), LOSE(-1);
+    DRAW(0), WIN(1), WIN_BY_BLACKJACK(1.5), LOSE(-1);
 
     private final double dividend;
 

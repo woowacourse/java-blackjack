@@ -64,6 +64,15 @@ class UserTest extends AbstractTestFixture {
         assertThat(player.competeWith(other)).isEqualTo(result);
     }
 
+    @DisplayName("블랙잭 승리인지 알 수 있다")
+    @Test
+    void test_win_by_blackjack() {
+        var user = new User("땡칠", createCards("K", "A"));
+        var other = new Dealer(createCards("K", "K"));
+
+        assertThat(user.competeWith(other)).isEqualTo(Result.WIN_BY_BLACKJACK);
+    }
+
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
     @Test
     void test_all_busted_is_draw() {

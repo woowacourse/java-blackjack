@@ -26,9 +26,16 @@ public abstract class Player {
             return Result.DRAW;
         }
         if (hand.isWinnerAgainst(other.hand)) {
-            return Result.WIN;
+            return winConsideringBlackjack();
         }
         return Result.LOSE;
+    }
+
+    private Result winConsideringBlackjack() {
+        if (hand.isBlackjack()) {
+            return Result.WIN_BY_BLACKJACK;
+        }
+        return Result.WIN;
     }
 
     public abstract boolean canHit();
