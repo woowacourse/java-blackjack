@@ -1,5 +1,6 @@
-package domain;
+package domain.bank;
 
+import domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

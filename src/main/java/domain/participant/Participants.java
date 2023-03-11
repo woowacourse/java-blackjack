@@ -1,8 +1,10 @@
-package domain;
+package domain.participant;
 
 import static domain.BlackJackWinningResult.DRAW;
 import static domain.BlackJackWinningResult.WIN;
 
+import domain.BlackJackWinningResult;
+import domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 

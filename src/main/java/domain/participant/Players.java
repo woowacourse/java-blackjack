@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Cards;
 import java.util.List;
 import java.util.stream.Collectors;
 

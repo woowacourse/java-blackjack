@@ -2,12 +2,18 @@ package domain;
 
 import static domain.BlackJackWinningResult.LOSE;
 import static domain.BlackJackWinningResult.WIN;
-import static domain.CardInfo.*;
-import static domain.Shape.CLOVER;
-import static domain.Shape.HEART;
-import static domain.Shape.SPADE;
+import static domain.card.CardInfo.*;
+import static domain.card.Shape.CLOVER;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardBox;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;

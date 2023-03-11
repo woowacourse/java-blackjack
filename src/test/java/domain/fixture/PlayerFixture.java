@@ -1,11 +1,11 @@
 package domain.fixture;
 
-import domain.Card;
-import domain.CardInfo;
-import domain.Cards;
-import domain.Name;
-import domain.Player;
-import domain.Shape;
+import domain.card.Card;
+import domain.card.CardInfo;
+import domain.card.Cards;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.card.Shape;
 import java.util.List;
 
 /**

@@ -1,9 +1,10 @@
 package domain;
 
-import static domain.CardInfo.A;
-import static domain.Shape.HEART;
+import static domain.card.CardInfo.A;
+import static domain.card.Shape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

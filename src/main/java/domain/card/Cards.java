@@ -1,5 +1,6 @@
-package domain;
+package domain.card;
 
+import domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,9 @@
-package domain;
+package domain.participant;
+
+import domain.BlackJackWinningResult;
+import domain.card.Card;
+import domain.card.CardBox;
+import domain.card.Cards;
 
 public class Dealer extends Participant {
 

@@ -1,6 +1,6 @@
 package domain.fixture;
 
-import domain.Money;
+import domain.bank.Money;
 
 /**
  * @author 우가

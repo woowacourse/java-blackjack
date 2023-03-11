@@ -1,16 +1,16 @@
 package service;
 
-import domain.Bank;
-import domain.BettingMoney;
-import domain.Card;
-import domain.CardBox;
-import domain.Cards;
-import domain.Dealer;
-import domain.Money;
-import domain.Name;
-import domain.Participants;
-import domain.Player;
-import domain.Players;
+import domain.bank.Bank;
+import domain.bank.BettingMoney;
+import domain.card.Card;
+import domain.card.CardBox;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.bank.Money;
+import domain.participant.Name;
+import domain.participant.Participants;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,11 +34,9 @@ public class BlackJackGame {
         printInitGameMessage(participants);
         askPlayerMoreDrawCard(participants);
         drawDealerCardByMinimumCondition(participants.getDealer());
+        calculateProfitMoneyOfPlayer(bank, participants.getPlayersToList(), participants.getProfits());
 
-        List<Double> profits = participants.getProfits();
-        calculateProfitMoneyOfPlayer(bank, participants.getPlayersToList(), profits);
         printCardResult(participants);
-
         printGameResult(bank, participants);
     }
 

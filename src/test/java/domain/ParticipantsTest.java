@@ -1,12 +1,19 @@
 package domain;
 
-import static domain.CardInfo.A;
-import static domain.CardInfo.TEN;
-import static domain.Shape.HEART;
+import static domain.card.CardInfo.A;
+import static domain.card.CardInfo.TEN;
+import static domain.card.Shape.HEART;
 import static domain.fixture.PlayerFixture.빙봉;
 import static domain.fixture.PlayerFixture.우가;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardBox;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Participants;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;

@@ -1,13 +1,17 @@
 package domain;
 
-import static domain.CardInfo.A;
-import static domain.CardInfo.TEN;
-import static domain.CardInfo.THREE;
-import static domain.CardInfo.TWO;
-import static domain.Shape.HEART;
+import static domain.card.CardInfo.A;
+import static domain.card.CardInfo.TEN;
+import static domain.card.CardInfo.THREE;
+import static domain.card.CardInfo.TWO;
+import static domain.card.Shape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.CardInfo;
+import domain.card.Cards;
+import domain.card.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
