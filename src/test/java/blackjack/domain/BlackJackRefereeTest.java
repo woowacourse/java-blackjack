@@ -75,7 +75,7 @@ class BlackJackRefereeTest {
         Map<Player,WinningResult> result = referee.getPlayerWinningResult();
 
         //then
-        assertThat(result.get(player)).isEqualTo(WinningResult.WIN);
+        assertThat(result.get(player)).isEqualTo(WinningResult.BLACKJACK);
     }
 
     @Test

@@ -37,7 +37,7 @@ public class Amount {
     }
 
     private void checkAmountRange(String amount) {
-        if (Integer.parseInt(amount) > MIN_AMOUNT || Integer.parseInt(amount) <= MAX_AMOUNT) {
+        if (Integer.parseInt(amount) < MIN_AMOUNT && Integer.parseInt(amount) > MAX_AMOUNT) {
             throw new IllegalArgumentException(PLAYER_AMOUNT_RANGE);
         }
     }

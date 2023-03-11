@@ -14,7 +14,7 @@ public class BlackJackReferee {
     private final Map<Player, WinningResult> playerWinningResult = new LinkedHashMap<>();
 
     public void createResult(final Dealer dealer, final Player player) {
-        playerWinningResult.put(player, getPlayerResultByDealerResult(judgeWinOrLose(dealer, player)));
+        playerWinningResult.put(player, judgeWinOrLose(dealer, player));
     }
 
     private WinningResult judgeWinOrLose(final Dealer dealer, final Player player) {
@@ -29,9 +29,9 @@ public class BlackJackReferee {
 
     private WinningResult calculateByBurst(final Player player) {
         if (player.calculateCardNumber() > WIN_MAX_NUMBER) {
-            return WinningResult.WIN;
+            return WinningResult.LOSE;
         }
-        return WinningResult.LOSE;
+        return WinningResult.WIN;
     }
 
     private WinningResult calculateByBlackjack(final Player player,final Dealer dealer) {
@@ -39,26 +39,16 @@ public class BlackJackReferee {
             return WinningResult.PUSH;
         }
         if (player.judgeBlackjack()) {
-            return WinningResult.LOSE;
+            return WinningResult.BLACKJACK;
         }
-        return WinningResult.WIN;
+        return WinningResult.LOSE;
     }
 
     private WinningResult calculateByNumber(final Player player,final Dealer dealer) {
         if (player.calculateCardNumber() > dealer.calculateCardNumber()) {
-            return WinningResult.LOSE;
+            return WinningResult.WIN;
         }
         if (player.calculateCardNumber() < dealer.calculateCardNumber()) {
-            return WinningResult.WIN;
-        }
-        return WinningResult.PUSH;
-    }
-
-    private WinningResult getPlayerResultByDealerResult(WinningResult dealerWinningResult) {
-        if (dealerWinningResult.isLose()) {
-            return WinningResult.WIN;
-        }
-        if (dealerWinningResult.isWin()) {
             return WinningResult.LOSE;
         }
         return WinningResult.PUSH;

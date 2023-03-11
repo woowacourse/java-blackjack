@@ -61,24 +61,6 @@ public class OutputView {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
     }
 
-    public void printAllWinORLose(final BlackjackGameResult blackjackGameResult) {
-        printDealerWinORLose(blackjackGameResult);
-        for (Player player : blackjackGameResult.getGameResult().keySet()) {
-            System.out.println(player.getName() + " : " +
-                    ViewWinningResult.getWinningResultName(blackjackGameResult.NameByPlayer(player)));
-        }
-    }
-
-    public void printDealerWinORLose(final BlackjackGameResult blackjackGameResult) {
-        System.out.print("딜러: ");
-        System.out.print(blackjackGameResult.getDealerWinCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.WIN));
-        System.out.print(blackjackGameResult.getDealerPushCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.PUSH));
-        System.out.println(blackjackGameResult.getDealerLoseCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.LOSE));
-    }
-
     private void printFirstDealerCards(final Dealer dealer) {
         String cardNumber = ViewCardNumber.getCardNumber(dealer.getCardNumber(FIRST_CARD).name());
         String cardSuit = ViewCardSuit.getCardSuit(dealer.getCardSuit(FIRST_CARD).name());
