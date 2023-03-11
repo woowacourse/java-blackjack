@@ -8,8 +8,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +75,20 @@ class ViewRendererTest {
 
         assertThat(renderedUserNameAndCardResults)
                 .containsExactly(entry("딜러", "A스페이드, 9다이아몬드 - 결과: 20"));
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러의 수익금을 렌더링하는 기능 테스트")
+    void renderUserNameAndProfitsTest() {
+        final Map<Name, Money> playerNameAndProfit = Map.of(new Name("제이미"), new Money(100_000));
+        final Money dealerProfit = new Money(-100_000);
+
+        final Map<String, Integer> renderUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(playerNameAndProfit,
+                dealerProfit);
+
+        assertThat(renderUserNameAndProfit)
+                .containsExactly(
+                        entry(Dealer.DEALER_NAME, -100_000),
+                        entry("제이미", 100_000));
     }
 }
