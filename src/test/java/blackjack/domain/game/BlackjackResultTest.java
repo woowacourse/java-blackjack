@@ -37,4 +37,18 @@ class BlackjackResultTest {
 
         assertThat(dealerLoseCount).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("딜러의 무승부 횟수를 반환한다")
+    void getDealerTieCountTest() {
+        Map<Player, GameResult> gameResult = new HashMap<>();
+        gameResult.put(new Player("박스터"), GameResult.WIN);
+        gameResult.put(new Player("제이미"), GameResult.LOSE);
+        gameResult.put(new Player("코즈"), GameResult.TIE);
+        BlackjackResult result = new BlackjackResult(gameResult);
+
+        int tieCount = result.getTieCount();
+
+        assertThat(tieCount).isEqualTo(1);
+    }
 }

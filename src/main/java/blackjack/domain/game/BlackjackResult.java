@@ -13,7 +13,7 @@ public class BlackjackResult {
     }
 
     public int getTieCount() {
-        return blackjackResult.size() - getDealerLoseCount() - getDealerWinCount();
+        return Collections.frequency(blackjackResult.values(), GameResult.TIE);
     }
 
     public int getDealerWinCount() {
