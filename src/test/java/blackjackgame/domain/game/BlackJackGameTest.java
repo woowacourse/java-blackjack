@@ -10,8 +10,10 @@ import blackjackgame.domain.card.CloverCard;
 import blackjackgame.domain.card.DiamondCard;
 import blackjackgame.domain.card.HeartCard;
 import blackjackgame.domain.card.SpadeCard;
+import blackjackgame.domain.user.Bet;
 import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.DealerStatus;
+import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
@@ -29,7 +31,7 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setUp() {
-        Players players = new Players(List.of("민트"));
+        Players players = new Players(new Names(List.of("민트")), List.of(new Bet(5000)));
         player = players.getPlayers().get(0);
         dealer = new Dealer();
         Cards cards = new Cards(new FixedCardsGenerator());
