@@ -1,6 +1,5 @@
 import controller.BlackJackController;
-import domain.CardBox;
-import domain.RandomCardNumberGenerator;
+import domain.generator.RandomCardNumberGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -11,6 +10,6 @@ public class Application {
                 new OutputView()
         );
 
-        game.run(new RandomCardNumberGenerator(), new CardBox());
+        game.run(new RandomCardNumberGenerator());
     }
 }

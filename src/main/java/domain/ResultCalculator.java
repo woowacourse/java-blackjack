@@ -10,8 +10,10 @@ public class ResultCalculator {
 
     public static List<Result> getWinningResult(final Dealer dealer, final List<Player> players) {
         List<Result> winningResult = new ArrayList<>();
-        for (int index = 1; index < players.size(); index++) {
-            winningResult.add(dealer.checkWinningResult(players.get(index)));
+        for (int index = 0; index < players.size(); index++) {
+            Player player = players.get(index);
+            Result result = Participant.checkWinningResult(dealer,player);
+            winningResult.add(result);
         }
         return winningResult;
     }

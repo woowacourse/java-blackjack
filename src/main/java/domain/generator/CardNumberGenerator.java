@@ -1,4 +1,4 @@
-package domain;
+package domain.generator;
 
 public interface CardNumberGenerator {
 

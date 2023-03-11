@@ -20,6 +20,10 @@ public class Card {
         return name.charAt(0) == 'A';
     }
 
+    public Card copyCard(){
+        return new Card(this.name,this.value);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
