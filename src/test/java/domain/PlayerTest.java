@@ -30,7 +30,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.create("Leo");
+        player = Player.create("Leo", new BetAmount(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TWO));
         player.receiveCard(new Card(Suit.DIAMOND, Rank.KING));
     }
@@ -57,24 +57,24 @@ class PlayerTest {
     @ParameterizedTest(name = "플레이어의 이름은 null이거나 공백일 수 없다.")
     @NullAndEmptySource
     void validatePlayerNameTest(String name) {
-        assertThatThrownBy(() -> Player.create(name)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.create(name, new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
     void validateNoDealer() {
-        assertThatThrownBy(() -> Player.create("딜러")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.create("딜러", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("플레이어의 이름에 쉼표(,)가 포함 될 수 없다.")
     void validateNoComma() {
-        assertThatThrownBy(() -> Player.create("이,름")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.create("이,름", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("플레이어의 이름의 길이가 10이상이 될 수 없다.")
     void validateNameLength() {
-        assertThatThrownBy(() -> Player.create("이건 열 글자 넘는.")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.create("이건 열 글자 넘는.", new BetAmount(1500))).isInstanceOf(IllegalArgumentException.class);
     }
 }

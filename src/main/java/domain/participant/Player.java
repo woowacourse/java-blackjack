@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BetAmount;
 import domain.ExceptionCode;
 
 import java.util.ArrayList;
@@ -7,13 +8,16 @@ import java.util.ArrayList;
 public class Player extends Participant {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
     private static final String INVALID_NAME_CHARACTER = ",";
-    private Player(String name) {
+
+    private final BetAmount betAmount;
+    private Player(String name, BetAmount betAmount) {
         super(new ArrayList<>(), name);
+        this.betAmount = betAmount;
     }
 
-    public static Player create(String name) {
+    public static Player create(String name, BetAmount betAmount) {
         validate(name);
-        return new Player(name);
+        return new Player(name, betAmount);
     }
 
     private static void validate(String name) {

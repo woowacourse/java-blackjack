@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BetAmount;
 import domain.card.Deck;
 import domain.ExceptionCode;
 
@@ -24,7 +25,7 @@ public class Participants {
         validate(names);
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
-        names.forEach(name -> participants.add(Player.create(name)));
+        names.forEach(name -> participants.add(Player.create(name, new BetAmount(1000))));
         return new Participants(participants);
     }
 
