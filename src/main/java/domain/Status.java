@@ -27,6 +27,6 @@ public class Status {
     }
 
     public int getAccount() {
-        return account.account();
+        return account.getAccount();
     }
 }

@@ -9,7 +9,6 @@ import domain.DrawCommand;
 import domain.Name;
 import domain.Player;
 import domain.Players;
-import domain.Status;
 import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
@@ -41,22 +40,41 @@ public class BlackJackController {
 
         splitCards(cardDeck, dealer, players);
         drawCards(cardDeck, dealer, players);
-        printParticipantResults(dealer, players);
-        printWinLoseResult(dealer, players);
+        printParticipantsCardsResults(dealer, players);
+        printParticipantAccountResults(dealer, players);
     }
 
     private Players createPlayers() {
+        List<Name> playerNames = createPlayerNames();
+        List<Account> playerAccounts = createPlayerAccounts(playerNames);
+        return ParticipantGenerator.createPlayers(playerNames, playerAccounts);
+    }
+
+    private List<Name> createPlayerNames() {
         try {
             List<String> rawNames = inputView.readPlayerNames();
-
-            List<Status> statuses = rawNames.stream()
-                    .map(name -> new Status(new Name(name), new Account(inputView.readAccount(name))))
+            return rawNames.stream()
+                    .map(Name::new)
                     .collect(toList());
-
-            return ParticipantGenerator.createPlayers(statuses);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return createPlayers();
+            return createPlayerNames();
+        }
+    }
+
+    private List<Account> createPlayerAccounts(final List<Name> playerNames) {
+        return playerNames.stream()
+                .map(this::createAccount)
+                .collect(toList());
+    }
+
+    private Account createAccount(final Name playerName) {
+        try {
+            int account = inputView.readAccount(playerName.name());
+            return new Account(account);
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception.getMessage());
+            return createAccount(playerName);
         }
     }
 
@@ -98,15 +116,14 @@ public class BlackJackController {
         } while (blackJackService.canDealerDrawMore(dealer));
     }
 
-    private void printParticipantResults(final Dealer dealer, final Players players) {
-        List<ParticipantResult> participantResults = blackJackService.getParticipantResults(dealer, players);
-        outputView.printParticipantResults(participantResults);
+    private void printParticipantsCardsResults(final Dealer dealer, final Players players) {
+        List<ParticipantResult> participantsCardsResults = blackJackService.getParticipantsCardsResults(dealer, players);
+        outputView.printParticipantsCardsResults(participantsCardsResults);
     }
 
-    private void printWinLoseResult(final Dealer dealer, final Players players) {
+    private void printParticipantAccountResults(final Dealer dealer, final Players players) {
         blackJackService.calculateGameResults(dealer, players);
-
-        List<BlackJackResult> gameResults = blackJackService.getParticipantsNameAndAccount(dealer, players);
-        outputView.printGameResults(gameResults);
+        List<BlackJackResult> gameResults = blackJackService.getParticipantAccountResults(dealer, players);
+        outputView.printParticipantAccountResults(gameResults);
     }
 }

@@ -10,10 +10,6 @@ public class Account {
         this.account = account;
     }
 
-    public int account() {
-        return account;
-    }
-
     public void bust(final int loseMoney) {
         account = loseMoney * -1;
     }
@@ -24,6 +20,10 @@ public class Account {
 
     public void subAccount(final int losingMoney) {
         account -= losingMoney;
+    }
+
+    public int getAccount() {
+        return account;
     }
 
     @Override
