@@ -48,37 +48,8 @@ public class BlackJackGame {
     }
 
     public void judgeWinner() {
-        for (Player player : players.getPlayers()) {
-            judgeWinnerBetweenDealer(player);
-        }
-    }
-
-    private void judgeWinnerBetweenDealer(Player player) {
-        if (isDraw(player)) {
-            resultByUserNames.put(new NameDto(player.getName()), Result.DRAW);
-            return;
-        }
-        if (isDealerWin(player)) {
-            resultByUserNames.put(new NameDto(player.getName()), Result.LOSE);
-            return;
-        }
-        resultByUserNames.put(new NameDto(player.getName()), Result.WIN);
-    }
-
-    private boolean isDraw(Player player) {
-        boolean isBothBust = player.getStatus() == PlayerStatus.BUST && dealer.getStatus() == DealerStatus.BUST;
-        boolean isSameScore = player.getScore() == dealer.getScore();
-        return isBothBust || isSameScore;
-    }
-
-    private boolean isDealerWin(Player player) {
-        boolean isOnlyPlayerBust = player.getStatus() == PlayerStatus.BUST && dealer.getStatus() != DealerStatus.BUST;
-        boolean isDealerHasHigherScore = isBothNormal(player) && player.getScore() < dealer.getScore();
-        return isOnlyPlayerBust || isDealerHasHigherScore;
-    }
-
-    private boolean isBothNormal(Player player) {
-        return player.getStatus() == PlayerStatus.NORMAL && dealer.getStatus() == DealerStatus.NORMAL;
+        Referee referee = new Referee(players, dealer);
+        referee.judgeWinner();
     }
 
     public Map<NameDto, List<Card>> getSetUpResult() {
