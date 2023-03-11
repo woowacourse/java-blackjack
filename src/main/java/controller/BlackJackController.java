@@ -6,6 +6,7 @@ import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
 import domain.game.Blackjack;
 import domain.game.Result;
+import domain.name.Names;
 import domain.user.Player;
 import domain.user.Users;
 import java.util.List;
@@ -27,10 +28,15 @@ public class BlackJackController {
     }
 
     private void initGame() {
-        List<String> playerNames = InputView.askPlayerNames();
-        Users users = Users.from(playerNames);
+        Users users = Users.from(initPlayerNames());
+
         blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck());
-        printInitMessages(playerNames);
+        printInitMessages(users.getPlayerNames());
+    }
+
+    private Names initPlayerNames() {
+        Names playerNames = Names.of(InputView.askPlayerNames());
+        return playerNames;
     }
 
     private void printInitMessages(final List<String> playerNames) {

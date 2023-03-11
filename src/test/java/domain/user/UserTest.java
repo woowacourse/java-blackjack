@@ -3,8 +3,8 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.Denomination;
+import domain.card.Hand;
 import domain.card.Suits;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

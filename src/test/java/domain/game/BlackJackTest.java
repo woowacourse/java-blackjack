@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
 import domain.deck.DefaultDeckGenerator;
+import domain.name.Names;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
@@ -21,14 +22,14 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUsers() {
-        users = Users.from(List.of("hongo"));
+        users = Users.from(Names.of(List.of("hongo")));
         blackJack = Blackjack.of(users, new DefaultDeckGenerator().generateDeck());
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
-        users = Users.from(List.of("hongo", "kiara"));
+        users = Users.from(Names.of(List.of("hongo", "kiara")));
         //blackJack = Blackjack.of(users, new ZeroIndexGenerator());
 
         Blackjack blackJack = Blackjack.of(users, new DefaultDeckGenerator().generateDeck());

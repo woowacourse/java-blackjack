@@ -12,7 +12,6 @@ import static domain.card.Denomination.THREE;
 import static domain.card.Denomination.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.game.Result;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +25,14 @@ public class HandTest {
 
 
     private Hand hand;
+
+    static Stream<Arguments> NotBlackjack_Data() {
+        return Stream.of(
+                Arguments.arguments(List.of(TWO, EIGHT, ACE),
+                        Arguments.arguments(List.of(KING, QUEEN)),
+                        Arguments.arguments(List.of(TEN, QUEEN, KING)))
+        );
+    }
 
     @BeforeEach
     void setCards() {
@@ -78,7 +85,7 @@ public class HandTest {
 
     @DisplayName("블랙잭인지 확인한다")
     @Test
-    void checkBlackjack_WhenHandIsBlackjack(){
+    void checkBlackjack_WhenHandIsBlackjack() {
         addCards(List.of(TEN, ACE));
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -86,17 +93,9 @@ public class HandTest {
     @DisplayName("블랙잭이 아닌것을 확인한다")
     @ParameterizedTest
     @MethodSource("NotBlackjack_Data")
-    void checkBlackjack_WhenHandIsNotBlackjack(List<Denomination> denominations){
+    void checkBlackjack_WhenHandIsNotBlackjack(List<Denomination> denominations) {
         addCards(denominations);
         assertThat(hand.isBlackjack()).isFalse();
-    }
-
-    static Stream<Arguments> NotBlackjack_Data() {
-        return Stream.of(
-                Arguments.arguments(List.of(TWO, EIGHT, ACE),
-                Arguments.arguments(List.of(KING, QUEEN)),
-                Arguments.arguments(List.of(TEN, QUEEN, KING)))
-        );
     }
 
     private void addCards(List<Denomination> denominations) {

@@ -38,10 +38,9 @@ public class OutputView {
     }
 
     private static String getEachPlayerCards(final String playerName, final CardNames cardNames) {
-        StringBuilder stringBuilder = new StringBuilder(playerName);
-        stringBuilder.append("카드: ");
-        stringBuilder.append(String.join(", ", cardNames.getCardNames()));
-        return stringBuilder.toString();
+        String stringBuilder = playerName + "카드: "
+                + String.join(", ", cardNames.getCardNames());
+        return stringBuilder;
     }
 
     private static String getCardName(final Card card) {

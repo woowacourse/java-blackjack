@@ -4,10 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.BettingMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Score;
 import domain.card.Suits;
+import domain.name.Names;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,6 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class UsersTest {
+    private final BettingMoney bettingMoney = new BettingMoney(1000);
 
     static Stream<List<String>> parameterProvider() {
         return Stream.of(
@@ -30,13 +33,13 @@ public class UsersTest {
     @MethodSource("parameterProvider")
     void playerCount1_4(List<String> names) {
         assertThatNoException()
-                .isThrownBy(() -> Users.from(names));
+                .isThrownBy(() -> Users.from(Names.of(names)));
     }
 
     @DisplayName("참여 인원은 1명미만이 될 수 없다")
     @Test
     void playerCount_shouldNotBeUnder1() {
-        assertThatThrownBy(() -> Users.from(Collections.emptyList()))
+        assertThatThrownBy(() -> Users.from(Names.of(Collections.emptyList())))
                 .hasMessageContaining("플레이어 수는 ")
                 .hasMessageContaining("명 이상, ");
     }
@@ -44,7 +47,7 @@ public class UsersTest {
     @DisplayName("참여 인원은 4명초과가 될 수 없다")
     @Test
     void playerCount_shouldNotBeOver4() {
-        assertThatThrownBy(() -> Users.from(List.of("a", "b", "c", "d", "e")))
+        assertThatThrownBy(() -> Users.from(Names.of(List.of("a", "b", "c", "d", "e"))))
                 .hasMessageContaining("플레이어 수는 ")
                 .hasMessageContaining("명 이하여야 합니다.");
     }
@@ -52,7 +55,7 @@ public class UsersTest {
     @DisplayName("플레이어의 이름은 중복될 수 없다")
     @Test
     void validateDuplication() {
-        assertThatThrownBy(() -> Users.from(List.of("hongo", "hongo", "ash", "kiara")))
+        assertThatThrownBy(() -> Users.from(Names.of(List.of("hongo", "hongo", "ash", "kiara"))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 이름은 중복될 수 없습니다.");
     }
@@ -60,7 +63,7 @@ public class UsersTest {
     @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
     @Test
     void hitCardByName() {
-        Users users = Users.from(List.of("hongo", "ash", "kiara"));
+        Users users = Users.from(Names.of(List.of("hongo", "ash", "kiara")));
 
         users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
         Player player = users.getPlayers().get(0);
