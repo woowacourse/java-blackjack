@@ -42,12 +42,8 @@ public class HandCards {
         return scoreSum;
     }
 
-    public int checkBust() {
-        int maxSum = calculateScore();
-        if (maxSum > MIN_BUST_NUMBER) {
-            return ZERO_SCORE;
-        }
-        return maxSum;
+    public boolean checkBust() {
+        return calculateScore() > MIN_BUST_NUMBER;
     }
 
     public boolean isBlackJack() {

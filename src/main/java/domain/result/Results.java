@@ -23,7 +23,7 @@ public class Results {
     }
 
     public void executeGame(Players players, Dealer dealer) {
-        if (dealer.getHandCards().checkBust() == 0) {
+        if (dealer.isBust()) {
             dealerBustCase(players, dealer);
             return;
         }
@@ -40,19 +40,29 @@ public class Results {
     }
 
     public void fight(Player player, Dealer dealer) {
-        int playerWinOrLose = player.getHandCards().checkBust() - dealer.getHandCards().checkBust();
-        if (playerWinOrLose > 0) {
+        Score playerWinOrLose = comparePlayerDealer(player, dealer);
+        if (playerWinOrLose.equals(Score.WIN)) {
             playerWin(results.get(player.getName()), results.get(dealer.getName()));
             playerWinBetting(player, dealer);
         }
-        if (playerWinOrLose < 0) {
+        if (playerWinOrLose.equals(Score.LOSE)) {
             dealerWin(results.get(player.getName()), results.get(dealer.getName()));
             playerLoseBetting(player, dealer);
         }
-        if (playerWinOrLose == 0) {
+        if (playerWinOrLose.equals(Score.DRAW)) {
             draw(results.get(player.getName()), results.get(dealer.getName()));
             drawBetting(player);
         }
+    }
+
+    private Score comparePlayerDealer(Player player, Dealer dealer) {
+        if (player.isBust() || player.getScoreSum() - dealer.getScoreSum() < 0) {
+            return Score.LOSE;
+        }
+        if (dealer.isBust() || player.getScoreSum() - dealer.getScoreSum() > 0) {
+            return Score.WIN;
+        }
+        return Score.DRAW;
     }
 
     private void playerWin(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {

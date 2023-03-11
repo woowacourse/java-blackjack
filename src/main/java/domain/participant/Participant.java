@@ -29,6 +29,10 @@ public abstract class Participant {
         return handCards.calculateScore();
     }
 
+    public boolean isBust(){
+        return handCards.checkBust();
+    }
+
     abstract boolean isDrawable();
 
     public String getName() {
