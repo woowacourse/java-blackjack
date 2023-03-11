@@ -88,4 +88,8 @@ public class OutputView {
     private static void generateDealerResult(Map<Result, Integer> dealerResult, Result result) {
         finalResult.append(dealerResult.get(result)).append(result.getValue());
     }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }

@@ -50,7 +50,7 @@ public class BlackJackGameController {
             final String playerNames = InputView.readNames();
             return Optional.of(new BlackJackGame(playerNames));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return Optional.empty();
         }
     }
@@ -68,7 +68,7 @@ public class BlackJackGameController {
             final int playerBetting = InputView.readBettingMoney(player.getName());
             return Optional.of(Profit.of(playerBetting));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return Optional.empty();
         }
     }
@@ -109,7 +109,7 @@ public class BlackJackGameController {
             validateCorrectCommand(gameCommand);
             return Optional.of(gameCommand);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return Optional.empty();
         }
     }
