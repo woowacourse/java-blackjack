@@ -34,11 +34,18 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             Score playerScore = player.calculateScore();
-            Result playerWin = Result.getLeftResult(playerScore, dealerScore, bustLowerBound);
+            Result playerWin = getPlayerResult(dealerScore, player, playerScore);
             Result dealerWin = Result.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
+    }
+
+    private Result getPlayerResult(Score dealerScore, Player player, Score playerScore) {
+        if (player.isBust()) {
+            return Result.LOSE;
+        }
+        return Result.getLeftResult(playerScore, dealerScore, bustLowerBound);
     }
 
     public Map<Result, Integer> getDealerResult() {
