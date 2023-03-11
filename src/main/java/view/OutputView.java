@@ -10,14 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final String INPUT_RECEIVE_YES_OR_NOT_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_RECEIVED_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String JOIN_DELIMITER = ", ";
-
-    public static void printInputReceiveYesOrNotMessage(String playerName) {
-        printMessage(playerName + INPUT_RECEIVE_YES_OR_NOT_MESSAGE);
-    }
 
     public static void printDealerReceivedMessage() {
         printSpaceLine();
