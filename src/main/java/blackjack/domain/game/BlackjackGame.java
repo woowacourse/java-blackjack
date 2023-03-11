@@ -62,10 +62,6 @@ public class BlackjackGame {
         participant.addCard(cardDeck.pick());
     }
 
-    public Participants getParticipants() {
-        return participants;
-    }
-
     private GameResult getGameResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return GameResult.LOSE;
@@ -84,5 +80,9 @@ public class BlackjackGame {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
+    }
+
+    public Participants getParticipants() {
+        return participants;
     }
 }

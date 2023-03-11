@@ -22,14 +22,14 @@ public class CardDeck {
         Collections.shuffle(this.cards);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public Card pick() {
         if (cards.isEmpty()) {
             throw new NoMoreCardException(ErrorCode.EMPTY_CARD);
         }
         return cards.remove(0);
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

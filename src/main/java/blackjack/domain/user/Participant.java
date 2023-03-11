@@ -29,6 +29,10 @@ public abstract class Participant {
         playerCards.addAll(cards);
     }
 
+    public boolean isBust() {
+        return getState().isBust();
+    }
+
     public ScoreState getState() {
         return ScoreState.of(playerCards.getScore());
     }
@@ -43,9 +47,5 @@ public abstract class Participant {
 
     public String getName() {
         return name.getValue();
-    }
-
-    public boolean isBust() {
-        return getState().isBust();
     }
 }
