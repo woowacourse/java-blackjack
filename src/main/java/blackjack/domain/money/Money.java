@@ -14,6 +14,10 @@ public class Money {
         return value;
     }
 
+    public Money multiply(final Double rate) {
+        return new Money((int) (rate * value));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
