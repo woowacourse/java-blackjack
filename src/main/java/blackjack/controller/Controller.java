@@ -36,8 +36,8 @@ public class Controller {
     private void setGame() {
         List<String> names = inputView.readPlayerNames();
         for (String name : names) {
-            String betAmount = inputView.readBetAmount(name);
-            blackjackGame.addPlayer(new Player(new Name(name), BetAmount.of(betAmount)));
+            int betAmount = inputView.readBetAmount(name);
+            blackjackGame.addPlayer(new Player(new Name(name), new BetAmount(betAmount)));
         }
         blackjackGame.supplyCardsToDealer();
         blackjackGame.supplyCardsToPlayers();

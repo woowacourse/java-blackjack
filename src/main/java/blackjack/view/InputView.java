@@ -12,9 +12,18 @@ public class InputView {
         return List.of(scanner.nextLine().split(","));
     }
 
-    public String readBetAmount(String name) {
+    public int readBetAmount(String name) {
         System.out.printf("%s의 배팅 금액은?\n", name);
-        return scanner.nextLine();
+        return parseInt(scanner.nextLine());
+    }
+
+    private int parseInt(String number) {
+        try {
+            int amount = Integer.parseInt(number);
+            return amount;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("올바른 숫자 형태가 아닙니다.");
+        }
     }
 
     public String readCommandToAddCardOrNot(Name name) {

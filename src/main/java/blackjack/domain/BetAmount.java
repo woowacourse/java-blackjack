@@ -13,4 +13,8 @@ public class BetAmount {
         }
         this.amount = new Money(amount);
     }
+
+    public Money getAmount() {
+        return amount;
+    }
 }
