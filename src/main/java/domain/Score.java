@@ -43,6 +43,10 @@ public class Score {
         return score;
     }
 
+    public boolean isBlackJackScore() {
+        return value == MEANINGFUL_SCORE_MAX;
+    }
+
     public boolean isBust() {
         return value > MEANINGFUL_SCORE_MAX;
     }

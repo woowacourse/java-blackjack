@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Card;
 import domain.card.Cards;
@@ -115,5 +116,18 @@ class ScoreTest {
 
         //then
         assertThat(value).isEqualTo(24);
+    }
+
+    @Test
+    @DisplayName("21점이 BlackJackScore인지 판별 테스트")
+    public void testScore21IsBlackJackScore() {
+        //given
+        Cards cards = Cards.of(
+            new Card(Suit.SPADE, Denomination.ACE),
+            new Card(Suit.SPADE, Denomination.TEN));
+        Score score = Score.of(cards);
+
+        //when & then
+        assertTrue(score.isBlackJackScore());
     }
 }
