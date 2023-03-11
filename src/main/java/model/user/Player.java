@@ -16,10 +16,6 @@ public class Player implements Receivable {
         this.user = new User(name);
     }
 
-    public Result judgeResult(int dealerTotalValue) {
-        return user.judgeResult(dealerTotalValue);
-    }
-
     public void receiveInitialCards(final Deck deck) {
         user.receiveInitialCards(deck);
     }

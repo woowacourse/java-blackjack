@@ -4,12 +4,7 @@ import static model.card.CardFixture.DIAMOND_ACE;
 import static model.card.CardFixture.DIAMOND_FIVE;
 import static model.card.CardFixture.DIAMOND_JACK;
 import static model.card.CardFixture.DIAMOND_KING;
-import static model.card.CardFixture.DIAMOND_NINE;
 import static model.card.CardFixture.DIAMOND_SIX;
-import static model.card.CardFixture.DIAMOND_THREE;
-import static model.card.CardFixture.DIAMOND_TWO;
-import static model.user.Result.LOSE;
-import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -56,46 +51,6 @@ class UserTest {
                     assertThat(user.calculateTotalValue()).isEqualTo(16);
                 }
         );
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 지는 결과가 반환된다.")
-    void whenOverBustNumberBoth_thenReturnLose() {
-        // given
-        int dealerTotalValue = 23;
-
-        user.receiveCard(DIAMOND_JACK);
-        user.receiveCard(DIAMOND_JACK);
-        user.receiveCard(DIAMOND_TWO);
-
-        // when, then
-        assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러가 21이하이고 플레이어는 21초과이면 플레이어의 패배가 반환된다.")
-    void whenPlayerBurstReturnFalse() {
-        // given
-        int dealerTotalValue = 10;
-
-        user.receiveCard(DIAMOND_JACK);
-        user.receiveCard(DIAMOND_NINE);
-        user.receiveCard(DIAMOND_THREE);
-
-        // when, then
-        assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러가 21초과이고 플레이어는 21이하이면 플레이어의 승리가 반환된다.")
-    void whenDealerBurstReturnTrue() {
-        // given
-        int dealerTotalValue = 22;
-
-        user.receiveCard(DIAMOND_KING);
-
-        // when, then
-        assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(WIN);
     }
 
     @Test

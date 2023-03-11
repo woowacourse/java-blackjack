@@ -2,8 +2,11 @@ package ui.output;
 
 import static java.util.stream.Collectors.joining;
 
+import controller.BlackJackGameResponse;
+import controller.CardResponse;
+import controller.HandResponse;
+import controller.UserResponse;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final String DIVIDE_CARDS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
@@ -76,23 +79,5 @@ public class OutputView {
         return cardResponses.stream()
                 .map(cardResponse -> cardResponse.getName() + cardResponse.getShape())
                 .collect(joining(", "));
-    }
-
-    public void printBetResult() {
-        System.out.println(System.lineSeparator() + "## 최종 수익");
-    }
-
-    public void printDealerBetResult(String dealerName, long totalBet) {
-        printBet(dealerName, -totalBet);
-    }
-
-    public void printPlayerBetResult(PurseResponse purseResponse) {
-        final Map<String, Long> purses = purseResponse.getPurses();
-        purses.keySet()
-                .forEach(playerName -> printBet(playerName, purses.get(playerName)));
-    }
-
-    private void printBet(String name, long bet) {
-        System.out.printf("%s: %s%n", name, bet);
     }
 }
