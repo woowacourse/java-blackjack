@@ -86,7 +86,6 @@ class ParticipantTest {
         }
     }
 
-
     @DisplayName("stay하면 Stay상태이다")
     @Test
     void stay() {
