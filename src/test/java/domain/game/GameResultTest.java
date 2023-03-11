@@ -41,9 +41,9 @@ public class GameResultTest {
 
     void stayUsers(List<Player> players, Dealer dealer) {
         for (int i = 0; i < 3; i++) {
-            players.get(i).stay();
+            players.get(i).stayIfRunning();
         }
-        dealer.stay();
+        dealer.stayIfRunning();
     }
 
     void giveCardToUsers(List<Player> players, Dealer dealer) {

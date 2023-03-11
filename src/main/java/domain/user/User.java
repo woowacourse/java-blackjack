@@ -17,14 +17,14 @@ public abstract class User {
         this.state = state.draw(card);
     }
 
-    public void stay() {
-        this.state = state.stay();
-    }
-
     public void stayIfRunning() {
         if (state.isRunning()) {
             stay();
         }
+    }
+
+    private void stay() {
+        this.state = state.stay();
     }
 
     public List<Card> getCards() {
