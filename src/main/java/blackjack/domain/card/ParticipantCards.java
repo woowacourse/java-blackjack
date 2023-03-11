@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class ParticipantCards {
     private static final int INITIAL_SIZE = 2;
-    private static final int BLACK_JACK = 21;
+    private static final int MAX_SCORE_NOT_BUST = 21;
 
     private final List<Card> cards;
 
@@ -28,7 +28,7 @@ public class ParticipantCards {
         List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toList());
-        return CardNumber.getMaxValueNearBlackJack(cardNumbers, BLACK_JACK);
+        return CardNumber.getMaxValueNearBlackJack(cardNumbers, MAX_SCORE_NOT_BUST);
     }
 
     public List<Card> open(int size) {
@@ -42,11 +42,11 @@ public class ParticipantCards {
     }
 
     public boolean isBust() {
-        return calculate() > BLACK_JACK;
+        return calculate() > MAX_SCORE_NOT_BUST;
     }
 
     public boolean isBlackJack() {
-        return calculate() == BLACK_JACK;
+        return cards.size() == INITIAL_SIZE && calculate() == MAX_SCORE_NOT_BUST;
     }
 
     private void validate(final List<Card> cards) {

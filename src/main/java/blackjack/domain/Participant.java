@@ -26,11 +26,19 @@ public abstract class Participant {
         return cards.openAll();
     }
 
-    public Name getName() {
-        return name;
+    protected boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    protected boolean isBust() {
+        return cards.isBust();
     }
 
     public abstract List<Card> initialOpen();
 
     protected abstract boolean isHittable();
+
+    public Name getName() {
+        return name;
+    }
 }
