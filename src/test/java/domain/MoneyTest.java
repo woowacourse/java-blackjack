@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class MoneyTest {
 
     @Test
-    @DisplayName("금액은 음수로 시작할 수 없다")
+    @DisplayName("금액은 음수로 생성할 수 없다")
     void test_money_is_not_negative() {
         assertThatThrownBy(() -> Money.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -40,7 +40,7 @@ public class MoneyTest {
     void test_distribute_dividend(double dividend, int expectedValue) {
         var money = Money.of(1234);
 
-        assertThat(money.distribute(dividend)).isEqualTo(Money.of(expectedValue));
+        assertThat(money.profit(dividend)).isEqualTo(Money.of(expectedValue));
     }
 
     @ParameterizedTest(name = "1원 이하는 절삭한다")
@@ -48,6 +48,16 @@ public class MoneyTest {
     void test_remove_points_under_unit(double dividend, int expectedValue) {
         var money = Money.of(1234);
 
-        assertThat(money.distribute(dividend)).isEqualTo(Money.of(expectedValue));
+        assertThat(money.profit(dividend)).isEqualTo(Money.of(expectedValue));
+    }
+
+    @DisplayName("다른 금액보다 작은지 알 수 있다")
+    @ParameterizedTest(name = "{0} < {1}? {2}")
+    @CsvSource({"1233,1234,true", "1234,1234,false"})
+    void test_less_than_other(int value, int otherValue, boolean isLess) {
+        var money = Money.of(value);
+        var other = Money.of(otherValue);
+
+        assertThat(money.isLessThan(other)).isEqualTo(isLess);
     }
 }
