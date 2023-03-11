@@ -88,9 +88,19 @@ public class Application {
     }
     
     private void giveCardToDealer(BlackJackGame blackJackGame) {
-        if (blackJackGame.shouldDealerGetCard()) {
-            blackJackGame.giveCard(blackJackGame.getDealer());
-            OutputView.printGiveDealerCardMessage();
+        if (blackJackGame.isDealerFinished()) {
+            return;
         }
+        
+        blackJackGame.giveCard(blackJackGame.getDealer());
+        OutputView.printGiveDealerCardMessage();
+    
+        if (isDealerNotFinished(blackJackGame)) {
+            blackJackGame.dealerDrawStop();
+        }
+    }
+    
+    private boolean isDealerNotFinished(BlackJackGame blackJackGame) {
+        return !blackJackGame.isDealerFinished();
     }
 }

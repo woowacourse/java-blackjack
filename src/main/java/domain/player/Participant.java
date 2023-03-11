@@ -14,4 +14,9 @@ public class Participant extends Player {
     public double calculateProfit(double betAmount) {
         return getState().calculateProfit(betAmount);
     }
+    
+    @Override
+    public boolean isFinished() {
+        return getState().isFinished();
+    }
 }

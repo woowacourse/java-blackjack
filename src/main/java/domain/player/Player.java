@@ -21,6 +21,8 @@ public abstract class Player {
     
     public abstract double calculateProfit(double betAmount);
     
+    public abstract boolean isFinished();
+    
     public void draw(Card card) {
         state = state.draw(card);
     }
@@ -39,10 +41,6 @@ public abstract class Player {
     
     public void drawStop() {
         state = state.drawStop();
-    }
-    
-    public boolean isFinished() {
-        return state.isFinished();
     }
     
     public String getName() {

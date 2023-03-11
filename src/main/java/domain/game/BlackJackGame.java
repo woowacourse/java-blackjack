@@ -55,10 +55,13 @@ public class BlackJackGame {
     public void giveCard(Player player) {
         player.draw(draw());
     }
-
-    public boolean shouldDealerGetCard() {
-        Score dealerTotalScore = getDealer().getTotalScore();
-        return dealerTotalScore.isLessThenOrEqualTo(DEALER_GIVE_CARD_STATE_MAX_SCORE);
+    
+    public boolean isDealerFinished() {
+        return getDealer().isFinished();
+    }
+    
+    public void dealerDrawStop() {
+        getDealer().drawStop();
     }
     
     public Player getDealer() {
@@ -73,7 +76,7 @@ public class BlackJackGame {
                 .filter(Predicate.not(Player::isDealer))
                 .collect(Collectors.toUnmodifiableList());
     }
-
+    
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(this.players);
     }
