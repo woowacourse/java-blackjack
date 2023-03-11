@@ -40,16 +40,16 @@ public class Dealer extends Participant {
     }
 
     public Map<String, WinningResult> participantWinningResults(Players players) {
-        Map<String, WinningResult> playerResults = new HashMap<>();
-        WinningResult totalResult = new WinningResult();
+        Map<String, WinningResult> totalResults = new HashMap<>();
+        WinningResult totalBettingProfit = new WinningResult();
 
         for (int playerId : players.getPlayerIds()) {
             WinningResult playerResult = players.getWinningResultById(playerId, this.cardScore());
-            playerResults.put(players.getNameById(playerId), playerResult);
-            totalResult = totalResult.merge(players.getWinningResultById(playerId, this.cardScore()));
+            totalResults.put(players.getNameById(playerId), playerResult);
+            totalBettingProfit = totalBettingProfit.merge(playerResult);
         }
-        playerResults.put(this.getName(), new WinningResult(totalResult.getLose(), totalResult.getDraw(), totalResult.getWin(), -totalResult.getBetting()));
-        return playerResults;
+        totalResults.put(this.getName(), new WinningResult(totalBettingProfit.getLose(), totalBettingProfit.getDraw(), totalBettingProfit.getWin(), -totalBettingProfit.getBetting()));
+        return totalResults;
     }
 
     @Override

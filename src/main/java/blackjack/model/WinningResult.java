@@ -1,7 +1,5 @@
 package blackjack.model;
 
-import java.util.List;
-
 public class WinningResult {
     private final double betting;
     private final int win;
