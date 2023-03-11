@@ -10,14 +10,14 @@ public abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
 
-    protected final ParticipantCard participantCard;
+    protected ParticipantCard participantCard;
 
     protected Participant() {
         participantCard = ParticipantCard.create();
     }
 
     public final void addCard(final Card card) {
-        participantCard.addCard(card);
+        this.participantCard = this.participantCard.addCard(card);
     }
 
     public final int calculateScore() {

@@ -16,12 +16,19 @@ public final class ParticipantCard {
         this.cards = new ArrayList<>();
     }
 
+    private ParticipantCard(final List<Card> cards) {
+        this.cards = cards;
+    }
+
     public static ParticipantCard create() {
         return new ParticipantCard();
     }
 
-    void addCard(final Card card) {
+    public ParticipantCard addCard(final Card card) {
+        final List<Card> cards = new ArrayList<>(this.cards);
         cards.add(card);
+
+        return new ParticipantCard(cards);
     }
 
     Card getFirstCard() {
