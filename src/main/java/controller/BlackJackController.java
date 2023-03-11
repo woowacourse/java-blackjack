@@ -1,15 +1,14 @@
 package controller;
 
 import java.util.List;
-import java.util.Map;
 
 import domain.AdditionalDrawStatus;
 import domain.BlackJackGame;
-import domain.participant.Dealer;
+import domain.betting.BettingManager;
+import domain.betting.BettingMoney;
 import domain.participant.Player;
-import domain.participant.Players;
-import domain.result.ResultCalculator;
 import util.Constants;
+import view.InputValidator;
 import view.InputView;
 import view.OutputView;
 import view.ResultView;
@@ -18,12 +17,13 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = generateBlackJackGame();
-        play(blackJackGame);
+        BettingManager bettingManager = new BettingManager();
+        saveBettingMoney(blackJackGame, bettingManager);
+        initDistributeCards(blackJackGame);
+        additionalCardDraw(blackJackGame);
         printFinalCardResult(blackJackGame);
-
-        ResultCalculator resultCalculator = new ResultCalculator(blackJackGame.getDealer(), blackJackGame.getPlayers());
-        calculateResult(blackJackGame, resultCalculator);
-        printFightResult(resultCalculator);
+        calculateFinalProfit(blackJackGame, bettingManager);
+        printFinalProfit(bettingManager);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -42,19 +42,39 @@ public class BlackJackController {
         }
     }
 
-    private void play(BlackJackGame blackJackGame) {
-        initSettingStep(blackJackGame);
-        askPlayerAdditionalCardDrawStep(blackJackGame);
-        dealerAdditionalCardDrawStep(blackJackGame);
+    private void saveBettingMoney(BlackJackGame blackJackGame, BettingManager bettingManager) {
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        for (String playerName : playerNames) {
+            BettingMoney bettingMoney = generateBettingMoney(playerName);
+            Player findPlayer = blackJackGame.findPlayerByPlayerName(playerName);
+            bettingManager.savePlayerBettingMoney(findPlayer, bettingMoney);
+        }
     }
 
-    private void initSettingStep(BlackJackGame blackJackGame) {
+    private void initDistributeCards(BlackJackGame blackJackGame) {
         List<String> playerNames = blackJackGame.getPlayerNames();
         ResultView.printInitMessage(playerNames);
         ResultView.printParticipantResult(Constants.DEALER_NAME, blackJackGame.findCardNamesByParticipantName(Constants.DEALER_NAME));
         for (String playerName : playerNames) {
             List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
             ResultView.printParticipantResult(playerName, findCardNames);
+        }
+    }
+
+    private void additionalCardDraw(BlackJackGame blackJackGame) {
+        askPlayerAdditionalCardDrawStep(blackJackGame);
+        dealerAdditionalCardDrawStep(blackJackGame);
+    }
+
+    private BettingMoney generateBettingMoney(String playerName) {
+        try {
+            OutputView.printInputBettingMoney(playerName);
+            String bettingMoney = InputView.inputBettingMoney();
+            InputValidator.validateBettingMoney(bettingMoney);
+            return new BettingMoney(Integer.parseInt(bettingMoney));
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return generateBettingMoney(playerName);
         }
     }
 
@@ -91,14 +111,11 @@ public class BlackJackController {
         }
     }
 
-    private void calculateResult(BlackJackGame blackJackGame, ResultCalculator resultCalculator) {
-        for (Player player : blackJackGame.getRawPlayers()) {
-            resultCalculator.calculate(player, blackJackGame.getDealer());
-        }
+    private void calculateFinalProfit(BlackJackGame blackJackGame, BettingManager bettingManager) {
+        bettingManager.calculateParticipantFinalProfit(blackJackGame.getRawPlayers(), blackJackGame.getDealer());
     }
 
-    private void printFightResult(ResultCalculator resultCalculator) {
-        Map<String, String> resultByPlayerName = resultCalculator.getFinalFightResults();
-        ResultView.printFinalFightResult(resultByPlayerName);
+    private void printFinalProfit(BettingManager bettingManager) {
+        ResultView.printFinalProfit(bettingManager.calculateDealerFinalProfit(), bettingManager.getFinalProfitByParticipantForPrint());
     }
 }

@@ -1,12 +1,10 @@
 package domain;
 
 import java.util.List;
-import java.util.Map;
 
 import domain.betting.BettingMoney;
 import domain.card.Deck;
 import domain.participant.*;
-import domain.result.ResultCalculator;
 
 public class BlackJackGame {
 
@@ -26,23 +24,17 @@ public class BlackJackGame {
         return participants.getPlayerNames();
     }
 
-    public void saveBettingMoney(String playerName, BettingMoney bettingMoney) {
-        Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        Dealer dealer = participants.getDealer();
-        dealer.savePlayerBettingMoney(findPlayer, bettingMoney);
+    public Player findPlayerByPlayerName(String playerName) {
+        return participants.findPlayerByPlayerName(playerName);
     }
 
     public List<String> findCardNamesByParticipantName(String participantName) {
         return participants.findCardNamesByParticipantName(participantName);
     }
 
-    public Players getPlayers() {
-        return participants.getPlayers();
-    }
-
     public boolean canPlayerDrawCard(String playerName) {
         Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        return findPlayer.checkCardsCondition();
+        return findPlayer.canHit();
     }
 
     public AdditionalDrawStatus distributePlayerCardOrPass(String playerName, String receiveOrNot) {
@@ -74,18 +66,11 @@ public class BlackJackGame {
 
     public int findPlayerCardValueSumByPlayerName(String playerName) {
         Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        return findPlayer.getOptimalCardValueSum();
+        Hand hand = findPlayer.getHand();
+        return hand.calculateOptimalCardValueSum();
     }
 
     public List<Player> getRawPlayers() {
         return participants.getRawPlayers();
-    }
-
-    public void calculatePlayersProfit() {
-        Players players = participants.getPlayers();
-        Dealer dealer = participants.getDealer();
-        for (Player player : players.getPlayers()) {
-            dealer.calculateFinalProfit(player);
-        }
     }
 }
