@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import blackjack.domain.cardPicker.CardPicker;
-import blackjack.domain.cardPicker.TestCardPicker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,8 @@ public class DeckTest {
     @DisplayName("덱을 생성한다.")
     void constructorDeckTest() {
         List<Card> cards = List.of();
-        CardPicker cardPicker = new TestCardPicker();
 
-        Assertions.assertThatNoException().isThrownBy(() -> new Deck(cards, cardPicker));
+        Assertions.assertThatNoException().isThrownBy(() -> new Deck(cards, (int size) -> 0));
     }
 
     @Test
@@ -30,8 +28,7 @@ public class DeckTest {
                 Arrays.asList(
                         new Card(Shape.CLOVER, Letter.ACE),
                         new Card(Shape.DIAMOND, Letter.JACK)));
-        CardPicker testCardPicker = new TestCardPicker();
-        Deck deck = new Deck(cards, testCardPicker);
+        Deck deck = new Deck(cards, (int size) -> 0);
 
         //when
         Card card = deck.drawCard();
@@ -47,8 +44,7 @@ public class DeckTest {
                 Arrays.asList(
                         new Card(Shape.CLOVER, Letter.ACE),
                         new Card(Shape.DIAMOND, Letter.JACK)));
-        CardPicker testCardPicker = new TestCardPicker();
-        Deck deck = new Deck(cards, testCardPicker);
+        Deck deck = new Deck(cards, (int size) -> 0);
 
         assertThat(deck.getCards()).isEqualTo(cards);
     }

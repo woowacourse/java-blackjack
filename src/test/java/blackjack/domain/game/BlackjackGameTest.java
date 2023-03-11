@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckMaker;
-import blackjack.domain.cardPicker.TestCardPicker;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -25,7 +24,7 @@ public class BlackjackGameTest {
     void setting() {
         dealer = new Dealer();
         participants = new Participants(dealer, List.of("pobi", "crong"));
-        deck = new Deck(DECK_MAKER.makeDeck(), new TestCardPicker());
+        deck = new Deck(DECK_MAKER.makeDeck(), (int size) -> 1);
     }
 
     @Test
