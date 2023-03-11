@@ -77,11 +77,10 @@ public class OutputView {
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
 
-    public void printBettingResult(GameResult gameResult) {
+    public void printBettingResult(int dealerBettingResults, Map<Player, Integer> playerBettingResults) {
+        System.out.println();
         System.out.println(FINAL_START_MESSAGE);
-        int dealerBettingResults = gameResult.getDealerBettingResults();
         printBlackJackParticipantsBettingResult(DEALER_MESSAGE, dealerBettingResults);
-        Map<Player, Integer> playerBettingResults = gameResult.getPlayerBettingResults();
         for (Player player : playerBettingResults.keySet()) {
             printBlackJackParticipantsBettingResult(player.showName(), playerBettingResults.get(player));
         }

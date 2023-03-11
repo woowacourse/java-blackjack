@@ -126,6 +126,6 @@ public class BlackJackGameController {
         }
 
         GameResult gameResult = new GameResult(game);
-        outputView.printBettingResult(gameResult);
+        outputView.printBettingResult(gameResult.getDealerBettingResults(), gameResult.getPlayerBettingResults());
     }
 }
