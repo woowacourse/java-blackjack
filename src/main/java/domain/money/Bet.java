@@ -5,16 +5,25 @@ import java.util.Objects;
 public class Bet {
     
     public static final String NEGATIVE_BET_NUMBER_ERROR_MESSAGE = "베팅 금액은 0보다 커야 합니다.";
+    public static final String BET_UNIT_ERROR_MESSAGE = "베팅 금액은 100원 단위로 입력해주세요.";
+    public static final int BET_UNIT = 100;
     private final int bet;
     
     public Bet(int bet) {
         this.validateNegativeBet(bet);
+        this.validateBetUnit(bet);
         this.bet = bet;
     }
     
     private void validateNegativeBet(final int bet) {
         if (bet < 0) {
             throw new IllegalArgumentException(NEGATIVE_BET_NUMBER_ERROR_MESSAGE);
+        }
+    }
+    
+    private void validateBetUnit(final int bet) {
+        if (bet % BET_UNIT != 0) {
+            throw new IllegalArgumentException(BET_UNIT_ERROR_MESSAGE);
         }
     }
     
