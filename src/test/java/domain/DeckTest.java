@@ -24,7 +24,7 @@ class DeckTest {
 
     private int getSize(Deck deck) {
         int size = 0;
-        while (deck.pickCard() != null) {
+        while (Deck.pickCard() != null) {
             size++;
         }
 
