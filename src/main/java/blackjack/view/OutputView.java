@@ -40,9 +40,8 @@ public class OutputView {
     }
 
     private void printStartMessage(List<String> names) {
-        System.out.println();
         int lastIndex = names.size() - 1;
-        System.out.print(INIT_START_MESSAGE);
+        System.out.println(INIT_START_MESSAGE);
         for (int i = 0; i < lastIndex; i++) {
             System.out.print(names.get(i) + CARD_DELIMITER);
         }
@@ -78,7 +77,7 @@ public class OutputView {
         System.out.println(RESULT_MESSAGE + score);
     }
 
-    public void printEndMsg() {
+    public void printMessage() {
         System.out.println();
         System.out.println(FINAL_START_MESSAGE);
     }
@@ -93,7 +92,9 @@ public class OutputView {
         StringBuilder dealerResultMsg = new StringBuilder(DEALER_MESSAGE);
         for (Result result : dealerResult.keySet()) {
             if (dealerResult.get(result) != ZERO) {
-                dealerResultMsg.append(dealerResult.get(result)).append(result.getResult()).append(BLANK);
+                dealerResultMsg.append(dealerResult.get(result))
+                        .append(result.getResult())
+                        .append(BLANK);
             }
         }
         System.out.println(dealerResultMsg);
