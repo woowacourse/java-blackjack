@@ -92,8 +92,7 @@ public class BlackJackGameController {
     private void playerTurn(Game game, Player player) {
         while (isCheckPlayerCommand(player)) {
             game.giveCardTo(player);
-            outputView.printPlayerName(player);
-            outputView.printCards(player.showCards(), LINE_SEPARATOR);
+            outputView.printPlayerWithCards(player, LINE_SEPARATOR);
         }
     }
 

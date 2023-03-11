@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.Result;
 import blackjack.domain.card.Card;
-import blackjack.domain.gameplayer.BlackJackParticipant;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
@@ -29,12 +26,16 @@ public class OutputView {
         System.out.print(DEALER_MESSAGE + RESULT_DELIMITER);
         printCards(dealer.showCards(), System.lineSeparator());
         for (Player player : players) {
-            printPlayerName(player);
-            printCards(player.showCards(), System.lineSeparator());
+            printPlayerWithCards(player, System.lineSeparator());
         }
     }
 
-    public void printPlayerName(Player player) {
+    public void printPlayerWithCards(Player player, String end) {
+        printPlayerName(player);
+        printCards(player.showCards(), end);
+    }
+
+    private void printPlayerName(Player player) {
         String name = player.showName();
         System.out.print(name + CARD_MESSAGE + RESULT_DELIMITER);
     }
@@ -48,7 +49,7 @@ public class OutputView {
         System.out.println(names.get(lastIndex) + INIT_END_MESSAGE);
     }
 
-    public void printCards(List<Card> cards, String end) {
+    private void printCards(List<Card> cards, String end) {
         int lastIndex = cards.size() - 1;
         for (int i = 0; i < lastIndex; i++) {
             Card card = cards.get(i);
@@ -78,8 +79,7 @@ public class OutputView {
     }
 
     private void printPlayerResult(Player player) {
-        printPlayerName(player);
-        printCards(player.showCards(), EMPTY);
+        printPlayerWithCards(player, EMPTY);
         int score = player.calculateScore().getScore();
         System.out.println(RESULT_MESSAGE + RESULT_DELIMITER + score);
     }
