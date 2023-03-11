@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.Number;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Score {
@@ -31,6 +32,27 @@ public class Score {
         score = sum;
     }
 
+    public Score add(Score other) {
+        return new Score(this.score + other.getScore());
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
+    }
+
     private List<Integer> convertCardsToNumbers(List<Card> cards) {
         return cards.stream()
                 .map(Card::getScore)
@@ -56,9 +78,5 @@ public class Score {
             aceCount--;
         }
         return sum;
-    }
-
-    public int getScore() {
-        return score;
     }
 }
