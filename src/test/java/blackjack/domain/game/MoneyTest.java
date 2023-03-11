@@ -62,4 +62,14 @@ public class MoneyTest {
 
         assertThat(income).isEqualTo(Money.createMoneyForBetting(expectedDifference));
     }
+
+    @ParameterizedTest
+    @CsvSource({"-1, -10000", "0, 0", "1, 10000", "1.5, 15000"})
+    void 수익을_반환한다(final double payoutRatio, final int amount) {
+        final Money moneyForBetting = Money.createMoneyForBetting(10000);
+
+        final Money profit = moneyForBetting.calculateProfit(payoutRatio);
+
+        assertThat(profit.getAmount()).isEqualTo(amount);
+    }
 }
