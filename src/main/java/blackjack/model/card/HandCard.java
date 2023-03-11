@@ -69,7 +69,7 @@ public class HandCard {
     private int smallScore() {
         int score = 0;
         for (CardNumber number : this.getCardNumbers()) {
-            score += number.getSmallScore();
+            score += number.getScore();
         }
         return score;
     }
