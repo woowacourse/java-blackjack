@@ -17,14 +17,23 @@ public class Referee {
         return playerResults;
     }
 
+    /*
+    [ ] 딜러가 버스트인 경우, 플레이어가 무조건 승리한다
+  - [ ] 딜러가 버스트되지 않았고 플레이어가 버스트인 경우, 플레이어의 패배로 판단한다
+  - [ ] 딜러와 플레이어가 둘 다 버스트 되지 않았을 경우, 카드 총합이 더 높은 쪽이 승리한다
+  - [ ] 딜러와 플레이어가 둘 다 버스트 되지 않았을 경우, 둘의 카드 총합이 같으면 무승부로 판단한다
+     */
     public static Result judgePlayerResult(final Score playerScore, final Score dealerScore) {
-        if (playerScore.equals(dealerScore)) {
-            return Result.PUSH;
+        if(dealerScore.isBust()){
+            return Result.WIN;
         }
-        if ((!dealerScore.isBust() && playerScore.isLessThan(dealerScore)) || playerScore.isBust()) {
+        if(playerScore.isBust() || dealerScore.isGreaterThan(playerScore)){
             return Result.LOSE;
         }
-        return Result.WIN;
+        if(playerScore.isGreaterThan(dealerScore)){
+            return Result.WIN;
+        }
+        return Result.PUSH;
     }
 
     public static Map<Result, Integer> judgeTotalDealerResult(final Map<String, Result> playerResults) {
