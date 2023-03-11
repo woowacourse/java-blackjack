@@ -9,15 +9,6 @@ import org.junit.jupiter.api.Test;
 class MoneyTest {
 
     @Test
-    @DisplayName("배팅 금액이 양수 인지 확인한다.")
-    void validateMoneyRange() {
-        // expect
-        assertThatThrownBy(() -> new Money(-1000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 배팅 금액은 0원 이상이여야 합니다.");
-    }
-
-    @Test
     @DisplayName("배팅 금액의 1.5배를 반환한다.")
     void getBlackjackPrize() {
         // given

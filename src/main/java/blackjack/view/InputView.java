@@ -10,6 +10,7 @@ public class InputView {
     private static final String DELIMITER_WITH_BLANK = "\\s*,\\s*";
     private static final String YES_ANSWER_ABOUT_ONE_MORE_CARD = "y";
     private static final String NO_ANSWER_ABOUT_ONE_MORE_CARD = "n";
+    private static final int MIN_BETTING_MONEY = 0;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -27,6 +28,7 @@ public class InputView {
 
         isBlank(input);
         validateDigit(input);
+        validatePositive(Integer.parseInt(input));
 
         return Integer.parseInt(input);
     }
@@ -66,6 +68,12 @@ public class InputView {
 
         if (!isDigit) {
             throw new IllegalArgumentException("[ERROR] 정수만 입력 가능합니다.");
+        }
+    }
+
+    private void validatePositive(int input) {
+        if (input < MIN_BETTING_MONEY) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 " + MIN_BETTING_MONEY + "원 이상이여야 합니다.");
         }
     }
 }

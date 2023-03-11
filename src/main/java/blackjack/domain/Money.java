@@ -9,18 +9,11 @@ public class Money {
     private final int money;
 
     public Money(int money) {
-        validateRange(money);
         this.money = money;
     }
 
     public static Money init() {
         return new Money(MIN_BETTING_MONEY);
-    }
-
-    private void validateRange(int bettingMoney) {
-        if (bettingMoney < MIN_BETTING_MONEY) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 " + MIN_BETTING_MONEY + "원 이상이여야 합니다.");
-        }
     }
 
     public Money getBlackjackPrize() {
