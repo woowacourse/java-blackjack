@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,22 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public Player getPlayer(final Name name) {
+    public void drawCardPlayer(final Name name, final Card card) {
+        getPlayer(name).drawCard(card);
+    }
+
+    private Player getPlayer(final Name name) {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public List<Card> getPlayerCards(final Name name) {
+        return getPlayer(name).cards();
+    }
+
+    public int getPlayerScore(final Name name) {
+        return getPlayer(name).score();
     }
 }

@@ -54,8 +54,7 @@ public class BlackJackGame {
     }
 
     public void drawCardPlayer(final Name name) {
-        players.getPlayer(name)
-                .drawCard(deck.popCard());
+        players.drawCardPlayer(name, deck.popCard());
     }
 
     public boolean isDealerDraw() {
@@ -63,7 +62,7 @@ public class BlackJackGame {
     }
 
     public List<Card> getPlayerCards(final Name name) {
-        return players.getPlayer(name).cards();
+        return players.getPlayerCards(name);
     }
 
     public List<Card> getDealerCards() {
@@ -71,7 +70,7 @@ public class BlackJackGame {
     }
 
     public int getPlayerScore(final Name name) {
-        return players.getPlayer(name).score();
+        return players.getPlayerScore(name);
     }
 
     public int getDealerScore() {
