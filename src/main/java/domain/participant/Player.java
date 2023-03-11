@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     private static final int BURST_NUMBER = 21;
 
-    private BettingMoney bettingMoney;
+    private final BettingMoney bettingMoney;
 
     public Player(Name name, DrawnCards drawnCards, BettingMoney bettingMoney) {
         super(name, drawnCards);
