@@ -23,11 +23,11 @@ public class Bank {
         return pay;
     }
 
-    private void applyExpense(Money money) {
-        bankProfit = bankProfit.sub(money);
-    }
-
     private Money betOf(User user) {
         return bets.getOrDefault(user, Money.of(0));
+    }
+
+    private void applyExpense(Money money) {
+        bankProfit = bankProfit.sub(money);
     }
 }
