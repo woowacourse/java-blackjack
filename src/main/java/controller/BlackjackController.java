@@ -3,6 +3,7 @@ package controller;
 import domain.Participants;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 import ui.InputView;
@@ -25,7 +26,7 @@ public class BlackjackController {
     public void run() {
         participants.initGame();
         OutputView.printCardsStatus(participants.getDealer(), participants.getPlayers());
-        participants.getPlayers().forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
+        giveCardPlayers(participants.getPlayers());
         addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
         participants.calculateAllResults();
@@ -37,6 +38,10 @@ public class BlackjackController {
             OutputView.announceAddCardToDealer();
             participants.addCardToDealerIfPossible();
         }
+    }
+
+    private void giveCardPlayers(List<Player> players) {
+        players.forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
     }
 
     private void giveCardUntilImpossible(Player player, Dealer dealer) {
