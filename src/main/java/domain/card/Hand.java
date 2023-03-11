@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.Score;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -42,8 +43,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 
     public int size() {

@@ -42,7 +42,7 @@ class HandTest {
     void test_addCard() {
         hand.add(new Card(HEART, "2"));
 
-        assertThat(hand.getCards()).hasSize(4);
+        assertThat(hand.cards()).hasSize(4);
     }
 
 }

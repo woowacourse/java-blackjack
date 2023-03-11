@@ -71,7 +71,7 @@ public class OutputView {
         String name = user.getName();
         String cardDisplays = getCardDisplays(user.cards());
 
-        System.out.println(name + CARD_NOTICE + cardDisplays + RESULT_NOTICE + user.score().getValue());
+        System.out.println(name + CARD_NOTICE + cardDisplays + RESULT_NOTICE + user.score().value());
     }
 
     public void printResultNotice() {
@@ -79,11 +79,11 @@ public class OutputView {
     }
 
     public void printResult(String name, Money money) {
-        System.out.println(name + NAME_AND_VALUE_DELIMITER + money.getAmount());
+        System.out.println(name + NAME_AND_VALUE_DELIMITER + money.amount());
     }
 
     public void printDealerResults(Money money) {
-        System.out.println(DEALER_NOTICE + money.getAmount());
+        System.out.println(DEALER_NOTICE + money.amount());
     }
 
     private String getCardDisplays(List<Card> cards) {

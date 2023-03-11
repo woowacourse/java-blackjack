@@ -29,7 +29,7 @@ public class Application {
     }
 
     private static List<Player> getPlayers() {
-        List<String> playerNames = inputView.readNames();
+        List<String> playerNames = inputView.enterNames();
         return createPlayersWith(playerNames);
     }
 

@@ -13,7 +13,7 @@ public enum Result {
         this.times = times;
     }
 
-    public double getTimes() {
+    public double times() {
         return times;
     }
 

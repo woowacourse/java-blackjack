@@ -20,7 +20,7 @@ class DeckTest {
     @Test
     @DisplayName("4개의 그림과 13개의 글자로 52장의 덱을 생성한다")
     void test_create() {
-        var cards = deck.getCards();
+        var cards = deck.cards();
 
         assertThat(cards).hasSize(52);
     }
@@ -30,7 +30,7 @@ class DeckTest {
     void test_drawCard_success() {
         deck.drawCard();
 
-        assertThat(deck.getCards()).hasSize(51);
+        assertThat(deck.cards()).hasSize(51);
     }
 
     @Test
@@ -38,7 +38,7 @@ class DeckTest {
     void test_removeCardByDraw() {
         var card = deck.drawCard();
 
-        assertThat(card).isNotIn(deck.getCards());
+        assertThat(card).isNotIn(deck.cards());
     }
 
     @Test

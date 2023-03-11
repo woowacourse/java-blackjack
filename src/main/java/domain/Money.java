@@ -27,7 +27,7 @@ public class Money {
         return new Money((int) (this.amount * times));
     }
 
-    public int getAmount() {
+    public int amount() {
         return amount;
     }
 

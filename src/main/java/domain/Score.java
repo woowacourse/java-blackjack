@@ -14,7 +14,7 @@ public class Score {
     }
 
     public Score add(Score other) {
-        return new Score(value + other.getValue());
+        return new Score(value + other.value());
     }
 
     public Score addScoreByAce() {
@@ -45,7 +45,7 @@ public class Score {
         return value < score;
     }
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 

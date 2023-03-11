@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+
     private static final int FIRST_INDEX = 0;
 
     private final List<Card> cards;
@@ -15,9 +16,8 @@ public class Deck {
 
     private List<Card> buildDeck() {
         var cards = new ArrayList<Card>();
-        var suits = List.of(Suit.values());
 
-        for (Suit suit : suits) {
+        for (Suit suit : Suit.values()) {
             cards.addAll(buildCardsFrom(suit));
         }
 
@@ -47,8 +47,8 @@ public class Deck {
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 
 }

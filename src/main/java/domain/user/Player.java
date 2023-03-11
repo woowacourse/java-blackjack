@@ -23,6 +23,7 @@ public class Player extends User {
         this.money = bettingAmount;
     }
 
+    @Override
     public boolean canHit() {
         return score().isLessThan(PLAYER_HIT_LIMIT);
     }

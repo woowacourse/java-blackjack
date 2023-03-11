@@ -17,7 +17,7 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readNames() {
+    public List<String> enterNames() {
         System.out.println(ENTER_PLAYER_NAME_NOTICE);
         String input = scanner.nextLine();
 

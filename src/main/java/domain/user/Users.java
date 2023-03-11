@@ -4,6 +4,7 @@ import domain.Money;
 import domain.card.Deck;
 import domain.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static domain.Referee.getResult;
@@ -48,7 +49,7 @@ public class Users {
     }
 
     public List<Player> players() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public Dealer dealer() {
