@@ -83,16 +83,16 @@ public final class Dealer extends Participant {
         return exchangedBank.totalMoney();
     }
 
-    public int getInitCardCount() {
-        return INIT_CARD_COUNT;
+    public void giveCard(final Player player) {
+        player.receiveCard(deck.drawCard());
     }
 
     public int getCanDrawScore() {
         return CAN_DRAW_SCORE;
     }
 
-    public void giveCard(final Player player) {
-        player.receiveCard(deck.drawCard());
+    public int getInitCardCount() {
+        return INIT_CARD_COUNT;
     }
 
     public String getName() {
@@ -101,9 +101,5 @@ public final class Dealer extends Participant {
 
     public Bank getBank() {
         return bank;
-    }
-
-    public Deck getDeck() {
-        return deck;
     }
 }
