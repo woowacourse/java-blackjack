@@ -3,13 +3,13 @@ package service;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
+import dto.ParticipantAccountResult;
 import dto.ParticipantResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackjackResultService {
+public class ResultService {
 
     public List<DrawnCardsInfo> makeAfterSplitsInfos(final Players players, final Dealer dealer) {
         return getDrawnCardsInfos(players, dealer);
@@ -44,13 +44,13 @@ public class BlackjackResultService {
         return participantResults;
     }
 
-    public List<BlackJackResult> getParticipantAccountResults(final Players players, final Dealer dealer) {
-        List<BlackJackResult> blackJackResults = new ArrayList<>();
-        blackJackResults.add(BlackJackResult.toDto(dealer));
+    public List<ParticipantAccountResult> getParticipantAccountResults(final Players players, final Dealer dealer) {
+        List<ParticipantAccountResult> participantAccountResults = new ArrayList<>();
+        participantAccountResults.add(ParticipantAccountResult.toDto(dealer));
 
         players.stream()
-                .forEach(player -> blackJackResults.add(BlackJackResult.toDto(player)));
+                .forEach(player -> participantAccountResults.add(ParticipantAccountResult.toDto(player)));
 
-        return blackJackResults;
+        return participantAccountResults;
     }
 }

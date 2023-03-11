@@ -1,6 +1,6 @@
 import controller.BlackJackController;
-import service.BlackjackCalculatorService;
-import service.BlackjackResultService;
+import service.CalculatorService;
+import service.ResultService;
 import view.InputView;
 import view.OutputView;
 
@@ -10,8 +10,8 @@ public class main {
         BlackJackController blackJackController = new BlackJackController(
                 new InputView(),
                 new OutputView(),
-                new BlackjackResultService(),
-                new BlackjackCalculatorService()
+                new ResultService(),
+                new CalculatorService()
         );
 
         blackJackController.run();

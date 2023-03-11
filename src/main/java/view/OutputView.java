@@ -1,7 +1,7 @@
 package view;
 
-import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
+import dto.ParticipantAccountResult;
 import dto.ParticipantResult;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ public class OutputView {
     private static final String RESULT_DELIMITER = ": ";
     private static final String NEW_LINE = System.getProperty("line.separator");
 
-    public void printCardSplitMessage(final List<DrawnCardsInfo> infos) {
+    public void printSplitCardsMessage(final List<DrawnCardsInfo> infos) {
         String names = infos.stream()
                 .filter(info -> !info.getName().equals("딜러"))
                 .map(info -> info.getName())
@@ -39,7 +39,7 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printParticipantsCardsResults(final List<ParticipantResult> results) {
+    public void printCardsResults(final List<ParticipantResult> results) {
         System.out.println();
         results.stream()
                 .forEach(result -> System.out.println(
@@ -51,7 +51,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void printParticipantAccountResults(final List<BlackJackResult> results) {
+    public void printAccountResults(final List<ParticipantAccountResult> results) {
         System.out.println(NEW_LINE + "## 최종 수익");
         results
                 .forEach(result -> System.out.println(result.getName() + ": " + (int) result.getAccount()));

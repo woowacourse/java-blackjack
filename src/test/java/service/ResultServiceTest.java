@@ -13,16 +13,16 @@ import domain.Dealer;
 import domain.DrawnCards;
 import domain.Player;
 import domain.Players;
-import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
+import dto.ParticipantAccountResult;
 import dto.ParticipantResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackjackResultServiceTest {
+class ResultServiceTest {
 
-    private final BlackjackResultService blackJackResultService = new BlackjackResultService();
+    private final ResultService blackJackResultService = new ResultService();
 
     @Test
     @DisplayName("플레이어와 딜러의 카드 정보를 반환한다.")
@@ -82,7 +82,7 @@ class BlackjackResultServiceTest {
         Dealer dealer = new Dealer(createEmptyCards());
 
         // when
-        List<BlackJackResult> result = blackJackResultService.getParticipantAccountResults(players, dealer);
+        List<ParticipantAccountResult> result = blackJackResultService.getParticipantAccountResults(players, dealer);
 
         // then
         assertThat(result.size()).isEqualTo(2);

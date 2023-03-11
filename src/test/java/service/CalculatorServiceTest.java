@@ -23,9 +23,9 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackCalculatorServiceTest {
+public class CalculatorServiceTest {
 
-    private final BlackjackCalculatorService blackjackCalculatorService = new BlackjackCalculatorService();
+    private final CalculatorService calculatorService = new CalculatorService();
 
     @Test
     @DisplayName("플레이어와 딜러에게 카드를 2장씩 나눠준다.")
@@ -36,7 +36,7 @@ public class BlackjackCalculatorServiceTest {
         Dealer dealer = new Dealer(createEmptyCards());
 
         // when
-        blackjackCalculatorService.splitCards(players, dealer, CardDeckGenerator.create());
+        calculatorService.splitCards(players, dealer, CardDeckGenerator.create());
 
         // then
         assertSoftly(softly -> {
@@ -53,7 +53,7 @@ public class BlackjackCalculatorServiceTest {
         DrawCommand drawCommand = new DrawCommand(Message.STOP_COMMAND.getMessage());
 
         // when
-        boolean result = blackjackCalculatorService.canDrawMore(player, drawCommand);
+        boolean result = calculatorService.canDrawMore(player, drawCommand);
 
         // then
         assertThat(result).isFalse();
@@ -67,7 +67,7 @@ public class BlackjackCalculatorServiceTest {
         DrawCommand drawCommand = new DrawCommand(Message.DRAW_COMMAND.getMessage());
 
         // when
-        boolean result = blackjackCalculatorService.canDrawMore(player, drawCommand);
+        boolean result = calculatorService.canDrawMore(player, drawCommand);
 
         // then
         assertThat(result).isTrue();
@@ -83,7 +83,7 @@ public class BlackjackCalculatorServiceTest {
         Dealer dealer = new Dealer(drawnCards);
 
         // when
-        blackjackCalculatorService.pickDealerCard(cardDeck, dealer);
+        calculatorService.pickDealerCard(cardDeck, dealer);
 
         // then
         assertThat(dealer.calculateCardScore() > sumBeforeDrawn).isTrue();
@@ -96,7 +96,7 @@ public class BlackjackCalculatorServiceTest {
         Dealer dealer = new Dealer(createStayCards());
 
         // when
-        boolean result = blackjackCalculatorService.canDealerDrawMore(dealer);
+        boolean result = calculatorService.canDealerDrawMore(dealer);
 
         // then
         assertThat(result).isTrue();
@@ -113,7 +113,7 @@ public class BlackjackCalculatorServiceTest {
         int playerAccount = player.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertSoftly(softly -> {
@@ -133,7 +133,7 @@ public class BlackjackCalculatorServiceTest {
         int dealerAccount = dealer.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertSoftly(softly -> {
@@ -152,7 +152,7 @@ public class BlackjackCalculatorServiceTest {
         int playerAccount = player.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertThat(player.getAccount() > playerAccount).isTrue();
@@ -168,7 +168,7 @@ public class BlackjackCalculatorServiceTest {
         int playerAccount = player.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertSoftly(softly -> {
@@ -188,7 +188,7 @@ public class BlackjackCalculatorServiceTest {
         int dealerAccount = dealer.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertSoftly(softly -> {
@@ -208,7 +208,7 @@ public class BlackjackCalculatorServiceTest {
         int dealerInitAccount = dealer.getAccount();
 
         // when
-        blackjackCalculatorService.calculateGameResults(players, dealer);
+        calculatorService.calculateGameResults(players, dealer);
 
         // then
         assertSoftly(softly -> {

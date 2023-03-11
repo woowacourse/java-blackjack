@@ -7,7 +7,7 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 
-public class BlackjackCalculatorService {
+public class CalculatorService {
 
     private static final int CARDS_SPLIT_COUNT_OF_INIT = 2;
 
@@ -23,7 +23,7 @@ public class BlackjackCalculatorService {
         }
     }
 
-    public void drawCards(final Player player, final CardDeck cardDeck, final DrawCommand drawCommand) {
+    public void drawCard(final Player player, final CardDeck cardDeck, final DrawCommand drawCommand) {
         if (canDrawMore(player, drawCommand)) {
             player.pickCard(cardDeck.draw());
         }
