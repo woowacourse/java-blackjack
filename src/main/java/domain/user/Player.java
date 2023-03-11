@@ -37,7 +37,7 @@ public class Player {
     public void decreaseRevenue() {
         bet.decreaseRevenue();
     }
-    //TODO: Player 추상클래스 분리 혹은 조합
+
     public void payFor(Player otherPlayer) {
         bet.payFor(otherPlayer.bet);
     }
