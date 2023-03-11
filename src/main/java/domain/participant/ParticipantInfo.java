@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static domain.game.EarningRate.BONUS;
 import static domain.game.EarningRate.LOSE;
 import static domain.participant.Participant.DEALER_NAME;
 
@@ -38,16 +39,28 @@ public class ParticipantInfo {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void loseAllMoney(final Participant participant) {
-        updateDealerMoney(participant);
-        final ParticipantMoney participantMoney = participantInfo.get(participant);
-        participantInfo.put(participant, LOSE.calculateMoney(participantMoney));
+    public void losePlayerMoney(final Participant player) {
+        earnDealerMoney(player);
+        final ParticipantMoney playerMoney = participantInfo.get(player);
+        participantInfo.put(player, LOSE.calculateMoney(playerMoney));
     }
 
-    private void updateDealerMoney(final Participant player) {
+    public void earnPlayerBonusMoney(final Participant player) {
+        final ParticipantMoney playerMoney = participantInfo.get(player);
+        participantInfo.put(player, BONUS.calculateMoney(playerMoney));
+        loseDealerMoney(player);
+    }
+
+    private void earnDealerMoney(final Participant player) {
         final Participant dealer = findDealerInfo();
         final ParticipantMoney dealerMoney = participantInfo.get(dealer);
         participantInfo.put(dealer, dealerMoney.add(participantInfo.get(player)));
+    }
+
+    private void loseDealerMoney(final Participant player) {
+        final Participant dealer = findDealerInfo();
+        final ParticipantMoney dealerMoney = participantInfo.get(dealer);
+        participantInfo.put(dealer, dealerMoney.subtract(participantInfo.get(player)));
     }
 
     @Override
