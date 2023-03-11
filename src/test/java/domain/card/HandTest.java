@@ -13,4 +13,13 @@ class HandTest {
     void createHandTest() {
         assertDoesNotThrow(() -> new Hand());
     }
+
+    @Test
+    @DisplayName("카드를 한 장 받을 수 있다.")
+    void addTest() {
+        Card card = CloverCard.CLOVER_FOUR;
+        Hand hand = new Hand();
+
+        assertDoesNotThrow(() -> hand.add(card));
+    }
 }
