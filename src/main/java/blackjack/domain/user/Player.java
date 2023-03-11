@@ -7,6 +7,10 @@ public class Player extends User {
 
     static final String NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 '딜러'일 수 없습니다.";
     private static final int FIRST_OPEN_CARD_COUNT = 2;
+    private static final double TIE_PROFIT_RATE = 0.0;
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+    private static final double WIN_PROFIT_RATE = 1.0;
+    private static final double LOSE_PROFIT_RATE = -WIN_PROFIT_RATE;
 
     protected Player(final String name, final CardGroup cardGroup) {
         super(name, cardGroup);
@@ -39,32 +43,31 @@ public class Player extends User {
             return calculateProfitRateWhenPlayerIsBlackJack(dealerScore);
         }
         if (playerScore.isBust()) {
-            return -1.0;
+            return LOSE_PROFIT_RATE;
         }
         if (dealerScore.isBust()) {
-            return 1.0;
+            return WIN_PROFIT_RATE;
         }
         return calculateProfitRateByScoreValue(dealer);
     }
 
     private Double calculateProfitRateWhenPlayerIsBlackJack(final Score dealerScore) {
         if (dealerScore.isBlackJack()) {
-            return 0.0;
+            return TIE_PROFIT_RATE;
         }
-        return 1.5;
+        return BLACKJACK_PROFIT_RATE;
     }
 
-    //TODO: 네이밍 고민해보기
     private Double calculateProfitRateByScoreValue(final Dealer dealer) {
         final Score playerScore = getScore();
         final Score dealerScore = dealer.getScore();
 
         if (playerScore.isBigger(dealerScore)) {
-            return 1.0;
+            return WIN_PROFIT_RATE;
         }
         if (playerScore.isEqual(dealerScore)) {
-            return 0.0;
+            return TIE_PROFIT_RATE;
         }
-        return -1.0;
+        return LOSE_PROFIT_RATE;
     }
 }
