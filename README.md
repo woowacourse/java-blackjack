@@ -9,26 +9,17 @@
 ## 그래프
 ```mermaid
 graph TD
-    A[contrller] -.-> PS[Players]
-    A -.-> W[WinningResult]
-    A --> D[Dealer]
-    A -.-> CD[CardDeck]
-    
-    PS --> P[Player]
-    CD --> C[Card]
-    
-     Pa[Participant]--extends--- P
-     Pa[Participant]--extends--- D 
-    
-    D --> N[Name]
-    D --> H[HandCard]
-    P --> H
-    P --> N[Name]
-    D --> ST[State] 
-    P --> ST 
+    A[controller] -.-> G[BlackjackGame]
+    A -.-> CD[CardDeck] --> C[Card]
+    A -.-> WS
+    G --> PS[Players] --> P[Player] --> H[HandCard]
+    G --> D[Dealer] --> H
+    P -.-> CS[CardScore] 
 
-    C --> S[CardSuit]
-    C --> Num[CardNumber]
+    CS--> |create|WS
+    H--> |create|CS
+    WS[WinningfResult]
+
 ```
 
 ## 입력
