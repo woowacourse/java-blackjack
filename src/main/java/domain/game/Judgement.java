@@ -13,14 +13,14 @@ public class Judgement {
     public static Map<Name, Outcome> judgeOutcome(final Dealer dealer, final Players players) {
         final Map<Name, Outcome> outcomes = new HashMap<>();
 
-        for (Player player : players.getPlayers()) {
-            outcomes.put(player.getName(), descideOutcome(dealer, player));
+        for (final Player player : players.getPlayers()) {
+            outcomes.put(player.getName(), decideOutcome(dealer, player));
         }
 
         return outcomes;
     }
 
-    private static Outcome descideOutcome(final Dealer dealer, final Player player) {
+    private static Outcome decideOutcome(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return Outcome.DRAW;
         }
@@ -45,7 +45,7 @@ public class Judgement {
         return Outcome.DRAW;
     }
 
-    private static boolean isBurst(int score) {
+    private static boolean isBurst(final int score) {
         return score > BLACKJACK_NUMBER;
     }
 }
