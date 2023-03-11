@@ -34,14 +34,6 @@ public class ScoreTest {
         assertThat(score.canAddBonus()).isEqualTo(canAddBonus);
     }
 
-    @ParameterizedTest(name = "보너스 점수를 더할 수 있다")
-    @CsvSource({"11,21", "1,11"})
-    void test_add_bonus(int providedScore, int expectedScore) {
-        var score = new Score(providedScore);
-
-        assertThat(score.addBonus()).isEqualTo(new Score(expectedScore));
-    }
-
     @ParameterizedTest(name = "다른 점수보다 큰지 알 수 있다")
     @CsvSource({"11,false", "12,true"})
     void test_is_greater_than(int providedScore, boolean isGreater) {
@@ -60,12 +52,12 @@ public class ScoreTest {
         assertThat(score.isSameWith(other)).isEqualTo(isGreater);
     }
 
-    // @ParameterizedTest(name = "다른 점수보다 작은지 알 수 있다")
-    // @CsvSource({"10,true", "11,false"})
-    // void test_is_less_than(int providedScore, boolean isLess) {
-    //     var score = new Score(providedScore);
-    //     var other = new Score(11);
-    //
-    //     assertThat(score.isLessThan(other)).isEqualTo(isLess);
-    // }
+    @ParameterizedTest(name = "다른 점수보다 작은지 알 수 있다")
+    @CsvSource({"10,true", "11,false"})
+    void test_is_less_than(int providedScore, boolean isLess) {
+        var score = new Score(providedScore);
+        var other = new Score(11);
+
+        assertThat(score.isLessThan(other)).isEqualTo(isLess);
+    }
 }

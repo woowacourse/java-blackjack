@@ -26,7 +26,7 @@ public class Hand {
     public Score score() {
         Score scoreSum = sumScoreOf(cards);
         if (hasAIn(cards) && scoreSum.canAddBonus()) {
-            return scoreSum.addBonus();
+            return scoreSum.add(Score.BONUS);
         }
         return scoreSum;
     }

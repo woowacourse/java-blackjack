@@ -4,8 +4,8 @@ public class Score {
 
     private static final int MIN = 0;
 
-    private static final Score MAX = new Score(21);
-    private static final Score BONUS = new Score(10);
+    public static final Score BLACKJACK = new Score(21);
+    public static final Score BONUS = new Score(10);
 
     private final int score;
 
@@ -22,15 +22,11 @@ public class Score {
     }
 
     public boolean canAddBonus() {
-        return this.addBonus().isNotBust();
-    }
-
-    public Score addBonus() {
-        return this.add(BONUS);
+        return this.add(BONUS).isNotBust();
     }
 
     public boolean isBust() {
-        return this.isGreaterThan(MAX);
+        return this.isGreaterThan(BLACKJACK);
     }
 
     private boolean isNotBust() {
