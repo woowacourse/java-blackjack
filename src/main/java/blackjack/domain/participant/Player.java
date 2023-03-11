@@ -42,6 +42,10 @@ public class Player implements Decidable {
         return participant.isBust();
     }
 
+    public boolean isBlackjack() {
+        return participant.isBlackjack();
+    }
+
     public void betting(int bettingMoney) {
         this.bettingMoney = new BettingMoney(bettingMoney);
     }
@@ -57,11 +61,15 @@ public class Player implements Decidable {
         return score.isLessOrEquals(new Score(PLAYER_MAX_RECEIVE_CARD));
     }
 
+    public List<Card> getCards() {
+        return participant.getCards();
+    }
+
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
-        return participant.getCards();
+    public Money getBettingMoney() {
+        return bettingMoney;
     }
 }

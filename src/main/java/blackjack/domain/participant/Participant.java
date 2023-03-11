@@ -25,6 +25,10 @@ public class Participant {
         return cards.isBust();
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public List<Card> getCards() {
         return cards.getCards();
     }

@@ -26,6 +26,10 @@ public class Dealer implements Decidable {
         return participant.isBust();
     }
 
+    public boolean isBlackjack() {
+        return participant.isBlackjack();
+    }
+
     @Override
     public List<Card> showInitCards() {
         return List.of(participant.getCards().get(0));
