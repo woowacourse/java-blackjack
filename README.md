@@ -8,6 +8,32 @@
 
 ---
 
+```mermaid
+graph TD
+    BlackjackController --> OutputView
+    BlackjackController --> InputView
+    BlackjackController --> BlackjackGame
+
+    BlackjackGame --> Participants
+    BlackjackGame --> CardDeck
+
+    Participants --> Player
+    Participants --> Dealer
+
+    Player --> Participant
+    Dealer --> Participant
+
+    Participant --> Name
+    Participant --> PlayerCards
+
+    PlayerCards --> Card
+    CardDeck --> Card
+
+    Card --> CardSuit
+    Card --> CardNumber
+
+```
+
 ### 기능 목록
 
 - [x] 플레이어 이름을 입력 받는다
