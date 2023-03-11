@@ -3,10 +3,7 @@ package domain.game;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.state.Blackjack;
-import domain.state.Bust;
-import domain.state.Hit;
-import domain.state.Ready;
+import domain.state.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -67,5 +64,14 @@ public class BlackjackGameTest {
 
         assertThatThrownBy(() -> state.draw(SPADE_TEN))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void stay() {
+        final var state = new Ready()
+                .draw(SPADE_TEN)
+                .draw(SPADE_TEN);
+
+        assertThat(state.stay()).isInstanceOf(Stay.class);
     }
 }
