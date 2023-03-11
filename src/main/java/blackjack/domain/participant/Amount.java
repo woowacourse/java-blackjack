@@ -26,10 +26,6 @@ public class Amount {
         return amount.multiply(winningResult.getMagnification());
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     private void validateAmount(String amount) {
         checkEmpty(amount);
         checkAmountNumber(amount);

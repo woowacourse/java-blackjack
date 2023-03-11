@@ -24,8 +24,4 @@ public class Player extends Participant {
     public boolean decideHit() {
         return calculateCardNumber() < BLACKJACK_MAX_NUMBER;
     }
-
-    public BigDecimal getAmount() {
-        return amount.getAmount();
-    }
 }

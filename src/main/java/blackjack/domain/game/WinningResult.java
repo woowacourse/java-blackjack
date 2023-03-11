@@ -15,18 +15,6 @@ public enum WinningResult {
         this.magnification = magnification;
     }
 
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isLose() {
-        return this == LOSE;
-    }
-
-    public boolean isPush() {
-        return this == PUSH;
-    }
-
     public BigDecimal getMagnification() {
         return magnification;
     }
