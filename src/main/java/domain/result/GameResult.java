@@ -36,7 +36,7 @@ public class GameResult {
             }
 
             Result result = compareHandValue(player);
-            playersPrize.put(player, player.calculatePrize(result.getWidth()));
+            playersPrize.put(player, player.calculatePrize(result.getPrizeRatio()));
         }
         return playersPrize;
     }
