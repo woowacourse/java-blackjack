@@ -2,6 +2,8 @@ package domain;
 
 import domain.user.User;
 
+import static domain.Result.*;
+import static domain.Status.BLACKJACK;
 import static domain.Status.BUST;
 
 public class Referee {
@@ -11,20 +13,24 @@ public class Referee {
     }
 
     private static Result compare(User user, User other) {
-        if (isDraw(user, other)) {
-            return Result.DRAW;
-        }
-
         if (isWon(user, other)) {
-            return Result.WIN;
+            return confirmWinReason(user);
         }
 
-        return Result.LOSE;
+        if (isDraw(user, other)) {
+            return DRAW;
+        }
+
+        return LOSE;
     }
 
     private static boolean isWon(User user, User other) {
         if (user.status() == BUST) {
             return false;
+        }
+
+        if (user.status() == BLACKJACK && other.status() != BLACKJACK) {
+            return true;
         }
 
         return user.score().isGreaterThan(other.score()) || other.status() == BUST;
@@ -35,7 +41,18 @@ public class Referee {
             return true;
         }
 
-        return user.score().equals(other.score());
+        if (user.status() == BLACKJACK && other.status() == BLACKJACK) {
+            return true;
+        }
+
+        return (user.score().equals(other.score())) && other.status() != BLACKJACK;
+    }
+
+    private static Result confirmWinReason(User user) {
+        if (user.status() == BLACKJACK) {
+            return WIN_BY_BLACKJACK;
+        }
+        return WIN;
     }
 
 }
