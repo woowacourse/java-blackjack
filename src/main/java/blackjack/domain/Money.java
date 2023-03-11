@@ -7,9 +7,6 @@ public class Money {
     private final int value;
 
     public Money(int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("범위가 올바르지 않습니다.");
-        }
         this.value = value;
     }
 
