@@ -4,17 +4,17 @@ import static java.util.stream.Collectors.toList;
 
 import domain.card.Card;
 import domain.card.DrawnCards;
-import domain.message.ExceptionMessage;
 import java.util.Collections;
 import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_LIMIT_SCORE = 16;
     private static final double GAME_LOSE_RATIO = 0.5;
 
     public Dealer(final DrawnCards drawnCards) {
-        super(new Status(new Name(ExceptionMessage.DEALER_NAME.getMessage()), new Account(0)), drawnCards);
+        super(new Status(new Name(DEALER_NAME), new Account(0)), drawnCards);
     }
 
     @Override
