@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.game.EarningRate;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,6 +7,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static domain.game.EarningRate.LOSE;
 import static domain.participant.Participant.DEALER_NAME;
 
 public class ParticipantInfo {
@@ -40,12 +39,12 @@ public class ParticipantInfo {
     }
 
     public void loseAllMoney(final Participant participant) {
-        updateDealerMoney(findDealerInfo());
+        updateDealerMoney(participant);
         final ParticipantMoney participantMoney = participantInfo.get(participant);
-        participantInfo.put(participant, EarningRate.LOSE.calculateMoney(participantMoney));
+        participantInfo.put(participant, LOSE.calculateMoney(participantMoney));
     }
 
-    public void updateDealerMoney(final Participant player) {
+    private void updateDealerMoney(final Participant player) {
         final Participant dealer = findDealerInfo();
         final ParticipantMoney dealerMoney = participantInfo.get(dealer);
         participantInfo.put(dealer, dealerMoney.add(participantInfo.get(player)));

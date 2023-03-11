@@ -76,22 +76,4 @@ class ParticipantInfoTest {
         assertThat(playerMoney)
                 .isEqualTo(ParticipantMoney.create(-10000));
     }
-
-    @Test
-    @DisplayName("updateDealerMoney()는 받은 플레이어의 돈을 딜러의 돈으로 설정한다")
-    void updateDealerMoney_givenPlayer_thenUpdateDealerMoney() {
-        // given
-        final Player targetPlayer = Player.create("pobi");
-        final Participant dealer = Participant.createDealer();
-
-        // when
-        participantInfo.updateDealerMoney(targetPlayer);
-
-        // then
-        final Map<Participant, ParticipantMoney> allParticipantInfo = participantInfo.getParticipantInfo();
-        final ParticipantMoney dealerMoney = allParticipantInfo.get(dealer);
-
-        assertThat(dealerMoney)
-                .isEqualTo(ParticipantMoney.create(10000));
-    }
 }
