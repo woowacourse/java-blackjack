@@ -38,7 +38,7 @@ class DealerTest {
                         List.of(
                                 new Card(Shape.DIAMOND, Symbol.ACE),
                                 new Card(Shape.CLOVER, Symbol.KING)),
-                        Result.WIN),
+                        Result.BLACKJACK),
                 Arguments.of(
                         List.of(
                                 new Card(Shape.DIAMOND, Symbol.JACK),
