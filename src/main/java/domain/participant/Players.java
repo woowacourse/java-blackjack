@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Deck;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,9 +12,9 @@ public class Players {
         this.players = players;
     }
 
-    public void initDistribute() {
+    public void initDistribute(Deck deck) {
         for (Player player : players) {
-            player.takeCard(2);
+            player.takeCard(deck, 2);
         }
     }
 

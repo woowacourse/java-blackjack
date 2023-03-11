@@ -6,28 +6,28 @@ import java.util.Stack;
 public class Deck {
     private static final String KOREAN_REGEX = "[가-힣]+";
 
-    private static final Stack<Card> deck = makeDeck();
+    private final Stack<Card> deck;
 
-    private static Stack<Card> makeDeck() {
+    public Deck() {
         Stack<Card> stack = new Stack<>();
         for (Denomination denomination : Denomination.values()) {
             makeCard(stack, denomination);
         }
         Collections.shuffle(stack);
-        return stack;
+        this.deck = stack;
     }
 
-    private static void makeCard(Stack<Card> stack, Denomination denomination) {
+    private  void makeCard(Stack<Card> stack, Denomination denomination) {
         for (Suit suit : Suit.values()) {
             stack.add(new Card(denomination.getName() + suit.getValue(), denomination.getValue()));
         }
     }
 
-    public static Card generateCard() {
+    public  Card generateCard() {
         return deck.pop();
     }
 
-    public static int extractCardNumber(String card) {
+    public  int extractCardNumber(String card) {
         String cardValue = card.replaceAll(KOREAN_REGEX, "");
         return Denomination.convertNumber(cardValue);
     }

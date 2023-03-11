@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Players;
@@ -14,12 +15,12 @@ public class BlackJackGame {
         this.dealer = dealer;
     }
 
-    public void initSettingCards() {
-        dealer.takeCard(INIT_CARD_NUM);
-        players.initDistribute();
+    public void initSettingCards(Deck deck) {
+        dealer.takeCard(deck, INIT_CARD_NUM);
+        players.initDistribute(deck);
     }
 
-    public void distributeCard(Participant participant, int num) {
-        participant.takeCard(num);
+    public void distributeCard(Deck deck, Participant participant, int num) {
+        participant.takeCard(deck, num);
     }
 }

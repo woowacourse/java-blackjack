@@ -15,9 +15,9 @@ public abstract class Participant {
         this.handCards = new HandCards();
     }
 
-    public void takeCard(int num) {
+    public void takeCard(Deck deck, int num) {
         for (int generateIndex = 0; generateIndex < num; generateIndex++) {
-            drawCard(Deck.generateCard());
+            drawCard(deck.generateCard());
         }
     }
 
