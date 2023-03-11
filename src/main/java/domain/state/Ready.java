@@ -7,9 +7,12 @@ import domain.user.Hand;
 import java.util.List;
 
 public class Ready implements State {
+
+    private static final int READY_SCORE = 0;
+
     @Override
     public Score score() {
-        throw new IllegalStateException("점수가 없습니다.");
+        return new Score(READY_SCORE);
     }
 
     @Override
