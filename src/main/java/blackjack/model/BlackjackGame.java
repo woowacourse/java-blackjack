@@ -3,6 +3,7 @@ package blackjack.model;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 
 import java.util.HashMap;
@@ -32,16 +33,12 @@ public class BlackjackGame {
         dealer.draw(cardDeck);
     }
 
-    public Map<String, WinningResult> participantWinningResults() {
+    public Map<String, WinningResult> participantProfits() {
         return dealer.participantWinningResults(players);
     }
 
     public boolean isPlayerFinished(int playerId) {
         return players.isPlayerFinished(playerId);
-    }
-
-    public Map<String, List<Card>> getPlayerHandCard(int playerId) {
-        return players.getHandCardsById(playerId);
     }
 
     public String getPlayerScoreResult(int playerId, String blackjackMessage) {
@@ -117,5 +114,13 @@ public class BlackjackGame {
             handCardUnits.put(handCard.getKey(), cardUnits);
         }
         return handCardUnits;
+    }
+
+    public int getPlayerId(String name) {
+        return players.getIdByName(name);
+    }
+
+    public List<Integer> getPlayerIds() {
+        return players.getPlayerIds();
     }
 }

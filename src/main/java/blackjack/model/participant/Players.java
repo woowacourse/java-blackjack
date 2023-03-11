@@ -5,9 +5,7 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -76,12 +74,17 @@ public class Players {
     }
 
     public WinningResult getWinningResultById(int playerId, CardScore cardScore) {
-        return getPlayerById(playerId)
-                .winningResult(cardScore);
+        return getPlayerById(playerId).winningResult(cardScore);
     }
 
     public int getScoreById(int playerId) {
         Player player = getPlayerById(playerId);
         return player.cardScore().getScore();
+    }
+
+    public List<Integer> getPlayerIds() {
+        return players.stream()
+                .map(Participant::getId)
+                .collect(Collectors.toList());
     }
 }

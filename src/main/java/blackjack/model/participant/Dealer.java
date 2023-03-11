@@ -39,10 +39,10 @@ public class Dealer extends Participant {
         Map<String, WinningResult> playerResults = new HashMap<>();
         WinningResult totalResult = new WinningResult();
 
-        for (int i = 0; i < players.getPlayerCount(); i++) {
-            WinningResult playerResult = players.getWinningResultById(i, this.cardScore());
-            playerResults.put(players.getNameById(i), playerResult);
-            totalResult = totalResult.merge(players.getWinningResultById(i, this.cardScore()));
+        for (int playerId: players.getPlayerIds()) {
+            WinningResult playerResult = players.getWinningResultById(playerId, this.cardScore());
+            playerResults.put(players.getNameById(playerId), playerResult);
+            totalResult = totalResult.merge(players.getWinningResultById(playerId, this.cardScore()));
         }
         playerResults.put(this.getName(), new WinningResult(totalResult.getLose(), totalResult.getDraw(), totalResult.getWin()));
         return playerResults;

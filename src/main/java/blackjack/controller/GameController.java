@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.model.BlackjackGame;
-import blackjack.model.CardUnit;
 import blackjack.model.participant.Players;
 import blackjack.model.WinningResult;
 import blackjack.model.card.*;
@@ -43,8 +42,8 @@ public class GameController {
     }
 
     private void playHitOrStand(BlackjackGame game, CardDeck cardDeck) {
-        for (int playerId = 0; playerId < game.getPlayerSize(); playerId++) {
-            playerHitOrStand(game, cardDeck, playerId);
+        for (int id : game.getPlayerIds()) {
+            playerHitOrStand(game, cardDeck, id);
         }
         dealerHitOrStand(game, cardDeck);
     }
@@ -59,14 +58,14 @@ public class GameController {
     private void playerHitOrStand(BlackjackGame game, CardDeck cardDeck, int playerId) {
         while (!game.isPlayerFinished(playerId) && inputView.readIsHit(game.getPlayerName(playerId))) {
             game.drawPlayerCard(cardDeck, playerId);
-            outputView.printHandCardUnits(new CardUnit(game.getPlayerHandCard(playerId)).getHandCardUnits());
+            outputView.printHandCardUnits(game.getPlayerNameHandCard(playerId));
         }
     }
 
     private void printScoreResults(BlackjackGame game) {
         outputView.printScoreResult(game.getDealerNameHand(), game.getDealerScoreResult(BLACKJACK_MESSAGE));
 
-        for (int playerId = 0; playerId < game.getPlayerSize(); playerId++) {
+        for (int playerId : game.getPlayerIds()) {
             outputView.printScoreResult(game.getPlayerNameHandCard(playerId), game.getPlayerScoreResult(playerId, BLACKJACK_MESSAGE));
         }
     }

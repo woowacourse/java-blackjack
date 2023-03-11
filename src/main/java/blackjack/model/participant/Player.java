@@ -20,7 +20,11 @@ public class Player extends Participant {
     }
 
     public Player(Name name, HandCard handCard) {
-        super(name, handCard);
+        super(name, handCard, 0);
+    }
+
+    public Player(Name name) {
+        super(name, new HandCard(), 0);
     }
 
     @Override
