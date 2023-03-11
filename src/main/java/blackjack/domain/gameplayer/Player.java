@@ -23,8 +23,21 @@ public class Player extends BlackJackParticipant {
         this(name, Betting.defaultBetting);
     }
 
+    public void bet(int betting) {
+        this.betting = this.betting.changeBetting(betting);
+    }
+
+    public boolean isBust() {
+        Score totalScore = calculateScore();
+        return totalScore.isGreaterThan(hitUpperBound);
+    }
+
     public String showName() {
         return name.getName();
+    }
+
+    public Betting getBetting() {
+        return betting;
     }
 
     @Override
@@ -49,13 +62,5 @@ public class Player extends BlackJackParticipant {
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
-    }
-
-    public void bet(int betting) {
-        this.betting = this.betting.changeBetting(betting);
-    }
-
-    public Betting getBetting() {
-        return betting;
     }
 }
