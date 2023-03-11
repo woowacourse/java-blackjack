@@ -37,7 +37,7 @@ class ParticipantCardTest {
     void addCard_givenCard_whenSuccess() {
         // when
         final Card card = Card.of(Shape.HEART, Denomination.ACE);
-        participantCard.addCard(card);
+        participantCard = participantCard.addCard(card);
 
         // then
         final List<Card> cards = participantCard.getCards();
@@ -50,7 +50,7 @@ class ParticipantCardTest {
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
         final Card card = Card.of(Shape.HEART, Denomination.ACE);
-        participantCard.addCard(card);
+        participantCard = participantCard.addCard(card);
 
         // when
         final Card actual = participantCard.getFirstCard();
@@ -64,7 +64,7 @@ class ParticipantCardTest {
     @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
     void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expectedScore) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard = participantCard.addCard(card));
 
         // when
         final ParticipantScore actual = participantCard.calculateScore();
@@ -80,7 +80,7 @@ class ParticipantCardTest {
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
     void checkBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard = participantCard.addCard(card));
 
         // when
         final boolean actual = participantCard.checkBust();
@@ -94,7 +94,7 @@ class ParticipantCardTest {
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
     void checkBlackJack_whenCall_thenReturnIsBlackJack(final List<Card> cards, final boolean expected) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard = participantCard.addCard(card));
 
         // when
         final boolean actual = participantCard.checkBlackJack();
