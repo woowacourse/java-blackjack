@@ -16,13 +16,7 @@ public class Settlement {
 
     public Settlement(Map<Name, Stake> userPrize) {
         this.userPrize = Map.copyOf(userPrize);
-        this.profit = initializeSetting();
-    }
-
-    private Map<Name, Integer> initializeSetting() {
-        final LinkedHashMap<Name, Integer> profit = new LinkedHashMap<>();
-        profit.put(new Name("딜러"), 0);
-        return profit;
+        this.profit = new LinkedHashMap<>();
     }
 
     public int getProfit(final Name name, final Result result) {

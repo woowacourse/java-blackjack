@@ -68,7 +68,8 @@ public class DtoParser {
     }
 
     private static void enrollDealerProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
-        nameAndProfit.put("딜러", settlement.getDealerProfit());
+        final int dealerProfit = settlement.getDealerProfit();
+        nameAndProfit.put("딜러", dealerProfit);
     }
 
     private static void enrollUserProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
