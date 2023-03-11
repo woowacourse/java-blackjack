@@ -12,9 +12,6 @@ public class Players {
     private static final int MIN_PLAYER_COUNT = 1;
     private static final String OVER_RANGE_MESSAGE =
             "사용자 수는 " + MIN_PLAYER_COUNT + " 이상 " + MAX_PLAYER_COUNT + " 이하여야 합니다. 현재 : %s 명입니다";
-
-    //일급 컬렉션의 변수 네이밍이 고민이 되네요 ㅠㅠ Players라는 클래스가 있으니 players라는 변수명이 적절한지 모르겠습니다.
-    //Player 가 여러개 있으니, Players 가 되는 것이 당연한데 이런 경우에는 어떤 것을 두어야 하나요?
     private final List<Player> players;
 
     private Players(final List<Player> players) {
