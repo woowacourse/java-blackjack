@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +29,7 @@ public class CardCollection implements Iterable<Card> {
     }
     
     private boolean hasAce() {
-        return this.cards.stream().anyMatch(domain.Card.Card::isAce);
+        return this.cards.stream().anyMatch(domain.card.Card::isAce);
     }
     
     public CardCollection add(Card card) {

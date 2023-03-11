@@ -1,7 +1,7 @@
 package domain.user;
 
-import domain.Card.Card;
-import domain.Card.CardCollection;
+import domain.card.Card;
+import domain.card.CardCollection;
 
 public class Dealer implements Playable {
     

@@ -1,10 +1,8 @@
-package domain;
+package domain.user;
 
-import domain.Card.Card;
-import domain.Card.CardNumber;
-import domain.Card.CardShape;
-import domain.user.ParticipantStatus;
-import domain.user.Player;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

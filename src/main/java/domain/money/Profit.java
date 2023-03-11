@@ -1,6 +1,6 @@
 package domain.money;
 
-import domain.game.ResultStatus;
+import domain.result.ResultStatus;
 import java.util.Objects;
 
 public class Profit {

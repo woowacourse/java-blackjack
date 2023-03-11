@@ -1,10 +1,9 @@
-package domain;
+package domain.game;
 
-import domain.Card.Card;
-import domain.Card.CardNumber;
-import domain.Card.CardShape;
-import domain.Card.Deck;
-import domain.game.Game;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import org.assertj.core.api.Assertions;

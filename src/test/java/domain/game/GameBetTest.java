@@ -1,6 +1,5 @@
-package domain;
+package domain.game;
 
-import domain.game.GameBet;
 import domain.money.Bet;
 import domain.user.Player;
 import org.assertj.core.api.Assertions;

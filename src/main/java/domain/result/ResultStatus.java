@@ -1,4 +1,4 @@
-package domain.game;
+package domain.result;
 
 public enum ResultStatus {
     WIN(1),

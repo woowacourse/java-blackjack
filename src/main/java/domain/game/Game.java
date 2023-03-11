@@ -1,6 +1,8 @@
 package domain.game;
 
-import domain.Card.Deck;
+import domain.card.Deck;
+import domain.result.ResultStatus;
+import domain.result.StatusResult;
 import domain.user.Dealer;
 import domain.user.Participants;
 import domain.user.Playable;
@@ -30,14 +32,14 @@ public class Game {
         participant.addCard(this.deck.draw());
     }
     
-    public GameResult generateGameResult() {
+    public StatusResult generateGameResult() {
         Dealer dealer = this.getDealer();
         List<Player> players = this.getPlayers();
-        GameResult gameResult = new GameResult();
+        StatusResult statusResult = new StatusResult();
         for (Player player : players) {
-            gameResult.accumulate(player, this.comparePlayerWithDealer(player, dealer));
+            statusResult.accumulate(player, this.comparePlayerWithDealer(player, dealer));
         }
-        return gameResult;
+        return statusResult;
     }
     
     public Dealer getDealer() {

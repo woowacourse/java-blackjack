@@ -1,12 +1,12 @@
 package controller;
 
-import domain.Card.Deck;
+import domain.card.Deck;
 import domain.game.Game;
 import domain.game.GameAction;
 import domain.game.GameBet;
-import domain.game.GameProfit;
-import domain.game.GameResult;
 import domain.money.Bet;
+import domain.result.ProfitResult;
+import domain.result.StatusResult;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
@@ -107,16 +107,16 @@ public class GameController {
     
     private void endGameWithStatus(Game game) {
         OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
-        GameResult gameResult = game.generateGameResult();
-        OutputView.printDealerGameResult(gameResult.getDealerResult());
-        OutputView.printPlayersGameResult(gameResult.getResultMap());
+        StatusResult statusResult = game.generateGameResult();
+        OutputView.printDealerGameResult(statusResult.getDealerResult());
+        OutputView.printPlayersGameResult(statusResult.getResultMap());
     }
     
     private void endGameWithProfit(Game game, GameBet gameBet) {
         OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
-        GameProfit gameProfit = GameProfit.create(gameBet, game.generateGameResult());
+        ProfitResult profitResult = ProfitResult.create(gameBet, game.generateGameResult());
         ProfitView.printProfitResult();
-        ProfitView.printDealerProfitResult(game.getDealer().getName(), gameProfit.getDealerProfit());
-        ProfitView.printGameProfit(gameProfit.getProfitMap());
+        ProfitView.printDealerProfitResult(game.getDealer().getName(), profitResult.getDealerProfit());
+        ProfitView.printGameProfit(profitResult.getProfitMap());
     }
 }

@@ -1,8 +1,8 @@
 package view;
 
-import domain.Card.Card;
-import domain.Card.CardCollection;
-import domain.game.ResultStatus;
+import domain.card.Card;
+import domain.card.CardCollection;
+import domain.result.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
 import java.util.List;

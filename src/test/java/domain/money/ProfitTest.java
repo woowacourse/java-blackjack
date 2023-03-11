@@ -1,8 +1,6 @@
-package domain;
+package domain.money;
 
-import domain.game.ResultStatus;
-import domain.money.Bet;
-import domain.money.Profit;
+import domain.result.ResultStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

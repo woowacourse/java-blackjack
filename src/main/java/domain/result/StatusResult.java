@@ -1,11 +1,11 @@
-package domain.game;
+package domain.result;
 
 import domain.user.Playable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameResult {
+public class StatusResult {
     
     private final Map<Playable, ResultStatus> resultMap = new HashMap<>();
     
