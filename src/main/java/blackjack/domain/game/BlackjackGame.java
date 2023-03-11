@@ -19,8 +19,8 @@ public class BlackjackGame {
         this.bettingSystem = bettingSystem;
     }
 
-    public void initialDraw(Deck deck) {
-        players.initialDraw(deck);
+    public void drawInitialCards(Deck deck) {
+        players.drawInitialCards(deck);
     }
 
     public void drawByDealer(Deck deck) {

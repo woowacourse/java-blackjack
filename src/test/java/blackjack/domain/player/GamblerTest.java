@@ -35,7 +35,7 @@ public class GamblerTest {
                 JACK_SPADE
         ));
 
-        gambler.initialDraw(deck);
+        gambler.drawInitialCard(deck);
 
         assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "J스페이드");
     }
@@ -45,7 +45,7 @@ public class GamblerTest {
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(cards);
-        gambler.initialDraw(deck);
+        gambler.drawInitialCard(deck);
         gambler.draw(deck);
 
         assertThat(gambler.isDrawable()).isEqualTo(result);
@@ -119,7 +119,7 @@ public class GamblerTest {
     void 겜블러_카드가_블랙잭인지_확인한다(final List<Card> cards, final boolean expectedResult) {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(cards);
-        gambler.initialDraw(deck);
+        gambler.drawInitialCard(deck);
 
         assertThat(gambler.isBlackjack()).isEqualTo(expectedResult);
     }
@@ -136,7 +136,7 @@ public class GamblerTest {
     void 겜블러_카드가_버스트인지_확인한다(final List<Card> cards, final boolean expectedResult) {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(cards);
-        gambler.initialDraw(deck);
+        gambler.drawInitialCard(deck);
         gambler.draw(deck);
 
         assertThat(gambler.isBust()).isEqualTo(expectedResult);

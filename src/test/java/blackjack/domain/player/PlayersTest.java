@@ -74,7 +74,7 @@ public class PlayersTest {
                 KING_SPADE
         ));
 
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
 
         assertThat(players.getPlayers())
                 .extracting(Player::calculateScore)
@@ -114,7 +114,7 @@ public class PlayersTest {
                 FOUR_SPADE,
                 ACE_SPADE
         ));
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
 
         players.drawByDealer(deck);
 
@@ -133,7 +133,7 @@ public class PlayersTest {
                 JACK_SPADE,
                 SEVEN_SPADE
         ));
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
         players.drawByDealer(deck);
 
         Map<Player, Result> result = players.play();

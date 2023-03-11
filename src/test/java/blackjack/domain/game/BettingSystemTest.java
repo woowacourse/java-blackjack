@@ -28,7 +28,7 @@ public class BettingSystemTest {
         final BettingSystem bettingSystem = new BettingSystem(betMoneyByPlayer);
 
         final BlackjackGame blackjackGame = new BlackjackGame(players, bettingSystem);
-        blackjackGame.initialDraw(new FixedDeck(List.of(
+        blackjackGame.drawInitialCards(new FixedDeck(List.of(
                 ACE_DIAMOND,
                 JACK_SPADE,
                 EIGHT_SPADE,

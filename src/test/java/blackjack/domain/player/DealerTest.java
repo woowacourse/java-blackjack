@@ -35,7 +35,7 @@ public class DealerTest {
                 JACK_SPADE
         ));
 
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
 
         assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J스페이드");
     }
@@ -45,7 +45,7 @@ public class DealerTest {
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(cards);
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
 
         assertThat(dealer.isDrawable()).isEqualTo(result);
     }
@@ -65,7 +65,7 @@ public class DealerTest {
                 JACK_SPADE,
                 THREE_SPADE
         ));
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
 
         dealer.draw(deck);
 
@@ -127,7 +127,7 @@ public class DealerTest {
                 ACE_DIAMOND,
                 JACK_SPADE
         ));
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
 
         final String firstCardLetter = dealer.getFirstCardLetter();
 
@@ -140,7 +140,7 @@ public class DealerTest {
     void 딜러_카드가_블랙잭인지_확인한다(final List<Card> cards, final boolean expectedResult) {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(cards);
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
 
         assertThat(dealer.isBlackjack()).isEqualTo(expectedResult);
     }
@@ -157,7 +157,7 @@ public class DealerTest {
     void 딜러_카드가_버스트인지_확인한다(final List<Card> cards, final boolean expectedResult) {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(cards);
-        dealer.initialDraw(deck);
+        dealer.drawInitialCard(deck);
         dealer.draw(deck);
 
         assertThat(dealer.isBust()).isEqualTo(expectedResult);

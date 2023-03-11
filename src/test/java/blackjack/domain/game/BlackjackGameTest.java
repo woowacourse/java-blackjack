@@ -59,7 +59,7 @@ public class BlackjackGameTest {
         ));
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
 
-        blackjackGame.initialDraw(deck);
+        blackjackGame.drawInitialCards(deck);
 
         final List<Player> players = blackjackGame.getPlayers();
         assertThat(players)
@@ -77,7 +77,7 @@ public class BlackjackGameTest {
                 KING_SPADE
         ));
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"));
-        blackjackGame.initialDraw(deck);
+        blackjackGame.drawInitialCards(deck);
 
         blackjackGame.drawByDealer(deck);
 
@@ -95,7 +95,7 @@ public class BlackjackGameTest {
                 KING_SPADE
         ));
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"));
-        blackjackGame.initialDraw(deck);
+        blackjackGame.drawInitialCards(deck);
         blackjackGame.drawByDealer(deck);
 
         final Map<Player, Result> result = blackjackGame.play();

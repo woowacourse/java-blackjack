@@ -57,9 +57,9 @@ public class Players {
         return players;
     }
 
-    public void initialDraw(final Deck deck) {
+    public void drawInitialCards(final Deck deck) {
         for (Player player : players) {
-            player.initialDraw(deck);
+            player.drawInitialCard(deck);
         }
     }
 

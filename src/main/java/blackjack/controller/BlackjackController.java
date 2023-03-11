@@ -56,7 +56,7 @@ public class BlackjackController {
     }
 
     private void initialDraw(final BlackjackGame blackjackGame) {
-        blackjackGame.initialDraw(ShuffledDeck.getInstance());
+        blackjackGame.drawInitialCards(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 

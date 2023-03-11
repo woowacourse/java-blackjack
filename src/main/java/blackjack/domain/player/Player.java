@@ -20,7 +20,7 @@ public abstract class Player {
 
     public abstract Result play(final Hand hand);
 
-    public void initialDraw(final Deck deck) {
+    public void drawInitialCard(final Deck deck) {
         draw(deck);
         draw(deck);
     }
