@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardFactory {
+public class DeckFactory {
 
     public static List<Card> createShuffledCard() {
-        List<Card> createdCard = new ArrayList<>();
+        List<Card> deck = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {
-            addCards(createdCard, suit);
+            addCards(deck, suit);
         }
-        Collections.shuffle(createdCard);
+        Collections.shuffle(deck);
 
-        return createdCard;
+        return deck;
     }
 
     private static void addCards(List<Card> createdCard, Suit suit) {

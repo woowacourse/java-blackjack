@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 
@@ -21,7 +21,7 @@ public class BlackJackGame {
 
     public static BlackJackGame create(Players players) {
         Participants participants = Participants.create(players);
-        Deck deck = Deck.create(CardFactory.createShuffledCard());
+        Deck deck = Deck.create(DeckFactory.createShuffledCard());
 
         return new BlackJackGame(participants, deck);
     }

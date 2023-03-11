@@ -11,30 +11,30 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardsTest {
+public class HandTest {
 
     @Test
     @DisplayName("카드를 추가하면 크기가 1 증가한다.")
     void addCard() {
-        Cards cards = new Cards();
-        int expectedSize = cards.getCount() + 1;
+        Hand hand = new Hand();
+        int expectedSize = hand.getCount() + 1;
 
-        cards.add(new Card(Suit.SPADE, Denomination.ACE));
+        hand.add(new Card(Suit.SPADE, Denomination.ACE));
 
-        assertThat(cards.getCount()).isEqualTo(expectedSize);
+        assertThat(hand.getCount()).isEqualTo(expectedSize);
     }
 
     @ParameterizedTest
     @MethodSource("generateCards")
     @DisplayName("보유한 카드의 점수 합을 계산한다.")
     void getSum(List<Card> createdCards, int expectedSum) {
-        Cards cards = new Cards();
+        Hand hand = new Hand();
 
         for (Card card : createdCards) {
-            cards.add(card);
+            hand.add(card);
         }
 
-        assertThat(cards.sum()).isEqualTo(expectedSum);
+        assertThat(hand.sum()).isEqualTo(expectedSum);
     }
 
     static Stream<Arguments> generateCards() {
@@ -52,13 +52,13 @@ public class CardsTest {
     @MethodSource("generateCardsWithACE")
     @DisplayName("에이스가 포함된 카드의 점수 합을 계산한다.")
     void getSumWithACE(List<Card> createdCards, int expectedCount) {
-        Cards cards = new Cards();
+        Hand hand = new Hand();
 
         for (Card card : createdCards) {
-            cards.add(card);
+            hand.add(card);
         }
 
-        assertThat(cards.getAceCount()).isEqualTo(expectedCount);
+        assertThat(hand.getAceCount()).isEqualTo(expectedCount);
     }
 
     static Stream<Arguments> generateCardsWithACE() {

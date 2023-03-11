@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -79,8 +79,8 @@ public class OutputView {
         }
     }
 
-    private String convertCard(Cards inputCards) {
-        return inputCards.getCards().stream()
+    private String convertCard(Hand inputHand) {
+        return inputHand.getCards().stream()
                 .map(this::mapCard)
                 .collect(Collectors.joining(JOINER));
     }

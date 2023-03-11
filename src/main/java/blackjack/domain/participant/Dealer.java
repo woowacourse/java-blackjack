@@ -20,7 +20,7 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        List<Card> cards = this.cards.getCards();
+        List<Card> cards = this.hand.getCards();
         if (cards.isEmpty()) {
             throw new IllegalStateException("보유하고 있는 카드가 없습니다.");
         }
@@ -28,7 +28,7 @@ public class Dealer extends Participant {
     }
 
     private boolean isUnderCount() {
-        return cards.getCount() < MAX_CARD_COUNT;
+        return hand.getCount() < MAX_CARD_COUNT;
     }
 
     private boolean isUnderScore() {
