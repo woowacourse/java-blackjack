@@ -1,8 +1,8 @@
 package view;
 
-import domain.card.Card;
-import domain.result.Result;
 import domain.ExceptionCode;
+import domain.card.Card;
+import domain.participant.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +13,10 @@ public class OutputView {
     private static final String PARTICIPANT_HAND_SUM = "%s 카드: %s - 결과: %s\n";
     private static final String INIT_FINISHIED_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
-    private static final String DEALER_RESULT_FORMAT = "딜러: %s승 %s무 %s패\n";
-    private static final String RESULT_FORMAT = "%s: %s";
 
-    private static final String RESULT_TAG = "## 최종 승패";
-    private static final String WIN_MESSAGE = "승\n";
-    private static final String TIE_MESSAGE = "무\n";
-    private static final String LOSE_MESSAGE = "패\n";
+    private static final String RESULT_TAG = "## 최종 수익";
+    private static final String DEALER_PRIZE_FORMAT = "딜러: %d";
+    private static final String PLAYER_PRIZE_FORMAT = "%s: %d";
 
     private static final String DELIMITER = ", ";
 
@@ -62,26 +59,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerResult(Map<Result, Integer> dealerResult) {
-        System.out.printf((DEALER_RESULT_FORMAT),
-                dealerResult.getOrDefault(Result.WIN,0),
-                dealerResult.getOrDefault(Result.TIE,0),
-                dealerResult.getOrDefault(Result.LOSE,0));
-    }
-
-    public static void printPlayerResult(String name, Result result) {
-        final String resultMessage = exchangeResultMessage(result);
-        System.out.printf((RESULT_FORMAT), name, resultMessage);
-    }
-
-    private static String exchangeResultMessage(final Result result) {
-        if (result.equals(Result.WIN)) {
-            return WIN_MESSAGE;
+    public static void printParticipantsPrize(int dealerPrize, Map<Participant, Integer> participantsPrize) {
+        System.out.println(String.format(DEALER_PRIZE_FORMAT, dealerPrize));
+        for (Map.Entry<Participant, Integer> participantPrize : participantsPrize.entrySet()) {
+            System.out.println(String.format(PLAYER_PRIZE_FORMAT, participantPrize.getKey().getName(), participantPrize.getValue()));
         }
-        if (result.equals(Result.LOSE)) {
-            return LOSE_MESSAGE;
-        }
-        return TIE_MESSAGE;
     }
 
     public static void printResultInfo() {
