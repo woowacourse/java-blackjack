@@ -46,7 +46,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isSameName(final Name name) {
+    public final boolean isSameName(final Name name) {
         return this.name.equals(name);
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractPlayer implements Player {
         return name;
     }
 
-    protected Hand hand() {
+    protected final Hand hand() {
         return hand;
     }
 
