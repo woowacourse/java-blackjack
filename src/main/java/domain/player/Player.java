@@ -17,20 +17,12 @@ public abstract class Player {
         this.name = new PlayerName(name);
     }
     
+    public abstract boolean isDealer();
+    
+    public abstract double calculateProfit(double betAmount);
+    
     public void draw(Card card) {
         state = state.draw(card);
-    }
-    
-    protected ParticipantGameResult decideGameResultWithScore(Score totalScore, Score totalScoreOfOtherPlayer) {
-        if (totalScore.isOverThen(totalScoreOfOtherPlayer)) {
-            return ParticipantGameResult.WIN;
-        }
-        
-        if (totalScore.isLessThen(totalScoreOfOtherPlayer)) {
-            return ParticipantGameResult.LOSE;
-        }
-        
-        return ParticipantGameResult.DRAW;
     }
     
     public boolean isBust() {
@@ -44,6 +36,13 @@ public abstract class Player {
     public List<Card> getCards() {
         return state.getCards();
     }
+    public void drawStop() {
+        state = state.drawStop();
+    }
+    
+    public boolean isFinished() {
+        return state.isFinished();
+    }
     
     public String getName() {
         return this.name.getName();
@@ -51,14 +50,6 @@ public abstract class Player {
     
     protected State getState() {
         return state;
-    }
-    public abstract ParticipantGameResult battleResult(Player otherPlayer);
-    
-    public abstract boolean isDealer();
-    public abstract double calculateProfit(double betAmount);
-    
-    public void drawStop() {
-        state = state.drawStop();
     }
     
     @Override

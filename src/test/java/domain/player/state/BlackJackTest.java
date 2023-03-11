@@ -4,13 +4,12 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.player.state.BlackJack;
-import domain.player.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class BlackJackTest {
     private State state;

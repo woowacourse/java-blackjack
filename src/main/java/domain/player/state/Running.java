@@ -16,4 +16,9 @@ public abstract class Running extends State {
     public State drawStop() {
         return new Stay(getHand());
     }
+    
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

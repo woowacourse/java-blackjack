@@ -17,4 +17,9 @@ public abstract class Finished extends State {
     public State drawStop() {
         throw new IllegalStateException("이미 드로우가 끝난 상태에선 사용할 수 없는 기능입니다.");
     }
+    
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

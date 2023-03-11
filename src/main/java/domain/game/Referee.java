@@ -1,49 +1,17 @@
 package domain.game;
 
 import domain.card.Score;
-import domain.player.ParticipantGameResult;
 import domain.player.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Referee {
     private final Map<Player, Double> betAmountResult;
-    private final Map<ParticipantGameResult, Integer> dealerGameResults;
-    private final Map<Player, ParticipantGameResult> participantsGameResults;
     
     public Referee() {
-        dealerGameResults = new EnumMap<>(ParticipantGameResult.class);
-        participantsGameResults = new HashMap<>();
         betAmountResult = new HashMap<>();
-    }
-    
-    // TODO : 삭제
-    public void decidePlayersBattleResults(BlackJackGame blackJackGame) {
-        Player dealer = blackJackGame.getDealer();
-        List<Player> participants = blackJackGame.getParticipants();
-    
-        savePlayersBattleResults(dealer, participants);
-    }
-    
-    // TODO : 삭제
-    private void savePlayersBattleResults(Player dealer, List<Player> participants) {
-        for (Player participant : participants) {
-            ParticipantGameResult dealerParticipantGameResult = dealer.battleResult(participant);
-            dealerGameResults.put(dealerParticipantGameResult, dealerGameResults.getOrDefault(dealerParticipantGameResult, 0) + 1);
-            
-            ParticipantGameResult participantGameResult = participant.battleResult(dealer);
-            participantsGameResults.put(participant, participantGameResult);
-        }
-    }
-    
-    // TODO : 삭제
-    public Map<Player, ParticipantGameResult> participantsGameResults() {
-        return Collections.unmodifiableMap(participantsGameResults);
-    }
-    
-    // TODO : 삭제
-    public Map<ParticipantGameResult, Integer> dealerGameResults() {
-        return Collections.unmodifiableMap(dealerGameResults);
     }
     
     public void saveParticipantBetAmount(Player participant, double betAmount) {

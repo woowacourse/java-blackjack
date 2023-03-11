@@ -16,10 +16,12 @@ public class Application {
     public void startGame() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
         initializedBlackjackGame(blackJackGame);
+    
+        Referee referee = new Referee();
+        // TODO : 배팅 금액 입력 및 referee에 저장 기능 구현
         
         giveCardToPlayers(blackJackGame);
-        Referee referee = new Referee();
-        referee.decidePlayersBattleResults(blackJackGame);
+        referee.saveBattleResults(blackJackGame);
         
         OutputView.printPlayersGameResults(blackJackGame, referee);
     }
@@ -51,10 +53,10 @@ public class Application {
         AddCardCommand command = getCommand(participant);
         if (command.isAddCardCommand()) {
             blackJackGame.giveCard(participant);
-            OutputView.printParticipantCardCondition(List.of(participant));
         }
+        OutputView.printParticipantCardCondition(List.of(participant));
         
-        if (command.isNotAddCardCommand() || participant.isBust()) {
+        if (command.isNotAddCardCommand() || participant.isFinished()) {
             stopGivingCard(participant, command);
             return;
         }
@@ -68,11 +70,11 @@ public class Application {
     
     private void stopGivingCard(Player participant, AddCardCommand command) {
         if (command.isNotAddCardCommand()) {
-            OutputView.printParticipantCardCondition(List.of(participant));
+            participant.drawStop();
             return;
         }
         
-        if (participant.isBust()) {
+        if (participant.isFinished()) {
             OutputView.printBustMessage(participant.getName());
         }
     }

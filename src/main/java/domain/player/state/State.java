@@ -17,6 +17,7 @@ public abstract class State {
     public abstract State draw(Card card);
     public abstract double calculateProfit(double betAmount);
     public abstract State drawStop();
+    public abstract boolean isFinished();
     
     public Score score() {
         return hand.getTotalScore();
