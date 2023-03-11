@@ -1,4 +1,4 @@
-package domain.game;
+package domain.state;
 
 import domain.card.Card;
 

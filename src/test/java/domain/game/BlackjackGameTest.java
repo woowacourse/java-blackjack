@@ -3,6 +3,10 @@ package domain.game;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.state.Blackjack;
+import domain.state.Bust;
+import domain.state.Hit;
+import domain.state.Ready;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
