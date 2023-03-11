@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
-    private static final int SPLIT_LIMIT = -1;
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> askPlayerNames() {
@@ -18,7 +17,7 @@ public class InputView {
     }
 
     private static List<String> parseByDelimiter(final String line) {
-        return Arrays.stream(line.split(",", SPLIT_LIMIT))
+        return Arrays.stream(line.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
@@ -38,6 +37,7 @@ public class InputView {
     }
 
     public static HitCommand askToHit(final String playerName) {
+        System.out.println();
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), playerName);
         return HitCommand.find(scanner.nextLine());
     }
