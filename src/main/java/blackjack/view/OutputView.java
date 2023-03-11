@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.dto.*;
-import blackjack.domain.user.Dealer;
 
 import java.util.List;
 import java.util.Map;
@@ -98,41 +97,14 @@ public class OutputView {
 
     public void printResult(GameResultDto gameResultDto) {
         System.out.print(System.lineSeparator());
-        System.out.println("## 최종 승패");
-        printDealerResult(gameResultDto);
-        printUsersResult(gameResultDto);
+        System.out.println("## 최종 수익");
+        printProfit(gameResultDto.getUserAndProfit());
     }
 
-    private void printDealerResult(final GameResultDto gameResultDto) {
-        printDealer(gameResultDto.getDealerResult(), gameResultDto.getDealerName());
-    }
-
-    private void printDealer(final Map<ResultDto, Integer> dealerResult, final String dealerName) {
-        System.out.println(String.format("%s: %s", dealerName, makeResultStringOf(dealerResult)));
-    }
-
-    private String makeResultStringOf(final Map<ResultDto, Integer> dealerResult) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (ResultDto result : dealerResult.keySet()) {
-            stringBuilder.append(makeStringOf(result, dealerResult.get(result)));
-            stringBuilder.append(" ");
+    private void printProfit(final Map<String, Integer> userAndProfit) {
+        for (String name : userAndProfit.keySet()) {
+            System.out.println(String.format("%s: %d", name, userAndProfit.get(name)));
         }
-        return stringBuilder.toString();
-    }
-
-    private String makeStringOf(final ResultDto result, final Integer count) {
-        return String.format("%d%s", count, result.getResult());
-    }
-
-    private void printUsersResult(final GameResultDto gameResultDto) {
-        for (Map.Entry<String, ResultDto> userData : gameResultDto.getUserResult().entrySet()) {
-            printUser(userData.getKey(), userData.getValue());
-        }
-    }
-
-    private void printUser(final String name, final ResultDto result) {
-        System.out.printf("%s: %s", name, result.getResult());
-        System.out.print(System.lineSeparator());
     }
 
     public void printException(final Exception exception) {
