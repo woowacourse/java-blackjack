@@ -18,14 +18,13 @@ public class Hand implements Iterable<Card> {
     }
     
     public int calculateScore() {
-        int score = 0;
-        for (Card card : this.cards) {
-            score += card.getScore();
+        Score score = this.cards.stream()
+                .map(Card::getScore)
+                .reduce(Score.base(), Score::add);
+        if (this.hasAce()) {
+            score = score.addTenIfInBoundary();
         }
-        if (this.hasAce() && score + 10 <= 21) {
-            score += 10;
-        }
-        return score;
+        return score.value();
     }
     
     private boolean hasAce() {
@@ -54,4 +53,5 @@ public class Hand implements Iterable<Card> {
     public Stream<Card> stream() {
         return this.cards.stream();
     }
+    
 }

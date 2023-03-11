@@ -23,7 +23,7 @@ public enum CardNumber {
         this.name = name;
     }
     
-    public int getScore() {
+    public int getNumber() {
         return this.score;
     }
     
