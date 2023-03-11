@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import blackjack.model.ResultState;
+import blackjack.model.WinningResult;
 
 public class CardScore {
 
@@ -21,5 +22,16 @@ public class CardScore {
             return (this.score - other.score);
         }
         return state.getWinningScore() - other.state.getWinningScore();
+    }
+
+    public WinningResult winningResult(CardScore other, Integer betting) {
+        boolean isBlackjack = ResultState.BLACKJACK == this.state;
+        if (this.compareTo(other) > 0) {
+            return new WinningResult().win(betting, isBlackjack);
+        }
+        if (this.compareTo(other) < 0) {
+            return new WinningResult().lose(betting);
+        }
+        return new WinningResult().draw(betting);
     }
 }

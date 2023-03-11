@@ -14,10 +14,12 @@ public class Dealer extends Participant {
     public static final int DEALER_HIT_NUMBER = 16;
     public static final int FIRST_CARD = 0;
 
-    public Dealer() {super(new Name("딜러"));}
+    public Dealer() {
+        super(new Name("딜러"));
+    }
 
     public Dealer(HandCard handCard) {
-        super(new Name("딜러"), handCard);
+        super(new Name("딜러"), handCard, 0);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class Dealer extends Participant {
             playerResults.put(players.getNameById(playerId), playerResult);
             totalResult = totalResult.merge(players.getWinningResultById(playerId, this.cardScore()));
         }
-        playerResults.put(this.getName(), new WinningResult(totalResult.getLose(), totalResult.getDraw(), totalResult.getWin()));
+        playerResults.put(this.getName(), new WinningResult(totalResult.getLose(), totalResult.getDraw(), totalResult.getWin(), -totalResult.getBetting()));
         return playerResults;
     }
 

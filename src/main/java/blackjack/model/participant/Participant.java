@@ -16,17 +16,23 @@ public abstract class Participant {
 
     private final int id;
     private final Name name;
+    protected final Integer betting;
     protected final HandCard handcard;
 
-    public Participant(Name name, HandCard handCard) {
+    public Participant(Name name, HandCard handCard, Integer betting) {
         this.id = CURRENT_MAX_ID;
         this.name = name;
         this.handcard = handCard;
+        this.betting = betting;
         CURRENT_MAX_ID++;
     }
 
     public Participant(Name name) {
-        this(name, new HandCard());
+        this(name, new HandCard(), 0);
+    }
+
+    public Participant(Name name, Integer betting) {
+        this(name, new HandCard(), betting);
     }
 
     public void draw(CardDeck cardDeck) {
@@ -78,5 +84,9 @@ public abstract class Participant {
 
     public String getName() {
         return name.getName();
+    }
+
+    public int getId() {
+        return id;
     }
 }

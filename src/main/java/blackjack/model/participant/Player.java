@@ -15,8 +15,13 @@ public class Player extends Participant {
     public static final int FIRST_CARD = 0;
     public static final int SECOND_CARD = 1;
 
-    public Player(Name name) {
-        super(name);
+
+    public Player(Name name, HandCard handCard, int betting) {
+        super(name, handCard, betting);
+    }
+
+    public Player(Name name, Integer betting) {
+        super(name, betting);
     }
 
     public Player(Name name, HandCard handCard) {
@@ -56,13 +61,10 @@ public class Player extends Participant {
     }
 
     public WinningResult winningResult(CardScore dealerScore) {
-        CardScore playerScore = cardScore();
-        if (playerScore.compareTo(dealerScore) > 0) {
-            return new WinningResult().win();
-        }
-        if (playerScore.compareTo(dealerScore) < 0) {
-            return new WinningResult().lose();
-        }
-        return new WinningResult().draw();
+        return cardScore().winningResult(dealerScore, betting);
+    }
+
+    public boolean isEqualName(String name) {
+        return getName().equals(name);
     }
 }

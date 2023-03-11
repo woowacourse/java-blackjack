@@ -71,7 +71,7 @@ public class GameController {
     }
 
     private void printWinningResult(BlackjackGame game) {
-        Map<String, WinningResult> results = game.participantWinningResults();
+        Map<String, WinningResult> results = game.participantProfits();
 
         outputView.printWinningResultMessage();
         outputView.printDealerWinningResult(results.remove(game.getDealerName()).getResult());

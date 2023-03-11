@@ -17,6 +17,20 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public Players(Player... players) {
+        this.players = new ArrayList<>();
+        Collections.addAll(this.players, players);
+    }
+
+    public Players(Map<String, Integer> playerBetting) {
+        List<Player> players = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> betting : playerBetting.entrySet()) {
+            players.add(new Player(new Name(betting.getKey()), betting.getValue()));
+        }
+        this.players = players;
+    }
+
     public void distributeFirstCards(CardDeck cardDeck) {
         if (players.stream().anyMatch(Player::isFinished)) {
             throw new IllegalStateException("첫 분배를 시작할 수 없는 상태입니다.");
@@ -71,6 +85,14 @@ public class Players {
         return players.stream().filter(p -> p.isEqualId(playerId))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
+    }
+
+    public int getIdByName(String name) {
+        Player player = players.stream()
+                .filter(p -> p.isEqualName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이름입니다."));
+        return player.getId();
     }
 
     public WinningResult getWinningResultById(int playerId, CardScore cardScore) {

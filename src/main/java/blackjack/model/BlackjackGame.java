@@ -20,6 +20,12 @@ public class BlackjackGame {
         this.dealer = dealer;
     }
 
+
+    public BlackjackGame(Player... players) {
+        this.players = new Players(players);
+        this.dealer = new Dealer();
+    }
+
     public void distributeCards(CardDeck cardDeck) {
         players.distributeFirstCards(cardDeck);
         dealer.drawFirstTurnCards(cardDeck);
@@ -59,10 +65,6 @@ public class BlackjackGame {
 
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
-    }
-
-    public int getPlayerSize() {
-        return players.getPlayerCount();
     }
 
     public String getPlayerName(int playerId) {
