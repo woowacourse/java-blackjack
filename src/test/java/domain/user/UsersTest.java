@@ -1,13 +1,21 @@
 package domain.user;
 
+import static domain.card.Denomination.ACE;
+import static domain.card.Denomination.JACK;
+import static domain.card.Denomination.QUEEN;
+import static domain.card.Denomination.SEVEN;
+import static domain.card.Denomination.TEN;
+import static domain.card.Denomination.THREE;
+import static domain.card.Denomination.TWO;
+import static domain.card.Suits.DIAMOND;
+import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suits;
 import domain.money.BettingAmount;
+import domain.user.state.Stay;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -68,7 +76,7 @@ public class UsersTest {
     @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
     @Test
     void hitCardByName() {
-        users.hitCardByName("hongo", Card.of(Denomination.JACK, Suits.HEART));
+        users.hitCardByName("hongo", Card.of(JACK, HEART));
         Player player = users.getPlayers().get(0);
         assertThat(player.getScore()).isEqualTo(10);
     }
@@ -76,9 +84,32 @@ public class UsersTest {
     @DisplayName("이름으로 카드추가시 해당 이름의 플레이어가 없을시 예외처리한다")
     @Test
     void hitCardByName_noSuchName_exception() {
-        assertThatThrownBy(() -> users.hitCardByName("error", Card.of(Denomination.JACK, Suits.HEART)))
+        assertThatThrownBy(() -> users.hitCardByName("error", Card.of(JACK, HEART)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
+    }
+
+    @DisplayName("Running상태인 딜러를 Stay상태로 바꾼다.")
+    @Test
+    void stayDealerIfRunning() {
+        Dealer dealer = users.getDealer();
+        dealer.hit(Card.of(TWO, HEART));
+        dealer.hit(Card.of(THREE, HEART));
+        users.stayDealerIfRunning();
+
+        assertThat(dealer.getState()).isInstanceOf(Stay.class);
+    }
+
+    @DisplayName("Terminated 상태인 딜러는 Stay상태로 바꾸지 않는다.")
+    @Test
+    void notStayDealerIfTerminated() {
+        Dealer dealer = users.getDealer();
+        dealer.hit(Card.of(TEN, HEART));
+        dealer.hit(Card.of(JACK, HEART));
+        dealer.hit(Card.of(TWO, HEART));
+        users.stayDealerIfRunning();
+
+        assertThat(dealer.getState()).isNotInstanceOf(Stay.class);
     }
 
     @DisplayName("해당 이름의 플레이어가 베팅한다")
@@ -104,10 +135,10 @@ public class UsersTest {
         // player1 : X          => 0
         // player2 : 7          => 7
         // player3 : 10, 10, 1  => 21
-        users.hitCardByName("ash", Card.of(Denomination.SEVEN, Suits.DIAMOND));
-        users.hitCardByName("kiara", Card.of(Denomination.JACK, Suits.DIAMOND));
-        users.hitCardByName("kiara", Card.of(Denomination.QUEEN, Suits.DIAMOND));
-        users.hitCardByName("kiara", Card.of(Denomination.ACE, Suits.DIAMOND));
+        users.hitCardByName("ash", Card.of(SEVEN, DIAMOND));
+        users.hitCardByName("kiara", Card.of(JACK, DIAMOND));
+        users.hitCardByName("kiara", Card.of(QUEEN, DIAMOND));
+        users.hitCardByName("kiara", Card.of(ACE, DIAMOND));
 
         List<Player> hittablePlayers = users.getHittablePlayers();
         assertThat(hittablePlayers)
@@ -119,5 +150,4 @@ public class UsersTest {
     private void assertNameEquals(Player player, String name) {
         assertThat(player.getName()).isEqualTo(name);
     }
-
 }

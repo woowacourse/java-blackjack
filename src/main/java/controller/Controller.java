@@ -81,7 +81,7 @@ public class Controller {
             blackJackGame.giveCardToDealer();
             outputView.printDealerHitMessage();
         }
-        blackJackGame.stayDealer();
+        blackJackGame.stayDealerIfRunning();
     }
 
     private void end(BlackJackGame blackJackGame) {

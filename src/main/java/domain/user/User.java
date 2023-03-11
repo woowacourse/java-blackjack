@@ -21,6 +21,12 @@ public abstract class User {
         this.state = state.stay();
     }
 
+    public void stayIfRunning() {
+        if (state.isRunning()) {
+            stay();
+        }
+    }
+
     public List<Card> getCards() {
         return state.getCards();
     }

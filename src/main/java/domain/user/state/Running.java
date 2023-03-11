@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.user.Cards;
 
 public class Running extends State {
-    
+
     protected Running(Cards cards) {
         super(cards);
     }
@@ -19,6 +19,11 @@ public class Running extends State {
             return new Bust(cards);
         }
         return this;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 
     @Override

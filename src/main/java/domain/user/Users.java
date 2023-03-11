@@ -59,15 +59,11 @@ public class Users {
 
     public void stayByName(final String name) {
         Player player = findPlayerByName(name);
-        if (player.isDrawable()) {
-            player.stay();
-        }
+        player.stayIfRunning();
     }
 
-    public void stayDealer() {
-        if (dealer.isDrawable()) {
-            dealer.stay();
-        }
+    public void stayDealerIfRunning() {
+        dealer.stayIfRunning();
     }
 
     public void bettingByName(final String name, final int bettingAmount) {

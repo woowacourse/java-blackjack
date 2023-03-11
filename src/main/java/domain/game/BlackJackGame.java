@@ -43,8 +43,8 @@ public class BlackJackGame {
         users.stayByName(playerName);
     }
 
-    public void stayDealer() {
-        users.stayDealer();
+    public void stayDealerIfRunning() {
+        users.stayDealerIfRunning();
     }
 
     public void giveCard(String playerName) {
