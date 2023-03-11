@@ -33,9 +33,16 @@ public class InputView {
     }
 
     public static int inputMoney(String playerName) {
+        System.out.println();
+        System.out.println(playerName + REQUEST_BETTING_MONEY);
+        String input = scanner.nextLine();
+        validateInteger(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateInteger(String input) {
         try {
-            System.out.println(playerName + REQUEST_BETTING_MONEY);
-            return scanner.nextInt();
+            Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new NotIntegerException();
         }
