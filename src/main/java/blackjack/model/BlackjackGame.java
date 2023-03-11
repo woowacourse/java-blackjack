@@ -3,7 +3,6 @@ package blackjack.model;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 
 import java.util.HashMap;
@@ -18,12 +17,6 @@ public class BlackjackGame {
     public BlackjackGame(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
-    }
-
-
-    public BlackjackGame(Player... players) {
-        this.players = new Players(players);
-        this.dealer = new Dealer();
     }
 
     public void distributeCards(CardDeck cardDeck) {

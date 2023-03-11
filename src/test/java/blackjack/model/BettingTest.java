@@ -20,7 +20,6 @@ public class BettingTest {
     public static final Card CLUB_JACK = Card.of(CardSuit.CLUB, CardNumber.JACK);
     public static final Card DIA_EIGHT = Card.of(CardSuit.DIAMOND, CardNumber.EIGHT);
     public static final Card CLUB_SEVEN = Card.of(CardSuit.CLUB, CardNumber.SEVEN);
-    public static final Card CLUB_FIVE = Card.of(CardSuit.CLUB, CardNumber.FIVE);
     public static final Card DIA_NINE = Card.of(CardSuit.DIAMOND, CardNumber.NINE);
     public static final Card HEART_EIGHT = Card.of(CardSuit.HEART, CardNumber.EIGHT);
     public static final Card DIA_JACK = Card.of(CardSuit.DIAMOND, CardNumber.JACK);

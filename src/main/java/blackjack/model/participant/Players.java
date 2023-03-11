@@ -11,12 +11,6 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        this.players = playerNames.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList());
-    }
-
     public Players(Player... players) {
         this.players = new ArrayList<>();
         Collections.addAll(this.players, players);
