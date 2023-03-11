@@ -1,15 +1,27 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.card.Cards;
 
 public abstract class Participant {
 
     public static final int INITIAL_CARDS_SIZE = 2;
 
     final String name;
-    final Cards cards;
+    Cards cards;
+
+    public Participant(String name) {
+        this.name = name;
+    }
 
     public Participant(String name, Cards cards) {
         validateCardsSize(cards);
         this.name = name;
+        this.cards = cards;
+    }
+
+    public void initCards(Cards cards) {
+        validateCardsSize(cards);
         this.cards = cards;
     }
 

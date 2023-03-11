@@ -2,6 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Number;
+import domain.card.Suit;
+import domain.participant.Participant;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,12 +21,15 @@ class ParticipantTest {
             new Card(Suit.CLOVER, Number.SIX),
             new Card(Suit.CLOVER, Number.A)));
 
-        assertThatThrownBy(() -> new Participant("roy", cards) {
+        Participant participant = new Participant("roy") {
             @Override
             public boolean canAddCard() {
                 return true;
             }
-        }).isInstanceOf(IllegalArgumentException.class)
+        };
+
+        assertThatThrownBy(() -> participant.initCards(cards))
+            .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("초기 카드는 2장이어야 합니다.");
     }
 }

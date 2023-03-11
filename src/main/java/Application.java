@@ -1,9 +1,10 @@
-import domain.CardDeck;
-import domain.Cards;
-import domain.Dealer;
 import domain.GameResult;
 import domain.Judge;
-import domain.Player;
+import domain.card.CardDeck;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import view.DealerScore;
@@ -22,10 +23,14 @@ public class Application {
         }
     }
 
+    private static Cards getInitCards(CardDeck cardDeck) {
+        return new Cards(new ArrayList<>(List.of(cardDeck.pick(), cardDeck.pick())));
+    }
+
     private void run() {
         CardDeck cardDeck = initDeck();
         Dealer dealer = new Dealer(getInitCards(cardDeck));
-        List<Player> players = makePlayers(cardDeck);
+        Players players = initPlayers(cardDeck);
         play(cardDeck, dealer, players);
         end(dealer, players);
     }
@@ -36,22 +41,14 @@ public class Application {
         return cardDeck;
     }
 
-    private static Cards getInitCards(CardDeck cardDeck) {
-        return new Cards(new ArrayList<>(List.of(cardDeck.pick(), cardDeck.pick())));
-    }
-
-    private List<Player> makePlayers(CardDeck cardDeck) {
+    private Players initPlayers(CardDeck cardDeck) {
         List<String> names = InputView.readNames();
-        List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            Cards playerCards = getInitCards(cardDeck);
-            players.add(new Player(name, playerCards));
-        }
-
+        Players players = Players.of(names);
+        players.forEach(player -> player.initCards(getInitCards(cardDeck)));
         return players;
     }
 
-    private void play(CardDeck cardDeck, Dealer dealer, List<Player> players) {
+    private void play(CardDeck cardDeck, Dealer dealer, Players players) {
         OutputView.printStart(dealer, players);
         for (Player player : players) {
             draw(cardDeck, player);
@@ -76,14 +73,14 @@ public class Application {
         OutputView.printCard(player);
     }
 
-    private void end(Dealer dealer, List<Player> players) {
+    private void end(Dealer dealer, Players players) {
         OutputView.printResults(dealer, players);
         List<PlayerScore> playerScores = judgePlayerScores(dealer, players);
         DealerScore dealerScore = new DealerScore(playerScores);
         OutputView.printWinOrLose(dealerScore, playerScores);
     }
 
-    private List<PlayerScore> judgePlayerScores(Dealer dealer, List<Player> players) {
+    private List<PlayerScore> judgePlayerScores(Dealer dealer, Players players) {
         List<PlayerScore> playerScores = new ArrayList<>();
 
         for (Player player : players) {

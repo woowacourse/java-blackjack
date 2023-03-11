@@ -1,8 +1,15 @@
-package domain;
+package domain.participant;
 
-public class Player extends Participant{
+import domain.card.Cards;
+
+public class Player extends Participant {
 
     public static final int MAX_NAME_LENGTH = 5;
+
+    public Player(String name) {
+        super(name);
+        validateName(name);
+    }
 
     public Player(String name, Cards cards) {
         super(name, cards);

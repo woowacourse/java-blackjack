@@ -1,11 +1,11 @@
 package view;
 
-import domain.Card;
-import domain.Cards;
-import domain.Dealer;
 import domain.GameResult;
-import domain.Participant;
-import domain.Player;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Players;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -14,14 +14,14 @@ public class OutputView {
 
     private static final String DELIMITER = ",";
 
-    public static void printStart(Dealer dealer, List<Player> players) {
+    public static void printStart(Dealer dealer, Players players) {
         printGiveMessage(dealer, players);
         printHideCard(dealer);
         players.forEach(OutputView::printCard);
         System.out.println();
     }
 
-    private static void printGiveMessage(Dealer dealer, List<Player> players) {
+    private static void printGiveMessage(Dealer dealer, Players players) {
         String playersNames = players.stream()
             .map(Participant::getName)
             .collect(Collectors.joining(","));
@@ -50,7 +50,7 @@ public class OutputView {
         System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
-    public static void printResults(Dealer dealer, List<Player> players) {
+    public static void printResults(Dealer dealer, Players players) {
         System.out.println();
         printResult(dealer);
         players.forEach(OutputView::printResult);

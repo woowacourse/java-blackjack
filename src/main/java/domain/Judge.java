@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public class Judge {
 
     public static GameResult of(Dealer dealer, Player player) {
