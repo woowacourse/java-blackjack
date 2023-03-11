@@ -68,7 +68,7 @@ class RefereeTest {
         int betAmount = 1000;
     
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isZero();
@@ -85,7 +85,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(1500);
@@ -103,7 +103,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(1500);
@@ -121,7 +121,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(-1000);
@@ -139,7 +139,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(-1000);
@@ -157,7 +157,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(-1000);
@@ -176,7 +176,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(1000);
@@ -195,7 +195,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(1000);
@@ -214,7 +214,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isZero();
@@ -233,7 +233,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(-1000);
@@ -251,7 +251,7 @@ class RefereeTest {
         int betAmount = 1000;
         
         // when
-        double betResult = referee.decidePlayersBattleResults1(dealer, abel, betAmount);
+        double betResult = referee.decideParticipantBattleResults(dealer, abel, betAmount);
         
         // then
         assertThat(betResult).isEqualTo(-1000);

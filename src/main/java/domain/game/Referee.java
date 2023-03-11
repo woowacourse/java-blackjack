@@ -40,7 +40,7 @@ public class Referee {
         return Collections.unmodifiableMap(dealerGameResults);
     }
     
-    public double decidePlayersBattleResults1(Player dealer, Player participant, int betAmount) {
+    public double decideParticipantBattleResults(Player dealer, Player participant, int betAmount) {
         Score participantTotalScore = participant.getTotalScore();
         Score dealerTotalScore = dealer.getTotalScore();
         double profit = participant.calculateProfit(betAmount);
