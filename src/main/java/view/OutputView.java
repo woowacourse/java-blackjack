@@ -26,6 +26,14 @@ public class OutputView {
         }
     }
 
+    public void printRevenueForAll(final Dealer dealer, final List<Player> players) {
+        System.out.println("## 최종 수익");
+        String frame = "%s: %d\n";
+
+        System.out.printf(frame, dealer.getPlayerName().getName(), dealer.getRevenue());
+        players.forEach(player -> System.out.printf(frame, player.getPlayerName().getName(), player.getRevenue()));
+    }
+
     private void printDealerCardWithName(final Dealer dealer) {
         System.out.println(makePlayerName(dealer) + makePlayerCardMessage(dealer.getHiddenCardPool()));
     }
@@ -48,24 +56,6 @@ public class OutputView {
 
     public void printDealerHitMessage() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public void printDealerRecord(final Dealer dealer, final Map<GameResult, Integer> dealerRecord) {
-        System.out.println("## 최종 승패");
-        System.out.print(makePlayerName(dealer)+ " : ");
-
-        for (GameResult gameResult : dealerRecord.keySet()) {
-            if (dealerRecord.get(gameResult) != 0) {
-                System.out.print(dealerRecord.get(gameResult) + GameResultMapper.getGameResult(gameResult));
-            }
-        }
-        System.out.println();
-    }
-
-    public void printPlayerRecord(final Map<Player, GameResult> gameResultMap) {
-        for (Player player : gameResultMap.keySet()) {
-            System.out.println(makePlayerName(player) + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
-        }
     }
 
     public void printGameScore(final Dealer dealer, final List<Player> players) {

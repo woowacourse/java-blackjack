@@ -2,6 +2,7 @@ package controller;
 
 import domain.game.BlackjackGame;
 import domain.strategy.RandomShuffleStrategy;
+import domain.user.Dealer;
 import domain.user.GameParticipant;
 import domain.user.Player;
 import view.InputView;
@@ -35,28 +36,27 @@ public class BlackJackController {
     }
 
     private void startGame() {
-        GameParticipant gameParticipant = blackjackGame.getGameParticipant();
+        List<Player> players = blackjackGame.getGameParticipant().getPlayers();
+        Dealer dealer = blackjackGame.getGameParticipant().getDealer();
 
-        for (Player player : gameParticipant.getPlayers()) {
+        startBet(players);
+        startHit();
+        outputView.printPlayersInfoWhenGameStarted(dealer, players);
+
+        letPlayerChoiceWhetherHit(players);
+        blackjackGame.updateBetAmount();
+        printGameResult(players, dealer);
+    }
+
+    private void startBet(final List<Player> players) {
+        for (Player player : players) {
             int amount = inputView.inputBetAmount(player.getPlayerName().getName());
             player.addAmount(amount);
         }
+    }
+
+    private void startHit() {
         blackjackGame.startHit();
-
-        outputView.printPlayersInfoWhenGameStarted(gameParticipant.getDealer(), gameParticipant.getPlayers());
-
-        letPlayerChoiceWhetherHit(gameParticipant.getPlayers());
-
-        blackjackGame.updateBetAmount();
-        outputView.printGameScore(gameParticipant.getDealer(), gameParticipant.getPlayers());
-
-        outputView.printDealerRecord(gameParticipant.getDealer(), blackjackGame.getDealerRecord());
-        outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
-
-        System.out.println(gameParticipant.getDealer().getRevenue());
-        for (Player player : gameParticipant.getPlayers()) {
-            System.out.println(player.getRevenue());
-        }
     }
 
     private void letPlayerChoiceWhetherHit(List<Player> players) {
@@ -93,4 +93,8 @@ public class BlackJackController {
         }
     }
 
+    private void printGameResult(final List<Player> players, final Dealer dealer) {
+        outputView.printGameScore(dealer, players);
+        outputView.printRevenueForAll(dealer, players);
+    }
 }
