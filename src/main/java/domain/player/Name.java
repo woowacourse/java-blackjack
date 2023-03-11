@@ -36,7 +36,7 @@ public class Name {
         return Objects.hash(name);
     }
 
-    public String getName() {
+    public String getValue() {
         return name;
     }
 }

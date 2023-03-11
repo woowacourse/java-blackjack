@@ -27,7 +27,7 @@ public class Player {
     }
 
     public String name() {
-        return name.getName();
+        return name.getValue();
     }
 
     public int score() {

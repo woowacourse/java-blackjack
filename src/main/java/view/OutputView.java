@@ -14,7 +14,7 @@ public class OutputView {
 
     public static void printDistributeCard(final List<Name> names) {
         final String joinedName = names.stream()
-                .map(Name::getName)
+                .map(Name::getValue)
                 .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinedName);
     }
@@ -28,7 +28,7 @@ public class OutputView {
     public static void printPlayerCard(final Name name, final List<Card> cards) {
         final String toStringCards = toStringCards(cards);
 
-        System.out.printf("%s: %s%n", name.getName(), toStringCards);
+        System.out.printf("%s: %s%n", name.getValue(), toStringCards);
     }
 
     private static String toStringCards(final List<Card> cards) {
@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     public static void printOneMoreCard(final Name name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.getName());
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.getValue());
     }
 
     public static void printDealerDrawCard() {
@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public static void printCardResult(final Name name, final List<Card> cards, final int score) {
-        System.out.printf("%s 카드: %s - 결과: %s%n", name.getName(), toStringCards(cards), score);
+        System.out.printf("%s 카드: %s - 결과: %s%n", name.getValue(), toStringCards(cards), score);
     }
 
     public static void printEmptyLine() {
@@ -57,7 +57,7 @@ public class OutputView {
     }
 
     public static void printInputAmount(final Name name) {
-        System.out.printf("%s의 베팅 금액은?%n", name.getName());
+        System.out.printf("%s의 베팅 금액은?%n", name.getValue());
     }
 
     public static void printProfitResult(final Map<Name, Integer> profits) {
@@ -66,6 +66,6 @@ public class OutputView {
     }
 
     private static void printProfit(final Name name, final Integer profit) {
-        System.out.printf("%s: %d%n", name.getName(), profit);
+        System.out.printf("%s: %d%n", name.getValue(), profit);
     }
 }
