@@ -32,7 +32,7 @@ public class HandTest {
         assertThat(hand.score()).isEqualTo(21);
     }
 
-    @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
+    @ParameterizedTest(name = "승패를 구한다. 겜블러: {0}, 딜러: {1}, 결과: {2}")
     @MethodSource("playBlackjackSource")
     void 승패를_구한다(final List<Card> cards, final List<Card> dealerCards, final Result expectedResult) {
         final Hand hand = new Hand(cards);
@@ -68,7 +68,7 @@ public class HandTest {
         assertThat(hand.getSymbols()).containsExactly("A하트");
     }
 
-    @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")
+    @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isPlayableSource")
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
         final Hand hand = new Hand(cards);

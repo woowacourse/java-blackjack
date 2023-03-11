@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class StateTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Cards를 받아 상태를 반환한다. 입력: {0}, 상태: {1}")
     @MethodSource("calculateStateSource")
     void Cards를_받아_상태를_반환한다(final List<Card> cards, final State state) {
         final Cards sut = new Cards(cards);
