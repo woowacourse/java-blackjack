@@ -20,7 +20,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.NINE));
-        Player player = new Player("player");
+        Player player = new Player("player", 0);
         cards.forEach(player::addCard);
 
         //when
@@ -37,7 +37,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.NINE));
-        Player player = new Player("player");
+        Player player = new Player("player", 0);
         cards.forEach(player::addCard);
 
         //when
@@ -54,7 +54,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.ACE),
             new Card(Suit.SPADE, Denomination.TEN));
-        Player player = new Player("player");
+        Player player = new Player("player", 0);
 
         //when
         cards.forEach(player::addCard);
@@ -70,7 +70,7 @@ class PlayerTest {
         List<Card> cards = List.of(
             new Card(Suit.SPADE, Denomination.ACE),
             new Card(Suit.SPADE, Denomination.NINE));
-        Player player = new Player("player");
+        Player player = new Player("player", 0);
         cards.forEach(player::addCard);
 
         //when
