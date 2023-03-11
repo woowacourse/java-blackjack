@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.Score;
 
 public abstract class User {
@@ -18,8 +18,8 @@ public abstract class User {
         return cardGroup.getScore();
     }
 
-    final public void drawCard(final Deck deck) {
-        cardGroup.add(deck.draw());
+    final public void drawCard(final Card card) {
+        cardGroup.add(card);
     }
 
     final public Name getName() {

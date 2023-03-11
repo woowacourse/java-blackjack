@@ -111,7 +111,7 @@ class UsersTest {
         final Deck deck = new Deck(new TestNonShuffledDeckGenerator(testCards));
         final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), deck);
 
-        users.drawDealer(deck);
+        users.drawDealer(deck.draw());
         final CardResult cardResult = users.getUserNameAndCardResults().get(DEALER_NAME);
 
         assertThat(cardResult.getCards().getCards())

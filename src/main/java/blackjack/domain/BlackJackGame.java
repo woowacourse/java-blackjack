@@ -4,7 +4,6 @@ import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
-import blackjack.domain.money.Deposit;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
@@ -19,14 +18,13 @@ import java.util.Map.Entry;
 public class BlackJackGame {
 
     //TODO: deposit과 Deck 합치기
-    private final Deposit deposit;
-    private final Deck deck;
     private final Users users;
+    private final GameTable gameTable;
 
     public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
-        this.deck = new Deck(deckGenerator);
+        final Deck deck = new Deck(deckGenerator);
+        this.gameTable = new GameTable(deck);
         this.users = new Users(playerNames, deck);
-        this.deposit = new Deposit();
     }
 
     public CardGroup getCardGroupBy(final Name userName) {
@@ -38,7 +36,7 @@ public class BlackJackGame {
     }
 
     public void betPlayer(final Name playerName, final int betMoney) {
-        deposit.betting(playerName, new Money(betMoney));
+        gameTable.betting(playerName, new Money(betMoney));
     }
 
     public List<Name> getPlayerNames() {
@@ -50,7 +48,7 @@ public class BlackJackGame {
     }
 
     public void drawDealer() {
-        users.drawDealer(deck);
+        users.drawDealer(gameTable.supplyCard());
     }
 
     public boolean shouldDealerDraw() {
@@ -59,7 +57,7 @@ public class BlackJackGame {
 
     public void playPlayer(final Name userName, final DrawOrStay drawOrStay) {
         if (drawOrStay.isDraw()) {
-            users.drawCard(userName, deck);
+            users.drawCard(userName, gameTable.supplyCard());
         }
     }
 
@@ -69,7 +67,7 @@ public class BlackJackGame {
 
         for (final Entry<Name, Double> nameAndProfit : playerNameAndProfitRates.entrySet()) {
             playerNameAndProfits.put(nameAndProfit.getKey(),
-                    deposit.getProfit(nameAndProfit.getKey(), nameAndProfit.getValue()));
+                    gameTable.getProfit(nameAndProfit.getKey(), nameAndProfit.getValue()));
         }
 
         return Collections.unmodifiableMap(playerNameAndProfits);

@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
@@ -68,12 +69,12 @@ public class Players {
         return Collections.unmodifiableMap(playerWinningResult);
     }
 
-    public void drawCard(final Name name, final Deck deck) {
+    public void drawCard(final Name name, final Card card) {
         players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
-                .drawCard(deck);
+                .drawCard(card);
     }
 
     public Map<Name, CardResult> getPlayerNameAndCardResults() {

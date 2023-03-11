@@ -187,7 +187,8 @@ class BlackJackGameTest {
 
         blackJackGame.betPlayer(TEST_PLAYER_NAME1, 10000);
 
-        assertThat(blackJackGame).extracting("deposit")
+        assertThat(blackJackGame).extracting("gameTable")
+                .extracting("deposit")
                 .extracting("deposit", InstanceOfAssertFactories.map(Name.class, Money.class))
                 .containsExactly(entry(TEST_PLAYER_NAME1, new Money(10000)));
     }

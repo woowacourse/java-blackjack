@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
@@ -43,8 +44,8 @@ public class Users {
         return players.getPlayerNames();
     }
 
-    public void drawDealer(final Deck deck) {
-        dealer.drawCard(deck);
+    public void drawDealer(final Card card) {
+        dealer.drawCard(card);
     }
 
     public Map<Name, WinningStatus> getPlayersWinningResults() {
@@ -59,8 +60,8 @@ public class Users {
                         Collections::unmodifiableMap));
     }
 
-    public void drawCard(final Name userName, final Deck deck) {
-        players.drawCard(userName, deck);
+    public void drawCard(final Name userName, final Card card) {
+        players.drawCard(userName, card);
     }
 
     public Map<Name, CardResult> getUserNameAndCardResults() {

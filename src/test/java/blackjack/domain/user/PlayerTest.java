@@ -8,10 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.WinningStatus;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,9 +63,8 @@ class PlayerTest {
     void drawCardTest() {
         final Card card = new Card(CardShape.HEART, CardNumber.JACK);
         final User player = new Player(name, initialCardGroup);
-        final Deck deck = new Deck(new TestNonShuffledDeckGenerator(List.of(card)));
 
-        player.drawCard(deck);
+        player.drawCard(card);
 
         Assertions.assertThat(player.getCardGroups().getCards()).containsExactly(cardKing, cardEight, card);
     }
