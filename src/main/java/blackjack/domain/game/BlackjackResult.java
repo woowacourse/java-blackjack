@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.user.Player;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

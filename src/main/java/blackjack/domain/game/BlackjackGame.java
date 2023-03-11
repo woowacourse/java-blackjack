@@ -2,10 +2,10 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
-import blackjack.domain.player.Player;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
+import blackjack.domain.user.Participants;
+import blackjack.domain.user.Player;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

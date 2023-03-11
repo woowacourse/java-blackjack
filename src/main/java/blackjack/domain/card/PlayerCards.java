@@ -22,6 +22,7 @@ public class PlayerCards {
 
     public int getScore() {
         int handleAceScore = getTotalScore() + 10;
+
         if (hasAce() && ScoreState.of(handleAceScore).isNotBust()) {
             return handleAceScore;
         }

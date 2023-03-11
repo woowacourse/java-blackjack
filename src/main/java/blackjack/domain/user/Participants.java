@@ -1,7 +1,7 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.constants.ErrorCode;
-import blackjack.domain.player.exception.DuplicatePlayerNameException;
+import blackjack.domain.user.exception.DuplicatePlayerNameException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;

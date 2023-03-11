@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.player.exception.ReservedPlayerNameException;
+import blackjack.domain.user.exception.ReservedPlayerNameException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

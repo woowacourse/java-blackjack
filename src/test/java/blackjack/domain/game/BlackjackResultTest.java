@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.user.Player;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

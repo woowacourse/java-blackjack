@@ -1,4 +1,4 @@
-package blackjack.domain.player.exception;
+package blackjack.domain.user.exception;
 
 import blackjack.constants.ErrorCode;
 import blackjack.domain.exception.CustomException;

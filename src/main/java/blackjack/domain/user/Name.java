@@ -1,7 +1,7 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.constants.ErrorCode;
-import blackjack.domain.player.exception.InvalidPlayerNameException;
+import blackjack.domain.user.exception.InvalidPlayerNameException;
 import java.util.Objects;
 
 public class Name {

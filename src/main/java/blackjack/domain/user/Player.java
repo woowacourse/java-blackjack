@@ -1,7 +1,7 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.constants.ErrorCode;
-import blackjack.domain.player.exception.ReservedPlayerNameException;
+import blackjack.domain.user.exception.ReservedPlayerNameException;
 
 public class Player extends Participant {
 

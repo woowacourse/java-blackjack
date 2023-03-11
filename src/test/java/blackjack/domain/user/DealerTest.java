@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +20,7 @@ class DealerTest {
     void createDealerTest() {
         Dealer dealer = new Dealer();
 
-        assertThat(dealer.getCards()).hasSize(0);
+        assertThat(dealer.getCards()).isEmpty();
     }
 
     @Test
@@ -31,7 +31,7 @@ class DealerTest {
 
         dealer.addCard(card);
 
-        assertThat(dealer.getCards()).contains(card);
+        assertThat(dealer.getCards()).contains(new Card(CardSuit.HEART, CardNumber.ACE));
     }
 
     @Test
@@ -44,7 +44,8 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.getCards()).contains(card1, card2);
+        assertThat(dealer.getCards()).contains(new Card(CardSuit.HEART, CardNumber.ACE),
+                new Card(CardSuit.HEART, CardNumber.ACE));
     }
 
     @ParameterizedTest
