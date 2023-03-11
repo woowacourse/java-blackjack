@@ -20,4 +20,17 @@ class FinalProfitTest {
         // then
         Assertions.assertThat(addFinalProfit.getProfit()).isEqualTo(20000.0);
     }
+
+    @Test
+    @DisplayName("최종 수익 부호를 바꾼다.")
+    void convertNegative() {
+        // given
+        FinalProfit finalProfit = new FinalProfit(10000.0);
+
+        // when
+        FinalProfit convertedFinalProfit = finalProfit.convertToNegative();
+
+        // then
+        Assertions.assertThat(convertedFinalProfit.getProfit()).isEqualTo(-10000.0);
+    }
 }
