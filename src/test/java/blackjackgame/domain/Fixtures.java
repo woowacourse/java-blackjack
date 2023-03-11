@@ -22,7 +22,7 @@ public class Fixtures {
     public static final List<Card> aceThreeFour = List.of((CloverCard.CLOVER_ACE), SpadeCard.SPADE_THREE,
             HeartCard.HEART_FOUR);
 
-    // 블랙잭
+    // 21
     public static final List<Card> aceKing = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_KING);
     public static final List<Card> jackKingAce = List.of(CloverCard.CLOVER_JACK, DiamondCard.DIAMOND_KING,
             SpadeCard.SPADE_ACE);
