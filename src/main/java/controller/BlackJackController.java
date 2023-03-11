@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Answer;
+import view.Answer;
 import domain.Betting;
 import domain.Card;
 import domain.Dealer;
