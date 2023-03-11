@@ -39,8 +39,9 @@ class HandTest {
 
     @Test
     @DisplayName("카드를 추가한다.")
-    void test_() {
+    void test_addCard() {
         hand.add(new Card(HEART, "2"));
+
         assertThat(hand.getCards()).hasSize(4);
     }
 
