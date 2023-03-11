@@ -9,7 +9,9 @@ import domain.card.DrawnCards;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
 
 class PlayerTest {
 
@@ -24,7 +26,7 @@ class PlayerTest {
         List<Card> emptyCards = new ArrayList<>();
         DrawnCards drawnCards = new DrawnCards(emptyCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(name, drawnCards, new BettingMoney(1000));
         // when
         player.drawCard(expectedA);
         player.drawCard(expectedB);
@@ -48,7 +50,7 @@ class PlayerTest {
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(name, drawnCards, new BettingMoney(1000));
         // when
         int actual = player.calculateScore();
         // then
@@ -66,99 +68,226 @@ class PlayerTest {
         List<Card> givenCards = List.of(expectedA, expectedB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(name, drawnCards, new BettingMoney(1000));
         // when
         List<Card> actual = player.openDrawnCards();
         // then
         assertThat(actual).containsExactly(expectedA, expectedB);
     }
 
-    @DisplayName("플레이어가 burst라면 반드시 패배한다.")
-    @Test
-    void lose_if_player_burst() {
-        // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
-        Card cardC = new Card(CardType.DIAMOND, CardValue.QUEEN);
 
-        Name name = new Name("pobi");
-        List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
-        List<Card> givenNotBurstCards = List.of(cardA, cardB);
+    @DisplayName("블랙잭을 판별할때 ")
+    @Nested
+    class is_blackJack {
 
+        @DisplayName("조건을 만족하면 true를 반환한다.")
+        @Test
+        void return_true() {
+            // given
+            Card cardA = new Card(CardType.SPADE, CardValue.ACE);
+            Card cardB = new Card(CardType.SPADE, CardValue.TEN);
 
-        Player player = new Player(name, new DrawnCards(givenBurstCards));
-        Dealer dealer = new Dealer(new DrawnCards(givenNotBurstCards));
+            DrawnCards blackJackCards = new DrawnCards(List.of(cardA, cardB));
+            Player player = new Player(new Name("pobi"), blackJackCards, new BettingMoney(1000));
+            // when
+            boolean actual = player.isBlackJack();
+            // then
+            assertThat(actual).isTrue();
+        }
 
-        boolean expected = false;
-        // when
-        boolean actual = player.isWin(dealer);
-        // then
-        assertThat(actual).isEqualTo(expected);
+        @DisplayName("점수가 21점이 아니라면 블랙잭이 아니다.")
+        @Test
+        void return_false_by_score() {
+            // given
+            Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+            Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+
+            DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB));
+            Player player = new Player(new Name("pobi"), notBlackJackCards, new BettingMoney(1000));
+            // when
+            boolean actual = player.isBlackJack();
+            // then
+            assertThat(actual).isFalse();
+        }
+
+        @DisplayName("카드가 2장이 아니라면 블랙잭이 아니다.")
+        @Test
+        void return_false_by_card_size() {
+            // given
+            Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+            Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardC = new Card(CardType.SPADE, CardValue.NINE);
+
+            DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB, cardC));
+            Player player = new Player(new Name("pobi"), notBlackJackCards, new BettingMoney(1000));
+            // when
+            boolean actual = player.isBlackJack();
+            // then
+            assertThat(actual).isFalse();
+        }
     }
 
-    @DisplayName("플레이어가 burst가 아니고 딜러가 burst라면 반드시 승리한다.")
-    @Test
-    void win_if_player_not_burst_and_dealer_burst() {
-        // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
-        Card cardC = new Card(CardType.DIAMOND, CardValue.QUEEN);
+    @DisplayName("수익금은 플레이어가")
+    @Nested
+    class result {
 
-        Name name = new Name("pobi");
-        List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
-        List<Card> givenNotBurstCards = List.of(cardA, cardB);
+        @DisplayName("블랙잭이면 배팅금액의 1.5배이다.")
+        @Test
+        void is_blackJack() {
+            // given
+            int givenMoney = 1000;
+            int expected =  (int) (givenMoney * 1.5);
+            BettingMoney bettingMoney = new BettingMoney(givenMoney);
+            Card cardA = new Card(CardType.SPADE, CardValue.ACE);
+            Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardC = new Card(CardType.SPADE, CardValue.TWO);
 
+            DrawnCards blackJackCards = new DrawnCards(List.of(cardA, cardB));
+            DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB, cardC));
 
-        Player player = new Player(name, new DrawnCards(givenNotBurstCards));
-        Dealer dealer = new Dealer(new DrawnCards(givenBurstCards));
+            Player player = new Player(new Name("pobi"), blackJackCards, bettingMoney);
+            Dealer dealer = new Dealer(notBlackJackCards);
 
-        boolean expected = true;
-        // when
-        boolean actual = player.isWin(dealer);
-        // then
-        assertThat(actual).isEqualTo(expected);
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("블랙잭이고 딜러도 블랙잭이면 수익은 0원이다.")
+        @Test
+        void is_each_blackJack() {
+            // given
+            int givenMoney = 1000;
+            int expected =  0;
+
+            Card cardA = new Card(CardType.SPADE, CardValue.ACE);
+            Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+
+            DrawnCards blackJackCards = new DrawnCards(List.of(cardA, cardB));
+
+            Player player = new Player(new Name("pobi"), blackJackCards, new BettingMoney(givenMoney));
+            Dealer dealer = new Dealer(blackJackCards);
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("버스트이면 배팅 금액의 * -1 이다.")
+        @Test
+        void is_Burst() {
+            // given
+            int givenMoney = 1000;
+            int expected =  givenMoney * -1;
+
+            Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardB = new Card(CardType.HEART, CardValue.TEN);
+            Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
+
+            DrawnCards burstCards = new DrawnCards(List.of(cardA, cardB, cardC));
+            DrawnCards notBurstCards = new DrawnCards(List.of(cardA, cardB));
+
+            Player player = new Player(new Name("pobi"), burstCards, new BettingMoney(givenMoney));
+            Dealer dealer = new Dealer(notBurstCards);
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("승리하면 배팅 금액과 동일하다 - 딜러가 버스트인 경우")
+        @Test
+        void is_win_by_dealer_burst() {
+            // given
+            int givenMoney = 1000;
+            int expected =  givenMoney;
+
+            Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardB = new Card(CardType.HEART, CardValue.TEN);
+            Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
+
+            DrawnCards burstCards = new DrawnCards(List.of(cardA, cardB, cardC));
+            DrawnCards notBurstCards = new DrawnCards(List.of(cardA, cardB));
+
+            Player player = new Player(new Name("pobi"), notBurstCards, new BettingMoney(givenMoney));
+            Dealer dealer = new Dealer(burstCards);
+
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("승리하면 배팅 금액과 동일하다 - 점수가 높은 경우.")
+        @Test
+        void is_win_by_high_score() {
+            // given
+            int givenMoney = 1000;
+            int expected =  givenMoney;
+
+            Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardB = new Card(CardType.DIAMOND, CardValue.NINE);
+            Card cardC = new Card(CardType.DIAMOND, CardValue.THREE);
+
+            DrawnCards highScoreCards = new DrawnCards(List.of(cardA, cardB));
+            DrawnCards lowScoreCards = new DrawnCards(List.of(cardA, cardC));
+
+            Player player = new Player(new Name("pobi"), highScoreCards, new BettingMoney(givenMoney));
+            Dealer dealer = new Dealer(lowScoreCards);
+
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("패배하면 배팅 금액의 * -1 이다.")
+        @Test
+        void is_lose_by_low_score() {
+            // given
+            int givenMoney = 1000;
+            int expected =  givenMoney * -1;
+
+            Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+            Card cardB = new Card(CardType.DIAMOND, CardValue.NINE);
+            Card cardC = new Card(CardType.DIAMOND, CardValue.THREE);
+
+            DrawnCards highScoreCards = new DrawnCards(List.of(cardA, cardB));
+            DrawnCards lowScoreCards = new DrawnCards(List.of(cardA, cardC));
+
+            Player player = new Player(new Name("pobi"), lowScoreCards, new BettingMoney(givenMoney));
+            Dealer dealer = new Dealer(highScoreCards);
+            // when
+            int actual = player.calculatePrize(dealer);
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 
-    @DisplayName("둘 다 burst가 아니라면 점수가 더 높아야 승리한다.")
+    @DisplayName("이름이 같으면 true를 반환한다.")
     @Test
-    void win_if_player_high_score() {
+    void has_same_name() {
         // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
-
-        Name name = new Name("pobi");
-        List<Card> givenHighScore = List.of(cardA, cardB);
-        List<Card> givenLowScore = List.of(cardA);
-
-
-        Player player = new Player(name, new DrawnCards(givenHighScore));
-        Dealer dealer = new Dealer(new DrawnCards(givenLowScore));
-
-        boolean expected = true;
+        String givenName = "name";
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name(givenName), new DrawnCards(emptyCards), new BettingMoney(1000));
         // when
-        boolean actual = player.isWin(dealer);
+        boolean actual = player.hasSameName(givenName);
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
-    @DisplayName("점수가 같다면 딜러가 승리한다.")
+    @DisplayName("이름이 다르면 false 반환한다.")
     @Test
-    void lose_if_player_same_score_with_dealer() {
+    void has_not_same_name() {
         // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
-
-        Name name = new Name("pobi");
-        List<Card> givenCard = List.of(cardA, cardB);
-
-
-        Player player = new Player(name, new DrawnCards(givenCard));
-        Dealer dealer = new Dealer(new DrawnCards(givenCard));
-
-        boolean expected = false;
+        String givenName = "name";
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name(givenName), new DrawnCards(emptyCards), new BettingMoney(1000));
         // when
-        boolean actual = player.isWin(dealer);
+        boolean actual = player.hasSameName(givenName + "any");
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 }

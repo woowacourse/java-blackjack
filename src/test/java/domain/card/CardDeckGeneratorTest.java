@@ -13,6 +13,4 @@ class CardDeckGeneratorTest {
         // when && then
         assertThatNoException().isThrownBy(() -> CardDeckGenerator.create());
     }
-
-    //TODO: 추가적인 테스트에 관한 고민
 }

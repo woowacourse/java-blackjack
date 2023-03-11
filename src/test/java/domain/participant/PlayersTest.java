@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,44 +23,38 @@ class PlayersTest {
                 .isThrownBy(() -> new Players(expected));
     }
 
-    @DisplayName("플레이어의 수가 4명 초과하면 예외를 반환한다.")
+    @DisplayName("해당하는 이름과 일치하는 플레이어를 찾는다.")
     @Test
-    void create_fail_by_players_size_over() {
-        // given
-        List<Player> expected = createPlayers("pobi", "neo", "ori", "jay", "odo");
-        // when && then
-        assertThatThrownBy(() -> new Players(expected))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
-     }
-
-    @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
-    @Test
-    void create_fail_by_players_size_under() {
-        // given
-        List<Player> expected = createPlayers();
-        // when && then
-        assertThatThrownBy(() -> new Players(expected))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
+    void find_player_by_name() {
+        //given
+        Player expected = new Player(
+                new Name("ori"), new DrawnCards(new ArrayList<>()), new BettingMoney(1000));
+        List<Player> rawPlayers = createPlayers("pobi");
+        rawPlayers.add(expected);
+        Players players = new Players(rawPlayers);
+        //when
+        Player actual = players.findPlayerByName("ori");
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("플레이어의 이름이 중복되면 예외를 반환한다.")
+    @DisplayName("이름에 해당하는 플레이어가 존재하지 않을 경우 예외를 반환한다.")
     @Test
-    void create_fail_by_duplicated_name() {
+    void find_not_contain_name_throw_exception() {
         //given
-        List<Player> expected = createPlayers("pobi", "pobi");
+        List<Player> rawPlayers = createPlayers("pobi", "ori");
+        Players players = new Players(rawPlayers);
         //when && then
-        assertThatThrownBy(() -> new Players(expected))
+        assertThatThrownBy(() -> players.findPlayerByName("failName"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+                .hasMessage("존재하지 않는 플레이어입니다.");
     }
 
     public List<Player> createPlayers(String... names) {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
-            players.add(new Player(new Name(name), new DrawnCards(cards)));
+            players.add(new Player(new Name(name), new DrawnCards(cards),new BettingMoney(1000)) );
         }
 
         return players;

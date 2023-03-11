@@ -7,11 +7,11 @@ import domain.card.CardDeck;
 import domain.card.CardType;
 import domain.card.CardValue;
 import domain.card.DrawnCards;
+import domain.participant.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +47,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
 
@@ -70,7 +70,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
         Player player = players.findPlayerByName("pobi");
@@ -91,7 +91,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
 
@@ -113,13 +113,14 @@ class BlackJackGameTest {
         cards.add(new Card(CardType.SPADE, CardValue.JACK));
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
-        Player player = new Player(new Name("ori"), new DrawnCards(cards));
 
+        Player player = new Player(new Name("ori"), new DrawnCards(cards), new BettingMoney(1000));
         List<Player> players = createPlayers("pobi");
         players.add(player);
 
-        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), createEmptyCardDealer(),
-                CardDeck.createShuffled(deck));
+        Dealer dealer = createEmptyCardDealer();
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), dealer, CardDeck.createShuffled(deck));
 
         boolean expected = false;
         // when
@@ -136,10 +137,11 @@ class BlackJackGameTest {
         Card givenCard = new Card(CardType.SPADE, CardValue.JACK);
         cards.add(givenCard);
 
+        List<Player> players = createPlayers("a", "b");
         Dealer dealer = new Dealer(new DrawnCards(cards));
+
         List<Card> rawDeck = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
-        List<Player> players = createPlayers("a", "b");
         BlackJackGame blackJackGame = new BlackJackGame(new Players(players), dealer, cardDeck);
 
         Card expected = rawDeck.get(0);
@@ -188,32 +190,6 @@ class BlackJackGameTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("딜러의 점수를 바탕으로 플레이어들의 승패를 계산한다.")
-    @Test
-    void get_win_loss_result() {
-        // given
-        List<Card> playerCards = new ArrayList<>();
-        playerCards.add(new Card(CardType.SPADE, CardValue.EIGHT));
-        Player player = new Player(new Name("pobi"), new DrawnCards(playerCards));
-
-        Players players = new Players(List.of(player));
-
-        List<Card> dealerCard = new ArrayList<>();
-        dealerCard.add(new Card(CardType.SPADE, CardValue.TWO));
-        Dealer dealer = new Dealer(new DrawnCards(dealerCard));
-
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer,
-                CardDeck.createShuffled(createFillCards()));
-
-        boolean expected = true;
-        // when
-        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults();
-        boolean actual = winLoseResults.get(0)
-                .isWin();
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
     private List<Card> createFillCards() {
         List<Card> cards = new ArrayList<>();
 
@@ -230,7 +206,7 @@ class BlackJackGameTest {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
-            players.add(new Player(new Name(name), new DrawnCards(cards)));
+            players.add(new Player(new Name(name), new DrawnCards(cards), new BettingMoney(1000)));
         }
 
         return players;

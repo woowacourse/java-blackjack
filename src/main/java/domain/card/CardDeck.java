@@ -23,7 +23,7 @@ public class CardDeck {
 
     private void validate(final List<Card> cards) {
         if (cards.size() != SIZE_OF_CARD_DECK) {
-            throw new IllegalArgumentException("전체 카드의 수는 52장이어야 합니다.");
+            throw new IllegalArgumentException(String.format("전체 카드의 수는 %s장이어야 합니다.", SIZE_OF_CARD_DECK));
         }
 
         if (isDuplicate(cards)) {

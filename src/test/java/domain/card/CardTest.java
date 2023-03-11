@@ -22,7 +22,7 @@ class CardTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("카드가 에이스라면 false를 반환한다.")
+    @DisplayName("카드가 에이스가 아니라면 false를 반환한다.")
     @Test
     void return_false_when_is_not_ace() {
         // given

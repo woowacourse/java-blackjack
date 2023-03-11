@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BlackJackResult;
 import domain.card.Card;
 import domain.card.DrawnCards;
 import java.util.ArrayList;
@@ -9,8 +10,11 @@ public class Player extends Participant {
 
     private static final int BURST_NUMBER = 21;
 
-    public Player(final Name name, final DrawnCards drawnCards) {
+    private final BettingMoney bettingMoney;
+
+    public Player(Name name, DrawnCards drawnCards, BettingMoney bettingMoney) {
         super(name, drawnCards);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override
@@ -23,16 +27,34 @@ public class Player extends Participant {
         return calculateScore() < BURST_NUMBER;
     }
 
-    public boolean isWin(Dealer dealer) {
+    public int calculatePrize(Dealer dealer) {
+        if (isBlackJack()) {
+            return calculateBlackJackCase(dealer);
+        }
+
         if (isBurst()) {
-            return false;
+            return calculateMoney(BlackJackResult.LOSE);
         }
 
-        if (dealer.isBurst()) {
-            return true;
-
+        if (this.calculateScore() > dealer.calculateScore() || dealer.isBurst()) {
+            return calculateMoney(BlackJackResult.WIN);
         }
 
-        return this.calculateScore() > dealer.calculateScore();
+        return calculateMoney(BlackJackResult.LOSE);
+    }
+
+    private int calculateBlackJackCase(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return calculateMoney(BlackJackResult.EACH_BLACKJACK);
+        }
+        return calculateMoney(BlackJackResult.BLACKJACK);
+    }
+
+    private int calculateMoney(BlackJackResult result) {
+        return result.calculatePrize(bettingMoney.getMoney());
+    }
+
+    public boolean hasSameName(String name) {
+        return this.name.getName().equals(name);
     }
 }

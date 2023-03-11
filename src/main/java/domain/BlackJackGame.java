@@ -2,15 +2,12 @@ package domain;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.response.DrawnCardsInfo;
-import dto.response.ParticipantResult;
-import dto.response.WinLoseResult;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
@@ -27,35 +24,30 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
-    public List<DrawnCardsInfo> splitCards() {
-        splitEachParticipant(dealer, cardDeck);
+    public void splitCards() {
+        splitEachParticipant(dealer);
         players.stream()
-                .forEach(player -> splitEachParticipant(player, cardDeck));
-
-        return getDrawnCardsInfos(dealer, players);
+                .forEach(this::splitEachParticipant);
     }
 
-    private void splitEachParticipant(final Participant participant, final CardDeck cardDeck) {
+    private void splitEachParticipant(final Participant participant) {
         for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
             participant.drawCard(cardDeck.draw());
         }
     }
 
-    private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
-                                                    final Players players) {
-        List<DrawnCardsInfo> cardInfos = new ArrayList<>();
-        cardInfos.add(DrawnCardsInfo.toDto(dealer, dealer.openDrawnCards()));
-
-        players.stream()
-                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player, player.openDrawnCards())));
-
-        return cardInfos;
+    public List<Card> getOpenCardsByName(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.openDrawnCards();
     }
 
-    public DrawnCardsInfo drawPlayerCardByName(final String playerName) {
+    public List<Card> getDealerOpenCard() {
+        return dealer.openDrawnCards();
+    }
+
+    public void drawPlayerCardByName(final String playerName) {
         Player player = players.findPlayerByName(playerName);
         player.drawCard(cardDeck.draw());
-        return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
     public boolean canPlayerDrawMore(final String playerName) {
@@ -71,19 +63,9 @@ public class BlackJackGame {
         return dealer.isDrawable();
     }
 
-    public List<ParticipantResult> getParticipantResults() {
-        List<ParticipantResult> participantResults = new ArrayList<>();
-        participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateScore()));
-        players.stream()
-                .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateScore())));
-
-        return participantResults;
-    }
-
-    public List<WinLoseResult> getWinLoseResults() {
-        return players.stream()
-                .map(player -> new WinLoseResult(player.getName(), player.isWin(dealer)))
-                .collect(toList());
+    public int calculateBettingResult(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.calculatePrize(dealer);
     }
 
     public List<String> getPlayersName() {
@@ -98,5 +80,23 @@ public class BlackJackGame {
 
     public int getDealerDrawLimitScore() {
         return dealer.getDrawLimitScore();
+    }
+
+    public List<Card> getDrawnCardByNames(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.getDrawnCards();
+    }
+
+    public List<Card> getDealerCards() {
+        return dealer.getDrawnCards();
+    }
+
+    public int getDealerScore() {
+        return dealer.calculateScore();
+    }
+
+    public int getScoreByName(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.calculateScore();
     }
 }

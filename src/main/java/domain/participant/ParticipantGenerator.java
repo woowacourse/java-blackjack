@@ -1,8 +1,5 @@
 package domain.participant;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import domain.card.Card;
 import domain.card.DrawnCards;
 import java.util.ArrayList;
@@ -14,15 +11,14 @@ public class ParticipantGenerator {
         throw new IllegalStateException("생성할 수 없는 객체입니다.");
     }
 
-    public static Players createPlayers(final List<Name> names) {
-        List<Card> emptyCards = new ArrayList<>();
 
-        return names.stream()
-                .map(name -> new Player(name, new DrawnCards(emptyCards)))
-                .collect(collectingAndThen(toList(), Players::new));
+    public static Player createEmptyCardPlayer(final Name name, final BettingMoney bettingMoney) {
+
+        List<Card> emptyCards = new ArrayList<>();
+        return new Player(name, new DrawnCards(emptyCards), bettingMoney);
     }
 
-    public static Dealer createDealer() {
+    public static Dealer createEmptyCardDealer() {
         List<Card> emptyCards = new ArrayList<>();
         return new Dealer(new DrawnCards(emptyCards));
     }

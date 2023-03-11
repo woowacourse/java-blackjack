@@ -41,6 +41,14 @@ public class DrawnCards {
         this.cards.add(card);
     }
 
+    public boolean isBlackJack() {
+        if (cards.size() != 2) {
+            return false;
+        }
+
+        return calculateScore() == BURST_NUMBER;
+    }
+
     public Stream<Card> stream() {
         return cards.stream();
     }
