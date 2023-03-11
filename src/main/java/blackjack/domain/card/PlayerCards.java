@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerCards {
+    private static final int HANDLE_ACE_SCORE = 10;
+
     private final List<Card> cards;
 
     public PlayerCards() {
@@ -22,7 +24,7 @@ public class PlayerCards {
     }
 
     public Score getScore() {
-        Score handleAceScore = getTotalScore().add(Score.of(10));
+        Score handleAceScore = getTotalScore().add(Score.of(HANDLE_ACE_SCORE));
 
         if (hasAce() && ScoreState.of(handleAceScore).isNotBust()) {
             return handleAceScore;
@@ -36,10 +38,11 @@ public class PlayerCards {
     }
 
     private Score getTotalScore() {
-        return cards.stream()
-                .map(Card::getScore)
-                .reduce(Score::add)
-                .orElseThrow(IllegalArgumentException::new);
+        int total = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+
+        return Score.of(total);
     }
 
     @Override
