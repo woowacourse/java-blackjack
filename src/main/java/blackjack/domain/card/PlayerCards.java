@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.game.ScoreState;
+import blackjack.domain.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +21,8 @@ public class PlayerCards {
         this.cards.addAll(cards);
     }
 
-    public int getScore() {
-        int handleAceScore = getTotalScore() + 10;
+    public Score getScore() {
+        Score handleAceScore = getTotalScore().add(Score.of(10));
 
         if (hasAce() && ScoreState.of(handleAceScore).isNotBust()) {
             return handleAceScore;
@@ -34,10 +35,11 @@ public class PlayerCards {
                 .anyMatch(Card::isAce);
     }
 
-    private int getTotalScore() {
+    private Score getTotalScore() {
         return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+                .map(Card::getScore)
+                .reduce(Score::add)
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

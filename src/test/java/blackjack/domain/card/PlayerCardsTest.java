@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.vo.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class PlayerCardsTest {
         playerCards.add(one);
         playerCards.add(two);
 
-        assertThat(playerCards.getScore()).isEqualTo(14);
+        assertThat(playerCards.getScore()).isEqualTo(Score.of(14));
     }
 
     @Test
@@ -43,6 +44,6 @@ class PlayerCardsTest {
         playerCards.add(two);
         playerCards.add(three);
 
-        assertThat(playerCards.getScore()).isEqualTo(12);
+        assertThat(playerCards.getScore()).isEqualTo(Score.of(12));
     }
 }

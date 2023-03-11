@@ -1,21 +1,23 @@
 package blackjack.domain.game;
 
+import blackjack.domain.vo.Score;
+
 public enum ScoreState {
-    STAY(17),
-    BUST(22),
-    HIT(16);
+    STAY(Score.of(17)),
+    BUST(Score.of(22)),
+    HIT(Score.of(16));
 
-    private final int score;
+    private final Score score;
 
-    ScoreState(int score) {
+    ScoreState(Score score) {
         this.score = score;
     }
 
-    public static ScoreState of(int score) {
-        if (score >= BUST.score) {
+    public static ScoreState of(Score score) {
+        if (score.isGreaterOrEqualsTo(BUST.score)) {
             return BUST;
         }
-        if (score >= STAY.score) {
+        if (score.isGreaterOrEqualsTo(STAY.score)) {
             return STAY;
         }
         return HIT;

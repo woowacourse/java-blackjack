@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,8 +37,8 @@ public class Card {
         return this.cardNumber.isAce();
     }
 
-    public int getScore() {
-        return cardNumber.getScore();
+    public Score getScore() {
+        return Score.of(cardNumber.getScore());
     }
 
     public CardSuit getSuit() {

@@ -67,7 +67,7 @@ public class OutputView {
     }
 
     private void printCardResultFormat(Participant participant, String cards) {
-        System.out.printf(CARDS_RESULT_FORMAT, participant.getName(), cards, participant.getScore());
+        System.out.printf(CARDS_RESULT_FORMAT, participant.getName(), cards, participant.getScore().getValue());
     }
 
     private String getParticipantCardsView(Participant participant) {
