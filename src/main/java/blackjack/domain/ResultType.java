@@ -1,15 +1,17 @@
 package blackjack.domain;
 
+import java.util.function.IntUnaryOperator;
+
 public enum ResultType {
-    BLACK_JACK("블랙잭"),
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무");
+    BLACK_JACK(money -> (int) (money * 1.5)),
+    WIN(money -> money),
+    LOSE(money -> -money),
+    PUSH(money -> 0);
 
-    private final String type;
+    private final IntUnaryOperator revenue;
 
-    ResultType(final String type) {
-        this.type = type;
+    ResultType(final IntUnaryOperator revenue) {
+        this.revenue = revenue;
     }
 
     public static ResultType getReverseType(ResultType type) {
@@ -22,7 +24,7 @@ public enum ResultType {
         return PUSH;
     }
 
-    public String getType() {
-        return type;
+    public int getRevenue(int bettingMoney) {
+        return revenue.applyAsInt(bettingMoney);
     }
 }
