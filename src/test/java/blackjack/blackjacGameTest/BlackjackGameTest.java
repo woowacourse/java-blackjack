@@ -1,8 +1,12 @@
 package blackjack.blackjacGameTest;
 
 import static blackjack.Fixtures.BET_AMOUNT_10000;
+import static blackjack.Fixtures.BLACKJACK_CARDS;
+import static blackjack.Fixtures.CARDS_OF_BUST;
+import static blackjack.Fixtures.CARDS_SUM_17;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
@@ -10,11 +14,13 @@ import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.Arrays;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -70,6 +76,39 @@ class BlackjackGameTest {
         assertThat(player2.showCards()).contains(new Card(CardNumber.ACE, Pattern.CLOVER),
                 new Card(CardNumber.ACE, Pattern.HEART));
 
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러의 최종 수익을 반환할 수 있다.")
+    void calculatePrize() {
+        //given
+        dealer.hit(CARDS_SUM_17);
+        Player blackjack = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        blackjack.hit(BLACKJACK_CARDS);
+        Player bust = new Player(new Name("로지"), BET_AMOUNT_10000);
+        bust.hit(CARDS_OF_BUST);
+        blackjackGame.addPlayer(blackjack);
+        blackjackGame.addPlayer(bust);
+
+        Map<Participant, Money> prize = blackjackGame.calculatePrize();
+
+        assertThat(prize.keySet()).contains(dealer, blackjack, bust);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러의 최종 수익을 반환할 수 있다.")
+    void calculateDealerPriceValueExactly() {
+        //given
+        dealer.hit(CARDS_SUM_17);
+        Player blackjack = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        blackjack.hit(BLACKJACK_CARDS);
+        Player bust = new Player(new Name("로지"), BET_AMOUNT_10000);
+        bust.hit(CARDS_OF_BUST);
+        blackjackGame.addPlayer(blackjack);
+        blackjackGame.addPlayer(bust);
+
+        Map<Participant, Money> prize = blackjackGame.calculatePrize();
+        assertThat(prize.get(dealer)).isEqualTo(new Money(-15000));
     }
 
     @DisplayName("딜러에게 추가 카드를 주는 기능")

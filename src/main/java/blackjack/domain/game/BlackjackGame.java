@@ -1,6 +1,8 @@
 package blackjack.domain.game;
 
+import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
@@ -9,6 +11,7 @@ import blackjack.domain.participant.player.CardDecisionStrategy;
 import blackjack.domain.participant.player.CardDisplayStrategy;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +70,20 @@ public class BlackjackGame {
 
     public List<ParticipantCardsDto> getPlayersCards() {
         return players.getPlayerCards();
+    }
+
+    private static Money calculateDealerPrize(Map<Player, Money> playerMoneyMap) {
+        int sumOfPlayerPrize = playerMoneyMap.values().stream().mapToInt(Money::getValue).sum();
+        return new Money(sumOfPlayerPrize)
+                .product(-1);
+    }
+
+    public Map<Participant, Money> calculatePrize() {
+        Map<Player, Money> playerMoneyMap = players.calculateEachPrize(dealer);
+        Money dealerPrize = calculateDealerPrize(playerMoneyMap);
+        Map<Participant, Money> prize = new HashMap<>();
+        prize.put(dealer, dealerPrize);
+        prize.putAll(playerMoneyMap);
+        return prize;
     }
 }
