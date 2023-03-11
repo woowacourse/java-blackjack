@@ -14,8 +14,6 @@ public class BlackJackRuleImpl implements BlackJackRule {
 
     @Override
     public ResultType calculateDealerResult(final Dealer dealer, final Player player) {
-        //이 부분이 애매해서 리팩토링을 해보려고 했는데, 더 좋은 방법이 생각나지 않아서 일단 이렇게 구현했습니다.
-        //enum 클래스에 BiPredicate를 추가해서 구현해보려고 했는데, enum 클래스에 메서드를 추가하는 것이 맞는지 잘 모르겠습니다.
         if (dealer.hasBlackJack()) {
             return playWithBlackjack(player);
         }

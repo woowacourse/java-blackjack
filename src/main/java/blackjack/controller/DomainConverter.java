@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-//이 클래스는 controller 의 역할이지만, controller 에다가 두면, 너무 많은 역할을 하게 되는 것 같아서 분리하였습니다
-//이 클래스가 단순하게 유틸리티 비슷한 클래스인데, 이대로 괜찮을지 여쭤보고 싶어요
 public class DomainConverter {
 
     private DomainConverter() {

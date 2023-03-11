@@ -17,11 +17,11 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return name.getValue();
     }
 
     boolean hasName(final String playerName) {
-        return name.getName()
+        return name.getValue()
                 .equals(playerName);
     }
 }

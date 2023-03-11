@@ -4,12 +4,11 @@ public class Name {
 
     private static final int MAX_NAME_LENGTH = 100;
 
-    //이 부분도 Name name 이런 네이밍은 어떻게 바꿔보는 게 좋을까요? getName.getName 같은 방식으로 호출될 것 같아서 애매했어요
-    private final String name;
+    private final String value;
 
-    Name(final String name) {
-        validateName(name);
-        this.name = name;
+    Name(final String value) {
+        validateName(value);
+        this.value = value;
     }
 
     private void validateName(final String name) {
@@ -29,7 +28,7 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
