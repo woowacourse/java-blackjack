@@ -12,7 +12,7 @@ public class BettingAreas {
         this.bettingAreas = bettingAreas;
     }
 
-    public BettingAmount getPlayerBettingAmount(Player player) {
-        return bettingAreas.get(player);
+    public int getPlayerBettingAmount(Player player) {
+        return bettingAreas.get(player).getBettingAmount();
     }
 }

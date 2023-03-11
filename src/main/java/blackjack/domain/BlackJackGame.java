@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.betting.BettingAreas;
+import blackjack.domain.betting.BettingResult;
+import blackjack.domain.betting.BettingYieldCalculator;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.GameResult;
@@ -28,6 +30,11 @@ public class BlackJackGame {
 
     public GameResult getGameResult() {
         return new GameResult(participants.getDealer(), participants.getPlayers());
+    }
+
+    public BettingResult getBettingResult() {
+        BettingYieldCalculator bettingYieldCalculator = new BettingYieldCalculator(participants.getDealer(), participants.getPlayers());
+        return new BettingResult(bettingYieldCalculator.getPlayersYields(), gameTable.getBettingAreas());
     }
 
     public Participants getParticipants() {
