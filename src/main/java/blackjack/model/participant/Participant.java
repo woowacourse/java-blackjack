@@ -55,7 +55,7 @@ public abstract class Participant {
     abstract public boolean isFinished();
 
     public CardScore cardScore() {
-        return handcard.score(resultState());
+        return handcard.cardScore(resultState());
     }
 
     abstract protected ResultState resultState();
@@ -65,11 +65,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return (handcard.size() == 2) && handcard.isBigScoreEqual(BLACKJACK_NUMBER);
+        return (handcard.size() == 2) && handcard.isScoreEqual(BLACKJACK_NUMBER);
     }
 
     protected boolean isBust() {
-        return handcard.isSmallScoreOver(21) && handcard.isBigScoreOver(21);
+        return handcard.isScoreOver(BLACKJACK_NUMBER);
     }
 
     public List<Card> getCards() {

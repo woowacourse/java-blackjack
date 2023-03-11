@@ -64,10 +64,6 @@ public class Dealer extends Participant {
     }
 
     private boolean isStand() {
-        int validScore = handcard.bigScore();
-        if (validScore > BLACKJACK_NUMBER) {
-            validScore = handcard.smallScore();
-        }
-        return validScore > DEALER_HIT_NUMBER;
+        return handcard.isScoreOver(DEALER_HIT_NUMBER);
     }
 }
