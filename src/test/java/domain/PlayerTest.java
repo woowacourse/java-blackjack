@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +31,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.create(new Name("Leo"), new BetAmount(1000));
+        player = Player.create(new Name("Leo"), new BetAmount(new BigDecimal(1000)));
         player.receiveCard(new Card(Suit.HEART, Rank.TWO));
         player.receiveCard(new Card(Suit.DIAMOND, Rank.KING));
     }
@@ -38,7 +39,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
     void validateNoDealer() {
-        assertThatThrownBy(() -> Player.create(new Name("딜러"), new BetAmount(1500)))
+        assertThatThrownBy(() -> Player.create(new Name("딜러"), new BetAmount(new BigDecimal(1500))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
