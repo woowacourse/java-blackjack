@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
 public class Card {
-    final private Shape shape;
-    final private Letter letter;
+    private final Shape shape;
+    private final Letter letter;
     private boolean isOpen;
 
     public Card(final Shape shape, final Letter letter) {
