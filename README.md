@@ -69,11 +69,32 @@
 - [x] 카드 섞기 규칙
   - [x] 랜덤으로 섞는다
 
-## 객체 다이어그램
+## 객체 다이어그램(초기 설계)
 
 <img src="diagram.png" style="width: 80%; height: 80%">
 
+## Main Dependency Graph
 
+```mermaid
+classDiagram
+    BlackjackController-->ClientCommand
+    BlackjackController-->InputView
+    BlackjackController-->OutputView
+    BlackjackController-->BlackjackGame
+    BlackjackGame-->Deck
+    BlackjackGame-->GameParticipant
+    Deck-->ShuffleStrategy
+    GameParticipant-->Player
+    GameParticipant-->Dealer
+    GameParticipant-->GameResult
+    Player-->Bet
+    Player-->CardPool
+    Player-->PlayerName
+    Dealer-->Bet
+    Dealer-->CardPool
+    Dealer-->PlayerName
+    
+```
 
 ### 고민사항
 - DeckMaker 객체를 둘지, Deck 안에서 생성 책임까지 가질지?
@@ -88,4 +109,6 @@
   그렇다고 해서 배팅 금액을 Player에서 분리하느냐? 이것은 예측하기 어려운 설계라고 생각한다. 프로그래밍 요구사항을 어기는 것은 금기인가? 좋은 설계가 우선이 아닐까?
 - void 타입 메소드를 선호하는데, 괜찮은걸까? 객체지향에서 사실 void 타입은 존재하지 않아도 되는데.
 - fixture를 처음 사용함. 다만 fixture 안에 값에 맞는 enum 객체를 찾기 위한 로직이 들어가게 됨. 괜찮을까?
-- 
+- blackjackGame 객체에서 `hitFor` 메소드에서 Player를 인자로 받기에, 바로 player.draw로 히트하는 책임을 수행할 수 있음. 다만 이렇게 하는 경우 <br>
+  blackjackGame에서 Player 객체와의 의존성이 생겨버림. blackjackGame은 gameParticipant에 인자만 넘겨주면서, 의존성을 줄이는게 좋은 전략 아닐까? 
+- 의존성은 import문의 개수로 취급되어야 할까? 그렇게 판단하면 의존성이 너무 많다고 생각하는데.. 잘못된 설계인가?
