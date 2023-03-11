@@ -1,12 +1,13 @@
 package domain.player;
 
 import domain.card.Deck;
+import view.AddCardCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -40,6 +41,32 @@ public class Players {
         for (int divideCardCount = 0; divideCardCount < INIT_GIVE_CARD_COUNT; divideCardCount++) {
             player.draw(deck.draw());
         }
+    }
+    
+    public void settingBetAmountToParticipantsBy(
+            Consumer<Player> printBetAmountInputGuide,
+            DoubleSupplier supplyBetAmount,
+            ObjDoubleConsumer<Player> settingBetAmountToParticipant
+    ) {
+        for (Player participant : getParticipants()) {
+            printBetAmountInputGuide.accept(participant);
+            double betAmount = supplyBetAmount.getAsDouble();
+            settingBetAmountToParticipant.accept(participant, betAmount);
+        }
+    }
+    
+    public void giveCardToParticipantsBy(
+            Deck deck,
+            Function<Player, AddCardCommand> supplyCommand,
+            Consumer<List<Player>> printParticipantCardStatus
+    ) {
+        for (Player participant : getParticipants()) {
+            participant.drawOrFinishBy(deck, supplyCommand, printParticipantCardStatus);
+        }
+    }
+    
+    public void giveCardToDealerBy(Deck deck, Consumer<List<Player>> printGiveDealerCardMessage) {
+        getDealer().drawOrFinishBy(deck, null, printGiveDealerCardMessage);
     }
     
     public Player getDealer() {

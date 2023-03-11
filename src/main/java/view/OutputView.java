@@ -30,7 +30,7 @@ public class OutputView {
     
     public static void printPlayersInformation(BlackJackGame blackJackGame) {
         printPlayerNames(blackJackGame);
-        printPlayerCardConditions(blackJackGame);
+        printPlayerCardsStatus(blackJackGame);
     }
     
     private static void printPlayerNames(BlackJackGame blackJackGame) {
@@ -48,19 +48,19 @@ public class OutputView {
                 .collect(Collectors.toUnmodifiableList());
     }
     
-    private static void printPlayerCardConditions(BlackJackGame blackJackGame) {
-        printDealerCardCondition(blackJackGame.getDealer());
-        printParticipantCardCondition(blackJackGame.getParticipants());
+    private static void printPlayerCardsStatus(BlackJackGame blackJackGame) {
+        printDealerCardStatus(blackJackGame.getDealer());
+        printParticipantCardStatus(blackJackGame.getParticipants());
     }
     
-    private static void printDealerCardCondition(Player dealer) {
+    private static void printDealerCardStatus(Player dealer) {
         Card card = dealer.getCards().get(0);
-        printPlayerCardCondition(dealer, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardInformation(card));
+        printPlayerCardStatus(dealer, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardInformation(card));
     }
     
-    public static void printParticipantCardCondition(List<Player> participants) {
+    public static void printParticipantCardStatus(List<Player> participants) {
         for (Player participant : participants) {
-            printPlayerCardCondition(participant, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardsInformation(participant.getCards()));
+            printPlayerCardStatus(participant, PLAYER_CARD_STATUS_FORMAT + NEW_LINE, parseCardsInformation(participant.getCards()));
         }
     }
     
@@ -79,17 +79,12 @@ public class OutputView {
         return numberDescription + shapeDescription;
     }
     
-    private static void printPlayerCardCondition(Player player, String format, String cardsDisplay) {
+    private static void printPlayerCardStatus(Player player, String format, String cardsDisplay) {
         System.out.printf(format, player.getName(), cardsDisplay);
     }
     
     public static void printAddCardGuide(String name) {
         System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, name);
-    }
-    
-    public static void printFinishedMessage(String name) {
-        System.out.printf(NEW_LINE + "%s님은 더이상 카드를 뽑을 수 없습니다." + NEW_LINE, name);
-        
     }
     
     public static void printGiveDealerCardMessage() {
@@ -99,7 +94,7 @@ public class OutputView {
     public static void printPlayersFinalInformation(List<Player> players) {
         println("");
         for (Player player : players) {
-            printPlayerCardCondition(player, PLAYER_CARD_STATUS_FORMAT, parseCardsInformation(player.getCards()));
+            printPlayerCardStatus(player, PLAYER_CARD_STATUS_FORMAT, parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore().getScore());
         }
     }

@@ -5,8 +5,10 @@ import domain.card.Deck;
 import domain.player.Player;
 import domain.player.Players;
 import domain.strategy.ShuffleStrategy;
+import view.AddCardCommand;
 
 import java.util.List;
+import java.util.function.*;
 
 public class BlackJackGame {
     private final Deck deck;
@@ -16,25 +18,28 @@ public class BlackJackGame {
         this.deck = Deck.from(shuffleStrategy);
         this.players = new Players(participantNames);
     }
-
+    
     public void giveTwoCardToPlayers() {
         players.giveTwoCardToPlayers(deck);
     }
-
-    private Card draw() {
-        return deck.draw();
-    }
-
-    public void giveCard(Player player) {
-        player.draw(draw());
+    
+    public void settingBetAmountToParticipantsBy(
+            Consumer<Player> printBetAmountInputGuide,
+            DoubleSupplier supplyBetAmount,
+            ObjDoubleConsumer<Player> saveParticipantBetAmount
+    ) {
+        players.settingBetAmountToParticipantsBy(printBetAmountInputGuide, supplyBetAmount, saveParticipantBetAmount);
     }
     
-    public boolean isDealerFinished() {
-        return getDealer().isFinished();
+    public void giveCardToParticipantsBy(
+            Function<Player, AddCardCommand> supplyCommand,
+            Consumer<List<Player>> printParticipantCardStatus
+    ) {
+        players.giveCardToParticipantsBy(deck, supplyCommand, printParticipantCardStatus);
     }
     
-    public void dealerDrawStop() {
-        getDealer().drawStop();
+    public void giveCardToDealerBy(Consumer<List<Player>> printGiveDealerCardMessage) {
+        players.giveCardToDealerBy(deck, printGiveDealerCardMessage);
     }
     
     public Player getDealer() {
