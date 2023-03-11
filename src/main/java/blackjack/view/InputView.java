@@ -20,6 +20,11 @@ public class InputView {
         return validateInput(scanner.nextLine());
     }
 
+    public static int readBettingMoney(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        return Integer.parseInt(validateInput(scanner.nextLine()));
+    }
+
     private static String validateInput(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("공백은 입력이 불가능합니다.");

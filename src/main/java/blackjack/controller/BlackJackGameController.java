@@ -1,11 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class BlackJackGameController {
@@ -19,13 +22,19 @@ public class BlackJackGameController {
         final BlackJackGame blackJackGame = generateBlackJackGame();
         deck = new Deck();
 
-        blackJackGame.handOutInitCards(deck);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
+
+        final Map<Player, Profit> playerBetting = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            playerBetting.put(player, generateProfit(player));
+        }
+
+        blackJackGame.handOutInitCards(deck);
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
 
         handOutHitCard(blackJackGame, players, dealer);
-        judgeGameResult(blackJackGame, players, dealer);
+        judgeGameResult(blackJackGame, players, dealer, playerBetting);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -40,6 +49,24 @@ public class BlackJackGameController {
         try {
             final String playerNames = InputView.readNames();
             return Optional.of(new BlackJackGame(playerNames));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    private Profit generateProfit(final Player player) {
+        Optional<Profit> profit;
+        do {
+            profit = checkValidProfit(player);
+        } while (profit.isEmpty());
+        return profit.get();
+    }
+
+    private Optional<Profit> checkValidProfit(final Player player) {
+        try {
+            final int playerBetting = InputView.readBettingMoney(player.getName());
+            return Optional.of(Profit.of(playerBetting));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return Optional.empty();
@@ -103,10 +130,12 @@ public class BlackJackGameController {
         }
     }
 
-    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer) {
+    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> playerBetting) {
         final DealerResult dealerResult = new DealerResult();
         final PlayerResult playerResult = new PlayerResult();
         blackJackGame.calculateParticipantResult(dealerResult, playerResult);
+        final Map<Player, Profit> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, playerBetting);
+        final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalResult(dealerResult.getDealerResult(), playerResult.getPlayerResults());
     }
