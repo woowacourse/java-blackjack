@@ -4,7 +4,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.Result;
 import blackjack.strategy.RandomCardShuffle;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
@@ -101,9 +100,10 @@ public class BlackJackController {
     }
 
     private void printFinal(Players players, Dealer dealer) {
-        List<Result> results = blackJackGame.getPlayersResult(dealer, players);
+        List<Integer> playersProfit = blackJackGame.getPlayersProfit(dealer, players);
+        int dealerProfit = blackJackGame.getDealerProfit(dealer, players);
 
         OutputView.printFinalCardsAndScore(dealer, players);
-        OutputView.printResult(blackJackGame.getDealerResult(results), dealer, players, results);
+        OutputView.printProfit(dealer, players, dealerProfit, playersProfit);
     }
 }

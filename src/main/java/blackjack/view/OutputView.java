@@ -141,4 +141,19 @@ public class OutputView {
     public static void println() {
         System.out.println();
     }
+
+    public static void printProfit(Dealer dealer, Players players, int dealerProfit, List<Integer> playersProfit) {
+        System.out.println("## 최종 수익");
+        List<String> names = getPlayerNames(players);
+
+        System.out.print(String.format("%s: %d\n", dealer.getName().getValue(), dealerProfit));
+        printPlayersProfit(playersProfit, names);
+    }
+
+    private static void printPlayersProfit(List<Integer> playersProfit, List<String> names) {
+        for (int index = 0; index < names.size(); index++) {
+            System.out.println(String.format("%s: %d", names.get(index), playersProfit.get(index)));
+        }
+    }
+
 }
