@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import domain.Dealer;
@@ -11,6 +10,7 @@ import domain.Participants;
 import domain.Player;
 import domain.User;
 import dto.PlayerDto;
+import view.IllegalArgumentExceptionHandler;
 import view.InputView;
 import view.OutputView;
 
@@ -30,16 +30,16 @@ public class Application {
 
     private static void bet(Game game) {
         for (User user : game.getUsers()) {
-            int betAmount = askBetAmount(user.getName());
-            game.bet(user, Money.of(betAmount));
+            bet(game, user);
         }
     }
 
-    private static int askBetAmount(String name) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(name + "의 배팅 금액은?");
-        String input = scanner.nextLine();
-        return Integer.parseInt(input);
+    private static void bet(Game game, User user) {
+        IllegalArgumentExceptionHandler.handleByRepeating(() -> {
+            int betAmount = INPUT_VIEW.askBetAmount(user.getName());
+            Money money = Money.of(betAmount);
+            game.bet(user, money);
+        });
     }
 
     private static void start(Game game) {
