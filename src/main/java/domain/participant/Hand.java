@@ -64,10 +64,6 @@ public class Hand {
         return calculateOptimalCardValueSum() < BLACKJACK_VALUE;
     }
 
-    public int getSize() {
-        return cards.size();
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

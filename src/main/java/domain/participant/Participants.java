@@ -60,10 +60,6 @@ public class Participants {
         return players.getPlayers();
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
