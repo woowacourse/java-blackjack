@@ -1,8 +1,12 @@
 package domain.user;
 
+import static domain.Result.BLACKJACK;
+import static domain.Result.DRAW;
+import static domain.Result.LOSE;
+import static domain.Result.WIN;
+
 import domain.Result;
 import domain.card.Deck;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,26 +54,44 @@ public final class Participants {
         return result.calculateWinningAmount(player.getBettingAmountValue());
     }
 
-    //TODO 딜러만 블랙잭인 경우 체크 및 구현
-    //TODO 로직 개선
     private Result calculateResult(Player player) {
         if (isBlackjackOnly(player)) {
-            return Result.BLACKJACK;
+            return BLACKJACK;
         }
-        if (player.isBust()) {
-            return Result.LOSE;
+        if (isLosed(player)) {
+            return LOSE;
         }
-        if (dealer.isBust() || player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
+        if (isWon(player)) {
+            return WIN;
         }
-        if (player.calculateScore() == dealer.calculateScore()) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
+        return DRAW;
     }
 
     private boolean isBlackjackOnly(Player player) {
         return player.isBlackjack() && !dealer.isBlackjack();
+    }
+
+    private boolean isLosed(Player player) {
+        if (player.isBust()) {
+            return true;
+        }
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
+            return true;
+        }
+        if (player.calculateScore() < dealer.calculateScore() && !dealer.isBust()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isWon(Player player) {
+        if (dealer.isBust()) {
+            return true;
+        }
+        if (!player.isBust() && player.calculateScore() > dealer.calculateScore()) {
+            return true;
+        }
+        return false;
     }
 
     public boolean hitOrStayByDealer(Deck deck) {
