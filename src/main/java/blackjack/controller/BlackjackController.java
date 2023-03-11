@@ -38,6 +38,14 @@ public class BlackjackController {
         return BlackjackGame.of(playersName, playerAmount, deck);
     }
 
+    private List<String> creatPlayerAmount(List<String> playersName) {
+        List<String> playerAmount = new ArrayList<>();
+        for (String name : playersName) {
+            playerAmount.add(inputPlayerAmount(name));
+        }
+        return playerAmount;
+    }
+
     private void hitFirstSetting(final BlackjackGame blackjackGame) {
         for (Participant participant : blackjackGame.getParticipants()) {
             blackjackGame.getTwoHitCards(participant);
@@ -66,17 +74,13 @@ public class BlackjackController {
         for (Participant participant : blackjackGame.getParticipants()) {
             outputView.printTotalCardsAndScore(participant);
         }
+        printProfits(blackjackGameResult);
+    }
+
+    private void printProfits(final BlackjackGameResult blackjackGameResult) {
         outputView.printFinalRevenueStatement();
         outputView.printDealerProceeds(blackjackGameResult.calculateDealerPrizeByGameResult());
         outputView.printPlayersProceeds(blackjackGameResult.calculatePlayersPrizeByGameResult());
-    }
-
-    private List<String> creatPlayerAmount(List<String> playersName) {
-        List<String> playerAmount = new ArrayList<>();
-        for (String name : playersName) {
-            playerAmount.add(inputPlayerAmount(name));
-        }
-        return playerAmount;
     }
 
     private List<String> inputPlayerName() {
