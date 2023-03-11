@@ -1,15 +1,20 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
+import blackjack.domain.game.BetMoney;
+import blackjack.domain.game.BettingSystem;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackGameResult;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -23,19 +28,35 @@ public class BlackjackController {
 
     public void run() {
         final BlackjackGame blackjackGame = generateBlackjackGame();
+
         initialDraw(blackjackGame);
         draw(blackjackGame);
         printPlayerResult(blackjackGame);
-        printGameResult(blackjackGame);
+        final Map<Player, BetMoney> betMoneyMap = blackjackGame.calculateBet();
+        outputView.printGameResult(betMoneyMap);
     }
 
     private BlackjackGame generateBlackjackGame() {
         final Players players = repeatUntilGetValidInput(inputView::readPlayers);
-        return new BlackjackGame(players, ShuffledDeck.getInstance());
+        final BettingSystem bettingSystem = generateBettingSystem(players);
+        return new BlackjackGame(players, bettingSystem);
+    }
+
+    private BettingSystem generateBettingSystem(final Players players) {
+        final List<Player> gamePlayers = players.getPlayers();
+        final LinkedHashMap<Player, BetMoney> betMoneyByPlayers = gamePlayers.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        player -> BetMoney.createBetMoney(repeatUntilGetValidInput(() -> inputView.readBetMoney(player))),
+                        (betMoney, betMoney2) -> betMoney,
+                        LinkedHashMap::new
+                ));
+        return new BettingSystem(betMoneyByPlayers);
     }
 
     private void initialDraw(final BlackjackGame blackjackGame) {
-        blackjackGame.initialDraw();
+        blackjackGame.initialDraw(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
@@ -44,14 +65,14 @@ public class BlackjackController {
         for (Player player : players) {
             drawByGambler(blackjackGame, player);
         }
-        blackjackGame.drawByDealer();
+        blackjackGame.drawByDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(blackjackGame.getDealer());
     }
 
     private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
         while (isDrawable(player)) {
             final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
-            blackjackGame.drawByGambler(player, command);
+            blackjackGame.drawByGambler(player, ShuffledDeck.getInstance(), command);
             outputView.printDrawResult(player);
         }
     }
@@ -74,10 +95,5 @@ public class BlackjackController {
         for (final Player player : players) {
             outputView.printPlayerResult(player);
         }
-    }
-
-    private void printGameResult(final BlackjackGame blackjackGame) {
-        final BlackjackGameResult result = blackjackGame.play();
-        outputView.printGameResult(result);
     }
 }
