@@ -51,7 +51,7 @@ public class BlackJackController {
     private Players initPlayers(ChallengerNames challengerNames) {
         List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos = new ArrayList<>();
         for (ChallengerName name : challengerNames.getChallengerNames()) {
-            makeChallengerMoneyDto(name);
+            challengerNameAndMoneyDtos.add(makeChallengerMoneyDto(name));
         }
         return Players.from(challengerNameAndMoneyDtos);
     }
