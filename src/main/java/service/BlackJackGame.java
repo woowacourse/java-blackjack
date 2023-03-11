@@ -1,10 +1,10 @@
 package service;
 
+import domain.BettingMoney;
 import domain.Card;
 import domain.CardBox;
 import domain.Cards;
 import domain.Dealer;
-import domain.Money;
 import domain.Name;
 import domain.Participants;
 import domain.Player;
@@ -44,13 +44,13 @@ public class BlackJackGame {
         Dealer dealer = participants.getDealer();
         for (final Player player : participants.getPlayersToList()) {
             outputView.printPlayerNameForBetting(player.getName());
-            Money bettingMoney = getBettingMoney();
+            BettingMoney bettingMoney = getBettingMoney();
         }
     }
 
-    private Money getBettingMoney() {
+    private BettingMoney getBettingMoney() {
         try {
-            return new Money(inputView.getBettingMoney());
+            return new BettingMoney(inputView.getBettingMoney());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return getBettingMoney();

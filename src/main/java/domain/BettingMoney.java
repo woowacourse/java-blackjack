@@ -5,7 +5,7 @@ package domain;
  * @version 1.0.0
  * @Created by 우가 on 2023/03/11
  */
-class BettingMoney extends Money {
+public class BettingMoney extends Money {
     public BettingMoney(final int money) {
         super(money);
         validate(money);
@@ -21,9 +21,5 @@ class BettingMoney extends Money {
         if (money > 100_000_000) {
             throw new IllegalArgumentException("최대 베팅 금액은 1억원 입니다.");
         }
-    }
-
-    public int calculateMoneyByProfit(final double profit) {
-        return (int) (money * profit);
     }
 }
