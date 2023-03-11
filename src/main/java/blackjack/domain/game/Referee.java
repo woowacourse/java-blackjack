@@ -62,9 +62,10 @@ public class Referee {
 
     public List<Integer> calculatePlayersProfit(List<Result> results, Players players) {
         List<Integer> profits = new ArrayList<>();
+        List<Integer> amounts = players.getAmounts();
 
         for (int index = 0; index < results.size(); index++) {
-            profits.add(calculate(results.get(index), players.getPlayers().get(index).getAmount().getValue()));
+            profits.add(calculate(results.get(index), amounts.get(index)));
         }
         return profits;
     }

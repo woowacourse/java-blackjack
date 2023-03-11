@@ -49,6 +49,12 @@ public class Players {
         }
     }
 
+    public List<Integer> getAmounts() {
+        return players.stream()
+                .map(player -> player.getAmount().getValue())
+                .collect(Collectors.toList());
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
