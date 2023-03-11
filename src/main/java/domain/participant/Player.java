@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.BetAmount;
 import domain.ExceptionCode;
 
 import java.math.BigDecimal;

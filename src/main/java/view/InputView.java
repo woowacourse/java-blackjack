@@ -1,6 +1,6 @@
 package view;
 
-import domain.BetAmount;
+import domain.participant.BetAmount;
 import domain.ExceptionCode;
 import domain.participant.Name;
 

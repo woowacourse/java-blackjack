@@ -1,8 +1,7 @@
-package domain;
+package domain.participant;
 
 import domain.card.Deck;
 import domain.card.RandomShuffleStrategy;
-import domain.participant.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

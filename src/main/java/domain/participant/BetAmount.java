@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.ExceptionCode;
 
 import java.math.BigDecimal;
 

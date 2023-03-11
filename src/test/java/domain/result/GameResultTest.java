@@ -1,13 +1,9 @@
-package domain;
+package domain.result;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
-import domain.participant.Player;
-import domain.result.GameResult;
+import domain.participant.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
