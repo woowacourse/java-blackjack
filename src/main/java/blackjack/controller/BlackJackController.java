@@ -55,6 +55,13 @@ public class BlackJackController {
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
+        final List<HoldingCards> initialHoldingCards = getInitialHoldingCards(blackJackGame);
+
+        outputView.printInitialHoldingCards(initialHoldingCards);
+        outputView.printLineBreak();
+    }
+
+    private static List<HoldingCards> getInitialHoldingCards(final BlackJackGame blackJackGame) {
         final List<HoldingCards> initialHoldingCards = new ArrayList<>();
         initialHoldingCards.add(new HoldingCards(
                 DEALER_NAME_CODE,
@@ -63,9 +70,7 @@ public class BlackJackController {
         for (String name : blackJackGame.getPlayerNames()) {
             initialHoldingCards.add(new HoldingCards(name, blackJackGame.getInitialHoldingCards(name)));
         }
-
-        outputView.printInitialHoldingCards(initialHoldingCards);
-        outputView.printLineBreak();
+        return initialHoldingCards;
     }
 
     private void playPlayerTurn(BlackJackGame blackJackGame) {
@@ -101,21 +106,21 @@ public class BlackJackController {
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
-        final List<CardAndScoreResult> cardAndScoreResults = getCardResults(blackJackGame);
+        final List<CardAndScoreResult> cardAndScoreResults = getCardAndScoreResults(blackJackGame);
 
         outputView.printCardAndScoreResult(cardAndScoreResults);
         outputView.printLineBreak();
     }
 
-    private static List<CardAndScoreResult> getCardResults(final BlackJackGame blackJackGame) {
-        final List<CardAndScoreResult> cardAndScoreResults = new ArrayList<>();
+    private List<CardAndScoreResult> getCardAndScoreResults(final BlackJackGame blackJackGame) {
+        final List<CardAndScoreResult> results = new ArrayList<>();
         final CardAndScore dealerCardAndScore = blackJackGame.getCardAndScore(DEALER_NAME_CODE);
-        cardAndScoreResults.add(new CardAndScoreResult(DEALER_NAME_CODE, dealerCardAndScore.getCards(), dealerCardAndScore.getScore()));
+        results.add(new CardAndScoreResult(DEALER_NAME_CODE, dealerCardAndScore.getCards(), dealerCardAndScore.getScore()));
         for (String name : blackJackGame.getPlayerNames()) {
             final CardAndScore cardAndScore = blackJackGame.getCardAndScore(name);
-            cardAndScoreResults.add(new CardAndScoreResult(name, cardAndScore.getCards(), cardAndScore.getScore()));
+            results.add(new CardAndScoreResult(name, cardAndScore.getCards(), cardAndScore.getScore()));
         }
-        return cardAndScoreResults;
+        return results;
     }
 
     private void printProfit(final BlackJackGame blackJackGame) {
