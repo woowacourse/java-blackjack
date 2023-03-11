@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Dealer extends Participant {
 
-    private static final ParticipantName dealerName = ParticipantName.create(DEALER_NAME);
+    private static final ParticipantName PARTICIPANT_DEALER_NAME = ParticipantName.create(DEALER_NAME);
 
     private static final int STANDARD_GIVEN_SCORE = 17;
 
@@ -68,6 +68,6 @@ public final class Dealer extends Participant {
 
     @Override
     public String getName() {
-        return dealerName.getName();
+        return PARTICIPANT_DEALER_NAME.getName();
     }
 }

@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 
 public final class Card {
 
-    private static final Map<Shape, Map<Denomination, Card>> cache;
+    private static final Map<Shape, Map<Denomination, Card>> CARD_PACK;
 
     static {
         final List<Shape> shapes = Shape.findAllCardPattern();
         final List<Denomination> denominations = Denomination.findTotalCardNumber();
 
-        cache = makeCacheCards(shapes, denominations);
+        CARD_PACK = makeCacheCards(shapes, denominations);
     }
 
     private final Shape pattern;
@@ -41,7 +41,7 @@ public final class Card {
 
     public static Card of(final Shape shape, final Denomination denomination) {
         try {
-            final Map<Denomination, Card> cardNumbers = cache.get(shape);
+            final Map<Denomination, Card> cardNumbers = CARD_PACK.get(shape);
 
             return cardNumbers.get(denomination);
         } catch (NullPointerException e) {

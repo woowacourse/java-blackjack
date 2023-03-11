@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum GameResultMessage {
+
     WIN(GameResult.WIN, "승"),
     LOSE(GameResult.LOSE, "패"),
     DRAW(GameResult.DRAW, "무");

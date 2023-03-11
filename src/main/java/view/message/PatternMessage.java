@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum PatternMessage {
+
     HEART(Shape.HEART, "하트"),
     DIAMOND(Shape.DIAMOND, "다이아몬드"),
     CLOVER(Shape.CLOVER, "클로버"),
