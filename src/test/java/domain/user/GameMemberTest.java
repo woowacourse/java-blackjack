@@ -21,6 +21,14 @@ class GameMemberTest {
                 .isEqualTo("딜러");
     }
     
+    @Test
+    @DisplayName("중복된 이름이 있을 경우 예외 발생")
+    void createException() {
+        Assertions.assertThatThrownBy(() -> GameMember.of("echo,echo"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 플레이어 이름이 있습니다.");
+    }
+    
     @DisplayName("참가자의 게임 상태 업데이트 기능 구현")
     @Test
     void updateTest() {
