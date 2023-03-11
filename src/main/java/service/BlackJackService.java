@@ -62,7 +62,7 @@ public class BlackJackService {
         return dealer.canDrawMore();
     }
 
-    public List<ParticipantResult> getParticipantResults(final Dealer dealer, final Players players) {
+    public List<ParticipantResult> getParticipantsCardsResults(final Dealer dealer, final Players players) {
         List<ParticipantResult> participantResults = new ArrayList<>();
         participantResults.add(ParticipantResult.toDto(dealer));
 
@@ -118,7 +118,7 @@ public class BlackJackService {
         return player.isBust() && dealer.isBust();
     }
 
-    public List<BlackJackResult> getParticipantsNameAndAccount(final Dealer dealer, final Players players) {
+    public List<BlackJackResult> getParticipantAccountResults(final Dealer dealer, final Players players) {
         List<BlackJackResult> blackJackResults = new ArrayList<>();
         blackJackResults.add(BlackJackResult.toDto(dealer));
 

@@ -203,7 +203,7 @@ class BlackJackServiceTest {
         Dealer dealer = new Dealer(emptyCards);
 
         // when
-        List<ParticipantResult> result = blackJackService.getParticipantResults(dealer, players);
+        List<ParticipantResult> result = blackJackService.getParticipantsCardsResults(dealer, players);
 
         // then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -379,7 +379,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        List<ParticipantResult> results = blackJackService.getParticipantResults(dealer, players);
+        List<ParticipantResult> results = blackJackService.getParticipantsCardsResults(dealer, players);
 
         // then
         assertThat(results.size()).isEqualTo(2);

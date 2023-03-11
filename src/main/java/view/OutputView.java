@@ -39,7 +39,7 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printParticipantResults(final List<ParticipantResult> results) {
+    public void printParticipantsCardsResults(final List<ParticipantResult> results) {
         System.out.println();
         results.stream()
                 .forEach(result -> System.out.println(
@@ -51,7 +51,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void printGameResults(final List<BlackJackResult> results) {
+    public void printParticipantAccountResults(final List<BlackJackResult> results) {
         System.out.println(NEW_LINE + "## 최종 수익");
         results
                 .forEach(result -> System.out.println(result.getName() + ": " + (int) result.getAccount()));
