@@ -36,7 +36,7 @@ public class BettingTest {
         Map<String, Integer> players = new HashMap<>();
         players.put("a", 1000);
         BlackjackGame game = new BlackjackGame(new Players(players), new Dealer());
-        CardDeck cardDeck = new CardDeck(List.of(HEART_EIGHT, DIA_EIGHT, CLUB_SEVEN, DIA_NINE, CLUB_JACK));
+        CardDeck cardDeck = new CardDeck(List.of(CLUB_SEVEN, HEART_EIGHT, DIA_NINE, DIA_NINE, CLUB_JACK));
         game.distributeCards(cardDeck);
 
         // when
@@ -55,7 +55,7 @@ public class BettingTest {
         Map<String, Integer> players = new HashMap<>();
         players.put("a", 1000);
         BlackjackGame game = new BlackjackGame(new Players(players), new Dealer());
-        CardDeck cardDeck = new CardDeck(List.of(DIA_EIGHT, CLUB_FIVE, CLUB_ACE, CLUB_JACK));
+        CardDeck cardDeck = new CardDeck(List.of(DIA_EIGHT, CLUB_JACK, CLUB_ACE, CLUB_JACK));
         game.distributeCards(cardDeck);
 
         // when

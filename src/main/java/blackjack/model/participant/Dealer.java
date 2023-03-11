@@ -54,6 +54,9 @@ public class Dealer extends Participant {
 
     @Override
     protected ResultState resultState() {
+        if (!isStand()) {
+            throw new IllegalStateException("아직 카드를 더 뽑아야 하는 상태입니다. 결과를 계산할 수 없습니다.");
+        }
         if (this.isBlackjack()) {
             return ResultState.BLACKJACK;
         }
