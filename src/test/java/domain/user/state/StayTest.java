@@ -2,9 +2,7 @@ package domain.user.state;
 
 import static domain.card.Denomination.ACE;
 import static domain.card.Denomination.EIGHT;
-import static domain.card.Denomination.JACK;
 import static domain.card.Denomination.NINE;
-import static domain.card.Denomination.QUEEN;
 import static domain.card.Denomination.SEVEN;
 import static domain.card.Denomination.SIX;
 import static domain.card.Denomination.TEN;
@@ -37,10 +35,7 @@ class StayTest {
     @DisplayName("딜러가 Bust일시 승리한다.")
     @Test
     void match_Bust_Lose() {
-        State dealer = new Ready()
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(JACK, DIAMOND)) // Ready -> Running
-            .draw(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
+        State dealer = StateFixtures.createBustState();
 
         assertThat(state.match(dealer)).isSameAs(WIN);
     }
@@ -95,9 +90,7 @@ class StayTest {
     @DisplayName("딜러가 BlackJack일시 패배한다.")
     @Test
     void match_BlackJack_Lose() {
-        State dealer = new Ready()
-            .draw(Card.of(ACE, DIAMOND))
-            .draw(Card.of(JACK, DIAMOND)); // Ready -> BlackJack
+        State dealer = StateFixtures.createBlackJackState();
 
         assertThat(state.match(dealer)).isSameAs(LOSE);
     }
