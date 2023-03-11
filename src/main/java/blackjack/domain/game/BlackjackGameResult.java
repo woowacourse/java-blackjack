@@ -13,24 +13,6 @@ public class BlackjackGameResult {
         this.gameResult = new LinkedHashMap<>(gameResult);
     }
 
-    public int getDealerLoseCount() {
-        return (int) gameResult.values().stream()
-                .filter(WinningResult::isWin)
-                .count();
-    }
-
-    public int getDealerWinCount() {
-        return (int) gameResult.values().stream()
-                .filter(WinningResult::isLose)
-                .count();
-    }
-
-    public int getDealerPushCount() {
-        return (int) gameResult.values().stream()
-                .filter(WinningResult::isPush)
-                .count();
-    }
-
     public Map<Player, WinningResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
