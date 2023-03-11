@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String INIT_END_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String INIT_START_MESSAGE = "딜러와 ";
     private static final String CARD_MESSAGE = "카드";
@@ -24,9 +25,9 @@ public class OutputView {
     public void printStart(Players players, Dealer dealer) {
         printStartMessage(players.getPlayersName());
         System.out.print(DEALER_MESSAGE + RESULT_DELIMITER);
-        printCards(dealer.showCards(), System.lineSeparator());
+        printCards(dealer.showCards(), LINE_SEPARATOR);
         for (Player player : players) {
-            printPlayerWithCards(player, System.lineSeparator());
+            printPlayerWithCards(player, LINE_SEPARATOR);
         }
     }
 
