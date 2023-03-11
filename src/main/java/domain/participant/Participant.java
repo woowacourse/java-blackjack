@@ -23,10 +23,6 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    public Hand getCards() {
-        return hand;
-    }
-
     public GamePoint calculatePoint() {
         return hand.getGamePoint();
     }
@@ -41,5 +37,9 @@ public abstract class Participant {
 
     public Name getName() {
         return name;
+    }
+
+    public Hand getCards() {
+        return hand;
     }
 }

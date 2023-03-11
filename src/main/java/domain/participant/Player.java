@@ -25,13 +25,13 @@ public final class Player extends Participant {
         return new Player(name, bet);
     }
 
+    public static Player of(final Player player) {
+        return new Player(player.getName(), player.getCards(), player.getBet());
+    }
+
     public static Player create(final Name name, final Hand hand, final int bet) {
         validateName(name);
         return new Player(name, hand, bet);
-    }
-
-    public static Player of(final Player player) {
-        return new Player(player.getName(), player.getBet());
     }
 
     public void takeInitialCards(final DeckStrategy deck, final int count) {
@@ -39,6 +39,7 @@ public final class Player extends Participant {
             this.hand = hand.add(deck.drawCard());
         }
     }
+
     public void takeCard(final Card card) {
         this.hand = hand.add(card);
     }

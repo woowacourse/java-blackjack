@@ -63,11 +63,7 @@ public final class BlackJackController {
     }
 
     private boolean wantMoreCard(final Player player) {
-        return repeat(() -> cardRequest(player.getName()));
-    }
-
-    private boolean cardRequest(final Name name) {
-        return inputView.cardRequest(name);
+        return repeat(() -> inputView.cardRequest(player.getName()));
     }
 
     private void getDealerResult(final BlackJack blackJack) {
