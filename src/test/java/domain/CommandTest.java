@@ -4,12 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.command.DrawCommand;
+import domain.message.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class DrawCommandTest {
+class CommandTest {
 
     @DisplayName("입력 값이 정상적인 경우 객체를 생성한다.")
     @ParameterizedTest
@@ -27,7 +29,7 @@ class DrawCommandTest {
         // when & then
         assertThatThrownBy(() -> new DrawCommand(command))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Message.COMMAND_NOT_PERMITTED.getMessage());
+                .hasMessage(ExceptionMessage.COMMAND_NOT_PERMITTED.getMessage());
     }
 
     @DisplayName("사용자가 뽑는 커맨드를 입력하면 true를 반환한다.")

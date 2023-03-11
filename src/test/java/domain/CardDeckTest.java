@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.Type;
+import domain.card.Value;
+import domain.message.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +48,7 @@ class CardDeckTest {
         // when & then
         assertThatThrownBy(() -> CardDeck.createShuffled(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.CARD_DECK_INVALID_SIZE.getMessage());
+                .hasMessageContaining(ExceptionMessage.CARD_DECK_INVALID_SIZE.getMessage());
     }
 
     @DisplayName("카드가 52장 모두 개별적인 카드가 아니면 예외를 반환한다.")

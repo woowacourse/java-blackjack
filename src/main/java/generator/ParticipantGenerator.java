@@ -1,13 +1,13 @@
 package generator;
 
-import domain.Account;
-import domain.Card;
-import domain.Dealer;
-import domain.DrawnCards;
-import domain.Name;
-import domain.Player;
-import domain.Players;
-import domain.Status;
+import domain.card.Card;
+import domain.card.DrawnCards;
+import domain.participants.Account;
+import domain.participants.Dealer;
+import domain.participants.Name;
+import domain.participants.Player;
+import domain.participants.Players;
+import domain.participants.Status;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,13 +2,13 @@ package controller;
 
 import static java.util.stream.Collectors.toList;
 
-import domain.Account;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.Name;
-import domain.Player;
-import domain.Players;
+import domain.card.CardDeck;
+import domain.command.DrawCommand;
+import domain.participants.Account;
+import domain.participants.Dealer;
+import domain.participants.Name;
+import domain.participants.Player;
+import domain.participants.Players;
 import generator.CardDeckGenerator;
 import generator.ParticipantGenerator;
 import java.util.List;

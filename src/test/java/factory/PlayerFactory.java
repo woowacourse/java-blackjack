@@ -6,9 +6,9 @@ import static factory.DrawnCardsFactory.createOverCards;
 import static factory.DrawnCardsFactory.createStayCards;
 import static factory.StatusFactory.createStatus;
 
-import domain.DrawnCards;
-import domain.Player;
-import domain.Status;
+import domain.card.DrawnCards;
+import domain.participants.Player;
+import domain.participants.Status;
 
 public class PlayerFactory {
 

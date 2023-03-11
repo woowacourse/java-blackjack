@@ -1,7 +1,8 @@
-package domain;
+package domain.participants;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.message.ExceptionMessage;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class Players {
 
     private void validatePlayerNumbers(final List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYERS_SIZE || MAX_PLAYERS_NUMBER < playerNames.size()) {
-            throw new IllegalArgumentException(Message.PLAYER_INVALID_NUMBERS.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.PLAYER_INVALID_NUMBERS.getMessage());
         }
     }
 
@@ -41,13 +42,13 @@ public class Players {
         Set<String> notDuplicatedPlayerNames = new HashSet<>(playerNames);
 
         if (playerNames.size() != notDuplicatedPlayerNames.size()) {
-            throw new IllegalArgumentException(Message.PLAYER_NAME_NOT_DUPLICATED.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.PLAYER_NAME_NOT_DUPLICATED.getMessage());
         }
     }
 
     private void validateNameNotDealer(final List<String> playerNames) {
         if (playerNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException(Message.PLAYER_NAME_NOT_DEALER.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.PLAYER_NAME_NOT_DEALER.getMessage());
         }
     }
 
@@ -56,7 +57,7 @@ public class Players {
                 .anyMatch(player -> player.getAccount() < MIN_BETTING_ACCOUNT);
 
         if (isValidate) {
-            throw new IllegalArgumentException(Message.BETTING_MONEY_NEED_MORE.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.BETTING_MONEY_NEED_MORE.getMessage());
         }
     }
 

@@ -11,13 +11,13 @@ import static factory.PlayerFactory.createPlayerWithStayCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import domain.CardDeck;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.DrawnCards;
-import domain.Message;
-import domain.Player;
-import domain.Players;
+import domain.card.CardDeck;
+import domain.card.DrawnCards;
+import domain.command.DrawCommand;
+import domain.message.ExceptionMessage;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.Players;
 import generator.CardDeckGenerator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ public class CalculatorServiceTest {
     void returns_false_when_player_do_not_want_more_card() {
         // given
         Player player = createPlayerWithStayCards("choonsik");
-        DrawCommand drawCommand = new DrawCommand(Message.STOP_COMMAND.getMessage());
+        DrawCommand drawCommand = new DrawCommand(ExceptionMessage.STOP_COMMAND.getMessage());
 
         // when
         boolean result = calculatorService.canDrawMore(player, drawCommand);
@@ -64,7 +64,7 @@ public class CalculatorServiceTest {
     void returns_true_when_player_want_more_card_and_not_bust() {
         // given
         Player player = createPlayerWithStayCards("choonsik");
-        DrawCommand drawCommand = new DrawCommand(Message.DRAW_COMMAND.getMessage());
+        DrawCommand drawCommand = new DrawCommand(ExceptionMessage.DRAW_COMMAND.getMessage());
 
         // when
         boolean result = calculatorService.canDrawMore(player, drawCommand);

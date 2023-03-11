@@ -1,4 +1,4 @@
-package domain;
+package domain.participants;
 
 import java.util.Objects;
 

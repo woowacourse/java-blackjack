@@ -9,10 +9,10 @@ import static factory.StatusFactory.createStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import domain.Dealer;
-import domain.DrawnCards;
-import domain.Player;
-import domain.Players;
+import domain.card.DrawnCards;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.Players;
 import dto.DrawnCardsInfo;
 import dto.ParticipantAccountResult;
 import dto.ParticipantResult;

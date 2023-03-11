@@ -1,6 +1,6 @@
-package domain;
+package domain.message;
 
-public enum Message {
+public enum ExceptionMessage {
 
     DEALER_NAME("딜러"),
     DRAW_COMMAND("y"),
@@ -17,7 +17,7 @@ public enum Message {
 
     private final String message;
 
-    Message(final String message) {
+    ExceptionMessage(final String message) {
         this.message = message;
     }
 

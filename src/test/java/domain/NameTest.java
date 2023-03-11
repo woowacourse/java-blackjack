@@ -3,6 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.message.ExceptionMessage;
+import domain.participants.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +27,7 @@ class NameTest {
         // when & then
         assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.NAME_IS_EMPTY.getMessage());
+                .hasMessageContaining(ExceptionMessage.NAME_IS_EMPTY.getMessage());
     }
 
     @DisplayName("이름의 길이는 10자를 초과하면 예외를 반환한다.")
@@ -37,6 +39,6 @@ class NameTest {
         // when & then
         assertThatThrownBy(() -> new Name(givenName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.NAME_LENGTH_OVER.getMessage());
+                .hasMessageContaining(ExceptionMessage.NAME_LENGTH_OVER.getMessage());
     }
 }

@@ -1,8 +1,8 @@
 package factory;
 
-import domain.Account;
-import domain.Name;
-import domain.Status;
+import domain.participants.Account;
+import domain.participants.Name;
+import domain.participants.Status;
 
 public class StatusFactory {
 

@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Participant;
+import domain.participants.Participant;
 
 public class ParticipantAccountResult {
 

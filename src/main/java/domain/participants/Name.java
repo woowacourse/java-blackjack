@@ -1,5 +1,6 @@
-package domain;
+package domain.participants;
 
+import domain.message.ExceptionMessage;
 import java.util.Objects;
 
 public class Name {
@@ -20,13 +21,13 @@ public class Name {
 
     private void validateIsNullOrBlank(final String name) {
         if (Objects.isNull(name) || name.isBlank()) {
-            throw new IllegalArgumentException(Message.NAME_IS_EMPTY.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.NAME_IS_EMPTY.getMessage());
         }
     }
 
     private void validateNameLength(final String name) {
         if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(Message.NAME_LENGTH_OVER.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.NAME_LENGTH_OVER.getMessage());
         }
     }
 

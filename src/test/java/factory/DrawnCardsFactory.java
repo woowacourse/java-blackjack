@@ -1,9 +1,9 @@
 package factory;
 
-import domain.Card;
-import domain.DrawnCards;
-import domain.Type;
-import domain.Value;
+import domain.card.Card;
+import domain.card.DrawnCards;
+import domain.card.Type;
+import domain.card.Value;
 import java.util.List;
 
 public class DrawnCardsFactory {

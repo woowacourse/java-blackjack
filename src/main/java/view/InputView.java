@@ -1,6 +1,6 @@
 package view;
 
-import domain.Message;
+import domain.message.ExceptionMessage;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,7 +31,7 @@ public class InputView {
 
     private void validatePlayerMinimumAccount(final int account) {
         if (account < MIN_BETTING_ACCOUNT) {
-            throw new IllegalArgumentException(Message.BETTING_MONEY_NEED_MORE.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.BETTING_MONEY_NEED_MORE.getMessage());
         }
     }
 

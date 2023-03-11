@@ -1,11 +1,11 @@
 package service;
 
-import domain.CardDeck;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
+import domain.card.CardDeck;
+import domain.command.DrawCommand;
+import domain.participants.Dealer;
+import domain.participants.Participant;
+import domain.participants.Player;
+import domain.participants.Players;
 
 public class CalculatorService {
 
