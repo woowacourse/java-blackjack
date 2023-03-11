@@ -5,7 +5,6 @@ import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
 import blackjackgame.domain.card.ShuffledCardsGenerator;
 import blackjackgame.domain.game.BlackJackGame;
-import blackjackgame.domain.game.Result;
 import blackjackgame.domain.user.Bet;
 import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Name;
@@ -13,7 +12,6 @@ import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
-import blackjackgame.domain.user.dto.NameDto;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,7 +37,7 @@ public class BlackJackGameController {
         progressDealerTurn(blackJackGame);
         printUsersCardResult(blackJackGame);
         blackJackGame.judgeWinner();
-        printFinalResult(blackJackGame);
+        outputView.printFinalResult(blackJackGame.getBetResult());
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -60,7 +58,7 @@ public class BlackJackGameController {
 
     private Players setUpPlayers() {
         Names playerNames = repeatForValidInput(this::setUpPlayerNames);
-        List<Bet> playerBets = repeatForValidInput(() -> setUpPlayerBets(playerNames));
+        List<Bet> playerBets = setUpPlayerBets(playerNames);
         return new Players(playerNames, playerBets);
     }
 
@@ -73,10 +71,14 @@ public class BlackJackGameController {
     private List<Bet> setUpPlayerBets(Names playerNames) {
         List<Bet> playerBetAmounts = new ArrayList<>();
         for (Name playerName : playerNames.getNames()) {
-            outputView.printInputPlayerBetAmountMessage(playerName.getName());
-            playerBetAmounts.add(new Bet(inputView.readPlayerBetAmount()));
+            playerBetAmounts.add(repeatForValidInput(() -> readPlayerBetAmount(playerName)));
         }
         return playerBetAmounts;
+    }
+
+    private Bet readPlayerBetAmount(Name playerName) {
+        outputView.printInputPlayerBetAmountMessage(playerName.getName());
+        return new Bet(inputView.readPlayerBetAmount());
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
@@ -96,13 +98,13 @@ public class BlackJackGameController {
         }
     }
 
+    private boolean isHitCommandEntered(Player player) {
+        return DrawCommand.HIT == repeatForValidInput(() -> readDrawCommand(player));
+    }
+
     private DrawCommand readDrawCommand(Player player) {
         outputView.printAskOneMoreCardMessage(player.getName());
         return inputView.readDrawCommand();
-    }
-
-    private boolean isHitCommandEntered(Player player) {
-        return DrawCommand.HIT == repeatForValidInput(() -> readDrawCommand(player));
     }
 
     private void printDrawResult(Player player) {
@@ -123,11 +125,5 @@ public class BlackJackGameController {
         userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().cards());
         blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.cards()));
         outputView.printUsersCardResult(userResult);
-    }
-
-    private void printFinalResult(BlackJackGame blackJackGame) {
-        Map<Result, Integer> dealerFinalResult = blackJackGame.getDealerFinalResult();
-        Map<NameDto, Result> playerFinalResult = blackJackGame.getPlayerFinalResult();
-        outputView.printFinalResult(dealerFinalResult, playerFinalResult);
     }
 }
