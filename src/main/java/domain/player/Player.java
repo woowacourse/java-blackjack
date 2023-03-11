@@ -6,7 +6,6 @@ import domain.card.Score;
 import domain.player.state.Ready;
 import domain.player.state.State;
 import view.AddCardCommand;
-import view.OutputView;
 
 import java.util.List;
 import java.util.Objects;

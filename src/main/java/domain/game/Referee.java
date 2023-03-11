@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Referee {
+    private static final int DRAW_PROFIT = 0;
+    
     private final Map<Player, Double> betAmountResult;
     
     public Referee() {
@@ -50,7 +52,7 @@ public class Referee {
             return -participantProfit;
         }
         
-        return 0;
+        return DRAW_PROFIT;
     }
     
     private double getOrZero(Player player) {
