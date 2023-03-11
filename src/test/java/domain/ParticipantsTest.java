@@ -1,9 +1,7 @@
 package domain;
 
 import domain.card.*;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.*;
 import domain.result.GameResult;
 import domain.result.Result;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ParticipantsTest {
 
@@ -23,14 +21,23 @@ class ParticipantsTest {
 
     @BeforeEach
     void setUp() {
-        participants = Participants.from(List.of("leo", "reo", "reoleo"));
+        participants = Participants.from(
+                List.of(
+                        Player.create(new Name("reo"), new BetAmount(1500)),
+                        Player.create(new Name("leo"), new BetAmount(1500)),
+                        Player.create(new Name("reoleo"), new BetAmount(1500))));
         leo = participants.findPlayers().get(0);
     }
 
     @Test
     @DisplayName("참가자들의 이름에 문제가 없으면 참가자들을 정상적으로 생성한다.")
     void participantsTest() {
-        assertThatCode(() -> Participants.from(List.of("leo", "reo", "reoleo"))).doesNotThrowAnyException();
+        assertThatCode(() -> Participants.from(
+                List.of(
+                        Player.create(new Name("leo"), new BetAmount(1500)),
+                        Player.create(new Name("reo"), new BetAmount(1500)),
+                        Player.create(new Name("reoleo"), new BetAmount(1500))))
+                ).doesNotThrowAnyException();
     }
 
     @Test

@@ -4,8 +4,10 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 import domain.result.GameResult;
 import domain.result.Result;
 import org.assertj.core.api.Assertions;
@@ -30,7 +32,7 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        participants = Participants.from(List.of("leo"));
+        participants = Participants.from(List.of(Player.create(new Name("leo"), new BetAmount(1500))));
         deck = Deck.from((orderedDeck) -> orderedDeck);
         leo = participants.findPlayers().get(0);
     }
