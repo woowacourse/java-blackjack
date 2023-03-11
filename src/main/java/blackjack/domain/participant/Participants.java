@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.dto.CardResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -54,5 +55,9 @@ public class Participants {
 
     public Map<String, Integer> calculatePlayersScore() {
         return players.calculatePlayersScore();
+    }
+
+    public Map<String, List<CardResponse>> getPlayersCards() {
+        return players.getPlayersCards();
     }
 }

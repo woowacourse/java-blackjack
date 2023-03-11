@@ -10,12 +10,10 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.dto.CardResponse;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -86,13 +84,7 @@ public class BlackJackGame {
     }
 
     public Map<String, List<CardResponse>> getPlayersCards() {
-        final Map<String, List<CardResponse>> playerCards = new HashMap<>();
-        participants.getPlayers().getPlayers().forEach(player -> playerCards.put(player.getName(),
-                player.getCards()
-                        .stream()
-                        .map(CardResponse::from)
-                        .collect(Collectors.toList())));
-        return playerCards;
+        return participants.getPlayersCards();
     }
 
     public Map<String, Integer> getPlayersScores() {
