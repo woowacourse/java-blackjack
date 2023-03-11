@@ -1,5 +1,7 @@
 package blackjackgame.domain.user;
 
+import blackjackgame.domain.game.Result;
+
 public class Bet {
     private static final int PROFIT_INITIAL_VALUE = 0;
 
@@ -17,16 +19,8 @@ public class Bet {
         }
     }
 
-    public void win() {
-        this.profit = amount;
-    }
-
-    public void draw() {
-        this.profit = 0;
-    }
-
-    public void lose() {
-        this.profit = -amount;
+    public void applyResult(Result result) {
+        profit = result.calculateProfit(amount);
     }
 
     public int profit() {
