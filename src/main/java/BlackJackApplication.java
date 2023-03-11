@@ -14,6 +14,9 @@ import view.OutputView;
 
 public class BlackJackApplication {
 
+    private static final int BLACK_JACK_NUMBER = 21;
+    private static final int SINGLE_CARD_NUM = 1;
+
     public static void main(String[] args) {
         BettingResults betting = new BettingResults();
         Players players = generatePlayers(betting);
@@ -21,20 +24,20 @@ public class BlackJackApplication {
         betting.initParticipantBet(dealer, new Money());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         startPhase(players, dealer, blackJackGame);
-        endPhase(betting, players, dealer);
+        endPhase(betting, players, dealer, blackJackGame);
+    }
+
+    private static void endPhase(BettingResults betting, Players players, Dealer dealer, BlackJackGame blackJackGame) {
+        askEachPlayers(blackJackGame, players);
+        dealerExecute(dealer);
+        printFinalGameStatus(players, dealer);
+        printFinalFightResult(betting, players, dealer);
     }
 
     private static void startPhase(Players players, Dealer dealer, BlackJackGame blackJackGame) {
         initSetting(blackJackGame, players, dealer);
         OutputView.printParticipantResult(dealer.getName(), dealer.getCardNames());
         OutputView.printInitPlayerCards(players);
-    }
-
-    private static void endPhase(BettingResults bettingResults, Players players, Dealer dealer) {
-        askEachPlayers(players);
-        dealerExecute(dealer);
-        printFinalGameStatus(players, dealer);
-        printFinalFightResult(bettingResults, players, dealer);
     }
 
     private static Players generatePlayers(BettingResults betting) {
@@ -75,10 +78,10 @@ public class BlackJackApplication {
     }
 
 
-    private static void askEachPlayers(Players players) {
+    private static void askEachPlayers(BlackJackGame blackJackGame, Players players) {
         OutputView.printSpaceLine();
         for (Player player : players.getPlayers()) {
-            askPlayerDistribute(player);
+            askPlayerDistribute(blackJackGame, player);
         }
     }
 
@@ -89,28 +92,28 @@ public class BlackJackApplication {
         }
     }
 
-    private static void askPlayerDistribute(Player player) {
+    private static void askPlayerDistribute(BlackJackGame blackJackGame, Player player) {
         try {
-            checkAdditionalDistribute(player);
+            askDistribute(blackJackGame, player);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            askPlayerDistribute(player);
+            askPlayerDistribute(blackJackGame, player);
         }
     }
 
-    private static void checkAdditionalDistribute(Player player) {
-        do {
-            OutputView.printInputReceiveYesOrNotMessage(player.getName());
+    private static void askDistribute(BlackJackGame blackJackGame, Player player) {
+        if (player.getScoreSum() < BLACK_JACK_NUMBER) {
+            boolean playerRespond = InputView.inputReceiveOrNot(player.getName());
+            askAnotherDistribute(blackJackGame, player, playerRespond);
+        }
+    }
+
+    private static void askAnotherDistribute(BlackJackGame blackJackGame, Player player, boolean playerRespond) {
+        if (playerRespond) {
+            blackJackGame.distributeCard(player, SINGLE_CARD_NUM);
             OutputView.printParticipantResult(player.getName(), player.getCardNames());
-        } while (player.isDrawable() && isReceivable(player));
-    }
-
-    private static boolean isReceivable(Player player) {
-        if (InputView.inputReceiveOrNot()) {
-            player.takeCard(1);
-            return true;
+            askPlayerDistribute(blackJackGame, player);
         }
-        return false;
     }
 
     private static void printFinalGameStatus(Players players, Dealer dealer) {

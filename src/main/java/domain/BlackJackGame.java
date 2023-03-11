@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Players;
 
 public class BlackJackGame {
+    private static final int INIT_CARD_NUM = 2;
     private final Players players;
     private final Dealer dealer;
 
@@ -14,7 +15,7 @@ public class BlackJackGame {
     }
 
     public void initSettingCards() {
-        dealer.takeCard(2);
+        dealer.takeCard(INIT_CARD_NUM);
         players.initDistribute();
     }
 
