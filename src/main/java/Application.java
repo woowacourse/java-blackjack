@@ -74,6 +74,7 @@ public class Application {
             game.dealCard(player);
             outputView.printPlayerCards(player);
         }
+
         game.updateStatusToStay(isYes, player);
     }
 
@@ -89,8 +90,13 @@ public class Application {
     private static void printResult(Game game) {
         Users users = game.getUsers();
         outputView.printCardsAndScores(users);
+        printFinalProfit(users);
+    }
+
+    private static void printFinalProfit(Users users) {
         outputView.printResultNotice();
         outputView.printDealerResults(users.getDealerMoney());
+
         for (Player player : users.players()) {
             String name = player.getName();
             Money money = calculate(users.getUserResult(player), player.getMoney());

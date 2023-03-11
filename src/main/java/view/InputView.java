@@ -14,6 +14,8 @@ public class InputView {
     private static final String NO = "n";
     private static final int MIN_PLAYER_NUM = 1;
     private static final int MAX_PLAYER_NUM = 10;
+    private static final int MIN_AMOUNT = 1_000;
+    private static final int MAX_AMOUNT = 100_000;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -59,10 +61,28 @@ public class InputView {
 
     public int enterBettingAmount(String name) {
         System.out.printf(ENTER_BETTING_AMOUNT_NOTICE, name);
-        String bettingAmount = scanner.nextLine();
+        String input = scanner.nextLine();
 
+        validateNumeric(input);
+        int bettingAmount = Integer.parseInt(input);
+        validateBettingAmountRange(bettingAmount);
 
-        return Integer.parseInt(bettingAmount);
+        return bettingAmount;
+    }
+
+    private void validateNumeric(String bettingAmount) {
+        try {
+            Integer.parseInt(bettingAmount);
+        } catch (NumberFormatException nfe) {
+            System.out.println(nfe.getMessage());
+            throw new IllegalArgumentException("배팅 금액으로 숫자를 입력해야합니다.");
+        }
+    }
+
+    private void validateBettingAmountRange(int bettingAmount) {
+        if (bettingAmount < MIN_AMOUNT || bettingAmount >= MAX_AMOUNT) {
+            throw new IllegalArgumentException("배팅 금액은 1,000 이상 100,000 이하로 입력해야합니다.");
+        }
     }
 
 }
