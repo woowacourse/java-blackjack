@@ -20,7 +20,6 @@ public class ParticipantBettingResultDTO {
         Map<String, Integer> bettingResults = new LinkedHashMap<>();
         bettingResults.put(DEALER_DEFAULT_NAME, gameResult.getDealerRevenue());
         gameResult.getBettingResult().forEach(calculatePlayersRevenue(bettingResults));
-        bettingResults.put(DEALER_DEFAULT_NAME, gameResult.getDealerRevenue());
         return new ParticipantBettingResultDTO(bettingResults);
     }
 
