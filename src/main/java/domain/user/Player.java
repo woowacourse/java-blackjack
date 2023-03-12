@@ -6,11 +6,17 @@ public class Player {
 
     private static final int INITIAL_BET_AMOUNT = 0;
 
+    // TODO: 소지품 객체 생성
     private final PlayerName playerName;
     private final CardPool cardPool;
     private final Bet bet;
 
-    // 소지품 객체 생성
+    protected Player(ReservedRole role, final CardPool cardPool) {
+        this.playerName = new PlayerName(role);
+        this.cardPool = cardPool;
+        this.bet = new Bet(INITIAL_BET_AMOUNT);
+    }
+
     public Player(final String playerName, final CardPool cardPool) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
