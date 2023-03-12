@@ -22,7 +22,7 @@ public class GameResult {
         this.dealerProfit = dealerProfit;
     }
 
-    public static GameResult of(final Users users) {
+    public static GameResult from(final Users users) {
         Map<String, Integer> playerProfits = calculatePlayerProfits(users);
         int dealerResult = calculateDealerProfit(playerProfits);
         return new GameResult(playerProfits, dealerResult);

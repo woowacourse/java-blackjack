@@ -59,7 +59,7 @@ public class BlackJackGame {
     }
 
     public GameResult getResult() {
-        return GameResult.of(users);
+        return GameResult.from(users);
     }
 
     public Card getDealerCardWithHidden() {

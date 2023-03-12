@@ -66,7 +66,7 @@ public class GameResultTest {
     @DisplayName("플레이어의 결과를 계산한다")
     @Test
     void calculateWinnings() {
-        GameResult gameResult = GameResult.of(users);
+        GameResult gameResult = GameResult.from(users);
 
         Map<String, Integer> profits = gameResult.getPlayerProfits();
 
@@ -83,7 +83,7 @@ public class GameResultTest {
     @DisplayName("딜러의 결과를 계산한다")
     @Test
     void calculateDealerResult() {
-        GameResult gameResult = GameResult.of(users);
+        GameResult gameResult = GameResult.from(users);
 
         int dealerProfit = gameResult.getDealerProfit();
 
