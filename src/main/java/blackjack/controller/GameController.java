@@ -38,7 +38,7 @@ public class GameController {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             Name name = new Name(playerName);
-            BetAmount betAmount = new BetAmount(inputView.readBetAmount(playerName));
+            BetAmount betAmount = new BetAmount(inputView.readBetAmount(name.getName()));
             players.add(new Player(name, betAmount, new PlayerInitialState(new Hand())));
         }
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
