@@ -87,4 +87,17 @@ class BankTest {
 
         assertThat(newBank.exchange(player, LOSE)).isEqualTo(new Money(0));
     }
+
+    @Test
+    @DisplayName("가진 금액을 모두 반환한다.")
+    void totalMoneyTest() {
+        bank.betMoney(new Player("player1"), new Money(1000));
+        bank.betMoney(new Player("player1"), new Money(200));
+        bank.betMoney(new Player("player1"), new Money(30));
+        bank.betMoney(new Player("player1"), new Money(4));
+
+        Money totalMoney = bank.totalMoney();
+
+        assertThat(totalMoney).isEqualTo(new Money(1234));
+    }
 }
