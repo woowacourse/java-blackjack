@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class FinalProfit {
 
+    private static final double NO_PROFIT = 0.0;
     private final double profit;
 
     public FinalProfit(final double profit) {
@@ -15,6 +16,9 @@ public class FinalProfit {
     }
 
     public FinalProfit convertToNegative() {
+        if (this.profit == NO_PROFIT) {
+            return new FinalProfit(NO_PROFIT);
+        }
         return new FinalProfit(this.profit * -1);
     }
 
