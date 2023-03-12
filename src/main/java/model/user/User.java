@@ -13,15 +13,11 @@ public class User {
     }
 
     public void receiveCard(final Card card) {
-        this.hand.receiveCard(card);
-    }
-
-    public int calculateTotalValue() {
-        return hand.getTotalValue();
+        hand.receiveCard(card);
     }
 
     public Score judgeResult(int dealerTotalValue) {
-        final int playerTotalValue = calculateTotalValue();
+        final int playerTotalValue = getCardTotalValue();
         return Score.judge(dealerTotalValue, playerTotalValue);
     }
 

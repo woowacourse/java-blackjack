@@ -27,4 +27,5 @@ class ScoreTest {
                 () -> assertThat(judge(21, 20)).isEqualTo(LOSE)
         );
     }
+
 }

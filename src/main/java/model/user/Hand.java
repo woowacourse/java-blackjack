@@ -5,6 +5,8 @@ import model.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.joining;
+
 public class Hand {
 
     private static final int BUST_NUMBER = 21;
@@ -24,15 +26,18 @@ public class Hand {
     }
 
     public int getTotalValue() {
-        int totalValue = calculateTotalValue();
+        int totalValue = sumCardsValue();
+        return calculateCardsValue(totalValue);
+    }
+
+    private int calculateCardsValue(int totalValue) {
         if (totalValue > BUST_NUMBER && isIncludeAce()) {
             return totalValue - 10;
         }
-
         return totalValue;
     }
 
-    private int calculateTotalValue() {
+    private int sumCardsValue() {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
@@ -46,4 +51,5 @@ public class Hand {
     public List<Card> getCards() {
         return this.cards;
     }
+
 }

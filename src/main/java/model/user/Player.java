@@ -3,22 +3,30 @@ package model.user;
 import model.card.Card;
 import model.card.Deck;
 
-public class Player implements Receivable {
+public class Player {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
+    private static final int BLACK_JACK_NUMBER = 21;
+    private static final double BLACK_JACK_WEIGHT = 1.5;
 
     private final User user;
+    private long money;
 
-    public Player(final String name) {
+    private Player(final String name, final int money) {
         this.user = new User(name);
+        this.money = money;
     }
 
-    @Override
+    public static Player from(String playerName, int money) {
+        return new Player(playerName, money);
+    }
+
     public boolean canReceiveCard() {
-        return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
+        Receivable receivable = () -> CAN_RECEIVE_MAX_NUMBER >= getCardTotalValue();
+        return receivable.canReceiveCard();
     }
 
-    private int calculateTotalValue() {
+    public int getCardTotalValue() {
         return user.getCardTotalValue();
     }
 
@@ -42,4 +50,21 @@ public class Player implements Receivable {
     public Hand getHand() {
         return user.getHand();
     }
+
+    public long getMoney() {
+        return this.money;
+    }
+
+    public void lose() {
+        this.money = -this.money;
+    }
+
+    public boolean isBlackJack() {
+        return getCardTotalValue() == BLACK_JACK_NUMBER;
+    }
+
+    public void receiveMoney() {
+        this.money *= BLACK_JACK_WEIGHT;
+    }
+
 }

@@ -5,7 +5,6 @@ import model.user.Dealer;
 import model.user.Hand;
 import model.user.Participants;
 import model.user.Player;
-import model.user.Score;
 
 import java.util.List;
 
@@ -16,45 +15,41 @@ public class OutputView {
     private static final String DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
 
-    public static void printDivideTwoCard(List<Player> players) {
+    public static void printDivideTwoCard(final List<Player> players) {
         String playersNameForm = players.stream()
                 .map(Player::getName)
                 .collect(joining(", "));
         System.out.println(System.lineSeparator() + String.format(DIVIDE_CARDS_MESSAGE, playersNameForm));
     }
 
-    public static void printFirstCardStatus(Participants participants) {
+    public static void printFirstCardStatus(final Participants participants) {
         printFirstDealerCardStatus(participants);
         printFirstPlayerCardStatus(participants);
         System.out.print(System.lineSeparator());
     }
 
-    private static void printFirstDealerCardStatus(Participants participants) {
+    private static void printFirstDealerCardStatus(final Participants participants) {
         Dealer dealer = participants.getDealer();
         Card dealerCard = dealer.getHand().getCards().get(0);
         System.out.println(dealer.getName() + ": " + dealerCard.getValue() + dealerCard.getShape());
     }
 
-    private static void printFirstPlayerCardStatus(Participants participants) {
+    private static void printFirstPlayerCardStatus(final Participants participants) {
         for (Player player : participants.getPlayers()) {
             printPlayerCardStatus(player);
         }
     }
 
-    public static void printPlayerCardStatus(Player player) {
+    public static void printPlayerCardStatus(final Player player) {
         System.out.println(player.getName() + ": " + getCardStatusForm(player.getHand()));
     }
 
-    public static void printDealerCardStatus(Dealer dealer) {
-        System.out.println(System.lineSeparator()
-                + dealer.getName()
-                + ": "
-                + getCardStatusForm(dealer.getHand())
-                + " - 결과: "
-                + dealer.getHand().getTotalValue());
+    public static void printDealerCardStatus(final Dealer dealer) {
+        System.out.println();
+        printParticipantsScoreBoard(dealer.getName(), dealer.getHand());
     }
 
-    private static String getCardStatusForm(Hand hand) {
+    private static String getCardStatusForm(final Hand hand) {
         return hand.getCards().stream()
                 .map(card -> card.getName() + card.getShape())
                 .collect(joining(", "));
@@ -64,7 +59,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 
-    public static void printScoreBoard(Participants participants) {
+    public static void printScoreBoard(final Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
@@ -72,49 +67,28 @@ public class OutputView {
         printPlayersScoreBoard(players);
     }
 
-    private static void printPlayersScoreBoard(List<Player> players) {
+    private static void printPlayersScoreBoard(final List<Player> players) {
         for (Player player : players) {
-            System.out.println(player.getName()
-                            + ": "
-                            + getCardStatusForm(player.getHand())
-                            + " - 결과: "
-                            + player.getHand().getTotalValue()
-            );
+            printParticipantsScoreBoard(player.getName(), player.getHand());
         }
     }
 
-    public static void printResult(Participants participants) {
-        List<Score> dealerResult = participants.getFinalResult(participants.getDealer());
+    private static void printParticipantsScoreBoard(String name, Hand hand) {
+        System.out.println(name
+                + ": "
+                + getCardStatusForm(hand)
+                + " - 결과: "
+                + hand.getTotalValue()
+        );
+    }
 
-        int dealerWinCount = getDealerScoreCount(dealerResult, Score.LOSE);
-        int dealerLoseCount = getDealerScoreCount(dealerResult, Score.WIN);
-        int dealerTieCount = getDealerScoreCount(dealerResult, Score.TIE);
+    public static void printGameResult(Participants participants) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println("딜러: " + participants.getDealerProfit());
 
         List<Player> players = participants.getPlayers();
-
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.println(getDealerResultForm(dealerWinCount, dealerLoseCount, dealerTieCount));
-        printPlayersResult(participants, players);
-    }
-
-    private static void printPlayersResult(Participants participants, List<Player> players) {
         for (Player player : players) {
-            Score score = player.judgeResult(participants.getDealer().calculateTotalValue());
-            System.out.printf("%s: %s\n", player.getName(), score.getName());
+            System.out.println(player.getName() + ": " + player.getMoney());
         }
     }
-
-    private static String getDealerResultForm(int dealerWinCount, int dealerLoseCount, int dealerTieCount) {
-        if (dealerTieCount == 0) {
-            return String.format("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        }
-        return String.format("딜러: %d승 %d패 %d무\n", dealerWinCount, dealerLoseCount, dealerTieCount);
-    }
-
-    private static int getDealerScoreCount(List<Score> dealerResult, Score score) {
-        return (int) dealerResult.stream()
-                .filter(result -> result == score)
-                .count();
-    }
-
 }
