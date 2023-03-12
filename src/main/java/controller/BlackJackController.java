@@ -10,7 +10,6 @@ import domain.participant.ParticipantFinalResultDto;
 import domain.participant.ParticipantResultDto;
 import domain.participant.Player;
 import util.Constants;
-import view.InputValidator;
 import view.InputView;
 import view.OutputView;
 import view.ResultView;
@@ -20,14 +19,14 @@ public class BlackJackController {
     public void run() {
         BlackJackGame blackJackGame = generateBlackJackGame();
         BettingManager bettingManager = new BettingManager();
+        startGameStep(blackJackGame, bettingManager);
+        additionalCardDrawStep(blackJackGame);
+        printResultStep(blackJackGame, bettingManager);
+    }
+
+    private void startGameStep(BlackJackGame blackJackGame, BettingManager bettingManager) {
         saveBettingMoney(blackJackGame, bettingManager);
         initDistributeCards(blackJackGame);
-        if (!isDealerBlackjack(blackJackGame)) {
-            additionalCardDraw(blackJackGame);
-        }
-        printFinalCardResult(blackJackGame);
-        calculateFinalProfit(blackJackGame, bettingManager);
-        printFinalProfit(bettingManager);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -63,6 +62,12 @@ public class BlackJackController {
         for (String playerName : playerNames) {
             ParticipantResultDto playerResultDto = blackJackGame.generateParticipantResultByParticipantName(playerName);
             ResultView.printParticipantResult(playerResultDto);
+        }
+    }
+
+    private void additionalCardDrawStep(BlackJackGame blackJackGame) {
+        if (!isDealerBlackjack(blackJackGame)) {
+            additionalCardDraw(blackJackGame);
         }
     }
 
@@ -109,6 +114,12 @@ public class BlackJackController {
             OutputView.printDealerReceivedMessage();
             blackJackGame.distributeDealerCard();
         }
+    }
+
+    private void printResultStep(BlackJackGame blackJackGame, BettingManager bettingManager) {
+        printFinalCardResult(blackJackGame);
+        calculateFinalProfit(blackJackGame, bettingManager);
+        printFinalProfit(bettingManager);
     }
 
     private void printFinalCardResult(BlackJackGame blackJackGame) {
