@@ -19,13 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class DealerTest {
 
-    static Stream<Arguments> isDrawableSource() {
-        return Stream.of(
-                Arguments.of(CardsFixture.valueOf(16), true),
-                Arguments.of(CardsFixture.valueOf(17), false)
-        );
-    }
-
     @Test
     void 딜러를_생성한다() {
         final Dealer dealer = Dealer.create();
@@ -41,6 +34,13 @@ public class DealerTest {
         dealer.initialDraw(deck);
 
         assertThat(dealer.isDrawable()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isDrawableSource() {
+        return Stream.of(
+                Arguments.of(CardsFixture.valueOf(16), true),
+                Arguments.of(CardsFixture.valueOf(17), false)
+        );
     }
 
     @Test

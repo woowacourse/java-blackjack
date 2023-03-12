@@ -29,6 +29,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class CardsTest {
 
+    @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
+    @MethodSource("totalScoreSource")
+    void 점수_산정에_들어갈_결과값을_반환한다(final List<Card> cards, final int result) {
+        final Cards sut = new Cards(cards);
+
+        assertThat(sut.totalScore()).isEqualTo(result);
+    }
+
     static Stream<Arguments> totalScoreSource() {
         return Stream.of(
                 Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), 16),
@@ -41,42 +49,6 @@ public class CardsTest {
                 Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), 22),
                 Arguments.of(List.of(JACK_SPADE, ACE_SPADE, KING_SPADE, NINE_SPADE), 30)
         );
-    }
-
-    static Stream<Arguments> isBlackjackSource() {
-        return Stream.of(
-                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
-                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
-                Arguments.of(List.of(ACE_SPADE, KING_SPADE), true),
-                Arguments.of(List.of(FIVE_SPADE, KING_SPADE, SIX_SPADE), false),
-                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), false)
-        );
-    }
-
-    static Stream<Arguments> isBustSource() {
-        return Stream.of(
-                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
-                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
-                Arguments.of(List.of(ACE_SPADE, KING_SPADE), false),
-                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), true)
-        );
-    }
-
-    static Stream<Arguments> isBlackjackScoreSource() {
-        return Stream.of(
-                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE, FIVE_SPADE), true),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), false),
-                Arguments.of(List.of(ACE_SPADE, ACE_HEART, EIGHT_SPADE), false),
-                Arguments.of(List.of(KING_SPADE, KING_HEART, JACK_SPADE), false)
-        );
-    }
-
-    @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
-    @MethodSource("totalScoreSource")
-    void 점수_산정에_들어갈_결과값을_반환한다(final List<Card> cards, final int result) {
-        final Cards sut = new Cards(cards);
-
-        assertThat(sut.totalScore()).isEqualTo(result);
     }
 
     @Test
@@ -112,6 +84,16 @@ public class CardsTest {
         assertThat(sut.isBlackjack()).isEqualTo(result);
     }
 
+    static Stream<Arguments> isBlackjackSource() {
+        return Stream.of(
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
+                Arguments.of(List.of(ACE_SPADE, KING_SPADE), true),
+                Arguments.of(List.of(FIVE_SPADE, KING_SPADE, SIX_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), false)
+        );
+    }
+
     @ParameterizedTest(name = "버스트인지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isBustSource")
     void 버스트인지_확인한다(final List<Card> cards, final boolean result) {
@@ -120,11 +102,29 @@ public class CardsTest {
         assertThat(sut.isBust()).isEqualTo(result);
     }
 
+    static Stream<Arguments> isBustSource() {
+        return Stream.of(
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
+                Arguments.of(List.of(ACE_SPADE, KING_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), true)
+        );
+    }
+
     @ParameterizedTest(name = "결과값이 블랙잭 점수인지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isBlackjackScoreSource")
     void 결과값이_블랙잭_점수인지_확인한다(final List<Card> cards, final boolean result) {
         final Cards sut = new Cards(cards);
 
         assertThat(sut.isBlackjackScore()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isBlackjackScoreSource() {
+        return Stream.of(
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE, FIVE_SPADE), true),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART, EIGHT_SPADE), false),
+                Arguments.of(List.of(KING_SPADE, KING_HEART, JACK_SPADE), false)
+        );
     }
 }

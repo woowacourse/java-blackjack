@@ -19,14 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class GamblerTest {
 
-    static Stream<Arguments> isDrawableSource() {
-        return Stream.of(
-                Arguments.of(CardsFixture.BUST, false),
-                Arguments.of(CardsFixture.valueOf(21), false),
-                Arguments.of(CardsFixture.valueOf(20), true)
-        );
-    }
-
     @Test
     void 겜블러를_생성한다() {
         final Gambler gambler = Gambler.create("허브");
@@ -45,6 +37,14 @@ public class GamblerTest {
         final boolean drawable = gambler.isDrawable();
 
         assertThat(drawable).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isDrawableSource() {
+        return Stream.of(
+                Arguments.of(CardsFixture.BUST, false),
+                Arguments.of(CardsFixture.valueOf(21), false),
+                Arguments.of(CardsFixture.valueOf(20), true)
+        );
     }
 
     @Test

@@ -23,30 +23,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class HandTest {
 
-    static Stream<Arguments> playBlackjackSource() {
-        return Stream.of(
-                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.BLACKJACK, PUSH),
-                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(20), BLACKJACK_WIN),
-                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(21), BLACKJACK_WIN),
-                Arguments.of(CardsFixture.valueOf(20), CardsFixture.BLACKJACK, LOSE),
-                Arguments.of(CardsFixture.BUST, CardsFixture.BLACKJACK, LOSE),
-                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(18), WIN),
-                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(20), PUSH),
-                Arguments.of(CardsFixture.valueOf(17), CardsFixture.valueOf(20), LOSE),
-                Arguments.of(CardsFixture.valueOf(17), CardsFixture.BUST, WIN),
-                Arguments.of(CardsFixture.BUST, CardsFixture.valueOf(17), LOSE),
-                Arguments.of(CardsFixture.BUST, CardsFixture.BUST, LOSE)
-        );
-    }
-
-    static Stream<Arguments> isPlayableSource() {
-        return Stream.of(
-                Arguments.of(CardsFixture.BLACKJACK, false),
-                Arguments.of(CardsFixture.BUST, false),
-                Arguments.of(CardsFixture.valueOf(20), true)
-        );
-    }
-
     @Test
     void 카드를_입력받아_핸드를_생성한다() {
         final List<Card> cards = CardsFixture.BLACKJACK;
@@ -67,6 +43,22 @@ public class HandTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    static Stream<Arguments> playBlackjackSource() {
+        return Stream.of(
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.BLACKJACK, PUSH),
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(20), BLACKJACK_WIN),
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(21), BLACKJACK_WIN),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.BLACKJACK, LOSE),
+                Arguments.of(CardsFixture.BUST, CardsFixture.BLACKJACK, LOSE),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(18), WIN),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(20), PUSH),
+                Arguments.of(CardsFixture.valueOf(17), CardsFixture.valueOf(20), LOSE),
+                Arguments.of(CardsFixture.valueOf(17), CardsFixture.BUST, WIN),
+                Arguments.of(CardsFixture.BUST, CardsFixture.valueOf(17), LOSE),
+                Arguments.of(CardsFixture.BUST, CardsFixture.BUST, LOSE)
+        );
+    }
+
     @Test
     void 카드가_추가된다() {
         final Hand hand = new Hand();
@@ -82,6 +74,14 @@ public class HandTest {
         final Hand hand = new Hand(cards);
 
         assertThat(hand.isPlayable()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isPlayableSource() {
+        return Stream.of(
+                Arguments.of(CardsFixture.BLACKJACK, false),
+                Arguments.of(CardsFixture.BUST, false),
+                Arguments.of(CardsFixture.valueOf(20), true)
+        );
     }
 
     @Test
