@@ -33,11 +33,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        if (getCards().size() != INITIAL_HAND_SIZE) {
-            return false;
-        }
-
-        return calculateScore() == BLACKJACK;
+        return getCards().size() == INITIAL_HAND_SIZE && calculateScore() == BLACKJACK;
     }
 
     public abstract boolean isStand();

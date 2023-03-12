@@ -17,7 +17,7 @@ public class BlackjackController {
             start(blackjackGame);
 
             OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printParticipantsResult(blackjackGame.getPlayersResult(), blackjackGame.getDealerResult());
+            OutputView.printParticipantsResult(blackjackGame.getParticipantsResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }

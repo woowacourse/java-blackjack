@@ -173,7 +173,7 @@ class ParticipantsTest {
         participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1000);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(1000);
     }
 
     @Test
@@ -188,7 +188,7 @@ class ParticipantsTest {
         participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.CLUB));
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(-1000);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(-1000);
     }
 
     @Test
@@ -201,7 +201,7 @@ class ParticipantsTest {
         //when
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(0);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(0);
     }
 
     @Test
@@ -214,7 +214,7 @@ class ParticipantsTest {
         //when
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1500);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(1500);
     }
 
     @Test
@@ -229,7 +229,7 @@ class ParticipantsTest {
         participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1500);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(1500);
     }
 
     @Test
@@ -243,7 +243,7 @@ class ParticipantsTest {
         participants.getPlayers().get(0).addCard(new Card(Rank.NINE, Suit.DIAMOND));
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1000);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(1000);
     }
 
     @Test
@@ -257,7 +257,7 @@ class ParticipantsTest {
         participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
 
         //then
-        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(0);
+        assertThat(participants.getParticipantsResult().get("연어")).isEqualTo(0);
     }
 
     private ShuffleStrategy notShuffle() {

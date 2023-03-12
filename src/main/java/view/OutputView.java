@@ -60,11 +60,11 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public static void printParticipantsResult(Map<String, Integer> playersResult, int dealerPrize) {
+    public static void printParticipantsResult(Map<String, Integer> result) {
         System.out.println("\n## 최종 수익");
 
-        System.out.println("딜러: " + dealerPrize);
-        playersResult.entrySet().stream()
+        System.out.println("딜러: " + result.remove("딜러"));
+        result.entrySet().stream()
                 .map(playerResult -> playerResult.getKey() + ": " + playerResult.getValue())
                 .forEach(System.out::println);
     }

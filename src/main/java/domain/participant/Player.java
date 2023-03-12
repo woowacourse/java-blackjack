@@ -11,6 +11,9 @@ public class Player extends Participant {
     private static final int MAX_BETTING_AMOUNT = 10000000;
     private static final int MIN_BETTING_AMOUNT = 1000;
     private static final int UNIT_OF_BETTING_MONEY = 1000;
+    private static final double BLACKJACK_OUTCOME_RATE = 1.5;
+    private static final int LOSE_RATE = -1;
+    private static final int BLACKJACK = 21;
 
     private int bettingAmount;
     private boolean isStand = false;
@@ -46,6 +49,24 @@ public class Player extends Participant {
         if (bettingAmount % UNIT_OF_BETTING_MONEY != 0) {
             throw new IllegalArgumentException(INVALID_BETTING_UNIT);
         }
+    }
+
+    public int getResultBettingAmount(int dealerScore) {
+        final int playerScore = calculateScore();
+
+        if (isBust()) {
+            return bettingAmount * LOSE_RATE;
+        }
+        if (playerScore == dealerScore) {
+            return 0;
+        }
+        if (isBlackjack()) {
+            return (int) (bettingAmount * BLACKJACK_OUTCOME_RATE);
+        }
+        if (dealerScore > BLACKJACK || playerScore > dealerScore) {
+            return bettingAmount;
+        }
+        return bettingAmount * LOSE_RATE;
     }
 
     @Override

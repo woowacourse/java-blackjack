@@ -11,8 +11,6 @@ public class Participants {
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 7;
-    private static final double BLACKJACK_OUTCOME_RATE = 1.5;
-    private static final int LOSE_RATE = -1;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -66,33 +64,22 @@ public class Participants {
         }
     }
 
-    public Map<String, Integer> getPlayersResult() {
+    public Map<String, Integer> getParticipantsResult() {
         Map<String, Integer> result = new LinkedHashMap<>();
 
         int dealerScore = dealer.calculateScore();
         for (Player player : players) {
-            result.put(player.getName(), getPlayerResult(player, dealerScore));
+            result.put(player.getName(), player.getResultBettingAmount(dealerScore));
         }
+        result.put(dealer.getName(), convertToDealerPrize(result));
 
         return result;
     }
 
-    private int getPlayerResult(Player player, int dealerScore) {
-        final int playerScore = player.calculateScore();
-
-        if (player.isBust()) {
-            return player.getBettingAmount() * LOSE_RATE;
-        }
-        if (playerScore == dealerScore) {
-            return 0;
-        }
-        if (player.isBlackjack()) {
-            return (int) (player.getBettingAmount() * BLACKJACK_OUTCOME_RATE);
-        }
-        if (dealer.isBust() || playerScore > dealerScore) {
-            return player.getBettingAmount();
-        }
-        return player.getBettingAmount() * LOSE_RATE;
+    private int convertToDealerPrize(Map<String, Integer> playersResult) {
+        return playersResult.values().stream()
+                .mapToInt(playerResult -> -playerResult)
+                .sum();
     }
 
     public List<String> getPlayersName() {
