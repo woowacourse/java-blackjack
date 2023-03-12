@@ -1,14 +1,10 @@
 package domain.state;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.CloverCard;
-import domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 @DisplayName("Stay 상태는 ")
 class StayTest {
@@ -17,7 +13,7 @@ class StayTest {
     void drawTest() {
         State stay = new Ready()
                 .draw(CloverCard.KING)
-                .draw(CloverCard.ACE)
+                .draw(CloverCard.JACK)
                 .stay();
 
         assertThatThrownBy(() -> stay.draw(CloverCard.SIX))
@@ -30,7 +26,7 @@ class StayTest {
     void stay() {
         State stay = new Ready()
                 .draw(CloverCard.KING)
-                .draw(CloverCard.ACE)
+                .draw(CloverCard.JACK)
                 .stay();
 
         assertThatThrownBy(stay::stay)
@@ -43,9 +39,9 @@ class StayTest {
     void getCards() {
         State stay = new Ready()
                 .draw(CloverCard.KING)
-                .draw(CloverCard.ACE)
+                .draw(CloverCard.JACK)
                 .stay();
 
-        assertThat(stay.getCards()).containsExactly(CloverCard.KING, CloverCard.ACE);
+        assertThat(stay.getCards()).containsExactly(CloverCard.KING, CloverCard.JACK);
     }
 }
