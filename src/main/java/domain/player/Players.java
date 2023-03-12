@@ -18,11 +18,11 @@ public class Players {
 
     public void giveCardByName(String name, Card card) {
         Player player = findByName(name);
-        player.addCard(card);
+        player.draw(card);
     }
 
     public boolean shouldDealerGetCard() {
-        return dealer.getTotalScore() <= Dealer.DEALER_MIN_SCORE;
+        return dealer.getScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
     public GameResult battleAll() {

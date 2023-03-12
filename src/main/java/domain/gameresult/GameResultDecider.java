@@ -30,8 +30,8 @@ public class GameResultDecider {
     }
 
     private static void decideGameResultOnScore(Dealer dealer, Player participant, GameResult gameResult) {
-        int dealerScore = dealer.getTotalScore();
-        int participantScore = participant.getTotalScore();
+        int dealerScore = dealer.getScore();
+        int participantScore = participant.getScore();
 
         if (dealerScore > participantScore) {
             gameResult.addParticipantLosingCase(participant);

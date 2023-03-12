@@ -29,7 +29,7 @@ class HandTest {
     @DisplayName("플레이어 점수를 가져올 수 있다.")
     void givenCard_whenGetScore() {
         Hand hand = new Hand(List.of(new Card(Suit.SPADE, Denomination.THREE)));
-        assertThat(hand.getTotalScore()).isEqualTo(3);
+        assertThat(hand.getScore()).isEqualTo(3);
     }
 
     @Nested
@@ -44,7 +44,7 @@ class HandTest {
             cards.add(new Card(Suit.SPADE, Denomination.SEVEN));
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(21);
+            assertThat(hand.getScore()).isEqualTo(21);
         }
 
         @Test
@@ -56,7 +56,7 @@ class HandTest {
             cards.add(new Card(Suit.SPADE, Denomination.EIGHT));
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(12);
+            assertThat(hand.getScore()).isEqualTo(12);
         }
 
         @Test
@@ -69,7 +69,7 @@ class HandTest {
             cards.add(new Card(Suit.CLOVER, Denomination.ACE));
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(14);
+            assertThat(hand.getScore()).isEqualTo(14);
         }
 
         @Test
@@ -81,7 +81,7 @@ class HandTest {
             cards.add(new Card(Suit.CLOVER, Denomination.ACE));
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(20);
+            assertThat(hand.getScore()).isEqualTo(20);
         }
     }
 

@@ -23,17 +23,17 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getTotalScore() {
-        int totalScore = getTotalScoreExceptAce();
+    public int getScore() {
+        int score = getScoreExceptAce();
 
         for (int aceCount = 0; aceCount < containsAce(); aceCount++) {
-            totalScore = getTotalScoreContainingAce(totalScore);
+            score = getScoreContainingAce(score);
         }
 
-        return totalScore;
+        return score;
     }
 
-    private int getTotalScoreExceptAce() {
+    private int getScoreExceptAce() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -45,16 +45,16 @@ public class Hand {
                 .count();
     }
 
-    private int getTotalScoreContainingAce(int totalScore) {
-        if (totalScore <= ACE_SCORE_SWITCHING_LINE) {
-            return totalScore + ACE_MAX_SCORE;
+    private int getScoreContainingAce(int score) {
+        if (score <= ACE_SCORE_SWITCHING_LINE) {
+            return score + ACE_MAX_SCORE;
         }
 
-        return totalScore + ACE_MIN_SCORE;
+        return score + ACE_MIN_SCORE;
     }
 
     public boolean isBust() {
-        return getTotalScore() > Card.BUST_DEADLINE;
+        return getScore() > Card.BUST_DEADLINE;
     }
 
     public List<Card> getCards() {

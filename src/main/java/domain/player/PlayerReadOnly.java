@@ -16,7 +16,7 @@ public class PlayerReadOnly {
     }
 
     public int getTotalScore() {
-        return player.getTotalScore();
+        return player.getScore();
     }
 
     public List<Card> getCards() {

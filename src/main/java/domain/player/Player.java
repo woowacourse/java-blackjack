@@ -15,12 +15,12 @@ public abstract class Player {
         this.name = name;
     }
 
-    public void addCard(Card card) {
+    public void draw(Card card) {
         hand.addCard(card);
     }
 
-    public int getTotalScore() {
-        return hand.getTotalScore();
+    public int getScore() {
+        return hand.getScore();
     }
 
     public boolean isBust() {
