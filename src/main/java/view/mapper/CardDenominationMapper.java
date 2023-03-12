@@ -4,7 +4,7 @@ import domain.card.Denomination;
 
 import java.util.Arrays;
 
-public enum CardNumberMapper {
+public enum CardDenominationMapper {
 
     ACE(Denomination.ACE, "A"),
     TWO(Denomination.TWO, "2"),
@@ -23,13 +23,13 @@ public enum CardNumberMapper {
     private final Denomination denomination;
     private final String value;
 
-    CardNumberMapper(Denomination denomination, String value) {
+    CardDenominationMapper(Denomination denomination, String value) {
         this.denomination = denomination;
         this.value = value;
     }
 
     public static String getCardNumber(Denomination denomination) {
-        return Arrays.stream(CardNumberMapper.values())
+        return Arrays.stream(CardDenominationMapper.values())
                 .filter(it -> it.denomination == denomination)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 타입이 없습니다."))
