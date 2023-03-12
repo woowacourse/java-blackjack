@@ -1,5 +1,6 @@
 package blackjackgame.domain.game;
 
+import static blackjackgame.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjackgame.domain.UserAction;
@@ -110,5 +111,17 @@ class BlackJackGameTest {
 
         assertThat(player.cards().size()).isEqualTo(defaultSize);
         assertThat(player.getStatus()).isSameAs(PlayerStatus.DRAW_FINISHED);
+    }
+
+    @DisplayName("플레이어가 수익을 잃은만큼 딜러가 수익을 얻는다.")
+    @Test
+    void calculateDealerProfit_dealerWin() {
+        dealer.receiveCards(eightNine);
+        player.receiveCards(sixFour);
+
+        int dealerProfit = blackJackGame.calculateDealerProfit();
+        int playerProfit = player.getProfitAmount();
+
+        assertThat(dealerProfit).isEqualTo(-playerProfit);
     }
 }

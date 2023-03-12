@@ -1,16 +1,15 @@
 package blackjackgame.domain.user;
 
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.game.Result;
 import java.util.List;
 
 public class Player extends User {
     private PlayerStatus status = PlayerStatus.HITTABLE;
-    private final Bet bet;
+    private final Profit profit;
 
     public Player(Name name, Bet bet) {
         super(name);
-        this.bet = bet;
+        this.profit = new Profit(bet);
     }
 
     @Override
@@ -25,8 +24,20 @@ public class Player extends User {
         status = score.calculatePlayerStatus();
     }
 
-    public void applyResult(Result result) {
-        bet.applyResult(result);
+    public void win() {
+        profit.keep();
+    }
+
+    public void lose() {
+        profit.becomeNegative();
+    }
+
+    public void draw() {
+        profit.lose();
+    }
+
+    public void winWithBlackJack(double blackJackBonusPercentage) {
+        profit.applyBonus(blackJackBonusPercentage);
     }
 
     public void finishDraw() {
@@ -42,7 +53,11 @@ public class Player extends User {
         return status;
     }
 
-    public int getProfit() {
-        return bet.profit();
+    public Profit getProfit() {
+        return profit;
+    }
+
+    public int getProfitAmount() {
+        return profit.getAmount();
     }
 }

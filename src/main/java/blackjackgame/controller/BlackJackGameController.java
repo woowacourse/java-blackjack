@@ -11,11 +11,15 @@ import blackjackgame.domain.user.Name;
 import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.Players;
+import blackjackgame.domain.user.Profit;
 import blackjackgame.domain.user.User;
+import blackjackgame.domain.user.dto.NameDto;
+import blackjackgame.domain.user.dto.ProfitDto;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
@@ -36,7 +40,7 @@ public class BlackJackGameController {
         progressPlayersTurn(blackJackGame);
         progressDealerTurn(blackJackGame);
         printUsersCardResult(blackJackGame);
-        outputView.printFinalResult(blackJackGame.getBetResult());
+        printFinalResult(blackJackGame);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -117,5 +121,27 @@ public class BlackJackGameController {
         userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().cards());
         blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.cards()));
         outputView.printUsersCardResult(userResult);
+    }
+
+    private void printFinalResult(BlackJackGame blackJackGame) {
+        Map<NameDto, ProfitDto> finalResult = new LinkedHashMap<>();
+        addDealerResult(blackJackGame, finalResult);
+        addPlayerResults(blackJackGame, finalResult);
+        outputView.printFinalResult(finalResult);
+    }
+
+    private void addDealerResult(BlackJackGame blackJackGame, Map<NameDto, ProfitDto> finalResult) {
+        String dealerName = blackJackGame.getDealerName();
+        int dealerProfit = blackJackGame.calculateDealerProfit();
+        finalResult.put(new NameDto(dealerName), new ProfitDto(dealerProfit));
+    }
+
+    private void addPlayerResults(BlackJackGame blackJackGame, Map<NameDto, ProfitDto> finalResult) {
+        Map<Player, Profit> betResultOfPlayer = blackJackGame.getBetResultOfPlayer();
+        for (Entry<Player, Profit> playerProfitEntry : betResultOfPlayer.entrySet()) {
+            String playerName = playerProfitEntry.getKey().getName();
+            int playerProfit = playerProfitEntry.getValue().getAmount();
+            finalResult.put(new NameDto(playerName), new ProfitDto(playerProfit));
+        }
     }
 }

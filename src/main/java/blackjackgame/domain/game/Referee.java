@@ -8,6 +8,8 @@ import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
 
 public class Referee {
+    private static final double BLACKJACK_WIN_BONUS_PERCENTAGE = 1.5;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -24,14 +26,14 @@ public class Referee {
 
     private void judgeWinnerBetweenDealer(Player player) {
         if (isDealerWin(player)) {
-            player.applyResult(Result.LOSE);
+            player.lose();
             return;
         }
         if (isPlayerWin(player)) {
             applyPlayerWinByHands(player);
             return;
         }
-        player.applyResult(Result.DRAW);
+        player.draw();
     }
 
     private boolean isDealerWin(Player player) {
@@ -54,9 +56,9 @@ public class Referee {
 
     private void applyPlayerWinByHands(Player player) {
         if (isBlackJack(player)) {
-            player.applyResult(Result.WIN_BLACKJACK);
+            player.winWithBlackJack(BLACKJACK_WIN_BONUS_PERCENTAGE);
             return;
         }
-        player.applyResult(Result.WIN);
+        player.win();
     }
 }
