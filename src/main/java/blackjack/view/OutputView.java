@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.card.Score;
-import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.Map;
 

@@ -5,31 +5,13 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
-public final class Dealer implements Decidable {
+public final class Dealer extends BlackjackParticipant {
 
     private static final int DEALER_MIN_RECEIVE_CARD = 16;
     private static final String DEALER_NAME = "딜러";
 
-    private final Participant participant;
-
     public Dealer() {
-        this.participant = new Participant(Hand.generateEmptyCards(), DEALER_NAME) ;
-    }
-
-    public void receiveCard(final Card card) {
-        participant.receiveCard(card);
-    }
-
-    public Score calculateTotalScore() {
-        return participant.calculateTotalScore();
-    }
-
-    public boolean isBust() {
-        return participant.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return participant.isBlackjack();
+        super(new Participant(Hand.generateEmptyCards(), DEALER_NAME));
     }
 
     @Override
@@ -41,13 +23,5 @@ public final class Dealer implements Decidable {
     public boolean canDraw() {
         Score score = participant.calculateTotalScore();
         return score.canDraw(new Score(DEALER_MIN_RECEIVE_CARD));
-    }
-
-    public List<Card> getHand() {
-        return participant.getHand();
-    }
-
-    public String getName() {
-        return participant.getName();
     }
 }

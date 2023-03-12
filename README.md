@@ -10,10 +10,6 @@
 - [x] 배팅 금액만큼 받는다.
 - [x] 배팅 금액만큼 잃는다.
 
-### Participants
-- [x] `Dealer`와 `Players`를 가진다.
-- [x] 카드를 받는다.
-
 ### Participant
 - [x] `Cards`를 가진다.
 - [x] `Card`를 받는다.
@@ -39,7 +35,7 @@
 - [x] 입력된 이름을 가지고 `Players`를 만들어 반환한다.
   - [x] 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
-### Result (Enum)
+### ~~Result (Enum)~~
 - [x] 결과를 가진다. (승, 무, 패)
 
 ### Profit

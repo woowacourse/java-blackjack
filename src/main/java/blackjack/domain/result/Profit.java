@@ -3,53 +3,55 @@ package blackjack.domain.result;
 import blackjack.domain.Money;
 import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class Profit {
 
-    private final Participants participants;
-    private Map<Player, Money> profit;
+    private final Dealer dealer;
+    private final Players players;
 
-    public Profit(final Participants participants) {
-        this.participants = participants;
-        initProfit();
-    }
-
-    private void initProfit() {
-        profit = new LinkedHashMap<>();
-        for (Player player : participants.getPlayers()) {
-            profit.put(player, Money.init());
-        }
+    public Profit(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public Map<Player, Money> makePlayersProfit() {
-        Dealer dealer = participants.getDealer();
+        Map<Player, Money> profit = initProfit();
 
-        for (Player player : participants.getPlayers()) {
-            changePlayersProfit(dealer, player);
+        for (Player player : players.getPlayers()) {
+            changePlayersProfit(profit, player);
         }
 
         return profit;
     }
 
-    private void changePlayersProfit(final Dealer dealer, final Player player) {
-        if (hasState(dealer, player)) {
+    private Map<Player, Money> initProfit() {
+        Map<Player, Money> profit = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            profit.put(player, Money.init());
+        }
+
+        return profit;
+    }
+
+    private void changePlayersProfit(final Map<Player, Money> profit, final Player player) {
+        if (hasState(profit, player)) {
             return;
         }
-        compareScore(dealer.calculateTotalScore(), player);
+        compareScore(profit, dealer.calculateTotalScore(), player);
     }
 
-    private boolean hasState(final Dealer dealer, final Player player) {
-        if (isPlayerBlackjack(dealer, player)) {
+    private boolean hasState(final Map<Player, Money> profit, final Player player) {
+        if (isPlayerBlackjack(profit, player)) {
             return true;
         }
-        return isBust(dealer, player);
+        return isBust(profit, player);
     }
 
-    private boolean isPlayerBlackjack(final Dealer dealer, final Player player) {
+    private boolean isPlayerBlackjack(final Map<Player, Money> profit, final Player player) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             profit.put(player, player.getBettingMoney().getBlackjackPrize());
             return true;
@@ -61,7 +63,7 @@ public final class Profit {
         return false;
     }
 
-    private boolean isBust(final Dealer dealer, final Player player) {
+    private boolean isBust(final Map<Player, Money> profit, final Player player) {
         if (player.isBust()) {
             profit.put(player, player.getBettingMoney().loseBettingPrize());
             return true;
@@ -73,7 +75,7 @@ public final class Profit {
         return false;
     }
 
-    private void compareScore(final Score dealerScore, final Player player) {
+    private void compareScore(final Map<Player, Money> profit, final Score dealerScore, final Player player) {
         if (dealerScore.isLose(player.calculateTotalScore())) {
             profit.put(player, player.getBettingMoney().getBettingPrize());
             return;

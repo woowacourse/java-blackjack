@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.BlackjackParticipant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Profit;
@@ -30,38 +30,49 @@ public final class BlackjackController {
     }
 
     public void run() {
-        Participants participants = makeParticipants();
+        Players players = makePlayers();
+        Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
-        bettingMoney(participants.getPlayers());
-        setInitCards(deck, participants);
-
-        turnOfPlayers(participants.getPlayers(), deck);
-        turnOfDealer(participants.getDealer(), deck);
-
-        finishGame(participants);
+        settingGame(players, dealer, deck);
+        turnOfPlayers(players.getPlayers(), deck);
+        turnOfDealer(dealer, deck);
+        finishGame(dealer, players);
     }
 
-    private Participants makeParticipants() {
+    private Players makePlayers() {
         List<String> playersName = inputView.receivePlayersName();
-        Players players = Players.from(playersName);
-
-        return new Participants(new Dealer(), players);
+        return Players.from(playersName);
     }
 
-    private void setInitCards(final Deck deck, final Participants participants) {
-        participants.receiveCards(deck, NUMBER_OF_SETTING_CARDS);
-        printParticipantsInitCards(participants);
+    private void settingGame(final Players players,final Dealer dealer,final Deck deck) {
+        bettingMoney(players);
+        setInitCards(deck, dealer, players);
     }
 
-    private void printParticipantsInitCards(final Participants participants) {
-        outputView.printDistributeCardsMessage(getPlayerNames(participants.getPlayers()));
-        outputView.printDealerInitCards(getDealersCards(participants.getDealer()));
-        outputView.printPlayersInitCards(getPlayersCards(participants.getPlayers()));
+    private void setInitCards(final Deck deck, final Dealer dealer, final Players players) {
+        for (Player player : players.getPlayers()) {
+            distributeInitCards(deck, player);
+        }
+        distributeInitCards(deck, dealer);
+        printParticipantsInitCards(dealer, players);
     }
 
-    private void bettingMoney(final List<Player> players) {
-        for (Player player : players) {
+    private void distributeInitCards(final Deck deck, final BlackjackParticipant participant) {
+        for (int i = 0; i < NUMBER_OF_SETTING_CARDS; i++) {
+            Card drawnCard = deck.drawCard();
+            participant.receiveCard(drawnCard);
+        }
+    }
+
+    private void printParticipantsInitCards(final Dealer dealer, final Players players) {
+        outputView.printDistributeCardsMessage(getPlayerNames(players.getPlayers()));
+        outputView.printDealerInitCards(getDealersCards(dealer));
+        outputView.printPlayersInitCards(getPlayersCards(players.getPlayers()));
+    }
+
+    private void bettingMoney(final Players players) {
+        for (Player player : players.getPlayers()) {
             int receiveBettingMoney = inputView.receiveBettingMoney(player.getName());
             player.betting(receiveBettingMoney);
         }
@@ -108,22 +119,20 @@ public final class BlackjackController {
         }
     }
 
-    private void finishGame(final Participants participants) {
-        List<Player> players = participants.getPlayers();
-        List<Score> scores = getPlayersScore(players);
-        Dealer dealer = participants.getDealer();
+    private void finishGame(final Dealer dealer, final Players players) {
+        List<Score> scores = getPlayersScore(players.getPlayers());
 
         outputView.printDealerFinalCards(getCurrentCards(dealer.getHand()), dealer.calculateTotalScore());
-        outputView.printPlayerFinalCards(getPlayersCards(players), scores);
+        outputView.printPlayerFinalCards(getPlayersCards(players.getPlayers()), scores);
 
-        showProfit(participants);
+        showProfit(dealer, players);
     }
 
-    private void showProfit(final Participants participants) {
-        Profit profit = new Profit(participants);
+    private void showProfit(final Dealer dealer, final Players players) {
+        Profit profit = new Profit(dealer, players);
         Map<Player, Money> playersProfit = profit.makePlayersProfit();
         Money dealerProfit = profit.getDealerProfit(playersProfit);
-        Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit, participants.getDealer());
+        Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit, dealer);
         outputView.printProfit(participantsProfit);
     }
 
