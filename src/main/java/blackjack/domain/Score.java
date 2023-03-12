@@ -5,28 +5,32 @@ import java.util.Objects;
 public class Score {
     private static final int BUST_SCORE_BOUNDARY = 21;
 
-    private final int value;
+    private final int score;
 
-    public Score(int value) {
-        this.value = value;
+    public Score(int score) {
+        this.score = score;
     }
 
-    public boolean isOverThen(Score other) {
+    public boolean isWinTo(Score other) {
         if (other.isBust()) {
             return true;
         }
         if (this.isBust()) {
             return false;
         }
-        return this.value > other.value;
+        return this.score > other.score;
     }
 
     private boolean isBust() {
-        return value > BUST_SCORE_BOUNDARY;
+        return score > BUST_SCORE_BOUNDARY;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isMaxScore() {
+        return this.score == BUST_SCORE_BOUNDARY;
     }
 
     @Override
@@ -37,12 +41,12 @@ public class Score {
         if (!(o instanceof Score)) {
             return false;
         }
-        Score score = (Score) o;
-        return value == score.value;
+        Score score1 = (Score) o;
+        return score == score1.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(score);
     }
 }

@@ -1,8 +1,10 @@
-package blackjack.service;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.ShuffledDeckGenerator;
 import java.util.Collection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

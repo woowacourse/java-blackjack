@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -14,7 +15,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return getScore().getValue() <= DRAW_CARD_BOUNDARY;
+        return getScore().getScore() <= DRAW_CARD_BOUNDARY;
     }
 
     @Override

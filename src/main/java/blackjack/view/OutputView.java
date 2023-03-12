@@ -1,13 +1,9 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-
+import blackjack.dto.ParticipantProfitResponse;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
-import blackjack.dto.PlayerGameResult;
-import blackjack.dto.TotalGameResult;
+import blackjack.dto.PlayerNamesResponse;
 import java.util.List;
 
 public class OutputView {
@@ -17,8 +13,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printStartDrawCardMessage(final List<String> playerNames) {
-        final String names = String.join(", ", playerNames);
+    public static void printStartDrawCardMessage(final PlayerNamesResponse response) {
+        final String names = String.join(", ", response.getNames());
         System.out.println(LINE_SEPARATOR + "딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
@@ -48,20 +44,10 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printTotalGameResult(TotalGameResult totalGameResult) {
-        System.out.println(LINE_SEPARATOR + "## 최종 승패");
-        System.out.println("딜러 카드: " + getDealerResult(totalGameResult.getDealerGameResult()));
-        for (PlayerGameResult playerGameResult : totalGameResult.getPlayerGameResults()) {
-            System.out.println(playerGameResult.getName() + ": " + playerGameResult.getResult().getName());
+    public static void printTotalGameResult(List<ParticipantProfitResponse> responses) {
+        System.out.println(LINE_SEPARATOR + "## 최종 수익");
+        for (ParticipantProfitResponse response : responses) {
+            System.out.println(response.getName() + ": " + response.getProfit());
         }
-    }
-
-    private static String getDealerResult(final List<String> dealerResult) {
-        return dealerResult.stream()
-                .collect(groupingBy(result -> result, counting()))
-                .entrySet()
-                .stream()
-                .map(entry -> entry.getValue() + entry.getKey())
-                .collect(joining(" "));
     }
 }

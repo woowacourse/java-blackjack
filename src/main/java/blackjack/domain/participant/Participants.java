@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public class Participants {
         return participants.stream()
                 .filter(Participant::isPlayer)
                 .map(Player.class::cast)
-                .collect(toList());
+                .collect(toUnmodifiableList());
     }
 
     public Dealer getDealer() {
@@ -43,10 +43,10 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
-    public Participant findByName(String playerName) {
-        return participants.stream()
-                .filter(participant -> participant.isNameMatch(playerName))
+    public Player getPlayerByName(Name playerName) {
+        return (Player) participants.stream()
+                .filter(participant -> participant.isSameName(playerName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 이름의 플레이어가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 플레이어가 없습니다."));
     }
 }

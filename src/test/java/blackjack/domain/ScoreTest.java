@@ -18,7 +18,7 @@ class ScoreTest {
         Score otherScore = new Score(5);
 
         // expect
-        assertThat(myScore.isOverThen(otherScore))
+        assertThat(myScore.isWinTo(otherScore))
                 .isFalse();
     }
 
@@ -30,7 +30,7 @@ class ScoreTest {
         Score otherScore = new Score(9);
 
         // expect
-        assertThat(myScore.isOverThen(otherScore))
+        assertThat(myScore.isWinTo(otherScore))
                 .isTrue();
     }
 
@@ -43,7 +43,7 @@ class ScoreTest {
         Score otherScore = new Score(22);
 
         // expect
-        assertThat(myScore.isOverThen(otherScore))
+        assertThat(myScore.isWinTo(otherScore))
                 .isTrue();
     }
 
@@ -55,7 +55,7 @@ class ScoreTest {
         Score otherScore = new Score(1);
 
         // expect
-        assertThat(myScore.isOverThen(otherScore))
+        assertThat(myScore.isWinTo(otherScore))
                 .isFalse();
     }
 }

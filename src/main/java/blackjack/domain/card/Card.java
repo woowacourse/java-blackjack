@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static java.util.stream.Collectors.toConcurrentMap;
+import static java.util.stream.Collectors.toMap;
 
 import java.util.Map;
 import java.util.Objects;
@@ -13,7 +13,7 @@ public class Card {
         CACHE = Rank.stream()
                 .flatMap(rank -> Suit.stream()
                         .map(suit -> new Card(suit, rank))
-                ).collect(toConcurrentMap(Card::hashCode, Function.identity()));
+                ).collect(toMap(Card::hashCode, Function.identity()));
     }
 
     private final Suit suit;

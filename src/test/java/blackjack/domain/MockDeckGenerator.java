@@ -1,9 +1,10 @@
-package blackjack.service;
+package blackjack.domain;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Card;
-import blackjack.domain.Deck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGenerator;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.stream.IntStream;

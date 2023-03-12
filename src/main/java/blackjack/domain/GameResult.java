@@ -1,23 +1,26 @@
 package blackjack.domain;
 
+import java.util.function.IntUnaryOperator;
+
 public enum GameResult {
-    WIN("승", "패"),
-    LOSE("패", "승"),
-    DRAW("무", "무");
+    WIN("승", IntUnaryOperator.identity()),
+    LOSE("패", money -> -money),
+    DRAW("무", money -> 0),
+    BLACKJACK("블랙잭", money -> (int) (money * 1.5));
 
     private final String name;
-    private final String antonym;
+    private final IntUnaryOperator intUnaryOperator;
 
-    GameResult(String name, String antonym) {
+    GameResult(String name, IntUnaryOperator intUnaryOperator) {
         this.name = name;
-        this.antonym = antonym;
+        this.intUnaryOperator = intUnaryOperator;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAntonym() {
-        return antonym;
+    public int applyBet(int money) {
+        return intUnaryOperator.applyAsInt(money);
     }
 }

@@ -1,13 +1,11 @@
 package blackjack;
 
 import blackjack.controller.BlackJackController;
-import blackjack.service.BlackJackService;
-import blackjack.service.ShuffledDeckGenerator;
+import blackjack.domain.card.ShuffledDeckGenerator;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackService blackJackService = new BlackJackService();
-        BlackJackController blackJackController = new BlackJackController(blackJackService);
+        BlackJackController blackJackController = new BlackJackController();
         blackJackController.run(new ShuffledDeckGenerator());
     }
 }

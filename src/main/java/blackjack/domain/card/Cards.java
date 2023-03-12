@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
     private static final int MAX_SCORE = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACKJACK_REQUIRE_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -17,12 +19,12 @@ public class Cards {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
         if (hasAce()) {
-            return calculateAce(score);
+            score = calculateAce(score);
         }
         return new Score(score);
     }
@@ -32,11 +34,15 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private Score calculateAce(int score) {
+    private int calculateAce(int score) {
         if (score + ACE_BONUS_SCORE <= MAX_SCORE) {
-            return new Score(score + ACE_BONUS_SCORE);
+            return score + ACE_BONUS_SCORE;
         }
-        return new Score(score);
+        return score;
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore().isMaxScore() && cards.size() == BLACKJACK_REQUIRE_COUNT;
     }
 
     public List<Card> getCards() {

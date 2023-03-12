@@ -1,7 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.Bet;
+import blackjack.domain.card.Card;
+import blackjack.domain.GameResult;
+import blackjack.domain.Score;
 import java.util.List;
 
 public class Player extends Participant {
@@ -9,9 +13,12 @@ public class Player extends Participant {
     private static final int PLAYER_START_SHOW_COUNT = 2;
     private static final int MAX_SCORE = 21;
 
-    public Player(String name, List<Card> cards) {
+    private final Bet bet;
+
+    public Player(String name, List<Card> cards, Bet bet) {
         super(name, cards);
         validateBlacklist(name);
+        this.bet = bet;
     }
 
     private void validateBlacklist(String name) {
@@ -20,13 +27,25 @@ public class Player extends Participant {
         }
     }
 
-    public GameResult matchGame(Dealer dealer) {
+    public Bet matchGameWithBet(Dealer dealer) {
+        GameResult gameResult = matchGame(dealer);
+        return bet.calculateResult(gameResult);
+    }
+
+    private GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
-        if (dealerScore.isOverThen(myScore)) {
+        if (this.isBlackjack() && !dealer.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        return getGameResult(dealerScore, myScore);
+    }
+
+    private GameResult getGameResult(Score dealerScore, Score myScore) {
+        if (dealerScore.isWinTo(myScore)) {
             return GameResult.LOSE;
         }
-        if (myScore.isOverThen(dealerScore)) {
+        if (myScore.isWinTo(dealerScore)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
@@ -51,6 +70,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return getScore().getValue() < MAX_SCORE;
+        return getScore().getScore() < MAX_SCORE;
     }
 }
