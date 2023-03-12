@@ -8,7 +8,7 @@ import participants.Name;
 import participants.Player;
 
 public class PlayersBettingTable {
-    public static final int NEGATIVE_UNIT = -1;
+    private static final int NEGATIVE_UNIT = -1;
     private final Map<Player, BettingAmount> bettingMap = new LinkedHashMap<>();
 
     public void saveBet(Player player, BettingAmount bettingAmount) {

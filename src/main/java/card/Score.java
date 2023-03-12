@@ -3,10 +3,10 @@ package card;
 import java.util.Objects;
 
 public class Score {
-    public static final int MAX_SCORE = 21;
-    public static final int LIMIT_ADDITIONAL_SCORE = 11;
-    public static final int ADDITIONAL_SCORE = 10;
-    public static final int UNDER_SCORE = 16;
+    private static final int MAX_SCORE = 21;
+    private static final int LIMIT_ADDITIONAL_SCORE = 11;
+    private static final int ADDITIONAL_SCORE = 10;
+    private static final int UNDER_SCORE = 16;
     private final int score;
 
     public Score(int score) {

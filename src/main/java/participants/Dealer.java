@@ -6,7 +6,7 @@ import blackjackgame.Result;
 import card.Card;
 
 public class Dealer extends Participant {
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
     private final DealerResult dealerResult = new DealerResult();
 
 

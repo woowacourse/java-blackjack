@@ -3,8 +3,8 @@ package betting;
 import blackjackgame.Result;
 
 public class BettingAmount {
-    public static final int MIN_AMOUNT_UNIT = 100;
-    public static final int MAX_AMOUNT_UNIT = 100_000;
+    private static final int MIN_AMOUNT_UNIT = 100;
+    private static final int MAX_AMOUNT_UNIT = 100_000;
     private final int amount;
 
     public BettingAmount(int amount) {

@@ -15,9 +15,9 @@ import dto.PlayerWinningDto;
 
 public class OutputView {
 
-    public static final String COMMA = ", ";
-    public static final String DIVISION = ": ";
-    public static final String ERROR_HEADER = "[ERROR] ";
+    private static final String COMMA = ", ";
+    private static final String DIVISION = ": ";
+    private static final String ERROR_HEADER = "[ERROR] ";
 
     public void printErrorMessage(Exception exception) {
         System.out.println(ERROR_HEADER + exception.getMessage());

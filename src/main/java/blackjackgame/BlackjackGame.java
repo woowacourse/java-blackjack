@@ -23,7 +23,7 @@ import participants.Participants;
 import participants.Player;
 
 public class BlackjackGame {
-    public static final int MAX_PLAYERS = 6;
+    private static final int MAX_PLAYERS = 6;
     private static final int FIRST_DRAW_COUNT = 2;
     private final Participants participants;
     private final Deck deck;
