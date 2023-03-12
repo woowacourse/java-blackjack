@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class Money {
+public final class Money {
 
     private static final int MIN_BETTING_MONEY = 0;
 

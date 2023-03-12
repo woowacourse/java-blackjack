@@ -8,7 +8,7 @@ public abstract class BlackjackParticipant implements Decidable {
 
     protected Participant participant;
 
-    public BlackjackParticipant(Participant participant) {
+    public BlackjackParticipant(final Participant participant) {
         this.participant = participant;
     }
 
