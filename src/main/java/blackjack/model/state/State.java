@@ -6,6 +6,32 @@ import blackjack.model.participant.Hand;
 
 import java.util.List;
 
+/**
+ *                                       -Player-                           -Dealer-
+ *     +--------------+            +--------------------+            +--------------------+
+ *     | InitialState |            | PlayerInitialState |----    ----| DealerInitialState |-----
+ *     +------+-------+            +---------+----------+    |   |   +---------+----------+    |
+ *            |                              |               |   |             |               |
+ *            |                              |               |   |             |               |
+ *            v                              v               |   |             v               |
+ *     +------+-------+            +---------+----------+    |   |   +---------+----------+    |
+ *     |  DrawState   |            |  PlayerDrawState   |    |   |   |  DealerDrawState   |    |
+ *     +------+-------+            +---------+----------+    |   |   +---------+----------+    |
+ *            |                              |               |   |             |               |
+ *            |                              |               |   |             |               |
+ *            v                              |               v   v             |               |
+ *     +------+-------+                      |        +------+---+-------+     |               |
+ *     |              |                      |        |  BlackjackState  |     |               |
+ *     |              |                      v        +------------------+     v               |
+ *     |              |                +----------------------------------------------+        |
+ *     |  FinalState  |                |                                              |        |
+ *     |              |                v                                              v        v
+ *     |              |         +------+-------+                                   +--+--------+--+
+ *     |              |         |  BustState   |                                   |  StandState  |
+ *     +--------------+         +--------------+                                   +--------------+
+ *
+ */
+
 public abstract class State {
     protected static final int BLACKJACK_NUMBER = 21;
 
