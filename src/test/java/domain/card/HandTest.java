@@ -39,6 +39,15 @@ class HandTest {
     }
 
     @ParameterizedTest
+    @MethodSource("bustHandCase")
+    @DisplayName("bust 인지 판단할 수 있다.")
+    void isBustTest(List<Card> cards, boolean expected) {
+        Hand hand = new Hand(cards);
+
+        assertThat(hand.isBust()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase")
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     void calculateScoreWithAceTest(List<Card> cards, Score expected) {
@@ -55,6 +64,18 @@ class HandTest {
                         CloverCard.CLOVER_EIGHT), new Score(20)),
                 Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
                         CloverCard.CLOVER_NINE), new Score(21))
+        );
+    }
+
+    static Stream<Arguments> bustHandCase() {
+        return Stream.of(
+                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_QUEEN, CloverCard.CLOVER_JACK), true),
+                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_QUEEN, CloverCard.CLOVER_ACE), false),
+                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_ACE), false),
+                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_NINE, CloverCard.CLOVER_ACE, HeartCard.HEART_ACE), false),
+                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_ACE), false),
+                Arguments.of(List.of(HeartCard.HEART_ACE, CloverCard.CLOVER_ACE), false),
+                Arguments.of(List.of(HeartCard.HEART_ACE, SpadeCard.SPADE_ACE, CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE), false)
         );
     }
 }
