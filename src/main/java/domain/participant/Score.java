@@ -5,7 +5,6 @@ import java.util.Objects;
 public final class Score {
 
     private static final Score MAX = new Score(21);
-    private static final Score BONUS = new Score(10);
 
     private final int value;
 
@@ -13,23 +12,12 @@ public final class Score {
         this.value = value;
     }
 
-    public Score applyBonusScore() {
-        if (canAddBonusScore()) {
-            return this.addBonus();
-        }
-        return this;
-    }
-
-    private boolean canAddBonusScore() {
-        return this.addBonus().isSmallerOrEqualsTo(MAX);
+    public Score add(Score score) {
+        return new Score(this.value + score.value);
     }
 
     public boolean isMax() {
         return this.isEquals(MAX);
-    }
-
-    private Score addBonus() {
-        return new Score(this.value + Score.BONUS.value);
     }
 
     public boolean isEquals(final Score score) {

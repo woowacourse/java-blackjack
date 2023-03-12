@@ -8,6 +8,7 @@ import java.util.List;
 public class Cards {
 
     private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
+    private static final Score BONUS_SCORE = new Score(10);
     private static final int INITIAL_CARDS_SIZE = 2;
     private final List<Card> cards;
 
@@ -40,9 +41,10 @@ public class Cards {
     public Score calculateScore() {
         boolean hasAce = hasAce();
         Score defaultScore = new Score(calculateDefaultScore());
+        boolean canAddBonusScore = defaultScore.add(BONUS_SCORE).isSmallerOrEqualsTo(BUST_BOUNDARY_EXCLUSIVE);
 
-        if (hasAce) {
-            defaultScore = defaultScore.applyBonusScore();
+        if (hasAce && canAddBonusScore) {
+            defaultScore = defaultScore.add(BONUS_SCORE);
         }
         return defaultScore;
     }
