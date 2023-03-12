@@ -22,7 +22,7 @@ public class Hand {
 
     public int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber().equals(Denomination.ACE))
+                .filter(Card::isAce)
                 .count();
     }
 
