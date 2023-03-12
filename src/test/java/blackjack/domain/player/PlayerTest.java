@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Hit;
 import blackjack.util.FixedDeck;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,10 +26,10 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(Name.from("허브"), new Hand()) {
+        player = new Player(Name.from("허브"), new Hit()) {
             @Override
             public boolean isDrawable() {
-                return hand().isPlayable();
+                return hand().isDrawable();
             }
 
             @Override
@@ -74,9 +74,11 @@ public class PlayerTest {
     @Test
     void 게임의_결과를_반환한다() {
         player.initialDraw(new FixedDeck(ACE_DIAMOND, KING_HEART));
-        final Hand hand = new Hand(List.of(KING_SPADE));
+        final Hand other = new Hit()
+                .draw(KING_SPADE)
+                .stay();
 
-        final Result result = player.play(hand);
+        final Result result = player.play(other);
 
         assertThat(result).isEqualTo(Result.BLACKJACK_WIN);
     }

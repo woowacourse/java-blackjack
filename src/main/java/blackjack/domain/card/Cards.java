@@ -7,11 +7,14 @@ import java.util.List;
 
 public final class Cards {
     private static final int ACE_ADDITIONAL_SCORE = 10;
-    private static final int BUST_LOWER_BOUND = 22;
     private static final int BLACKJACK_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
+
+    public Cards() {
+        this(new ArrayList<>());
+    }
 
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -19,12 +22,6 @@ public final class Cards {
 
     public void add(final Card card) {
         cards.add(card);
-    }
-
-    public int minScore() {
-        return cards.stream()
-                .mapToInt(Card::score)
-                .sum();
     }
 
     public int totalScore() {
@@ -35,13 +32,19 @@ public final class Cards {
         return score;
     }
 
+    private int minScore() {
+        return cards.stream()
+                .mapToInt(Card::score)
+                .sum();
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
 
     private boolean canChangeAceScore(final int score) {
-        return score + ACE_ADDITIONAL_SCORE < BUST_LOWER_BOUND;
+        return score + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {

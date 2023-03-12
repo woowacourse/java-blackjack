@@ -52,13 +52,6 @@ public class CardsTest {
     }
 
     @Test
-    void 점수_최솟값을_반환한다() {
-        final Cards cards = new Cards(List.of(FIVE_SPADE, ACE_SPADE));
-
-        assertThat(cards.minScore()).isEqualTo(6);
-    }
-
-    @Test
     void 카드가_추가된다() {
         final Cards cards = new Cards(List.of(FIVE_SPADE));
 

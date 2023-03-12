@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.player.Result.BLACKJACK_WIN;
 import static blackjack.domain.player.Result.PUSH;
-import static blackjack.domain.player.Result.WIN;
 import static blackjack.util.CardFixture.ACE_DIAMOND;
 import static blackjack.util.CardFixture.ACE_SPADE;
 import static blackjack.util.CardFixture.EIGHT_SPADE;
@@ -10,7 +10,6 @@ import static blackjack.util.CardFixture.JACK_SPADE;
 import static blackjack.util.CardFixture.KING_HEART;
 import static blackjack.util.CardFixture.NINE_CLOVER;
 import static blackjack.util.CardFixture.NINE_HEART;
-import static blackjack.util.CardFixture.NINE_SPADE;
 import static blackjack.util.CardFixture.SEVEN_SPADE;
 import static blackjack.util.CardFixture.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -154,12 +153,13 @@ public class PlayersTest {
     void 게임_결과를_반환한다() {
         final Players players = Players.create();
         players.addPlayers(List.of("후추", "허브"));
-        final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, ACE_SPADE, NINE_HEART, NINE_CLOVER);
         players.initialDraw(deck);
+        players.stay(Name.from("허브"));
 
         Map<Name, Result> result = players.play();
 
-        assertThat(result.values()).containsExactly(WIN, PUSH);
+        assertThat(result.values()).containsExactly(BLACKJACK_WIN, PUSH);
     }
 
     @Test

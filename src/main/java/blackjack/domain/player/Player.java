@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Player {
     private final Name name;
-    private final Hand hand;
+    private Hand hand;
 
     protected Player(final Name name, final Hand hand) {
         this.name = name;
@@ -23,7 +23,7 @@ public abstract class Player {
     }
 
     public final void draw(final Deck deck) {
-        hand.add(deck.draw());
+        hand = hand.draw(deck.draw());
     }
 
     public final int score() {
@@ -31,7 +31,7 @@ public abstract class Player {
     }
 
     public final void stay() {
-        hand.stay();
+        hand = hand.stay();
     }
 
     public final Result play(final Hand hand) {
@@ -55,6 +55,6 @@ public abstract class Player {
     }
 
     public final List<String> getSymbols() {
-        return hand.getSymbols();
+        return hand.cards().getSymbols();
     }
 }
