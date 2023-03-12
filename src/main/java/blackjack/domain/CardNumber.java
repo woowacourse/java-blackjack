@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.Arrays;
-
 public enum CardNumber {
     ACE("A", 11),
     TWO("2", 2),
@@ -23,14 +21,6 @@ public enum CardNumber {
     CardNumber(String number, int score) {
         this.number = number;
         this.score = score;
-    }
-
-    public static int scoreByNumber(String input) {
-        return Arrays.stream(values())
-                .filter(cardNumber -> cardNumber.number.equals(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("숫자를 찾을 수 없습니다."))
-                .getScore();
     }
 
     public String getNumber() {

@@ -10,11 +10,12 @@ public class Card {
     }
 
     public boolean isACE() {
-        return cardNumber.getNumber().equals(CardNumber.ACE.getNumber());
+        return cardNumber == CardNumber.ACE;
     }
 
+
     public int getScore() {
-        return CardNumber.scoreByNumber(cardNumber.getNumber());
+        return cardNumber.getScore();
     }
 
     public String getCardNumberToString() {
