@@ -1,7 +1,7 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,8 +14,8 @@ import domain.result.Result;
 
 public class ViewRenderer {
 
-	private static final Map<Denomination, String> DENOMINATION_TO_STRING = new HashMap<>();
-	private static final Map<Suit, String> SUIT_TO_STRING = new HashMap<>();
+	private static final Map<Denomination, String> DENOMINATION_TO_STRING = new EnumMap<>(Denomination.class);
+	private static final Map<Suit, String> SUIT_TO_STRING = new EnumMap<>(Suit.class);
 
 	static {
 		DENOMINATION_TO_STRING.put(Denomination.ACE, "A");
