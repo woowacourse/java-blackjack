@@ -22,10 +22,6 @@ public enum Number {
         this.score = score;
     }
 
-    public int score() {
-        return score;
-    }
-
     public String value() {
         if (this == ACE) {
             return "A";
@@ -40,5 +36,9 @@ public enum Number {
             return "J";
         }
         return String.valueOf(score);
+    }
+
+    public int score() {
+        return score;
     }
 }
