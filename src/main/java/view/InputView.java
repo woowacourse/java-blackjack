@@ -28,6 +28,6 @@ public class InputView {
 
     public int readBettingMoney(String name) {
         System.out.printf("%s의 배팅 금액은?" + System.lineSeparator(), name);
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 }
