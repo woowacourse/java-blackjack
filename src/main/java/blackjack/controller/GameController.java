@@ -65,12 +65,12 @@ public final class GameController {
     }
 
     private void play(final Dealer dealer, final Player player) {
-        while (ask(dealer, player) && !player.isBust()) {
+        while (askHit(dealer, player) && !player.isBust()) {
             // do nothing
         }
     }
 
-    private boolean ask(final Dealer dealer, final Player player) {
+    private boolean askHit(final Dealer dealer, final Player player) {
         outputView.printPlayerHand(player);
         String action = inputView.readHitOrStand(player);
 
