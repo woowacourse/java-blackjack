@@ -4,8 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Denomination;
+import domain.card.Suit;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -65,5 +69,79 @@ class ParticipantsTest {
         assertThat(participants.getPlayers())
                 .map(Participant::getCards)
                 .allMatch(cards -> cards.size() == 2);
+    }
+
+    @Test
+    void 딜러보다_점수가_크다면_배팅_금만큼_수익이다() {
+        // given
+        Participants participants = Participants.of(List.of("둘리"));
+        Player player = participants.getPlayers().get(0);
+        Card card = new Card(Denomination.NINE, Suit.SPADE);
+        player.addCard(card);
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(participants.getBettingResult()).contains(
+                // 딜러 0 vs 둘리 9 -> 딜러 승
+                Map.entry(player, 10_000)
+        );
+    }
+
+    @Test
+    void 딜러와_점수가_같다면_수익은_없다() {
+        // given
+        Participants participants = Participants.of(List.of("둘리"));
+        Player player = participants.getPlayers().get(0);
+        Card card = new Card(Denomination.NINE, Suit.SPADE);
+        participants.getDealer().addCard(card);
+        player.addCard(card);
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(participants.getBettingResult()).contains(
+                // 딜러 9 vs 둘리 9 -> 무승부
+                Map.entry(player, 0)
+        );
+    }
+
+    @Test
+    void 딜러보다_점수가_낮으면_배팅금액만큼_잃는다() {
+        // given
+        Participants participants = Participants.of(List.of("패배자이름"));
+        Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+        dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
+        player.addCard(new Card(Denomination.TWO, Suit.SPADE));
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(participants.getBettingResult()).contains(
+                // 딜러 9 vs 패배자 1
+                Map.entry(player, -10_000)
+        );
+    }
+
+    @Test
+    void 플레이어_카드_합이_블랙잭이면_150_퍼센트_수익이다() {
+        // given
+        Participants participants = Participants.of(List.of("둘리"));
+        Player player = participants.getPlayers().get(0);
+        player.addCard(new Card(Denomination.ACE, Suit.SPADE));
+        player.addCard(new Card(Denomination.TEN, Suit.SPADE));
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(participants.getBettingResult()).contains(
+                // 딜러 0 vs 둘리 21
+                Map.entry(player, 15_000)
+        );
     }
 }

@@ -1,8 +1,11 @@
 package domain.participant;
 
+import domain.PlayerGameResult;
 import domain.card.Deck;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -75,6 +78,42 @@ public class Participants {
 
     public boolean isDealerBlackjack() {
         return dealer.isBlackjack();
+    }
+
+    public Map<Player, Integer> getBettingResult() {
+        Map<Player, Integer> betResult = new LinkedHashMap<>();
+        for (Player player : getPlayers()) {
+            PlayerGameResult playerGameResult = getPlayerGameResult(player);
+            int reward = playerGameResult.calculateBenefit(player.getBetAmount());
+            betResult.put(player, reward);
+        }
+
+        return new LinkedHashMap<>(betResult);
+    }
+
+    private PlayerGameResult getPlayerGameResult(Player player) {
+        if (isPlayerBlackjack(player)) {
+            return PlayerGameResult.BLACKJACK;
+        }
+        if (isPlayerWin(player)) {
+            return PlayerGameResult.WIN;
+        }
+        if (isDraw(player)) {
+            return PlayerGameResult.DRAW;
+        }
+        return PlayerGameResult.LOSE;
+    }
+
+    private boolean isPlayerBlackjack(Player player) {
+        return player.isBlackjack() && !isDealerBlackjack();
+    }
+
+    private boolean isPlayerWin(Player player) {
+        return (player.calculateScore() > getDealerScore() && !player.isBust()) || isDealerBust();
+    }
+
+    private boolean isDraw(Player player) {
+        return player.calculateScore() == getDealerScore();
     }
 
     public Dealer getDealer() {
