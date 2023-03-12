@@ -37,6 +37,10 @@ public class Names {
         }
     }
 
+    public int size() {
+        return names.size();
+    }
+
     public List<Name> getNames() {
         return names;
     }

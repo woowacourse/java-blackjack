@@ -46,7 +46,8 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards(new ShuffledCardsGenerator());
         Dealer dealer = new Dealer();
-        Players players = setUpPlayers();
+        Names playerNames = repeatForValidInput(this::setUpPlayerNames);
+        Players players = repeatForValidInput(() -> setUpPlayers(playerNames));
         return new BlackJackGame(players, dealer, cards);
     }
 
@@ -59,8 +60,7 @@ public class BlackJackGameController {
         }
     }
 
-    private Players setUpPlayers() {
-        Names playerNames = repeatForValidInput(this::setUpPlayerNames);
+    private Players setUpPlayers(Names playerNames) {
         List<Bet> playerBets = setUpPlayerBets(playerNames);
         return new Players(playerNames, playerBets);
     }
