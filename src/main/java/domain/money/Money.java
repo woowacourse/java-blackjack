@@ -15,6 +15,13 @@ public class Money {
         this(amount.intValue());
     }
 
+    public static Money initialBet(final int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 1원 이상 입력해 주세요");
+        }
+        return new Money(amount);
+    }
+
     public Money multiply(final BigDecimal amount) {
         return new Money(this.amount.multiply(amount));
     }

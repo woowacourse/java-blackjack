@@ -1,9 +1,9 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.PlayerCommand;
 import domain.card.CardDeck;
 import domain.card.shuffler.CardsShuffler;
-import domain.BlackJackGame;
 import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Participants;
@@ -36,8 +36,7 @@ public final class BlackJackController {
 
     private void playGame(final BlackJackGame blackJackGame) {
         for (Player player : blackJackGame.getPlayers()) {
-            Money money = new Money(inputView.readBet(player.getName()));
-            blackJackGame.addBet(player, money);
+            blackJackGame.addBet(player, inputView.readBet(player.getName()));
         }
 
         blackJackGame.distributeInitialCards();

@@ -30,10 +30,9 @@ class BetsTest {
     @Test
     void addBet() {
         Player player = new Player("깃짱");
-        Money money = new Money(1000);
 
         Bets bets = new Bets();
-        assertDoesNotThrow(() -> bets.addBet(player, money));
+        assertDoesNotThrow(() -> bets.addBet(player, 1000));
     }
 
     @Test
@@ -46,8 +45,8 @@ class BetsTest {
         Dealer dealer = participants.getDealer(); // score: 20
 
         Bets bets = new Bets();
-        bets.addBet(gitJjang, new Money(1000));
-        bets.addBet(irene, new Money(10000));
+        bets.addBet(gitJjang, 1000);
+        bets.addBet(irene, 10000);
 
         gitJjang.receiveCard(ACE_HEART); // score: 21 (stand)
         irene.receiveCard(THREE_SPADE); // score: 23 (bust)
@@ -74,8 +73,8 @@ class BetsTest {
         Dealer dealer = participants.getDealer(); // score: 20
 
         Bets bets = new Bets();
-        bets.addBet(gitJjang, new Money(1000));
-        bets.addBet(irene, new Money(10000));
+        bets.addBet(gitJjang, 1000);
+        bets.addBet(irene, 10000);
 
         irene.receiveCard(FOUR_HEART); // score: 20 (hit) => draw
         irene.selectStand();
@@ -103,8 +102,8 @@ class BetsTest {
         Dealer dealer = participants.getDealer(); // score: 13
 
         Bets bets = new Bets();
-        bets.addBet(gitJjang, new Money(1000));
-        bets.addBet(irene, new Money(10000));
+        bets.addBet(gitJjang, 1000);
+        bets.addBet(irene, 10000);
 
         dealer.receiveCard(TEN_CLOVER);
         irene.selectStand();
@@ -131,8 +130,8 @@ class BetsTest {
         Dealer dealer = participants.getDealer(); // score: 21 (BlackJack)
 
         Bets bets = new Bets();
-        bets.addBet(gitJjang, new Money(1000));
-        bets.addBet(irene, new Money(10000));
+        bets.addBet(gitJjang, 1000);
+        bets.addBet(irene, 10000);
 
         irene.selectStand();
 
@@ -158,8 +157,8 @@ class BetsTest {
         Dealer dealer = participants.getDealer(); // score: 12
 
         Bets bets = new Bets();
-        bets.addBet(gitJjang, new Money(1000));
-        bets.addBet(irene, new Money(10000));
+        bets.addBet(gitJjang, 1000);
+        bets.addBet(irene, 10000);
 
         dealer.receiveCard(FOUR_HEART);
         gitJjang.selectStand();

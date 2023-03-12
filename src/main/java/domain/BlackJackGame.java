@@ -35,8 +35,8 @@ public final class BlackJackGame {
         return new WinningResult(participants);
     }
 
-    public void addBet(final Player player, final Money money) {
-        this.bets.addBet(player, money);
+    public void addBet(final Player player, final int amount) {
+        this.bets.addBet(player, amount);
     }
 
     public Map<Player, Money> playersProfit() {
