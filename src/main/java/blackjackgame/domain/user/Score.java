@@ -37,7 +37,7 @@ public class Score {
         if (score > MAX_SCORE) {
             return PlayerStatus.BUST;
         }
-        return PlayerStatus.NORMAL;
+        return PlayerStatus.HITTABLE;
     }
 
     public DealerStatus calculateDealerStatus() {
@@ -52,6 +52,10 @@ public class Score {
 
     public boolean isLessThanBustScore() {
         return score <= MAX_SCORE;
+    }
+
+    public boolean isGreaterThanBustScore() {
+        return score > MAX_SCORE;
     }
 
     public int getScore() {
