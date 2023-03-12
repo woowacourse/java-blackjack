@@ -31,15 +31,15 @@ public class GameResult {
 
     public int calculateResult(Dealer dealer,Player player) {
         if (player.isBust() || (dealer.dealerWin(player.getCardsSum()) && !dealer.isBust())) {
-            return player.bustMoney();
+            return player.getMoney().bust();
         }
         else if (dealer.getCardsSum() == player.getCardsSum()) {
             return 0;
         }
         else if(player.isBlackJack()){
-            return player.blackJackWinMoney();
+            return player.getMoney().blackJack();
         }
-        return player.getMoney();
+        return player.getMoney().getBettingMoney();
     }
 
     private void calculateDealer(Dealer dealer, Player player) {

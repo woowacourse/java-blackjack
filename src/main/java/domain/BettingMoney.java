@@ -12,12 +12,14 @@ public class BettingMoney {
         this.money = money;
     }
 
-    public void bust() {
+    public int bust() {
         this.money = this.money * LOSE_MONEY;
+        return this.money;
     }
 
-    public void blackJack() {
+    public int blackJack() {
         this.money = (int) (this.money * BLACK_JACK_BONUS);
+        return this.money;
     }
 
     public int getBettingMoney() {

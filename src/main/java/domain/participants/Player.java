@@ -43,16 +43,6 @@ public class Player {
         return (getCardsSum() == BLACK_JACK) && cards.getCards().size() == 2;
     }
 
-    public int bustMoney() {
-        bettingMoney.bust();
-        return getMoney();
-    }
-
-    public int blackJackWinMoney() {
-        bettingMoney.blackJack();
-        return getMoney();
-    }
-
     public boolean isCommandYes(Command command) {
         return command.equals(Command.YES);
     }
@@ -65,8 +55,8 @@ public class Player {
         return cards.getCards();
     }
 
-    public int getMoney() {
-        return bettingMoney.getBettingMoney();
+    public BettingMoney getMoney() {
+        return bettingMoney;
     }
 }
 
