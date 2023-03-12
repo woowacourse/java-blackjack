@@ -45,11 +45,11 @@ public final class Players {
         }
     }
 
-    public Map<Player, Result> compareTo(Hand dealerHand) {
+    public Map<Player, Result> compareHandTo(Hand dealerHand) {
         return players.stream()
                 .collect(toMap(
                         player -> player,
-                        player -> player.compareTo(dealerHand)
+                        player -> player.compareHandTo(dealerHand)
                 ));
     }
 

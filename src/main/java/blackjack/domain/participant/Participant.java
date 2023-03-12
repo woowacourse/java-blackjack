@@ -42,8 +42,8 @@ public abstract class Participant {
         return this.hand.isBlackjack();
     }
 
-    public Result compareTo(Hand anotherHand) {
-        return this.hand.compareTo(anotherHand);
+    public Result compareHandTo(Hand anotherHand) {
+        return this.hand.compareHandTo(anotherHand);
     }
 
     public Hand getHand() {

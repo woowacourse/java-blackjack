@@ -35,7 +35,7 @@ public final class BlackjackGame {
     }
 
     public void dealOutMoney() {
-        Map<Player, Result> playersResult = players.compareTo(dealer.getHand());
+        Map<Player, Result> playersResult = players.compareHandTo(dealer.getHand());
         Map<Player, Money> exchanges = dealer.exchange(playersResult);
 
         players.dealOutMoney(exchanges);

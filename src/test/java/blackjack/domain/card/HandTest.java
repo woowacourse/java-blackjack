@@ -118,46 +118,46 @@ final class HandTest {
 
     @Test
     @DisplayName("상대방의 카드와 비교하여 결과를 반환한다.")
-    void compareTest_win() {
+    void compareHandToTest_win() {
         Hand anotherHand = new Hand(List.of(
                 new Card(TWO, HEART),
                 new Card(THREE, SPADE)
         ));
 
-        assertThat(this.hand.compareTo(anotherHand)).isEqualTo(WIN);
+        assertThat(this.hand.compareHandTo(anotherHand)).isEqualTo(WIN);
     }
 
     @Test
     @DisplayName("상대방의 카드와 비교하여 결과를 반환한다.")
-    void compareTest_draw() {
+    void compareHandToTest_draw() {
         Hand anotherHand = new Hand(List.of(
                 new Card(ACE, HEART),
                 new Card(TWO, SPADE)
         ));
 
-        assertThat(this.hand.compareTo(anotherHand)).isEqualTo(DRAW);
+        assertThat(this.hand.compareHandTo(anotherHand)).isEqualTo(DRAW);
     }
 
     @Test
     @DisplayName("상대방의 카드와 비교하여 결과를 반환한다.")
-    void compareTest_lose() {
+    void compareHandToTest_lose() {
         Hand anotherHand = new Hand(List.of(
                 new Card(ACE, HEART),
                 new Card(K, SPADE)
         ));
 
-        assertThat(this.hand.compareTo(anotherHand)).isEqualTo(LOSE);
+        assertThat(this.hand.compareHandTo(anotherHand)).isEqualTo(LOSE);
     }
 
     @Test
     @DisplayName("상대방이 버스트인 경우 테스트한다.")
-    void compareToTest_bust() {
+    void compareHandToTest_bust() {
         Hand anotherHand = new Hand(List.of(
                 new Card(TEN, HEART),
                 new Card(K, SPADE),
                 new Card(K, CLOVER)
         ));
 
-        assertThat(this.hand.compareTo(anotherHand)).isEqualTo(WIN);
+        assertThat(this.hand.compareHandTo(anotherHand)).isEqualTo(WIN);
     }
 }

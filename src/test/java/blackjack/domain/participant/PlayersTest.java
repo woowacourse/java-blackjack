@@ -17,10 +17,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
 import blackjack.domain.result.Result;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,7 +79,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("딜러가 블랙잭의 핸드를 가진 경우 compareTo를 테스트한다.")
-    void compareToTest() {
+    void compareHandToTest() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(K, HEART));
         dealer.receiveCard(new Card(TEN, HEART));
@@ -95,7 +93,7 @@ class PlayersTest {
         player2.receiveCard(new Card(TWO, DIAMOND));
         player2.receiveCard(new Card(TWO, CLOVER));
 
-        Map<Player, Result> playersResult = players.compareTo(dealer.getHand());
+        Map<Player, Result> playersResult = players.compareHandTo(dealer.getHand());
 
         assertAll(
                 () -> assertThat(playersResult.get(player1)).isEqualTo(WIN),

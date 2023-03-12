@@ -58,7 +58,7 @@ public final class Hand {
         return hand.size() == BLACKJACK_SIZE && totalScore() == BLACKJACK_SCORE;
     }
 
-    public Result compareTo(final Hand anotherHand) {
+    public Result compareHandTo(final Hand anotherHand) {
         if (this.isBust()) {
             return checkBust(anotherHand);
         }
