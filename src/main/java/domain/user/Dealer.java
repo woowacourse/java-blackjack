@@ -3,7 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Score;
 import domain.state.DealerStatus;
-import domain.state.UserStatus;
+import domain.state.State;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isUserStatus(UserStatus status) {
+    public boolean isUserStatus(State status) {
         return this.status.equals(status);
     }
 

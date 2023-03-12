@@ -3,7 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Score;
-import domain.state.UserStatus;
+import domain.state.State;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public abstract class User {
         return hand.calculateScore();
     }
 
-    public abstract boolean isUserStatus(UserStatus status);
+    public abstract boolean isUserStatus(State status);
 
     protected abstract void checkBustByScore();
 

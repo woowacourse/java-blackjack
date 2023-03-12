@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 import domain.state.PlayerStatus;
-import domain.state.UserStatus;
+import domain.state.State;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isUserStatus(UserStatus status) {
+    public boolean isUserStatus(State status) {
         return this.status.equals(status);
     }
 
