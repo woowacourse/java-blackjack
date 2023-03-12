@@ -36,7 +36,6 @@ public class BlackJackGameController {
         progressPlayersTurn(blackJackGame);
         progressDealerTurn(blackJackGame);
         printUsersCardResult(blackJackGame);
-        blackJackGame.judgeWinner();
         outputView.printFinalResult(blackJackGame.getBetResult());
     }
 

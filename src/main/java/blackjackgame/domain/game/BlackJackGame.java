@@ -54,12 +54,6 @@ public class BlackJackGame {
         }
     }
 
-    public void judgeWinner() {
-        Referee referee = new Referee(players, dealer);
-        referee.judgeWinner();
-        referee.judgeWinner();
-    }
-
     public Map<NameDto, List<Card>> getSetUpResult() {
         Map<NameDto, List<Card>> setUpResult = new LinkedHashMap<>();
 
@@ -73,6 +67,7 @@ public class BlackJackGame {
     }
 
    public Map<NameDto, ProfitDto> getBetResult() {
+       judgeWinner();
        FinalResult finalResult = new FinalResult(players, dealer);
        Map<User, ProfitDto> betResultByUser = finalResult.getBetResultByPlayer();
 
@@ -81,9 +76,13 @@ public class BlackJackGame {
            String userName = betResutByUserEntry.getKey().getName();
            betResultByName.put(new NameDto(userName), betResutByUserEntry.getValue());
        }
-
        return betResultByName;
    }
+
+    private void judgeWinner() {
+        Referee referee = new Referee(players, dealer);
+        referee.judgeWinner();
+    }
 
     public boolean isDealerDrawExtraCount() {
         return dealer.cards().size() > INITIAL_CARD_COUNT;
