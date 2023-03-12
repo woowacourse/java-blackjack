@@ -16,9 +16,10 @@ class ProfitTest {
     void createBet() {
         // given
         int input = 1000;
+        Profit profit = Profit.of(input);
 
         // when & then
-        assertDoesNotThrow(() -> Profit.of(input));
+        assertThat(profit.getProfit()).isEqualTo(input);
     }
 
     @ParameterizedTest(name = "양수가 아닐 경우 예외가 발생한다.")
