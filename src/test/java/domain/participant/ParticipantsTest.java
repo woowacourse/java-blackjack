@@ -66,6 +66,19 @@ class ParticipantsTest {
     }
 
     @Test
+    void 이름을_가져올_수_있다() {
+        //given
+        String name1 = "연어";
+        String name2 = "가비";
+        Participants participants = Participants.of(List.of(name1, name2), Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThat(participants.getPlayersName()).containsExactly(name1, name2);
+    }
+
+    @Test
     void 플레이어가_버스트이면_다음_차례는_없다() {
         //given
         List<String> players = List.of("연어");
