@@ -2,6 +2,8 @@ package domain;
 
 public class Money {
 
+    public static Money ZERO = Money.of(0);
+
     private final int principal;
     private final int value;
 
@@ -41,6 +43,10 @@ public class Money {
         return this.value < other.value;
     }
 
+    public int getProfit() {
+        return value - principal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -56,9 +62,5 @@ public class Money {
     @Override
     public int hashCode() {
         return value;
-    }
-
-    public int getProfit() {
-        return value - principal;
     }
 }

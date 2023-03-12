@@ -8,7 +8,7 @@ public class Bank {
     private static final Money BET_MINIMUM = Money.of(100);
 
     private final Map<User, Money> deposits = new HashMap<>();
-    private Money bankProfit = Money.of(0);
+    private Money bankProfit = Money.ZERO;
 
     public void bet(User user, Money money) {
         validateMinimum(money);
@@ -43,11 +43,11 @@ public class Bank {
     }
 
     private void clearDepositOf(User user) {
-        deposits.put(user, Money.of(0));
+        deposits.put(user, Money.ZERO);
     }
 
     private Money getDepositOf(User user) {
-        return deposits.getOrDefault(user, Money.of(0));
+        return deposits.getOrDefault(user, Money.ZERO);
     }
 
     public Money getProfit() {
