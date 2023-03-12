@@ -16,5 +16,4 @@ public class Hit extends Running {
     public Hit(Hand hand) {
         super(hand);
     }
-
 }

@@ -7,4 +7,9 @@ public class Stay extends Finished {
     public Stay(Hand hand) {
         super(hand);
     }
+
+    @Override
+    double profitRate() {
+        return 1;
+    }
 }

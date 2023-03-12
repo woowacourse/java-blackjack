@@ -15,6 +15,13 @@ public abstract class Finished implements State {
     }
 
     @Override
+    public double profit(int base) {
+        return base * profitRate();
+    }
+
+    abstract double profitRate();
+
+    @Override
     public Score score() {
         return hand.score();
     }

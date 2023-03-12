@@ -16,5 +16,7 @@ public interface State {
 
     Hand hand();
 
+    double profit(int base);
+
     List<Card> cards();
 }

@@ -21,6 +21,11 @@ public class Ready implements State {
     }
 
     @Override
+    public double profit(int base) {
+        throw new IllegalStateException("수익을 계산할 수 없는 상태입니다.");
+    }
+
+    @Override
     public State stay() {
         throw new IllegalStateException("게임을 멈출 수 없는 상태입니다.");
     }

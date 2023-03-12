@@ -33,6 +33,11 @@ public abstract class Running implements State {
     }
 
     @Override
+    public double profit(int base) {
+        throw new IllegalStateException("수익을 계산할 수 없는 상태입니다.");
+    }
+
+    @Override
     public State stay() {
         return new Stay(hand);
     }
