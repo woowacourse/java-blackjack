@@ -12,4 +12,9 @@ public abstract class Ready extends State {
     public State stay() {
         throw new IllegalStateException("[ERROR] 게임 준비 단계에는 상태를 조작할 수 없습니다.");
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

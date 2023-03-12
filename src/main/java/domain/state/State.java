@@ -2,6 +2,7 @@ package domain.state;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.card.Score;
 
 import java.util.List;
 
@@ -16,8 +17,14 @@ public abstract class State {
 
     public abstract State stay();
 
+    public abstract boolean isFinished();
+
     public final List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public final Score getScore() {
+        return hand.calculateScore();
     }
 
     protected final Hand getHand() {

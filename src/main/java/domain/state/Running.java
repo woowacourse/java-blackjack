@@ -11,4 +11,9 @@ public abstract class Running extends State {
     public State stay() {
         return new Stay(getHand());
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -17,4 +17,9 @@ public abstract class Finished extends State {
     public final State stay() {
         throw new IllegalStateException("[ERROR] 게임이 종료되어 상태를 조작할 수 없습니다.");
     }
+
+    @Override
+    public final boolean isFinished() {
+        return true;
+    }
 }
