@@ -57,13 +57,13 @@ public class OutputView {
     }
 
     public void printResult(String name, Result result) {
-        System.out.println(name + ": " + Display.of(result));
+        System.out.println(name + ": " + ResultCategory.of(result).getDisplay());
     }
 
     public void printDealerResults(List<Result> results) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        String renderedResults = Arrays.stream(Result.values())
-                .map(targetResult -> getDisplay(targetResult, results))
+        String renderedResults = Arrays.stream(ResultCategory.values())
+                .map(resultCategory -> getDisplay(resultCategory, results))
                 .collect(Collectors.joining(" "));
         System.out.println("딜러: " + renderedResults);
     }
@@ -76,9 +76,10 @@ public class OutputView {
         System.out.println("[ERROR] " + message);
     }
 
-    private long countResults(Result targetResult, List<Result> results) {
+    private long countResults(ResultCategory resultCategory, List<Result> results) {
         return results.stream()
-                .filter(result -> result.equals(targetResult))
+                .map(ResultCategory::of)
+                .filter(result -> result.equals(resultCategory))
                 .count();
     }
 
@@ -94,7 +95,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private String getDisplay(Result targetResult, List<Result> results) {
-        return countResults(targetResult, results) + Display.of(targetResult);
+    private String getDisplay(ResultCategory resultCategory, List<Result> results) {
+        return countResults(resultCategory, results) + resultCategory.getDisplay();
     }
 }
