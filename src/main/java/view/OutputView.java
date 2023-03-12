@@ -60,10 +60,10 @@ public class OutputView {
     public void printWinnerResult(Dealer dealer, Players players, GameResult gameResult) {
         System.out.println(FINAL_WIN_LOSE_RATIO_MESSAGE);
         System.out.printf(PROFIT_RESULT_MESSAGE, dealer.getName(),
-                gameResult.getPlayerProfit(dealer));
+                gameResult.calculateDealer(players));
         for (Player player : players.getPlayers()) {
             System.out.printf(PROFIT_RESULT_MESSAGE, player.getName(),
-                    gameResult.getPlayerProfit(player));
+                    gameResult.getPlayerResult(player).calculateResult(player.getMoney()));
         }
     }
 }

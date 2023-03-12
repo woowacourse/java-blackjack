@@ -19,8 +19,7 @@ public class  GameResultTest {
         Player player1 = new Player("pobi",new BettingMoney(0));
         Player player2 = new Player("jason",new BettingMoney(0));
         Dealer dealer = new Dealer();
-        Assertions.assertThatNoException().isThrownBy(()->new GameResult(dealer,
-                new Players(List.of(player1, player2))));
+        Assertions.assertThatNoException().isThrownBy(()->new GameResult());
     }
 
     @Test
@@ -31,10 +30,10 @@ public class  GameResultTest {
         Dealer dealer = new Dealer();
 
         Players players = new Players(List.of(player1));
-        GameResult gameResult = new GameResult(dealer,players);
+        GameResult gameResult = new GameResult();
         gameResult.calculatePlayersResult(dealer,players);
 
-        Assertions.assertThat(gameResult.getPlayerProfit(players.getPlayers().get(0))).isEqualTo(10000);
+        Assertions.assertThat(gameResult.getPlayerResult(players.getPlayers().get(0))).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -45,13 +44,13 @@ public class  GameResultTest {
         player1.addCard(new Card(CardNumber.TEN, CardPattern.SPADE));
 
         Dealer dealer = new Dealer();
-
+        dealer.addCard(new Card(CardNumber.TEN, CardPattern.DIAMOND));
         Players players = new Players(List.of(player1));
-        GameResult gameResult = new GameResult(dealer,players);
+        GameResult gameResult = new GameResult();
         gameResult.calculatePlayersResult(dealer,players);
 
         Player player = players.getPlayers().get(0);
 
-        Assertions.assertThat(gameResult.getPlayerProfit(player)).isEqualTo(15000);
+        Assertions.assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.BLACKJACKWIN);
     }
 }

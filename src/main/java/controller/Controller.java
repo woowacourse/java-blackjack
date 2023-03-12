@@ -28,7 +28,7 @@ public class Controller {
     public void run() {
         Players players = setPlayers();
         Dealer dealer = new Dealer();
-        GameResult gameResult = new GameResult(dealer,players);
+        GameResult gameResult = new GameResult();
         BlackjackGame game = new BlackjackGame(dealer,players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
         distributeInitialCard(dealer, players, game);

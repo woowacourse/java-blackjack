@@ -1,7 +1,6 @@
 package domain;
 
 import domain.participants.Dealer;
-import domain.participants.Participant;
 import domain.participants.Player;
 import domain.participants.Players;
 
@@ -9,46 +8,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Participant, Integer> gameResult;
+    private final Map<Player, Result> gameResult;
 
-    public GameResult(Dealer dealer, Players players) {
+    public GameResult() {
         this.gameResult = new HashMap<>();
-        setPlayersInitialResult(dealer,players);
-    }
-
-    private void setPlayersInitialResult(Dealer dealer,Players players) {
-        gameResult.put(dealer, 0);
-        for (Player player : players.getPlayers()) {
-            gameResult.put(player, 0);
-        }
     }
 
     public void calculatePlayersResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            gameResult.replace(player, calculateResult(dealer,player));
-            calculateDealer(dealer, player);
+            gameResult.put(player, calculateResult(dealer,player));
         }
     }
 
-    public int calculateResult(Dealer dealer,Player player) {
+    public Result calculateResult(Dealer dealer,Player player) {
         if (player.isBust() || (dealer.dealerWin(player.getCardsSum()) && !dealer.isBust())) {
-            return player.getMoney().bust();
+            return Result.LOSE;
         }
         else if (dealer.getCardsSum() == player.getCardsSum()) {
-            return 0;
+            return Result.DRAW;
         }
         else if(player.isBlackJack()){
-            return player.getMoney().blackJack();
+            return Result.BLACKJACKWIN;
         }
-        return player.getMoney().getBettingMoney();
+        return Result.WIN;
     }
 
-    private void calculateDealer(Dealer dealer, Player player) {
-        int oldDealerValue = gameResult.get(dealer);
-        gameResult.replace(dealer, oldDealerValue + (-gameResult.get(player)));
+    public int calculateDealer(Players players) {
+        return players.getPlayers().stream()
+                .map(s-> -gameResult.get(s).calculateResult(s.getMoney()))
+                .reduce(0,Integer::sum);
     }
 
-    public int getPlayerProfit(Participant player) {
+    public Result getPlayerResult(Player player) {
         return gameResult.get(player);
     }
 }

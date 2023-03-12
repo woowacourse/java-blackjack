@@ -11,8 +11,8 @@ public class Player extends Participant {
         this.bettingMoney = money;
     }
 
-    public BettingMoney getMoney() {
-        return bettingMoney;
+    public int getMoney() {
+        return bettingMoney.getBettingMoney();
     }
 
 }
