@@ -46,6 +46,6 @@ public class Deck {
     }
 
     public List<Card> cards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList(cards);
     }
 }

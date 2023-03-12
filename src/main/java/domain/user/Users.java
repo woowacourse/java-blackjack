@@ -1,13 +1,11 @@
 package domain.user;
 
 import domain.Money;
-import domain.card.Deck;
+import domain.Referee;
 import domain.Result;
-
-import java.util.ArrayList;
+import domain.card.Deck;
+import java.util.Collections;
 import java.util.List;
-
-import static domain.Referee.getResult;
 
 public class Users {
     private final List<Player> players;
@@ -26,7 +24,7 @@ public class Users {
     }
 
     public Result getUserResult(User user) {
-        return getResult(user, dealer);
+        return Referee.getResult(user, dealer);
     }
 
     public Money getDealerProfit() {
@@ -44,7 +42,7 @@ public class Users {
     }
 
     public List<Player> players() {
-        return new ArrayList<>(players);
+        return Collections.unmodifiableList(players);
     }
 
     public Dealer dealer() {

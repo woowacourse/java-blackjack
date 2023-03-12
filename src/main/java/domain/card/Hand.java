@@ -1,8 +1,7 @@
 package domain.card;
 
 import domain.Score;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -40,7 +39,7 @@ public class Hand {
     }
 
     public List<Card> cards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList(cards);
     }
 
     public int size() {
