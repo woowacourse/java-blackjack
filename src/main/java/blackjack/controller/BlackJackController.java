@@ -1,13 +1,14 @@
 package blackjack.controller;
 
+import blackjack.domain.game.Betting;
+import blackjack.domain.game.BettingTable;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.Result;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,18 +24,18 @@ public class BlackJackController {
 
     public void run() {
         Players players = generatePlayers();
+        BettingTable bettingTable = generateBettingTable(players.getNames());
 
-        BlackJackGame blackJackGame = BlackJackGame.create(players);
+        BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
 
-        start(blackJackGame);
+        setUp(blackJackGame);
 
         play(blackJackGame);
 
         showResult(blackJackGame);
     }
 
-
-    private void start(BlackJackGame blackJackGame) {
+    private void setUp(BlackJackGame blackJackGame) {
         blackJackGame.setUp();
 
         outputView.showInitStatus(blackJackGame.getPlayers());
@@ -43,34 +44,38 @@ public class BlackJackController {
     }
 
     private void play(BlackJackGame blackJackGame) {
+        if (blackJackGame.isDealerBlackJack()) {
+            return;
+        }
         passExtraCardToPlayers(blackJackGame);
         passExtraCardToDealer(blackJackGame);
     }
 
     private void showResult(BlackJackGame blackJackGame) {
         outputView.showTotalScore(blackJackGame.getDealer(), blackJackGame.getPlayers());
-        Map<Player, Result> result = blackJackGame.calculateResult();
-        outputView.showFinalResult(result, blackJackGame.getPlayers());
+        Map<Name, Integer> result = blackJackGame.calculatePlayersProfit();
+        int dealerProfit = blackJackGame.calculateDealerProfit();
+
+        outputView.showProfits(result, dealerProfit);
     }
 
     private void passExtraCardToPlayers(BlackJackGame blackJackGame) {
-        List<Player> players = blackJackGame.getPlayers();
-        for (Player player : players) {
-            addExtraCard(blackJackGame, player);
+        List<Name> playerNames = blackJackGame.getPlayerNames();
+        for (Name playerName : playerNames) {
+            addExtraCard(blackJackGame, playerName);
         }
     }
 
-    private void addExtraCard(BlackJackGame blackJackGame, Player player) {
-        while (player.canReceive() && hasIntention(player.getName())) {
-            blackJackGame.passCardTo(player);
-            outputView.showPlayer(player);
+    private void addExtraCard(BlackJackGame blackJackGame, Name name) {
+        while (blackJackGame.canPlayerReceive(name) && hasIntention(name.getValue())) {
+            blackJackGame.passCardToPlayer(name);
+            outputView.showPlayer(blackJackGame.getPlayer(name));
         }
     }
 
     private void passExtraCardToDealer(BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getDealer();
-        if (dealer.canReceive()) {
-            blackJackGame.passCardTo(dealer);
+        if (blackJackGame.canDealerReceive()) {
+            blackJackGame.passCardToDealer();
             outputView.showDealerDrawPossible();
             return;
         }
@@ -88,6 +93,25 @@ public class BlackJackController {
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
             return generatePlayers();
+        }
+    }
+
+    private BettingTable generateBettingTable(List<Name> playerNames) {
+        Map<Name, Betting> bettingInfo = new HashMap<>();
+        for (Name playerName : playerNames) {
+            Betting betting = generateBetting(playerName);
+            bettingInfo.put(playerName, betting);
+        }
+        return new BettingTable(bettingInfo);
+    }
+
+    private Betting generateBetting(Name name) {
+        try {
+            int betting = inputView.readBetting(name.getValue());
+            return new Betting(betting);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            return generateBetting(name);
         }
     }
 }

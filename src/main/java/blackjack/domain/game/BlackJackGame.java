@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.*;
 
 import java.util.LinkedHashMap;
@@ -34,21 +34,30 @@ public class BlackJackGame {
         List<Player> players = participants.getPlayers();
 
         for (Player player : players) {
-            passCardTo(player);
-            passCardTo(player);
+            player.addCard(deck.draw());
+            player.addCard(deck.draw());
         }
-        passCardTo(dealer);
-        passCardTo(dealer);
+        dealer.addCard(deck.draw());
+        dealer.addCard(deck.draw());
     }
 
-    public void passCardTo(Participant participant) {
-        if (participant.canReceive()) {
+    public void passCardToDealer() {
+        Dealer dealer = participants.getDealer();
+        if (dealer.canReceive()) {
             Card card = deck.draw();
-            participant.addCard(card);
+            dealer.addCard(card);
         }
     }
 
-    public Map<String, Integer> calculatePlayersProfit() {
+    public void passCardToPlayer(Name name) {
+        Player player = participants.getPlayer(name);
+        if (player.canReceive()) {
+            Card card = deck.draw();
+            player.addCard(card);
+        }
+    }
+
+    public Map<Name, Integer> calculatePlayersProfit() {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
@@ -59,15 +68,15 @@ public class BlackJackGame {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
-        Map<String, Integer> playersProfit = calculateProfit(players, dealer);
+        Map<Name, Integer> playersProfit = calculateProfit(players, dealer);
 
         return playersProfit.values()
                 .stream()
                 .reduce(0, Integer::sum) * -1;
     }
 
-    private Map<String, Integer> calculateProfit(List<Player> players, Dealer dealer) {
-        LinkedHashMap<String, Integer> playersProfit = new LinkedHashMap<>();
+    private Map<Name, Integer> calculateProfit(List<Player> players, Dealer dealer) {
+        LinkedHashMap<Name, Integer> playersProfit = new LinkedHashMap<>();
 
         for (Player player : players) {
             Result result = Result.calculatePlayerResult(player, dealer);
@@ -79,7 +88,15 @@ public class BlackJackGame {
         return playersProfit;
     }
 
-    public boolean canDealerReceiveCard() {
+    public boolean isDealerBlackJack() {
+        return participants.getDealer().isBlackJack();
+    }
+
+    public boolean canPlayerReceive(Name name) {
+        return participants.getPlayer(name).canReceive();
+    }
+
+    public boolean canDealerReceive() {
         return participants.getDealer().canReceive();
     }
 
@@ -91,7 +108,11 @@ public class BlackJackGame {
         return participants.getDealer();
     }
 
-    public List<String> getPlayerNames() {
+    public Player getPlayer(Name name) {
+        return participants.getPlayer(name);
+    }
+
+    public List<Name> getPlayerNames() {
         return participants.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());

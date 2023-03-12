@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.Assertions;
@@ -26,10 +27,10 @@ public class BlackJackGameTest {
     @BeforeEach
     void init() {
         players = Players.create(List.of("gray", "luca", "bada"));
-        Map<String, Betting> bettingInfo = new HashMap<>();
+        Map<Name, Betting> bettingInfo = new HashMap<>();
 
-        List<String> names = players.getNames();
-        for (String name : names) {
+        List<Name> names = players.getNames();
+        for (Name name : names) {
             bettingInfo.put(name, new Betting(10000));
         }
         bettingTable = new BettingTable(bettingInfo);
@@ -48,7 +49,7 @@ public class BlackJackGameTest {
     void getPlayersName() {
         BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
 
-        assertThat(blackJackGame.getPlayerNames()).containsExactly("gray", "luca", "bada");
+        assertThat(blackJackGame.getPlayerNames()).containsExactly(new Name("gray"), new Name("luca"), new Name("bada"));
     }
 
     @Test
@@ -57,14 +58,12 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
 
         blackJackGame.setUp();
-        List<Player> players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
 
         Assertions.assertAll(
-                () -> assertThat(players.get(0).getCards().getCount()).isEqualTo(2),
-                () -> assertThat(players.get(1).getCards().getCount()).isEqualTo(2),
-                () -> assertThat(players.get(2).getCards().getCount()).isEqualTo(2),
-                () -> assertThat(dealer.getCards().getCount()).isEqualTo(2)
+                () -> assertThat(blackJackGame.getPlayer(new Name("gray")).getCards().getCount()).isEqualTo(2),
+                () -> assertThat(blackJackGame.getPlayer(new Name("luca")).getCards().getCount()).isEqualTo(2),
+                () -> assertThat(blackJackGame.getPlayer(new Name("bada")).getCards().getCount()).isEqualTo(2),
+                () -> assertThat(blackJackGame.getDealer().getCards().getCount()).isEqualTo(2)
         );
     }
 
@@ -76,9 +75,9 @@ public class BlackJackGameTest {
         Player gray = players.get(0);
         Player luca = players.get(1);
 
-        blackJackGame.passCardTo(gray);
-        blackJackGame.passCardTo(luca);
-        blackJackGame.passCardTo(luca);
+        blackJackGame.passCardToPlayer(gray.getName());
+        blackJackGame.passCardToPlayer(luca.getName());
+        blackJackGame.passCardToPlayer(luca.getName());
 
         assertAll(
                 () -> assertThat(gray.getCards().getCount()).isEqualTo(1),
@@ -94,7 +93,7 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Suit.SPADE, Denomination.TEN));
         int beforeCount = dealer.getCards().getCount();
 
-        blackJackGame.passCardTo(dealer);
+        blackJackGame.passCardToDealer();
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount + 1);
     }
@@ -108,7 +107,7 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Suit.HEART, Denomination.SEVEN));
         int beforeCount = dealer.getCards().getCount();
 
-        blackJackGame.passCardTo(dealer);
+        blackJackGame.passCardToDealer();
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount);
     }
@@ -124,7 +123,7 @@ public class BlackJackGameTest {
         Player bada = players.get(2);
 
         setCards(dealer, gray, luca, bada);
-        Map<String, Integer> result = blackJackGame.calculatePlayersProfit();
+        Map<Name, Integer> result = blackJackGame.calculatePlayersProfit();
 
         Assertions.assertAll(
                 () -> assertThat(result).containsEntry(gray.getName(), 15000),
@@ -144,7 +143,7 @@ public class BlackJackGameTest {
         Player bada = players.get(2);
 
         setDealCardBlackJack(dealer, gray, luca, bada);
-        Map<String, Integer> result = blackJackGame.calculatePlayersProfit();
+        Map<Name, Integer> result = blackJackGame.calculatePlayersProfit();
 
         Assertions.assertAll(
                 () -> assertThat(result).containsEntry(gray.getName(), 0),
