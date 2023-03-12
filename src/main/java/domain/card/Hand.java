@@ -36,6 +36,14 @@ public class Hand {
         return calculateScore().isOverMax();
     }
 
+    public boolean isBlackjack() {
+        return calculateScore().isMax() && hasTwoCards();
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     private Score sum() {
         return cards.stream()
                 .map(Card::getScore)
@@ -46,5 +54,9 @@ public class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    private boolean hasTwoCards() {
+        return cards.size() == 2;
     }
 }
