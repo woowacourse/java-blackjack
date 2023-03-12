@@ -1,6 +1,5 @@
 package domain.participants;
 
-import domain.Command;
 import domain.deck.Card;
 import domain.deck.Cards;
 
@@ -25,14 +24,6 @@ public class Participant {
         return cards.getSum();
     }
 
-    public boolean isOverPlayerBlackJack() {
-        return getCardsSum() >= BLACK_JACK;
-    }
-
-    public boolean canDrawCard(Command command) {
-        return !isOverPlayerBlackJack() && isCommandYes(command);
-    }
-
     public boolean isBust() {
         return getCardsSum() > BLACK_JACK;
     }
@@ -41,15 +32,11 @@ public class Participant {
         return (getCardsSum() == BLACK_JACK) && cards.getCards().size() == 2;
     }
 
-    public boolean isCommandYes(Command command) {
-        return command.equals(Command.YES);
-    }
-
     public String getName() {
         return name.getName();
     }
 
-    public List<Card> getPlayerCards() {
+    public List<Card> getCards() {
         return cards.getCards();
     }
 }

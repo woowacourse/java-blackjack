@@ -42,7 +42,7 @@ public class BlackjackGameTest {
 
         blackjackGame.distributeDealer();
 
-        Assertions.assertThat(dealer.getPlayerCards()).usingRecursiveComparison().isEqualTo(playerCard);
+        Assertions.assertThat(dealer.getCards()).usingRecursiveComparison().isEqualTo(playerCard);
     }
 
     @Test
@@ -56,6 +56,6 @@ public class BlackjackGameTest {
 
         blackjackGame.distributePlayers();
 
-        Assertions.assertThat(playerPobi.getPlayerCards()).usingRecursiveComparison().isEqualTo(playerCard);
+        Assertions.assertThat(playerPobi.getCards()).usingRecursiveComparison().isEqualTo(playerCard);
     }
 }

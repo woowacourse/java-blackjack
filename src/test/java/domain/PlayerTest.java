@@ -23,7 +23,7 @@ public class PlayerTest {
         Player player = new Player("pobi",new BettingMoney(0));
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE);
         player.addCard(card);
-        assertThat(player.getPlayerCards().get(0)).isEqualTo(card);
+        assertThat(player.getCards().get(0)).isEqualTo(card);
     }
 
     @Test

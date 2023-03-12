@@ -23,7 +23,7 @@ public class OutputView {
     }
 
     private String printCardsForm(Participant player) {
-        return player.getPlayerCards().stream()
+        return player.getCards().stream()
                 .map(e -> e.getCardName() + e.getCardPattern())
                 .collect(Collectors.joining(SPLIT_DELIMITER));
     }
