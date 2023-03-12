@@ -41,7 +41,7 @@ public class BlackjackGame {
 
     public Player findPlayer(String name) {
          return players.stream()
-                .filter(player -> player.getName().getValue().equals(name))
+                .filter(player -> player.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름의 플레이어는 존재하지 않습니다."));
     }

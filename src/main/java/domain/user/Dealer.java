@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.game.Score;
 import domain.state.State;
 
+import java.util.List;
+
 public class Dealer {
 
     private static final Score hitScoreLimit = new Score(16);
@@ -33,11 +35,15 @@ public class Dealer {
         return participant.stay();
     }
 
-    public Name getName() {
-        return participant.getName();
+    public String getName() {
+        return participant.getName().getValue();
     }
 
     public State getState() {
         return participant.getState();
+    }
+
+    public List<Card> cards() {
+        return participant.cards();
     }
 }

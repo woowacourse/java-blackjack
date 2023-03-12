@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.state.Ready;
 import domain.state.State;
 
+import java.util.List;
+
 public class Participant {
 
     private final Name name;
@@ -28,6 +30,10 @@ public class Participant {
 
     public State getState() {
         return state;
+    }
+
+    public List<Card> cards() {
+        return getState().cards();
     }
 
     public boolean equalsName(String name) {

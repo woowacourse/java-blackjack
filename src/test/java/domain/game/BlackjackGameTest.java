@@ -56,7 +56,7 @@ public class BlackjackGameTest {
 
         Player maco = blackjackGame.findPlayer("maco");
 
-        assertThat(maco.getState().cards().size()).isEqualTo(1);
+        assertThat(maco.cards().size()).isEqualTo(1);
     }
 
     @DisplayName("딜러는 16이하이면 hit할 수 있다")
