@@ -1,30 +1,16 @@
 package domain;
 
-import java.util.List;
-
-public class Dealer {
+public class Dealer extends Participant {
 
     public static final int STANDARD_TO_GET_ONE_MORE_CARD = 16;
 
-    private final Name name;
-    private final Cards cards;
-
     public Dealer(Name name, Cards cards) {
-        this.name = name;
-        this.cards = cards;
+        super(name, cards, new Money(0));
     }
 
-    public boolean isWhetherToGetMoreCard() {
+    @Override
+    public boolean canReceiveOneMoreCard() {
         return cards.calculateSum() <= STANDARD_TO_GET_ONE_MORE_CARD;
-    }
-
-    public void pickCard(CardDeck cardDeck) {
-        Card card = cardDeck.pickCard();
-        cards.addCard(card);
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
     }
 
     //    public static final int STANDARD_FOR_HIT = 16;

@@ -28,7 +28,7 @@ public class DealerTest {
 
         Dealer dealer = new Dealer(name, cards);
 
-        assertThat(dealer.isWhetherToGetMoreCard()).isTrue();
+        assertThat(dealer.canReceiveOneMoreCard()).isTrue();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DealerTest {
 
         Dealer dealer = new Dealer(name, cards);
 
-        assertThat(dealer.isWhetherToGetMoreCard()).isFalse();
+        assertThat(dealer.canReceiveOneMoreCard()).isFalse();
     }
 
     @Test

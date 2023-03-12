@@ -51,6 +51,10 @@ public class Cards {
         return cards;
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     //
 //    public static final int BLACKJACK_NUMBER = 21;
 //    public static final int ADDITIONAL_A_VALUE = 10;

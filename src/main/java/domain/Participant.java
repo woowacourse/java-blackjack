@@ -1,39 +1,45 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
-//
-//    private static final int INITIAL_CARDS_SIZE = 2;
-//
-//    protected final String name;
-//    protected final Cards cards;
-//
-//    protected Participant(String name, Cards cards) {
-//        validateCardsSize(cards);
-//        this.name = name;
-//        this.cards = cards;
-//    }
-//
-//    private void validateCardsSize(Cards cards) {
-//        if (cards.getSize() != INITIAL_CARDS_SIZE) {
-//            throw new IllegalArgumentException("초기 카드는 2장이어야 합니다.");
-//        }
-//    }
-//
-//    public Card pickCard(CardDeck cardDeck) {
-//        return cardDeck.pick();
-//    }
-//
-//    public void hit(Card card) {
-//        cards.add(card);
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public abstract boolean canAddCard();
-//
-//    public Cards getCards() {
-//        return cards;
-//    }
+
+    private static final int INITIAL_CARDS_SIZE = 2;
+    public static final int STANDARD_SUM_OF_BLACKJACK = 21;
+
+    protected final Name name;
+    protected final Cards cards;
+    protected final Money money;
+
+    protected Participant(Name name, Cards cards, Money money) {
+        validateCardsSize(cards);
+        this.name = name;
+        this.cards = cards;
+        this.money = money;
+    }
+
+    private void validateCardsSize(Cards cards) {
+        if (cards.getSize() != INITIAL_CARDS_SIZE) {
+            throw new IllegalArgumentException("초기 카드는 2장이어야 합니다.");
+        }
+    }
+
+    public boolean isBlackjack() {
+        return cards.calculateSum() == STANDARD_SUM_OF_BLACKJACK;
+    }
+
+    public void pickCard(CardDeck cardDeck) {
+        Card card = cardDeck.pickCard();
+        cards.addCard(card);
+    }
+
+    public abstract boolean canReceiveOneMoreCard();
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
 }

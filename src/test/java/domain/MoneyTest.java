@@ -20,11 +20,11 @@ public class MoneyTest {
 
     @ParameterizedTest
     @DisplayName("0 또는 음수를 파라미터로 주입하여 money 객체를 생성하면 예외가 발생한다")
-    @ValueSource(ints = {-100, -1, 0})
+    @ValueSource(ints = {-100, -1})
     void ErrorTestGeneratingMoney(int money) {
 
         assertThatThrownBy(() -> new Money(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 음수 또는 0을 입력할 수 없습니다.");
+                .hasMessage("[ERROR] 음수는 입력할 수 없습니다.");
     }
 }

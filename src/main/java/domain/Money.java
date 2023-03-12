@@ -2,7 +2,7 @@ package domain;
 
 public class Money {
 
-    public static final int MINIMUM_BETTING_MONEY = 1;
+    public static final int MINIMUM_BETTING_MONEY = 0;
 
     private final int money;
 
@@ -13,7 +13,7 @@ public class Money {
 
     private void validateNonPositiveNumber(int money) {
         if (money < MINIMUM_BETTING_MONEY) {
-            throw new IllegalArgumentException("[ERROR] 음수 또는 0을 입력할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 음수는 입력할 수 없습니다.");
         }
     }
 }
