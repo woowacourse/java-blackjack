@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.state.Blackjack;
 import blackjack.domain.player.state.PlayerStatus;
 
 import java.util.List;
@@ -16,7 +17,13 @@ public abstract class Participant {
 
     abstract boolean isAbleToReceive();
 
-    abstract void hit(Card card);
+    public boolean isBlackJack() {
+        return playerStatus.getClass() == Blackjack.class;
+    }
+
+    public void hit(Card card) {
+        playerStatus = playerStatus.draw(card);
+    }
 
     public Hand getHand() {
         return hand;

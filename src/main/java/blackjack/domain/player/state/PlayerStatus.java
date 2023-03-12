@@ -1,7 +1,9 @@
 package blackjack.domain.player.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Hand;
+import blackjack.domain.result.Score;
 
 public abstract class PlayerStatus {
     private final Hand hand;
@@ -22,6 +24,8 @@ public abstract class PlayerStatus {
     public abstract PlayerStatus stay();
 
     public abstract boolean isRunning();
+
+    public abstract double calculateProfit(boolean isDealerBlackJack, Score dealerScore, BettingMoney bettingMoney);
 
     protected final Hand hand() {
         return hand;

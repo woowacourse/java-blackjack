@@ -19,10 +19,6 @@ public class Dealer extends Participant {
         return hand.calculateScore().isNotOver(MAX_SCORE_TO_RECEIVE);
     }
 
-    @Override
-    public void hit(Card card) {
-        hand.add(card);
-    }
 
     public String getName() {
         return DEALER_NAME;

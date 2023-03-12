@@ -19,4 +19,8 @@ public class BettingMoney {
             throw new IllegalArgumentException("양의 정수(100원 단위)만 입력이 가능합니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
