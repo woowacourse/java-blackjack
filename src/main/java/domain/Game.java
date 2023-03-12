@@ -70,7 +70,7 @@ public class Game {
         return participants.getDealer();
     }
 
-    public Money getDealerPrize() {
-        return bank.getProfit();
+    public int getDealerProfit() {
+        return bank.getProfit().getProfit();
     }
 }

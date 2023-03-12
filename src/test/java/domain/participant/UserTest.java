@@ -42,7 +42,7 @@ class UserTest extends AbstractTestFixture {
 
         user.drawFrom(deck);
 
-        assertThat(user.getHand().getCards()).hasSize(1);
+        assertThat(user.getCards()).hasSize(1);
     }
 
     static Stream<Arguments> test_win_lose_draw() {

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import java.util.List;
+import java.util.Set;
 
 import domain.Result;
 import domain.card.Card;
@@ -46,8 +47,8 @@ public abstract class Player {
 
     public abstract boolean canHit();
 
-    public Hand getHand() {
-        return hand;
+    public Set<Card> getCards() {
+        return hand.getCards();
     }
 
     public String getName() {

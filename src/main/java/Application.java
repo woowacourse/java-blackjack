@@ -47,7 +47,7 @@ public class Application {
         game.dealTwice();
 
         OUTPUT_VIEW.printDealStatus(createDtosOf(game.getUsers()));
-        OUTPUT_VIEW.printFirstCardOfDealer(game.getDealer().getHand().getCards());
+        OUTPUT_VIEW.printFirstCardOfDealer(game.getDealer().getCards());
         OUTPUT_VIEW.printUsersStatus(createDtosOf(game.getUsers()));
     }
 
@@ -73,7 +73,7 @@ public class Application {
 
     private static void showProfitsOf(Game game) {
         System.out.println(System.lineSeparator() + "## 최종 수익");
-        OUTPUT_VIEW.printProfit(game.getDealer().getName(), game.getDealerPrize().getProfit());
+        OUTPUT_VIEW.printProfit(game.getDealer().getName(), game.getDealerProfit());
         for (User user : game.getUsers()) {
             OUTPUT_VIEW.printProfit(user.getName(), game.getPrizeOf(user).getProfit());
         }
@@ -82,7 +82,7 @@ public class Application {
     private static void selectHitOrStand(Game game, User user) {
         while (user.canHit() && INPUT_VIEW.askForHit(user.getName())) {
             game.dealTo(user);
-            OUTPUT_VIEW.printPlayerCards(user.getName(), user.getHand().getCards());
+            OUTPUT_VIEW.printPlayerCards(user.getName(), user.getCards());
         }
     }
 
@@ -110,6 +110,6 @@ public class Application {
     }
 
     private static PlayerDto createDtoOf(Player player) {
-        return new PlayerDto(player.getName(), player.getHand().getCards(), player.getScore().getScore());
+        return new PlayerDto(player.getName(), player.getCards(), player.getScore().getScore());
     }
 }
