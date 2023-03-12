@@ -12,7 +12,7 @@ import java.util.Map;
 public final class Bank {
 
     private static final double BLACKJACK_WIN_RATE = 1.5;
-    private static final int WIN_RATE = 2;
+    private static final double WIN_RATE = 2.0;
     private static final int EMPTY_MONEY = 0;
 
     private final Map<Player, Money> bank;
@@ -44,15 +44,19 @@ public final class Bank {
 
     private Money evaluate(final Player player, final Result result, final Money findMoney) {
         if (isBlackJackWin(player, result)) {
-            return new Money((int) (findMoney.getMoney() * BLACKJACK_WIN_RATE));
+            return multiply(findMoney, BLACKJACK_WIN_RATE);
         }
         if (result == WIN) {
-            return new Money(findMoney.getMoney() * WIN_RATE);
+            return multiply(findMoney, WIN_RATE);
         }
         if (result == DRAW) {
             return findMoney;
         }
         return new Money(EMPTY_MONEY);
+    }
+
+    private Money multiply(final Money findMoney, double ratio) {
+        return new Money((int) (findMoney.getMoney() * ratio));
     }
 
     private boolean isBlackJackWin(final Player player, final Result result) {
