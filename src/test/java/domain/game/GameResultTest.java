@@ -1,8 +1,11 @@
 package domain.game;
 
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.TestCardGenerator;
 import domain.player.Dealer;
 import domain.player.Participant;
-import domain.player.Player;
+import domain.player.info.PlayerInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +22,12 @@ class GameResultTest {
     @BeforeEach
     public void beforeEach() {
         //given
-        final List<Participant> participants = List.of(Participant.of("준팍", 13),
-                Participant.of("범블비", 12),
-                Participant.of("파워", 9),
-                Participant.of("서브웨이", 20));
+        final List<Participant> participants = List.of(createParticipantWith("준팍", List.of(Rank.FIVE, Rank.EIGHT)),
+                createParticipantWith("범블비", List.of(Rank.THREE, Rank.NINE)),
+                createParticipantWith("파워", List.of(Rank.TWO, Rank.SEVEN)),
+                createParticipantWith("서브웨이", List.of(Rank.JACK, Rank.TEN)));
 
-
-        gameResult = GameResult.of(Dealer.create(12), participants);
+        gameResult = GameResult.of(createDealerWith(List.of(Rank.ACE, Rank.ACE)), participants);
     }
 
 
@@ -34,7 +36,7 @@ class GameResultTest {
     void getLosersTest() {
         //when
         final List<String> resultNames = gameResult.getLosers().stream()
-                .map(Player::getName)
+                .map(Participant::getName)
                 .collect(toList());
 
         //then
@@ -46,7 +48,7 @@ class GameResultTest {
     void getWinnersTest() {
         //when
         final List<String> resultNames = gameResult.getWinners().stream()
-                .map(Player::getName)
+                .map(Participant::getName)
                 .collect(toList());
 
         //then
@@ -58,12 +60,35 @@ class GameResultTest {
     void getDrawParticipantsTest() {
         //when
         final List<String> resultNames = gameResult.getDrawParticipants().stream()
-                .map(Player::getName)
+                .map(Participant::getName)
                 .collect(toList());
 
         //then
         assertThat(resultNames).isEqualTo(List.of("범블비"));
     }
 
+    private static Dealer createDealerWith(final List<Rank> ranks) {
+        final Dealer dealer = Dealer.create();
+
+        final Deck dealerDeck = Deck.from(TestCardGenerator.from(ranks));
+        ranks.forEach(i -> dealer.takeCard(dealerDeck.dealCard()));
+
+        return dealer;
+    }
+
+    private static Participant createParticipantWith(final String name, final List<Rank> ranks) {
+        final Participant participant = Participant.of(getPlayerInfo(name));
+
+        final Deck participantDeck = Deck.from(TestCardGenerator.from(ranks));
+        ranks.forEach(i -> participant.takeCard(participantDeck.dealCard()));
+
+        return participant;
+    }
+
+    private static PlayerInfo getPlayerInfo(final String name) {
+        return new PlayerInfo.PlayerInfoBuilder(name)
+                .setBetAmount(1000)
+                .build();
+    }
 
 }

@@ -8,7 +8,6 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public final class Runner {
 
@@ -21,7 +20,7 @@ public final class Runner {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = retryOnError(this::joinGame);
+        final BlackjackGame blackjackGame = joinGame();
         startGame(blackjackGame);
         playGame(blackjackGame);
         judgeGameResult(blackjackGame);
@@ -31,12 +30,12 @@ public final class Runner {
         final List<String> participantNames = this.inputView.readPlayerNames();
         this.outputView.printSetupGame(participantNames);
 
-        return BlackjackGame.from(participantNames, new RandomCardGenerator());
+        return BlackjackGame.from(participantNames, this.inputView::readBetAmount, new RandomCardGenerator());
     }
 
     private void startGame(final BlackjackGame blackjackGame) {
         blackjackGame.drawCards();
-        this.outputView.printPlayerCards(blackjackGame.getPlayers());
+        this.outputView.printDrawCards(blackjackGame.getDealerDTO(), blackjackGame.getParticipantDTOs());
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
@@ -45,20 +44,10 @@ public final class Runner {
     }
 
     private void judgeGameResult(final BlackjackGame blackjackGame) {
-        this.outputView.printPlayerScore(blackjackGame.getPlayers());
-        this.outputView.printGameResult(blackjackGame.judgeResult());
-    }
-
-    private <T> T retryOnError(Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException e) {
-            this.outputView.printExceptionMessage(e.getMessage());
-            return retryOnError(supplier);
-        }
+        this.outputView.printGameResult(blackjackGame.getDealerResultDTO(), blackjackGame.getFinalResultDTO());
     }
 
     private boolean isHit(final Participant participant) {
-        return retryOnError(() -> this.inputView.readCommand(participant.getName()).isValue());
+        return this.inputView.readCommand(participant.getName()).isValue();
     }
 }

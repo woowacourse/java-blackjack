@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -24,12 +23,8 @@ public final class InputView {
     }
 
     public Integer readBetAmount(final String playerName) {
-        try {
-            System.out.printf("%n%s의 배팅 금액은?%n", playerName);
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            throw new IllegalArgumentException("숫자만 입력해주세요.");
-        }
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        return Integer.parseInt(readLine());
     }
 
     private String readLine() {
