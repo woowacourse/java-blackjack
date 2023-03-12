@@ -25,10 +25,10 @@ public class OutputView {
 
     public void printRevenueForAll(final Dealer dealer, final List<Player> players) {
         System.out.println("## 최종 수익");
-        String frame = "%s: %d\n";
+        String format = "%s: %d\n";
 
-        System.out.printf(frame, dealer.getPlayerName().getName(), dealer.getRevenue());
-        players.forEach(player -> System.out.printf(frame, player.getPlayerName().getName(), player.getRevenue()));
+        System.out.printf(format, dealer.getPlayerName().getName(), dealer.getRevenue());
+        players.forEach(player -> System.out.printf(format, player.getPlayerName().getName(), player.getRevenue()));
     }
 
     private void printDealerCardWithName(final Dealer dealer) {
