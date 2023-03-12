@@ -96,7 +96,7 @@ public class BlackjackController {
     }
 
     private void printPlayerProfit(final BlackjackGame blackjackGame) {
-        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBet();
+        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBettingProfit();
         outputView.printGameResult(betMoneyMap);
     }
 }

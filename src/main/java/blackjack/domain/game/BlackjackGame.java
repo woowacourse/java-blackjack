@@ -35,12 +35,12 @@ public class BlackjackGame {
         player.stay();
     }
 
-    public Map<Player, Result> play() {
-        return players.play();
+    public Map<Player, Money> calculateBettingProfit() {
+        return bettingZone.calculateProfitByPlayers(getResultByPlayers());
     }
 
-    public Map<Player, Money> calculateBet() {
-        return bettingZone.calculateProfitByPlayers(players.play());
+    private Map<Player, Result> getResultByPlayers() {
+        return players.compareHands();
     }
 
     public List<Player> getPlayers() {

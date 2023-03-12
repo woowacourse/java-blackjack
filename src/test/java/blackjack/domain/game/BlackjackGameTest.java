@@ -4,17 +4,15 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.Result;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.player.Result.WIN;
 import static blackjack.util.CardFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +33,11 @@ public class BlackjackGameTest {
 
     private BlackjackGame generateBlackjackGame(final List<String> names) {
         final Players players = Players.from(names);
-        return new BlackjackGame(players, new BettingZone(new HashMap<>()));
+        Map<Player, Money> betMoneyByPlayers = new LinkedHashMap<>();
+        for (Player gambler : players.getGamblers()) {
+            betMoneyByPlayers.put(gambler, Money.createMoneyForBetting(10000));
+        }
+        return new BlackjackGame(players, new BettingZone(betMoneyByPlayers));
     }
 
     @Test
@@ -86,7 +88,7 @@ public class BlackjackGameTest {
     }
 
     @Test
-    void 게임_결과를_반환한다() {
+    void 베팅_수익을_계산한다() {
         final Deck deck = new FixedDeck(List.of(
                 JACK_SPADE,
                 TWO_SPADE,
@@ -98,8 +100,8 @@ public class BlackjackGameTest {
         blackjackGame.drawInitialCards(deck);
         blackjackGame.drawByDealer(deck);
 
-        final Map<Player, Result> result = blackjackGame.play();
+        final Map<Player, Money> result = blackjackGame.calculateBettingProfit();
 
-        assertThat(result.values()).containsExactly(WIN);
+        assertThat(result.values()).extracting(Money::getAmount).containsExactly(10000);
     }
 }
