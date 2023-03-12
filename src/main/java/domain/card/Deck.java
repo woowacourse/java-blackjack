@@ -24,7 +24,7 @@ public class Deck {
     private List<Card> buildCardsOf(Face face) {
         List<Card> cards = new ArrayList<>();
         for (Letter letter : Letter.values()) {
-            cards.add(new Card(face, letter));
+            cards.add(Card.of(face, letter));
         }
         return cards;
     }

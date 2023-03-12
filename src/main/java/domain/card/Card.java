@@ -1,15 +1,32 @@
 package domain.card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import domain.hand.Score;
 
 public class Card {
 
+    private static final Map<Map.Entry<Face, Letter>, Card> CACHE = new HashMap<>();
+
+    static {
+        for (Face face : Face.values()) {
+            for (Letter letter : Letter.values()) {
+                CACHE.put(Map.entry(face, letter), new Card(face, letter));
+            }
+        }
+    }
+
     private final Face face;
     private final Letter letter;
 
-    public Card(Face face, Letter letter) {
+    private Card(Face face, Letter letter) {
         this.face = face;
         this.letter = letter;
+    }
+
+    public static Card of(Face face, Letter letter) {
+        return CACHE.get(Map.entry(face, letter));
     }
 
     public Letter getLetter() {

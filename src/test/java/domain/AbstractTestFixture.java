@@ -32,13 +32,13 @@ public abstract class AbstractTestFixture {
     private static Card parse(String card) {
         String[] cardInfo = card.split("-");
         if (cardInfo.length > 1) {
-            return new Card(faceFrom(cardInfo[0]), letterFrom(cardInfo[1]));
+            return Card.of(faceFrom(cardInfo[0]), letterFrom(cardInfo[1]));
         }
-        return new Card(SPADE, letterFrom(cardInfo[0]));
+        return Card.of(SPADE, letterFrom(cardInfo[0]));
     }
 
     public static Card createCard(Letter letter) {
-        return new Card(SPADE, letter);
+        return Card.of(SPADE, letter);
     }
 
     public static Letter letterFrom(String letter) {
