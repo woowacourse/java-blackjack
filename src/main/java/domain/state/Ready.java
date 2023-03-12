@@ -3,25 +3,21 @@ package domain.state;
 import domain.card.Card;
 import domain.card.Hand;
 
-import java.util.List;
-
-public final class Ready implements State {
-    private final Hand hand;
-
+public final class Ready extends State {
     public Ready() {
-        this.hand = new Hand();
+        super(new Hand());
     }
 
     public Ready(Hand hand) {
-        this.hand = hand;
+        super(hand);
     }
 
     @Override
     public State draw(Card card) {
-        if (hand.isEmpty()) {
-            return new Ready(hand.add(card));
+        if (getHand().isEmpty()) {
+            return new Ready(getHand().add(card));
         }
-        return new Hit(hand.add(card));
+        return new Hit(getHand().add(card));
     }
 
     @Override
