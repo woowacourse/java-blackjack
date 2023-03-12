@@ -5,6 +5,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.state.DealerDrawState;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerInitialState;
+import blackjack.model.state.StandState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -114,4 +115,17 @@ class DealerTest {
         assertThat(dealer.isBlackjack()).isTrue();
     }
 
+    @Test
+    @DisplayName("플레이어의 수익 결과가 주어지면 딜러의 수익을 알 수 있다.")
+    void calculate_dealer_profit() {
+        //given
+        List<Integer> playerProfits = List.of(10000, -20000, 50000);
+        Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_EIGHT, HEART_TEN))));
+
+        // when
+        int dealerProfit = dealer.getProfit(playerProfits);
+
+        //then
+        assertThat(dealerProfit).isEqualTo(-40000);
+    }
 }
