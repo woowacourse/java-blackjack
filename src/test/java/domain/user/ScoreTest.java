@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 @DisplayName("블랙잭 카드 점수는 ")
 class ScoreTest {
@@ -54,16 +58,21 @@ class ScoreTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"13, 1, 13", "41, 2, 21", "21, 1, 21", "22, 2, 12", "44, 3, 14"})
+    @MethodSource("calculateScoreWithAceCases")
     @DisplayName("Ace를 1혹은 11로 계산한다.")
     void calculateAceAsOne(int scoreInitSum, int aceCount, int expected) {
-        // 11 2
-        // 10 9 11 11
-        // 11 10
-        // 11 11
-        // 11 11 11 11
         Score score = new Score(scoreInitSum);
 
         assertThat(score.calculateAceAsOne(aceCount)).isEqualTo(new Score(expected));
+    }
+
+    static Stream<Arguments> calculateScoreWithAceCases() {
+        return Stream.of(
+                Arguments.of(13, 1, 13), // Ace 2
+                Arguments.of(41, 2, 21), // 10 9 Ace Ace
+                Arguments.of(21, 1, 21), // Ace 10
+                Arguments.of(22, 2, 12), // Ace Ace
+                Arguments.of(44, 3, 14)  // Ace Ace Ace Ace
+        );
     }
 }
