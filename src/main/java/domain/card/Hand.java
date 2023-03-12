@@ -34,6 +34,10 @@ public class Hand {
         return cards;
     }
 
+    public boolean isBust() {
+        return calculateScore().isOverMax();
+    }
+
     private Score sum() {
         return cards.stream()
                 .map(Card::getScore)
