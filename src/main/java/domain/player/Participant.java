@@ -12,6 +12,7 @@ import java.util.List;
 
 public final class Participant {
 
+    private static final int BLACKJACK = 21;
     private final PlayerInfo playerInfo;
     private final Hand hand;
 
@@ -34,6 +35,10 @@ public final class Participant {
 
     public boolean isHit(boolean wantHit) {
         return canHit() && wantHit;
+    }
+
+    public boolean isBlackjack() {
+        return getCards().size() == 2 && getScore() == BLACKJACK;
     }
 
 
@@ -64,8 +69,18 @@ public final class Participant {
         return playerInfo.getName();
     }
 
-    public int getBetAmount() {
-        return playerInfo.getBetAmount();
+    public int winBet() {
+        if (isBlackjack()) {
+            return (int) (playerInfo.winBet() * 1.5);
+        }
+        return playerInfo.winBet();
     }
 
+    public int loseBet() {
+        return playerInfo.loseBet();
+    }
+
+    public int returnBet() {
+        return playerInfo.returnBet();
+    }
 }

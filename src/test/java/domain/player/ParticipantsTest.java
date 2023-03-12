@@ -14,7 +14,7 @@ class ParticipantsTest {
     @DisplayName("중복된 이름이 입력되면, 예외가 발생한다")
     void givenDuplicateName_thenFail() {
         final PlayerInfo playerInfo1 = new PlayerInfo.PlayerInfoBuilder("준팍")
-                .setBetAmount(0)
+                .setBetAmount(1100)
                 .build();
         final PlayerInfo playerInfo2 = new PlayerInfo.PlayerInfoBuilder("준팍")
                 .setBetAmount(1000)

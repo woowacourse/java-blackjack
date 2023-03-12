@@ -37,7 +37,15 @@ public class PlayerInfo {
         return name.getName();
     }
 
-    public int getBetAmount() {
-        return betAmount.getBetAmount();
+    public int winBet() {
+        return betAmount.winBet();
+    }
+
+    public int loseBet() {
+        return betAmount.loseBet();
+    }
+
+    public int returnBet() {
+        return betAmount.returnBet();
     }
 }
