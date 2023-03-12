@@ -28,6 +28,10 @@ public class Player {
         cards.addCard(card);
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     public List<Card> getCards() {
         return cards.getCards();
     }

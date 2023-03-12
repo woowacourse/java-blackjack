@@ -37,4 +37,8 @@ public class Name {
             throw new IllegalArgumentException("[ERROR] 이름으로 '딜러(Dealer)'는 사용할 수 없습니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
