@@ -1,7 +1,5 @@
 package domain.player;
 
-import domain.score.Score;
-
 public final class Dealer extends Gambler{
 
     private static final String DEALER_NAME = "딜러";
