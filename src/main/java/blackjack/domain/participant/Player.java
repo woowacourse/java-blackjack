@@ -16,8 +16,8 @@ public class Player extends Participant {
         return calculateCurrentScore() < BLACK_JACK_SCORE;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     @Override

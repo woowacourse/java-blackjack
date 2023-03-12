@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,8 +19,8 @@ public class BettingTableTest {
     @MethodSource("createNameAndBetting")
     @DisplayName("참가자 이름과 배팅 금액을 가진다.")
     void createBettingTable(String playerName, Betting betting) {
-        Map<String, Betting> bettingTable = new HashMap<>();
-        bettingTable.put(playerName, betting);
+        Map<Name, Betting> bettingTable = new HashMap<>();
+        bettingTable.put(new Name(playerName), betting);
 
         assertDoesNotThrow(() -> new BettingTable(bettingTable));
     }
@@ -28,12 +29,13 @@ public class BettingTableTest {
     @MethodSource("createNameAndBetting")
     @DisplayName("참가자 이름에 해당하는 배팅 금액을 반환한다.")
     void getBettingByName(String playerName, Betting betting) {
-        Map<String, Betting> bettingInfo = new HashMap<>();
-        bettingInfo.put(playerName, betting);
+        Map<Name, Betting> bettingInfo = new HashMap<>();
+        Name name = new Name(playerName);
+        bettingInfo.put(name, betting);
 
         BettingTable bettingTable = new BettingTable(bettingInfo);
 
-        assertThat(bettingTable.getBetting(playerName).getMoney()).isEqualTo(betting.getMoney());
+        assertThat(bettingTable.getBetting(name).getMoney()).isEqualTo(betting.getMoney());
     }
 
     static Stream<Arguments> createNameAndBetting() {

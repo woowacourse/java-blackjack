@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class OutputView {
     public void showInitStatus(List<Player> players) {
         printMessage(LINE_SEPARATOR);
         String names = players.stream()
-                .map(Player::getName)
+                .map(player -> player.getName().getValue())
                 .collect(Collectors.joining(JOINER));
 
         printMessage(String.format(CARD_SETUP_MESSAGE, names));
@@ -38,7 +39,7 @@ public class OutputView {
     }
 
     public void showPlayer(Player player) {
-        printMessage(player.getName() + CARD + DELIMITER + convertCard(player.getCards()));
+        printMessage(player.getName().getValue() + CARD + DELIMITER + convertCard(player.getCards()));
     }
 
     public void showPlayers(List<Player> players) {
@@ -64,19 +65,19 @@ public class OutputView {
                 + RESULT_MESSAGE + dealer.calculateCurrentScore());
 
         for (Player player : players) {
-            printMessage(player.getName() + DELIMITER + convertCard(player.getCards())
+            printMessage(player.getName().getValue() + DELIMITER + convertCard(player.getCards())
                     + RESULT_MESSAGE + player.calculateCurrentScore());
         }
     }
 
-    public void showProfits(Map<String, Integer> results, int dealerProfit) {
+    public void showProfits(Map<Name, Integer> results, int dealerProfit) {
         printMessage(LINE_SEPARATOR);
         printMessage(FINAL_RESULT);
         printMessage(DEALER_NAME + DELIMITER + dealerProfit);
-        Set<Map.Entry<String, Integer>> entries = results.entrySet();
+        Set<Map.Entry<Name, Integer>> entries = results.entrySet();
 
-        for (Map.Entry<String, Integer> entry : entries) {
-            printMessage(entry.getKey() + DELIMITER + entry.getValue());
+        for (Map.Entry<Name, Integer> entry : entries) {
+            printMessage(entry.getKey().getValue() + DELIMITER + entry.getValue());
         }
     }
 

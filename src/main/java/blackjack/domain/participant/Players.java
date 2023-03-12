@@ -42,11 +42,18 @@ public class Players {
         return new Players(players);
     }
 
+    public Player findByName(Name name) {
+        return players.stream()
+                .filter(player -> player.equals(new Player(name)))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 참가자가 없습니다."));
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    public List<String> getNames() {
+    public List<Name> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());

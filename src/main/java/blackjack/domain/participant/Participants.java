@@ -21,6 +21,10 @@ public class Participants {
         return dealer;
     }
 
+    public Player getPlayer(Name name) {
+        return players.findByName(name);
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players.getPlayers());
     }
