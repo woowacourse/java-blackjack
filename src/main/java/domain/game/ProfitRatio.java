@@ -6,6 +6,9 @@ public enum ProfitRatio {
     LOSE(-1),
     TIE(0);
 
+    private static final int BLACKJACK_VALUE = -1;
+    private static final int BUST_VALUE = 0;
+
     private final double ratio;
 
     ProfitRatio(final double ratio) {
@@ -13,10 +16,10 @@ public enum ProfitRatio {
     }
 
     public static double fetchProfitRatio(final int handValue, final int dealerHandValue) {
-        if (handValue == -1) {
+        if (handValue == BLACKJACK_VALUE) {
             return BLACKJACK.ratio;
         }
-        if (handValue == 0) {
+        if (handValue == BUST_VALUE) {
             return LOSE.ratio;
         }
         if (handValue - dealerHandValue > 0) {

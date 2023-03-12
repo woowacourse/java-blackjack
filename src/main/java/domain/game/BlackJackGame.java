@@ -64,9 +64,11 @@ public final class BlackJackGame {
 
     public List<String> fetchParticipantInitHand(final String participantName) {
         List<String> participantHand = fetchParticipantHand(participantName);
+
         if (participantName.equals(participants.getDealer().getName())) {
             participantHand = participantHand.subList(0, 1);
         }
+
         return new ArrayList<>(participantHand);
     }
 
@@ -105,6 +107,7 @@ public final class BlackJackGame {
         if (name.equals(participants.getDealer().getName())) {
             return participants.getDealer().fetchHandValue();
         }
+
         return participants.findPlayer(name).orElseThrow().fetchHandValue(INIT_HAND_COUNT);
     }
 
