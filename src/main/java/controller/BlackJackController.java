@@ -20,7 +20,9 @@ public class BlackJackController {
         BettingManager bettingManager = new BettingManager();
         saveBettingMoney(blackJackGame, bettingManager);
         initDistributeCards(blackJackGame);
-        additionalCardDraw(blackJackGame);
+        if (!isDealerBlackjack(blackJackGame)) {
+            additionalCardDraw(blackJackGame);
+        }
         printFinalCardResult(blackJackGame);
         calculateFinalProfit(blackJackGame, bettingManager);
         printFinalProfit(bettingManager);
@@ -59,6 +61,10 @@ public class BlackJackController {
             List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
             ResultView.printParticipantResult(playerName, findCardNames);
         }
+    }
+
+    private boolean isDealerBlackjack(BlackJackGame blackJackGame) {
+        return blackJackGame.isDealerBlackjack();
     }
 
     private void additionalCardDraw(BlackJackGame blackJackGame) {

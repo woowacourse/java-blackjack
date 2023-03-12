@@ -35,6 +35,9 @@ public class BettingManager {
     private void calculatePlayerFinalProfit(Player player, Dealer dealer) {
         Hand playerHand = player.getHand();
         BettingMoney bettingMoney = bettingMoneyByPlayer.findBettingMoneyByPlayer(player);
+        if (dealer.isBlackjack()) {
+            saveLoseProfit(player, bettingMoney);
+        }
         if (playerHand.isBlackjack()) {
             saveBlackjackProfit(player, bettingMoney);
         }

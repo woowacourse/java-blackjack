@@ -14,4 +14,8 @@ public class Dealer extends Participant {
     public boolean canHit() {
         return this.calculateOptimalCardValueSum() < LIMIT_HIT_VALUE;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }

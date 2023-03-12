@@ -20,6 +20,11 @@ public class BlackJackGame {
         this.participants = new Participants(players, dealer);
     }
 
+    public boolean isDealerBlackjack() {
+        Dealer dealer = participants.getDealer();
+        return dealer.isBlackjack();
+    }
+
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
     }
