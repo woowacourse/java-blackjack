@@ -32,7 +32,7 @@ public class GameResult {
     }
 
     private boolean isBust(Participant participant) {
-        return participant.getScore() > MAX_BLACKJACK_SCORE;
+        return !participant.getHand().calculateScore().isNotOver(MAX_BLACKJACK_SCORE);
     }
 
     private void compareBuster(Dealer dealer, Player player) {
@@ -46,11 +46,13 @@ public class GameResult {
     }
 
     private void compareScore(Dealer dealer, Player player) {
-        if (player.getScore() == dealer.getScore()) {
+        Score dealerScore = dealer.getHand().calculateScore();
+        Score playerScore = player.getHand().calculateScore();
+        if (dealerScore.equals(playerScore)) {
             bothDraw(player);
             return;
         }
-        if (player.getScore() > dealer.getScore()) {
+        if (dealerScore.isLessThan(playerScore)) {
             addPlayerWin(player);
             return;
         }

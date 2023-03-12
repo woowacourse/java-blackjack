@@ -23,16 +23,23 @@ public class Hand {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        boolean hasAce = cards.stream()
-                .anyMatch(Card::isAce);
-        int score = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-        if (hasAce && score + 10 <= 21) {
-            score += 10;
+    public Score calculateScore() {
+        Score score = score();
+        if (hasAce()) {
+            return score.plusTenIfNotBust();
         }
         return score;
+    }
+
+    private Score score() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(Score.min(), Score::add);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

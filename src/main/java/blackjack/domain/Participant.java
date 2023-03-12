@@ -2,31 +2,24 @@ package blackjack.domain;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Participant {
-    protected final List<Card> cards;
+    protected final Hand hand;
     protected final Score score;
 
     protected Participant(List<Card> cards) {
-        this.cards = cards;
-        this.score = new Score();
+        this.hand = new Hand(cards);
+        this.score = hand.calculateScore();
     }
 
     abstract boolean isAbleToReceive();
 
     public void receiveCard(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
-    protected List<Letter> extractNumbers() {
-        return cards.stream()
-                .map(Card::getCardLetter)
-                .collect(Collectors.toList());
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public Hand getHand() {
+        return hand;
     }
 
     public int getScore() {

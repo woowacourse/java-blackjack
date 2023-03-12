@@ -11,7 +11,7 @@ class HandTest {
     @DisplayName("8 + 5 = 13")
     void score() {
         Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.EIGHT), Card.of(Suit.CLOVER, Letter.FIVE));
-        assertThat(hand.calculateScore()).isEqualTo(13);
+        assertThat(hand.calculateScore()).isEqualTo(new Score(13));
     }
 
     @Nested
@@ -21,14 +21,14 @@ class HandTest {
         @DisplayName("ACE + 2 = 13")
         void ace1() {
             Hand hand = new Hand(Card.of(Suit.CLOVER, Letter.ACE), Card.of(Suit.DIAMOND, Letter.TWO));
-            assertThat(hand.calculateScore()).isEqualTo(13);
+            assertThat(hand.calculateScore()).isEqualTo(new Score(13));
         }
 
         @Test
         @DisplayName("ACE + ACE = 12")
         void ace2() {
             Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.CLOVER, Letter.ACE));
-            assertThat(hand.calculateScore()).isEqualTo(12);
+            assertThat(hand.calculateScore()).isEqualTo(new Score(12));
         }
 
         @Test
@@ -36,7 +36,7 @@ class HandTest {
         void ace3() {
             Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.CLOVER, Letter.ACE),
                     Card.of(Suit.HEART, Letter.ACE), Card.of(Suit.SPADE, Letter.ACE));
-            assertThat(hand.calculateScore()).isEqualTo(14);
+            assertThat(hand.calculateScore()).isEqualTo(new Score(14));
         }
 
         @Test
@@ -44,14 +44,14 @@ class HandTest {
         void ace4() {
             Hand hand = new Hand(Card.of(Suit.SPADE, Letter.ACE), Card.of(Suit.HEART, Letter.ACE),
                     Card.of(Suit.HEART, Letter.ACE), Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.HEART, Letter.ACE));
-            assertThat(hand.calculateScore()).isEqualTo(15);
+            assertThat(hand.calculateScore()).isEqualTo(new Score(15));
         }
 
         @Test
-        @DisplayName("ACE + 10 = 11")
+        @DisplayName("ACE + 10 = 21")
         void ace5() {
             Hand hand = new Hand(Card.of(Suit.HEART, Letter.ACE), Card.of(Suit.DIAMOND, Letter.TEN));
-            assertThat(hand.calculateScore()).isEqualTo(11);
+            assertThat(hand.calculateScore()).isEqualTo(new Score(21));
         }
     }
 }

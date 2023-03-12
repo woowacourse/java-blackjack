@@ -34,8 +34,8 @@ public class Card {
         return letter;
     }
 
-    public int getScore() {
-        return letter.getScore();
+    public Score getScore() {
+        return new Score(letter.getScore());
     }
 
     @Override

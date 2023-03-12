@@ -1,38 +1,55 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.Objects;
 
 public class Score {
-    private static final int MAX_BLACKJACK_SCORE = 21;
-    private static final int ACE_GAP = 10;
+    private static final Score MIN = new Score(0);
+    private static final Score BLACKJACK_SCORE = new Score(21);
+    private static final Score ACE_GAP = new Score(10);
 
-    private int score;
+    private final int value;
 
-    public void calculateScore(List<Letter> letters) {
-        score = letters.stream()
-                .mapToInt(Letter::getScore)
-                .sum();
-
-        if (score > MAX_BLACKJACK_SCORE) {
-            handleBust(letters);
-        }
+    public Score(int score) {
+        this.value = score;
     }
 
-    private void handleBust(List<Letter> letters) {
-        int aceCount = countAce(letters);
-        while (score > MAX_BLACKJACK_SCORE && aceCount > 0) {
-            score -= ACE_GAP;
-            aceCount -= 1;
-        }
-    }
-
-    private int countAce(List<Letter> letters) {
-        return (int) letters.stream()
-                .filter(e -> e.equals(Letter.ACE))
-                .count();
+    public static Score min() {
+        return Score.MIN;
     }
 
     public int getScore() {
-        return score;
+        return value;
+    }
+
+    public boolean isNotOver(int maxValue) {
+        return value <= maxValue;
+    }
+
+    public Score plusTenIfNotBust() {
+        if (add(ACE_GAP).value <= BLACKJACK_SCORE.value) {
+            return new Score(value + ACE_GAP.value);
+        }
+        return this;
+    }
+
+    public Score add(Score other) {
+        return new Score(value + other.value);
+    }
+
+    public boolean isLessThan(Score other) {
+        return this.value < other.value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return value == score1.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

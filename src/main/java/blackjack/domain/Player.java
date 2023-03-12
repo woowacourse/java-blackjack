@@ -14,8 +14,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractNumbers());
-        return score.getScore() <= MAX_SCORE_TO_RECEIVE;
+        return hand.calculateScore().isNotOver(MAX_SCORE_TO_RECEIVE);
     }
 
     public String getName() {

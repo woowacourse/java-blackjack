@@ -25,7 +25,7 @@ class DealerTest {
 
         dealer.receiveCard(card);
 
-        List<Card> cards = dealer.getCards();
+        List<Card> cards = dealer.getHand().getCards();
         assertThat(cards.get(cards.size() - 1)).isEqualTo(card);
     }
 

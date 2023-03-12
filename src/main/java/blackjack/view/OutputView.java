@@ -29,7 +29,7 @@ public class OutputView {
                 .collect(Collectors.toList());
         System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
-        printCards(dealer.getName(), List.of(makeCardName(dealer.getCards().get(0))));
+        printCards(dealer.getName(), List.of(makeCardName(dealer.getHand().getCards().get(0))));
         players.getPlayers().forEach(player -> printCards(player.getName(), makeCardNames(player)));
     }
 
@@ -53,9 +53,10 @@ public class OutputView {
     }
 
     public void printFinalCards(final Dealer dealer, final Players players) {
-        printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getScore());
+        printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getHand().calculateScore().getScore());
         players.getPlayers().forEach(
-                player -> printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
+                player -> printFinalCards(player.getName(), makeCardNames(player),
+                        player.getHand().calculateScore().getScore()));
     }
 
     private void printFinalCards(String name, List<String> cardNames, int score) {
@@ -64,7 +65,7 @@ public class OutputView {
 
 
     private List<String> makeCardNames(final Participant participant) {
-        return participant.getCards().stream()
+        return participant.getHand().getCards().stream()
                 .map(this::makeCardName)
                 .collect(Collectors.toList());
     }

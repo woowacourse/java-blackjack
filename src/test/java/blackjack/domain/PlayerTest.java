@@ -25,7 +25,7 @@ class PlayerTest {
 
         player.receiveCard(card);
 
-        List<Card> cards = player.getCards();
+        List<Card> cards = player.getHand().getCards();
         assertThat(cards.get(cards.size() - 1)).isEqualTo(card);
     }
 

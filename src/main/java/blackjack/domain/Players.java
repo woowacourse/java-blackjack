@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.controller.BlackJackController.CARD_COUNT;
+
 public class Players {
     private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상 7명 이하여야 합니다.";
     private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE = "플레이어 이름은 중복될 수 없습니다.";
@@ -19,7 +21,7 @@ public class Players {
     public static Players of(List<String> playerNames, Deck deck) {
         validatePlayerNames(playerNames);
         return new Players(playerNames.stream()
-                .map(name -> new Player(name, deck.getTwoCards()))
+                .map(name -> new Player(name, deck.getCards(CARD_COUNT)))
                 .collect(Collectors.toList()));
     }
 
