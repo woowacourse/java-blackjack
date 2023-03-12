@@ -1,6 +1,7 @@
 package controller;
 
-import domain.BlackjackGame;
+import domain.card.Deck;
+import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.List;
 import view.InputView;
@@ -10,15 +11,17 @@ public class BlackjackController {
 
     public void run() {
         try {
-            BlackjackGame blackjackGame = BlackjackGame.of(getPlayersName());
-            initBetting(blackjackGame);
+            Deck deck = Deck.create();
+            Participants participants = Participants.of(getPlayersName());
 
-            initParticipantsHand(blackjackGame);
-            runPlayersTurn(blackjackGame);
-            runDealerTurn(blackjackGame);
+            initBetting(participants);
 
-            OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printBettingResult(blackjackGame.getBettingResult());
+            initParticipantsHand(deck, participants);
+            runPlayersTurn(deck, participants);
+            runDealerTurn(deck, participants);
+
+            OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
+            OutputView.printBettingResult(participants.getBettingResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
@@ -33,42 +36,42 @@ public class BlackjackController {
         }
     }
 
-    private void initBetting(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getPlayers();
+    private void initBetting(Participants participants) {
+        List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            betEachPlayer(blackjackGame, player);
+            betEachPlayer(player);
         }
     }
 
-    private void betEachPlayer(BlackjackGame blackjackGame, Player player) {
+    private void betEachPlayer(Player player) {
         try {
             player.betPlayer(InputView.readBetMoney(player));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            betEachPlayer(blackjackGame, player);
+            betEachPlayer(player);
         }
     }
 
-    private void initParticipantsHand(BlackjackGame blackjackGame) {
-        OutputView.printStartMessage(blackjackGame.getPlayersName());
+    private void initParticipantsHand(Deck deck, Participants participants) {
+        OutputView.printStartMessage(participants.getPlayersName());
 
-        blackjackGame.start();
+        participants.initHand(deck);
 
-        OutputView.printDealerCard(blackjackGame.getDealer());
-        OutputView.printPlayersCard(blackjackGame.getPlayers());
+        OutputView.printDealerCard(participants.getDealer());
+        OutputView.printPlayersCard(participants.getPlayers());
     }
 
-    public void runPlayersTurn(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getPlayers();
+    public void runPlayersTurn(Deck deck, Participants participants) {
+        List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            runPlayerTurn(blackjackGame, player);
+            runPlayerTurn(deck, player);
         }
         InputView.closeScanner();
     }
 
-    private void runPlayerTurn(BlackjackGame blackjackGame, Player player) {
+    private void runPlayerTurn(Deck deck, Player player) {
         while (!player.isBust() && isCommandHit(player)) {
-            blackjackGame.giveCardToParticipant(player);
+            player.addCard(deck.pollAvailableCard());
             OutputView.printPlayerCard(player);
         }
     }
@@ -83,9 +86,9 @@ public class BlackjackController {
         }
     }
 
-    private void runDealerTurn(BlackjackGame blackjackGame) {
-        if (blackjackGame.canDealerHit()) {
-            blackjackGame.playDealerTurn();
+    private void runDealerTurn(Deck deck, Participants participants) {
+        if (participants.canDealerHit()) {
+            participants.playDealerTurn(deck);
             OutputView.printDealerHit();
         }
     }

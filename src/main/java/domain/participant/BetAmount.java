@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import java.util.Objects;
 
 public class BetAmount {

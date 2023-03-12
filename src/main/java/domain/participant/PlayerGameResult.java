@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public enum PlayerGameResult {
     WIN(1),

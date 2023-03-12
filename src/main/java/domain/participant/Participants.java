@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.Deck;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -114,6 +113,12 @@ public class Participants {
 
     private boolean isDraw(Player player) {
         return player.calculateScore() == getDealerScore();
+    }
+
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {
