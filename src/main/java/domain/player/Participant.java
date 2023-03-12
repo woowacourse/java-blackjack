@@ -6,6 +6,7 @@ import view.AddCardCommand;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 public class Participant extends Player {
     public Participant(String name) {
@@ -39,6 +40,11 @@ public class Participant extends Player {
         }
         
         decideDrawOrFinish(deck, supplyCommand, printParticipantCardStatus);
+    }
+    
+    @Override
+    public double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount) {
+        return supplyBetAmount.applyAsDouble(getName());
     }
     
     private void decideDrawOrFinish(

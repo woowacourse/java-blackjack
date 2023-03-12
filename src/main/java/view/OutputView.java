@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    
     private static final String NEW_LINE = System.lineSeparator();
     private static final String PLAYER_PROFIT_STATUS_FORMAT = "%s: %.0f";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s 카드: %s";
@@ -111,7 +110,7 @@ public class OutputView {
     }
     
     private static String parsePlayerGameResult(Player player, Referee referee) {
-        return String.format(PLAYER_PROFIT_STATUS_FORMAT, player.getName(), referee.getPlayerBetAmount(player));
+        return String.format(PLAYER_PROFIT_STATUS_FORMAT, player.getName(), referee.findProfitByPlayer(player));
     }
     
     public static void println(String message) {

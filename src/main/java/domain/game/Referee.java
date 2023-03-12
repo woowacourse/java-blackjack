@@ -10,14 +10,10 @@ import java.util.Map;
 public class Referee {
     private static final int DRAW_PROFIT = 0;
     
-    private final Map<Player, Double> betAmountResult;
+    private final Map<Player, Double> profitResults;
     
     public Referee() {
-        betAmountResult = new HashMap<>();
-    }
-    
-    public void saveParticipantBetAmount(Player participant, double betAmount) {
-        betAmountResult.put(participant, betAmount);
+        profitResults = new HashMap<>();
     }
     
     public void saveBattleResults(BlackJackGame blackJackGame) {
@@ -25,9 +21,10 @@ public class Referee {
         List<Player> participants = blackJackGame.getParticipants();
         
         for (Player participant : participants) {
-            double participantProfit = decideParticipantProfit(dealer, participant, betAmountResult.get(participant));
-            betAmountResult.put(participant, participantProfit);
-            betAmountResult.put(dealer, getOrZero(dealer) - participantProfit);
+            double participantBetAmount = blackJackGame.findBetAmountByPlayer(participant);
+            double participantProfit = decideParticipantProfit(dealer, participant, participantBetAmount);
+            profitResults.put(participant, participantProfit);
+            profitResults.put(dealer, getOrZero(dealer) - participantProfit);
         }
     }
     
@@ -56,10 +53,10 @@ public class Referee {
     }
     
     private double getOrZero(Player player) {
-        return betAmountResult.getOrDefault(player, 0.0);
+        return profitResults.getOrDefault(player, 0.0);
     }
     
-    public double getPlayerBetAmount(Player player) {
-        return betAmountResult.get(player);
+    public double findProfitByPlayer(Player player) {
+        return profitResults.get(player);
     }
 }

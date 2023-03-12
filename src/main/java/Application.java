@@ -13,15 +13,11 @@ public class Application {
     
     public void startGame() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
+        
         initializedBlackjackGame(blackJackGame);
-    
-        Referee referee = new Referee();
-        
-        settingParticipantsBetAmount(blackJackGame, referee);
+        settingParticipantsBetAmount(blackJackGame);
         giveCardToPlayers(blackJackGame);
-        referee.saveBattleResults(blackJackGame);
-        
-        OutputView.printPlayersGameResults(blackJackGame, referee);
+        printProfitResults(blackJackGame, new Referee());
     }
     
     private String getParticipantNames() {
@@ -34,16 +30,12 @@ public class Application {
         OutputView.printPlayersInformation(blackJackGame);
     }
     
-    private void settingParticipantsBetAmount(BlackJackGame blackJackGame, Referee referee) {
-        blackJackGame.settingBetAmountToParticipantsBy(
-                OutputView::printParticipantBetAmountInputGuide,
-                this::inputBetAmount,
-                referee::saveParticipantBetAmount
-        );
+    private void settingParticipantsBetAmount(BlackJackGame blackJackGame) {
+        blackJackGame.settingBetAmountToParticipantsBy(this::inputBetAmount);
     }
     
-    private Double inputBetAmount() {
-        return InputView.repeat(InputView::inputBetAmount);
+    private Double inputBetAmount(String playerName) {
+        return InputView.repeat(() -> InputView.inputBetAmount(playerName));
     }
     
     private void giveCardToPlayers(BlackJackGame blackJackGame) {
@@ -55,5 +47,10 @@ public class Application {
     private AddCardCommand inputCommand(Player participant) {
         OutputView.printAddCardGuide(participant.getName());
         return InputView.repeat(InputView::inputAddCardCommand);
+    }
+    
+    private void printProfitResults(BlackJackGame blackJackGame, Referee referee) {
+        referee.saveBattleResults(blackJackGame);
+        OutputView.printPlayersGameResults(blackJackGame, referee);
     }
 }

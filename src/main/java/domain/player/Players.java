@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.Deck;
+import domain.game.BetAmounts;
 import view.AddCardCommand;
 
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ public class Players {
     private static final int INIT_GIVE_CARD_COUNT = 2;
     
     private final List<Player> players;
+    private final BetAmounts betAmounts;
     
     public Players(String participantNames) {
         this.players = initPlayers(participantNames);
+        this.betAmounts = new BetAmounts();
     }
     
     private List<Player> initPlayers(String playerNames) {
@@ -43,15 +46,10 @@ public class Players {
         }
     }
     
-    public void settingBetAmountToParticipantsBy(
-            Consumer<Player> printBetAmountInputGuide,
-            DoubleSupplier supplyBetAmount,
-            ObjDoubleConsumer<Player> settingBetAmountToParticipant
-    ) {
+    public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
         for (Player participant : getParticipants()) {
-            printBetAmountInputGuide.accept(participant);
-            double betAmount = supplyBetAmount.getAsDouble();
-            settingBetAmountToParticipant.accept(participant, betAmount);
+            double betAmount = participant.supplyBetAmount(supplyBetAmount);
+            betAmounts.savePlayerBetAmount(participant, betAmount);
         }
     }
     
@@ -67,6 +65,10 @@ public class Players {
     
     public void giveCardToDealerBy(Deck deck, Consumer<List<Player>> printGiveDealerCardMessage) {
         getDealer().drawOrFinishBy(deck, null, printGiveDealerCardMessage);
+    }
+    
+    public double findBetAmountByPlayer(Player player) {
+        return betAmounts.findBetAmountByPlayer(player);
     }
     
     public Player getDealer() {

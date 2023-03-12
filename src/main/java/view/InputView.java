@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class InputView {
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
     private static final Pattern INPUT_PARTICIPANT_NAMES_FORMAT = Pattern.compile("([가-힣|a-zA-Z0-9]+)(,[가-힣|a-zA-Z0-9]+)*");
+    private static final String NEW_LINE = System.lineSeparator();
     
     private InputView() {
         throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
@@ -50,7 +51,8 @@ public class InputView {
         }
     }
 
-    public static double inputBetAmount() {
+    public static double inputBetAmount(String playerName) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, playerName);
         try {
             String betAmount = BUFFERED_READER.readLine();
             validateNullOrBlank(betAmount);

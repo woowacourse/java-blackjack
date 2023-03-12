@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Function;
-import java.util.function.ObjDoubleConsumer;
+import java.util.function.ToDoubleFunction;
 
 public class BlackJackGame {
-    private final Deck deck;
     private final Players players;
+    private final Deck deck;
 
     public BlackJackGame(String participantNames, ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
@@ -25,12 +25,8 @@ public class BlackJackGame {
         players.giveTwoCardToPlayers(deck);
     }
     
-    public void settingBetAmountToParticipantsBy(
-            Consumer<Player> printBetAmountInputGuide,
-            DoubleSupplier supplyBetAmount,
-            ObjDoubleConsumer<Player> saveParticipantBetAmount
-    ) {
-        players.settingBetAmountToParticipantsBy(printBetAmountInputGuide, supplyBetAmount, saveParticipantBetAmount);
+    public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
+        players.settingBetAmountToParticipantsBy(supplyBetAmount);
     }
     
     public void giveCardToParticipantsBy(
@@ -54,5 +50,9 @@ public class BlackJackGame {
     
     public List<Player> getPlayers() {
         return players.getPlayers();
+    }
+    
+    public double findBetAmountByPlayer(Player player) {
+        return players.findBetAmountByPlayer(player);
     }
 }

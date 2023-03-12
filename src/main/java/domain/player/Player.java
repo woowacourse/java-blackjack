@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 public abstract class Player {
     private State state;
     private final PlayerName name;
-
+    
     protected Player(String name) {
         this.state = new Ready();
         this.name = new PlayerName(name);
@@ -32,6 +33,8 @@ public abstract class Player {
             Function<Player, AddCardCommand> supplyCommand,
             Consumer<List<Player>> printParticipantCardStatus
     );
+    
+    public abstract double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount);
     
     public void draw(Card card) {
         state = state.draw(card);

@@ -23,19 +23,11 @@ class RefereeTest {
     }
     
     @Test
-    @DisplayName("저장된 플레이어의 배팅 금액이 해당 플레이어와 매칭되어있다.")
-    void saveBetAmount() {
-        Player abel = new Participant("abel");
-        referee.saveParticipantBetAmount(abel, 1000);
-        
-        assertThat(referee.getPlayerBetAmount(abel)).isEqualTo(1000);
-    }
-    
-    @Test
     @DisplayName("딜러와 참가자의 배틀 결과를 계산 후 반환한다.")
-    void saveBattleResults() {
+    void saveBattleResults() { // TODO
         // given
         BlackJackGame blackJackGame = new BlackJackGame("아벨,포비", cards -> cards);
+        blackJackGame.settingBetAmountToParticipantsBy(playerName -> 1000);
         Player dealer = blackJackGame.getDealer();
         List<Player> participants = blackJackGame.getParticipants();
         Player abel = participants.get(0);
@@ -47,21 +39,19 @@ class RefereeTest {
         
         abel.draw(new Card(Shape.DIAMOND, Number.ACE));
         abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
-        referee.saveParticipantBetAmount(abel, 1000);
         
         pobi.draw(new Card(Shape.SPADE, Number.KING));
         pobi.draw(new Card(Shape.SPADE, Number.NINE));
         pobi.drawStop();
-        referee.saveParticipantBetAmount(pobi, 2000);
         
         // when
         referee.saveBattleResults(blackJackGame);
         
         // then
         assertAll(
-                () -> assertThat(referee.getPlayerBetAmount(dealer)).isEqualTo(500),
-                () -> assertThat(referee.getPlayerBetAmount(abel)).isEqualTo(1500),
-                () -> assertThat(referee.getPlayerBetAmount(pobi)).isEqualTo(-2000)
+                () -> assertThat(referee.findProfitByPlayer(dealer)).isEqualTo(-500),
+                () -> assertThat(referee.findProfitByPlayer(abel)).isEqualTo(1500),
+                () -> assertThat(referee.findProfitByPlayer(pobi)).isEqualTo(-1000)
         );
     }
 }
