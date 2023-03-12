@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerTest {
 
     @Test
-    @DisplayName("딜러는 받은 카드를 자신의 패에 추가한다.")
+    @DisplayName("받은 카드를 자신의 패에 추가한다.")
     void addCardInCards() {
         Player player = new Player(new Name("pobi"));
 
@@ -29,7 +29,7 @@ public class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("generateCards")
-    @DisplayName("참여자는 자신의 카드 점수를 계산한다.")
+    @DisplayName("자신의 카드 점수를 계산한다.")
     void calculateCards(List<Card> cards, int expectedScore) {
         Player player = new Player(new Name("pobi"));
         for (Card card : cards) {
