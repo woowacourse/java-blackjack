@@ -1,17 +1,17 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.state.PlayerStatus;
 
 import java.util.List;
 
 public abstract class Participant {
     protected final Hand hand;
-    protected final Score score;
+    protected PlayerStatus playerStatus;
 
     protected Participant(List<Card> cards) {
         this.hand = new Hand(cards);
-        this.score = hand.calculateScore();
+        this.playerStatus = PlayerStatus.checkInitialBlackJack(hand);
     }
 
     abstract boolean isAbleToReceive();
@@ -24,7 +24,4 @@ public abstract class Participant {
         return hand;
     }
 
-    public int getScore() {
-        return score.getScore();
-    }
 }

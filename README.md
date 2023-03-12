@@ -9,14 +9,14 @@
     - [x] 100 원 단위 아니면 에러 처리
 - [ ] 최종 수익 출력(Profit)
 - [ ] 플레이어의 상태(State)
-    - [ ] running
-        - [ ] hit
-    - [ ] finished
-        - [ ] bust
+    - [x] running
+        - [x] hit
+    - [x] finished
+        - [x] bust
             - [ ] 카드를 추가로 뽑아 21점이 넘어가면 배팅 금액을 잃는다 (player bust)
             - [ ] 딜러가 21점 초과 시 남아있던 플레이어들은 승리 -> 배팅금액 받는다 (dealer bust)
-        - [ ] stay
-        - [ ] blackjack
+        - [x] stay
+        - [x] blackjack
             - [x] 처음 두 장의 합이 21이면 블랙잭
             - [ ] 블랙잭일 경우 배팅 금액의 1.5배를 딜러에게 받는다
             - [ ] 딜러와 플레이어가 동시 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다

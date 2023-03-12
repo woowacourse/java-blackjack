@@ -38,6 +38,11 @@ public class Hand {
         return calculateScore().isBlackJack() && cards.size() == 2;
     }
 
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
+
     private Score score() {
         return cards.stream()
                 .map(Card::getScore)
@@ -50,6 +55,6 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -62,8 +62,16 @@ class HandTest {
 
     @Test
     @DisplayName("blackjack 확인")
-    void isBlackJack(){
+    void isBlackJack() {
         Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.HEART, Letter.TEN));
         assertThat(hand.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("bust 확인")
+    void isBust() {
+        Hand hand = new Hand(Card.of(Suit.HEART, Letter.EIGHT),
+                Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.EIGHT));
+        assertThat(hand.isBust()).isTrue();
     }
 }

@@ -44,6 +44,10 @@ public class Score {
         return this.equals(BLACKJACK_SCORE);
     }
 
+    public boolean isBust() {
+        return BLACKJACK_SCORE.isLessThan(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
