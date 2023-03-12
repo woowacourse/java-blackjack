@@ -30,20 +30,16 @@ public class BlackJackController {
 
     public void run() {
         BlackJackService blackJackService = new BlackJackService(inputView.requestPlayerName());
-        blackJackService.betPlayers(getBettingAmountOfPlayers(blackJackService));
+        getBettingAmountOfPlayers(blackJackService);
         printInitialDistribution(blackJackService);
         progress(blackJackService);
         end(blackJackService);
     }
 
-    private List<Integer> getBettingAmountOfPlayers(BlackJackService blackJackService) {
-        List<Integer> bettingAmount = new ArrayList<>();
-
+    private void getBettingAmountOfPlayers(BlackJackService blackJackService) {
         for (Player player : blackJackService.getPlayers()) {
-            bettingAmount.add(getBettingAmount(player));
+            player.betAmount(getBettingAmount(player));
         }
-
-        return bettingAmount;
     }
 
     private int getBettingAmount(Player player) {

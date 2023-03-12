@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.AbstractList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,14 +29,6 @@ public class Participants {
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
-    }
-
-    public void betPlayers(List<Integer> bettingAmount) {
-        for (int i = 0; i < players.getSize(); i++) {
-            players.getPlayers()
-                    .get(i)
-                    .betAmount(new Amount(bettingAmount.get(i)));
-        }
     }
 
     public Dealer getDealer() {

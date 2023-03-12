@@ -60,7 +60,7 @@ public class GameResultAmountTest {
 
     public Player createPlayer() {
         Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        player.betAmount(new Amount(10000));
+        player.betAmount(10000);
         return player;
     }
 

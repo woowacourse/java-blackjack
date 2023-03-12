@@ -103,7 +103,7 @@ public class PlayerTest {
     @DisplayName("Betting 에서 Player 의 배팅 금액을 알아낸다.")
     void getBettingAmount() {
         Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        player.betAmount(new Amount(10000));
+        player.betAmount(10000);
 
         int amount = player.getAmount();
 

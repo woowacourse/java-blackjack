@@ -20,8 +20,8 @@ public class Player extends Participant {
         }
     }
 
-    public void betAmount(Amount bettingAmount) {
-        this.bettingAmount = bettingAmount;
+    public void betAmount(int bettingAmount) {
+        this.bettingAmount = new Amount(bettingAmount);
     }
 
     public int getAmount() {

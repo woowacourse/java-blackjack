@@ -23,10 +23,6 @@ public class BlackJackService {
         participants = Participants.of(playerNames, cardDistributor);
     }
 
-    public void betPlayers(List<Integer> bettingAmount) {
-        participants.betPlayers(bettingAmount);
-    }
-
     public List<Player> getPlayers() {
         return participants.getPlayers()
                 .getPlayers();
