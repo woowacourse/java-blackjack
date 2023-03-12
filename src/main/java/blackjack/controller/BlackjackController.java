@@ -4,7 +4,7 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gameresult.ResultReader;
 import blackjack.domain.gameresult.WinningResult;
-import blackjack.domain.money.Revenue;
+import blackjack.domain.betting.Revenue;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;

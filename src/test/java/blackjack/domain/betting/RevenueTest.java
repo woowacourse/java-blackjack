@@ -1,4 +1,4 @@
-package blackjack.domain.money;
+package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

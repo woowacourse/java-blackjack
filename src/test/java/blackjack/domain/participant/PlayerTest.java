@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
-import blackjack.domain.money.BettingMoney;
+import blackjack.domain.betting.BettingMoney;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
