@@ -8,13 +8,16 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.Status;
+import domain.stake.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -50,12 +53,17 @@ class PlayersTest {
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("ori", "jude"));
         dealer.drawCard(new Card(Suit.HEART, Denomination.ACE));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.NINE));
-        players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
+        Player ori = players.getPlayers().get(0);
+        Player jude = players.getPlayers().get(1);
+        ori.drawCard(new Card(Suit.HEART, Denomination.NINE));
+        jude.drawCard(new Card(Suit.HEART, Denomination.JACK));
+        jude.drawCard(new Card(Suit.HEART, Denomination.JACK));
+        final var bets = new HashMap<Player, Bet>();
+        bets.put(ori, Bet.from(2000));
+        bets.put(jude, Bet.from(1000));
         //when
-        Map<Player, Status> playerStatusMap = players.calculateResults(dealer);
+        Map<Player, Bet> playerStatusMap = players.calculateFinalResults(dealer, bets);
         //then
-        assertThat(playerStatusMap).containsValues(Status.WIN, Status.LOSE);
+        assertThat(playerStatusMap).containsEntry(jude, Bet.from(1000));
     }
 }

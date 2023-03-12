@@ -48,12 +48,12 @@ public final class Players {
         return calculateBets(dealer, statusResults, playerBets);
     }
 
-    public Map<Player, Status> calculateResults(final Dealer dealer) {
+    private Map<Player, Status> calculateResults(final Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player, player -> player.compareWithDealer(dealer)));
     }
 
-    public Map<Player, Bet> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Bet> playerBets) {
+    private Map<Player, Bet> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Bet> playerBets) {
         Map<Player, Bet> prizeResult = new LinkedHashMap<>();
         for (Player player : players) {
             Status singleResult = statusResults.get(player);
