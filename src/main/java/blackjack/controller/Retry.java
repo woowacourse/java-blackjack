@@ -1,25 +1,18 @@
 package blackjack.controller;
 
 public final class Retry {
-
-    private final int initialCount;
-    private int count;
+    private final int count;
 
     public Retry(final int count) {
-        this.initialCount = count;
         this.count = count;
-    }
-
-    public void reset() {
-        count = initialCount;
     }
 
     public boolean isRepeatable() {
         return count > 0;
     }
 
-    public void decrease() {
-        count--;
+    public Retry decrease() {
+        return new Retry(count - 1);
     }
 
     public String getFailMessage() {

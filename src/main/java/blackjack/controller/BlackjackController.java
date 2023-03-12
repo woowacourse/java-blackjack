@@ -30,17 +30,17 @@ public final class BlackjackController {
     }
 
     private void addPlayers() {
-        retry.reset();
+        Retry retry = this.retry;
         while (retry.isRepeatable()) {
             try {
                 blackjackGame.addPlayers(inputView.readPlayers());
                 return;
             } catch (IllegalArgumentException e) {
                 outputView.printException(e.getMessage());
-                retry.decrease();
+                retry = retry.decrease();
             }
         }
-        throw new IllegalArgumentException(retry.getFailMessage());
+        throw new IllegalArgumentException(this.retry.getFailMessage());
     }
 
     private void addBets() {
@@ -50,14 +50,14 @@ public final class BlackjackController {
     }
 
     private void addBet(final Name player) {
-        retry.reset();
+        Retry retry = this.retry;
         while (retry.isRepeatable()) {
             try {
                 blackjackGame.addBet(player, inputView.readBet(player));
                 return;
             } catch (IllegalArgumentException e) {
                 outputView.printException(e.getMessage());
-                retry.decrease();
+                retry = retry.decrease();
             }
         }
         throw new IllegalArgumentException(retry.getFailMessage());
@@ -83,13 +83,13 @@ public final class BlackjackController {
     }
 
     private BlackjackCommand readCommand(final Player player) {
-        retry.reset();
+        Retry retry = this.retry;
         while (retry.isRepeatable()) {
             try {
                 return BlackjackCommand.from(inputView.readCommand(player));
             } catch (IllegalArgumentException e) {
                 outputView.printException(e.getMessage());
-                retry.decrease();
+                retry = retry.decrease();
             }
         }
         throw new IllegalArgumentException(retry.getFailMessage());

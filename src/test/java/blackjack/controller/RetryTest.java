@@ -22,20 +22,10 @@ public class RetryTest {
 
     @Test
     void 재입력_가능_횟수를_1회_감소시킨다() {
-        final Retry retry = new Retry(1);
+        Retry retry = new Retry(1);
 
-        retry.decrease();
+        retry = retry.decrease();
 
         assertThat(retry.isRepeatable()).isFalse();
-    }
-
-    @Test
-    void 재입력_가능_횟수를_초기화시킨다() {
-        final Retry retry = new Retry(1);
-        retry.decrease();
-
-        retry.reset();
-
-        assertThat(retry.isRepeatable()).isTrue();
     }
 }
