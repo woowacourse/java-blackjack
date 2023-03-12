@@ -10,7 +10,7 @@ public class InputView {
     private static final String DELIMITER_USERNAME = ",";
 
     private static final Scanner scanner = new Scanner(System.in);
-    public static final String INVALID_BETTING_AMOUNT_FORMAT = "[ERROR] 베팅 금액은 숫자만 입력 가능합니다";
+    private static final String INVALID_BETTING_AMOUNT_FORMAT = "[ERROR] 베팅 금액은 숫자만 입력 가능합니다";
 
     private InputView() {
     }

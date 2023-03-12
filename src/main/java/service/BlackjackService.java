@@ -14,7 +14,7 @@ public class BlackjackService {
 
     private static final String HIT = "y";
     private static final String STAND = "n";
-    public static final String ERROR_HIT_OPERATION = "[ERROR] y 또는 n만 입력할 수 있습니다";
+    private static final String ERROR_HIT_OPERATION = "[ERROR] y 또는 n만 입력할 수 있습니다";
 
     private final Deck deck;
     private final Participants participants;

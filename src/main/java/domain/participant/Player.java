@@ -4,13 +4,13 @@ import domain.card.Deck;
 
 public class Player extends Participant {
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
-    public static final String INVALID_BETTING_AMOUNT = "[ERROR] 베팅 금액은 1000 ~ 10억원 까지만 가능합니다";
-    public static final String INVALID_BETTING_UNIT = "[ERROR] 베팅 금액은 1000원 단위만 가능합니다";
+    private static final String INVALID_BETTING_AMOUNT = "[ERROR] 베팅 금액은 1000 ~ 10억원 까지만 가능합니다";
+    private static final String INVALID_BETTING_UNIT = "[ERROR] 베팅 금액은 1000원 단위만 가능합니다";
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
-    public static final int MAX_BETTING_AMOUNT = 10000000;
-    public static final int MIN_BETTING_AMOUNT = 1000;
-    public static final int UNIT_OF_BETTING_MONEY = 1000;
+    private static final int MAX_BETTING_AMOUNT = 10000000;
+    private static final int MIN_BETTING_AMOUNT = 1000;
+    private static final int UNIT_OF_BETTING_MONEY = 1000;
 
     private int bettingAmount;
     private boolean isStand = false;
