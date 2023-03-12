@@ -114,9 +114,8 @@ public class BlackJackGameController {
     private void progressDealerTurn(BlackJackGame blackJackGame) {
         blackJackGame.hitUntilSatisfyingDealerMinimumScore();
 
-        int dealerDrawCount = blackJackGame.getDealerExtraDrawCount();
-        if (dealerDrawCount > 0) {
-            outputView.printDealerDrawResult(dealerDrawCount);
+        if (blackJackGame.isDealerDrawExtraCount()) {
+            outputView.printDealerDrawResult(blackJackGame.getDealerExtraDrawCount());
         }
     }
 

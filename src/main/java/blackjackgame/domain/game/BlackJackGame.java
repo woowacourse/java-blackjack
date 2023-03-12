@@ -74,6 +74,10 @@ public class BlackJackGame {
        return betResultByName;
    }
 
+    public boolean isDealerDrawExtraCount() {
+        return dealer.cards().size() > INITIAL_CARD_COUNT;
+    }
+
     public int getDealerExtraDrawCount() {
         return dealer.getExtraDrawCount(INITIAL_CARD_COUNT);
     }
