@@ -7,6 +7,7 @@ import domain.command.Command;
 import domain.participants.Account;
 import domain.participants.Dealer;
 import domain.participants.Name;
+import domain.participants.Names;
 import domain.participants.Player;
 import domain.participants.Players;
 import generator.CardDeckGenerator;
@@ -46,25 +47,23 @@ public class BlackJackController {
     }
 
     private Players createPlayers() {
-        List<Name> playerNames = createPlayerNames();
+        Names playerNames = createPlayerNames();
         List<Account> playerAccounts = createPlayerAccounts(playerNames);
 
         return ParticipantGenerator.createPlayers(playerNames, playerAccounts);
     }
 
-    private List<Name> createPlayerNames() {
+    private Names createPlayerNames() {
         try {
             List<String> rawNames = inputView.readPlayerNames();
-            return rawNames.stream()
-                    .map(Name::new)
-                    .collect(toList());
+            return Names.createNames(rawNames);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return createPlayerNames();
         }
     }
 
-    private List<Account> createPlayerAccounts(final List<Name> playerNames) {
+    private List<Account> createPlayerAccounts(final Names playerNames) {
         return playerNames.stream()
                 .map(this::createAccount)
                 .collect(toList());
@@ -72,7 +71,7 @@ public class BlackJackController {
 
     private Account createAccount(final Name playerName) {
         try {
-            int account = inputView.readAccount(playerName.name());
+            int account = inputView.readAccount(playerName.getName());
             return new Account(account);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());

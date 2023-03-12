@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.DrawnCards;
 import domain.participants.Account;
 import domain.participants.Dealer;
-import domain.participants.Name;
+import domain.participants.Names;
 import domain.participants.Player;
 import domain.participants.Players;
 import domain.participants.Status;
@@ -17,13 +17,13 @@ public class ParticipantGenerator {
         throw new IllegalStateException("생성할 수 없는 객체입니다.");
     }
 
-    public static Players createPlayers(final List<Name> playerNames, final List<Account> playerAccounts) {
+    public static Players createPlayers(final Names playerNames, final List<Account> playerAccounts) {
         List<Card> emptyCards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
 
-        for (int i = 0; i < playerNames.size(); i++) {
+        for (int i = 0; i < playerNames.getNamesSize(); i++) {
             players.add(new Player(
-                    new Status(playerNames.get(i), playerAccounts.get(i)),
+                    new Status(playerNames.findByIndex(i), playerAccounts.get(i)),
                     new DrawnCards(emptyCards))
             );
         }

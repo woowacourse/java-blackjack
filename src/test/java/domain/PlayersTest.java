@@ -31,30 +31,6 @@ class PlayersTest {
                 .isThrownBy(() -> new Players(players));
     }
 
-    @DisplayName("플레이어의 수가 4명 초과하면 예외를 반환한다.")
-    @Test
-    void create_fail_by_players_size_over() {
-        // given
-        List<Player> players = createPlayers("pobi", "neo", "ori", "jay", "odo");
-
-        // when && then
-        assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessage.PLAYER_INVALID_NUMBERS.getMessage());
-    }
-
-    @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
-    @Test
-    void create_fail_by_players_size_under() {
-        // given
-        List<Player> players = createPlayers();
-
-        // when && then
-        assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessage.PLAYER_INVALID_NUMBERS.getMessage());
-    }
-
     private List<Player> createPlayers(String... names) {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
@@ -63,32 +39,6 @@ class PlayersTest {
         }
 
         return players;
-    }
-
-    @DisplayName("플레이어의 이름이 중복이면 예외를 반환한다.")
-    @Test
-    void create_fail_when_player_names_duplicated() {
-        // given
-        String givenName = "춘식";
-        List<Player> players = createPlayers(givenName, givenName);
-
-        // when && then
-        assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessage.PLAYER_NAME_NOT_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("플레이어의 이름이 딜러와 같다면 예외를 반환한다.")
-    @Test
-    void create_fail_when_player_name_is_same_with_dealer() {
-        // given
-        String givenName = "딜러";
-        List<Player> players = createPlayers(givenName);
-
-        // when && then
-        assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessage.PLAYER_NAME_NOT_DEALER.getMessage());
     }
 
     @Test
@@ -107,7 +57,8 @@ class PlayersTest {
     @DisplayName("배팅 금액이 1000원 미만이면 예외가 발생한다.")
     void throws_exception_when_betting_account_under_boundary(int givenAccount) {
         // given
-        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), new DrawnCards(new ArrayList<>()));
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)),
+                new DrawnCards(new ArrayList<>()));
 
         // when & then
         assertThatThrownBy(() -> new Players(List.of(player)))

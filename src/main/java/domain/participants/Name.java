@@ -31,7 +31,7 @@ public class Name {
         }
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
@@ -40,11 +40,11 @@ public class Name {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Name)) {
             return false;
         }
         Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return name.equals(name1.name);
     }
 
     @Override

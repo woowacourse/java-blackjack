@@ -23,7 +23,7 @@ public class Status {
     }
     
     public String getName() {
-        return name.name();
+        return name.getName();
     }
 
     public int getAccount() {
