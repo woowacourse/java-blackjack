@@ -10,15 +10,14 @@ public class ParticipantDto {
     private final String name;
     private final List<String> cards;
 
-    public ParticipantDto(String name, List<String> cards) {
+    private ParticipantDto(String name, List<String> cards) {
         this.name = name;
         this.cards = cards;
     }
 
     public static ParticipantDto of(Participant participant) {
         String name = participant.name();
-        List<String> cards = participant.hand()
-                .stream()
+        List<String> cards = participant.hand().stream()
                 .map(card -> String.join("", renderCardNumber(card), card.suit()))
                 .collect(Collectors.toUnmodifiableList());
         return new ParticipantDto(name, cards);
@@ -26,8 +25,7 @@ public class ParticipantDto {
 
     public static ParticipantDto ofInitial(Participant participant) {
         String name = participant.name();
-        List<String> cards = participant.initialHand()
-                .stream()
+        List<String> cards = participant.initialHand().stream()
                 .map(card -> String.join("", renderCardNumber(card), card.suit()))
                 .collect(Collectors.toUnmodifiableList());
         return new ParticipantDto(name, cards);

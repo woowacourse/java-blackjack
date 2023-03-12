@@ -21,9 +21,11 @@ class BlackjackGameTest {
     @Nested
     class 결과반환 {
         @Test
-        void should_승패를판단하여반환한다_when_getPlayerOutcome호출시() {
-            Players players = new Players(List.of(new Player(new Name("포이"), new Hand(), new BettingMoney(1000)),
-                    new Player(new Name("에밀"), new Hand(), new BettingMoney(2000))));
+        void should_승패를판단하여수익을반환한다_when_getRevenues호출시() {
+            Players players = new Players(List.of(
+                    new Player(new Name("포이"), new Hand(), new BettingMoney(1000)),
+                    new Player(new Name("에밀"), new Hand(), new BettingMoney(2000))
+            ));
             //given
             BlackjackGame blackjackGame = new BlackjackGame(players);
             blackjackGame.handOutInitialCards((cards) -> {

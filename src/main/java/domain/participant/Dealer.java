@@ -15,8 +15,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> initialHand() {
-        return hand.getCards()
-                .stream()
+        return hand.getCards().stream()
                 .limit(NUMBER_OF_INITIAL_OPEN_CARD)
                 .collect(Collectors.toUnmodifiableList());
     }

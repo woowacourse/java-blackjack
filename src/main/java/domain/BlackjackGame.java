@@ -72,7 +72,7 @@ public class BlackjackGame {
         return revenues;
     }
 
-    private static int calculateDealerRevenue(Map<String, Integer> playersRevenues) {
+    private int calculateDealerRevenue(Map<String, Integer> playersRevenues) {
         return playersRevenues.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum() * -1;
