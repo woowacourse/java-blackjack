@@ -78,7 +78,8 @@ public class BlackJackGame {
     }
 
     public Map<Name, Integer> calculateProfits() {
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         final Map<Name, Integer> profits = new LinkedHashMap<>();
         final Name dealerName = dealer.getName();
 

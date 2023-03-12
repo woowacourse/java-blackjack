@@ -87,7 +87,7 @@
 
 - [ ] `Judgement`에서 결과 판단 로직 응집 시키기
   - [ ] 사실상 `if-else` 구문인 것 해결하기
-- [ ] 결과 판단을 `Players`로 이동하여 중복 코드 제거
+- [x] 결과 판단을 `Players`로 이동하여 중복 코드 제거
 - [x] `BlackjackGame`에서 사용하는 특정 유저의 카드를 찾아주는 `getter` 메서드 구현하기
 - [x] `BlackjackGame`에서 사용하는 특정 유저의 점수를 찾아주는 `getter` 메서드 구현하기
 - [ ] `Map<Name, Outcome>` 일급 컬렉션화하기

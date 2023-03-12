@@ -1,13 +1,9 @@
-package domain.game;
+package domain.player;
 
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Suit;
-import domain.player.Amount;
-import domain.player.Dealer;
-import domain.player.Name;
-import domain.player.Player;
-import domain.player.Players;
+import domain.game.Outcome;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class JudgementTest {
+class PlayersTest {
     private static final String PLAYER_NAME = "player";
 
     List<Name> names = Stream.of(PLAYER_NAME)
@@ -34,7 +30,7 @@ class JudgementTest {
     @BeforeEach
     void setup() {
         players = new Players(names, amounts);
-        player = players.getPlayer(name);
+        player = players.getPlayers().get(0);
         dealer = new Dealer();
     }
 
@@ -46,7 +42,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.ACE));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.DRAW);
     }
@@ -59,7 +55,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.QUEEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.BLACKJACK);
     }
@@ -72,7 +68,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.ACE));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -87,7 +83,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.HEART, Rank.FIVE));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -101,7 +97,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -115,7 +111,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.HEART, Rank.FIVE));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.WIN);
     }
@@ -128,7 +124,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.WIN);
     }
@@ -141,7 +137,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.QUEEN));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -154,7 +150,7 @@ class JudgementTest {
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.EIGHT));
 
-        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
         Assertions.assertThat(outcomes.get(name))
                 .isEqualTo(Outcome.DRAW);
     }
