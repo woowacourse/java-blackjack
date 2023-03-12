@@ -3,14 +3,11 @@ package view;
 import domain.card.Card;
 import domain.user.CardPool;
 import domain.user.Dealer;
-import domain.game.GameResult;
 import domain.user.Player;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardTypeMapper;
-import view.mapper.GameResultMapper;
 
 import java.util.List;
-import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -35,7 +32,7 @@ public class OutputView {
     }
 
     private void printDealerCardWithName(final Dealer dealer) {
-        System.out.println(makePlayerName(dealer) + makePlayerCardMessage(dealer.getHiddenCardPool()));
+        System.out.println(makePlayerName(dealer) + makePlayerCardMessage(dealer.getLimitedCardPool()));
     }
 
     public void printPlayerCardWithName(final Player player) {
