@@ -1,13 +1,6 @@
 package domain.player;
 
-import domain.card.Card;
 import domain.score.Score;
-import domain.stake.Stake;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toMap;
 
 public class Dealer extends Player {
 
