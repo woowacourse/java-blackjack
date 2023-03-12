@@ -20,11 +20,11 @@ public class Cards {
     }
 
     public Cards receiveInitialCards(final List<Card> initialCards) {
-        if (initialCards.size() == INITIAL_CARDS_SIZE) {
-            List<Card> newCards = new ArrayList<>(initialCards);
-            return new Cards(newCards);
+        if (initialCards.size() != INITIAL_CARDS_SIZE) {
+            throw new IllegalArgumentException("처음 받는 카드는 2장이어야 합니다.");
         }
-        throw new IllegalArgumentException("처음 받는 카드는 2장이어야 합니다.");
+        List<Card> newCards = new ArrayList<>(initialCards);
+        return new Cards(newCards);
     }
 
     public Cards receiveCard(Card card) {
