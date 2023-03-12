@@ -13,9 +13,9 @@ public class InputView {
         return splitWithComma(input);
     }
 
-    public boolean askForHit(String userName) {
+    public boolean askForHit(String name) {
         return IllegalArgumentExceptionHandler.handleByRepeating(() -> {
-            System.out.println(userName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
             String input = scanner.nextLine();
             return Command.from(input).isYes();
         });
