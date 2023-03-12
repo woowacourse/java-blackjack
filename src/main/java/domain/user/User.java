@@ -1,35 +1,42 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.Score;
-import domain.state.State;
 
 import java.util.List;
 
 public abstract class User {
-    protected Hand hand;
+    private final UserData userData;
 
-    public User(List<Card> firstTurnCards) {
-        hand = new Hand(firstTurnCards);
+    User(UserData userData) {
+        this.userData = userData;
     }
 
-    public void receiveCard(Card card) {
-        hand = hand.add(card);
-        checkBustByScore();
+    public final void receiveCards(List<Card> cards) {
+        cards.forEach(this::receiveCard);
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public final void receiveCard(Card card) {
+        userData.receiveCard(card);
     }
 
-    public Score getScore() {
-        return hand.calculateScore();
+    public final boolean hasResult() {
+        return userData.hasResult();
     }
 
-    public abstract boolean isUserStatus(State status);
+    public final List<Card> getCards() {
+        return userData.getCards();
+    }
 
-    protected abstract void checkBustByScore();
+    public final Score getScore() {
+        return userData.getScore();
+    }
 
-    public abstract String getName();
+    public final Name getName() {
+        return userData.getName();
+    }
+
+    public final void endGame() {
+        userData.doStay();
+    }
 }
