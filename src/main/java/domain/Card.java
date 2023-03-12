@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -17,8 +18,15 @@ public class Card {
         this.letter = letter;
     }
 
+    static {
+        for (Shape shape : Shape.values()) {
+            Arrays.stream(Letter.values())
+                    .forEach(letter -> CACHE.put(toKeyString(shape, letter), new Card(shape, letter)));
+        }
+    }
+
     public static Card of(Shape shape, Letter letter) {
-        return CACHE.computeIfAbsent(toKeyString(shape, letter), k -> new Card(shape, letter));
+        return CACHE.get(toKeyString(shape, letter));
     }
 
     private static String toKeyString(Shape shape, Letter letter) {
