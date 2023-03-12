@@ -67,8 +67,7 @@ public class MainController {
     }
 
     private void hitTwiceEachParticipant(final Dealer dealer, final Players players, final Deck deck) {
-        dealer.hit(deck.popCard());
-        dealer.hit(deck.popCard());
+        dealer.hitTwice(deck);
         players.hitTwice(deck);
     }
 }

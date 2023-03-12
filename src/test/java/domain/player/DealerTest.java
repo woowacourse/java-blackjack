@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.deck.Card;
+import domain.deck.Deck;
 import domain.deck.Rank;
 import domain.deck.Suit;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,5 +42,12 @@ public class DealerTest {
         dealer.hit(secondCard);
 
         assertFalse(dealer.isDealerHit());
+    }
+
+    @Test
+    void hitTwiceTest() {
+        Deck deck = new Deck();
+        dealer.hitTwice(deck);
+        assertTrue(dealer.getCards().size() == 2);
     }
 }
