@@ -50,7 +50,7 @@ class RefereeTest {
         referee.judgeWinner();
 
         assertThat(player.getStatus()).isSameAs(PlayerStatus.BUST);
-        assertThat(player.getProfit()).isEqualTo(-betAmount);
+        assertThat(player.getProfitAmount()).isEqualTo(-betAmount);
     }
 
     static Stream<List<Card>> generateEveryCaseOfHands() {
@@ -72,7 +72,7 @@ class RefereeTest {
 
         assertThat(dealer.getStatus()).isSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getProfit()).isEqualTo(betAmount);
+        assertThat(player.getProfitAmount()).isEqualTo(betAmount);
     }
 
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 딜러의 점수가 플레이어의 점수보다 높으면 딜러가 승리한다.")
@@ -85,7 +85,7 @@ class RefereeTest {
 
         assertThat(dealer.getStatus()).isNotSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getProfit()).isEqualTo(-betAmount);
+        assertThat(player.getProfitAmount()).isEqualTo(-betAmount);
     }
 
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 승리한다.")
@@ -98,7 +98,7 @@ class RefereeTest {
 
         assertThat(dealer.getStatus()).isNotSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getProfit()).isEqualTo(betAmount);
+        assertThat(player.getProfitAmount()).isEqualTo(betAmount);
     }
 
     @DisplayName("딜러와 플레이어 모두 버스트가 아니며 점수가 같고, 블랙잭이 아니면 무승부다.")
@@ -110,7 +110,7 @@ class RefereeTest {
         referee.judgeWinner();
 
         assertThat(player.getScore()).isEqualTo(dealer.getScore());
-        assertThat(player.getProfit()).isEqualTo(0);
+        assertThat(player.getProfitAmount()).isEqualTo(0);
     }
 
     @DisplayName("딜러와 플레이어가 동점이지만, 플레이어만 블랙잭이면 플레이어가 승리하며 배팅금액 1.5배의 수익을 얻는다.")
@@ -122,7 +122,7 @@ class RefereeTest {
         referee.judgeWinner();
 
         assertThat(player.getScore()).isEqualTo(dealer.getScore());
-        assertThat(player.getProfit()).isEqualTo((int) (betAmount * 1.5));
+        assertThat(player.getProfitAmount()).isEqualTo((int) (betAmount * 1.5));
     }
 
     @DisplayName("딜러와 플레이어가 동점이지만, 딜러만 블랙잭이면 플레이어는 패배한다.")
@@ -134,6 +134,6 @@ class RefereeTest {
         referee.judgeWinner();
 
         assertThat(player.getScore()).isEqualTo(dealer.getScore());
-        assertThat(player.getProfit()).isEqualTo(-betAmount);
+        assertThat(player.getProfitAmount()).isEqualTo(-betAmount);
     }
 }
