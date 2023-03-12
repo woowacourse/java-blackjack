@@ -1,13 +1,13 @@
 package domain.betting;
 
 import java.util.List;
-import java.util.Map;
 
 import domain.participant.Dealer;
 import domain.participant.Hand;
 import domain.participant.Player;
 import domain.profit.FinalProfit;
 import domain.profit.FinalProfitByParticipant;
+import domain.profit.FinalProfitDto;
 
 public class BettingManager {
 
@@ -83,11 +83,9 @@ public class BettingManager {
         finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getValue()));
     }
 
-    public Double calculateDealerFinalProfit() {
-        return finalProfitByParticipant.calculateDealerFinalProfit();
-    }
-
-    public Map<String, Double> getFinalProfitByParticipantForPrint() {
-        return finalProfitByParticipant.getFinalProfitByParticipantForPrint();
+    public FinalProfitDto generateFinalProfitDto() {
+        return new FinalProfitDto(
+                finalProfitByParticipant.calculateDealerFinalProfit(),
+                finalProfitByParticipant.getFinalProfitByParticipant());
     }
 }
