@@ -5,16 +5,15 @@ public class BetAmount {
     private static final int MIN_BET_AMOUNT = 1_000;
     private static final int MAX_BET_AMOUNT = 100_000;
 
-    private final int value;
+    private int value;
 
-
-    private BetAmount(int value) {
-        this.value = value;
+    public BetAmount() {
+        this.value = 0;
     }
 
-    public static BetAmount of(int value) {
+    public void initialize(int value) {
         validateAmount(value);
-        return new BetAmount(value);
+        this.value = value;
     }
 
     private static void validateAmount(int value) {

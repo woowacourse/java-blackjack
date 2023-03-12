@@ -5,8 +5,8 @@ import java.util.Objects;
 
 public abstract class Participant {
 
-    private final PlayerCards playerCards;
     private final Name name;
+    private final PlayerCards playerCards;
 
     Participant(Name name) {
         this.name = name;

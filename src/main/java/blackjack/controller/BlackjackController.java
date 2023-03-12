@@ -18,6 +18,7 @@ public class BlackjackController {
     public void run() {
         try {
             Participants participants = getParticipants();
+            getBetAmounts(participants);
             BlackjackGame blackjackGame = new BlackjackGame(participants);
             startGame(blackjackGame, participants);
         } catch (IllegalArgumentException exception) {
@@ -33,6 +34,22 @@ public class BlackjackController {
         } catch (IllegalArgumentException exception) {
             outputView.printException(exception.getMessage());
             return getParticipants();
+        }
+    }
+
+    private void getBetAmounts(Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            getBetAmountEachPlayer(player);
+        }
+    }
+
+    private void getBetAmountEachPlayer(Player player) {
+        try {
+            int betAmount = inputView.readBetAmount(player.getName());
+            player.initBetAmount(betAmount);
+        } catch (IllegalArgumentException exception) {
+            outputView.printException(exception.getMessage());
+            getBetAmountEachPlayer(player);
         }
     }
 
