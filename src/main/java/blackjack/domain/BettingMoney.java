@@ -24,4 +24,8 @@ public class BettingMoney {
             throw new IllegalArgumentException("베팅 금액은 100 단위어야 합니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
