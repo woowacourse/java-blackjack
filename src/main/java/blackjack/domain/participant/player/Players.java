@@ -1,13 +1,10 @@
 package blackjack.domain.participant.player;
 
-import static blackjack.domain.participant.FinishedState.BLACK_JACK;
-import static blackjack.domain.participant.FinishedState.BUST;
-import static blackjack.domain.participant.FinishedState.STAY;
-
 import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
+import blackjack.domain.participant.PlayerFinalState;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,16 +62,6 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private double getEarningRate(Player player, Dealer dealer) {
-        if (player.isBlackjack()) {
-            return BLACK_JACK.getEarningRate(player, dealer);
-        }
-        if (player.isBust()) {
-            return BUST.getEarningRate(player, dealer);
-        }
-        return STAY.getEarningRate(player, dealer);
-    }
-
     public Map<Player, Money> calculateEachPrize(Dealer dealer) {
         Map<Player, Money> playerToPrize = new LinkedHashMap<>();
         for (Player player : players) {
@@ -84,7 +71,7 @@ public class Players {
     }
 
     private Money calculatePrize(Player player, Dealer dealer) {
-        double earningRate = getEarningRate(player, dealer);
+        double earningRate = PlayerFinalState.getEarningRateOf(player, dealer);
         return player.getBetAmount().product(earningRate);
     }
 }
