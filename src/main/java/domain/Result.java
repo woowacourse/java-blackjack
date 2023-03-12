@@ -17,7 +17,6 @@ public class Result {
 
     private Map<Gambler, Integer> createBenefits(Players players, Dealer dealer) {
         Map<Gambler, Integer> benefits = new LinkedHashMap<>();
-
         benefits.put(dealer, 0);
         for (Player player : players.getPlayers()) {
             referee.decideBenefits(player, players.getPlayers(), benefits);

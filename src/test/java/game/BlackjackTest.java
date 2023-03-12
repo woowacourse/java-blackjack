@@ -58,9 +58,9 @@ class BlackjackTest {
 
 
         Dealer dealer = new Dealer(
-                            new Cards(List.of(
-                                    new Card(Suit.CLOVER, Denomination.KING),
-                                    new Card(Suit.HEART, Denomination.QUEEN))));
+                new Cards(List.of(
+                        new Card(Suit.CLOVER, Denomination.KING),
+                        new Card(Suit.HEART, Denomination.QUEEN))));
 
         Blackjack blackjack = new Blackjack(List.of(player));
         Players players = blackjack.getPlayers();

@@ -31,6 +31,6 @@ class PlayerTest {
     @Test
     void 생성_테스트() {
         //given, when, then
-        Assertions.assertDoesNotThrow(() ->  new Player(new PlayerName("pobi"), new Cards(new ArrayList<>())));
+        Assertions.assertDoesNotThrow(() -> new Player(new PlayerName("pobi"), new Cards(new ArrayList<>())));
     }
 }

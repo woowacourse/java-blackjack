@@ -41,30 +41,43 @@ public class Referee {
         int index = players.indexOf(player);
         int winnerCount = 0;
 
-        if (isPlayerWin(player, dealer)) {
-            if (!benefits.containsKey(player)) {
-                benefits.put(player, 0);
-            }
+        if (isPlayerWin(player, dealer) && !benefits.containsKey(player)) {
+            benefits.put(player, 0);
         }
 
         if (isDealerWin(player, dealer)) {
             loseBenefit(player, benefits, bettings.get(index).getBetting());
-            winnerCount++;
-
-            for (Player searchPlayer : players) {
-                if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
-                    winnerCount++;
-                }
-            }
-
+            winnerCount = getWinnerCount(player, players, winnerCount + 1);
             int money = bettings.get(index).getBetting() / winnerCount;
-            earnBenefit(benefits, money, dealer);
-            for (Player searchPlayer : players) {
-                if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
-                    earnBenefit(benefits, money, searchPlayer);
-                }
-            }
+            earnBenefits(player, players, benefits, money);
         }
+    }
+
+    private void earnBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits, int money) {
+        earnBenefit(benefits, money, dealer);
+        for (Player searchPlayer : players) {
+            playerEarnBenefit(player, benefits, money, searchPlayer);
+        }
+    }
+
+    private void playerEarnBenefit(Player player, Map<Gambler, Integer> benefits, int money, Player searchPlayer) {
+        if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
+            earnBenefit(benefits, money, searchPlayer);
+        }
+    }
+
+    private int getWinnerCount(Player player, List<Player> players, int winnerCount) {
+        for (Player searchPlayer : players) {
+            winnerCount = getWinnerCount(player, winnerCount, searchPlayer);
+        }
+        return winnerCount;
+    }
+
+    private int getWinnerCount(Player player, int winnerCount, Player searchPlayer) {
+        if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
+            return winnerCount + 1;
+        }
+        return winnerCount;
     }
 
     private void loseBenefit(Player player, Map<Gambler, Integer> benefits, int money) {

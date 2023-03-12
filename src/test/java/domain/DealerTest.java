@@ -44,7 +44,7 @@ class DealerTest {
     @Test
     void 정상_생성_테스트() {
         //given, when, then
-        assertDoesNotThrow(()-> new Dealer(
+        assertDoesNotThrow(() -> new Dealer(
                 new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.KING),
                         new Card(Suit.CLOVER, Denomination.SEVEN))
