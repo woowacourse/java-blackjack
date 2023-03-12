@@ -2,14 +2,14 @@ package blackjack.domain.game;
 
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Result;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class Bets {
     private final Map<Name, Money> bets;
 
     public Bets() {
-        bets = new LinkedHashMap<>();
+        bets = new HashMap<>();
     }
 
     public void addBet(final Name player, final int amount) {
@@ -24,7 +24,7 @@ public final class Bets {
     }
 
     public Map<Name, Money> getBets() {
-        return new LinkedHashMap<>(bets);
+        return new HashMap<>(bets);
     }
 
     public Money getDealerProfit() {

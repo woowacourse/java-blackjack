@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Result;
@@ -35,32 +36,34 @@ public class BetsTest {
                 Name.from("후추"), Result.PUSH)
         );
 
-        assertThat(bets.getBets().values())
-                .extracting(Money::getValue)
-                .containsExactly(1500, 0);
+        assertThat(bets.getBets()).contains(
+                entry(Name.from("허브"), Money.initialBet(1500)),
+                entry(Name.from("후추"), Money.ZERO)
+        );
     }
 
     @Test
     void 베팅_결과를_반환한다() {
         final Bets bets = new Bets();
-        bets.addBet(Name.from("허브"), 1000);
-        bets.addBet(Name.from("후추"), 100);
+        bets.addBet(Name.from("허브"), 100);
+        bets.addBet(Name.from("후추"), 10000);
 
         final Map<Name, Money> result = bets.getBets();
 
-        assertThat(result.values())
-                .extracting(Money::getValue)
-                .containsExactly(1000, 100);
+        assertThat(result).contains(
+                entry(Name.from("허브"), Money.initialBet(100)),
+                entry(Name.from("후추"), Money.initialBet(10000))
+        );
     }
 
     @Test
     void 딜러의_수익을_반환한다() {
         final Bets bets = new Bets();
         bets.addBet(Name.from("허브"), 1000);
-        bets.addBet(Name.from("후추"), 100);
+        bets.addBet(Name.from("후추"), 2000);
 
         Money money = bets.getDealerProfit();
 
-        assertThat(money.getValue()).isEqualTo(-1100);
+        assertThat(money.getValue()).isEqualTo(-3000);
     }
 }

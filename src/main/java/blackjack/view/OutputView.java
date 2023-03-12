@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.Money;
@@ -9,7 +10,6 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
@@ -25,13 +25,13 @@ public final class OutputView {
     private String generateNameMessages(final List<Player> players) {
         return players.stream()
                 .map(Player::getNameValue)
-                .collect(Collectors.joining(DELIMITER));
+                .collect(joining(DELIMITER));
     }
 
     private String generateInitialDrawMessages(final List<Player> players) {
         return players.stream()
                 .map(this::generateInitialDrawMessage)
-                .collect(Collectors.joining(NEW_LINE));
+                .collect(joining(NEW_LINE));
     }
 
     private String generateInitialDrawMessage(final Player player) {
@@ -66,16 +66,17 @@ public final class OutputView {
         return format(" - 결과: %d", player.score());
     }
 
-    public void printBetResult(final Bets bets) {
+    public void printBetResult(final Bets bets, final List<Player> players) {
         System.out.println(NEW_LINE + "## 최종 수익");
         System.out.println(String.format("%s: %s", "딜러", bets.getDealerProfit().getValue()));
-        System.out.println(generateBetResultMessage(bets.getBets()));
+        System.out.println(generateBetResultMessage(bets.getBets(), players));
     }
 
-    private String generateBetResultMessage(final Map<Name, Money> bets) {
-        return bets.keySet().stream()
-                .map(name -> String.format("%s: %s", name.getValue(), bets.get(name).getValue()))
-                .collect(Collectors.joining(NEW_LINE));
+    private String generateBetResultMessage(final Map<Name, Money> bets, final List<Player> players) {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .map(player -> String.format("%s: %s", player.getNameValue(), bets.get(player.name()).getValue()))
+                .collect(joining(NEW_LINE));
     }
 
     public void printException(final String message) {

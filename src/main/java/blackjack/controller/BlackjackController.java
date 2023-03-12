@@ -105,6 +105,6 @@ public final class BlackjackController {
 
     private void play() {
         final Bets bets = blackjackGame.play();
-        outputView.printBetResult(bets);
+        outputView.printBetResult(bets, blackjackGame.getPlayers());
     }
 }
