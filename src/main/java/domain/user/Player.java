@@ -4,15 +4,17 @@ import domain.card.Card;
 
 public class Player {
 
+    private static final int INITIAL_BET_AMOUNT = 0;
+
     private final PlayerName playerName;
     private final CardPool cardPool;
     private final Bet bet;
 
     // 소지품 객체 생성
-    public Player(final String playerName, final CardPool cardPool, final int betAmount) {
+    public Player(final String playerName, final CardPool cardPool) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
-        this.bet = new Bet(betAmount);
+        this.bet = new Bet(INITIAL_BET_AMOUNT);
     }
 
     public void draw(final Card card) {

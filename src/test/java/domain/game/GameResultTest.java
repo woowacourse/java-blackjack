@@ -27,7 +27,7 @@ class GameResultTest {
                 List.of(CardFixtures.ofNumber(CardNumber.EIGHT))
         );
 
-        Player player = new Player("플레이어", playerCardPool, 0);
+        Player player = new Player("플레이어", playerCardPool);
         Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
@@ -44,7 +44,7 @@ class GameResultTest {
                 List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
 
-        Player player = new Player("플레이어", playerCardPool, 0);
+        Player player = new Player("플레이어", playerCardPool);
         Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
@@ -61,7 +61,7 @@ class GameResultTest {
                 List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
 
-        Player player = new Player("플레이어", playerCardPool, 0);
+        Player player = new Player("플레이어", playerCardPool);
         Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
@@ -81,7 +81,7 @@ class GameResultTest {
                 List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
 
-        Player player = new Player("플레이어", playerCardPool, 0);
+        Player player = new Player("플레이어", playerCardPool);
         Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
@@ -101,7 +101,7 @@ class GameResultTest {
                 )
         );
 
-        Player player = new Player("플레이어", playerCardPool, 0);
+        Player player = new Player("플레이어", playerCardPool);
         Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
@@ -111,7 +111,7 @@ class GameResultTest {
     @Test
     @DisplayName("Dealer는 Player가 이기면 1패가 적립된다.")
     void makeDealerRecordWhenLose() {
-        Player player = new Player("플레이어", new CardPool(Collections.emptyList()), 0);
+        Player player = new Player("플레이어", new CardPool(Collections.emptyList()));
         Map<Player, GameResult> playerGameResult = new HashMap<>();
 
         playerGameResult.put(player, GameResult.WIN);
@@ -125,7 +125,7 @@ class GameResultTest {
     @Test
     @DisplayName("Dealer는 Player가 지면 1승이 적립된다.")
     void makeDealerRecordWhenWin() {
-        Player player = new Player("플레이어", new CardPool(Collections.emptyList()), 0);
+        Player player = new Player("플레이어", new CardPool(Collections.emptyList()));
         Map<Player, GameResult> playerGameResult = new HashMap<>();
 
         playerGameResult.put(player, GameResult.LOSE);
@@ -139,7 +139,7 @@ class GameResultTest {
     @Test
     @DisplayName("Dealer는 Player와 점수가 같으면 1무가 적립된다.")
     void makeDealerRecordWhenDraw() {
-        Player player = new Player("플레이어", new CardPool(Collections.emptyList()), 0);
+        Player player = new Player("플레이어", new CardPool(Collections.emptyList()));
         Map<Player, GameResult> playerGameResult = new HashMap<>();
 
         playerGameResult.put(player, GameResult.DRAW);

@@ -21,7 +21,7 @@ public class GameParticipant {
 
     private List<Player> makePlayersWithName(final List<String> playerNames) {
         return playerNames.stream()
-                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList()), 0))
+                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 
