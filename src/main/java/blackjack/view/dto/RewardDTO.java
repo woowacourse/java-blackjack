@@ -1,5 +1,6 @@
-package blackjack.domain.result;
+package blackjack.view.dto;
 
+import blackjack.domain.result.Rewards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 

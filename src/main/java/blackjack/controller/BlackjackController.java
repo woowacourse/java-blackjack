@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.result.RewardDTO;
+import blackjack.view.dto.RewardDTO;
 import blackjack.domain.result.Rewards;
 import blackjack.domain.user.*;
 import blackjack.view.InputView;
