@@ -77,6 +77,24 @@ class PlayerTest {
     }
 
     @Nested
+    @DisplayName("플레이어가 스탠드 상태로 전환하는 changeToStand 메소드 테스트")
+    class changeToStand {
+        @Test
+        @DisplayName("플레이어는 점수가 21 이하일 경우 스탠드할 수 있다.")
+        void player_can_stand() {
+            //given
+            State drawState = new PlayerDrawState(new Hand(List.of(CLUB_FIVE, CLUB_JACK)));
+            Player player = new Player(new Name("이리내"), new BetAmount(10000), drawState);
+
+            //when
+            player.changeToStand();
+
+            //then
+            assertThat(player.isStand()).isTrue();
+        }
+    }
+
+    @Nested
     @DisplayName("플레이어의 수익을 계산하는 getProfit 메소드 테스트")
     class getProfit {
 
