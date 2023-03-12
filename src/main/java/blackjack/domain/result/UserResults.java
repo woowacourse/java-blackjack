@@ -1,9 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
+import blackjack.domain.user.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +16,8 @@ public class UserResults {
         this.results = results;
     }
 
-    public static UserResults of(Dealer dealer, Players players) {
-        return new UserResults(calculateResults(dealer, players));
+    public static UserResults of(Users users) {
+        return new UserResults(calculateResults(users.getDealer(), users.getPlayers()));
     }
 
     private static HashMap<User, List<Result>> calculateResults(Dealer dealer, Players players) {
