@@ -54,7 +54,7 @@ class UserTest extends AbstractTestFixture {
                 Arguments.of(
                         new User("땡칠", createCards("A", "J")),
                         new User("조이", createCards("A", "A")),
-                        Result.WIN)
+                        Result.WIN_BY_BLACKJACK)
         );
     }
 
@@ -98,7 +98,7 @@ class UserTest extends AbstractTestFixture {
         var user = new User("조이", createCards("A", "J"));
         var dealer = new Dealer(createCards("K", "9", "10"));
 
-        assertThat(user.competeWith(dealer)).isEqualTo(Result.WIN);
+        assertThat(user.competeWith(dealer)).isEqualTo(Result.WIN_BY_BLACKJACK);
         assertThat(dealer.competeWith(user)).isEqualTo(Result.LOSE);
     }
 }
