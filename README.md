@@ -101,7 +101,7 @@
 
 ### 클래스 내부 로직 변경
 
-- [ ] BlackJackGameController에 dealer와 players를 가져와서 로직을 호출할 수 있도록 로직 변경
+- [x] BlackJackGameController에 dealer와 players를 가져와서 로직을 호출할 수 있도록 로직 변경
 - [x] enum class → enum 자체로 값을 비교하도록 수정
 - [ ] enum 내부 메소드를 사용하도록 수정
 - [ ] 디미터 법칙 위반된 코드 한 줄에 점을 하나만 찍도록 수정

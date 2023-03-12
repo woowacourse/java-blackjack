@@ -18,7 +18,7 @@ abstract class Person {
         hand.add(card);
     }
 
-    int calculateScore() {
+    public int calculateScore() {
         int totalScore = hand.getTotalScore();
         if (totalScore > BURST_SCORE && hand.hasACE()) {
             return totalScore - ACE_BONUS_SCORE;
@@ -26,7 +26,7 @@ abstract class Person {
         return totalScore;
     }
 
-    List<Card> getAllCards() {
+    public List<Card> getAllCards() {
         return hand.getAllCards();
     }
 }

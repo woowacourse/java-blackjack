@@ -27,6 +27,14 @@ public class Game {
         gamePlayer.initializeGamePlayer(cards);
     }
 
+    public Dealer getDealer() {
+        return gamePlayer.getDealer();
+    }
+
+    public Players getPlayers() {
+        return gamePlayer.getPlayers();
+    }
+
     public int getDealerScore() {
         return gamePlayer.getDealer().calculateScore();
     }
@@ -35,37 +43,14 @@ public class Game {
         return gamePlayer.getPlayers().getPlayersScore();
     }
 
-    public void dealerHit() {
-        gamePlayer.dealerHit(deck.draw());
-    }
-
-    public void playerHit(int i) {
-        gamePlayer.playerHit(i, deck.draw());
-    }
-
-    public boolean isDealerHitPossible() {
-        return gamePlayer.getDealer().isHitPossible();
-    }
-
-    public boolean isPlayerHitPossibleByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).isHitPossible();
+    public void Hit(Person person) {
+        person.addCard(deck.draw());
     }
 
     public String getPlayerNameByIndex(int i) {
         return gamePlayer.getPlayers().getPlayer(i).getName();
     }
 
-    public List<Card> getPlayerCardsByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).getAllCards();
-    }
-
-    public Card getDealerFirstCard() {
-        return gamePlayer.getDealer().getFirstCard();
-    }
-
-    public List<Card> getDealerAllCards() {
-        return gamePlayer.getDealer().getAllCards();
-    }
 
     public int getPlayersCount() {
         return gamePlayer.getPlayers().getCount();

@@ -40,7 +40,9 @@ public class OutputView {
     }
 
     public void printDealerResult(List<String> dealerCards, int calculateScore) {
-        System.out.println("딜러 카드: " + String.join(DELIMITER, dealerCards) + " - 결과: " + calculateScore);
+        System.out.println("딜러 카드: " + String.join(DELIMITER, dealerCards)
+                + " - 결과: "
+                + calculateScore);
     }
 
     public void printPlayerResult(Map<String, List<String>> players, List<Integer> calculateScore) {
@@ -74,7 +76,9 @@ public class OutputView {
 
     private void makeFinalVictoryOrDefeatDealer(Integer resultCount, StringBuilder resultMsg, String victoryOrDefeat) {
         if (resultCount != ZERO) {
-            resultMsg.append(resultCount).append(victoryOrDefeat).append(" ");
+            resultMsg.append(resultCount)
+                    .append(victoryOrDefeat)
+                    .append(" ");
         }
     }
 
