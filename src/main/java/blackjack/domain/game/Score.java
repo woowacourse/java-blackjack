@@ -20,6 +20,10 @@ public final class Score {
         return this.score > compareScore.score;
     }
 
+    public boolean isLessThen(final Score compareScore) {
+        return this.score < compareScore.score;
+    }
+
     public boolean isBust() {
         return this.equals(min);
     }

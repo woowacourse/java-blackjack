@@ -48,7 +48,7 @@ public class Dealer extends User {
                 GameResult.DRAW, GameResult.DRAW);
         updateMatchingResult(player -> player.getScore().isMoreThen(getScore()), gameResult, targetPlayer,
                 GameResult.WIN, GameResult.LOSE);
-        updateMatchingResult(player -> !player.getScore().isMoreThen(getScore()), gameResult, targetPlayer,
+        updateMatchingResult(player -> player.getScore().isLessThen(getScore()), gameResult, targetPlayer,
                 GameResult.LOSE, GameResult.WIN);
     }
 
