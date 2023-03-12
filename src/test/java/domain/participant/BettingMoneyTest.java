@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,5 +15,14 @@ class BettingMoneyTest {
     void createTest(int money) {
         BettingMoney bettingMoney = new BettingMoney(money);
         assertThat(bettingMoney.getValue()).isEqualTo(money);
+    }
+
+    @DisplayName("베팅 금액이 0보다 작으면 예외 처리한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-1000, -25000, -120000})
+    void invalidMoneyTestWithUnderZero(int money) {
+        assertThatThrownBy(() -> new BettingMoney(money))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액이 0보다 작을 수 없습니다.");
     }
 }
