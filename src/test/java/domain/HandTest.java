@@ -74,7 +74,8 @@ public class HandTest extends AbstractTestFixture {
                 Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "Q"), false),
                 Arguments.of(createCards("K", "10", "Q"), createCards("K", "10", "A"), false),
                 Arguments.of(createCards("K", "10", "A"), createCards("J", "10"), false),
-                Arguments.of(createCards("K", "10"), createCards("K", "10", "A"), false)
+                Arguments.of(createCards("K", "10"), createCards("K", "10", "A"), false),
+                Arguments.of(createCards("K", "A"), createCards("2", "8", "A"), false)
         );
     }
 
@@ -101,5 +102,25 @@ public class HandTest extends AbstractTestFixture {
         var hand = new Hand(createCards(cards));
 
         assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
+    }
+
+    @Test
+    @DisplayName("다른 조건이 같다면 블랙잭인 패가 이긴다")
+    void test_blackjack_wins_in_same_condition() {
+        var hand = new Hand(createCards("K", "A"));
+        var other = new Hand(createCards("8", "2", "A"));
+
+        assertThat(hand.isWinnerAgainst(other)).isTrue();
+        assertThat(other.isWinnerAgainst(hand)).isFalse();
+    }
+
+    @Test
+    @DisplayName("둘다 블랙잭이라면 비긴다")
+    void test_draw_on_both_blackjack() {
+        var hand = new Hand(createCards("K", "A"));
+        var other = new Hand(createCards("10", "A"));
+
+        assertThat(hand.isWinnerAgainst(other)).isFalse();
+        assertThat(other.isDrawAgainst(hand)).isTrue();
     }
 }

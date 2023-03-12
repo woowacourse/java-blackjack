@@ -47,6 +47,9 @@ public class Hand {
     public boolean isDrawAgainst(Hand other) {
         Score score = this.score();
         Score otherScore = other.score();
+        if (this.isBlackjack() || other.isBlackjack()) {
+            return this.isBlackjack() && other.isBlackjack();
+        }
         if (score.isBust() && otherScore.isBust()) {
             return true;
         }
@@ -56,6 +59,9 @@ public class Hand {
     public boolean isWinnerAgainst(Hand other) {
         Score score = this.score();
         Score otherScore = other.score();
+        if (this.isBlackjack() && !other.isBlackjack()) {
+            return true;
+        }
         if (score.isBust()) {
             return false;
         }
