@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.assertj.core.api.Assertions;
@@ -11,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
@@ -24,7 +27,11 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
+        Map<String,Integer> players = new HashMap<>();
+        players.put("pobi",0);
+        players.put("crong",0);
+        players.put("dali",0);
+        participants = new Participants(dealer, players);
     }
 
     @Test

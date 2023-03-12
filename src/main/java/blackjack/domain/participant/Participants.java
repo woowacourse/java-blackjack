@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -11,24 +13,24 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(final Dealer dealer, List<String> players) {
-        validate(players);
+    public Participants(final Dealer dealer, Map<String,Integer> players) {
+        validate(players.keySet());
         this.dealer = dealer;
         this.players = makePlayer(players);
     }
 
-    private void validate(List<String> players) {
+    private void validate(Set<String> players) {
         validatePlayerLimit(players);
         validateEmptyNames(players);
     }
 
-    private void validatePlayerLimit(List<String> players) {
+    private void validatePlayerLimit(Set<String> players) {
         if (players.size() > PLAYERS_COUNT_LIMIT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
         }
     }
 
-    private void validateEmptyNames(final List<String> players) {
+    private void validateEmptyNames(final Set<String> players) {
         players.forEach(Participants::checkNameIsEmpty);
     }
 
@@ -38,8 +40,8 @@ public class Participants {
         }
     }
 
-    private List<Player> makePlayer(List<String> players) {
-        return players.stream().map(name -> new Player(new Name(name))).collect(Collectors.toList());
+    private List<Player> makePlayer(Map<String,Integer> players) {
+        return players.entrySet().stream().map(entry -> new Player(new Name(entry.getKey()),entry.getValue())).collect(Collectors.toList());
     }
 
     public Dealer getDealer() {

@@ -38,8 +38,9 @@ public class BlackjackController {
 
 
     private Participants makeParticipants() {
-        final Dealer dealer = new Dealer();
-        return new Participants(dealer, inputView.inputPlayers());
+//        final Dealer dealer = new Dealer();
+//        return new Participants(dealer, inputView.inputPlayers());
+        return null;
     }
 
     private Deck makeDeck() {
