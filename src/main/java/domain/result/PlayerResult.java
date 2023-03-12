@@ -1,42 +1,53 @@
 package domain.result;
 
+import domain.Dealer;
 import domain.Player;
 
-public class PlayerResult {
+public class PlayerResult implements Result {
 
 	private final String name;
-	private final ResultState resultState;
+	private final int profit;
 
-	private PlayerResult(final String name, final ResultState resultState) {
+	private PlayerResult(final String name, final int profit) {
 		this.name = name;
-		this.resultState = resultState;
+		this.profit = profit;
 	}
 
-	public static PlayerResult decide(final Player targetPlayer, final Player comparedPlayer) {
-		if (isVictory(targetPlayer, comparedPlayer)) {
-			return new PlayerResult(targetPlayer.getName(), ResultState.WIN);
+	public static PlayerResult decide(final Player player, final Dealer dealer) {
+		if (isBlackJackVictory(player, dealer)) {
+			return new PlayerResult(player.getName(), (int)(ResultState.BLACKJACK.getMultiplier() * player.getBet()));
 		}
-		if (isDraw(targetPlayer, comparedPlayer)) {
-			return new PlayerResult(targetPlayer.getName(), ResultState.DRAW);
+		if (isVictory(player, dealer)) {
+			return new PlayerResult(player.getName(), (int)(ResultState.WIN.getMultiplier() * player.getBet()));
 		}
-		return new PlayerResult(targetPlayer.getName(), ResultState.LOSS);
+		if (isDraw(player, dealer)) {
+			return new PlayerResult(player.getName(), (int)(ResultState.DRAW.getMultiplier() * player.getBet()));
+		}
+		return new PlayerResult(player.getName(), (int)(ResultState.DEFEAT.getMultiplier() * player.getBet()));
 	}
 
-	private static boolean isVictory(final Player targetPlayer, final Player comparedPlayer) {
-		return !targetPlayer.isBust()
-			&& (comparedPlayer.isBust() || targetPlayer.getScore() > comparedPlayer.getScore());
+	private static boolean isBlackJackVictory(final Player player, final Dealer dealer) {
+		return player.isBlackJack() && !dealer.isBlackJack();
 	}
 
-	private static boolean isDraw(final Player targetPlayer, final Player comparedPlayer) {
-		return targetPlayer.isBust() && comparedPlayer.isBust()
-			|| targetPlayer.getScore() == comparedPlayer.getScore();
+	private static boolean isVictory(final Player player, final Dealer dealer) {
+		return (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore())
+			|| (!player.isBust() && dealer.isBust());
 	}
 
+	private static boolean isDraw(final Player player, final Dealer dealer) {
+		return (player.isBust() && dealer.isBust())
+			|| (!player.isBlackJack() && !dealer.isBlackJack() && (player.getScore() == dealer.getScore()))
+			|| (player.isBlackJack() && dealer.isBlackJack());
+	}
+
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	public ResultState getResultState() {
-		return resultState;
+	@Override
+	public int getProfit() {
+		return profit;
 	}
 }
