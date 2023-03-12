@@ -10,7 +10,8 @@ public class InputView {
 
     private static final String REQUEST_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ASK_MORE_CARD_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
+    private static final String INVALID_MORE_CARD_ERROR_MESSAGE = String.format("%s 나 %s 만을 입력해주세요.",
+            Answer.HIT.getInput(), Answer.STAND.getInput());
     private static final String REQUEST_BATTING_AMOUNT = "%s의 배팅 금액은?";
     private static final String WRONG_BATTING_AMOUNT_ERROR_MESSAGE = "배팅 금액은 정수여야 합니다.";
     private static final String DELIMITER = ",";

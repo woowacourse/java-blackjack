@@ -28,7 +28,7 @@ public enum Answer {
         return REQUEST_ANSWER.containsKey(input);
     }
 
-    private String getInput() {
+    public String getInput() {
         return input;
     }
 

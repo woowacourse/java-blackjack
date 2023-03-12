@@ -6,7 +6,7 @@ public class BettingAmount {
 
     private static final int MIN_AMOUNT = 10000;
     private static final BettingAmount INITIAL = new BettingAmount(0);
-    private static final String MIN_BETTING_AMOUNT_ERROR_MESSAGE = "초기 배팅 금액은 10000원 이상이어야 합니다.";
+    private static final String MIN_BETTING_AMOUNT_ERROR_MESSAGE = String.format("초기 배팅 금액은 %d원 이상이어야 합니다.", MIN_AMOUNT);
 
     private final double revenue;
 
