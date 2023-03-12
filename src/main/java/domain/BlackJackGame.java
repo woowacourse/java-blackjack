@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Deck;
+import domain.participant.BettingMoney;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -16,15 +17,15 @@ public class BlackJackGame {
     private final Deck deck;
     private Participants participants;
 
-    public BlackJackGame(List<String> playerNames) {
+    public BlackJackGame(Map<String, BettingMoney> playerBettingMoneys) {
         this.deck = new Deck();
         deck.shuffleDeck();
-        initializeParticipants(playerNames, deck);
+        initializeParticipants(playerBettingMoneys, deck);
     }
 
-    private void initializeParticipants(List<String> playerNames, Deck deck) {
+    private void initializeParticipants(Map<String, BettingMoney> playerBettingMoneys, Deck deck) {
         try {
-            this.participants = new Participants(playerNames, deck);
+            this.participants = new Participants(playerBettingMoneys, deck);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

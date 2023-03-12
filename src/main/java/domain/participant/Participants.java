@@ -3,6 +3,8 @@ package domain.participant;
 import domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -14,16 +16,15 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<String> names, Deck deck) {
-        validateSize(names);
-        this.players = names.stream()
-                .map(Name::new)
-                .map(name -> new Player(name, deck.getInitialDeck()))
+    public Participants(Map<String, BettingMoney> playerBettingMoney, Deck deck) {
+        validateSize(playerBettingMoney.keySet());
+        this.players = playerBettingMoney.keySet().stream()
+                .map(name -> new Player(new Name(name), deck.getInitialDeck(), playerBettingMoney.get(name)))
                 .collect(Collectors.toList());
         this.dealer = new Dealer(deck.getInitialDeck());
     }
 
-    private void validateSize(final List<String> names) {
+    private void validateSize(final Set<String> names) {
         if (names.size() < MIN_SIZE_EXCLUSIVE || names.size() > MAX_SIZE_EXCLUSIVE) {
             throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
         }
