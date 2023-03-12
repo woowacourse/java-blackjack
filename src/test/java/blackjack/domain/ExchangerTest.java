@@ -21,12 +21,13 @@ class ExchangerTest {
     @MethodSource("makeResult")
     void calculatePlayerProfit(GameResult gameResult, double expectedProfit) {
         // given
-        Map<String, Integer> bettingMoney = new HashMap<>();
-        bettingMoney.put("user", 1000);
+        Map<Person, Integer> bettingMoney = new HashMap<>();
+        Player player = new Player("user");
+        bettingMoney.put(player, 1000);
         Exchanger exchanger = new Exchanger(bettingMoney);
 
         // when
-        double profit = exchanger.calculatePlayerProfit("user", gameResult);
+        double profit = exchanger.calculatePlayerProfit(player, gameResult);
 
         // then
         assertThat(profit)

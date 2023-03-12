@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.dto.BettingMoneyDto;
+import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 
 import java.util.*;
@@ -113,35 +115,40 @@ public class BlackjackGame {
         return participants.findByName(name).getScore();
     }
 
-    public Map<String,Double> getParticipantsProfit(Map<String, Integer> bettingMoney) {
+    public ParticipantsProfitDto getParticipantsProfitDto(BettingMoneyDto bettingMoneyDto) {
+        Map<Person, Integer> bettingMoney = bettingMoneyDto.getBettingMoney();
         Exchanger exchanger = new Exchanger(bettingMoney);
-        Map<String, Double> playersProfit = getPlayersProfit(exchanger);
+        Map<Person, Double> playersProfit = getPlayersProfit(exchanger);
         double dealerProfit = getDealerProfit(exchanger, playersProfit);
 
-        Map<String, Double> participantsProfit = new HashMap<>(playersProfit);
-        participantsProfit.put(participants.getDealer().getName(), dealerProfit);
+        Map<Person, Double> participantsProfit = new HashMap<>(playersProfit);
+        participantsProfit.put(participants.getDealer(), dealerProfit);
 
-        return participantsProfit;
+        return ParticipantsProfitDto.of(participantsProfit);
     }
 
-    private Map<String, Double> getPlayersProfit(Exchanger exchanger) {
+    private Map<Person, Double> getPlayersProfit(Exchanger exchanger) {
         Person dealer = participants.getDealer();
         List<String> playersName = getPlayersName();
-        Map<String, Double> playersProfit = new HashMap<>();
+        Map<Person, Double> playersProfit = new HashMap<>();
         for (String name : playersName) {
             Player player = (Player) participants.findByName(name);
-            double profit = exchanger.calculatePlayerProfit(name, player.matchGame(dealer));
-            playersProfit.put(name, profit);
+            double profit = exchanger.calculatePlayerProfit(player, player.matchGame(dealer));
+            playersProfit.put(player, profit);
         }
         return playersProfit;
     }
 
-    private double getDealerProfit(Exchanger exchanger, Map<String, Double> playersProfit) {
+    private double getDealerProfit(Exchanger exchanger, Map<Person, Double> playersProfit) {
         List<Double> profits = getProfits(playersProfit);
         return exchanger.calculateDealerProfit(profits);
     }
 
-    private List<Double> getProfits(Map<String, Double> playersProfit) {
+    private List<Double> getProfits(Map<Person, Double> playersProfit) {
         return new ArrayList<>(playersProfit.values());
+    }
+
+    public Participants getParticipants() {
+        return participants;
     }
 }

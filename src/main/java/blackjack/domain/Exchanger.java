@@ -5,23 +5,23 @@ import java.util.Map;
 
 public class Exchanger {
 
-    private final Map<String, Integer> bettingMoney;
+    private final Map<Person, Integer> bettingMoney;
 
-    public Exchanger(Map<String, Integer> bettingMoney) {
+    public Exchanger(Map<Person, Integer> bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
-    public double calculatePlayerProfit(String name, GameResult gameResult) {
+    public double calculatePlayerProfit(Person player, GameResult gameResult) {
         if (gameResult.equals(GameResult.BLACKJACK)) {
-            return bettingMoney.get(name) * 1.5;
+            return bettingMoney.get(player) * 1.5;
         }
         if (gameResult.equals(GameResult.WIN)) {
-            return bettingMoney.get(name);
+            return bettingMoney.get(player);
         }
         if (gameResult.equals(GameResult.DRAW)) {
             return 0;
         }
-        return bettingMoney.get(name) * (-1.0);
+        return bettingMoney.get(player) * (-1.0);
     }
 
     public double calculateDealerProfit(List<Double> playersProfit) {

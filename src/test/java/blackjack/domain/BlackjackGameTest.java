@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.dto.BettingMoneyDto;
+import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -127,20 +129,27 @@ class BlackjackGameTest {
         blackjackGame.drawMoreCard("encho");
         blackjackGame.drawDealerMoreCard();
 
+        Person encho = blackjackGame.getParticipants().findByName("encho");
+        Person glen = blackjackGame.getParticipants().findByName("glen");
+
         Map<String, Integer> bettingMoney = new HashMap<>();
-        bettingMoney.put("encho", 2000);
-        bettingMoney.put("glen", 3000);
+        bettingMoney.put(encho.getName(), 2000);
+        bettingMoney.put(glen.getName(), 3000);
+        BettingMoneyDto bettingMoneyDto = BettingMoneyDto.of(bettingMoney, blackjackGame.getParticipants());
+
+        Person dealer = blackjackGame.getParticipants().findByName("딜러");
+
+        Map<Person, Double> expected = new HashMap<>();
+        expected.put(encho, -2000.0);
+        expected.put(glen, 4500.0);
+        expected.put(dealer, -2500.0);
+        ParticipantsProfitDto expectedDto = ParticipantsProfitDto.of(expected);
 
         // when
-        Map<String, Double> participantsProfit = blackjackGame.getParticipantsProfit(bettingMoney);
+        ParticipantsProfitDto participantsProfitDto = blackjackGame.getParticipantsProfitDto(bettingMoneyDto);
 
         // then
-        Map<String, Double> expected = new HashMap<>();
-        expected.put("encho", -2000.0);
-        expected.put("glen", 4500.0);
-        expected.put("딜러", -2500.0);
-
-        assertThat(participantsProfit).containsAllEntriesOf(expected);
+        assertThat(participantsProfitDto.getParticipantsProfit()).isEqualTo(expectedDto.getParticipantsProfit());
     }
 
     static class MockDeckMaker implements Shuffler {

@@ -2,6 +2,8 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.DeckMaker;
+import blackjack.dto.BettingMoneyDto;
+import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -33,23 +35,23 @@ public class BlackJackController {
     }
 
     public void run() {
-        Map<String, Integer> bettingMoney = getBettingMoney(blackjackGame.getPlayersName());
+        BettingMoneyDto bettingMoneyDto = getBettingMoney(blackjackGame.getPlayersName());
         blackjackGame.drawInitCard();
         printInitStatus(blackjackGame.getParticipantsInit());
         drawMoreCardForPlayers(blackjackGame.getPlayersName());
         InputView.closeScanner();
         drawMoreCardForDealer();
         printAllStatus();
-        printGameResult(blackjackGame.getParticipantsProfit(bettingMoney));
+        printGameResult(blackjackGame.getParticipantsProfitDto(bettingMoneyDto));
     }
 
-    private Map<String, Integer> getBettingMoney(List<String> playersName) {
+    private BettingMoneyDto getBettingMoney(List<String> playersName) {
         Map<String, Integer> bettingMoney = new HashMap<>();
         for (String name : playersName) {
             int money = repeat(() -> validate(InputView.readBettingMoney(name)));
             bettingMoney.put(name, money);
         }
-        return bettingMoney;
+        return BettingMoneyDto.of(bettingMoney, blackjackGame.getParticipants());
     }
 
     private int validate(int value) {
@@ -122,9 +124,10 @@ public class BlackJackController {
         OutputView.printPersonStatus(name, personStatusDto.getCards(), score);
     }
 
-    private void printGameResult(Map<String, Double> participantsProfit) {
-        OutputView.printGameEndMessage();
+    private void printGameResult(ParticipantsProfitDto participantsProfitDto) {
+        Map<String, Double> participantsProfit = participantsProfitDto.getParticipantsProfit();
 
+        OutputView.printGameEndMessage();
         for (String name : blackjackGame.getParticipantsName()) {
             OutputView.printProfitResult(name, participantsProfit.get(name));
         }
