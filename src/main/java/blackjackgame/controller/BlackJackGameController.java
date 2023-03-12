@@ -1,6 +1,6 @@
 package blackjackgame.controller;
 
-import blackjackgame.domain.DrawCommand;
+import blackjackgame.domain.UserAction;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
 import blackjackgame.domain.card.ShuffledCardsGenerator;
@@ -99,10 +99,10 @@ public class BlackJackGameController {
     }
 
     private boolean isHitCommandEntered(Player player) {
-        return DrawCommand.HIT == repeatForValidInput(() -> readDrawCommand(player));
+        return UserAction.HIT == repeatForValidInput(() -> readDrawCommand(player));
     }
 
-    private DrawCommand readDrawCommand(Player player) {
+    private UserAction readDrawCommand(Player player) {
         outputView.printAskOneMoreCardMessage(player.getName());
         return inputView.readDrawCommand();
     }

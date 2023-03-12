@@ -1,6 +1,6 @@
 package blackjackgame.view;
 
-import blackjackgame.domain.DrawCommand;
+import blackjackgame.domain.UserAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -55,7 +55,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public DrawCommand readDrawCommand() {
-        return DrawCommand.of(scanner.nextLine());
+    public UserAction readDrawCommand() {
+        return UserAction.of(scanner.nextLine());
     }
 }
