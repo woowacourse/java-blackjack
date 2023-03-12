@@ -16,13 +16,13 @@ class GamePlayerTest {
         gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("name1", "name2", "name3")));
     }
 
-    @DisplayName("생성 테스트")
+    @DisplayName("GamePlayer의 수는 players의 수보다 하나 많다.")
     @Test
     void Should_Create_When_NewGamePlayer() {
         assertThat(gamePlayer.count()).isEqualTo(4);
     }
 
-    @DisplayName("딜러에게 카드를 나눠주는 메소드 테스트")
+    @DisplayName("딜러에게 카드를 나눠줄 수 있다.")
     @Test
     void Should_Success_When_GiveCardToDealer() {
         gamePlayer.dealerHit(new Card(CardNumber.ACE, CardSymbol.HEARTS));
@@ -30,7 +30,7 @@ class GamePlayerTest {
         assertThat(gamePlayer.getDealer().getAllCards().get(0).getCardNumberToString()).isEqualTo("A");
     }
 
-    @DisplayName("플레이어에게 카드를 나눠주는 메소드 테스트")
+    @DisplayName("플레이어에게 카드를 나눠줄 수 있다.")
     @Test
     void Should_Success_When_GiveCardToPlayer() {
         int secondPlayerIndex = 1;
@@ -40,7 +40,7 @@ class GamePlayerTest {
                 .getCardNumberToString()).isEqualTo("A");
     }
 
-    @DisplayName("게임 시작 시 딜러와 플레이어에게 카드 두 장을 나눠주는 메소드 테스트")
+    @DisplayName("게임 시작 시 딜러와 플레이어에게 카드 두 장씩 나눠준다.")
     @Test
     void Should_Success_When_init() {
         List<Card> cards = new ArrayList<>();

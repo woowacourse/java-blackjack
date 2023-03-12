@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
-    @DisplayName("생성 테스트")
+    @DisplayName("입력되는 이름의 수만큼 참가자를 생성한다.")
     @Test
     void Should_Create_When_NewPlayers() {
         assertThat(Players.from(List.of("name1", "name2", "name3")).count()).isEqualTo(3);

@@ -16,7 +16,7 @@ class CardNumberTest {
         assertThat(CardNumber.scoreByNumber(number)).isEqualTo(score);
     }
 
-    @DisplayName("카드 숫자가 아닌 경우 예외 발생")
+    @DisplayName("카드 숫자가 아닌 경우 예외가 발생한다.")
     @ParameterizedTest(name = "{displayName} [{index}] => ''{0}''")
     @ValueSource(strings = {"N", "11", "a"})
     void Should_ThrowException_When_InputNumber(String number) {
