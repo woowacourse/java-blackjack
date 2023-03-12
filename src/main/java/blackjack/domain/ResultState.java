@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum ResultState {
     WIN_BLACKJACK(1.5),
     WIN(1),

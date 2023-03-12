@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.BetAmount;
 
 public class Player extends Participant {
     private static final String INVALID_NAME = "딜러";

@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.ScoreState;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayerCards;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,15 +17,15 @@ public abstract class Participant {
         this.playerCards = new PlayerCards();
     }
 
-    void addCard(Card card) {
+    public void addCard(Card card) {
         playerCards.add(card);
     }
 
-    void addCards(List<Card> cards) {
+    public void addCards(List<Card> cards) {
         playerCards.addAll(cards);
     }
 
-    ScoreState getState() {
+    public ScoreState getState() {
         return ScoreState.of(playerCards.getScore(), playerCards.size());
     }
 

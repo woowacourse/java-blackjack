@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,12 +45,6 @@ public class Participants {
         if (new HashSet<>(participants).size() != participants.size()) {
             throw new IllegalArgumentException("중복인 이름은 입력하실 수 없습니다.");
         }
-    }
-
-    public List<String> getPlayerNames() {
-        return getPlayers().stream()
-                           .map(Participant::getName)
-                           .collect(Collectors.toList());
     }
 
     public List<Participant> getParticipants() {
