@@ -144,4 +144,27 @@ class ParticipantsTest {
                 Map.entry(player, 15_000)
         );
     }
+
+    @Test
+    void 딜러가_버스트면_플레이어는_본인패와_상관없이_배팅금액을_돌려받는다() {
+        // given
+        Participants participants = Participants.of(List.of("포비"));
+        Player player = participants.getPlayers().get(0);
+        Dealer dealer = participants.getDealer();
+        dealer.addCard(new Card(Denomination.JACK, Suit.SPADE));
+        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Denomination.QUEEN, Suit.SPADE));
+        player.addCard(new Card(Denomination.JACK, Suit.SPADE));
+        player.addCard(new Card(Denomination.TEN, Suit.SPADE));
+        player.addCard(new Card(Denomination.QUEEN, Suit.SPADE));
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(participants.getBettingResult()).contains(
+                // 딜러 버스트 vs 플레이어 버스트
+                Map.entry(player, 10_000)
+        );
+    }
 }
