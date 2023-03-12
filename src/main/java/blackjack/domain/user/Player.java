@@ -39,7 +39,11 @@ public class Player extends User {
         return name.getName();
     }
 
-    public double getReceivingAmount() {
+    public double getRewards() {
         return betAmount.getReceivingAmount();
+    }
+
+    public int getBetAmount() {
+        return betAmount.getBetAmount();
     }
 }

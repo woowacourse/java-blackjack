@@ -56,6 +56,6 @@ class PlayerTest {
         player.checkBlackjack(false);
 
         // then
-        assertThat(player.getReceivingAmount()).isEqualTo(betAmount * 1.5);
+        assertThat(player.getRewards()).isEqualTo(betAmount * 1.5);
     }
 }
