@@ -28,13 +28,16 @@ public final class WinningResult {
         if (dealer.isBust()) {
             return WinningStatus.WIN;
         }
-        return statusWhenDealerNotBust(player, dealer);
+        if (player.isBust()) {
+            return WinningStatus.LOSE;
+        }
+        return statusWhenNotBust(player, dealer);
     }
 
-    private WinningStatus statusWhenDealerNotBust(final Player player, final Dealer dealer) {
+    private WinningStatus statusWhenNotBust(final Player player, final Dealer dealer) {
         Score playerScore = player.calculateScore();
         Score dealerScore = dealer.calculateScore();
-        if (!player.isBust() && playerScore.isGreaterThan(dealerScore)) {
+        if (playerScore.isGreaterThan(dealerScore)) {
             return WinningStatus.WIN;
         }
         if (playerScore.isEquals(dealerScore)) {
