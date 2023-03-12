@@ -14,10 +14,13 @@ public final class Ready extends State {
 
     @Override
     public State draw(Card card) {
-        if (getHand().isEmpty()) {
-            return new Ready(getHand().add(card));
-        }
-        return new Hit(getHand().add(card));
+        final Hand newHand = getHand().add(card);
+
+        if (getHand().isEmpty())
+            return new Ready(newHand);
+        if (newHand.isBlackjack())
+            return new Blackjack(newHand);
+        return new Hit(newHand);
     }
 
     @Override
