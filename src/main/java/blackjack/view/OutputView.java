@@ -6,13 +6,12 @@ import java.util.Map;
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final String DEALER_NAME = "딜러";
     private static final int NUMBER_OF_SETTING_CARDS = 2;
     private static final int SPECIFIC_SCORE_OF_DEALER = 16;
 
-    public void printDistributeCardsMessage(final List<String> players) {
-        String names = String.join(DELIMITER, players);
-        System.out.println("\n" + DEALER_NAME + "와 " + names + "에게 " + NUMBER_OF_SETTING_CARDS + "장을 나누었습니다.");
+    public void printDistributeCardsMessage(final String dealerName, final List<String> players) {
+        String playersName = String.join(DELIMITER, players);
+        System.out.println("\n" + dealerName + "와 " + playersName + "에게 " + NUMBER_OF_SETTING_CARDS + "장을 나누었습니다.");
     }
 
     public void printParticipantsInitCards(final Map<String, List<String>> initCards) {
@@ -30,8 +29,8 @@ public final class OutputView {
         System.out.println(playerName + "카드: " + String.join(DELIMITER, currentCards));
     }
 
-    public void printDealerDrawOneMoreCard() {
-        System.out.println("\n" + DEALER_NAME + "는 " + SPECIFIC_SCORE_OF_DEALER + "이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerDrawOneMoreCard(final String dealerName) {
+        System.out.println("\n" + dealerName + "는 " + SPECIFIC_SCORE_OF_DEALER + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printParticipantsScore(final Map<String, List<String>> cardsWithName, final List<Integer> scores) {

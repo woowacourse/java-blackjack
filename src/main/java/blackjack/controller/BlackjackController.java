@@ -66,7 +66,7 @@ public final class BlackjackController {
 
     private void printParticipantsInitCards(final Dealer dealer, final Players players) {
         List<String> playerNames = getPlayerNames(players.getPlayers());
-        outputView.printDistributeCardsMessage(playerNames);
+        outputView.printDistributeCardsMessage(dealer.getName(), playerNames);
 
         Map<String, List<String>> participantsInitCards = getParticipantsInitCards(dealer, players.getPlayers());
         outputView.printParticipantsInitCards(participantsInitCards);
@@ -116,7 +116,7 @@ public final class BlackjackController {
     private void turnOfDealer(final Dealer dealer, final Deck deck) {
         while (dealer.canDraw()) {
             dealer.receiveCard(deck.drawCard());
-            outputView.printDealerDrawOneMoreCard();
+            outputView.printDealerDrawOneMoreCard(dealer.getName());
         }
     }
 
