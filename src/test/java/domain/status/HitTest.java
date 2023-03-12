@@ -18,20 +18,20 @@ class HitTest {
     @Test
     void drawBust() {
         Cards cards = new Cards(List.of(TEN_CLOVER, TEN_HEART));
-        Hit hit = new Hit(cards);
+        Status hit = new Hit(cards);
         assertThat(hit.draw(TEN_SPADE)).isInstanceOf(Bust.class);
     }
 
     @Test
     void drawHit() {
         Cards cards = new Cards(List.of(TEN_CLOVER, TEN_HEART));
-        Hit hit = new Hit(cards);
+        Status hit = new Hit(cards);
         assertThat(hit.draw(ACE_CLOVER)).isInstanceOf(Stand.class);
     }
 
     @Test
     void selectStand() {
-        Hit hit = new Hit(new Cards());
+        Status hit = new Hit(new Cards());
         assertThat(hit.selectStand()).isInstanceOf(Stand.class);
     }
 }

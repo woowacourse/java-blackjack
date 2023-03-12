@@ -15,7 +15,7 @@ class BustTest {
     @Test
     void profitWeight() {
         Cards cards = new Cards(List.of(TEN_CLOVER, JACK_SPADE, JACK_CLOVER));
-        Bust bust = new Bust(cards);
+        Status bust = new Bust(cards);
         assertThat(bust.profitWeight()).isEqualTo(BigDecimal.valueOf(1));
     }
 }

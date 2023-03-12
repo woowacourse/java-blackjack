@@ -14,7 +14,7 @@ class BlackJackTest {
     @Test
     void profitWeight() {
         Cards cards = new Cards(List.of(ACE_CLOVER, TEN_CLOVER));
-        BlackJack blackJack = new BlackJack(cards);
+        Status blackJack = new BlackJack(cards);
         assertThat(blackJack.profitWeight()).isEqualTo(BigDecimal.valueOf(1.5));
     }
 }

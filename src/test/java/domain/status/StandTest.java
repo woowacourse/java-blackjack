@@ -14,7 +14,7 @@ class StandTest {
     @Test
     void profitWeight() {
         Cards cards = new Cards(List.of(QUEEN_DIAMOND, JACK_SPADE));
-        Stand stand = new Stand(cards);
+        Status stand = new Stand(cards);
         assertThat(stand.profitWeight()).isEqualTo(BigDecimal.valueOf(1));
     }
 }

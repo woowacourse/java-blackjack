@@ -17,14 +17,14 @@ class ReadyTest {
     @Test
     void initialDrawBlackJack() {
         Cards cards = new Cards(List.of(ACE_HEART, KING_HEART));
-        Ready ready = new Ready();
+        Status ready = new Ready();
         assertThat(ready.initialDraw(cards)).isInstanceOf(BlackJack.class);
     }
 
     @Test
     void initialDrawHit() {
         Cards cards = new Cards(List.of(KING_CLOVER, KING_SPADE));
-        Ready ready = new Ready();
+        Status ready = new Ready();
         assertThat(ready.initialDraw(cards)).isInstanceOf(Hit.class);
     }
 }
