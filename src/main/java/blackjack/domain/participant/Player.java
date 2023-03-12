@@ -1,15 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BetAmount;
-
 public class Player extends Participant {
     private static final String INVALID_NAME = "딜러";
 
-    private final BetAmount betAmount;
-
     private Player(Name name) {
         super(name);
-        this.betAmount = new BetAmount();
     }
 
     public static Player from(String name) {
@@ -36,10 +31,5 @@ public class Player extends Participant {
 
     public void multipleBetAmount(double times) {
         betAmount.multiple(times);
-    }
-
-    @Override
-    public int getBetAmount() {
-        return betAmount.getValue();
     }
 }

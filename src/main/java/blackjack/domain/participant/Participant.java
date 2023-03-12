@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.ScoreState;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
@@ -11,10 +12,12 @@ public abstract class Participant {
 
     private final Name name;
     private final PlayerCards playerCards;
+    protected final BetAmount betAmount;
 
     Participant(Name name) {
         this.name = name;
         this.playerCards = new PlayerCards();
+        this.betAmount = new BetAmount();
     }
 
     public void addCard(Card card) {
@@ -35,7 +38,9 @@ public abstract class Participant {
 
     public abstract void initBetAmount(int value);
 
-    public abstract int getBetAmount();
+    public int getBetAmount() {
+        return betAmount.getValue();
+    }
 
     public List<Card> getCards() {
         return playerCards.toList();
