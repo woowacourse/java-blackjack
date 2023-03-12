@@ -7,13 +7,13 @@ public enum CardShape {
     HEART("하트"),
     CLOVER("클로버");
 
-    private final String view;
+    private final String name;
 
-    CardShape(final String view) {
-        this.view = view;
+    CardShape(final String name) {
+        this.name = name;
     }
 
-    public String getView() {
-        return view;
+    public String getName() {
+        return name;
     }
 }
