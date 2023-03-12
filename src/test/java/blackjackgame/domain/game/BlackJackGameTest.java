@@ -1,7 +1,9 @@
 package blackjackgame.domain.game;
 
+import static blackjackgame.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;
 
+import blackjackgame.domain.UserAction;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
 import blackjackgame.domain.card.CloverCard;
@@ -12,6 +14,7 @@ import blackjackgame.domain.user.Bet;
 import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Names;
 import blackjackgame.domain.user.Player;
+import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,5 +88,40 @@ class BlackJackGameTest {
         blackJackGame.drawDefaultCard();
 
         assertThat(blackJackGame.isDealerDrawExtraCount()).isFalse();
+    }
+
+    @DisplayName("플레이어가 HIT를 선택했을 경우, 한 장의 카드를 더 뽑는다.")
+    @Test
+    void takeUserAction_hit() {
+        blackJackGame.drawDefaultCard();
+        int defaultSize = player.cards().size();
+
+        blackJackGame.takePlayerAction(player, UserAction.HIT);
+
+        assertThat(player.cards().size()).isEqualTo(defaultSize + 1);
+    }
+
+    @DisplayName("플레이어가 HIT를 선택하고 뽑은 카드로 인해 버스트 상태가 되면 플레이어의 상태를 드로우 종료 상태로 변경한다.")
+    @Test
+    void takeUserAction_hitAndBust() {
+        player.receiveCards(jackKingAce);
+        int defaultSize = player.cards().size();
+
+        blackJackGame.takePlayerAction(player, UserAction.HIT);
+
+        assertThat(player.cards().size()).isEqualTo(defaultSize + 1);
+        assertThat(player.getStatus()).isSameAs(PlayerStatus.DRAW_FINISHED);
+    }
+
+    @DisplayName("플레이어가 STAY를 선택했을 경우, 카드를 뽑지 않고 플레이어의 상태를 드로우 종료 상태로 변경한다.")
+    @Test
+    void takeUserAction_stay() {
+        blackJackGame.drawDefaultCard();
+        int defaultSize = player.cards().size();
+
+        blackJackGame.takePlayerAction(player, UserAction.STAY);
+
+        assertThat(player.cards().size()).isEqualTo(defaultSize);
+        assertThat(player.getStatus()).isSameAs(PlayerStatus.DRAW_FINISHED);
     }
 }
