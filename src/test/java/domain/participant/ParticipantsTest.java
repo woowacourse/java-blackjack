@@ -146,7 +146,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 딜러가_버스트면_플레이어는_본인패와_상관없이_배팅금액을_돌려받는다() {
+    void 딜러가_버스트면_플레이어는_본인패와_상관없이_수익이다() {
         // given
         Participants participants = Participants.of(List.of("포비"));
         Player player = participants.getPlayers().get(0);
@@ -169,7 +169,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 딜러와_플레이어_동시에_블랙잭이면_플레이어는_배팅금액을_돌려받는다() {
+    void 딜러와_플레이어_동시에_블랙잭이면_수익은_없다() {
         // given
         Participants participants = Participants.of(List.of("포비"));
         Player player = participants.getPlayers().get(0);
