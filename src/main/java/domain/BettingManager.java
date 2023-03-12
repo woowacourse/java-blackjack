@@ -40,7 +40,7 @@ public class BettingManager {
         BettingAmount playerRevenue = calculatePlayerRevenue(name, playerResult.getValue());
         participantRevenues.put(name, playerRevenue);
         participantRevenues.put(Name.DEALER,
-                participantRevenues.get(Name.DEALER).subtractFromOtherPlayer(playerRevenue));
+                participantRevenues.get(Name.DEALER).subtract(playerRevenue));
     }
 
     private BettingAmount calculatePlayerRevenue(Name playerName, GameResult result) {

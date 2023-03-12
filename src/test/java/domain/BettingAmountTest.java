@@ -64,7 +64,7 @@ class BettingAmountTest {
         BettingAmount dealerInitialAmount = BettingAmount.getDealerInitialAmount();
         BettingAmount playerInitialAmount = BettingAmount.fromPlayer(10000);
 
-        BettingAmount dealerResult = dealerInitialAmount.subtractFromOtherPlayer(playerInitialAmount);
+        BettingAmount dealerResult = dealerInitialAmount.subtract(playerInitialAmount);
 
         assertThat(dealerResult.getRevenue()).isEqualTo(dealerInitialAmount.getRevenue() - 10000);
     }

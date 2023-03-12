@@ -29,7 +29,7 @@ public class BettingAmount {
         return new BettingAmount(revenue * result.getMultiple());
     }
 
-    public BettingAmount subtractFromOtherPlayer(BettingAmount other) {
+    public BettingAmount subtract(BettingAmount other) {
         return new BettingAmount(revenue - other.getRevenue());
     }
 
