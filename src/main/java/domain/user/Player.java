@@ -43,7 +43,7 @@ public class Player {
         return -betting;
     }
 
-    private Score getScore() {
+    public Score getScore() {
         return getState().score();
     }
 

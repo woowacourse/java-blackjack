@@ -1,5 +1,7 @@
 package view;
 
+import domain.game.Command;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -33,10 +35,11 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public String inputCardCommand(String player) {
+    public Command inputCardCommand(String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
-        String command = scanner.nextLine();
-        validator.validateNotBlank(command);
-        return command;
+        String input = scanner.nextLine();
+        validator.validateNotBlank(input);
+
+        return Command.from(input);
     }
 }

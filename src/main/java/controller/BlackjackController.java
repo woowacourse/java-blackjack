@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Card;
 import domain.game.BlackjackGame;
+import domain.game.Command;
 import domain.game.Deck;
 import domain.strategy.NumberGenerator;
 import domain.strategy.RandomNumberGenerator;
@@ -73,18 +74,25 @@ public class BlackjackController {
 
     public void hitPlayers() {
         List<Player> players = blackjackGame.getPlayers();
-
-        String command;
+        
         for (Player player : players) {
-            while(blackjackGame.isRunning(player.getName())) {
-                command = inputView.inputCardCommand(player.getName());
-                if (command.equals("y")) {
-                    blackjackGame.hitPlayer(player.getName());
-                } else if (command.equals("n")) {
-                    blackjackGame.stayPlayer(player.getName());
-                }
-                outputView.printNameAndCards(player.getName(), cardString(player));
-            }
+            playTurn(player);
+        }
+    }
+
+    private void playTurn(Player player) {
+        while(blackjackGame.isRunning(player.getName())) {
+            hitOrStay(player);
+            outputView.printNameAndCards(player.getName(), cardString(player));
+        }
+    }
+
+    private void hitOrStay(Player player) {
+        Command command = inputView.inputCardCommand(player.getName());
+        if (command == Command.Y) {
+            blackjackGame.hitPlayer(player.getName());
+        } else if (command == Command.N) {
+            blackjackGame.stayPlayer(player.getName());
         }
     }
 
@@ -98,9 +106,9 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         List<Player> players = blackjackGame.getPlayers();
 
-        outputView.printResult(dealer.getName(), cardString(dealer), dealer.getState().score().value());
+        outputView.printResult(dealer.getName(), cardString(dealer), dealer.getScore().value());
         for (Player player : players) {
-            outputView.printResult(player.getName(), cardString(player), player.getState().score().value());
+            outputView.printResult(player.getName(), cardString(player), player.getScore().value());
         }
     }
 
@@ -120,7 +128,8 @@ public class BlackjackController {
     private List<String> cardString(Dealer dealer) {
         List<String> res = new ArrayList<>();
         for (Card card : dealer.cards()) {
-            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) + CardSuitMapper.getCardName(card.getSuit()));
+            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
+                    CardSuitMapper.getCardName(card.getSuit()));
         }
         return res;
     }
@@ -128,7 +137,8 @@ public class BlackjackController {
     private List<String> cardString(Player player) {
         List<String> res = new ArrayList<>();
         for (Card card : player.cards()) {
-            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) + CardSuitMapper.getCardName(card.getSuit()));
+            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
+                    CardSuitMapper.getCardName(card.getSuit()));
         }
         return res;
     }
