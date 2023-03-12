@@ -1,19 +1,19 @@
 package domain;
 
 import domain.player.Status;
-import domain.stake.Stake;
+import domain.stake.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class StakeTest {
+class BetTest {
 
     @Test
     @DisplayName("0미만일 수  없다")
     void minimumTest() {
-        assertThatThrownBy(() -> Stake.fromBet(-1))
+        assertThatThrownBy(() -> Bet.from(-1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("미만");
     }
@@ -21,7 +21,7 @@ class StakeTest {
     @Test
     @DisplayName("100_000 초과일 수 없다")
     void maximumTest() {
-        assertThatThrownBy(() -> Stake.fromBet(100_001))
+        assertThatThrownBy(() -> Bet.from(100_001))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("초과");
     }
@@ -31,9 +31,9 @@ class StakeTest {
     @DisplayName("이기면 베팅 금액의 1배를 반환한다")
     void calculatePrize() {
         //given
-        Stake stake = Stake.fromBet(100);
+        Bet bet = Bet.from(100);
         //when
-        Stake dealerPrize = stake.getPrize(Status.WIN);
+        Bet dealerPrize = bet.getPrize(Status.WIN);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(100);
@@ -43,9 +43,9 @@ class StakeTest {
     @DisplayName("지면 베팅 금액의 -1배를 반환한다")
     void calculatePrize2() {
         //given
-        Stake stake = Stake.fromBet(100);
+        Bet bet = Bet.from(100);
         //when
-        Stake dealerPrize = stake.getPrize(Status.LOSE);
+        Bet dealerPrize = bet.getPrize(Status.LOSE);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(-100);
@@ -55,9 +55,9 @@ class StakeTest {
     @DisplayName("비기면 베팅 금액의 0배를 반환한다")
     void calculatePrize3() {
         //given
-        Stake stake = Stake.fromBet(100);
+        Bet bet = Bet.from(100);
         //when
-        Stake dealerPrize = stake.getPrize(Status.DRAW);
+        Bet dealerPrize = bet.getPrize(Status.DRAW);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(0);
@@ -67,9 +67,9 @@ class StakeTest {
     @DisplayName("블랙잭으로 지면 베팅 금액의 1.5배를 반환한다")
     void calculatePrize4() {
         //given
-        Stake stake = Stake.fromBet(100);
+        Bet bet = Bet.from(100);
         //when
-        Stake dealerPrize = stake.getPrize(Status.BLACKJACK_WIN);
+        Bet dealerPrize = bet.getPrize(Status.BLACKJACK_WIN);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(150);
@@ -79,21 +79,21 @@ class StakeTest {
     @DisplayName("Stake 합산 테스트")
     void addStakeTest() {
         //given
-        Stake stake1 = Stake.fromBet(150);
-        Stake stake2 = Stake.fromBet(100);
+        Bet bet1 = Bet.from(150);
+        Bet bet2 = Bet.from(100);
         //when
-        Stake add = stake1.add(stake2);
+        Bet add = bet1.add(bet2);
         //then
-        assertThat(add).isEqualTo(Stake.fromBet(250));
+        assertThat(add).isEqualTo(Bet.from(250));
     }
 
     @Test
     @DisplayName("블랙잭으로 승리해서 얻은 stake는 100_000 초과일 수 있다")
     void stakeUnlimitTest() {
         //given
-        Stake stake = Stake.fromBet(100000);
+        Bet bet = Bet.from(100000);
         //when
-        Stake playerPrize = stake.getPrize(Status.BLACKJACK_WIN);
+        Bet playerPrize = bet.getPrize(Status.BLACKJACK_WIN);
         //then
         assertThat(playerPrize.getValue()).isEqualTo(150000);
     }

@@ -2,10 +2,9 @@ package controller;
 
 import domain.card.Deck;
 import domain.player.Dealer;
-import domain.player.Status;
 import domain.player.Player;
 import domain.player.Players;
-import domain.stake.Stake;
+import domain.stake.Bet;
 import view.InputView;
 
 import java.util.LinkedHashMap;
@@ -34,7 +33,7 @@ public final class BlackjackController {
     }
 
     private void process(final Players players, final Dealer dealer, final Deck deck) {
-        Map<Player, Stake> playerStakes = readStakes(players);
+        Map<Player, Bet> playerStakes = readStakes(players);
         drawInitialCards(players, dealer, deck);
 
         readPlayersHit(players, deck);
@@ -53,17 +52,17 @@ public final class BlackjackController {
         printInitialCards(dealer, players);
     }
 
-    private Map<Player, Stake> readStakes(final Players players) {
-        Map<Player, Stake> playerStakes = new LinkedHashMap<>();
+    private Map<Player, Bet> readStakes(final Players players) {
+        Map<Player, Bet> playerStakes = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             repeatReadSingleStake(playerStakes, player);
         }
         return playerStakes;
     }
 
-    private void repeatReadSingleStake(final Map<Player, Stake> playerStakes, final Player player) {
+    private void repeatReadSingleStake(final Map<Player, Bet> playerStakes, final Player player) {
         try {
-            playerStakes.put(player, Stake.fromBet(readBettingStake(player)));
+            playerStakes.put(player, Bet.from(readBet(player)));
         } catch (RuntimeException e) {
             InputView.printErrorMessage(e);
             repeatReadSingleStake(playerStakes, player);
@@ -114,8 +113,8 @@ public final class BlackjackController {
         }
     }
 
-    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Stake> playerBets) {
-        Map<Player, Stake> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
+    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Bet> playerBets) {
+        Map<Player, Bet> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
         printResult(finalStakeResults);
     }
 }

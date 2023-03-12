@@ -30,14 +30,14 @@ public final class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int readBettingStake(final Player player) {
+    public static int readBet(final Player player) {
         System.out.println(player.getName() + "의 베팅 금액은?");
         String input = scanner.nextLine();
         try {
             return Integer.parseInt(input);
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] 숫자를 입력해야 합니다.");
-            return readBettingStake(player);
+            return readBet(player);
         }
     }
 

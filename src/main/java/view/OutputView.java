@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
-import domain.stake.Stake;
+import domain.stake.Bet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public final class OutputView {
         printNewLine();
     }
 
-    public static void printResult(final Map<Player, Stake> prizeResults) {
+    public static void printResult(final Map<Player, Bet> prizeResults) {
         printNewLine();
         System.out.println(RESULT_GUIDE_MESSAGE);
         prizeResults.forEach(

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.stake.Stake;
+import domain.stake.Bet;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ public final class Players {
                 .collect(toList());
     }
 
-    public Map<Player, Stake> calculateFinalResults(final Dealer dealer, final Map<Player, Stake> playerBets) {
+    public Map<Player, Bet> calculateFinalResults(final Dealer dealer, final Map<Player, Bet> playerBets) {
         Map<Player, Status> statusResults = calculateResults(dealer);
         return calculateBets(dealer, statusResults, playerBets);
     }
@@ -53,13 +53,13 @@ public final class Players {
                 .collect(toMap(player -> player, player -> player.compareWithDealer(dealer)));
     }
 
-    public Map<Player, Stake> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Stake> playerBets) {
-        Map<Player, Stake> prizeResult = new LinkedHashMap<>();
+    public Map<Player, Bet> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Bet> playerBets) {
+        Map<Player, Bet> prizeResult = new LinkedHashMap<>();
         for (Player player : players) {
             Status singleResult = statusResults.get(player);
-            Stake singleStake = playerBets.get(player);
-            prizeResult.merge(dealer, singleStake.getPrize(singleResult), Stake::add);
-            prizeResult.merge(player, singleStake.getPrize(singleResult), Stake::add);
+            Bet singleBet = playerBets.get(player);
+            prizeResult.merge(dealer, singleBet.getPrize(singleResult), Bet::add);
+            prizeResult.merge(player, singleBet.getPrize(singleResult), Bet::add);
         }
         prizeResult.computeIfPresent(dealer, (ignored, stake) -> stake.negate());
         return prizeResult;

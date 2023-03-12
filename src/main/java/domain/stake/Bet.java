@@ -4,21 +4,21 @@ import domain.player.Status;
 
 import java.util.Objects;
 
-public final class Stake {
+public final class Bet {
 
     private static final int MIN_BET = 100;
     private static final int MAX_BET = 100_000;
-    private static final int PLAYER_NEGATE = -1;
+    private static final int NEGATIVE_VALUE = -1;
 
     private final int value;
 
-    private Stake(final int value) {
+    private Bet(final int value) {
         this.value = value;
     }
 
-    public static Stake fromBet(final int value) {
+    public static Bet from(final int value) {
         validate(value);
-        return new Stake(value);
+        return new Bet(value);
     }
 
     private static void validate(final int value) {
@@ -30,16 +30,16 @@ public final class Stake {
         }
     }
 
-    public Stake getPrize(final Status status) {
-        return new Stake((int) (value * status.getMultiplyRatio()));
+    public Bet getPrize(final Status status) {
+        return new Bet((int) (value * status.getMultiplyRatio()));
     }
 
-    public Stake negate() {
-        return new Stake(value * -1);
+    public Bet negate() {
+        return new Bet(value * NEGATIVE_VALUE);
     }
 
-    public Stake add(final Stake stake) {
-        return new Stake(this.value + stake.value);
+    public Bet add(final Bet bet) {
+        return new Bet(this.value + bet.value);
     }
 
     public int getValue() {
@@ -50,8 +50,8 @@ public final class Stake {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Stake stake = (Stake) o;
-        return value == stake.value;
+        Bet bet = (Bet) o;
+        return value == bet.value;
     }
 
     @Override
