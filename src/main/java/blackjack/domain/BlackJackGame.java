@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.BettingTable;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -14,7 +13,6 @@ public class BlackJackGame {
     private static final int TRUMP_COUNT = 1;
     private static final int INITIAL_DRAW_COUNT = 2;
     private static final int BLACK_JACK_SCORE = 21;
-    private static final double BLACK_JACK_BONUS_RATE = 1.5;
 
     private final Participants participants;
     private final Deck deck;
@@ -47,8 +45,22 @@ public class BlackJackGame {
     public int getPlayerProfit(final PlayerName playerName) {
         final int dealerScore = participants.getDealerScore();
         final int playerScore = participants.getPlayerScore(playerName);
-        final Result result = checkResult(dealerScore, playerScore);
-        return calculateProfit(playerName, result);
+        final Result result = showResult(dealerScore, playerScore);
+        return result.calculateProfit(bettingTable.getPlayerBetting(playerName));
+    }
+
+    private Result showResult(final int dealerScore, final int playerScore) {
+        if (playerScore == BLACK_JACK_SCORE) {
+            return checkBlackJackResult(dealerScore);
+        }
+        return checkResult(dealerScore, playerScore);
+    }
+
+    private Result checkBlackJackResult(final int dealerScore) {
+        if (dealerScore == BLACK_JACK_SCORE) {
+            return Result.DRAW;
+        }
+        return Result.BLACK_JACK_WIN;
     }
 
     private Result checkResult(final int dealerScore, final int playerScore) {
@@ -62,15 +74,6 @@ public class BlackJackGame {
             return Result.LOSE;
         }
         return Result.DRAW;
-    }
-
-    private int calculateProfit(final PlayerName playerName, final Result result) {
-        final Betting betting = bettingTable.getPlayerBetting(playerName);
-        final int profit = result.calculateProfit(betting);
-        if (participants.isBlackJackPlayer(playerName)) {
-            return (int) (profit * BLACK_JACK_BONUS_RATE);
-        }
-        return profit;
     }
 
     public int getDealerProfit() {

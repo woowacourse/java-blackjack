@@ -5,23 +5,18 @@ import java.util.function.Function;
 
 public enum Result {
 
-    WIN("승", Betting::getValue),
-    DRAW("무", profit -> 0),
-    LOSE("패", profit -> profit.getValue() * -1);
+    BLACK_JACK_WIN(betting -> (int) (betting.getValue() * 1.5)),
+    WIN(Betting::getValue),
+    DRAW(betting -> 0),
+    LOSE(betting -> betting.getValue() * -1);
 
-    private final String name;
     private final Function<Betting, Integer> function;
 
-    Result(final String name, final Function<Betting, Integer> function) {
-        this.name = name;
+    Result(final Function<Betting, Integer> function) {
         this.function = function;
     }
 
     public int calculateProfit(final Betting betting) {
         return function.apply(betting);
-    }
-
-    public String getName() {
-        return name;
     }
 }
