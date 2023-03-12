@@ -19,7 +19,8 @@ public class OutputView {
     }
 
     public static void printDealerCard(Participant dealer) {
-        System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCards().get(DEALER_VISIBLE_CARD)));
+        final Card dealerVisibleCard = dealer.getCards().get(DEALER_VISIBLE_CARD);
+        System.out.println(dealer.getName() + ": " + dealerVisibleCard.getName());
     }
 
     public static void printPlayersCard(List<Player> players) {
@@ -35,16 +36,12 @@ public class OutputView {
 
     private static String makeCardsView(List<Card> cards) {
         return cards.stream()
-                .map(OutputView::makeCardView)
+                .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
 
     public static void printPlayerCard(Participant player) {
         System.out.println(makePlayerHandView(player));
-    }
-
-    private static String makeCardView(Card card) {
-        return card.getRank().getName() + card.getSuit().getName();
     }
 
     public static void printDealerHit() {

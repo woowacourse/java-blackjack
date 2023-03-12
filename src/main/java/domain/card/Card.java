@@ -32,6 +32,10 @@ public class Card {
         return rank.getScore();
     }
 
+    public String getName() {
+        return rank.getName() + suit.getName();
+    }
+
     public Rank getRank() {
         return rank;
     }
