@@ -5,6 +5,7 @@ import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
 import blackjack.model.participant.Participant;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,14 @@ public class ParticipantDto {
         String participantName = participant.getName();
         List<String> participantCard = Collections.singletonList((makeCardUnit(card.getNumber(), card.getSuit())));
         return new ParticipantDto(participantName, participantCard);
+    }
+
+    public static List<ParticipantDto> of(List<? extends Participant> participants) {
+        List<ParticipantDto> participantsDto = new ArrayList<>();
+        for (Participant participant : participants) {
+            participantsDto.add(from(participant));
+        }
+        return participantsDto;
     }
 
     private static List<String> makeCardUnits(List<Card> hand) {

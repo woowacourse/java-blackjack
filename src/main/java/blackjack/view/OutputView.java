@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.dto.FinishedParticipantDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.ResultDto;
+import blackjack.dto.ProfitResultDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -15,7 +15,6 @@ public class OutputView {
     private static final String BLACKJACK_MARK = " (블랙잭)";
     private static final String SCORE_RESULT_FORMAT = "%s: %s - 결과: %s\n";
     private static final String PROFIT_RESULT_MESSAGE = "## 최종 수익";
-    private static final String DEALER_WINNING_RESULT_FORMAT = "딜러: %d승 %d무 %d패\n";
 
     private static OutputView instance;
 
@@ -35,7 +34,11 @@ public class OutputView {
         System.out.printf(DISTRIBUTION_MESSAGE_FORMAT, names);
     }
 
-    public void printNameAndHand(ParticipantDto participant) {
+    public void printAllCardStatus(List<ParticipantDto> participants){
+        participants.forEach(this::printSingleCardStatus);
+    }
+
+    public void printSingleCardStatus(ParticipantDto participant) {
         String name = participant.getName();
         String hand = String.join(DELIMITER_COMMA, participant.getCards());
         System.out.println(name + DELIMITER_COLON + hand);
@@ -49,11 +52,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printScoreResult(ParticipantDto participant, int score, boolean isBlackjack) {
+    public void printAllFinalCardStatus(List<FinishedParticipantDto> participants){
+        participants.forEach(this::printSingleFinalCardStatus);
+    }
+
+    private void printSingleFinalCardStatus(FinishedParticipantDto participant) {
         String name = participant.getName();
         String hand = String.join(DELIMITER_COMMA, participant.getCards());
-        String result = Integer.toString(score);
-        if (isBlackjack) {
+        String result = participant.getScore();
+        if (participant.isBlackjack()) {
             result += BLACKJACK_MARK;
         }
         System.out.printf(SCORE_RESULT_FORMAT, name, hand, result);
@@ -64,8 +71,10 @@ public class OutputView {
         System.out.println(PROFIT_RESULT_MESSAGE);
     }
 
-    public void printProfitResult(ResultDto result) {
-        System.out.printf(result.getName() + DELIMITER_COLON + result.getProfit());
-        System.out.println();
+    public void printAllProfitResult(List<ProfitResultDto> results) {
+        for(ProfitResultDto result : results){
+            System.out.printf(result.getName() + DELIMITER_COLON + result.getProfit());
+            System.out.println();
+        }
     }
 }

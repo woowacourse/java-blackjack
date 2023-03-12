@@ -1,8 +1,8 @@
 package blackjack.controller;
 
+import blackjack.dto.FinishedParticipantDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.ResultDto;
-import blackjack.model.participant.BetAmount;
+import blackjack.dto.ProfitResultDto;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
 import blackjack.model.state.DealerInitialState;
@@ -12,7 +12,6 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -58,10 +57,8 @@ public class GameController {
         outputView.printDistributionMessage(playerNames);
 
         Dealer dealer = participants.getDealer();
-        outputView.printNameAndHand(ParticipantDto.of(dealer, dealer.getFirstCard()));
-
-        List<Player> players = participants.getPlayers();
-        players.forEach(player -> outputView.printNameAndHand(ParticipantDto.from(player)));
+        outputView.printSingleCardStatus(ParticipantDto.of(dealer, dealer.getFirstCard()));
+        outputView.printAllCardStatus(ParticipantDto.of(participants.getPlayers()));
     }
 
     private void hitOrStand(CardDeck cardDeck, Participants participants) {
@@ -69,29 +66,15 @@ public class GameController {
             Player player = participants.getNextPlayer();
             boolean isHit = inputView.readHitOrStand(player.getName());
             participants.hitOrStandByPlayer(cardDeck, player, isHit);
-            outputView.printNameAndHand(ParticipantDto.from(player));
+            outputView.printSingleCardStatus(ParticipantDto.from(player));
         }
         outputView.printDealerHitMessage(participants.hitOrStandByDealer(cardDeck));
     }
 
     private void finish(Participants participants) {
-        printFinalCardStatus(participants);
-        printProfitResult(participants.getProfitResult());
-    }
+        outputView.printAllFinalCardStatus(FinishedParticipantDto.of(participants.getParticipants()));
 
-    private void printFinalCardStatus(Participants participants) {
-        for (Participant participant : participants.getParticipants()) {
-            int score = participant.getScore();
-            boolean isBlackjack = participant.isBlackjack();
-            outputView.printScoreResult(ParticipantDto.from(participant), score, isBlackjack);
-        }
-    }
-
-    private void printProfitResult(Map<Participant, Integer> profitResult) {
         outputView.printProfitResultMessage();
-        for (Map.Entry<Participant, Integer> entry : profitResult.entrySet()) {
-            outputView.printProfitResult(ResultDto.of(entry.getKey(), entry.getValue()));
-        }
+        outputView.printAllProfitResult(ProfitResultDto.of(participants.getProfitResult()));
     }
-
 }
