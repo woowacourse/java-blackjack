@@ -37,7 +37,7 @@ public class BettingZoneTest {
                 QUEEN_SPADE
         )));
 
-        assertThat(bettingZone.getProfitByPlayers(blackjackGame.play()).values())
+        assertThat(bettingZone.calculateProfitByPlayers(blackjackGame.play()).values())
                 .extracting(Money::getAmount)
                 .containsExactly(-10000, -10000);
     }

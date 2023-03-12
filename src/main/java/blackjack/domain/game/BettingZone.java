@@ -13,7 +13,7 @@ public class BettingZone {
         this.betMoneyByPlayers = betMoneyByPlayers;
     }
 
-    public Map<Player, Money> getProfitByPlayers(final Map<Player, Result> resultByPlayers) {
+    public Map<Player, Money> calculateProfitByPlayers(final Map<Player, Result> resultByPlayers) {
         Map<Player, Money> profitByPlayers = new LinkedHashMap<>();
 
         for (Player player : resultByPlayers.keySet()) {
@@ -25,6 +25,6 @@ public class BettingZone {
 
     private Money calculateProfit(final Player player, final Result result) {
         final Money money = betMoneyByPlayers.get(player);
-        return money.calculateProfit(result.getPayoutRatio());
+        return money.multiply(result.getPayoutRatio());
     }
 }

@@ -24,7 +24,7 @@ public class Money {
         }
     }
 
-    public Money calculateProfit(final double payoutRatio) {
+    public Money multiply(final double payoutRatio) {
         return new Money((int) (this.amount * payoutRatio));
     }
 

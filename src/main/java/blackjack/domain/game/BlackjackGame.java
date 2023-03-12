@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     public Map<Player, Money> calculateBet() {
-        return bettingZone.getProfitByPlayers(players.play());
+        return bettingZone.calculateProfitByPlayers(players.play());
     }
 
     public List<Player> getPlayers() {

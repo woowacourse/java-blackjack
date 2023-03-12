@@ -37,7 +37,7 @@ public class MoneyTest {
     void 수익을_반환한다(final double payoutRatio, final int amount) {
         final Money moneyForBetting = Money.createMoneyForBetting(10000);
 
-        final Money profit = moneyForBetting.calculateProfit(payoutRatio);
+        final Money profit = moneyForBetting.multiply(payoutRatio);
 
         assertThat(profit.getAmount()).isEqualTo(amount);
     }
