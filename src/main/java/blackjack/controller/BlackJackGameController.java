@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.Command;
 import blackjack.domain.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
@@ -13,9 +14,6 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class BlackJackGameController {
-
-    private static final String HIT_COMMAND = "y";
-    private static final String STAND_COMMAND = "n";
 
     private Deck deck;
 
@@ -69,15 +67,15 @@ public class BlackJackGameController {
     }
 
     private void handOutCardToEachPlayer(BlackJackGame blackJackGame, Player player) {
-        boolean isYesCommand = true;
-        while (player.isUnderThanBoundary(Participant.BUST_BOUNDARY) && isYesCommand) {
-            String gameCommand = readUntilValidate(() -> generateGameCommand(player));
-            isYesCommand = handOutCardByCommand(blackJackGame, player, gameCommand);
+        boolean isHitCommand = true;
+        while (player.isUnderThanBoundary(Participant.BUST_BOUNDARY) && isHitCommand) {
+            Command gameCommand = readUntilValidate(() -> generateGameCommand(player));
+            isHitCommand = handOutCardByCommand(blackJackGame, player, gameCommand);
         }
     }
 
-    private boolean handOutCardByCommand(BlackJackGame blackJackGame, Player player, String playerAnswer) {
-        if (playerAnswer.equals(HIT_COMMAND)) {
+    private boolean handOutCardByCommand(BlackJackGame blackJackGame, Player player, Command playerAnswer) {
+        if (playerAnswer.isHit()) {
             blackJackGame.handOutCardTo(deck, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
             return true;
@@ -86,16 +84,9 @@ public class BlackJackGameController {
         return false;
     }
 
-    private String generateGameCommand(final Player player) {
+    private Command generateGameCommand(final Player player) {
         final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
-        validateCorrectCommand(gameCommand);
-        return gameCommand;
-    }
-
-    private void validateCorrectCommand(final String gameCommand) {
-        if (!(HIT_COMMAND.equals(gameCommand) || STAND_COMMAND.equals(gameCommand))) {
-            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
-        }
+        return Command.of(gameCommand);
     }
 
     private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> bettingMoney) {
