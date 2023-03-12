@@ -33,7 +33,7 @@ public class BettingTableTest {
 
         BettingTable bettingTable = new BettingTable(bettingInfo);
 
-        assertThat(bettingTable.getBetting(playerName)).isEqualTo(betting.getValue());
+        assertThat(bettingTable.getBetting(playerName).getMoney()).isEqualTo(betting.getMoney());
     }
 
     static Stream<Arguments> createNameAndBetting() {
