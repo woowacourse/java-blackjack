@@ -38,8 +38,8 @@ class GameDeckTest {
     @DisplayName("카드는 덱에서 순서대로 뽑아간다.")
     void drawCard() {
         //given
-        List<Card> cards = new ArrayList<>(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_THREE,
-                CloverCard.CLOVER_FIVE));
+        List<Card> cards = new ArrayList<>(List.of(CloverCard.ACE, CloverCard.THREE,
+                CloverCard.FIVE));
         GameDeck gameDeck = new GameDeck(new TestDeckGenerator(cards));
         List<Card> drawCards = new ArrayList<>();
 
@@ -47,8 +47,8 @@ class GameDeckTest {
         IntStream.range(0, cards.size()).forEach(trial -> drawCards.add(gameDeck.drawCard()));
 
         //then
-        assertThat(drawCards).isEqualTo(List.of(CloverCard.CLOVER_ACE,
-                CloverCard.CLOVER_THREE, CloverCard.CLOVER_FIVE));
+        assertThat(drawCards).isEqualTo(List.of(CloverCard.ACE,
+                CloverCard.THREE, CloverCard.FIVE));
     }
 
     static class TestDeckGenerator implements DeckGenerator {

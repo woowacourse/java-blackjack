@@ -26,9 +26,9 @@ class GameResultTest {
     @DisplayName("전체 플레이어의 결과를 포함한다.")
     void judgePlayerResultsTest() {
         //given
-        Dealer dealer = new Dealer(List.of(CloverCard.CLOVER_SIX, CloverCard.CLOVER_THREE));
-        Player pobi = new Player(new Name("pobi"), List.of(CloverCard.CLOVER_FIVE, CloverCard.CLOVER_EIGHT));
-        Player neo = new Player(new Name("neo"), List.of(HeartCard.HEART_TWO, HeartCard.HEART_THREE));
+        Dealer dealer = new Dealer(List.of(CloverCard.SIX, CloverCard.THREE));
+        Player pobi = new Player(new Name("pobi"), List.of(CloverCard.FIVE, CloverCard.EIGHT));
+        Player neo = new Player(new Name("neo"), List.of(HeartCard.TWO, HeartCard.THREE));
         List<Player> players = List.of(pobi, neo);
         GameResult gameResult = new GameResult(List.of("pobi", "neo"));
         gameResult.saveResults(dealer, players);
@@ -45,9 +45,9 @@ class GameResultTest {
     @DisplayName("딜러의 결과를 포함한다.")
     void judgeDealerResultsTest() {
         //given
-        Dealer dealer = new Dealer(List.of(CloverCard.CLOVER_SIX, CloverCard.CLOVER_THREE));
-        Player pobi = new Player(new Name("pobi"), List.of(CloverCard.CLOVER_FIVE, CloverCard.CLOVER_EIGHT));
-        Player neo = new Player(new Name("neo"), List.of(HeartCard.HEART_TWO, HeartCard.HEART_THREE));
+        Dealer dealer = new Dealer(List.of(CloverCard.SIX, CloverCard.THREE));
+        Player pobi = new Player(new Name("pobi"), List.of(CloverCard.FIVE, CloverCard.EIGHT));
+        Player neo = new Player(new Name("neo"), List.of(HeartCard.TWO, HeartCard.THREE));
         List<Player> players = List.of(pobi, neo);
         GameResult gameResult = new GameResult(List.of("pobi", "neo"));
         gameResult.saveResults(dealer, players);

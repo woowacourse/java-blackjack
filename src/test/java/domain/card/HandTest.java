@@ -24,7 +24,7 @@ class HandTest {
     @Test
     @DisplayName("카드를 한 장 받을 수 있다.")
     void addTest() {
-        Card card = CloverCard.CLOVER_FOUR;
+        Card card = CloverCard.FOUR;
         Hand hand = new Hand();
 
         assertDoesNotThrow(() -> hand.add(card));
@@ -33,7 +33,7 @@ class HandTest {
     @Test
     @DisplayName("가진 카드 숫자의 합산을 계산할 수 있다.")
     void sumTest() {
-        Hand hand = new Hand(List.of(CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE));
+        Hand hand = new Hand(List.of(CloverCard.FOUR, CloverCard.FIVE));
 
         assertThat(hand.calculateScore()).isEqualTo(new Score(9));
     }
@@ -58,24 +58,24 @@ class HandTest {
 
     static Stream<Arguments> calculateScoreWithAceCase() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN,
-                        CloverCard.CLOVER_EIGHT), new Score(16)),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE,
-                        CloverCard.CLOVER_EIGHT), new Score(20)),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
-                        CloverCard.CLOVER_NINE), new Score(21))
+                Arguments.of(List.of(CloverCard.ACE, CloverCard.SEVEN,
+                        CloverCard.EIGHT), new Score(16)),
+                Arguments.of(List.of(CloverCard.ACE, CloverCard.ACE,
+                        CloverCard.EIGHT), new Score(20)),
+                Arguments.of(List.of(CloverCard.ACE, CloverCard.ACE, CloverCard.TEN,
+                        CloverCard.NINE), new Score(21))
         );
     }
 
     static Stream<Arguments> bustHandCase() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_QUEEN, CloverCard.CLOVER_JACK), true),
-                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_QUEEN, CloverCard.CLOVER_ACE), false),
-                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_ACE), false),
-                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_NINE, CloverCard.CLOVER_ACE, HeartCard.HEART_ACE), false),
-                Arguments.of(List.of(CloverCard.CLOVER_KING, CloverCard.CLOVER_ACE), false),
-                Arguments.of(List.of(HeartCard.HEART_ACE, CloverCard.CLOVER_ACE), false),
-                Arguments.of(List.of(HeartCard.HEART_ACE, SpadeCard.SPADE_ACE, CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE), false)
+                Arguments.of(List.of(CloverCard.KING, CloverCard.QUEEN, CloverCard.JACK), true),
+                Arguments.of(List.of(CloverCard.KING, CloverCard.QUEEN, CloverCard.ACE), false),
+                Arguments.of(List.of(CloverCard.TWO, CloverCard.ACE), false),
+                Arguments.of(List.of(CloverCard.KING, CloverCard.NINE, CloverCard.ACE, HeartCard.ACE), false),
+                Arguments.of(List.of(CloverCard.KING, CloverCard.ACE), false),
+                Arguments.of(List.of(HeartCard.ACE, CloverCard.ACE), false),
+                Arguments.of(List.of(HeartCard.ACE, SpadeCard.ACE, CloverCard.ACE, DiamondCard.ACE), false)
         );
     }
 }

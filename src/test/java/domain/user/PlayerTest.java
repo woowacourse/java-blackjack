@@ -21,7 +21,7 @@ class PlayerTest {
     @DisplayName("처음에 2장의 카드를 받는다.")
     void generatePlayerTest() {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
+        List<Card> firstTurnCards = List.of(CloverCard.ACE, CloverCard.FIVE);
         Player player = new Player(new Name("플레이어"), firstTurnCards);
 
         //when
@@ -35,11 +35,11 @@ class PlayerTest {
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
     void receiveCardTest() {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
+        List<Card> firstTurnCards = List.of(CloverCard.ACE, CloverCard.FIVE);
         Player player = new Player(new Name("플레이어"), firstTurnCards);
 
         //when
-        player.receiveCard(CloverCard.CLOVER_FOUR);
+        player.receiveCard(CloverCard.FOUR);
 
         //then
         assertThat(player.getCards().size()).isEqualTo(3);
@@ -62,8 +62,8 @@ class PlayerTest {
 
     static Stream<Arguments> isPlayerStatusTestCase() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING), CloverCard.CLOVER_QUEEN, Named.of("버스트", PlayerStatus.BUST)),
-                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE), CloverCard.CLOVER_FOUR, Named.of("노멀", PlayerStatus.NORMAL))
+                Arguments.of(List.of(CloverCard.TEN, CloverCard.KING), CloverCard.QUEEN, Named.of("버스트", PlayerStatus.BUST)),
+                Arguments.of(List.of(CloverCard.TWO, CloverCard.THREE), CloverCard.FOUR, Named.of("노멀", PlayerStatus.NORMAL))
         );
     }
 }
