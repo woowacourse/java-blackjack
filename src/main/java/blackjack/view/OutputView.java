@@ -64,13 +64,18 @@ public class OutputView {
     }
 
     private void printFinalVictoryOrDefeatDealer(Map<String, Integer> dealerResult) {
-        StringBuilder dealerResultMsg = new StringBuilder("딜러: ");
+        StringBuilder resultMsg = new StringBuilder("딜러: ");
         for (String victoryOrDefeat : dealerResult.keySet()) {
-            if (dealerResult.get(victoryOrDefeat) != ZERO) {
-                dealerResultMsg.append(dealerResult.get(victoryOrDefeat)).append(victoryOrDefeat).append(" ");
-            }
+            Integer resultCount = dealerResult.get(victoryOrDefeat);
+            makeFinalVictoryOrDefeatDealer(resultCount, resultMsg, victoryOrDefeat);
         }
-        System.out.println(dealerResultMsg);
+        System.out.println(resultMsg);
+    }
+
+    private void makeFinalVictoryOrDefeatDealer(Integer resultCount, StringBuilder resultMsg, String victoryOrDefeat) {
+        if (resultCount != ZERO) {
+            resultMsg.append(resultCount).append(victoryOrDefeat).append(" ");
+        }
     }
 
     private void printFinalVictoryOrDefeatPlayers(Map<String, String> playerResult) {
