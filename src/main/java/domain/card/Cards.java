@@ -13,12 +13,12 @@ public class Cards {
     private static final int INITIAL_CARDS_SIZE = 2;
     private final List<Card> cards;
 
-    public Cards() {
-        this.cards = Collections.emptyList();
-    }
-
     public Cards(final List<Card> cards) {
         this.cards = Collections.unmodifiableList(cards);
+    }
+
+    public Cards() {
+        this(Collections.emptyList());
     }
 
     public Cards receiveInitialCards(final List<Card> initialCards) {
@@ -69,8 +69,8 @@ public class Cards {
     }
 
     public WinningStatus compete(final Cards dealerCards) {
-       Score score = this.calculateScore();
-       Score dealerScore = dealerCards.calculateScore();
+        Score score = this.calculateScore();
+        Score dealerScore = dealerCards.calculateScore();
 
         if (score.isGreaterThan(dealerScore)) {
             return WinningStatus.WIN;
