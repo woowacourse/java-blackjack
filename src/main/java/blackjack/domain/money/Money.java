@@ -15,7 +15,6 @@ public final class Money {
     }
 
     public Money subtract(final Money money) {
-        // 최종 수익을 구할 때 마이너스가 나올 수 있기에, 음수 검증 생략
         return new Money(this.money - money.money);
     }
 
