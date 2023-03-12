@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Profit;
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -66,11 +66,11 @@ public class OutputView {
         }
     }
 
-    public static void printFinalProfit(final Profit dealerProfit, final Map<Player, Profit> playerProfit) {
+    public static void printFinalProfit(final Money dealerMoney, final Map<Player, Money> playerProfit) {
         System.out.println(NEW_LINE + "## 최종 수익");
-        System.out.println("딜러: " + dealerProfit.getProfit());
+        System.out.println("딜러: " + dealerMoney.getValue());
         for (final Player player : playerProfit.keySet()) {
-            System.out.println(player.getName() + ": " + playerProfit.get(player).getProfit());
+            System.out.println(player.getName() + ": " + playerProfit.get(player).getValue());
         }
     }
 

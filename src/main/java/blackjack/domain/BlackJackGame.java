@@ -42,20 +42,18 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, Profit> calculatePlayerProfit(PlayerResult playerResult, Map<Player, Profit> playerProfit) {
+    public Map<Player, Money> calculatePlayerProfit(final PlayerResult playerResult, final Map<Player, Money> playerBetting) {
         for (final Player player : players.getPlayers()) {
             final Result result = playerResult.getPlayerResult(player);
-            final Profit bettingMoney = playerProfit.get(player);
-            playerProfit.put(player, bettingMoney.calculateProfit(result));
+            final Money bettingMoney = playerBetting.get(player);
+            playerBetting.put(player, bettingMoney.calculateProfit(result.getRate()));
         }
-        return playerProfit;
+        return playerBetting;
     }
 
-    public Profit calculateDealerProfit(Map<Player, Profit> playerProfit) {
-        int dealerProfit = playerProfit.keySet().stream()
-                .mapToInt(player -> playerProfit.get(player).getProfit())
-                .sum() * -1;
-        return Profit.dealerProfit(dealerProfit);
+    public Money calculateDealerProfit(final Map<Player, Money> playerProfit) {
+        return playerProfit.values().stream()
+                .reduce(Money.dealer(), Money::minus);
     }
 
     public Dealer getDealer() {

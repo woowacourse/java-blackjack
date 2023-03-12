@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Command;
-import blackjack.domain.Profit;
+import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 import blackjack.view.InputView;
@@ -24,13 +24,13 @@ public class BlackJackGameController {
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 
-        final Map<Player, Profit> bettingMoney = generateBettingMoney(players);
+        final Map<Player, Money> playerBetting = generateBettingMoney(players);
 
         blackJackGame.handOutInitCards(deck);
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
 
         handOutHitCard(blackJackGame, players, dealer);
-        judgeGameResult(blackJackGame, players, dealer, bettingMoney);
+        judgeGameResult(blackJackGame, players, dealer, playerBetting);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -38,18 +38,18 @@ public class BlackJackGameController {
         return new BlackJackGame(playerNames);
     }
 
-    private Map<Player, Profit> generateBettingMoney(final Players players) {
-        final Map<Player, Profit> bettingMoney = new LinkedHashMap<>();
+    private Map<Player, Money> generateBettingMoney(final Players players) {
+        final Map<Player, Money> playerBetting = new LinkedHashMap<>();
         for (final Player player : players.getPlayers()) {
-            final Profit profit = readUntilValidate(() -> generateProfit(player));
-            bettingMoney.put(player, profit);
+            final Money bettingMoney = readUntilValidate(() -> generateBettingMoney(player));
+            playerBetting.put(player, bettingMoney);
         }
-        return bettingMoney;
+        return playerBetting;
     }
 
-    private Profit generateProfit(final Player player) {
-        final int playerBetting = InputView.readBettingMoney(player.getName());
-        return Profit.from(playerBetting);
+    private Money generateBettingMoney(final Player player) {
+        final int money = InputView.readBettingMoney(player.getName());
+        return Money.forBetting(money);
     }
 
     private void handOutHitCard(BlackJackGame blackJackGame, Players players, Dealer dealer) {
@@ -89,13 +89,13 @@ public class BlackJackGameController {
         return Command.from(gameCommand);
     }
 
-    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> bettingMoney) {
+    private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Money> playerBetting) {
         final DealerResult dealerResult = new DealerResult();
         final PlayerResult playerResult = new PlayerResult();
         blackJackGame.calculateParticipantResult(dealerResult, playerResult);
 
-        final Map<Player, Profit> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, bettingMoney);
-        final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
+        final Map<Player, Money> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, playerBetting);
+        final Money dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalProfit(dealerProfit, playerProfit);
     }
