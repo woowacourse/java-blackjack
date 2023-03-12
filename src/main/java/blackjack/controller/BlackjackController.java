@@ -3,16 +3,15 @@ package blackjack.controller;
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.BlackjackParticipant;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -66,9 +65,11 @@ public final class BlackjackController {
     }
 
     private void printParticipantsInitCards(final Dealer dealer, final Players players) {
-        outputView.printDistributeCardsMessage(getPlayerNames(players.getPlayers()));
-        outputView.printDealerInitCards(getDealersCards(dealer));
-        outputView.printPlayersInitCards(getPlayersCards(players.getPlayers()));
+        List<String> playerNames = getPlayerNames(players.getPlayers());
+        outputView.printDistributeCardsMessage(playerNames);
+
+        Map<String, List<String>> participantsInitCards = getParticipantsInitCards(dealer, players.getPlayers());
+        outputView.printParticipantsInitCards(participantsInitCards);
     }
 
     private void bettingMoney(final Players players) {
@@ -97,12 +98,12 @@ public final class BlackjackController {
         Boolean answer = inputView.askReceiveMoreCard(player.getName());
 
         if (!answer) {
-            outputView.printCurrentCards(player.getName(), getCurrentCards(player.getHand()));
+            outputView.printCurrentCards(player.getName(), getCards(player.getHand()));
             return false;
         }
 
         player.receiveCard(deck.drawCard());
-        outputView.printCurrentCards(player.getName(), getCurrentCards(player.getHand()));
+        outputView.printCurrentCards(player.getName(), getCards(player.getHand()));
         return true;
     }
 
@@ -120,10 +121,10 @@ public final class BlackjackController {
     }
 
     private void finishGame(final Dealer dealer, final Players players) {
-        List<Score> scores = getPlayersScore(players.getPlayers());
+        List<Integer> scores = getParticipantScores(dealer, players.getPlayers());
+        Map<String, List<String>> participantsFinalCards = getParticipantsFinalCards(dealer, players.getPlayers());
 
-        outputView.printDealerFinalCards(getCurrentCards(dealer.getHand()), dealer.calculateTotalScore());
-        outputView.printPlayerFinalCards(getPlayersCards(players.getPlayers()), scores);
+        outputView.printParticipantsScore(participantsFinalCards, scores);
 
         showProfit(dealer, players);
     }
@@ -133,6 +134,7 @@ public final class BlackjackController {
         Map<Player, Money> playersProfit = profit.makePlayersProfit();
         Money dealerProfit = profit.getDealerProfit(playersProfit);
         Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit, dealer);
+
         outputView.printProfit(participantsProfit);
     }
 
@@ -142,35 +144,46 @@ public final class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getDealersCards(final Dealer dealer) {
-        return dealer.showInitCards().stream()
-                .map(card -> makeCardInfo(card))
-                .collect(Collectors.toList());
-    }
-
-    private Map<String, List<String>> getPlayersCards(final List<Player> players) {
-        Map<String, List<String>> playersCards = new HashMap<>();
+    private Map<String, List<String>> getParticipantsInitCards(final Dealer dealer, final List<Player> players) {
+        Map<String, List<String>> participantsInitCards = new LinkedHashMap<>() {{
+            put(dealer.getName(), getCards(dealer.showInitCards()));
+        }};
 
         for (Player player : players) {
-            playersCards.put(player.getName(),
-                    player.showInitCards().stream()
-                            .map(card -> makeCardInfo(card))
-                            .collect(Collectors.toList()));
+            participantsInitCards.put(player.getName(), getCards(player.showInitCards()));
         }
 
-        return playersCards;
+        return participantsInitCards;
     }
 
-    private List<Score> getPlayersScore(final List<Player> players) {
-        return players.stream()
-                .map(Player::calculateTotalScore)
-                .collect(Collectors.toList());
+    private Map<String, List<String>> getParticipantsFinalCards(final Dealer dealer, final List<Player> players) {
+        Map<String, List<String>> participantsFinalCards = new LinkedHashMap<>() {{
+            put(dealer.getName(), getCards(dealer.getHand()));
+        }};
+
+        for (Player player : players) {
+            participantsFinalCards.put(player.getName(), getCards(player.getHand()));
+        }
+
+        return participantsFinalCards;
     }
 
-    private List<String> getCurrentCards(final List<Card> cards) {
+    private List<String> getCards(final List<Card> cards) {
         return cards.stream()
-                .map(card -> makeCardInfo(card))
+                .map(this::makeCardInfo)
                 .collect(Collectors.toList());
+    }
+
+    private List<Integer> getParticipantScores(final Dealer dealer, final List<Player> players) {
+        List<Integer> scores = new LinkedList<>() {{
+            add(dealer.calculateTotalScore().getValue());
+        }};
+
+        for (Player player : players) {
+            scores.add(player.calculateTotalScore().getValue());
+        }
+
+        return scores;
     }
 
     private String makeCardInfo(Card card) {

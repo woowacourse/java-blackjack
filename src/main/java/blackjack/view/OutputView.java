@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.card.Score;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +15,9 @@ public final class OutputView {
         System.out.println("\n" + DEALER_NAME + "와 " + names + "에게 " + NUMBER_OF_SETTING_CARDS + "장을 나누었습니다.");
     }
 
-    public void printDealerInitCards(final List<String> card) {
-        System.out.println(DEALER_NAME + ": " + String.join("", card));
-    }
-
-    public void printPlayersInitCards(final Map<String, List<String>> initCards) {
-        for (String player : initCards.keySet()) {
-            System.out.println(player + "카드: " + String.join(DELIMITER, initCards.get(player)));
+    public void printParticipantsInitCards(final Map<String, List<String>> initCards) {
+        for (String name : initCards.keySet()) {
+            System.out.println(name + "카드: " + String.join(DELIMITER, initCards.get(name)));
         }
         System.out.println();
     }
@@ -39,16 +34,12 @@ public final class OutputView {
         System.out.println("\n" + DEALER_NAME + "는 " + SPECIFIC_SCORE_OF_DEALER + "이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerFinalCards(final List<String> cards, final Score score) {
-        System.out.println("\n" + DEALER_NAME + " 카드: " + String.join(DELIMITER, cards) + " - 결과: " + score.getValue());
-    }
-
-    public void printPlayerFinalCards(final Map<String, List<String>> cardsWithName, final List<Score> scores) {
+    public void printParticipantsScore(final Map<String, List<String>> cardsWithName, final List<Integer> scores) {
         int index = 0;
-        for (String playerName : cardsWithName.keySet()) {
-            System.out.println(playerName + "카드: " +
-                    String.join(DELIMITER, cardsWithName.get(playerName))
-                    + " - 결과: " + scores.get(index++).getValue());
+        for (String name : cardsWithName.keySet()) {
+            System.out.println(name + "카드: " +
+                    String.join(DELIMITER, cardsWithName.get(name))
+                    + " - 결과: " + scores.get(index++));
         }
     }
 
