@@ -11,11 +11,6 @@ public class Player extends Participant {
         validateName(name);
     }
 
-    public Player(String name, Cards cards) {
-        super(name, cards);
-        validateName(name);
-    }
-
     private void validateName(String name) {
         validateNameLength(name);
         validateSameDealerName(name);
@@ -35,6 +30,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canAddCard() {
+        validateExistenceCards();
         return cards.getScore() < Cards.BLACKJACK_NUMBER;
     }
 }

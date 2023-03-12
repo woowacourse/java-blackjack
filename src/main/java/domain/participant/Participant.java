@@ -7,8 +7,8 @@ public abstract class Participant {
 
     private static final int INITIAL_CARDS_SIZE = 2;
 
-    final String name;
-    Cards cards;
+    protected final String name;
+    protected Cards cards;
 
     public Participant(String name) {
         this.name = name;
@@ -32,7 +32,14 @@ public abstract class Participant {
     }
 
     public void hit(Card card) {
+        validateExistenceCards();
         cards.add(card);
+    }
+
+    protected void validateExistenceCards() {
+        if (cards == null) {
+            throw new IllegalArgumentException("카드를 먼저 받으세요.");
+        }
     }
 
     public String getName() {
@@ -42,6 +49,7 @@ public abstract class Participant {
     public abstract boolean canAddCard();
 
     public Cards getCards() {
+        validateExistenceCards();
         return cards;
     }
 }

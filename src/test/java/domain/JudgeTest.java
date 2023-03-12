@@ -20,11 +20,14 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.SPADE, Denomination.EIGHT))));
-        Player player = new Player("pobi", new Cards(
+        Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q)))));
-        player.hit(new Card(Suit.SPADE, Denomination.THREE));
+                List.of(new Card(Suit.CLOVER, Denomination.J),
+                    new Card(Suit.SPADE, Denomination.Q))));
+        Player player = new Player("pobi");
+        player.initCards(cards);
         //when
+        player.hit(new Card(Suit.SPADE, Denomination.THREE));
         GameResult result = Judge.of(dealer, player);
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
@@ -36,9 +39,12 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q))));
-        Player player = new Player("pobi", new Cards(
+        Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.THREE), new Card(Suit.SPADE, Denomination.TWO)))));
+                List.of(new Card(Suit.CLOVER, Denomination.THREE),
+                    new Card(Suit.SPADE, Denomination.TWO))));
+        Player player = new Player("pobi");
+        player.initCards(cards);
         //when
         GameResult result = Judge.of(dealer, player);
         //then
@@ -54,8 +60,11 @@ class JudgeTest {
                 List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q)))));
         dealer.hit(new Card(Suit.SPADE, Denomination.THREE));
 
-        Player player = new Player("pobi", new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.SPADE, Denomination.EIGHT))));
+        Cards cards = new Cards(
+            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
+                new Card(Suit.SPADE, Denomination.EIGHT)));
+        Player player = new Player("pobi");
+        player.initCards(cards);
         //when
         GameResult result = Judge.of(dealer, player);
         //then
@@ -68,9 +77,12 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.Q))));
-        Player player = new Player("pobi", new Cards(
+        Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q)))));
+                List.of(new Card(Suit.CLOVER, Denomination.J),
+                    new Card(Suit.SPADE, Denomination.Q))));
+        Player player = new Player("pobi");
+        player.initCards(cards);
         //when
         GameResult result = Judge.of(dealer, player);
         //then
@@ -83,9 +95,12 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.Q))));
-        Player player = new Player("pobi", new Cards(
+        Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.Q)))));
+                List.of(new Card(Suit.CLOVER, Denomination.SIX),
+                    new Card(Suit.SPADE, Denomination.Q))));
+        Player player = new Player("pobi");
+        player.initCards(cards);
         //when
         GameResult result = Judge.of(dealer, player);
         //then
