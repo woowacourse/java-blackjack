@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
@@ -146,5 +147,17 @@ final class HandTest {
         ));
 
         assertThat(this.hand.compareTo(anotherHand)).isEqualTo(LOSE);
+    }
+
+    @Test
+    @DisplayName("상대방이 버스트인 경우 테스트한다.")
+    void compareToTest_bust() {
+        Hand anotherHand = new Hand(List.of(
+                new Card(TEN, HEART),
+                new Card(K, SPADE),
+                new Card(K, CLOVER)
+        ));
+
+        assertThat(this.hand.compareTo(anotherHand)).isEqualTo(WIN);
     }
 }

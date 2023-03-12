@@ -62,6 +62,9 @@ public final class Hand {
         if (this.isBust()) {
             return checkBust(anotherHand);
         }
+        if (anotherHand.isBust()) {
+            return checkBustSelf();
+        }
         return compareScoreTo(anotherHand);
     }
 
@@ -70,6 +73,13 @@ public final class Hand {
             return DRAW;
         }
         return LOSE;
+    }
+
+    private Result checkBustSelf() {
+        if (this.isBust()) {
+            return DRAW;
+        }
+        return WIN;
     }
 
     private Result compareScoreTo(final Hand anotherHand) {
