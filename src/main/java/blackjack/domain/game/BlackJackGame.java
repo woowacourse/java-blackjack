@@ -12,6 +12,8 @@ import blackjack.domain.participant.Players;
 
 public class BlackJackGame {
 
+    private static final int DRAWING_INITIAL_CARD_SIZE = 2;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -20,21 +22,16 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public void hit(final ShufflingMachine shufflingMachine, final Participant participant) {
-        final Card card = Deck.from(shufflingMachine.draw());
-        participant.receiveCard(card);
-    }
-
     public void handOutCards(final ShufflingMachine shufflingMachine) {
-        handOutInitCardsTo(shufflingMachine, dealer);
+        handOutCardTo(shufflingMachine, dealer, DRAWING_INITIAL_CARD_SIZE);
         players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
+                .forEach(player -> handOutCardTo(shufflingMachine, player, DRAWING_INITIAL_CARD_SIZE));
     }
 
-    private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        int cardSize = 2;
+    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant, int cardSize) {
         while (cardSize-- > 0) {
-            hit(shufflingMachine, participant);
+            final Card card = Deck.from(shufflingMachine.draw());
+            participant.receiveCard(card);
         }
     }
 

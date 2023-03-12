@@ -49,7 +49,7 @@ class BlackJackGameTest {
         Dealer dealer = blackJackGame.getDealer();
 
         // when
-        blackJackGame.hit(shufflingMachine, dealer);
+        blackJackGame.handOutCardTo(shufflingMachine, dealer, 1);
         int dealerCardSize = dealer.getCards().size();
 
         // then

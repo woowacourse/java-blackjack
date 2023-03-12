@@ -16,6 +16,7 @@ public class BlackJackGameController {
     private static final String NO_COMMAND = "n";
     private static final int DEALER_DRAWING_BOUNDARY = 17;
     private static final int PLAYER_BUST_BOUNDARY = 21;
+    private static final int DRAWING_CARD_SIZE = 1;
 
     private final ShufflingMachine shufflingMachine;
 
@@ -27,14 +28,11 @@ public class BlackJackGameController {
         final BlackJackGame blackJackGame = generateBlackJackGame();
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
-
         final Map<Player, Money> playerProfit = makeMoneys(players);
 
         playBlackJackGame(blackJackGame, dealer, players);
 
-        final FinalProfit finalProfit = blackJackGame.makePlayerProfit(playerProfit);
-
-        printFinalResult(dealer, players, finalProfit);
+        printFinalResult(dealer, players, blackJackGame.makePlayerProfit(playerProfit));
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -55,6 +53,7 @@ public class BlackJackGameController {
         }
     }
 
+    // TODO: 재입력 로직 추가
     private Map<Player, Money> makeMoneys(final Players players) {
         final Map<Player, Money> playerProfit = new LinkedHashMap<>();
 
@@ -71,8 +70,8 @@ public class BlackJackGameController {
         blackJackGame.handOutCards(shufflingMachine);
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
-        handOutCardToPlayers(blackJackGame, players);
-        handOutCardToDealer(blackJackGame, dealer);
+        handOutCardTo(blackJackGame, players);
+        handOutCardTo(blackJackGame, dealer);
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
@@ -80,7 +79,7 @@ public class BlackJackGameController {
         OutputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
     }
 
-    private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
+    private void handOutCardTo(final BlackJackGame blackJackGame, final Players players) {
         for (final Player player : players.getPlayers()) {
             handOutCardToEachPlayer(blackJackGame, player);
         }
@@ -116,7 +115,7 @@ public class BlackJackGameController {
     private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
                                              final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
-            blackJackGame.hit(shufflingMachine, player);
+            blackJackGame.handOutCardTo(shufflingMachine, player, DRAWING_CARD_SIZE);
             OutputView.printParticipantCards(player.getName(), player.getCards());
             return true;
         }
@@ -124,9 +123,9 @@ public class BlackJackGameController {
         return false;
     }
 
-    private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
+    private void handOutCardTo(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
-            blackJackGame.hit(shufflingMachine, dealer);
+            blackJackGame.handOutCardTo(shufflingMachine, dealer, DRAWING_CARD_SIZE);
             OutputView.printDealerReceiveOneMoreCard();
         }
     }
