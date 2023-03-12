@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static blackjack.model.Fixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -109,4 +110,30 @@ class ParticipantsTest {
                 () -> assertThat(player2.getHand().size()).isEqualTo(2));
     }
 
+    @Test
+    @DisplayName("참여자들의 수익을 반환한다.")
+    void get_profit_result() {
+        //given
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(20000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Participants participants = new Participants(dealer, List.of(player1, player2));
+        List<Card> cards = List.of(HEART_ACE, HEART_TEN, HEART_EIGHT, HEART_FIVE, CLUB_NINE, CLUB_TEN);
+        CardDeck cardDeck = new CardDeck(cards);
+
+        //when
+        participants.distributeTwoCardsToEach(cardDeck);
+        participants.hitOrStandByPlayer(cardDeck, player1, false);
+        Map<Participant, Integer> profitResult = participants.getProfitResult();
+        /*
+           Dealer: 9 + 10 --> 스탠드
+           player1: 8 + 5 --> 스탠드
+           player2: 11 + 10 --> 블랙잭
+         */
+
+        //then
+        assertAll(() -> assertThat(profitResult.get(dealer)).isEqualTo(5000),
+                () -> assertThat(profitResult.get(player1)).isEqualTo(-20000),
+                () -> assertThat(profitResult.get(player2)).isEqualTo(15000));
+    }
 }
