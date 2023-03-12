@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -44,6 +45,15 @@ public class InputView {
     private static void validateDuplicateName(List<String> names) {
         if (names.size() != names.stream().distinct().count()) {
             throw new IllegalArgumentException("같은 이름은 입력할 수 없습니다.");
+        }
+    }
+
+    public static int readBetAmount(String personName) {
+        System.out.printf("%s의 배팅 금액은?%n", personName);
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
         }
     }
 
