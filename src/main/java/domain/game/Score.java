@@ -18,6 +18,10 @@ public class Score {
         return min;
     }
 
+    public static Score max() {
+        return max;
+    }
+
     public Score minusTenIfBust() {
         if (isMoreThan(max)) {
             return sub(aceSubtraction);

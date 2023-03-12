@@ -33,10 +33,34 @@ public class BlackjackGame {
     public boolean hitDealer() {
         if (dealer.canHit()) {
             dealer.hit(deck.serve());
+            if (dealer.getState().isRunning()) {
+                dealer.stay();
+            }
             return true;
         }
-
+        dealer.stay();
         return false;
+    }
+
+    public void stayPlayer(String name) {
+        findPlayer(name).stay();
+    }
+
+    public boolean isRunning(String name) {
+        return findPlayer(name).getState().isRunning();
+    }
+
+    public int dealerProfit() {
+        return -players.stream()
+                .map(this::profit)
+                .reduce(0, Integer::sum);
+    }
+
+    public int profit(Player player) {
+        if (player.getState().isStay() && dealer.getState().isStay()) {
+            return player.calculateStay(dealer);
+        }
+        return player.calculate();
     }
 
     public Player findPlayer(String name) {

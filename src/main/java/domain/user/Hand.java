@@ -28,7 +28,7 @@ public class Hand {
     }
 
     public Score score() {
-        if (hasAce()) {
+        if (hasAce() && sum().isMoreThan(Score.max())) {
             return sum().minusTenIfBust();
         }
 

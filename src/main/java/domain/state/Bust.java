@@ -10,6 +10,11 @@ public class Bust extends Finished {
 
     @Override
     double profitRate() {
-        return 0;
+        return -1;
+    }
+
+    @Override
+    public boolean isStay() {
+        return false;
     }
 }

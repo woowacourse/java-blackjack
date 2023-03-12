@@ -12,4 +12,9 @@ public class Blackjack extends Finished {
     double profitRate() {
         return 1.5;
     }
+
+    @Override
+    public boolean isStay() {
+        return false;
+    }
 }

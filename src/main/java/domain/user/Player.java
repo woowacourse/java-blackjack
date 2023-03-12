@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Score;
 import domain.state.State;
 
 import java.util.List;
@@ -31,8 +32,19 @@ public class Player {
         return (int) state.profit(betting);
     }
 
-    public boolean equalsName(String name) {
-        return participant.equalsName(name);
+    public int calculateStay(Dealer dealer) {
+        if (getScore().isMoreThan(dealer.getScore())) {
+            return calculate();
+        }
+        if (getScore().equals(dealer.getScore())) {
+            return 0;
+        }
+
+        return -betting;
+    }
+
+    private Score getScore() {
+        return getState().score();
     }
 
     public String getName() {

@@ -2,7 +2,6 @@ package domain.state;
 
 import domain.card.Card;
 import domain.game.Score;
-import domain.user.Hand;
 
 import java.util.List;
 
@@ -14,9 +13,13 @@ public interface State {
 
     Score score();
 
-    Hand hand();
-
     double profit(int base);
 
     List<Card> cards();
+
+    boolean isHit();
+
+    boolean isRunning();
+
+    boolean isStay();
 }

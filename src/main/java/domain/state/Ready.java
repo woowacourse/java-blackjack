@@ -2,7 +2,6 @@ package domain.state;
 
 import domain.card.Card;
 import domain.game.Score;
-import domain.user.Hand;
 
 import java.util.List;
 
@@ -36,7 +35,17 @@ public class Ready implements State {
     }
 
     @Override
-    public Hand hand() {
-        throw new IllegalStateException("카드가 없습니다.");
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isStay() {
+        return false;
     }
 }

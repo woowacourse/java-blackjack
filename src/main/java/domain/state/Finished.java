@@ -42,7 +42,12 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public Hand hand() {
-        return hand;
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

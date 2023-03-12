@@ -47,7 +47,17 @@ public abstract class Running implements State {
     }
 
     @Override
-    public Hand hand() {
-        return hand;
+    public boolean isHit() {
+        return true;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
+    public boolean isStay() {
+        return false;
     }
 }

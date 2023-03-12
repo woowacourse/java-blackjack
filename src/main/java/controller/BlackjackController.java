@@ -32,6 +32,10 @@ public class BlackjackController {
     public void play() {
         init();
         start();
+        hitPlayers();
+        hitDealer();
+        printResult();
+        printProfit();
     }
 
     public void init() {
@@ -67,6 +71,52 @@ public class BlackjackController {
         outputView.printGameStarted(participants);
     }
 
+    public void hitPlayers() {
+        List<Player> players = blackjackGame.getPlayers();
+
+        String command;
+        for (Player player : players) {
+            while(blackjackGame.isRunning(player.getName())) {
+                command = inputView.inputCardCommand(player.getName());
+                if (command.equals("y")) {
+                    blackjackGame.hitPlayer(player.getName());
+                } else if (command.equals("n")) {
+                    blackjackGame.stayPlayer(player.getName());
+                }
+                outputView.printNameAndCards(player.getName(), cardString(player));
+            }
+        }
+    }
+
+    public void hitDealer() {
+        if (blackjackGame.hitDealer()) {
+            outputView.printHitDealer();
+        }
+    }
+
+    private void printResult() {
+        Dealer dealer = blackjackGame.getDealer();
+        List<Player> players = blackjackGame.getPlayers();
+
+        outputView.printResult(dealer.getName(), cardString(dealer), dealer.getState().score().value());
+        for (Player player : players) {
+            outputView.printResult(player.getName(), cardString(player), player.getState().score().value());
+        }
+    }
+
+    private void printProfit() {
+        Dealer dealer = blackjackGame.getDealer();
+        List<Player> players = blackjackGame.getPlayers();
+
+        Map<String, Integer> profitMap = new LinkedHashMap<>();
+
+        profitMap.put(dealer.getName(), blackjackGame.dealerProfit());
+        for (Player player : players) {
+            profitMap.put(player.getName(), blackjackGame.profit(player));
+        }
+        outputView.printProfit(profitMap);
+    }
+
     private List<String> cardString(Dealer dealer) {
         List<String> res = new ArrayList<>();
         for (Card card : dealer.cards()) {
@@ -82,5 +132,4 @@ public class BlackjackController {
         }
         return res;
     }
-
 }

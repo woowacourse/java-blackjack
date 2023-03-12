@@ -46,4 +46,8 @@ public class Dealer {
     public List<Card> cards() {
         return participant.cards();
     }
+
+    public Score getScore() {
+        return getState().score();
+    }
 }

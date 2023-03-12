@@ -12,4 +12,9 @@ public class Stay extends Finished {
     double profitRate() {
         return 1;
     }
+
+    @Override
+    public boolean isStay() {
+        return true;
+    }
 }
