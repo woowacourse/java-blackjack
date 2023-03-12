@@ -50,14 +50,8 @@ public class BlackjackController {
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
         UserResults results = blackjackGame.getResults();
+        blackjackGame.calculatePlayersBetAmount(results);
         OutputView.printResults(UserResultsDTO.of(results));
-    }
-
-    private void stopServingCard(Player player) {
-        if (player.isBust()) {
-            OutputView.printScoreUnderLimit();
-        }
-        OutputView.printPlayerCurrentCards(player);
     }
 
     private void giveAdditionalCardsToPlayers(Players players) {
@@ -81,6 +75,13 @@ public class BlackjackController {
             answer = InputView.askAdditionalCard(player.getPlayerName());
         }
         stopServingCard(player);
+    }
+
+    private void stopServingCard(Player player) {
+        if (player.isBust()) {
+            OutputView.printScoreUnderLimit();
+        }
+        OutputView.printPlayerCurrentCards(player);
     }
 
     private enum GameCommand {

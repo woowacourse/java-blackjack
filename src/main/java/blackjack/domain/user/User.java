@@ -21,9 +21,7 @@ public abstract class User {
         return handCards.getTotalScore();
     }
 
-    public void updateCardScore(Card card) {
-        handCards.updateCardScore(card);
-    }
+    public abstract void updateCardScore(Card card);
 
     public boolean isBust() {
         return handCards.isBust();
@@ -33,7 +31,9 @@ public abstract class User {
         return name.getName();
     }
 
-    public boolean isDealer(Object object) {
-        return object instanceof Dealer;
+    public abstract boolean isDealer();
+
+    public boolean isBlackjack() {
+        return handCards.isBlackjack();
     }
 }

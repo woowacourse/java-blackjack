@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.UserResults;
 
 public class Users {
 
@@ -34,5 +35,12 @@ public class Users {
 
     public Players getPlayers() {
         return players;
+    }
+
+    public void calculateReceivingAmount(UserResults userResults) {
+        for (Player player : players.getPlayers()) {
+            player.updateReceivingAmount(userResults.getResultOf(player));
+            player.checkBlackjack(dealer.isBlackjack());
+        }
     }
 }

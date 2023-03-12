@@ -1,14 +1,19 @@
 package blackjack.domain.user;
 
+import blackjack.domain.result.Result;
+
 public class BetAmount {
 
     private static final int MINIMUM_AMOUNT = 500;
     private static final int MAXIMUM_AMOUNT = 1_000_000;
-    private final int amount;
 
-    public BetAmount(int amount) {
-        validateAmountRange(amount);
-        this.amount = amount;
+    private final int betAmount;
+    private double receivingAmount;
+
+    public BetAmount(int betAmount) {
+        validateAmountRange(betAmount);
+        this.betAmount = betAmount;
+        this.receivingAmount = betAmount;
     }
 
     private void validateAmountRange(int amount) {
@@ -19,7 +24,17 @@ public class BetAmount {
         }
     }
 
-    public int getBetAmount() {
-        return amount;
+    public double getReceivingAmount() {
+        return receivingAmount;
+    }
+
+    public void updateReceivingAmount(Result result) {
+        if (result.equals(Result.LOSE)) {
+            receivingAmount = (-betAmount);
+        }
+    }
+
+    public void setBlackjack() {
+        receivingAmount = betAmount * 1.5;
     }
 }

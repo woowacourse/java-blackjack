@@ -9,6 +9,8 @@ public class HandCards {
     public static final int BUST = 21;
     private static final int ACE_VALUE_GAP = 10;
     private static final int LIMIT_SCORE = 21;
+    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> playerCards;
     private int totalScore;
@@ -56,5 +58,9 @@ public class HandCards {
 
     public boolean isBust() {
         return totalScore > LIMIT_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getTotalScore() == BLACKJACK && playerCards.size() == BLACKJACK_CARD_SIZE;
     }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class UserResults {
 
+    private static final int PLAYER_RESULT_INDEX = 0;
+
     private final HashMap<User, List<Result>> results;
 
     private UserResults(HashMap<User, List<Result>> results) {
@@ -44,5 +46,9 @@ public class UserResults {
 
     public HashMap<User, List<Result>> getResults() {
         return results;
+    }
+
+    public Result getResultOf(Player player) {
+        return results.get(player).get(PLAYER_RESULT_INDEX);
     }
 }

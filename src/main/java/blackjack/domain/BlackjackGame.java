@@ -27,6 +27,10 @@ public class BlackjackGame {
         return UserResults.of(users.getDealer(), users.getPlayers());
     }
 
+    public void calculatePlayersBetAmount(UserResults results) {
+        users.calculateReceivingAmount(results);
+    }
+
     public Dealer getDealer() {
         return users.getDealer();
     }

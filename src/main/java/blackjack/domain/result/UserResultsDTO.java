@@ -29,7 +29,7 @@ public class UserResultsDTO {
     }
 
     private static String getResult(HashMap<User, List<Result>> userResults, User user) {
-        if (user.isDealer(user)) {
+        if (user.isDealer()) {
             return makeDealerResult(userResults.get(user));
         }
         return userResults.get(user).stream()
