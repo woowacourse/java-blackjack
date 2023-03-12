@@ -1,5 +1,6 @@
 package blackjackgame.domain.game;
 
+import blackjackgame.domain.UserAction;
 import blackjackgame.domain.user.DealerStatus;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Cards;
@@ -31,6 +32,15 @@ public class BlackJackGame {
         dealer.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
         for (Player player : players.getPlayers()) {
             player.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
+        }
+    }
+
+    public void takePlayerAction(Player player, UserAction action) {
+        if (action == UserAction.HIT) {
+            hit(player);
+        }
+        if (action == UserAction.STAY || player.isBust()) {
+            player.finishDraw();
         }
     }
 

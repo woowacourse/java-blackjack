@@ -5,7 +5,7 @@ import blackjackgame.domain.game.Result;
 import java.util.List;
 
 public class Player extends User {
-    private PlayerStatus status = PlayerStatus.NORMAL;
+    private PlayerStatus status = PlayerStatus.HITTABLE;
     private final Bet bet;
 
     public Player(Name name, Bet bet) {
@@ -27,6 +27,14 @@ public class Player extends User {
 
     public void applyResult(Result result) {
         bet.applyResult(result);
+    }
+
+    public void finishDraw() {
+        status = PlayerStatus.DRAW_FINISHED;
+    }
+
+    public boolean isHittable() {
+        return isLessThanBustScore() && PlayerStatus.HITTABLE == status;
     }
 
     @Override

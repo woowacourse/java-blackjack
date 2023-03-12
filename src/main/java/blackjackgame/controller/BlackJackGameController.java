@@ -89,17 +89,11 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (player.isLessThanBustScore() && isHitCommandEntered(player)) {
-            blackJackGame.hit(player);
+        while (player.isHittable()) {
+            UserAction action = repeatForValidInput(() -> readDrawCommand(player));
+            blackJackGame.takePlayerAction(player, action);
             printDrawResult(player);
         }
-        if (player.isLessThanBustScore()) {
-            printDrawResult(player);
-        }
-    }
-
-    private boolean isHitCommandEntered(Player player) {
-        return UserAction.HIT == repeatForValidInput(() -> readDrawCommand(player));
     }
 
     private UserAction readDrawCommand(Player player) {
