@@ -126,6 +126,6 @@ public class BlackJackController {
     }
 
     private void printFinalProfit(BettingManager bettingManager) {
-        ResultView.printFinalProfit(bettingManager.calculateDealerFinalProfit(), bettingManager.getFinalProfitByParticipantForPrint());
+        ResultView.printFinalProfit(bettingManager.generateFinalProfitDto());
     }
 }

@@ -1,6 +1,5 @@
 package domain.profit;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,12 +27,7 @@ public class FinalProfitByParticipant {
                 .getProfit();
     }
 
-    public Map<String, Double> getFinalProfitByParticipantForPrint() {
-        Map<String, Double> finalProfitByParticipantForPrint = new HashMap<>();
-        for (Participant participant : finalProfitByParticipant.keySet()) {
-            FinalProfit participantFinalProfit = finalProfitByParticipant.get(participant);
-            finalProfitByParticipantForPrint.put(participant.getName(), participantFinalProfit.getProfit());
-        }
-        return Map.copyOf(finalProfitByParticipantForPrint);
+    public Map<Participant, FinalProfit> getFinalProfitByParticipant() {
+        return Map.copyOf(finalProfitByParticipant);
     }
 }

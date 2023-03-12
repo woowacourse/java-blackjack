@@ -5,6 +5,7 @@ import java.util.Map;
 
 import domain.participant.ParticipantFinalResultDto;
 import domain.participant.ParticipantResultDto;
+import domain.profit.FinalProfitDto;
 import util.Constants;
 
 public class ResultView {
@@ -38,7 +39,9 @@ public class ResultView {
         System.out.println(participantName + "카드: " + String.join(JOIN_DELIMITER, cardNames) + " - 결과: " + totalValueSum);
     }
 
-    public static void printFinalProfit(Double dealerFinalProfit, Map<String, Double> finalProfitByPlayer) {
+    public static void printFinalProfit(FinalProfitDto finalProfitDto) {
+        Double dealerFinalProfit = finalProfitDto.getDealerFinalProfit();
+        Map<String, Double> finalProfitByPlayer = finalProfitDto.getFinalProfitByPlayer();
         System.out.println(FINAL_PROFIT_MESSAGE);
         System.out.println(Constants.DEALER_NAME + ": " + dealerFinalProfit);
         for (String participantName : finalProfitByPlayer.keySet()) {
