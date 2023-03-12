@@ -65,7 +65,8 @@ public class BlackJackController {
     }
 
     private void giveDealerAdditionalCard() {
-        while (runner.giveDealerIfReceivable()) {
+        while (runner.isDealerReceivable()) {
+            runner.giveDealerIfReceivable();
             OutputView.printDealerReceptionNotice();
         }
     }

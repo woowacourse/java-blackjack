@@ -56,7 +56,7 @@ public class BlackJackGameRunner {
         if (playerPassedHitStageCount >= players.size()) {
             return false;
         }
-        if (!getCurrentPlayerOnHitStage().canReceiveCard()) {
+        if (getCurrentPlayerOnHitStage().isBust()) {
             endCurrentPlayerHitStage();
         }
         return playerPassedHitStageCount < players.size();
@@ -87,12 +87,14 @@ public class BlackJackGameRunner {
         playerPassedHitStageCount++;
     }
 
-    public boolean giveDealerIfReceivable() {
+    public boolean isDealerReceivable() {
+        return dealer.canReceiveCard();
+    }
+
+    public void giveDealerIfReceivable() {
         if (dealer.canReceiveCard()) {
             giveCard(dealer);
-            return true;
         }
-        return false;
     }
 
     private void giveCard(final Player player) {
