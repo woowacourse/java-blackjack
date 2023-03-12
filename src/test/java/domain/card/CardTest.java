@@ -24,7 +24,8 @@ class CardTest {
         @NullSource
         void createTestWithNullValue(Object value) {
             assertThatThrownBy(() -> new Card((Value) value, Shape.SPADE))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(Card.NULL_ERROR_MESSAGE);
         }
 
         @DisplayName("카드의 모양으로 null 값이 들어가면 카드 생성에 실패한다.")
@@ -32,7 +33,8 @@ class CardTest {
         @NullSource
         void createTestWithNullShape(Object shape) {
             assertThatThrownBy(() -> new Card(Value.ACE, (Shape) shape))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(Card.NULL_ERROR_MESSAGE);
         }
     }
 }
