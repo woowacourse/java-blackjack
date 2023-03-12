@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static domain.card.CardShape.*;
 import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.FOUR;
 import static domain.card.CardValue.JACK;
@@ -40,7 +41,7 @@ class HandTest {
 
         // when
         final int beforeSize = hand.cards().size();
-        hand.addCard(new Card(CardShape.CLOVER, FOUR));
+        hand.addCard(new Card(CLOVER, FOUR));
 
         // then
         assertThat(hand.cards().size()).isEqualTo(beforeSize + 1);
@@ -60,8 +61,8 @@ class HandTest {
         final Hand hand = new Hand();
 
         // when
-        hand.addCard(new Card(CardShape.CLOVER, valueOf(split[0])));
-        hand.addCard(new Card(CardShape.CLOVER, valueOf(split[1])));
+        hand.addCard(new Card(CLOVER, valueOf(split[0])));
+        hand.addCard(new Card(CLOVER, valueOf(split[1])));
 
         // then
         assertThat(hand.calculate()).isEqualTo(new Score(totalScore));
@@ -81,8 +82,8 @@ class HandTest {
         final String[] split = values.split("\\+");
         final Hand hand = new Hand();
 
-        hand.addCard(new Card(CardShape.CLOVER, valueOf(split[0])));
-        hand.addCard(new Card(CardShape.CLOVER, valueOf(split[1])));
+        hand.addCard(new Card(CLOVER, valueOf(split[0])));
+        hand.addCard(new Card(CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(hand.calculate()).isEqualTo(new Score(totalScore));
@@ -99,41 +100,41 @@ class HandTest {
 
         // 10 + [11] = 21
         final Hand hand1 = new Hand();
-        hand1.addCard(new Card(CardShape.CLOVER, TEN));
-        hand1.addCard(new Card(CardShape.CLOVER, ACE));
+        hand1.addCard(new Card(CLOVER, TEN));
+        hand1.addCard(new Card(CLOVER, ACE));
 
         // 10 + 10 + [1] = 21
         final Hand hand2 = new Hand();
-        hand2.addCard(new Card(CardShape.CLOVER, JACK));
-        hand2.addCard(new Card(CardShape.CLOVER, TEN));
+        hand2.addCard(new Card(CLOVER, JACK));
+        hand2.addCard(new Card(CLOVER, TEN));
 
-        hand2.addCard(new Card(CardShape.CLOVER, ACE));
+        hand2.addCard(new Card(CLOVER, ACE));
 
         // [11] + 9 + [1] = 21
         final Hand hand3 = new Hand();
-        hand3.addCard(new Card(CardShape.CLOVER, ACE));
-        hand3.addCard(new Card(CardShape.CLOVER, NINE));
+        hand3.addCard(new Card(CLOVER, ACE));
+        hand3.addCard(new Card(CLOVER, NINE));
 
-        hand3.addCard(new Card(CardShape.CLOVER, ACE));
+        hand3.addCard(new Card(CLOVER, ACE));
 
         // [11] + 6 + 3 = 20
         final Hand hand4 = new Hand();
-        hand4.addCard(new Card(CardShape.CLOVER, SIX));
-        hand4.addCard(new Card(CardShape.CLOVER, THREE));
+        hand4.addCard(new Card(CLOVER, SIX));
+        hand4.addCard(new Card(CLOVER, THREE));
 
-        hand4.addCard(new Card(CardShape.CLOVER, ACE));
+        hand4.addCard(new Card(CLOVER, ACE));
 
         // [11] + 10 = 21
         final Hand hand5 = new Hand();
-        hand5.addCard(new Card(CardShape.CLOVER, ACE));
-        hand5.addCard(new Card(CardShape.CLOVER, TEN));
+        hand5.addCard(new Card(CLOVER, ACE));
+        hand5.addCard(new Card(CLOVER, TEN));
 
         // 10 + [1] + 7 = 18
         final Hand hand6 = new Hand();
-        hand6.addCard(new Card(CardShape.CLOVER, TEN));
-        hand6.addCard(new Card(CardShape.CLOVER, ACE));
+        hand6.addCard(new Card(CLOVER, TEN));
+        hand6.addCard(new Card(CLOVER, ACE));
 
-        hand6.addCard(new Card(CardShape.SPADE, SEVEN));
+        hand6.addCard(new Card(SPADE, SEVEN));
 
         return Stream.of(
                 Arguments.of(hand1, 21),
@@ -149,8 +150,8 @@ class HandTest {
     void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
         // given
         final Hand hand = new Hand();
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
+        hand.addCard(new Card(CLOVER, TEN));
+        hand.addCard(new Card(CLOVER, TEN));
 
         // when & then
         assertTrue(hand.canMoreCard());
@@ -160,8 +161,8 @@ class HandTest {
     void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
         // given
         final Hand hand = new Hand();
-        hand.addCard(new Card(CardShape.CLOVER, ACE));
-        hand.addCard(new Card(CardShape.SPADE, TEN));
+        hand.addCard(new Card(CLOVER, ACE));
+        hand.addCard(new Card(SPADE, TEN));
 
         // when & then
         assertFalse(hand.canMoreCard());
@@ -171,10 +172,10 @@ class HandTest {
     void 총합이_21_초과이면_버스트_된다() {
         // given
         final Hand hand = new Hand();
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
-        hand.addCard(new Card(CardShape.SPADE, TEN));
+        hand.addCard(new Card(CLOVER, TEN));
+        hand.addCard(new Card(SPADE, TEN));
 
-        hand.addCard(new Card(CardShape.DIAMOND, TEN));
+        hand.addCard(new Card(DIAMOND, TEN));
 
         // when & then
         assertTrue(hand.isBust());
@@ -184,8 +185,8 @@ class HandTest {
     void 총합이_21_이하이면_버스트_아니다() {
         // given
         final Hand hand = new Hand();
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
-        hand.addCard(new Card(CardShape.CLOVER, ACE));
+        hand.addCard(new Card(CLOVER, TEN));
+        hand.addCard(new Card(CLOVER, ACE));
 
         // when & then
         assertFalse(hand.isBust());
@@ -197,11 +198,11 @@ class HandTest {
         // given
         final Hand hand = new Hand();
 
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
-        hand.addCard(new Card(CardShape.CLOVER, SEVEN));
+        hand.addCard(new Card(CLOVER, TEN));
+        hand.addCard(new Card(CLOVER, SEVEN));
 
         // when & then
-        assertEquals(hand.firstCard(), new Card(CardShape.CLOVER, TEN));
+        assertEquals(hand.firstCard(), new Card(CLOVER, TEN));
     }
 
     @Test
@@ -210,20 +211,18 @@ class HandTest {
         // given
         final Hand hand = new Hand();
 
-        hand.addCard(new Card(CardShape.CLOVER, TEN));
-        hand.addCard(new Card(CardShape.CLOVER, SEVEN));
+        hand.addCard(new Card(CLOVER, TEN));
+        hand.addCard(new Card(CLOVER, SEVEN));
 
         // when & then
-        assertEquals(hand.secondCard(), new Card(CardShape.CLOVER, SEVEN));
+        assertEquals(hand.secondCard(), new Card(CLOVER, SEVEN));
     }
 
     @ParameterizedTest
     @MethodSource("isBlackjack")
     @DisplayName("isBlackjack() : 총합이 21이면 블랙잭이다.")
-    void test_isBlackjack(final Hand hand, final int calculateScore) throws Exception {
-        //given
-        final boolean isBlackjack = new Score(calculateScore).isBlackjack();
-
+    void test_isBlackjack(final Hand hand,
+                          final boolean isBlackjack) throws Exception {
         //when & then
         assertEquals(hand.isBlackjack(), isBlackjack);
     }
@@ -232,18 +231,19 @@ class HandTest {
 
         // 21
         final Hand hand1 = new Hand();
-        hand1.addCard(new Card(CardShape.CLOVER, TEN));
-        hand1.addCard(new Card(CardShape.CLOVER, ACE));
+        hand1.addCard(new Card(CLOVER, TEN));
+        hand1.addCard(new Card(CLOVER, ACE));
 
-        // 20
+        // 21
         final Hand hand2 = new Hand();
-        hand2.addCard(new Card(CardShape.CLOVER, SIX));
-        hand2.addCard(new Card(CardShape.CLOVER, THREE));
-        hand2.addCard(new Card(CardShape.CLOVER, ACE));
+        hand2.addCard(new Card(CLOVER, SIX));
+        hand2.addCard(new Card(CLOVER, THREE));
+        hand2.addCard(new Card(CLOVER, ACE));
+        hand2.addCard(new Card(SPADE, ACE));
 
         return Stream.of(
-                Arguments.of(hand1, 21),
-                Arguments.of(hand2, 20)
+                Arguments.of(hand1, true),
+                Arguments.of(hand2, false)
         );
     }
 }

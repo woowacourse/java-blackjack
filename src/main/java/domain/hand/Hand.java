@@ -49,7 +49,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculate().isBlackjack();
+        return cards.size() == 2 && calculate().isBlackjack();
     }
 
     public Card firstCard() {
