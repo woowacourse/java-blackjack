@@ -24,7 +24,7 @@ public class Player {
     }
 
     public int sumCardPool() {
-        return cardPool.sumCardNumbers();
+        return cardPool.calculateTotalPoint();
     }
 
     public void increaseRevenue() {
@@ -44,7 +44,7 @@ public class Player {
     }
 
     public boolean isBurst() {
-        return cardPool.isSumExceedLimit();
+        return cardPool.isTotalPointExceedLimit();
     }
 
     public boolean isBlackjack() {
