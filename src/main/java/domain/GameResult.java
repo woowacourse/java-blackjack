@@ -38,8 +38,4 @@ public class GameResult {
                 .map(s-> -gameResult.get(s).calculateResult(s.getMoney()))
                 .reduce(0,Integer::sum);
     }
-
-    public Result getPlayerResult(Player player) {
-        return gameResult.get(player);
-    }
 }

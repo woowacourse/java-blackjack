@@ -63,7 +63,7 @@ public class OutputView {
                 gameResult.calculateDealer(players));
         for (Player player : players.getPlayers()) {
             System.out.printf(PROFIT_RESULT_MESSAGE, player.getName(),
-                    gameResult.getPlayerResult(player).calculateResult(player.getMoney()));
+                    gameResult.calculateResult(dealer,player));
         }
     }
 }
