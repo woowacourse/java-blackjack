@@ -87,6 +87,37 @@ public class PlayerTest {
         ));
 
         assertThat(player.getFirstCard()).hasSize(2);
-        ;
+    }
+
+    @ParameterizedTest
+    @MethodSource("blackjackGameCardSource")
+    @DisplayName("플레이어의 블랙잭 여부를 반환한다")
+    void blackjackTest(List<Card> cards, boolean expect) {
+        Player player = new Player("박스터");
+        player.addCards(cards);
+
+        assertThat(player.isBlackjack()).isEqualTo(expect);
+    }
+
+    static Stream<Arguments> blackjackGameCardSource() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.ACE)
+                        ), true),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.SEVEN),
+                                new Card(CardSuit.SPADE, CardNumber.FOUR)
+                        ), false),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.ACE)
+                        ), false)
+        );
     }
 }

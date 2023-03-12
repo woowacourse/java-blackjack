@@ -5,7 +5,9 @@ import blackjack.domain.vo.Score;
 public enum ScoreState {
     STAY(Score.of(17)),
     BUST(Score.of(22)),
-    HIT(Score.of(16));
+    HIT(Score.of(16)),
+    BLACKJACK(Score.of(21)),
+    ;
 
     private final Score score;
 
@@ -14,6 +16,9 @@ public enum ScoreState {
     }
 
     public static ScoreState of(Score score) {
+        if (score.equals(BLACKJACK.score)) {
+            return BLACKJACK;
+        }
         if (score.isGreaterOrEqualsTo(BUST.score)) {
             return BUST;
         }
@@ -33,5 +38,9 @@ public enum ScoreState {
 
     public boolean isHit() {
         return this == HIT;
+    }
+
+    public boolean isBlackjack() {
+        return this == BLACKJACK;
     }
 }

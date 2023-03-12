@@ -26,6 +26,9 @@ public class BlackjackResult {
     }
 
     private static GameResult getGameResult(Player player, Dealer dealer) {
+        if (player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
         if (player.isBust()) {
             return GameResult.LOSE;
         }

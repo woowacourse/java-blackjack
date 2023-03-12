@@ -27,4 +27,8 @@ public class Player extends Participant {
     public List<Card> getFirstCard() {
         return List.copyOf(getAllCards().subList(0, 2));
     }
+
+    public boolean isBlackjack() {
+        return getAllCards().size() == 2 && getState().isBlackjack();
+    }
 }

@@ -57,7 +57,7 @@ class BlackjackGameTest {
                                 new Card(CardSuit.HEART, CardNumber.ACE),
                                 new Card(CardSuit.SPADE, CardNumber.SIX),
                                 new Card(CardSuit.CLUB, CardNumber.SIX)
-                        ), GameResult.WIN),
+                        ), GameResult.BLACKJACK),
                 Arguments.of(
                         List.of(
                                 new Card(CardSuit.HEART, CardNumber.TEN),
