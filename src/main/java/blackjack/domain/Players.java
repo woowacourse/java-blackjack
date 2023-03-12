@@ -28,7 +28,7 @@ public class Players {
     public List<Integer> getPlayersScore() {
         List<Integer> playersScore = new ArrayList<>();
         for (Player player : players) {
-            playersScore.add(player.calculateScore());
+            playersScore.add(player.getScore());
         }
         return playersScore;
     }

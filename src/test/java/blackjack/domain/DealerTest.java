@@ -64,7 +64,7 @@ class DealerTest {
             dealer.addCard(card);
             dealer.addCard(card2);
 
-            assertThat(dealer.calculateScore()).isEqualTo(20);
+            assertThat(dealer.getScore()).isEqualTo(20);
         }
 
         @DisplayName("ACE를 가지고 있을 때")
@@ -78,7 +78,7 @@ class DealerTest {
                 dealer.addCard(card);
                 dealer.addCard(card2);
 
-                assertThat(dealer.calculateScore()).isEqualTo(21);
+                assertThat(dealer.getScore()).isEqualTo(21);
             }
 
             @DisplayName("카드 점수의 합이 21점을 넘는다면, ACE의 점수를 1점으로 계산한다.")
@@ -91,7 +91,7 @@ class DealerTest {
                 dealer.addCard(card2);
                 dealer.addCard(card3);
 
-                assertThat(dealer.calculateScore()).isEqualTo(12);
+                assertThat(dealer.getScore()).isEqualTo(12);
             }
         }
     }

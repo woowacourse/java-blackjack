@@ -87,7 +87,7 @@ public class BlackJackGameController {
     }
 
     private void gameEnd(Dealer dealer, Players players) {
-        outputView.printDealerResult(cardsToPrintFormat(dealer.getAllCards()), dealer.calculateScore());
+        outputView.printDealerResult(cardsToPrintFormat(dealer.getAllCards()), dealer.getScore());
         outputView.printPlayerResult(playersToPrintFormat(players), players.getPlayersScore());
     }
 

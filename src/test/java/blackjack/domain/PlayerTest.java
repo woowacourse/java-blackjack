@@ -55,7 +55,7 @@ class PlayerTest {
             tori.addCard(card);
             tori.addCard(card2);
 
-            assertThat(tori.calculateScore()).isEqualTo(20);
+            assertThat(tori.getScore()).isEqualTo(20);
         }
 
         @DisplayName("ACE를 가지고 있을 때")
@@ -69,7 +69,7 @@ class PlayerTest {
                 tori.addCard(card);
                 tori.addCard(card2);
 
-                assertThat(tori.calculateScore()).isEqualTo(21);
+                assertThat(tori.getScore()).isEqualTo(21);
             }
 
             @DisplayName("카드 점수의 합이 21점을 넘는다면, ACE의 점수를 1점으로 계산한다.")
@@ -82,7 +82,7 @@ class PlayerTest {
                 tori.addCard(card2);
                 tori.addCard(card3);
 
-                assertThat(tori.calculateScore()).isEqualTo(12);
+                assertThat(tori.getScore()).isEqualTo(12);
             }
         }
     }

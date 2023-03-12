@@ -36,7 +36,7 @@ public class Game {
     }
 
     public int getDealerScore() {
-        return gamePlayer.getDealer().calculateScore();
+        return gamePlayer.getDealer().getScore();
     }
 
     public List<Integer> getPlayersScore() {
