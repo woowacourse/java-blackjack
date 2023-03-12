@@ -11,6 +11,11 @@ public class BettingResult {
         this.bettingResults = bettingResults;
     }
 
+    public Money getDealerBettingResult() {
+        return bettingResults.values().stream()
+                .reduce(new Money(0), (Money::minus));
+    }
+
     public Map<Player, Money> getBettingResults() {
         return Map.copyOf(bettingResults);
     }

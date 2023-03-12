@@ -46,4 +46,8 @@ public class Money {
                 "value=" + value +
                 '}';
     }
+
+    public Money minus(Money other) {
+        return new Money(this.value.subtract(other.value));
+    }
 }
