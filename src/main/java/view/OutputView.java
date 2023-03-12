@@ -16,8 +16,8 @@ public final class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public void printInitBetMoney(final Player player) {
-        System.out.printf("%n%s 배팅 금액은?%n", player.getName());
+    public void printInitBetMoney(final String name) {
+        System.out.printf("%n%s 배팅 금액은?%n", name);
     }
 
     public void printHitTwice(final Players players) {

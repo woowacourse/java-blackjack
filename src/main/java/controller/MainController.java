@@ -2,7 +2,6 @@ package controller;
 
 import domain.deck.Deck;
 import domain.player.Dealer;
-import domain.player.Player;
 import domain.player.Players;
 import view.InputView;
 import view.OutputView;
@@ -48,9 +47,9 @@ public class MainController {
     }
 
     private void initBetMoney(final Players players) {
-        for (Player player : players.getPlayers()) {
-            outputView.printInitBetMoney(player);
-            player.initBet(inputView.readBetMoney());
+        for(String name : players.getPlayerNames()) {
+            outputView.printInitBetMoney(name);
+            players.initBet(inputView.readBetMoney(), name);
         }
     }
 

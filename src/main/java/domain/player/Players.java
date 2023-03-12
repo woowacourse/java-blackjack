@@ -23,11 +23,21 @@ public final class Players {
         });
     }
 
+    public void initBet(final int money, final String name) {
+        findPlayer(name).initBet(money);
+    }
+
     public Player findPlayer(final String name) {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 이름을 가진 플레이어가 존재하지 않습니다."));
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
