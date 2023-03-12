@@ -28,7 +28,7 @@ public class BlackJackController {
     }
 
     private void startGame() {
-        blackJackGame.getPlayers().forEach(this::savePlayerBetMoney);
+        blackJackGame.getPlayers().forEach(this::betMoney);
         blackJackGame.handInitialCards();
         openInitialCards();
 
@@ -36,7 +36,7 @@ public class BlackJackController {
         hitOrStayForDealer(blackJackGame.getDealer());
     }
 
-    private void savePlayerBetMoney(Player player) {
+    private void betMoney(Player player) {
         Money betMoney = InputView.askBetMoney(player.getName());
         Dealer dealer = blackJackGame.getDealer();
         dealer.addPlayerBetMoney(player, betMoney);
