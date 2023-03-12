@@ -32,6 +32,6 @@ class BettingMoneyTest {
     void invalidMoneyTestWithWrongUnit(int money) {
         assertThatThrownBy(() -> new BettingMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 베팅 금액은 1000원 단위여야 합니다.");
+                .hasMessageContaining(BettingMoney.UNIT_ERROR_MESSAGE);
     }
 }
