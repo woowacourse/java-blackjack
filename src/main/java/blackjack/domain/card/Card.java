@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import blackjack.domain.result.Score;
 
 import java.util.Map;
 import java.util.Objects;
@@ -6,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Card {
     private static final Map<String, Card> cache = new ConcurrentHashMap<>(52);
+
     private final Suit suit;
     private final Letter letter;
 

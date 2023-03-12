@@ -17,10 +17,10 @@
 - [x] Card 생성 캐시로 만들기
 - [x] List<Card> cards -> Hand 로 일급컬렉션으로 관리
   - [x] 점수 계산 책임
-- [ ] outputView 다시 보기 (DTO 적용해보기)
+- [ ] outputView 다시 정리 (DTO 적용해보기)
 - [x] 값 객체는 equals, hashcode 구현
 - [ ] 인스턴스 변수 2개 이하로 수정
-- [ ] 도메인 패키지 분리
+- [x] 도메인 패키지 분리
 - [ ] Player, Dealer 중복 코드 상속 말고 조합으로 풀어보기
 
 ### 1단계 피드백 사항 및 추가 수정사항
