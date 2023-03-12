@@ -7,7 +7,7 @@ public enum ResultState {
     WIN_BLACKJACK(1.5),
     WIN(1),
     LOSE(-1),
-    DRAW(0);
+    PUSH(0);
 
     private final double times;
 
@@ -29,7 +29,7 @@ public enum ResultState {
     private static ResultState getResultDealerBlackjack(Player player) {
         ScoreState playerState = player.getState();
         if (playerState.isBlackjack()) {
-            return ResultState.DRAW;
+            return ResultState.PUSH;
         }
         return ResultState.LOSE;
     }
@@ -51,7 +51,7 @@ public enum ResultState {
             return ResultState.WIN;
         }
         if (player.getScore() == dealer.getScore()) {
-            return ResultState.DRAW;
+            return ResultState.PUSH;
         }
         return ResultState.LOSE;
     }
