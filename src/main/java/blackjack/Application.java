@@ -23,12 +23,12 @@ public class Application {
         final List<String> playerNames = inputPlayerNames(inputView);
         final List<Integer> moneys = new ArrayList<>();
         for (final String playerName : playerNames) {
-            inputPlayerMoney(inputView, moneys, playerName);
+            moneys.add(inputPlayerMoney(inputView, playerName));
         }
         final Deck deck = new ShuffledDeckFactory().generate();
         final Participants participants = Participants.of(playerNames, moneys);
         participants.distributeInitialCards(deck);
-        outputView.printInitialCards(participants.getDealer().getFirstCard(), participants.getPlayersCards());
+        outputView.printInitialCards(participants.getDealerFirstCard(), participants.getPlayersCards());
 
         for (final String playerName : participants.getPlayerNames()) {
             DrawCommand playerChoice = DrawCommand.DRAW;
@@ -67,22 +67,19 @@ public class Application {
                 inputView::printInputError);
     }
 
-    private static void inputPlayerMoney(final InputView inputView, final List<Integer> moneys,
+    private static int inputPlayerMoney(final InputView inputView,
             final String playerName) {
-
-        final int amount = inputPlayerMoney(playerName, inputView);
-        Participants.validateBettingMoney(amount);
-        moneys.add(amount);
+        return repeatUntilNoException(() -> {
+                    final int amount = inputView.inputPlayerMoney(playerName);
+                    Participants.validateBettingMoney(amount);
+                    return amount;
+                },
+                inputView::printInputError);
     }
 
     private static DrawCommand inputPlayerChoice(final String playerName, final InputView inputView) {
         return repeatUntilNoException(
                 () -> inputView.inputCommand(playerName), inputView::printInputError);
-    }
-
-    private static int inputPlayerMoney(final String playerName, final InputView inputView) {
-        return repeatUntilNoException(
-                () -> inputView.inputPlayerMoney(playerName), inputView::printInputError);
     }
 
     private static <T> T repeatUntilNoException(final Supplier<T> supplier,
