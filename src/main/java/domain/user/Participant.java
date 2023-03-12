@@ -30,6 +30,10 @@ public class Participant {
         return state;
     }
 
+    public boolean equalsName(String name) {
+        return this.name.getValue().equals(name);
+    }
+
     @Override
     public String toString() {
         return "Participant{" +

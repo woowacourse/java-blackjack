@@ -1,77 +1,82 @@
 package domain.game;
 
-import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suit;
-import domain.state.*;
+import domain.strategy.NumberGenerator;
+import domain.user.Dealer;
+import domain.user.Player;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static domain.Fixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
 
 public class BlackjackGameTest {
 
-    @Test
-    void hit() {
-        final var state = new Ready()
-                .draw(SPADE_TWO)
-                .draw(SPADE_THREE);
+    BlackjackGame blackjackGame;
 
-        assertThat(state).isInstanceOf(Hit.class);
+    @BeforeEach
+    void setUp() {
+        Dealer dealer = new Dealer("딜러");
+        Player maco = new Player("maco");
+        Player teo = new Player("teo");
+
+        NumberGenerator numberGenerator = threshold -> 0;
+        Deck deck = new Deck(numberGenerator);
+
+        blackjackGame = new BlackjackGame(dealer, List.of(maco,teo), deck);
     }
 
+    @DisplayName("모든 참여자가 hit하면 딜러는 카드를 1장 가지고 있다.")
     @Test
-    void blackjack() {
-        final var state = new Ready()
-                .draw(SPADE_ACE)
-                .draw(SPADE_TEN);
+    void hitAll_dealer() {
+        blackjackGame.hitAll();
 
-        assertThat(state).isInstanceOf(Blackjack.class);
+        Dealer dealer = blackjackGame.getDealer();
+        assertThat(dealer.getState().cards().size()).isEqualTo(1);
     }
 
+    @DisplayName("모든 참여자가 hit하면 각 플레이어는 카드를 1장 가지고 있다.")
     @Test
-    void bust() {
-        final var state = new Ready()
-                .draw(SPADE_TEN)
-                .draw(HEART_TEN)
-                .draw(SPADE_TEN);
+    void hitAll_player() {
+        blackjackGame.hitAll();
 
-        assertThat(state).isInstanceOf(Bust.class);
+        List<Player> players = blackjackGame.getPlayers();
+
+        for (Player player : players) {
+            assertThat(player.getState().cards().size()).isEqualTo(1);
+        }
     }
 
+    @DisplayName("maco가 hit하면 maco는 카드를 한장 가지고 있다.")
     @Test
-    void hitCards() {
-        final var state = new Ready()
-                .draw(SPADE_TEN)
-                .draw(HEART_TEN);
+    void hitPlayer() {
+        blackjackGame.hitPlayer("maco");
 
-        final var cards = state.cards();
+        Player maco = blackjackGame.findPlayer("maco");
 
-        assertThat(cards).isEqualTo(List.of(SPADE_TEN,
-                Card.of(Suit.HEART, Denomination.TEN)));
+        assertThat(maco.getState().cards().size()).isEqualTo(1);
     }
 
+    @DisplayName("딜러는 16이하이면 hit할 수 있다")
     @Test
-    void bustDraw_Throw() {
-        final var state = new Ready()
-                .draw(SPADE_TEN)
-                .draw(SPADE_TEN)
-                .draw(SPADE_TEN);
+    void hitDealer() {
+        Dealer dealer = blackjackGame.getDealer();
+        dealer.hit(SPADE_EIGHT);
+        dealer.hit(CLOVER_EIGHT);
 
-        assertThatThrownBy(() -> state.draw(SPADE_TEN))
-                .isInstanceOf(IllegalStateException.class);
+        assertThat(blackjackGame.hitDealer()).isTrue();
     }
 
+    @DisplayName("딜러는 17이상이면 hit할 수 없다")
     @Test
-    void stay() {
-        final var state = new Ready()
-                .draw(SPADE_TEN)
-                .draw(SPADE_TEN);
+    void hitDealer2() {
+        Dealer dealer = blackjackGame.getDealer();
+        dealer.hit(SPADE_EIGHT);
+        dealer.hit(SPADE_NINE);
+        blackjackGame.hitDealer();
 
-        assertThat(state.stay()).isInstanceOf(Stay.class);
+        assertThat(blackjackGame.hitDealer()).isFalse();
     }
 }

@@ -19,6 +19,10 @@ public class Player {
         return participant.stay();
     }
 
+    public boolean equalsName(String name) {
+        return participant.equalsName(name);
+    }
+
     public Name getName() {
         return participant.getName();
     }
