@@ -26,7 +26,7 @@ public class Dealer extends Participant {
         return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT;
     }
 
-    public ResultType judgeResult(final Participant participant) {
+    public ResultType judgePlayerResult(final Participant participant) {
         int dealerPoint = getTotalPoint();
         int participantPoint = participant.getTotalPoint();
 

@@ -38,10 +38,10 @@ class DealerTest {
         ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
         ParticipantCards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
 
-        Player player = new Player(participantsCards, "베로");
+        Player player = new Player(participantsCards, "베로", 1000);
         Dealer dealer = new Dealer(dealerCards);
 
-        assertThat(dealer.judgeResult(player)).isEqualTo(expectedResult);
+        assertThat(dealer.judgePlayerResult(player)).isEqualTo(expectedResult);
     }
 
     static Stream<Arguments> isHittableDummy() {
@@ -150,6 +150,122 @@ class DealerTest {
                         List.of(Card.of(Suit.CLOVER, CardNumber.TWO),
                                 Card.of(Suit.CLOVER, CardNumber.KING)),
                         // 플레이어 무승부
+                        ResultType.PUSH
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("judgeDealerResultDummy")
+    @DisplayName("딜러는 플레이어의 결과의 반대 결과를 갖는다.")
+    void getReverseResult(
+            final List<Card> playerInitialCards,
+            final List<Card> playerAdditionalCards,
+            final List<Card> dealerInitialCards,
+            final List<Card> dealerAdditionalCards,
+            final ResultType expectedResult
+    ) {
+        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
+        ParticipantCards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
+
+        Player player = new Player(participantsCards, "베로", 1000);
+        Dealer dealer = new Dealer(dealerCards);
+
+        ResultType playerResult = dealer.judgePlayerResult(player);
+        ResultType dealerType = ResultType.getReverseType(playerResult);
+
+        assertThat(dealerType).isEqualTo(expectedResult);
+    }
+
+    static Stream<Arguments> judgeDealerResultDummy() {
+        return Stream.of(
+                Arguments.arguments(
+                        // 플레이어 딜러 모두 버스트하는 경우
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.NINE),
+                                Card.of(Suit.DIAMOND, CardNumber.QUEEN)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.JACK),
+                                Card.of(Suit.HEART, CardNumber.KING)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.QUEEN)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.JACK),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 승리
+                        ResultType.WIN
+                ),
+                Arguments.arguments(
+                        // 플레이어만 버스트하는 경우
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.NINE),
+                                Card.of(Suit.DIAMOND, CardNumber.QUEEN)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.JACK),
+                                Card.of(Suit.HEART, CardNumber.KING)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.THREE),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 승리
+                        ResultType.WIN
+                ),Arguments.arguments(
+                        // 딜러만 버스트하는 경우
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.THREE),
+                                Card.of(Suit.DIAMOND, CardNumber.EIGHT)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.FIVE),
+                                Card.of(Suit.HEART, CardNumber.THREE)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.QUEEN),
+                                Card.of(Suit.HEART, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.NINE),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 패배
+                        ResultType.LOSE
+                ),
+                Arguments.arguments(
+                        // 플레이어가 승리한다.
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                                Card.of(Suit.DIAMOND, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.THREE),
+                                Card.of(Suit.HEART, CardNumber.QUEEN)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.TWO),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 패배
+                        ResultType.LOSE
+                ),
+                Arguments.arguments(
+                        // 플레이어가 패배한다.
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                                Card.of(Suit.DIAMOND, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.QUEEN)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.THREE),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 승리
+                        ResultType.WIN
+                ),
+                Arguments.arguments(
+                        // 플레이어 딜러 모두 무승부한다.
+                        // 플레이어
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                                Card.of(Suit.DIAMOND, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.SPADE, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.QUEEN)),
+                        // 딜러
+                        List.of(Card.of(Suit.HEART, CardNumber.TWO),
+                                Card.of(Suit.HEART, CardNumber.FIVE)),
+                        List.of(Card.of(Suit.CLOVER, CardNumber.TWO),
+                                Card.of(Suit.CLOVER, CardNumber.KING)),
+                        // 딜러 무승부
                         ResultType.PUSH
                 )
         );
