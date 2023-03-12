@@ -9,6 +9,7 @@ import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +36,16 @@ public class BlackjackController {
     }
 
     private BlackjackGame generateBlackjackGame() {
-        final Players players = repeatUntilGetValidInput(inputView::readPlayers);
+        final Players players = generateValidPlayers();
         final BettingZone bettingZone = generateBettingZone(players);
         return new BlackjackGame(players, bettingZone);
+    }
+
+    private Players generateValidPlayers() {
+        return repeatUntilGetValidInput(() -> {
+            final List<String> playerNames = new ArrayList<>(inputView.readPlayers());
+            return Players.from(playerNames);
+        });
     }
 
     private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
@@ -54,11 +62,18 @@ public class BlackjackController {
         final LinkedHashMap<Player, Money> betMoneyByPlayers = allPlayers.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> Money.createMoneyForBetting(repeatUntilGetValidInput(() -> inputView.readBetMoney(player))),
+                        this::generateBettingMoney,
                         (betMoney, betMoney2) -> betMoney,
                         LinkedHashMap::new
                 ));
         return new BettingZone(betMoneyByPlayers);
+    }
+
+    private Money generateBettingMoney(final Player player) {
+        return repeatUntilGetValidInput(() -> {
+            final int amount = inputView.readBetMoney(player);
+            return Money.createMoneyForBetting(amount);
+        });
     }
 
     private void drawInitialCards(final BlackjackGame blackjackGame) {
@@ -77,10 +92,17 @@ public class BlackjackController {
 
     private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
         while (player.isDrawable()) {
-            final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
+            final BlackjackCommand command = generateValidCommand(player);
             blackjackGame.drawByGambler(player, ShuffledDeck.getInstance(), command);
             outputView.printDrawResult(player);
         }
+    }
+
+    private BlackjackCommand generateValidCommand(final Player player) {
+        return repeatUntilGetValidInput(() -> {
+            final String input = inputView.readCommand(player);
+            return BlackjackCommand.from(input);
+        });
     }
 
     private void printPlayerCardAndScores(final BlackjackGame blackjackGame) {
