@@ -92,7 +92,7 @@
 
 - [ ] playerHitOrStand 메소드 indent 요구사항에 맞춰 수정
 - [ ] 메소드 네이밍 get ~ 으로 통일
-- [ ] 스트림 연산자 기준으로 개행
+- [x] 스트림 연산자 기준으로 개행
 - [ ] OutputView printFinalVictoryOrDefeatDealer 내 depth 2인 부분 수정
 - [ ] 테스트 클래스 given when then 패턴 대신 개행으로 구분
 - [ ] 테스트 코드 내의 메서드 네이밍에 대해 질문하기
