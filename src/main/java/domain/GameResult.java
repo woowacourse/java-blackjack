@@ -16,11 +16,11 @@ public class GameResult {
 
     public void calculatePlayersResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            gameResult.put(player, calculateResult(dealer,player));
+            gameResult.put(player, calculatePlayerResult(dealer,player));
         }
     }
 
-    public Result calculateResult(Dealer dealer,Player player) {
+    public Result calculatePlayerResult(Dealer dealer, Player player) {
         if (player.isBust() || (dealer.dealerWin(player.getCardsSum()) && !dealer.isBust())) {
             return Result.LOSE;
         }
@@ -33,7 +33,7 @@ public class GameResult {
         return Result.WIN;
     }
 
-    public int calculateDealer(Players players) {
+    public int calculateDealerProfit(Players players) {
         return players.getPlayers().stream()
                 .map(s-> -gameResult.get(s).calculateResult(s.getMoney()))
                 .reduce(0,Integer::sum);

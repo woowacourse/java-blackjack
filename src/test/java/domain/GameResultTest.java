@@ -33,7 +33,7 @@ public class  GameResultTest {
         GameResult gameResult = new GameResult();
         gameResult.calculatePlayersResult(dealer,players);
 
-        Assertions.assertThat(gameResult.calculateResult(dealer,player1)).isEqualTo(Result.WIN);
+        Assertions.assertThat(gameResult.calculatePlayerResult(dealer,player1)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class  GameResultTest {
         Players players = new Players(List.of(player1));
         GameResult gameResult = new GameResult();
         gameResult.calculatePlayersResult(dealer,players);
-        
-        Assertions.assertThat(gameResult.calculateResult(dealer,player1)).isEqualTo(Result.BLACKJACKWIN);
+
+        Assertions.assertThat(gameResult.calculatePlayerResult(dealer,player1)).isEqualTo(Result.BLACKJACKWIN);
     }
 }
