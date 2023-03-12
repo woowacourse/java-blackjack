@@ -109,7 +109,7 @@ public class GamblerTest {
         final Dealer dealer = Dealer.create();
         dealer.draw(deck);
 
-        final Result result = gambler.play(dealer.getHand());
+        final Result result = gambler.compareHandTo(dealer.getHand());
 
         assertThat(result).isEqualTo(Result.WIN);
     }

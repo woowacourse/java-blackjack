@@ -18,7 +18,7 @@ public abstract class Player {
 
     public abstract boolean isDealer();
 
-    public abstract Result play(final Hand hand);
+    public abstract Result compareHandTo(final Hand hand);
 
     public void drawInitialCard(final Deck deck) {
         draw(deck);

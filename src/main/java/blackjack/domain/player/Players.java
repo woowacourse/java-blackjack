@@ -70,13 +70,13 @@ public class Players {
         }
     }
 
-    public Map<Player, Result> play() {
+    public Map<Player, Result> compareHands() {
         final Dealer dealer = getDealer();
         return players.stream()
                 .filter(player -> !player.isDealer())
                 .collect(toMap(
                         Function.identity(),
-                        player -> player.play(dealer.getHand()),
+                        player -> player.compareHandTo(dealer.getHand()),
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));

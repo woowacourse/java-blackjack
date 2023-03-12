@@ -29,17 +29,17 @@ public class HandTest {
     }
 
     @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
-    @MethodSource("playBlackjackSource")
+    @MethodSource("compareHandSource")
     void 승패를_구한다(final List<Card> cards, final List<Card> dealerCards, final Result expectedResult) {
         final Hand hand = generateHand(cards);
         final Hand dealerHand = generateHand(dealerCards);
 
-        final Result result = hand.play(dealerHand);
+        final Result result = hand.compare(dealerHand);
 
         assertThat(result).isEqualTo(expectedResult);
     }
 
-    static Stream<Arguments> playBlackjackSource() {
+    static Stream<Arguments> compareHandSource() {
         return Stream.of(
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(KING_SPADE, QUEEN_SPADE), BLACKJACK),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(QUEEN_SPADE, SIX_SPADE, TEN_SPADE), BLACKJACK),

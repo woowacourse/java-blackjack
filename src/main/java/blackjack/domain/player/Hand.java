@@ -20,31 +20,31 @@ public class Hand {
         state = State.calculateState(cards);
     }
 
-    public Result play(final Hand other) {
+    public Result compare(final Hand other) {
         if (state.isBlackjack()) {
-            return playWithBlackjack(other);
+            return compareWithBlackjack(other);
         }
         if (state.isBust()) {
-            return playWithBust(other);
+            return compareWithBust(other);
         }
-        return playWithScore(other);
+        return compareByScore(other);
     }
 
-    private Result playWithBlackjack(final Hand other) {
+    private Result compareWithBlackjack(final Hand other) {
         if (other.state.isBlackjack()) {
             return PUSH;
         }
         return BLACKJACK;
     }
 
-    private Result playWithBust(final Hand other) {
+    private Result compareWithBust(final Hand other) {
         if (other.state.isBust()) {
             return PUSH;
         }
         return LOSE;
     }
 
-    private Result playWithScore(final Hand other) {
+    private Result compareByScore(final Hand other) {
         if (other.state.isBust() || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
             return WIN;
         }

@@ -23,7 +23,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public Result play(final Hand hand) {
+    public Result compareHandTo(final Hand hand) {
         throw new UnsupportedOperationException();
     }
 

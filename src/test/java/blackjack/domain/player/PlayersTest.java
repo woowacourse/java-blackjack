@@ -136,7 +136,7 @@ public class PlayersTest {
         players.drawInitialCards(deck);
         players.drawByDealer(deck);
 
-        Map<Player, Result> result = players.play();
+        Map<Player, Result> result = players.compareHands();
 
         assertThat(result.values()).containsExactly(WIN, PUSH);
     }
