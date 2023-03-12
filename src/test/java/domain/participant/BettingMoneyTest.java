@@ -12,7 +12,7 @@ class BettingMoneyTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1000, 15000})
     void createTest(int money) {
-        BettingMoney bettingMoney = new BettingMoney();
+        BettingMoney bettingMoney = new BettingMoney(money);
         assertThat(bettingMoney.getValue()).isEqualTo(money);
     }
 }
