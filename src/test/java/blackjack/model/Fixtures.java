@@ -13,6 +13,7 @@ public class Fixtures {
     public static final Card CLUB_FIVE = Card.of(CardSuit.CLUB, CardNumber.FIVE);
     public static final Card CLUB_EIGHT = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
     public static final Card CLUB_NINE = Card.of(CardSuit.CLUB, CardNumber.NINE);
+    public static final Card CLUB_TEN = Card.of(CardSuit.CLUB, CardNumber.TEN);
     public static final Card CLUB_JACK = Card.of(CardSuit.CLUB, CardNumber.JACK);
 
 
