@@ -61,7 +61,7 @@ public class Hand {
     }
 
     public boolean isStay() {
-        return calculateOptimalCardValueSum() < BLACKJACK_VALUE;
+        return (calculateOptimalCardValueSum() < BLACKJACK_VALUE) || (calculateOptimalCardValueSum() == BLACKJACK_VALUE && cards.size() != BLACKJACK_SIZE);
     }
 
     public List<Card> getCards() {
