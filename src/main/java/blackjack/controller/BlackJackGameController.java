@@ -5,12 +5,12 @@ import blackjack.domain.Command;
 import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
+import blackjack.dto.BlackJackProfitDto;
+import blackjack.dto.PlayerProfitDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class BlackJackGameController {
@@ -96,8 +96,15 @@ public class BlackJackGameController {
 
         final Map<Player, Money> playerProfit = blackJackGame.calculatePlayerProfit(playerResult, playerBetting);
         final Money dealerProfit = blackJackGame.calculateDealerProfit(playerProfit);
-        OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalProfit(dealerProfit, playerProfit);
+
+        final List<PlayerProfitDto> playerProfitDto = new ArrayList<>();
+        for (Player player : playerProfit.keySet()) {
+            playerProfitDto.add(new PlayerProfitDto(player.getName(), playerProfit.get(player).getValue()));
+        }
+        final BlackJackProfitDto blackJackProfitDto = new BlackJackProfitDto(dealerProfit.getValue(), playerProfitDto);
+
+        OutputView.printCardsWithSum(dealer, players.getPlayers());
+        OutputView.printFinalProfit(blackJackProfitDto);
     }
 
     private <T> T readUntilValidate(final Supplier<T> supplier) {
