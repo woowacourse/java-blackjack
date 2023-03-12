@@ -1,4 +1,4 @@
-package domain;
+package domain.hand;
 
 public class Score {
 

@@ -1,7 +1,10 @@
-package domain;
+package domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.card.Card;
+import domain.hand.Score;
 
 public class User extends Player {
 

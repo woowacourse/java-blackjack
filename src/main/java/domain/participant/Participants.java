@@ -1,7 +1,9 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import domain.card.Deck;
 
 public class Participants {
 
@@ -12,7 +14,7 @@ public class Participants {
         this(new Dealer(), users);
     }
 
-    Participants(Dealer dealer, List<User> users) {
+    public Participants(Dealer dealer, List<User> users) {
         this.dealer = dealer;
         this.users = users;
     }

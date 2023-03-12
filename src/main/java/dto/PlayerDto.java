@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Hand;
-import domain.Player;
+import domain.hand.Hand;
+import domain.participant.Player;
 
 public class PlayerDto {
 

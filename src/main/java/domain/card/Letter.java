@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import domain.hand.Score;
 
 public enum Letter {
 

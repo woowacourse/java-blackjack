@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.bank.Money;
+import domain.participant.Dealer;
+import domain.participant.User;
+
 public class GameTest extends AbstractTestFixture {
 
     @Test

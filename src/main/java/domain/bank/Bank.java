@@ -1,7 +1,10 @@
-package domain;
+package domain.bank;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import domain.Result;
+import domain.participant.User;
 
 public class Bank {
 

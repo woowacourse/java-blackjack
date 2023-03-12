@@ -1,20 +1,29 @@
 package domain;
 
-import static domain.Face.SPADE;
+import static domain.card.Face.SPADE;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.bank.Money;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Face;
+import domain.card.Letter;
+import domain.participant.Dealer;
+import domain.participant.Participants;
+import domain.participant.User;
+
 public abstract class AbstractTestFixture {
 
-    static List<Card> createCards(String... cards) {
+    public static List<Card> createCards(String... cards) {
         return Arrays.stream(cards)
                 .map(AbstractTestFixture::parse)
                 .collect(Collectors.toList());
     }
 
-    static List<Card> createCards(List<String> cards) {
+    public static List<Card> createCards(List<String> cards) {
         return cards.stream()
                 .map(AbstractTestFixture::parse)
                 .collect(Collectors.toList());
@@ -28,34 +37,34 @@ public abstract class AbstractTestFixture {
         return new Card(SPADE, letterFrom(cardInfo[0]));
     }
 
-    static Card createCard(Letter letter) {
+    public static Card createCard(Letter letter) {
         return new Card(SPADE, letter);
     }
 
-    static Letter letterFrom(String letter) {
+    public static Letter letterFrom(String letter) {
         return Arrays.stream(Letter.values())
                 .filter(letterEnum -> letterEnum.getLetter().equals(letter))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 글자입니다"));
     }
 
-    static Face faceFrom(String face) {
+    public static Face faceFrom(String face) {
         return Arrays.stream(Face.values())
                 .filter(faceEnum -> faceEnum.name().equals(face))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 그림입니다"));
     }
 
-    static Participants createParticipantsFrom(Dealer dealer, User... users) {
+    public static Participants createParticipantsFrom(Dealer dealer, User... users) {
         return new Participants(dealer, Arrays.asList(users));
     }
 
-    Game createGameFrom(Dealer dealer, User... users) {
+    public Game createGameFrom(Dealer dealer, User... users) {
         var participants = createParticipantsFrom(dealer, users);
         return new Game(participants, new Deck());
     }
 
-    static Money createMoney(int value) {
+    public static Money createMoney(int value) {
         if (value < 0) {
             return Money.of(-value).multiply(-1);
         }

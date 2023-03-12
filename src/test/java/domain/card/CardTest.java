@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class CardTest extends AbstractTestFixture{
+import domain.AbstractTestFixture;
+import domain.hand.Score;
+
+public class CardTest extends AbstractTestFixture {
 
     @ParameterizedTest(name = "점수를 알 수 있다")
     @CsvSource({"ACE,1", "TWO,2", "THREE,3", "FOUR,4", "FIVE,5", "SIX,6", "SEVEN,7",

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import domain.Card;
-import domain.Hand;
+import domain.card.Card;
+import domain.hand.Hand;
 import domain.Result;
 import dto.PlayerDto;
 

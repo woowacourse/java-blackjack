@@ -1,6 +1,12 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
+
+import domain.Result;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.hand.Hand;
+import domain.hand.Score;
 
 public abstract class Player {
 
@@ -21,7 +27,7 @@ public abstract class Player {
         return hand.score();
     }
 
-    Result competeWith(Player other) {
+    public Result competeWith(Player other) {
         if (hand.isDrawAgainst(other.hand)) {
             return Result.DRAW;
         }

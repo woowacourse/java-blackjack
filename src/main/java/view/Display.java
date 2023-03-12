@@ -4,7 +4,7 @@ import static domain.Result.LOSE;
 import static domain.Result.WIN;
 import static domain.Result.WIN_BY_BLACKJACK;
 
-import domain.Card;
+import domain.card.Card;
 import domain.Result;
 
 public class Display {
