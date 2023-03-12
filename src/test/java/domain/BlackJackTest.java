@@ -1,10 +1,10 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardHolder;
+import domain.card.Hand;
 import domain.card.DeckOfCards;
-import domain.card.Number;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class BlackJackTest {
     @DisplayName("게임 시작 시 플레이어들에게 카드를 2장씩 나눠준다.")
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Participant.from(GIVEN_NAMES)),
+                new Players(makeDealer(), Gambler.from(GIVEN_NAMES)),
                 DeckOfCards.create(maxIndex -> 0)
         );
         blackJack.initializeCardsOfPlayers();
@@ -38,22 +38,22 @@ class BlackJackTest {
     @DisplayName("전체 플레이어에게 카드를 한 장씩 추가한다.")
     void givesAllPlayersACard() {
         Dealer dealer = makeDealer();
-        List<Participant> participants = Participant.from(GIVEN_NAMES);
+        List<Gambler> gamblers = Gambler.from(GIVEN_NAMES);
         BlackJack blackJack = new BlackJack(
-                new Players(dealer, participants),
+                new Players(dealer, gamblers),
                 DeckOfCards.create(maxIndex -> 0)
         );
         blackJack.giveCardToAllPlayers();
 
         assertThat(dealer.getCards()).hasSize(1);
-        participants.forEach(participant -> assertThat(participant.getCards()).hasSize(1));
+        gamblers.forEach(participant -> assertThat(participant.getCards()).hasSize(1));
     }
 
     @Test
     @DisplayName("특정 플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Participant.from(GIVEN_NAMES)),
+                new Players(makeDealer(), Gambler.from(GIVEN_NAMES)),
                 DeckOfCards.create(maxIndex -> 0)
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
@@ -70,8 +70,8 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(
                 new Players(
                         makeDealer(
-                                new Card(Shape.SPADE, Number.KING),
-                                new Card(Shape.HEART, Number.SIX)), Participant.from(GIVEN_NAMES)
+                                new Card(Suit.SPADE, Denomination.KING),
+                                new Card(Suit.HEART, Denomination.SIX)), Gambler.from(GIVEN_NAMES)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isTrue();
@@ -83,8 +83,8 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(
                 new Players(
                         makeDealer(
-                                new Card(Shape.SPADE, Number.KING),
-                                new Card(Shape.HEART, Number.SEVEN)), Participant.from(GIVEN_NAMES)
+                                new Card(Suit.SPADE, Denomination.KING),
+                                new Card(Suit.HEART, Denomination.SEVEN)), Gambler.from(GIVEN_NAMES)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isFalse();
@@ -94,15 +94,15 @@ class BlackJackTest {
     @DisplayName("딜러에게 한 장의 카드를 추가한다.")
     void thenGiveDealerCard() {
         Dealer dealer = makeDealer();
-        BlackJack blackJack = new BlackJack(new Players(dealer, Participant.from(GIVEN_NAMES)), DeckOfCards.create(maxIndex -> 0));
+        BlackJack blackJack = new BlackJack(new Players(dealer, Gambler.from(GIVEN_NAMES)), DeckOfCards.create(maxIndex -> 0));
         blackJack.giveCardToDealer();
         assertThat(dealer.getCards()).hasSize(1);
     }
 
     private static Dealer makeDealer(Card... cards) {
         if (cards.length == 0) {
-            return new Dealer(CardHolder.makeEmptyHolder());
+            return new Dealer(Hand.makeEmptyHolder());
         }
-        return new Dealer(new CardHolder(List.of(cards)));
+        return new Dealer(new Hand(List.of(cards)));
     }
 }

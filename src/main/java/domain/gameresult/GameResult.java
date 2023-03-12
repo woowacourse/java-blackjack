@@ -1,6 +1,6 @@
 package domain.gameresult;
 
-import domain.player.Participant;
+import domain.player.Gambler;
 import domain.player.Player;
 
 import java.util.HashMap;
@@ -47,8 +47,8 @@ public class GameResult {
         return this.resultOfDealer.get(Result.DRAW);
     }
 
-    public Result getResultByParticipant(Participant participant) {
-        return this.resultOfParticipants.get(participant);
+    public Result getResultByParticipant(Gambler gambler) {
+        return this.resultOfParticipants.get(gambler);
     }
 
     protected Map<Player, Result> getAllParticipantResults() {

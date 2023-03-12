@@ -1,8 +1,8 @@
 package domain.gameresult;
 
-import domain.card.CardHolder;
+import domain.card.Hand;
 import domain.player.Name;
-import domain.player.Participant;
+import domain.player.Gambler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +13,12 @@ class GameResultTest {
     @Test
     @DisplayName("주어진 플레이어의 무승부 카운트를 올리면 딜러와 참가자 양 쪽에 무승부 카운트가 1 올라간다.")
     void givenParticipant_thenCountDraw() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
+        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"));
         GameResult gameResult = new GameResult();
 
-        gameResult.addDrawCount(participant);
+        gameResult.addDrawCount(gambler);
 
-        Result participantResult = gameResult.getResultByParticipant(participant);
+        Result participantResult = gameResult.getResultByParticipant(gambler);
         int drawingCountOfDealer = gameResult.getDrawingCountOfDealer();
         assertAll(
                 () -> assertThat(participantResult).isEqualTo(Result.DRAW),
@@ -29,12 +29,12 @@ class GameResultTest {
     @Test
     @DisplayName("주어진 플레이어의 승리 카운트를 올리면 딜러는 패배 카운트가 올라간다.")
     void givenWinningParticipant_thenCountWinning() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
+        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"));
         GameResult gameResult = new GameResult();
 
-        gameResult.addParticipantWinningCase(participant);
+        gameResult.addParticipantWinningCase(gambler);
 
-        Result participantResult = gameResult.getResultByParticipant(participant);
+        Result participantResult = gameResult.getResultByParticipant(gambler);
         int losingCountOfDealer = gameResult.getLosingCountOfDealer();
         assertAll(
                 () -> assertThat(participantResult).isEqualTo(Result.WIN),
@@ -45,12 +45,12 @@ class GameResultTest {
     @Test
     @DisplayName("주어진 플레이어의 패배 카운트를 올리면 딜러는 승리 카운트가 올라간다.")
     void givenLosingParticipant_thenCountLosing() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
+        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"));
         GameResult gameResult = new GameResult();
 
-        gameResult.addParticipantLosingCase(participant);
+        gameResult.addParticipantLosingCase(gambler);
 
-        Result participantResult = gameResult.getResultByParticipant(participant);
+        Result participantResult = gameResult.getResultByParticipant(gambler);
         int winningCountOfDealer = gameResult.getWinningCountOfDealer();
         assertAll(
                 () -> assertThat(participantResult).isEqualTo(Result.LOSE),

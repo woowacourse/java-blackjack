@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardHolder {
+public class Hand {
     public static final int ACE_SCORE_SWITCHING_LINE = 10;
     public static final int ACE_MAX_SCORE = 11;
     public static final int ACE_MIN_SCORE = 1;
 
     private final List<Card> cards;
 
-    public CardHolder(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static CardHolder makeEmptyHolder() {
-        return new CardHolder(new ArrayList<>());
+    public static Hand makeEmptyHolder() {
+        return new Hand(new ArrayList<>());
     }
 
     public void addCard(Card card) {

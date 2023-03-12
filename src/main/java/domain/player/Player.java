@@ -1,34 +1,34 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.CardHolder;
+import domain.card.Hand;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Player {
-    private final CardHolder cardHolder;
+    private final Hand hand;
     private final Name name;
 
-    public Player(CardHolder cardHolder, Name name) {
-        this.cardHolder = cardHolder;
+    public Player(Hand hand, Name name) {
+        this.hand = hand;
         this.name = name;
     }
 
     public void addCard(Card card) {
-        cardHolder.addCard(card);
+        hand.addCard(card);
     }
 
     public int getTotalScore() {
-        return cardHolder.getTotalScore();
+        return hand.getTotalScore();
     }
 
     public boolean isBust() {
-        return cardHolder.isBust();
+        return hand.isBust();
     }
 
     public List<Card> getCards() {
-        return cardHolder.getCards();
+        return hand.getCards();
     }
 
     public abstract boolean isNameEqualTo(String playerName);
@@ -51,6 +51,6 @@ public abstract class Player {
     }
 
     public Card getCardIndexOf(int index) {
-        return cardHolder.getCardIndexOf(index);
+        return hand.getCardIndexOf(index);
     }
 }

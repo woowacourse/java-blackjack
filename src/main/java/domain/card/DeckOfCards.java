@@ -20,16 +20,16 @@ public class DeckOfCards {
 
     private static List<Card> initializeCards() {
         List<Card> cards = new ArrayList<>();
-        for (Shape shape : Shape.values()) {
-            initializeCardsByShape(cards, shape);
+        for (Suit suit : Suit.values()) {
+            initializeCardsByShape(cards, suit);
         }
 
         return cards;
     }
 
-    private static void initializeCardsByShape(List<Card> cards, Shape shape) {
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
+    private static void initializeCardsByShape(List<Card> cards, Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(suit, denomination));
         }
     }
 

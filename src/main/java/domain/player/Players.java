@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 
 public class Players {
     private final Dealer dealer;
-    private final List<Participant> participants;
+    private final List<Gambler> gamblers;
 
-    public Players(Dealer dealer, List<Participant> participants) {
+    public Players(Dealer dealer, List<Gambler> gamblers) {
         this.dealer = dealer;
-        this.participants = participants;
+        this.gamblers = gamblers;
     }
 
     public void giveCardByName(String name, Card card) {
@@ -27,7 +27,7 @@ public class Players {
 
     public GameResult battleAll() {
         GameResult gameResult = new GameResult();
-        participants.forEach(participant -> dealer.battle(participant, gameResult));
+        gamblers.forEach(participant -> dealer.battle(participant, gameResult));
         return gameResult;
     }
 
@@ -41,7 +41,7 @@ public class Players {
     private List<Player> getAllPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(participants);
+        players.addAll(gamblers);
         return players;
     }
 
@@ -49,8 +49,8 @@ public class Players {
         return dealer;
     }
 
-    protected List<Participant> getParticipants() {
-        return participants;
+    protected List<Gambler> getParticipants() {
+        return gamblers;
     }
 
     public List<String> getAllPlayerNames() {

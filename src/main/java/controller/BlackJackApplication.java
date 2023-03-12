@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackJack;
-import domain.card.CardHolder;
+import domain.card.Hand;
 import domain.card.DeckOfCards;
 import domain.gameresult.GameResultReadOnly;
 import domain.player.*;
@@ -15,7 +15,7 @@ import java.util.List;
 public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(
-                new Players(new Dealer(CardHolder.makeEmptyHolder()), Participant.from(getParticipantNames())),
+                new Players(new Dealer(Hand.makeEmptyHolder()), Gambler.from(getParticipantNames())),
                 DeckOfCards.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);

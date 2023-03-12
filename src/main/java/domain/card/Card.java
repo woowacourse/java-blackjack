@@ -5,20 +5,20 @@ import java.util.Objects;
 public class Card {
     public static final int BUST_DEADLINE = 21;
 
-    private final Shape shape;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(Shape shape, Number number) {
-        this.shape = shape;
-        this.number = number;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     public boolean isAce() {
-        return number.isAce();
+        return denomination.isAce();
     }
 
     public int getScore() {
-        return number.getScore();
+        return denomination.getScore();
     }
 
     @Override
@@ -26,27 +26,27 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return shape == card.shape && number == card.number;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, number);
+        return Objects.hash(suit, denomination);
     }
 
     @Override
     public String toString() {
         return "Card{" +
-                "shape=" + shape +
-                ", number=" + number +
+                "shape=" + suit +
+                ", number=" + denomination +
                 '}';
     }
 
     public String getNumberDescription() {
-        return number.getDescription();
+        return denomination.getDescription();
     }
 
     public String getShapeDescription() {
-        return shape.getDescription();
+        return suit.getDescription();
     }
 }

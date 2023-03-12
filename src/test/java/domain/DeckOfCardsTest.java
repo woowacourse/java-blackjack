@@ -2,8 +2,8 @@ package domain;
 
 import domain.card.Card;
 import domain.card.DeckOfCards;
-import domain.card.Number;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ class DeckOfCardsTest {
         Card card = deckOfCards.findAnyOneCard();
 
         assertAll(
-                () -> assertThat(card).isEqualTo(new Card(Shape.HEART, Number.FOUR)),
+                () -> assertThat(card).isEqualTo(new Card(Suit.HEART, Denomination.FOUR)),
                 () -> assertThat(deckOfCards)
                         .extracting("cards")
                         .asList()
