@@ -24,6 +24,19 @@ public class Referee {
         }
     }
 
+    private boolean isPlayerWin(Player player, Dealer dealer) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        return (dealerScore <= playerScore && !player.isBustedGambler()
+                || (dealer.isBustedGambler() && !player.isBustedGambler()));
+    }
+
+    private boolean isDealerWin(Player player, Dealer dealer) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        return dealerScore > playerScore || player.isBustedGambler();
+    }
+
     public void decideBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
         int index = players.indexOf(player);
         int winnerCount = 0;
@@ -73,18 +86,5 @@ public class Referee {
         if (benefits.containsKey(gambler)) {
             benefits.replace(gambler, benefits.get(gambler) + money);
         }
-    }
-
-    private boolean isPlayerWin(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler()
-                || (dealer.isBustedGambler() && !player.isBustedGambler()));
-    }
-
-    private boolean isDealerWin(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return dealerScore > playerScore || player.isBustedGambler();
     }
 }

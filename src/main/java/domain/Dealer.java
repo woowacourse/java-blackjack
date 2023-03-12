@@ -47,12 +47,12 @@ public class Dealer implements Gambler {
         return cards.getCards();
     }
 
-    public int getCardsSize() {
-        return cards.getCards().size();
-    }
-
     @Override
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public int getCardsSize() {
+        return cards.getCards().size();
     }
 }

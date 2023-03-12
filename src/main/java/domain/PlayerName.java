@@ -40,5 +40,4 @@ public class PlayerName {
     public String getName() {
         return name;
     }
-
 }

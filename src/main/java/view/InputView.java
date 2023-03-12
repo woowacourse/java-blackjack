@@ -55,6 +55,4 @@ public class InputView {
     private static void printBettingGuideMessage(String playerName) {
         System.out.println(playerName + BETTING_GUIDE_MESSAGE);
     }
-
-
 }

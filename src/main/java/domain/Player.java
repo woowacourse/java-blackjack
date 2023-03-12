@@ -25,10 +25,6 @@ public class Player implements Gambler {
         cards.addCard(Deck.pickCard());
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
     @Override
     public String getName() {
         return playerName.getName();
@@ -42,5 +38,9 @@ public class Player implements Gambler {
     @Override
     public boolean isBustedGambler() {
         return this.cards.isBusted(cards.calculateScore());
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }

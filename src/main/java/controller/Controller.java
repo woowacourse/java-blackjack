@@ -41,21 +41,14 @@ public class Controller {
         printAllOutputs(players, dealer, result);
     }
 
-    private List<Player> createPlayers(PlayerNames playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames.getStringPlayerNames()) {
-            players.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
+    private PlayerNames getPlayerNames() {
+        try {
+            List<String> playerNamesInput = readPlayerNames();
+            return new PlayerNames(playerNamesInput);
+        } catch (RuntimeException exception) {
+            printErrorMessage(exception);
+            return getPlayerNames();
         }
-
-        return players;
-    }
-
-    private void printAllOutputs(Players players, Dealer dealer, Result result) {
-        printInitialPickGuideMessage(players);
-        printGamblersCards(players, dealer);
-        printScores(players, dealer);
-        printResult(result);
-        printBenefits(players.getPlayers(), dealer, result.getBenefits());
     }
 
     private Bettings getBettings(PlayerNames playerNames) {
@@ -78,23 +71,13 @@ public class Controller {
         }
     }
 
-    public boolean getIsHit(Player player) {
-        try {
-            return readIsHit(player.getName());
-        } catch (RuntimeException exception) {
-            printErrorMessage(exception);
-            return getIsHit(player);
+    private List<Player> createPlayers(PlayerNames playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames.getStringPlayerNames()) {
+            players.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
         }
-    }
 
-    private PlayerNames getPlayerNames() {
-        try {
-            List<String> playerNamesInput = readPlayerNames();
-            return new PlayerNames(playerNamesInput);
-        } catch (RuntimeException exception) {
-            printErrorMessage(exception);
-            return getPlayerNames();
-        }
+        return players;
     }
 
     private Result playBlackjack(Players players, Dealer dealer, Blackjack blackjack, Bettings bettings) {
@@ -115,6 +98,16 @@ public class Controller {
         }
     }
 
+    public boolean getIsHit(Player player) {
+        try {
+            return readIsHit(player.getName());
+        } catch (RuntimeException exception) {
+            printErrorMessage(exception);
+            return getIsHit(player);
+        }
+    }
+
+
     private boolean isPickAble(Player player) {
         return !player.isBustedGambler();
     }
@@ -124,5 +117,13 @@ public class Controller {
             blackjack.hitOrStandByDealer(dealer);
             printDealerHitMessage();
         }
+    }
+
+    private void printAllOutputs(Players players, Dealer dealer, Result result) {
+        printInitialPickGuideMessage(players);
+        printGamblersCards(players, dealer);
+        printScores(players, dealer);
+        printResult(result);
+        printBenefits(players.getPlayers(), dealer, result.getBenefits());
     }
 }
