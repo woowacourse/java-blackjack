@@ -90,15 +90,8 @@ public class Participants {
             Result result = Result.checkPlayerResult(player, dealer);
             profitResult.put(player, player.getProfit(result));
         }
-        int dealerProfit = sumAndReversePlayerProfits(profitResult);
+        int dealerProfit = dealer.getProfit(profitResult.values());
         profitResult.replace(dealer, dealerProfit);
         return profitResult;
     }
-
-    private int sumAndReversePlayerProfits(Map<Participant, Integer> playerProfitResult) {
-        return -1 * playerProfitResult.values().stream()
-                .mapToInt(value -> value)
-                .sum();
-    }
-
 }
