@@ -1,28 +1,34 @@
 package blackjack.domain.card;
 
+import static java.util.Collections.shuffle;
+
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public final class Deck {
 
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck;
 
     public Deck() {
-        init();
+        List<Card> cards = init();
+        deck = new ConcurrentLinkedDeque<>(cards);
     }
 
-    private void init() {
+    private List<Card> init() {
+        List<Card> cards = new ArrayList<>();
         for (Denomination denomination : Denomination.values()) {
-            fillCards(denomination);
+            fillCards(denomination, cards);
         }
-        Collections.shuffle(deck);
+        shuffle(cards);
+
+        return cards;
     }
 
-    private void fillCards(final Denomination denomination) {
+    private void fillCards(final Denomination denomination, final List<Card> cards) {
         for (Suit suit : Suit.values()) {
-            deck.add(new Card(denomination, suit));
+            cards.add(new Card(denomination, suit));
         }
     }
 
