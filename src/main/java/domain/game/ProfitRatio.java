@@ -8,11 +8,11 @@ public enum ProfitRatio {
 
     private final double ratio;
 
-    ProfitRatio(double ratio) {
+    ProfitRatio(final double ratio) {
         this.ratio = ratio;
     }
 
-    public static double fetchProfitRatio(int handValue, int dealerHandValue) {
+    public static double fetchProfitRatio(final int handValue, final int dealerHandValue) {
         if (handValue == -1) {
             return BLACKJACK.ratio;
         }

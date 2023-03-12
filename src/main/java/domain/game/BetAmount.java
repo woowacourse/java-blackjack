@@ -1,13 +1,13 @@
 package domain.game;
 
-public class BetAmount {
+public final class BetAmount {
     private final int betAmount;
 
-    public BetAmount(int betAmount) {
+    public BetAmount(final int betAmount) {
         this.betAmount = betAmount;
     }
 
-    public int calculateProfit(double ratio) {
+    public int calculateProfit(final double ratio) {
         return (int)(betAmount * ratio);
     }
 }

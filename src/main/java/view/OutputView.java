@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 
-public class OutputView {
+public final class OutputView {
     private static final String PARTICIPANT_CARD_FORMAT = "%s : %s\n";
     private static final String PARTICIPANT_HAND_SUM = "%s 카드: %s - 결과: %s\n";
     private static final String INIT_FINISHIED_MESSAGE = "딜러와 %s에게 %d장을 나누었습니다.\n";
@@ -36,6 +36,11 @@ public class OutputView {
 
     public static void printParticipantHandValue(String name, List<String> hand, int handValue) {
         String cards = String.join(DELIMITER, hand);
+        String value = decideValue(handValue);
+        System.out.printf((PARTICIPANT_HAND_SUM), name, cards, value);
+    }
+
+    private static String decideValue(int handValue) {
         String value = String.valueOf(handValue);
         if (handValue == BLACKJACK_HAND_VALUE) {
             value = BLACKJACK;
@@ -43,7 +48,7 @@ public class OutputView {
         if (handValue == BUST_HAND_VALUE) {
             value = BUST;
         }
-        System.out.printf((PARTICIPANT_HAND_SUM), name, cards, value);
+        return value;
     }
 
     public static void printPlayerHasBlackJack(String playerName) {

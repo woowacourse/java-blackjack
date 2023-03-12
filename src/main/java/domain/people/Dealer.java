@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import domain.card.Card;
 
-public class Dealer {
+public final class Dealer {
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_MINIMUM_VALUE = 17;
 
@@ -16,7 +16,7 @@ public class Dealer {
         participant = new Participant(new ArrayList<>(), DEALER_NAME);
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         participant.receiveCard(card);
     }
 

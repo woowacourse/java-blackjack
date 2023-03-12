@@ -11,7 +11,7 @@ import domain.card.ShuffleStrategy;
 import domain.people.Participants;
 import domain.people.Player;
 
-public class BlackJackGame {
+public final class BlackJackGame {
 
     private static final int INIT_HAND_COUNT = 2;
     private static final String HIT_REQUEST = "y";
@@ -19,16 +19,16 @@ public class BlackJackGame {
     private final Deck deck;
     private final Participants participants;
 
-    private BlackJackGame(List<String> names, ShuffleStrategy shuffleStrategy) {
+    private BlackJackGame(final List<String> names, final ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
         this.participants = createParticipants(names);
     }
 
-    public static BlackJackGame from(List<String> names, ShuffleStrategy shuffleStrategy) {
+    public static BlackJackGame from(final List<String> names, final ShuffleStrategy shuffleStrategy) {
         return new BlackJackGame(names, shuffleStrategy);
     }
 
-    private Participants createParticipants(List<String> names) {
+    private Participants createParticipants(final List<String> names) {
         return Participants.from(names);
     }
 
@@ -62,7 +62,7 @@ public class BlackJackGame {
         return participants.getDealer().getName();
     }
 
-    public List<String> fetchParticipantInitHand(String participantName) {
+    public List<String> fetchParticipantInitHand(final String participantName) {
         List<String> participantHand = fetchParticipantHand(participantName);
         if (participantName.equals(participants.getDealer().getName())) {
             participantHand = participantHand.subList(0, 1);
@@ -70,7 +70,7 @@ public class BlackJackGame {
         return new ArrayList<>(participantHand);
     }
 
-    public List<String> fetchParticipantHand(String participantName) {
+    public List<String> fetchParticipantHand(final String participantName) {
         if (participantName.equals(participants.getDealer().getName())) {
             return participants.getDealer().fetchHand().stream().map(Card::toString).collect(toList());
         }
@@ -81,7 +81,7 @@ public class BlackJackGame {
             collect(toList());
     }
 
-    public void hitOrStay(String hitRequest, String playerName) {
+    public void hitOrStay(final String hitRequest, final String playerName) {
         if (isHit(hitRequest)) {
             participants.findPlayer(playerName).
                 orElseThrow().
@@ -89,7 +89,7 @@ public class BlackJackGame {
         }
     }
 
-    private boolean isHit(String drawingInput) {
+    private boolean isHit(final String drawingInput) {
         return drawingInput.equals(HIT_REQUEST);
     }
 

@@ -8,7 +8,7 @@ import domain.game.BetAmount;
 import domain.game.ProfitRatio;
 import view.ErrorMessage;
 
-public class Player {
+public final class Player {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
     private static final int BLACKJACK_VALUE = 21;
     private static final String COMMA = ",";
@@ -17,12 +17,12 @@ public class Player {
     private final Participant participant;
     private BetAmount betAmount;
 
-    public Player(String name) {
+    public Player(final String name) {
         validate(name);
         participant = new Participant(new ArrayList<>(), name);
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         validateNotNull(name);
         validateNotEmpty(name);
         validateNoDealer(name);
@@ -30,31 +30,31 @@ public class Player {
         validateNameLength(name);
     }
 
-    private void validateNotNull(String name) {
+    private void validateNotNull(final String name) {
         if (name == null) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_NULL.getMessage());
         }
     }
 
-    private void validateNotEmpty(String name) {
+    private void validateNotEmpty(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_EMPTY.getMessage());
         }
     }
 
-    private void validateNoDealer(String name) {
+    private void validateNoDealer(final String name) {
         if (InvalidNames.isInvalidNames(name)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DEALER.getMessage());
         }
     }
 
-    private void validateDoesNotContainComma(String name) {
+    private void validateDoesNotContainComma(final String name) {
         if (name.contains(COMMA)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
         }
     }
 
-    private void validateNameLength(String name) {
+    private void validateNameLength(final String name) {
         if (name.length() > MAX_PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
         }
@@ -64,11 +64,11 @@ public class Player {
         return participant.getName();
     }
 
-    public boolean hasBlackJack(int initHandCount) {
+    public boolean hasBlackJack(final int initHandCount) {
         return participant.fetchHandValue() == BLACKJACK_VALUE && participant.fetchHand().size() == initHandCount;
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         participant.receiveCard(card);
     }
 
@@ -76,7 +76,7 @@ public class Player {
         return participant.fetchHand();
     }
 
-    public int fetchHandValue(int initHandCount) {
+    public int fetchHandValue(final int initHandCount) {
         int handValue = participant.fetchHandValue();
         if (hasBlackJack(initHandCount)) {
             handValue = BLACKJACK_HAND_VALUE;
@@ -88,11 +88,11 @@ public class Player {
         return participant.isBust();
     }
 
-    public void assignBetAmount(int betAmount) {
+    public void assignBetAmount(final int betAmount) {
         this.betAmount = new BetAmount(betAmount);
     }
 
-    public int fetchProfit(int initHandCount, int dealerHandValue) {
+    public int fetchProfit(final int initHandCount, final int dealerHandValue) {
         return betAmount.calculateProfit(
             ProfitRatio.fetchProfitRatio(
                 fetchHandValue(initHandCount), dealerHandValue));

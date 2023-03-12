@@ -6,16 +6,16 @@ import java.util.Objects;
 import domain.card.Card;
 import domain.card.Hand;
 
-public class Participant {
+public final class Participant {
     private final Hand hand;
     private final String name;
 
-    public Participant(List<Card> cards, String name) {
+    public Participant(final List<Card> cards, final String name) {
         this.hand = new Hand(cards);
         this.name = name;
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hand.addCard(card);
     }
 

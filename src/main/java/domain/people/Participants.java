@@ -6,18 +6,18 @@ import java.util.Optional;
 
 import view.ErrorMessage;
 
-public class Participants {
+public final class Participants {
     private static final int MINIMUM_PLAYER_COUNT = 1;
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private final Dealer dealer;
     private final List<Player> players;
 
-    private Participants(Dealer dealer, List<Player> players) {
+    private Participants(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static Participants from(List<String> names) {
+    public static Participants from(final List<String> names) {
         validate(names);
         List<Player> participants = new ArrayList<>();
 
@@ -27,24 +27,24 @@ public class Participants {
         return new Participants(new Dealer(), participants);
     }
 
-    private static void validate(List<String> names) {
+    private static void validate(final List<String> names) {
         validateNumberOfNames(names);
         validateNoDuplication(names);
     }
 
-    private static void validateNumberOfNames(List<String> names) {
+    private static void validateNumberOfNames(final List<String> names) {
         if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
         }
     }
 
-    private static void validateNoDuplication(List<String> names) {
+    private static void validateNoDuplication(final List<String> names) {
         if (names.stream().distinct().count() != names.size()) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DUPLICATED.getMessage());
         }
     }
 
-    public Optional<Player> findPlayer(String participantName) {
+    public Optional<Player> findPlayer(final String participantName) {
         return players.stream().
             filter(player -> player.fetchPlayerName().equals(participantName)).
             findAny();

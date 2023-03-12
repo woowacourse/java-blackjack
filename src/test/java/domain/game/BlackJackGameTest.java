@@ -92,18 +92,4 @@ class BlackJackGameTest {
             () -> assertThat(blackJackGame.fetchParticipantScore("reo")).isEqualTo(18),
             () -> assertThat(blackJackGame.fetchParticipantScore("reoleo")).isEqualTo(17));
     }
-
-    // @Test
-    // @DisplayName("플레이어의 게임 결과를 반환한다.")
-    // void getPlayerResult() {
-    //     blackJackGame.dealCardsToParticipants();
-    //     Map<String, String> playerResults = blackJackGame.calculatePlayerResults();
-    //     assertAll(
-    //         () -> {
-    //             for (Map.Entry<String, String> playerResult : playerResults.entrySet()) {
-    //                 assertThat(playerResult.getValue()).isEqualTo(Result.LOSE.getResult());
-    //             }
-    //         },
-    //         () -> assertThat(playerResults.size()).isEqualTo(3));
-    // }
 }

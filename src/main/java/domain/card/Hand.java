@@ -3,30 +3,30 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
     private static final int HIGH_ACE_VALUE = 11;
     private static final int LOW_ACE_VALUE = 1;
     private static final int BUST_BOUNDARY_VALUE = 21;
 
     private final List<Card> hand;
 
-    public Hand(List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.hand = cards;
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         hand.add(card);
     }
 
     public int calculateHandValue() {
-        int value = calculateHandValueWithoutBust();
+        int value = calculateHandValueWithoutConsideringBust();
         if (isBust()) {
             value = 0;
         }
         return value;
     }
 
-    private int calculateHandValueWithoutBust() {
+    private int calculateHandValueWithoutConsideringBust() {
         int aceCount = countAce();
         int value = sumValue();
 
@@ -55,7 +55,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateHandValueWithoutBust() > BUST_BOUNDARY_VALUE;
+        return calculateHandValueWithoutConsideringBust() > BUST_BOUNDARY_VALUE;
     }
 
     public List<Card> getHand() {
