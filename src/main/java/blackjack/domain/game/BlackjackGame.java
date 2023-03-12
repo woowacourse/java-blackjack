@@ -52,15 +52,19 @@ public class BlackjackGame {
         participant.addCard(cardDeck.pick());
     }
 
+    public void bet(Player player, BettingMoney money) {
+        bettingTable.put(player, money);
+    }
+
+    public BettingResult getBettingResult() {
+        return bettingTable.calculateResult(getResult());
+    }
+
     public BlackjackResult getResult() {
         return BlackjackResult.of(participants.getPlayers(), participants.getDealer());
     }
 
     public Participants getParticipants() {
         return participants;
-    }
-
-    public void bet(Player player, BettingMoney money) {
-        bettingTable.put(player, money);
     }
 }

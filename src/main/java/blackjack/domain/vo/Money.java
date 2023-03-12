@@ -14,6 +14,10 @@ public class Money {
         this(BigDecimal.valueOf(value));
     }
 
+    public static Money zero() {
+        return new Money(0);
+    }
+
     public int getValue() {
         return value.intValue();
     }

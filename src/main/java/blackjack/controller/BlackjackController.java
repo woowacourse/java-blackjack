@@ -4,8 +4,8 @@ import blackjack.controller.exception.InvalidCommandException;
 import blackjack.domain.card.exception.NoMoreCardException;
 import blackjack.domain.exception.CustomException;
 import blackjack.domain.game.BettingMoney;
+import blackjack.domain.game.BettingResult;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackResult;
 import blackjack.domain.game.exception.InvalidMoneyValueException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participants;
@@ -69,8 +69,8 @@ public class BlackjackController {
     }
 
     private void printResult(BlackjackGame blackjackGame) {
-        BlackjackResult result = blackjackGame.getResult();
-        outputView.printGameResult(result);
+        BettingResult result = blackjackGame.getBettingResult();
+        outputView.printBettingResult(result);
     }
 
     private Participants createParticipants() {

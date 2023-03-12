@@ -3,15 +3,18 @@ package blackjack.view;
 import static java.text.MessageFormat.format;
 
 import blackjack.constants.ErrorCode;
+import blackjack.domain.game.BettingResult;
 import blackjack.domain.game.BlackjackResult;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
+import blackjack.domain.vo.Money;
 import blackjack.view.message.CardMessageConvertor;
 import blackjack.view.message.ErrorCodeMessage;
 import blackjack.view.message.GameResultMessage;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -20,9 +23,9 @@ public class OutputView {
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패" + LINE_SEPARATOR;
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s" + LINE_SEPARATOR;
+    private static final String RESULT_MESSAGE = "## 최종 수익";
+    private static final String DEALER_RESULT_FORMAT = "딜러: %d" + LINE_SEPARATOR;
+    private static final String PLAYER_RESULT_FORMAT = "%s: %d" + LINE_SEPARATOR;
     private static final String DELIMITER = ", ";
 
     public void printInitCards(Participants participants) {
@@ -84,6 +87,16 @@ public class OutputView {
         for (Player player : result.getPlayer()) {
             GameResult gameResult = result.get(player);
             System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), getGameResultMessage(gameResult));
+        }
+    }
+
+    public void printBettingResult(BettingResult result) {
+        System.out.println(RESULT_MESSAGE);
+        System.out.printf(DEALER_RESULT_FORMAT, result.getDealerBettingResult().getValue());
+        Map<Player, Money> bettingResults = result.getBettingResults();
+        for (Player player : bettingResults.keySet()) {
+            Money money = bettingResults.get(player);
+            System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), money.getValue());
         }
     }
 

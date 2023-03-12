@@ -13,7 +13,7 @@ public class BettingResult {
 
     public Money getDealerBettingResult() {
         return bettingResults.values().stream()
-                .reduce(new Money(0), (Money::minus));
+                .reduce(Money.zero(), (Money::minus));
     }
 
     public Map<Player, Money> getBettingResults() {
