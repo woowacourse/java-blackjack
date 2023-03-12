@@ -46,6 +46,7 @@ class PlayerStatusTest {
 		//then
 		assertFalse(status.canReceiveCard());
 	}
+
 	@Test
 	@DisplayName("21점에서는 카드를 추가로 수령 가능한 상태여야 한다.")
 	public void score21receivableTest() {

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.result.Result;
-import domain.card.Card;
 import domain.Player;
+import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.result.Result;
 
 public class ViewRenderer {
 
