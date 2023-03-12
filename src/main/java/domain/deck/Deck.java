@@ -19,16 +19,16 @@ public final class Deck {
         return cards;
     }
 
-    public void shuffleDeck() {
-        List<Card> cards = new ArrayList<>(this.cards);
-        Collections.shuffle(cards);
-        this.cards = new ArrayDeque<>(cards);
-    }
-
     private void pushCards(final Deque<Card> cards, final Suit suit) {
         for (Rank rank : Rank.values()) {
             cards.push(Card.of(suit, rank));
         }
+    }
+
+    public void shuffleDeck() {
+        List<Card> cards = new ArrayList<>(this.cards);
+        Collections.shuffle(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public Card popCard() {

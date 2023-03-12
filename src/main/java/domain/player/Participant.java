@@ -18,18 +18,18 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
+    public boolean isBlackJack() {
+        if (getCards().size() == 2 && getScore() == BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return false;
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }
 
     public int getScore() {
         return hand.score();
-    }
-
-    public boolean isBlackJack() {
-        if (getCards().size() == 2 && getScore() == BLACK_JACK_NUMBER) {
-            return true;
-        }
-        return false;
     }
 }

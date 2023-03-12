@@ -29,10 +29,6 @@ public final class Hand {
         return card.getRank().equals(Rank.ACE);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public int score() {
         int sum = 0;
 
@@ -44,5 +40,9 @@ public final class Hand {
         }
 
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
