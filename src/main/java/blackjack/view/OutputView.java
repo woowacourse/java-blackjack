@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -59,5 +60,4 @@ public class OutputView {
             System.out.println(player.getName() + ": " + player.getMoney());
         }
     }
-
 }
