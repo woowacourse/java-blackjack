@@ -1,15 +1,10 @@
 package domain.state;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.CloverCard;
-import domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 
 @DisplayName("Ready 상태는 ")
 class ReadyTest {
@@ -41,8 +36,7 @@ class ReadyTest {
     @Test
     @DisplayName("아직 stay 할 수 없다.")
     void stayTest() {
-        State state = new Ready()
-                .draw(CloverCard.FOUR);
+        State state = new Ready().draw(CloverCard.FOUR);
 
         assertThatThrownBy(state::stay)
                 .isInstanceOf(IllegalStateException.class)
@@ -50,12 +44,22 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("패를 2장 드로우한 뒤 Hit 상태가 된다.")
+    @DisplayName("패를 2장 드로우한 뒤 Hit 상태가 될 수 있다.")
     void transferToHitTest() {
-        Ready ready = new Ready();
-
-        State state = ready.draw(CloverCard.FOUR).draw(CloverCard.FIVE);
+        State state = new Ready()
+                .draw(CloverCard.FOUR)
+                .draw(CloverCard.FIVE);
 
         assertThat(state).isInstanceOf(Hit.class);
+    }
+
+    @Test
+    @DisplayName("패를 2장 드로우한 뒤 Blackjack 상태가 될 수 있다.")
+    void transferToBlackjackTest() {
+        State state = new Ready()
+                .draw(CloverCard.KING)
+                .draw(CloverCard.ACE);
+
+        assertThat(state).isInstanceOf(Blackjack.class);
     }
 }
