@@ -11,6 +11,7 @@ import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -55,38 +56,48 @@ class BlackJackGameTest {
         assertThat(dealerCardSize).isEqualTo(1);
     }
 
-//    @DisplayName("BlackJackGame의 makePlayerResult는 각 Player의 승패를 계산한다.")
-//    @Test
-//    void findResultForEachParticipant() {
-//        // given
-//        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), Players.createPlayers("pobi,crong"));
-//
-//        Card kingCloverOfDealer = new Card(Rank.KING, Suit.CLOVER);
-//        Card jackSpadeOfDealer = new Card(Rank.JACK, Suit.SPADE);
-//
-//        Card threeSpadeOfPlayer = new Card(Rank.THREE, Suit.SPADE);
-//        Card fourSpadeOfPlayer = new Card(Rank.FOUR, Suit.SPADE);
-//
-//        Dealer dealer = blackJackGame.getDealer();
-//        Players players = blackJackGame.getPlayers();
-//
-//        dealer.receiveCard(kingCloverOfDealer);
-//        dealer.receiveCard(jackSpadeOfDealer);
-//
-//        for (Player player : players.getPlayers()) {
-//            player.receiveCard(threeSpadeOfPlayer);
-//            player.receiveCard(fourSpadeOfPlayer);
-//
-//            threeSpadeOfPlayer = new Card(Rank.FIVE, Suit.SPADE);
-//            fourSpadeOfPlayer = new Card(Rank.SIX, Suit.SPADE);
-//        }
-//
-//        // when
-//        Map<Player, Money> playerProfit = blackJackGame.makePlayerProfit();
-//
-//        // then
-//        for (Player player : playerResult.keySet()) {
-//            assertThat(playerResult.get(player)).isEqualTo(ResultType.LOSE);
-//        }
-//    }
+    @DisplayName("BlackJackGame의 makePlayerProfit은 각 Player의 수익을 계산한다.")
+    @Test
+    void findResultForEachParticipant() {
+        // given
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), Players.createPlayers("pobi,crong"));
+
+        Card kingCloverOfDealer = new Card(Rank.KING, Suit.CLOVER);
+        Card jackSpadeOfDealer = new Card(Rank.JACK, Suit.SPADE);
+
+        Card threeSpadeOfPlayer = new Card(Rank.THREE, Suit.SPADE);
+        Card fourSpadeOfPlayer = new Card(Rank.FOUR, Suit.SPADE);
+
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
+
+        dealer.receiveCard(kingCloverOfDealer);
+        dealer.receiveCard(jackSpadeOfDealer);
+
+        for (Player player : players.getPlayers()) {
+            player.receiveCard(threeSpadeOfPlayer);
+            player.receiveCard(fourSpadeOfPlayer);
+        }
+
+        String pobiMoney = "10000";
+        String crongMoney = "20000";
+
+        Map<Player, Money> playerProfit = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            if (player.getName().equals("pobi")) {
+                playerProfit.put(player, new Money(pobiMoney));
+            }
+            if (player.getName().equals("crong")) {
+                playerProfit.put(player, new Money(crongMoney));
+            }
+        }
+
+        // when
+        FinalProfit finalProfit = blackJackGame.makePlayerProfit(playerProfit);
+
+        // then
+        Map<Player, Money> playerMoney = finalProfit.getPlayerMoney();
+        int sum = playerMoney.values().stream().mapToInt(Money::getValue).sum();
+        assertThat(sum).isEqualTo(-30000);
+    }
 }
