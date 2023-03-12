@@ -37,6 +37,10 @@ public class Score {
         return newScore;
     }
 
+    public boolean isMax() {
+        return max.equals(this);
+    }
+
     public int getScore() {
         return score;
     }
