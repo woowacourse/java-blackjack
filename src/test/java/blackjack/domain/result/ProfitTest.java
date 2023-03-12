@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Money;
+import blackjack.domain.participant.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
