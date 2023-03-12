@@ -24,9 +24,22 @@ public class GameResult {
 
     public void calculatePlayersResult(Players players) {
         for (Player player : players.getPlayersWithOutDealer()) {
-            gameResult.replace(player, player.calculateResult(players.findDealer()));
+            gameResult.replace(player, calculateResult(players.findDealer(),player));
             calculateDealer(players.findDealer(), player);
         }
+    }
+
+    public int calculateResult(Dealer dealer,Player player) {
+        if (player.isBust() || (dealer.dealerWin(player.getCardsSum()) && !dealer.isBust())) {
+            return player.bustMoney();
+        }
+        else if (dealer.getCardsSum() == player.getCardsSum()) {
+            return 0;
+        }
+        else if(player.isBlackJack()){
+            return player.blackJackWinMoney();
+        }
+        return player.getMoney();
     }
 
     private void calculateDealer(Dealer dealer, Player player) {

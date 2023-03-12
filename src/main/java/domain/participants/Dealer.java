@@ -13,4 +13,8 @@ public class Dealer extends Player {
     public boolean isOverDealerStandard() {
         return super.getCardsSum() > BOUND;
     }
+
+    public boolean dealerWin(int playerSum){
+        return this.getCardsSum() > playerSum;
+    }
 }
