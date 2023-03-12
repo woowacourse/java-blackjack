@@ -1,20 +1,16 @@
 package domain;
 
 import domain.deck.CardDeck;
-import domain.participants.Dealer;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participants.*;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_SET = 2;
 
-    private final Players players;
-    private final Dealer dealer;
+    private final Participants participants;
     private final CardDeck cardDeck;
 
     public BlackjackGame(Dealer dealer, Players players, CardDeck cardDeck) {
-        this.dealer = dealer;
-        this.players = players;
+        this.participants = new Participants(dealer,players);
         this.cardDeck = cardDeck;
     }
 
@@ -26,11 +22,11 @@ public class BlackjackGame {
     }
 
     public void distributeDealer() {
-        dealer.addCard(cardDeck.poll());
+        participants.getDealer().addCard(cardDeck.poll());
     }
 
     public void distributePlayers() {
-        for (Player player : players.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             distributePlayer(player);
         }
     }
