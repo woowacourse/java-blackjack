@@ -27,7 +27,7 @@ class DealerTest {
     void receiveCardSuccess() {
         Card card = Card.of(Suit.CLOVER, Letter.FIVE);
 
-        dealer.receiveCard(card);
+        dealer.hit(card);
 
         List<Card> cards = dealer.getHand().getCards();
         assertThat(cards.get(cards.size() - 1)).isEqualTo(card);
@@ -42,7 +42,7 @@ class DealerTest {
     @Test
     @DisplayName("카드 새로 뽑을 수 있는지 판단 - 실패")
     void cannotReceiveNewCard() {
-        dealer.receiveCard(Card.of(Suit.HEART, Letter.THREE));
+        dealer.hit(Card.of(Suit.HEART, Letter.THREE));
 
         assertThat(dealer.isAbleToReceive()).isFalse();
     }

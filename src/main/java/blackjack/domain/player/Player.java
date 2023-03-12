@@ -19,6 +19,11 @@ public class Player extends Participant {
         return playerStatus.isRunning();
     }
 
+    @Override
+    public void hit(Card card) {
+        playerStatus = playerStatus.draw(card);
+    }
+
     public String getName() {
         return name.getName();
     }

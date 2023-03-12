@@ -40,7 +40,7 @@ public class BlackJackController {
         outputView.printRequestPlayerNames();
         List<String> playerNames = inputView.readPlayerNames();
         List<String> bettingMoneys = new ArrayList<>();
-        for (String playerName : playerNames){
+        for (String playerName : playerNames) {
             outputView.printRequestBettingMoney(playerName);
             bettingMoneys.add(inputView.readBettingMoney());
         }
@@ -66,14 +66,14 @@ public class BlackJackController {
     }
 
     private void hit(final Deck deck, final Player player) {
-        player.receiveCard(deck.getCard());
+        player.hit(deck.getCard());
         outputView.printPlayerCards(player);
     }
 
     private void playDealer(final Deck deck, final Dealer dealer) {
         while (dealer.isAbleToReceive()) {
             outputView.printDealerReceived();
-            dealer.receiveCard(deck.getCard());
+            dealer.hit(deck.getCard());
         }
     }
 

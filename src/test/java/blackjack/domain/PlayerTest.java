@@ -28,7 +28,7 @@ class PlayerTest {
     void receiveCardSuccess() {
         Card card = Card.of(Suit.CLOVER, Letter.FIVE);
 
-        player.receiveCard(card);
+        player.hit(card);
 
         List<Card> cards = player.getHand().getCards();
         assertThat(cards.get(cards.size() - 1)).isEqualTo(card);
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     @DisplayName("카드 새로 뽑을 수 있는지 판단 - 실패")
     void cannotReceiveNewCard() {
-        player.receiveCard(Card.of(Suit.HEART, Letter.KING));
+        player.hit(Card.of(Suit.HEART, Letter.KING));
 
         assertThat(player.isAbleToReceive()).isFalse();
     }

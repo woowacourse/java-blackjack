@@ -16,12 +16,9 @@ public abstract class Participant {
 
     abstract boolean isAbleToReceive();
 
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
+    abstract void hit(Card card);
 
     public Hand getHand() {
         return hand;
     }
-
 }

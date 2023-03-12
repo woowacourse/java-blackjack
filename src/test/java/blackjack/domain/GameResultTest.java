@@ -46,7 +46,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 비기는 경우")
     void gameResult2() {
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.hit(Card.of(Suit.CLOVER, Letter.EIGHT));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -58,8 +58,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 딜러가 지는 경우")
     void gameResult3() {
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.TWO));
+        player.hit(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.hit(Card.of(Suit.CLOVER, Letter.TWO));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -71,8 +71,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 플레이어만 버스터인 경우")
     void gameResult4() {
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.KING));
+        player.hit(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.hit(Card.of(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -84,7 +84,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 딜러만 버스터인 경우")
     void gameResult5() {
-        dealer.receiveCard(Card.of(Suit.CLOVER, Letter.SEVEN));
+        dealer.hit(Card.of(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -96,10 +96,10 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 둘 다 버스터인 경우")
     void gameResult6() {
-        dealer.receiveCard(Card.of(Suit.CLOVER, Letter.SEVEN));
+        dealer.hit(Card.of(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(Card.of(Suit.CLOVER, Letter.KING));
+        player.hit(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.hit(Card.of(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
