@@ -18,11 +18,6 @@ public abstract class Participant {
         this.status = new Ready();
     }
 
-    public Participant(final Name name, final Status status) {
-        this.name = name;
-        this.status = status;
-    }
-
     abstract boolean isHittable();
 
     public void receiveInitialCards(Cards cards) {
