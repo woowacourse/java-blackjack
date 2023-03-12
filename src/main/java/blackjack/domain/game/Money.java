@@ -14,7 +14,7 @@ public class Money {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("베팅 금액은 숫자만 가능합니다.");
+            throw new IllegalArgumentException("베팅 금액은 정수만 가능합니다.");
         }
     }
 
@@ -26,8 +26,8 @@ public class Money {
         return new Money(String.valueOf(0));
     }
 
-    public Money calculateIfBlackjack() {
-        return new Money(String.valueOf(value + (value * 1.5)));
+    public Money calculateIfBlackJack() {
+        return new Money(String.valueOf((int) Math.floor(value * 1.5)));
     }
 
     @Override
