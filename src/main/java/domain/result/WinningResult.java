@@ -3,6 +3,7 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public final class WinningResult {
     }
 
     public Map<Player, WinningStatus> getPlayersResult() {
-        return Map.copyOf(playersResult);
+        return Collections.unmodifiableMap(playersResult);
     }
 
     public Map<WinningStatus, Integer> getDealerResult() {
