@@ -30,10 +30,10 @@ class ParticipantsTest {
     @Test
     @DisplayName("참가자들이 카드를 한 장씩 받는다.")
     void participantsDealTest() {
-        for (Participant participant : participants.getParticipants()) {
-            participant.receiveCard(deck.draw());
+        for (Player player : participants.getPlayers()) {
+            player.receiveCard(deck.draw());
         }
-        List<Player> players = participants.findPlayers();
+        List<Player> players = participants.getPlayers();
         for (Player player : players) {
             assertThat(player.fetchHand().size()).isEqualTo(1);
         }
@@ -42,13 +42,13 @@ class ParticipantsTest {
     @Test
     @DisplayName("플레이어(딜러 제외)의 목록을 반환한다.")
     void findPlayersTest() {
-        assertThat(participants.findPlayers().size()).isEqualTo(3);
+        assertThat(participants.getPlayers().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("딜러를 반환한다.")
     void findDealerTest() {
-        assertThat(participants.findDealer()).isInstanceOf(Dealer.class);
+        assertThat(participants.getDealer()).isInstanceOf(Dealer.class);
     }
 
 }

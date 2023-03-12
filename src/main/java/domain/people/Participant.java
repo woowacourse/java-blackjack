@@ -1,6 +1,7 @@
 package domain.people;
 
 import java.util.List;
+import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Hand;
@@ -32,5 +33,20 @@ public class Participant {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Participant that = (Participant)o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hand, name);
     }
 }

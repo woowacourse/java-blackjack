@@ -45,6 +45,20 @@ class HandTest {
     @MethodSource("cardProvider")
     void calculateValue(Card card, int handValue) {
         hand.addCard(card);
-        assertThat(hand.calculateValue()).isEqualTo(handValue);
+        assertThat(hand.calculateHandValue()).isEqualTo(handValue);
+    }
+
+    @Test
+    @DisplayName("Bust인지 판단한다. - Bust인 경우")
+    void isBustTrueTest() {
+        hand.addCard(Card.from(Suit.CLOVER, Rank.KING));
+        assertThat(hand.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Bust인지 판단한다. - Bust가 아닌 경우")
+    void isBustFalseTest() {
+        hand.addCard(Card.from(Suit.CLOVER, Rank.FOUR));
+        assertThat(hand.isBust()).isFalse();
     }
 }

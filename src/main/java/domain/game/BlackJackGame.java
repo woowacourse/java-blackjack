@@ -28,7 +28,7 @@ public class BlackJackGame {
         return new BlackJackGame(names, shuffleStrategy);
     }
 
-    public Participants createParticipants(List<String> names) {
+    private Participants createParticipants(List<String> names) {
         return Participants.from(names);
     }
 
@@ -131,6 +131,7 @@ public class BlackJackGame {
     public boolean isTurnOver(String hitRequest) {
         return !hitRequest.equals(HIT_REQUEST);
     }
+
     // public Map<String, String> calculatePlayerResults() {
     //     Dealer dealer = participants.getDealer();
     //     Map<String, String> playerResults = new LinkedHashMap<>();

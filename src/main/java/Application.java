@@ -95,7 +95,7 @@ public class Application {
             blackJackGame.hitOrStay(hitRequest, playerName);
             List<String> playerHand = blackJackGame.fetchParticipantHand(playerName);
             OutputView.printParticipantCard(playerName, playerHand);
-        } while (!blackJackGame.isBust(playerName) && !blackJackGame.isTurnOver(hitRequest));
+        } while (!(blackJackGame.isBust(playerName) || blackJackGame.isTurnOver(hitRequest)));
     }
 
     private static String readDrawingCardRequest(String currentPlayer) {

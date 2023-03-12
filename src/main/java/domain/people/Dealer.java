@@ -2,6 +2,7 @@ package domain.people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import domain.card.Card;
 
@@ -33,5 +34,20 @@ public class Dealer {
 
     public String getName() {
         return DEALER_NAME;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Dealer dealer = (Dealer)o;
+        return Objects.equals(participant, dealer.participant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(participant);
     }
 }

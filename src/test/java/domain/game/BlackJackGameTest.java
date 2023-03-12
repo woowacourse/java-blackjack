@@ -4,15 +4,10 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import domain.people.Dealer;
-import domain.people.Participant;
-import domain.people.Player;
 
 class BlackJackGameTest {
 
@@ -24,30 +19,91 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("참가자들의 handValue를 계산한다.")
-    void getScores() {
+    @DisplayName("딜러와 플레이어들에게 카드를 두장씩 나눠준다.")
+    void dealTest() {
         blackJackGame.dealCardsToParticipants();
-
-        Map<String, String> scores = blackJackGame.fetchParticipantScores();
-
         assertAll(
-            () -> assertThat(scores.get(new Dealer().getName())).isEqualTo("21"),
-            () -> assertThat(scores.get("leo")).isEqualTo("19"),
-            () -> assertThat(scores.get("reo")).isEqualTo("18"),
-            () -> assertThat(scores.get("reoleo")).isEqualTo("17"));
+            () -> assertThat(blackJackGame.fetchParticipantHand(blackJackGame.fetchDealerName()).size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchParticipantHand("leo").size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchParticipantHand("reo").size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchParticipantHand("reoleo").size()).isEqualTo(2));
     }
 
     @Test
-    @DisplayName("플레이어의 게임 결과를 반환한다.")
-    void getPlayerResult() {
-        blackJackGame.dealCardsToParticipants();
-        Map<String, String> playerResults = blackJackGame.calculatePlayerResults();
-        assertAll(
-            () -> {
-                for (Map.Entry<String, String> playerResult : playerResults.entrySet()) {
-                    assertThat(playerResult.getValue()).isEqualTo(Result.LOSE.getResult());
-                }
-            },
-            () -> assertThat(playerResults.size()).isEqualTo(3));
+    @DisplayName("참가자들의 이름을 반환한다.")
+    void fetchParticipantNamesTest() {
+        assertThat(blackJackGame.fetchParticipantNames()).containsExactly("딜러", "leo", "reo", "reoleo");
     }
+
+    @Test
+    @DisplayName("플레이어들의 이름을 반환한다.")
+    void fetchPlayerNamesTest() {
+        assertThat(blackJackGame.fetchPlayerNames()).containsExactly("leo", "reo", "reoleo");
+    }
+
+    @Test
+    @DisplayName("딜러의 이름을 반환한다.")
+    void fetchDealerNamesTest() {
+        assertThat(blackJackGame.fetchDealerName()).isEqualTo("딜러");
+    }
+
+    @Test
+    @DisplayName("참가자들의 첫 패를 반환한다. - 플레이어의 경우 2장을 반환한다.")
+    void fetchParticipantsInitHandsPlayerTest() {
+        blackJackGame.dealCardsToParticipants();
+        assertAll(
+            () -> assertThat(blackJackGame.fetchParticipantInitHand("leo")).hasSize(2),
+            () -> assertThat(blackJackGame.fetchParticipantInitHand("reo")).hasSize(2),
+            () -> assertThat(blackJackGame.fetchParticipantInitHand("reoleo")).hasSize(2));
+    }
+
+    @Test
+    @DisplayName("참가자들의 첫 패를 반환한다. - 딜러의 경우 1장을 반환한다.")
+    void fetchParticipantsInitHandsDealerTest() {
+        blackJackGame.dealCardsToParticipants();
+        assertThat(blackJackGame.fetchParticipantInitHand("딜러")).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("hit요청이 있을 시 hit을 한다.")
+    void hitOrStay() {
+        blackJackGame.dealCardsToParticipants();
+        blackJackGame.hitOrStay("y", "reo");
+        assertAll(
+            () -> assertThat(blackJackGame.fetchParticipantHand("reo")).hasSize(3),
+            () -> assertThat(blackJackGame.fetchParticipantHand("leo")).hasSize(2));
+    }
+
+    @Test
+    @DisplayName("딜러가 hit을 한다.")
+    void dealerHit() {
+        blackJackGame.dealCardsToParticipants();
+        blackJackGame.dealerHit();
+        assertThat(blackJackGame.fetchParticipantHand("딜러")).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("참가자들의 점수를 반환한다.")
+    void fetchParticipantScores() {
+        blackJackGame.dealCardsToParticipants();
+        assertAll(
+            () -> assertThat(blackJackGame.fetchParticipantScore("딜러")).isEqualTo(21),
+            () -> assertThat(blackJackGame.fetchParticipantScore("leo")).isEqualTo(19),
+            () -> assertThat(blackJackGame.fetchParticipantScore("reo")).isEqualTo(18),
+            () -> assertThat(blackJackGame.fetchParticipantScore("reoleo")).isEqualTo(17));
+    }
+
+    // @Test
+    // @DisplayName("플레이어의 게임 결과를 반환한다.")
+    // void getPlayerResult() {
+    //     blackJackGame.dealCardsToParticipants();
+    //     Map<String, String> playerResults = blackJackGame.calculatePlayerResults();
+    //     assertAll(
+    //         () -> {
+    //             for (Map.Entry<String, String> playerResult : playerResults.entrySet()) {
+    //                 assertThat(playerResult.getValue()).isEqualTo(Result.LOSE.getResult());
+    //             }
+    //         },
+    //         () -> assertThat(playerResults.size()).isEqualTo(3));
+    // }
 }
