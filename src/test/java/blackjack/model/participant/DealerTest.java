@@ -114,5 +114,4 @@ class DealerTest {
         assertThat(dealer.isBlackjack()).isTrue();
     }
 
-
 }
