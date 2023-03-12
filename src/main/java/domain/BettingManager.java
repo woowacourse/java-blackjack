@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class BettingManager {
 
@@ -12,14 +13,16 @@ public class BettingManager {
 
     public BettingManager(List<Name> playerNames, List<BettingAmount> bets) {
         this.playersBettingAmount = new HashMap<>();
-        for (int index = 0; index < playerNames.size(); index++) {
+        int playerCount = playerNames.size();
+        for (int index = 0; index < playerCount; index++) {
             playersBettingAmount.put(playerNames.get(index), bets.get(index));
         }
     }
 
     public Map<String, Double> calculateTotalRevenue(Map<Name, GameResult> winLossResult) {
         Map<Name, BettingAmount> participantRevenues = createInitialParticipantRevenues();
-        for (Entry<Name, GameResult> playerResult : winLossResult.entrySet()) {
+        Set<Entry<Name, GameResult>> playerResults = winLossResult.entrySet();
+        for (Entry<Name, GameResult> playerResult : playerResults) {
             updateParticipantRevenue(participantRevenues, playerResult);
         }
         return getParticipantRevenuesToString(participantRevenues);
@@ -47,7 +50,8 @@ public class BettingManager {
 
     private Map<String, Double> getParticipantRevenuesToString(Map<Name, BettingAmount> participantRevenues) {
         Map<String, Double> revenues = new LinkedHashMap<>();
-        for (Entry<Name, BettingAmount> revenue : participantRevenues.entrySet()) {
+        Set<Entry<Name, BettingAmount>> revenuesEntry = participantRevenues.entrySet();
+        for (Entry<Name, BettingAmount> revenue : revenuesEntry) {
             revenues.put(revenue.getKey().getValue(), revenue.getValue().getRevenue());
         }
         return revenues;

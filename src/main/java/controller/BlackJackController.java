@@ -48,7 +48,8 @@ public class BlackJackController {
     }
 
     private void progressPlayers(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.getPlayers()) {
+        List<Player> players = blackJackGame.getPlayers();
+        for (Player player : players) {
             requestPlayerMoreCard(blackJackGame, player);
         }
     }
