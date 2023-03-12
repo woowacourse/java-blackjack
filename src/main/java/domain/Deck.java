@@ -8,10 +8,10 @@ import java.util.Queue;
 
 public class Deck {
 
-    private static Queue<Card> DECK = createDeck();
+    private static Queue<Card> deck = createDeck();
 
     public Deck() {
-        DECK = createDeck();
+        deck = createDeck();
     }
 
     private static Queue<Card> createDeck() {
@@ -29,6 +29,6 @@ public class Deck {
     }
 
     public static Card pickCard() {
-        return DECK.poll();
+        return deck.poll();
     }
 }

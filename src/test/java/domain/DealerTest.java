@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -38,5 +39,15 @@ class DealerTest {
 
         //then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void 정상_생성_테스트() {
+        //given, when, then
+        assertDoesNotThrow(()-> new Dealer(
+                new Cards(List.of(
+                        new Card(Suit.CLOVER, Denomination.KING),
+                        new Card(Suit.CLOVER, Denomination.SEVEN))
+                )));
     }
 }

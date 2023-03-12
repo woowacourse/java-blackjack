@@ -26,6 +26,7 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final int PLAYER_WIN = 1;
+    private static final String BENEFIT_GUIDE_MESSAGE = "## 최종 수익";
 
     private OutputView() {
     }
@@ -144,4 +145,15 @@ public class OutputView {
         System.out.println(DEALER_HIT);
     }
 
+    public static void printBenefits(List<Player> players, Dealer dealer, Map<Gambler, Integer> benefits) {
+        System.out.println("\n" + BENEFIT_GUIDE_MESSAGE);
+
+        System.out.print(dealer.getName() + COLON + " ");
+        System.out.println(benefits.get(dealer));
+
+        for (Player player : players) {
+            System.out.print(player.getName() + COLON + " ");
+            System.out.println(benefits.get(player));
+        }
+    }
 }
