@@ -128,4 +128,20 @@ class DealerTest {
         //then
         assertThat(dealerProfit).isEqualTo(-40000);
     }
+
+    @Test
+    @DisplayName("딜러는 처음에 카드 첫 한장만을 공개한다.")
+    void dealer_show_single_card() {
+        //given
+        List<Card> cards = List.of(HEART_ACE, HEART_TEN);
+        CardDeck cardDeck = new CardDeck(cards);
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+
+        // when
+        dealer.play(cardDeck);
+        Card card = dealer.getFirstCard();
+
+        //then
+        assertThat(card).isEqualTo(HEART_TEN);
+    }
 }
