@@ -23,6 +23,6 @@ class BettingMoneyTest {
     void invalidMoneyTestWithUnderZero(int money) {
         assertThatThrownBy(() -> new BettingMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 베팅 금액이 0보다 작을 수 없습니다.");
+                .hasMessageContaining(BettingMoney.BOUNDARY_ERROR_MESSAGE);
     }
 }
