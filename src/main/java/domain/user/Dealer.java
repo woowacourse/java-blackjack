@@ -15,7 +15,7 @@ public class Dealer extends User {
     @Override
     protected void checkBustByScore() {
         // TODO : hand 메서드 기능 구현 후 수정하기
-        if (hand.calculateScore().isOverMax()) {
+        if (hand.isBust()) {
             status = DealerStatus.BUST;
             return;
         }

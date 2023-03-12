@@ -15,7 +15,7 @@ public class Player extends User {
 
     @Override
     protected void checkBustByScore() {
-        if (hand.calculateScore().isOverMax()) {
+        if (hand.isBust()) {
             status = PlayerStatus.BUST;
         }
     }
