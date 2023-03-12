@@ -11,7 +11,7 @@ class StayTest {
     @Test
     @DisplayName("드로우 할 수 없다.")
     void drawTest() {
-        State stay = new Ready()
+        State stay = new UserReady()
                 .draw(CloverCard.KING)
                 .draw(CloverCard.JACK)
                 .stay();
@@ -23,8 +23,8 @@ class StayTest {
 
     @Test
     @DisplayName("더 이상 stay 할 수 없다.")
-    void stay() {
-        State stay = new Ready()
+    void stayTest() {
+        State stay = new UserReady()
                 .draw(CloverCard.KING)
                 .draw(CloverCard.JACK)
                 .stay();
@@ -36,8 +36,8 @@ class StayTest {
 
     @Test
     @DisplayName("드로우한 카드들을 갖고 있다.")
-    void getCards() {
-        State stay = new Ready()
+    void getCardsTest() {
+        State stay = new UserReady()
                 .draw(CloverCard.KING)
                 .draw(CloverCard.JACK)
                 .stay();
