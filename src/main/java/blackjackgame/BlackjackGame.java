@@ -2,9 +2,17 @@ package blackjackgame;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import betting.BettingAmount;
+import betting.PlayersBettingTable;
+import betting.Reward;
 import deck.Deck;
+import dto.BettingResultDto;
+import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
@@ -15,25 +23,29 @@ import participants.Participants;
 import participants.Player;
 
 public class BlackjackGame {
+    private static final int MAX_PLAYERS = 6;
     private static final int FIRST_DRAW_COUNT = 2;
     private final Participants participants;
     private final Deck deck;
+    private final PlayersBettingTable playersBettingTable;
 
-    public BlackjackGame(Participants participants, Deck deck) {
+    public BlackjackGame(Participants participants, Deck deck, PlayersBettingTable playersBettingTable) {
         this.participants = participants;
         this.deck = deck;
+        this.playersBettingTable = playersBettingTable;
     }
 
     public void addPlayers(List<String> names) {
         validateDuplicatedName(names);
         validateMaxPlayer(names);
         for (String name : names) {
-            participants.addPlayer(new Player(new Name(name)));
+            Player player = new Player(new Name(name));
+            participants.addPlayer(player);
         }
     }
 
     private void validateMaxPlayer(List<String> names) {
-        if (names.size() > 6) {
+        if (names.size() > MAX_PLAYERS) {
             throw new IllegalArgumentException("참가인원은 최대 6명입니다.");
         }
     }
@@ -119,4 +131,30 @@ public class BlackjackGame {
     public Name findUserNameByIndex(int playerIndex) {
         return participants.findUserNameByIndex(playerIndex);
     }
+
+    public void saveBetAmount(String name, int betAmount) {
+        Player player = participants.findPlayerByName(new Name(name));
+        playersBettingTable.saveBet(player, new BettingAmount(betAmount));
+    }
+
+    public Reward getDealerRewardResult() {
+        return new Reward(playersBettingTable.calculateDealerReward());
+    }
+
+    public BettingResultsDto getPlayersResultDto() {
+        List<BettingResultDto> bettingResults = getBettingResults(playersBettingTable.getBettingMap());
+        return new BettingResultsDto(bettingResults);
+    }
+
+    private List<BettingResultDto> getBettingResults(Map<Name, BettingAmount> bettingAmountMap) {
+        return bettingAmountMap.entrySet()
+                .stream()
+                .map(entry -> new BettingResultDto(entry.getKey(), getRewardByResult(entry)))
+                .collect(Collectors.toList());
+    }
+
+    private int getRewardByResult(Entry<Name, BettingAmount> entry) {
+        return entry.getValue().calculateRewardByResult(participants.findPlayerResultByName(entry.getKey()));
+    }
+
 }

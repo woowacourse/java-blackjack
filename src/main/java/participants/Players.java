@@ -37,47 +37,8 @@ public class Players {
 
     public void calculateWinning(Dealer dealer) {
         for (Player player : players) {
-            compareScore(dealer, player);
+            player.compareScoreWith(dealer);
         }
-    }
-
-    private void compareScore(Dealer dealer, Player player) {
-        if (isPlayerWinDealer(dealer, player)) {
-            player.win();
-            dealer.lose();
-        }
-        if (isDealerWinPlayer(dealer, player)) {
-            player.lose();
-            dealer.win();
-        }
-        if (isDraw(dealer, player)) {
-            player.tie();
-            dealer.tie();
-        }
-    }
-
-    private boolean isDraw(Dealer dealer, Player player) {
-        return dealer.calculateScore() == player.calculateScore();
-    }
-
-    private boolean isDealerWinPlayer(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return true;
-        }
-        if (dealer.isBust()) {
-            return false;
-        }
-        return dealer.calculateScore() > player.calculateScore();
-    }
-
-    private boolean isPlayerWinDealer(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return false;
-        }
-        if (dealer.isBust()) {
-            return true;
-        }
-        return player.calculateScore() > dealer.calculateScore();
     }
 
     public List<PlayerWinningDto> getWinningResults() {
@@ -94,5 +55,12 @@ public class Players {
 
     public Name findPlayer(int playerIndex) {
         return players.get(playerIndex).getName();
+    }
+
+    public Player findPlayer(Name name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다."));
     }
 }

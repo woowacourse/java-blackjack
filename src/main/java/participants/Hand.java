@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import card.Card;
+import card.Score;
 
 public class Hand {
-    public static final int ACE_ADDITIONAL_SCORE = 10;
-    public static final int LIMIT_ADDITIONAL_SCORE = 11;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -18,18 +18,15 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
+    public Score calculateScore() {
+        int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        if (canAddTen(score)) {
-            score += ACE_ADDITIONAL_SCORE;
+        Score score = new Score(sum);
+        if(containAce()) {
+            return score.calculateAceScore();
         }
         return score;
-    }
-
-    private boolean canAddTen(int score) {
-        return containAce() && score <= LIMIT_ADDITIONAL_SCORE;
     }
 
     private boolean containAce() {
@@ -42,5 +39,9 @@ public class Hand {
             throw new IllegalStateException("들고있는 카드가 없습니다.");
         }
         return cards.get(0);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore().isMaxScore() && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 }

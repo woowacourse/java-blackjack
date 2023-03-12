@@ -14,6 +14,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import betting.BettingAmount;
+import betting.PlayersBettingTable;
 import blackjack.fixedcaradsgenerator.FixedCardsGenerator;
 import blackjackgame.BlackjackGame;
 import blackjackgame.Result;
@@ -36,6 +38,7 @@ class BlackjackGameTest {
     Players players;
     Participants participants;
     Deck deck;
+    PlayersBettingTable playersBettingTable;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +52,9 @@ class BlackjackGameTest {
         deck = new Deck(fixedCardsGenerator);
         dealer = new Dealer();
         players = new Players();
+        playersBettingTable = new PlayersBettingTable();
         participants = new Participants(dealer, players);
-        blackjackGame = new BlackjackGame(participants, deck);
+        blackjackGame = new BlackjackGame(participants, deck, playersBettingTable);
     }
 
     @Test
@@ -131,7 +135,7 @@ class BlackjackGameTest {
         );
 
         Deck fixedDeck = new Deck(new FixedCardsGenerator(cards));
-        blackjackGame = new BlackjackGame(participants, fixedDeck);
+        blackjackGame = new BlackjackGame(participants, fixedDeck, playersBettingTable);
 
         Player player1 = new Player(new Name("폴로"));
         players.add(player1);
@@ -218,6 +222,19 @@ class BlackjackGameTest {
             dealer.hit(new Card(Rank.EIGHT, Suit.SPADE));
 
             assertThat(blackjackGame.canDealerHit()).isFalse();
+        }
+
+        @Test
+        @DisplayName("이름과 배팅 금액을 입력 받아 베팅맵에 저장한다")
+        void saveBetAmount() {
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            player.win();
+
+            blackjackGame.saveBetAmount("폴로", 10000);
+
+            BettingAmount amount = playersBettingTable.getBettingAmountByPlayer(player);
+            assertThat(amount.getAmount()).isEqualTo(10000);
         }
     }
 }

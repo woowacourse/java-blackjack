@@ -2,9 +2,12 @@ package blackjackcontroller;
 
 import java.util.List;
 
+import betting.PlayersBettingTable;
+import betting.Reward;
 import blackjackgame.BlackjackGame;
 import deck.CardsGenerator;
 import deck.Deck;
+import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
@@ -31,7 +34,8 @@ public class BlackjackController {
     private BlackjackGame initializeGame(CardsGenerator cardsGenerator) {
         Participants participants = new Participants(new Dealer(), new Players());
         Deck deck = new Deck(cardsGenerator);
-        return new BlackjackGame(participants, deck);
+        PlayersBettingTable playersBettingTable = new PlayersBettingTable();
+        return new BlackjackGame(participants, deck, playersBettingTable);
     }
 
     public void run() {
@@ -40,21 +44,47 @@ public class BlackjackController {
         hitPlayers();
         dealerHit();
         printFinalCards();
+        printRewardResults();
         printWinningResult();
     }
 
     private void setGame() {
+        List<String> names = recruitParticipants();
+        getBetAmountFromPlayers(names);
+        supplyCards(names);
+    }
+
+    private void getBetAmountFromPlayers(List<String> names) {
+        for (String name : names) {
+            saveBet(name);
+        }
+    }
+
+    private void saveBet(String name) {
+        try {
+            int betAmount = inputView.readBetAmount(name);
+            blackjackGame.saveBetAmount(name, betAmount);
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception);
+            saveBet(name);
+        }
+    }
+
+    private List<String> recruitParticipants() {
         try {
             List<String> names = inputView.readPlayerNames();
             blackjackGame.addPlayers(names);
-            blackjackGame.supplyCardsToDealer();
-            blackjackGame.supplyCardsToPlayers();
-            outputView.printFirstDrawMessage(names);
+            return names;
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
-            setGame();
+            return recruitParticipants();
         }
+    }
 
+    private void supplyCards(List<String> names) {
+        blackjackGame.supplyCardsToDealer();
+        blackjackGame.supplyCardsToPlayers();
+        outputView.printFirstDrawMessage(names);
     }
 
     private void showFirstDraw() {
@@ -108,8 +138,16 @@ public class BlackjackController {
         outputView.printFinalResults(dealerResult, playerResults);
     }
 
-    private void printWinningResult() {
+
+    private void printRewardResults() {
         blackjackGame.calculateWinning();
+        Reward dealerRewardResult = blackjackGame.getDealerRewardResult();
+        BettingResultsDto playersResultDto = blackjackGame.getPlayersResultDto();
+        outputView.printRewardResults(dealerRewardResult, playersResultDto);
+    }
+
+
+    private void printWinningResult() {
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         List<PlayerWinningDto> playerWinningResults = blackjackGame.getPlayerWinningResults();
         outputView.printWinningResults(dealerWinningResult, playerWinningResults);

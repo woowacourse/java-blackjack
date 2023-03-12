@@ -3,7 +3,10 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import betting.Reward;
 import card.Card;
+import dto.BettingResultDto;
+import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
@@ -12,9 +15,9 @@ import dto.PlayerWinningDto;
 
 public class OutputView {
 
-    public static final String COMMA = ", ";
-    public static final String DIVISION = ": ";
-    public static final String ERROR_HEADER = "[ERROR] ";
+    private static final String COMMA = ", ";
+    private static final String DIVISION = ": ";
+    private static final String ERROR_HEADER = "[ERROR] ";
 
     public void printErrorMessage(Exception exception) {
         System.out.println(ERROR_HEADER + exception.getMessage());
@@ -76,5 +79,18 @@ public class OutputView {
                 .stream()
                 .map(result -> dealerWinningResult.getWinningMap().get(result).getCount() + result.getLabel())
                 .collect(Collectors.joining(" "));
+    }
+
+    public void printRewardResults(Reward dealerRewardResult, BettingResultsDto playersResultDto) {
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러: " + dealerRewardResult.getReward());
+        playersResultDto.getBettingResults()
+                .stream()
+                .map(this::parseMessage)
+                .forEach(System.out::println);
+    }
+
+    private String parseMessage(BettingResultDto bettingResultDto) {
+        return bettingResultDto.getName().getValue() + DIVISION + bettingResultDto.getReward();
     }
 }

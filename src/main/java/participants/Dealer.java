@@ -6,8 +6,7 @@ import blackjackgame.Result;
 import card.Card;
 
 public class Dealer extends Participant {
-    public static final String DEALER_NAME = "딜러";
-    public static final int UNDER_SCORE = 16;
+    private static final String DEALER_NAME = "딜러";
     private final DealerResult dealerResult = new DealerResult();
 
 
@@ -20,17 +19,25 @@ public class Dealer extends Participant {
     }
 
     public boolean isUnderScore() {
-        return hand.calculateScore() <= UNDER_SCORE;
+        return hand.calculateScore().isUnderScore();
     }
 
-    public void lose() {
-        dealerResult.addLose();
+    @Override
+    protected void winBlackjack() {
+        dealerResult.addWin();
     }
 
+    @Override
     public void win() {
         dealerResult.addWin();
     }
 
+    @Override
+    public void lose() {
+        dealerResult.addLose();
+    }
+
+    @Override
     public void tie() {
         dealerResult.addTie();
     }

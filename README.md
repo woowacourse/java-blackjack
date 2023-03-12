@@ -12,22 +12,23 @@
 classDiagram
     BlackJackGame <|-- Gamblers
     BlackJackGame <|-- Deck
-    BlackJackGame <|-- Players
-    BlackJackGame <|-- Dealer
-blackjackcontroller.BlackjackController <|-- BlackJackGame
-blackjackcontroller.BlackjackController <|-- InputView
-blackjackcontroller.BlackjackController <|-- OutputView
-Deck <.. DeckGenerator
-<<interface>>DeckGenerator
-DeckGenerator <|.. RandomDeckGenerator
-Players <-- Player
-Player <-- Name
-Player <-- Hand
-Dealer <-- Name
-Dealer <-- Hand
-Hand <-- Card
-Card <-- Pattern
-Card <-- Number
+    BlackJackGame <|-- Participants
+    Participants <|-- Players
+    Participants <|-- Dealer
+    BlackjackController <|-- BlackJackGame
+    BlackjackController <|-- InputView
+    BlackjackController <|-- OutputView
+    Deck <.. DeckGenerator
+    <<interface>>DeckGenerator
+    DeckGenerator <|.. RandomDeckGenerator
+    Players <-- Player
+    Player <-- Name
+    Player <-- Hand
+    Dealer <-- Name
+    Dealer <-- Hand
+    Hand <-- Card
+    Card <-- Pattern
+    Card <-- Number
 ```
 
 ## ✨기능 구현 목록
@@ -72,3 +73,16 @@ Card <-- Number
     - [x] 딜러보다 플레이어의 카드합이 높으면 플레이어 승
     - [x] 딜러와 플레이어의 카드합이 같으면 무승부
     - [x] 딜러의 카드합이 모두 21 초과면 플레이어 패
+
+## step2 기능구현 목록
+
+- [x] 플레이어 마다 배팅금액을 입력받는다.
+    - [x] 배팅 금액은 숫자만 입력가능하다.
+    - [x] 최소 배팅금액은 100원이다
+    - [x] 최대 배팅금액은 1000000이다.
+    - [x] 배팅은 100원단위로 가능하다
+
+
+- [x] 플레이어가 블랙잭으로 이긴 경우 배팅 금액의 1.5배를 받는다.
+
+- [x] 승무패에 따른 최종수익을 출력한다.

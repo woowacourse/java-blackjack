@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import blackjackgame.Result;
 import card.Card;
 import card.Rank;
 import card.Suit;
@@ -187,9 +188,45 @@ class PlayersTest {
             player.hit(new Card(Rank.KING, Suit.HEART));
             player.hit(new Card(Rank.JACK, Suit.CLOVER));
             player.hit(new Card(Rank.JACK, Suit.DIAMOND));
-            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.CLOVER));
             dealer.hit(new Card(Rank.KING, Suit.SPADE));
             dealer.hit(new Card(Rank.QUEEN, Suit.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(LOSE);
+        }
+
+        @Test
+        @DisplayName("플레이어가 블랙잭으로 이긴경우 플레이어의 result는 BLACKJACK이다.")
+        void winPlayerBlackjack() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            player.hit(new Card(Rank.ACE, Suit.HEART));
+            dealer.hit(new Card(Rank.KING, Suit.CLOVER));
+            dealer.hit(new Card(Rank.QUEEN, Suit.SPADE));
+            dealer.hit(new Card(Rank.ACE, Suit.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(Result.BLACKJACK);
+        }
+
+        @Test
+        @DisplayName("딜러가 블랙잭으로 이긴경우 플레이어의 result는 LOSE 이다.")
+        void winDealerBlackjack() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(Rank.KING, Suit.CLOVER));
+            player.hit(new Card(Rank.QUEEN, Suit.SPADE));
+            player.hit(new Card(Rank.ACE, Suit.SPADE));
+            dealer.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.ACE, Suit.HEART));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);
