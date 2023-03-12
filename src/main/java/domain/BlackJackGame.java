@@ -1,6 +1,8 @@
-package domain.game;
+package domain;
 
 import domain.card.CardDeck;
+import domain.money.Bets;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

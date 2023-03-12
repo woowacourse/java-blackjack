@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.participant.Score;
+import domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

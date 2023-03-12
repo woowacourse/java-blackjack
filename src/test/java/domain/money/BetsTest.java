@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import static domain.Fixtures.ACE_CLOVER;
 import static domain.Fixtures.ACE_HEART;

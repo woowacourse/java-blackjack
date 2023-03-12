@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import java.math.BigDecimal;
 import java.util.Objects;

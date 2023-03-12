@@ -3,7 +3,7 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Score;
+import domain.score.Score;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

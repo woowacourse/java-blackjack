@@ -1,8 +1,8 @@
 package view;
 
 import domain.card.Card;
-import domain.game.BlackJackGame;
-import domain.game.Money;
+import domain.BlackJackGame;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

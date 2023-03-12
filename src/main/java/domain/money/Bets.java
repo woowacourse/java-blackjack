@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import domain.participant.Player;
 import domain.result.WinningResult;

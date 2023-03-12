@@ -1,10 +1,10 @@
-package domain;
+package domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.card.Cards;
-import domain.game.Money;
+import domain.money.Money;
 import domain.status.end.BlackJack;
 import org.junit.jupiter.api.Test;
 

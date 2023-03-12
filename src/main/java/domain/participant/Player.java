@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.score.Score;
+
 public final class Player extends Participant {
     private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
 

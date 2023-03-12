@@ -1,7 +1,7 @@
 package domain.status.initial;
 
 import domain.card.Cards;
-import domain.participant.Score;
+import domain.score.Score;
 import domain.status.Status;
 import domain.status.end.BlackJack;
 import domain.status.intermediate.Hit;

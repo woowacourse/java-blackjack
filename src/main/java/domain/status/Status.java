@@ -2,7 +2,7 @@ package domain.status;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.Score;
+import domain.score.Score;
 import java.math.BigDecimal;
 
 public interface Status {
