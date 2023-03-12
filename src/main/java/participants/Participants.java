@@ -2,6 +2,7 @@ package participants;
 
 import java.util.List;
 
+import blackjackgame.Result;
 import card.Card;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
@@ -80,5 +81,9 @@ public class Participants {
 
     public Player findPlayerByName(Name name) {
         return players.findPlayer(name);
+    }
+
+    public Result findPlayerResultByName(Name name) {
+        return findPlayerByName(name).getResult();
     }
 }

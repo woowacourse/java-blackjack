@@ -146,15 +146,15 @@ public class BlackjackGame {
         return new BettingResultsDto(bettingResults);
     }
 
-    private List<BettingResultDto> getBettingResults(Map<Player, BettingAmount> bettingAmountMap) {
+    private List<BettingResultDto> getBettingResults(Map<Name, BettingAmount> bettingAmountMap) {
         return bettingAmountMap.entrySet()
                 .stream()
-                .map(entry -> new BettingResultDto(entry.getKey().getName(), getRewardByResult(entry)))
+                .map(entry -> new BettingResultDto(entry.getKey(), getRewardByResult(entry)))
                 .collect(Collectors.toList());
     }
 
-    private int getRewardByResult(Entry<Player, BettingAmount> entry) {
-        return entry.getValue().calculateRewardByResult(entry.getKey().getResult());
+    private int getRewardByResult(Entry<Name, BettingAmount> entry) {
+        return entry.getValue().calculateRewardByResult(participants.findPlayerResultByName(entry.getKey()));
     }
 
 }
