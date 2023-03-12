@@ -101,5 +101,6 @@
 - [x] 돈을 지출할 수 있다.
 
 # 궁금했던 점
-1. `Dealer`의 `settingCards(Players players)`를 구현하기 위해 `players.distributeHands()`를 구현했습니다. 또, `players.distributeHands()`를 구현하기 위해 `player.receiveHand(Card card)`를 구현했습니다. 그러다보니 추상화 계층 하위에 있는 메서드를 모두 테스트해야하나? 라는 고민이 생겼습니다. 추상화 계층 상위에 있는 메서드 하나만을 테스트하면 되는 것인지, 혹은 하위 계층에 있는 작은 단위의 메서드부터 상위까지 모든 메서드를 테스트 해야 하는지 궁금합니다!
+1. `Dealer`의 `settingCards(Players players)`를 구현하기 위해 `players.distributeHands()`를 구현했습니다. 또, `players.distributeHands()`를 구현하기 위해 `player.receiveHand(Card card)`를 구현했습니다. 그러다보니 추상화 계층 하위에 있는 메서드를 모두 테스트해야하나? 라는 고민이 생겼습니다.
+   모든 메서드를 테스트한다면, 전반적인 프로그램의 안정성이 훨씬 올라갈 것 같아요. 하지만 추상화 계층 상위에 있는 메서드 하나만을 테스트했을 때의 효율성을 생각하게 됩니다. 어떤 방법이 더 효율적이고 적절한 방법일까요?
 2. 1차 때 디미터의 법칙과 관련한 질문입니다. `Participant`의 `getHand()`를 기존에는 `return hand.getHand()` 같은 방식으로 하여 디미터의 법칙을 해결했습니다. 하지만 Controller나 OutputView에서 `Hand` 타입의 인스턴스가 필요할 때가 있어, 항상 `List<Card>` 타입으로 줄 수 없는 상황입니다. 이럴 때는 어떻게 해결할 수 있나요? 
