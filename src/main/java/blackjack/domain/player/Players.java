@@ -126,8 +126,7 @@ public final class Players {
     }
 
     public List<Name> getGamblerNames() {
-        return players.stream()
-                .filter(player -> !player.isDealer())
+        return gamblers().stream()
                 .map(Player::name)
                 .collect(toList());
     }
