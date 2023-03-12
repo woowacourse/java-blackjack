@@ -1,9 +1,8 @@
 package view;
 
-import dto.DealerWinLoseResult;
+import dto.CardsResultsWithScore;
 import dto.DrawnCardsInfo;
-import dto.ParticipantResult;
-import dto.WinLoseResult;
+import dto.ParticipantAccountResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,10 +11,8 @@ public class OutputView {
     private static final String NAME_DELIMITER = ", ";
     private static final String RESULT_DELIMITER = ": ";
     private static final String NEW_LINE = System.getProperty("line.separator");
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
 
-    public void printCardSplitMessage(final List<DrawnCardsInfo> infos) {
+    public void printSplitCardsMessage(final List<DrawnCardsInfo> infos) {
         String names = infos.stream()
                 .filter(info -> !info.getName().equals("딜러"))
                 .map(info -> info.getName())
@@ -42,7 +39,7 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printParticipantResults(final List<ParticipantResult> results) {
+    public void printCardsResults(final List<CardsResultsWithScore> results) {
         System.out.println();
         results.stream()
                 .forEach(result -> System.out.println(
@@ -50,26 +47,13 @@ public class OutputView {
                                 + result.getScore()));
     }
 
-    public void printWinLoseResult(final List<WinLoseResult> winLoseResults,
-                                   final DealerWinLoseResult dealerWinLoseResult) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-
-        System.out.println(
-                dealerWinLoseResult.getName() + RESULT_DELIMITER + dealerWinLoseResult.getWinCount() + "승 "
-                        + dealerWinLoseResult.getLoseCount() + "패");
-
-        winLoseResults.forEach(
-                result -> System.out.println(result.getName() + RESULT_DELIMITER + getWinLoseFormat(result.isWin())));
-    }
-
-    private String getWinLoseFormat(final boolean isWin) {
-        if (isWin) {
-            return WIN;
-        }
-        return LOSE;
-    }
-
     public void printExceptionMessage(final String message) {
         System.out.println(message);
+    }
+
+    public void printAccountResults(final List<ParticipantAccountResult> results) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        results
+                .forEach(result -> System.out.println(result.getName() + ": " + (int) result.getAccount()));
     }
 }

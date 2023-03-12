@@ -1,14 +1,17 @@
 package view;
 
+import domain.message.ExceptionMessage;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
+    private static final String NEW_LINE = System.getProperty("line.separator");
     private static final List<String> VOWELS = List.of("a", "e", "i", "o", "u");
     private static final String DELIMITER = ",";
     private static final String END_VOWEL = "는";
     private static final String END_CONSONANT = "은";
+    private static final int MIN_BETTING_ACCOUNT = 1000;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -19,9 +22,23 @@ public class InputView {
         return splitNames;
     }
 
+    public int readAccount(final String name) {
+        System.out.println(NEW_LINE + name + "의 배팅 금액은?");
+        int account = scanner.nextInt();
+        validatePlayerMinimumAccount(account);
+        return account;
+    }
+
+    private void validatePlayerMinimumAccount(final int account) {
+        if (account < MIN_BETTING_ACCOUNT) {
+            throw new IllegalArgumentException(ExceptionMessage.BETTING_MONEY_NEED_MORE.getMessage());
+        }
+    }
+
     public String readChoiceOfDrawCard(final String name) {
         System.out.println(name + generatePreposition(name) + " 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        String command = scanner.next();
+        return command;
     }
 
     private String generatePreposition(final String name) {

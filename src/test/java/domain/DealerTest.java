@@ -2,6 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.DrawnCards;
+import domain.card.Type;
+import domain.card.Value;
+import domain.participants.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -68,5 +73,33 @@ class DealerTest {
 
         // then
         assertThat(expectedDrawnCards).containsExactly(cardB);
+    }
+
+    @Test
+    @DisplayName("딜러 우승시 상금을 얻는다.")
+    void earn_winning_price_when_dealer_win_game() {
+        // given
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        int winningPrice = 1000;
+
+        // when
+        dealer.winGame(winningPrice);
+
+        // then
+        assertThat(dealer.getAccount()).isEqualTo(winningPrice);
+    }
+
+    @Test
+    @DisplayName("딜러 패배시 플레이어의 상금만큼 돈을 잃는다.")
+    void lose_money_when_dealer_lose_game() {
+        // given
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        int playerAccount = 1000;
+
+        // when
+        dealer.loseGame(playerAccount);
+
+        // then
+        assertThat(dealer.getAccount()).isEqualTo(-500);
     }
 }

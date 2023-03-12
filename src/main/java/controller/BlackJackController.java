@@ -2,20 +2,19 @@ package controller;
 
 import static java.util.stream.Collectors.toList;
 
-import domain.CardDeck;
-import domain.CardDeckGenerator;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.Name;
-import domain.ParticipantGenerator;
-import domain.Player;
-import domain.Players;
-import dto.DealerWinLoseResult;
-import dto.DrawnCardsInfo;
-import dto.ParticipantResult;
-import dto.WinLoseResult;
+import domain.card.CardDeck;
+import domain.command.Command;
+import domain.participants.Account;
+import domain.participants.Dealer;
+import domain.participants.Name;
+import domain.participants.Names;
+import domain.participants.Player;
+import domain.participants.Players;
+import generator.CardDeckGenerator;
+import generator.ParticipantGenerator;
 import java.util.List;
-import service.BlackJackService;
+import service.CalculatorService;
+import service.ResultService;
 import view.InputView;
 import view.OutputView;
 
@@ -23,14 +22,17 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackJackService blackJackService;
+    private final ResultService blackJackResultService;
+    private final CalculatorService calculatorService;
 
     public BlackJackController(final InputView inputView,
                                final OutputView outputView,
-                               final BlackJackService blackJackService) {
+                               final ResultService resultService,
+                               final CalculatorService calculatorService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJackService = blackJackService;
+        this.blackJackResultService = resultService;
+        this.calculatorService = calculatorService;
     }
 
     public void run() {
@@ -38,73 +40,90 @@ public class BlackJackController {
         Dealer dealer = ParticipantGenerator.createDealer();
         Players players = createPlayers();
 
-        splitCards(cardDeck, dealer, players);
-        drawCards(cardDeck, dealer, players);
-        printParticipantResults(dealer, players);
-        printWinLoseResult(dealer, players);
+        splitInitCardsToParticipants(players, dealer, cardDeck);
+        drawCards(players, dealer, cardDeck);
+        printParticipantsCardResultsWithScore(players, dealer);
+        printParticipantAccountResults(players, dealer);
     }
 
     private Players createPlayers() {
+        Names playerNames = createPlayerNames();
+        List<Account> playerAccounts = createPlayerAccounts(playerNames);
+
+        return ParticipantGenerator.createPlayers(playerNames, playerAccounts);
+    }
+
+    private Names createPlayerNames() {
         try {
             List<String> rawNames = inputView.readPlayerNames();
-
-            List<Name> names = rawNames.stream()
-                    .map(Name::new)
-                    .collect(toList());
-
-            return ParticipantGenerator.createPlayers(names);
+            return Names.createNames(rawNames);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return createPlayers();
+            return createPlayerNames();
         }
     }
 
-    private void splitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        List<DrawnCardsInfo> drawnCardsInfos = blackJackService.splitCards(dealer, players, cardDeck);
-        outputView.printCardSplitMessage(drawnCardsInfos);
+    private List<Account> createPlayerAccounts(final Names playerNames) {
+        return playerNames.stream()
+                .map(this::createAccount)
+                .collect(toList());
     }
 
-    private void drawCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+    private Account createAccount(final Name playerName) {
+        try {
+            int account = inputView.readAccount(playerName.getName());
+            return new Account(account);
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception.getMessage());
+            return createAccount(playerName);
+        }
+    }
+
+    private void splitInitCardsToParticipants(final Players players, final Dealer dealer, final CardDeck cardDeck) {
+        calculatorService.splitCards(players, dealer, cardDeck);
+        outputView.printSplitCardsMessage(blackJackResultService.makeAfterSplitsInfos(players, dealer));
+    }
+
+    private void drawCards(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         players.stream()
-                .forEach(player -> drawPlayerCards(cardDeck, player));
+                .forEach(player -> drawPlayerCards(player, cardDeck));
+
         drawDealerCards(cardDeck, dealer);
     }
 
-    private void drawPlayerCards(final CardDeck cardDeck, final Player player) {
-        DrawCommand drawCommand;
+    private void drawPlayerCards(final Player player, final CardDeck cardDeck) {
+        Command command;
         do {
-            drawCommand = getRawCommand(player.getName());
-            DrawnCardsInfo drawnCardsInfo = blackJackService.drawCards(cardDeck, player, drawCommand);
-            outputView.printPlayerCardInfo(drawnCardsInfo);
-        } while (blackJackService.canDrawMore(player, drawCommand));
+            command = getMoreDrawCardCommand(player.getName());
+            calculatorService.drawCard(player, cardDeck, command);
+            outputView.printPlayerCardInfo(blackJackResultService.drawCards(player));
+        } while (calculatorService.canDrawMore(player, command));
     }
 
-    private DrawCommand getRawCommand(final String name) {
+    private Command getMoreDrawCardCommand(final String name) {
         try {
             String rawCommand = inputView.readChoiceOfDrawCard(name);
-            DrawCommand drawCommand = new DrawCommand(rawCommand);
-            return drawCommand;
+            Command command = Command.fromCommand(rawCommand);
+            return command;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getRawCommand(name);
+            return getMoreDrawCardCommand(name);
         }
     }
 
     private void drawDealerCards(final CardDeck cardDeck, final Dealer dealer) {
         do {
-            blackJackService.pickDealerCard(cardDeck, dealer);
+            calculatorService.pickDealerCard(cardDeck, dealer);
             outputView.printDealerCardPickMessage();
-        } while (blackJackService.canDealerDrawMore(dealer));
+        } while (calculatorService.canDealerDrawMore(dealer));
     }
 
-    private void printParticipantResults(final Dealer dealer, final Players players) {
-        List<ParticipantResult> participantResults = blackJackService.getParticipantResults(dealer, players);
-        outputView.printParticipantResults(participantResults);
+    private void printParticipantsCardResultsWithScore(final Players players, final Dealer dealer) {
+        outputView.printCardsResults(blackJackResultService.getParticipantsCardResultsWithScore(players, dealer));
     }
 
-    private void printWinLoseResult(final Dealer dealer, final Players players) {
-        List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
-        DealerWinLoseResult dealerWinLoseResult = blackJackService.getDealerResult(winLoseResults, dealer);
-        outputView.printWinLoseResult(winLoseResults, dealerWinLoseResult);
+    private void printParticipantAccountResults(final Players players, final Dealer dealer) {
+        calculatorService.calculateGameResults(players, dealer);
+        outputView.printAccountResults(blackJackResultService.getParticipantAccountResults(players, dealer));
     }
 }
