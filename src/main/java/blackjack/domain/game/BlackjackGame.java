@@ -13,14 +13,16 @@ public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final Participants participants;
+    private final BettingTable bettingTable;
 
-    public BlackjackGame(Participants participants, CardDeck cardDeck) {
+    public BlackjackGame(Participants participants, CardDeck cardDeck, BettingTable bettingTable) {
         this.participants = participants;
         this.cardDeck = cardDeck;
+        this.bettingTable = bettingTable;
     }
 
     public BlackjackGame(Participants participants) {
-        this(participants, new CardDeck());
+        this(participants, new CardDeck(), new BettingTable());
     }
 
     public void dealOutCard() {
@@ -56,5 +58,9 @@ public class BlackjackGame {
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    public void bet(Player player, BettingMoney money) {
+        bettingTable.put(player, money);
     }
 }

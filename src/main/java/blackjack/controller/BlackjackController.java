@@ -3,8 +3,10 @@ package blackjack.controller;
 import blackjack.controller.exception.InvalidCommandException;
 import blackjack.domain.card.exception.NoMoreCardException;
 import blackjack.domain.exception.CustomException;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackResult;
+import blackjack.domain.game.exception.InvalidMoneyValueException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
@@ -34,14 +36,36 @@ public class BlackjackController {
 
     private void start(BlackjackGame blackjackGame) {
         try {
-            blackjackGame.dealOutCard();
             Participants participants = blackjackGame.getParticipants();
-            outputView.printInitCards(participants);
+            bet(participants.getPlayers(), blackjackGame);
+            dealOutInitCards(blackjackGame, participants);
             play(participants, blackjackGame);
             outputView.printCardResult(participants);
         } catch (NoMoreCardException e) {
             outputView.printError(e.getErrorCode());
         }
+    }
+
+    private void bet(List<Player> players, BlackjackGame blackjackGame) {
+        for (Player player : players) {
+            BettingMoney money = createBettingMoney(player);
+            blackjackGame.bet(player, money);
+        }
+    }
+
+    private BettingMoney createBettingMoney(Player player) {
+        try {
+            int money = inputView.readBettingMoney(player);
+            return new BettingMoney(money);
+        } catch (InvalidMoneyValueException e) {
+            outputView.printError(e.getErrorCode());
+            return createBettingMoney(player);
+        }
+    }
+
+    private void dealOutInitCards(BlackjackGame blackjackGame, Participants participants) {
+        blackjackGame.dealOutCard();
+        outputView.printInitCards(participants);
     }
 
     private void printResult(BlackjackGame blackjackGame) {

@@ -38,7 +38,8 @@ class BlackjackGameTest {
     void getGameResultTest(List<Card> cards, GameResult expect) {
         List<String> names = List.of("jamie");
         Participants participants = Participants.from(names);
-        BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(new ArrayList<>(cards)));
+        BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(new ArrayList<>(cards)),
+                new BettingTable());
 
         blackjackGame.dealOutCard();
 

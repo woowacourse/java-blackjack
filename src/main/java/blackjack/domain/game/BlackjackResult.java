@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.vo.Score;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,14 +32,14 @@ public class BlackjackResult {
         if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return compareScore(player, dealer);
+        return compareScore(player.getScore(), dealer.getScore());
     }
 
-    private static GameResult compareScore(Player player, Dealer dealer) {
-        if (player.getScore().equals(dealer.getScore())) {
+    private static GameResult compareScore(Score score, Score dealerScore) {
+        if (score.equals(dealerScore)) {
             return GameResult.TIE;
         }
-        if (player.getScore().isGreaterOrEqualsTo(dealer.getScore())) {
+        if (score.isGreaterOrEqualsTo(dealerScore)) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
