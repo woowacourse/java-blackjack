@@ -40,6 +40,10 @@ public class Cards {
         return sum + ADDITIONAL_A_VALUE;
     }
 
+    public boolean isBlackJack() {
+        return getSize() == 2 && getScore() == BLACKJACK_NUMBER;
+    }
+
     public int getSize() {
         return cards.size();
     }
