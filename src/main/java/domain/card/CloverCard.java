@@ -1,9 +1,5 @@
 package domain.card;
 
-import domain.Number;
-import domain.Pattern;
-import domain.user.Score;
-
 public enum CloverCard implements Card {
     ACE(Pattern.CLOVER, Number.ACE),
     TWO(Pattern.CLOVER, Number.TWO),

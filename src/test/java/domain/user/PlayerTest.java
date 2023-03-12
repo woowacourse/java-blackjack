@@ -8,6 +8,7 @@ import domain.card.CloverCard;
 import java.util.List;
 import java.util.stream.Stream;
 
+import domain.state.PlayerStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;

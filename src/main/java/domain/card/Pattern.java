@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Pattern {
     HEART("하트"),

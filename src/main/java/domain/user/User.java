@@ -2,6 +2,8 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.card.Score;
+import domain.state.UserStatus;
 
 import java.util.List;
 

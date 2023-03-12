@@ -1,6 +1,8 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.state.PlayerStatus;
+import domain.state.UserStatus;
 
 import java.util.List;
 

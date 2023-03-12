@@ -2,7 +2,7 @@ package domain.game;
 
 import domain.card.GameDeck;
 import domain.user.Dealer;
-import domain.user.DealerStatus;
+import domain.state.DealerStatus;
 import domain.user.Player;
 
 import java.util.ArrayList;

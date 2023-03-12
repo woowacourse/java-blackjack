@@ -1,7 +1,5 @@
 package domain.card;
 
-import domain.user.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 

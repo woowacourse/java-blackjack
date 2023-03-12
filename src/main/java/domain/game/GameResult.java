@@ -1,9 +1,9 @@
 package domain.game;
 
 import domain.user.Dealer;
-import domain.user.DealerStatus;
+import domain.state.DealerStatus;
 import domain.user.Player;
-import domain.user.PlayerStatus;
+import domain.state.PlayerStatus;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

@@ -1,6 +1,6 @@
 package view;
 
-import domain.DrawCommand;
+import domain.command.DrawCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

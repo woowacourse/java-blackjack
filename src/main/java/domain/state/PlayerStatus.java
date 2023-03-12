@@ -1,4 +1,4 @@
-package domain.user;
+package domain.state;
 
 public enum PlayerStatus implements UserStatus {
     NORMAL,

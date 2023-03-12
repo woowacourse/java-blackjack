@@ -1,9 +1,5 @@
 package domain.card;
 
-import domain.Number;
-import domain.Pattern;
-import domain.user.Score;
-
 public enum HeartCard implements Card {
     ACE(Pattern.HEART, Number.ACE),
     TWO(Pattern.HEART, Number.TWO),

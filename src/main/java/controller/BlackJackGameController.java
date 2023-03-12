@@ -1,6 +1,6 @@
 package controller;
 
-import domain.DrawCommand;
+import domain.command.DrawCommand;
 import domain.card.Card;
 import domain.card.GameDeck;
 import domain.card.ShuffleDeckGenerator;
@@ -10,7 +10,7 @@ import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.Names;
 import domain.user.Player;
-import domain.user.PlayerStatus;
+import domain.state.PlayerStatus;
 import domain.user.User;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
