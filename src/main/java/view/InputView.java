@@ -27,17 +27,18 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
+    public static int inputBet(String name) {
+        System.out.println(NEW_LINE + name + INPUT_BET_REQUEST_MESSAGE);
+        String input = SCANNER.nextLine();
+        checkBlank(input);
+        checkPositive(input);
+        return Integer.parseInt(input);
+    }
+
     private static void checkBlank(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException(BLANK_INPUT_INVALID_ERROR_MESSAGE);
         }
-    }
-
-    public static int inputBet(String name) {
-        System.out.println(NEW_LINE + name + INPUT_BET_REQUEST_MESSAGE);
-        String input = SCANNER.nextLine();
-        checkPositive(input);
-        return Integer.parseInt(input);
     }
 
     private static void checkPositive(String input) {

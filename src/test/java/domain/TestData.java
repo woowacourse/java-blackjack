@@ -8,48 +8,48 @@ import domain.card.Suit;
 
 public class TestData {
 
-	public static Player getScore19Player() {
+	public static Player getScore19Player(int bet) {
 		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.NINE),
 			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("playerScore19", 19);
+		Player player = new Player("playerScore19", bet);
 		cards.forEach(player::addCard);
 		return player;
 	}
 
-	public static Player getScore20Player() {
+	public static Player getScore20Player(int bet) {
 		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.TEN),
 			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("playerScore20", 20);
+		Player player = new Player("playerScore20", bet);
 		cards.forEach(player::addCard);
 		return player;
 	}
 
-	public static Player getScore21Player() {
+	public static Player getScore21Player(int bet) {
 		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.TEN),
 			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("playerScore21", 21);
+		Player player = new Player("playerScore21", bet);
 		cards.forEach(player::addCard);
 		player.addCard(new Card(Suit.CLOVER, Denomination.ACE));
 		return player;
 	}
 
-	public static Player getBlackJackPlayer() {
+	public static Player getBlackJackPlayer(int bet) {
 		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.ACE),
 			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("playerBlackJack", 21);
+		Player player = new Player("playerBlackJack", bet);
 		cards.forEach(player::addCard);
 		return player;
 	}
 
-	public static Player getBustPlayer() {
+	public static Player getBustPlayer(int bet) {
 		List<Card> cards = List.of(
 			new Card(Suit.DIAMOND, Denomination.TEN),
 			new Card(Suit.HEART, Denomination.TEN));
-		Player player = new Player("playerBust", 22);
+		Player player = new Player("playerBust", bet);
 		cards.forEach(player::addCard);
 		player.addCard(new Card(Suit.CLOVER, Denomination.TWO));
 		return player;

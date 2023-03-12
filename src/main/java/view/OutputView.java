@@ -12,7 +12,7 @@ public class OutputView {
     private static final String DEALER_RECEPTION_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_STATE_RESULT_SIGN = " - 결과: ";
     private static final String CARD = " 카드";
-    private static final String RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
+    private static final String PROFIT_MESSAGE = NEW_LINE + "## 최종 수익";
 
     public static void printInitializedPlayers(final List<NameCardScoreDto> players) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
@@ -54,23 +54,18 @@ public class OutputView {
         }
     }
 
-    public static void printMultiResult(final MultiResultsDto multiResults) {
-        System.out.println(RESULT_MESSAGE);
-        System.out.println(multiResults.getName() + COLON + stringifyMultiResult(multiResults.getResults()));
+    public static void printProfitMessage() {
+        System.out.println(PROFIT_MESSAGE);
     }
 
-    public static void printSingleResult(final List<SingleResultDto> singleResults) {
-        for (SingleResultDto singleResult : singleResults) {
-            System.out.println(singleResult.getName() + COLON + singleResult.getResult());
+    public static void printProfits(final List<NameProfitDto> nameProfits) {
+        for (NameProfitDto nameProfit : nameProfits) {
+            printProfits(nameProfit);
         }
     }
 
-    private static String stringifyMultiResult(final List<String> results) {
-        StringJoiner sj = new StringJoiner(" ");
-        for (String result : results) {
-            sj.add(result);
-        }
-        return sj.toString();
+    public static void printProfits(final NameProfitDto nameProfit) {
+        System.out.println(nameProfit.getName() + COLON + nameProfit.getProfit());
     }
 
     public static void printErrorMessage(final String errorMessage) {
