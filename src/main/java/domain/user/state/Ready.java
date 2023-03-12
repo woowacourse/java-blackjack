@@ -4,7 +4,7 @@ import domain.card.Card;
 
 public class Ready extends State {
 
-    public Ready() {
+    protected Ready() {
         super();
     }
 

@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.user.state.Ready;
 import domain.user.state.State;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public abstract class User {
     protected State state;
 
     public User() {
-        this.state = new Ready();
+        this.state = State.create();
     }
 
     public void hit(Card card) {

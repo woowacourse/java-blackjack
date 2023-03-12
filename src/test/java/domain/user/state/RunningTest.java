@@ -21,7 +21,7 @@ class RunningTest {
 
     @BeforeEach
     void setUpRunningState() {
-        this.state = new Ready()
+        this.state = State.create()
             .draw(Card.of(FOUR, DIAMOND))
             .draw(Card.of(SIX, DIAMOND)); // Ready -> Running
     }
@@ -70,7 +70,7 @@ class RunningTest {
     @DisplayName("딜러와 점수 비교시 예외가 발생한다.")
     @Test
     void match() {
-        State dealer = new Ready()
+        State dealer = State.create()
             .draw(Card.of(ACE, HEART))
             .draw(Card.of(TEN, HEART));
         assertThatThrownBy(() -> state.match(dealer))

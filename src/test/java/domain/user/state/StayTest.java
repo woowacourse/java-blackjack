@@ -25,7 +25,7 @@ class StayTest {
 
     @BeforeEach
     void setUpStayState() {
-        this.state = new Ready()
+        this.state = State.create()
             .draw(Card.of(TWO, DIAMOND))
             .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
             .draw(Card.of(TEN, DIAMOND))
@@ -43,7 +43,7 @@ class StayTest {
     @DisplayName("딜러가 Stay일시 점수가 더 높으면 승리한다.")
     @Test
     void match_Stay_Win() {
-        State dealer = new Ready()
+        State dealer = State.create()
             .draw(Card.of(TEN, DIAMOND))
             .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
             .draw(Card.of(ACE, DIAMOND))
@@ -55,7 +55,7 @@ class StayTest {
     @DisplayName("딜러가 Stay일시 점수가 더 낮으면 패배한다.")
     @Test
     void match_Stay_Lose() {
-        State dealer = new Ready()
+        State dealer = State.create()
             .draw(Card.of(TEN, DIAMOND))
             .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
             .draw(Card.of(THREE, DIAMOND))
@@ -67,7 +67,7 @@ class StayTest {
     @DisplayName("딜러가 Stay일시 점수가 같으면 무승부다.")
     @Test
     void match_Stay_Push() {
-        State dealer = new Ready()
+        State dealer = State.create()
             .draw(Card.of(TWO, DIAMOND))
             .draw(Card.of(SEVEN, DIAMOND)) // Ready -> Running
             .draw(Card.of(NINE, DIAMOND))
@@ -79,7 +79,7 @@ class StayTest {
     @DisplayName("21점이 되면 Stay가 된다.")
     @Test
     void StayWhen21() {
-        state = new Ready()
+        state = State.create()
             .draw(Card.of(THREE, DIAMOND))
             .draw(Card.of(EIGHT, DIAMOND)) // Ready -> Running
             .draw(Card.of(TEN, DIAMOND)); // Running -> Stay (21)

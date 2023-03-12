@@ -19,6 +19,10 @@ public abstract class State {
         this.cards = cards;
     }
 
+    public static State create() {
+        return new Ready();
+    }
+
     public abstract State draw(Card card);
 
     public boolean isDrawable() {

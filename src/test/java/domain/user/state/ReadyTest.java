@@ -20,7 +20,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUpReadyState() {
-        state = new Ready();
+        state = State.create();
     }
 
     @DisplayName("처음 한 장만 받으면 Ready상태이다.")
@@ -68,7 +68,7 @@ class ReadyTest {
     @DisplayName("딜러와 점수 비교시 예외가 발생한다.")
     @Test
     void match() {
-        State dealer = new Ready()
+        State dealer = State.create()
             .draw(Card.of(ACE, HEART))
             .draw(Card.of(TEN, HEART));
         assertThatThrownBy(() -> state.match(dealer))

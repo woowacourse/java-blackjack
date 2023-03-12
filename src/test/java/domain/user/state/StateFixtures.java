@@ -13,20 +13,20 @@ import domain.card.Card;
 public class StateFixtures {
 
     public static State createBlackJackState() {
-        return new Ready()
+        return State.create()
             .draw(Card.of(ACE, DIAMOND))
             .draw(Card.of(JACK, DIAMOND)); // Ready -> BlackJack
     }
 
     public static State createBustState() {
-        return new Ready()
+        return State.create()
             .draw(Card.of(TEN, DIAMOND))
             .draw(Card.of(JACK, DIAMOND)) // Ready -> Running
             .draw(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
     }
 
     public static State createStayState() {
-        return new Ready()
+        return State.create()
             .draw(Card.of(TEN, DIAMOND))
             .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
             .draw(Card.of(FOUR, DIAMOND))

@@ -19,7 +19,7 @@ class TerminatedTest {
 
     @BeforeEach
     void setUpTerminatedState() {
-        this.state = new Ready()
+        this.state = State.create()
             .draw(Card.of(TEN, DIAMOND))
             .draw(Card.of(JACK, DIAMOND)) // Ready -> Running
             .draw(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
