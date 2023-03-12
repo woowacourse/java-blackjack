@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
     private final Deck deck;
     private final GamePlayer gamePlayer;
@@ -18,13 +15,18 @@ public class Game {
     }
 
     private void initializeGame() {
-        List<Card> cards = new ArrayList<>();
-        int playersCount = getPlayersCount();
-        for (int i = 0; i < playersCount + 1; i++) {
-            cards.add(deck.draw());
-            cards.add(deck.draw());
+        Players players = getPlayers();
+        Dealer dealer = getDealer();
+        for (int i = 0; i < 2; i++) {
+            Hit(dealer);
         }
-        gamePlayer.initializeGamePlayer(cards);
+        for (Player player : players.getPlayers()) {
+            Hit(player);
+        }
+    }
+
+    public void Hit(Person person) {
+        person.addCard(deck.draw());
     }
 
     public Dealer getDealer() {
@@ -33,26 +35,5 @@ public class Game {
 
     public Players getPlayers() {
         return gamePlayer.getPlayers();
-    }
-
-    public int getDealerScore() {
-        return gamePlayer.getDealer().getScore();
-    }
-
-    public List<Integer> getPlayersScore() {
-        return gamePlayer.getPlayers().getPlayersScore();
-    }
-
-    public void Hit(Person person) {
-        person.addCard(deck.draw());
-    }
-
-    public String getPlayerNameByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).getName();
-    }
-
-
-    public int getPlayersCount() {
-        return gamePlayer.getPlayers().getCount();
     }
 }

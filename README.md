@@ -104,8 +104,8 @@
 - [x] BlackJackGameController에 dealer와 players를 가져와서 로직을 호출할 수 있도록 로직 변경
 - [x] enum class → enum 자체로 값을 비교하도록 수정
 - [x] enum 내부 메소드를 사용하도록 수정
-- [ ] 디미터 법칙 위반된 코드 한 줄에 점을 하나만 찍도록 수정
-- [x] Game 내부에서 GameResult를 생성하는 메서드를 만들고, GamePlayer(Players와 Dealer)를 넘겨줄 수 있지 않나 ?
+- [x] 디미터 법칙 위반된 코드 한 줄에 점을 하나만 찍도록 수정
+- [ ] Game 내부에서 GameResult를 생성하는 메서드를 만들고, GamePlayer(Players와 Dealer)를 넘겨줄 수 있지 않나 ?
 - [ ] Person class에서 hand를 생성자로 ..?
 - [x] calculateScore 메소드 hand로 위치 변경
 - [x] 전체 코드에 사용되는 것이 아니면 @BeforeEach 제거

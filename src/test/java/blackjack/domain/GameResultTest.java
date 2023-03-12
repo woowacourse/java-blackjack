@@ -20,7 +20,7 @@ class GameResultTest {
     void setup() {
         GamePlayer gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("tori", "name2", "name3")));
         Game game = Game.from(gamePlayer);
-        gameResult = new GameResult(game);
+        gameResult = new GameResult(game.getDealer(), game.getPlayers());
     }
 
     @DisplayName("GameResult의 수는 GamePlayer의 수와 같다.")
@@ -28,7 +28,7 @@ class GameResultTest {
     void Should_Create_When_NewGameResult() {
         GamePlayer gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("tori", "name2", "name3")));
         Game game = Game.from(gamePlayer);
-        GameResult gameResult = new GameResult(game);
+        GameResult gameResult = new GameResult(game.getDealer(), game.getPlayers());
 
         assertThat(gameResult.getDealerResult().size()).isEqualTo(3);
     }

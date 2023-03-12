@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResult {
@@ -10,10 +9,10 @@ public class GameResult {
     private final Map<String, Integer> dealerResult;
     private final Map<String, String> playersResult;
 
-    public GameResult(Game game) {
+    public GameResult(Dealer dealer, Players players) {
         this.dealerResult = initializeDealerResult();
         this.playersResult = new LinkedHashMap<>();
-        calculateVictoryOrDefeat(game);
+        calculateVictoryOrDefeat(dealer, players);
     }
 
     private Map<String, Integer> initializeDealerResult() {
@@ -26,14 +25,12 @@ public class GameResult {
         return dealerResult;
     }
 
-    private void calculateVictoryOrDefeat(Game game) {
-        int dealerScore = game.getDealerScore();
-        List<Integer> playersScore = game.getPlayersScore();
-        int playersCount = game.getPlayersCount();
+    private void calculateVictoryOrDefeat(Dealer dealer, Players players) {
+        int dealerScore = dealer.getScore();
 
-        for (int i = 0; i < playersCount; i++) {
-            int playerScore = playersScore.get(i);
-            String playerName = game.getPlayerNameByIndex(i);
+        for (Player player : players.getPlayers()) {
+            int playerScore = player.getScore();
+            String playerName = player.getName();
             calculateVictoryOrDefeatWithDealerAndPlayer(dealerScore, playerScore, playerName);
         }
     }
