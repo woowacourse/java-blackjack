@@ -12,7 +12,7 @@ public class Bet {
         this.revenue = 0;
     }
 
-    public void addAmount(int amount) {
+    public void addAmount(final int amount) {
         this.credit += amount;
     }
 
