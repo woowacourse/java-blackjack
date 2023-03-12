@@ -1,6 +1,6 @@
 package blackjack.domain.money;
 
-import blackjack.domain.gameResult.WinningResult;
+import blackjack.domain.gameresult.WinningResult;
 import blackjack.domain.participant.Player;
 
 public class Revenue {

@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
-import blackjack.domain.gameResult.WinningResult;
+import blackjack.domain.gameresult.WinningResult;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import java.util.List;
