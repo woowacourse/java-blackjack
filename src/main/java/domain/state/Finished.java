@@ -3,8 +3,8 @@ package domain.state;
 import domain.card.Card;
 import domain.card.Hand;
 
-public abstract class Finished extends State{
-    public Finished(Hand hand) {
+public abstract class Finished extends State {
+    Finished(Hand hand) {
         super(hand);
     }
 

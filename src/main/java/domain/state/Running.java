@@ -2,8 +2,8 @@ package domain.state;
 
 import domain.card.Hand;
 
-public abstract class Running extends State{
-    public Running(Hand hand) {
+public abstract class Running extends State {
+    Running(Hand hand) {
         super(hand);
     }
 

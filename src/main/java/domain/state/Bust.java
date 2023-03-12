@@ -2,8 +2,8 @@ package domain.state;
 
 import domain.card.Hand;
 
-public final class Bust extends Finished{
-    public Bust(Hand hand) {
+public final class Bust extends Finished {
+    Bust(Hand hand) {
         super(hand);
     }
 }

@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 
 public abstract class Ready extends State {
-    public Ready(Hand hand) {
+    Ready(Hand hand) {
         super(hand);
     }
 

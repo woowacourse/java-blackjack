@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 
 public final class DealerHit extends Running {
-    public DealerHit(Hand hand) {
+    DealerHit(Hand hand) {
         super(hand);
     }
 
