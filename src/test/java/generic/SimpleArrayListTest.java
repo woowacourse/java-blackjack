@@ -1,0 +1,5 @@
+package generic;
+
+class SimpleArrayListTest {
+
+}
