@@ -10,7 +10,7 @@ public class BlackJackRule {
 
     public int calculatePlayerProfit(final Player player, final Dealer dealer) {
         final ResultType result = calculatePlayerResult(dealer, player);
-        return (int) (player.calculateProfit(result.getPlayerProfit()));
+        return (player.calculateProfit(result.getPlayerProfit()));
     }
 
     private ResultType calculatePlayerResult(final Dealer dealer, final Player player) {
