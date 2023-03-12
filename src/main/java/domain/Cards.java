@@ -15,11 +15,18 @@ public class Cards {
         return cards.size();
     }
 
-    public Score getScore(int limit) {
+    public Score getDealerScore() {
         int totalSumOfCards = getSumOfCard();
         int aceCount = getAceCount();
 
-        return Score.of(totalSumOfCards, limit, aceCount);
+        return Score.ofDealerScore(totalSumOfCards, aceCount);
+    }
+
+    public Score getPlayerScore() {
+        int totalSumOfCards = getSumOfCard();
+        int aceCount = getAceCount();
+
+        return Score.ofPlayerScore(totalSumOfCards, aceCount);
     }
 
     private int getAceCount() {

@@ -6,8 +6,10 @@ import java.util.Map;
 public class Score {
 
     private static final int MAX_SCORE = 21;
-    private static final int DEALER_CARD_ABLE_BOUND = 16;
+    private static final int PLAYER_LIMIT = 21;
     private static final int PLAYER_CARD_ABLE_BOUND = 20;
+    private static final int DEALER_LIMIT = 16;
+    private static final int DEALER_CARD_ABLE_BOUND = 16;
     private static final int ACE_DECREASE = 10;
     private static final Map<Integer, Score> scoreFactory = new HashMap<>();
 
@@ -17,8 +19,13 @@ public class Score {
         this.value = value;
     }
 
-    public static Score of(int inputValue, int limit, int aceCount) {
-        int value = decreaseScoreByAceCount(inputValue, limit, aceCount);
+    public static Score ofDealerScore(int inputValue, int aceCount) {
+        int value = decreaseScoreByAceCount(inputValue, DEALER_LIMIT, aceCount);
+        return scoreFactory.computeIfAbsent(value, ignored -> new Score(value));
+    }
+
+    public static Score ofPlayerScore(int inputValue, int aceCount) {
+        int value = decreaseScoreByAceCount(inputValue, PLAYER_LIMIT, aceCount);
         return scoreFactory.computeIfAbsent(value, ignored -> new Score(value));
     }
 
@@ -32,7 +39,7 @@ public class Score {
     }
 
     private static boolean canDecreaseScore(int inputValue, int limit, int aceCount) {
-        return inputValue != MAX_SCORE && aceCount <= 0 && limit < inputValue;
+        return inputValue != MAX_SCORE && 0 < aceCount && limit < inputValue;
     }
 
     public boolean isMaxScore() {

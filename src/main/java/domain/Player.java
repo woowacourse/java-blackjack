@@ -16,13 +16,23 @@ public class Player extends Participant {
         }
     }
 
+    public boolean isBust() {
+        return cards.getPlayerScore()
+                .isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.getPlayerScore()
+                .isMaxScore() && cards.getSize() == NUMBER_OF_CARDS_BLACKJACK;
+    }
+
     public int getTotalScoreValue() {
-        return cards.getScore(BUST_LIMIT)
+        return cards.getPlayerScore()
                 .getValue();
     }
 
     public boolean isMoreCardAble() {
-        return cards.getScore(BUST_LIMIT)
+        return cards.getPlayerScore()
                 .isPlayerMoreCardAble();
     }
 

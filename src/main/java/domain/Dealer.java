@@ -2,7 +2,6 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private static final int MORE_CARD_LIMIT = 16;
     private static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer(Cards cards) {
@@ -13,15 +12,25 @@ public class Dealer extends Participant {
         return cards.getCard();
     }
 
+    public boolean isBust() {
+        return cards.getDealerScore()
+                .isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.getDealerScore()
+                .isMaxScore() && cards.getSize() == NUMBER_OF_CARDS_BLACKJACK;
+    }
+
     @Override
     public boolean isMoreCardAble() {
-        return cards.getScore(MORE_CARD_LIMIT)
+        return cards.getDealerScore()
                 .isDealerMoreCardAble();
     }
 
     @Override
     public int getTotalScoreValue() {
-        return cards.getScore(MORE_CARD_LIMIT)
+        return cards.getDealerScore()
                 .getValue();
     }
 

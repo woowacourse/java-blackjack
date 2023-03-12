@@ -29,7 +29,7 @@ public class CardsTest {
 
         Cards cards = new Cards(initialCards);
 
-        assertThat(cards.getScore(21).getValue()).isEqualTo(13);
+        assertThat(cards.getPlayerScore().getValue()).isEqualTo(13);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CardsTest {
 
         Cards cards = new Cards(initialCards);
 
-        assertThat(cards.getScore(21).getValue()).isEqualTo(12);
+        assertThat(cards.getPlayerScore().getValue()).isEqualTo(12);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CardsTest {
 
         Cards cards = new Cards(initialCards);
 
-        assertThat(cards.getScore(16).getValue()).isEqualTo(10);
+        assertThat(cards.getDealerScore().getValue()).isEqualTo(10);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class CardsTest {
 
         Cards cards = new Cards(initialCards);
 
-        assertThat(cards.getScore(16).getValue()).isEqualTo(21);
+        assertThat(cards.getDealerScore().getValue()).isEqualTo(21);
     }
 
     @Test

@@ -4,8 +4,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int NUMBER_OF_CARDS_BLACKJACK = 2;
-    protected static final int BUST_LIMIT = 21;
+    protected static final int NUMBER_OF_CARDS_BLACKJACK = 2;
 
     protected final Name name;
     protected final Cards cards;
@@ -19,15 +18,9 @@ public abstract class Participant {
         cards.addNewCard(card);
     }
 
-    public boolean isBust() {
-        return cards.getScore(BUST_LIMIT)
-                .isBust();
-    }
+    public abstract boolean isBust();
 
-    public boolean isBlackJack() {
-        return cards.getScore(BUST_LIMIT)
-                .isMaxScore() && cards.getSize() == NUMBER_OF_CARDS_BLACKJACK;
-    }
+    public abstract boolean isBlackJack();
 
     public abstract int getTotalScoreValue();
 
