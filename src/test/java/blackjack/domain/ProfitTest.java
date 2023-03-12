@@ -16,7 +16,7 @@ class ProfitTest {
     void createBet() {
         // given
         int input = 1000;
-        Profit profit = Profit.of(input);
+        Profit profit = Profit.from(input);
 
         // when & then
         assertThat(profit.getProfit()).isEqualTo(input);
@@ -26,7 +26,7 @@ class ProfitTest {
     @ValueSource(ints = {-1000, 0})
     void validatePositiveNumber(int input) {
         // when & then
-        assertThatThrownBy(() -> Profit.of(input))
+        assertThatThrownBy(() -> Profit.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 1 이상이여야 합니다.");
     }
@@ -35,7 +35,7 @@ class ProfitTest {
     @ValueSource(ints = {100_000_001})
     void validateMaxNumber(int input) {
         // when & then
-        assertThatThrownBy(() -> Profit.of(input))
+        assertThatThrownBy(() -> Profit.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 100,000,000 이하여야 합니다.");
     }
@@ -45,7 +45,7 @@ class ProfitTest {
     void calculateProfit() {
         // given
         int money = 1000;
-        Profit profit = Profit.of(money);
+        Profit profit = Profit.from(money);
 
         // when
         int finalProfit1 = profit.calculateProfit(Result.WIN).getProfit();

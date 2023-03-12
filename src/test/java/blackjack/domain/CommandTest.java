@@ -12,8 +12,8 @@ class CommandTest {
     @Test
     void createCommand() {
         // given
-        Command hitCommand = Command.of("y");
-        Command stayCommand = Command.of("n");
+        Command hitCommand = Command.from("y");
+        Command stayCommand = Command.from("n");
 
         // when & then
         assertThat(hitCommand).isEqualTo(Command.HIT);
@@ -27,7 +27,7 @@ class CommandTest {
         String input = "wrong";
 
         // when & then
-        assertThatThrownBy(() -> Command.of(input))
+        assertThatThrownBy(() -> Command.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("y 또는 n만 입력 가능합니다.");
     }

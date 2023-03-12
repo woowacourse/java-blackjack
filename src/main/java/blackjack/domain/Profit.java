@@ -2,15 +2,16 @@ package blackjack.domain;
 
 public class Profit {
 
-    private final static int MAX_PROFIT = 100_000_000;
     private final static int MIN_PROFIT = 1;
+    private final static int MAX_PROFIT = 100_000_000;
+
     private final int value;
 
     private Profit(final int value) {
         this.value = value;
     }
 
-    public static Profit of(final int value) {
+    public static Profit from(final int value) {
         validateProfit(value);
         return new Profit(value);
     }

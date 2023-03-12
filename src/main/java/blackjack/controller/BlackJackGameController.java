@@ -49,7 +49,7 @@ public class BlackJackGameController {
 
     private Profit generateProfit(final Player player) {
         final int playerBetting = InputView.readBettingMoney(player.getName());
-        return Profit.of(playerBetting);
+        return Profit.from(playerBetting);
     }
 
     private void handOutHitCard(BlackJackGame blackJackGame, Players players, Dealer dealer) {
@@ -86,7 +86,7 @@ public class BlackJackGameController {
 
     private Command generateGameCommand(final Player player) {
         final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
-        return Command.of(gameCommand);
+        return Command.from(gameCommand);
     }
 
     private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer, Map<Player, Profit> bettingMoney) {
