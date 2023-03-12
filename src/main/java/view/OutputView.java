@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import domain.card.Card;
-import domain.hand.Hand;
 import domain.Result;
+import domain.card.Card;
 import dto.PlayerDto;
 
 public class OutputView {
@@ -20,16 +19,16 @@ public class OutputView {
     public void printUsersStatus(List<PlayerDto> players) {
         for (PlayerDto player : players) {
             String name = player.getName();
-            printPlayerHand(name, player.getHand());
+            printPlayerCards(name, player.getCards());
         }
     }
 
-    public void printPlayerHand(String playerName, Hand hand) {
-        System.out.println(playerName + "카드: " + joinDisplaysOf(hand.getCards()));
+    public void printPlayerCards(String name, Set<Card> cards) {
+        System.out.println(name + "카드: " + joinDisplaysOf(cards));
     }
 
-    public void printFirstCardOfDealer(Hand hand) {
-        Iterator<Card> cardIterator = hand.getCards().iterator();
+    public void printFirstCardOfDealer(Set<Card> cards) {
+        Iterator<Card> cardIterator = cards.iterator();
         if (cardIterator.hasNext()) {
             Card firstCard = cardIterator.next();
             System.out.println("딜러: " + Display.of(firstCard));
@@ -49,16 +48,16 @@ public class OutputView {
 
     public void printCardsAndScores(List<PlayerDto> players) {
         for (PlayerDto player : players) {
-            printCardsAndScore(player.getName(), player.getHand());
+            printCardsAndScore(player.getName(), player.getCards(), player.getScore());
         }
     }
 
-    private void printCardsAndScore(String name, Hand hand) {
-        System.out.println(name + "카드: " + joinDisplaysOf(hand.getCards()) + " - 결과: " + hand.score().getScore());
+    private void printCardsAndScore(String name, Set<Card> cards, int score) {
+        System.out.println(name + "카드: " + joinDisplaysOf(cards) + " - 결과: " + score);
     }
 
-    public void printResult(String userName, Result result) {
-        System.out.println(userName + ": " + Display.of(result));
+    public void printResult(String name, Result result) {
+        System.out.println(name + ": " + Display.of(result));
     }
 
     public void printDealerResults(List<Result> results) {
