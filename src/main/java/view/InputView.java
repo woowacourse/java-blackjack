@@ -28,6 +28,11 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public int inputBetting(String player) {
+        System.out.println(player + "의 배팅 금액은?");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public String inputCardCommand(String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
         String command = scanner.nextLine();
