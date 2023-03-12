@@ -12,13 +12,13 @@ public class BettingTest {
 
     @Test
     @DisplayName("Betting 에서 Player 의 배팅 금액을 알아낸다.")
-    void getBettingMoney() {
+    void getBettingAmount() {
         BettingDto bettingDto = new BettingDto();
         Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        bettingDto.putPlayerAndMoney(player, new Money(10000));
+        bettingDto.putPlayerAndAmount(player, new Amount(10000));
 
         Betting betting = new Betting(bettingDto.getBetting());
-        int money = betting.getMoneyFromPlayerName(player.getName());
+        int money = betting.getAmountFromPlayerName(player.getName());
 
         assertThat(money).isEqualTo(10000);
     }

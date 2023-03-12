@@ -4,13 +4,13 @@ import java.util.Map;
 
 public class Betting {
 
-    private final Map<Name, Money> betting;
+    private final Map<Name, Amount> betting;
 
-    public Betting(Map<Name, Money> betting) {
+    public Betting(Map<Name, Amount> betting) {
         this.betting = betting;
     }
 
-    public int getMoneyFromPlayerName(Name name) {
+    public int getAmountFromPlayerName(Name name) {
         return betting.get(name).getValue();
     }
 

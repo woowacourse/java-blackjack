@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Money;
+import domain.Amount;
 import domain.Name;
 import domain.Player;
 
@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class BettingDto {
 
-    private final Map<Name, Money> betting;
+    private final Map<Name, Amount> betting;
 
     public BettingDto() {
         betting = new LinkedHashMap<>();
     }
 
-    public void putPlayerAndMoney(Player player, Money money) {
-        betting.put(player.getName(), money);
+    public void putPlayerAndAmount(Player player, Amount amount) {
+        betting.put(player.getName(), amount);
     }
 
-    public Map<Name, Money> getBetting() {
+    public Map<Name, Amount> getBetting() {
         return betting;
     }
 

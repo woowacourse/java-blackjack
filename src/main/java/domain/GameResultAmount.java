@@ -3,12 +3,12 @@ package domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ResultCalculator {
+public class GameResultAmount {
 
     private final Map<Name, Integer> resultOfBetting;
     private final Name DEALER_NAME = new Name("딜러");
 
-    public ResultCalculator(Betting betting, Map<Name, GameResult> result) {
+    public GameResultAmount(Betting betting, Map<Name, GameResult> result) {
         resultOfBetting = new LinkedHashMap<>();
         calculateResult(betting, result);
     }
@@ -19,12 +19,12 @@ public class ResultCalculator {
     }
 
     private void calculateEachResult(Name name, GameResult gameResult, Betting betting) {
-        int money = (int) (betting.getMoneyFromPlayerName(name) * gameResult.getRateOfReturn());
-        resultOfBetting.put(name, money);
-        resultOfBetting.put(DEALER_NAME, calculateDealerMoney(money));
+        int amount = (int) (betting.getAmountFromPlayerName(name) * gameResult.getRateOfReturn());
+        resultOfBetting.put(name, amount);
+        resultOfBetting.put(DEALER_NAME, calculateDealerAmount(amount));
     }
 
-    private int calculateDealerMoney(int money) {
+    private int calculateDealerAmount(int money) {
         return resultOfBetting.getOrDefault(DEALER_NAME, 0) - money;
     }
 

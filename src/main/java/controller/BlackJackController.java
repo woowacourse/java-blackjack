@@ -5,12 +5,12 @@ import domain.Betting;
 import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
-import domain.Money;
+import domain.Amount;
 import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Result;
-import domain.ResultCalculator;
+import domain.GameResultAmount;
 import domain.service.BlackJackService;
 import dto.BettingDto;
 import dto.CardStatusDto;
@@ -42,13 +42,13 @@ public class BlackJackController {
     private Betting getBetting(List<Player> players) {
         BettingDto bettingDto = new BettingDto();
         for (Player player : players) {
-            bettingDto.putPlayerAndMoney(player, new Money(getBettingMoney(player)));
+            bettingDto.putPlayerAndAmount(player, new Amount(getBettingAmount(player)));
         }
         return new Betting(bettingDto.getBetting());
     }
 
-    private int getBettingMoney(Player player) {
-        return inputView.requestBettingMoney(player.getNameValue());
+    private int getBettingAmount(Player player) {
+        return inputView.requestBettingAmount(player.getNameValue());
     }
 
     private void printInitialDistribution(BlackJackService blackJackService) {
@@ -96,7 +96,7 @@ public class BlackJackController {
     }
 
     private Map<Name, Integer> getResultOfBetting(BlackJackService blackJackService, Betting betting) {
-        return new ResultCalculator(betting, getResult(blackJackService.getDealer(), blackJackService.getPlayers()))
+        return new GameResultAmount(betting, getResult(blackJackService.getDealer(), blackJackService.getPlayers()))
                 .getResultOfBetting();
     }
 
