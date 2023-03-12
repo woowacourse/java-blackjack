@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -87,6 +88,12 @@ public class Players {
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));
+    }
+
+    public List<Player> getGamblers() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public List<Player> getPlayers() {

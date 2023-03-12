@@ -93,6 +93,17 @@ public class PlayersTest {
     }
 
     @Test
+    void 겜블러들을_반환한다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+
+        List<Player> result = players.getGamblers();
+
+        assertThat(result).extracting(Player::getName)
+                .containsExactly("후추", "허브");
+    }
+
+    @Test
     void 딜러를_반환한다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
