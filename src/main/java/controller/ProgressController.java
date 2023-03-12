@@ -49,17 +49,13 @@ public class ProgressController {
         if (isHitAgain) {
             player.hit(deck.popCard());
         }
-
         return isHitAgain;
     }
 
     private void hitDealer(final Dealer dealer, final Deck deck) {
-        outputView.printEmptyLine();
-
         while (dealer.isDealerHit()) {
             outputView.printDealerHitAgain();
             dealer.hit(deck.popCard());
-            outputView.printEmptyLine();
         }
     }
 }

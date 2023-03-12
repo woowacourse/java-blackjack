@@ -21,6 +21,7 @@ public final class OutputView {
     }
 
     public void printHitTwice(final Players players) {
+        printEmptyLine();
         List<String> names = players.getPlayers()
                 .stream()
                 .map(Player::getName)
@@ -40,6 +41,7 @@ public final class OutputView {
     public void printPlayersCard(final Players players) {
         players.getPlayers()
                 .forEach(this::printPlayerCard);
+        printEmptyLine();
     }
 
     public void printPlayerCard(final Player player) {
@@ -64,6 +66,7 @@ public final class OutputView {
 
     public void printDealerHitAgain() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        printEmptyLine();
     }
 
     public void printDealerCardAndScore(final Dealer dealer) {
@@ -82,6 +85,7 @@ public final class OutputView {
     }
 
     public void printGameResult(final int dealerProfit, final Map<String, Integer> playerBetMoneyResults) {
+        printEmptyLine();
         System.out.println("## 최종 수익");
         printDealerResult(dealerProfit);
         printPlayerResults(playerBetMoneyResults);

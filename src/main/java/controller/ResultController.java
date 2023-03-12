@@ -24,7 +24,6 @@ public class ResultController {
     private void printCardAndScore(final Dealer dealer, final Players players) {
         printDealerCardAndScore(dealer);
         printPlayersCardAndScore(players);
-        outputView.printEmptyLine();
     }
 
     private void printDealerCardAndScore(final Dealer dealer) {

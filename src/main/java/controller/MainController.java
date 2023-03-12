@@ -55,15 +55,10 @@ public class MainController {
     }
 
     private void hitTwice(final Dealer dealer, final Players players, final Deck deck) {
-        outputView.printEmptyLine();
         outputView.printHitTwice(players);
-
         hitTwiceEachParticipant(dealer, players, deck);
-
         outputView.printDealerFirstCard(dealer);
         outputView.printPlayersCard(players);
-
-        outputView.printEmptyLine();
     }
 
     private void hitTwiceEachParticipant(final Dealer dealer, final Players players, final Deck deck) {
