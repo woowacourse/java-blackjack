@@ -102,7 +102,7 @@
 
 #### 기타 (1단계 후 추가 수정 요구 사항)
 - [x] 사용하지 않는 메서드 제거
-- [ ] Stack 대신 Deque 사용
+- [x] Stack 대신 Deque 사용
 - [ ] Card 생성 실패 테스트 추가
 - [ ] assertDoesNotThrow 대신 변수의 값을 직접 검증하는 방식으로 테스트 수정
 - [ ] Dealer 생성 테스트 추가
