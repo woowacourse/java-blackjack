@@ -31,7 +31,8 @@ public class RetryTest {
 
     @Test
     void 재입력_가능_횟수를_초기화시킨다() {
-        final Retry retry = new Retry(0);
+        final Retry retry = new Retry(1);
+        retry.decrease();
 
         retry.reset();
 

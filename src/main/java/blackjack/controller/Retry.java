@@ -2,20 +2,16 @@ package blackjack.controller;
 
 public final class Retry {
 
-    private static final int DEFAULT_COUNT = 5;
-
+    private final int initialCount;
     private int count;
 
-    public Retry() {
-        this(DEFAULT_COUNT);
-    }
-
     public Retry(final int count) {
+        this.initialCount = count;
         this.count = count;
     }
 
     public void reset() {
-        this.count = DEFAULT_COUNT;
+        count = initialCount;
     }
 
     public boolean isRepeatable() {
