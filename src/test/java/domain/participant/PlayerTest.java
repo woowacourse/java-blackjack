@@ -97,7 +97,7 @@ class PlayerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1000, 10000000})
-    void 베팅_금액의_범위는_1000원부터_1000만원까지이다(int bettingAmount) throws Exception {
+    void 베팅_금액의_범위는_1000원부터_1000만원까지이다(int bettingAmount) {
         //given
         Player player = Player.from("연어", Deck.create(notShuffle()));
 
@@ -111,7 +111,7 @@ class PlayerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {999, 10000001})
-    void 베팅_금액의_범위는_1000원_1000만원이_아니면_예외가_발생한다(int bettingAmount) throws Exception {
+    void 베팅_금액의_범위는_1000원_1000만원이_아니면_예외가_발생한다(int bettingAmount) {
         //given
         Player player = Player.from("연어", Deck.create(notShuffle()));
 
@@ -124,7 +124,7 @@ class PlayerTest {
     }
 
     @Test
-    void 베팅_금액은_1000원_단위이다() throws Exception {
+    void 베팅_금액은_1000원_단위이다() {
         //given
         Player player = Player.from("연어", Deck.create(notShuffle()));
 
@@ -135,7 +135,7 @@ class PlayerTest {
     }
 
     @Test
-    void 베팅_금액은_1000원_단위가_아니면_예외가_발생한다() throws Exception {
+    void 베팅_금액은_1000원_단위가_아니면_예외가_발생한다() {
         //given
         Player player = Player.from("연어", Deck.create(notShuffle()));
 
