@@ -10,7 +10,7 @@ public class PlayerDto {
 
     public PlayerDto(Player player) {
         this.name = player.getName();
-        this.hand = player.hand();
+        this.hand = player.getHand();
     }
 
     public String getName() {

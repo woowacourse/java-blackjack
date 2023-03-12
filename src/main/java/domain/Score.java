@@ -2,8 +2,7 @@ package domain;
 
 public class Score {
 
-    private static final int MIN = 0;
-
+    public static final Score ZERO = new Score(0);
     public static final Score BLACKJACK = new Score(21);
     public static final Score BONUS = new Score(10);
 
@@ -11,10 +10,6 @@ public class Score {
 
     public Score(int score) {
         this.score = score;
-    }
-
-    public Score() {
-        this(MIN);
     }
 
     public Score add(Score other) {

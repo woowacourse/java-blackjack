@@ -19,9 +19,9 @@ public class GameTest extends AbstractTestFixture {
         game.dealTwice();
 
         for (var user : game.getUsers()) {
-            assertThat(user.hand().cards()).hasSize(2);
+            assertThat(user.getHand().getCards()).hasSize(2);
         }
-        assertThat(dealer.hand().cards()).hasSize(2);
+        assertThat(dealer.getHand().getCards()).hasSize(2);
     }
 
     @Test

@@ -47,7 +47,7 @@ public class Application {
         game.dealTwice();
 
         OUTPUT_VIEW.printDealStatus(createDtosOf(game.getUsers()));
-        OUTPUT_VIEW.printFirstCardOfDealer(game.getDealer().hand());
+        OUTPUT_VIEW.printFirstCardOfDealer(game.getDealer().getHand());
         OUTPUT_VIEW.printUsersStatus(createDtosOf(game.getUsers()));
     }
 
@@ -82,7 +82,7 @@ public class Application {
     private static void selectHitOrStand(Game game, User user) {
         while (user.canHit() && INPUT_VIEW.askForHit(user.getName())) {
             game.dealTo(user);
-            OUTPUT_VIEW.printPlayerHand(user.getName(), user.hand());
+            OUTPUT_VIEW.printPlayerHand(user.getName(), user.getHand());
         }
     }
 

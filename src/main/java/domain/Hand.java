@@ -35,8 +35,8 @@ public class Hand {
 
     private Score sumScoreOf(Set<Card> cards) {
         return cards.stream()
-                .map(Card::score)
-                .reduce(new Score(), Score::add);
+                .map(Card::getScore)
+                .reduce(Score.ZERO, Score::add);
     }
 
     private boolean hasAIn(Set<Card> cards) {
@@ -75,7 +75,7 @@ public class Hand {
         return false;
     }
 
-    public Set<Card> cards() {
+    public Set<Card> getCards() {
         return new HashSet<>(cards);
     }
 }

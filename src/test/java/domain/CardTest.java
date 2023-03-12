@@ -14,7 +14,7 @@ public class CardTest extends AbstractTestFixture{
             "EIGHT,8", "NINE,9", "TEN,10", "JACK,10", "QUEEN,10", "KING,10"})
     void test_card_score(Letter letter, int expectedScore) {
         var card = createCard(letter);
-        assertThat(card.score()).isEqualTo(new Score(expectedScore));
+        assertThat(card.getScore()).isEqualTo(new Score(expectedScore));
     }
 
     @Test

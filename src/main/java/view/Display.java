@@ -20,6 +20,6 @@ public class Display {
     }
 
     public static String of(Card card) {
-        return card.getLetter().getLetter() + card.face().getName();
+        return card.getLetter().getLetter() + card.getFace().getName();
     }
 }

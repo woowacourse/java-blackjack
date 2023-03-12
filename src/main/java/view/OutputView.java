@@ -25,11 +25,11 @@ public class OutputView {
     }
 
     public void printPlayerHand(String playerName, Hand hand) {
-        System.out.println(playerName + "카드: " + joinDisplaysOf(hand.cards()));
+        System.out.println(playerName + "카드: " + joinDisplaysOf(hand.getCards()));
     }
 
     public void printFirstCardOfDealer(Hand hand) {
-        Iterator<Card> cardIterator = hand.cards().iterator();
+        Iterator<Card> cardIterator = hand.getCards().iterator();
         if (cardIterator.hasNext()) {
             Card firstCard = cardIterator.next();
             System.out.println("딜러: " + Display.of(firstCard));
@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     private void printCardsAndScore(String name, Hand hand) {
-        System.out.println(name + "카드: " + joinDisplaysOf(hand.cards()) + " - 결과: " + hand.score().getScore());
+        System.out.println(name + "카드: " + joinDisplaysOf(hand.getCards()) + " - 결과: " + hand.score().getScore());
     }
 
     public void printResult(String userName, Result result) {

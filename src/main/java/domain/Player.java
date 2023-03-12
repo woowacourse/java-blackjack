@@ -40,7 +40,7 @@ public abstract class Player {
 
     public abstract boolean canHit();
 
-    public Hand hand() {
+    public Hand getHand() {
         return hand;
     }
 

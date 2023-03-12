@@ -14,7 +14,7 @@ public class Card {
         return letter;
     }
 
-    public Face face() {
+    public Face getFace() {
         return face;
     }
 
@@ -22,8 +22,8 @@ public class Card {
         return letter.isA();
     }
 
-    public Score score() {
-        return letter.score();
+    public Score getScore() {
+        return letter.getScore();
     }
 
     @Override
