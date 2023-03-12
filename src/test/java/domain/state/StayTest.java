@@ -15,7 +15,10 @@ class StayTest {
     @Test
     @DisplayName("드로우 할 수 없다.")
     void drawTest() {
-        State stay = new Stay(new Hand(List.of(CloverCard.FOUR, CloverCard.FIVE)));
+        State stay = new Ready()
+                .draw(CloverCard.KING)
+                .draw(CloverCard.ACE)
+                .stay();
 
         assertThatThrownBy(() -> stay.draw(CloverCard.SIX))
                 .isInstanceOf(IllegalStateException.class)
@@ -25,7 +28,10 @@ class StayTest {
     @Test
     @DisplayName("더 이상 stay 할 수 없다.")
     void stay() {
-        State stay = new Stay(new Hand(List.of(CloverCard.FOUR, CloverCard.FIVE)));
+        State stay = new Ready()
+                .draw(CloverCard.KING)
+                .draw(CloverCard.ACE)
+                .stay();
 
         assertThatThrownBy(stay::stay)
                 .isInstanceOf(IllegalStateException.class)
