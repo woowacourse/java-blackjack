@@ -7,9 +7,13 @@ public class BettingMoney {
     private final int value;
 
     public BettingMoney(final int value) {
+        validate(value);
+        this.value = value;
+    }
+
+    private void validate(final int value) {
         validateBoundary(value);
         validateUnit(value);
-        this.value = value;
     }
 
     private void validateBoundary(final int value) {
