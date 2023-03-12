@@ -4,8 +4,7 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final Score step = new Score(10);
-    private static final Score max = new Score(21);
+    private static final Score min = new Score(-1);
 
     private final int score;
 
@@ -22,15 +21,15 @@ public final class Score {
     }
 
     public boolean isBust() {
-        return this.isMoreThen(max);
+        return this.equals(min);
     }
 
-    public Score minusIfBust() {
-        if (isBust()) {
-            return this.minus(step);
-        }
+    public static Score min() {
+        return min;
+    }
 
-        return this;
+    public int score() {
+        return score;
     }
 
     @Override

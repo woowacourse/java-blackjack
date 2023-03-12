@@ -1,4 +1,4 @@
-package blackjack.domain.cardpack;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public final class Hand {
 
+    private static final Score step = new Score(10);
+    private static final Score max = new Score(21);
     private final List<Card> cards;
 
     public Hand(final Card... cards) {
@@ -28,8 +30,13 @@ public final class Hand {
         Score sumScore = getSumScore();
         final List<Card> aceCards = getAceCards();
 
-        while (!aceCards.isEmpty() && sumScore.isBust()) {
-            sumScore = sumScore.minusIfBust();
+        while (sumScore.isMoreThen(max) && !aceCards.isEmpty()) {
+            sumScore = sumScore.minus(step);
+            aceCards.remove(0);
+        }
+
+        if (sumScore.isMoreThen(max)) {
+            return Score.min();
         }
 
         return sumScore;

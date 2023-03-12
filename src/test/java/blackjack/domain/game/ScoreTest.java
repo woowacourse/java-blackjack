@@ -39,18 +39,6 @@ class ScoreTest {
     }
 
     @Test
-    void 점수는_BUST_이면_10을_뺼_수_있다() {
-        //given
-        Score score = new Score(22);
-
-        //when
-        Score result = score.minusIfBust();
-
-        //then
-        assertThat(result).isEqualTo(new Score(12));
-    }
-
-    @Test
     void 점수는_다른_점수보다_큰지_검사할_수_있다() {
         //given
         Score score1 = new Score(22);
