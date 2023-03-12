@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import domain.result.DealerResult;
-import domain.result.PlayerResult;
+import domain.result.Result;
 import domain.result.Results;
 
 public class BlackJackGameRunner {
@@ -101,12 +100,12 @@ public class BlackJackGameRunner {
         player.addCard(cardGenerator.generate());
     }
 
-    public DealerResult getDealerResults() {
+    public Result getDealerResults() {
         results = Results.of(dealer, players);
         return results.getDealerResult();
     }
 
-    public List<PlayerResult> getPlayerResults() {
+    public List<Result> getPlayerResults() {
         return results.getPlayerResults();
     }
 

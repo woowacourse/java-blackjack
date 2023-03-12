@@ -7,8 +7,7 @@ import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.MultiResultsDto;
-import view.SingleResultDto;
+import view.NameProfitDto;
 import view.ViewRenderer;
 import view.NameCardScoreDto;
 import view.InputView;
@@ -80,9 +79,10 @@ public class BlackJackController {
     }
 
     private void printResult() {
-        MultiResultsDto multiResults = ViewRenderer.toMultiResults(runner.getDealerResults());
-        OutputView.printMultiResult(multiResults);
-        List<SingleResultDto> singleResults = ViewRenderer.toSingleResults(runner.getPlayerResults());
-        OutputView.printSingleResult(singleResults);
+        OutputView.printProfitMessage();
+        NameProfitDto dealerProfit = ViewRenderer.toNameProfit(runner.getDealerResults());
+        OutputView.printProfits(dealerProfit);
+        List<NameProfitDto> playerProfits = ViewRenderer.toNameProfit(runner.getPlayerResults());
+        OutputView.printProfits(playerProfits);
     }
 }

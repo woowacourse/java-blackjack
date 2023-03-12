@@ -23,11 +23,11 @@ public class Results {
 		return new Results(playerResult);
 	}
 
-	public DealerResult getDealerResult() {
+	public Result getDealerResult() {
 		return DealerResult.from(playerResults);
 	}
 
-	public List<PlayerResult> getPlayerResults() {
+	public List<Result> getPlayerResults() {
 		return Collections.unmodifiableList(playerResults);
 	}
 }
