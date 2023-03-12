@@ -128,4 +128,9 @@ public class OutputView {
     private static void printEmptyLine() {
         println("");
     }
+
+    public static void printBetNameGuide(String name) {
+        printEmptyLine();
+        println(String.format("%s의 배팅 금액은?", name));
+    }
 }

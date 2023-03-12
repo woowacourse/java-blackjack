@@ -2,18 +2,19 @@ package domain.player;
 
 import domain.card.Hand;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class Gambler extends Player {
-    public Gambler(Hand hand, Name name) {
-        super(hand, name);
+    public Gambler(Hand hand, Name name, Bet bet) {
+        super(hand, name, bet);
     }
 
-    public static List<Gambler> from(List<Name> names) {
-        return names.stream()
-                .map(name -> new Gambler(Hand.makeEmptyHolder(), name))
-                .collect(Collectors.toList());
+    public static List<Gambler> from(Map<Name, Bet> nameAndBet) {
+        List<Gambler> gamblers = new ArrayList<>();
+        nameAndBet.forEach((name, bet) -> gamblers.add(new Gambler(Hand.makeEmptyHolder(), name, bet)));
+        return gamblers;
     }
 
     @Override

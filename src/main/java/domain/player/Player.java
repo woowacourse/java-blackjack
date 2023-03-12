@@ -9,10 +9,12 @@ import java.util.Objects;
 public abstract class Player {
     private final Hand hand;
     private final Name name;
+    private Bet bet;
 
-    public Player(Hand hand, Name name) {
+    public Player(Hand hand, Name name, Bet bet) {
         this.hand = hand;
         this.name = name;
+        this.bet = bet;
     }
 
     public void draw(Card card) {
@@ -31,10 +33,18 @@ public abstract class Player {
         return hand.getCards();
     }
 
+    public Card getCardIndexOf(int index) {
+        return hand.getCardIndexOf(index);
+    }
+
     public abstract boolean isNameEqualTo(String playerName);
 
     public String getName() {
         return this.name.getName();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 
     @Override
@@ -50,7 +60,11 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-    public Card getCardIndexOf(int index) {
-        return hand.getCardIndexOf(index);
+    public void profit() {
+        this.bet = bet.multiplyDouble();
+    }
+
+    public void lose() {
+        this.bet = Bet.makeEmptyBet();
     }
 }

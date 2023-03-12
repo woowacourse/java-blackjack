@@ -55,7 +55,7 @@ class PlayersTest {
     @Test
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
     void givenName_thenReturnsPlayer() {
-        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"));
+        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"), Bet.from(3000));
         Players players = new Players(new Dealer(Hand.makeEmptyHolder()), List.of(gambler));
 
         Player findPlayer = players.findByName("테스트");
@@ -65,7 +65,7 @@ class PlayersTest {
     @Test
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
     void givenInvalidName_thenThrowsException() {
-        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"));
+        Gambler gambler = new Gambler(Hand.makeEmptyHolder(), Name.of("테스트"), Bet.from(3000));
         Players players = new Players(new Dealer(Hand.makeEmptyHolder()), List.of(gambler));
 
         assertThatThrownBy(() -> players.findByName("없는회원"))

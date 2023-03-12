@@ -6,6 +6,7 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.gameresult.GameResult;
 import domain.gameresult.Result;
+import domain.player.Bet;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Gambler;
@@ -71,7 +72,8 @@ class DealerTest {
     private static Gambler makeParticipant(Suit suit, Denomination denomination) {
         return new Gambler(
                 new Hand(List.of(new Card(suit, denomination))),
-                Name.of("참가자")
+                Name.of("참가자"),
+                Bet.from(3000)
         );
     }
 

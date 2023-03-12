@@ -6,43 +6,39 @@ import domain.player.Player;
 public class GameResultDecider {
     private GameResultDecider() {}
 
-    public static void decideGameResult(Dealer dealer, Player participant, GameResult gameResult) {
+    public static void decideGameResult(Dealer dealer, Player participant) {
         if (dealer.isBust() || participant.isBust()) {
-            decideGameResultOnBurst(dealer, participant, gameResult);
+            decideGameResultOnBurst(dealer, participant);
             return;
         }
-        decideGameResultOnScore(dealer, participant, gameResult);
+        decideGameResultOnScore(dealer, participant);
     }
 
-    private static void decideGameResultOnBurst(Dealer dealer, Player participant, GameResult gameResult) {
+    private static void decideGameResultOnBurst(Dealer dealer, Player participant) {
         if (dealer.isBust() && participant.isBust()) {
-            gameResult.addDrawCount(participant);
             return;
         } // 둘 다 버스트
 
         if (dealer.isBust()) {
-            gameResult.addParticipantWinningCase(participant);
+            participant.profit();
             return;
         } // 딜러가 버스트
 
-        gameResult.addParticipantLosingCase(participant);
+        participant.lose();
         // 참가자가 버스트
     }
 
-    private static void decideGameResultOnScore(Dealer dealer, Player participant, GameResult gameResult) {
+    private static void decideGameResultOnScore(Dealer dealer, Player participant) {
         int dealerScore = dealer.getScore();
         int participantScore = participant.getScore();
 
         if (dealerScore > participantScore) {
-            gameResult.addParticipantLosingCase(participant);
+            participant.lose();
             return;
         }
 
         if (dealerScore < participantScore) {
-            gameResult.addParticipantWinningCase(participant);
-            return;
+            participant.profit();
         }
-
-        gameResult.addDrawCount(participant);
     }
 }

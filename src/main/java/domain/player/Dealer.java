@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.card.Hand;
-import domain.gameresult.GameResult;
 import domain.gameresult.GameResultDecider;
 
 public class Dealer extends Player {
@@ -10,11 +9,11 @@ public class Dealer extends Player {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer(Hand hand) {
-        super(hand, Name.dealerName());
+        super(hand, Name.dealerName(), new Bet(10000));
     }
 
-    public void battle(Player participant, GameResult gameResult) {
-        GameResultDecider.decideGameResult(this, participant, gameResult);
+    public void battle(Player participant) {
+        GameResultDecider.decideGameResult(this, participant);
     }
 
     @Override

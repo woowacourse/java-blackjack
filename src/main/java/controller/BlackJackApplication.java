@@ -10,12 +10,14 @@ import view.Command;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(
-                new Players(new Dealer(Hand.makeEmptyHolder()), Gambler.from(getParticipantNames())),
+                new Players(new Dealer(Hand.makeEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
                 DeckOfCards.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);
@@ -26,7 +28,21 @@ public class BlackJackApplication {
         OutputView.printPlayersGameResults(gameResult);
     }
 
-    private List<Name> getParticipantNames() {
+    private Map<Name, Bet> getGamblerNameAndBets() {
+        Map<Name, Bet> nameAndBet = new HashMap<>();
+        List<Name> gamblerNames = getGamblerNames();
+        for (Name gamblerName : gamblerNames) {
+            nameAndBet.put(gamblerName, getBet(gamblerName));
+        }
+        return nameAndBet;
+    }
+
+    private Bet getBet(Name gamblerName) {
+        OutputView.printBetNameGuide(gamblerName.getName());
+        return InputView.repeat(InputView::inputBet);
+    }
+
+    private List<Name> getGamblerNames() {
         OutputView.printParticipantNamesGuide();
         return InputView.repeat(InputView::inputParticipantNames);
     }

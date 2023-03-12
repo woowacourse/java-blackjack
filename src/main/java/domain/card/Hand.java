@@ -15,6 +15,7 @@ public class Hand {
         this.cards = cards;
     }
 
+
     public static Hand makeEmptyHolder() {
         return new Hand(new ArrayList<>());
     }

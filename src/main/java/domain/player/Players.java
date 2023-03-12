@@ -25,10 +25,8 @@ public class Players {
         return dealer.getScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
-    public GameResult battleAll() {
-        GameResult gameResult = new GameResult();
-        gamblers.forEach(participant -> dealer.battle(participant, gameResult));
-        return gameResult;
+    public void battleAll() {
+        gamblers.forEach(participant -> dealer.battle(participant));
     }
 
     public Player findByName(String name) {
