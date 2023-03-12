@@ -28,12 +28,12 @@ public class Application {
         List<String> playerNames = blackJackGame.fetchPlayerNames();
 
         for (String name : playerNames) {
-            Long betAmount = readBetAmount(name);
-            // blackJackGame.assignBetAmount(name, betAmount);
+            int betAmount = readBetAmount(name);
+            blackJackGame.assignBetAmount(name, betAmount);
         }
     }
 
-    private static Long readBetAmount(String currentPlayerName) {
+    private static int readBetAmount(String currentPlayerName) {
         try {
             OutputView.printEmptyLine();
             return InputView.requestBetAmount(currentPlayerName);

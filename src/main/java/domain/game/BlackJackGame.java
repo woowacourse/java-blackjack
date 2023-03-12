@@ -132,6 +132,10 @@ public class BlackJackGame {
         return !hitRequest.equals(HIT_REQUEST);
     }
 
+    public void assignBetAmount(String name, int betAmount) {
+        participants.findPlayer(name).orElseThrow().assignBetAmount(betAmount);
+    }
+
     // public Map<String, String> calculatePlayerResults() {
     //     Dealer dealer = participants.getDealer();
     //     Map<String, String> playerResults = new LinkedHashMap<>();

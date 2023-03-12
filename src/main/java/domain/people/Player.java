@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.card.Card;
+import domain.game.BetAmount;
 import view.ErrorMessage;
 
 public class Player {
@@ -13,6 +14,7 @@ public class Player {
     private static final int BLACKJACK_HAND_VALUE = -1;
 
     private final Participant participant;
+    private BetAmount betAmount;
 
     public Player(String name) {
         validate(name);
@@ -83,5 +85,9 @@ public class Player {
 
     public boolean isBust() {
         return participant.isBust();
+    }
+
+    public void assignBetAmount(int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
     }
 }

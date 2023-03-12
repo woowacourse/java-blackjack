@@ -28,11 +28,11 @@ public class InputView {
         System.out.println(ASK_INPUT_NAMES_MESSAGE);
     }
 
-    public static Long requestBetAmount(String name) {
+    public static int requestBetAmount(String name) {
         askBetAmount(name);
         String betAmount = scanner.nextLine();
         validateNaturalNumber(betAmount);
-        return Long.parseLong(betAmount);
+        return Integer.parseInt(betAmount);
     }
 
     private static void askBetAmount(String name) {
