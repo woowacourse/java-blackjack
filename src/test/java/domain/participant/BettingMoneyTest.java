@@ -25,4 +25,13 @@ class BettingMoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(BettingMoney.BOUNDARY_ERROR_MESSAGE);
     }
+
+    @DisplayName("베팅 금액이 1000 단위가 아니면 예외 처리한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {10, 500, 15002})
+    void invalidMoneyTestWithWrongUnit(int money) {
+        assertThatThrownBy(() -> new BettingMoney(money))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액은 1000원 단위여야 합니다.");
+    }
 }
