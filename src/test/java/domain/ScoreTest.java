@@ -52,9 +52,8 @@ class ScoreTest {
     void compareValueTest(int origin, int compared, boolean expected) {
         //given
         Score score = Score.from(origin);
-        Score scoreCompared = Score.from(compared);
         //when
-        boolean smallerOrEqual = score.isSmallerOrEqual(scoreCompared);
+        boolean smallerOrEqual = score.isSmallerOrEqual(compared);
         //then
         assertThat(smallerOrEqual).isEqualTo(expected);
     }

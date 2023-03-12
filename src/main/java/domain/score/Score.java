@@ -34,8 +34,8 @@ public final class Score {
         return Status.LOSE;
     }
 
-    public boolean isSmallerOrEqual(final Score score) {
-        return value <= score.value;
+    public boolean isSmallerOrEqual(final int number) {
+        return value <= number;
     }
 
     public boolean isBlackjackCandidate() {

@@ -14,6 +14,6 @@ public class Dealer extends Player {
 
     public boolean isHittable() {
         return getScore()
-                .isSmallerOrEqual(Score.from(DEALER_HIT_BOUNDARY));
+                .isSmallerOrEqual(DEALER_HIT_BOUNDARY);
     }
 }
