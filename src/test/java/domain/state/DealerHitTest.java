@@ -37,4 +37,15 @@ class DealerHitTest {
 
         assertThat(state.stay()).isInstanceOf(Stay.class);
     }
+
+    @Test
+    @DisplayName("hand 총합이 16 이하면 유지된다.")
+    void keepDealerHitTest() {
+        State state = new DealerReady()
+                .draw(CloverCard.KING)
+                .draw(CloverCard.THREE)
+                .draw(CloverCard.TWO);
+
+        assertThat(state).isInstanceOf(DealerHit.class);
+    }
 }
