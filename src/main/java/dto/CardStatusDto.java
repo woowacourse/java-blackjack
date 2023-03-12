@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CardStatusDto {
 
-    private static final Map<String, Map<String, CardStatusDto>> cardStatusDtoFactory = new HashMap<>();
+    private static final Map<String, Map<String, CardStatusDto>> CACHE = new HashMap<>();
 
     private final String letterExpression;
 
@@ -22,7 +22,7 @@ public class CardStatusDto {
         String letterExpression = card.getLetterExpression();
         String shapeName = card.getShapeName();
 
-        return cardStatusDtoFactory.computeIfAbsent(letterExpression,
+        return CACHE.computeIfAbsent(letterExpression,
                         ignored -> createMapAndPutCardIfAbsent(letterExpression, shapeName))
                 .computeIfAbsent(letterExpression, ignored -> new CardStatusDto(letterExpression, shapeName));
     }

@@ -11,7 +11,7 @@ public class Score {
     private static final int DEALER_LIMIT = 16;
     private static final int DEALER_CARD_ABLE_BOUND = 16;
     private static final int ACE_DECREASE = 10;
-    private static final Map<Integer, Score> scoreFactory = new HashMap<>();
+    private static final Map<Integer, Score> CACHE = new HashMap<>();
 
     private final int value;
 
@@ -21,12 +21,12 @@ public class Score {
 
     public static Score ofDealerScore(int inputValue, int aceCount) {
         int value = decreaseScoreByAceCount(inputValue, DEALER_LIMIT, aceCount);
-        return scoreFactory.computeIfAbsent(value, ignored -> new Score(value));
+        return CACHE.computeIfAbsent(value, ignored -> new Score(value));
     }
 
     public static Score ofPlayerScore(int inputValue, int aceCount) {
         int value = decreaseScoreByAceCount(inputValue, PLAYER_LIMIT, aceCount);
-        return scoreFactory.computeIfAbsent(value, ignored -> new Score(value));
+        return CACHE.computeIfAbsent(value, ignored -> new Score(value));
     }
 
     private static int decreaseScoreByAceCount(int inputValue, int limit, int aceCount) {
