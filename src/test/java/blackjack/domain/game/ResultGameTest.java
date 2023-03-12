@@ -25,10 +25,10 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        Map<String,Integer> players = new HashMap<>();
-        players.put("pobi",1000);
-        players.put("crong",1000);
-        players.put("dali",1000);
+        Map<String, Integer> players = new HashMap<>();
+        players.put("pobi", 1000);
+        players.put("crong", 1000);
+        players.put("dali", 1000);
         participants = new Participants(dealer, players);
     }
 
@@ -113,7 +113,7 @@ public class ResultGameTest {
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
         player.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        player.drawCard(new Card(Shape.HEART,Letter.ACE));
+        player.drawCard(new Card(Shape.HEART, Letter.ACE));
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
 
@@ -129,7 +129,7 @@ public class ResultGameTest {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.JACK));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        dealer.drawCard(new Card(Shape.HEART,Letter.ACE));
+        dealer.drawCard(new Card(Shape.HEART, Letter.ACE));
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
 

@@ -13,7 +13,7 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(final Dealer dealer, Map<String,Integer> players) {
+    public Participants(final Dealer dealer, Map<String, Integer> players) {
         validate(players.keySet());
         this.dealer = dealer;
         this.players = makePlayer(players);
@@ -40,8 +40,8 @@ public class Participants {
         }
     }
 
-    private List<Player> makePlayer(Map<String,Integer> players) {
-        return players.entrySet().stream().map(entry -> new Player(new Name(entry.getKey()),entry.getValue())).collect(Collectors.toList());
+    private List<Player> makePlayer(Map<String, Integer> players) {
+        return players.entrySet().stream().map(entry -> new Player(new Name(entry.getKey()), entry.getValue())).collect(Collectors.toList());
     }
 
     public Dealer getDealer() {

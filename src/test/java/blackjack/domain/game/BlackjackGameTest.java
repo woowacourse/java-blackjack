@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,9 +24,9 @@ public class BlackjackGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        Map<String,Integer> players = new HashMap<>();
-        players.put("pobi",0);
-        players.put("crong",0);
+        Map<String, Integer> players = new HashMap<>();
+        players.put("pobi", 0);
+        players.put("crong", 0);
         participants = new Participants(dealer, players);
         deck = new Deck(DECK_MAKER.makeDeck(), (int size) -> 1);
     }

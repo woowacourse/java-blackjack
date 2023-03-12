@@ -25,7 +25,7 @@ public class Dealer extends Participant {
     }
 
     public WinTieLose compareScoreWith(Player player) {
-        if(player.isBlackjack()){
+        if (player.isBlackjack()) {
             return checkBlackjackCase(player);
         }
         if (isTie(player.getTotalScore())) {
@@ -41,7 +41,7 @@ public class Dealer extends Participant {
     }
 
     private WinTieLose checkBlackjackCase(Player player) {
-        if(this.isBlackjack()){
+        if (this.isBlackjack()) {
             return WinTieLose.TIE;
         }
         return WinTieLose.BLACKJACK;

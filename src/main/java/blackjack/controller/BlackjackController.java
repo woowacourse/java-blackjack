@@ -88,5 +88,4 @@ public class BlackjackController {
         outputView.outputCardsAndScore(new ParticipantsDto(participants));
         outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
     }
-
 }
