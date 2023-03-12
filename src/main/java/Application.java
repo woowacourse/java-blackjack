@@ -26,6 +26,7 @@ public class Application {
         play(game);
         showCardsAndScores(game);
         showResultsOf(game);
+        showProfitsOf(game);
     }
 
     private static void placeBet(Game game) {
@@ -67,6 +68,14 @@ public class Application {
         OUTPUT_VIEW.printDealerResults(game.getDealerResults());
         for (var user : game.getUsers()) {
             OUTPUT_VIEW.printResult(user.getName(), game.getResultOf(user));
+        }
+    }
+
+    private static void showProfitsOf(Game game) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        OUTPUT_VIEW.printProfit(game.getDealer().getName(), game.getDealerPrize().getProfit());
+        for (User user : game.getUsers()) {
+            OUTPUT_VIEW.printProfit(user.getName(), game.getPrizeOf(user).getProfit());
         }
     }
 

@@ -61,4 +61,8 @@ public class Game {
     public Dealer getDealer() {
         return participants.getDealer();
     }
+
+    public Money getDealerPrize() {
+        return bank.getProfit();
+    }
 }

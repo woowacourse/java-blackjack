@@ -69,6 +69,10 @@ public class OutputView {
         System.out.println("딜러: " + renderedResults);
     }
 
+    public void printProfit(String name, int profit) {
+        System.out.println(name + ": " + profit);
+    }
+
     public static void printError(String message) {
         System.out.println("[ERROR] " + message);
     }
