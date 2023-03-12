@@ -18,8 +18,10 @@ graph TD
     BlackjackGame --> Participants
     BlackjackGame --> CardDeck
 
-    BettingTable --> Money
+    BettingTable --> BettingMoney
     BettingTable --> Player
+
+    BettingMoney <-.-> Money
 
     Participants --> Player
     Participants --> Dealer
@@ -61,8 +63,8 @@ graph TD
 ## 2단계
 
 - [ ] 베팅 금액을 입력 받는 기능
-    - [ ] 베팅 금액은 1000원 단위로 가능하다
-    - [ ] 베팅 금액은 최대 10,000,000원까지 가능하다
+    - [x] 베팅 금액은 1000원 단위로 가능하다
+    - [x] 베팅 금액은 최대 10,000,000원까지 가능하다
 - [ ] 수익률을 계산하는 기능
     - 플레이어가 블랙잭으로 이기면 1.5배를 받는다
         - 블랙잭은 카드가 2장일 때 점수가 21이다
