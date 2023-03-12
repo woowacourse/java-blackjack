@@ -1,9 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.result.RewardDTO;
 import blackjack.domain.user.*;
-import blackjack.domain.result.UserResultsDTO;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +14,8 @@ public class OutputView {
     public static final String CARD_USER_DELIMITER = ": ";
     public static final String RESULT_DELIMITER = " - 결과: ";
     public static final String CARD_DELIMITER = "카드: ";
-    public static final String RESULT_TITLE = "## 최종 승패";
     public static final String NAME_JOINING_DELIMITER = ", ";
+    private static final String PRIZE_TITLE = "## 최종 수익";
 
     private OutputView() {
     }
@@ -75,12 +75,11 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printResults(UserResultsDTO userResultsDTO) {
-        System.out.println(RESULT_TITLE);
-        HashMap<User, String> userResults = userResultsDTO.getResults();
-        System.out.println(DEALER_NAME + CARD_USER_DELIMITER + userResultsDTO.removeAndGetDealerResult());
-        for (User user : userResults.keySet()) {
-            System.out.println(user.getName() + CARD_USER_DELIMITER + userResults.get(user));
+    public static void printPrize(RewardDTO rewardDTO) {
+        System.out.println(PRIZE_TITLE);
+        LinkedHashMap<String, Double> prizeResults = rewardDTO.getPrizeDTO();
+        for (String userName : prizeResults.keySet()) {
+            System.out.println(userName + CARD_USER_DELIMITER + String.format("%.1f", prizeResults.get(userName)));
         }
     }
 }

@@ -1,9 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.result.RewardDTO;
+import blackjack.domain.result.Rewards;
 import blackjack.domain.user.*;
-import blackjack.domain.result.UserResults;
-import blackjack.domain.result.UserResultsDTO;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -56,9 +56,8 @@ public class BlackjackController {
 
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        UserResults results = blackjackGame.getResults();
-        blackjackGame.calculatePlayersBetAmount(results);
-        OutputView.printResults(UserResultsDTO.of(results));
+        Rewards rewards = blackjackGame.getRewards();
+        OutputView.printPrize(RewardDTO.of(rewards));
     }
 
     private void giveAdditionalCardsToPlayers(Players players) {
