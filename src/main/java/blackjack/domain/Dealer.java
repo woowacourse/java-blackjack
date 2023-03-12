@@ -18,6 +18,11 @@ public class Dealer extends Participant {
 
     @Override
     public void initBetAmount(int value) {
-        betAmount.initialize(value * CONVERT_TO_DEALER_AMOUNT);
+        betAmount.initializeDealer(value * CONVERT_TO_DEALER_AMOUNT);
+    }
+
+    @Override
+    public int getBetAmount() {
+        return betAmount.getValue();
     }
 }

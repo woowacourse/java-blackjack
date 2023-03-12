@@ -36,6 +36,7 @@ public class Player extends Participant {
         betAmount.multiple(times);
     }
 
+    @Override
     public int getBetAmount() {
         return betAmount.getValue();
     }

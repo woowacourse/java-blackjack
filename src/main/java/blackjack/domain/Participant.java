@@ -25,13 +25,13 @@ public abstract class Participant {
         return ScoreState.of(playerCards.getScore(), playerCards.size());
     }
 
-    public List<String> getCardNames() {
-        return playerCards.getCardNames();
-    }
-
     public int getScore() {
         return playerCards.getScore();
     }
+
+    public abstract void initBetAmount(int value);
+
+    public abstract int getBetAmount();
 
     public List<Card> getCards() {
         return playerCards.toList();

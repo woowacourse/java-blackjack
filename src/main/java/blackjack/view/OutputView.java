@@ -1,6 +1,9 @@
 package blackjack.view;
 
-import java.util.List;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantCardsResultDto;
+import blackjack.dto.ParticipantGameResultDto;
+import blackjack.dto.PlayerNamesDto;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -14,36 +17,39 @@ public class OutputView {
     private static final String RESULT_MESSAGE = LINE_SEPARATOR + "## 최종 승패";
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %d" + LINE_SEPARATOR;
 
-    public void printInitCardsMessage(List<String> participantNames) {
-        System.out.printf(INIT_FORMAT, String.join(", ", participantNames));
+    public void printInitCardsMessage(PlayerNamesDto playerNamesDto) {
+        System.out.printf(INIT_FORMAT, String.join(", ", playerNamesDto.getNames()));
     }
 
-    public void printDealerInitCards(String name, String cardName) {
-        System.out.printf(DEALER_CARDS_FORMAT, name, cardName);
+    public void printDealerInitCards(ParticipantCardsDto participantCardsDto) {
+        System.out.printf(DEALER_CARDS_FORMAT, participantCardsDto.getName(), participantCardsDto.getCards()
+                                                                                                 .get(0));
     }
 
-    public void printPlayerCards(String name, List<String> cardNames) {
-        System.out.printf(PLAYER_CARDS_FORMAT, name, String.join(", ", cardNames));
+    public void printPlayerCards(ParticipantCardsDto participantCardsDto) {
+        System.out.printf(PLAYER_CARDS_FORMAT,
+                participantCardsDto.getName(), String.join(", ", participantCardsDto.getCards()));
     }
 
     public void printDealerState() {
         System.out.println(DEALER_HIT_MESSAGE);
     }
 
-    public void printEachParticipantCardsResult(String name, List<String> cardNames, int score) {
-        System.out.printf(CARDS_RESULT_FORMAT, name, String.join(", ", cardNames), score);
+    public void printEachParticipantCardsResult(ParticipantCardsResultDto participantCardsResultDto) {
+        System.out.printf(CARDS_RESULT_FORMAT,
+                participantCardsResultDto.getName(),
+                String.join(", ", participantCardsResultDto.getCardNames()),
+                participantCardsResultDto.getScore()
+        );
     }
 
     public void printGameResultMessage() {
         System.out.println(RESULT_MESSAGE);
     }
 
-    public void printDealerGameResult(String name, int amount) {
-        System.out.printf(PARTICIPANT_RESULT_FORMAT, name, amount);
-    }
-
-    public void printEachPlayerGameResult(String name, int amount) {
-        System.out.printf(PARTICIPANT_RESULT_FORMAT, name, amount);
+    public void printEachParticipantGameResult(ParticipantGameResultDto participantGameResultDto) {
+        System.out.printf(PARTICIPANT_RESULT_FORMAT,
+                participantGameResultDto.getName(), participantGameResultDto.getAmount());
     }
 
     public void printException(String message) {

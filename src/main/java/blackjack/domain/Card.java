@@ -12,10 +12,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public String getCardName() {
-        return this.cardNumber.getValue() + this.cardSuit.getValue();
-    }
-
     public boolean isAce() {
         return this.cardNumber.isAce();
     }

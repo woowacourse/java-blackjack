@@ -1,6 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantCardsResultDto;
+import blackjack.dto.ParticipantGameResultDto;
+import blackjack.dto.PlayerNamesDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -73,7 +77,7 @@ public class BlackjackController {
         while (player.canHit() && command.isPlay()) {
             command = getCommand(player);
             giveCard(player, blackjackGame, command);
-            outputView.printPlayerCards(player.getName(), player.getCardNames());
+            outputView.printPlayerCards(ParticipantCardsDto.from(player));
         }
     }
 
@@ -101,13 +105,12 @@ public class BlackjackController {
     }
 
     private void printInitGame(Participants participants) {
-        outputView.printInitCardsMessage(participants.getPlayerNames());
+        outputView.printInitCardsMessage(PlayerNamesDto.from(participants.getPlayers()));
 
         Dealer dealer = participants.getDealer();
-        outputView.printDealerInitCards(dealer.getName(), dealer.getCardNames()
-                                                                .get(0));
+        outputView.printDealerInitCards(ParticipantCardsDto.from(dealer));
         for (Player player : participants.getPlayers()) {
-            outputView.printPlayerCards(player.getName(), player.getCardNames());
+            outputView.printPlayerCards(ParticipantCardsDto.from(player));
         }
     }
 
@@ -118,8 +121,7 @@ public class BlackjackController {
 
     private void printCardResult(Participants participants) {
         for (Participant participant : participants.getParticipants()) {
-            outputView.printEachParticipantCardsResult(
-                    participant.getName(), participant.getCardNames(), participant.getScore());
+            outputView.printEachParticipantCardsResult(ParticipantCardsResultDto.of(participant));
         }
     }
 
@@ -127,9 +129,9 @@ public class BlackjackController {
         outputView.printGameResultMessage();
         blackjackGame.calculateBetAmount();
         Dealer dealer = participants.getDealer();
-        outputView.printDealerGameResult(dealer.getName(), blackjackGame.getDealerAmount());
+        outputView.printEachParticipantGameResult(ParticipantGameResultDto.of(dealer));
         for (Player player : participants.getPlayers()) {
-            outputView.printEachPlayerGameResult(player.getName(), player.getBetAmount());
+            outputView.printEachParticipantGameResult(ParticipantGameResultDto.of(player));
         }
     }
 }

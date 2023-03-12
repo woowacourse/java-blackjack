@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerCards {
     private static final int ACE_HANDLE_SCORE = 10;
@@ -19,12 +18,6 @@ public class PlayerCards {
 
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
-    }
-
-    public List<String> getCardNames() {
-        return cards.stream()
-                    .map(Card::getCardName)
-                    .collect(Collectors.toList());
     }
 
     public int getScore() {

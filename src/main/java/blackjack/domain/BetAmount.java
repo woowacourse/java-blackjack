@@ -16,6 +16,10 @@ public class BetAmount {
         this.value = value;
     }
 
+    public void initializeDealer(int value) {
+        this.value = value;
+    }
+
     private static void validateAmount(int value) {
         if (value < MIN_BET_AMOUNT) {
             throw new IllegalArgumentException("베팅 금액은 1,000원 이상부터 가능합니다.");
