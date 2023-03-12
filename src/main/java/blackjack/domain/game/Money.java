@@ -36,7 +36,7 @@ public final class Money {
 
     private static void validateBetUnit(final int value) {
         if (isInvalidUnit(value)) {
-            throw new IllegalArgumentException("베팅은 100 단위로 할 수 있습니다.");
+            throw new IllegalArgumentException("베팅은 " + BETTING_UNIT + " 단위로 할 수 있습니다.");
         }
     }
 
