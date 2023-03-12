@@ -92,10 +92,9 @@ public class OutputView {
             System.out.println(name + NAME_CARD_DELIMITER + cards + CARD_SCORE_DELIMITER + score);
         }
     }
-
-    public void printFinalResult(Map<NameDto, ProfitDto> betResutByName) {
+    public void printFinalResult(Map<NameDto, ProfitDto> betResultByName) {
         System.out.println(NEWLINE + FINAL_RESULT_NOTICE_MESSAGE);
-        for (Entry<NameDto, ProfitDto> betResultByNameEntry : betResutByName.entrySet()) {
+        for (Entry<NameDto, ProfitDto> betResultByNameEntry : betResultByName.entrySet()) {
             String name = betResultByNameEntry.getKey().getName();
             int profit = betResultByNameEntry.getValue().getProfit();
             System.out.println(name + VALUE_DELIMITER + profit);
