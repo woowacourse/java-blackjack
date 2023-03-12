@@ -46,7 +46,7 @@ public class UserResultsDTO {
     private static String combineResults(List<Result> results, Result resultType) {
         int resultCount = countResultSize(results, resultType);
         if (resultCount > EXISTS) {
-            return Result.WIN.getResult();
+            return resultCount + resultType.getResult();
         }
         return EMPTY_STRING;
     }

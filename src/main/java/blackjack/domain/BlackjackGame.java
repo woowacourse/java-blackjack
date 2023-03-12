@@ -17,7 +17,6 @@ public class BlackjackGame {
     public void giveInitialCardsToUsers() {
         deck.shuffleCards();
         users.giveInitialCards();
-        users.giveInitialCards();
     }
 
     public void updateCard(User user) {
