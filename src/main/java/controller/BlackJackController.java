@@ -76,8 +76,7 @@ public class BlackJackController {
         try {
             OutputView.printInputBettingMoney(playerName);
             String bettingMoney = InputView.inputBettingMoney();
-            InputValidator.validateBettingMoney(bettingMoney);
-            return new BettingMoney(Integer.parseInt(bettingMoney));
+            return new BettingMoney(bettingMoney);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             return generateBettingMoney(playerName);
