@@ -58,8 +58,4 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public int getSize() {
-        return players.size();
-    }
-
 }

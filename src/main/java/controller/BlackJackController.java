@@ -2,13 +2,13 @@ package controller;
 
 import domain.Card;
 import domain.Dealer;
+import domain.GameManager;
 import domain.GameResult;
 import domain.GameResultAmount;
 import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Result;
-import domain.GameManager;
 import dto.CardStatusDto;
 import view.Answer;
 import view.InputView;
@@ -87,7 +87,9 @@ public class BlackJackController {
     }
 
     private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant.getCards()), participant.getTotalScoreValue());
+        outputView.printCardAndScore(participant.getNameValue(),
+                getCardStatus(participant.getCards()),
+                participant.getTotalScoreValue());
     }
 
     private Map<Name, Integer> getResultOfBetting(GameManager gameManager) {
