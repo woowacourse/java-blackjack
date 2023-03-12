@@ -50,11 +50,11 @@ public class BettingManager {
     }
 
     private void saveBlackjackProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getValue() * BLACKJACK_VALUE));
+        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney() * BLACKJACK_VALUE));
     }
 
     private void saveLoseProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getValue() * LOSE_VALUE));
+        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney() * LOSE_VALUE));
     }
 
 
@@ -80,7 +80,7 @@ public class BettingManager {
     }
 
     private void saveWinProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getValue()));
+        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney()));
     }
 
     public FinalProfitDto generateFinalProfitDto() {

@@ -1,7 +1,5 @@
 package domain.profit;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
 import domain.betting.BettingMoney;
@@ -28,7 +26,7 @@ class FinalProfitByParticipantTest {
 
         // when
         FinalProfitByParticipant finalProfitByParticipant = new FinalProfitByParticipant();
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getValue()));
+        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney()));
 
         // then
         Assertions.assertThat(finalProfitByParticipant.calculateDealerFinalProfit()).isEqualTo(-10000.0);

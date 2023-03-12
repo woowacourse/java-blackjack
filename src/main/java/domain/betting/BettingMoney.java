@@ -1,7 +1,5 @@
 package domain.betting;
 
-import java.util.Collections;
-
 import util.Constants;
 
 public class BettingMoney {
@@ -38,7 +36,7 @@ public class BettingMoney {
         }
     }
 
-    public int getValue() {
+    public int getMoney() {
         return money;
     }
 }
