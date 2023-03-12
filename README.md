@@ -91,4 +91,4 @@
 - [x] `BlackjackGame`에서 사용하는 특정 유저의 카드를 찾아주는 `getter` 메서드 구현하기
 - [x] `BlackjackGame`에서 사용하는 특정 유저의 점수를 찾아주는 `getter` 메서드 구현하기
 - [x] `Map<Name, Outcome>` 일급 컬렉션화하기
-- [ ] 테스트 코드에서 `준비, 액션, 검증`에 해당하는 플로우 위에 `given, when, then` 명시해 주기
+- [x] 테스트 코드에서 `준비, 액션, 검증`에 해당하는 플로우 위에 `given, when, then` 명시해 주기

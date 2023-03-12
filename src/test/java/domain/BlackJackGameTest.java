@@ -35,8 +35,12 @@ public class BlackJackGameTest {
         @DisplayName("처음 카드를 나눠주면 플레이어의 패의 크기는 2이다.")
         @Test
         void distributeTwoCardsToPlayersTest() {
+            // given
             final int expectedCardSize = 2;
+
+            // when
             for (final Name name : names) {
+                // then
                 assertEquals(expectedCardSize, blackJackGame.getPlayerCards(name).size());
             }
         }
@@ -44,9 +48,14 @@ public class BlackJackGameTest {
         @DisplayName("처음 카드를 나눠받고 카드를 뽑으면 패의 크기는 3이다.")
         @Test
         void drawCardTest() {
+            // given
             final int expectedCardSize = 3;
+
+            //when
             for (final Name name : names) {
                 blackJackGame.drawCardPlayer(name);
+
+                //then
                 assertEquals(expectedCardSize, blackJackGame.getPlayerCards(name).size());
             }
         }
@@ -76,59 +85,68 @@ public class BlackJackGameTest {
         @DisplayName("플레이어가 블랙잭인 경우 베팅 금액의 1.5배 수익이 난다.")
         @Test
         void blackjackTest() {
+            // given
             final int blackjackOffset = 10;
             final int expectProfit = 150;
-
             for (int i = 0; i < blackjackOffset; i++) {
                 deck.popCard();
             }
 
+            // when
             final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
             final Map<Name, Integer> profits = blackJackGame.calculateProfits();
 
+            // then
             assertEquals(expectProfit, profits.get(name));
         }
 
         @DisplayName("플레이어가 이긴 경우 베팅 금액만큼 수익이 난다.")
         @Test
         void winTest() {
+            // given
             final int winOffset = 11;
             final int expectProfit = 100;
-
             for (int i = 0; i < winOffset; i++) {
                 deck.popCard();
             }
 
+            // when
             final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
             final Map<Name, Integer> profits = blackJackGame.calculateProfits();
 
+            // then
             assertEquals(expectProfit, profits.get(name));
         }
 
         @DisplayName("플레이어가 비긴 경우 수익이 0이다.")
         @Test
         void drawTest() {
+            // given
             final int expectProfit = 0;
 
+            // when
             final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
             final Map<Name, Integer> profits = blackJackGame.calculateProfits();
 
+            // then
             assertEquals(expectProfit, profits.get(name));
         }
 
         @DisplayName("플레이어가 진 경우 베팅 금액만큼 손실이 난다.")
         @Test
         void loseTest() {
+            // given
             final int loseOffset = 2;
             final int expectProfit = -100;
-
             for (int i = 0; i < loseOffset; i++) {
                 deck.popCard();
             }
 
+            // when
             final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
             final Map<Name, Integer> profits = blackJackGame.calculateProfits();
 
+            // then
             assertEquals(expectProfit, profits.get(name));
         }
     }

@@ -17,12 +17,15 @@ public class PlayerTest {
     @DisplayName("플레이어가 처음 카드를 뽑으면 패의 크기는 1이다.")
     @Test
     void drawTest() {
+        // given
         final Name name = new Name("test");
         final Amount amount = new Amount(100_000);
         final Player player = new Player(name, amount);
 
-        Assertions.assertEquals(0, player.cards().size());
+        // when
         player.drawCard(deck.popCard());
+
+        // then
         Assertions.assertEquals(1, player.cards().size());
     }
 }

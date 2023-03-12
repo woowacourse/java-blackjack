@@ -37,12 +37,16 @@ class PlayersTest {
     @DisplayName("플레이어와 딜러 모두 블랙잭일 경우 플레이어는 무승부다.")
     @Test
     void allBlackjackTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.ACE));
         player.drawCard(new Card(Suit.DIAMOND, Rank.TEN));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.ACE));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.DRAW);
     }
@@ -50,12 +54,16 @@ class PlayersTest {
     @DisplayName("플레이어만 블랙잭일 경우 플레이어는 블랙잭이다.")
     @Test
     void playerBlackjackTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.ACE));
         player.drawCard(new Card(Suit.DIAMOND, Rank.TEN));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.QUEEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.BLACKJACK);
     }
@@ -63,12 +71,16 @@ class PlayersTest {
     @DisplayName("딜러만 블랙잭일 경우 플레이어는 패배이다.")
     @Test
     void dealerBlackjackTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.ACE));
         player.drawCard(new Card(Suit.DIAMOND, Rank.ACE));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.ACE));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -76,6 +88,7 @@ class PlayersTest {
     @DisplayName("딜러와 플레이어 모두 버스트일 경우 플레이어의 패배이다.")
     @Test
     void allBurstTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.NINE));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
@@ -83,7 +96,10 @@ class PlayersTest {
         dealer.drawCard(new Card(Suit.HEART, Rank.FIVE));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -91,13 +107,17 @@ class PlayersTest {
     @DisplayName("플레이어만 버스트일 경우 플레이어의 패배이다.")
     @Test
     void playerBurstTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.NINE));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -105,13 +125,17 @@ class PlayersTest {
     @DisplayName("딜러만 버스트일 경우 플레이어의 승리이다.")
     @Test
     void dealerBurstTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.FIVE));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        //then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.WIN);
     }
@@ -119,12 +143,16 @@ class PlayersTest {
     @DisplayName("둘 다 버스트가 아니고 플레이어의 점수가 더 높을 경우 플레이어의 승리이다.")
     @Test
     void playerWinTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.SEVEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.WIN);
     }
@@ -132,12 +160,16 @@ class PlayersTest {
     @DisplayName("둘 다 버스트가 아니고 딜러의 점수가 더 높을 경우 플레이어의 패배이다.")
     @Test
     void playerLoseTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.QUEEN));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.LOSE);
     }
@@ -145,12 +177,16 @@ class PlayersTest {
     @DisplayName("둘 다 버스트가 아니고 딜러와 플레이어의 점수가 같을 경우 무승부이다.")
     @Test
     void playerDrawTest() {
+        // given
         player.drawCard(new Card(Suit.CLOVER, Rank.TEN));
         player.drawCard(new Card(Suit.DIAMOND, Rank.EIGHT));
         dealer.drawCard(new Card(Suit.SPADE, Rank.KING));
         dealer.drawCard(new Card(Suit.HEART, Rank.EIGHT));
 
+        // when
         final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+
+        // then
         Assertions.assertThat(outcomes.getOutcome(name))
                 .isEqualTo(Outcome.DRAW);
     }

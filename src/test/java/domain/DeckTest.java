@@ -14,11 +14,15 @@ public class DeckTest {
     @DisplayName("덱의 최대 카드 반환 가능 수는 52번이다.")
     @Test
     void generateCardsTest() {
+        // given
         final int expectedDeckSize = 52;
 
+        //  when
         for (int i = 0; i < expectedDeckSize; i++) {
             deck.popCard();
         }
+
+        // then
         assertThrows(NoSuchElementException.class, deck::popCard);
     }
 }

@@ -22,24 +22,30 @@ public class DealerTest {
     @DisplayName("딜러의 점수가 16이하이면 더 뽑아야 한다.")
     @Test
     void shouldDealerDrawTest() {
-        Card firstCard = new Card(Suit.CLOVER, Rank.FOUR);
-        Card secondCard = new Card(Suit.CLOVER, Rank.KING);
+        // given
+        final Card firstCard = new Card(Suit.CLOVER, Rank.FOUR);
+        final Card secondCard = new Card(Suit.CLOVER, Rank.KING);
 
+        // when
         dealer.drawCard(firstCard);
         dealer.drawCard(secondCard);
 
+        // then
         assertTrue(dealer.isDealerDraw());
     }
 
     @DisplayName("딜러의 점수가 17이상이면 더 뽑으면 안된다.")
     @Test
     void shouldNotDealerDrawTest() {
-        Card firstCard = new Card(Suit.CLOVER, Rank.ACE);
-        Card secondCard = new Card(Suit.CLOVER, Rank.KING);
+        // given
+        final Card firstCard = new Card(Suit.CLOVER, Rank.ACE);
+        final Card secondCard = new Card(Suit.CLOVER, Rank.KING);
 
+        // when
         dealer.drawCard(firstCard);
         dealer.drawCard(secondCard);
 
+        // then
         assertFalse(dealer.isDealerDraw());
     }
 }
