@@ -2,10 +2,9 @@ package domain.player;
 
 import domain.deck.Card;
 import domain.game.Outcome;
+import domain.game.Outcomes;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Players {
     private static final int BLACKJACK_NUMBER = 21;
@@ -59,11 +58,11 @@ public class Players {
         getPlayer(name).drawCard(card);
     }
 
-    public Map<Name, Outcome> judgePlayersOutcome(final Dealer dealer) {
-        final Map<Name, Outcome> outcomes = new LinkedHashMap<>();
+    public Outcomes judgePlayersOutcome(final Dealer dealer) {
+        final Outcomes outcomes = new Outcomes();
 
         for (final Player player : players) {
-            outcomes.put(player.getName(), decideOutcome(dealer, player));
+            outcomes.addOutcome(player.getName(), decideOutcome(dealer, player));
         }
 
         return outcomes;

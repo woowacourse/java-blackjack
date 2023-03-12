@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class BlackJackGame {
     private static final int DEFAULT_DEALER_PROFIT = 0;
-    private static final double BLACKJACK_PROFIT_WEIGHT = 1.5;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -28,15 +27,15 @@ public class BlackJackGame {
 
     private static int calculateProfit(final Outcome outcome, final int amount) {
         if (outcome == Outcome.BLACKJACK) {
-            return (int) (amount * BLACKJACK_PROFIT_WEIGHT);
+            return (int) (amount * Outcome.BLACKJACK.profitRate());
         }
-        if (outcome == Outcome.DRAW) {
-            return 0;
+        if (outcome == Outcome.WIN) {
+            return (int) (amount * Outcome.WIN.profitRate());
         }
         if (outcome == Outcome.LOSE) {
-            return -amount;
+            return (int) (amount * Outcome.LOSE.profitRate());
         }
-        return amount;
+        return (int) (amount * Outcome.DRAW.profitRate());
     }
 
     private void distributeTwoCards() {
@@ -79,13 +78,13 @@ public class BlackJackGame {
 
     public Map<Name, Integer> calculateProfits() {
 
-        final Map<Name, Outcome> outcomes = players.judgePlayersOutcome(dealer);
+        final Outcomes outcomes = players.judgePlayersOutcome(dealer);
         final Map<Name, Integer> profits = new LinkedHashMap<>();
         final Name dealerName = dealer.getName();
 
         profits.put(dealerName, DEFAULT_DEALER_PROFIT);
         for (final Player player : players.getPlayers()) {
-            final int profit = calculateProfit(outcomes.get(player.getName()), player.amount());
+            final int profit = calculateProfit(outcomes.getOutcome(player.getName()), player.amount());
             profits.put(dealerName, profits.get(dealerName) - profit);
             profits.put(player.getName(), profit);
         }
