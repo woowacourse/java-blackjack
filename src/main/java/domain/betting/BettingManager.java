@@ -11,9 +11,6 @@ import domain.profit.FinalProfitDto;
 
 public class BettingManager {
 
-    private static final int LOSE_VALUE = -1;
-    private static final double BLACKJACK_VALUE = 1.5;
-
     private final BettingMoneyByPlayer bettingMoneyByPlayer;
     private final FinalProfitByParticipant finalProfitByParticipant;
 
@@ -33,54 +30,14 @@ public class BettingManager {
     }
 
     private void calculatePlayerFinalProfit(Player player, Dealer dealer) {
-        Hand playerHand = player.getHand();
+        Hand dealerHand = dealer.getHand();
         BettingMoney bettingMoney = bettingMoneyByPlayer.findBettingMoneyByPlayer(player);
-        if (dealer.isBlackjack()) {
-            saveLoseProfit(player, bettingMoney);
-        }
-        if (playerHand.isBlackjack()) {
-            saveBlackjackProfit(player, bettingMoney);
-        }
-        if (playerHand.isBust()) {
-            saveLoseProfit(player, bettingMoney);
-        }
-        if (playerHand.isStay()) {
-            saveProfitWhenPlayerStay(player, dealer, bettingMoney);
-        }
+        PlayerBettingResult playerBettingResult = player.calculateBettingResult(dealerHand);
+        saveProfit(player, bettingMoney, playerBettingResult);
     }
 
-    private void saveBlackjackProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney() * BLACKJACK_VALUE));
-    }
-
-    private void saveLoseProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney() * LOSE_VALUE));
-    }
-
-
-    private void saveProfitWhenPlayerStay(Player player, Dealer dealer, BettingMoney bettingMoney) {
-        Hand dealerHand = dealer.getHand();
-        if (dealerHand.isBust()) {
-            saveWinProfit(player, bettingMoney);
-        }
-        if (dealerHand.isStay()) {
-            compareCardValueSum(player, dealer, bettingMoney);
-        }
-    }
-
-    private void compareCardValueSum(Player player, Dealer dealer, BettingMoney bettingMoney) {
-        Hand playerHand = player.getHand();
-        Hand dealerHand = dealer.getHand();
-        if (dealerHand.calculateOptimalCardValueSum() > playerHand.calculateOptimalCardValueSum()) {
-            saveLoseProfit(player, bettingMoney);
-        }
-        if (dealerHand.calculateOptimalCardValueSum() <= playerHand.calculateOptimalCardValueSum()) {
-            saveWinProfit(player, bettingMoney);
-        }
-    }
-
-    private void saveWinProfit(Player player, BettingMoney bettingMoney) {
-        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(bettingMoney.getMoney()));
+    private void saveProfit(Player player, BettingMoney bettingMoney, PlayerBettingResult playerBettingResult) {
+        finalProfitByParticipant.putParticipantFinalProfit(player, new FinalProfit(playerBettingResult.calculateFinalProfit(bettingMoney.getMoney())));
     }
 
     public FinalProfitDto generateFinalProfitDto() {
