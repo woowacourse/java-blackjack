@@ -45,11 +45,9 @@ public final class GameController {
     }
 
     private void betMoney(final BlackjackGame blackjackGame) {
-        Bank bank = blackjackGame.getDealer().getBank();
-
         for (Player player : blackjackGame.getPlayers().getPlayers()) {
             int bettingMoney = inputView.readBettingMoney(player);
-            bank.betMoney(player, new Money(bettingMoney));
+            blackjackGame.saveBettingMoney(player, new Money(bettingMoney));
         }
     }
 
