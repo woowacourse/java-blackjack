@@ -11,7 +11,7 @@ class BetAmountTest {
 
     @ParameterizedTest
     @DisplayName("베팅 금액이 양의 정수가 아니면 예외처리한다.")
-    @ValueSource(ints = {0, -10, -9999999})
+    @ValueSource(ints = {0, -10, Integer.MIN_VALUE})
     void validate_not_positive_amount(int input) {
         assertThatThrownBy(() -> new BetAmount(input)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유효한 금액이 아닙니다. 베팅 금액은 양의 정수여야 합니다.");
