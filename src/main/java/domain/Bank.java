@@ -38,8 +38,12 @@ public class Bank {
     }
 
     private void deposit(User user, Money money) {
-        Money deposit = getDepositOf(user).add(money);
-        deposits.put(user, deposit);
+        Money deposit = getDepositOf(user);
+        if (deposit.equals(Money.ZERO)) {
+            deposits.put(user, money);
+            return;
+        }
+        deposits.put(user, deposit.add(money));
     }
 
     private void clearDepositOf(User user) {
