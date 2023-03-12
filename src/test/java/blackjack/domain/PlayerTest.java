@@ -19,7 +19,8 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("IO", new ArrayList<>(List.of(Card.of(Suit.DIAMOND, Letter.EIGHT), Card.of(Suit.HEART, Letter.JACK))));
+        player = new Player("IO", "3000",
+                new ArrayList<>(List.of(Card.of(Suit.DIAMOND, Letter.EIGHT), Card.of(Suit.HEART, Letter.JACK))));
     }
 
     @Test

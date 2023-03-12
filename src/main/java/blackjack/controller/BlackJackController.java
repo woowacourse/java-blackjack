@@ -9,6 +9,9 @@ import blackjack.view.DrawIntention;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlackJackController {
     public static final int CARD_COUNT = 2;
 
@@ -35,7 +38,13 @@ public class BlackJackController {
 
     private Players generatePlayers(final Deck deck) {
         outputView.printRequestPlayerNames();
-        return Players.of(inputView.readPlayerNames(), deck);
+        List<String> playerNames = inputView.readPlayerNames();
+        List<String> bettingMoneys = new ArrayList<>();
+        for (String playerName : playerNames){
+            outputView.printRequestBettingMoney(playerName);
+            bettingMoneys.add(inputView.readBettingMoney());
+        }
+        return Players.of(playerNames, bettingMoneys, deck);
     }
 
     private void playGame(final Deck deck, final Dealer dealer, final Players players) {

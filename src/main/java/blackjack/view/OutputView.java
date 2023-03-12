@@ -105,4 +105,8 @@ public class OutputView {
     public void printErrorMessage(String errorMessage) {
         System.out.println(ERROR + errorMessage);
     }
+
+    public void printRequestBettingMoney(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+    }
 }

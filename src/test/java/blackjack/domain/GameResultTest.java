@@ -27,7 +27,8 @@ class GameResultTest {
         dealer = new Dealer(new ArrayList<>(List.of(Card.of(Suit.HEART, Letter.JACK), Card.of(Suit.SPADE, Letter.EIGHT))));
         dealer.isAbleToReceive();
 
-        player = new Player("pobi", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.FOUR), Card.of(Suit.DIAMOND, Letter.SIX))));
+        player = new Player("pobi", "3000",
+                new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.FOUR), Card.of(Suit.DIAMOND, Letter.SIX))));
         player.isAbleToReceive();
         players = new ArrayList<>();
         players.add(player);
@@ -110,8 +111,10 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인 : 플레이어 여러명일 때")
     void multiPlayer() {
-        Player player2 = new Player("jena", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.ACE), Card.of(Suit.DIAMOND, Letter.SEVEN))));
-        Player player3 = new Player("io", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.KING))));
+        Player player2 = new Player("jena", "3000",
+                new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.ACE), Card.of(Suit.DIAMOND, Letter.SEVEN))));
+        Player player3 = new Player("io", "3000",
+                new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.KING))));
 
         List<Player> players = new ArrayList<>();
         players.add(player);

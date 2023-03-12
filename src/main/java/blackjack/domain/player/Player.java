@@ -8,10 +8,12 @@ public class Player extends Participant {
     private static final int MAX_SCORE_TO_RECEIVE = 21;
 
     private final Name name;
+    private final BettingMoney bettingMoney;
 
-    public Player(String name, List<Card> cards) {
+    public Player(String name, String bettingMoney, List<Card> cards) {
         super(cards);
         this.name = new Name(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     @Override

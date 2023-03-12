@@ -27,4 +27,8 @@ public class InputView {
     public String readPlayerIntention() {
         return scanner.nextLine();
     }
+
+    public String readBettingMoney() {
+        return scanner.nextLine();
+    }
 }
