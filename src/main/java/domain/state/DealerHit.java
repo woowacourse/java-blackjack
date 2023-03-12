@@ -17,9 +17,9 @@ public final class DealerHit extends Running {
     public State draw(Card card) {
         final Hand newHand = getHand().add(card);
 
-        if(newHand.isDealerHit())
+        if (newHand.isDealerHit())
             return new DealerHit(newHand);
-        if(newHand.isBust())
+        if (newHand.isBust())
             return new Bust(newHand);
         return new Stay(newHand);
     }
