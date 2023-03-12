@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import blackjack.model.participant.BetAmount;
 import org.junit.jupiter.api.DisplayName;
