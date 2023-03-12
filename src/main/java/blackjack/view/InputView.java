@@ -19,10 +19,10 @@ public class InputView {
     }
 
     public boolean readCommand(final User user) {
-        System.out.println(
+        System.out.println(System.lineSeparator() +
                 user.getName() + "는 한장의 카드를 더 받겠습니까?"
-                        + "(예는 " + Command.YES.value()
-                        + "아니오는 " + Command.NO.value() + ")");
+                + "(예는 " + Command.YES.value()
+                + "아니오는 " + Command.NO.value() + ")");
 
         final String input = scanner.nextLine();
         Command command = Command.from(input);

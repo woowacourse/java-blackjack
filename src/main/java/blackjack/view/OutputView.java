@@ -4,34 +4,25 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.game.ScoreBoard;
+import blackjack.domain.game.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
-import blackjack.domain.user.name.UserName;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printUsersCard(final Dealer dealer, final Players players) {
+    public void printCardInitDrawResultMessage(final Players players, final Dealer dealer) {
         final List<String> playerNames = extractPlayerNames(players);
-        final String dealerName = dealer.getName().getName();
+        final String dealerName = dealer.getName();
 
         System.out.println(dealerName + "와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
-
-        printUserCards(dealer);
-        System.out.println();
-        players.getPlayers().forEach(player -> {
-            printUserCards(player);
-            System.out.println();
-        });
     }
 
-    public void printUserCards(final User user) {
-        System.out.print(user.getName().getName() + "카드: " + getCards(user.showCards()));
+    public void printUserCards(final String name, final List<Card> cards) {
+        System.out.print(System.lineSeparator() + name + "카드: " + getCards(cards));
     }
 
     private String getCards(final List<Card> cards) {
@@ -49,7 +40,6 @@ public class OutputView {
     private static List<String> extractPlayerNames(final Players players) {
         return players.getPlayers().stream()
                 .map(Player::getName)
-                .map(UserName::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -57,34 +47,34 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardResult(ScoreBoard scoreBoard) {
-        System.out.println();
-        scoreBoard.getParticipants().forEach(user -> {
-            printUserCards(user);
-            System.out.println(" - 결과: " + scoreBoard.get(user.getName()));
-        });
-        System.out.println();
+
+    public void printCardResult(final User user) {
+        printUserCards(user.getName(), user.getCards());
+        System.out.println(" - 결과: " + user.getScore().score());
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerScore,
-                                final Map<UserName, GameResult> playerScore) {
+    public void introduceGameResult() {
         System.out.println("## 최종 승패");
+    }
+
+    public void printGameResult(final User user, final Result result) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (final GameResult score : dealerScore.keySet()) {
-            final Integer count = dealerScore.get(score);
+
+        for (final GameResult score : result.getResult().keySet()) {
+            final Integer count = result.getResult().get(score);
             stackResult(stringBuilder, score, count);
         }
 
-        System.out.println("딜러: " + stringBuilder);
-
-        playerScore.keySet().forEach(userName -> {
-            System.out.println(userName.getName() + ": " + playerScore.get(userName).getView());
-        });
+        System.out.println(user.getName() + ": " + stringBuilder);
     }
 
     private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {
         if (count != 0) {
             stringBuilder.append(count).append(score.getView()).append(" ");
         }
+    }
+
+    public static void printBust() {
+        System.out.println(System.lineSeparator() + "BUST 되었습니다.");
     }
 }
