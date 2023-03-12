@@ -8,7 +8,7 @@ import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Result;
-import domain.BlackJacService;
+import domain.GameManager;
 import dto.CardStatusDto;
 import view.Answer;
 import view.InputView;
@@ -29,15 +29,15 @@ public class BlackJackController {
     }
 
     public void run() {
-        BlackJacService blackJacService = new BlackJacService(inputView.requestPlayerName());
-        getBettingAmountOfPlayers(blackJacService);
-        printInitialDistribution(blackJacService);
-        progress(blackJacService);
-        end(blackJacService);
+        GameManager gameManager = new GameManager(inputView.requestPlayerName());
+        getBettingAmountOfPlayers(gameManager);
+        printInitialDistribution(gameManager);
+        progress(gameManager);
+        end(gameManager);
     }
 
-    private void getBettingAmountOfPlayers(BlackJacService blackJacService) {
-        for (Player player : blackJacService.getPlayers()) {
+    private void getBettingAmountOfPlayers(GameManager gameManager) {
+        for (Player player : gameManager.getPlayers()) {
             player.betAmount(getBettingAmount(player));
         }
     }
@@ -46,52 +46,52 @@ public class BlackJackController {
         return inputView.requestBettingAmount(player.getNameValue());
     }
 
-    private void printInitialDistribution(BlackJacService blackJacService) {
-        outputView.printFirstCardDistribution(blackJacService.getDealerName(), blackJacService.getPlayerNames());
-        outputView.printCardStatus(blackJacService.getDealerName(), getCardStatus(blackJacService.showOneCardOfDealerCards()));
-        for (Player player : blackJacService.getPlayers()) {
+    private void printInitialDistribution(GameManager gameManager) {
+        outputView.printFirstCardDistribution(gameManager.getDealerName(), gameManager.getPlayerNames());
+        outputView.printCardStatus(gameManager.getDealerName(), getCardStatus(gameManager.showOneCardOfDealerCards()));
+        for (Player player : gameManager.getPlayers()) {
             outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
         }
     }
 
-    private void progress(BlackJacService blackJacService) {
-        for (Player player : blackJacService.getPlayers()) {
-            requestPlayerMoreCard(blackJacService, player);
+    private void progress(GameManager gameManager) {
+        for (Player player : gameManager.getPlayers()) {
+            requestPlayerMoreCard(gameManager, player);
         }
 
-        blackJacService.drawUntilDealerNoMoreCard();
-        outputView.printDealerMoreCard(blackJacService.getDealerName(), blackJacService.getDealerMoreCardCount());
+        gameManager.drawUntilDealerNoMoreCard();
+        outputView.printDealerMoreCard(gameManager.getDealerName(), gameManager.getDealerMoreCardCount());
     }
 
-    private void requestPlayerMoreCard(BlackJacService blackJacService, Player player) {
+    private void requestPlayerMoreCard(GameManager gameManager, Player player) {
         Answer isCardRequested = Answer.MORE_CARD;
 
         while (player.isMoreCardAble() && isCardRequested.isMoreCard()) {
             isCardRequested = Answer.from(inputView.askMoreCard(player.getNameValue()));
-            proceedOnce(blackJacService, player, isCardRequested);
+            proceedOnce(gameManager, player, isCardRequested);
         }
     }
 
-    private void proceedOnce(BlackJacService blackJacService, Player player, Answer answer) {
+    private void proceedOnce(GameManager gameManager, Player player, Answer answer) {
         if (answer.isMoreCard()) {
-            blackJacService.distributeCardToPlayer(player);
+            gameManager.distributeCardToPlayer(player);
         }
 
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
     }
 
-    private void end(BlackJacService blackJacService) {
-        printFinalCard(blackJacService.getDealer());
-        blackJacService.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(getResultOfBetting(blackJacService));
+    private void end(GameManager gameManager) {
+        printFinalCard(gameManager.getDealer());
+        gameManager.getPlayers().forEach(this::printFinalCard);
+        outputView.printFinalResult(getResultOfBetting(gameManager));
     }
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant.getCards()), participant.getTotalScoreValue());
     }
 
-    private Map<Name, Integer> getResultOfBetting(BlackJacService blackJacService) {
-        return new GameResultAmount(getResult(blackJacService.getDealer(), blackJacService.getPlayers()))
+    private Map<Name, Integer> getResultOfBetting(GameManager gameManager) {
+        return new GameResultAmount(getResult(gameManager.getDealer(), gameManager.getPlayers()))
                 .getResultOfBetting();
     }
 

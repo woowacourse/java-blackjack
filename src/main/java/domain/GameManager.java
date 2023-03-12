@@ -5,14 +5,14 @@ import util.CardsMaker;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJacService {
+public class GameManager {
 
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final CardDistributor cardDistributor;
     private final Participants participants;
 
-    public BlackJacService(List<String> playerNames) {
+    public GameManager(List<String> playerNames) {
         cardDistributor = new CardDistributor(CardsMaker.generate());
         participants = Participants.of(playerNames, cardDistributor);
     }
