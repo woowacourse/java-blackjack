@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.user.name.UserName;
 import blackjack.domain.util.NoviceShuffleStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -19,7 +18,7 @@ class UserTest {
     void 유저는_카드팩에서_카드를_뽑는다() {
 
         // given
-        User user = new User(new UserName("주노"));
+        User user = new Player("주노");
         CardPack cardPack = new CardPack();
         cardPack.shuffle(new NoviceShuffleStrategy());
 
@@ -27,7 +26,7 @@ class UserTest {
         user.drawCard(cardPack);
 
         // then
-        List<Card> userCards = user.showCards();
+        List<Card> userCards = user.getCards();
         Assertions.assertThat(userCards.get(0))
                 .isEqualTo(new Card(CardNumber.ACE, CardShape.SPADE));
     }
