@@ -115,7 +115,7 @@ public class BlackJackGameTest {
 
     @Test
     @DisplayName("플레이어의 수익을 계산한다.")
-    void calculateProfit() {
+    void calculatePlayerProfit() {
         BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
         List<Player> players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
@@ -124,7 +124,7 @@ public class BlackJackGameTest {
         Player bada = players.get(2);
 
         setCards(dealer, gray, luca, bada);
-        Map<String, Integer> result = blackJackGame.calculatePlayerProfit();
+        Map<String, Integer> result = blackJackGame.calculatePlayersProfit();
 
         Assertions.assertAll(
                 () -> assertThat(result).containsEntry(gray.getName(), 15000),
@@ -133,9 +133,56 @@ public class BlackJackGameTest {
         );
     }
 
+    @Test
+    @DisplayName("딜러가 처음에 블랙잭인 경우, 플레이어의 수익을 계산한다.")
+    void calculateProfitWhenDealerBlackJack() {
+        BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
+        List<Player> players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
+        Player gray = players.get(0);
+        Player luca = players.get(1);
+        Player bada = players.get(2);
+
+        setDealCardBlackJack(dealer, gray, luca, bada);
+        Map<String, Integer> result = blackJackGame.calculatePlayersProfit();
+
+        Assertions.assertAll(
+                () -> assertThat(result).containsEntry(gray.getName(), 0),
+                () -> assertThat(result).containsEntry(luca.getName(), -10000),
+                () -> assertThat(result).containsEntry(bada.getName(), -10000)
+        );
+    }
+
+    @Test
+    @DisplayName("딜러의 수익을 계산한다.")
+    void calculateDealerProfit() {
+        BlackJackGame blackJackGame = BlackJackGame.create(players, bettingTable);
+        List<Player> players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
+        Player gray = players.get(0);
+        Player luca = players.get(1);
+        Player bada = players.get(2);
+
+        setCards(dealer, gray, luca, bada);
+        int dealerProfit = blackJackGame.calculateDealerProfit();
+
+        assertThat(dealerProfit).isEqualTo(-5000);
+    }
+
     private void setCards(Dealer dealer, Player gray, Player luca, Player bada) {
         dealer.addCard(new Card(Suit.HEART, Denomination.TEN));
         dealer.addCard(new Card(Suit.HEART, Denomination.SEVEN));
+        gray.addCard(new Card(Suit.SPADE, Denomination.ACE));
+        gray.addCard(new Card(Suit.SPADE, Denomination.TEN));
+        luca.addCard(new Card(Suit.DIAMOND, Denomination.SIX));
+        luca.addCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        bada.addCard(new Card(Suit.HEART, Denomination.TEN));
+        bada.addCard(new Card(Suit.HEART, Denomination.SEVEN));
+    }
+
+    private void setDealCardBlackJack(Dealer dealer, Player gray, Player luca, Player bada) {
+        dealer.addCard(new Card(Suit.HEART, Denomination.TEN));
+        dealer.addCard(new Card(Suit.HEART, Denomination.ACE));
         gray.addCard(new Card(Suit.SPADE, Denomination.ACE));
         gray.addCard(new Card(Suit.SPADE, Denomination.TEN));
         luca.addCard(new Card(Suit.DIAMOND, Denomination.SIX));
