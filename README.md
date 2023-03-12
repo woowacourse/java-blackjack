@@ -22,8 +22,7 @@ flowchart TD
         Card --> Rank
         Card --> Shape
         Cards --> Card
-        Hand -- 사용자의 패 --> Cards
-        Hand -- 핸드의 상태 --> State
+        Hand --> Cards
     end
     
     Players --> 플레이어 --> Hand
@@ -33,6 +32,21 @@ flowchart TD
         Gambler -.-> Player
         Dealer -.-> Player
     end
+```
+
+```mermaid
+---
+title: Hand 상태
+---
+flowchart BT
+    AbstractHand -.-> Hand
+    Running --> AbstractHand
+    Finished --> AbstractHand
+    Hit --> Running
+    Blackjack --> Finished
+    Bust --> Finished
+    Stay --> Finished
+    
 ```
 
 ### 블랙잭 게임 개요
