@@ -20,15 +20,13 @@ public class RandomCardGenerator implements CardGenerator {
 
     static {
         Arrays.stream(Denomination.values())
-            .forEach(
-                letter -> Arrays.stream(Suit.values())
-                    .map(suit -> new Card(suit, letter))
-                    .forEach(CARDS::add));
+            .forEach(letter -> Arrays.stream(Suit.values())
+                .map(suit -> new Card(suit, letter))
+                .forEach(CARDS::add));
     }
 
     @Override
     public Card generate() {
         return CARDS.poll();
     }
-
 }
