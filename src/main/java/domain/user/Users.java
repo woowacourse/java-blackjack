@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static domain.Referee.getResult;
-import static domain.RewardCalculator.calculate;
 
 public class Users {
     private final List<Player> players;
@@ -30,21 +29,18 @@ public class Users {
         return getResult(user, dealer);
     }
 
-    public Money getDealerMoney() {
+    public Money getDealerProfit() {
         Money money = Money.zero();
 
         for (Player player : players) {
-            money = money.add(getPlayerMoney(player));
+            money = money.add(calculateProfit(player));
         }
 
         return money.multiply(-1);
     }
 
-    private Money getPlayerMoney(Player player) {
-        Result result = getUserResult(player);
-        Money money = player.getMoney();
-
-        return calculate(result, money);
+    public Money calculateProfit(Player player) {
+        return player.calculateProfit(getUserResult(player));
     }
 
     public List<Player> players() {

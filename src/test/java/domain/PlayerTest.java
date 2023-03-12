@@ -9,6 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 
+import static domain.Result.DRAW;
+import static domain.Result.LOSE;
+import static domain.Result.WIN;
+import static domain.Result.WIN_BY_BLACKJACK;
 import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.Assistant.addCards;
@@ -69,5 +73,33 @@ class PlayerTest {
         player.updateStatusToStay(isYes);
 
         assertThat(player.status()).isEqualTo(status);
+    }
+
+    @Test
+    @DisplayName("승리하면 배팅한 금액만큼 돈을 얻는다.")
+    void test_calculate_win() {
+        assertThat(player.calculateProfit(WIN))
+                .isEqualTo(player.getMoney());
+    }
+
+    @Test
+    @DisplayName("블랙잭으로 승리하면 배팅한 금액의 1.5배만큼 돈을 얻는다.")
+    void test_calculate_win_by_blackjack() {
+        assertThat(player.calculateProfit(WIN_BY_BLACKJACK))
+                .isEqualTo(player.getMoney().multiply(1.5));
+    }
+
+    @Test
+    @DisplayName("무승부면 돈을 잃지도 얻지도 않는다.")
+    void test_calculate_draw() {
+        assertThat(player.calculateProfit(DRAW))
+                .isEqualTo(Money.zero());
+    }
+
+    @Test
+    @DisplayName("패배하면 배팅한 금액만큼 돈을 잃는다.")
+    void test_calculate_lose() {
+        assertThat(player.calculateProfit(LOSE))
+                .isEqualTo(player.getMoney().multiply(-1));
     }
 }

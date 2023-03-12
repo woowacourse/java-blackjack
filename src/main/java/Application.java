@@ -4,13 +4,10 @@ import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
-import view.InputView;
-import view.OutputView;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static domain.RewardCalculator.calculate;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
     private static final InputView inputView = new InputView();
@@ -95,11 +92,11 @@ public class Application {
 
     private static void printFinalProfit(Users users) {
         outputView.printResultNotice();
-        outputView.printDealerResults(users.getDealerMoney());
+        outputView.printDealerResults(users.getDealerProfit());
 
         for (Player player : users.players()) {
             String name = player.getName();
-            Money money = calculate(users.getUserResult(player), player.getMoney());
+            Money money = users.calculateProfit(player);
             outputView.printResult(name, money);
         }
     }

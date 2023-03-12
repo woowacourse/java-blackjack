@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.Money;
+import domain.Result;
 import domain.card.Card;
 import domain.card.Hand;
 
@@ -21,6 +22,11 @@ public class Player extends User {
         super(new Hand(cards));
         this.name = name;
         this.money = bettingAmount;
+    }
+
+    public Money calculateProfit(Result result) {
+        double times = result.times();
+        return money.multiply(times);
     }
 
     @Override
