@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+
+    private static final String regex = "[0-9]+";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -42,4 +44,19 @@ public class InputView {
     public static void closeScanner() {
         scanner.close();
     }
+
+    public static int readBetAmount(String playerName) {
+        System.out.println(playerName + "의 베팅 금액은?");
+        String input = scanner.nextLine();
+        validateBlank(input);
+        validateNumeric(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateNumeric(String input) {
+        if (!input.matches(regex)) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+
 }

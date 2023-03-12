@@ -18,9 +18,16 @@ public class BlackjackController {
         ready(generatePlayers());
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
+        setBetAmount(players);
         printNewCards(players, dealer);
         giveAdditionalCards(players, dealer);
         printFinalResults(dealer, players);
+    }
+
+    private void setBetAmount(Players players) {
+        for (Player player : players.getPlayers()) {
+            player.setBetAmount(InputView.readBetAmount(player.getPlayerName()));
+        }
     }
 
     private void ready(Players players) {
@@ -69,7 +76,7 @@ public class BlackjackController {
     }
 
     private void giveAdditionalCard(String answer, Player player) {
-        while (GameCommand.isContinue(answer) && player.isBust()) {
+        while (GameCommand.isContinue(answer) && !player.isBust()) {
             blackjackGame.updateCard(player);
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
