@@ -91,12 +91,12 @@ public class BlackjackController {
     private void printPlayerGameResult(final BlackjackGame blackjackGame) {
         final List<Player> players = blackjackGame.getPlayers();
         for (final Player player : players) {
-            outputView.printPlayerGameResult(player);
+            outputView.printPlayerCardAndScores(player);
         }
     }
 
     private void printPlayerProfit(final BlackjackGame blackjackGame) {
-        final Map<Player, Money> betMoneyMap = blackjackGame.calculateBettingProfit();
-        outputView.printGameResult(betMoneyMap);
+        final Map<Player, Money> profitByPlayers = blackjackGame.calculateBettingProfit();
+        outputView.printPlayerProfits(profitByPlayers);
     }
 }

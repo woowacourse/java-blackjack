@@ -20,14 +20,14 @@ public class OutputView {
     private static final String PLAYER_SCORE_MESSAGE_FORMAT = " - 결과: %d";
     private static final String ERROR_MESSAGE = "[ERROR] ";
     private static final String DEALER_DRAW_MESSAGE = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String GAME_RESULT_MESSAGE = NEW_LINE + "##최종 수익";
-    private static final String GAME_RESULT_PLAYER_MESSAGE_FORMAT = "%s: %s";
-    private static final String GAME_RESULT_DEALER_MESSAGE_FORMAT = "딜러: %d";
+    private static final String GAME_PROFIT_TITLE = NEW_LINE + "##최종 수익";
+    private static final String GAME_GAMBLER_PROFIT_MESSAGE_FORMAT = "%s: %s";
+    private static final String GAME_DEALER_PROFIT_MESSAGE_FORMAT = "딜러: %d";
 
     public void printInitialDraw(final List<Player> players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
         for (Player player : players) {
-            printPlayerMessage(player, generateFirstCardMessages(player));
+            printPlayerCardMessage(player, generateFirstCardMessages(player));
         }
         System.out.print(NEW_LINE);
     }
@@ -38,7 +38,7 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void printPlayerMessage(final Player player, final String message) {
+    private void printPlayerCardMessage(final Player player, final String message) {
         System.out.printf((PLAYER_CARD_MESSAGE_FORMAT) + "%n", player.getName(), message);
     }
 
@@ -47,10 +47,10 @@ public class OutputView {
             Dealer dealer = (Dealer) player;
             return dealer.getFirstCardLetter();
         }
-        return generateCardMessages(player);
+        return generateCardMessage(player);
     }
 
-    private String generateCardMessages(final Player player) {
+    private String generateCardMessage(final Player player) {
         return join(DELIMITER, player.getCardLetters());
     }
 
@@ -59,28 +59,37 @@ public class OutputView {
     }
 
     public void printDrawResult(final Player player) {
-        printPlayerMessage(player, generateFirstCardMessages(player));
+        printPlayerCardMessage(player, generateFirstCardMessages(player));
     }
 
-    public void printPlayerGameResult(final Player player) {
-        printPlayerMessage(player, generateCardMessages(player) + generateScoreMessage(player));
+    public void printPlayerCardAndScores(final Player player) {
+        printPlayerCardMessage(player, generateCardMessage(player) + generateScoreMessage(player));
     }
 
     private String generateScoreMessage(final Player player) {
         return format(PLAYER_SCORE_MESSAGE_FORMAT, player.calculateScore());
     }
 
-    public void printGameResult(final Map<Player, Money> betMoneyByPlayer) {
-        System.out.println(GAME_RESULT_MESSAGE);
+    public void printPlayerProfits(final Map<Player, Money> profitByPlayers) {
+        System.out.println(GAME_PROFIT_TITLE);
+        printDealerProfit(profitByPlayers);
+        printGamblerProfits(profitByPlayers);
+    }
 
-        final int dealerProfit = -betMoneyByPlayer.values()
+    private void printDealerProfit(final Map<Player, Money> profitByPlayers) {
+        System.out.printf((GAME_DEALER_PROFIT_MESSAGE_FORMAT) + "%n", calculateDealerProfit(profitByPlayers));
+    }
+
+    private int calculateDealerProfit(final Map<Player, Money> profitByPlayers) {
+        return -profitByPlayers.values()
                 .stream()
                 .mapToInt(Money::getAmount)
                 .sum();
+    }
 
-        System.out.println(String.format(GAME_RESULT_DEALER_MESSAGE_FORMAT, dealerProfit));
-        for (Player player : betMoneyByPlayer.keySet()) {
-            System.out.println(String.format(GAME_RESULT_PLAYER_MESSAGE_FORMAT, player.getName(), betMoneyByPlayer.get(player).getAmount()));
+    private void printGamblerProfits(final Map<Player, Money> profitByPlayers) {
+        for (Player player : profitByPlayers.keySet()) {
+            System.out.printf((GAME_GAMBLER_PROFIT_MESSAGE_FORMAT) + "%n", player.getName(), profitByPlayers.get(player).getAmount());
         }
     }
 
