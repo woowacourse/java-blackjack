@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private final int BUST_POINT = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private final BettingMoney bettingMoney;
 
     private final Name name;
@@ -15,7 +15,7 @@ public class Player extends Participant {
     @Override
     public boolean isDrawable() {
         final int currentScore = currentScore();
-        return currentScore < BUST_POINT;
+        return currentScore < BLACKJACK_SCORE;
     }
 
     public String getName() {
