@@ -51,6 +51,10 @@ public class Score {
         return new Score(value + other.value);
     }
 
+    public boolean isBlackjack() {
+        return this.equals(BLACKJACK);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -66,9 +70,5 @@ public class Score {
 
     public int value() {
         return value;
-    }
-
-    public boolean isBlackjack() {
-        return this.equals(BLACKJACK);
     }
 }
