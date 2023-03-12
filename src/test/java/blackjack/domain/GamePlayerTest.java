@@ -19,7 +19,7 @@ class GamePlayerTest {
     @DisplayName("GamePlayer의 수는 players의 수보다 하나 많다.")
     @Test
     void Should_Create_When_NewGamePlayer() {
-        assertThat(gamePlayer.count()).isEqualTo(4);
+        assertThat(gamePlayer.getCount()).isEqualTo(4);
     }
 
     @DisplayName("딜러에게 카드를 나눠줄 수 있다.")

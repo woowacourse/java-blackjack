@@ -19,9 +19,9 @@ public class GameResult {
     private Map<String, Integer> initializeDealerResult() {
         Map<String, Integer> dealerResult = new LinkedHashMap<>();
 
-        dealerResult.put(ResultType.WIN.message(), 0);
-        dealerResult.put(ResultType.LOSE.message(), 0);
-        dealerResult.put(ResultType.DRAW.message(), 0);
+        dealerResult.put(ResultType.WIN.getMessage(), 0);
+        dealerResult.put(ResultType.LOSE.getMessage(), 0);
+        dealerResult.put(ResultType.DRAW.getMessage(), 0);
 
         return dealerResult;
     }
@@ -79,18 +79,18 @@ public class GameResult {
     }
 
     private void playerWin(String playerName) {
-        playersResult.put(playerName, ResultType.WIN.message());
-        dealerResult.put(ResultType.LOSE.message(), dealerResult.get(ResultType.LOSE.message()) + 1);
+        playersResult.put(playerName, ResultType.WIN.getMessage());
+        dealerResult.put(ResultType.LOSE.getMessage(), dealerResult.get(ResultType.LOSE.getMessage()) + 1);
     }
 
     private void playerLose(String playerName) {
-        playersResult.put(playerName, ResultType.LOSE.message());
-        dealerResult.put(ResultType.WIN.message(), dealerResult.get(ResultType.WIN.message()) + 1);
+        playersResult.put(playerName, ResultType.LOSE.getMessage());
+        dealerResult.put(ResultType.WIN.getMessage(), dealerResult.get(ResultType.WIN.getMessage()) + 1);
     }
 
     private void draw(String playerName) {
-        playersResult.put(playerName, ResultType.DRAW.message());
-        dealerResult.put(ResultType.DRAW.message(), dealerResult.get(ResultType.DRAW.message()) + 1);
+        playersResult.put(playerName, ResultType.DRAW.getMessage());
+        dealerResult.put(ResultType.DRAW.getMessage(), dealerResult.get(ResultType.DRAW.getMessage()) + 1);
     }
 
     public Map<String, Integer> getDealerResult() {

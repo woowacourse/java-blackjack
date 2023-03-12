@@ -11,7 +11,7 @@ public enum ResultType {
         this.message = message;
     }
 
-    public String message() {
+    public String getMessage() {
         return message;
     }
 }

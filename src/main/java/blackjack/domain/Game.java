@@ -68,6 +68,6 @@ public class Game {
     }
 
     public int getPlayersCount() {
-        return gamePlayer.getPlayers().count();
+        return gamePlayer.getPlayers().getCount();
     }
 }

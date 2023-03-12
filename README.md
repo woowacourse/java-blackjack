@@ -91,7 +91,7 @@
 ### 컨벤션
 
 - [ ] playerHitOrStand 메소드 indent 요구사항에 맞춰 수정
-- [ ] 메소드 네이밍 get ~ 으로 통일
+- [x] 메서드 네이밍 get ~ 으로 통일
 - [x] 스트림 연산자 기준으로 개행
 - [x] OutputView printFinalVictoryOrDefeatDealer 내 depth 2인 부분 수정
 - [ ] 테스트 클래스 given when then 패턴 대신 개행으로 구분

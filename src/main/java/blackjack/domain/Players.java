@@ -41,7 +41,7 @@ public class Players {
         return players.get(i);
     }
 
-    public int count() {
+    public int getCount() {
         return players.size();
     }
 }

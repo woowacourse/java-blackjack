@@ -10,18 +10,18 @@ public class Card {
     }
 
     public boolean isACE() {
-        return cardNumber.number().equals(CardNumber.ACE.number());
+        return cardNumber.getNumber().equals(CardNumber.ACE.getNumber());
     }
 
     public int getScore() {
-        return CardNumber.scoreByNumber(cardNumber.number());
+        return CardNumber.scoreByNumber(cardNumber.getNumber());
     }
 
     public String getCardNumberToString() {
-        return cardNumber.number();
+        return cardNumber.getNumber();
     }
 
     public String getCardSymbolToString() {
-        return cardSymbol.symbol();
+        return cardSymbol.getSymbol();
     }
 }

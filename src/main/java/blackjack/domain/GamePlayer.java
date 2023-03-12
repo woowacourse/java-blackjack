@@ -31,7 +31,7 @@ public class GamePlayer {
     }
 
     private void initializePlayer(List<Card> cards) {
-        for (int i = 0; i < players.count(); i++) {
+        for (int i = 0; i < players.getCount(); i++) {
             playerHit(i, cards.get(i * 2));
             playerHit(i, cards.get(i * 2 + 1));
         }
@@ -45,7 +45,7 @@ public class GamePlayer {
         return players;
     }
 
-    public int count() {
-        return players.count() + 1;
+    public int getCount() {
+        return players.getCount() + 1;
     }
 }

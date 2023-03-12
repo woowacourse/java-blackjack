@@ -14,7 +14,7 @@ class DeckTest {
     @Test
     void Should_Create_When_NewDeck() {
         deck = Deck.of(new ShuffleCardsGenerator().generator());
-        assertThat(deck.size()).isEqualTo(52);
+        assertThat(deck.getSize()).isEqualTo(52);
     }
 
     @DisplayName("덱의 가장 위쪽에 위치하는 카드를 뽑을 수 있다.")

@@ -30,14 +30,14 @@ public enum CardNumber {
                 .filter(cardNumber -> cardNumber.number.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("숫자를 찾을 수 없습니다."))
-                .score();
+                .getScore();
     }
 
-    public String number() {
+    public String getNumber() {
         return number;
     }
 
-    public int score() {
+    public int getScore() {
         return score;
     }
 }

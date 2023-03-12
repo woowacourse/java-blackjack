@@ -30,7 +30,7 @@ public class Deck {
         return cards.isEmpty();
     }
 
-    public int size() {
+    public int getSize() {
         return cards.size();
     }
 }

@@ -14,7 +14,7 @@ class PlayersTest {
     @DisplayName("입력되는 이름의 수만큼 참가자를 생성한다.")
     @Test
     void Should_Create_When_NewPlayers() {
-        assertThat(Players.from(List.of("name1", "name2", "name3")).count()).isEqualTo(3);
+        assertThat(Players.from(List.of("name1", "name2", "name3")).getCount()).isEqualTo(3);
     }
 
     @DisplayName("플레이어 수는 1에서 6사이여야 한다.")

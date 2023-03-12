@@ -19,10 +19,10 @@ public enum TryCommand {
                 .filter(tryCommand -> tryCommand.command.equals(inputCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."))
-                .hit();
+                .getHit();
     }
 
-    public boolean hit() {
+    public boolean getHit() {
         return hit;
     }
 }
