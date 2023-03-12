@@ -36,14 +36,14 @@ public class Hand {
     }
 
     private int getCardValueSumMax(TotalSumValues totalValues, List<Integer> handCardValues) {
-        int maxSumValue = 0;
+        return handleAce(totalValues, handCardValues);
+    }
+
+    private int handleAce(TotalSumValues totalValues, List<Integer> handCardValues) {
         if (handCardValues.contains(Denomination.ACE_VALUE)) {
-            maxSumValue = totalValues.getLessThanLimitMaxValue();
+            return totalValues.getLessThanLimitMaxValue();
         }
-        if (!handCardValues.contains(Denomination.ACE_VALUE)) {
-            maxSumValue = totalValues.getMaxValue();
-        }
-        return maxSumValue;
+        return totalValues.getMaxValue();
     }
 
     private List<Integer> getCardValues() {
