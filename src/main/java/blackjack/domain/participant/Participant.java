@@ -6,6 +6,7 @@ import blackjack.domain.card.Hand;
 public abstract class Participant {
 
     protected static final int BLACK_JACK_SCORE = 21;
+    protected static final int BLACK_JACK_COUNT = 2;
     protected static final int ACE_ALTER_VALUE = 10;
 
     protected final Hand hand;
@@ -29,13 +30,12 @@ public abstract class Participant {
         return sum;
     }
 
-    public int calculateFinalScore() {
-        int finalScore = calculateCurrentScore();
+    public boolean isBlackJack() {
+        return hand.getCount() == BLACK_JACK_COUNT && hand.sum() == BLACK_JACK_SCORE;
+    }
 
-        if (finalScore > BLACK_JACK_SCORE) {
-            finalScore = 0;
-        }
-        return finalScore;
+    public boolean isBust() {
+        return calculateCurrentScore() > BLACK_JACK_SCORE;
     }
 
     public abstract boolean canReceive();
