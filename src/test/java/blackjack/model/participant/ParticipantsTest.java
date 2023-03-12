@@ -19,7 +19,7 @@ class ParticipantsTest {
 
     @Test
     @DisplayName("다음으로 hit 또는 stand 입력을 받을 플레이어가 남아있는지 확인한다.")
-    void has_nex_player() {
+    void has_next_player() {
         //given
         Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));

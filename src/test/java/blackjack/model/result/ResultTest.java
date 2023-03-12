@@ -1,10 +1,10 @@
 package blackjack.model.result;
 
-import blackjack.model.participant.BetAmount;
-import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
-import blackjack.model.state.DealerInitialState;
-import blackjack.model.state.PlayerInitialState;
+import blackjack.model.state.BlackjackState;
+import blackjack.model.state.BustState;
+import blackjack.model.state.StandState;
+import blackjack.model.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,28 +19,19 @@ class ResultTest {
     @Nested
     @DisplayName("플레이어가 버스트일 때")
     class player_bust {
+        private final State playerState = new BustState(new Hand(List.of(HEART_JACK, HEART_FIVE, HEART_TEN)));
+        private final int betAmount = 10000;
+        private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
         @Nested
         @DisplayName("딜러가 버스트라면")
         class dealer_bust {
+            private final Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_NINE, CLUB_FIVE, CLUB_EIGHT))));
+
             @Test
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_SIX, HEART_NINE, HEART_JACK, HEART_TEN, DIAMOND_SIX, CLUB_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, true);
-                participants.hitOrStandByDealer(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBust()).isTrue();
-                assertThat(dealer.isBust()).isTrue();
                 assertThat(result).isEqualTo(Result.LOSE);
             }
         }
@@ -48,24 +39,12 @@ class ResultTest {
         @Nested
         @DisplayName("딜러가 블랙잭이라면")
         class dealer_blackjack {
+            private final Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+
             @Test
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_FIVE, CLUB_JACK, HEART_TEN, HEART_ACE, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, true);
-                participants.hitOrStandByDealer(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBust()).isTrue();
-                assertThat(dealer.isBlackjack()).isTrue();
                 assertThat(result).isEqualTo(Result.LOSE);
             }
         }
@@ -73,54 +52,33 @@ class ResultTest {
         @Nested
         @DisplayName("딜러가 스탠드라면")
         class dealer_stand {
+            private final Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_NINE, CLUB_JACK))));
+
             @Test
             @DisplayName("플레이어가 패배한다")
             void player_lose() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_FIVE, CLUB_JACK, HEART_TEN, HEART_SEVEN, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, true);
-                participants.hitOrStandByDealer(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBust()).isTrue();
-                assertThat(dealer.isStand()).isTrue();
                 assertThat(result).isEqualTo(Result.LOSE);
             }
         }
-
     }
 
     @Nested
     @DisplayName("플레이어가 블랙잭일 때")
     class player_blackjack {
+        private final State playerState = new BlackjackState(new Hand(List.of(HEART_JACK, HEART_ACE)));
+        private final int betAmount = 10000;
+        private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
         @Nested
         @DisplayName("딜러가 버스트라면")
         class dealer_bust {
+            private final Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_NINE, CLUB_FIVE, CLUB_EIGHT))));
+
             @Test
             @DisplayName("플레이어가 승리한다")
             void player_win() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, HEART_ACE, HEART_JACK, DIAMOND_SIX, CLUB_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByDealer(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBlackjack()).isTrue();
-                assertThat(dealer.isBust()).isTrue();
                 assertThat(result).isEqualTo(Result.WIN);
             }
         }
@@ -128,22 +86,12 @@ class ResultTest {
         @Nested
         @DisplayName("딜러가 블랙잭이라면")
         class dealer_blackjack {
+            private final Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+
             @Test
             @DisplayName("플레이어는 무승부다")
             void player_tie() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(CLUB_ACE, CLUB_JACK, HEART_ACE, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBlackjack()).isTrue();
-                assertThat(dealer.isBlackjack()).isTrue();
                 assertThat(result).isEqualTo(Result.TIE);
             }
         }
@@ -151,53 +99,33 @@ class ResultTest {
         @Nested
         @DisplayName("딜러가 스탠드라면")
         class dealer_stand {
+            private final Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_NINE, CLUB_JACK))));
+
             @Test
             @DisplayName("플레이어가 승리한다")
             void player_win() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_ACE, HEART_TEN, HEART_SEVEN, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isBlackjack()).isTrue();
-                assertThat(dealer.isStand()).isTrue();
                 assertThat(result).isEqualTo(Result.WIN);
             }
         }
-
     }
 
     @Nested
     @DisplayName("플레이어가 스탠드일 때")
     class player_stand {
+        private final State playerState = new StandState(new Hand(List.of(HEART_JACK, HEART_NINE)));
+        private final int betAmount = 10000;
+        private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
         @Nested
         @DisplayName("딜러가 버스트라면")
         class dealer_bust {
+            private final Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_NINE, CLUB_FIVE, CLUB_EIGHT))));
+
             @Test
             @DisplayName("플레이어가 승리한다")
             void player_win() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, CLUB_NINE, CLUB_JACK, HEART_SIX, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, false);
-                participants.hitOrStandByDealer(cardDeck);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isStand()).isTrue();
-                assertThat(dealer.isBust()).isTrue();
                 assertThat(result).isEqualTo(Result.WIN);
             }
         }
@@ -205,23 +133,12 @@ class ResultTest {
         @Nested
         @DisplayName("딜러가 블랙잭이라면")
         class dealer_blackjack {
+            private final Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+
             @Test
             @DisplayName("플레이어는 패배한다")
             void player_lose() {
-                //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_NINE, HEART_JACK, HEART_ACE, CLUB_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
-
-                //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, false);
                 Result result = Result.checkPlayerResult(player, dealer);
-
-                //then
-                assertThat(player.isStand()).isTrue();
-                assertThat(dealer.isBlackjack()).isTrue();
                 assertThat(result).isEqualTo(Result.LOSE);
             }
         }
@@ -234,19 +151,12 @@ class ResultTest {
             @DisplayName("플레이어의 총점이 딜러보다 높으면 플레이어가 승리한다.")
             void player_win() {
                 //given
-                CardDeck cardDeck = new CardDeck(List.of(CLUB_NINE, CLUB_JACK, HEART_SEVEN, HEART_TEN));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
+                Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_NINE, CLUB_EIGHT))));
 
                 //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, false);
                 Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
-                assertThat(player.isStand()).isTrue();
-                assertThat(dealer.isStand()).isTrue();
                 assertThat(result).isEqualTo(Result.WIN);
             }
 
@@ -254,19 +164,12 @@ class ResultTest {
             @DisplayName("플레이어의 총점과 딜러의 총점이 같으면 무승부다.")
             void player_tie() {
                 //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_SEVEN, HEART_TEN, DIAMOND_SEVEN, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
+                Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_NINE, CLUB_JACK))));
 
                 //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, false);
                 Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
-                assertThat(player.isStand()).isTrue();
-                assertThat(dealer.isStand()).isTrue();
                 assertThat(result).isEqualTo(Result.TIE);
             }
 
@@ -274,24 +177,14 @@ class ResultTest {
             @DisplayName("플레이어의 총점이 딜러의 총점보다 작으면 패배한다.")
             void player_lose() {
                 //given
-                CardDeck cardDeck = new CardDeck(List.of(HEART_SEVEN, HEART_TEN, HEART_NINE, HEART_JACK));
-                Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
-                Player player = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
-                Participants participants = new Participants(dealer, List.of(player));
+                Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_TEN, CLUB_JACK))));
 
                 //when
-                participants.distributeTwoCardsToEach(cardDeck);
-                participants.hitOrStandByPlayer(cardDeck, player, false);
                 Result result = Result.checkPlayerResult(player, dealer);
 
                 //then
-                assertThat(player.isStand()).isTrue();
-                assertThat(dealer.isStand()).isTrue();
                 assertThat(result).isEqualTo(Result.LOSE);
             }
-
         }
-
     }
-
 }

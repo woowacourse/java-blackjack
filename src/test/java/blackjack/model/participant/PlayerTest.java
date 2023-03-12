@@ -186,7 +186,7 @@ class PlayerTest {
                 int playerProfit = player.getProfit(result);
 
                 //then
-                assertThat(playerProfit).isEqualTo((int)(betAmount * 1.5));
+                assertThat(playerProfit).isEqualTo((int) (betAmount * 1.5));
             }
 
             @Test
@@ -200,7 +200,7 @@ class PlayerTest {
                 int playerProfit = player.getProfit(result);
 
                 //then
-                assertThat(playerProfit).isEqualTo((int)(betAmount * 1.5));
+                assertThat(playerProfit).isEqualTo((int) (betAmount * 1.5));
             }
 
             @Test
