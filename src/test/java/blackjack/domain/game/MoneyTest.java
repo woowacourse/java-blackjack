@@ -3,12 +3,20 @@ package blackjack.domain.game;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class MoneyTest {
+
+    private Money money;
+
+    @BeforeEach
+    void setUp() {
+        money = new Money("10000");
+    }
 
     @DisplayName("Money는 숫자가 아니면 예외가 발생한다.")
     @ParameterizedTest
@@ -23,9 +31,6 @@ class MoneyTest {
     @DisplayName("Money의 changeSign메서드는 Money의 부호를 바꿔서 반환한다.")
     @Test
     void returnsChangedSignAtMoney() {
-        // given
-        Money money = new Money("10000");
-        
         // when
         Money changedSignMoney = money.changeSign();
 
@@ -36,9 +41,6 @@ class MoneyTest {
     @DisplayName("Money의 makeZero메서드는 Money의 value를 0으로 바꾼다.")
     @Test
     void makeMoneyValueToZero() {
-        // given
-        Money money = new Money("10000");
-
         // when
         Money zeroMoney = money.makeZero();
 
@@ -49,9 +51,6 @@ class MoneyTest {
     @DisplayName("Money의 CalculateIfBlackJack은 Money의 value를 1.5배로 만든다.")
     @Test
     void makeMoneyOneAndHalfTimes() {
-        // given
-        Money money = new Money("10000");
-        
         // when
         Money blackJackProfit = money.calculateIfBlackJack();
 
