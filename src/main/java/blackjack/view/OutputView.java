@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.BlackJackGameResultDTO;
-import blackjack.dto.ParticipantCardsDTO;
-import blackjack.dto.ParticipantEntireStatusDTO;
-import blackjack.dto.ParticipantStatusDTO;
+import blackjack.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -80,5 +77,14 @@ public class OutputView {
                 .forEach(entry -> stringBuilder.append(entry.getValue()).append(entry.getKey()).append(" "));
         stringBuilder.append(System.lineSeparator());
         return stringBuilder.toString();
+    }
+
+    public static void printBettingResults(ParticipantBettingResultDTO bettingResultDTO) {
+        System.out.println("\n## 최종 수익");
+        Set<Map.Entry<String, Integer>> bettingEntries = bettingResultDTO.getBettingResults().entrySet();
+        String bettingResults = bettingEntries.stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining(System.lineSeparator()));
+        System.out.println(bettingResults);
     }
 }
