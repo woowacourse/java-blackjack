@@ -31,10 +31,11 @@ public class Deck {
         return cards.poll();
     }
 
-    public List<Card> getTwoCards() {
+    public List<Card> getCards(int count) {
         List<Card> cards = new ArrayList<>();
-        cards.add(getCard());
-        cards.add(getCard());
+        for (int index = 0; index < count; index++) {
+            cards.add(getCard());
+        }
         return cards;
     }
 }

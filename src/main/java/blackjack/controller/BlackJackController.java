@@ -5,6 +5,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
+    public static final int CARD_COUNT = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -16,7 +18,7 @@ public class BlackJackController {
     public void run() {
         try {
             Deck deck = new Deck();
-            Dealer dealer = new Dealer(deck.getTwoCards());
+            Dealer dealer = new Dealer(deck.getCards(CARD_COUNT));
             Players players = generatePlayers(deck);
             outputView.showInitialCards(dealer, players);
             playGame(deck, dealer, players);
