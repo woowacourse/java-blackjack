@@ -23,6 +23,12 @@ class PlayerTest {
         player = new Player(new Name("깃짱"), cards);
     }
 
+    @DisplayName("플레이어 이름 확인을 통해 딜러 생성에 성공하였는지 알 수 있다.")
+    @Test
+    void createTest() {
+        assertThat(player.getName()).isEqualTo("깃짱");
+    }
+
     @DisplayName("플레이어의 점수를 알 수 있다.")
     @Test
     void calculateScoreTest() {
