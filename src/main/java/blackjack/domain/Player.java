@@ -7,8 +7,16 @@ import java.util.List;
 
 public class Player extends Participant {
     private static final int INITIAL_OPEN_CARD_COUNT = 2;
-    protected Player(final ParticipantCards cards, final String name) {
+
+    private final BettingMoney bettingMoney;
+
+    protected Player(final ParticipantCards cards, final String name, final int bettingMoney) {
         super(cards, name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 
     @Override
