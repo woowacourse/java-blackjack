@@ -79,7 +79,7 @@ class UsersTest {
     }
 
     /*
-    필립: 21
+    필립: blackjack
     홍실: 19
     딜러: 13
      */
@@ -91,13 +91,13 @@ class UsersTest {
         Map<String, GameResult> winningResult = users.getGameResult();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
+            softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.BLACKJACK_WIN);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.NORMAL_WIN);
         });
     }
 
     /*
-    필립: 21
+    필립: blackjack
     홍실: 19
      */
     @Test

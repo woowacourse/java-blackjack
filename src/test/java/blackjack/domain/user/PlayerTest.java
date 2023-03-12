@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -28,5 +29,13 @@ class PlayerTest {
         final User player = new Player(name, initialGroup);
 
         assertThat(player.getInitialHoldingCards()).containsExactly(spadeAce, cloverEight);
+    }
+
+    @Test
+    @DisplayName("플레이어 이름으로 딜러 코드 입력시 오류 발생 테스트")
+    void dealerNameCodeValidationTest() {
+        assertThatThrownBy(() -> new Player(Dealer.DEALER_NAME_CODE, initialGroup))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Player.NAME_EQUAL_DEALER_CODE_EXCEPTION_MESSAGE);
     }
 }

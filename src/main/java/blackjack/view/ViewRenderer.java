@@ -1,12 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.dto.DealerFinalResult;
-import blackjack.dto.FinalResult;
-import blackjack.dto.PlayerFinalResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +14,6 @@ public class ViewRenderer {
 
     private static final Map<CardShape, String> CARD_SHAPE_STRING_MAPPER;
     private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER;
-    private static final Map<GameResult, String> WINNING_STATUS_MAPPER;
-    private static final String BLANK = "";
 
     static {
         CARD_SHAPE_STRING_MAPPER = Map.of(
@@ -43,12 +37,6 @@ public class ViewRenderer {
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.JACK, "J");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.QUEEN, "Q");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.KING, "K");
-
-        WINNING_STATUS_MAPPER = Map.of(
-                GameResult.WIN, "승 ",
-                GameResult.TIE, "무 ",
-                GameResult.LOSE, "패 "
-        );
     }
 
     public static List<String> renderCardsToString(final List<Card> cards) {
@@ -56,34 +44,5 @@ public class ViewRenderer {
                 .map(card -> CARD_NUMBER_STRING_MAPPER.get(card.getNumber())
                         + CARD_SHAPE_STRING_MAPPER.get(card.getShape()))
                 .collect(toUnmodifiableList());
-    }
-
-    public static String renderFinalResult(final FinalResult finalResult) {
-        if (finalResult instanceof DealerFinalResult) {
-            return renderDealerFinalResult((DealerFinalResult) finalResult);
-        }
-        return renderPlayerFinalResult((PlayerFinalResult) finalResult);
-    }
-
-    private static String renderDealerFinalResult(final DealerFinalResult finalResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        final Map<GameResult, Long> dealerWinningResult = finalResult.getResult();
-        stringBuilder.append(renderWinningStatus(GameResult.WIN, dealerWinningResult));
-        stringBuilder.append(renderWinningStatus(GameResult.TIE, dealerWinningResult));
-        stringBuilder.append(renderWinningStatus(GameResult.LOSE, dealerWinningResult));
-
-        return stringBuilder.toString();
-    }
-
-    private static String renderWinningStatus(final GameResult gameResult
-            , final Map<GameResult, Long> dealerWinningResult) {
-        if (dealerWinningResult.containsKey(gameResult)) {
-            return dealerWinningResult.get(gameResult) + WINNING_STATUS_MAPPER.get(gameResult);
-        }
-        return BLANK;
-    }
-
-    private static String renderPlayerFinalResult(final PlayerFinalResult finalResult) {
-        return WINNING_STATUS_MAPPER.get(finalResult.getResult());
     }
 }

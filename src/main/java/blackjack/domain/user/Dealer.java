@@ -36,13 +36,13 @@ public class Dealer extends User {
         if (playerScore.isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.WIN;
+        return selectWinningType(playerScore);
     }
 
     private GameResult compareByScore(final Score playerScore) {
         final Score dealerScore = this.getScore();
         if (dealerScore.getValue() < playerScore.getValue()) {
-            return GameResult.WIN;
+            return selectWinningType(playerScore);
         }
         if (dealerScore.getValue() > playerScore.getValue()) {
             return GameResult.LOSE;
@@ -58,8 +58,15 @@ public class Dealer extends User {
             return GameResult.LOSE;
         }
         if (!dealerScore.isBlackJack() && playerScore.isBlackJack()) {
-            return GameResult.WIN;
+            return selectWinningType(playerScore);
         }
         return GameResult.TIE;
+    }
+
+    private GameResult selectWinningType(final Score playerScore) {
+        if (playerScore.isBlackJack()) {
+            return GameResult.BLACKJACK_WIN;
+        }
+        return GameResult.NORMAL_WIN;
     }
 }

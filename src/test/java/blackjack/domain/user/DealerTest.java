@@ -1,13 +1,13 @@
 package blackjack.domain.user;
 
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.result.GameResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -58,25 +58,126 @@ class DealerTest {
         assertThat(isOverDraw).isTrue();
     }
 
-    // TODO: 나머지 경우(딜러가 다른경우)도 nested test 찾아보고 하위로 같이 만들기
-    @ParameterizedTest(name = "결과 : {1}")
+    @Nested
     @DisplayName("플레이어 점수로 블랙젝 결과 테스트")
-    @MethodSource("providePlayerScoresAndExpectedResults")
-    void judgePlayerResultTest(Score playerScore, GameResult expectedResult) {
-        final Dealer dealer = new Dealer(initialGroup);
+    static class JudgePlayerScoreTest {
 
-        GameResult actualResult = dealer.judgePlayerGameResult(playerScore);
+        private static final Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        private static final Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        private static final Card nineCard = new Card(CardShape.DIAMOND, CardNumber.NINE);
+        private static final Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
 
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
+        private static final CardGroup thirteenCardGroup;
+        private static final CardGroup nineteenCardGroup;
+        private static final CardGroup twentyoneCardGroup;
+        private static final CardGroup blackjackCardGroup;
+        private static final CardGroup bustedCardGame;
 
-    private static Stream<Arguments> providePlayerScoresAndExpectedResults() {
-        return Stream.of(
-                Arguments.of(new Score(17, 2), GameResult.LOSE),
-                Arguments.of(new Score(19, 2), GameResult.TIE),
-                Arguments.of(new Score(20, 2), GameResult.WIN),
-                Arguments.of(new Score(23, 3), GameResult.LOSE)
-        );
+        static {
+            thirteenCardGroup = new CardGroup(aceCard, twoCard);
+
+            nineteenCardGroup = new CardGroup(nineCard, tenCard);
+
+            twentyoneCardGroup = new CardGroup(twoCard, nineCard);
+            twentyoneCardGroup.add(tenCard);
+
+            blackjackCardGroup = new CardGroup(aceCard, tenCard);
+
+            bustedCardGame = new CardGroup(aceCard, twoCard);
+            bustedCardGame.add(nineCard);
+            bustedCardGame.add(tenCard);
+        }
+
+        @ParameterizedTest(name = "result: {1}")
+        @DisplayName("19점 딜러와 비교")
+        @MethodSource("provideFor19Dealer")
+        void judgeWith19Dealer(final CardGroup playersHand, final GameResult expectedResult) {
+            final CardGroup dealersHand = new CardGroup(new Card(CardShape.SPADE, CardNumber.JACK), new Card(CardShape.SPADE, CardNumber.NINE));
+            final Dealer dealer = new Dealer(dealersHand);
+            final Player player = new Player("test", playersHand);
+
+            final GameResult actualResult = dealer.judgePlayerGameResult(player.getScore());
+
+            assertThat(actualResult).isEqualTo(expectedResult);
+        }
+
+        private static Stream<Arguments> provideFor19Dealer() {
+            return Stream.of(
+                    Arguments.of(thirteenCardGroup, GameResult.LOSE),
+                    Arguments.of(nineteenCardGroup, GameResult.TIE),
+                    Arguments.of(twentyoneCardGroup, GameResult.NORMAL_WIN),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
+                    Arguments.of(bustedCardGame, GameResult.LOSE)
+            );
+        }
+
+        @ParameterizedTest(name = "result: {1}")
+        @DisplayName("21점 딜러와 비교")
+        @MethodSource("provideFor21Dealer")
+        void judgeWith21Dealer(final CardGroup playersHand, final GameResult expectedResult) {
+            final CardGroup dealersHand = new CardGroup(new Card(CardShape.SPADE, CardNumber.JACK), new Card(CardShape.SPADE, CardNumber.NINE));
+            dealersHand.add(new Card(CardShape.SPADE, CardNumber.TWO));
+            final Dealer dealer = new Dealer(dealersHand);
+            final Player player = new Player("test", playersHand);
+
+            final GameResult actualResult = dealer.judgePlayerGameResult(player.getScore());
+
+            assertThat(actualResult).isEqualTo(expectedResult);
+        }
+
+        private static Stream<Arguments> provideFor21Dealer() {
+            return Stream.of(
+                    Arguments.of(thirteenCardGroup, GameResult.LOSE),
+                    Arguments.of(twentyoneCardGroup, GameResult.TIE),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
+                    Arguments.of(bustedCardGame, GameResult.LOSE)
+            );
+        }
+
+        @ParameterizedTest(name = "result: {1}")
+        @DisplayName("블랙잭 딜러와 비교")
+        @MethodSource("provideForBlackjackDealer")
+        void judgeWithBlackjackDealer(final CardGroup playersHand, final GameResult expectedResult) {
+            final CardGroup dealersHand = new CardGroup(new Card(CardShape.SPADE, CardNumber.JACK), new Card(CardShape.SPADE, CardNumber.ACE));
+            final Dealer dealer = new Dealer(dealersHand);
+            final Player player = new Player("test", playersHand);
+
+            final GameResult actualResult = dealer.judgePlayerGameResult(player.getScore());
+
+            assertThat(actualResult).isEqualTo(expectedResult);
+        }
+
+        private static Stream<Arguments> provideForBlackjackDealer() {
+            return Stream.of(
+                    Arguments.of(thirteenCardGroup, GameResult.LOSE),
+                    Arguments.of(twentyoneCardGroup, GameResult.LOSE),
+                    Arguments.of(blackjackCardGroup, GameResult.TIE),
+                    Arguments.of(bustedCardGame, GameResult.LOSE)
+            );
+        }
+
+        @ParameterizedTest(name = "result: {1}")
+        @DisplayName("버스트된 딜러와 비교")
+        @MethodSource("provideForBustedDealer")
+        void judgeWithBustedDealer(final CardGroup playersHand, final GameResult expectedResult) {
+            final CardGroup dealersHand = new CardGroup(new Card(CardShape.SPADE, CardNumber.JACK), new Card(CardShape.SPADE, CardNumber.NINE));
+            dealersHand.add(new Card(CardShape.SPADE, CardNumber.THREE));
+            final Dealer dealer = new Dealer(dealersHand);
+            final Player player = new Player("test", playersHand);
+
+            final GameResult actualResult = dealer.judgePlayerGameResult(player.getScore());
+
+            assertThat(actualResult).isEqualTo(expectedResult);
+        }
+
+        private static Stream<Arguments> provideForBustedDealer() {
+            return Stream.of(
+                    Arguments.of(thirteenCardGroup, GameResult.NORMAL_WIN),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
+                    Arguments.of(bustedCardGame, GameResult.LOSE)
+            );
+        }
+
     }
 
 }
