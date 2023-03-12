@@ -1,9 +1,13 @@
 package domain;
 
+import java.util.Objects;
+
 public class Player extends Participant {
 
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
     private static final String DEALER_NAME = "딜러";
+
+    private Amount bettingAmount;
 
     public Player(Name name, Cards cards) {
         super(name, cards);
@@ -14,6 +18,14 @@ public class Player extends Participant {
         if (name.getValue().equals(DEALER_NAME)) {
             throw new IllegalArgumentException(BAN_NAME_ERROR_MESSAGE);
         }
+    }
+
+    public void betAmount(Amount bettingAmount) {
+        this.bettingAmount = bettingAmount;
+    }
+
+    public int getAmount() {
+        return bettingAmount.getValue();
     }
 
     public boolean isBust() {
@@ -34,6 +46,19 @@ public class Player extends Participant {
     public boolean isMoreCardAble() {
         return cards.getPlayerScore()
                 .isPlayerMoreCardAble();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
 }

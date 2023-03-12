@@ -7,6 +7,7 @@ import type.Letter;
 import type.Shape;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +36,9 @@ public class ResultTest {
         playerPick(Card.of(Shape.HEART, Letter.KING));
 
         Result result = new Result(dealer, players.getPlayers());
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -46,9 +47,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.NINE))));
 
         Result result = new Result(dealer, players.getPlayers());
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -58,9 +59,9 @@ public class ResultTest {
         dealer.pick(Card.of(Shape.HEART, Letter.QUEEN));
 
         Result result = new Result(dealer, players.getPlayers());
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -69,9 +70,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
 
         Result result = new Result(dealer, players.getPlayers());
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -81,9 +82,9 @@ public class ResultTest {
         playerPick(Card.of(Shape.HEART, Letter.KING));
         Result result = new Result(dealer, players.getPlayers());
 
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -92,9 +93,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.TWO))));
         Result result = new Result(dealer, players.getPlayers());
 
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -105,9 +106,9 @@ public class ResultTest {
         dealer.pick(Card.of(Shape.DIAMOND, Letter.JACK));
         Result result = new Result(dealer, players.getPlayers());
 
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.BLACK_JACK_WIN);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.BLACK_JACK_WIN);
     }
 
     @Test
@@ -116,9 +117,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateBlackJackCard()));
         Result result = new Result(dealer, players.getPlayers());
 
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.BLACK_JACK_WIN);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.BLACK_JACK_WIN);
     }
 
     @Test
@@ -129,9 +130,9 @@ public class ResultTest {
         Dealer dealer = new Dealer(generateBlackJackCard());
         Result result = new Result(dealer, players.getPlayers());
 
-        Map<Name, GameResult> gameResult = result.getResult();
+        Map<Player, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult.get(createPlayer())).isEqualTo(GameResult.LOSE);
     }
 
 
@@ -143,6 +144,10 @@ public class ResultTest {
         }
 
         return new Cards(cards);
+    }
+
+    private Player createPlayer() {
+        return new Player(new Name("aa"), new Cards(Collections.emptyList()));
     }
 
     private Cards generateBlackJackCard() {

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Result {
 
-    private final Map<Name, GameResult> gameResult;
+    private final Map<Player, GameResult> gameResult;
 
     public Result(Dealer dealer, List<Player> players) {
         gameResult = new LinkedHashMap<>();
@@ -28,25 +28,25 @@ public class Result {
 
     private void blackJackWin(Dealer dealer, Player player) {
         if (isPlayerBlackJackWin(player, dealer)) {
-            gameResult.put(player.getName(), GameResult.BLACK_JACK_WIN);
+            gameResult.put(player, GameResult.BLACK_JACK_WIN);
         }
     }
 
     private void win(Dealer dealer, Player player) {
         if (isPlayerWin(dealer, player)) {
-            gameResult.put(player.getName(), GameResult.WIN);
+            gameResult.put(player, GameResult.WIN);
         }
     }
 
     private void lose(Dealer dealer, Player player) {
         if (isPlayerLose(dealer, player)) {
-            gameResult.put(player.getName(), GameResult.LOSE);
+            gameResult.put(player, GameResult.LOSE);
         }
     }
 
     private void draw(Dealer dealer, Player player) {
         if (isPlayerDraw(dealer, player)) {
-            gameResult.put(player.getName(), GameResult.DRAW);
+            gameResult.put(player, GameResult.DRAW);
         }
     }
 
@@ -82,7 +82,7 @@ public class Result {
         return player.isBlackJack() && dealer.isBlackJack();
     }
 
-    public Map<Name, GameResult> getResult() {
+    public Map<Player, GameResult> getResult() {
         return gameResult;
     }
 

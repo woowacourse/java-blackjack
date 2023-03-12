@@ -1,22 +1,19 @@
 package controller;
 
 import view.Answer;
-import domain.Betting;
 import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
-import domain.Amount;
 import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Result;
-import domain.GameResultAmount;
 import domain.service.BlackJackService;
-import dto.BettingDto;
 import dto.CardStatusDto;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,18 +30,20 @@ public class BlackJackController {
 
     public void run() {
         BlackJackService blackJackService = new BlackJackService(inputView.requestPlayerName());
-        Betting betting = getBetting(blackJackService.getPlayers());
+        blackJackService.betPlayers(getBettingAmountOfPlayers(blackJackService));
         printInitialDistribution(blackJackService);
         progress(blackJackService);
-        end(blackJackService, betting);
+        end(blackJackService);
     }
 
-    private Betting getBetting(List<Player> players) {
-        BettingDto bettingDto = new BettingDto();
-        for (Player player : players) {
-            bettingDto.putPlayerAndAmount(player, new Amount(getBettingAmount(player)));
+    private List<Integer> getBettingAmountOfPlayers(BlackJackService blackJackService) {
+        List<Integer> bettingAmount = new ArrayList<>();
+
+        for (Player player : blackJackService.getPlayers()) {
+            bettingAmount.add(getBettingAmount(player));
         }
-        return new Betting(bettingDto.getBetting());
+
+        return bettingAmount;
     }
 
     private int getBettingAmount(Player player) {
@@ -85,23 +84,24 @@ public class BlackJackController {
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
     }
 
-    private void end(BlackJackService blackJackService, Betting betting) {
+    private void end(BlackJackService blackJackService) {
         printFinalCard(blackJackService.getDealer());
         blackJackService.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(getResultOfBetting(blackJackService, betting));
+//        outputView.printFinalResult(getResultOfBetting(blackJackService, bettingAmount));
     }
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant.getCards()), participant.getTotalScoreValue());
     }
 
-    private Map<Name, Integer> getResultOfBetting(BlackJackService blackJackService, Betting betting) {
-        return new GameResultAmount(betting, getResult(blackJackService.getDealer(), blackJackService.getPlayers()))
-                .getResultOfBetting();
-    }
+//    private Map<Name, Integer> getResultOfBetting(BlackJackService blackJackService) {
+//        return new GameResultAmount(bettingAmount, getResult(blackJackService.getDealer(), blackJackService.getPlayers()))
+//                .getResultOfBetting();
+//    }
 
-    private Map<Name, GameResult> getResult(Dealer dealer, List<Player> players) {
-        return new Result(dealer, players).getResult();
+    private Map<Player, GameResult> getResult(Dealer dealer, List<Player> players) {
+        return new Result(dealer, players)
+                .getResult();
     }
 
     private List<CardStatusDto> getCardStatus(List<Card> cards) {

@@ -7,6 +7,7 @@ import type.Letter;
 import type.Shape;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,6 +97,17 @@ public class PlayerTest {
         Player player = new Player(new Name("aa"), new Cards(notBlackJackCards));
 
         assertThat(player.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Betting 에서 Player 의 배팅 금액을 알아낸다.")
+    void getBettingAmount() {
+        Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
+        player.betAmount(new Amount(10000));
+
+        int amount = player.getAmount();
+
+        assertThat(amount).isEqualTo(10000);
     }
 
 }
