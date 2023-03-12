@@ -44,6 +44,7 @@ public abstract class Participant {
     public String getName() {
         return participantName.getName();
     }
+
     public CardNumber getCardNumber(int index) {
         return hand.getReceivedCards().get(index).getCardNumber();
     }
@@ -53,7 +54,7 @@ public abstract class Participant {
     }
 
     public boolean isDealer() {
-       return participantName.equals(new ParticipantName(DEALER_NAME));
+        return participantName.equals(new ParticipantName(DEALER_NAME));
     }
 
     abstract boolean decideHit();

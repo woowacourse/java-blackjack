@@ -32,7 +32,7 @@ public class Revenue {
         return revenue;
     }
 
-    private static int calculatePlayerBlackjackWin (BettingMoney bettingMoney) {
+    private static int calculatePlayerBlackjackWin(BettingMoney bettingMoney) {
         return (int) (bettingMoney.getMoney() * BLACKJACK_REVENUE);
     }
 
