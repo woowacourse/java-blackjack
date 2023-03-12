@@ -39,12 +39,11 @@ class BlackjackGameTest {
         List<String> names = List.of("jamie", "boxster");
 
         Participants participants = Participants.from(names);
-        participants.getPlayers()
-                    .get(0)
-                    .initBetAmount(1000);
-        participants.getPlayers()
-                    .get(1)
-                    .initBetAmount(1000);
+        List<Player> players = participants.getPlayers();
+        players.get(0)
+               .initBetAmount(1000);
+        players.get(1)
+               .initBetAmount(1000);
         List<Card> cards = new ArrayList<>(List.of(
                 new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
                 new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING),
@@ -52,8 +51,6 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
         blackjackGame.calculateBetAmount();
-
-        List<Player> players = participants.getPlayers();
 
         Assertions.assertEquals(-1000, players.get(0)
                                               .getBetAmount());

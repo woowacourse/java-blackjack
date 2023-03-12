@@ -38,7 +38,7 @@ public class PlayerTest {
 
         player.addCard(card);
 
-        assertThat(player.getCards()).contains(card);
+        assertThat(player.getCards()).containsExactly(card);
     }
 
     @Test

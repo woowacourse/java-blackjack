@@ -15,7 +15,7 @@ class PlayerCardsTest {
 
         playerCards.add(card);
 
-        assertThat(playerCards.toList()).contains(card);
+        assertThat(playerCards.toList()).containsExactly(card);
     }
 
     @Test

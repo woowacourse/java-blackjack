@@ -26,6 +26,6 @@ class DealerTest {
 
         dealer.addCard(card);
 
-        assertThat(dealer.getCards()).contains(card);
+        assertThat(dealer.getCards()).containsExactly(card);
     }
 }

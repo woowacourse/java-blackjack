@@ -23,9 +23,9 @@ class CardDeckTest {
     void pickCardTest() {
         CardDeck cardDeck = new CardDeck();
 
-        Card card = cardDeck.pick();
+        cardDeck.pick();
 
-        assertThat(CardSuit.values()).contains(card.getSuit());
+        assertThat(cardDeck.getCards()).hasSize(51);
     }
 
     @Test
