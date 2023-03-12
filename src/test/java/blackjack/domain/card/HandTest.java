@@ -9,7 +9,7 @@ import static blackjack.util.CardFixture.ACE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Result;
-import blackjack.util.CardFixture;
+import blackjack.util.CardsFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -25,31 +25,31 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(CardFixture.BLACKJACK, CardFixture.BLACKJACK, PUSH),
-                Arguments.of(CardFixture.BLACKJACK, CardFixture.valueOf(20), BLACKJACK_WIN),
-                Arguments.of(CardFixture.BLACKJACK, CardFixture.valueOf(21), BLACKJACK_WIN),
-                Arguments.of(CardFixture.valueOf(20), CardFixture.BLACKJACK, LOSE),
-                Arguments.of(CardFixture.BUST, CardFixture.BLACKJACK, LOSE),
-                Arguments.of(CardFixture.valueOf(20), CardFixture.valueOf(18), WIN),
-                Arguments.of(CardFixture.valueOf(20), CardFixture.valueOf(20), PUSH),
-                Arguments.of(CardFixture.valueOf(17), CardFixture.valueOf(20), LOSE),
-                Arguments.of(CardFixture.valueOf(17), CardFixture.BUST, WIN),
-                Arguments.of(CardFixture.BUST, CardFixture.valueOf(17), LOSE),
-                Arguments.of(CardFixture.BUST, CardFixture.BUST, LOSE)
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.BLACKJACK, PUSH),
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(20), BLACKJACK_WIN),
+                Arguments.of(CardsFixture.BLACKJACK, CardsFixture.valueOf(21), BLACKJACK_WIN),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.BLACKJACK, LOSE),
+                Arguments.of(CardsFixture.BUST, CardsFixture.BLACKJACK, LOSE),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(18), WIN),
+                Arguments.of(CardsFixture.valueOf(20), CardsFixture.valueOf(20), PUSH),
+                Arguments.of(CardsFixture.valueOf(17), CardsFixture.valueOf(20), LOSE),
+                Arguments.of(CardsFixture.valueOf(17), CardsFixture.BUST, WIN),
+                Arguments.of(CardsFixture.BUST, CardsFixture.valueOf(17), LOSE),
+                Arguments.of(CardsFixture.BUST, CardsFixture.BUST, LOSE)
         );
     }
 
     static Stream<Arguments> isPlayableSource() {
         return Stream.of(
-                Arguments.of(CardFixture.BLACKJACK, false),
-                Arguments.of(CardFixture.BUST, false),
-                Arguments.of(CardFixture.valueOf(20), true)
+                Arguments.of(CardsFixture.BLACKJACK, false),
+                Arguments.of(CardsFixture.BUST, false),
+                Arguments.of(CardsFixture.valueOf(20), true)
         );
     }
 
     @Test
     void 카드를_입력받아_핸드를_생성한다() {
-        final List<Card> cards = CardFixture.BLACKJACK;
+        final List<Card> cards = CardsFixture.BLACKJACK;
 
         final Hand hand = new Hand(cards);
 
@@ -95,7 +95,7 @@ public class HandTest {
 
     @Test
     void 카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Hand hand = new Hand(CardFixture.valueOf(19));
+        final Hand hand = new Hand(CardsFixture.valueOf(19));
 
         hand.stay();
 

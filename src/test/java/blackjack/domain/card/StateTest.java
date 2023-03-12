@@ -6,7 +6,7 @@ import static blackjack.domain.card.State.PLAY;
 import static blackjack.domain.card.State.STOP;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.util.CardFixture;
+import blackjack.util.CardsFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,10 +21,10 @@ public class StateTest {
 
     static Stream<Arguments> calculateStateSource() {
         return Stream.of(
-                Arguments.of(CardFixture.BLACKJACK, BLACKJACK),
-                Arguments.of(CardFixture.BUST, BUST),
-                Arguments.of(CardFixture.valueOf(21), STOP),
-                Arguments.of(CardFixture.valueOf(20), PLAY)
+                Arguments.of(CardsFixture.BLACKJACK, BLACKJACK),
+                Arguments.of(CardsFixture.BUST, BUST),
+                Arguments.of(CardsFixture.valueOf(21), STOP),
+                Arguments.of(CardsFixture.valueOf(20), PLAY)
         );
     }
 

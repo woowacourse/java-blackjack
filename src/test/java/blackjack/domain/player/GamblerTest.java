@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.util.CardFixture;
+import blackjack.util.CardsFixture;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,9 +21,9 @@ public class GamblerTest {
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(CardFixture.BUST, false),
-                Arguments.of(CardFixture.valueOf(21), false),
-                Arguments.of(CardFixture.valueOf(20), true)
+                Arguments.of(CardsFixture.BUST, false),
+                Arguments.of(CardsFixture.valueOf(21), false),
+                Arguments.of(CardsFixture.valueOf(20), true)
         );
     }
 
