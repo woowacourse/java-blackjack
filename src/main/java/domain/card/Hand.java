@@ -12,11 +12,7 @@ public class Hand {
         this.cards = cards;
     }
 
-    public Score score() {
-        return calculateScore();
-    }
-
-    private Score calculateScore() {
+    public Score calculateScore() {
         var countAce = countAce();
         Score score = sum();
 

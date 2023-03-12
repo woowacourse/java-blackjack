@@ -33,7 +33,7 @@ class HandTest {
     @Test
     @DisplayName("카드들을 통해 점수를 계산한다.")
     void test_score() {
-        assertThat(hand.score()).isEqualTo(new Score(19));
+        assertThat(hand.calculateScore()).isEqualTo(new Score(19));
     }
 
     @Test

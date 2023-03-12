@@ -62,7 +62,7 @@ public abstract class User {
     }
 
     public Score score() {
-        return hand.score();
+        return hand.calculateScore();
     }
 
     public Status status() {
