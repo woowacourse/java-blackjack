@@ -29,7 +29,7 @@ public class DealerTest {
         dealer.hit(firstCard);
         dealer.hit(secondCard);
 
-        assertTrue(dealer.isDealerHit());
+        assertTrue(dealer.shouldHit());
     }
 
     @DisplayName("딜러의 점수가 17이상이면 더 뽑으면 안된다.")
@@ -41,7 +41,7 @@ public class DealerTest {
         dealer.hit(firstCard);
         dealer.hit(secondCard);
 
-        assertFalse(dealer.isDealerHit());
+        assertFalse(dealer.shouldHit());
     }
 
     @Test

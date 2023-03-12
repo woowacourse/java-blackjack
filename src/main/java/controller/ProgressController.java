@@ -53,7 +53,7 @@ public class ProgressController {
     }
 
     private void hitDealer(final Dealer dealer, final Deck deck) {
-        while (dealer.isDealerHit()) {
+        while (dealer.shouldHit()) {
             outputView.printDealerHitAgain();
             dealer.hit(deck.popCard());
         }

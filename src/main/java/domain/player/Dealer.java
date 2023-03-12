@@ -15,7 +15,7 @@ public final class Dealer extends Participant {
         hit(deck.popCard());
     }
 
-    public boolean isDealerHit() {
+    public boolean shouldHit() {
         return getScore() < STOP_LOWER_BOUND;
     }
 }
