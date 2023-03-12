@@ -17,7 +17,7 @@ public class Score {
         return score == MAX_SCORE;
     }
 
-    public Score calculateAdditionalScore() {
+    public Score calculateAceScore() {
         if (canAddAdditionalScore()) {
             return new Score(score + ADDITIONAL_SCORE);
         }

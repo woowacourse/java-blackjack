@@ -24,7 +24,7 @@ public class Hand {
                 .sum();
         Score score = new Score(sum);
         if(containAce()) {
-            return score.calculateAdditionalScore();
+            return score.calculateAceScore();
         }
         return score;
     }

@@ -1,6 +1,5 @@
 package blackjack.card;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class ScoreTest {
     void addAdditionalScore() {
         Score score = new Score(10);
 
-        assertThat(score.calculateAdditionalScore().getScore()).isEqualTo(20);
+        assertThat(score.calculateAceScore().getScore()).isEqualTo(20);
     }
 
     @Test
@@ -40,7 +39,7 @@ public class ScoreTest {
     void addAdditionalScoreFail() {
         Score score = new Score(12);
 
-        assertThat(score.calculateAdditionalScore().getScore()).isEqualTo(12);
+        assertThat(score.calculateAceScore().getScore()).isEqualTo(12);
     }
 
     @Test
