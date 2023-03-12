@@ -9,6 +9,7 @@ import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantCardsResultDto;
 import blackjack.dto.ParticipantGameResultDto;
 import blackjack.dto.PlayerNamesDto;
+import blackjack.util.Retryable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -36,13 +37,10 @@ public class BlackjackController {
     }
 
     private Participants getParticipants() {
-        try {
+        return Retryable.retryWhenException(() -> {
             List<String> names = inputView.readNames();
             return Participants.from(names);
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception.getMessage());
-            return getParticipants();
-        }
+        }, outputView);
     }
 
     private void getBetAmounts(Participants participants) {
@@ -52,13 +50,11 @@ public class BlackjackController {
     }
 
     private void getBetAmountEachPlayer(Player player) {
-        try {
+        Retryable.retryWhenException(() -> {
             int betAmount = inputView.readBetAmount(player.getName());
             player.initBetAmount(betAmount);
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception.getMessage());
-            getBetAmountEachPlayer(player);
-        }
+            return null;
+        }, outputView);
     }
 
     private void startGame(BlackjackGame blackjackGame, Participants participants) {
@@ -86,13 +82,10 @@ public class BlackjackController {
     }
 
     private GameCommand getCommand(Player player) {
-        try {
+        return Retryable.retryWhenException(() -> {
             String inputCommand = inputView.readIsContinue(player.getName());
             return GameCommand.from(inputCommand);
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception.getMessage());
-            return getCommand(player);
-        }
+        }, outputView);
     }
 
     private void giveCard(Player player, BlackjackGame blackjackGame, GameCommand command) {
