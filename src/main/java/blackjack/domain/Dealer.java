@@ -33,7 +33,7 @@ public class Dealer extends Participant {
         if(participant.isBlackJack() && !isBlackJack()) {
             return BLACK_JACK;
         }
-        if(participant.isBust()) {
+        if(participant.isBust() || isDealerBlackJack(participant)) {
             return LOSE;
         }
         if (isDealerBust(dealerPoint, participantPoint)) {
@@ -43,6 +43,10 @@ public class Dealer extends Participant {
             return LOSE;
         }
         return PUSH;
+    }
+
+    private boolean isDealerBlackJack(final Participant participant) {
+        return isBlackJack() && !participant.isBlackJack();
     }
 
     private boolean isDealerBust(int dealerPoint, int participantPoint) {
