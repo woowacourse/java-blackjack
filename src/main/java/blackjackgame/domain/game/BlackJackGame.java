@@ -39,7 +39,7 @@ public class BlackJackGame {
         if (action == UserAction.HIT) {
             hit(player);
         }
-        if (action == UserAction.STAY || player.isBust()) {
+        if (action == UserAction.STAY) {
             player.finishDraw();
         }
     }
@@ -56,6 +56,7 @@ public class BlackJackGame {
 
     public void judgeWinner() {
         Referee referee = new Referee(players, dealer);
+        referee.judgeWinner();
         referee.judgeWinner();
     }
 

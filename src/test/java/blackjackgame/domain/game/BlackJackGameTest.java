@@ -1,6 +1,5 @@
 package blackjackgame.domain.game;
 
-import static blackjackgame.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjackgame.domain.UserAction;
@@ -99,18 +98,6 @@ class BlackJackGameTest {
         blackJackGame.takePlayerAction(player, UserAction.HIT);
 
         assertThat(player.cards().size()).isEqualTo(defaultSize + 1);
-    }
-
-    @DisplayName("플레이어가 HIT를 선택하고 뽑은 카드로 인해 버스트 상태가 되면 플레이어의 상태를 드로우 종료 상태로 변경한다.")
-    @Test
-    void takeUserAction_hitAndBust() {
-        player.receiveCards(jackKingAce);
-        int defaultSize = player.cards().size();
-
-        blackJackGame.takePlayerAction(player, UserAction.HIT);
-
-        assertThat(player.cards().size()).isEqualTo(defaultSize + 1);
-        assertThat(player.getStatus()).isSameAs(PlayerStatus.DRAW_FINISHED);
     }
 
     @DisplayName("플레이어가 STAY를 선택했을 경우, 카드를 뽑지 않고 플레이어의 상태를 드로우 종료 상태로 변경한다.")

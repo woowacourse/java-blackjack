@@ -34,7 +34,7 @@ public class Player extends User {
     }
 
     public boolean isHittable() {
-        return isLessThanBustScore() && PlayerStatus.HITTABLE == status;
+        return PlayerStatus.HITTABLE == status;
     }
 
     @Override
