@@ -7,5 +7,7 @@ public enum ErrorCode {
     BLANK_NAME,
     EMPTY_CARD,
     INVALID_COMMAND,
+    INVALID_MONEY_UNIT,
+    INVALID_MONEY_BOUND,
     ;
 }
