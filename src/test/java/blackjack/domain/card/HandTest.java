@@ -4,12 +4,12 @@ import static blackjack.domain.player.Result.BLACKJACK_WIN;
 import static blackjack.domain.player.Result.LOSE;
 import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
-import static blackjack.util.CardFixtures.ACE_HEART;
-import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixture.ACE_HEART;
+import static blackjack.util.CardFixture.ACE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Result;
-import blackjack.util.CardFixtures;
+import blackjack.util.CardFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,9 +23,33 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class HandTest {
 
+    static Stream<Arguments> playBlackjackSource() {
+        return Stream.of(
+                Arguments.of(CardFixture.BLACKJACK, CardFixture.BLACKJACK, PUSH),
+                Arguments.of(CardFixture.BLACKJACK, CardFixture.valueOf(20), BLACKJACK_WIN),
+                Arguments.of(CardFixture.BLACKJACK, CardFixture.valueOf(21), BLACKJACK_WIN),
+                Arguments.of(CardFixture.valueOf(20), CardFixture.BLACKJACK, LOSE),
+                Arguments.of(CardFixture.BUST, CardFixture.BLACKJACK, LOSE),
+                Arguments.of(CardFixture.valueOf(20), CardFixture.valueOf(18), WIN),
+                Arguments.of(CardFixture.valueOf(20), CardFixture.valueOf(20), PUSH),
+                Arguments.of(CardFixture.valueOf(17), CardFixture.valueOf(20), LOSE),
+                Arguments.of(CardFixture.valueOf(17), CardFixture.BUST, WIN),
+                Arguments.of(CardFixture.BUST, CardFixture.valueOf(17), LOSE),
+                Arguments.of(CardFixture.BUST, CardFixture.BUST, LOSE)
+        );
+    }
+
+    static Stream<Arguments> isPlayableSource() {
+        return Stream.of(
+                Arguments.of(CardFixture.BLACKJACK, false),
+                Arguments.of(CardFixture.BUST, false),
+                Arguments.of(CardFixture.valueOf(20), true)
+        );
+    }
+
     @Test
     void 카드를_입력받아_핸드를_생성한다() {
-        final List<Card> cards = CardFixtures.BLACKJACK;
+        final List<Card> cards = CardFixture.BLACKJACK;
 
         final Hand hand = new Hand(cards);
 
@@ -41,22 +65,6 @@ public class HandTest {
         final Result result = hand.play(dealerHand);
 
         assertThat(result).isEqualTo(expectedResult);
-    }
-
-    static Stream<Arguments> playBlackjackSource() {
-        return Stream.of(
-                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.BLACKJACK, PUSH),
-                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.valueOf(20), BLACKJACK_WIN),
-                Arguments.of(CardFixtures.BLACKJACK, CardFixtures.valueOf(21), BLACKJACK_WIN),
-                Arguments.of(CardFixtures.valueOf(20), CardFixtures.BLACKJACK, LOSE),
-                Arguments.of(CardFixtures.BUST, CardFixtures.BLACKJACK, LOSE),
-                Arguments.of(CardFixtures.valueOf(20), CardFixtures.valueOf(18), WIN),
-                Arguments.of(CardFixtures.valueOf(20), CardFixtures.valueOf(20), PUSH),
-                Arguments.of(CardFixtures.valueOf(17), CardFixtures.valueOf(20), LOSE),
-                Arguments.of(CardFixtures.valueOf(17), CardFixtures.BUST, WIN),
-                Arguments.of(CardFixtures.BUST, CardFixtures.valueOf(17), LOSE),
-                Arguments.of(CardFixtures.BUST, CardFixtures.BUST, LOSE)
-        );
     }
 
     @Test
@@ -76,14 +84,6 @@ public class HandTest {
         assertThat(hand.isPlayable()).isEqualTo(result);
     }
 
-    static Stream<Arguments> isPlayableSource() {
-        return Stream.of(
-                Arguments.of(CardFixtures.BLACKJACK, false),
-                Arguments.of(CardFixtures.BUST, false),
-                Arguments.of(CardFixtures.valueOf(20), true)
-        );
-    }
-
     @Test
     void 점수_산정에_들어갈_결과값을_반환한다() {
         final Hand hand = new Hand(List.of(ACE_SPADE));
@@ -95,7 +95,7 @@ public class HandTest {
 
     @Test
     void 카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Hand hand = new Hand(CardFixtures.valueOf(19));
+        final Hand hand = new Hand(CardFixture.valueOf(19));
 
         hand.stay();
 

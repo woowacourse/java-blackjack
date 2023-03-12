@@ -2,17 +2,17 @@ package blackjack.domain.player;
 
 import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
-import static blackjack.util.CardFixtures.ACE_DIAMOND;
-import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.EIGHT_SPADE;
-import static blackjack.util.CardFixtures.JACK_CLOVER;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.KING_HEART;
-import static blackjack.util.CardFixtures.NINE_CLOVER;
-import static blackjack.util.CardFixtures.NINE_HEART;
-import static blackjack.util.CardFixtures.NINE_SPADE;
-import static blackjack.util.CardFixtures.SEVEN_SPADE;
-import static blackjack.util.CardFixtures.TWO_SPADE;
+import static blackjack.util.CardFixture.ACE_DIAMOND;
+import static blackjack.util.CardFixture.ACE_SPADE;
+import static blackjack.util.CardFixture.EIGHT_SPADE;
+import static blackjack.util.CardFixture.JACK_CLOVER;
+import static blackjack.util.CardFixture.JACK_SPADE;
+import static blackjack.util.CardFixture.KING_HEART;
+import static blackjack.util.CardFixture.NINE_CLOVER;
+import static blackjack.util.CardFixture.NINE_HEART;
+import static blackjack.util.CardFixture.NINE_SPADE;
+import static blackjack.util.CardFixture.SEVEN_SPADE;
+import static blackjack.util.CardFixture.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

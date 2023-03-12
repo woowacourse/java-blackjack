@@ -1,11 +1,11 @@
 package blackjack.domain.player;
 
-import static blackjack.util.CardFixtures.ACE_DIAMOND;
+import static blackjack.util.CardFixture.ACE_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.util.CardFixtures;
+import blackjack.util.CardFixture;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,6 +19,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class DealerTest {
+
+    static Stream<Arguments> isDrawableSource() {
+        return Stream.of(
+                Arguments.of(CardFixture.valueOf(16), true),
+                Arguments.of(CardFixture.valueOf(17), false)
+        );
+    }
 
     @Test
     void 딜러를_생성한다() {
@@ -35,13 +42,6 @@ public class DealerTest {
         dealer.initialDraw(deck);
 
         assertThat(dealer.isDrawable()).isEqualTo(result);
-    }
-
-    static Stream<Arguments> isDrawableSource() {
-        return Stream.of(
-                Arguments.of(CardFixtures.valueOf(16), true),
-                Arguments.of(CardFixtures.valueOf(17), false)
-        );
     }
 
     @Test

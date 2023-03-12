@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class CardFixtures {
+public class CardFixture {
     public static final Card ACE_SPADE = new Card(Rank.ACE, Shape.SPADE);
     public static final Card TWO_SPADE = new Card(Rank.TWO, Shape.SPADE);
     public static final Card THREE_SPADE = new Card(Rank.THREE, Shape.SPADE);

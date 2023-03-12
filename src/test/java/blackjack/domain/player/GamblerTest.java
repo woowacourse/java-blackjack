@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.util.CardFixtures;
+import blackjack.util.CardFixture;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,6 +18,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class GamblerTest {
+
+    static Stream<Arguments> isDrawableSource() {
+        return Stream.of(
+                Arguments.of(CardFixture.BUST, false),
+                Arguments.of(CardFixture.valueOf(21), false),
+                Arguments.of(CardFixture.valueOf(20), true)
+        );
+    }
 
     @Test
     void 겜블러를_생성한다() {
@@ -37,14 +45,6 @@ public class GamblerTest {
         final boolean drawable = gambler.isDrawable();
 
         assertThat(drawable).isEqualTo(result);
-    }
-
-    static Stream<Arguments> isDrawableSource() {
-        return Stream.of(
-                Arguments.of(CardFixtures.BUST, false),
-                Arguments.of(CardFixtures.valueOf(21), false),
-                Arguments.of(CardFixtures.valueOf(20), true)
-        );
     }
 
     @Test

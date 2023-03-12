@@ -1,10 +1,10 @@
 package blackjack.domain.player;
 
-import static blackjack.util.CardFixtures.ACE_DIAMOND;
-import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.KING_HEART;
-import static blackjack.util.CardFixtures.KING_SPADE;
-import static blackjack.util.CardFixtures.TEN_SPADE;
+import static blackjack.util.CardFixture.ACE_DIAMOND;
+import static blackjack.util.CardFixture.ACE_SPADE;
+import static blackjack.util.CardFixture.KING_HEART;
+import static blackjack.util.CardFixture.KING_SPADE;
+import static blackjack.util.CardFixture.TEN_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;

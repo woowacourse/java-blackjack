@@ -1,11 +1,11 @@
 package blackjack.domain.game;
 
-import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.KING_SPADE;
-import static blackjack.util.CardFixtures.SIX_HEART;
-import static blackjack.util.CardFixtures.TWO_HEART;
-import static blackjack.util.CardFixtures.TWO_SPADE;
+import static blackjack.util.CardFixture.ACE_SPADE;
+import static blackjack.util.CardFixture.JACK_SPADE;
+import static blackjack.util.CardFixture.KING_SPADE;
+import static blackjack.util.CardFixture.SIX_HEART;
+import static blackjack.util.CardFixture.TWO_HEART;
+import static blackjack.util.CardFixture.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
