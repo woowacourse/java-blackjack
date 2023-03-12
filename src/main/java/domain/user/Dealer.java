@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Dealer extends User {
 
-    private static final int DRAWABLE_LIMIT_SCORE = 17;
+    private static final int HITTABLE_LIMIT_SCORE = 17;
 
     @Override
-    public boolean isDrawable() {
-        if (!state.isDrawable()) {
+    public boolean isHittable() {
+        if (!state.isHittable()) {
             return false;
         }
         int score = state.getScore();
-        return score < DRAWABLE_LIMIT_SCORE;
+        return score < HITTABLE_LIMIT_SCORE;
     }
 
     public Card getFirstCard() {

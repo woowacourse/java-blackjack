@@ -27,7 +27,7 @@ public class DealerTest {
     void hit_WhenScoreUnder21() {
         addCards(List.of(SIX, JACK));
 
-        assertThat(dealer.isDrawable()).isTrue();
+        assertThat(dealer.isHittable()).isTrue();
     }
 
     @DisplayName("카드 점수가 17 이상이면 카드를 받을 수 없다")
@@ -35,7 +35,7 @@ public class DealerTest {
     void stay_WhenScoreOver21() {
         addCards(List.of(SEVEN, JACK));
 
-        assertThat(dealer.isDrawable()).isFalse();
+        assertThat(dealer.isHittable()).isFalse();
     }
 
     @DisplayName("플레이 중간에는 딜러의 제일 첫 번째 카드만 보여준다")

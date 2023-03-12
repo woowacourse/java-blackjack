@@ -10,12 +10,12 @@ public abstract class Terminated extends State {
     }
 
     @Override
-    public State draw(Card card) {
+    public State hit(Card card) {
         throw new IllegalStateException("더 이상 카드를 받을 수 없습니다.");
     }
 
     @Override
-    public boolean isDrawable() {
+    public boolean isHittable() {
         return false;
     }
 

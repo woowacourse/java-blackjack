@@ -9,7 +9,7 @@ public class Ready extends State {
     }
 
     @Override
-    public State draw(Card card) {
+    public State hit(Card card) {
         cards.addCard(card);
         if (cards.isMaxScore()) {
             return new BlackJack(cards);

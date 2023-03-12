@@ -84,7 +84,7 @@ public class Users {
     }
 
     public boolean isDealerHittable() {
-        return getDealer().isDrawable();
+        return getDealer().isHittable();
     }
 
     public List<User> getUsers() {
@@ -109,7 +109,7 @@ public class Users {
 
     public List<Player> getHittablePlayers() {
         return players.values().stream()
-            .filter(Player::isDrawable)
+            .filter(Player::isHittable)
             .collect(Collectors.toUnmodifiableList());
     }
 }

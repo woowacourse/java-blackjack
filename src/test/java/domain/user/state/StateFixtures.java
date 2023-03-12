@@ -14,22 +14,22 @@ public class StateFixtures {
 
     public static State createBlackJackState() {
         return State.create()
-            .draw(Card.of(ACE, DIAMOND))
-            .draw(Card.of(JACK, DIAMOND)); // Ready -> BlackJack
+            .hit(Card.of(ACE, DIAMOND))
+            .hit(Card.of(JACK, DIAMOND)); // Ready -> BlackJack
     }
 
     public static State createBustState() {
         return State.create()
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(JACK, DIAMOND)) // Ready -> Running
-            .draw(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(JACK, DIAMOND)) // Ready -> Running
+            .hit(Card.of(QUEEN, DIAMOND)); // Running -> Terminated(Bust)
     }
 
     public static State createStayState() {
         return State.create()
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
-            .draw(Card.of(FOUR, DIAMOND))
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(SIX, DIAMOND)) // Ready -> Running
+            .hit(Card.of(FOUR, DIAMOND))
             .stay(); // Running -> Terminated(Stay)
     }
 }

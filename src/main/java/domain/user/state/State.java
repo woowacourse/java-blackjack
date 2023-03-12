@@ -23,9 +23,9 @@ public abstract class State {
         return new Ready();
     }
 
-    public abstract State draw(Card card);
+    public abstract State hit(Card card);
 
-    public boolean isDrawable() {
+    public boolean isHittable() {
         return true;
     }
 

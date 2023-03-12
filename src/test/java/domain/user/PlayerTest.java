@@ -24,7 +24,7 @@ public class PlayerTest {
     void hit_WhenScoreUnder21() {
         player.hit(Card.of(Denomination.JACK, Suits.HEART));
         player.hit(Card.of(Denomination.QUEEN, Suits.HEART));
-        assertThat(player.isDrawable()).isTrue();
+        assertThat(player.isHittable()).isTrue();
     }
 
     @DisplayName("카드 점수가 21 이상이면 카드를 받을 수 없다")
@@ -33,7 +33,7 @@ public class PlayerTest {
         player.hit(Card.of(Denomination.JACK, Suits.HEART));
         player.hit(Card.of(Denomination.FIVE, Suits.HEART));
         player.hit(Card.of(Denomination.SIX, Suits.HEART));
-        assertThat(player.isDrawable()).isFalse();
+        assertThat(player.isHittable()).isFalse();
     }
 
     @DisplayName("본인의 이름인지 확인한다")

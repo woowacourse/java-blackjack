@@ -5,7 +5,7 @@ import domain.money.BettingAmount;
 
 public class Player extends User {
 
-    private static final int DRAWABLE_LIMIT_SCORE = 21;
+    private static final int HITTABLE_LIMIT_SCORE = 21;
 
     private final PlayerName name;
     private BettingAmount bettingAmount;
@@ -31,12 +31,12 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isDrawable() {
-        if (!state.isDrawable()) {
+    public boolean isHittable() {
+        if (!state.isHittable()) {
             return false;
         }
         int score = state.getScore();
-        return score < DRAWABLE_LIMIT_SCORE;
+        return score < HITTABLE_LIMIT_SCORE;
     }
 
     public String getName() {

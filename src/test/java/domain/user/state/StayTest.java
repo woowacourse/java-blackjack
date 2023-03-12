@@ -26,9 +26,9 @@ class StayTest {
     @BeforeEach
     void setUpStayState() {
         this.state = State.create()
-            .draw(Card.of(TWO, DIAMOND))
-            .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
-            .draw(Card.of(TEN, DIAMOND))
+            .hit(Card.of(TWO, DIAMOND))
+            .hit(Card.of(SIX, DIAMOND)) // Ready -> Running
+            .hit(Card.of(TEN, DIAMOND))
             .stay(); // Running -> Stay (18);
     }
 
@@ -44,9 +44,9 @@ class StayTest {
     @Test
     void match_Stay_Win() {
         State dealer = State.create()
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
-            .draw(Card.of(ACE, DIAMOND))
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(SIX, DIAMOND)) // Ready -> Running
+            .hit(Card.of(ACE, DIAMOND))
             .stay(); // Running -> Stay (17)
 
         assertThat(state.match(dealer)).isSameAs(WIN);
@@ -56,9 +56,9 @@ class StayTest {
     @Test
     void match_Stay_Lose() {
         State dealer = State.create()
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(SIX, DIAMOND)) // Ready -> Running
-            .draw(Card.of(THREE, DIAMOND))
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(SIX, DIAMOND)) // Ready -> Running
+            .hit(Card.of(THREE, DIAMOND))
             .stay(); // Running -> Stay (19)
 
         assertThat(state.match(dealer)).isSameAs(LOSE);
@@ -68,9 +68,9 @@ class StayTest {
     @Test
     void match_Stay_Push() {
         State dealer = State.create()
-            .draw(Card.of(TWO, DIAMOND))
-            .draw(Card.of(SEVEN, DIAMOND)) // Ready -> Running
-            .draw(Card.of(NINE, DIAMOND))
+            .hit(Card.of(TWO, DIAMOND))
+            .hit(Card.of(SEVEN, DIAMOND)) // Ready -> Running
+            .hit(Card.of(NINE, DIAMOND))
             .stay(); // Running -> Stay (18);
 
         assertThat(state.match(dealer)).isSameAs(PUSH);
@@ -80,9 +80,9 @@ class StayTest {
     @Test
     void StayWhen21() {
         state = State.create()
-            .draw(Card.of(THREE, DIAMOND))
-            .draw(Card.of(EIGHT, DIAMOND)) // Ready -> Running
-            .draw(Card.of(TEN, DIAMOND)); // Running -> Stay (21)
+            .hit(Card.of(THREE, DIAMOND))
+            .hit(Card.of(EIGHT, DIAMOND)) // Ready -> Running
+            .hit(Card.of(TEN, DIAMOND)); // Running -> Stay (21)
 
         assertThat(state).isInstanceOf(Stay.class);
     }

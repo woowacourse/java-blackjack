@@ -24,7 +24,7 @@ class UserTest {
     void setUpUser() {
         user = new User() {
             @Override
-            public boolean isDrawable() {
+            public boolean isHittable() {
                 return true;
             }
         };

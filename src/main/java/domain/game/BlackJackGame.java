@@ -53,7 +53,7 @@ public class BlackJackGame {
 
     public void giveCardToDealer() {
         Dealer dealer = users.getDealer();
-        if (dealer.isDrawable()) {
+        if (dealer.isHittable()) {
             dealer.hit(deck.pickCard());
         }
     }

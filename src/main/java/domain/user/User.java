@@ -13,7 +13,7 @@ public abstract class User {
     }
 
     public void hit(Card card) {
-        this.state = state.draw(card);
+        this.state = state.hit(card);
     }
 
     public void stayIfRunning() {
@@ -30,7 +30,7 @@ public abstract class User {
         return state.getCards();
     }
 
-    public abstract boolean isDrawable();
+    public abstract boolean isHittable();
 
     public int getScore() {
         return state.getScore();

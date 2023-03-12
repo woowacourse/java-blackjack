@@ -26,7 +26,7 @@ class ReadyTest {
     @DisplayName("처음 한 장만 받으면 Ready상태이다.")
     @Test
     void stateToReady() {
-        State newState = state.draw(Card.of(JACK, DIAMOND));
+        State newState = state.hit(Card.of(JACK, DIAMOND));
 
         assertThat(newState).isInstanceOf(Ready.class);
     }
@@ -35,8 +35,8 @@ class ReadyTest {
     @Test
     void stateToRunning() {
         State newState = state
-            .draw(Card.of(JACK, DIAMOND))
-            .draw(Card.of(TWO, DIAMOND));
+            .hit(Card.of(JACK, DIAMOND))
+            .hit(Card.of(TWO, DIAMOND));
 
         assertThat(newState).isInstanceOf(Running.class);
     }
@@ -45,16 +45,16 @@ class ReadyTest {
     @Test
     void stateToBlackJack() {
         State newState = state
-            .draw(Card.of(ACE, DIAMOND))
-            .draw(Card.of(JACK, DIAMOND));
+            .hit(Card.of(ACE, DIAMOND))
+            .hit(Card.of(JACK, DIAMOND));
 
         assertThat(newState).isInstanceOf(BlackJack.class);
     }
 
     @DisplayName("카드를 더 받을 수 있다.")
     @Test
-    void isDrawable() {
-        assertThat(state.isDrawable()).isTrue();
+    void isHittable() {
+        assertThat(state.isHittable()).isTrue();
     }
 
     @DisplayName("stay할시 예외가 발생한다.")
@@ -69,8 +69,8 @@ class ReadyTest {
     @Test
     void match() {
         State dealer = State.create()
-            .draw(Card.of(ACE, HEART))
-            .draw(Card.of(TEN, HEART));
+            .hit(Card.of(ACE, HEART))
+            .hit(Card.of(TEN, HEART));
         assertThatThrownBy(() -> state.match(dealer))
             .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("게임 종료 전입니다.");

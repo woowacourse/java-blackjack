@@ -22,14 +22,14 @@ class RunningTest {
     @BeforeEach
     void setUpRunningState() {
         this.state = State.create()
-            .draw(Card.of(FOUR, DIAMOND))
-            .draw(Card.of(SIX, DIAMOND)); // Ready -> Running
+            .hit(Card.of(FOUR, DIAMOND))
+            .hit(Card.of(SIX, DIAMOND)); // Ready -> Running
     }
 
     @DisplayName("카드를 받았는데, 총 합이 21점보다 작으면 그대로 Running상태이다.")
     @Test
     void stateToRunning() {
-        State newState = state.draw(Card.of(TEN, DIAMOND));
+        State newState = state.hit(Card.of(TEN, DIAMOND));
 
         assertThat(newState).isInstanceOf(Running.class);
     }
@@ -38,8 +38,8 @@ class RunningTest {
     @Test
     void stateToBust() {
         State newState = state
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(TWO, DIAMOND));
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(TWO, DIAMOND));
 
         assertThat(newState).isInstanceOf(Bust.class);
     }
@@ -48,16 +48,16 @@ class RunningTest {
     @Test
     void stateToStay() {
         State newState = state
-            .draw(Card.of(TEN, DIAMOND))
-            .draw(Card.of(ACE, DIAMOND));
+            .hit(Card.of(TEN, DIAMOND))
+            .hit(Card.of(ACE, DIAMOND));
 
         assertThat(newState).isInstanceOf(Stay.class);
     }
 
     @DisplayName("카드를 더 받을 수 있다.")
     @Test
-    void isDrawable() {
-        assertThat(state.isDrawable()).isTrue();
+    void isHittable() {
+        assertThat(state.isHittable()).isTrue();
     }
 
     @DisplayName("stay할 수 있다.")
@@ -71,8 +71,8 @@ class RunningTest {
     @Test
     void match() {
         State dealer = State.create()
-            .draw(Card.of(ACE, HEART))
-            .draw(Card.of(TEN, HEART));
+            .hit(Card.of(ACE, HEART))
+            .hit(Card.of(TEN, HEART));
         assertThatThrownBy(() -> state.match(dealer))
             .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("게임 종료 전입니다.");
