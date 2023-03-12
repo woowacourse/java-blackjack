@@ -68,7 +68,7 @@ public class BlackjackController {
     }
 
     private void processDealerDraw(final Dealer dealer, final BlackjackGame blackjackGame) {
-        while (!dealer.isSatisfiedMinScore()) {
+        while (!dealer.isBust() && !dealer.isSatisfiedMinScore()) {
             blackjackGame.draw(dealer);
             outputView.printDealerDraw();
         }
