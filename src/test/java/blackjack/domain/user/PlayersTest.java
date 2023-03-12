@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.user.name.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -19,7 +18,7 @@ class PlayersTest {
         dummy = new ArrayList<>();
 
         for (int playerCount = 0; playerCount < 15; playerCount++) {
-            dummy.add(new Player(new PlayerName("dummy" + playerCount)));
+            dummy.add(new Player("dummy" + playerCount));
         }
     }
 
@@ -33,8 +32,8 @@ class PlayersTest {
     @Test
     void 플레이어들은_중복된_이름을_가질_수_없다() {
         // given
-        Player dummy1 = new Player(new PlayerName("dummy"));
-        Player dummy2 = new Player(new PlayerName("dummy"));
+        Player dummy1 = new Player("dummy");
+        Player dummy2 = new Player("dummy");
         List<Player> dummy = List.of(dummy1, dummy2);
 
         // then

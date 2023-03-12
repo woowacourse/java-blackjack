@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.user.name.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,14 +15,14 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         // given
-        Player player = new Player(new PlayerName("주노"));
+        Player player = new Player("주노");
         CardPack cardPack = new CardPack();
 
         // when
         player.drawCard(cardPack);
 
         // then
-        Assertions.assertThat(player.showCards())
+        Assertions.assertThat(player.getCards())
                 .containsExactly(new Card(CardNumber.KING, CardShape.CLOVER));
     }
 }
