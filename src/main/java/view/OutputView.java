@@ -3,11 +3,10 @@ package view;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import domain.Result;
-import domain.card.Card;
+import dto.CardDto;
 import dto.PlayerDto;
 
 public class OutputView {
@@ -23,15 +22,15 @@ public class OutputView {
         }
     }
 
-    public void printPlayerCards(String name, Set<Card> cards) {
+    public void printPlayerCards(String name, List<CardDto> cards) {
         System.out.println(name + "카드: " + joinDisplaysOf(cards));
     }
 
-    public void printFirstCardOfDealer(Set<Card> cards) {
-        Iterator<Card> cardIterator = cards.iterator();
+    public void printFirstCardOfDealer(List<CardDto> cards) {
+        Iterator<CardDto> cardIterator = cards.iterator();
         if (cardIterator.hasNext()) {
-            Card firstCard = cardIterator.next();
-            System.out.println("딜러: " + Display.of(firstCard));
+            CardDto firstCard = cardIterator.next();
+            System.out.println("딜러: " + getDisplay(firstCard));
             return;
         }
         System.out.println("딜러의 카드가 없습니다");
@@ -52,7 +51,7 @@ public class OutputView {
         }
     }
 
-    private void printCardsAndScore(String name, Set<Card> cards, int score) {
+    private void printCardsAndScore(String name, List<CardDto> cards, int score) {
         System.out.println(name + "카드: " + joinDisplaysOf(cards) + " - 결과: " + score);
     }
 
@@ -83,9 +82,9 @@ public class OutputView {
                 .count();
     }
 
-    private String joinDisplaysOf(Set<Card> cards) {
+    private String joinDisplaysOf(List<CardDto> cards) {
         return cards.stream()
-                .map(Display::of)
+                .map(this::getDisplay)
                 .collect(Collectors.joining(", "));
     }
 
@@ -97,5 +96,9 @@ public class OutputView {
 
     private String getDisplay(ResultCategory resultCategory, List<Result> results) {
         return countResults(resultCategory, results) + resultCategory.getDisplay();
+    }
+
+    private String getDisplay(CardDto card) {
+        return card.getLetter() + card.getName();
     }
 }

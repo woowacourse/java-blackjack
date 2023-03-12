@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import domain.Game;
 import domain.bank.Money;
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.User;
+import dto.CardDto;
 import dto.PlayerDto;
 import view.IllegalArgumentExceptionHandler;
 import view.InputView;
@@ -47,7 +50,7 @@ public class Application {
         game.dealTwice();
 
         OUTPUT_VIEW.printDealStatus(createDtosOf(game.getUsers()));
-        OUTPUT_VIEW.printFirstCardOfDealer(game.getDealer().getCards());
+        OUTPUT_VIEW.printFirstCardOfDealer(createDtosOf(game.getDealer().getCards()));
         OUTPUT_VIEW.printUsersStatus(createDtosOf(game.getUsers()));
     }
 
@@ -82,7 +85,7 @@ public class Application {
     private static void selectHitOrStand(Game game, User user) {
         while (user.canHit() && INPUT_VIEW.askForHit(user.getName())) {
             game.dealTo(user);
-            OUTPUT_VIEW.printPlayerCards(user.getName(), user.getCards());
+            OUTPUT_VIEW.printPlayerCards(user.getName(), createDtosOf(user.getCards()));
         }
     }
 
@@ -109,7 +112,18 @@ public class Application {
                 .collect(Collectors.toList());
     }
 
+    private static List<CardDto> createDtosOf(Set<Card> cards) {
+        return cards
+                .stream()
+                .map(Application::createDtoOf)
+                .collect(Collectors.toList());
+    }
+
     private static PlayerDto createDtoOf(Player player) {
-        return new PlayerDto(player.getName(), player.getCards(), player.getScore().getScore());
+        return new PlayerDto(player.getName(), createDtosOf(player.getCards()), player.getScore().getScore());
+    }
+
+    private static CardDto createDtoOf(Card card) {
+        return new CardDto(card.getLetter().getLetter(), card.getFace().getName());
     }
 }

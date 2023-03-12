@@ -1,16 +1,14 @@
 package dto;
 
-import java.util.Set;
-
-import domain.card.Card;
+import java.util.List;
 
 public class PlayerDto {
 
     private final String name;
-    private final Set<Card> cards;
+    private final List<CardDto> cards;
     private final int score;
 
-    public PlayerDto(String name, Set<Card> cards, int score) {
+    public PlayerDto(String name, List<CardDto> cards, int score) {
         this.name = name;
         this.cards = cards;
         this.score = score;
@@ -20,7 +18,7 @@ public class PlayerDto {
         return name;
     }
 
-    public Set<Card> getCards() {
+    public List<CardDto> getCards() {
         return cards;
     }
 
