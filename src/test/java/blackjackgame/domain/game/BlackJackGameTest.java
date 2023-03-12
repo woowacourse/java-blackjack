@@ -35,7 +35,7 @@ class BlackJackGameTest {
                 DiamondCard.DIAMOND_NINE, HeartCard.HEART_SEVEN
         )));
 
-        blackJackGame = new BlackJackGame(players , dealer, cards);
+        blackJackGame = new BlackJackGame(players, dealer, cards);
     }
 
     @DisplayName("블랙잭 게임 생성 당시 플레이어와 딜러는 카드를 가지고 있지 않다.")
@@ -67,5 +67,23 @@ class BlackJackGameTest {
         blackJackGame.hitUntilSatisfyingDealerMinimumScore();
 
         assertThat(dealer.cards()).isEqualTo(expectedCards);
+    }
+
+    @DisplayName("딜러가 기본 카드 2장 외에 카드를 추가로 뽑았다면, true를 반환한다.")
+    @Test
+    void isDealerDrawExtraCount_true() {
+        blackJackGame.drawDefaultCard();
+
+        dealer.receiveCard(SpadeCard.SPADE_ACE);
+
+        assertThat(blackJackGame.isDealerDrawExtraCount()).isTrue();
+    }
+
+    @DisplayName("딜러가 기본 카드 2장 외에 카드를 추가로 뽑지 않았다면, false를 반환한다.")
+    @Test
+    void isDealerDrawExtraCount_false() {
+        blackJackGame.drawDefaultCard();
+
+        assertThat(blackJackGame.isDealerDrawExtraCount()).isFalse();
     }
 }
