@@ -8,7 +8,7 @@ import domain.participant.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -37,7 +37,7 @@ public class MainController {
     }
 
     private Map<String, BettingMoney> readPlayers() {
-        Map<String, BettingMoney> playerBettingMoneys = new HashMap<>();
+        Map<String, BettingMoney> playerBettingMoneys = new LinkedHashMap<>();
         List<String> playerNames = inputView.readPlayerNames();
         for (String playerName : playerNames) {
             playerBettingMoneys.put(playerName, initializeBettingMoney(playerName));
