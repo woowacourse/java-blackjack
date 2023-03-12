@@ -1,6 +1,7 @@
 package blackjackgame.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import blackjackgame.domain.*;
 import blackjackgame.view.AddCardRequest;
@@ -18,43 +19,51 @@ public class BlackJackController {
 
     public void run() {
         final Deck deck = new Deck();
-        final Guests guests = generateGuests(deck);
         final Dealer dealer = new Dealer(new Hand(deck.pickOne(), deck.pickOne()));
-        Map<Guest, BettingMoney> guestBettingMoney = askGuestsBettingMoney(guests);
+        final Guests guests = generateGuests(deck);
         printFirstHand(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
         askDealerHitCard(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
-        printBettingResult(guests, dealer, guestBettingMoney);
+        printBettingResult(guests, dealer);
     }
 
     private Guests generateGuests(final Deck deck) {
+        List<Name> guestNames = askGuestNames();
+        List<BettingMoney> bettingMonies = askGuestsBettingMoney(guestNames);
+        return new Guests(guestNames, bettingMonies, deck);
+    }
+
+    private List<Name> askGuestNames() {
         try {
-            List<String> guestNames = inputView.readGuestsName();
-            return new Guests(guestNames, deck);
+            List<String> guestNames = inputView.readGuestNames();
+            Guests.validateGuestNames(guestNames);
+            return guestNames.stream()
+                    .map(Name::new)
+                    .collect(Collectors.toUnmodifiableList());
         } catch (IllegalArgumentException e) {
             inputView.printErrorMsg(e.getMessage());
-            return generateGuests(deck);
+            return askGuestNames();
         }
     }
 
-    private Map<Guest, BettingMoney> askGuestsBettingMoney(final Guests guests) {
-        Map<Guest, BettingMoney> guestBettingMoneyMap = new LinkedHashMap<>();
-        for (Guest guest : guests.getGuests()) {
-            askGuestBettingMoney(guestBettingMoneyMap, guest);
+    private List<BettingMoney> askGuestsBettingMoney(List<Name> guestNames) {
+        List<BettingMoney> guestsBettingMoney = new ArrayList<>();
+        for (Name name : guestNames) {
+            askGuestBettingMoney(guestsBettingMoney, name.getName());
         }
-        return guestBettingMoneyMap;
+        return guestsBettingMoney;
     }
 
-    private void askGuestBettingMoney(Map<Guest, BettingMoney> guestBettingMoneyMap, Guest guest) {
+    private void askGuestBettingMoney(List<BettingMoney> guestBettingMoney, String guestName) {
         try {
-            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guest.getName()));
-            guestBettingMoneyMap.put(guest, bettingMoney);
+            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guestName));
+            guestBettingMoney.add(bettingMoney);
         } catch (IllegalArgumentException e) {
             inputView.printErrorMsg(e.getMessage());
-            askGuestBettingMoney(guestBettingMoneyMap, guest);
+            askGuestBettingMoney(guestBettingMoney, guestName);
         }
     }
 
@@ -109,14 +118,14 @@ public class BlackJackController {
         }
     }
 
-    private void printBettingResult(final Guests guests, final Dealer dealer, final Map<Guest, BettingMoney> guestBettingMoney) {
+    private void printBettingResult(final Guests guests, final Dealer dealer) {
         Result result = new Result(dealer, guests.getGuests());
         Map<Guest, GameOutcome> guestGameOutcome = result.getGuestsResult();
         Map<String, Integer> bettingResult = new LinkedHashMap<>();
         int dealerRevenue = 0;
         bettingResult.put(dealer.getName(), dealerRevenue);
         for(Guest guest : guestGameOutcome.keySet()) {
-            int guestRevenue = guestBettingMoney.get(guest).getRevenue(guestGameOutcome.get(guest));
+            int guestRevenue = guestGameOutcome.get(guest).calculateRevenue(guest.getBettingMoney());
             bettingResult.put(guest.getName(), guestRevenue);
             dealerRevenue -= guestRevenue;
         }

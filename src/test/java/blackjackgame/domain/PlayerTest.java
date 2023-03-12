@@ -45,7 +45,7 @@ class PlayerTest {
         Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
         Card heartQ = new Card(Symbol.HEART, CardValue.QUEEN);
 
-        Player player = new Guest(new Name("pobi"), new Hand(spade5, clover8));
+        Player player = new Dealer(new Hand(spade5, clover8));
         player.addCard(heartQ);
 
         Assertions.assertThat(player.getHand()).hasSize(3);

@@ -8,7 +8,7 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readGuestsName() {
+    public List<String> readGuestNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String guestsName = scanner.nextLine();
         validateBlank(guestsName);
@@ -18,7 +18,7 @@ public class InputView {
     private void validateBlank(final String guestsName) {
         if (guestsName.isBlank()) {
             printErrorMsg("참여할 사람 이름은 비어서는 안 됩니다.");
-            readGuestsName();
+            readGuestNames();
         }
     }
 
