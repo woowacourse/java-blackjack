@@ -15,7 +15,6 @@ import static blackjack.util.CardFixture.THREE_SPADE;
 import static blackjack.util.CardFixture.TWO_HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.player.Result;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

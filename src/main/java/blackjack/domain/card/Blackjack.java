@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.player.Result;
-
 public class Blackjack extends Finished {
     Blackjack(final Cards cards) {
         super(cards);

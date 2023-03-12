@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.player.Result;
-
 public final class Stay extends Finished {
     Stay(final Cards cards) {
         super(cards);

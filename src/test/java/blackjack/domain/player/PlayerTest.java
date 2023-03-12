@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Hit;
+import blackjack.domain.card.Result;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;

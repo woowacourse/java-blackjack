@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.player.Result.BLACKJACK_WIN;
-import static blackjack.domain.player.Result.PUSH;
+import static blackjack.domain.card.Result.BLACKJACK_WIN;
+import static blackjack.domain.card.Result.PUSH;
 import static blackjack.util.CardFixture.ACE_DIAMOND;
 import static blackjack.util.CardFixture.ACE_SPADE;
 import static blackjack.util.CardFixture.EIGHT_SPADE;
@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Result;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.Map;

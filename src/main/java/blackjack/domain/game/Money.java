@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.player.Result;
+import blackjack.domain.card.Result;
 import java.math.BigDecimal;
 import java.util.Objects;
 
