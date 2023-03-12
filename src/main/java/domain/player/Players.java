@@ -44,7 +44,7 @@ public final class Players {
                 .collect(toList());
     }
 
-    public Map<Player, Bet> calculateFinalResults(final Dealer dealer, final Map<Player, Bet> playerBets) {
+    public Map<Gambler, Bet> calculateFinalResults(final Dealer dealer, final Map<Player, Bet> playerBets) {
         Map<Player, Status> statusResults = calculateResults(dealer);
         return calculateBets(dealer, statusResults, playerBets);
     }
@@ -54,8 +54,8 @@ public final class Players {
                 .collect(toMap(player -> player, player -> player.compareWithDealer(dealer)));
     }
 
-    private Map<Player, Bet> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Bet> playerBets) {
-        Map<Player, Bet> prizeResult = new LinkedHashMap<>();
+    private Map<Gambler, Bet> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Bet> playerBets) {
+        Map<Gambler, Bet> prizeResult = new LinkedHashMap<>();
         for (Player player : players) {
             Status singleResult = statusResults.get(player);
             Bet singleBet = playerBets.get(player);

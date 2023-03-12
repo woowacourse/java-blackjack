@@ -2,6 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.player.Dealer;
+import domain.player.Gambler;
 import domain.player.Player;
 import domain.player.Players;
 import domain.stake.Bet;
@@ -47,25 +48,25 @@ public final class OutputView {
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        printPlayerName(dealer);
+        printGamblerName(dealer);
         Card oneCard = dealer.getCards()
                 .get(FIRST_INDEX_CARD);
         System.out.println(CardParser.parse(oneCard));
     }
 
-    private static void printPlayerName(final Player player) {
-        String name = player.getName();
+    private static void printGamblerName(final Gambler gambler) {
+        String name = gambler.getName();
         System.out.print(name + NAME_FORMAT);
     }
 
-    private static void printPlayerCards(final Player player) {
-        List<String> output = getPlayerCards(player);
+    private static void printGamblerCards(final Gambler gambler) {
+        List<String> output = getGamblerCards(gambler);
         System.out.print(String.join(DELIMITER, output));
     }
 
-    private static List<String> getPlayerCards(final Player player) {
+    private static List<String> getGamblerCards(final Gambler gambler) {
         List<String> output = new ArrayList<>();
-        for (Card card : player.getCards()) {
+        for (Card card : gambler.getCards()) {
             output.add(CardParser.parse(card));
         }
         return output;
@@ -77,28 +78,28 @@ public final class OutputView {
     }
 
     public static void printSinglePlayer(final Player player) {
-        printPlayerName(player);
-        printPlayerCards(player);
+        printGamblerName(player);
+        printGamblerCards(player);
         printNewLine();
     }
 
-    public static void printScore(final Player player) {
-        printPlayerName(player);
-        printPlayerCards(player);
+    public static void printScore(final Gambler gambler) {
+        printGamblerName(gambler);
+        printGamblerCards(gambler);
         System.out.print(SCORE_GUIDE_MESSAGE);
-        if (isSpecialScore(player)) {
+        if (isSpecialScore(gambler)) {
             return;
         }
-        System.out.print(player.getScore().getValue());
+        System.out.print(gambler.getScore().getValue());
         printNewLine();
     }
 
-    private static boolean isSpecialScore(final Player player) {
-        if (player.isBusted()) {
+    private static boolean isSpecialScore(final Gambler gambler) {
+        if (gambler.isBusted()) {
             System.out.println(BUSTED_RESULT_GUIDE_MESSAGE);
             return true;
         }
-        if (player.isBlackjack()) {
+        if (gambler.isBlackjack()) {
             System.out.println(BLACKJACK_GUIDE_MESSAGE);
             return true;
         }
@@ -110,11 +111,11 @@ public final class OutputView {
         printNewLine();
     }
 
-    public static void printResult(final Map<Player, Bet> prizeResults) {
+    public static void printResult(final Map<Gambler, Bet> prizeResults) {
         printNewLine();
         System.out.println(RESULT_GUIDE_MESSAGE);
         prizeResults.forEach(
-                (player, prize) -> System.out.println(player.getName() + COLON + prize.getValue())
+                (gambler, prize) -> System.out.println(gambler.getName() + COLON + prize.getValue())
         );
     }
 

@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Deck;
 import domain.player.Dealer;
+import domain.player.Gambler;
 import domain.player.Player;
 import domain.player.Players;
 import domain.stake.Bet;
@@ -114,7 +115,7 @@ public final class BlackjackController {
     }
 
     private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Bet> playerBets) {
-        Map<Player, Bet> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
+        Map<Gambler, Bet> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
         printResult(finalStakeResults);
     }
 }

@@ -5,6 +5,7 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.player.Dealer;
+import domain.player.Gambler;
 import domain.player.Player;
 import domain.player.Players;
 import domain.stake.Bet;
@@ -59,7 +60,7 @@ class PlayersTest {
         Bet from = Bet.from(1000);
         Bet negate = from.negate();
         //when
-        Map<Player, Bet> playerStatusMap = players.calculateFinalResults(dealer, bets);
+        Map<Gambler, Bet> playerStatusMap = players.calculateFinalResults(dealer, bets);
         //then
         assertThat(playerStatusMap).containsExactly(Map.entry(dealer, negate), Map.entry(jude, Bet.from(1000)));
     }
