@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -17,7 +18,9 @@ class NameTest {
         @DisplayName("이름을 생성할 수 있다.")
         @Test
         void validLengthTest() {
-            assertDoesNotThrow(() -> new Name("mango"));
+            Name name = new Name("mango");
+
+            assertThat(name.getName()).isEqualTo("mango");
         }
 
         @DisplayName("10글자를 초과하는 문자로는 이름을 생성할 수 없다.")

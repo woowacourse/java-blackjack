@@ -1,7 +1,7 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Deck;
 import java.util.List;
@@ -14,7 +14,10 @@ class ParticipantsTest {
     @DisplayName("전체 참가자의 수가 2명 이상 8명 이하면 생성에 성공한다.")
     @Test
     void validSizeTest() {
-        assertDoesNotThrow(() -> new Participants(List.of("깃짱", "망고"), deck));
+        List<String> playerNames = List.of("깃짱", "망고");
+        Participants participants = new Participants(playerNames, deck);
+
+        assertThat(participants.getPlayerNames()).isEqualTo(playerNames);
     }
 
     @DisplayName("전체 참가자의 수가 2명보다 작으면 예외 처리한다.")

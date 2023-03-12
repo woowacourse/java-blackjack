@@ -1,8 +1,9 @@
 package domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,10 @@ class CardTest {
     @DisplayName("카드의 값과 모양으로 카드를 생성한다.")
     @Test
     void createTest() {
-        assertDoesNotThrow(() -> new Card(Value.ACE, Shape.SPADE));
+        Card card = new Card(Value.ACE, Shape.SPADE);
+        List<String> expected = List.of(Value.ACE.getValue(), Shape.SPADE.getShape());
+
+        assertThat(List.of(card.getValue(), card.getShape())).isEqualTo(expected);
     }
 
     @Nested
