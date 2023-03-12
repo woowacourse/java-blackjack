@@ -3,14 +3,13 @@ package blackjackgame.domain.user;
 import blackjackgame.domain.Denomination;
 import blackjackgame.domain.card.Card;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hands {
     private final List<Card> cards;
 
     public Hands() {
-        this.cards = new ArrayList<>(Collections.emptyList());
+        this.cards = new ArrayList<>();
     }
 
     public void add(Card receivedCard) {
