@@ -35,6 +35,34 @@ public class Player {
         return !isOverPlayerBlackJack() && isCommandYes(command);
     }
 
+    public boolean isBust() {
+        if (getCardsSum() > BLACK_JACK) {
+            return true;
+        }
+        return false;
+    }
+
+    public int bustMoney() {
+        bettingMoney.bust();
+        return getMoney();
+    }
+
+    public int blackJackWinMoney() {
+        bettingMoney.blackJack();
+        return getMoney();
+    }
+
+    public int calculateResult(Dealer dealer) {
+        if (isBust() || (dealer.getCardsSum() > getCardsSum() && !(dealer.isBust()))) {
+            return bustMoney();
+        } else if ((dealer.isBust() || dealer.getCardsSum() < getCardsSum()) && getPlayerCards().size() > 2) {
+            return getMoney();
+        } else if (dealer.getCardsSum() == getCardsSum()) {
+            return 0;
+        }
+        return blackJackWinMoney();
+    }
+
     public boolean isCommandYes(Command command) {
         return command.equals(Command.YES);
     }
@@ -45,6 +73,10 @@ public class Player {
 
     public List<Card> getPlayerCards() {
         return cards.getCards();
+    }
+
+    public int getMoney() {
+        return bettingMoney.getBettingMoney();
     }
 }
 

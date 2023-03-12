@@ -3,11 +3,21 @@ package domain;
 import java.util.Objects;
 
 public class BettingMoney {
+    private static final Double BLACK_JACK_BONUS = 1.5;
+    private static final Integer LOSE_MONEY = -1;
 
-    private final int money;
+    private int money;
 
     public BettingMoney(int money) {
         this.money = money;
+    }
+
+    public void bust() {
+        this.money = this.money * LOSE_MONEY;
+    }
+
+    public void blackJack() {
+        this.money = (int) (this.money * BLACK_JACK_BONUS);
     }
 
     public int getBettingMoney(){
