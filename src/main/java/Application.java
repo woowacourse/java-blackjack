@@ -4,6 +4,7 @@ import java.util.Map;
 
 import domain.card.RandomShuffleStrategy;
 import domain.game.BlackJackGame;
+
 import view.InputView;
 import view.OutputView;
 
@@ -173,5 +174,4 @@ public class Application {
             OutputView.printResult(playerAndProfit.getKey(), playerAndProfit.getValue());
         }
     }
-
 }

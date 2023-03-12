@@ -31,7 +31,7 @@ public final class Participants {
         validateNumberOfNames(names);
         validateNoDuplication(names);
     }
-
+    
     private static void validateNumberOfNames(final List<String> names) {
         if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());

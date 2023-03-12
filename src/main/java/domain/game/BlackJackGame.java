@@ -1,5 +1,6 @@
 package domain.game;
 
+
 import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public final class BlackJackGame {
     }
 
     private Participants createParticipants(final List<String> names) {
+
         return Participants.from(names);
     }
 

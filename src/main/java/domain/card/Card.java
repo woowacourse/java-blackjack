@@ -43,6 +43,4 @@ public final class Card {
     public String toString() {
         return rank.getName() + suit.getShape();
     }
-
 }
-

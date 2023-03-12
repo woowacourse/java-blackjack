@@ -58,6 +58,7 @@ public final class InputView {
         System.out.printf(HIT_OR_STAY_REQUEST_MESSAGE, name);
     }
 
+
     private static void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DRAWING_CARD_REQUEST.getMessage());
