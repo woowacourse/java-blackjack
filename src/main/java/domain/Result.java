@@ -8,18 +8,14 @@ public class Result {
     private final Map<Gambler, Integer> result;
     private final Map<Gambler, Integer> benefits;
     private final Referee referee;
-    private final Players players;
-    private final Dealer dealer;
 
     public Result(Players players, Dealer dealer, Bettings bettings) {
-        this.players = players;
-        this.dealer = dealer;
         referee = new Referee(dealer, bettings);
-        result = createResult();
-        benefits = createBenefits();
+        result = createResult(players, dealer);
+        benefits = createBenefits(players, dealer);
     }
 
-    private Map<Gambler, Integer> createBenefits() {
+    private Map<Gambler, Integer> createBenefits(Players players, Dealer dealer) {
         Map<Gambler, Integer> benefits = new LinkedHashMap<>();
 
         benefits.put(dealer, 0);
@@ -30,7 +26,7 @@ public class Result {
         return benefits;
     }
 
-    private Map<Gambler, Integer> createResult() {
+    private Map<Gambler, Integer> createResult(Players players, Dealer dealer) {
         Map<Gambler, Integer> result = new LinkedHashMap<>();
         result.put(dealer, 0);
         for (Player player : players.getPlayers()) {
