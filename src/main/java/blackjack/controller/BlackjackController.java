@@ -30,7 +30,7 @@ public class BlackjackController {
         final BlackjackGame blackjackGame = generateBlackjackGame();
         drawInitialCards(blackjackGame);
         drawAdditionalCards(blackjackGame);
-        printPlayerGameResult(blackjackGame);
+        printPlayerCardAndScores(blackjackGame);
         printPlayerProfit(blackjackGame);
     }
 
@@ -50,9 +50,8 @@ public class BlackjackController {
     }
 
     private BettingZone generateBettingZone(final Players players) {
-        final List<Player> allPlayers = players.getPlayers();
+        final List<Player> allPlayers = players.getGamblers();
         final LinkedHashMap<Player, Money> betMoneyByPlayers = allPlayers.stream()
-                .filter(player -> !player.isDealer())
                 .collect(Collectors.toMap(
                         Function.identity(),
                         player -> Money.createMoneyForBetting(repeatUntilGetValidInput(() -> inputView.readBetMoney(player))),
@@ -68,7 +67,7 @@ public class BlackjackController {
     }
 
     private void drawAdditionalCards(final BlackjackGame blackjackGame) {
-        final List<Player> players = blackjackGame.getPlayers();
+        final List<Player> players = blackjackGame.getGamblers();
         for (Player player : players) {
             drawByGambler(blackjackGame, player);
         }
@@ -77,18 +76,14 @@ public class BlackjackController {
     }
 
     private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
-        while (isDrawable(player)) {
+        while (player.isDrawable()) {
             final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
             blackjackGame.drawByGambler(player, ShuffledDeck.getInstance(), command);
             outputView.printDrawResult(player);
         }
     }
 
-    private boolean isDrawable(final Player player) {
-        return player.isDrawable() && !player.isDealer();
-    }
-
-    private void printPlayerGameResult(final BlackjackGame blackjackGame) {
+    private void printPlayerCardAndScores(final BlackjackGame blackjackGame) {
         final List<Player> players = blackjackGame.getPlayers();
         for (final Player player : players) {
             outputView.printPlayerCardAndScores(player);

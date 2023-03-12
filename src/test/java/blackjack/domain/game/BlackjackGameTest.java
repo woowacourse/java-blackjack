@@ -41,6 +41,17 @@ public class BlackjackGameTest {
     }
 
     @Test
+    void 겜블러들을_반환한다() {
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
+
+        final List<Player> players = blackjackGame.getGamblers();
+
+        assertThat(players)
+                .extracting(Player::getName)
+                .containsExactly("허브", "후추");
+    }
+
+    @Test
     void 딜러를_반환한다() {
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
 

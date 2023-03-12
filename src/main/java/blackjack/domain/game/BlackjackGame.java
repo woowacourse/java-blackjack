@@ -43,11 +43,15 @@ public class BlackjackGame {
         return players.compareHands();
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
-    }
-
     public Dealer getDealer() {
         return players.getDealer();
+    }
+
+    public List<Player> getGamblers() {
+        return players.getGamblers();
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }
