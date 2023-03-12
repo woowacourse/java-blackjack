@@ -56,7 +56,7 @@ public class Result {
     }
 
     private boolean isPlayerNotBustAndWin(Dealer dealer, Player player) {
-        return !player.isBust() && !player.isBlackjack() && (dealer.isBust() || player.getTotalScore()
+        return player.isNotBust() && player.isNotBlackjack() && (dealer.isBust() || player.getTotalScore()
                 .isGreaterThan(dealer.getTotalScore()));
     }
 
@@ -67,7 +67,7 @@ public class Result {
     }
 
     private boolean isPlayerBustOrLose(Dealer dealer, Player player) {
-        return player.isBust() || !dealer.isBust() && dealer.getTotalScore().isGreaterThan(player.getTotalScore());
+        return player.isBust() || dealer.isNotBust() && dealer.getTotalScore().isGreaterThan(player.getTotalScore());
     }
 
     private void draw(Dealer dealer, Player player) {
@@ -77,7 +77,7 @@ public class Result {
     }
 
     private boolean isBothBustOrDraw(Dealer dealer, Player player) {
-        return !player.isBust() && !dealer.isBust() && dealer.getTotalScore().equals(player.getTotalScore());
+        return player.isNotBust() && dealer.isNotBust() && dealer.getTotalScore().equals(player.getTotalScore());
     }
 
     public Map<Name, GameResult> getPlayersWinResult() {

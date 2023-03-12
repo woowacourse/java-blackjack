@@ -22,6 +22,10 @@ public abstract class Participant {
         return getTotalScore().isBust();
     }
 
+    public boolean isNotBust() {
+        return !this.isBust();
+    }
+
     public abstract Score getTotalScore();
 
     public int getTotalScoreToValue() {
@@ -32,6 +36,10 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return getTotalScore().isMaxScore() && hand.getSize() == INITIAL_CARD_COUNT;
+    }
+
+    public boolean isNotBlackjack() {
+        return !this.isBlackjack();
     }
 
     public List<Card> getCardList() {
