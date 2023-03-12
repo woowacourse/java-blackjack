@@ -22,7 +22,7 @@ public class Hand {
         Score score = score();
 
         if (isSoftHand()) {
-            score = score.plusSoftHand();
+            return score.plusSoftHand();
         }
 
         return score;
