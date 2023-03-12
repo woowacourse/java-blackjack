@@ -6,6 +6,7 @@ import blackjack.model.result.Result;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.PlayerInitialState;
+import blackjack.model.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -78,6 +79,29 @@ class PlayerTest {
     @Nested
     @DisplayName("플레이어의 수익을 계산하는 getProfit 메소드 테스트")
     class getProfit {
+
+        @Nested
+        @DisplayName("플레이어가 게임이 끝나지 않았을 때")
+        class player_playing {
+
+            @Test
+            @DisplayName("초기 카드를 배분받지 못한 상태에서 수익 계산을 시도하면 예외처리한다.")
+            void player_cannot_calculate_money_when_initial() {
+                State notFinishedState = new PlayerInitialState(new Hand());
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), notFinishedState);
+                assertThatThrownBy(() -> player.getProfit(Result.WIN)).isInstanceOf(IllegalStateException.class)
+                        .hasMessage("게임이 끝나지 않아 수익을 알 수 없습니다.");
+            }
+
+            @Test
+            @DisplayName("카드를 추가로 받아야 하는 상태에서 수익 계산을 시도하면 예외처리한다.")
+            void player_cannot_calculate_money_when_draw() {
+                State notFinishedState = new PlayerDrawState(new Hand(List.of(HEART_NINE, CLUB_NINE)));
+                Player player = new Player(new Name("이리내"), new BetAmount(10000), notFinishedState);
+                assertThatThrownBy(() -> player.getProfit(Result.WIN)).isInstanceOf(IllegalStateException.class)
+                        .hasMessage("게임이 끝나지 않아 수익을 알 수 없습니다.");
+            }
+        }
 
         @Nested
         @DisplayName("플레이어가 버스트일 때")
