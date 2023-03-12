@@ -3,6 +3,9 @@ package blackjackgame.view;
 import java.util.List;
 import java.util.Scanner;
 
+import static blackjackgame.view.AddCardRequest.NO;
+import static blackjackgame.view.AddCardRequest.YES;
+
 public class InputView {
     public static final String DELIMITER = ",";
 
@@ -26,20 +29,17 @@ public class InputView {
         System.out.println();
         System.out.println(guestName + "의 베팅 금액은?");
         try {
-            return validateInteger(scanner.nextLine());
-        } catch (Exception e) {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
             System.out.println("베팅 금액으로 양의 정수를 입력해주세요.");
             return readBettingMoney(guestName);
         }
     }
 
-    private int validateInteger(final String inputMoney) {
-        return Integer.parseInt(inputMoney);
-    }
-
     public AddCardRequest readWantMoreCard(final String playerName) {
         System.out.println();
-        System.out.println(AddCardRequest.printAddCardRequest(playerName));
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)"
+                ,playerName, YES.value(), NO.value()));
         try {
             return AddCardRequest.validate(scanner.nextLine());
         } catch (IllegalArgumentException e) {

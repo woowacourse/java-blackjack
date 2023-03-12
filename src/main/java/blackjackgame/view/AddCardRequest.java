@@ -13,11 +13,6 @@ public enum AddCardRequest {
         this.value = value;
     }
 
-    public static String printAddCardRequest(final String playerName) {
-        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", playerName
-            , YES.value, NO.value);
-    }
-
     public static AddCardRequest validate(final String input) {
         return Arrays.stream(AddCardRequest.values())
             .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
@@ -27,12 +22,12 @@ public enum AddCardRequest {
 
     private static String getErrorRequestMsg() {
         List<String> values = Arrays.stream(AddCardRequest.values())
-            .map(AddCardRequest::getValue)
+            .map(AddCardRequest::value)
             .collect(Collectors.toList());
         return String.join(",", values) + " 만 입력해주세요";
     }
 
-    private String getValue() {
+    public String value() {
         return value;
     }
 }

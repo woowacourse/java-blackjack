@@ -69,10 +69,8 @@ public class BlackJackController {
 
     private void printFirstHand(final Guests guests, final Dealer dealer) {
         outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()));
-        outputView.printLineSeparator();
         for (final Guest guest : guests.getGuests()) {
             outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
-            outputView.printLineSeparator();
         }
     }
 
@@ -99,7 +97,6 @@ public class BlackJackController {
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
-        outputView.printLineSeparator();
         while (dealer.canHit()) {
             dealer.addCard(deck.pickOne());
             outputView.dealerAddCard();
@@ -107,14 +104,10 @@ public class BlackJackController {
     }
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
-        outputView.printLineSeparator();
-        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()));
-        outputView.printScore(dealer.getScore());
+        outputView.printScore(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()), dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
-            outputView.printLineSeparator();
-            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
-            outputView.printScore(guest.getScore());
+            outputView.printScore(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()), guest.getScore());
         }
     }
 
