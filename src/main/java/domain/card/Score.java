@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Score {
     private static final Score max = new Score(21);
+    public static final Score maxDealerHit = new Score(16);
     private static final int DIFFERENCE_BETWEEN_ACE_ONE_AND_ELEVEN = 10;
 
     private final int score;
@@ -28,6 +29,14 @@ public class Score {
         return max.isLessThan(this);
     }
 
+    public boolean isMax() {
+        return max.equals(this);
+    }
+
+    public boolean isDealerHit() {
+        return this.isLessThanOrEqual(maxDealerHit);
+    }
+
     public Score calculateAceAsOne(int aceCount) {
         Score newScore = new Score(this.score);
         while (aceCount > 0 && newScore.isOverMax()) {
@@ -35,10 +44,6 @@ public class Score {
             aceCount--;
         }
         return newScore;
-    }
-
-    public boolean isMax() {
-        return max.equals(this);
     }
 
     public int getScore() {

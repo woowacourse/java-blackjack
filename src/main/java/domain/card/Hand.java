@@ -44,6 +44,10 @@ public class Hand {
         return cards.isEmpty();
     }
 
+    public boolean isDealerHit() {
+        return calculateScore().isDealerHit();
+    }
+
     private Score sum() {
         return cards.stream()
                 .map(Card::getScore)
