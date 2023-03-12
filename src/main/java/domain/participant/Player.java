@@ -33,7 +33,6 @@ public class Player extends Participant {
         }
     }
 
-
     public void betPlayer(int betMoney) {
         this.betAmount = BetAmount.from(betMoney);
     }

@@ -67,18 +67,6 @@ public class Participants {
         return dealer.canHit();
     }
 
-    public boolean isDealerBust() {
-        return dealer.isBust();
-    }
-
-    public int getDealerScore() {
-        return dealer.calculateScore();
-    }
-
-    public boolean isDealerBlackjack() {
-        return dealer.isBlackjack();
-    }
-
     public Map<Player, Integer> getBettingResult() {
         Map<Player, Integer> betResult = new LinkedHashMap<>();
         for (Player player : getPlayers()) {
@@ -104,20 +92,20 @@ public class Participants {
     }
 
     private boolean isPlayerBlackjack(Player player) {
-        return player.isBlackjack() && !isDealerBlackjack();
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
     private boolean isPlayerWin(Player player) {
-        return (player.calculateScore() > getDealerScore() && !player.isBust()) || isDealerBust();
+        return (player.calculateScore() > dealer.calculateScore() && !player.isBust()) || dealer.isBust();
     }
 
     private boolean isDraw(Player player) {
-        return player.calculateScore() == getDealerScore();
+        return player.calculateScore() == dealer.calculateScore();
     }
 
     public List<String> getPlayersName() {
         return players.stream()
-                .map(Participant::getName)
+                .map(player -> player.getName())
                 .collect(Collectors.toList());
     }
 
