@@ -25,6 +25,10 @@ public class BetAmount {
         }
     }
 
+    public void multiple(double times) {
+        this.value *= times;
+    }
+
     public int getValue() {
         return value;
     }

@@ -30,4 +30,12 @@ public class Player extends Participant {
                    .isHit() || this.getState()
                                    .isStay();
     }
+
+    public void multipleBetAmount(double times) {
+        betAmount.multiple(times);
+    }
+
+    public int getBetAmount() {
+        return betAmount.getValue();
+    }
 }

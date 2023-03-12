@@ -125,12 +125,11 @@ public class BlackjackController {
 
     private void printGameResult(BlackjackGame blackjackGame, Participants participants) {
         outputView.printGameResultMessage();
-        GameResult gameResult = blackjackGame.getResult();
-        outputView.printDealerGameResult(gameResult.getDealerWinCount(),
-                gameResult.getDealerLoseCount(), gameResult.getDealerDrawCount());
+        blackjackGame.calculateBetAmount();
+        Dealer dealer = participants.getDealer();
+        outputView.printDealerGameResult(dealer.getName(), blackjackGame.getDealerAmount());
         for (Player player : participants.getPlayers()) {
-            outputView.printEachPlayerGameResult(player.getName(),
-                    gameResult.getResultStateByPlayer(player));
+            outputView.printEachPlayerGameResult(player.getName(), player.getBetAmount());
         }
     }
 }

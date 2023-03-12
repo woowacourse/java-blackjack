@@ -9,10 +9,10 @@ public class OutputView {
     private static final String DEALER_CARDS_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
-    private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_HIT_MESSAGE =
+            LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR;
     private static final String RESULT_MESSAGE = LINE_SEPARATOR + "## 최종 승패";
-    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패 %d무" + LINE_SEPARATOR;
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s" + LINE_SEPARATOR;
+    private static final String PARTICIPANT_RESULT_FORMAT = "%s: %d" + LINE_SEPARATOR;
 
     public void printInitCardsMessage(List<String> participantNames) {
         System.out.printf(INIT_FORMAT, String.join(", ", participantNames));
@@ -38,12 +38,12 @@ public class OutputView {
         System.out.println(RESULT_MESSAGE);
     }
 
-    public void printDealerGameResult(long winCount, long loseCount, long drawCount) {
-        System.out.printf(DEALER_RESULT_FORMAT, winCount, loseCount, drawCount);
+    public void printDealerGameResult(String name, int amount) {
+        System.out.printf(PARTICIPANT_RESULT_FORMAT, name, amount);
     }
 
-    public void printEachPlayerGameResult(String name, String scoreState) {
-        System.out.printf(PLAYER_RESULT_FORMAT, name, scoreState);
+    public void printEachPlayerGameResult(String name, int amount) {
+        System.out.printf(PARTICIPANT_RESULT_FORMAT, name, amount);
     }
 
     public void printException(String message) {

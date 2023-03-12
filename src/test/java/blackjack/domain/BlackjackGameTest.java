@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,26 +27,30 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("게임 승패를 반환한다")
+    @DisplayName("게임 결과에 대한 베팅 금액을 반환한다")
     void getGameResultTest() {
         List<String> names = List.of("jamie", "boxster");
 
         Participants participants = Participants.from(names);
+        participants.getPlayers()
+                    .get(0)
+                    .initBetAmount(1000);
+        participants.getPlayers()
+                    .get(1)
+                    .initBetAmount(1000);
         List<Card> cards = new ArrayList<>(List.of(
                 new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
                 new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING),
                 new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART, CardNumber.THREE)));
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
+        blackjackGame.calculateBetAmount();
 
-        Player player1 = Player.from("jamie");
-        Player player2 = Player.from("boxster");
+        List<Player> players = participants.getPlayers();
 
-        assertThat(blackjackGame.getResult()
-                                .getResultStateByPlayer(player1))
-                .isEqualTo(ResultState.LOSE.getValue());
-        assertThat(blackjackGame.getResult()
-                                .getResultStateByPlayer(player2))
-                .isEqualTo(ResultState.WIN.getValue());
+        Assertions.assertEquals(-1000, players.get(0)
+                                              .getBetAmount());
+        Assertions.assertEquals(1000, players.get(1)
+                                             .getBetAmount());
     }
 }

@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
+
+    public static final int CONVERT_TO_DEALER_AMOUNT = -1;
 
     private final CardDeck cardDeck;
     private final Participants participants;
@@ -32,12 +32,18 @@ public class BlackjackGame {
         dealer.addCards(cards);
     }
 
-    public GameResult getResult() {
-        Map<Player, ResultState> result = new LinkedHashMap<>();
+    public void calculateBetAmount() {
         for (Player player : participants.getPlayers()) {
-            result.put(player, ResultState.of(player, participants.getDealer()));
+            ResultState resultState = ResultState.of(player, participants.getDealer());
+            player.multipleBetAmount(resultState.getTimes());
         }
-        return new GameResult(result);
+    }
+
+    public int getDealerAmount() {
+        return participants.getPlayers()
+                           .stream()
+                           .mapToInt(Player::getBetAmount)
+                           .sum() * CONVERT_TO_DEALER_AMOUNT;
     }
 
     public void giveCard(Participant participant) {
