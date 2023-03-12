@@ -9,6 +9,7 @@ import static domain.Fixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Cards;
+import domain.result.WinningStatus;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,5 +52,16 @@ class PlayerTest {
 
         kyle.receiveCard(NINE_DIAMOND);
         assertThat(kyle.getScore()).isEqualTo(19);
+    }
+
+    @Test
+    void compete() {
+        gitJjang.selectStand();
+
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(new Cards(List.of(FOUR_HEART, NINE_DIAMOND)));
+        dealer.receiveCard(KING_HEART);
+
+        assertThat(gitJjang.compete(dealer)).isEqualTo(WinningStatus.WIN);
     }
 }

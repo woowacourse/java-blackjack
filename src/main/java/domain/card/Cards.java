@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.result.WinningStatus;
 import domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,5 +66,18 @@ public class Cards {
 
     public int size() {
         return cards.size();
+    }
+
+    public WinningStatus compete(final Cards dealerCards) {
+       Score score = this.calculateScore();
+       Score dealerScore = dealerCards.calculateScore();
+
+        if (score.isGreaterThan(dealerScore)) {
+            return WinningStatus.WIN;
+        }
+        if (score.isEquals(dealerScore)) {
+            return WinningStatus.DRAW;
+        }
+        return WinningStatus.LOSE;
     }
 }

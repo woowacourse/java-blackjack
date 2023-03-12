@@ -3,7 +3,6 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.score.Score;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,31 +18,9 @@ public final class WinningResult {
     private void computeWinningResult(final Participants participants) {
         Dealer dealer = participants.getDealer();
         for (Player player : participants.getPlayers()) {
-            WinningStatus playerWinningStatus = compete(player, dealer);
+            WinningStatus playerWinningStatus = player.compete(dealer);
             playersResult.put(player, playerWinningStatus);
         }
-    }
-
-    private WinningStatus compete(final Player player, final Dealer dealer) {
-        if (dealer.isBust()) {
-            return WinningStatus.WIN;
-        }
-        if (player.isBust()) {
-            return WinningStatus.LOSE;
-        }
-        return statusWhenNotBust(player, dealer);
-    }
-
-    private WinningStatus statusWhenNotBust(final Player player, final Dealer dealer) {
-        Score playerScore = player.calculateScore();
-        Score dealerScore = dealer.calculateScore();
-        if (playerScore.isGreaterThan(dealerScore)) {
-            return WinningStatus.WIN;
-        }
-        if (playerScore.isEquals(dealerScore)) {
-            return WinningStatus.DRAW;
-        }
-        return WinningStatus.LOSE;
     }
 
     public Map<Player, WinningStatus> getPlayersResult() {

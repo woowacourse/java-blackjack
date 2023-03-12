@@ -1,12 +1,17 @@
 package domain.card;
 
+import static domain.Fixtures.ACE_CLOVER;
 import static domain.Fixtures.KING_CLOVER;
 import static domain.Fixtures.KING_SPADE;
 import static domain.Fixtures.QUEEN_HEART;
+import static domain.Fixtures.SEVEN_HEART;
+import static domain.Fixtures.TEN_CLOVER;
+import static domain.Fixtures.TEN_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import domain.result.WinningStatus;
 import domain.score.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -38,5 +43,13 @@ class CardsTest {
     @Test
     void isBustTest() {
         assertTrue(BUST_CARDS.isBust());
+    }
+
+    @Test
+    void compete() {
+        Cards cards = new Cards(List.of(ACE_CLOVER, SEVEN_HEART));
+        Cards dealerCards = new Cards(List.of(TEN_SPADE, TEN_CLOVER));
+
+        assertThat(cards.compete(dealerCards)).isEqualTo(WinningStatus.LOSE);
     }
 }
