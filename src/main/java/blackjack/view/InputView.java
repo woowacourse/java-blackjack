@@ -1,8 +1,6 @@
 package blackjack.view;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -22,6 +20,24 @@ public class InputView {
         return Arrays.stream(namesValue.split(NAME_SPLIT))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+    public static Map<String, Integer> readBettingMoney(final List<String> playerNames) {
+        Map<String, Integer> playerStatuses = new HashMap<>();
+        playerNames.forEach(playerName -> {
+            System.out.println(playerName + "의 베팅 금액은?");
+            String bettingMoney = scanner.nextLine();
+            playerStatuses.put(playerName, toInt(bettingMoney));
+        });
+        return playerStatuses;
+    }
+
+    private static int toInt(final String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 정수여야 합니다.");
+        }
     }
 
     public static boolean checkPlayerAdditionalHit(final String playerName) {
