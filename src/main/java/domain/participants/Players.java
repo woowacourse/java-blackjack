@@ -14,7 +14,7 @@ public class Players {
     }
 
     private void validateDuplicatedName(List<Player> splitedName) {
-        if (splitedName.size() != splitedName.stream().map(s->s.getName()).distinct().count()) {
+        if (splitedName.size() != splitedName.stream().map(Player::getName).distinct().count()) {
             throw new IllegalArgumentException(INVALID_NAME);
         }
     }

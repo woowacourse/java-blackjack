@@ -36,10 +36,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        if (getCardsSum() > BLACK_JACK) {
-            return true;
-        }
-        return false;
+        return getCardsSum() > BLACK_JACK;
     }
 
     public int bustMoney() {

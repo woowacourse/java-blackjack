@@ -24,14 +24,14 @@ public class GameResult {
 
     public void calculatePlayersResult(Players players) {
         for (Player player : players.getPlayersWithOutDealer()) {
-            gameResult.replace(player,player.calculateResult(players.findDealer()));
-            calculateDealer(players.findDealer(),player);
+            gameResult.replace(player, player.calculateResult(players.findDealer()));
+            calculateDealer(players.findDealer(), player);
         }
     }
 
     private void calculateDealer(Dealer dealer, Player player) {
         int oldDealerValue = gameResult.get(dealer);
-        gameResult.replace(dealer,oldDealerValue + (-gameResult.get(player)));
+        gameResult.replace(dealer, oldDealerValue + (-gameResult.get(player)));
     }
 
     public int getPlayerProfit(Player player) {

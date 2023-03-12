@@ -20,7 +20,7 @@ public class BettingMoney {
         this.money = (int) (this.money * BLACK_JACK_BONUS);
     }
 
-    public int getBettingMoney(){
+    public int getBettingMoney() {
         return money;
     }
 

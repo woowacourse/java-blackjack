@@ -28,9 +28,9 @@ public class InputView {
     }
 
     public int readBetMoney() {
-        try{
+        try {
             return Integer.parseInt(scanner.nextLine());
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentException("숫자만 입력해주세요.");
         }
     }

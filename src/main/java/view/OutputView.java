@@ -31,8 +31,7 @@ public class OutputView {
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(INITIAL_DISTRIBUTE_MESSAGE, dealer.getName(),
-                String.join(SPLIT_DELIMITER,
-                        players.getPlayersWithOutDealer().stream().map(Player::getName).collect(Collectors.toList())));
+                players.getPlayersWithOutDealer().stream().map(Player::getName).collect(Collectors.joining(SPLIT_DELIMITER)));
         System.out.println(dealer.getName() + ": " + printCardsForm(dealer).split(SPLIT_DELIMITER)[0]);
         for (Player player : players.getPlayersWithOutDealer()) {
             System.out.println(player.getName() + "카드: " + printCardsForm(player));
@@ -58,7 +57,7 @@ public class OutputView {
         }
     }
 
-    public void printWinnerResult(Players players, BlackjackGame game, GameResult gameResult) {
+    public void printWinnerResult(Players players, GameResult gameResult) {
         System.out.println(FINAL_WIN_LOSE_RATIO_MESSAGE);
         System.out.printf(PROFIT_RESULT_MESSAGE, players.findDealer().getName(),
                 gameResult.getPlayerProfit(players.findDealer()));

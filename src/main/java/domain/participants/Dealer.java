@@ -7,7 +7,7 @@ public class Dealer extends Player {
     private static final int BOUND = 16;
 
     public Dealer() {
-        super(NAME,new BettingMoney(0));
+        super(NAME, new BettingMoney(0));
     }
 
     public boolean isOverDealerStandard() {

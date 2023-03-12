@@ -13,7 +13,6 @@ import strategy.ShuffleCardsStrategy;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,7 @@ public class Controller {
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
         distributeInitialCard(players, game);
         pollAdditionalCard(players, game);
-        printResult(players, game, gameResult);
+        printResult(players, gameResult);
     }
 
     private Players setPlayers() {
@@ -50,7 +49,7 @@ public class Controller {
         List<Player> players = names.stream()
                 .map(name -> createPlayer(name))
                 .collect(Collectors.toList());
-        players.add(0,new Dealer());
+        players.add(0, new Dealer());
         return new Players(players);
     }
 
@@ -92,9 +91,9 @@ public class Controller {
         }
     }
 
-    private void printResult(Players players, BlackjackGame game, GameResult gameResult) {
+    private void printResult(Players players, GameResult gameResult) {
         gameResult.calculatePlayersResult(players);
         outputView.printCardsResult(players.findDealer(), players);
-        outputView.printWinnerResult(players, game, gameResult);
+        outputView.printWinnerResult(players, gameResult);
     }
 }
