@@ -129,15 +129,15 @@ class BlackjackGameTest {
         blackjackGame.drawMoreCard("encho");
         blackjackGame.drawDealerMoreCard();
 
-        Person encho = blackjackGame.getParticipants().findByName("encho");
-        Person glen = blackjackGame.getParticipants().findByName("glen");
+        Person encho = blackjackGame.getParticipantByName("encho");
+        Person glen = blackjackGame.getParticipantByName("glen");
 
         Map<String, Integer> bettingMoney = new HashMap<>();
         bettingMoney.put(encho.getName(), 2000);
         bettingMoney.put(glen.getName(), 3000);
         BettingMoneyDto bettingMoneyDto = BettingMoneyDto.of(bettingMoney, blackjackGame.getParticipants());
 
-        Person dealer = blackjackGame.getParticipants().findByName("딜러");
+        Person dealer = blackjackGame.getParticipantByName("딜러");
 
         Map<Person, Double> expected = new HashMap<>();
         expected.put(encho, -2000.0);

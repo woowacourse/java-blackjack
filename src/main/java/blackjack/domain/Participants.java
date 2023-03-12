@@ -14,11 +14,15 @@ public class Participants {
         this.participants.addAll(players);
     }
 
-    public List<Player> getPlayers() {
+    public Person findByName(String name) {
         return participants.stream()
-                .filter(Person::isPlayer)
-                .map(Player.class::cast)
-                .collect(toList());
+                .filter(person -> person.getName().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 이름과 일치하는 참가자가 없습니다."));
+    }
+
+    public int getPlayerScore(String name) {
+        return findByName(name).getScore();
     }
 
     public Person getDealer() {
@@ -28,14 +32,30 @@ public class Participants {
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 딜러가 없습니다."));
     }
 
-    public Person findByName(String name) {
+    public String getDealerName() {
+        return getDealer().getName();
+    }
+
+    public List<Card> getDealerInitCard() {
+        return getDealer().getInitCards();
+    }
+
+    public int getDealerScore() {
+        return getDealer().getScore();
+    }
+
+    public List<Player> getPlayers() {
         return participants.stream()
-                .filter(person -> person.getName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 이름과 일치하는 참가자가 없습니다."));
+                .filter(Person::isPlayer)
+                .map(Player.class::cast)
+                .collect(toList());
     }
 
     public List<Person> getParticipants() {
         return Collections.unmodifiableList(participants);
+    }
+
+    public List<Card> getCardsByName(String name) {
+        return findByName(name).getCards();
     }
 }

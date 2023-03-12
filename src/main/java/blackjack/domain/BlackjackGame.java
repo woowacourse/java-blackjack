@@ -75,13 +75,14 @@ public class BlackjackGame {
 
     public List<PersonStatusDto> getParticipantsInit() {
         List<PersonStatusDto> dto = new ArrayList<>();
-        Person dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
-        dto.add(PersonStatusDto.of(dealer.getName(), dealer.getInitCards()));
+        dto.add(PersonStatusDto.of(participants.getDealerName(), participants.getDealerInitCard()));
+
         for (Person player : players) {
             dto.add(PersonStatusDto.of(player.getName(), player.getInitCards()));
         }
+
         return dto;
     }
 
@@ -98,8 +99,8 @@ public class BlackjackGame {
     }
 
     public PersonStatusDto getPlayerStatus(String name) {
-        Person player = participants.findByName(name);
-        return PersonStatusDto.of(player.getName(), player.getCards());
+        List<Card> cards = participants.getCardsByName(name);
+        return PersonStatusDto.of(name, cards);
     }
     public List<PersonStatusDto> getAllPersonStatus() {
         return participants.getParticipants().stream()
@@ -108,11 +109,11 @@ public class BlackjackGame {
     }
 
     public int getDealerScore() {
-        return participants.getDealer().getScore();
+        return participants.getDealerScore();
     }
 
     public int getPlayerScore(String name) {
-        return participants.findByName(name).getScore();
+        return participants.getPlayerScore(name);
     }
 
     public ParticipantsProfitDto getParticipantsProfitDto(BettingMoneyDto bettingMoneyDto) {
@@ -150,5 +151,9 @@ public class BlackjackGame {
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    public Person getParticipantByName(String name) {
+        return participants.findByName(name);
     }
 }
