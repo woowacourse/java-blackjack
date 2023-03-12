@@ -14,14 +14,18 @@ graph TD
     BlackjackController --> InputView
     BlackjackController --> BlackjackGame
 
+    BlackjackGame --> BettingTable
     BlackjackGame --> Participants
     BlackjackGame --> CardDeck
+
+    BettingTable --> Money
+    BettingTable --> Player
 
     Participants --> Player
     Participants --> Dealer
 
-    Player --> Participant
-    Dealer --> Participant
+    Player <-.-> Participant
+    Dealer <-.-> Participant
 
     Participant --> Name
     Participant --> PlayerCards
@@ -35,6 +39,8 @@ graph TD
 ```
 
 ### 기능 목록
+
+## 1단계
 
 - [x] 플레이어 이름을 입력 받는다
     - [x] 이름은 공백 혹은 빈값만 들어올 수 없다
@@ -51,3 +57,15 @@ graph TD
         - [x] 딜러는 16 이하라면 무조건 받음
         - [x] 각 플레이어와 딜러의 카드 결과 출력
         - [x] 각 플레이어와 딜러의 승패 결과 출력
+
+## 2단계
+
+- [ ] 베팅 금액을 입력 받는 기능
+    - [ ] 베팅 금액은 1000원 단위로 가능하다
+    - [ ] 베팅 금액은 최대 10,000,000원까지 가능하다
+- [ ] 수익률을 계산하는 기능
+    - 플레이어가 블랙잭으로 이기면 1.5배를 받는다
+        - 블랙잭은 카드가 2장일 때 점수가 21이다
+    - 플레이어가 이기면 1배를 받는다
+    - 플레이어가 지면 -1배를 받는다
+- [ ] 수익률을 출력하는 기능
