@@ -61,7 +61,7 @@ public class BlackjackGameTest {
 
     @DisplayName("딜러는 16이하이면 hit할 수 있다")
     @Test
-    void hitDealer() {
+    void hitDealer_true() {
         Dealer dealer = blackjackGame.getDealer();
         dealer.hit(SPADE_EIGHT);
         dealer.hit(CLOVER_EIGHT);
@@ -71,12 +71,22 @@ public class BlackjackGameTest {
 
     @DisplayName("딜러는 17이상이면 hit할 수 없다")
     @Test
-    void hitDealer2() {
+    void hitDealer_false() {
         Dealer dealer = blackjackGame.getDealer();
         dealer.hit(SPADE_EIGHT);
         dealer.hit(SPADE_NINE);
-        blackjackGame.hitDealer();
 
         assertThat(blackjackGame.hitDealer()).isFalse();
+    }
+
+    @DisplayName("딜러가 16에서 hit했을 때 21 이하이면 stay 상태이다")
+    @Test
+    void hitDealer_stay() {
+        Dealer dealer = blackjackGame.getDealer();
+        dealer.hit(SPADE_EIGHT);
+        dealer.hit(CLOVER_EIGHT);
+        blackjackGame.hitDealer();
+
+        assertThat(dealer.getState().isStay()).isTrue();
     }
 }

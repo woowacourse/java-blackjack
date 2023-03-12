@@ -74,7 +74,7 @@ public class BlackjackController {
 
     public void hitPlayers() {
         List<Player> players = blackjackGame.getPlayers();
-        
+
         for (Player player : players) {
             playTurn(player);
         }

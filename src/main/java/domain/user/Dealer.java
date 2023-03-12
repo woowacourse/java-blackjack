@@ -24,11 +24,7 @@ public class Dealer {
     }
 
     public State hit(Card card) {
-        if (canHit()) {
-            return participant.hit(card);
-        }
-
-        throw new IllegalStateException("카드를 뽑을 수 없는 상태");
+        return participant.hit(card);
     }
 
     public State stay() {
