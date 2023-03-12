@@ -10,6 +10,7 @@ public class CardPocket {
     private static final int BUST_SCORE = 21;
     private static final int BLACKJACK_SCORE = 21;
     private static final int VALUE_ACE = 10;
+
     private final List<Card> cards;
 
     private CardPocket(final List<Card> cards) {
