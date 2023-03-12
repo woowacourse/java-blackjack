@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.result.WinningStatus;
 import domain.score.Score;
 import domain.status.Status;
 import domain.status.initial.Ready;
