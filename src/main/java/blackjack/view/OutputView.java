@@ -1,16 +1,16 @@
 package blackjack.view;
 
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
-import blackjack.domain.player.User;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.domain.result.UserResultsDTO;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.player.Dealer.DEALER_NAME;
+import static blackjack.domain.user.Dealer.DEALER_NAME;
 
 public class OutputView {
 

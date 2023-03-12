@@ -3,10 +3,10 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Names;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Names;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.*;
+import blackjack.domain.user.*;
 import blackjack.domain.result.UserResults;
 
 public class BlackjackGame {
