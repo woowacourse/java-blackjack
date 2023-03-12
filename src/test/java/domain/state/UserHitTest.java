@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("UserHit 상태는")
 public class UserHitTest {
     @Test
-    @DisplayName("Ready 상태에서 2장을 드로우하면 될 수 있다.")
-    void createHitTest() {
-        State state = new Ready()
+    @DisplayName("UserReady 상태에서 2장을 드로우하면 될 수 있다.")
+    void createUserHitTest() {
+        State state = new UserReady()
                 .draw(CloverCard.FOUR)
                 .draw(CloverCard.FIVE);
 
@@ -20,8 +20,8 @@ public class UserHitTest {
 
     @Test
     @DisplayName("카드를 한 장 드로우 한 뒤 Bust 상태가 될 수 있다.")
-    void transferToBustTest(){
-        State state = new Ready()
+    void transferToBustTest() {
+        State state = new UserReady()
                 .draw(CloverCard.KING)
                 .draw(CloverCard.QUEEN);
 
@@ -30,8 +30,8 @@ public class UserHitTest {
 
     @Test
     @DisplayName("카드 받기를 멈추고 Stay 상태가 될 수 있다.")
-    void transferToStayTest(){
-        State state = new Ready()
+    void transferToStayTest() {
+        State state = new UserReady()
                 .draw(CloverCard.KING)
                 .draw(CloverCard.QUEEN);
 
