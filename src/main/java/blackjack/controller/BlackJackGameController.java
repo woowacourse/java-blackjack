@@ -18,9 +18,14 @@ public class BlackJackGameController {
     private static final int PLAYER_BUST_BOUNDARY = 21;
     private static final int DRAWING_CARD_SIZE = 1;
 
+    private final InputView inputView;
+    private final OutputView outputView;
     private final ShufflingMachine shufflingMachine;
 
-    public BlackJackGameController(final ShufflingMachine shufflingMachine) {
+    public BlackJackGameController(final InputView inputView, final OutputView outputView,
+                                   final ShufflingMachine shufflingMachine) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.shufflingMachine = shufflingMachine;
     }
 
@@ -45,7 +50,7 @@ public class BlackJackGameController {
 
     private Optional<BlackJackGame> generateNames() {
         try {
-            final String inputNames = InputView.readNames();
+            final String inputNames = inputView.readNames();
             return Optional.of(new BlackJackGame(new Dealer(), Players.createPlayers(inputNames)));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -58,7 +63,7 @@ public class BlackJackGameController {
         final Map<Player, Money> playerProfit = new LinkedHashMap<>();
 
         for (final Player player : players.getPlayers()) {
-            final String bettingAmount = InputView.readPlayersBettingAmount(player.getName());
+            final String bettingAmount = inputView.readPlayersBettingAmount(player.getName());
             playerProfit.put(player, new Money(bettingAmount));
         }
 
@@ -69,14 +74,14 @@ public class BlackJackGameController {
                                                       final Players players) {
         blackJackGame.handOutCards(shufflingMachine);
 
-        OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
+        outputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
         handOutCardTo(blackJackGame, players);
         handOutCardTo(blackJackGame, dealer);
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
-        OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
+        outputView.printCardsWithSum(players.getPlayers(), dealer);
+        outputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
     }
 
     private void handOutCardTo(final BlackJackGame blackJackGame, final Players players) {
@@ -103,7 +108,7 @@ public class BlackJackGameController {
 
     private Optional<String> checkGameCommand(final Player player) {
         try {
-            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
+            final String gameCommand = inputView.readGameCommandToGetOneMoreCard(player.getName());
             validateCorrectCommand(gameCommand);
             return Optional.of(gameCommand);
         } catch (final IllegalArgumentException e) {
@@ -116,17 +121,17 @@ public class BlackJackGameController {
                                              final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player, DRAWING_CARD_SIZE);
-            OutputView.printParticipantCards(player.getName(), player.getCards());
+            outputView.printParticipantCards(player.getName(), player.getCards());
             return true;
         }
-        OutputView.printParticipantCards(player.getName(), player.getCards());
+        outputView.printParticipantCards(player.getName(), player.getCards());
         return false;
     }
 
     private void handOutCardTo(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
             blackJackGame.handOutCardTo(shufflingMachine, dealer, DRAWING_CARD_SIZE);
-            OutputView.printDealerReceiveOneMoreCard();
+            outputView.printDealerReceiveOneMoreCard();
         }
     }
 
