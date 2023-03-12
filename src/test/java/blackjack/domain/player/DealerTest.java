@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import static blackjack.util.CardFixture.ACE_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -49,14 +48,6 @@ public class DealerTest {
         final Dealer dealer = Dealer.create();
 
         assertThat(dealer.isDealer()).isTrue();
-    }
-
-    @Test
-    void 딜러의_카드수를_반환한다() {
-        final Dealer dealer = Dealer.create();
-        dealer.draw(new FixedDeck(ACE_DIAMOND));
-
-        assertThat(dealer.getCardCount()).isEqualTo(1);
     }
 }
 

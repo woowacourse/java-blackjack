@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.Money;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import java.util.List;
@@ -49,9 +48,9 @@ public final class OutputView {
         return String.join(DELIMITER, player.getSymbols());
     }
 
-    public void printDealerDraw(final Dealer dealer) {
+    public void printDealerDraw(final Player dealer) {
         final String dealerDrawMessage = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
-        System.out.println(dealerDrawMessage.repeat(dealer.getCardCount() - INITIAL_DRAW_COUNT));
+        System.out.println(dealerDrawMessage.repeat(dealer.getSymbols().size() - INITIAL_DRAW_COUNT));
     }
 
     public void printPlayerDraw(final Player player) {

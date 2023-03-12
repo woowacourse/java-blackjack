@@ -20,13 +20,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class AbstractPlayerTest {
+public class PlayerTest {
 
     private Player player;
 
     @BeforeEach
     void setUp() {
-        player = new AbstractPlayer(Name.from("허브"), new Hand()) {
+        player = new Player(Name.from("허브"), new Hand()) {
             @Override
             public boolean isDrawable() {
                 return hand().isPlayable();

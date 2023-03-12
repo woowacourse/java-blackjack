@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Hand;
 
-public final class Gambler extends AbstractPlayer {
+public final class Gambler extends Player {
 
     private Gambler(final Name name, final Hand hand) {
         super(name, hand);

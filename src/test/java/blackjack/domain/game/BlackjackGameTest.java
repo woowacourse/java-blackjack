@@ -9,7 +9,6 @@ import static blackjack.util.CardFixture.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.util.FixedDeck;
@@ -42,8 +41,8 @@ public class BlackjackGameTest {
 
         blackjackGame.drawToDealer(deck);
 
-        final Dealer dealer = blackjackGame.getDealer();
-        assertThat(dealer.getCardCount()).isEqualTo(4);
+        final Player dealer = blackjackGame.getDealer();
+        assertThat(dealer.getSymbols().size()).isEqualTo(4);
     }
 
     @Test
@@ -131,7 +130,7 @@ public class BlackjackGameTest {
         final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("허브"));
 
-        final Dealer dealer = blackjackGame.getDealer();
+        final Player dealer = blackjackGame.getDealer();
 
         assertThat(dealer.isDealer()).isTrue();
     }

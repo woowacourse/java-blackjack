@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Hand;
 
-public final class Dealer extends AbstractPlayer {
+public final class Dealer extends Player {
     private static final int SCORE_LOWER_BOUND = 16;
 
     private Dealer(final Name name, final Hand hand) {
@@ -21,9 +21,5 @@ public final class Dealer extends AbstractPlayer {
     @Override
     public boolean isDealer() {
         return true;
-    }
-
-    public int getCardCount() {
-        return hand().getSymbols().size();
     }
 }

@@ -64,7 +64,7 @@ public final class Players {
     }
 
     public void drawToDealer(final Deck deck) {
-        final Dealer dealer = getDealer();
+        final Player dealer = getDealer();
         while (dealer.isDrawable()) {
             dealer.draw(deck);
         }
@@ -107,7 +107,7 @@ public final class Players {
 
     public Map<Name, Result> play() {
         final Map<Name, Result> result = new LinkedHashMap<>();
-        final Dealer dealer = getDealer();
+        final Player dealer = getDealer();
         for (Player player : gamblers()) {
             result.put(player.name(), player.play(dealer.hand()));
         }
@@ -118,8 +118,8 @@ public final class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public Dealer getDealer() {
-        return (Dealer) players.stream()
+    public Player getDealer() {
+        return players.stream()
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("딜러가 존재하지 않습니다."));

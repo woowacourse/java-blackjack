@@ -86,7 +86,7 @@ public class PlayersTest {
 
         players.drawToDealer(deck);
 
-        final Dealer dealer = players.getDealer();
+        final Player dealer = players.getDealer();
         assertThat(dealer.score()).isEqualTo(21);
     }
 
