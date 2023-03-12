@@ -5,8 +5,6 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class User {
-    public static final int BUST = 21;
-
     protected final HandCards handCards;
     protected final Name name;
 
@@ -27,8 +25,8 @@ public abstract class User {
         handCards.updateCardScore(card);
     }
 
-    public boolean isUnderBust() {
-        return handCards.getTotalScore() <= BUST;
+    public boolean isBust() {
+        return handCards.isBust();
     }
 
     public String getName() {

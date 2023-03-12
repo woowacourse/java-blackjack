@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
+    public static final int BUST = 21;
     private static final int ACE_VALUE_GAP = 10;
     private static final int LIMIT_SCORE = 21;
 
@@ -51,5 +52,9 @@ public class HandCards {
 
     public int getTotalScore() {
         return totalScore;
+    }
+
+    public boolean isBust() {
+        return totalScore > LIMIT_SCORE;
     }
 }

@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
+import blackjack.domain.user.*;
 import blackjack.domain.result.UserResultsDTO;
 
 import java.util.HashMap;
@@ -74,7 +71,7 @@ public class OutputView {
 
     public static void printScoreUnderLimit() {
         printEmptyLine();
-        System.out.printf("현재 카드 점수 총합은 %d을 초과합니다.%n", User.BUST);
+        System.out.printf("현재 카드 점수 총합은 %d을 초과합니다.%n", HandCards.BUST);
         printEmptyLine();
     }
 
