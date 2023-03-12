@@ -27,12 +27,13 @@ public class Controller {
 
     public void run() {
         Players players = setPlayers();
-        GameResult gameResult = new GameResult(players);
-        BlackjackGame game = new BlackjackGame(players,
+        Dealer dealer = new Dealer();
+        GameResult gameResult = new GameResult(dealer,players);
+        BlackjackGame game = new BlackjackGame(dealer,players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
-        distributeInitialCard(players, game);
-        pollAdditionalCard(players, game);
-        printResult(players, gameResult);
+        distributeInitialCard(dealer, players, game);
+        pollAdditionalCard(dealer, players, game);
+        printResult(dealer, players, gameResult);
     }
 
     private Players setPlayers() {
@@ -49,7 +50,6 @@ public class Controller {
         List<Player> players = names.stream()
                 .map(name -> createPlayer(name))
                 .collect(Collectors.toList());
-        players.add(0, new Dealer());
         return new Players(players);
     }
 
@@ -58,9 +58,9 @@ public class Controller {
         return new Player(name, new BettingMoney(inputView.readBetMoney()));
     }
 
-    private void distributeInitialCard(Players players, BlackjackGame game) {
+    private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
         game.distributeInitialCard();
-        outputView.printInitialCards(players.findDealer(), players);
+        outputView.printInitialCards(dealer, players);
     }
 
     private void selectByPlayer(BlackjackGame game, Player player) {
@@ -81,19 +81,19 @@ public class Controller {
         }
     }
 
-    private void pollAdditionalCard(Players players, BlackjackGame game) {
-        for (Player player : players.getPlayersWithOutDealer()) {
+    private void pollAdditionalCard(Dealer dealer, Players players, BlackjackGame game) {
+        for (Player player : players.getPlayers()) {
             selectByPlayer(game, player);
         }
-        while (!players.findDealer().isOverDealerStandard()) {
+        while (!dealer.isOverDealerStandard()) {
             game.distributeDealer();
-            outputView.printDistributeDealer(players.findDealer());
+            outputView.printDistributeDealer(dealer);
         }
     }
 
-    private void printResult(Players players, GameResult gameResult) {
-        gameResult.calculatePlayersResult(players);
-        outputView.printCardsResult(players.findDealer(), players);
-        outputView.printWinnerResult(players, gameResult);
+    private void printResult(Dealer dealer, Players players, GameResult gameResult) {
+        gameResult.calculatePlayersResult(dealer,players);
+        outputView.printCardsResult(dealer, players);
+        outputView.printWinnerResult(dealer,players, gameResult);
     }
 }

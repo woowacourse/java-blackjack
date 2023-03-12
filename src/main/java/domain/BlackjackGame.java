@@ -9,9 +9,11 @@ public class BlackjackGame {
     private static final int INITIAL_CARD_SET = 2;
 
     private final Players players;
+    private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public BlackjackGame(Players players, CardDeck cardDeck) {
+    public BlackjackGame(Dealer dealer, Players players, CardDeck cardDeck) {
+        this.dealer = dealer;
         this.players = players;
         this.cardDeck = cardDeck;
     }
@@ -24,12 +26,11 @@ public class BlackjackGame {
     }
 
     public void distributeDealer() {
-        Dealer dealer = players.findDealer();
         dealer.addCard(cardDeck.poll());
     }
 
     public void distributePlayers() {
-        for (Player player : players.getPlayersWithOutDealer()) {
+        for (Player player : players.getPlayers()) {
             distributePlayer(player);
         }
     }

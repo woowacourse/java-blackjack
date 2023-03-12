@@ -1,6 +1,7 @@
 package domain;
 
 import domain.participants.Dealer;
+import domain.participants.Participant;
 import domain.participants.Player;
 import domain.participants.Players;
 
@@ -8,24 +9,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, Integer> gameResult;
+    private final Map<Participant, Integer> gameResult;
 
-    public GameResult(Players players) {
+    public GameResult(Dealer dealer, Players players) {
         this.gameResult = new HashMap<>();
-        setPlayersInitialResult(players);
+        setPlayersInitialResult(dealer,players);
     }
 
-    private void setPlayersInitialResult(Players players) {
-        gameResult.put(players.findDealer(), 0);
-        for (Player player : players.getPlayersWithOutDealer()) {
+    private void setPlayersInitialResult(Dealer dealer,Players players) {
+        gameResult.put(dealer, 0);
+        for (Player player : players.getPlayers()) {
             gameResult.put(player, 0);
         }
     }
 
-    public void calculatePlayersResult(Players players) {
-        for (Player player : players.getPlayersWithOutDealer()) {
-            gameResult.replace(player, calculateResult(players.findDealer(),player));
-            calculateDealer(players.findDealer(), player);
+    public void calculatePlayersResult(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
+            gameResult.replace(player, calculateResult(dealer,player));
+            calculateDealer(dealer, player);
         }
     }
 
@@ -47,7 +48,7 @@ public class GameResult {
         gameResult.replace(dealer, oldDealerValue + (-gameResult.get(player)));
     }
 
-    public int getPlayerProfit(Player player) {
+    public int getPlayerProfit(Participant player) {
         return gameResult.get(player);
     }
 }

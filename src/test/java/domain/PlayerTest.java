@@ -40,6 +40,4 @@ public class PlayerTest {
 
         assertThat(player.isOverPlayerBlackJack()).isTrue();
     }
-
-
 }

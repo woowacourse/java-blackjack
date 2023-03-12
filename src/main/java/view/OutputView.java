@@ -1,8 +1,8 @@
 package view;
 
-import domain.BlackjackGame;
 import domain.GameResult;
 import domain.participants.Dealer;
+import domain.participants.Participant;
 import domain.participants.Player;
 import domain.participants.Players;
 
@@ -22,7 +22,7 @@ public class OutputView {
         System.out.println(name + "의 베팅 금액은?");
     }
 
-    private String printCardsForm(Player player) {
+    private String printCardsForm(Participant player) {
         return player.getPlayerCards().stream()
                 .map(e -> e.getCardName() + e.getCardPattern())
                 .collect(Collectors.joining(SPLIT_DELIMITER));
@@ -31,9 +31,9 @@ public class OutputView {
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(INITIAL_DISTRIBUTE_MESSAGE, dealer.getName(),
-                players.getPlayersWithOutDealer().stream().map(Player::getName).collect(Collectors.joining(SPLIT_DELIMITER)));
+                players.getPlayers().stream().map(Player::getName).collect(Collectors.joining(SPLIT_DELIMITER)));
         System.out.println(dealer.getName() + ": " + printCardsForm(dealer).split(SPLIT_DELIMITER)[0]);
-        for (Player player : players.getPlayersWithOutDealer()) {
+        for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + "카드: " + printCardsForm(player));
         }
     }
@@ -51,17 +51,17 @@ public class OutputView {
         System.out.println();
         System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), printCardsForm(dealer),
                 dealer.getCardsSum());
-        for (Player player : players.getPlayersWithOutDealer()) {
+        for (Player player : players.getPlayers()) {
             System.out.printf(PLAYER_CARDS_RESULT_MESSAGE,
                     player.getName(), printCardsForm(player), player.getCardsSum());
         }
     }
 
-    public void printWinnerResult(Players players, GameResult gameResult) {
+    public void printWinnerResult(Dealer dealer, Players players, GameResult gameResult) {
         System.out.println(FINAL_WIN_LOSE_RATIO_MESSAGE);
-        System.out.printf(PROFIT_RESULT_MESSAGE, players.findDealer().getName(),
-                gameResult.getPlayerProfit(players.findDealer()));
-        for (Player player : players.getPlayersWithOutDealer()) {
+        System.out.printf(PROFIT_RESULT_MESSAGE, dealer.getName(),
+                gameResult.getPlayerProfit(dealer));
+        for (Player player : players.getPlayers()) {
             System.out.printf(PROFIT_RESULT_MESSAGE, player.getName(),
                     gameResult.getPlayerProfit(player));
         }
