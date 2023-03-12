@@ -6,6 +6,7 @@ import domain.AdditionalDrawStatus;
 import domain.BlackJackGame;
 import domain.betting.BettingManager;
 import domain.betting.BettingMoney;
+import domain.participant.ParticipantResultDto;
 import domain.participant.Player;
 import util.Constants;
 import view.InputValidator;
@@ -56,10 +57,11 @@ public class BlackJackController {
     private void initDistributeCards(BlackJackGame blackJackGame) {
         List<String> playerNames = blackJackGame.getPlayerNames();
         ResultView.printInitMessage(playerNames);
-        ResultView.printParticipantResult(Constants.DEALER_NAME, blackJackGame.findCardNamesByParticipantName(Constants.DEALER_NAME));
+        ParticipantResultDto dealerResultDto = blackJackGame.generateParticipantResultByParticipantName(Constants.DEALER_NAME);
+        ResultView.printParticipantResult(dealerResultDto);
         for (String playerName : playerNames) {
-            List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
-            ResultView.printParticipantResult(playerName, findCardNames);
+            ParticipantResultDto playerResultDto = blackJackGame.generateParticipantResultByParticipantName(playerName);
+            ResultView.printParticipantResult(playerResultDto);
         }
     }
 
@@ -96,7 +98,8 @@ public class BlackJackController {
             OutputView.printInputReceiveYesOrNotMessage(playerName);
             String receiveOrNot = InputView.inputReceiveOrNot();
             additionalDrawStatus = blackJackGame.distributePlayerCardOrPass(playerName, receiveOrNot);
-            ResultView.printParticipantResult(playerName, blackJackGame.findCardNamesByParticipantName(playerName));
+            ParticipantResultDto playerResultDto = blackJackGame.generateParticipantResultByParticipantName(playerName);
+            ResultView.printParticipantResult(playerResultDto);
         }
     }
 

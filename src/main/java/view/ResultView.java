@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 
+import domain.participant.ParticipantResultDto;
 import util.Constants;
 
 public class ResultView {
@@ -16,7 +17,9 @@ public class ResultView {
         System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public static void printParticipantResult(String participantName, List<String> cardNames) {
+    public static void printParticipantResult(ParticipantResultDto participantResultDto) {
+        String participantName = participantResultDto.getParticipantName();
+        List<String> cardNames = participantResultDto.getCardNames();
         if (!participantName.equals(Constants.DEALER_NAME)) {
             System.out.println(participantName + "카드: " + String.join(JOIN_DELIMITER, cardNames));
         }

@@ -37,6 +37,11 @@ public class BlackJackGame {
         return participants.findCardNamesByParticipantName(participantName);
     }
 
+    public ParticipantResultDto generateParticipantResultByParticipantName(String participantName) {
+        List<String> findCardNames = participants.findCardNamesByParticipantName(participantName);
+        return new ParticipantResultDto(participantName, findCardNames);
+    }
+
     public boolean canPlayerDrawCard(String playerName) {
         Player findPlayer = participants.findPlayerByPlayerName(playerName);
         return findPlayer.canHit();
