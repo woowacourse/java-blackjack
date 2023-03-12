@@ -30,8 +30,8 @@ public class BlackjackController {
         BlackjackGame blackjackGame = initializeGame();
         handOutCardsToPlayers(blackjackGame);
         handOutCardsToDealer(blackjackGame);
-        outputView.printParticipantsScore(toParticipantDtosWithScore(blackjackGame.getParticipants()));
-        outputView.printRevenues(blackjackGame.getRevenues());
+        outputView.printParticipantsScore(toParticipantDtosWithScore(blackjackGame.participants()));
+        outputView.printRevenues(blackjackGame.calculateParticipantsRevenues());
     }
 
     private BlackjackGame initializeGame() {
@@ -40,7 +40,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
-        outputView.printCardInfos(toParticipantDtosOfInitialState(blackjackGame.getParticipants()));
+        outputView.printCardInfos(toParticipantDtosOfInitialState(blackjackGame.participants()));
         return blackjackGame;
     }
 
@@ -83,19 +83,19 @@ public class BlackjackController {
 
     private void handOutCardsToPlayers(BlackjackGame blackjackGame) {
         while (blackjackGame.hasDrawablePlayer()) {
-            Player currentDrawablePlayer = blackjackGame.getCurrentDrawablePlayer();
-            Decision decision = getDecision(currentDrawablePlayer);
+            Player currentDrawablePlayer = blackjackGame.findCurrentDrawablePlayer();
+            Decision decision = createDecision(currentDrawablePlayer);
             blackjackGame.hitOrStand(decision);
             outputView.printCardsInfo(ParticipantDto.of(currentDrawablePlayer));
         }
     }
 
-    private Decision getDecision(Player currentDrawablePlayer) {
+    private Decision createDecision(Player currentDrawablePlayer) {
         try {
             return Decision.from(inputView.readDecision(currentDrawablePlayer.name()));
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
-            return getDecision(currentDrawablePlayer);
+            return createDecision(currentDrawablePlayer);
         }
     }
 

@@ -39,7 +39,7 @@ public class Hand {
         return score + ADDITIONAL_SCORE_OF_ACE;
     }
 
-    public List<Card> getCards() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 }

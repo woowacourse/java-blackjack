@@ -26,16 +26,20 @@ public enum GameOutcome {
         if (isBlackjack(criteria, comparison, cardSize)) {
             return BLACKJACK;
         }
-        if (criteria > BLACK_JACK_SCORE) {
+        if (isBust(criteria)) {
             return LOSE;
         }
-        if (criteria > comparison || comparison > BLACK_JACK_SCORE) {
+        if (criteria > comparison || isBust(comparison)) {
             return WIN;
         }
         if (criteria < comparison) {
             return LOSE;
         }
         return DRAW;
+    }
+
+    private static boolean isBust(final int score) {
+        return score > BLACK_JACK_SCORE;
     }
 
     private static boolean isBlackjack(final int criteria, final int comparison, final int cardSize) {

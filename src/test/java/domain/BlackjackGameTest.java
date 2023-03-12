@@ -21,7 +21,7 @@ class BlackjackGameTest {
     @Nested
     class 결과반환 {
         @Test
-        void should_승패를판단하여수익을반환한다_when_getRevenues호출시() {
+        void should_승패를판단하여수익을반환한다_when_calculateParticipantsRevenues호출시() {
             Players players = new Players(List.of(
                     new Player(new Name("포이"), new Hand(), new BettingMoney(1000)),
                     new Player(new Name("에밀"), new Hand(), new BettingMoney(2000))
@@ -39,7 +39,7 @@ class BlackjackGameTest {
             });
 
             //when
-            Map<String, Integer> outcome = blackjackGame.getRevenues();
+            Map<String, Integer> outcome = blackjackGame.calculateParticipantsRevenues();
 
             //then
             assertAll(

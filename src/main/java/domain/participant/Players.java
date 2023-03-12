@@ -27,7 +27,7 @@ public class Players {
         players.forEach(player -> player.receiveCard(deck.draw()));
     }
 
-    public Player getCurrentDrawablePlayer() {
+    public Player findCurrentDrawablePlayer() {
         return players.stream()
                 .filter(Player::isDrawable)
                 .findFirst()
@@ -40,14 +40,14 @@ public class Players {
     }
 
     public void handOutCardToCurrentPlayer(Card card) {
-        getCurrentDrawablePlayer().receiveCard(card);
+        findCurrentDrawablePlayer().receiveCard(card);
     }
 
     public void standCurrentPlayer() {
-        getCurrentDrawablePlayer().stand();
+        findCurrentDrawablePlayer().stand();
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> values() {
         return new ArrayList<>(players);
     }
 

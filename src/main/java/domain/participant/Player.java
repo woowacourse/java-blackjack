@@ -28,7 +28,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> initialHand() {
-        return hand.getCards();
+        return hand.cards();
     }
 
     public int bettingMoney() {

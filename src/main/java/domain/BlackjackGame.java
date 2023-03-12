@@ -37,8 +37,8 @@ public class BlackjackGame {
         return players.hasDrawablePlayer();
     }
 
-    public Player getCurrentDrawablePlayer() {
-        return players.getCurrentDrawablePlayer();
+    public Player findCurrentDrawablePlayer() {
+        return players.findCurrentDrawablePlayer();
     }
 
     public void hitOrStand(Decision decision) {
@@ -57,17 +57,12 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>(List.of(dealer));
-        participants.addAll(players.getPlayers());
-        return participants;
-    }
-
-    public Map<String, Integer> getRevenues() {
+    public Map<String, Integer> calculateParticipantsRevenues() {
         Map<String, Integer> playersRevenues = players.calculateRevenues(dealer);
-        int dealerRevenues = calculateDealerRevenue(playersRevenues);
+        int dealerRevenue = calculateDealerRevenue(playersRevenues);
+
         Map<String, Integer> revenues = new LinkedHashMap<>();
-        revenues.put(dealer.name(), dealerRevenues);
+        revenues.put(dealer.name(), dealerRevenue);
         revenues.putAll(playersRevenues);
         return revenues;
     }
@@ -76,5 +71,11 @@ public class BlackjackGame {
         return playersRevenues.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum() * -1;
+    }
+
+    public List<Participant> participants() {
+        List<Participant> participants = new ArrayList<>(List.of(dealer));
+        participants.addAll(players.values());
+        return participants;
     }
 }

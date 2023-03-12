@@ -29,7 +29,7 @@ class PlayersTest {
             Players players = new Players(rawPlayers);
 
             //then
-            List<Player> playerList = players.getPlayers();
+            List<Player> playerList = players.values();
 
             assertAll(
                     () -> assertThat(playerList.get(0).name()).isEqualTo("에밀"),
@@ -129,7 +129,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            String actual = players.getCurrentDrawablePlayer().name();
+            String actual = players.findCurrentDrawablePlayer().name();
 
             //then
             assertThat(actual).isEqualTo(expected);
@@ -150,7 +150,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            ThrowingCallable throwingCallable = players::getCurrentDrawablePlayer;
+            ThrowingCallable throwingCallable = players::findCurrentDrawablePlayer;
 
             //then
             assertThatThrownBy(throwingCallable)
@@ -177,7 +177,7 @@ class PlayersTest {
 
             //when
             players.handOutCardToCurrentPlayer(new Card(Suit.SPADE, Number.ACE));
-            final List<Card> hand = players.getPlayers().get(0).hand();
+            final List<Card> hand = players.values().get(0).hand();
 
             //then
             assertThat(hand).hasSize(3).contains(new Card(Suit.SPADE, Number.ACE));
@@ -200,7 +200,7 @@ class PlayersTest {
 
             //when
             players.standCurrentPlayer();
-            final Player actual = players.getCurrentDrawablePlayer();
+            final Player actual = players.findCurrentDrawablePlayer();
 
             //then
             assertThat(expected).isEqualTo(actual);
