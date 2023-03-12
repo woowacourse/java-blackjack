@@ -54,4 +54,5 @@ public class Participant {
     public boolean isNotBust() {
         return this.cards.calculateTotalScore() <= MAX_NUMBER;
     }
+    public boolean isBlackjack(){return this.cards.isBlackjack();}
 }

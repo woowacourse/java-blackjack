@@ -32,6 +32,7 @@ public class ResultGame {
     }
 
     private void put(Player player) {
-        playersResult.put(player, dealer.compareScoreWith(player.getTotalScore()));
+        player.setRate(dealer.compareScoreWith(player).rate());
+        playersResult.put(player, dealer.compareScoreWith(player));
     }
 }
