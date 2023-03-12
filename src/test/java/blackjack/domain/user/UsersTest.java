@@ -42,7 +42,7 @@ class UsersTest {
         users.calculateRewards(userResults);
 
         // then
-        assertThat(player.getReceivingAmount())
+        assertThat(player.getRewards())
                 .isEqualTo(10000 * 1.5);
     }
 
@@ -61,7 +61,7 @@ class UsersTest {
         users.calculateRewards(userResults);
 
         // then
-        assertThat(player.getReceivingAmount())
+        assertThat(player.getRewards())
                 .isEqualTo(10000);
     }
 
@@ -80,7 +80,7 @@ class UsersTest {
         users.calculateRewards(userResults);
 
         assertThat(users.calculateDealerRewards())
-                .isEqualTo(-10000);
+                .isEqualTo(0);
     }
 
     @DisplayName("Player가 블랙잭이고 Dealer가 블랙잭이 아닌 경우 Dealer는 Player의 베팅 금액 만큼 손해를 본다.")
@@ -93,6 +93,6 @@ class UsersTest {
         dealer.updateCardScore(new Card(CardNumber.TWO, CardSymbol.HEART));
 
         assertThat(users.calculateDealerRewards())
-                .isEqualTo(-10000);
+                .isEqualTo(0);
     }
 }

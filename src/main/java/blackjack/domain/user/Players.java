@@ -21,4 +21,11 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
         return new Players(players);
     }
+
+    public int getTotalBetAmount() {
+        return players.stream()
+                .map(Player::getBetAmount)
+                .reduce(Integer::sum)
+                .get();
+    }
 }

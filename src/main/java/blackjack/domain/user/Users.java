@@ -29,17 +29,18 @@ public class Users {
         for (Player player : players.getPlayers()) {
             player.updateReceivingAmount(userResults.getResultOf(player));
             player.checkBlackjack(dealer.isBlackjack());
-            playerResults.put(player, player.getReceivingAmount());
+            playerResults.put(player, player.getRewards());
         }
         return playerResults;
     }
 
     public double calculateDealerRewards() {
-        double dealerReceivingAmount = 0;
-        for (Player player : players.getPlayers()) {
-            dealerReceivingAmount -= (player.getReceivingAmount());
-        }
-        return dealerReceivingAmount;
+        double playersTotalBetAmount = players.getTotalBetAmount();
+        double playerRewards = players.getPlayers().stream()
+                .map(Player::getRewards)
+                .reduce(Double::sum)
+                .get();
+        return playersTotalBetAmount - playerRewards;
     }
 
     public Dealer getDealer() {
