@@ -4,8 +4,11 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.CloverCard;
+import domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 
 @DisplayName("Ready 상태는 ")
@@ -33,6 +36,17 @@ class ReadyTest {
                 .draw(CloverCard.FIVE);
 
         assertThat(state.getCards()).containsExactly(CloverCard.FOUR, CloverCard.FIVE);
+    }
+
+    @Test
+    @DisplayName("아직 stay 할 수 없다.")
+    void stayTest() {
+        State ready = new Ready()
+                .draw(CloverCard.FOUR);
+
+        assertThatThrownBy(ready::stay)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("[ERROR] 게임 준비 단계에는 상태를 조작할 수 없습니다.");
     }
 
     @Test
