@@ -10,11 +10,11 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class ParticipantsFinalResult {
+public class FinalResult {
     private final Map<GameResult, List<Player>> playerResult = new EnumMap<>(GameResult.class);
     private final int dealerProfit;
 
-    private ParticipantsFinalResult(final Dealer dealer, final Players players) {
+    private FinalResult(final Dealer dealer, final Players players) {
         final GamePoint dealerPoint = dealer.calculatePoint();
         updateGameResult(GameResult.WIN, players.findPlayerGreaterThan(dealerPoint));
         updateGameResult(GameResult.DRAW, players.findPlayerSameAs(dealerPoint));
@@ -22,8 +22,8 @@ public class ParticipantsFinalResult {
         this.dealerProfit = updateDealerProfit();
     }
 
-    public static ParticipantsFinalResult of(final Dealer dealer, final Players players) {
-        return new ParticipantsFinalResult(dealer, players);
+    public static FinalResult of(final Dealer dealer, final Players players) {
+        return new FinalResult(dealer, players);
     }
 
     private void updateGameResult(final GameResult gameResult, final List<Player> players) {

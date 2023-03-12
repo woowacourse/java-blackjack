@@ -7,7 +7,6 @@ import java.util.Collections;
 
 public abstract class Participant {
 
-    private static final int INITIAL_CARD_COUNT = 2;
     protected static final String DEALER_NAME = "딜러";
 
     private final Name name;

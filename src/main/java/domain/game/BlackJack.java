@@ -6,7 +6,7 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.ParticipantsFinalResult;
+import domain.result.FinalResult;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public final class BlackJack {
         return players;
     }
 
-    public ParticipantsFinalResult getGameResult() {
-        return ParticipantsFinalResult.of(dealer, players);
+    public FinalResult getGameResult() {
+        return FinalResult.of(dealer, players);
     }
 }

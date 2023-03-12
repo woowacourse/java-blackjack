@@ -1,7 +1,7 @@
 package view;
 
 import domain.game.GamePoint;
-import domain.result.ParticipantsFinalResult;
+import domain.result.FinalResult;
 import domain.result.GameResult;
 import domain.card.Card;
 import domain.game.Hand;
@@ -110,14 +110,14 @@ public final class OutputView {
         return TranslationUtil.translatePoint(point);
     }
 
-    public void printFinalResult(final Dealer dealer, ParticipantsFinalResult participantsFinalResult) {
+    public void printFinalResult(final Dealer dealer, FinalResult finalResult) {
         System.out.println("\n## 최종 수익");
-        printDealerResult(dealer, participantsFinalResult);
-        printPlayersResult(participantsFinalResult.getResult());
+        printDealerResult(dealer, finalResult);
+        printPlayersResult(finalResult.getResult());
     }
 
-    private void printDealerResult(final Dealer dealer, final ParticipantsFinalResult participantsFinalResult) {
-        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), participantsFinalResult.getDealerProfit());
+    private void printDealerResult(final Dealer dealer, final FinalResult finalResult) {
+        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName().getValue(), finalResult.getDealerProfit());
     }
 
     private void printPlayersResult(final Map<GameResult, List<Player>> gameResult) {
