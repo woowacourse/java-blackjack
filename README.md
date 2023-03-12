@@ -94,8 +94,7 @@
 - [x] 메서드 네이밍 get ~ 으로 통일
 - [x] 스트림 연산자 기준으로 개행
 - [x] OutputView printFinalVictoryOrDefeatDealer 내 depth 2인 부분 수정
-- [ ] 테스트 클래스 given when then 패턴 대신 개행으로 구분
-- [ ] 테스트 코드 내의 메서드 네이밍에 대해 질문하기
+- [x] 테스트 클래스 given when then 패턴 대신 개행으로 구분
 - [x] DisplayName 자세히 작성하기
 - [x] 사용하지 않는 메서드, 출력문구 제거
 
@@ -105,8 +104,6 @@
 - [x] enum class → enum 자체로 값을 비교하도록 수정
 - [x] enum 내부 메소드를 사용하도록 수정
 - [x] 디미터 법칙 위반된 코드 한 줄에 점을 하나만 찍도록 수정
-- [ ] Game 내부에서 GameResult를 생성하는 메서드를 만들고, GamePlayer(Players와 Dealer)를 넘겨줄 수 있지 않나 ?
-- [ ] Person class에서 hand를 생성자로 ..?
 - [x] calculateScore 메소드 hand로 위치 변경
 - [x] 전체 코드에 사용되는 것이 아니면 @BeforeEach 제거
 - [ ] `calculateVictoryOrDefeatWithDealerAndPlayer` 메서드 private로 수정
