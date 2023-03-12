@@ -8,6 +8,7 @@ public class Player {
     private final CardPool cardPool;
     private final Bet bet;
 
+    // 소지품 객체 생성
     public Player(final String playerName, final CardPool cardPool, final int betAmount) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;

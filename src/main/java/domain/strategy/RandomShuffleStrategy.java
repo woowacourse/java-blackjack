@@ -9,7 +9,7 @@ import java.util.List;
 public class RandomShuffleStrategy implements ShuffleStrategy {
 
     @Override
-    public List<Card> shuffle(final List<Card> cards) {
+    public List<Card> makeShuffledCards(final List<Card> cards) {
         List<Card> shuffledCards = new ArrayList<>(cards);
         Collections.shuffle(shuffledCards);
         return shuffledCards;
