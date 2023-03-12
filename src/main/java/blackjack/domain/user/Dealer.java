@@ -14,6 +14,7 @@ public class Dealer extends Participant {
         return getState().isHit();
     }
 
+    @Override
     public List<Card> getFirstCard() {
         return List.of(getAllCards().get(0));
     }
