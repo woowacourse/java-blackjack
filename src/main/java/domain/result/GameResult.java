@@ -31,7 +31,7 @@ public final class GameResult {
                 .forEach((player ->
                         playerResults.put(
                                 player.getName(),
-                                Outcome.decideOutcome(player.getScore(), dealer.getScore())
+                                Outcome.decide(player.getScore(), dealer.getScore())
                         )
                 ));
         return playerResults;

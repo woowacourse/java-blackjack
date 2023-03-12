@@ -6,7 +6,7 @@ public enum Outcome {
 
     private static final int BLACK_JACK_NUMBER = 21;
 
-    public static Outcome reverseOutcome(final Outcome outcome) {
+    public static Outcome reverse(final Outcome outcome) {
         if (outcome == Outcome.WIN) {
             return Outcome.LOSE;
         }
@@ -16,7 +16,7 @@ public enum Outcome {
         return Outcome.DRAW;
     }
 
-    public static Outcome decideOutcome(final int score, final int otherScore) {
+    public static Outcome decide(final int score, final int otherScore) {
         if (lose(score, otherScore)) {
             return Outcome.LOSE;
         }

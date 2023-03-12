@@ -11,9 +11,9 @@ class OutcomeTest {
     @DisplayName("WIN이면 LOSE, LOSE면 WIN, DRAW면 DRAW를 반환한다.")
     @Test
     void reverseOutcome() {
-        assertSame(Outcome.LOSE, Outcome.reverseOutcome(Outcome.WIN));
-        assertSame(Outcome.WIN, Outcome.reverseOutcome(Outcome.LOSE));
-        assertSame(Outcome.DRAW, Outcome.reverseOutcome(Outcome.DRAW));
+        assertSame(Outcome.LOSE, Outcome.reverse(Outcome.WIN));
+        assertSame(Outcome.WIN, Outcome.reverse(Outcome.LOSE));
+        assertSame(Outcome.DRAW, Outcome.reverse(Outcome.DRAW));
     }
 
     @DisplayName("점수가 높으면 WIN, 낮으면 LOSE, 같으면 DRAW를 반환한다.")
@@ -25,8 +25,8 @@ class OutcomeTest {
 
         int otherScore = 20;
 
-        assertEquals(Outcome.WIN, Outcome.decideOutcome(highScore, otherScore));
-        assertEquals(Outcome.LOSE, Outcome.decideOutcome(lowScore, otherScore));
-        assertEquals(Outcome.DRAW, Outcome.decideOutcome(sameScore, otherScore));
+        assertEquals(Outcome.WIN, Outcome.decide(highScore, otherScore));
+        assertEquals(Outcome.LOSE, Outcome.decide(lowScore, otherScore));
+        assertEquals(Outcome.DRAW, Outcome.decide(sameScore, otherScore));
     }
 }
