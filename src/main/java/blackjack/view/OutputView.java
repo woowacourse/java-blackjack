@@ -1,20 +1,19 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.game.ResultType;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.game.Money;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public class OutputView {
 
     private static final String SPLIT_DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
-    private static final StringBuilder finalResult = new StringBuilder();
 
     private OutputView() {
     }
@@ -65,23 +64,12 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(final Map<Player, ResultType> playerResult,
-                                        final Map<ResultType, Integer> dealerResult) {
-        for (final ResultType resultType : dealerResult.keySet()) {
-            generateDealerResult(dealerResult, resultType);
-        }
-        System.out.println(NEW_LINE + "## 최종 승패");
-        System.out.println("딜러: " + finalResult);
-        for (final Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + ": " + playerResult.get(player).getValue());
-        }
-    }
-
-    private static void generateDealerResult(final Map<ResultType, Integer> dealerResult, final ResultType resultType) {
-        if (dealerResult.get(resultType) != 0) {
-            finalResult.append(dealerResult.get(resultType))
-                    .append(resultType.getValue())
-                    .append(" ");
+    public static void printFinalResult(final Map<Player, Money> playerProfit,
+                                        final int dealerProfit) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+        for (final Player player : playerProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playerProfit.get(player).getValue());
         }
     }
 }

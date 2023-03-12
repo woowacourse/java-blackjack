@@ -1,12 +1,9 @@
 package blackjack.controller;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.*;
 import blackjack.domain.card.ShufflingMachine;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -17,7 +14,7 @@ public class BlackJackGameController {
 
     private static final String YES_COMMAND = "y";
     private static final String NO_COMMAND = "n";
-    private static final int DEALER_DRAWING_BOUNDARY = 16;
+    private static final int DEALER_DRAWING_BOUNDARY = 17;
     private static final int PLAYER_BUST_BOUNDARY = 21;
 
     private final ShufflingMachine shufflingMachine;
@@ -31,10 +28,13 @@ public class BlackJackGameController {
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 
-        final Map<Player, ResultType> playerResult = playBlackJackGame(blackJackGame, dealer, players);
-        final GameResult gameResult = new GameResult(playerResult);
+        final Map<Player, Money> playerProfit = makeMoneys(players);
 
-        printFinalResult(dealer, players, gameResult);
+        playBlackJackGame(blackJackGame, dealer, players);
+
+        final FinalProfit finalProfit = blackJackGame.makePlayerProfit(playerProfit);
+
+        printFinalResult(dealer, players, finalProfit);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -55,20 +55,29 @@ public class BlackJackGameController {
         }
     }
 
-    private Map<Player, ResultType> playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer,
+    private Map<Player, Money> makeMoneys(final Players players) {
+        final Map<Player, Money> playerProfit = new LinkedHashMap<>();
+
+        for (final Player player : players.getPlayers()) {
+            final String bettingAmount = InputView.readPlayersBettingAmount(player.getName());
+            playerProfit.put(player, new Money(bettingAmount));
+        }
+
+        return playerProfit;
+    }
+
+    private void playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer,
                                                       final Players players) {
         blackJackGame.handOutCards(shufflingMachine);
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
         handOutCardToPlayers(blackJackGame, players);
         handOutCardToDealer(blackJackGame, dealer);
-
-        return blackJackGame.makePlayerResult();
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players, final GameResult gameResult) {
+    private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(gameResult.getPlayerResult(), gameResult.findDealerResult());
+        OutputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
     }
 
     private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
@@ -109,6 +118,7 @@ public class BlackJackGameController {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.hit(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
+            return true;
         }
         OutputView.printParticipantCards(player.getName(), player.getCards());
         return false;

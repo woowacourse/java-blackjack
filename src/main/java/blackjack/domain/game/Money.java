@@ -7,9 +7,7 @@ public class Money {
     private final int value;
 
     public Money(final String value) {
-        final int parsedValue = validateInteger(value);
-        validateRangeOfMoney(parsedValue);
-        this.value = parsedValue;
+        this.value = validateInteger(value);
     }
 
     private int validateInteger(final String value) {
@@ -20,10 +18,16 @@ public class Money {
         }
     }
 
-    private void validateRangeOfMoney(final int value) {
-        if (value < 1000 || value > 1000000) {
-            throw new IllegalArgumentException("베팅 금액은 1000~1000000사이의 숫자만 가능합니다.");
-        }
+    public Money changeSign() {
+        return new Money(String.valueOf(value * -1));
+    }
+    
+    public Money makeZero() {
+        return new Money(String.valueOf(0));
+    }
+
+    public Money calculateIfBlackjack() {
+        return new Money(String.valueOf(value + (value * 1.5)));
     }
 
     @Override
@@ -37,5 +41,9 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }
