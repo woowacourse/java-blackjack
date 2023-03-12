@@ -2,19 +2,10 @@ package controller;
 
 import domain.BettingAmount;
 import domain.BettingManager;
-import domain.Card;
-import domain.CardDistributor;
-import domain.Dealer;
-import domain.Name;
-import domain.Participant;
 import domain.Player;
-import domain.Players;
-import domain.Result;
-import dto.CardStatusDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import util.InitialCardMaker;
+import service.BlackJackGame;
 import view.InputView;
 import view.OutputView;
 
@@ -27,116 +18,61 @@ public class BlackJackController {
     }
 
     public void run() {
-        CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
-        Players players = createGamePlayers(cardDistributor);
-        Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
-        BettingManager bettingManager = createBettingManager(players);
-        printInitialDistribution(players, dealer);
+        BlackJackGame blackJackGame = new BlackJackGame(inputView.requestPlayerName());
+        BettingManager bettingManager = blackJackGame.createBettingManager(
+                requestBettingAmounts(blackJackGame.getPlayerNamesToString()));
+        printInitialDistribution(blackJackGame);
 
-        progress(players, cardDistributor, dealer);
-        end(players, dealer, bettingManager);
+        progress(blackJackGame);
+        end(blackJackGame, bettingManager);
     }
 
-    private Players createGamePlayers(CardDistributor cardDistributor) {
-        List<String> playerNames = inputView.requestPlayerName();
-        List<Player> players = playerNames.stream()
-                .map(name -> distributeInitialCardForPlayer(name, cardDistributor))
-                .collect(Collectors.toList());
-        return Players.from(players);
-    }
-
-    private Player distributeInitialCardForPlayer(String playerName, CardDistributor cardDistributor) {
-        return Player.of(new Name(playerName), cardDistributor.distributeInitialCard());
-    }
-
-    private BettingManager createBettingManager(Players players) {
-        return new BettingManager(players.getPlayerNames(), requestBettingAmounts(players));
-    }
-
-    private List<BettingAmount> requestBettingAmounts(Players players) {
+    private List<BettingAmount> requestBettingAmounts(List<String> playerNames) {
         List<BettingAmount> bettingAmounts = new ArrayList<>();
-        for (String name : players.getPlayerNamesToString()) {
+        for (String name : playerNames) {
             bettingAmounts.add(BettingAmount.fromPlayer(inputView.askPlayerBettingAmount(name)));
         }
         return bettingAmounts;
     }
 
-    private void printInitialDistribution(Players players, Dealer dealer) {
-        outputView.printFirstCardDistribution(dealer.getNameToValue(), players.getPlayerNamesToString());
-        printDealerInitialCard(dealer);
-        printPlayersInitialCard(players);
+    private void printInitialDistribution(BlackJackGame blackJackGame) {
+        outputView.printFirstCardDistribution(blackJackGame.getDealerNameToString(),
+                blackJackGame.getPlayerNamesToString());
+        outputView.printAllParticipantsInitialCard(blackJackGame.getAllParticipantsNameToString(),
+                blackJackGame.getParticipantsInitialCards());
     }
 
-    private void printDealerInitialCard(Dealer dealer) {
-        outputView.printCardStatus(dealer.getNameToValue(),
-                getCardStatusFromCards(List.of(dealer.showOneCard())));
+    private void progress(BlackJackGame blackJackGame) {
+        progressPlayers(blackJackGame);
+        progressDealer(blackJackGame);
     }
 
-    private List<CardStatusDto> getCardStatusFromCards(List<Card> cards) {
-        return cards.stream()
-                .map(CardStatusDto::from)
-                .collect(Collectors.toList());
-    }
-
-    private void printPlayersInitialCard(Players players) {
-        for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getNameToValue(),
-                    getCardStatusFromCards(player.getCardList()));
+    private void progressPlayers(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            requestPlayerMoreCard(blackJackGame, player);
         }
     }
 
-    private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {
-        progressPlayers(players, cardDistributor);
-        progressDealer(dealer, cardDistributor);
-    }
-
-    private void progressPlayers(Players players, CardDistributor cardDistributor) {
-        for (Player player : players.getPlayers()) {
-            requestPlayerMoreCard(cardDistributor, player);
-        }
-    }
-
-    private void requestPlayerMoreCard(CardDistributor cardDistributor, Player player) {
+    private void requestPlayerMoreCard(BlackJackGame blackJackGame, Player player) {
         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
             isCardRequested = inputView.askMoreCard(player.getNameToValue());
-            pickPlayerCardIfRequested(cardDistributor, player, isCardRequested);
+            blackJackGame.progressPlayer(player, isCardRequested);
+            outputView.printCardStatus(player.getNameToValue(),
+                    blackJackGame.getStatusFromCards(player.getCardList()));
         }
     }
 
-    private void pickPlayerCardIfRequested(CardDistributor cardDistributor, Player player, boolean isCardRequested) {
-        if (isCardRequested && cardDistributor.isCardLeft()) {
-            player.pick(cardDistributor.distribute());
-        }
-        outputView.printCardStatus(player.getNameToValue(),
-                getCardStatusFromCards(player.getCardList()));
+    private void progressDealer(BlackJackGame blackJackGame) {
+        int dealerMoreCardCount = blackJackGame.progressDealer();
+        outputView.printDealerMoreCard(blackJackGame.getDealerNameToString(), dealerMoreCardCount);
     }
 
-    private void progressDealer(Dealer dealer, CardDistributor cardDistributor) {
-        int dealerMoreCardCount = 0;
-        while (dealer.isMoreCardAble() && cardDistributor.isCardLeft()) {
-            dealer.pick(cardDistributor.distribute());
-            dealerMoreCardCount++;
-        }
-        outputView.printDealerMoreCard(dealer.getNameToValue(), dealerMoreCardCount);
-    }
-
-    private void end(Players players, Dealer dealer, BettingManager bettingManager) {
-        printFinalCard(dealer);
-        players.getPlayers().forEach(this::printFinalCard);
-        printParticipantsRevenue(dealer, players, bettingManager);
-    }
-
-    private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getNameToValue(),
-                getCardStatusFromCards(participant.getCardList()),
-                participant.getTotalScoreToValue());
-    }
-
-    private void printParticipantsRevenue(Dealer dealer, Players players, BettingManager bettingManager) {
-        Result result = new Result(dealer, players);
-        outputView.printFinalResult(bettingManager.calculateTotalRevenue(result.getPlayersWinResult()));
+    private void end(BlackJackGame blackJackGame, BettingManager bettingManager) {
+        outputView.printAllParticipantsCardAndScore(blackJackGame.getAllParticipantsNameToString(),
+                blackJackGame.getAllParticipantsCards(), blackJackGame.getAllParticipantsTotalScore());
+        outputView.printFinalResult(blackJackGame.calculateTotalRevenue(bettingManager));
     }
 
 }

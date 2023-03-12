@@ -24,6 +24,12 @@ public class OutputView {
         System.out.printf("\n" + INITIAL_CARD_DISTRIBUTION, dealerName, String.join(NAME_DELIMITER, playerNames));
     }
 
+    public void printAllParticipantsInitialCard(List<String> names, List<List<CardStatusDto>> cards) {
+        for (int index = 0; index < names.size(); index++) {
+            printCardStatus(names.get(index), cards.get(index));
+        }
+    }
+
     public void printCardStatus(String name, List<CardStatusDto> cardStatuses) {
         System.out.printf("\n" + PARTICIPANT_CARD_STATUS_FORMAT, name,
                 String.join(NAME_DELIMITER, convertCardStatus(cardStatuses)));
@@ -42,7 +48,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printCardAndScore(String playerName, List<CardStatusDto> cardStatuses, int totalScore) {
+    public void printAllParticipantsCardAndScore(List<String> names, List<List<CardStatusDto>> cards,
+                                                 List<Integer> scores) {
+        for (int index = 0; index < names.size(); index++) {
+            printCardAndScore(names.get(index), cards.get(index), scores.get(index));
+        }
+    }
+
+    private void printCardAndScore(String playerName, List<CardStatusDto> cardStatuses, int totalScore) {
         printCardStatus(playerName, cardStatuses);
         System.out.printf(FINAL_SCORE, totalScore);
     }
