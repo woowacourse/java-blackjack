@@ -25,24 +25,24 @@ public class OutputView {
     private static final String GAME_DEALER_PROFIT_MESSAGE_FORMAT = "딜러: %d";
 
     public void printInitialDraw(final List<Player> players) {
-        System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
+        System.out.println(NEW_LINE + generateNamesMessage(players) + INITIAL_DRAW_MESSAGE);
         for (Player player : players) {
-            printPlayerCardMessage(player, generateFirstCardMessages(player));
+            System.out.println(generatePlayerCardMessage(player, generateInitialCardMessages(player)));
         }
         System.out.print(NEW_LINE);
     }
 
-    private String generateNames(final List<Player> players) {
+    private String generateNamesMessage(final List<Player> players) {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void printPlayerCardMessage(final Player player, final String message) {
-        System.out.printf((PLAYER_CARD_MESSAGE_FORMAT) + "%n", player.getName(), message);
+    private String generatePlayerCardMessage(final Player player, final String message) {
+        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message);
     }
 
-    private String generateFirstCardMessages(final Player player) {
+    private String generateInitialCardMessages(final Player player) {
         if (player.isDealer()) {
             Dealer dealer = (Dealer) player;
             return dealer.getFirstCardLetter();
@@ -59,11 +59,12 @@ public class OutputView {
     }
 
     public void printDrawResult(final Player player) {
-        printPlayerCardMessage(player, generateFirstCardMessages(player));
+        System.out.println(generatePlayerCardMessage(player, generateInitialCardMessages(player)));
     }
 
     public void printPlayerCardAndScores(final Player player) {
-        printPlayerCardMessage(player, generateCardMessage(player) + generateScoreMessage(player));
+        final String cardAndScoreMessages = generateCardMessage(player) + generateScoreMessage(player);
+        System.out.println(generatePlayerCardMessage(player, cardAndScoreMessages));
     }
 
     private String generateScoreMessage(final Player player) {
@@ -72,12 +73,12 @@ public class OutputView {
 
     public void printPlayerProfits(final Map<Player, Money> profitByPlayers) {
         System.out.println(GAME_PROFIT_TITLE);
-        printDealerProfit(profitByPlayers);
-        printGamblerProfits(profitByPlayers);
+        System.out.println(generateDealerProfit(profitByPlayers));
+        System.out.println(generateGamblerProfits(profitByPlayers));
     }
 
-    private void printDealerProfit(final Map<Player, Money> profitByPlayers) {
-        System.out.printf((GAME_DEALER_PROFIT_MESSAGE_FORMAT) + "%n", calculateDealerProfit(profitByPlayers));
+    private String generateDealerProfit(final Map<Player, Money> profitByPlayers) {
+        return format(GAME_DEALER_PROFIT_MESSAGE_FORMAT, calculateDealerProfit(profitByPlayers));
     }
 
     private int calculateDealerProfit(final Map<Player, Money> profitByPlayers) {
@@ -87,10 +88,11 @@ public class OutputView {
                 .sum();
     }
 
-    private void printGamblerProfits(final Map<Player, Money> profitByPlayers) {
-        for (Player player : profitByPlayers.keySet()) {
-            System.out.printf((GAME_GAMBLER_PROFIT_MESSAGE_FORMAT) + "%n", player.getName(), profitByPlayers.get(player).getAmount());
-        }
+    private String generateGamblerProfits(final Map<Player, Money> profitByPlayers) {
+        return profitByPlayers.keySet()
+                .stream()
+                .map(player -> format(GAME_GAMBLER_PROFIT_MESSAGE_FORMAT, player.getName(), profitByPlayers.get(player).getAmount()))
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     public void printError(final String message) {
