@@ -28,8 +28,6 @@ import static view.OutputView.printSingleGambler;
 
 
 public class Controller {
-    //TODO: 기능 목록 작성
-    //TODO: method순서 호출 순으로 정렬
 
     public void playBlackjack() {
         PlayerNames playerNames = getPlayerNames();
