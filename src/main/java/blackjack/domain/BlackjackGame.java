@@ -4,8 +4,6 @@ import java.util.List;
 
 public class BlackjackGame {
 
-    public static final int CONVERT_TO_DEALER_AMOUNT = -1;
-
     private final CardDeck cardDeck;
     private final Participants participants;
 
@@ -37,13 +35,17 @@ public class BlackjackGame {
             ResultState resultState = ResultState.of(player, participants.getDealer());
             player.multipleBetAmount(resultState.getTimes());
         }
+        calculateDealerAmount();
     }
 
-    public int getDealerAmount() {
-        return participants.getPlayers()
-                           .stream()
-                           .mapToInt(Player::getBetAmount)
-                           .sum() * CONVERT_TO_DEALER_AMOUNT;
+    private void calculateDealerAmount() {
+        int playerTotalAmount = participants.getPlayers()
+                                            .stream()
+                                            .mapToInt(Player::getBetAmount)
+                                            .sum();
+        participants.getDealer()
+                    .initBetAmount(playerTotalAmount);
+
     }
 
     public void giveCard(Participant participant) {

@@ -21,6 +21,7 @@ public class Player extends Participant {
         }
     }
 
+    @Override
     public void initBetAmount(int value) {
         betAmount.initialize(value);
     }
