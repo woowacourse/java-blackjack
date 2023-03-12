@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final int NOT_EXIST_MATCH_RESULT = 0;
     private static final String DEALER_DEFAULT_NAME = "딜러";
 
     private OutputView() {
@@ -44,39 +43,10 @@ public class OutputView {
         System.out.println(playerCards + playerTotalPoint);
     }
 
-    public static void printBlackJackResults(final BlackJackGameResultDTO gameResultDTO) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.println(makeBlackJackResultFormat(gameResultDTO.getGameResults()));
-    }
-
-    private static String makeBlackJackResultFormat(final Map<String, List<String>> blackJackResults) {
-        Set<String> participants = blackJackResults.keySet();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (final String name : participants) {
-            List<String> gameResults = blackJackResults.get(name);
-            Map<String, Long> results = gameResults.stream()
-                    .collect(Collectors.groupingBy(String::valueOf, Collectors.counting()));
-            stringBuilder.append(getParticipantResult(name, results));
-        }
-
-        return stringBuilder.toString();
-    }
-
     private static String getParticipantCards(final String participantName, final List<String> participantCards) {
         return participantName
                 + " 카드: "
                 + String.join(", ", participantCards);
-    }
-
-    private static String getParticipantResult(final String name, final Map<String, Long> results) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name).append(": ");
-        results.entrySet().stream()
-                .filter(entry -> entry.getValue() > NOT_EXIST_MATCH_RESULT)
-                .forEach(entry -> stringBuilder.append(entry.getValue()).append(entry.getKey()).append(" "));
-        stringBuilder.append(System.lineSeparator());
-        return stringBuilder.toString();
     }
 
     public static void printBettingResults(ParticipantBettingResultDTO bettingResultDTO) {

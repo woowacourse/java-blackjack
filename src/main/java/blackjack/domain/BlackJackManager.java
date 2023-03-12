@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.BlackJackGameResultDTO;
 import blackjack.dto.ParticipantBettingResultDTO;
 import blackjack.dto.ParticipantEntireStatusDTO;
 import blackjack.dto.ParticipantStatusDTO;
@@ -55,11 +54,6 @@ public class BlackJackManager {
     public void showParticipantStatus(final Consumer<ParticipantEntireStatusDTO> printParticipantStatus) {
         printParticipantStatus.accept(ParticipantEntireStatusDTO.of(participants.getDealer()));
         participants.getPlayers().forEach(player -> printParticipantStatus.accept(ParticipantEntireStatusDTO.of(player)));
-    }
-
-    public void showGameResult(final Consumer<BlackJackGameResultDTO> printGameResults) {
-        BlackJackResults blackJackResults = new BlackJackResults(participants.getDealer(), participants.getPlayers());
-//        printGameResults.accept(BlackJackGameResultDTO.of(blackJackResults));
     }
 
     public void showBettingResults(final Consumer<ParticipantBettingResultDTO> printBettingResults) {

@@ -26,7 +26,6 @@ public class BlackJackController {
         showParticipantInitialCards();
         checkParticipantsHit();
         showParticipantStatus();
-        showGameResult();
         showBettingResults();
     }
 
@@ -43,10 +42,6 @@ public class BlackJackController {
 
     private void showParticipantStatus() {
         blackJackManager.showParticipantStatus(OutputView::printParticipantCardWithResult);
-    }
-
-    private void showGameResult() {
-        blackJackManager.showGameResult(OutputView::printBlackJackResults);
     }
 
     private void showBettingResults() {
