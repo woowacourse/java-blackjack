@@ -21,7 +21,7 @@ public final class Ready extends State {
     }
 
     @Override
-    public List<Card> getCards() {
-        return hand.getCards();
+    public State stay() {
+        throw new IllegalStateException("[ERROR] 게임 준비 단계에는 상태를 조작할 수 없습니다.");
     }
 }
