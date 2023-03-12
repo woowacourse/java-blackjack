@@ -24,6 +24,6 @@ public class GameResult {
     }
 
     public Map<Player, ResultType> getBettingResult() {
-        return bettingResult;
+        return new LinkedHashMap<>(bettingResult);
     }
 }

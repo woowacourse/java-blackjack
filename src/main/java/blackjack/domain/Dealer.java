@@ -30,6 +30,10 @@ public class Dealer extends Participant {
         int dealerPoint = getTotalPoint();
         int participantPoint = participant.getTotalPoint();
 
+        return judgeResult(participant, dealerPoint, participantPoint);
+    }
+
+    private ResultType judgeResult(final Participant participant, final int dealerPoint, final int participantPoint) {
         if(participant.isBlackJack() && !isBlackJack()) {
             return BLACK_JACK;
         }

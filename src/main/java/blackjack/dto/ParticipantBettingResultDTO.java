@@ -29,6 +29,6 @@ public class ParticipantBettingResultDTO {
     }
 
     public Map<String, Integer> getBettingResults() {
-        return bettingResults;
+        return new LinkedHashMap<>(bettingResults);
     }
 }

@@ -4,6 +4,7 @@ import blackjack.domain.Name;
 import blackjack.domain.Participant;
 import blackjack.domain.card.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,6 @@ public class ParticipantStatusDTO {
     }
 
     public List<String> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }

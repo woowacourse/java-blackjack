@@ -31,7 +31,7 @@ public class Participants {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public Dealer getDealer() {

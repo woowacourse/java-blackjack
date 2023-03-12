@@ -5,6 +5,7 @@ import blackjack.dto.ParticipantBettingResultDTO;
 import blackjack.dto.ParticipantEntireStatusDTO;
 import blackjack.dto.ParticipantStatusDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -66,6 +67,6 @@ public class BlackJackManager {
     }
 
     public List<Player> getPlayers() {
-        return participants.getPlayers();
+        return new ArrayList<>(participants.getPlayers());
     }
 }

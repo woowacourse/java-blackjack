@@ -34,11 +34,11 @@ public class ParticipantCards {
     public List<Card> open(int size) {
         return IntStream.range(0, size)
                 .mapToObj(cards::get)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Card> openAll() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 
     public boolean isBust() {
