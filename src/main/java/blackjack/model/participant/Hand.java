@@ -47,8 +47,4 @@ public class Hand {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
-
-    public int size() {
-        return cards.size();
-    }
 }
