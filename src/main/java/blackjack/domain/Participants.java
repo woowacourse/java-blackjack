@@ -6,6 +6,7 @@ import blackjack.domain.card.ParticipantCards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -14,10 +15,10 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(final Deck deck, List<String> playerNames) {
+    public Participants(final Deck deck, final Map<String, Integer> playerStatuses) {
         this.dealer = new Dealer(makeInitialCards(deck));
-        this.players = playerNames.stream()
-                .map(name -> new Player(makeInitialCards(deck), name))
+        this.players = playerStatuses.keySet().stream()
+                .map(name -> new Player(makeInitialCards(deck), name, playerStatuses.get(name)))
                 .collect(Collectors.toList());
     }
 
