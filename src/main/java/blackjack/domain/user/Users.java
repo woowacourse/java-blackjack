@@ -17,18 +17,29 @@ public class Users {
         this.players = players;
     }
 
-    public void giveInitialCards() {
+    public void giveInitialCardsTo() {
         for (Player player : players.getPlayers()) {
-            giveInitialCards(player);
+            giveInitialCardsTo(player);
         }
-        giveInitialCards(dealer);
+        giveInitialCardsTo(dealer);
     }
 
-    private void giveInitialCards(User user) {
-        Deck deck = Deck.getInstance();
-        for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIAL_CARDS; cardIndex++) {
-            user.updateCardScore(deck.drawCard());
+    public LinkedHashMap<User, Double> calculateRewards(UserResults userResults) {
+        LinkedHashMap<User, Double> playerResults = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            player.updateReceivingAmount(userResults.getResultOf(player));
+            player.checkBlackjack(dealer.isBlackjack());
+            playerResults.put(player, player.getReceivingAmount());
         }
+        return playerResults;
+    }
+
+    public double calculateDealerRewards() {
+        double dealerReceivingAmount = 0;
+        for (Player player : players.getPlayers()) {
+            dealerReceivingAmount -= (player.getReceivingAmount());
+        }
+        return dealerReceivingAmount;
     }
 
     public Dealer getDealer() {
@@ -39,21 +50,10 @@ public class Users {
         return players;
     }
 
-    public LinkedHashMap<User, Double> calculateReceivingAmount(UserResults userResults) {
-        LinkedHashMap<User, Double> playerResults = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            player.updateReceivingAmount(userResults.getResultOf(player));
-            player.checkBlackjack(dealer.isBlackjack());
-            playerResults.put(player, player.getReceivingAmount());
+    private void giveInitialCardsTo(User user) {
+        Deck deck = Deck.getInstance();
+        for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIAL_CARDS; cardIndex++) {
+            user.updateCardScore(deck.drawCard());
         }
-        return playerResults;
-    }
-
-    public double calculateDealerReceivingAmount() {
-        double dealerReceivingAmount = 0;
-        for (Player player : players.getPlayers()) {
-            dealerReceivingAmount -= (player.getReceivingAmount());
-        }
-        return dealerReceivingAmount;
     }
 }

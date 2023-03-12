@@ -20,6 +20,14 @@ public class UserResults {
         return new UserResults(calculateResults(users.getDealer(), users.getPlayers()));
     }
 
+    public HashMap<User, List<Result>> getResults() {
+        return results;
+    }
+
+    public Result getResultOf(Player player) {
+        return results.get(player).get(PLAYER_RESULT_INDEX);
+    }
+
     private static HashMap<User, List<Result>> calculateResults(Dealer dealer, Players players) {
         HashMap<User, List<Result>> userResults = initializeResults(dealer, players);
         int dealerScore = dealer.getTotalScore();
@@ -39,13 +47,5 @@ public class UserResults {
             userResults.put(player, new ArrayList<>());
         }
         return userResults;
-    }
-
-    public HashMap<User, List<Result>> getResults() {
-        return results;
-    }
-
-    public Result getResultOf(Player player) {
-        return results.get(player).get(PLAYER_RESULT_INDEX);
     }
 }

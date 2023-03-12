@@ -11,18 +11,6 @@ public class Player extends User {
         super(name);
     }
 
-    public void setBetAmount(int betAmount) {
-        this.betAmount = new BetAmount(betAmount);
-    }
-
-    public String getPlayerName() {
-        return name.getName();
-    }
-
-    public double getReceivingAmount() {
-        return betAmount.getReceivingAmount();
-    }
-
     @Override
     public boolean isDealer() {
         return false;
@@ -33,6 +21,10 @@ public class Player extends User {
         handCards.updateCardScore(card);
     }
 
+    public void setBetAmount(int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+
     public void checkBlackjack(boolean isDealerBlackjack) {
         if (!isDealerBlackjack && isBlackjack()) {
             betAmount.setBlackjack();
@@ -41,5 +33,13 @@ public class Player extends User {
 
     public void updateReceivingAmount(Result result) {
         betAmount.updateReceivingAmount(result);
+    }
+
+    public String getPlayerName() {
+        return name.getName();
+    }
+
+    public double getReceivingAmount() {
+        return betAmount.getReceivingAmount();
     }
 }

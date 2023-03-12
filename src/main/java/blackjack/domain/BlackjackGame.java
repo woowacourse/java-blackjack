@@ -19,15 +19,11 @@ public class BlackjackGame {
 
     public void giveInitialCardsToUsers() {
         deck.shuffleCards();
-        users.giveInitialCards();
+        users.giveInitialCardsTo();
     }
 
     public void updateCard(User user) {
         user.updateCardScore(deck.drawCard());
-    }
-
-    public UserResults getResults() {
-        return UserResults.of(users);
     }
 
     public Players getPlayers() {
@@ -40,17 +36,20 @@ public class BlackjackGame {
 
     public Rewards getRewards() {
         UserResults results = getResults();
-        LinkedHashMap<User, Double> rewards = calculatePlayersBetAmount(results);
-        double dealerReceivingAmount = calculateDealerReceivingAmount();
-        rewards.put(getDealer(), dealerReceivingAmount);
+        LinkedHashMap<User, Double> rewards = calculatePlayersRewards(results);
+        rewards.put(getDealer(), calculateDealerRewards());
         return Rewards.of(rewards);
     }
 
-    private LinkedHashMap<User, Double> calculatePlayersBetAmount(UserResults results) {
-        return users.calculateReceivingAmount(results);
+    private LinkedHashMap<User, Double> calculatePlayersRewards(UserResults results) {
+        return users.calculateRewards(results);
     }
 
-    private double calculateDealerReceivingAmount() {
-        return users.calculateDealerReceivingAmount();
+    private double calculateDealerRewards() {
+        return users.calculateDealerRewards();
+    }
+
+    private UserResults getResults() {
+        return UserResults.of(users);
     }
 }

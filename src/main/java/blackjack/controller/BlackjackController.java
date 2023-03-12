@@ -18,16 +18,9 @@ public class BlackjackController {
         ready(generatePlayers());
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
-        setBetAmount(players);
         printNewCards(players, dealer);
         giveAdditionalCards(players, dealer);
         printFinalResults(dealer, players);
-    }
-
-    private void setBetAmount(Players players) {
-        for (Player player : players.getPlayers()) {
-            player.setBetAmount(InputView.readBetAmount(player.getPlayerName()));
-        }
     }
 
     private void ready(Players players) {
@@ -37,6 +30,7 @@ public class BlackjackController {
                 .map(Player::getPlayerName)
                 .collect(Collectors.toList())
         );
+        setBetAmount(players);
     }
 
     private void printNewCards(Players players, Dealer dealer) {
@@ -49,21 +43,27 @@ public class BlackjackController {
         giveAdditionalCardsToDealer(dealer);
     }
 
-    private Players generatePlayers() {
-        Names names = new Names(InputView.inputPeopleNames());
-        return Players.from(names);
-    }
-
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
         Rewards rewards = blackjackGame.getRewards();
         OutputView.printPrize(RewardDTO.of(rewards));
     }
 
+    private void setBetAmount(Players players) {
+        for (Player player : players.getPlayers()) {
+            player.setBetAmount(InputView.readBetAmount(player.getPlayerName()));
+        }
+    }
+
+    private Players generatePlayers() {
+        Names names = new Names(InputView.inputPeopleNames());
+        return Players.from(names);
+    }
+
     private void giveAdditionalCardsToPlayers(Players players) {
         for (Player player : players.getPlayers()) {
             String answer = InputView.askAdditionalCard(player.getPlayerName());
-            giveAdditionalCard(answer, player);
+            giveAdditionalCardToPlayer(answer, player);
         }
     }
 
@@ -74,7 +74,7 @@ public class BlackjackController {
         }
     }
 
-    private void giveAdditionalCard(String answer, Player player) {
+    private void giveAdditionalCardToPlayer(String answer, Player player) {
         while (GameCommand.isContinue(answer) && !player.isBust()) {
             blackjackGame.updateCard(player);
             OutputView.printPlayerCurrentCards(player);

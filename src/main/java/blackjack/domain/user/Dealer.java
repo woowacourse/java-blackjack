@@ -11,10 +11,6 @@ public class Dealer extends User {
         super(new Name(DEALER_NAME));
     }
 
-    public boolean hasUnderMinimumScore() {
-        return handCards.getTotalScore() <= MINIMUM_SCORE;
-    }
-
     @Override
     public boolean isDealer() {
         return true;
@@ -23,5 +19,9 @@ public class Dealer extends User {
     @Override
     public void updateCardScore(Card card)  {
         handCards.updateCardScore(card);
+    }
+
+    public boolean hasUnderMinimumScore() {
+        return handCards.getTotalScore() <= MINIMUM_SCORE;
     }
 }
