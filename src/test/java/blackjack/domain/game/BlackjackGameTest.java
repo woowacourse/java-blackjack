@@ -74,7 +74,7 @@ public class BlackjackGameTest {
         final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("후추"));
 
-        final boolean result = blackjackGame.isDrawable();
+        final boolean result = blackjackGame.isExistDrawablePlayer();
 
         assertThat(result).isTrue();
     }
@@ -83,7 +83,7 @@ public class BlackjackGameTest {
     void 카드를_뽑을_수_있는_플레이어들이_없다면_거짓을_반환한다() {
         final BlackjackGame blackjackGame = new BlackjackGame();
 
-        final boolean result = blackjackGame.isDrawable();
+        final boolean result = blackjackGame.isExistDrawablePlayer();
 
         assertThat(result).isFalse();
     }

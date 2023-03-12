@@ -117,7 +117,7 @@ public class PlayersTest {
 
         players.stay(Name.from("후추"));
 
-        assertThat(players.isDrawable()).isFalse();
+        assertThat(players.isExistDrawablePlayer()).isFalse();
     }
 
     @Test
@@ -125,7 +125,7 @@ public class PlayersTest {
         final Players players = Players.create();
         players.addPlayers(List.of("후추"));
 
-        final boolean result = players.isDrawable();
+        final boolean result = players.isExistDrawablePlayer();
 
         assertThat(result).isTrue();
     }
@@ -134,7 +134,7 @@ public class PlayersTest {
     void 카드를_뽑을_수_있는_플레이어들이_없다면_거짓을_반환한다() {
         final Players players = Players.create();
 
-        final boolean result = players.isDrawable();
+        final boolean result = players.isExistDrawablePlayer();
 
         assertThat(result).isFalse();
     }

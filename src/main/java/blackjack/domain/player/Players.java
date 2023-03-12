@@ -87,7 +87,7 @@ public final class Players {
         player.stay();
     }
 
-    public boolean isDrawable() {
+    public boolean isExistDrawablePlayer() {
         return gamblers().stream()
                 .anyMatch(Player::isDrawable);
     }

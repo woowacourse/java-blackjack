@@ -39,8 +39,8 @@ public final class BlackjackGame {
         players.stay(name);
     }
 
-    public boolean isDrawable() {
-        return players.isDrawable();
+    public boolean isExistDrawablePlayer() {
+        return players.isExistDrawablePlayer();
     }
 
     public Player findDrawablePlayer() {

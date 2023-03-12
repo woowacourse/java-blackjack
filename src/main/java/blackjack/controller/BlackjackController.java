@@ -69,7 +69,7 @@ public final class BlackjackController {
     }
 
     private void draw() {
-        while (blackjackGame.isDrawable()) {
+        while (blackjackGame.isExistDrawablePlayer()) {
             final Player player = blackjackGame.findDrawablePlayer();
             final BlackjackCommand command = readCommand(player);
             decide(player, command);
