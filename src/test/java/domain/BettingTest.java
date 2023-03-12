@@ -1,10 +1,21 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class BettingTest {
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1,0})
+    void 베팅금액은_0원을_초과해야_한다(int bettingMoney) {
+        assertThatThrownBy(
+            ()->  new Betting(bettingMoney, 20000)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 
     @Test
     void 수익에서_베팅금액을_공제해_반환한다() {
