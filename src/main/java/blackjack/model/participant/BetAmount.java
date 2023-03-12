@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 public class BetAmount {
 
@@ -23,7 +23,7 @@ public class BetAmount {
         }
     }
 
-    private static boolean isNotSatisfiedBetUnit(int betAmount) {
+    private boolean isNotSatisfiedBetUnit(int betAmount) {
         return betAmount % MIN_BET_UNIT != 0;
     }
 

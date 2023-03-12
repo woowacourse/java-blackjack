@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ResultDto;
-import blackjack.model.BetAmount;
+import blackjack.model.participant.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
 import blackjack.model.state.DealerInitialState;

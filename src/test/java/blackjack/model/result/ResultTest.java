@@ -1,6 +1,6 @@
 package blackjack.model.result;
 
-import blackjack.model.BetAmount;
+import blackjack.model.participant.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
 import blackjack.model.state.DealerInitialState;
