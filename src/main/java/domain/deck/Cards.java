@@ -25,13 +25,13 @@ public class Cards {
     }
 
     private int calculateAceValue(int sum) {
-        while (countAce() && sum > BLACK_JACK) {
+        while (aceExist() && sum > BLACK_JACK) {
             sum += DECREASE_ACE_VALUE;
         }
         return sum;
     }
 
-    private boolean countAce() {
+    private boolean aceExist() {
         return cards.stream().anyMatch(Card::isAce);
     }
 

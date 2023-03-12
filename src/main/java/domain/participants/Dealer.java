@@ -1,11 +1,13 @@
 package domain.participants;
 
+import domain.BettingMoney;
+
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int BOUND = 16;
 
     public Dealer() {
-        super(NAME);
+        super(NAME,new BettingMoney(0));
     }
 
     public boolean isOverDealerStandard() {

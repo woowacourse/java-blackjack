@@ -18,8 +18,8 @@ public class OutputView {
     private static final String FINAL_WIN_LOSE_RATIO_MESSAGE = System.lineSeparator() + "## 최종 " +
             "수익";
 
-    public void printBettingMessage(Player player) {
-        System.out.println(player.getName() + "의 베팅 금액은?");
+    public void printBettingMessage(String name) {
+        System.out.println(name + "의 베팅 금액은?");
     }
 
     private String printCardsForm(Player player) {

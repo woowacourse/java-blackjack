@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 import org.assertj.core.api.Assertions;
@@ -12,14 +13,20 @@ public class  GameResultTest {
     @Test
     @DisplayName("GameResult 생성 성공 테스트")
     void createGameResultTest(){
-        Assertions.assertThatNoException().isThrownBy(()->new GameResult(new Players(List.of("pobi",
-                "ocean"))));
+        Player player1 = new Player("pobi",new BettingMoney(0));
+        Player player2 = new Player("jason",new BettingMoney(0));
+        Dealer dealer = new Dealer();
+        Assertions.assertThatNoException().isThrownBy(()->new GameResult(new Players(List.of(dealer,player1, player2))));
     }
 
     @Test
     @DisplayName("GameResult 베팅 금액 추가 후 조회 테스트 ")
     void addGameResultTest(){
-        Players players = new Players(List.of("pobi","ocean"));
+        Player player1 = new Player("pobi",new BettingMoney(0));
+        Player player2 = new Player("jason",new BettingMoney(0));
+        Dealer dealer = new Dealer();
+
+        Players players = new Players(List.of(dealer,player1,player2));
         GameResult gameResult = new GameResult(players);
         gameResult.addBetMoney(players.getPlayersWithOutDealer().get(0),new BettingMoney(10000));
 
@@ -29,7 +36,11 @@ public class  GameResultTest {
     @Test
     @DisplayName("GameResult 베팅 금액 계산 테스트 ")
     void calculateGameResultTest(){
-        Players players = new Players(List.of("pobi","ocean"));
+        Player player1 = new Player("pobi",new BettingMoney(0));
+        Player player2 = new Player("jason",new BettingMoney(0));
+        Dealer dealer = new Dealer();
+
+        Players players = new Players(List.of(dealer,player1,player2));
         GameResult gameResult = new GameResult(players);
         gameResult.calculatePlayersResult(players);
 

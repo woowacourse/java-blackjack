@@ -6,11 +6,16 @@ import domain.Command;
 import domain.GameResult;
 import domain.deck.CardDeck;
 import domain.generator.CardGenerator;
+import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 import strategy.ShuffleCardsStrategy;
 import view.InputView;
 import view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     private final InputView inputView;
@@ -26,7 +31,6 @@ public class Controller {
         GameResult gameResult = new GameResult(players);
         BlackjackGame game = new BlackjackGame(players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
-        setPlayersBetMoney(players, gameResult);
         distributeInitialCard(players, game);
         pollAdditionalCard(players, game);
         printResult(players, game, gameResult);
@@ -34,26 +38,25 @@ public class Controller {
 
     private Players setPlayers() {
         try {
-            return new Players(inputView.readPlayerNames());
+            List<String> names = inputView.readPlayerNames();
+            return createPlayers(names);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return setPlayers();
         }
     }
 
-    private void setPlayersBetMoney(Players players, GameResult gameResult) {
-        for (Player player : players.getPlayersWithOutDealer()) {
-            outputView.printBettingMessage(player);
-            setBetMoney(player,gameResult);
-        }
+    private Players createPlayers(List<String> names) {
+        List<Player> players = names.stream()
+                .map(name -> createPlayer(name))
+                .collect(Collectors.toList());
+        players.add(0,new Dealer());
+        return new Players(players);
     }
-    private void setBetMoney(Player player, GameResult gameResult){
-        try{
-            gameResult.addBetMoney(player, new BettingMoney(inputView.readBetMoney()));
-        }catch(IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            setBetMoney(player,gameResult);
-        }
+
+    private Player createPlayer(String name) {
+        outputView.printBettingMessage(name);
+        return new Player(name, new BettingMoney(inputView.readBetMoney()));
     }
 
     private void distributeInitialCard(Players players, BlackjackGame game) {

@@ -1,29 +1,21 @@
 package domain.participants;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
     private static final String INVALID_NAME = "중복된 이름입니다.";
 
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
-    public Players(List<String> names) {
-        validateDuplicatedName(names);
-        addPlayer(names);
+    public Players(List<Player> players) {
+        validateDuplicatedName(players);
+        this.players = players;
     }
 
-    private void validateDuplicatedName(List<String> splitedName) {
-        if (splitedName.size() != splitedName.stream().distinct().count()) {
+    private void validateDuplicatedName(List<Player> splitedName) {
+        if (splitedName.size() != splitedName.stream().map(s->s.getName()).distinct().count()) {
             throw new IllegalArgumentException(INVALID_NAME);
-        }
-    }
-
-    private void addPlayer(List<String> splitedName) {
-        players.add(new Dealer());
-        for (String name : splitedName) {
-            players.add(new Player(name));
         }
     }
 
