@@ -12,18 +12,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
-    private static OutputView INSTANCE = new OutputView();
     private static final String NEW_LINE = System.lineSeparator();
     private static final int INITIAL_DRAW_COUNT = 2;
     private static final int DEALER_OPEN_CARD_INDEX = 0;
     private static final String DELIMITER = ", ";
-
-    private OutputView() {
-    }
-
-    public static OutputView getInstance() {
-        return INSTANCE;
-    }
 
     public void printInitialDraw(final List<Player> players) {
         System.out.println(NEW_LINE + generateNameMessages(players) + "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.");

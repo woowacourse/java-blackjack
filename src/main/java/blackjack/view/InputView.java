@@ -9,18 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public final class InputView {
-    private static InputView INSTANCE = new InputView();
     private static final String DELIMITER = ",";
     private static final int LIMIT = -1;
+    private static InputView INSTANCE = new InputView();
 
     private final Scanner scanner;
 
-    private InputView() {
+    public InputView() {
         this.scanner = new Scanner(System.in);
-    }
-
-    public static InputView getInstance() {
-        return INSTANCE;
     }
 
     public List<String> readPlayers() {

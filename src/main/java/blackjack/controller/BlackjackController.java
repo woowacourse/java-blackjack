@@ -10,8 +10,8 @@ import blackjack.view.OutputView;
 
 public final class BlackjackController {
 
-    private static final InputView inputView = InputView.getInstance();
-    private static final OutputView outputView = OutputView.getInstance();
+    private static final InputView inputView = new InputView();
+    private static final OutputView outputView = new OutputView();
 
     private final BlackjackGame blackjackGame;
     private final Retry retry;
