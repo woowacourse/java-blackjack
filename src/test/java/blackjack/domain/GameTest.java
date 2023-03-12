@@ -13,8 +13,6 @@ class GameTest {
         GamePlayer gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("name1", "name2", "name3")));
         Game game = Game.from(gamePlayer);
 
-        System.out.println(game.getPlayersCount());
-
         assertThat(game.getPlayersCount()).isEqualTo(3);
     }
 }

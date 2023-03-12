@@ -52,7 +52,6 @@ class GameResultTest {
             void Should_WIN_When_DealerNotBlackJack() {
                 gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(LESS_THAN_BLACKJACK, BLACKJACK, PLAYER_NAME);
                 String playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                System.out.println("블랙잭, 브랙잭X" + playerResult);
                 assertThat(playerResult).isEqualTo("승");
             }
         }
