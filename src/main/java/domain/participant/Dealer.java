@@ -4,10 +4,10 @@ import domain.score.Score;
 
 public final class Dealer extends Participant {
     private static final Score FILL_BOUNDARY_INCLUSIVE = new Score(16);
-    private static final Name DEFAULT_DEALER = new Name("딜러");
+    private static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer() {
-        super(DEFAULT_DEALER);
+        super(DEALER_NAME);
     }
 
     @Override
