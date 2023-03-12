@@ -18,4 +18,8 @@ public class BetAmount {
             );
         }
     }
+
+    public int getBetAmount() {
+        return amount;
+    }
 }
