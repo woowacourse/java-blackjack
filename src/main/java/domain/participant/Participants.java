@@ -59,10 +59,6 @@ public class Participants {
         return players.getPlayerNames();
     }
 
-    public int getDealerCardValueSum() {
-        return dealer.calculateOptimalCardValueSum();
-    }
-
     public List<Player> getRawPlayers() {
         return players.getPlayers();
     }

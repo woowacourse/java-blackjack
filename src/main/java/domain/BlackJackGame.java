@@ -75,16 +75,6 @@ public class BlackJackGame {
         return participants.getDealer();
     }
 
-    public int getDealerCardValueSum() {
-        return participants.getDealerCardValueSum();
-    }
-
-    public int findPlayerCardValueSumByPlayerName(String playerName) {
-        Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        Hand hand = findPlayer.getHand();
-        return hand.calculateOptimalCardValueSum();
-    }
-
     public List<Player> getRawPlayers() {
         return participants.getRawPlayers();
     }
