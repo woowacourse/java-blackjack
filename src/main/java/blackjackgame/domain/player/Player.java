@@ -24,9 +24,9 @@ public abstract class Player {
         }
     }
 
-    public abstract boolean canHit();
+    protected abstract boolean canHit();
 
-    public abstract String getName();
+    protected abstract String getName();
 
     public final int getScore() {
         int totalScore = cards.stream()

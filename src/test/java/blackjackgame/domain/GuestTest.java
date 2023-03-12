@@ -14,7 +14,6 @@ import blackjackgame.domain.card.CardValue;
 import blackjackgame.domain.card.Symbol;
 import blackjackgame.domain.player.Guest;
 import blackjackgame.domain.player.Name;
-import blackjackgame.domain.player.Player;
 
 class GuestTest {
     @DisplayName("게스트가 가진 카드들의 합이 21미만이면, true를 반환한다.")
@@ -22,7 +21,7 @@ class GuestTest {
     void Should_CanPickMoreCard_When_ScoreUnder21() {
         Card five = new Card(Symbol.SPADE, CardValue.FIVE);
         Card eight = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        Player guest = new Guest(new Name("name"), Arrays.asList(five, eight));
+        Guest guest = new Guest(new Name("name"), Arrays.asList(five, eight));
 
         assertThat(guest.canHit()).isTrue();
     }
@@ -34,7 +33,7 @@ class GuestTest {
         Card five = new Card(Symbol.CLOVER, CardValue.FIVE);
         Card ten = new Card(Symbol.HEART, CardValue.TEN);
 
-        Player guest = new Guest(new Name("name"), new ArrayList<>(List.of(jack, five)));
+        Guest guest = new Guest(new Name("name"), new ArrayList<>(List.of(jack, five)));
         guest.addCard(ten);
 
         assertThat(guest.canHit()).isFalse();
