@@ -5,13 +5,24 @@ import java.util.Objects;
 public final class Name {
     private static final int LENGTH_LOWER_BOUND = 1;
     private static final int LENGTH_UPPER_BOUND = 5;
-    private static final String RESERVED_DEALER_NAME = "딜러";
+    private static final String DEALER = "딜러";
 
     private final String value;
 
     private Name(final String value) {
         validate(value);
         this.value = value;
+    }
+
+    public static Name from(final String value) {
+        if (DEALER.equals(value)) {
+            throw new IllegalArgumentException("이름이 '" + DEALER + "'일 수 없습니다.");
+        }
+        return new Name(value);
+    }
+
+    public static Name createDealerName() {
+        return new Name(DEALER);
     }
 
     private void validate(final String value) {
@@ -24,17 +35,6 @@ public final class Name {
 
     private boolean isValidName(final String value) {
         return value == null || value.length() < LENGTH_LOWER_BOUND || LENGTH_UPPER_BOUND < value.length();
-    }
-
-    public static Name from(final String value) {
-        if (RESERVED_DEALER_NAME.equals(value)) {
-            throw new IllegalArgumentException("이름이 '" + RESERVED_DEALER_NAME + "'일 수 없습니다.");
-        }
-        return new Name(value);
-    }
-
-    public static Name createDealerName() {
-        return new Name(RESERVED_DEALER_NAME);
     }
 
     @Override
