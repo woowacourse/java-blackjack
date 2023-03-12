@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain.card.Card;
 import domain.game.BetAmount;
+import domain.game.ProfitRatio;
 import view.ErrorMessage;
 
 public class Player {
@@ -89,5 +90,11 @@ public class Player {
 
     public void assignBetAmount(int betAmount) {
         this.betAmount = new BetAmount(betAmount);
+    }
+
+    public int fetchProfit(int initHandCount, int dealerHandValue) {
+        return betAmount.calculateProfit(
+            ProfitRatio.fetchProfitRatio(
+                fetchHandValue(initHandCount), dealerHandValue));
     }
 }

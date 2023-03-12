@@ -1,4 +1,6 @@
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.card.RandomShuffleStrategy;
 import domain.game.BlackJackGame;
@@ -122,7 +124,7 @@ public class Application {
 
     private static void showResults(BlackJackGame blackJackGame) {
         printScores(blackJackGame);
-        // printResults(blackJackGame);
+        printResults(blackJackGame);
     }
 
     private static void printScores(BlackJackGame blackJackGame) {
@@ -141,13 +143,33 @@ public class Application {
             blackJackGame.fetchParticipantScore(name));
     }
 
-    // private static void printResults(BlackJackGame blackJackGame) {
-    //     OutputView.printResultInfo();
-    //     blackJackGame.calculateResult();
-    //     OutputView.printResult(blackJackGame.fetchDealerName(),
-    //         blackJackGame.fetchParticipantResult(blackJackGame.fetchDealerName()));
-    //     for (String name : blackJackGame.fetchParticipantNames()) {
-    //         OutputView.printResult(name, blackJackGame.fetchParticipantResult(name));
-    //     }
-    // }
+    private static void printResults(BlackJackGame blackJackGame) {
+        OutputView.printResultInfo();
+
+        LinkedHashMap<String, Integer> playersAndProfits = new LinkedHashMap<>();
+
+        printDealerResult(blackJackGame, playersAndProfits);
+        printPlayersResults(playersAndProfits);
+    }
+
+    private static void printDealerResult(BlackJackGame blackJackGame,
+        LinkedHashMap<String, Integer> playersAndProfits) {
+        int dealerProfit = calculateDealerProfit(blackJackGame, playersAndProfits);
+        OutputView.printResult(blackJackGame.fetchDealerName(), dealerProfit);
+    }
+
+    private static int calculateDealerProfit(BlackJackGame blackJackGame,
+        LinkedHashMap<String, Integer> playersAndProfits) {
+        for (String name : blackJackGame.fetchPlayerNames()) {
+            playersAndProfits.put(name, blackJackGame.fetchPlayerProfit(name));
+        }
+        return -playersAndProfits.values().stream().mapToInt(profit -> profit).sum();
+    }
+
+    private static void printPlayersResults(LinkedHashMap<String, Integer> playersAndProfits) {
+        for (Map.Entry<String, Integer> playerAndProfit : playersAndProfits.entrySet()) {
+            OutputView.printResult(playerAndProfit.getKey(), playerAndProfit.getValue());
+        }
+    }
+
 }

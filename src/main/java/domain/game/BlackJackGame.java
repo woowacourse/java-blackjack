@@ -136,25 +136,9 @@ public class BlackJackGame {
         participants.findPlayer(name).orElseThrow().assignBetAmount(betAmount);
     }
 
-    // public Map<String, String> calculatePlayerResults() {
-    //     Dealer dealer = participants.getDealer();
-    //     Map<String, String> playerResults = new LinkedHashMap<>();
-    //     for (Player player : fetchPlayers()) {
-    //         compareHandValue(dealer, playerResults, player);
-    //     }
-    //
-    //     return playerResults;
-    // }
-
-    // private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
-    //     int playerHandValue = player.fetchHandValue();
-    //     int dealerHandValue = dealer.fetchHandValue();
-    //     int handValueGap = playerHandValue - dealerHandValue;
-    //
-    //     int playerHandCount = player.fetchHand().size();
-    //     int dealerHandCount = dealer.fetchHand().size();
-    //     int handCountGap = playerHandCount - dealerHandCount;
-    //
-    //     playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
-    // }
+    public Integer fetchPlayerProfit(String name) {
+        return participants.findPlayer(name)
+            .orElseThrow()
+            .fetchProfit(INIT_HAND_COUNT, participants.getDealer().fetchHandValue());
+    }
 }
