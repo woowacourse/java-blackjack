@@ -33,13 +33,18 @@ public class BlackJackGame {
         return participants.findPlayerByPlayerName(playerName);
     }
 
-    public List<String> findCardNamesByParticipantName(String participantName) {
-        return participants.findCardNamesByParticipantName(participantName);
-    }
-
     public ParticipantResultDto generateParticipantResultByParticipantName(String participantName) {
         List<String> findCardNames = participants.findCardNamesByParticipantName(participantName);
         return new ParticipantResultDto(participantName, findCardNames);
+    }
+
+    public ParticipantFinalResultDto generateParticipantFinalResultByParticipantName(String participantName) {
+        ParticipantResultDto participantResultDto = generateParticipantResultByParticipantName(participantName);
+
+        Participant findParticipant = participants.findParticipantByParticipantName(participantName);
+        int totalValueSum = findParticipant.calculateOptimalCardValueSum();
+
+        return new ParticipantFinalResultDto(participantResultDto, totalValueSum);
     }
 
     public boolean canPlayerDrawCard(String playerName) {

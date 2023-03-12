@@ -6,6 +6,7 @@ import domain.AdditionalDrawStatus;
 import domain.BlackJackGame;
 import domain.betting.BettingManager;
 import domain.betting.BettingMoney;
+import domain.participant.ParticipantFinalResultDto;
 import domain.participant.ParticipantResultDto;
 import domain.participant.Player;
 import util.Constants;
@@ -111,11 +112,12 @@ public class BlackJackController {
     }
 
     private void printFinalCardResult(BlackJackGame blackJackGame) {
-        ResultView.printParticipantFinalResult(Constants.DEALER_NAME, blackJackGame.findCardNamesByParticipantName(Constants.DEALER_NAME), blackJackGame.getDealerCardValueSum());
+        ParticipantFinalResultDto dealerFinalResultDto = blackJackGame.generateParticipantFinalResultByParticipantName(Constants.DEALER_NAME);
+        ResultView.printParticipantFinalResult(dealerFinalResultDto);
         List<String> playerNames = blackJackGame.getPlayerNames();
         for (String playerName : playerNames) {
-            List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
-            ResultView.printParticipantFinalResult(playerName, findCardNames, blackJackGame.findPlayerCardValueSumByPlayerName(playerName));
+            ParticipantFinalResultDto playerFinalResultDto = blackJackGame.generateParticipantFinalResultByParticipantName(playerName);
+            ResultView.printParticipantFinalResult(playerFinalResultDto);
         }
     }
 

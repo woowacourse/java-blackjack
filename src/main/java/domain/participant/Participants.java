@@ -44,6 +44,13 @@ public class Participants {
         return players.findPlayerByPlayerName(playerName);
     }
 
+    public Participant findParticipantByParticipantName(String participantName) {
+        if (participantName.equals(Constants.DEALER_NAME)) {
+            return dealer;
+        }
+        return players.findPlayerByPlayerName(participantName);
+    }
+
     public boolean canDealerDrawCard() {
         return dealer.canHit();
     }

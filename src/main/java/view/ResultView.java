@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 
+import domain.participant.ParticipantFinalResultDto;
 import domain.participant.ParticipantResultDto;
 import util.Constants;
 
@@ -28,8 +29,13 @@ public class ResultView {
         }
     }
 
-    public static void printParticipantFinalResult(String name, List<String> cardName, int totalValueSum) {
-        System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
+    public static void printParticipantFinalResult(ParticipantFinalResultDto participantFinalResultDto) {
+        ParticipantResultDto participantResultDto = participantFinalResultDto.getParticipantResultDto();
+        String participantName = participantResultDto.getParticipantName();
+        List<String> cardNames = participantResultDto.getCardNames();
+
+        int totalValueSum = participantFinalResultDto.getTotalValueSum();
+        System.out.println(participantName + "카드: " + String.join(JOIN_DELIMITER, cardNames) + " - 결과: " + totalValueSum);
     }
 
     public static void printFinalProfit(Double dealerFinalProfit, Map<String, Double> finalProfitByPlayer) {
