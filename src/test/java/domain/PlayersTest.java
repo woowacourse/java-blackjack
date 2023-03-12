@@ -51,19 +51,18 @@ class PlayersTest {
     void dealerCompareWithPlayersTest() {
         //given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("ori", "jude"));
+        Players players = new Players(List.of("jude"));
+        Player jude = players.getPlayers().get(0);
         dealer.drawCard(new Card(Suit.HEART, Denomination.ACE));
-        Player ori = players.getPlayers().get(0);
-        Player jude = players.getPlayers().get(1);
-        ori.drawCard(new Card(Suit.HEART, Denomination.NINE));
         jude.drawCard(new Card(Suit.HEART, Denomination.JACK));
         jude.drawCard(new Card(Suit.HEART, Denomination.JACK));
         final var bets = new HashMap<Player, Bet>();
-        bets.put(ori, Bet.from(2000));
         bets.put(jude, Bet.from(1000));
+        Bet from = Bet.from(1000);
+        Bet negate = from.negate();
         //when
         Map<Player, Bet> playerStatusMap = players.calculateFinalResults(dealer, bets);
         //then
-        assertThat(playerStatusMap).containsEntry(jude, Bet.from(1000));
+        assertThat(playerStatusMap).containsExactly(Map.entry(dealer, negate), Map.entry(jude, Bet.from(1000)));
     }
 }
