@@ -59,4 +59,11 @@ class HandTest {
             assertThat(hand.calculateScore()).isEqualTo(new Score(21));
         }
     }
+
+    @Test
+    @DisplayName("blackjack 확인")
+    void isBlackJack(){
+        Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.HEART, Letter.TEN));
+        assertThat(hand.isBlackJack()).isTrue();
+    }
 }

@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +32,10 @@ public class Hand {
             return score.plusTenIfNotBust();
         }
         return score;
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore().isBlackJack() && cards.size() == 2;
     }
 
     private Score score() {

@@ -40,6 +40,10 @@ public class Score {
         return this.value < other.value;
     }
 
+    public boolean isBlackJack() {
+        return this.equals(BLACKJACK_SCORE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
