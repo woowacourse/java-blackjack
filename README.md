@@ -17,14 +17,12 @@ flowchart
 
     Deck --> Card
 
-    BlackjackGame --> BlackjackGameResult
-    BlackjackGame --> Deck
+    BlackjackGame --> BettingZone
     BlackjackGame --> Player
-    BlackjackGame --> BettingSystem
 
-
-    BettingSystem --> Player
-    BettingSystem --> BetMoney
+    BettingZone --> Player
+    BettingZone --> BetMoney
+    BettingZone --> Result
 
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
@@ -110,27 +108,27 @@ flowchart
 
 **베팅 금액**
 
-- [ ] 겜블러는 베팅할 수 있다.
+- [x] 겜블러는 베팅할 수 있다.
 - [x] 베팅 금액은 최소 1,000 최대 100,000,000이다.
 
 **정산 시스템**
 
-- [ ] 베팅 및 게임 결과에 따라 수익이 결정된다.
+- [x] 베팅 및 게임 결과에 따라 수익이 결정된다.
     - 겜블러
-        - [ ] 겜블러가 딜러를 이기면 베팅한 금액만큼 수익을 얻는다.
-        - [ ] 겜블러가 딜러에게 지면 베팅한 금액만큼 수익을 잃는다.
-        - [ ] 겜블러와 딜러가 비기면 수익은 없다.
-        - [ ] 단, 겜블러가 블랙잭으로 이긴 경우 베팅 금액의 1.5배 수익을 얻는다.
+        - [x] 겜블러가 딜러를 이기면 베팅한 금액만큼 수익을 얻는다.
+        - [x] 겜블러가 딜러에게 지면 베팅한 금액만큼 수익을 잃는다.
+        - [x] 겜블러와 딜러가 비기면 수익은 없다.
+        - [x] 단, 겜블러가 블랙잭으로 이긴 경우 베팅 금액의 1.5배 수익을 얻는다.
     - 딜러
-        - [ ] 딜러는 겜블러러가 얻은 수익만큼 잃는다.
-        - [ ] 딜러는 겜블러가가 잃은 수익만큼 얻는다.
+        - [x] 딜러는 겜블러러가 얻은 수익만큼 잃는다.
+        - [x] 딜러는 겜블러가가 잃은 수익만큼 얻는다.
 
 ### 입력
 
 - [x] 블랙잭 게임에 참가할 사람들의 이름을 입력받는다.
     - [x] 쉼표`,` 기준으로 분리하여 입력받는다.
-- [ ] 베팅 금액을 입력받는다.
-    - [ ] 숫자를 입력받는다.
+- [x] 베팅 금액을 입력받는다.
+    - [x] 숫자를 입력받는다.
 - [x] 카드를 더 받을지 입력받는다.
     - [x] 카드를 더 받는 경우 y를 입력받는다.
     - [x] 카드를 더 받지 않는 경우 n을 입력받는다.
