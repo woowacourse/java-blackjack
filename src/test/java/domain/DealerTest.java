@@ -60,4 +60,28 @@ class DealerTest {
 
         assertThat(dealer.canHit()).isEqualTo(isOverSixteen);
     }
+
+    @ParameterizedTest(name = "처음 2장의 카드를 받았을 때 점수가 21점이 되면 딜러의 상태는 BLACKJACK가 된다.")
+    @CsvSource({"K,A,BLACKJACK", "A,J,BLACKJACK"})
+    void test_updateStatus_blackjack(String letter1, String letter2, Status status) {
+        addCards(dealer, letter1, letter2);
+
+        assertThat(dealer.status()).isEqualTo(status);
+    }
+
+    @ParameterizedTest(name = "점수가 21점 초과이면 딜러의 상태는 BUST 된다.")
+    @CsvSource({"K,J,5,BUST", "9,J,7,BUST"})
+    void test_updateStatus_bust(String letter1, String letter2, String letter3, Status status) {
+        addCards(dealer, letter1, letter2, letter3);
+
+        assertThat(dealer.status()).isEqualTo(status);
+    }
+
+    @ParameterizedTest(name = "처음 2장의 카드를 받았을 때 점수가 16점 초과이면 딜러의 상태는 STAY 된다.")
+    @CsvSource({"K,J,STAY", "J,7,STAY"})
+    void test_updateStatus_stay(String letter1, String letter2, Status status) {
+        addCards(dealer, letter1, letter2);
+
+        assertThat(dealer.status()).isEqualTo(status);
+    }
 }

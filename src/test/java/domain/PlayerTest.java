@@ -74,6 +74,22 @@ class PlayerTest {
         assertThat(player.status()).isEqualTo(status);
     }
 
+    @ParameterizedTest(name = "처음 2장의 카드를 받았을 때 점수가 21점이 되면 사용자의 상태는 BLACKJACK가 된다.")
+    @CsvSource({"K,A,BLACKJACK", "A,J,BLACKJACK"})
+    void test_updateStatus_blackjack(String letter1, String letter2, Status status) {
+        addCards(player, letter1, letter2);
+
+        assertThat(player.status()).isEqualTo(status);
+    }
+
+    @ParameterizedTest(name = "점수가 21점 초과이면 사용자의 상태는 BUST 된다.")
+    @CsvSource({"K,J,5,BUST", "9,J,7,BUST"})
+    void test_updateStatus_bust(String letter1, String letter2, String letter3, Status status) {
+        addCards(player, letter1, letter2, letter3);
+
+        assertThat(player.status()).isEqualTo(status);
+    }
+
     @Test
     @DisplayName("승리하면 배팅한 금액만큼 돈을 얻는다.")
     void test_calculate_win() {
