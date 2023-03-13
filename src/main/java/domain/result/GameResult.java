@@ -27,23 +27,32 @@ public class GameResult {
         return scores;
     }
 
-    public Map<Participant, Integer> calculatePlayersPrize() {
-        Map<Participant, Integer> playersPrize = new LinkedHashMap<>();
+    public Map<Participant, Integer> calculateParticipantsPrize() {
+        Map<Participant, Integer> participantsPrize = new LinkedHashMap<>();
+        participantsPrize.put(dealer, 0);
 
         for (Participant player : gameResult.keySet()) {
-            calculatePlayerPrize(playersPrize, player);
+            int playerPrize = calculatePlayerPrize(player);
+            savePlayerAndDealerPrize(participantsPrize, player, playerPrize);
         }
-        return playersPrize;
+
+        return participantsPrize;
     }
 
-    private void calculatePlayerPrize(Map<Participant, Integer> playersPrize, Participant player) {
+    private void savePlayerAndDealerPrize(Map<Participant, Integer> playersPrize, Participant player, int playerPrize) {
+        int dealerPrize = playerPrize * -1;
+
+        playersPrize.put(dealer, playersPrize.get(dealer) + dealerPrize);
+        playersPrize.put(player, playerPrize);
+    }
+
+    private int calculatePlayerPrize(Participant player) {
         if (player.isBlackjack()) {
-            playersPrize.put(player, calculatePrizeWhenPlayerBlackjack(player));
-            return;
+            return calculatePrizeWhenPlayerBlackjack(player);
         }
 
         Result result = compareHandValue(player);
-        playersPrize.put(player, player.calculatePrize(result.getPrizeRatio()));
+        return player.calculatePrize(result.getPrizeRatio());
     }
 
     private int calculatePrizeWhenPlayerBlackjack(Participant player) {

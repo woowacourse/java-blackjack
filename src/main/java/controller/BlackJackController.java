@@ -136,13 +136,8 @@ public class BlackJackController {
     }
 
     private void showParticipantsWinningStatus(final GameResult gameResult) {
-        int dealerPrize = 0;
+        Map<Participant, Integer> participantsPrize = gameResult.calculateParticipantsPrize();
 
-        Map<Participant, Integer> playersPrize = gameResult.calculatePlayersPrize();
-        for (Map.Entry<Participant, Integer> playerPrize : playersPrize.entrySet()) {
-            dealerPrize += playerPrize.getValue() * -1;
-        }
-
-        OutputView.printParticipantsPrize(dealerPrize, playersPrize);
+        OutputView.printParticipantsPrize(participantsPrize);
     }
 }

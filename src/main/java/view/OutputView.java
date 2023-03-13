@@ -19,7 +19,6 @@ public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
 
     private static final String RESULT_TAG = "## 최종 수익";
-    private static final String DEALER_PRIZE_FORMAT = "딜러: %d";
     private static final String PLAYER_PRIZE_FORMAT = "%s: %d";
 
     private static final String DELIMITER = ", ";
@@ -59,8 +58,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printParticipantsPrize(int dealerPrize, Map<Participant, Integer> participantsPrize) {
-        System.out.println(String.format(DEALER_PRIZE_FORMAT, dealerPrize));
+    public static void printParticipantsPrize(Map<Participant, Integer> participantsPrize) {
         for (Map.Entry<Participant, Integer> participantPrize : participantsPrize.entrySet()) {
             System.out.println(String.format(PLAYER_PRIZE_FORMAT, participantPrize.getKey().getName(), participantPrize.getValue()));
         }
