@@ -3,6 +3,7 @@ package domain.blackjack.gamestate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.TrumpCardNumber;
@@ -29,8 +30,29 @@ class BustTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
+    @DisplayName("버스트 된 상태에서 카드 발급 요청 시 예외가 발생한다.")
+
     @Test
     void isAbleToReceiveCard() {
         assertThat(bustState.isAbleToReceiveCard()).isFalse();
+    }
+
+    @DisplayName("버스트 상태와 다른 상태들을 비교했을 때 항상 진다.")
+    @Test
+    void competeToOtherState() {
+        GameState blackjackState = Playing.from(Cards.of(
+                new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE),
+                new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN))
+        );
+        assertThat(blackjackState).isInstanceOf(Blackjack.class);
+        assertThat(bustState.competeToOtherState(blackjackState)).isEqualTo(Result.LOSE);
+
+        GameState playingState = Playing.from(Cards.of(
+                new Card(TrumpCardType.SPADE, TrumpCardNumber.NINE),
+                new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN))
+        );
+
+        assertThat(playingState).isInstanceOf(Playing.class);
+        assertThat(bustState.competeToOtherState(playingState)).isEqualTo(Result.LOSE);
     }
 }
