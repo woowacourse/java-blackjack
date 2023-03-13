@@ -3,12 +3,16 @@ package blackjack.domain.cardpack;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardPackTest {
@@ -23,12 +27,25 @@ class CardPackTest {
         }
 
         @Test
-        void _52이_생성된다() {
-            Assertions.assertThatThrownBy(() -> {
-                for (int i = 0; i < 53; i++) {
-                    cardPack.takeOne();
-                }
-            }).isInstanceOf(IllegalStateException.class);
+        void _52장이_생성된다() {
+            assertThat(cardPack.size()).isEqualTo(52);
+        }
+
+        @Test
+        void _52장을_드로우_할_수_있다() {
+            assertAll(
+                    () -> {
+                        assertDoesNotThrow(() -> {
+                            for (int i = 0; i < 52; i++) {
+                                cardPack.takeOne();
+                            }
+                        });
+                    },
+                    () -> {
+                        assertThatThrownBy(() -> cardPack.takeOne())
+                                .isInstanceOf(IllegalStateException.class);
+                    }
+            );
         }
     }
 
@@ -43,8 +60,8 @@ class CardPackTest {
 
         //then
         Card card = cardPack.takeOne();
-        Assertions.assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
-        Assertions.assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
+        assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
+        assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
     }
 
     @Test
@@ -57,6 +74,6 @@ class CardPackTest {
         Card card = cardPack.takeOne();
 
         // then
-        Assertions.assertThat(cardPack.size()).isEqualTo(originSize - 1);
+        assertThat(cardPack.size()).isEqualTo(originSize - 1);
     }
 }

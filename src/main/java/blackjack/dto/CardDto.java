@@ -5,14 +5,14 @@ import blackjack.domain.card.Card;
 public class CardDto {
 
     private final String shape;
-    private final int number;
+    private final String number;
 
     public CardDto(Card card) {
         this.shape = card.getShape().getView();
-        this.number = card.getNumber().getScore();
+        this.number = card.getNumber().getView();
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 

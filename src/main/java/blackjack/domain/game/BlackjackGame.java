@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.cardpack.MasterShuffleStrategy;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.player.Player;
 import blackjack.domain.user.player.Players;
@@ -18,17 +17,8 @@ public class BlackjackGame {
     private final CardPack cardPack;
     private final Map<Player, Money> playerMoney = new LinkedHashMap<>();
 
-    public BlackjackGame() {
-        this.cardPack = new CardPack();
-        initCardPack();
-    }
-
-    BlackjackGame(final CardPack cardPack) {
+    public BlackjackGame(final CardPack cardPack) {
         this.cardPack = cardPack;
-    }
-
-    private void initCardPack() {
-        cardPack.shuffle(new MasterShuffleStrategy());
     }
 
     public void initDraw(final Dealer dealer, final Players players) {

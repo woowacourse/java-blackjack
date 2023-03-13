@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.EIGHT;
 import static blackjack.domain.card.CardNumber.NINE;
+import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.THREE;
@@ -22,7 +23,9 @@ public class FixtureCard {
 
     public static final Card 스페이드_A = new Card(ACE, SPADE);
     public static final Card 스페이드_8 = new Card(EIGHT, SPADE);
+    public static final Card 스페이드_9 = new Card(NINE, SPADE);
     public static final Card 스페이드_10 = new Card(TEN, SPADE);
+    public static final Card 스페이드_Q = new Card(QUEEN, SPADE);
 
     public static final Card 클로버_A = new Card(ACE, CLOVER);
     public static final Card 클로버_2 = new Card(TWO, CLOVER);

@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
+import static blackjack.domain.fixture.FixtureCard.스페이드_10;
+import static blackjack.domain.fixture.FixtureCard.스페이드_8;
+import static blackjack.domain.fixture.FixtureCard.하트_10;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
 
@@ -50,5 +56,20 @@ class PlayerTest {
             Assertions.assertThatThrownBy(() -> new Player(name))
                     .isInstanceOf(IllegalArgumentException.class);
         }
+    }
+
+    @Test
+    void 플레이어는_22점_이상이면_Bust_상태다() {
+        // given
+        CardPack cardPack = new CardPack(List.of(스페이드_8, 스페이드_10, 하트_10));
+        Player player = new Player("dummy");
+
+        // when
+        player.drawCard(cardPack);
+        player.drawCard(cardPack);
+        player.drawCard(cardPack);
+
+        // then
+        Assertions.assertThat(player.isBust()).isTrue();
     }
 }

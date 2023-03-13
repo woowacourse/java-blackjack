@@ -4,7 +4,6 @@ import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.user.player.Player;
 import blackjack.domain.user.player.Players;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -13,11 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 import static blackjack.domain.fixture.FixtureCard.다이아몬드_6;
+import static blackjack.domain.fixture.FixtureCard.스페이드_10;
+import static blackjack.domain.fixture.FixtureCard.스페이드_9;
 import static blackjack.domain.fixture.FixtureCard.클로버_10;
 import static blackjack.domain.fixture.FixtureCard.클로버_2;
 import static blackjack.domain.fixture.FixtureCard.클로버_3;
+import static blackjack.domain.fixture.FixtureCard.클로버_9;
 import static blackjack.domain.fixture.FixtureCard.클로버_A;
 import static blackjack.domain.fixture.FixtureCard.하트_10;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DealerTest {
@@ -34,7 +38,7 @@ class DealerTest {
         dealer.drawCard(cardPack);
 
         // then
-        Assertions.assertThat(dealer.showCards()).isNotEmpty();
+        assertThat(dealer.showCards()).isNotEmpty();
     }
 
 
@@ -69,33 +73,51 @@ class DealerTest {
         dealer.drawCard(dealerPack);
 
         //then
-        Assertions.assertThat(dealer.declareGameResult(player1.getScore().getValue())).isEqualTo(GameResult.WIN);
-        Assertions.assertThat(dealer.declareGameResult(player2.getScore().getValue())).isEqualTo(GameResult.DRAW);
-        Assertions.assertThat(dealer.declareGameResult(player3.getScore().getValue())).isEqualTo(GameResult.LOSE);
+        assertThat(dealer.declareGameResult(player1.getScore().getValue())).isEqualTo(GameResult.WIN);
+        assertThat(dealer.declareGameResult(player2.getScore().getValue())).isEqualTo(GameResult.DRAW);
+        assertThat(dealer.declareGameResult(player3.getScore().getValue())).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 딜러의_승부_결과를_가져올_수_있다() {
         //given
         CardPack cardPack = new CardPack(List.of(
-                클로버_10, 클로버_A,
-                클로버_2, 클로버_3
+                클로버_10, 클로버_A, // playerWin
+                스페이드_10, 스페이드_9, // playerDraw
+                클로버_2, 클로버_3, // playerLose
+                하트_10, 클로버_9 // dealer
         ));
 
-        Player player = new Player("player");
+        Player playerWin = new Player("player");
+        Player playerDraw = new Player("player2");
+        Player playerLose = new Player("player3");
+
+        Players players = new Players(List.of(playerWin, playerLose, playerDraw));
+
         Dealer dealer = new Dealer("딜러");
 
         //when
-        player.drawCard(cardPack);
-        player.drawCard(cardPack);
-
         dealer.drawCard(cardPack);
         dealer.drawCard(cardPack);
 
-        dealer.declareGameResult(player.getScore().getValue());
+        playerLose.drawCard(cardPack);
+        playerLose.drawCard(cardPack);
+
+        playerDraw.drawCard(cardPack);
+        playerDraw.drawCard(cardPack);
+
+        playerWin.drawCard(cardPack);
+        playerWin.drawCard(cardPack);
 
         //then
-        Map<GameResult, Integer> result = dealer.getResult(new Players(List.of(player)));
-        Assertions.assertThat(result.get(GameResult.WIN)).isEqualTo(1);
+        Map<GameResult, Integer> result = dealer.getResult(players);
+
+        assertAll(
+                () -> assertThat(result.get(GameResult.WIN)).isEqualTo(1),
+                () -> assertThat(result.get(GameResult.DRAW)).isEqualTo(1),
+                () -> assertThat(result.get(GameResult.LOSE)).isEqualTo(1)
+        );
+
+
     }
 }

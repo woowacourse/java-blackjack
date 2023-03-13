@@ -4,7 +4,6 @@ import blackjack.domain.game.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Score;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,8 +52,7 @@ public class Players {
                         player -> {
                             Score score = player.getScore();
                             return dealer.declareGameResult(score.getValue());
-                        },
-                        (a, b) -> a, HashMap::new));
+                        }));
     }
 
     public List<Player> getPlayers() {

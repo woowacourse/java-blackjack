@@ -62,7 +62,6 @@ class BlackjackGameTest {
         )));
 
         // when
-        int betMoney = 1000;
         blackjackGame.initDraw(dealer, players);
 
         // then

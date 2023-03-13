@@ -33,4 +33,14 @@ class MoneyTest {
         //then
         Assertions.assertThat(money.getValue()).isEqualTo(12);
     }
+
+    @Test
+    void 돈은_값이_같으면_같다고_판단한다() {
+        //given
+        Money money1 = new Money(2);
+        Money money2 = new Money(2);
+
+        //then
+        Assertions.assertThat(money1).isEqualTo(money2);
+    }
 }

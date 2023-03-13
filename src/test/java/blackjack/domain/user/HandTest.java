@@ -56,13 +56,12 @@ class HandTest {
     }
 
     @Test
-    void _카드_총합이_21을_넘어가면_무조건_패배이다() {
+    void _카드_총합이_21을_넘어가면_BUST이다() {
         // given
         List<Card> cards = List.of(클로버_10, 스페이드_10, 하트_10);
         Hand hand = new Hand(cards);
 
         //then
-        Assertions.assertThat(hand.getScore().getValue())
-                .isEqualTo(BUST_SCORE);
+        Assertions.assertThat(hand.isBust()).isTrue();
     }
 }
