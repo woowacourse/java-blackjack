@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 public class Player extends Participant {
 
     private static final int BLACKJACK_SCORE = 21;
+    
     private final BettingMoney bettingMoney;
-
     private final Name name;
 
     Player(final String name, final int bettingMoney) {
