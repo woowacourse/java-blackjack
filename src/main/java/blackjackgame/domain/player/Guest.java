@@ -9,22 +9,24 @@ import blackjackgame.domain.state.State;
 
 public class Guest extends Player {
     private final Name name;
+    private final int money;
 
-    private Guest(State state, final Name name) {
+    private Guest(State state, final Name name, final int money) {
         super(state);
         this.name = name;
+        this.money = money;
     }
 
-    public static Guest of(List<Card> cards, Name name) {
+    public static Guest of(List<Card> cards, Name name, int money) {
         State state = new Ready();
         for (Card card : cards) {
             state = state.draw(card);
         }
-        return new Guest(state, name);
+        return new Guest(state, name, money);
     }
 
     @Override
-    protected List<Card> startingCards() {
+    public List<Card> startingCards() {
         return cards();
     }
 
@@ -55,5 +57,9 @@ public class Guest extends Player {
 
     public void stay() {
         super.stay();
+    }
+
+    public int bettingMoney() {
+        return money;
     }
 }
