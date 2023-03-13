@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        if (hand.getCount() == 0) {
+        if (hand.isEmpty()) {
             throw new IllegalStateException("보유하고 있는 카드가 없습니다.");
         }
         return hand.getCards().get(FIRST_CARD_INDEX);

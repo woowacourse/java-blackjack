@@ -30,6 +30,10 @@ public class Hand {
         return cards;
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     public int getCount() {
         return cards.size();
     }
