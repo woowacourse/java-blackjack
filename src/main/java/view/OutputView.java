@@ -22,8 +22,8 @@ public class OutputView {
         }
     }
 
-    public void printCardsPerDealer(final String dealerName, final String dealerFirstCard) {
-        System.out.println(dealerName + ": " + dealerFirstCard);
+    public void printCardsPerDealer(final String dealerFirstCard) {
+        System.out.println("딜러: " + dealerFirstCard);
     }
 
     public void printCurrentPlayerResult(final String name, final List<String> cards) {
@@ -44,24 +44,27 @@ public class OutputView {
         System.out.println(name + "카드: " + cardsMessage + " - 결과 : " + cardSum);
     }
 
-    public void printGameResult(final List<String> namesCopy, final List<Integer> monies) {
+    public void printDealerGameResult(final Integer profitMoney) {
         System.out.println(NEW_LINE + "## 최종 수익");
-        printDealerResult(monies);
+        System.out.println("딜러: " + profitMoney);
+    }
+
+    public void printPlayersGameResult(final List<String> namesCopy, final List<Integer> monies) {
         for (int index = 0; index < namesCopy.size(); index++) {
             System.out.println(namesCopy.get(index) + ": " + monies.get(index));
         }
     }
 
-    private void printDealerResult(final List<Integer> monies) {
-        int sum = sumDealerResult(monies);
-        System.out.println("딜러: " + (sum * -1));
-    }
+//    private void printDealerResult(final List<Integer> monies) {
+//        int sum = sumDealerResult(monies);
+//        System.out.println("딜러: " + (sum * -1));
+//    }
 
-    private int sumDealerResult(final List<Integer> monies) {
-        return monies.stream()
-                .mapToInt(i -> i)
-                .sum();
-    }
+//    private int sumDealerResult(final List<Integer> monies) {
+//        return monies.stream()
+//                .mapToInt(i -> i)
+//                .sum();
+//    }
 
     public void newLine() {
         System.out.print(NEW_LINE);
@@ -73,5 +76,9 @@ public class OutputView {
 
     public void printErrorMessage(final String message) {
         System.out.println(message);
+    }
+
+    public void printAllDealerCardResult(final List<String> dealerCards, final int sumOfDealerCards) {
+        printAllCardResult("딜러", dealerCards, sumOfDealerCards);
     }
 }

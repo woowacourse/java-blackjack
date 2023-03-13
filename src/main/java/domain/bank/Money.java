@@ -20,19 +20,23 @@ public class Money {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
+    public boolean equals(final Object otherMoney) {
+        if (this == otherMoney) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (otherMoney == null || getClass() != otherMoney.getClass()) {
             return false;
         }
-        final Money money1 = (Money) o;
-        return money == money1.money;
+        final Money another = (Money) otherMoney;
+        return money == another.money;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(money);
+    }
+
+    public int getMoney() {
+        return this.money;
     }
 }
