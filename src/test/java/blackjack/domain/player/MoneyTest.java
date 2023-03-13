@@ -20,7 +20,7 @@ class MoneyTest {
     @DisplayName("배팅 금액 곱셈 테스트")
     void initial_money(double rate, int expected) {
         Money money = Money.from(1000);
-        assertThat(Money.multiply(money, rate).getAmount()).isEqualTo(expected);
+        assertThat(money.multiplyBy(rate).getAmount()).isEqualTo(expected);
     }
 
     @Nested

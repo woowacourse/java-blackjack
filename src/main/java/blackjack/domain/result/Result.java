@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class Result {
 
+    private static final int OPPOSITE_SIGN = -1;
+
     private final Map<Player, Money> results;
 
     private Result(final Map<Player, Money> results) {
@@ -71,7 +73,7 @@ public class Result {
 
     private static Money calculateProfit(Challenger challenger, Rank rank) {
         Money bettingMoney = challenger.getMoney();
-        return Money.multiply(bettingMoney, rank.getRateOfReturn());
+        return bettingMoney.multiplyBy(rank.getRateOfReturn());
     }
 
     public Money getChallengerProfit(final Player player) {
@@ -81,7 +83,7 @@ public class Result {
     public Money getDealerProfit() {
         Money challengersProfit = results.values()
                 .stream()
-                .reduce(Money.zero(), Money::sum);
-        return Money.multiply(challengersProfit, -1);
+                .reduce(Money.zero(), Money::sumWith);
+        return challengersProfit.multiplyBy(OPPOSITE_SIGN);
     }
 }

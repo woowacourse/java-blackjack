@@ -21,13 +21,13 @@ public final class Money {
         return new Money(0);
     }
 
-    public static Money multiply(final Money money, final double rate) {
-        int moneyAmount = (int) (money.amount * rate);
+    public Money multiplyBy(final double rate) {
+        int moneyAmount = (int) (amount * rate);
         return new Money(moneyAmount);
     }
 
-    public static Money sum(final Money firstMoney, final Money secondMoney) {
-        return new Money(firstMoney.amount + secondMoney.amount);
+    public Money sumWith(final Money addedMoney) {
+        return new Money(amount + addedMoney.amount);
     }
 
     public static Money from(final int amount) {

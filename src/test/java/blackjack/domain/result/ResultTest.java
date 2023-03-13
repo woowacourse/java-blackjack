@@ -89,7 +89,7 @@ class ResultTest {
             Money bettingMoney = bustedChallenger.getMoney();
             double rate = Rank.DRAW.getRateOfReturn();
 
-            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
@@ -99,7 +99,7 @@ class ResultTest {
             Money bettingMoney = blackjackChallenger.getMoney();
             double rate = Rank.BLACKJACK.getRateOfReturn();
 
-            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
@@ -109,7 +109,7 @@ class ResultTest {
             Money bettingMoney = lowPointChallenger.getMoney();
             double rate = Rank.WIN.getRateOfReturn();
 
-            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
@@ -150,7 +150,7 @@ class ResultTest {
             Money bettingMoney = bustedChallenger.getMoney();
             double rate = Rank.LOSE.getRateOfReturn();
 
-            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
@@ -161,7 +161,7 @@ class ResultTest {
             double rate = Rank.BLACKJACK.getRateOfReturn();
             System.out.println(result.getChallengerProfit(blackjackChallenger).getAmount());
 
-            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
@@ -171,7 +171,7 @@ class ResultTest {
             Money bettingMoney = lowPointChallenger.getMoney();
             double rate = Rank.LOSE.getRateOfReturn();
 
-            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(Money.multiply(bettingMoney, rate));
+            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
