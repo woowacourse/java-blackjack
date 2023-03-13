@@ -14,11 +14,8 @@ public class GameResult {
 
     private final Map<Player, Integer> playerBettingResults;
 
-    private int dealerBettingResults;
-
     public GameResult(Game game) {
         this.playerBettingResults = new LinkedHashMap<>();
-        dealerBettingResults = 0;
         accumulationResult(game);
     }
 
@@ -35,7 +32,6 @@ public class GameResult {
         int playerBetting = calculatePlayerBetting(player.getBetting().getBettingMoney(), playerResult);
 
         playerBettingResults.put(player, playerBetting);
-        dealerBettingResults -= playerBetting;
     }
 
     private int calculatePlayerBetting(int playerBetting, Result playerResult) {
@@ -56,6 +52,8 @@ public class GameResult {
     }
 
     public int getDealerBettingResults() {
-        return dealerBettingResults;
+        return -playerBettingResults.values().stream()
+                .mapToInt(x -> x.intValue())
+                .sum();
     }
 }
