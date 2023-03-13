@@ -1,38 +1,44 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    @Test
-    @DisplayName("딜러가 카드를 더 뽑을 수 있으면 참을 반환해야 한다.")
-    void canDrawCard_true() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+    @Nested
+    @DisplayName("딜러가 카드를 더 뽑을 수 ")
+    class canDealerDraw {
+        @Test
+        @DisplayName("있으면 참을 반환해야 한다.")
+        void canDrawCard_true() {
+            // given
+            Dealer dealer = new Dealer();
+            dealer.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+            dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
 
-        // expect
-        assertThat(dealer.canDrawCard())
-                .isTrue();
-    }
+            // expect
+            assertThat(dealer.canDrawCard())
+                    .isTrue();
+        }
 
-    @Test
-    @DisplayName("딜러가 카드를 더 뽑을 수 없으면 거짓을 반환해야 한다.")
-    void canDrawCard_false() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        @Test
+        @DisplayName("없으면 거짓을 반환해야 한다.")
+        void canDrawCard_false() {
+            // given
+            Dealer dealer = new Dealer();
+            dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+            dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+            dealer.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
 
-        // expect
-        assertThat(dealer.canDrawCard())
-                .isFalse();
+            // expect
+            assertThat(dealer.canDrawCard())
+                    .isFalse();
+        }
     }
 
     @Test

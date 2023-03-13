@@ -4,6 +4,7 @@ import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -39,26 +40,30 @@ class BlackjackGameTest {
                 .withMessage("[ERROR] 참여할 사람은 한 명 이상이어야 합니다.");
     }
 
-    @Test
-    @DisplayName("입력받은 플레이어 이름에 중복돤 이름이 없으면 예외가 발생하지 않는다.")
-    void createParticipants_success() {
-        // given
-        String[] namesSuccess = {"encho", "glen"};
-        // expect
-        assertThatNoException()
-                .isThrownBy(() -> new BlackjackGame(namesSuccess, mockDeckMaker));
-    }
+    @Nested
+    @DisplayName("입력받은 플레이어 이름에")
+    class whenInputPlayersName {
+        @Test
+        @DisplayName("중복돤 이름이 없으면 예외가 발생하지 않는다.")
+        void createParticipants_success() {
+            // given
+            String[] namesSuccess = {"encho", "glen"};
+            // expect
+            assertThatNoException()
+                    .isThrownBy(() -> new BlackjackGame(namesSuccess, mockDeckMaker));
+        }
 
-    @Test
-    @DisplayName("입력받은 플레이어 이름에 중복된 이름이 있으면 예외가 발생한다")
-    void createParticipants_fail() {
-        // given
-        String[] namesFail = {"encho", "encho"};
+        @Test
+        @DisplayName("중복된 이름이 있으면 예외가 발생한다")
+        void createParticipants_fail() {
+            // given
+            String[] namesFail = {"encho", "encho"};
 
-        // expect
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new BlackjackGame(namesFail, mockDeckMaker))
-                .withMessage("[ERROR] 중복된 이름이 있습니다.");
+            // expect
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> new BlackjackGame(namesFail, mockDeckMaker))
+                    .withMessage("[ERROR] 중복된 이름이 있습니다.");
+        }
     }
 
     @Test
@@ -78,30 +83,34 @@ class BlackjackGameTest {
         }
     }
 
-    @Test
-    @DisplayName("가지고 있는 카드들의 점수 합이 21점 이하이면 카드를 하나 더 뽑는다.")
-    void drawMoreCard_success() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(names, mockDeckMaker);
-        blackjackGame.drawInitCard();
+    @Nested
+    @DisplayName("가지고 있는 카드들의 점수 합이")
+    class whenScoreIs {
+        @Test
+        @DisplayName("21점 이하이면 카드를 하나 더 뽑는다.")
+        void drawMoreCard_success() {
+            // given
+            BlackjackGame blackjackGame = new BlackjackGame(names, mockDeckMaker);
+            blackjackGame.drawInitCard();
 
-        // expect
-        assertThatNoException()
-                .isThrownBy(() -> blackjackGame.drawMoreCard("encho"));
-    }
+            // expect
+            assertThatNoException()
+                    .isThrownBy(() -> blackjackGame.drawMoreCard("encho"));
+        }
 
-    @Test
-    @DisplayName("가지고 있는 카드들의 점수 합이 21점 초과이면 예외가 발생한다.")
-    void drawMoreCard_fail() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(names, mockDeckMaker);
-        blackjackGame.drawInitCard();
-        blackjackGame.drawMoreCard("encho");
+        @Test
+        @DisplayName("21점 초과이면 예외가 발생한다.")
+        void drawMoreCard_fail() {
+            // given
+            BlackjackGame blackjackGame = new BlackjackGame(names, mockDeckMaker);
+            blackjackGame.drawInitCard();
+            blackjackGame.drawMoreCard("encho");
 
-        // expect
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> blackjackGame.drawMoreCard("encho"))
-                .withMessage("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
+            // expect
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> blackjackGame.drawMoreCard("encho"))
+                    .withMessage("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
+        }
     }
 
     @Test

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,7 +36,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 동시에 블랙잭이면 플레이어가 승리한다.")
-    void matchGame___() {
+    void matchGame_DealerAndPlayerBust() {
         // given
         Dealer dealer = new Dealer();
         dealer.addCard((new Card(Suit.SPADE, Rank.JACK)));
@@ -55,7 +56,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("처음 받은 두 장의 카드의 점수 합이 21점이면 게임 결과는 블랙잭이다.")
+    @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아니면 플레이어의 게임 결과는 블랙잭이다.")
     void matchGame_blackjack() {
         // given
         Dealer dealer = new Dealer();
@@ -73,7 +74,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("가지고 있는 카드의 점수 합이 21점 초과이면 게임 결과는 패배이다.")
+    @DisplayName("딜러가 버스트가 아니고 플레이어가 버스트이면 게임 결과는 패배이다.")
     void matchGame_bust() {
         // given
         Dealer dealer = new Dealer();
@@ -89,57 +90,6 @@ class PlayerTest {
         assertThat(gameResult)
                 .isEqualTo(GameResult.LOSE);
 
-    }
-
-    @Test
-    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 내 점수보다 낮으면 승리해야 한다.")
-    void matchGame_win() {
-        // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-
-        // when
-        GameResult gameResult = player1.matchGame(player2);
-
-        // then
-        assertThat(gameResult)
-                .isEqualTo(GameResult.WIN);
-    }
-
-    @Test
-    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 내 점수보다 높으면 패배해야 한다.")
-    void matchGame_lose() {
-        // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.ACE));
-
-        // when
-        GameResult gameResult = player1.matchGame(player2);
-
-        // then
-        assertThat(gameResult)
-                .isEqualTo(GameResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 딜러의 점수가 나와 같으면 무승부여야 한다.")
-    void matchGame_draw() {
-        // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-
-        // when
-        GameResult gameResult = player1.matchGame(player2);
-
-        // then
-        assertThat(gameResult)
-                .isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -159,6 +109,61 @@ class PlayerTest {
         // then
         assertThat(gameResult)
                 .isEqualTo(GameResult.WIN);
+    }
+
+    @Nested
+    @DisplayName("내가 블랙잭이거나 버스트가 아닐 때 ")
+    class whenBlackjackOrNotBust {
+        @Test
+        @DisplayName("딜러의 점수가 내 점수보다 낮으면 승리해야 한다.")
+        void matchGame_win() {
+            // given
+            Player player1 = new Player("glen");
+            Player player2 = new Player("encho");
+            player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
+            player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+
+            // when
+            GameResult gameResult = player1.matchGame(player2);
+
+            // then
+            assertThat(gameResult)
+                    .isEqualTo(GameResult.WIN);
+        }
+
+        @Test
+        @DisplayName("딜러의 점수가 내 점수보다 높으면 패배해야 한다.")
+        void matchGame_lose() {
+            // given
+            Player player1 = new Player("glen");
+            Player player2 = new Player("encho");
+            player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
+            player2.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+
+            // when
+            GameResult gameResult = player1.matchGame(player2);
+
+            // then
+            assertThat(gameResult)
+                    .isEqualTo(GameResult.LOSE);
+        }
+
+        @Test
+        @DisplayName("딜러의 점수가 나와 같으면 무승부여야 한다.")
+        void matchGame_draw() {
+            // given
+            Player player1 = new Player("glen");
+            Player player2 = new Player("encho");
+            player1.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+            player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+
+            // when
+            GameResult gameResult = player1.matchGame(player2);
+
+            // then
+            assertThat(gameResult)
+                    .isEqualTo(GameResult.DRAW);
+        }
     }
 
     @Test
