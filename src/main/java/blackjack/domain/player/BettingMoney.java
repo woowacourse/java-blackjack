@@ -14,7 +14,6 @@ public class BettingMoney {
             if (newValue < 0 || newValue % 100 != 0) {
                 throw new IllegalArgumentException("양의 정수(100원 단위)만 입력이 가능합니다.");
             }
-
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("양의 정수(100원 단위)만 입력이 가능합니다.");
         }

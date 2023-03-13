@@ -22,7 +22,7 @@ public class Profit {
                 .collect(Collectors.toMap(
                         Player::getName,
                         player -> player.calculateProfit(dealer),
-                        (a, b) -> a,
+                        (exist, replacement) -> exist,
                         LinkedHashMap::new
                 ));
         return new Profit(value);

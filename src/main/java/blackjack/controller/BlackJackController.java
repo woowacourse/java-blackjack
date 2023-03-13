@@ -54,13 +54,17 @@ public class BlackJackController {
 
     private void playAllPlayer(final Deck deck, final Players players) {
         for (Player player : players.getPlayers()) {
-            while (player.isAbleToReceive() && wantHit(player.getName())) {
-                player.hit(deck.getCard());
-                outputView.printPlayerCards(player);
-            }
-            if (player.isAbleToReceive()) {
-                player.stay();
-            }
+            playEachPlayer(deck, player);
+        }
+    }
+
+    private void playEachPlayer(Deck deck, Player player) {
+        while (player.isAbleToReceive() && wantHit(player.getName())) {
+            player.hit(deck.getCard());
+            outputView.printPlayerCards(player);
+        }
+        if (player.isAbleToReceive()) {
+            player.stay();
         }
     }
 
