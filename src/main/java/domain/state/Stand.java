@@ -20,6 +20,9 @@ public class Stand extends Finished {
 
     @Override
     public Result calculateResult(State dealerState) {
+        if (dealerState.isBlackJack()) {
+            return Result.LOSE;
+        }
         return compareScore(dealerState);
     }
 
