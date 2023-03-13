@@ -32,7 +32,7 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int inputMoney(String playerName) {
+    public static int inputMoney(final String playerName) {
         System.out.println();
         System.out.println(playerName + REQUEST_BETTING_MONEY);
         String input = scanner.nextLine();
@@ -40,7 +40,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    private static void validateInteger(String input) {
+    private static void validateInteger(final String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -48,7 +48,7 @@ public class InputView {
         }
     }
 
-    public static boolean inputPlayerChoice(String name) {
+    public static boolean inputPlayerChoice(final String name) {
         System.out.println();
         System.out.println(name + REQUEST_PLAYER_CHOICE);
         String choice = scanner.nextLine();
@@ -56,7 +56,7 @@ public class InputView {
         return getChoice(choice);
     }
 
-    private static void validateChoice(String choice) {
+    private static void validateChoice(final String choice) {
         if (!choice.equalsIgnoreCase(YES) && !choice.equalsIgnoreCase(NO)) {
             throw new InvalidChoiceException();
         }

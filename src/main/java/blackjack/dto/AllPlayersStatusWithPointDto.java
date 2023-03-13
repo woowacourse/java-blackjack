@@ -12,20 +12,20 @@ public class AllPlayersStatusWithPointDto {
     private final PlayerStatusWithPointDto dealerDto;
 
     private AllPlayersStatusWithPointDto(
-            List<PlayerStatusWithPointDto> challengersDto,
-            PlayerStatusWithPointDto dealerDto
+            final List<PlayerStatusWithPointDto> challengersDto,
+            final PlayerStatusWithPointDto dealerDto
     ) {
         this.challengersDto = challengersDto;
         this.dealerDto = dealerDto;
     }
 
-    public static AllPlayersStatusWithPointDto of(Players players) {
+    public static AllPlayersStatusWithPointDto of(final Players players) {
         List<PlayerStatusWithPointDto> challengersDto = toChallengersDto(players.getChallengers());
         PlayerStatusWithPointDto dealerDto = PlayerStatusWithPointDto.from(players.getDealer());
         return new AllPlayersStatusWithPointDto(challengersDto, dealerDto);
     }
 
-    private static List<PlayerStatusWithPointDto> toChallengersDto(List<Challenger> challengers) {
+    private static List<PlayerStatusWithPointDto> toChallengersDto(final List<Challenger> challengers) {
         return challengers.stream()
                 .map(PlayerStatusWithPointDto::from)
                 .collect(Collectors.toUnmodifiableList());

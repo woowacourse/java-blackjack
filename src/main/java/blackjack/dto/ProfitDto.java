@@ -15,20 +15,20 @@ public class ProfitDto {
     private final String dealerName;
     private final int dealerProfit;
 
-    public ProfitDto(Map<String, Integer> challengersProfit, String dealerName, int dealerProfit) {
+    public ProfitDto(final Map<String, Integer> challengersProfit, final String dealerName, final int dealerProfit) {
         this.challengersProfit = challengersProfit;
         this.dealerName = dealerName;
         this.dealerProfit = dealerProfit;
     }
 
-    public static ProfitDto of(Result result, Players players) {
+    public static ProfitDto of(final Result result, final Players players) {
         Map<String, Integer> challengersProfit = toChallengersProfit(result, players.getChallengers());
         String dealerName = players.getDealer().getName();
         int dealerProfit = result.getDealerProfit().getAmount();
         return new ProfitDto(challengersProfit, dealerName, dealerProfit);
     }
 
-    private static Map<String, Integer> toChallengersProfit(Result result, List<Challenger> challengers) {
+    private static Map<String, Integer> toChallengersProfit(final Result result, final List<Challenger> challengers) {
         Map<String, Integer> challengersProfit = new LinkedHashMap<>();
         for (Challenger challenger : challengers) {
             Money challengerProfit = result.getChallengerProfit(challenger);

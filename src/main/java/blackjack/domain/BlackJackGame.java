@@ -17,12 +17,12 @@ public class BlackJackGame {
     private final CardDeck cardDeck;
     private final Players players;
 
-    private BlackJackGame(CardDeck cardDeck, Players players) {
+    private BlackJackGame(final CardDeck cardDeck, final Players players) {
         this.cardDeck = cardDeck;
         this.players = players;
     }
 
-    public static BlackJackGame from(List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
+    public static BlackJackGame from(final List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
         Players players = Players.from(challengerNameAndMoneyDtos);
         CardDeck cardDeck = CardDeck.create();
         cardDeck.shuffle();
@@ -33,7 +33,7 @@ public class BlackJackGame {
         players.pickStartCards(cardDeck);
     }
 
-    public boolean canPick(Player player) {
+    public boolean canPick(final Player player) {
         return player.canPick();
     }
 
@@ -41,7 +41,7 @@ public class BlackJackGame {
         return getDealer().canPick();
     }
 
-    public void pick(Player player) {
+    public void pick(final Player player) {
         Card pickedCard = cardDeck.pick();
         player.pick(pickedCard);
     }

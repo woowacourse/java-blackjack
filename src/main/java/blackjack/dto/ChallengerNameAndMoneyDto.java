@@ -8,7 +8,7 @@ public class ChallengerNameAndMoneyDto {
     private final ChallengerName name;
     private final Money money;
 
-    public ChallengerNameAndMoneyDto(ChallengerName name, Money money) {
+    public ChallengerNameAndMoneyDto(final ChallengerName name, final Money money) {
         this.name = name;
         this.money = money;
     }
