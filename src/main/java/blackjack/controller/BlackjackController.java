@@ -9,11 +9,11 @@ import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantCardsResultDto;
 import blackjack.dto.ParticipantGameResultDto;
 import blackjack.dto.PlayerNamesDto;
-import blackjack.util.Retryable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -37,10 +37,10 @@ public class BlackjackController {
     }
 
     private Participants getParticipants() {
-        return Retryable.retryWhenException(() -> {
+        return retryWhenException(() -> {
             List<String> names = inputView.readNames();
             return Participants.from(names);
-        }, outputView);
+        });
     }
 
     private void getBetAmounts(Participants participants) {
@@ -50,11 +50,11 @@ public class BlackjackController {
     }
 
     private void getBetAmountEachPlayer(Player player) {
-        Retryable.retryWhenException(() -> {
+        retryWhenException(() -> {
             int betAmount = inputView.readBetAmount(player.getName());
             player.initBetAmount(betAmount);
-            return null;
-        }, outputView);
+            return player;
+        });
     }
 
     private void startGame(BlackjackGame blackjackGame, Participants participants) {
@@ -82,10 +82,10 @@ public class BlackjackController {
     }
 
     private GameCommand getCommand(Player player) {
-        return Retryable.retryWhenException(() -> {
+        return retryWhenException(() -> {
             String inputCommand = inputView.readIsContinue(player.getName());
             return GameCommand.from(inputCommand);
-        }, outputView);
+        });
     }
 
     private void giveCard(Player player, BlackjackGame blackjackGame, GameCommand command) {
@@ -129,6 +129,24 @@ public class BlackjackController {
         outputView.printEachParticipantGameResult(ParticipantGameResultDto.of(dealer));
         for (Player player : participants.getPlayers()) {
             outputView.printEachParticipantGameResult(ParticipantGameResultDto.of(player));
+        }
+    }
+
+    private <T> T retryWhenException(Supplier<T> supplier) {
+        T result;
+        do {
+            result = getSupplier(supplier);
+        } while (result == null);
+
+        return result;
+    }
+
+    private <T> T getSupplier(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException exception) {
+            outputView.printException(exception.getMessage());
+            return null;
         }
     }
 }
