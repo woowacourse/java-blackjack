@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYER_NAMES_DUPLICATED;
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYER_NAMES_RESERVED_FORMAT;
 import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -26,7 +28,7 @@ class ParticipantsTest {
 
         assertThatThrownBy(() -> Participants.of(DEALER, players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
+                .hasMessageContaining(INVALID_PLAYER_NAMES_DUPLICATED);
     }
 
     @DisplayName("플레이어의 이름과 딜러의 이름 간 중복을 허용하지 않는다.")
@@ -36,6 +38,6 @@ class ParticipantsTest {
 
         assertThatThrownBy(() -> Participants.of(DEALER, players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어 이름은 딜러 이름(딜러)과 중복될 수 없습니다.");
+                .hasMessageContaining(String.format(INVALID_PLAYER_NAMES_RESERVED_FORMAT, Dealer.NAME));
     }
 }

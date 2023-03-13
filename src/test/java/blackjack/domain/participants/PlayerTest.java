@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PARTICIPANT_NAME_EMPTY;
 import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Suit.DIAMOND;
@@ -37,7 +38,7 @@ class PlayerTest {
     void should_ThrowException_When_NameIsEmpty(final String name) {
         assertThatThrownBy(() -> new Player(name, BETTING_MONEY_1000))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름은 빈 문자열이거나 공백일 수 없습니다.");
+                .hasMessageContaining(INVALID_PARTICIPANT_NAME_EMPTY);
     }
 
     @DisplayName("플레이어는 카드 오픈 시 모든 카드를 확인한다.")

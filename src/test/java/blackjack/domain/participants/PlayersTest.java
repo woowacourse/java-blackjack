@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYERS_COUNT_FORMAT;
 import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -28,6 +29,6 @@ class PlayersTest {
     void should_ThrowException_When_PlayersCountOutOfBounds(final List<Player> players) {
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어 인원 수는 최소 2명 최대 8명입니다.");
+                .hasMessageContaining(String.format(INVALID_PLAYERS_COUNT_FORMAT, 2, 8));
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_BETTING_AMOUNT_FORMAT;
+
 import java.math.BigDecimal;
 
 public class BettingMoney {
@@ -15,7 +17,7 @@ public class BettingMoney {
 
     private void validate(final BigDecimal amount) {
         if (amount.compareTo(MIN) < 0) {
-            throw new IllegalArgumentException("베팅 금액은 " + MIN + "원 이상이어야 합니다.");
+            throw new IllegalArgumentException(String.format(INVALID_BETTING_AMOUNT_FORMAT, MIN.intValue()));
         }
     }
 

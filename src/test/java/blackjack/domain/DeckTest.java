@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.ExceptionMessage.INVALID_TAKEOUT_CARDS_EMPTY;
 import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.TWO;
@@ -63,6 +64,6 @@ class DeckTest {
 
         assertThatThrownBy(() -> deck.handCardsTo(player, 1))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("더 이상 꺼낼 카드가 없습니다.");
+                .hasMessageContaining(INVALID_TAKEOUT_CARDS_EMPTY);
     }
 }

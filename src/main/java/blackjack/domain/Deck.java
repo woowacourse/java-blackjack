@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.ExceptionMessage.INVALID_TAKEOUT_CARDS_EMPTY;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Player;
@@ -36,7 +38,7 @@ public class Deck {
 
     private Card takeOutOneCard() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("더 이상 꺼낼 카드가 없습니다.");
+            throw new IllegalStateException(INVALID_TAKEOUT_CARDS_EMPTY);
         }
         return cards.poll();
     }

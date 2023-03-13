@@ -24,27 +24,6 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class JudgeResultTest {
 
-//    @DisplayName("첫번째 수가 두번째 수보다 크면 승리이다.")
-//    @ParameterizedTest
-//    @CsvSource(value = {"-1:-2", "0:-1", "1:0", "2:1"}, delimiter = ':')
-//    void should_ReturnWin_When_SelfBiggerThanCounter(final int selfScore, final int counterScore) {
-//        assertThat(JudgeResult.matchWithoutBlackJackConsider(selfScore, counterScore)).isEqualTo(WIN);
-//    }
-//
-//    @DisplayName("첫번째 수가 두번째승 수보다 작으면 패배이다.")
-//    @ParameterizedTest
-//    @CsvSource(value = {"-2:-1", "-1:0", "0:1", "1:2"}, delimiter = ':')
-//    void should_ReturnLose_When_SelfSmallerThanCounter(final int selfScore, final int counterScore) {
-//        assertThat(JudgeResult.matchWithoutBlackJackConsider(selfScore, counterScore)).isEqualTo(LOSE);
-//    }
-//
-//    @DisplayName("첫번째 수와 두번째 수가 같으면 무승부이다.")
-//    @ParameterizedTest
-//    @CsvSource(value = {"-1:-1", "0:0", "1:1", "2:2"}, delimiter = ':')
-//    void should_ReturnPush_When_SelfSameWithCounter(final int selfScore, final int counterScore) {
-//        assertThat(JudgeResult.matchWithoutBlackJackConsider(selfScore, counterScore)).isEqualTo(PUSH);
-//    }
-
     @DisplayName("플레이어가 버스트이면 플레이어는 무조건 패배이다.")
     @Test
     void should_ReturnLose_When_PlayerIsBust() {

@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_HAND_CARDS_EMPTY;
+
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class Hand {
 
     private void validateStatus() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("카드가 존재하지 않는 핸드입니다.");
+            throw new IllegalStateException(INVALID_HAND_CARDS_EMPTY);
         }
     }
 }

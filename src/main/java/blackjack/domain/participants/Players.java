@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYERS_COUNT_FORMAT;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +20,8 @@ public class Players {
 
     private void validatePlayersCount(final List<Player> players) {
         if (players.size() < COUNT_MINIMUM || players.size() > COUNT_MAXIMUM) {
-            throw new IllegalArgumentException("플레이어 인원 수는 최소 " + COUNT_MINIMUM + "명 최대 " + COUNT_MAXIMUM + "명입니다.");
+            throw new IllegalArgumentException(
+                    String.format(INVALID_PLAYERS_COUNT_FORMAT, COUNT_MINIMUM, COUNT_MAXIMUM));
         }
     }
 

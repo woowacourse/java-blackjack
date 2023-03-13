@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PARTICIPANT_NAME_EMPTY;
+
 import blackjack.domain.card.Card;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
@@ -15,7 +17,7 @@ public abstract class Participant {
     public Participant(final String name) {
         validateName(name);
         this.name = name;
-        hand = new Hand(new ArrayList<>());
+        this.hand = new Hand(new ArrayList<>());
     }
 
     public Participant(final String name, final List<Card> cards) {
@@ -26,7 +28,7 @@ public abstract class Participant {
 
     private void validateName(final String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름은 빈 문자열이거나 공백일 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_PARTICIPANT_NAME_EMPTY);
         }
     }
 

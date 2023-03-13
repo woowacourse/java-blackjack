@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static blackjack.domain.ExceptionMessage.INVALID_BETTING_AMOUNT_FORMAT;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
@@ -16,9 +17,8 @@ class BettingMoneyTest {
     @ParameterizedTest
     @ValueSource(strings = {"-1", "0", "999"})
     void should_ThrowException_When_AmountIsUnder0(final String amount) {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> new BettingMoney(new BigDecimal(amount)), "베팅 금액은 0보다 큰 수여야 합니다."
-        );
+        assertThatThrownBy(() -> new BettingMoney(new BigDecimal(amount)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(String.format(INVALID_BETTING_AMOUNT_FORMAT, 1000));
     }
 }

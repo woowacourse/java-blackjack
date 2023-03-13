@@ -12,6 +12,7 @@ public class InputView {
     private static final String ASK_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ASK_BETTING_AMOUNT_MESSAGE = "%s의 베팅 금액은?" + System.lineSeparator();
     private static final String ASK_HIT_OR_STAY_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
+    private static final String EXCEPTION_NOT_DECIMAL_MESSAGE = "입력값이 숫자가 아닙니다.";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> askPlayerNames() {
@@ -36,7 +37,7 @@ public class InputView {
         try {
             return new BigDecimal(line);
         } catch (final NumberFormatException exception) {
-            throw new IllegalArgumentException("입력값이 숫자가 아닙니다.");
+            throw new IllegalArgumentException(EXCEPTION_NOT_DECIMAL_MESSAGE);
         }
     }
 

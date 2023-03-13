@@ -1,5 +1,8 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYER_NAMES_DUPLICATED;
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYER_NAMES_RESERVED_FORMAT;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +27,10 @@ public class Participants {
                 .map(Player::getName)
                 .collect(Collectors.toList());
         if (names.size() != new HashSet<>(names).size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_PLAYER_NAMES_DUPLICATED);
         }
         if (names.contains(Dealer.NAME)) {
-            throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + Dealer.NAME + ")과 중복될 수 없습니다.");
+            throw new IllegalArgumentException(String.format(INVALID_PLAYER_NAMES_RESERVED_FORMAT, Dealer.NAME));
         }
     }
 
