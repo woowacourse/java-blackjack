@@ -13,7 +13,7 @@ public class BettingAmount {
 
     private void validate(int bettingAmountValue) {
         if (bettingAmountValue < LOWER_LIMIT || bettingAmountValue > UPPER_LIMIT) {
-            throw new IllegalArgumentException("베팅 금액은 1,000원 이상 1억원 이하여야 합니다.");
+            throw new IllegalArgumentException("베팅 금액은 0원 이상 1억원 이하여야 합니다.");
         }
     }
 

@@ -16,7 +16,7 @@ class BettingAmountTest {
     void 베팅_금액_천원_이하_예외_발생(int inputBettingAmount) {
         assertThatThrownBy(() -> new BettingAmount(inputBettingAmount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 1,000원 이상 1억원 이하여야 합니다.");
+                .hasMessage("베팅 금액은 0원 이상 1억원 이하여야 합니다.");
     }
 
     @DisplayName("베팅 금액을 반환한다.")
