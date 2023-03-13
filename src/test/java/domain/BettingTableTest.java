@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class BettingTableTest {
     public static final Player player1 = new Player("pobi");
     public static final Player player2 = new Player("jason");
@@ -17,8 +16,8 @@ public class BettingTableTest {
 
     @BeforeEach
     void set() {
-        bettingTable.add(player1, new Money(10000));
-        bettingTable.add(player2, new Money(2000));
+        bettingTable.add(player1, new BettingMoney(10000));
+        bettingTable.add(player2, new BettingMoney(2000));
     }
 
     @Test
@@ -30,16 +29,22 @@ public class BettingTableTest {
 
         this.bettingTable.calculate(playerResult);
 
-        Map<Player, Money> bettingTableResult = new HashMap<>();
-        bettingTableResult.put(player1, new Money(15000));
-        bettingTableResult.put(player2, new Money(-2000));
+        Map<Player, ResultMoney> bettingTableResult = new HashMap<>();
+        bettingTableResult.put(player1, new ResultMoney(15000));
+        bettingTableResult.put(player2, new ResultMoney(-2000));
         Assertions.assertThat(bettingTable.getBettingTable()).isEqualTo(bettingTableResult);
     }
 
     @Test
-    @DisplayName("배팅테이블의 총 금액을 합산한다.")
+    @DisplayName("딜러의 최종 수익을 확인한다.")
     void sum() {
-        Assertions.assertThat(bettingTable.sum()).isEqualTo(12000);
+        Map<Player, ResultType> playerResult = new HashMap<>();
+        playerResult.put(player1, ResultType.LOSE);
+        playerResult.put(player2, ResultType.WIN);
+
+        this.bettingTable.calculate(playerResult);
+
+        Assertions.assertThat(bettingTable.getDealerProfit()).isEqualTo(8000);
     }
 
 }
