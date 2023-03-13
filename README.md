@@ -199,7 +199,7 @@
 - [x] drawDealerCardUntilSatisfyingCondition 메서드명과 상수명 통일
 - [x]  judgeWinner 결과를 각 player와 dealer에 심어주는 게 맞을까? (player는 dealer를 모르고, dealer는 player를 모른다.)
 - [x] Score.DEALER_MIN_SCORE 상수명 개선
-- [ ] Dealer와 Player 모두 name을 가진다면 User에서 관리할 수 있지 않을까?
+- [x] Dealer와 Player 모두 name을 가진다면 User에서 관리할 수 있지 않을까?
   - 딜러는 무조건 "딜러"라는 이름을 반환합니다.
   - 그렇기 떄문에 때문에 이를 Name 객체로 생성해주기 보다는 Dealer 클래스 내에서 상수로 선언하여 사용하는 것이 좋다고 생각했습니다.
   - 제이미는 `new Name("딜러")`와 같이 Name 객체를 만들고 이를 Dealer가 인스턴스 변수로 갖는 것이 좋다고 생각하시나요??
@@ -249,28 +249,33 @@
 - [x] 에러메시지 리터럴로 출력
 
 **2단계 1차 코드리뷰**
-- [ ] 컨트롤러에서 입력값을 통해 추가드로우 여부를 결정하고, HIT일 때만 BlackJackGame을 호출한다면, BlackJackGame은 STAY라는 선택지가 존재한다는 걸 알 수 있을까?
-- [ ] getDealerExtraCount가 0보다 큰지 비교하는 로직은 컨트롤러가 아니라 도메인 자체에서 가져도 되지 않을까?
-- [ ] HIT과 STAY가 관리되는 클래스 이름으로 DrawCommand가 적당할까?
+- [x] 컨트롤러에서 입력값을 통해 추가드로우 여부를 결정하고, HIT일 때만 BlackJackGame을 호출한다면, BlackJackGame은 STAY라는 선택지가 존재한다는 걸 알 수 있을까?
+  - 컨트롤러는 입/출력과 비즈니스 로직 사이의 연결만 하고 게임 진행에 관련된 로직, 즉, 비즈니스 로직은 없는 게 좋은 걸까?
+- [x] getDealerExtraCount가 0보다 큰지 비교하는 로직은 컨트롤러가 아니라 도메인 자체에서 가져도 되지 않을까?
+- [x] HIT과 STAY가 관리되는 클래스 이름으로 DrawCommand가 적당할까?
 - [ ] 인스턴스 변수 3개 미만으로 관리하기
-- [ ] Referee.judgeWinner()는 결국 getBetResut()와 세트로 동작하는 메서드이다. 이를 public 메서드로 분리할 필요가 있을까?
-- [ ] judgeWinner()를 한 게임에서 두 번 호출하면 어떤 문제가 생길까??
-- [ ] 현재 블랙잭게임에서 DTO를 키로 가지는 맵을 반환하는데, 이렇게 도메인이 DTO를 알고 있는 게 괜찮을까??
+- [x] Referee.judgeWinner()는 결국 getBetResut()와 세트로 동작하는 메서드이다. 이를 public 메서드로 분리할 필요가 있을까?
+  - judgeWinner와 getBetResult는 결과를 얻기 위해서는 꼭 함께 호출돼야 합니다.
+  - 그렇기 때문에 BlackJackGame.calculateDealerProfit 메서드 안에서 Referee.judgeWinner를 호출하도록 하고 BlackJackGame.judgeWinner는 private으로 수정했습니다.
+- [x] judgeWinner()를 한 게임에서 두 번 호출하면 어떤 문제가 생길까??
+  - 두 메서드가 모두 public으로 열려있을 필요는 없다는 건 알겠지만, judgeWinner 메서드는 당시에 유저들이 들고 있는 패를 기준으로 승자를 정하는데, 두 번 호출됐을 때 어떤 문제가 발생할 수 있는지 예를 알고 싶습니다.
+- [x] 현재 블랙잭게임에서 DTO를 키로 가지는 맵을 반환하는데, 이렇게 도메인이 DTO를 알고 있는 게 괜찮을까??
   - 뷰를 위해 보내줄 DTO를 생성하는 것이 도메인의 역할일까?
-- [ ] Bet이라는 도메인이 게임 결과(Result)와 수익(Profit)을 알고 있는 것이 맞을까?
-- [ ] bet 금액과 profit은 Bet에서 관리하는데, 계산은 Result가 하고 있는 것이 맞을까?
-- [ ] "딜러"뿐 아니라 new Name("딜러") 역시 상수가 될 수 있지 않을까?
-- [ ] List 생성 시, Collections.emptyList()를 넘겨주는 것과, 빈 매개변수를 전달하는 것의 차이
-- [ ] Players를 생성할 때, List<Name>과 List<Bet>의 사이즈가 다르다면 어떤 일이 발생할까?
-- [ ] MAX_SCORE라는 상수 이름은 게임 내에서 얻을 수 있는 최대 점수라는 의미로 받아들여지지 않을까?
-- [ ] 명사 메서드명 개선
-- [ ] " 딜러" 와 같은 이름은 생성되는데, 이러한 검증을 어디서 하는 것이 좋을까?
-- [ ] System.out.print(NEWLINE) -> System.out.println()으로 개선
-- [ ] Fixtures 상수 이름개선
-- [ ] Bet 성공 케이스 추가, 오타 개선
-- [ ] 테스트 케이스에서 카드 변수로 묶어놓기
-- [ ] Players -> Names 클래스명 수정에 따라 테스트 메서드 수정(프로덕트 코드 포함)
-- [ ] 천 단위 이상은 5_000과 같이 언더바 사용
+- [x] Bet이라는 도메인이 게임 결과(Result)와 수익(Profit)을 알고 있는 것이 맞을까?
+- [x] bet 금액과 profit은 Bet에서 관리하는데, 계산은 Result가 하고 있는 것이 맞을까?
+- [x] "딜러"뿐 아니라 new Name("딜러") 역시 상수가 될 수 있지 않을까?
+- [x] List 생성 시, Collections.emptyList()를 넘겨주는 것과, 빈 매개변수를 전달하는 것의 차이
+  - emptyList는 unmodifiable 리스트를 반환한다. 하지만, new로 객체를 생성하면서 파라미터로 전달하면 그 결과물이 unmodifiable하진 않음. 즉, 차이는 없는 것 같다.
+- [x] Players를 생성할 때, List<Name>과 List<Bet>의 사이즈가 다르다면 어떤 일이 발생할까?
+- [x] MAX_SCORE라는 상수 이름은 게임 내에서 얻을 수 있는 최대 점수라는 의미로 받아들여지지 않을까?
+- [x] 명사 메서드명 개선
+- [x] " 딜러" 와 같은 이름은 생성되는데, 이러한 검증을 어디서 하는 것이 좋을까?
+- [x] System.out.print(NEWLINE) -> System.out.println()으로 개선
+- [x] Fixtures 상수 이름개선
+- [x] Bet 성공 케이스 추가, 오타 개선
+- [x] 테스트 케이스에서 카드 변수로 묶어놓기
+- [x] Players -> Names 클래스명 수정에 따라 테스트 메서드 수정(프로덕트 코드 포함)
+- [x] 천 단위 이상은 5_000과 같이 언더바 사용
 - [ ] Players.getPlayers()를 통해 진행되는 로직은 Players내에서 해결할 수 있지 않을까?
 
 ### 게임 도메인의 역할?
