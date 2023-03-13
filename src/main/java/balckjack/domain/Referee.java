@@ -9,18 +9,21 @@ public class Referee {
     private final List<Result> results;
     private final List<Money> moneys;
 
-    public Referee(CardDeck dealerDeck, List<CardDeck> playersDeck, List<Money> moneys) {
-        this.results = initializeResults(dealerDeck, playersDeck);
+    private Referee(List<Result> results, List<Money> moneys) {
+        this.results = results;
         this.moneys = moneys;
     }
+    public static Referee createJudged(CardDeck dealerDeck, List<CardDeck> playersDeck, List<Money> moneys){
+        return new Referee(initializeResults(dealerDeck, playersDeck),moneys);
+    }
 
-    private List<Result> initializeResults(CardDeck dealerDeck, List<CardDeck> playersDeck) {
+    private static List<Result> initializeResults(CardDeck dealerDeck, List<CardDeck> playersDeck) {
         return playersDeck.stream()
             .map((deck) -> judgeResult(dealerDeck, deck))
             .collect(Collectors.toList());
     }
 
-    private Result judgeResult(CardDeck dealerDeck, CardDeck playerDeck) {
+    private static Result judgeResult(CardDeck dealerDeck, CardDeck playerDeck) {
         if (isDraw(dealerDeck, playerDeck)) {
             return Result.DRAW;
         }
@@ -33,7 +36,7 @@ public class Referee {
         return Result.LOSE;
     }
 
-    private boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck) {
+    private static boolean isDraw(CardDeck dealerDeck, CardDeck playerDeck) {
         return
             (!playerDeck.isBust()
                 && !dealerDeck.isBlackJack()
@@ -42,7 +45,7 @@ public class Referee {
                 || (dealerDeck.isBlackJack() && playerDeck.isBlackJack());
     }
 
-    private boolean isWin(CardDeck dealerDeck, CardDeck playerDeck) {
+    private static boolean isWin(CardDeck dealerDeck, CardDeck playerDeck) {
         return !playerDeck.isBust() && (dealerDeck.isBust()
             || playerDeck.isMoreThan(dealerDeck));
     }

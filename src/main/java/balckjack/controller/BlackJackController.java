@@ -22,7 +22,7 @@ public class BlackJackController {
 
         initializeGame(cardPicker, players, dealer);
         playGame(cardPicker, players, dealer);
-        final Referee referee = new Referee(dealer.getCardDeck(), players.getPlayersDeck(), moneys);
+        final Referee referee = Referee.createJudged(dealer.getCardDeck(), players.getPlayersDeck(), moneys);
         reportGame(players, dealer, referee);
     }
 

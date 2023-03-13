@@ -30,17 +30,17 @@ class RefereeTest {
         List<Money> moneys = List.of(new Money(1000.0), new Money(1000.0), new Money(1500.0),
             new Money(2000.0));
         return Stream.of(
-            Arguments.arguments(new Referee(commonDealer, players, moneys),
+            Arguments.arguments(Referee.createJudged(commonDealer, players, moneys),
                 List.of(1000.0, -1000.0, 0.0, -2000.0), 2000.0),
-            Arguments.arguments(new Referee(bustDealer, players, moneys),
+            Arguments.arguments(Referee.createJudged(bustDealer, players, moneys),
                 List.of(1000.0, 1000.0, 1500.0, -2000.0), -1500.0),
-            Arguments.arguments(new Referee(bustDealer, playersHaveBlackJack, moneys),
+            Arguments.arguments(Referee.createJudged(bustDealer, playersHaveBlackJack, moneys),
                 List.of(1500.0, 1000.0, 1500.0, -2000.0), -2000.0),
-            Arguments.arguments(new Referee(blackJackDealer, players, moneys),
+            Arguments.arguments(Referee.createJudged(blackJackDealer, players, moneys),
                 List.of(-1000.0, -1000.0, -1500.0, -2000.0), 5500.0),
-            Arguments.arguments(new Referee(blackJackDealer, playersHaveBlackJack, moneys),
+            Arguments.arguments(Referee.createJudged(blackJackDealer, playersHaveBlackJack, moneys),
                 List.of(0.0, -1000.0, -1500.0, -2000.0), 4500.0),
-            Arguments.arguments(new Referee(maxDealer, playersHaveBlackJack, moneys),
+            Arguments.arguments(Referee.createJudged(maxDealer, playersHaveBlackJack, moneys),
                 List.of(1500.0, -1000.0, -1500.0, -2000.0), 3000.0)
         );
     }
