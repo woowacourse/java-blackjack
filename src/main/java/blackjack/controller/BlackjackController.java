@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Betting;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
@@ -28,14 +29,20 @@ public final class BlackjackController {
     public void run() {
         final Participants participants = makeParticipants();
         final Deck deck = Deck.createTrump();
+        final ResultGame resultGame = ResultGame.from(new HashMap<>());
 
-        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
-        outputView.printInitialCards(participants);
+        initialBettingMoney(participants, resultGame);
 
+        startDrawParticipants(participants, deck);
+        drawParticipants(participants, deck);
+
+        resultGame.calculateResult(participants);
+        outputView.printBettingResult(participants, resultGame);
+    }
+
+    private void drawParticipants(Participants participants, Deck deck) {
         drawCardsParticipants(participants, deck);
         outputView.printAllCardsAndScore(participants);
-
-        outputView.printResult(participants, ResultGame.from(new HashMap<>(), participants));
     }
 
     private Participants makeParticipants() {
@@ -43,6 +50,18 @@ public final class BlackjackController {
         final List<String> playerNames = inputView.readPlayers();
 
         return Participants.of(dealer, playerNames);
+    }
+
+    private void initialBettingMoney(final Participants participants, final ResultGame resultGame) {
+        for (final Participant player: participants.getPlayers()) {
+            final Betting betting = Betting.from(inputView.readBettingMoney(player.getName()));
+            resultGame.betMoney(player, betting);
+        }
+    }
+
+    private void startDrawParticipants(Participants participants, Deck deck) {
+        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
+        outputView.printInitialCards(participants);
     }
 
     private void drawCardsParticipants(final Participants participants, final Deck deck) {

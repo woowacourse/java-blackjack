@@ -1,13 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Betting;
 import blackjack.domain.game.ResultGame;
-import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -69,7 +68,7 @@ public class OutputView {
         System.out.println(NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 
-    public void printResult(final Participants participants, final ResultGame resultGame) {
+    public void printBettingResult(final Participants participants, final ResultGame resultGame) {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
 
@@ -82,21 +81,16 @@ public class OutputView {
 
     private void printDealerResult(final Participant dealer, final ResultGame resultGame) {
         final String dealerName = dealer.getName();
-        final int win = resultGame.getDealerCount(WinTieLose.WIN);
-        final int tie = resultGame.getDealerCount(WinTieLose.TIE);
-        final int lose = resultGame.getDealerCount(WinTieLose.LOSE);
+        final Betting dealerProfitResult = resultGame.getDealerResult();
 
-        System.out.println(dealerName + COLON
-                + win + WIN_MESSAGE + BLANK
-                + tie + TIE_MESSAGE + BLANK
-                + lose + LOSE_MESSAGE);
+        System.out.println(dealerName + COLON + dealerProfitResult);
     }
 
     private void printPlayerResult(final Participant player, final ResultGame resultGame) {
         final String playerName = player.getName();
-        final String result = resultGame.getPlayerResult(player).getValue();
+        final Betting resultBettingMoney = resultGame.getPlayerResult(player);
 
-        System.out.println(playerName + COLON + result);
+        System.out.println(playerName + COLON + resultBettingMoney.getValue());
     }
 
     public void printErrorMessage(IllegalArgumentException e) {
