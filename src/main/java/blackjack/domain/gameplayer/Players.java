@@ -39,7 +39,6 @@ public class Players implements Iterable<Player> {
 
     private long getDistinctNameCount(List<Player> players) {
         return players.stream()
-                .map(player -> player.showName())
                 .distinct()
                 .count();
     }
