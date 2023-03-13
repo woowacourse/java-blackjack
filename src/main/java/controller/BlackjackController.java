@@ -39,11 +39,6 @@ public class BlackjackController {
         runDealerTurn(deck, participants);
     }
 
-    private void printResult(Participants participants) {
-        OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
-        OutputView.printBettingResult(participants.getBettingResult());
-    }
-
     private void initBetting(Participants participants) {
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
@@ -99,5 +94,10 @@ public class BlackjackController {
             participants.playDealerTurn(deck);
             OutputView.printDealerHit();
         }
+    }
+
+    private void printResult(Participants participants) {
+        OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
+        OutputView.printBettingResult(participants.getBettingResult());
     }
 }
