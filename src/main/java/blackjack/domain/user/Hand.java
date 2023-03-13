@@ -11,6 +11,8 @@ public final class Hand {
 
     private static final Score step = new Score(10);
     private static final Score max = new Score(21);
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand(final Card... cards) {
@@ -55,7 +57,11 @@ public final class Hand {
                 .collect(Collectors.toList());
     }
 
+    public boolean isBlackjack() {
+        return max.equals(getScore()) && cards.size() == BLACKJACK_CARD_SIZE;
+    }
+
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }

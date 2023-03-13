@@ -35,4 +35,8 @@ public abstract class User {
     public boolean isBust() {
         return hand.getScore().isBust();
     }
+
+    public boolean isBlackJack() {
+        return hand.isBlackjack();
+    }
 }
