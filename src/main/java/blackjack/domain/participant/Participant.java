@@ -13,27 +13,32 @@ public class Participant {
     private static final int NUMBER_OF_BLACKJACK_CARD = 2;
 
     private final Set<Card> cards;
-    private int numberOfElevenAce = 0;
 
     public Participant() {
         this.cards = new LinkedHashSet<>();
     }
 
     public void receiveCard(final Card card) {
-        if (isElevenAce(card)) {
-            numberOfElevenAce++;
-        }
         cards.add(card);
     }
 
-    private boolean isElevenAce(final Card card) {
-        return card.getRank() == Rank.ACE && (calculateSumOfRank() + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
+    private boolean isElevenAce() {
+        return hasAce() && (calculateSumOfRank() + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
     public int calculateSumOfRank() {
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(card -> card.getRank().getValue())
-                .sum() + numberOfElevenAce * 10;
+                .sum();
+        if (isElevenAce()) {
+            sum += 10;
+        }
+        return sum;
     }
 
     public boolean isUnderThanBoundary(final int boundary) {

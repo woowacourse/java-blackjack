@@ -1,9 +1,13 @@
 package blackjack.controller;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
-import blackjack.domain.game.*;
 import blackjack.domain.card.ShufflingMachine;
+import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.FinalProfit;
+import blackjack.domain.game.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -75,22 +79,13 @@ public class BlackJackGameController {
         blackJackGame.handOutCards(shufflingMachine);
 
         outputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
-        handOutCardTo(blackJackGame, players);
+        for (final Player player : players.getPlayers()) {
+            handOutCardTo(blackJackGame, player);
+        }
         handOutCardTo(blackJackGame, dealer);
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
-        outputView.printCardsWithSum(players.getPlayers(), dealer);
-        outputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
-    }
-
-    private void handOutCardTo(final BlackJackGame blackJackGame, final Players players) {
-        for (final Player player : players.getPlayers()) {
-            handOutCardToEachPlayer(blackJackGame, player);
-        }
-    }
-
-    private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final Player player) {
+    private void handOutCardTo(final BlackJackGame blackJackGame, final Player player) {
         boolean command = true;
         while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && command) {
             final String playerAnswer = inputGameCommandToGetOneMoreCard(player);
@@ -117,6 +112,12 @@ public class BlackJackGameController {
         }
     }
 
+    private void validateCorrectCommand(final String gameCommand) {
+        if (!(YES_COMMAND.equals(gameCommand) || NO_COMMAND.equals(gameCommand))) {
+            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
+        }
+    }
+
     private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
                                              final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
@@ -135,9 +136,8 @@ public class BlackJackGameController {
         }
     }
 
-    private void validateCorrectCommand(final String gameCommand) {
-        if (!(YES_COMMAND.equals(gameCommand) || NO_COMMAND.equals(gameCommand))) {
-            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
-        }
+    private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
+        outputView.printCardsWithSum(players.getPlayers(), dealer);
+        outputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
     }
 }
