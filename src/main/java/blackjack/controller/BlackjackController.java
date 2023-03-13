@@ -59,7 +59,7 @@ public class BlackjackController {
 
     private BettingZone generateBettingZone(final Players players) {
         final List<Player> allGamblers = players.getGamblers();
-        final LinkedHashMap<Player, Money> betMoneyByPlayers = allGamblers.stream()
+        final Map<Player, Money> betMoneyByPlayers = allGamblers.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         this::generateBettingMoney,
