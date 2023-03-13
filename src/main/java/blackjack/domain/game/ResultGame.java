@@ -8,17 +8,18 @@ import java.util.Map;
 
 public final class ResultGame {
 
-    private final Map<Participant, WinTieLose> playersResult;
+    private final Map<Participant, Betting> resultBetting;
 
-    private ResultGame(final Map<Participant, WinTieLose> playersResult) {
-        this.playersResult = playersResult;
+    private ResultGame(final Map<Participant, Betting> resultBetting) {
+        this.resultBetting = resultBetting;
     }
 
-    public static ResultGame from(final Map<Participant, WinTieLose> playersResult, final Participants participants) {
-        ResultGame resultGame = new ResultGame(playersResult);
-        resultGame.calculateResult(participants);
+    public static ResultGame from(final Map<Participant, Betting> resultBetting) {
+        return new ResultGame(resultBetting);
+    }
 
-        return resultGame;
+    public void betMoney(final Participant participant, final Betting betting) {
+        resultBetting.put(participant, betting);
     }
 
     public void calculateResult(final Participants participants) {
@@ -27,18 +28,22 @@ public final class ResultGame {
 
         final Score dealerScore = dealer.getScore();
         for (final Participant player : players) {
-            playersResult.put(player, WinTieLose.resultPlayer(player.getScore(), dealerScore));
+            final Betting bettingMoney = resultBetting.get(player);
+            final ResultState playerGameResult = ResultState.resultPlayer(player.getScore(), dealerScore);
+
+            resultBetting.put(player, Betting.from(playerGameResult.calculateProfit(bettingMoney)));
         }
     }
 
-    public int getDealerCount(final WinTieLose expected) {
-        return (int) playersResult.values()
-                .stream()
-                .filter(winTieLose -> winTieLose.equals(expected.reverse()))
-                .count();
+    public Betting getDealerResult() {
+        final int playerAllMoney = resultBetting.values().stream()
+                .map(Betting::getValue)
+                .reduce(0, Integer::sum);
+
+        return Betting.from(-playerAllMoney);
     }
 
-    public WinTieLose getPlayerResult(final Participant player) {
-        return playersResult.get(player);
+    public Betting getPlayerResult(final Participant player) {
+        return resultBetting.get(player);
     }
 }
