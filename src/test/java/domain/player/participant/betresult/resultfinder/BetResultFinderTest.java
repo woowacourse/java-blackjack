@@ -29,7 +29,7 @@ import static domain.card.CardValue.QUEEN;
 import static domain.card.CardValue.TEN;
 import static domain.card.CardValue.THREE;
 import static domain.card.CardValue.TWO;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BetResultFinderTest {
 
@@ -151,12 +151,12 @@ class BetResultFinderTest {
         Assertions.assertThat(betResultState).isInstanceOf(LoseState.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{2}")
     @MethodSource("betBlackjack")
     @DisplayName("findStateOf() : 첫 두장에서 승부가 날 수 있다.")
     void test_findStateOf_blackjack(final Participant participant,
-                                           final Dealer dealer,
-                                           final BetResultState resultState) throws Exception {
+                                    final Dealer dealer,
+                                    final BetResultState resultState) throws Exception {
 
         //when
         final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);
@@ -201,12 +201,12 @@ class BetResultFinderTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{2}")
     @MethodSource("betNotBlackjack")
     @DisplayName("findStateOf() : 첫 두장에서 승부가 결정되지 않고, 마지막에 승부 상태가 결정될 수 있다.")
-    void test_determineBetMoney_not_blackjack(final Participant participant,
-                                              final Dealer dealer,
-                                              final BetResultState resultState) throws Exception {
+    void test_findStateOf_not_blackjack(final Participant participant,
+                                        final Dealer dealer,
+                                        final BetResultState resultState) throws Exception {
         //when
         final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);
 
