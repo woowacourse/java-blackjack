@@ -15,13 +15,9 @@ public final class BlackjackGame {
     private final CardPack cardPack;
     private final Bets bets;
 
-    public BlackjackGame() {
+    public BlackjackGame(final ShuffleStrategy strategy) {
         this.cardPack = new CardPack();
         this.bets = new Bets();
-    }
-
-    public BlackjackGame(final ShuffleStrategy strategy) {
-        this();
         initCardPack(strategy);
     }
 
