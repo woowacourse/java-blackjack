@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.card.exception.NoMoreCardException;
+import blackjack.exception.NoMoreCardException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;

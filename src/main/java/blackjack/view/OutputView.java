@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.dto.ChallengerResultDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerStatusDto;
 import java.util.List;
 import java.util.Map;
@@ -92,41 +91,10 @@ public class OutputView {
         System.out.println(RESULT_PREFIX + point);
     }
 
-    public static void printEndRank(ChallengerResultDto challengerResultDto, DealerResultDto dealerResultDto) {
+    public static void printRevenue(ChallengerResultDto challengerResultDto) {
         System.out.println();
         System.out.println(FINAL_RESULT_HEADER_MESSAGE);
-        printDealerFinalRank(dealerResultDto);
-        printChallengersFinalRank(challengerResultDto);
-    }
-
-    private static void printDealerFinalRank(DealerResultDto dealerResultDto) {
-        System.out.print(dealerResultDto.getName() + PLAYER_NAME_AND_CARDS_PARTITION);
-        printDealerWinCount(dealerResultDto);
-        printDealerDrawCount(dealerResultDto);
-        printDealerLoseCount(dealerResultDto);
-        System.out.println();
-    }
-
-    private static void printDealerWinCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getWinCount() != 0) {
-            System.out.print(dealerResultDto.getWinCount() + "승 ");
-        }
-    }
-
-    private static void printDealerDrawCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getDrawCount() != 0) {
-            System.out.print(dealerResultDto.getDrawCount() + "무 ");
-        }
-    }
-
-    private static void printDealerLoseCount(DealerResultDto dealerResultDto) {
-        if (dealerResultDto.getLoseCount() != 0) {
-            System.out.print(dealerResultDto.getLoseCount() + "패 ");
-        }
-    }
-
-    private static void printChallengersFinalRank(ChallengerResultDto challengerResultDto) {
-        Map<String, String> nameAndResult = challengerResultDto.getNameAndResult();
+        Map<String, Integer> nameAndResult = challengerResultDto.getNameAndResult();
         for (String name : nameAndResult.keySet()) {
             System.out.println(name + PLAYER_NAME_AND_CARDS_PARTITION + nameAndResult.get(name));
         }

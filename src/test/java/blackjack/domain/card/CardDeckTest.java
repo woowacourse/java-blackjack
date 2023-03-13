@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import blackjack.domain.card.exception.NoMoreCardException;
+import blackjack.exception.NoMoreCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

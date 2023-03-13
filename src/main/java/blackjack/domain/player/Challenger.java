@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.exception.InvalidPlayerNameException;
+import blackjack.exception.InvalidArgumentException;
 
 public class Challenger extends Player {
 
@@ -13,7 +13,7 @@ public class Challenger extends Player {
 
     private void validateName(String name) {
         if (Dealer.NAME.equals(name)) {
-            throw new InvalidPlayerNameException();
+            throw new InvalidArgumentException("플레이어의 이름은 " + Dealer.NAME + "이면 안됩니다.");
         }
     }
 

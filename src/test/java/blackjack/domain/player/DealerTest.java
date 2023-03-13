@@ -2,10 +2,9 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.CardFixture;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Symbol;
-import blackjack.domain.result.ResultType;
+import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -14,39 +13,32 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
+
+    private static Stream<Arguments> challengerCards() {
+        return Stream.of(
+                Arguments.of(List.of(CardFixture.CLOVER_KING, CardFixture.SPADE_SIX), Result.LOSE),
+                Arguments.of(List.of(CardFixture.CLOVER_ACE, CardFixture.CLOVER_KING), Result.BLACKJACK),
+                Arguments.of(List.of(CardFixture.DIAMOND_JACK, CardFixture.CLOVER_KING), Result.DRAW));
+    }
+
+    private static Stream<Arguments> provideCards() {
+        return Stream.of(
+                Arguments.of(List.of(CardFixture.DIAMOND_JACK, CardFixture.SPADE_SIX), true),
+                Arguments.of(List.of(CardFixture.DIAMOND_JACK, CardFixture.HEART_SEVEN), false));
+    }
+
     @ParameterizedTest
     @MethodSource("challengerCards")
     @DisplayName("다른 Challenger의 게임 결과를 올바르게 판단하는지 확인한다")
-    void judge(List<Card> cards, ResultType expected) {
+    void judge(List<Card> cards, Result expected) {
         Challenger challenger = new Challenger("oing");
         challenger.pickStartCards(cards.get(0), cards.get(1));
 
         Dealer dealer = new Dealer();
-        dealer.pickStartCards(new Card(Shape.HEART, Symbol.KING), new Card(Shape.SPADE, Symbol.QUEEN));
+        dealer.pickStartCards(CardFixture.CLOVER_KING, CardFixture.DIAMOND_JACK);
 
         assertThat(dealer.judge(challenger)).isEqualTo(expected);
     }
-
-    private static Stream<Arguments> challengerCards() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.SIX)),
-                        ResultType.LOSE),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.ACE),
-                                new Card(Shape.CLOVER, Symbol.KING)),
-                        ResultType.WIN),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.JACK),
-                                new Card(Shape.CLOVER, Symbol.KING)),
-                        ResultType.DRAW)
-        );
-    }
-
 
     @ParameterizedTest
     @MethodSource("provideCards")
@@ -58,20 +50,5 @@ class DealerTest {
         }
 
         assertThat(player.canPick()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> provideCards() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.SIX)),
-                        true),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.SEVEN)),
-                        false)
-        );
     }
 }
