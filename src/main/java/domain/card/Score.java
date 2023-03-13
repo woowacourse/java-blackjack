@@ -3,6 +3,7 @@ package domain.card;
 public class Score {
     private static final Score MAX = new Score(21);
     private static final Score ACE_BOTH_SCORE_DIFFERENCE = new Score(10);
+    private static final int MIN_SCORE = 0;
     
     private final int score;
     
@@ -12,7 +13,7 @@ public class Score {
     }
     
     private void validateNegativeScore(int score) {
-        if (score < 0) {
+        if (score < MIN_SCORE) {
             throw new IllegalArgumentException("Score에 음수는 들어올 수 없습니다.");
         }
     }
