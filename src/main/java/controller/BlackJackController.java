@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final int INITIAL_CARD_COUNT = 2;
+
     private static final String HIT_RESPONSE = "y";
 
     private final Deck deck;
@@ -61,9 +61,7 @@ public class BlackJackController {
     }
 
     private static void dealInitialCards(final Deck deck, final Participants participants) {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participants.deal(deck);
-        }
+        participants.dealInit(deck);
     }
 
     private void showParticipantsInitCardsStatus(final Participants participants) {

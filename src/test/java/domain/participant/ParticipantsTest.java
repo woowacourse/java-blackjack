@@ -37,12 +37,12 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("참가자들에게 카드를 한 장씩 나누어준다.")
+    @DisplayName("참가자들에게 카드를 한 장씩 총 2장 나누어준다.")
     void participantsDealTest() {
-        participants.deal(Deck.from(new RandomShuffleStrategy()));
+        participants.dealInit(Deck.from(new RandomShuffleStrategy()));
         List<Participant> players = participants.findPlayers();
         for (Participant player : players) {
-            assertThat(player.getCardNames().size()).isEqualTo(1);
+            assertThat(player.getCardNames().size()).isEqualTo(2);
         }
     }
 

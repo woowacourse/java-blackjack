@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
+    private static final int INITIAL_CARD_COUNT = 2;
+
     private final List<Player> players;
     private final Participant dealer;
 
@@ -21,10 +23,10 @@ public class Participants {
         return new Participants(players);
     }
 
-    public void deal(Deck deck) {
-        dealer.receiveCard(deck.draw());
-        for (Participant player : players) {
-            player.receiveCard(deck.draw());
+    public void dealInit(Deck deck) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            dealer.receiveCard(deck.draw());
+            players.forEach(player -> player.receiveCard(deck.draw()));
         }
     }
 
