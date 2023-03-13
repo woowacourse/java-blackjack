@@ -14,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class DealerTest {
 
-    static Dealer dealer;
+    Dealer dealer;
 
     @BeforeEach
     void setUp() {

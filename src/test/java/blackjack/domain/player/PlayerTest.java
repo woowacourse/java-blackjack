@@ -14,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class PlayerTest {
 
-    static Player player;
+    Player player;
 
     @BeforeEach
     void setUp() {
