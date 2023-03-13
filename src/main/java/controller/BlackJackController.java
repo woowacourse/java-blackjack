@@ -1,19 +1,17 @@
 package controller;
 
+import domain.Amount;
+import domain.BettingAmount;
 import domain.Card;
-import domain.Dealer;
 import domain.GameManager;
-import domain.GameResult;
-import domain.GameResultAmount;
-import domain.Name;
 import domain.Participant;
 import domain.Player;
-import domain.Result;
 import dto.CardStatusDto;
 import view.Answer;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,20 +28,24 @@ public class BlackJackController {
 
     public void run() {
         GameManager gameManager = new GameManager(inputView.requestPlayerName());
-        getBettingAmountOfPlayers(gameManager);
+        BettingAmount bettingAmount = getBettingAmountOfPlayers(gameManager);
         printInitialDistribution(gameManager);
         progress(gameManager);
-        end(gameManager);
+        end(gameManager, bettingAmount);
     }
 
-    private void getBettingAmountOfPlayers(GameManager gameManager) {
+    private BettingAmount getBettingAmountOfPlayers(GameManager gameManager) {
+        Map<Player, Amount> bettingAmountOfPlayers = new HashMap<>();
+
         for (Player player : gameManager.getPlayers()) {
-            player.betAmount(getBettingAmount(player));
+            bettingAmountOfPlayers.put(player, getBettingAmount(player));
         }
+
+        return new BettingAmount(bettingAmountOfPlayers);
     }
 
-    private int getBettingAmount(Player player) {
-        return inputView.requestBettingAmount(player.getNameValue());
+    private Amount getBettingAmount(Player player) {
+        return new Amount(inputView.requestBettingAmount(player.getNameValue()));
     }
 
     private void printInitialDistribution(GameManager gameManager) {
@@ -80,10 +82,10 @@ public class BlackJackController {
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
     }
 
-    private void end(GameManager gameManager) {
+    private void end(GameManager gameManager, BettingAmount bettingAmount) {
         printFinalCard(gameManager.getDealer());
         gameManager.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(gameManager.getCameResultAmount());
+        outputView.printFinalResult(gameManager.getCameResultAmount(bettingAmount));
     }
 
     private void printFinalCard(Participant participant) {

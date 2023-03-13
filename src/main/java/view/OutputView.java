@@ -1,6 +1,7 @@
 package view;
 
 import domain.Name;
+import domain.ResultAmount;
 import dto.CardStatusDto;
 
 import java.util.List;
@@ -46,14 +47,14 @@ public class OutputView {
         System.out.printf(FINAL_SCORE, totalScore);
     }
 
-    public void printFinalResult(Map<Name, Integer> result) {
+    public void printFinalResult(Map<Name, ResultAmount> result) {
         System.out.println("\n\n" + FINAL_RESULT_TITLE);
 
         result.forEach(this::printEachFinalResult);
     }
 
-    private void printEachFinalResult(Name name, Integer money) {
-        System.out.printf(RESULT_NAME_FORMAT + "\n", name.getValue(), money);
+    private void printEachFinalResult(Name name, ResultAmount resultAmount) {
+        System.out.printf(RESULT_NAME_FORMAT + "\n", name.getValue(), resultAmount.getResultAmount());
     }
 
 }

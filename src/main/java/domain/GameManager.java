@@ -55,8 +55,8 @@ public class GameManager {
         }
     }
 
-    public Map<Name, Integer> getCameResultAmount() {
-        return new GameResultAmount(participants.getResult())
+    public Map<Name, ResultAmount> getCameResultAmount(BettingAmount bettingAmount) {
+        return new GameResultAmount(participants.getResult(), bettingAmount.getBettingAmount())
                 .getResultOfBetting();
     }
 
