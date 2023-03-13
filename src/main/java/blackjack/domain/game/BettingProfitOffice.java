@@ -6,10 +6,10 @@ import blackjack.domain.player.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BettingZone {
+public class BettingProfitOffice {
     private final Map<Player, Money> bettingMoneyByPlayers;
 
-    public BettingZone(final Map<Player, Money> bettingMoneyByPlayers) {
+    public BettingProfitOffice(final Map<Player, Money> bettingMoneyByPlayers) {
         this.bettingMoneyByPlayers = bettingMoneyByPlayers;
     }
 

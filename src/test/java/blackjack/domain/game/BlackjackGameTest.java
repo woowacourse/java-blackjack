@@ -37,7 +37,7 @@ public class BlackjackGameTest {
         for (Player gambler : players.getGamblers()) {
             bettingMoneyByPlayers.put(gambler, Money.createMoneyForBetting(10000));
         }
-        return new BlackjackGame(players, new BettingZone(bettingMoneyByPlayers));
+        return new BlackjackGame(players, new BettingProfitOffice(bettingMoneyByPlayers));
     }
 
     @Test

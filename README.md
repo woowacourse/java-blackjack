@@ -17,12 +17,12 @@ flowchart
 
     Deck --> Card
 
-    BlackjackGame --> BettingZone
+    BlackjackGame --> BettingProfitOffice
     BlackjackGame --> Player
 
-    BettingZone --> Player
-    BettingZone --> BetMoney
-    BettingZone --> Result
+    BettingProfitOffice --> Player
+    BettingProfitOffice --> BetMoney
+    BettingProfitOffice --> Result
 
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView

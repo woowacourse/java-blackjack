@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
-import blackjack.domain.game.BettingZone;
+import blackjack.domain.game.BettingProfitOffice;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
@@ -36,8 +36,8 @@ public class BlackjackController {
 
     private BlackjackGame generateBlackjackGame() {
         final Players players = generateValidPlayers();
-        final BettingZone bettingZone = generateBettingZone(players);
-        return new BlackjackGame(players, bettingZone);
+        final BettingProfitOffice bettingProfitOffice = generateBettingProfitOffice(players);
+        return new BlackjackGame(players, bettingProfitOffice);
     }
 
     private Players generateValidPlayers() {
@@ -56,7 +56,7 @@ public class BlackjackController {
         }
     }
 
-    private BettingZone generateBettingZone(final Players players) {
+    private BettingProfitOffice generateBettingProfitOffice(final Players players) {
         final List<Player> allGamblers = players.getGamblers();
         final Map<Player, Money> bettingMoneyByPlayers = allGamblers.stream()
                 .collect(Collectors.toMap(
@@ -65,7 +65,7 @@ public class BlackjackController {
                         (bettingMoney, bettingMoney2) -> bettingMoney,
                         LinkedHashMap::new
                 ));
-        return new BettingZone(bettingMoneyByPlayers);
+        return new BettingProfitOffice(bettingMoneyByPlayers);
     }
 
     private Money generateBettingMoney(final Player player) {
