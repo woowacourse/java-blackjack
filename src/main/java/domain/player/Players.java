@@ -15,32 +15,32 @@ public class Players {
         this.players = generatePlayers(names, amounts);
     }
 
-    private static Outcome decideOutcome(final Dealer dealer, final Player player) {
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            return Outcome.DRAW;
-        }
-        if (player.isBlackjack()) {
+    private Outcome decideOutcome(final Dealer dealer, final Player player) {
+        if (isBlackjack(dealer, player)) {
             return Outcome.BLACKJACK;
         }
-        if (dealer.isBlackjack()) {
-            return Outcome.LOSE;
-        }
-        if (isBurst(player.score())) {
-            return Outcome.LOSE;
-        }
-        if (isBurst(dealer.score())) {
+        if (isWin(dealer, player)) {
             return Outcome.WIN;
         }
-        if (dealer.score() < player.score()) {
-            return Outcome.WIN;
-        }
-        if (dealer.score() > player.score()) {
+        if (isLose(dealer, player)) {
             return Outcome.LOSE;
         }
         return Outcome.DRAW;
     }
 
-    private static boolean isBurst(final int score) {
+    private boolean isBlackjack(final Dealer dealer, final Player player) {
+        return !dealer.isBlackjack() && player.isBlackjack();
+    }
+
+    private boolean isWin(final Dealer dealer, final Player player) {
+        return !isBurst(player.score()) && (isBurst(dealer.score()) || dealer.score() < player.score());
+    }
+
+    private boolean isLose(final Dealer dealer, final Player player) {
+        return isBurst(player.score()) || !isBurst(dealer.score()) && dealer.score() > player.score();
+    }
+
+    private boolean isBurst(final int score) {
         return score > BLACKJACK_NUMBER;
     }
 
