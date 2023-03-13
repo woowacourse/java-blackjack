@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final int BLACKJACK = 21;
+    private static final int MAX_HIT_SCORE = 21;
 
     private final int value;
 
@@ -20,16 +20,16 @@ public final class Score {
         return new Score(this.value - value);
     }
 
-    public boolean isHit() {
-        return value <= BLACKJACK;
+    public boolean canHit() {
+        return value <= MAX_HIT_SCORE;
     }
 
-    public boolean isHit(final int hitScore) {
-        return value <= hitScore;
+    public boolean canHit(final int maxHitScore) {
+        return value <= maxHitScore;
     }
 
     public boolean isBust() {
-        return value > BLACKJACK;
+        return value > MAX_HIT_SCORE;
     }
 
     public boolean isGreaterThan(final Score other) {

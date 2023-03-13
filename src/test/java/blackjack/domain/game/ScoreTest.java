@@ -25,7 +25,7 @@ class ScoreTest {
     void isHitTest() {
         final Score score = Score.from(21);
 
-        Assertions.assertThat(score.isHit()).isTrue();
+        Assertions.assertThat(score.canHit()).isTrue();
     }
 
     @Test
@@ -33,7 +33,7 @@ class ScoreTest {
     void isHitForDealerTest() {
         final Score score = Score.from(16);
 
-        Assertions.assertThat(score.isHit(16)).isTrue();
+        Assertions.assertThat(score.canHit(16)).isTrue();
     }
 
     @Test

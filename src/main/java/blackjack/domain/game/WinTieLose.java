@@ -16,7 +16,7 @@ public enum WinTieLose {
         if (bothBust(playerScore, dealerScore) || playerScore.isEqualTo(dealerScore)) {
             return TIE;
         }
-        if (playerScore.isHit() && (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore))) {
+        if (playerScore.canHit() && (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore))) {
             return WIN;
         }
         return LOSE;

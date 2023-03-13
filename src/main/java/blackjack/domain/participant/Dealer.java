@@ -18,6 +18,6 @@ public final class Dealer extends Participant {
 
     @Override
     public boolean isHit() {
-        return getScore().isHit(DEALER_HIT_SCORE);
+        return getScore().canHit(DEALER_HIT_SCORE);
     }
 }
