@@ -15,7 +15,7 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 

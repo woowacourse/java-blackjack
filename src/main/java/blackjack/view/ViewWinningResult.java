@@ -17,12 +17,4 @@ public enum ViewWinningResult {
         this.winningResult = winningResult;
         this.name = name;
     }
-
-    public static String getWinningResultName(final WinningResult winningResult) {
-        return Arrays.stream(ViewWinningResult.values())
-                .filter(it -> it.winningResult == winningResult)
-                .findAny()
-                .get()
-                .name;
-    }
 }

@@ -25,8 +25,4 @@ public enum ViewCardSuit {
                 .get()
                 .cardSuitName;
     }
-
-    public String getCardSuitName() {
-        return cardSuitName;
-    }
 }

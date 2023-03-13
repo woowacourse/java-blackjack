@@ -21,7 +21,7 @@ public enum ViewCardNumber {
     final String cardNumberName;
     final String name;
 
-    ViewCardNumber(String cardNumberName, String name) {
+    ViewCardNumber(final String cardNumberName, final String name) {
         this.name = name;
         this.cardNumberName = cardNumberName;
     }

@@ -13,17 +13,17 @@ public class Deck {
     private final List<Card> cards;
     private final CardPickerGenerator cardPickerGenerator;
 
-    private Deck(List<Card> cards, CardPickerGenerator cardPickerGenerator) {
+    private Deck(final List<Card> cards, final CardPickerGenerator cardPickerGenerator) {
         this.cards = cards;
         this.cardPickerGenerator = cardPickerGenerator;
     }
 
-    public static Deck create(CardPickerGenerator cardPickerGenerator) {
+    public static Deck create(final CardPickerGenerator cardPickerGenerator) {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
             deck.addAll(initCards());
         }
-        return new Deck(deck,cardPickerGenerator);
+        return new Deck(deck, cardPickerGenerator);
     }
 
     private static List<Card> initCards() {

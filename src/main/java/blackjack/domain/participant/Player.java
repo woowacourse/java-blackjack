@@ -16,7 +16,7 @@ public class Player extends Participant {
         this.amount = amount;
     }
 
-    public BigDecimal calculateAmountByGameResult(WinningResult winningResult) {
+    public BigDecimal calculateAmountByGameResult(final WinningResult winningResult) {
         return amount.calculateAmountByResult(winningResult);
     }
 

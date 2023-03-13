@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class BlackjackGameResult {
 
-    public static final int CHANGE_DEALER_PROFIT = -1;
+    private static final int CHANGE_DEALER_PROFIT = -1;
     private final Map<Player, WinningResult> gameResult;
 
-    public BlackjackGameResult(Map<Player, WinningResult> gameResult) {
+    public BlackjackGameResult(final Map<Player, WinningResult> gameResult) {
         this.gameResult = new LinkedHashMap<>(gameResult);
     }
 
@@ -43,9 +43,5 @@ public class BlackjackGameResult {
 
     public Map<Player, WinningResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
-    }
-
-    public WinningResult NameByPlayer(Player player) {
-        return gameResult.get(player);
     }
 }
