@@ -42,6 +42,8 @@ public final class Dealer extends User {
     }
 
     private void updateResult(final Map<User, Result> gameResult, final Player targetPlayer) {
+        updateMatchingResult(player -> player.isBlackJack() && !isBlackJack(), gameResult, targetPlayer,
+                GameResult.BLACKJACK, GameResult.LOSE);
         updateMatchingResult(player -> player.getScore().isBust() && isBust(), gameResult, targetPlayer,
                 GameResult.LOSE, GameResult.LOSE);
         updateMatchingResult(player -> !player.isBust() && player.getScore().equals(getScore()), gameResult,

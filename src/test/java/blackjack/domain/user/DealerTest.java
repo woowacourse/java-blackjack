@@ -64,7 +64,7 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_자신의_점수를_기반으로_플레이어의_점수를_계산한다() {
+    void 딜러는_자신의_점수를_기반으로_플레이어의_결과를_계산한다() {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("dummy");
