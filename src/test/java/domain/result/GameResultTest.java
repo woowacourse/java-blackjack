@@ -23,9 +23,8 @@ class GameResultTest {
 
     @BeforeEach
     void setup() {
-        gameResult = new GameResult();
-        players = new Players(List.of("hardy", "ddoring", "crong", "doodoom"));
         dealer = new Dealer();
+        players = new Players(List.of("hardy", "ddoring", "crong", "doodoom"));
         // 2장씩 뽑는다.
 
         // 19
@@ -51,16 +50,16 @@ class GameResultTest {
         Player doodoom = players.findPlayer("doodoom");
         doodoom.hit(Card.of(Suit.DIAMOND, Rank.EIGHT));
         doodoom.hit(Card.of(Suit.DIAMOND, Rank.KING));
+
+        gameResult = new GameResult(dealer, players);
     }
 
     @DisplayName("플레이어는 블랙잭 점수에 따라 WIN, DRAW, LOSE의 게임결과를 저장한다.")
     @Test
     void makePlayerResultsTest() {
-        Map<String, Outcome> playerResults = gameResult.makePlayerResults(dealer, players);
-
-        assertEquals(Outcome.WIN, playerResults.get("hardy"));
-        assertEquals(Outcome.DRAW, playerResults.get("crong"));
-        assertEquals(Outcome.LOSE, playerResults.get("doodoom"));
+        assertEquals(Outcome.WIN, gameResult.getOutcomeByPlayer(players.findPlayer("hardy")));
+        assertEquals(Outcome.DRAW, gameResult.getOutcomeByPlayer(players.findPlayer("crong")));
+        assertEquals(Outcome.LOSE, gameResult.getOutcomeByPlayer(players.findPlayer("doodoom")));
     }
 
     @DisplayName("플레이어는 게임 결과에 따라 수익을 저장한다.")
@@ -68,7 +67,7 @@ class GameResultTest {
     void makePlayerBetMoneyResultsTest() {
         players.getPlayers()
                 .forEach(player -> player.initBet(10000));
-        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(dealer, players);
+        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(players);
 
         Integer hardyMoney = playerBetMoneyResults.get("hardy");
         Integer ddoringMoney = playerBetMoneyResults.get("ddoring");
@@ -94,7 +93,7 @@ class GameResultTest {
         int expectedDealerProfit = -15000;
         players.getPlayers()
                 .forEach(player -> player.initBet(10000));
-        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(dealer, players);
+        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(players);
         int dealerProfit = gameResult.calculateDealerBetMoneyResult(playerBetMoneyResults);
 
         assertEquals(expectedDealerProfit, dealerProfit);

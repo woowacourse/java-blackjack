@@ -40,8 +40,8 @@ public class ResultController {
     }
 
     private void printGameResult(final Dealer dealer, final Players players) {
-        GameResult gameResult = new GameResult();
-        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players);
+        Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(players);
         int dealerProfit = gameResult.calculateDealerBetMoneyResult(playerBetMoneyResults);
 
         outputView.printGameResult(dealerProfit, playerBetMoneyResults);

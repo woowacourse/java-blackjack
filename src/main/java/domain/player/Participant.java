@@ -19,10 +19,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        if (getCards().size() == 2 && getScore() == BLACK_JACK_NUMBER) {
-            return true;
-        }
-        return false;
+        return getCards().size() == 2 && getScore() == BLACK_JACK_NUMBER;
     }
 
     public List<Card> getCards() {
