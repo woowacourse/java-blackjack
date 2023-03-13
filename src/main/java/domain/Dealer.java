@@ -2,7 +2,7 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private static final Name DEALER_NAME = new Name("딜러");
+    public static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer(Cards cards) {
         super(DEALER_NAME, cards);

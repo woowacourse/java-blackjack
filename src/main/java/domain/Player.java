@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
-    private static final String DEALER_NAME = "딜러";
 
     private Amount bettingAmount;
 
@@ -15,7 +14,7 @@ public class Player extends Participant {
     }
 
     private void validate(Name name) {
-        if (name.getValue().equals(DEALER_NAME)) {
+        if (name.equals(Dealer.DEALER_NAME)) {
             throw new IllegalArgumentException(BAN_NAME_ERROR_MESSAGE);
         }
     }
