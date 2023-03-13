@@ -7,6 +7,7 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -52,6 +53,7 @@ class GameResultTest {
         doodoom.hit(Card.of(Suit.DIAMOND, Rank.KING));
     }
 
+    @DisplayName("플레이어는 블랙잭 점수에 따라 WIN, DRAW, LOSE의 게임결과를 저장한다.")
     @Test
     void makePlayerResultsTest() {
         Map<String, Outcome> playerResults = gameResult.makePlayerResults(dealer, players);
@@ -61,6 +63,7 @@ class GameResultTest {
         assertEquals(Outcome.LOSE, playerResults.get("doodoom"));
     }
 
+    @DisplayName("플레이어는 게임 결과에 따라 수익을 저장한다.")
     @Test
     void makePlayerBetMoneyResultsTest() {
         players.getPlayers()
@@ -85,6 +88,7 @@ class GameResultTest {
         assertEquals(-10000, doodoomMoney);
     }
 
+    @DisplayName("딜러의 최종 수익은 플레이어의 최종 수익의 합의 * (-1)이다.")
     @Test
     void calculateDealerBetMoneyResultTest() {
         int expectedDealerProfit = -15000;
