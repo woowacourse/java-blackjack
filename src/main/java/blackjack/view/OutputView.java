@@ -127,8 +127,8 @@ public class OutputView {
 
     private static void printChallengersProfit(final ProfitDto profitDto) {
         Map<String, Integer> nameAndRanks = profitDto.getChallengersProfit();
-        for (String name : nameAndRanks.keySet()) {
-            System.out.println(name + PLAYER_NAME_PARTITION + nameAndRanks.get(name));
+        for (Map.Entry<String, Integer> nameAndRank : nameAndRanks.entrySet()) {
+            System.out.println(nameAndRank.getKey() + PLAYER_NAME_PARTITION + nameAndRank.getValue());
         }
     }
 }
