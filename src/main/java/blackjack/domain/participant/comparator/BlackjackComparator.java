@@ -19,14 +19,15 @@ public class BlackjackComparator implements Comparator {
 
     @Override
     public WinTieLose compareWithPlayer(Player player) {
-        if(player.isBlackjack()){
+        if (player.isBlackjack()) {
             return checkBlackjack();
         }
         setNext();
         return next.compareWithPlayer(player);
     }
-    private WinTieLose checkBlackjack(){
-        if(dealer.isBlackjack()){
+
+    private WinTieLose checkBlackjack() {
+        if (dealer.isBlackjack()) {
             return WinTieLose.TIE;
         }
         return WinTieLose.BLACKJACK;

@@ -10,7 +10,6 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardsDto;
 import blackjack.dto.ParticipantsDto;
-import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -40,12 +39,12 @@ public class BlackjackController {
 
 
     private Participants makeParticipants() {
-        Map<String,Integer> players = new LinkedHashMap<>();
-        for(String name: inputView.inputPlayers()){
+        Map<String, Integer> players = new LinkedHashMap<>();
+        for (String name : inputView.inputPlayers()) {
             players.put(name, inputView.inputBetting(name));
         }
         final Dealer dealer = new Dealer();
-        return new Participants(dealer,players);
+        return new Participants(dealer, players);
     }
 
     private Deck makeDeck() {

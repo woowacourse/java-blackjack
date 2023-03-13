@@ -3,7 +3,7 @@ package blackjack.domain.participant.comparator;
 import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Player;
 
-public class NoCaseComparator implements Comparator{
+public class NoCaseComparator implements Comparator {
 
     private static final String NO_CASE_MASSAGE = "더이상의 경우의 수가 없습니다";
 

@@ -9,8 +9,9 @@ public class Name {
         validate(value);
         this.value = value;
     }
-    private void validate(String value){
-        if(value.isEmpty()){
+
+    private void validate(String value) {
+        if (value.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_NAME_MASSAGE);
         }
     }

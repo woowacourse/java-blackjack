@@ -28,24 +28,28 @@ public class InputView {
         System.out.println(INPUT_PLAYERS_MESSAGE);
         return validateDuplicatePlayer(scanner.nextLine());
     }
-    private List<String> validateDuplicatePlayer(String input){
+
+    private List<String> validateDuplicatePlayer(String input) {
         List<String> inputList = List.of(input.replace(TARGET_SPACE, REPLACEMENT).split(INPUT_PLAYER_DELIMITER));
-        if(inputList.size() != inputList.stream().distinct().count()){
+        if (inputList.size() != inputList.stream().distinct().count()) {
             throw new IllegalArgumentException(DUPLICATED_PLAYER_MASSAGE);
         }
         return List.of(input.replace(TARGET_SPACE, REPLACEMENT).split(INPUT_PLAYER_DELIMITER));
     }
-    public int inputBetting(String name){
+
+    public int inputBetting(String name) {
         System.out.println();
-        System.out.println(name+ BETTING_MASSAGE);
+        System.out.println(name + BETTING_MASSAGE);
         return bettingValidate(scanner.nextLine());
     }
-    private int bettingValidate(String input){
-        if(NON_NUMBER.matcher(input).matches()){
+
+    private int bettingValidate(String input) {
+        if (NON_NUMBER.matcher(input).matches()) {
             throw new IllegalArgumentException(NON_NUMBUER_MASSAGE);
         }
         return Integer.parseInt(input);
     }
+
     public boolean inputOrderCard(final String name) {
         System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
         String input = scanner.nextLine();

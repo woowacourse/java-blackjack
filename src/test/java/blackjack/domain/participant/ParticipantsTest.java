@@ -26,7 +26,7 @@ public class ParticipantsTest {
     void validatePlayerCountsFail() {
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 9; i++) {
-            players.put("test"+i, 0);
+            players.put("test" + i, 0);
         }
         Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -38,7 +38,7 @@ public class ParticipantsTest {
     void validatePlayerCountsSuccess() {
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 8; i++) {
-            players.put("test"+i, 0);
+            players.put("test" + i, 0);
         }
         Assertions.assertThatNoException().isThrownBy(() -> new Participants(new Dealer(), players));
     }
@@ -60,7 +60,7 @@ public class ParticipantsTest {
         Dealer dealer = new Dealer();
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 8; i++) {
-            players.put("test"+i, 0);
+            players.put("test" + i, 0);
         }
         Participants participants = new Participants(dealer, players);
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(Player.class);

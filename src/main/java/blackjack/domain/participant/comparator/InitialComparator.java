@@ -4,12 +4,14 @@ import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public class InitialComparator implements Comparator{
+public class InitialComparator implements Comparator {
     private final Dealer dealer;
     private Comparator next;
-    public InitialComparator(Dealer dealer){
+
+    public InitialComparator(Dealer dealer) {
         this.dealer = dealer;
     }
+
     @Override
     public void setNext() {
         next = new BlackjackComparator(dealer);

@@ -5,5 +5,6 @@ import blackjack.domain.participant.Player;
 
 public interface Comparator {
     void setNext();
+
     WinTieLose compareWithPlayer(Player player);
 }

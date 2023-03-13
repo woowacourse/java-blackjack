@@ -7,7 +7,6 @@ import blackjack.domain.participant.comparator.InitialComparator;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
-    private static final String NON_CASE = "해당하는 경우가 없습니다.";
     private final Comparator comparator;
 
     public Dealer() {

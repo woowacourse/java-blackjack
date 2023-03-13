@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.dto.CardInfo;
 import blackjack.dto.CardsDto;
 import blackjack.dto.ParticipantsDto;
-import blackjack.dto.ResultDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,11 +14,6 @@ public class OutputView {
     private static final String GIVE_TWO_CARD_MASSAGE = "에게 두장을 나누었습니다.";
     private static final String NOTICE_TOTAL_SCORE_UNDER_SIXTEEN = "는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_DELIMITER = " - 결과 : ";
-    private static final String FINAL_RESULT_MASSAGE = "## 최종 승패";
-    private static final String DEALER_DELIMITER = " : ";
-    private static final String WIN_COUNT_MASSAGE = "승 ";
-    private static final String TIE_COUNT_MASSAGE = "무 ";
-    private static final String LOSE_COUNT_MASSAGE = "패";
     private static final String PLAYER_SCORE_DELIMITER = " : ";
     private static final String PLAYER_DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
@@ -79,35 +73,17 @@ public class OutputView {
         System.out.print(RESULT_DELIMITER + score);
     }
 
-    public void outputFinalResult(ResultDto resultDto) {
-        System.out.println(FINAL_RESULT_MASSAGE);
-        outputDealerResult(resultDto.getDealerWinCount(),
-                resultDto.getDealerTieCount(),
-                resultDto.getDealerLoseCount());
-        resultDto.getPlayerResult().forEach(this::outputPlayerResult);
-    }
-
-    private void outputDealerResult(final int win, final int tie, final int lose) {
-        System.out.println(DEALER_NAME + DEALER_DELIMITER
-                + win + WIN_COUNT_MASSAGE
-                + tie + TIE_COUNT_MASSAGE
-                + lose + LOSE_COUNT_MASSAGE);
-    }
-
-    private void outputPlayerResult(final String name, final String result) {
-        System.out.println(name + PLAYER_SCORE_DELIMITER + result);
-    }
-    public void outputRevenue(ParticipantsDto participantsDto){
+    public void outputRevenue(ParticipantsDto participantsDto) {
         System.out.println(REVENUE_RESULT_MASSAGE);
-        outputParticipantRevenue(DEALER_NAME,participantsDto.getDealerRevenue());
+        outputParticipantRevenue(DEALER_NAME, participantsDto.getDealerRevenue());
         participantsDto.getPlayersRevenue()
-                .entrySet().forEach(entry->{
-                    outputParticipantRevenue(entry.getKey(),entry.getValue());
-                });
+                .forEach(this::outputParticipantRevenue);
     }
-    private void outputParticipantRevenue(String name, int revenue){
+
+    private void outputParticipantRevenue(String name, int revenue) {
         System.out.println(name + PLAYER_SCORE_DELIMITER + revenue);
     }
+
     private void changeLine() {
         System.out.println();
     }

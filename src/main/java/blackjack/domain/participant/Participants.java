@@ -10,8 +10,6 @@ public class Participants {
     private static final String PLAYERS_COUNT_LIMIT_MASSAGE = "참여자는 8명 이하여야 합니다.";
     private static final int PLAYERS_COUNT_LIMIT = 8;
     private static final int DEALER_COEFFICIENT = -1;
-    private static final int NO_PLAYER_COUNT = 1;
-    private final int totalBetting;
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -19,16 +17,11 @@ public class Participants {
         validate(players.keySet());
         this.dealer = dealer;
         this.players = makePlayer(players);
-        this.totalBetting = makeTotalBetting(players);
     }
-    public int getDealerRevenue(){
+
+    public int getDealerRevenue() {
         return DEALER_COEFFICIENT * players.stream()
                 .map(Player::getRevenue)
-                .reduce(0,Integer::sum);
-    }
-    private Integer makeTotalBetting(Map<String, Integer> players) {
-        return players.entrySet().stream()
-                .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
     }
 
@@ -36,11 +29,13 @@ public class Participants {
         validateNonPlayer(players);
         validatePlayerLimit(players);
     }
-    private void validateNonPlayer(Set<String> players){
-        if(players.isEmpty()){
+
+    private void validateNonPlayer(Set<String> players) {
+        if (players.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
         }
     }
+
     private void validatePlayerLimit(Set<String> players) {
         if (players.size() > PLAYERS_COUNT_LIMIT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
