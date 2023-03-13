@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
+    public static final int BLACKJACK_CARD_COUNT = 2;
+    public static final int BLACKJACK_SCORE = 21;
 
     protected final List<Card> cards;
     protected final Score score;
@@ -34,7 +36,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && score.getScore() == 21;
+        return cards.size() == BLACKJACK_CARD_COUNT && score.getScore() == BLACKJACK_SCORE;
     }
 
     public List<String> getCardNames() {

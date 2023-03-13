@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class BettingResult {
 
-    int dealerBettingResult;
+    private int dealerBettingResult;
     private final Map<Player, Integer> playersBettingResults = new HashMap<>();
 
     public BettingResult(Map<Player, Double> playersYields, BettingAreas bettingAreas) {
