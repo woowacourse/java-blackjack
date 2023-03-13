@@ -6,7 +6,7 @@ import java.util.Map;
 public class GameResult {
     private static final int BLACK_JACK = 21;
 
-    private final Map<String, ResultType> playerResult;
+    private final Map<Player, ResultType> playerResult;
 
     public GameResult(Dealer dealer, Players players) {
         this.playerResult = new LinkedHashMap<>();
@@ -16,7 +16,7 @@ public class GameResult {
     private void calculateResultType(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             ResultType resultType = calculateResultType(dealer, player);
-            playerResult.put(player.getName(), resultType);
+            playerResult.put(player, resultType);
         }
     }
 
@@ -38,7 +38,7 @@ public class GameResult {
         return playerSum > BLACK_JACK || (dealerSum < BLACK_JACK && dealerSum >= playerSum);
     }
 
-    public Map<String, ResultType> getPlayerResult() {
+    public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
     }
 

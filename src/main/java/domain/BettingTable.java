@@ -4,17 +4,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingTable {
-    private final Map<String, Money> bettingTable = new LinkedHashMap<>();
+    private final Map<Player, Money> bettingTable = new LinkedHashMap<>();
 
-    public void add(String name, Money money) {
-        bettingTable.put(name, money);
+    public void add(Player player, Money money) {
+        bettingTable.put(player, money);
     }
 
-    public void calculate(Map<String, ResultType> playerResult) {
-        for (String name : playerResult.keySet()) {
-            ResultType resultType = playerResult.get(name);
-            Money money = bettingTable.get(name);
-            bettingTable.put(name, resultType.calculateBetting(money));
+    public void calculate(Map<Player, ResultType> playerResult) {
+        for (Player player : playerResult.keySet()) {
+            ResultType resultType = playerResult.get(player);
+            Money money = bettingTable.get(player);
+            bettingTable.put(player, resultType.calculateBetting(money));
         }
     }
 
@@ -24,7 +24,7 @@ public class BettingTable {
                 .sum();
     }
 
-    public Map<String, Money> getBettingTable() {
+    public Map<Player, Money> getBettingTable() {
         return bettingTable;
     }
 

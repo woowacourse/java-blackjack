@@ -63,11 +63,11 @@ public class OutputView {
     public void printWinnerResult(Dealer dealer, BettingTable bettingTable) {
         System.out.println();
         System.out.println(FINAL_PROFIT_MESSAGE);
-        Map<String, Money> result = bettingTable.getBettingTable();
+        Map<Player, Money> result = bettingTable.getBettingTable();
         System.out.println(dealer.getName() + NAME_DELIMITER + -bettingTable.sum());
-        for (String playerName : result.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, playerName,
-                    result.get(playerName).getMoney());
+        for (Player player : result.keySet()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
+                    result.get(player).getMoney());
         }
     }
 

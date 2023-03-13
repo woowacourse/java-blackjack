@@ -36,8 +36,7 @@ public class Controller {
     private BettingTable createBettingTable(Players players) {
         BettingTable bettingTable = new BettingTable();
         for (Player player : players.getPlayers()) {
-            String playerName = player.getName();
-            bettingTable.add(playerName, new Money(inputView.readBettingMoney(playerName)));
+            bettingTable.add(player, new Money(inputView.readBettingMoney(player.getName())));
         }
         return bettingTable;
     }
