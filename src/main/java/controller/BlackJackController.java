@@ -8,7 +8,6 @@ import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
 import domain.game.Blackjack;
-import domain.game.Result;
 import domain.name.Names;
 import domain.user.Player;
 import domain.user.Users;
@@ -98,6 +97,6 @@ public class BlackJackController {
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCardNames(), blackJack.getPlayerToScore());
         Map<String, Money> winningMoneyOfPlayers = blackJack.calculateWinningMoneyOfPlayers();
         Money winningMoneyOfDealer = blackJack.calculateWinningMoneyOfDealer(winningMoneyOfPlayers);
-        //OutputView.printWinningMoneyOfPlayers(winningMoneyOfDealer, winningMoneyOfPlayers);
+        OutputView.printWinningMoneyOfPlayers(winningMoneyOfDealer, winningMoneyOfPlayers);
     }
 }

@@ -38,9 +38,9 @@ public class Exchanger {
         return 0;
     }
 
-    public Money getDealerWinningMoney(List<Money> winningMoneyOfPlayers){
+    public Money getDealerWinningMoney(List<Money> winningMoneyOfPlayers) {
         int dealerWinningMoney = 0;
-        for(Money winningMoneyOfPlayer : winningMoneyOfPlayers){
+        for (Money winningMoneyOfPlayer : winningMoneyOfPlayers) {
             dealerWinningMoney += winningMoneyOfPlayer.multiply(-1).getValue();
         }
         return new Money(dealerWinningMoney);
