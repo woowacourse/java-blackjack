@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.betting.BettingAreas;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 public class GameTable {
@@ -13,8 +14,8 @@ public class GameTable {
         this.bettingAreas = bettingAreas;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Card pickCard() {
+        return deck.getCard();
     }
 
     public BettingAreas getBettingAreas() {

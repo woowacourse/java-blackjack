@@ -59,7 +59,7 @@ public class BlackJackGameController {
     }
 
     private int requestBettingAmount(String playerName) {
-        return inputView.readBetAmount(playerName);
+        return inputView.readBettingAmount(playerName);
     }
 
     private void startGame(final BlackJackGame blackJackGame) {
@@ -91,7 +91,7 @@ public class BlackJackGameController {
     }
 
     private void playGame(final BlackJackGame blackJackGame) {
-        if (blackJackGame.getParticipants().getDealer().isBlackJack()) {
+        if (blackJackGame.isDealerBlackJack()) {
             return;
         }
         playPlayersTurn(blackJackGame);

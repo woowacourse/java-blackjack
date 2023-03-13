@@ -37,7 +37,7 @@ public class InputView {
         return input.equals(HIT_COMMAND);
     }
 
-    public int readBetAmount(String playerName) {
+    public int readBettingAmount(String playerName) {
         System.out.println(playerName + "의 배팅 금액은?");
 
         String input = scanner.nextLine();

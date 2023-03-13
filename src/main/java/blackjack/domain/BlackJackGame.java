@@ -20,12 +20,16 @@ public class BlackJackGame {
 
     public void drawInitialCards() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participants.getAllParticipants().forEach(participant -> participant.receiveCard(gameTable.getDeck().getCard()));
+            participants.getAllParticipants().forEach(participant -> participant.receiveCard(gameTable.pickCard()));
         }
     }
 
     public void drawNewCard(Participant participant) {
-        participant.receiveCard(gameTable.getDeck().getCard());
+        participant.receiveCard(gameTable.pickCard());
+    }
+
+    public boolean isDealerBlackJack(){
+        return participants.getDealer().isBlackJack();
     }
 
     public GameResult getGameResult() {
