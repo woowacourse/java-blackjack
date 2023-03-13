@@ -6,25 +6,39 @@ import java.util.List;
 public class Player {
     private final Name name;
     private final Hand hand;
+    private final Amount amount;
 
-    public Player(final String name) {
-        this.name = new Name(name);
+    public Player(final Name name, final Amount amount) {
+        this.name = name;
         this.hand = new Hand();
+        this.amount = amount;
     }
 
     public void drawCard(final Card card) {
         hand.addCard(card);
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public List<Card> cards() {
+        return hand.cards();
     }
 
     public Name getName() {
         return name;
     }
 
-    public int getScore() {
+    public String name() {
+        return name.getValue();
+    }
+
+    public int score() {
         return hand.score();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public int amount() {
+        return amount.getAmount();
     }
 }

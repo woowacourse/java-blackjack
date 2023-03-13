@@ -14,31 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class HandTest {
-    @DisplayName("카드가 패에 처음 추가되면 패의 크기가 1이다.")
-    @Test
-    void addCardTest() {
-        Hand hand = new Hand();
-        final Card card = new Card(Suit.DIAMOND, Rank.ACE);
-
-        assertEquals(0, hand.getCards().size());
-        hand.addCard(card);
-        assertEquals(1, hand.getCards().size());
-    }
-
-    @DisplayName("21에 가장 가까운 점수를 반환한다.")
-    @ParameterizedTest
-    @MethodSource("calculateScoreTestProvider")
-    void calculateScoreTest(final Card firstCard, final Card secondCard, final Card thirdCard,
-                            final int expectedScore) {
-
-        Hand hand = new Hand();
-        hand.addCard(firstCard);
-        hand.addCard(secondCard);
-        hand.addCard(thirdCard);
-
-        assertEquals(expectedScore, hand.score());
-    }
-
     private static Stream<Arguments> calculateScoreTestProvider() {
         return Stream.of(
                 Arguments.of(
@@ -66,5 +41,36 @@ public class HandTest {
                         30
                 )
         );
+    }
+
+    @DisplayName("카드가 패에 처음 추가되면 패의 크기가 1이다.")
+    @Test
+    void addCardTest() {
+        // given
+        final Hand hand = new Hand();
+        final Card card = new Card(Suit.DIAMOND, Rank.ACE);
+
+        //when
+        hand.addCard(card);
+
+        // then
+        assertEquals(1, hand.cards().size());
+    }
+
+    @DisplayName("21에 가장 가까운 점수를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("calculateScoreTestProvider")
+    void calculateScoreTest(final Card firstCard, final Card secondCard, final Card thirdCard,
+                            final int expectedScore) {
+        // given
+        final Hand hand = new Hand();
+
+        // when
+        hand.addCard(firstCard);
+        hand.addCard(secondCard);
+        hand.addCard(thirdCard);
+
+        // then
+        assertEquals(expectedScore, hand.score());
     }
 }

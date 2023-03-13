@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    public static final int UPPER_BOUND = 11;
-    public static final int ACE_RANK_DIFFERENCE = 10;
+    public static final int ABLE_ACE_ADDITIONAL_SCORE_UPPERBOUND = 11;
+    public static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -19,25 +21,32 @@ public class Hand {
         cards.add(card);
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getRank().equals(Rank.ACE.getRank()));
-    }
-
-    public List<Card> getCards() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 
     public int score() {
-        int sum = 0;
+        int score = 0;
 
         for (Card card : cards) {
-            sum += card.getScore();
+            score += card.getScore();
         }
-        if (hasAce() && sum <= UPPER_BOUND) {
-            sum += ACE_RANK_DIFFERENCE;
+        if (isAbleAddAceAdditionalScore(score)) {
+            score += ACE_ADDITIONAL_SCORE;
         }
 
-        return sum;
+        return score;
+    }
+
+    private boolean isAbleAddAceAdditionalScore(final int score) {
+        return hasAce() && score <= ABLE_ACE_ADDITIONAL_SCORE_UPPERBOUND;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(card -> card.getRank().equals(Rank.ACE));
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARDS_SIZE && score() == BLACKJACK_NUMBER;
     }
 }

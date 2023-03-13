@@ -2,126 +2,93 @@ package domain.game;
 
 import domain.deck.Card;
 import domain.deck.Deck;
+import domain.player.Amount;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
 import domain.player.Players;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-    private static final String DEALER_NAME = "딜러";
-    private static final int BLACK_JACK_NUMBER = 21;
+    private static final int DEFAULT_DEALER_PROFIT = 0;
 
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Deck deck, final List<String> playerNames) {
+    public BlackJackGame(final Deck deck, final List<Name> names, final List<Amount> amounts) {
         this.deck = deck;
         this.dealer = new Dealer();
-        this.players = new Players(playerNames);
+        this.players = new Players(names, amounts);
         distributeTwoCards();
+    }
+
+    private static int calculateProfit(final Outcome outcome, final int amount) {
+        if (outcome == Outcome.BLACKJACK) {
+            return (int) (amount * Outcome.BLACKJACK.profitRate());
+        }
+        if (outcome == Outcome.WIN) {
+            return (int) (amount * Outcome.WIN.profitRate());
+        }
+        if (outcome == Outcome.LOSE) {
+            return (int) (amount * Outcome.LOSE.profitRate());
+        }
+        return (int) (amount * Outcome.DRAW.profitRate());
     }
 
     private void distributeTwoCards() {
         dealer.drawCard(deck.popCard());
         dealer.drawCard(deck.popCard());
 
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             player.drawCard(deck.popCard());
             player.drawCard(deck.popCard());
         }
     }
 
-    public void drawCard(final String playerName) {
-        if (isDealer(playerName)) {
-            dealer.drawCard(deck.popCard());
-        }
-        players.getPlayer(playerName)
-                .drawCard(deck.popCard());
+    public void drawCardDealer() {
+        dealer.drawCard(deck.popCard());
+    }
+
+    public void drawCardPlayer(final Name name) {
+        players.drawCardPlayer(name, deck.popCard());
     }
 
     public boolean isDealerDraw() {
         return dealer.isDealerDraw();
     }
 
-    public Map<Name, Outcome> decidePlayersOutcome() {
-        Map<Name, Outcome> result = new LinkedHashMap<>();
-
-        players.getPlayers()
-                .forEach(player ->
-                        result.put(player.getName(), decideOutcome(dealer.getScore(), player.getScore()))
-                );
-
-        return result;
+    public List<Card> getPlayerCards(final Name name) {
+        return players.getPlayerCards(name);
     }
 
-    private Outcome decideOutcome(final int dealerScore, final int playerScore) {
-        if (isPlayerWin(dealerScore, playerScore)) {
-            return Outcome.WIN;
-        }
-        if (isPlayerDraw(dealerScore, playerScore)) {
-            return Outcome.DRAW;
-        }
-        return Outcome.LOSE;
+    public List<Card> getDealerCards() {
+        return dealer.cards();
     }
 
-    private boolean isPlayerWin(final int dealerScore, final int playerScore) {
-        if (isBurst(dealerScore) && !isBurst(playerScore)) {
-            return true;
-        }
-        return !isBurst(playerScore) && playerScore > dealerScore;
+    public int getPlayerScore(final Name name) {
+        return players.getPlayerScore(name);
     }
 
-    private boolean isPlayerDraw(final int dealerScore, final int playerScore) {
-        if (isBurst(dealerScore) && isBurst(playerScore)) {
-            return true;
-        }
-        return dealerScore == playerScore;
+    public int getDealerScore() {
+        return dealer.score();
     }
 
-    private boolean isBurst(int score) {
-        return score > BLACK_JACK_NUMBER;
-    }
+    public Map<Name, Integer> calculateProfits() {
 
-    public List<Card> getCards(final String playerName) {
-        if (isDealer(playerName)) {
-            return dealer.getCards();
-        }
-        return players.getPlayer(playerName).getCards();
-    }
+        final Outcomes outcomes = players.judgePlayersOutcome(dealer);
+        final Map<Name, Integer> profits = new LinkedHashMap<>();
+        final Name dealerName = dealer.getName();
 
-    private boolean isDealer(final String name) {
-        return name.equals(DEALER_NAME);
-    }
-
-    public int getScore(final String playerName) {
-        if (isDealer(playerName)) {
-            return dealer.getScore();
-        }
-        return players.getPlayer(playerName).getScore();
-    }
-
-    public EnumMap<Outcome, Integer> calculateDealerResult() {
-        Map<Name, Outcome> result = decidePlayersOutcome();
-        EnumMap<Outcome, Integer> dealerResult = initializeDealerResult();
-        for (Name key : result.keySet()) {
-            final Outcome outcome = result.get(key);
-            dealerResult.put(outcome, dealerResult.get(outcome) + 1);
-        }
-        return dealerResult;
-    }
-
-    private static EnumMap<Outcome, Integer> initializeDealerResult() {
-        EnumMap<Outcome, Integer> enumMap = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            enumMap.put(outcome, 0);
+        profits.put(dealerName, DEFAULT_DEALER_PROFIT);
+        for (final Player player : players.getPlayers()) {
+            final int profit = calculateProfit(outcomes.getOutcome(player.getName()), player.amount());
+            profits.put(dealerName, profits.get(dealerName) - profit);
+            profits.put(player.getName(), profit);
         }
 
-        return enumMap;
+        return profits;
     }
 }

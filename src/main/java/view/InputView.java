@@ -1,5 +1,7 @@
 package view;
 
+import domain.player.Amount;
+import domain.player.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,14 +17,17 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> readNames() {
+    public static List<Name> readNames() {
         final String input = scanner.nextLine();
         final List<String> names = splitAsList(input);
 
         if (names.size() == 0) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 수는 1명이상 이어야합니다.");
         }
-        return names;
+
+        return names.stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     private static List<String> splitAsList(final String input) {
@@ -40,5 +45,9 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
+    }
+
+    public static Amount readBatting() {
+        return new Amount(Integer.parseInt(scanner.nextLine()));
     }
 }
