@@ -1,6 +1,7 @@
 package domain.blackjack.gamestate;
 
 import domain.blackjack.BlackjackScore;
+import domain.card.Card;
 import domain.card.Cards;
 
 public class Start extends GameState {
@@ -25,8 +26,9 @@ public class Start extends GameState {
     }
 
     @Override
-    public GameState drawCard() {
-        return null;
+    public GameState receive(Card card) {
+        cards.add(card);
+        return new Start(cards);
     }
 
     @Override

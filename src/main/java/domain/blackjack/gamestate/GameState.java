@@ -1,5 +1,6 @@
 package domain.blackjack.gamestate;
 
+import domain.card.Card;
 import domain.card.Cards;
 
 public abstract class GameState {
@@ -9,7 +10,7 @@ public abstract class GameState {
         this.cards = cards;
     }
 
-    public abstract GameState drawCard();
+    public abstract GameState receive(Card card);
 
     public abstract boolean isAbleToReceiveCard();
 
