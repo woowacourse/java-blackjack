@@ -59,7 +59,7 @@ public class BlackJackGame {
         setUpResult.put(new NameDto(dealer.getName()), List.of(dealer.getFirstCard()));
 
         for (Player player : players.getPlayers()) {
-            setUpResult.put(new NameDto(player.getName()), player.cards());
+            setUpResult.put(new NameDto(player.getName()), player.getCards());
         }
 
         return setUpResult;
@@ -85,7 +85,7 @@ public class BlackJackGame {
     }
 
     public boolean isDealerDrawExtraCount() {
-        return dealer.cards().size() > INITIAL_CARD_COUNT;
+        return dealer.getCards().size() > INITIAL_CARD_COUNT;
     }
 
     public int getDealerExtraDrawCount() {

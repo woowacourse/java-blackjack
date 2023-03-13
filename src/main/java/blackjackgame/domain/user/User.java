@@ -28,11 +28,7 @@ public abstract class User {
         return score.isLessThanBustScore();
     }
 
-    public boolean isBust() {
-        return score.isGreaterThanBustScore();
-    }
-
-    public List<Card> cards() {
+    public List<Card> getCards() {
         return hands.getCards();
     }
 

@@ -22,13 +22,13 @@ class PlayerTest {
     @DisplayName("생성 직후엔 빈 카드패를 가지고 있다.")
     @Test
     void generatePlayerTest_noCard() {
-        assertThat(player.cards()).isEmpty();
+        assertThat(player.getCards()).isEmpty();
     }
 
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
     @Test
     void receiveCardTest() {
-        List<Card> cards = player.cards();
+        List<Card> cards = player.getCards();
         int initialPlayerCardsSize = cards.size();
 
         player.receiveCard(CloverCard.CLOVER_FOUR);

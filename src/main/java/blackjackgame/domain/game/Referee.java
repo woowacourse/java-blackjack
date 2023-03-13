@@ -44,7 +44,7 @@ public class Referee {
     }
 
     private boolean isBlackJack(User user) {
-        return user.cards().size() == 2 && user.getScore() == 21;
+        return user.getCards().size() == 2 && user.getScore() == 21;
     }
 
     private boolean isPlayerWin(Player player) {

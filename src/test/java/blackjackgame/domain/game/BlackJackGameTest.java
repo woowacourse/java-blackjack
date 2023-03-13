@@ -44,22 +44,22 @@ class BlackJackGameTest {
     @DisplayName("블랙잭 게임 생성 당시 플레이어와 딜러는 카드를 가지고 있지 않다.")
     @Test
     void defaultCardTest() {
-        assertThat(player.cards().size()).isEqualTo(0);
-        assertThat(dealer.cards().size()).isEqualTo(0);
+        assertThat(player.getCards().size()).isEqualTo(0);
+        assertThat(dealer.getCards().size()).isEqualTo(0);
     }
 
     @DisplayName("플레이어와 딜러의 기본 카드 2장을 뽑는다.")
     @Test
     void drawDefaultCardTest() {
-        int dealerInitialCardsSize = dealer.cards().size();
-        int playerInitialCardsSize = player.cards().size();
+        int dealerInitialCardsSize = dealer.getCards().size();
+        int playerInitialCardsSize = player.getCards().size();
 
         blackJackGame.drawDefaultCard();
 
-        assertThat(dealer.cards().size()).isEqualTo(dealerInitialCardsSize + 2);
-        assertThat(player.cards().size()).isEqualTo(playerInitialCardsSize + 2);
-        assertThat(dealer.cards()).isEqualTo(List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK));
-        assertThat(player.cards()).isEqualTo(List.of(SpadeCard.SPADE_FIVE, DiamondCard.DIAMOND_SEVEN));
+        assertThat(dealer.getCards().size()).isEqualTo(dealerInitialCardsSize + 2);
+        assertThat(player.getCards().size()).isEqualTo(playerInitialCardsSize + 2);
+        assertThat(dealer.getCards()).isEqualTo(List.of(CloverCard.CLOVER_FIVE, HeartCard.HEART_JACK));
+        assertThat(player.getCards()).isEqualTo(List.of(SpadeCard.SPADE_FIVE, DiamondCard.DIAMOND_SEVEN));
     }
 
     @DisplayName("딜러는 합산 점수가 17 이상이 될 때까지 카드를 뽑는다")
@@ -69,7 +69,7 @@ class BlackJackGameTest {
 
         blackJackGame.hitUntilSatisfyingDealerMinimumScore();
 
-        assertThat(dealer.cards()).isEqualTo(expectedCards);
+        assertThat(dealer.getCards()).isEqualTo(expectedCards);
     }
 
     @DisplayName("딜러가 기본 카드 2장 외에 카드를 추가로 뽑았다면, true를 반환한다.")
@@ -94,22 +94,22 @@ class BlackJackGameTest {
     @Test
     void takeUserAction_hit() {
         blackJackGame.drawDefaultCard();
-        int defaultSize = player.cards().size();
+        int defaultSize = player.getCards().size();
 
         blackJackGame.takePlayerAction(player, UserAction.HIT);
 
-        assertThat(player.cards().size()).isEqualTo(defaultSize + 1);
+        assertThat(player.getCards().size()).isEqualTo(defaultSize + 1);
     }
 
     @DisplayName("플레이어가 STAY를 선택했을 경우, 카드를 뽑지 않고 플레이어의 상태를 드로우 종료 상태로 변경한다.")
     @Test
     void takeUserAction_stay() {
         blackJackGame.drawDefaultCard();
-        int defaultSize = player.cards().size();
+        int defaultSize = player.getCards().size();
 
         blackJackGame.takePlayerAction(player, UserAction.STAY);
 
-        assertThat(player.cards().size()).isEqualTo(defaultSize);
+        assertThat(player.getCards().size()).isEqualTo(defaultSize);
         assertThat(player.getStatus()).isSameAs(PlayerStatus.DRAW_FINISHED);
     }
 
