@@ -27,7 +27,7 @@ public class Player {
     }
 
     public boolean isDrawable() {
-        return !isBusted();
+        return !isBusted() && !isBlackjack();
     }
 
     public boolean isBlackjack() {
@@ -50,13 +50,17 @@ public class Player {
         return cardPocket.getPossessedCards();
     }
 
+    public boolean hasName(final String playerName) {
+        return user.getName()
+                .equals(playerName);
+    }
+
     public String getName() {
         return user.getName();
     }
 
-    public boolean hasName(final String playerName) {
-        return user.getName()
-                .equals(playerName);
+    public Money getBettingMoney() {
+        return bettingMoney;
     }
 
 }

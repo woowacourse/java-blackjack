@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.ResultType;
+import blackjack.domain.participants.Money;
 
 import java.util.List;
 import java.util.Map;
@@ -9,20 +10,16 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다.";
-    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DELIMITER_BETWEEN_CARDS = ", ";
     private static final String DELIMITER = ": ";
     private static final String DEALER = "딜러";
     private static final String CARD = "카드";
     private static final String RESULT = " - 결과: ";
+    private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다.";
+    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + DEALER + "는 %d이하라 한장의 카드를 더 받았습니다.";
 
-    /**
-     * 질문: outputView의 메서드들이 인자로 넘겨받는 Map이 LinkedHashMap이라
-     * 플레이어의 순서가 보장되지만, outview입장에서는 플레이어 출력 순서가 보장되는지 알 수 없음
-     * 이대로 두는 것이 나은지?
-     * 이러한 경우 List<PlayerNames>를 따로 인자로 전달해, 출력 순서를 보장해야하는지 궁금합니다.
-     */
+    private static final String FINAL_RESULT = System.lineSeparator() + "## 최종 수익";
+
     public void printInitialCards(final Card dealerCard, final Map<String, List<Card>> playerNameToCards) {
         printInitialDistributionMessage(playerNameToCards);
         printInitialDealerCard(dealerCard);
@@ -65,7 +62,7 @@ public class OutputView {
     }
 
     public void printDealerCardDrawMessage(final int dealerDrawPoint) {
-        System.out.printf(OUTPUT_DEALER_STATUS_MESSAGE + System.lineSeparator(), DEALER, dealerDrawPoint);
+        System.out.printf(OUTPUT_DEALER_STATUS_MESSAGE + System.lineSeparator(), dealerDrawPoint);
     }
 
     public void printFinalStatusOfDealer(final List<Card> dealerCards, final int dealerScore) {
@@ -107,6 +104,12 @@ public class OutputView {
     private void printPlayerResult(final String name, final ResultType resultType) {
         System.out.println(name + DELIMITER + OutputViewResultType.from(resultType)
                 .getPrintResultType());
+    }
+
+    public void printProfitOfGameParticipants(final Money revenueOfDealer, final Map<String, Money> revenueOfPlayers) {
+        System.out.println(FINAL_RESULT);
+        System.out.println(DEALER + DELIMITER + (int) revenueOfDealer.getAmount());
+        revenueOfPlayers.forEach((name, money) -> System.out.println(name + DELIMITER + (int) money.getAmount()));
     }
 
     public void printError(final Exception exception) {

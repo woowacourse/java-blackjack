@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
+import blackjack.domain.game.ProfitReferee;
 import blackjack.domain.game.Score;
 
 import java.util.LinkedHashMap;
@@ -124,4 +125,16 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
                 .currentScore();
     }
+
+    public Map<String, Money> findRevenueOfPlayers(final ProfitReferee profitReferee) {
+        final Map<String, Money> result = new LinkedHashMap<>();
+        for (final Player player : players) {
+            final double profit = profitReferee.profit(player);
+            final Money earnings = player.getBettingMoney()
+                    .multiple(profit);
+            result.put(player.getName(), earnings);
+        }
+        return result;
+    }
+
 }

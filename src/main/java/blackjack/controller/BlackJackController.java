@@ -9,6 +9,7 @@ import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class BlackJackController {
@@ -88,6 +89,7 @@ public class BlackJackController {
 
     private void printResult(final BlackjackGame blackjackGame) {
         printFinalStatusOfParticipants(blackjackGame);
+        getPrintProfitOfGameParticipants(blackjackGame);
     }
 
     private void printFinalStatusOfParticipants(final BlackjackGame blackjackGame) {
@@ -102,5 +104,10 @@ public class BlackJackController {
         }
     }
 
+    private void getPrintProfitOfGameParticipants(final BlackjackGame blackjackGame) {
+        final Map<String, Money> revenueOfPlayers = blackjackGame.findRevenueOfPlayers();
+        final Money revenueOfDealer = blackjackGame.findRevenueOfDealer();
+        outputView.printProfitOfGameParticipants(revenueOfDealer, revenueOfPlayers);
+    }
 
 }

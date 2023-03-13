@@ -86,4 +86,16 @@ public class BlackjackGame {
         return players.findScoreOfPlayerByName(playerName);
     }
 
+    public Map<String, Money> findRevenueOfPlayers() {
+        return players.findRevenueOfPlayers(new ProfitReferee(dealer));
+    }
+
+    public Money findRevenueOfDealer() {
+        final Map<String, Money> revenueOfPlayers = findRevenueOfPlayers();
+        final Money sumOfPlayerRevenue = revenueOfPlayers.values()
+                .stream()
+                .reduce(new Money(), Money::add);
+        return sumOfPlayerRevenue.multiple(-1);
+    }
+
 }
