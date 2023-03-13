@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Score;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public abstract class Participant {
         cardPocket.addCard(card);
     }
 
-    public int currentScore() {
+    public Score currentScore() {
         return cardPocket.getScore();
     }
 

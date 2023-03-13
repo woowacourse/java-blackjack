@@ -21,4 +21,5 @@ public class Player extends Participant {
         return name.getName()
                 .equals(playerName);
     }
+
 }

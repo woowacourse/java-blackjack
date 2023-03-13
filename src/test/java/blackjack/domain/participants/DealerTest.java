@@ -61,7 +61,7 @@ class DealerTest {
 
         @Test
         void 딜러가_이긴_횟수는_2이다() {
-            final int winCount = dealer.calculateResult(playerResult)
+            final int winCount = Dealer.calculateResult(playerResult)
                     .getOrDefault(ResultType.WIN, 0);
 
             assertThat(winCount)
@@ -70,7 +70,7 @@ class DealerTest {
 
         @Test
         void 딜러가_비긴_횟수는_0이다() {
-            final int winCount = dealer.calculateResult(playerResult)
+            final int winCount = Dealer.calculateResult(playerResult)
                     .getOrDefault(ResultType.TIE, 0);
 
             assertThat(winCount)
@@ -79,7 +79,7 @@ class DealerTest {
 
         @Test
         void 딜러가_진_횟수는_1이다() {
-            final int winCount = dealer.calculateResult(playerResult)
+            final int winCount = Dealer.calculateResult(playerResult)
                     .getOrDefault(ResultType.LOSE, 0);
 
             assertThat(winCount)

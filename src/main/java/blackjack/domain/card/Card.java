@@ -21,4 +21,8 @@ public class Card {
         return shape;
     }
 
+    public int getScore() {
+        return symbol.getScore();
+    }
+
 }

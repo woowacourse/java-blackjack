@@ -80,7 +80,8 @@ public class BlackJackController {
     }
 
     private void printFinalStatusOfParticipants(final BlackJackGame blackJackGame) {
-        outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore());
+        outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore()
+                .getValue());
         outputView.printFinalStatusOfPlayers(blackJackGame.findPlayerStatusByName());
     }
 

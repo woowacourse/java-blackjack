@@ -38,7 +38,8 @@ public class GameReferee {
         if (player.isBusted()) {
             return false;
         }
-        return player.currentScore() > dealer.currentScore();
+        return player.currentScore()
+                .isBiggerThan(dealer.currentScore());
     }
 
 }

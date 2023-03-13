@@ -2,15 +2,13 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
+import blackjack.domain.game.Score;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class CardPocket {
-
-    private static final int BLACKJACK = 21;
-    private static final int BIGGER_VALUE_OF_ACE = 10;
     private final List<Card> possessedCards;
 
     public CardPocket() {
@@ -21,38 +19,34 @@ public class CardPocket {
         possessedCards.add(card);
     }
 
-    public int getScore() {
+    public Score getScore() {
         final int countOfAce = countAce();
-        int scoreOfCards = calculateMinimumScore();
+        Score scoreOfCards = calculateMinimumScore();
 
         for (int i = 0; i < countOfAce; i++) {
-            scoreOfCards = calculateMaximumScore(scoreOfCards);
+            scoreOfCards = scoreOfCards.plusTenIfNotBusted();
         }
         return scoreOfCards;
     }
 
     private int countAce() {
         return (int) possessedCards.stream()
-                .filter(card -> card.getSymbol() == Symbol.ACE)
+                .filter(this::isAce)
                 .count();
     }
 
-    private int calculateMinimumScore() {
-        return possessedCards.stream()
-                .mapToInt(card -> card.getSymbol()
-                        .getScore())
-                .sum();
+    private boolean isAce(final Card card) {
+        return card.getSymbol() == Symbol.ACE;
     }
 
-    private int calculateMaximumScore(final int score) {
-        if (score + BIGGER_VALUE_OF_ACE > BLACKJACK) {
-            return score;
-        }
-        return score + BIGGER_VALUE_OF_ACE;
+    private Score calculateMinimumScore() {
+        return new Score(possessedCards.stream()
+                .mapToInt(Card::getScore)
+                .sum());
     }
 
     public boolean isBusted() {
-        return getScore() > BLACKJACK;
+        return getScore().isOverBlackjack();
     }
 
     @Override
