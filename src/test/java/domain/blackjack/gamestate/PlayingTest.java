@@ -3,6 +3,7 @@ package domain.blackjack.gamestate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjack.BlackjackScore;
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.TrumpCardNumber;
@@ -61,7 +62,7 @@ class PlayingTest {
         assertThat(stateCards.getCards()).hasSize(3);
     }
 
-    @DisplayName("게임 시작 후 추가로 받은 카드의 합이 21을 넘으면 버스타 상태가 된다.")
+    @DisplayName("게임 시작 후 추가로 받은 카드의 합이 21을 넘으면 버스트 상태가 된다.")
     @Test
     void createBustFromStartSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
@@ -73,5 +74,36 @@ class PlayingTest {
 
         assertThat(gameState).isInstanceOf(Bust.class);
         assertThat(gameState).isNotInstanceOf(Playing.class);
+    }
+
+    @DisplayName("플레이 상태는 블랙잭 상태와 비교하면 항상 진다.")
+    @Test
+    void competeToOtherStateWithBlackjack() {
+        Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
+        GameState playingState = Playing.from(cards);
+
+        GameState blackjackState = Playing.from(Cards.of(
+                new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE),
+                new Card(TrumpCardType.HEART, TrumpCardNumber.TEN))
+        );
+
+        assertThat(blackjackState).isInstanceOf(Blackjack.class);
+        assertThat(playingState.competeToOtherState(blackjackState)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이 상태는 버스트 상태와 비교하면 항상 이긴다.")
+    @Test
+    void competeToOtherStateWithBust() {
+        Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
+        GameState playingState = Playing.from(cards);
+
+        GameState bustState = Playing.from(Cards.of(
+                new Card(TrumpCardType.HEART, TrumpCardNumber.NINE),
+                new Card(TrumpCardType.HEART, TrumpCardNumber.TEN))
+        );
+        bustState = bustState.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.EIGHT));
+
+        assertThat(bustState).isInstanceOf(Bust.class);
+        assertThat(playingState.competeToOtherState(bustState)).isEqualTo(Result.WIN);
     }
 }
