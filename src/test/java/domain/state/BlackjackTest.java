@@ -39,7 +39,8 @@ class BlackjackTest {
     @DisplayName("상태가 Blackjack일 때, 결과 값은 BLACKJACK으로 계산된다.")
     @Test
     void calculateResultTest() {
-        State dealerState = new Blackjack(hand);
+        Hand dealerHand = new Hand(new ArrayList<>(List.of(new Card(Value.KING, Shape.SPADE))));
+        State dealerState = new Hit(dealerHand);
         assertThat(blackjack.calculateResult(dealerState)).isEqualTo(Result.BLACKJACK);
     }
 

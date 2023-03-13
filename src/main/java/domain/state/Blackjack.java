@@ -20,6 +20,9 @@ public class Blackjack extends Finished {
 
     @Override
     public Result calculateResult(final State dealerState) {
+        if (dealerState.isBlackJack()) {
+            return Result.TIE;
+        }
         return Result.BLACKJACK;
     }
 }
