@@ -14,12 +14,17 @@ public class Dealer extends Participant {
     }
 
     public Result competeWithPlayer(Player player) {
-        if (player.isBusted()) {
-            return Result.WIN;
+        Result result = gameState.competeToOtherState(player.gameState);
+        if (result == Result.DRAW) {
+            result = competeByScore(player);
         }
 
-        if (this.isBusted()) {
-            return Result.LOSE;
+        return result;
+    }
+
+    private Result competeByScore(Player player) {
+        if (player.isBusted()) {
+            return Result.WIN;
         }
 
         BlackjackScore blackjackScore = this.calculateBlackjackScore();
