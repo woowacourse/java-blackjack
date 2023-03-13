@@ -7,7 +7,14 @@ public class Score {
     private final int value;
 
     private Score(int value) {
+        validate(value);
         this.value = value;
+    }
+
+    private void validate(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("점수는 음수가 될 수 없습니다");
+        }
     }
 
     public static Score of(int value) {
