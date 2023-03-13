@@ -19,7 +19,8 @@ public class BlackJackGame {
     private final Deck deck;
     private final BettingManager bettingManager;
 
-    public BlackJackGame(final Participants participants, final Deck deck, final BettingManager bettingManager, final int drawCount) {
+    public BlackJackGame(final Participants participants, final Deck deck, final BettingManager bettingManager,
+                         final int drawCount) {
         this.participants = participants;
         this.deck = deck;
         this.bettingManager = bettingManager;
@@ -29,6 +30,13 @@ public class BlackJackGame {
     private void initGame(final int drawCount) {
         deck.shuffle();
         participants.drawCard(deck, drawCount);
+        checkingDealerBlackJack();
+    }
+
+    private void checkingDealerBlackJack() {
+        if (dealer().isBlackJack()) {
+            players().forEach(Player::changeDrawable);
+        }
     }
 
     public void drawOrNot(final boolean wantMoreDraw, final Participant participant) {
@@ -55,17 +63,24 @@ public class BlackJackGame {
         int dealerProfit = 0;
         for (final Player player : players()) {
             final Betting playerBetting = bettingManager.findBettingByName(player.getName());
-            final Result dealerResult = dealer().compareScoreTo(player);
-            dealerProfit += dealerResult.calculateProfit(playerBetting.getAmount());
+            final Result playerResult = getResult(player);
+            dealerProfit -= playerResult.calculateProfit(playerBetting.getAmount());
         }
         return dealerProfit;
+    }
+
+    private Result getResult(final Player player) {
+        if (player.isBlackJack()) {
+            return Result.BLACKJACK;
+        }
+        return dealer().compareScoreTo(player).reverseResult();
     }
 
     public Map<Player, Integer> getPlayerProfits() {
         Map<Player, Integer> playerProfits = new HashMap<>();
         for (final Player player : players()) {
             final Betting playerBetting = bettingManager.findBettingByName(player.getName());
-            final Result playerResult = dealer().compareScoreTo(player).reverseResult();
+            final Result playerResult = getResult(player);
             playerProfits.put(player, playerResult.calculateProfit(playerBetting.getAmount()));
         }
         return playerProfits;
