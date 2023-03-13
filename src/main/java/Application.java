@@ -6,6 +6,7 @@ import domain.user.Player;
 import domain.user.Users;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -92,12 +93,9 @@ public class Application {
 
     private static void printFinalProfit(Users users) {
         outputView.printResultNotice();
-        outputView.printDealerResults(users.getDealerProfit());
+        Map<String, Money> profits = users.getPlayersProfits(users);
 
-        for (Player player : users.players()) {
-            String name = player.getName();
-            Money money = users.calculateProfit(player);
-            outputView.printResult(name, money);
-        }
+        outputView.printDealerResults(users.getDealerProfit(profits));
+        outputView.printPlayersResult(profits);
     }
 }

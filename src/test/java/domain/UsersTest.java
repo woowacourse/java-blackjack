@@ -8,6 +8,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,9 @@ class UsersTest {
         addCards(users.players().get(1), "10", "5");
         addCards(users.dealer(), "10", "7");
 
-        assertThat(users.getDealerProfit())
+        Map<String, Money> profits = users.getPlayersProfits(users);
+
+        assertThat(users.getDealerProfit(profits))
                 .isEqualTo(new Money((int) (-1_000 * 1.5) + 2_000));
     }
 }
