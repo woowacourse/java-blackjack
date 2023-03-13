@@ -6,9 +6,6 @@ public class InputPlayerDTO {
 
     public InputPlayerDTO(String name, int bettingAmount) {
         this.name = name;
-        if (bettingAmount < 0) {
-            throw new IllegalArgumentException("베팅 금액은 음수가 될 수 없습니다.");
-        }
         this.bettingAmount = bettingAmount;
     }
 
