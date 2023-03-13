@@ -1,13 +1,13 @@
-package domain;
+package domain.game;
 
 import domain.money.BettingMoneyTable;
 import domain.money.Money;
 import domain.card.Hand;
-import domain.game.Referee;
-import domain.game.Result;
 import domain.user.Dealer;
 import domain.user.Player;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Exchanger {
     private final BettingMoneyTable bettingMoneyTable;
@@ -17,10 +17,19 @@ public class Exchanger {
         this.bettingMoneyTable = bettingMoneyTable;
     }
 
-    public Money getPlayerWinningMoney(Player player, Dealer dealer) {
+    public Map<String, Money> getWinningMoneyOfPlayers(List<Player> players, Dealer dealer){
+        Map<String, Money> winningMoneyOfPlayers = new HashMap<>();
+        for (Player player : players) {
+            Money winningMoney = getWinningMoneyOfPlayer(player, dealer);
+            winningMoneyOfPlayers.put(player.getName(), winningMoney);
+        }
+        return winningMoneyOfPlayers;
+    }
+
+    public Money getWinningMoneyOfPlayer(Player player, Dealer dealer) {
         Hand playerHand = player.getHand();
         Hand dealerHand = dealer.getHand();
-        Result result = Referee.judgePlayerResult(playerHand, dealerHand);
+        Result result = referee.judgePlayerResult(playerHand, dealerHand);
         Money bettingMoney = bettingMoneyTable.findByPlayer(player);
         return bettingMoney.multiply(getExchangeRate(playerHand, result));
     }
@@ -38,7 +47,7 @@ public class Exchanger {
         return 0;
     }
 
-    public Money getDealerWinningMoney(List<Money> winningMoneyOfPlayers) {
+    public Money getWinningMoneyOfDealer(List<Money> winningMoneyOfPlayers) {
         int dealerWinningMoney = 0;
         for (Money winningMoneyOfPlayer : winningMoneyOfPlayers) {
             dealerWinningMoney += winningMoneyOfPlayer.multiply(-1).getValue();

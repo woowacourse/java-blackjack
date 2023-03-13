@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.Exchanger;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.deck.Deck;
@@ -101,17 +100,11 @@ public class Blackjack {
     }
 
     public Map<String, Money> calculateWinningMoneyOfPlayers() {
-        Map<String, Money> winningMoneyOfPlayers = new HashMap<>();
-        Dealer dealer = users.getDealer();
-        for (Player player : users.getPlayers()) {
-            Money winningMoney = exchanger.getPlayerWinningMoney(player, dealer);
-            winningMoneyOfPlayers.put(player.getName(), winningMoney);
-        }
-        return winningMoneyOfPlayers;
+        return exchanger.getWinningMoneyOfPlayers(users.getPlayers(), users.getDealer());
     }
 
     public Money calculateWinningMoneyOfDealer(Map<String, Money> winningMoneyOfPlayers) {
         List<Money> playerMonies = winningMoneyOfPlayers.values().stream().collect(Collectors.toList());
-        return exchanger.getDealerWinningMoney(playerMonies);
+        return exchanger.getWinningMoneyOfDealer(playerMonies);
     }
 }
