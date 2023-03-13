@@ -20,6 +20,18 @@ public class Stand extends Finished {
 
     @Override
     public Result calculateResult(State dealerState) {
-        return null;
+        return compareScore(dealerState);
+    }
+
+    private Result compareScore(final State dealerState) {
+        int playerScore = this.calculateScore().getValue();
+        int dealerScore = dealerState.calculateScore().getValue();
+        if (playerScore > dealerScore) {
+            return Result.WIN;
+        }
+        if (playerScore < dealerScore) {
+            return Result.LOSE;
+        }
+        return Result.TIE;
     }
 }

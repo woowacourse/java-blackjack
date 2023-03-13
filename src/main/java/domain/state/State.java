@@ -12,4 +12,6 @@ public interface State {
     boolean isBlackJack();
 
     Result calculateResult(final State dealerState);
+
+    Score calculateScore();
 }

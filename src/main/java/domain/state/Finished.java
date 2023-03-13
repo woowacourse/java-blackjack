@@ -14,4 +14,9 @@ public abstract class Finished implements State {
     public State drawCard(Card card) {
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public Score calculateScore() {
+        return hand.calculateScore();
+    }
 }

@@ -16,4 +16,9 @@ public abstract class Running implements State {
     public boolean isBlackJack() {
         return false;
     }
+
+    @Override
+    public Score calculateScore() {
+        return hand.calculateScore();
+    }
 }
