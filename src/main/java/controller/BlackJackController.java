@@ -2,6 +2,7 @@ package controller;
 
 import domain.HitCommand;
 import domain.bettingMoney.BettingMoneyTable;
+import domain.bettingMoney.Money;
 import domain.bettingMoney.Monies;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
@@ -30,13 +31,6 @@ public class BlackJackController {
         }
     }
 
-    /*
-    pobi의 배팅 금액은?
-    10000
-
-    jason의 배팅 금액은?
-    20000
-     */
     private void initGame() {
         Users users = Users.from(initPlayerNames());
         BettingMoneyTable bettingMoneyTable = initBettingMoneyTable(users.getPlayers());
@@ -102,7 +96,8 @@ public class BlackJackController {
     private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCardNames(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCardNames(), blackJack.getPlayerToScore());
-        Map<String, Result> playerTotalResults = blackJack.calculateTotalPlayerResults();
-        OutputView.printGameResult(blackJack.calculateTotalDealerResult(playerTotalResults), playerTotalResults);
+        Map<String, Money> winningMoneyOfPlayers = blackJack.calculateWinningMoneyOfPlayers();
+        Money winningMoneyOfDealer = blackJack.calculateWinningMoneyOfDealer(winningMoneyOfPlayers);
+        //OutputView.printWinningMoneyOfPlayers(winningMoneyOfDealer, winningMoneyOfPlayers);
     }
 }
