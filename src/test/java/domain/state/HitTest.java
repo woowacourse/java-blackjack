@@ -1,6 +1,7 @@
 package domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Shape;
@@ -30,5 +31,16 @@ class HitTest {
         State hit = new Hit(hand);
 
         assertThat(hit.drawCard(new Card(Value.THREE, Shape.SPADE))).isInstanceOf(Bust.class);
+    }
+
+    @DisplayName("상태가 Hit일 때는 결과 값을 계산할 수 없다.")
+    @Test
+    void calculateResultTest() {
+        List<Card> initialCards = List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.KING, Shape.HEART));
+        Hand hand = new Hand(new ArrayList<>(initialCards));
+        State hit = new Hit(hand);
+
+        assertThatThrownBy(hit::calculateResult)
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }
