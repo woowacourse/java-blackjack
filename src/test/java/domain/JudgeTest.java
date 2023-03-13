@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.gamestate.GameState;
+import domain.gamestate.GameStates;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ class JudgeTest {
     void playerOver21() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.SPADE, Denomination.EIGHT))));
+            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
+                new Card(Suit.SPADE, Denomination.EIGHT))));
         Cards cards = new Cards(
             new ArrayList<>(
                 List.of(new Card(Suit.CLOVER, Denomination.J),
@@ -28,9 +31,9 @@ class JudgeTest {
         player.initCards(cards);
         //when
         player.hit(new Card(Suit.SPADE, Denomination.THREE));
-        GameResult result = Judge.of(dealer, player);
+        GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(result).isEqualTo(GameStates.LOSE);
     }
 
     @Test
@@ -46,9 +49,9 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameResult result = Judge.of(dealer, player);
+        GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(result).isEqualTo(GameStates.LOSE);
     }
 
     @Test
@@ -57,7 +60,8 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q)))));
+                List.of(new Card(Suit.CLOVER, Denomination.J),
+                    new Card(Suit.SPADE, Denomination.Q)))));
         dealer.hit(new Card(Suit.SPADE, Denomination.THREE));
 
         Cards cards = new Cards(
@@ -66,9 +70,9 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameResult result = Judge.of(dealer, player);
+        GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(result).isEqualTo(GameStates.WIN);
     }
 
     @Test
@@ -76,7 +80,8 @@ class JudgeTest {
     void playerGreaterThanDealerUnder21() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.Q))));
+            List.of(new Card(Suit.CLOVER, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.Q))));
         Cards cards = new Cards(
             new ArrayList<>(
                 List.of(new Card(Suit.CLOVER, Denomination.J),
@@ -84,9 +89,9 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameResult result = Judge.of(dealer, player);
+        GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(result).isEqualTo(GameStates.WIN);
     }
 
     @Test
@@ -94,7 +99,8 @@ class JudgeTest {
     void draw() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.Q))));
+            List.of(new Card(Suit.CLOVER, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.Q))));
         Cards cards = new Cards(
             new ArrayList<>(
                 List.of(new Card(Suit.CLOVER, Denomination.SIX),
@@ -102,8 +108,8 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameResult result = Judge.of(dealer, player);
+        GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(result).isEqualTo(GameStates.DRAW);
     }
 }

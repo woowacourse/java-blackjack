@@ -1,6 +1,5 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Dealer;
@@ -29,7 +28,7 @@ public class OutputView {
 
     private static void printHideCard(Dealer dealer) {
         Card dealerCard = dealer.getCards().get(0);
-        System.out.printf("%s: %s%n", dealer.getName(), Converter.of(dealerCard));
+        System.out.printf("%s: %s%n", dealer.getName(), CardConverter.of(dealerCard));
     }
 
     public static void printCard(Participant participant) {
@@ -40,7 +39,7 @@ public class OutputView {
         Cards cards = participant.getCards();
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         for (int i = 0; i < cards.getSize(); i++) {
-            stringJoiner.add(Converter.of(cards.get(i)));
+            stringJoiner.add(CardConverter.of(cards.get(i)));
         }
         return stringJoiner.toString();
     }
@@ -60,25 +59,17 @@ public class OutputView {
             getAllCardsNames(participant), participant.getCards().getScore());
     }
 
-    public static void printWinOrLose(DealerResult dealerResult, PlayerResults results) {
-        printDealerWinOrLose(dealerResult);
-        printPlayersWinOrLose(results);
-    }
-
-    private static void printDealerWinOrLose(DealerResult dealerResult) {
-        System.out.printf("딜러: %d%s %d%s %d%s%n",
-            dealerResult.getWin(), Converter.of(GameResult.WIN),
-            dealerResult.getLose(), Converter.of(GameResult.LOSE),
-            dealerResult.getDraw(), Converter.of(GameResult.DRAW));
-    }
-
-    private static void printPlayersWinOrLose(PlayerResults results) {
-        for (PlayerResult result : results) {
-            System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
-        }
-    }
-
     public static void printError(Exception e) {
         System.out.printf("[ERROR] %s%n", e.getMessage());
+    }
+
+    public static void printGains(Gain dealerGain, Gains playerGaines) {
+        System.out.println("\n## 최종 수익");
+        printGain(dealerGain);
+        playerGaines.forEach(OutputView::printGain);
+    }
+
+    private static void printGain(Gain gain) {
+        System.out.printf("%s: %.0f%n", gain.getName(), gain.getBetAmount());
     }
 }
