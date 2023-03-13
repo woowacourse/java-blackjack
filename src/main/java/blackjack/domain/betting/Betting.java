@@ -20,4 +20,8 @@ public class Betting {
             throw new IllegalArgumentException("최소 배팅 금액은 1000원입니다.");
         }
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
