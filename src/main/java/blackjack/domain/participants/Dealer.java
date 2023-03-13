@@ -6,11 +6,12 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    public static final String NAME = "딜러";
     private static final int CARD_TAKE_LIMIT = 17;
     private static final int INITIAL_DEALER_CARD_OPEN_INDEX = 0;
 
-    public Dealer(final String name) {
-        super(name);
+    public Dealer() {
+        super(NAME);
     }
 
     public Dealer(final String name, final List<Card> cards) {

@@ -17,7 +17,7 @@ class ParticipantsTest {
     private static final Player PLAYER_JASON = new Player("jason", BETTING_MONEY_1000);
     private static final Player PLAYER_WITH_DEALER_NAME = new Player("딜러", BETTING_MONEY_1000);
 
-    private static final Dealer DEALER = new Dealer("딜러");
+    private static final Dealer DEALER = new Dealer();
 
     @DisplayName("플레이어의 이름 간 중복을 허용하지 않는다.")
     @Test

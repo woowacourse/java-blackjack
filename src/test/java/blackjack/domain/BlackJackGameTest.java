@@ -18,7 +18,7 @@ class BlackJackGameTest {
     private static final Player PLAYER_LISA = new Player("lisa", BETTING_MONEY_1000);
     private static final Player PLAYER_JASON = new Player("jason", BETTING_MONEY_1000);
 
-    private static final Dealer DEALER = new Dealer("딜러");
+    private static final Dealer DEALER = new Dealer();
 
     @DisplayName("모든 참가자에게 카드를 2장씩 나눠준다.")
     @Test

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private final static String DEALER_NAME = "딜러";
     private BlackJackGame blackJackGame;
 
     public void run() {
@@ -32,7 +31,7 @@ public class BlackJackController {
     }
 
     private void initializeGame(final List<String> playerNames) {
-        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), new Dealer(DEALER_NAME),
+        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), new Dealer(),
                 createPlayers(playerNames));
     }
 
@@ -50,7 +49,7 @@ public class BlackJackController {
 
     private void startGame(final List<String> playerNames) {
         blackJackGame.handOut();
-        OutputView.showOpenCards(DEALER_NAME, playerNames, blackJackGame.openHandStatuses());
+        OutputView.showOpenCards(Dealer.NAME, playerNames, blackJackGame.openHandStatuses());
     }
 
     private void hitOrStayForAvailablePlayers() {
@@ -77,7 +76,7 @@ public class BlackJackController {
 
     private void hitUntilDealerAvailable() {
         final int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(DEALER_NAME, hitCount);
+        OutputView.showDealerHitResult(Dealer.NAME, hitCount);
     }
 
     private void endGame() {

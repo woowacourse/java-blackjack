@@ -15,20 +15,19 @@ public class Participants {
     }
 
     public static Participants of(final Dealer dealer, final List<Player> players) {
-        validatePlayerNames(dealer, players);
+        validatePlayerNames(players);
         return new Participants(dealer, players);
     }
 
-    private static void validatePlayerNames(final Dealer dealer, final List<Player> players) {
+    private static void validatePlayerNames(final List<Player> players) {
         final List<String> names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
-        final String dealerName = dealer.getName();
         if (names.size() != new HashSet<>(names).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
-        if (names.contains(dealerName)) {
-            throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + dealerName + ")과 중복될 수 없습니다.");
+        if (names.contains(Dealer.NAME)) {
+            throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + Dealer.NAME + ")과 중복될 수 없습니다.");
         }
     }
 
