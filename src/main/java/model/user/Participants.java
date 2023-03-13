@@ -34,7 +34,7 @@ public class Participants {
         dealer.receiveInitialCards(deck);
     }
 
-    public long getTotalProfits() {
+    public long calculateTotalProfits() {
         return players.stream()
                 .mapToLong(this::createTotalProfit)
                 .sum();

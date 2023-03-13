@@ -155,7 +155,7 @@ public class BlackJackController {
 
     private void printBetResult(Dealer dealer, Participants participants) {
         outputView.printBetResult();
-        outputView.printDealerBetResult(dealer.getName(), participants.getTotalProfits());
+        outputView.printDealerBetResult(dealer.getName(), participants.calculateTotalProfits());
         outputView.printPlayerBetResult(BetResponse.create(participants));
     }
 }

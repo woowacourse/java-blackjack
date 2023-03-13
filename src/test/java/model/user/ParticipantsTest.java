@@ -56,6 +56,6 @@ class ParticipantsTest {
         ethan.receiveCard(CardFixture.DIAMOND_SIX);
 
         // when, then
-        assertThat(participants.getTotalProfits()).isEqualTo(0);
+        assertThat(participants.calculateTotalProfits()).isEqualTo(0);
     }
 }
