@@ -30,7 +30,7 @@ public class Controller {
     private BettingTable createBettingTable(Players players) {
         BettingTable bettingTable = new BettingTable();
         for (Player player : players.getPlayers()) {
-            bettingTable.add(player, new Money(inputView.readBettingMoney(player.getName())));
+            bettingTable.add(player, new BettingMoney(inputView.readBettingMoney(player.getName())));
         }
         return bettingTable;
     }

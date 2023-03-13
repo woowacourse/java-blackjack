@@ -7,14 +7,14 @@ public enum ResultType {
 
     private static final double BLACKAJACK_PROFIT_RATE = 1.5;
 
-    public Money calculateBetting(Money money) {
+    public Money calculateBetting(Money bettingMoney) {
         if (this == ResultType.BLACKJACK) {
-            return money.multiply(BLACKAJACK_PROFIT_RATE);
+            return bettingMoney.multiply(BLACKAJACK_PROFIT_RATE);
         }
         if (this == ResultType.LOSE) {
-            return money.negative();
+            return bettingMoney.negative();
         }
-        return money;
+        return bettingMoney.stay();
     }
 
 }
