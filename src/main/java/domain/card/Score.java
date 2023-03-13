@@ -7,7 +7,14 @@ public class Score {
     private final int score;
     
     public Score(int score) {
+        validateNegativeScore(score);
         this.score = score;
+    }
+    
+    private void validateNegativeScore(int score) {
+        if (score < 0) {
+            throw new IllegalArgumentException("Score에 음수는 들어올 수 없습니다.");
+        }
     }
     
     public Score plusTenIfNotBust() {

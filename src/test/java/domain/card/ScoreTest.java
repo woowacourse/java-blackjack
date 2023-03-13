@@ -17,6 +17,14 @@ class ScoreTest {
     }
     
     @Test
+    @DisplayName("음수가 들어오는 경우 예외 발생")
+    void negative_exception() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Score(-1))
+                .withMessage("Score에 음수는 들어올 수 없습니다.");
+    }
+    
+    @Test
     @DisplayName("21이 안넘는 경우 10을 더해서 반환한다.")
     void add() {
         Score score = tenScore.plusTenIfNotBust();
