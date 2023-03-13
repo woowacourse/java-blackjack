@@ -12,7 +12,7 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, BettingMoney bettingMoney) {
+    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, Score playerScore, BettingMoney bettingMoney) {
         if (isDealerBlackJack) {
             return 0;
         }

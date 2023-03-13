@@ -25,6 +25,10 @@ public abstract class Participant {
         playerStatus = playerStatus.draw(card);
     }
 
+    public void stay() {
+        playerStatus = playerStatus.stay();
+    }
+
     public Hand getHand() {
         return hand;
     }

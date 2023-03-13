@@ -20,7 +20,7 @@ public abstract class Running extends PlayerStatus {
     }
 
     @Override
-    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, BettingMoney bettingMoney) {
+    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, Score playerScore, BettingMoney bettingMoney) {
         throw new IllegalStateException("게임이 진행 중 입니다.");
     }
 }

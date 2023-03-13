@@ -21,11 +21,13 @@ public abstract class PlayerStatus {
 
     public abstract PlayerStatus draw(Card card);
 
-    public abstract PlayerStatus stay();
+    public PlayerStatus stay() {
+        return new Stay(hand);
+    }
 
     public abstract boolean isRunning();
 
-    public abstract double calculateProfit(boolean isDealerBlackJack, Score dealerScore, BettingMoney bettingMoney);
+    public abstract double calculateProfit(boolean isDealerBlackJack, Score dealerScore, Score playerScore, BettingMoney bettingMoney);
 
     protected final Hand hand() {
         return hand;
