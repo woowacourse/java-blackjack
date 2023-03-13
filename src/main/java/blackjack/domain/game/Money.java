@@ -10,11 +10,11 @@ public class Money {
     }
 
     public Money add(Money money) {
-        return new Money(this.value + money.getValue());
+        return new Money(this.value + money.value);
     }
 
     public Money multiple(Money money) {
-        return new Money(this.value * money.getValue());
+        return new Money(this.value * money.value);
     }
 
     public int getValue() {

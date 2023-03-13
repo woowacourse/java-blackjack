@@ -29,11 +29,7 @@ public class Dealer {
             return GameResult.WIN;
         }
 
-        if (playerScore == dealerScore) {
-            return GameResult.DRAW;
-        }
-
-        return GameResult.LOSE;
+        return GameResult.DRAW;
     }
 
     public void drawCard(final CardPack cardPack) {

@@ -15,9 +15,6 @@ public class Score {
 
     private int value;
 
-    public Score() {
-    }
-
     public void calculateScore(Cards cards) {
         final List<Card> acePack = getAcePack(cards);
         int sum = calculateAceSum(getSum(cards), acePack);
