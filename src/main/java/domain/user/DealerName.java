@@ -2,11 +2,11 @@ package domain.user;
 
 public final class DealerName implements UserName {
 
-    private final String value;
+    private final String name;
 
     public DealerName(String nameValue) {
         validate(nameValue);
-        this.value = nameValue;
+        this.name = nameValue;
     }
 
     private void validate(String nameValue) {
@@ -20,7 +20,7 @@ public final class DealerName implements UserName {
     }
 
     @Override
-    public String getValue() {
-        return this.value;
+    public String getName() {
+        return this.name;
     }
 }

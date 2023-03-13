@@ -73,7 +73,7 @@ public class BlackjackController {
     private UserInformation generateUserInformation(UserName userName) {
         return repeat(() -> new UserInformation(
                 userName,
-                new BettingMoney(InputView.readPlayerBettingMoneyOf(userName.getValue())))
+                new BettingMoney(InputView.readPlayerBettingMoneyOf(userName.getName())))
         );
     }
 

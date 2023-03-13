@@ -24,6 +24,6 @@ class BettingMoneyTest {
     void 베팅_금액_반환() {
         int bettingMoneyInput = 7_000;
         BettingMoney bettingMoney = new BettingMoney(bettingMoneyInput);
-        assertThat(bettingMoney.getValue()).isEqualTo(bettingMoneyInput);
+        assertThat(bettingMoney.getMoney()).isEqualTo(bettingMoneyInput);
     }
 }

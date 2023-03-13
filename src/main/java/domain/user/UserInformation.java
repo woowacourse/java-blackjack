@@ -10,11 +10,11 @@ public class UserInformation {
     }
 
     public String getNameValue() {
-        return this.userName.getValue();
+        return this.userName.getName();
     }
 
 
     public int getBettingMoneyValue() {
-        return this.bettingMoney.getValue();
+        return this.bettingMoney.getMoney();
     }
 }

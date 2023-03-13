@@ -9,11 +9,11 @@ public final class PlayerName implements UserName {
     }};
     private static final int MAXIMUM_NAME_LENGTH = 100;
 
-    private final String value;
+    private final String name;
 
     public PlayerName(String nameValue) {
         validate(nameValue);
-        this.value = nameValue;
+        this.name = nameValue;
     }
 
     private void validate(String nameValue) {
@@ -41,7 +41,7 @@ public final class PlayerName implements UserName {
     }
 
     @Override
-    public String getValue() {
-        return this.value;
+    public String getName() {
+        return this.name;
     }
 }

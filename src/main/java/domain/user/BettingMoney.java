@@ -4,11 +4,11 @@ public class BettingMoney {
     private static final int LOWER_LIMIT = 0;
     private static final int UPPER_LIMIT = 100_000_000;
 
-    private final int value;
+    private final int money;
 
     public BettingMoney(int bettingMoneyValue) {
         validate(bettingMoneyValue);
-        this.value = bettingMoneyValue;
+        this.money = bettingMoneyValue;
     }
 
     private void validate(int bettingMoneyValue) {
@@ -17,7 +17,7 @@ public class BettingMoney {
         }
     }
 
-    public int getValue() {
-        return value;
+    public int getMoney() {
+        return money;
     }
 }
