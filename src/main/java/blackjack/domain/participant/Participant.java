@@ -39,12 +39,8 @@ public abstract class Participant {
         return name.getValue();
     }
 
-    public List<Card> getHand() {
-        return hand.getCards();
-    }
-
     public List<String> getCardNames() {
-        return getHand().stream()
+        return hand.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
     }
