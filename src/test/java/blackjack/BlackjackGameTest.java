@@ -28,7 +28,6 @@ class BlackjackGameTest {
     void handOutInitialCardsSuccessTest() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         List<Participant> participants = blackjackGame.getParticipants();
-        assertParticipantsCardSize(participants, 0);
 
         blackjackGame.handOutInitialCards();
 
@@ -46,7 +45,7 @@ class BlackjackGameTest {
     void handOutAdditionalCardToDealerSuccessTestWhenUnderMoreCardLimit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.receive(Cards.of(CLUB_KING, CLUB_SIX));
+        dealer.start(Cards.of(CLUB_KING, CLUB_SIX));
         assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
@@ -60,7 +59,7 @@ class BlackjackGameTest {
     void handOutAdditionalCardToDealerSuccessTestWhenOverMoreCardLimit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.receive(Cards.of(CLUB_KING, CLUB_SEVEN));
+        dealer.start(Cards.of(CLUB_KING, CLUB_SEVEN));
         assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
@@ -98,6 +97,10 @@ class BlackjackGameTest {
         @DisplayName("액션이 HIT이고 player가 카드를 받을 수 있는 상태에만 진행 할 수 있다.")
         @Test
         void isAbleToContinueTrueTest() {
+            gamePlayer.start(Cards.of(
+                    new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
+                    new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN))
+            );
             assertThat(gamePlayer.isAbleToReceiveCard()).isTrue();
 
             boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HIT);
@@ -107,11 +110,12 @@ class BlackjackGameTest {
         @DisplayName("player가 카드를 받을 수 있는 상태가 아니면 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenPlayerIsNotAbleToReceiveCard() {
-            gamePlayer.receive(Cards.of(
+            gamePlayer.start(Cards.of(
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
-                    new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN),
-                    new Card(TrumpCardType.CLUB, TrumpCardNumber.JACK))
-            );
+                    new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN)
+            ));
+            gamePlayer.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.JACK));
+
             assertThat(gamePlayer.isAbleToReceiveCard()).isFalse();
 
             boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HIT);
@@ -121,6 +125,10 @@ class BlackjackGameTest {
         @DisplayName("player가 카드를 받을 수 있지만 액션이 HOLD인 경우 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenActionIsHold() {
+            gamePlayer.start(Cards.of(
+                    new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
+                    new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN))
+            );
             assertThat(gamePlayer.isAbleToReceiveCard()).isTrue();
 
             boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HOLD);
@@ -133,12 +141,11 @@ class BlackjackGameTest {
     void playByActionHit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
-
+        player.start(Cards.of(CLUB_KING, CLUB_SEVEN));
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HIT);
 
-        assertThat(player.getCurrentCardAmount()).isEqualTo(1);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(3);
     }
 
     @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
@@ -146,12 +153,12 @@ class BlackjackGameTest {
     void playByActionHold() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
+        player.start(Cards.of(CLUB_KING, CLUB_SEVEN));
 
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HOLD);
 
-        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(2);
     }
 
 }

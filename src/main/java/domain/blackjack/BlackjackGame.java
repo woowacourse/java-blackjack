@@ -1,6 +1,7 @@
 package domain.blackjack;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Players;
@@ -25,8 +26,8 @@ public class BlackjackGame {
 
     public void handOutInitialCards() {
         for (Participant participant : blackjackParticipants.getAllParticipants()) {
-            handOutCardTo(participant);
-            handOutCardTo(participant);
+            Cards cards = Cards.of(deck.drawCard(), deck.drawCard());
+            participant.start(cards);
         }
     }
 

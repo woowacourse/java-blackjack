@@ -24,8 +24,7 @@ class PlayerTest {
     @Test
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        player.receive(HEART_THREE);
-        player.receive(HEART_TEN);
+        player.start(Cards.of(HEART_THREE, HEART_TEN));
         player.receive(HEART_QUEEN);
 
         assertThat(player.isAbleToReceiveCard()).isFalse();
@@ -35,8 +34,7 @@ class PlayerTest {
     @Test
     void getInitialCardsTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        player.receive(HEART_QUEEN);
-        player.receive(HEART_TEN);
+        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
 
         Cards initialOpeningCards = player.getInitialOpeningCards();
         assertThat(initialOpeningCards.getCards()).hasSize(2);

@@ -40,11 +40,11 @@ class DealerResultTest {
     void createDealerResultSuccessTest() {
         Players players = Players.of(pobi, crong, royce);
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
-        blackjackGame.getDealer().receive(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
 
-        pobi.receive(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
-        crong.receive(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
-        royce.receive(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+        pobi.start(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
+        crong.start(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
+        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
         DealerResult dealerResult = DealerResult.from(blackjackGame);
 

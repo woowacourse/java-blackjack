@@ -29,7 +29,7 @@ class DealerTest {
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
         Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
-        dealer.receive(cards);
+        dealer.start(cards);
 
         assertThat(dealer.isAbleToReceiveCard()).isTrue();
     }
@@ -39,7 +39,7 @@ class DealerTest {
     void isAbleToReceiveCardWhenOverMoreCardLimitTest() {
         Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(HEART_QUEEN, HEART_TEN);
-        dealer.receive(cards);
+        dealer.start(cards);
 
         assertThat(dealer.isAbleToReceiveCard()).isFalse();
     }
@@ -49,7 +49,7 @@ class DealerTest {
     void getInitialCardsTest() {
         Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(HEART_QUEEN, HEART_TEN);
-        dealer.receive(cards);
+        dealer.start(cards);
 
         Cards initialOpeningCards = dealer.getInitialOpeningCards();
         assertThat(initialOpeningCards.getCards()).hasSize(1);
@@ -71,8 +71,8 @@ class DealerTest {
         @DisplayName("딜러의 게임 점수가 높으면 승리한다.")
         @Test
         void competeWithPlayerWinTest() {
-            dealer.receive(Cards.of(HEART_QUEEN, HEART_TEN)); // 20
-            player.receive(Cards.of(HEART_TEN, HEART_THREE)); // 13
+            dealer.start(Cards.of(HEART_QUEEN, HEART_TEN)); // 20
+            player.start(Cards.of(HEART_TEN, HEART_THREE)); // 13
 
             Result result = dealer.competeWithPlayer(player);
             assertThat(result).isEqualTo(Result.WIN);
@@ -81,8 +81,8 @@ class DealerTest {
         @DisplayName("게임 점수가 낮으면 패배한다.")
         @Test
         void competeWithPlayerWLoseTest() {
-            dealer.receive(Cards.of(HEART_TEN, HEART_THREE)); // 13
-            player.receive(Cards.of(HEART_QUEEN, HEART_TEN)); // 20
+            dealer.start(Cards.of(HEART_TEN, HEART_THREE)); // 13
+            player.start(Cards.of(HEART_QUEEN, HEART_TEN)); // 20
 
             Result result = dealer.competeWithPlayer(player);
             assertThat(result).isEqualTo(Result.LOSE);
@@ -91,8 +91,8 @@ class DealerTest {
         @DisplayName("게임 점수가 같으면 비긴다.")
         @Test
         void competeWithPlayerDrawTest() {
-            dealer.receive(Cards.of(HEART_TEN, HEART_THREE)); // 13
-            player.receive(Cards.of(HEART_QUEEN, CLUB_THREE)); // 13
+            dealer.start(Cards.of(HEART_TEN, HEART_THREE)); // 13
+            player.start(Cards.of(HEART_QUEEN, CLUB_THREE)); // 13
 
             Result result = dealer.competeWithPlayer(player);
             assertThat(result).isEqualTo(Result.DRAW);
@@ -101,8 +101,10 @@ class DealerTest {
         @DisplayName("딜러가 버스트 된 경우 패배한다.")
         @Test
         void competeWithPlayerLoseWhenBustedTest() {
-            dealer.receive(Cards.of(HEART_TEN, HEART_THREE, HEART_QUEEN));
-            player.receive(Cards.of(CLUB_THREE, CLUB_ACE));
+            dealer.start(Cards.of(HEART_TEN, HEART_THREE));
+            dealer.receive(HEART_QUEEN);
+
+            player.start(Cards.of(CLUB_THREE, CLUB_ACE));
 
             assertThat(dealer.isBusted()).isTrue();
             Result result = dealer.competeWithPlayer(player);
@@ -112,8 +114,9 @@ class DealerTest {
         @DisplayName("플레이어가 버스트 된 경우 승리한다.")
         @Test
         void competeWithPlayerWinWhenPlayerBustedTest() {
-            dealer.receive(Cards.of(CLUB_THREE, CLUB_ACE));
-            player.receive(Cards.of(HEART_TEN, HEART_THREE, HEART_QUEEN));
+            dealer.start(Cards.of(CLUB_THREE, CLUB_ACE));
+            player.start(Cards.of(HEART_TEN, HEART_THREE));
+            player.receive(HEART_QUEEN);
 
             assertThat(player.isBusted()).isTrue();
 
@@ -124,8 +127,11 @@ class DealerTest {
         @DisplayName("딜러와 플레이어 모두 버스트 된 경우 딜러가 승리한다.")
         @Test
         void competeWithPlayerWinWhenBothBustedTest() {
-            dealer.receive(Cards.of(CLUB_THREE, SPADE_KING, SPADE_QUEEN));
-            player.receive(Cards.of(HEART_THREE, HEART_TEN, HEART_QUEEN));
+            dealer.start(Cards.of(CLUB_THREE, SPADE_KING));
+            dealer.receive(SPADE_QUEEN);
+
+            player.start(Cards.of(HEART_THREE, HEART_TEN));
+            player.receive(HEART_QUEEN);
 
             assertThat(dealer.isBusted()).isTrue();
             assertThat(player.isBusted()).isTrue();

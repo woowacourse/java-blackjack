@@ -1,20 +1,26 @@
 package domain.participant;
 
 import domain.blackjack.BlackjackScore;
+import domain.blackjack.gamestate.GameState;
+import domain.blackjack.gamestate.Start;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.Objects;
 
 public abstract class Participant {
     protected final ParticipantName participantName;
-    protected final Cards cards = Cards.getDefault();
+    protected GameState gameState;
 
     protected Participant(ParticipantName participantName) {
         this.participantName = participantName;
     }
 
+    public void start(Cards cards) {
+        this.gameState = Start.from(cards);
+    }
+
     public void receive(Card card) {
-        cards.add(card);
+        this.gameState = gameState.receive(card);
     }
 
     public void receive(Cards cards) {
@@ -24,6 +30,7 @@ public abstract class Participant {
     }
 
     public BlackjackScore calculateBlackjackScore() {
+        Cards cards = gameState.getCards();
         return BlackjackScore.from(cards);
     }
 
@@ -36,6 +43,7 @@ public abstract class Participant {
     public abstract boolean isAbleToReceiveCard();
 
     public int getCurrentCardAmount() {
+        Cards cards = gameState.getCards();
         return cards.getCards().size();
     }
 
@@ -45,7 +53,7 @@ public abstract class Participant {
     }
 
     public Cards getCards() {
-        return cards;
+        return gameState.getCards();
     }
 
     public String getName() {

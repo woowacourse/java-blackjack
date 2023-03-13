@@ -38,7 +38,7 @@ public class Start extends GameState {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        return false;
+        return true;
     }
 
     @Override

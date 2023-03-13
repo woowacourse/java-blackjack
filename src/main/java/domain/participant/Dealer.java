@@ -22,8 +22,8 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
 
-        BlackjackScore blackjackScore = BlackjackScore.from(cards);
-        BlackjackScore otherBlackjackScore = BlackjackScore.from(player.cards);
+        BlackjackScore blackjackScore = this.calculateBlackjackScore();
+        BlackjackScore otherBlackjackScore = player.calculateBlackjackScore();
         return blackjackScore.compete(otherBlackjackScore);
     }
 
@@ -33,6 +33,7 @@ public class Dealer extends Participant {
 
     @Override
     public Cards getInitialOpeningCards() {
+        Cards cards = gameState.getCards();
         Card initialOpeningCard = cards.getCards().get(INITIAL_CARD_INDEX);
         return Cards.of(initialOpeningCard);
     }

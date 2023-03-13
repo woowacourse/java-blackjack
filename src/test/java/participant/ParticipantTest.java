@@ -24,7 +24,7 @@ class ParticipantTest {
     void calculateScoreSuccessTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
-        player.receive(cards);
+        player.start(cards);
 
         BlackjackScore expectedScore = BlackjackScore.from(14);
         assertThat(player.calculateBlackjackScore())
@@ -35,10 +35,12 @@ class ParticipantTest {
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        Cards cards = Cards.of(CLUB_ACE, HEART_THREE, HEART_TEN);
+        Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
+        player.start(cards);
+        player.receive(HEART_TEN);
+
         assertThat(CLUB_ACE.getScore() + HEART_THREE.getScore() + HEART_TEN.getScore())
                 .isGreaterThan(21);
-        player.receive(cards);
 
         BlackjackScore expectedScore = BlackjackScore.from(14);
         assertThat(player.calculateBlackjackScore())
@@ -49,22 +51,23 @@ class ParticipantTest {
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        Cards cards = Cards.of(CLUB_ACE, HEART_TEN);
-        player.receive(cards);
+        Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
+        player.start(cards);
         assertThat(player.calculateBlackjackScore())
-                .isEqualTo(BlackjackScore.from(21));
+                .isEqualTo(BlackjackScore.from(14));
 
         player.receive(HEART_ACE);
         assertThat(player.calculateBlackjackScore())
-                .isEqualTo(BlackjackScore.from(12));
+                .isEqualTo(BlackjackScore.from(15));
     }
 
     @DisplayName("카드의 합이 21이 넘으면 버스트 된다.")
     @Test
     void isBustedSuccessTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        Cards cards = Cards.of(HEART_THREE, HEART_TEN, HEART_QUEEN);
-        player.receive(cards);
+        Cards cards = Cards.of(HEART_THREE, HEART_TEN);
+        player.start(cards);
+        player.receive(HEART_QUEEN);
 
         BlackjackScore playerScore = player.calculateBlackjackScore();
 
@@ -78,7 +81,7 @@ class ParticipantTest {
     void isNotBustedSuccessTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(HEART_TEN, HEART_QUEEN);
-        player.receive(cards);
+        player.start(cards);
 
         BlackjackScore playerScore = player.calculateBlackjackScore();
 
