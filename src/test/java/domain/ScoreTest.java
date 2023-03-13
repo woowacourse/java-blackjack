@@ -161,9 +161,9 @@ class ScoreTest {
             "20 -> false",
             "0 -> false",
     }, delimiterString = " -> ")
-    @DisplayName("isBlackjack() : 점수가 21이면 블랙잭이라고 할 수 있다.")
+    @DisplayName("isSumTwentyOne() : 점수가 21이다.")
     void test_isBlackjack(final int value, final boolean isBlackjack) throws Exception {
         //when & then
-        assertEquals(new Score(value).isBlackjack(), isBlackjack);
+        assertEquals(new Score(value).isSumTwentyOne(), isBlackjack);
     }
 }

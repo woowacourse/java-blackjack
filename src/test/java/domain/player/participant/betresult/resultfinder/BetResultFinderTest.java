@@ -119,6 +119,7 @@ class BetResultFinderTest {
         final Participant participant = new Participant(new Name("name1"), Money.wons(10000));
         participant.hit(new Card(SPADE, TEN));
         participant.hit(new Card(SPADE, NINE));
+        participant.hit(new Card(SPADE, TWO));
 
         final Dealer dealer = new Dealer();
         dealer.hit(new Card(HEART, KING));
@@ -130,6 +131,28 @@ class BetResultFinderTest {
 
         //then
         Assertions.assertThat(betResultState).isInstanceOf(BreakEvenState.class);
+    }
+
+    @Test
+    @DisplayName("[ParticipantBust] findStateOf() : 딜러, 참여자가 버스트 일 경우에는 딜러가 이긴다.")
+    void test_findStateOf_both_bust() throws Exception {
+        //given
+        final Participant participant = new Participant(new Name("name1"), Money.wons(10000));
+        participant.hit(new Card(SPADE, TEN));
+        participant.hit(new Card(SPADE, NINE));
+        participant.hit(new Card(SPADE, TWO));
+        participant.hit(new Card(CLOVER, TWO));
+
+        final Dealer dealer = new Dealer();
+        dealer.hit(new Card(HEART, KING));
+        dealer.hit(new Card(CLOVER, TWO));
+        dealer.hit(new Card(CLOVER, QUEEN));
+
+        //when
+        final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);
+
+        //then
+        Assertions.assertThat(betResultState).isInstanceOf(LoseState.class);
     }
 
     @Test
@@ -210,6 +233,7 @@ class BetResultFinderTest {
         //when
         final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);
 
+        System.out.println("participant = " + participant.name().value());
         //then
         assertEquals(resultState.getClass(), betResultState.getClass());
     }

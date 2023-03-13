@@ -29,4 +29,8 @@ public class Participant extends Player {
     public List<Card> faceUpFirstDeal() {
         return List.of(hand.firstCard(), hand.secondCard());
     }
+
+    public boolean isSumTwentyOne() {
+        return hand.isSumTwentyOne();
+    }
 }

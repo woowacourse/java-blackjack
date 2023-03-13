@@ -9,7 +9,6 @@ public class Score {
     private static final Score UPPER_LIMIT_SCORE = new Score(21);
 
     private static final Score SOFT_HAND_SCORE = new Score(10);
-    private static final Score BLACKJACK = new Score(21);
 
     private final int value;
 
@@ -51,8 +50,8 @@ public class Score {
         return new Score(value + other.value);
     }
 
-    public boolean isBlackjack() {
-        return this.equals(BLACKJACK);
+    public boolean isSumTwentyOne() {
+        return this.equals(UPPER_LIMIT_SCORE);
     }
 
     @Override
