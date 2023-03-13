@@ -23,7 +23,8 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
+    public static Players from(final List<String> inputNames) {
+        final List<String> names = new ArrayList<>(inputNames);
         validateDuplicate(names);
         validateNameCount(names);
         return new Players(generate(names));

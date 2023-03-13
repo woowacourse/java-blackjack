@@ -26,7 +26,7 @@ public class InputView {
 
         return Arrays.stream(names.split(DELIMITER, LIMIT))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public int readBettingMoney(final Player player) {

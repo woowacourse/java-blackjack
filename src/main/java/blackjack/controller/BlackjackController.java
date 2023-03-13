@@ -9,7 +9,6 @@ import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class BlackjackController {
 
     private Players generateValidPlayers() {
         return repeatUntilGetValidInput(() -> {
-            final List<String> playerNames = new ArrayList<>(inputView.readPlayers());
+            final List<String> playerNames = inputView.readPlayers();
             return Players.from(playerNames);
         });
     }
