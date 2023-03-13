@@ -20,11 +20,11 @@ class PlayerTest {
     void setting() {
         player = Player.of(Name.from("test"), new ArrayList<>());
         player.drawCard(DIAMOND_TEN);
-        player.drawCard(Card.of(Shape.DIAMOND, Letter.NINE));
+        player.drawCard(DIAMOND_EIGHT);
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21 이하일 때, 히트인지 테스트")
+    @DisplayName("플레이어의 점수가 20 이하일 때, 히트인지 테스트")
     void isHitTest() {
         // when
         player.drawCard(DIAMOND_TWO);
@@ -34,7 +34,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21 이상일 때, 히트인지 테스트")
+    @DisplayName("플레이어의 점수가 21 이상일 때, 히트가 아닌지 테스트")
     void isNotHitTest() {
         // when
         player.drawCard(DIAMOND_THREE);

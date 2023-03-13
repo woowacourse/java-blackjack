@@ -23,7 +23,7 @@ class ScoreTest {
     @Test
     @DisplayName("현재 점수가 히트인지 테스트")
     void isHitTest() {
-        final Score score = Score.from(21);
+        final Score score = Score.from(20);
 
         Assertions.assertThat(score.canHit()).isTrue();
     }
