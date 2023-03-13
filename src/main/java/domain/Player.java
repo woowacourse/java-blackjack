@@ -8,7 +8,7 @@ public class Player extends Participant {
     private final Name name;
     private HitOrStand hitOrStand;
 
-    public Player(String inputName) {
+    public Player(final String inputName) {
         this.name = new Name(inputName);
         this.hitOrStand = HitOrStand.HIT;
     }
@@ -22,7 +22,7 @@ public class Player extends Participant {
         hitOrStand = HitOrStand.STAND;
     }
 
-    public PlayerOutcome computeWinLoss(Hand dealerHand) {
+    public PlayerOutcome computeWinLoss(final Hand dealerHand) {
         return PlayerOutcome.of(hand, dealerHand);
     }
 
@@ -32,14 +32,14 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Player player = (Player) o;
+        final Player player = (Player) o;
         return Objects.equals(name, player.name);
     }
 

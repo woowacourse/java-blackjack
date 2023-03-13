@@ -14,13 +14,13 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
-        BlackjackGame blackjackGame = startGame();
+        final BlackjackGame blackjackGame = startGame();
         dealCardsToPlayers(blackjackGame);
         dealCardsToDealer(blackjackGame);
 
@@ -29,7 +29,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame startGame() {
-        BlackjackGame blackjackGame = new BlackjackGame();
+        final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.setParticipants(inputView.readPlayerNames());
         setBettingAmounts(blackjackGame);
         blackjackGame.dealFirstHands(new RandomShuffleStrategy());
@@ -39,37 +39,37 @@ public class BlackjackController {
     }
 
     private void setBettingAmounts(final BlackjackGame blackjackGame) {
-        Map<String, Integer> bettingAmounts = new HashMap<>();
-        List<String> playerNames = blackjackGame.getPlayerNames();
-        for (String name : playerNames) {
+        final Map<String, Integer> bettingAmounts = new HashMap<>();
+        final List<String> playerNames = blackjackGame.getPlayerNames();
+        for (final String name : playerNames) {
             bettingAmounts.put(name, inputView.readBettingAmount(name));
         }
         blackjackGame.makeBet(bettingAmounts);
     }
 
-    private void dealCardsToPlayers(BlackjackGame blackjackGame) {
+    private void dealCardsToPlayers(final BlackjackGame blackjackGame) {
         while (blackjackGame.hasAnyPlayerToDeal()) {
-            Player playerToDecide = blackjackGame.getPlayerToDecide();
-            HitOrStand decision = HitOrStand.from(inputView.readHitOrStand(playerToDecide.name()));
+            final Player playerToDecide = blackjackGame.getPlayerToDecide();
+            final HitOrStand decision = HitOrStand.from(inputView.readHitOrStand(playerToDecide.name()));
             blackjackGame.hitOrStand(decision);
             outputView.printCards(new HandDto(playerToDecide));
         }
     }
 
-    private void dealCardsToDealer(BlackjackGame blackjackGame) {
+    private void dealCardsToDealer(final BlackjackGame blackjackGame) {
         while (blackjackGame.shouldDealerDrawCard()) {
             blackjackGame.dealCardToDealer();
             outputView.printIfDealerReceivedCard();
         }
     }
 
-    private List<HandDto> toHandDtos(List<Participant> participants) {
+    private List<HandDto> toHandDtos(final List<Participant> participants) {
         return participants.stream()
                            .map(HandDto::new)
                            .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<HandScoreDto> toHandScoreDtos(List<Participant> participants) {
+    private List<HandScoreDto> toHandScoreDtos(final List<Participant> participants) {
         return participants.stream()
                            .map(HandScoreDto::new)
                            .collect(Collectors.toUnmodifiableList());

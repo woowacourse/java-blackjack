@@ -15,7 +15,7 @@ public enum PlayerOutcome {
         this.earningEquation = earningEquation;
     }
 
-    public static PlayerOutcome of(Hand playerHand, Hand dealerHand) {
+    public static PlayerOutcome of(final Hand playerHand, final Hand dealerHand) {
         if (playerHand.isBlackjack() && !dealerHand.isBlackjack()) {
             return BLACKJACK;
         }

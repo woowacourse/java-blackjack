@@ -11,8 +11,8 @@ public class BettingInfo {
     }
 
     public Map<String, Integer> getEarnings(final Map<String, PlayerOutcome> playersOutcome) {
-        Map<String, Integer> earnings = new HashMap<>();
-        for (String name : bettingAmounts.keySet()) {
+        final Map<String, Integer> earnings = new HashMap<>();
+        for (final String name : bettingAmounts.keySet()) {
             final PlayerOutcome playerOutcome = playersOutcome.get(name);
             final int earning = playerOutcome.calculateEarning(bettingAmounts.get(name));
             earnings.put(name, earning);

@@ -9,32 +9,32 @@ import static java.util.stream.Collectors.*;
 public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶다.
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    private Players(final List<Player> players) {
         validateNotEmpty(players);
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
+    public static Players from(final List<String> names) {
         return names.stream()
                     .map(Player::new)
                     .collect(collectingAndThen(toUnmodifiableList(), Players::new));
     }
 
-    private void validateNotEmpty(List<Player> players) {
+    private void validateNotEmpty(final List<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어는 1명 이상이어야 합니다.");
         }
     }
 
-    public void receiveCard(Deck deck) {
+    public void receiveCard(final Deck deck) {
         players.forEach(player -> player.receiveCard(deck.draw()));
     }
 
     public Player getPlayerToDecide() {
-        Player player = players.stream()
-                               .filter(Player::isDrawable)
-                               .findFirst()
-                               .orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다."));
+        final Player player = players.stream()
+                                     .filter(Player::isDrawable)
+                                     .findFirst()
+                                     .orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다."));
         return player;
     }
 
@@ -43,7 +43,7 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
                       .anyMatch(Player::isDrawable);
     }
 
-    public void dealToCurrentPlayer(Card card) {
+    public void dealToCurrentPlayer(final Card card) {
         getPlayerToDecide().receiveCard(card);
     }
 
@@ -51,7 +51,7 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
         getPlayerToDecide().stand();
     }
 
-    public Map<String, PlayerOutcome> computeWinLoss(Hand dealerHand) {
+    public Map<String, PlayerOutcome> computeWinLoss(final Hand dealerHand) {
         return players.stream()
                       .collect(toUnmodifiableMap(Player::name
                               , player -> player.computeWinLoss(dealerHand)));

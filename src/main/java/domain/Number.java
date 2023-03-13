@@ -19,7 +19,7 @@ public enum Number {
     private final int score;
     private final String symbol;
 
-    Number(int score, String symbol) {
+    Number(final int score, final String symbol) {
         this.score = score;
         this.symbol = symbol;
     }

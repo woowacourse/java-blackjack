@@ -14,16 +14,11 @@ public class BlackjackGame {
     private Deck deck;
     private BettingInfo playerBettingInfo;
 
-    public void setParticipants(List<String> playerNames) {
-        players = Players.from(playerNames);
-        dealer = new Dealer();
-    }
-
     public void makeBet(final Map<String, Integer> bettingAmounts) {
         playerBettingInfo = new BettingInfo(bettingAmounts);
     }
 
-    public void dealFirstHands(ShuffleStrategy shuffleStrategy) {
+    public void dealFirstHands(final ShuffleStrategy shuffleStrategy) {
         Objects.requireNonNull(players, "플레이어가 없는 상태에서 카드를 나눠줄 수 없습니다.");
 
         deck = Deck.createFullDeck();
@@ -43,7 +38,7 @@ public class BlackjackGame {
         return players.getPlayerToDecide();
     }
 
-    public void hitOrStand(HitOrStand hitOrStand) {
+    public void hitOrStand(final HitOrStand hitOrStand) {
         if (hitOrStand == HitOrStand.HIT) {
             players.dealToCurrentPlayer(deck.draw());
             return;
@@ -68,11 +63,16 @@ public class BlackjackGame {
     }
 
     public List<Participant> getParticipants() {
-        List<Participant> participants = players.getPlayers()
-                                                .stream()
-                                                .map(player -> (Participant) player)
-                                                .collect(Collectors.toList());
+        final List<Participant> participants = players.getPlayers()
+                                                      .stream()
+                                                      .map(player -> (Participant) player)
+                                                      .collect(Collectors.toList());
         participants.add(DEALER_POSITION, dealer);
         return participants;
+    }
+
+    public void setParticipants(final List<String> playerNames) {
+        players = Players.from(playerNames);
+        dealer = new Dealer();
     }
 }

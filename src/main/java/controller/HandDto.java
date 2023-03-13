@@ -9,7 +9,7 @@ public class HandDto {
     private final String name;
     private final List<String> cards;
 
-    public HandDto(Participant participant) {
+    public HandDto(final Participant participant) {
         this.name = participant.name();
         this.cards = participant.getHand()
                                 .stream()
