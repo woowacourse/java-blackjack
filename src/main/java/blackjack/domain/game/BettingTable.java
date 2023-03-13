@@ -20,10 +20,7 @@ public class BettingTable {
     }
 
     public BettingTable put(Player player, BettingMoney money) {
-        Map<Player, BettingMoney> newBets = new LinkedHashMap<>();
-        for (Player playerBefore : bets.keySet()) {
-            newBets.put(playerBefore, bets.get(playerBefore));
-        }
+        Map<Player, BettingMoney> newBets = new LinkedHashMap<>(bets);
         newBets.put(player, money);
         return new BettingTable(Collections.unmodifiableMap(newBets));
     }
