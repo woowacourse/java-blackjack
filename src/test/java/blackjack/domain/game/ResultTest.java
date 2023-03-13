@@ -43,6 +43,7 @@ public class ResultTest {
 
         assertThat(Result.calculateResult(playerHand, dealerHand)).isEqualTo(Result.WIN);
     }
+
     @Test
     @DisplayName("플레이어가 딜러보다 카드가 낮으면 진다")
     void lose() {

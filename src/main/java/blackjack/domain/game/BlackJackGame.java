@@ -19,7 +19,7 @@ public class BlackJackGame {
     private PlayerMoney playerMoney;
     private Deck deck;
 
-    public  BlackJackGame() {
+    public BlackJackGame() {
     }
 
     public void registerPlayers(List<String> names) {
