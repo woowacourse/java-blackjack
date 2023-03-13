@@ -34,11 +34,12 @@ class HandsTest {
     @DisplayName("카드패에 카드를 한 장 넣는다.")
     @Test
     void add_oneCard() {
-        hands.add(SpadeCard.SPADE_KING);
+        Card addedCard = SpadeCard.SPADE_KING;
+        hands.add(addedCard);
         Card card = hands.getCards().get(0);
 
         assertThat(hands.size()).isEqualTo(1);
-        assertThat(card).isSameAs(SpadeCard.SPADE_KING);
+        assertThat(card).isSameAs(addedCard);
     }
 
     @DisplayName("카드패에 여러장의 카드를 넣는다.")
