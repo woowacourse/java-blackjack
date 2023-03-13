@@ -91,6 +91,48 @@ class ParticipantsTest {
         assertThat(participants.getProfits()).containsExactly(1.0, 1.5);
     }
 
+    @Test
+    void 참가자들중_딜러의_최종수익을_반환한다() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, THREE));
+
+        Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
+
+        assertThat(participants.getDealerProfit()).isEqualTo(0);
+    }
+
+    @Test
+    void 참가자들_최종수익을_더한_반대값을_딜러의_돈으로_교체한다() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, THREE));
+
+        Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
+
+        //when
+        participants.calculateDealerMoney();
+
+        assertThat(participants.getDealerProfit()).isEqualTo(-3000);
+    }
+
+    @Test
+    void 참가자들중_딜러의_카드합을_반환한다() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, THREE));
+
+        Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
+
+        assertThat(participants.sumOfDealerCards()).isEqualTo(5);
+    }
+
     Dealer readDealer() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(HEART, A));

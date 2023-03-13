@@ -65,10 +65,6 @@ public class Participants {
         return winningResult;
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
@@ -93,4 +89,18 @@ public class Participants {
         return dealer.sumOfCards();
     }
 
+    public List<Integer> getPlayerMonies() {
+        return players.getMonies();
+    }
+
+    public void calculateDealerMoney() {
+        int sumOfPlayersProfit = getPlayerMonies().stream()
+                .mapToInt(i -> i)
+                .sum();
+        dealer.changeMoney(sumOfPlayersProfit * (-1));
+    }
+
+    public Integer getDealerProfit() {
+        return dealer.getMoney();
+    }
 }
