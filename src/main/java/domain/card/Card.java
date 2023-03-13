@@ -21,6 +21,14 @@ public class Card {
         return denomination.getScore();
     }
 
+    public String getNumberDescription() {
+        return denomination.getDescription();
+    }
+
+    public String getShapeDescription() {
+        return suit.getDescription();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -40,13 +48,5 @@ public class Card {
                 "shape=" + suit +
                 ", number=" + denomination +
                 '}';
-    }
-
-    public String getNumberDescription() {
-        return denomination.getDescription();
-    }
-
-    public String getShapeDescription() {
-        return suit.getDescription();
     }
 }
