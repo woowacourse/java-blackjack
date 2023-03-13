@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public final class Card {
-    private static final int HIGH_ACE_VALUE = 11;
+    private static final int LOW_ACE_VALUE = 1;
 
     private final Suit suit;
     private final Rank rank;
@@ -18,7 +18,7 @@ public final class Card {
     }
 
     public boolean isAce() {
-        return rank.getValue() == HIGH_ACE_VALUE;
+        return rank.getValue() == LOW_ACE_VALUE;
     }
 
     public int fetchValue() {

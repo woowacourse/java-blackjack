@@ -27,31 +27,19 @@ public final class Hand {
     }
 
     private int calculateHandValueWithoutConsideringBust() {
-        int aceCount = countAce();
+        boolean hasAce = hand.stream().anyMatch(Card::isAce);
         int value = sumValue();
 
-        value = chooseAceValue(value, aceCount);
+        if (hasAce && value + HIGH_ACE_VALUE - LOW_ACE_VALUE <= BUST_BOUNDARY_VALUE) {
+            value += HIGH_ACE_VALUE - LOW_ACE_VALUE;
+        }
         return value;
-    }
-
-    private int countAce() {
-        return (int)hand.stream()
-            .filter(Card::isAce)
-            .count();
     }
 
     private int sumValue() {
         return hand.stream()
             .mapToInt(Card::fetchValue)
             .sum();
-    }
-
-    private int chooseAceValue(int value, int aceCount) {
-        while (value > BUST_BOUNDARY_VALUE && aceCount > 0) {
-            value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
-            aceCount -= 1;
-        }
-        return value;
     }
 
     public boolean isBust() {
