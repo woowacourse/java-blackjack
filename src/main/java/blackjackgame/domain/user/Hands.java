@@ -7,17 +7,29 @@ import java.util.List;
 
 public class Hands {
     private final List<Card> cards;
+    private final Score score;
 
     public Hands() {
         this.cards = new ArrayList<>();
+        this.score = new Score();
     }
 
     public void add(Card receivedCard) {
         cards.add(receivedCard);
+        score.setScore(this);
     }
 
     public void add(List<Card> receivedCards) {
         cards.addAll(receivedCards);
+        score.setScore(this);
+    }
+
+    public PlayerStatus calculatePlayerStatus() {
+        return score.calculatePlayerStatus();
+    }
+
+    public DealerStatus calculateDealerStatus() {
+        return score.calculateDealerStatus();
     }
 
     public int countOfAce() {
@@ -39,5 +51,13 @@ public class Hands {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public int getScore() {
+        return score.getScore();
+    }
+
+    public boolean isLessThanBustScore() {
+        return score.isLessThanBustScore();
     }
 }

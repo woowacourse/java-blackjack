@@ -15,13 +15,13 @@ public class Player extends User {
     @Override
     public void receiveCard(Card card) {
         super.receiveCard(card);
-        status = score.calculatePlayerStatus();
+        status = hands.calculatePlayerStatus();
     }
 
     @Override
     public void receiveCards(List<Card> cards) {
         super.receiveCards(cards);
-        status = score.calculatePlayerStatus();
+        status = hands.calculatePlayerStatus();
     }
 
     public void win() {

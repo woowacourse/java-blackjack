@@ -4,28 +4,24 @@ import blackjackgame.domain.card.Card;
 import java.util.List;
 
 public abstract class User {
-    private final Hands hands;
+    protected final Hands hands;
     private final Name name;
-    protected final Score score;
 
     public User(Name name) {
         this.hands = new Hands();
-        this.score = new Score();
         this.name = name;
     }
 
     public void receiveCard(Card card) {
         hands.add(card);
-        score.setScore(hands);
     }
 
     public void receiveCards(List<Card> cards) {
         hands.add(cards);
-        score.setScore(hands);
     }
 
     public boolean isLessThanBustScore() {
-        return score.isLessThanBustScore();
+        return hands.isLessThanBustScore();
     }
 
     public List<Card> getCards() {
@@ -37,7 +33,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        return score.getScore();
+        return hands.getScore();
     }
 
     public abstract UserStatus getStatus();

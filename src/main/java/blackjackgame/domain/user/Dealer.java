@@ -16,13 +16,13 @@ public class Dealer extends User {
     @Override
     public void receiveCard(Card card) {
         super.receiveCard(card);
-        status = score.calculateDealerStatus();
+        status = hands.calculateDealerStatus();
     }
 
     @Override
     public void receiveCards(List<Card> cards) {
         super.receiveCards(cards);
-        status = score.calculateDealerStatus();
+        status = hands.calculateDealerStatus();
     }
 
     public Card getFirstCard() {
