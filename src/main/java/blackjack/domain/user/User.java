@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class User {
 
-    static final String DEALER_NAME = "딜러";
     private final String name;
     private Hand hand;
 
