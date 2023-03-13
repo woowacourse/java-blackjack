@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,14 +30,10 @@ public class BettingZoneTest {
     }
 
     private BettingZone generateBettingZone() {
-        Map<Player, Money> betMoneyByPlayers = new HashMap<>();
-        betMoneyByPlayers.put(new Gambler("후추"), Money.createMoneyForBetting(10000));
-        return new BettingZone(betMoneyByPlayers);
+        return new BettingZone(Map.of(new Gambler("후추"), Money.createMoneyForBetting(10000)));
     }
 
     private Map<Player, Result> generateResultByPlayers(final Result result) {
-        Map<Player, Result> resultByPlayers = new HashMap<>();
-        resultByPlayers.put(new Gambler("후추"), result);
-        return resultByPlayers;
+        return Map.of(new Gambler("후추"), result);
     }
 }
