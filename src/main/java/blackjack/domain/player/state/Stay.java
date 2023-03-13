@@ -10,16 +10,16 @@ public class Stay extends Finished {
     }
 
     @Override
-    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore,Score playerScore, BettingMoney bettingMoney) {
-       if (dealerScore.isBust()) {
-           return bettingMoney.getValue();
-       }
-       if (dealerScore.equals(playerScore)){
-           return 0;
-       }
-       if (dealerScore.isLessThan(playerScore)){
-           return bettingMoney.getValue();
-       }
-       return bettingMoney.getValue() * NEGATIVE;
+    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, Score playerScore, BettingMoney bettingMoney) {
+        if (isDealerBlackJack) {
+            return bettingMoney.getValue() * NEGATIVE;
+        }
+        if (dealerScore.isBust() || dealerScore.isLessThan(playerScore)) {
+            return bettingMoney.getValue();
+        }
+        if (dealerScore.equals(playerScore)) {
+            return 0;
+        }
+        return bettingMoney.getValue() * NEGATIVE;
     }
 }
