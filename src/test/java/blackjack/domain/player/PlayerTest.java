@@ -1,5 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Letter;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,37 +12,38 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class DealerTest {
+class PlayerTest {
 
-    static Dealer dealer;
+    Player player;
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new ArrayList<>(List.of(new Card(Suit.DIAMOND, Letter.FIVE), new Card(Suit.HEART, Letter.JACK))));
+        player = new Player("IO", "3000",
+                new ArrayList<>(List.of(Card.of(Suit.DIAMOND, Letter.EIGHT), Card.of(Suit.HEART, Letter.JACK))));
     }
 
     @Test
     @DisplayName("카드 한장씩 잘 받는지 테스트")
     void receiveCardSuccess() {
-        Card card = new Card(Suit.CLOVER, Letter.FIVE);
+        Card card = Card.of(Suit.CLOVER, Letter.FIVE);
 
-        dealer.receiveCard(card);
+        player.hit(card);
 
-        List<Card> cards = dealer.getCards();
+        List<Card> cards = player.getHand().getCards();
         assertThat(cards.get(cards.size() - 1)).isEqualTo(card);
     }
 
     @Test
     @DisplayName("카드 새로 뽑을 수 있는지 판단 - 성공")
     void canReceiveNewCard() {
-        assertThat(dealer.isAbleToReceive()).isTrue();
+        assertThat(player.isAbleToReceive()).isTrue();
     }
 
     @Test
     @DisplayName("카드 새로 뽑을 수 있는지 판단 - 실패")
     void cannotReceiveNewCard() {
-        dealer.receiveCard(new Card(Suit.HEART, Letter.THREE));
+        player.hit(Card.of(Suit.HEART, Letter.KING));
 
-        assertThat(dealer.isAbleToReceive()).isFalse();
+        assertThat(player.isAbleToReceive()).isFalse();
     }
 }

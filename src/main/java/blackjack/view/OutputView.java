@@ -1,9 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -29,7 +32,7 @@ public class OutputView {
                 .collect(Collectors.toList());
         System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
-        printCards(dealer.getName(), List.of(makeCardName(dealer.getCards().get(0))));
+        printCards(dealer.getName(), List.of(makeCardName(dealer.getHand().getCards().get(0))));
         players.getPlayers().forEach(player -> printCards(player.getName(), makeCardNames(player)));
     }
 
@@ -53,9 +56,10 @@ public class OutputView {
     }
 
     public void printFinalCards(final Dealer dealer, final Players players) {
-        printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getScore());
+        printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getHand().calculateScore().getScore());
         players.getPlayers().forEach(
-                player -> printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
+                player -> printFinalCards(player.getName(), makeCardNames(player),
+                        player.getHand().calculateScore().getScore()));
     }
 
     private void printFinalCards(String name, List<String> cardNames, int score) {
@@ -64,7 +68,7 @@ public class OutputView {
 
 
     private List<String> makeCardNames(final Participant participant) {
-        return participant.getCards().stream()
+        return participant.getHand().getCards().stream()
                 .map(this::makeCardName)
                 .collect(Collectors.toList());
     }
@@ -73,30 +77,20 @@ public class OutputView {
         return card.getCardLetter().getName() + card.getCardSuit().getShape();
     }
 
-    public void printDealerResults(final Map<Result, Integer> dealerResults) {
-        System.out.print(System.lineSeparator() + "## 최종 승패" + System.lineSeparator() + "딜러: ");
-        Map<String, Integer> convertedDealerResult = getConvertedDealerResult(dealerResults);
-        convertedDealerResult.keySet().forEach(result -> {
-            if (convertedDealerResult.get(result) > 0) {
-                System.out.print(convertedDealerResult.get(result) + result);
-            }
-        });
-        System.out.println();
+    public void printDealerResults(final double dealerProfit) {
+        System.out.print(System.lineSeparator() + "## 최종 수익" + System.lineSeparator());
+        System.out.println(DEALER_NAME + ": " + dealerProfit);
     }
 
-    private Map<String, Integer> getConvertedDealerResult(Map<Result, Integer> dealerResults) {
-        return dealerResults.keySet().stream()
-                .collect(Collectors.toMap(
-                        Result::getTerm,
-                        dealerResults::get
-                ));
-    }
-
-    public void printPlayerResult(final Player player, final Result playerResult) {
-        System.out.println(player.getName() + ": " + playerResult.getTerm());
+    public void printPlayerResult(final Player player, final double playerProfit) {
+        System.out.println(player.getName() + ": " + playerProfit);
     }
 
     public void printErrorMessage(String errorMessage) {
         System.out.println(ERROR + errorMessage);
+    }
+
+    public void printRequestBettingMoney(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
     }
 }

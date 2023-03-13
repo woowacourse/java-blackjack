@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
@@ -14,9 +16,9 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractNumbers());
-        return score.getScore() <= MAX_SCORE_TO_RECEIVE;
+        return getHand().calculateScore().isNotOver(MAX_SCORE_TO_RECEIVE);
     }
+
 
     public String getName() {
         return DEALER_NAME;

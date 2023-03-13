@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.*;
 
@@ -20,8 +20,16 @@ public class Deck {
 
     private void generateCardEachSuit(Suit suit) {
         for (Letter letter : Letter.values()) {
-            cards.add(new Card(suit, letter));
+            cards.add(Card.of(suit, letter));
         }
+    }
+
+    public List<Card> getCards(int count) {
+        List<Card> cards = new ArrayList<>();
+        for (int index = 0; index < count; index++) {
+            cards.add(getCard());
+        }
+        return cards;
     }
 
     public Card getCard() {
@@ -29,12 +37,5 @@ public class Deck {
             throw new IllegalStateException(NO_REMAIN_CARD_ERROR_MESSAGE);
         }
         return cards.poll();
-    }
-
-    public List<Card> getTwoCards() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(getCard());
-        cards.add(getCard());
-        return cards;
     }
 }

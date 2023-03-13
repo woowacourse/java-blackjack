@@ -1,8 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static blackjack.controller.BlackJackController.CARD_COUNT;
 
 public class Players {
     private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상 7명 이하여야 합니다.";
@@ -16,10 +21,11 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames, Deck deck) {
+    public static Players of(List<String> playerNames, List<String> bettingMoneys, Deck deck) {
         validatePlayerNames(playerNames);
-        return new Players(playerNames.stream()
-                .map(name -> new Player(name, deck.getTwoCards()))
+        return new Players(IntStream.range(0, playerNames.size())
+                .mapToObj(index -> new Player(playerNames.get(index),
+                        bettingMoneys.get(index), deck.getCards(CARD_COUNT)))
                 .collect(Collectors.toList()));
     }
 
