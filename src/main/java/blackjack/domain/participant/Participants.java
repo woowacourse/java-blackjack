@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.GameResult;
 
@@ -22,6 +23,14 @@ public class Participants {
     public void handInitialCards(Deck deck) {
         dealer.handInitialCards(deck);
         players.handInitialCards(deck);
+    }
+
+    public boolean canDealerHit() {
+        return dealer.canHit();
+    }
+
+    public void handOneCardToDealer(Card card) {
+        dealer.take(card);
     }
 
     public GameResult getGameResult() {

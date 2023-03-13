@@ -39,6 +39,14 @@ public class BlackJackGame {
         return getDealer().getFirstCard();
     }
 
+    public boolean canDealerHit() {
+        return participants.canDealerHit();
+    }
+
+    public void handOneCardToDealer() {
+        participants.handOneCardToDealer(deck.draw());
+    }
+
     public GameResult getGameResult() {
         return participants.getGameResult();
     }

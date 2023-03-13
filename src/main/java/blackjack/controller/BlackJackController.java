@@ -6,7 +6,6 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.bet.Money;
 import blackjack.domain.card.BlackJackDeckGenerator;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
@@ -51,7 +50,7 @@ public class BlackJackController {
 
     private void playGame() {
         blackJackGame.getPlayers().forEach(this::hitOrStay);
-        hitOrStayForDealer(blackJackGame.getDealer());
+        hitOrStayForDealer();
     }
 
     private void hitOrStay(Player player) {
@@ -69,14 +68,14 @@ public class BlackJackController {
         hitOrStay(player);
     }
 
-    private void hitOrStayForDealer(Dealer dealer) {
-        if (!dealer.canHit()) {
+    private void hitOrStayForDealer() {
+        if (!blackJackGame.canDealerHit()) {
             return;
         }
 
-        blackJackGame.handOneCard(dealer);
+        blackJackGame.handOneCardToDealer();
         OutputView.showDealerHitMessage();
-        hitOrStayForDealer(dealer);
+        hitOrStayForDealer();
     }
 
     private void showResult() {
