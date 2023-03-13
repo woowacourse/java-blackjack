@@ -4,10 +4,13 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 
 public class RandomDeckGenerator implements DeckGenerator {
-    private static void addCard(final Deque<Card> cards, final Suits suits) {
+    private static void addCard(final List<Card> cards, final Suits suits) {
         for (Denomination denomination : Denomination.values()) {
             cards.add(new Card(denomination, suits));
         }
@@ -15,10 +18,11 @@ public class RandomDeckGenerator implements DeckGenerator {
 
     @Override
     public Deck generateDeck() {
-        Deque<Card> cards = new ArrayDeque<>();
+        List<Card> cards = new ArrayList<>();
         for (Suits suits : Suits.values()) {
             addCard(cards, suits);
         }
-        return new Deck(cards);
+        Collections.shuffle(cards);
+        return new Deck(new ArrayDeque<>(cards));
     }
 }
