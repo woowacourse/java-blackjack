@@ -24,11 +24,11 @@ class ParticipantsTest {
     @Test
     void 초기_카드_지급() {
         // given
-        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>() {{
+        Map<String, Integer> playerBettingMoneyTable = new LinkedHashMap<>() {{
             put("Player1", 1_000);
             put("Player2", 2_000);
         }};
-        Participants participants = Participants.from(playerBettingAmountTable);
+        Participants participants = Participants.from(playerBettingMoneyTable);
         participants.drawInitialCardsEachParticipant(ShuffledDeck.createByCount(6));
         // when
         Dealer dealer = participants.getDealer();
@@ -41,11 +41,11 @@ class ParticipantsTest {
     @DisplayName("모든 플레이어의 결과를 반환한다.")
     @Test
     void 결과_계산() {
-        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>() {{
+        Map<String, Integer> playerBettingMoneyTable = new LinkedHashMap<>() {{
             put("Player1", 1_000);
             put("Player2", 2_000);
         }};
-        Participants participants = Participants.from(playerBettingAmountTable);
+        Participants participants = Participants.from(playerBettingMoneyTable);
         participants.drawInitialCardsEachParticipant(ShuffledDeck.createByCount(6));
 
         AllWinningAmountDto allWinningAmountDto = participants.calculateWinningAmountOfAllPlayers();

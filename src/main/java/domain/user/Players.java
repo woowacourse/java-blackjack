@@ -11,14 +11,14 @@ public final class Players {
         this.players = players;
     }
 
-    public static Players from(Map<String, Integer> playerBettingAmountTable) {
-        return new Players(generatePlayers(playerBettingAmountTable));
+    public static Players from(Map<String, Integer> playerBettingMoneyTable) {
+        return new Players(generatePlayers(playerBettingMoneyTable));
     }
 
-    private static List<Player> generatePlayers(Map<String, Integer> playerBettingAmountTable) {
+    private static List<Player> generatePlayers(Map<String, Integer> playerBettingMoneyTable) {
         try {
-            return playerBettingAmountTable.keySet().stream()
-                    .map(playerNameInput -> Player.of(playerNameInput, playerBettingAmountTable.get(playerNameInput)))
+            return playerBettingMoneyTable.keySet().stream()
+                    .map(playerNameInput -> Player.of(playerNameInput, playerBettingMoneyTable.get(playerNameInput)))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("플레이어 생성에 실패했습니다" + System.lineSeparator()

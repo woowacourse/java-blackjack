@@ -4,7 +4,7 @@ import domain.BlackjackGame;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.ShuffledDeck;
-import domain.user.BettingAmount;
+import domain.user.BettingMoney;
 import domain.user.Dealer;
 import domain.user.Participants;
 import domain.user.Player;
@@ -73,7 +73,7 @@ public class BlackjackController {
     private UserInformation generateUserInformation(UserName userName) {
         return repeat(() -> new UserInformation(
                 userName,
-                new BettingAmount(InputView.readPlayerBettingAmountOf(userName.getValue())))
+                new BettingMoney(InputView.readPlayerBettingMoneyOf(userName.getValue())))
         );
     }
 

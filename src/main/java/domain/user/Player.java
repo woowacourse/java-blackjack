@@ -8,9 +8,9 @@ public final class Player extends User {
         super.hand = hand;
     }
 
-    public static Player of(String nameValue, int bettingAmountValue) {
+    public static Player of(String nameValue, int bettingMoneyValue) {
         return new Player(
-                new UserInformation(new PlayerName(nameValue), new BettingAmount(bettingAmountValue)),
+                new UserInformation(new PlayerName(nameValue), new BettingMoney(bettingMoneyValue)),
                 new Hand()
         );
     }
@@ -20,7 +20,7 @@ public final class Player extends User {
         return super.calculateScore() < BLACKJACK_SCORE;
     }
 
-    public int getBettingAmountValue() {
-        return this.userInformation.getBettingAmountValue();
+    public int getBettingMoneyValue() {
+        return this.userInformation.getBettingMoneyValue();
     }
 }

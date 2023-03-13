@@ -22,8 +22,8 @@ public final class Participants {
         this.dealer = dealer;
     }
 
-    public static Participants from(Map<String, Integer> playerBettingAmountTable) {
-        return new Participants(Players.from(playerBettingAmountTable), new Dealer());
+    public static Participants from(Map<String, Integer> playerBettingMoneyTable) {
+        return new Participants(Players.from(playerBettingMoneyTable), new Dealer());
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {
@@ -51,7 +51,7 @@ public final class Participants {
 
     private int calculateWinningAmount(Player player) {
         Result result = calculateResult(player);
-        return result.calculateWinningAmount(player.getBettingAmountValue());
+        return result.calculateWinningAmount(player.getBettingMoneyValue());
     }
 
     private Result calculateResult(Player player) {

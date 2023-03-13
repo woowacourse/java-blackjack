@@ -17,7 +17,7 @@ class PlayerTest {
         hand.add(new Card(Suit.SPADE, Rank.TWO));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.calculateScore()).isEqualTo(12);
     }
@@ -37,7 +37,7 @@ class PlayerTest {
         hand.add(new Card(Suit.SPADE, Rank.TWO));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.canAdd()).isTrue();
     }
@@ -50,7 +50,7 @@ class PlayerTest {
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.canAdd()).isFalse();
     }
@@ -72,7 +72,7 @@ class PlayerTest {
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThatThrownBy(() -> player.addCard(new Card(Suit.SPADE, Rank.ACE)))
                 .isInstanceOf(IllegalStateException.class)
@@ -86,7 +86,7 @@ class PlayerTest {
         hand.add(new Card(Suit.SPADE, Rank.ACE));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.isBlackjack()).isTrue();
     }
@@ -98,7 +98,7 @@ class PlayerTest {
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.isBlackjack()).isFalse();
     }
@@ -111,7 +111,7 @@ class PlayerTest {
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.TWO));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.isBust()).isTrue();
     }
@@ -124,7 +124,7 @@ class PlayerTest {
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.ACE));
         Player player = new Player(
-                new UserInformation(new PlayerName("name"), new BettingAmount(1_000)),
+                new UserInformation(new PlayerName("name"), new BettingMoney(1_000)),
                 hand);
         assertThat(player.isBust()).isFalse();
     }
@@ -132,8 +132,8 @@ class PlayerTest {
     @Test
     @DisplayName("베팅 금액을 반환한다.")
     void 베팅_금액_반환() {
-        int bettingAmountValue = 7_000;
-        Player player = Player.of("Player", bettingAmountValue);
-        assertThat(player.getBettingAmountValue()).isEqualTo(bettingAmountValue);
+        int bettingMoneyValue = 7_000;
+        Player player = Player.of("Player", bettingMoneyValue);
+        assertThat(player.getBettingMoneyValue()).isEqualTo(bettingMoneyValue);
     }
 }

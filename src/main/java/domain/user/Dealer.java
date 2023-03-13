@@ -8,11 +8,11 @@ public final class Dealer extends User {
     private static final int NO_BETTING_AMOUNT = 0;
 
     public Dealer() {
-        this(new UserInformation(new DealerName(DEALER_NAME), new BettingAmount(NO_BETTING_AMOUNT)), new Hand());
+        this(new UserInformation(new DealerName(DEALER_NAME), new BettingMoney(NO_BETTING_AMOUNT)), new Hand());
     }
 
     public Dealer(Hand hand) {
-        this(new UserInformation(new DealerName(DEALER_NAME), new BettingAmount(NO_BETTING_AMOUNT)), hand);
+        this(new UserInformation(new DealerName(DEALER_NAME), new BettingMoney(NO_BETTING_AMOUNT)), hand);
     }
 
     public Dealer(UserInformation userInformation, Hand hand) {

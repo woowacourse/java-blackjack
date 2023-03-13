@@ -40,12 +40,12 @@ classDiagram
 ### UserInformation 관련 클래스
 ```mermaid
 classDiagram
-    note "* UserInformation와 UserName/BettingAmount는 합성 집합 관계(Composition)
+    note "* UserInformation와 UserName/BettingMoney는 합성 집합 관계(Composition)
     UserName과 PlayerName/DealerName은 실체화 관계(구현)"
     UserName <|.. PlayerName
     UserName <|.. DealerName
     UserInformation *-- UserName
-    UserInformation *-- BettingAmount
+    UserInformation *-- BettingMoney
     <<interface>> UserName
 ```
 
@@ -136,7 +136,7 @@ classDiagram
   - [x] 예외 처리) 빈 이름
 - [x] 이름 값을 반환한다.
 
-### BettingAmount
+### BettingMoney
 - 베팅 금액 정보를 가지고 있는 객체
 - [x] 올바른 베팅 금액인지 검증한다.
 - [x] 베팅 금액을 반환한다.

@@ -19,13 +19,13 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Integer readPlayerBettingAmountOf(String nameInput) {
+    public static Integer readPlayerBettingMoneyOf(String nameInput) {
         System.out.println();
         System.out.printf("%s의 배팅 금액은?", nameInput);
         System.out.println();
-        int bettingAmountInput = SCANNER.nextInt();
+        int bettingMoneyInput = SCANNER.nextInt();
         SCANNER.nextLine();
-        return bettingAmountInput;
+        return bettingMoneyInput;
     }
 
     public static boolean readWhetherDrawCardOrNot(Player player) {

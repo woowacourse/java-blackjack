@@ -2,11 +2,11 @@ package domain.user;
 
 public class UserInformation {
     private final UserName userName;
-    private final BettingAmount bettingAmount;
+    private final BettingMoney bettingMoney;
 
-    public UserInformation(UserName userName, BettingAmount bettingAmount) {
+    public UserInformation(UserName userName, BettingMoney bettingMoney) {
         this.userName = userName;
-        this.bettingAmount = bettingAmount;
+        this.bettingMoney = bettingMoney;
     }
 
     public String getNameValue() {
@@ -14,7 +14,7 @@ public class UserInformation {
     }
 
 
-    public int getBettingAmountValue() {
-        return this.bettingAmount.getValue();
+    public int getBettingMoneyValue() {
+        return this.bettingMoney.getValue();
     }
 }

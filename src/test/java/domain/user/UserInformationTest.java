@@ -13,7 +13,7 @@ class UserInformationTest {
         String nameInput = "test";
         UserInformation userInformation = new UserInformation(
                 new PlayerName(nameInput),
-                new BettingAmount(1_000)
+                new BettingMoney(1_000)
         );
 
         assertThat(userInformation.getNameValue()).isEqualTo(nameInput);
@@ -22,10 +22,10 @@ class UserInformationTest {
     @DisplayName("User의 베팅 금액을 반환한다.")
     @Test
     void 베팅_금액_반환() {
-        int bettingAmountValue = 7_000;
+        int bettingMoneyValue = 7_000;
         UserInformation userInformation = new UserInformation(
                 new PlayerName("test"),
-                new BettingAmount(bettingAmountValue));
-        assertThat(userInformation.getBettingAmountValue()).isEqualTo(bettingAmountValue);
+                new BettingMoney(bettingMoneyValue));
+        assertThat(userInformation.getBettingMoneyValue()).isEqualTo(bettingMoneyValue);
     }
 }
