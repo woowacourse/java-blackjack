@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final String DELIMITER = ",";
-    private static final String DEALER_NAME = "딜러";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -17,15 +16,7 @@ public class InputView {
         String[] seperatedInputNames = inputNames.split(DELIMITER);
         List<String> playerNames = Arrays.asList(seperatedInputNames);
 
-        validateplayerNames(playerNames);
-
         return getNamesWithSpaceRemoved(playerNames);
-    }
-
-    private static void validateplayerNames(List<String> playerNames) {
-        if (playerNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException("플레이어의 이름은 \"딜러\"가 될 수 없습니다.");
-        }
     }
 
     public int readPlayerBetAmount() {
