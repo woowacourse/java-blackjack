@@ -15,11 +15,11 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public static Participants of(final List<String> playersName, final List<Bet> bets, final Dealer dealer) {
+    public static Participants of(final List<Name> playersName, final List<Bet> bets, final Dealer dealer) {
         return new Participants(createPlayers(playersName, bets), dealer);
     }
 
-    private static List<Player> createPlayers(List<String> playersName, List<Bet> bets) {
+    private static List<Player> createPlayers(List<Name> playersName, List<Bet> bets) {
         final List<Player> players = new ArrayList<>();
 
         for (int i = 0, size = playersName.size(); i < size; i++) {

@@ -16,7 +16,7 @@ public class Player implements Receivable {
     private final User user;
     private final Bet bet;
 
-    public Player(final String name, final Bet bet) {
+    public Player(final Name name, final Bet bet) {
         this.user = new User(name);
         this.bet = bet;
     }
@@ -77,7 +77,8 @@ public class Player implements Receivable {
     }
 
     public String getName() {
-        return user.getName();
+        final Name name = user.getName();
+        return name.getName();
     }
 
     public Hand getHand() {

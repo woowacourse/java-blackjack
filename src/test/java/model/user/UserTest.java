@@ -19,7 +19,7 @@ class UserTest {
 
     @BeforeEach
     void init() {
-        user = new User("bebe");
+        user = new User(new Name("bebe"));
     }
 
     @DisplayName("플레이어가 카드를 받는지 테스트한다")

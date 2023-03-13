@@ -29,7 +29,7 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = new Player("ethan", new Bet(10_000));
+        player = new Player(new Name("ethan"), new Bet(10_000));
         dealer = new Dealer();
     }
 

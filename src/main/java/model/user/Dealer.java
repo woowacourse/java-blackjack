@@ -10,7 +10,8 @@ public class Dealer implements Receivable {
     private final User user;
 
     public Dealer() {
-        this.user = new User("딜러");
+        final Name dealerName = new Name("딜러");
+        this.user = new User(dealerName);
     }
 
     @Override
@@ -36,7 +37,8 @@ public class Dealer implements Receivable {
     }
 
     public String getName() {
-        return user.getName();
+        final Name name = user.getName();
+        return name.getName();
     }
 
     public Hand getHand() {

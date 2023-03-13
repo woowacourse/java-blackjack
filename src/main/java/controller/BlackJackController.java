@@ -1,12 +1,14 @@
 package controller;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import model.card.Deck;
 import model.money.Bet;
 import model.user.Dealer;
+import model.user.Name;
 import model.user.Participants;
 import model.user.Player;
 import ui.input.InputView;
@@ -37,23 +39,24 @@ public class BlackJackController {
     }
 
     private Participants getParticipants(final Dealer dealer) {
-        final List<String> playerNames = getPlayerNames();
+        final List<Name> playerNames = getPlayerNames();
         final List<Bet> bets = getBets(playerNames);
 
         return Participants.of(playerNames, bets, dealer);
     }
 
-    private List<String> getPlayerNames() {
-        final String[] playersName = inputView.getPlayersName().split(",");
+    private List<Name> getPlayerNames() {
+        final String[] playersName = inputView.getPlayersName().split(",", -1);
         return Arrays.stream(playersName)
-                .collect(Collectors.toList());
+                .map(playerName -> new Name(playerName.trim()))
+                .collect(toList());
     }
 
-    private List<Bet> getBets(final List<String> playerNames) {
+    private List<Bet> getBets(final List<Name> playerNames) {
         List<Bet> bets = new ArrayList<>();
 
-        for (String playerName : playerNames) {
-            final Bet bet = new Bet(inputView.getBet(playerName));
+        for (Name playerName : playerNames) {
+            final Bet bet = new Bet(inputView.getBet(playerName.getName()));
             bets.add(bet);
         }
 

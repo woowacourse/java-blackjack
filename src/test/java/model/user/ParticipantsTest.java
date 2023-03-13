@@ -22,7 +22,9 @@ class ParticipantsTest {
     @BeforeEach
     void init() {
         dealer = new Dealer();
-        participants = Participants.of(List.of("bebe", "ethan"), List.of(new Bet(10_000), new Bet(15_000)), dealer);
+        final Name bebeName = new Name("bebe");
+        final Name ethanName = new Name("ethan");
+        participants = Participants.of(List.of(bebeName, ethanName), List.of(new Bet(10_000), new Bet(15_000)), dealer);
         bebe = participants.getPlayers().get(0);
         ethan = participants.getPlayers().get(1);
     }
