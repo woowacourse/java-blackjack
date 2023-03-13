@@ -81,7 +81,7 @@ public class OutputView {
     }
 
     public void printUsersCardResult(Map<User, List<Card>> userResult) {
-        System.out.print(NEWLINE);
+        System.out.println();
         for (Entry<User, List<Card>> cardsByUser : userResult.entrySet()) {
             String name = cardsByUser.getKey().getName();
             String cards = cardsByUser.getValue().stream()
