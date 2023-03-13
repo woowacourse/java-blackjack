@@ -48,4 +48,15 @@ class StartTest {
         assertThat(gameState).isInstanceOf(Blackjack.class);
         assertThat(gameState).isNotInstanceOf(Start.class);
     }
+
+    @DisplayName("게임 시작시 카드를 추가로 받을 수 있다.")
+    @Test
+    void receiveSuccessTest() {
+        Cards cards = Cards.of(SPADE_TEN, SPADE_ACE);
+        GameState gameState = Start.from(cards);
+
+        gameState.receive(SPADE_TEN);
+        Cards stateCards = gameState.getCards();
+        assertThat(stateCards.getCards()).hasSize(3);
+    }
 }
