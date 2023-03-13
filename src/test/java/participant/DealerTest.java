@@ -3,6 +3,7 @@ package participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import common.TestDataGenerator;
+import domain.blackjack.BlackjackScore;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Dealer;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
     private static final Card CLUB_ACE = new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE);
+    private static final Card HEART_ACE = new Card(TrumpCardType.HEART, TrumpCardNumber.ACE);
     private static final Card HEART_THREE = new Card(TrumpCardType.HEART, TrumpCardNumber.THREE);
     private static final Card HEART_TEN = new Card(TrumpCardType.HEART, TrumpCardNumber.TEN);
     private static final Card CLUB_THREE = new Card(TrumpCardType.CLUB, TrumpCardNumber.THREE);
@@ -135,6 +137,21 @@ class DealerTest {
 
             assertThat(dealer.isBusted()).isTrue();
             assertThat(player.isBusted()).isTrue();
+
+            Result result = dealer.competeWithPlayer(player);
+            assertThat(result).isEqualTo(Result.WIN);
+        }
+
+        @DisplayName("점수가 모두 21인 경우 블랙잭을 달성한 참여자가 승리한다.")
+        @Test
+        void competeWithPlayerWinWhenBlackjackTest() {
+            dealer.start(Cards.of(CLUB_ACE, SPADE_KING));
+
+            player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+            player.receive(HEART_ACE);
+
+            assertThat(dealer.calculateBlackjackScore()).isEqualTo(BlackjackScore.from(21));
+            assertThat(player.calculateBlackjackScore()).isEqualTo(BlackjackScore.from(21));
 
             Result result = dealer.competeWithPlayer(player);
             assertThat(result).isEqualTo(Result.WIN);
