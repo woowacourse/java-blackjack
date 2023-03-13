@@ -31,6 +31,13 @@ public class BlackJackGame {
         players.receiveCards(cards, INITIAL_CARD_COUNT);
     }
 
+    public Map<User, List<Card>> getSetUpResult() {
+        Map<User, List<Card>> setUpResult = new LinkedHashMap<>();
+        setUpResult.put(dealer, List.of(dealer.getFirstCard()));
+        setUpResult.putAll(players.getHandsByPlayer());
+        return setUpResult;
+    }
+
     public void takePlayerAction(Player player, UserAction action) {
         if (action == UserAction.HIT) {
             hit(player);
@@ -50,15 +57,11 @@ public class BlackJackGame {
         }
     }
 
-    public Map<User, List<Card>> getSetUpResult() {
-        Map<User, List<Card>> setUpResult = new LinkedHashMap<>();
-        setUpResult.put(dealer, List.of(dealer.getFirstCard()));
-        setUpResult.putAll(players.getHandsByPlayer());
-        return setUpResult;
-    }
+    public int calculateDealerProfit() {
+        judgeWinner();
 
-    public Map<Player, Profit> getBetResultOfPlayer() {
-        return players.getPlayerProfits();
+        int playerProfitSum = players.calculateProfitSum();
+        return -playerProfitSum;
     }
 
     private void judgeWinner() {
@@ -66,11 +69,8 @@ public class BlackJackGame {
         referee.judgeWinner();
     }
 
-    public int calculateDealerProfit() {
-        judgeWinner();
-
-        int playerProfitSum = players.calculateProfitSum();
-        return -playerProfitSum;
+    public Map<Player, Profit> getBetResultOfPlayer() {
+        return players.getPlayerProfits();
     }
 
     public boolean isDealerDrawExtraCount() {
