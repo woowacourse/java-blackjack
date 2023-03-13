@@ -2,6 +2,7 @@ package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.money.BettingMoney;
 import domain.money.BettingMoneyTable;
 import domain.money.BettingMonies;
 import domain.deck.DefaultDeckGenerator;
@@ -10,6 +11,7 @@ import domain.user.Player;
 import domain.user.Users;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,14 +39,17 @@ public class BlackjackTest {
     }
 
     private BettingMoneyTable getDefaultBettingMoneyTable(List<Player> players) {
-        return BettingMoneyTable.of(players, getDefaultMonies(players.size()));
+        BettingMonies bettingMonies = getZeroNumbers(players.size()).stream()
+                .map(number -> BettingMoney.of(number))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), BettingMonies::of));
+        return BettingMoneyTable.of(players, bettingMonies);
     }
 
-    private BettingMonies getDefaultMonies(int size) {
-        List<Integer> emptyMonies = new ArrayList<>();
+    private List<Integer> getZeroNumbers(int size) {
+        List<Integer> zeroNumbers = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            emptyMonies.add(0);
+            zeroNumbers.add(0);
         }
-        return BettingMonies.of(emptyMonies);
+        return zeroNumbers;
     }
 }

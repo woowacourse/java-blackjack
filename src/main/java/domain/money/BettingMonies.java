@@ -1,7 +1,6 @@
 package domain.money;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BettingMonies {
     private final List<BettingMoney> bettingMonies;
