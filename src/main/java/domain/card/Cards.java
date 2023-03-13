@@ -68,9 +68,9 @@ public class Cards {
         return cards.size();
     }
 
-    public WinningStatus compete(final Cards dealerCards) {
+    public WinningStatus compete(final Cards cards) {
         Score score = this.calculateScore();
-        Score dealerScore = dealerCards.calculateScore();
+        Score dealerScore = cards.calculateScore();
 
         if (score.isGreaterThan(dealerScore)) {
             return WinningStatus.WIN;
