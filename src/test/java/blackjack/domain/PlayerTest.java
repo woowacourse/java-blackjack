@@ -25,14 +25,14 @@ class PlayerTest {
     @DisplayName("처음 Player가 생성되면 배팅 금액은 0이다.")
     @Test
     void Should_BattingAmountIsZero_When_NewPlayer() {
-        assertThat(tori.getBattingAmount()).isEqualTo(0);
+        assertThat(tori.getBettingAmountToInt()).isEqualTo(0);
     }
 
     @DisplayName("배팅 금액을 갱신할 수 있다.")
     @Test
     void Should_PlayerTest_When_PlayerTest() {
-        tori.setBattingAmount(new BattingAmount(1000));
-        assertThat(tori.getBattingAmount()).isEqualTo(1000);
+        tori.setBettingAmount(new BettingAmount(1000));
+        assertThat(tori.getBettingAmountToInt()).isEqualTo(1000);
     }
 
     @DisplayName("플레이어에게 카드를 추가할 수 있다.")

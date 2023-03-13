@@ -5,12 +5,12 @@ public class Player extends Person {
     private static final int ZERO = 0;
 
     private final Name name;
-    private BattingAmount battingAmount;
+    private BettingAmount bettingAmount;
 
     private Player(Name name) {
         super();
         this.name = name;
-        this.battingAmount = new BattingAmount(ZERO);
+        this.bettingAmount = new BettingAmount(ZERO);
     }
 
     public static Player from(String name) {
@@ -27,11 +27,11 @@ public class Player extends Person {
         return name.getName();
     }
 
-    public BattingAmount getBattingAmount() {
-        return battingAmount;
+    public int getBettingAmountToInt() {
+        return bettingAmount.getBettingAmount();
     }
 
-    public void setBattingAmount(BattingAmount battingAmount) {
-        this.battingAmount = battingAmount;
+    public void setBettingAmount(BettingAmount bettingAmount) {
+        this.bettingAmount = bettingAmount;
     }
 }
