@@ -1,14 +1,58 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
 class PlayerTest {
+
+    @Test
+    @DisplayName("딜러가 버스트면 플레이어는 가지고 있는 카드와 상관없이 승리한다.")
+    void matchGame_dealer_bust() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.SPADE, Rank.KING));
+        dealer.addCard(new Card(Suit.SPADE, Rank.FIVE));
+        dealer.addCard(new Card(Suit.SPADE, Rank.QUEEN));
+
+        Player player = new Player("encho");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
+
+        // when
+        GameResult gameResult = player.matchGame(dealer);
+
+        // then
+        assertThat(gameResult)
+                .isEqualTo(GameResult.WIN);
+
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 동시에 블랙잭이면 플레이어가 승리한다.")
+    void matchGame___() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard((new Card(Suit.SPADE, Rank.JACK)));
+        dealer.addCard(new Card(Suit.SPADE, Rank.ACE));
+
+        Player player = new Player("encho");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+
+        // when
+        GameResult gameResult = player.matchGame(dealer);
+
+        // then
+        assertThat(gameResult)
+                .isEqualTo(GameResult.WIN);
+
+    }
 
     @Test
     @DisplayName("처음 받은 두 장의 카드의 점수 합이 21점이면 게임 결과는 블랙잭이다.")

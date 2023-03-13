@@ -36,14 +36,17 @@ public class Player extends Person {
     }
 
     public GameResult matchGame(Person dealer) {
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+        if (dealer.isBlackjack() && this.isBlackjack()) {
+            return GameResult.WIN;
+        }
         if (isBlackjack()) {
             return GameResult.BLACKJACK;
         }
         if (isBust()) {
             return GameResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return GameResult.WIN;
         }
         return compareScoreWith(dealer);
     }
