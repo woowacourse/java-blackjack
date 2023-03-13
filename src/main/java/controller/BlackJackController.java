@@ -28,7 +28,6 @@ public class BlackJackController {
 
         firstDeal(cardTable, players);
         printStateAfterFirstDeal(participants, dealer);
-        cardTable.matchAfterFirstDeal(participants, dealer);
 
         finalDeal(cardTable, participants, dealer);
         printStateAfterFinalDeal(participants, dealer);
@@ -58,7 +57,7 @@ public class BlackJackController {
 
     private void hitForParticipants(final CardTable cardTable, final List<Participant> participants) {
         participants.stream()
-                    .filter(Participant::hasNotBetState)
+                    .filter(Participant::isNotBlackjack)
                     .forEach(participant -> hitForParticipant(cardTable, participant));
 
     }

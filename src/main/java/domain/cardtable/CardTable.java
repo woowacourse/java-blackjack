@@ -5,6 +5,7 @@ import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.participant.Money;
 import domain.player.participant.Participant;
+import domain.player.participant.betresult.resultfinder.BetResultFinder;
 
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class CardTable {
 
     private final CardDeck cardDeck;
+    private final BetResultFinder betResultFinder;
 
     private CardTable(final CardDeck cardDeck) {
         this.cardDeck = cardDeck;
+        this.betResultFinder = new BetResultFinder();
     }
 
     public static CardTable readyToPlayBlackjack(final CardDeck cardDeck) {
@@ -27,11 +30,11 @@ public class CardTable {
                                                                      final Dealer dealer) {
 
         return participants.stream()
-                           .peek(participant -> participant.finalMatchWith(dealer))
                            .collect(Collectors.toMap(
                                    Function.identity(),
-                                   Participant::determineBetMoney)
-                           );
+                                   participant -> participant.determineBetMoney(
+                                           betResultFinder.findStateOf(participant, dealer))
+                           ));
     }
 
     public Money determineDealerMoney(final List<Participant> participants, final Dealer dealer) {
@@ -42,11 +45,6 @@ public class CardTable {
                                       .stream()
                                       .reduce(Money.MIN, Money::plus)
                                       .lose();
-    }
-
-    public void matchAfterFirstDeal(final List<Participant> participants, final Dealer dealer) {
-
-        participants.forEach(participant -> participant.firstMatchWith(dealer));
     }
 
     public void dealCardTo(Player player) {

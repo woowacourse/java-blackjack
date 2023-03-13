@@ -55,8 +55,6 @@ class CardTableTest {
 
         final Dealer dealer = new Dealer();
 
-        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
-
         //when
         final Map<Participant, Money> gameResultMoney =
                 cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
@@ -81,8 +79,6 @@ class CardTableTest {
         dealer.hit(new Card(SPADE, JACK));
         dealer.hit(new Card(SPADE, QUEEN));
 
-        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
-
         //when
         final Map<Participant, Money> gameResultMoney =
                 cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
@@ -100,9 +96,6 @@ class CardTableTest {
     void test_determineParticipantsBettingMoney_both_not_bust(
             final Participant participant, final Dealer dealer,
             final Money resultBettingMoney) throws Exception {
-
-        //given
-        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
 
         //when
         final Map<Participant, Money> gameResultMoney =
@@ -158,9 +151,6 @@ class CardTableTest {
                                                                           final Dealer dealer,
                                                                           final Money resultMoney) throws Exception {
 
-        //given
-        cardTable.matchAfterFirstDeal(participants, dealer);
-
         //when
         final Map<Participant, Money> gameResultMoney =
                 cardTable.determineParticipantsBettingMoney(participants, dealer);
@@ -214,9 +204,6 @@ class CardTableTest {
     void test_determineDealerMoney(final List<Participant> participants,
                                    final Dealer dealer,
                                    final Money resultMoney) throws Exception {
-        //given
-        cardTable.matchAfterFirstDeal(participants, dealer);
-        cardTable.matchAfterFirstDeal(participants, dealer);
 
         //when
         final Money dealerMoney = cardTable.determineDealerMoney(participants, dealer);

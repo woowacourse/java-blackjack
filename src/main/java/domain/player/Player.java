@@ -42,5 +42,9 @@ public abstract class Player {
         return hand.isBlackjack();
     }
 
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
     public abstract List<Card> faceUpFirstDeal();
 }
