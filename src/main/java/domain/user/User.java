@@ -1,13 +1,15 @@
 package domain.user;
 
+import static domain.Status.BLACKJACK;
+import static domain.Status.BUST;
+import static domain.Status.PLAYING;
+import static domain.Status.STAY;
+
 import domain.Score;
 import domain.Status;
 import domain.card.Card;
 import domain.card.Hand;
-
 import java.util.List;
-
-import static domain.Status.*;
 
 public abstract class User {
     public static int NUMBER_OF_FIRST_CARDS = 2;

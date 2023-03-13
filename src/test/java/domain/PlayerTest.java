@@ -1,14 +1,5 @@
 package domain;
 
-import domain.card.Card;
-import domain.user.Player;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-
 import static domain.Result.DRAW;
 import static domain.Result.LOSE;
 import static domain.Result.WIN;
@@ -16,6 +7,14 @@ import static domain.Result.WIN_BY_BLACKJACK;
 import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.Assistant.addCards;
+
+import domain.card.Card;
+import domain.user.Player;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
     private Player player;

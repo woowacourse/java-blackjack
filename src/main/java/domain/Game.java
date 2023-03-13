@@ -1,12 +1,14 @@
 package domain;
 
-import domain.card.Deck;
-import domain.user.*;
-
-import java.util.List;
-
-import static domain.Status.*;
+import static domain.Status.PLAYING;
 import static domain.user.User.NUMBER_OF_FIRST_CARDS;
+
+import domain.card.Deck;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.User;
+import domain.user.Users;
+import java.util.List;
 
 public class Game {
     private final Deck deck;

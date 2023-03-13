@@ -1,10 +1,13 @@
 package domain;
 
-import domain.user.User;
-
-import static domain.Result.*;
+import static domain.Result.DRAW;
+import static domain.Result.LOSE;
+import static domain.Result.WIN;
+import static domain.Result.WIN_BY_BLACKJACK;
 import static domain.Status.BLACKJACK;
 import static domain.Status.BUST;
+
+import domain.user.User;
 
 public class Referee {
     public static Result getResult(User user, User other) {

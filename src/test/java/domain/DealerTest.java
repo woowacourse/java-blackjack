@@ -1,5 +1,9 @@
 package domain;
 
+import static domain.card.Suit.HEART;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static utils.Assistant.addCards;
+
 import domain.card.Card;
 import domain.user.Dealer;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,10 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static domain.card.Suit.HEART;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static utils.Assistant.addCards;
 
 class DealerTest {
     private Dealer dealer;

@@ -1,10 +1,12 @@
-package domain.user;
+package domain;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.Assistant.addCards;
 
-import domain.Money;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Users;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
