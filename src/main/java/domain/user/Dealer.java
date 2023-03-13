@@ -1,18 +1,22 @@
 package domain.user;
 
-import domain.Hand;
+import domain.card.Hand;
 
-public class Dealer extends User {
+public final class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int UPPER_LIMIT_TO_DRAW = 16;
+    private static final int NO_BETTING_AMOUNT = 0;
 
     public Dealer() {
-        super.userName = new DealerName(DEALER_NAME);
-        super.hand = new Hand();
+        this(new UserInformation(new DealerName(DEALER_NAME), new BettingMoney(NO_BETTING_AMOUNT)), new Hand());
     }
 
     public Dealer(Hand hand) {
-        super.userName = new DealerName(DEALER_NAME);
+        this(new UserInformation(new DealerName(DEALER_NAME), new BettingMoney(NO_BETTING_AMOUNT)), hand);
+    }
+
+    public Dealer(UserInformation userInformation, Hand hand) {
+        super.userInformation = userInformation;
         super.hand = hand;
     }
 

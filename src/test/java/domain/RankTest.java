@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

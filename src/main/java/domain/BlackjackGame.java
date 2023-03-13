@@ -1,17 +1,20 @@
 package domain;
 
+import domain.card.Deck;
+import domain.user.AllWinningAmountDto;
 import domain.user.Dealer;
+import domain.user.Participants;
 import domain.user.Player;
 import java.util.List;
-import java.util.Map;
 
-public class BlackjackGame {
+public final class BlackjackGame {
+
     private final Participants participants;
     private final Deck deck;
 
-    public BlackjackGame(List<String> nameValues) {
-        this.participants = new Participants(nameValues);
-        this.deck = new Deck();
+    public BlackjackGame(Participants participants, Deck deck) {
+        this.participants = participants;
+        this.deck = deck;
     }
 
     public void initializeGame() {
@@ -22,8 +25,8 @@ public class BlackjackGame {
         return this.participants.hitOrStayByDealer(this.deck);
     }
 
-    public Map<Player, Result> calculateAllResults() {
-        return this.participants.calculateAllResults();
+    public AllWinningAmountDto calculateAllWinningAmounts() {
+        return this.participants.calculateWinningAmountOfAllPlayers();
     }
 
     public void hitBy(Player player) {

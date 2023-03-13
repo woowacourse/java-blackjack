@@ -1,17 +1,20 @@
 package domain;
 
+import java.util.function.IntUnaryOperator;
+
 public enum Result {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN(bettingMoney -> bettingMoney),
+    LOSE(bettingMoney -> bettingMoney * -1),
+    DRAW(bettingMoney -> 0),
+    BLACKJACK(bettingMoney -> (int) (bettingMoney * 1.5));
 
-    private final String koreanText;
+    private final IntUnaryOperator operator;
 
-    Result(String koreanText) {
-        this.koreanText = koreanText;
+    Result(IntUnaryOperator operator) {
+        this.operator = operator;
     }
 
-    public String getKoreanText() {
-        return koreanText;
+    public int calculateWinningAmount(int bettingMoneyValue) {
+        return operator.applyAsInt(bettingMoneyValue);
     }
 }

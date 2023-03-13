@@ -30,8 +30,8 @@ public class PlayerNameTest {
     @DisplayName("이름 값을 반환한다.")
     @Test
     void 이름_반환() {
-        String value = "name";
-        PlayerName playerName = new PlayerName(value);
-        assertThat(playerName.getValue()).isEqualTo(value);
+        String nameValue = "name";
+        PlayerName playerName = new PlayerName(nameValue);
+        assertThat(playerName.getName()).isEqualTo(nameValue);
     }
 }

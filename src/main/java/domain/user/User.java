@@ -1,19 +1,19 @@
 package domain.user;
 
-import domain.Card;
-import domain.Hand;
+import domain.card.Card;
+import domain.card.Hand;
 import java.util.List;
 
 abstract public class User {
     protected static final int BLACKJACK_SCORE = 21;
 
-    protected UserName userName;
+    protected UserInformation userInformation;
     protected Hand hand;
 
     abstract public boolean canAdd();
 
     public String getNameValue() {
-        return this.userName.getValue();
+        return this.userInformation.getNameValue();
     }
 
     public int calculateScore() {
@@ -21,7 +21,7 @@ abstract public class User {
     }
 
     public boolean isBlackjack() {
-        return hand.calculateScore() == BLACKJACK_SCORE;
+        return hand.calculateScore() == BLACKJACK_SCORE && hand.isInitialState();
     }
 
     public void addCard(Card card) {

@@ -1,12 +1,11 @@
 package ui;
 
-import domain.Card;
-import domain.Result;
+import domain.card.Card;
+import domain.user.AllWinningAmountDto;
 import domain.user.User;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -57,21 +56,20 @@ public class OutputView {
         players.forEach(OutputView::printCardsStatusAndScoreOfUser);
     }
 
-    public static void printResults(Map<Player, Result> resultsOfPlayers) {
-        long dealerLose = resultsOfPlayers.values().stream().filter(result -> result == Result.WIN).count();
-        long dealerWin = resultsOfPlayers.values().stream().filter(result -> result == Result.LOSE).count();
-        long dealerDraws = resultsOfPlayers.values().stream().filter(result -> result == Result.DRAW).count();
+    public static void printWinningAmountsOfAllPlayers(AllWinningAmountDto allWinningAmountDto) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
-        if(dealerDraws > 0) {
-            System.out.printf(" %d무", dealerDraws);
-        }
-        System.out.println();
-        resultsOfPlayers.forEach((player, result) -> System.out.println(player.getNameValue()+ ": " + result.getKoreanText()));
+        System.out.println("딜러: " + allWinningAmountDto.getWinningAmountOfDealer());
+        allWinningAmountDto.getPlayerNameWinningAmounts()
+                .forEach((playerName, winningAmount) -> System.out.println(playerName + ": " + winningAmount));
     }
 
     public static void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
+        System.out.println();
+    }
+
+    public static void printWinningAmountOfDealer(Dealer dealer, int dealerWinningAmount) {
+        System.out.println();
+        System.out.println(dealer.getNameValue() + ": " + dealerWinningAmount);
     }
 }

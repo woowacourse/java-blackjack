@@ -1,39 +1,40 @@
 package techcourse.jcf.mission;
 
-public class SimpleLinkedList implements SimpleList {
-    private Node head;
-    private Node tail;
+public class SimpleLinkedList<T> implements SimpleList<T> {
+    private Node<T> head;
+    private Node<T> tail;
 
     public SimpleLinkedList() {
         this(null);
     }
 
-    public SimpleLinkedList(String[] values) {
-        this.head = new Node();
+    public SimpleLinkedList(T[] values) {
+        this.head = new Node<>();
         this.tail = this.head;
-        for (String value: values) {
-            this.tail.next = new Node(value);
+        for (T value: values) {
+            this.tail.next = new Node<>(value);
             this.tail = this.tail.next;
         }
     }
 
+
     @Override
-    public String get(int index) {
-        Node pointer = getNodeOf(index);
+    public T get(int index) {
+        Node<T> pointer = getNodeOf(index);
         return pointer.value;
     }
 
     @Override
-    public boolean add(String value) {
-        this.tail.next = new Node(value);
+    public boolean add(T value) {
+        this.tail.next = new Node<>(value);
         this.tail = this.tail.next;
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
-        Node prevPointer = this.head;
-        Node nextPointer = this.head;
+    public void add(int index, T value) {
+        Node<T> prevPointer = this.head;
+        Node<T> nextPointer = this.head;
         for (int i = 0; i <= index; i++) {
             prevPointer = nextPointer;
             if (prevPointer == null) {
@@ -41,20 +42,20 @@ public class SimpleLinkedList implements SimpleList {
             }
             nextPointer = nextPointer.next;
         }
-        prevPointer.next = new Node(value, nextPointer);
+        prevPointer.next = new Node<>(value, nextPointer);
     }
 
     @Override
-    public String set(int index, String value) {
-        Node pointer = getNodeOf(index);
-        String valueBeforeSet = pointer.value;
+    public T set(int index, T value) {
+        Node<T> pointer = getNodeOf(index);
+        T valueBeforeSet = pointer.value;
         pointer.value = value;
         return valueBeforeSet;
     }
 
     @Override
-    public boolean contains(String value) {
-        Node pointer = this.head.next;
+    public boolean contains(T value) {
+        Node<T> pointer = this.head.next;
         while (pointer != null) {
             if (pointer.value.equals(value)) {
                 return true;
@@ -65,8 +66,8 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
-        Node pointer = this.head.next;
+    public int indexOf(T value) {
+        Node<T> pointer = this.head.next;
         int index = 0;
         while (pointer != null) {
             if (pointer.value.equals(value)) {
@@ -80,7 +81,7 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public int size() {
-        Node pointer = this.head.next;
+        Node<T> pointer = this.head.next;
         int size = 0;
         while (pointer != null) {
             pointer = pointer.next;
@@ -95,9 +96,9 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
-        Node previousPointer = this.head;
-        Node nextPointer = this.head.next;
+    public boolean remove(T value) {
+        Node<T> previousPointer = this.head;
+        Node<T> nextPointer = this.head.next;
         while (nextPointer != null) {
             if (nextPointer.value.equals(value)) {
                 previousPointer.next = nextPointer.next;
@@ -110,24 +111,24 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
-        Node previousPointer = getNodeOf(index - 1);
-        Node pointerToRemove = getNodeOf(index);
-        String valueToRemove = pointerToRemove.value;
+    public T remove(int index) {
+        Node<T> previousPointer = getNodeOf(index - 1);
+        Node<T> pointerToRemove = getNodeOf(index);
+        T valueToRemove = pointerToRemove.value;
         previousPointer.next = pointerToRemove.next;
         return valueToRemove;
     }
 
     @Override
     public void clear() {
-        this.head = new Node();
+        this.head = new Node<T>();
         this.tail = this.head;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Node pointer = this.head.next;
+        Node<T> pointer = this.head.next;
         while (pointer != null) {
             sb.append(pointer.value);
             sb.append(", ");
@@ -137,8 +138,8 @@ public class SimpleLinkedList implements SimpleList {
         return sb.toString();
     }
 
-    private Node getNodeOf(int index) {
-        Node pointer = this.head;
+    private Node<T> getNodeOf(int index) {
+        Node<T> pointer = this.head;
         for (int i = 0; i <= index; i++) {
             pointer = pointer.next;
             if (pointer == null) {
@@ -147,20 +148,20 @@ public class SimpleLinkedList implements SimpleList {
         }
         return pointer;
     }
-    class Node {
+    class Node<T> {
 
-        private String value;
-        private Node next;
+        private T value;
+        private SimpleLinkedList<T>.Node<T> next;
 
         public Node() {
             this(null);
         }
 
-        public Node(String value) {
+        public Node(T value) {
             this(value, null);
         }
 
-        public Node(String value, Node next) {
+        public Node(T value, SimpleLinkedList<T>.Node<T> next) {
             this.value = value;
             this.next = next;
         }

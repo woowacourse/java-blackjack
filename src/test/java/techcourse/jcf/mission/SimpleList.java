@@ -1,26 +1,59 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList {
+public interface SimpleList<T> {
 
-    boolean add(String value);
+    static <T> SimpleList<T> fromArrayToList(T[] objects) {
+        SimpleArrayList<T> simpleArrayList = new SimpleArrayList<>();
+        for (T object : objects) {
+            simpleArrayList.add(object);
+        }
+        return simpleArrayList;
+    }
 
-    void add(int index, String value);
+    static <T extends Number> double sum(SimpleList<T> simpleList) {
+        double sum = 0;
+        for (int i = 0; i < simpleList.size(); i++) {
+            sum += simpleList.get(i).doubleValue();
+        }
+        return sum;
+    }
 
-    String set(int index, String value);
+    static <T> SimpleList<T> filterNegative(SimpleList<? extends Number> simpleList) {
+        SimpleList<T> resultList = new SimpleArrayList<>();
+        for (int i = 0; i < simpleList.size(); i++) {
+            if (simpleList.get(i).doubleValue() >= 0) {
+                resultList.add((T) simpleList.get(i));
+            }
+        }
+        return resultList;
+    }
 
-    String get(int index);
+    static <T> SimpleList<T> copy(SimpleList<? extends T> listToCopy, SimpleList<T> target) {
+        for (int i = 0; i < listToCopy.size(); i++) {
+            target.add(listToCopy.get(i));
+        }
+        return target;
+    }
 
-    boolean contains(String value);
+    boolean add(T value);
 
-    int indexOf(String value);
+    void add(int index, T value);
+
+    T set(int index, T value);
+
+    T get(int index);
+
+    boolean contains(T value);
+
+    int indexOf(T value);
 
     int size();
 
     boolean isEmpty();
 
-    boolean remove(String value);
+    boolean remove(T value);
 
-    String remove(int index);
+    T remove(int index);
 
     void clear();
 }

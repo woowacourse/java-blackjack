@@ -1,21 +1,26 @@
 package domain.user;
 
-import domain.Hand;
+import domain.card.Hand;
 
-public class Player extends User {
-
-    public Player(String nameValue) {
-        super.userName = new PlayerName(nameValue);
-        super.hand = new Hand();
+public final class Player extends User {
+    public Player(UserInformation userInformation, Hand hand) {
+        super.userInformation = userInformation;
+        super.hand = hand;
     }
 
-    public Player(String nameValue, Hand hand) {
-        super.userName = new PlayerName(nameValue);
-        super.hand = hand;
+    public static Player of(String nameValue, int bettingMoneyValue) {
+        return new Player(
+                new UserInformation(new PlayerName(nameValue), new BettingMoney(bettingMoneyValue)),
+                new Hand()
+        );
     }
 
     @Override
     public boolean canAdd() {
         return super.calculateScore() < BLACKJACK_SCORE;
+    }
+
+    public int getBettingMoneyValue() {
+        return this.userInformation.getBettingMoneyValue();
     }
 }

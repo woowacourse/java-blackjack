@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-public class Card {
+public final class Card {
     private final Suit suit;
     private final Rank rank;
 

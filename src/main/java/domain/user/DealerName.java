@@ -1,18 +1,12 @@
 package domain.user;
 
-import java.util.ArrayList;
-import java.util.List;
+public final class DealerName implements UserName {
 
-public class DealerName implements UserName {
-    private static final List<String> PROHIBITED_NAMES = new ArrayList<>() {{
-        add("딜러");
-    }};
-
-    private final String value;
+    private final String name;
 
     public DealerName(String nameValue) {
         validate(nameValue);
-        this.value = nameValue;
+        this.name = nameValue;
     }
 
     private void validate(String nameValue) {
@@ -26,7 +20,7 @@ public class DealerName implements UserName {
     }
 
     @Override
-    public String getValue() {
-        return this.value;
+    public String getName() {
+        return this.name;
     }
 }

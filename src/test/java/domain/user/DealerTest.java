@@ -3,10 +3,10 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Card;
-import domain.Hand;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -72,11 +72,10 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("Dealer가 가진 카드의 점수의 합이 블랙잭이면 true를 반환한다.")
+    @DisplayName("Dealer가 가진 카드가 블랙잭이면 true를 반환한다.")
     void 카드_블랙잭_인지_확인() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.SPADE, Rank.ACE));
-        hand.add(new Card(Suit.CLOVER, Rank.KING));
         hand.add(new Card(Suit.CLOVER, Rank.KING));
         Dealer dealer = new Dealer(hand);
         assertThat(dealer.isBlackjack()).isTrue();
