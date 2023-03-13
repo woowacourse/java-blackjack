@@ -33,11 +33,16 @@ public class Participants {
     }
 
     private void validate(Set<String> players) {
+        validateNonPlayer(players);
         validatePlayerLimit(players);
     }
-
+    private void validateNonPlayer(Set<String> players){
+        if(players.isEmpty()){
+            throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
+        }
+    }
     private void validatePlayerLimit(Set<String> players) {
-        if (players.size() > PLAYERS_COUNT_LIMIT || NO_PLAYER_COUNT >players.size()) {
+        if (players.size() > PLAYERS_COUNT_LIMIT) {
             throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
         }
     }

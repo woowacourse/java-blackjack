@@ -15,7 +15,6 @@ public class ParticipantsTest {
     @Test
     @DisplayName("참가자들이 존재하지 않을 때 예외를 던지는지 테스트")
     void throwExceptionWhenEmptyNames() {
-        String names = ",,";
         Map<String, Integer> players = new HashMap<>();
         Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -27,7 +26,7 @@ public class ParticipantsTest {
     void validatePlayerCountsFail() {
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 9; i++) {
-            players.put("test", 0);
+            players.put("test"+i, 0);
         }
         Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -35,11 +34,11 @@ public class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("플레이어가 9명 이하일때 에러 테스트")
+    @DisplayName("플레이어가 8명 이하일때 성공 테스트")
     void validatePlayerCountsSuccess() {
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 8; i++) {
-            players.put("test", 0);
+            players.put("test"+i, 0);
         }
         Assertions.assertThatNoException().isThrownBy(() -> new Participants(new Dealer(), players));
     }
@@ -61,7 +60,7 @@ public class ParticipantsTest {
         Dealer dealer = new Dealer();
         Map<String, Integer> players = new HashMap<>();
         for (int i = 0; i < 8; i++) {
-            players.put("test", 0);
+            players.put("test"+i, 0);
         }
         Participants participants = new Participants(dealer, players);
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(Player.class);
