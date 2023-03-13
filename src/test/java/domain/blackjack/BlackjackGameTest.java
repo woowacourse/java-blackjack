@@ -1,16 +1,14 @@
-package blackjack;
+package domain.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import common.TestDataGenerator;
-import domain.blackjack.BlackjackAction;
-import domain.blackjack.BlackjackGame;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.Participant;
 import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
+import domain.participant.Participant;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

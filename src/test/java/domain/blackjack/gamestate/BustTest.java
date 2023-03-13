@@ -33,13 +33,13 @@ class BustTest {
     @DisplayName("버스트 된 상태에서 카드 발급 요청 시 예외가 발생한다.")
 
     @Test
-    void isAbleToReceiveCard() {
+    void isAbleToReceiveExceptionCard() {
         assertThat(bustState.isAbleToReceiveCard()).isFalse();
     }
 
     @DisplayName("버스트 상태와 다른 상태들과 비교했을 때 항상 진다.")
     @Test
-    void competeToOtherState() {
+    void competeToOtherStateLose() {
         GameState blackjackState = Playing.from(Cards.of(
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE),
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN))

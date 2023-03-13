@@ -24,7 +24,7 @@ class BlackjackTest {
 
     @DisplayName("블랙잭 상태에서는 카드를 추가로 받을 수 없다.")
     @Test
-    void isAbleToReceiveCardTest() {
+    void isAbleToReceiveCardExceptionTest() {
         assertThat(blackjackState.isAbleToReceiveCard()).isFalse();
     }
 
@@ -37,7 +37,7 @@ class BlackjackTest {
 
     @DisplayName("블랙잭 상태는 다른 상태들과 비교했을 때 항상 이긴다.")
     @Test
-    void competeToOtherState() {
+    void competeToOtherStateWinTest() {
         GameState competeState = Playing.from(Cards.of(
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.NINE),
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN))
@@ -49,9 +49,5 @@ class BlackjackTest {
 
         assertThat(competeState).isInstanceOf(Bust.class);
         assertThat(blackjackState.competeToOtherState(competeState)).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    void getEarningRate() {
     }
 }

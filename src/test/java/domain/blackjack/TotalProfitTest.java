@@ -1,10 +1,8 @@
-package blackjack;
+package domain.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import common.TestDataGenerator;
-import domain.blackjack.BlackjackGame;
-import domain.blackjack.TotalProfit;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.TrumpCardNumber;

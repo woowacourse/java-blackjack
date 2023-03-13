@@ -1,4 +1,4 @@
-package participant;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,9 +11,6 @@ import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
 import domain.money.BetAmount;
 import domain.money.Profit;
-import domain.participant.Participant;
-import domain.participant.ParticipantName;
-import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
