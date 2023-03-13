@@ -37,7 +37,7 @@ public class Score {
             >= ACE_VALUE_GAP;
     }
 
-    public boolean isMax() {
+    public boolean isBlackJackScore() {
         return value == MAX_VALUE;
     }
 

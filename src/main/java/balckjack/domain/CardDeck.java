@@ -49,7 +49,7 @@ public class CardDeck {
     public boolean isBlackJack() {
         Score score = calculateScore();
         int count = cards.size();
-        return score.isMax() && count == BLACKJACK_CARD_COUNT;
+        return score.isBlackJackScore() && count == BLACKJACK_CARD_COUNT;
     }
 
     public boolean isEqualScore(CardDeck deck) {
