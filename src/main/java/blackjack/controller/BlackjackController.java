@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-
 import blackjack.domain.cardpack.MasterShuffleStrategy;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Money;
@@ -79,6 +78,7 @@ public class BlackjackController {
             outputView.printDealerDraw();
         }
     }
+
 
     private void endGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         outputView.printCardResult(dealer);

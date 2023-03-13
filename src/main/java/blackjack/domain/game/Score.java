@@ -31,7 +31,7 @@ public final class Score {
     public static Score min() {
         return min;
     }
-
+    
     public int getScore() {
         return score;
     }

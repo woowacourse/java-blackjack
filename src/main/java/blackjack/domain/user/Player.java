@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+
 public final class Player extends User {
 
     public Player(final String name) {
