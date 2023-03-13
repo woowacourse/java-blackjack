@@ -32,5 +32,4 @@ class CardTest {
             assertThat(card.isACE()).isFalse();
         }
     }
-
 }

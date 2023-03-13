@@ -22,6 +22,4 @@ class BettingAmountTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액은 0원 이상이어야 합니다.");
     }
-
-
 }
