@@ -27,4 +27,10 @@ class BlackjackTest {
     void isBustTest() {
         assertThat(blackjack.isBust()).isFalse();
     }
+
+    @DisplayName("현재 상태가 BlackJack인지 확인하는 테스트")
+    @Test
+    void isBlackJackTest() {
+        assertThat(blackjack.isBlackJack()).isTrue();
+    }
 }
