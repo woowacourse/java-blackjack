@@ -1,16 +1,15 @@
-package blackjack.domain.service;
+package blackjack.domain.blackjack;
 
-import blackjack.domain.blackjack.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public class BlackJackRule {
+class BlackJackRule {
 
     private static final int BUST_POINT = 21;
 
-    public int calculatePlayerProfit(final Player player, final Dealer dealer) {
+    int calculatePlayerProfit(final Player player, final Dealer dealer) {
         final ResultType result = calculatePlayerResult(dealer, player);
-        return (player.calculateProfit(result.getPlayerProfit()));
+        return player.calculateProfit(result.getPlayerProfit());
     }
 
     private ResultType calculatePlayerResult(final Dealer dealer, final Player player) {
