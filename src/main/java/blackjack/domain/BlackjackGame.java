@@ -40,7 +40,7 @@ public class BlackjackGame {
     public void calculateBetAmount() {
         for (Player player : participants.getPlayers()) {
             ResultState resultState = ResultState.of(player, participants.getDealer());
-            player.multipleBetAmount(resultState.getTimes());
+            player.multipleBetAmount(resultState.getYield());
         }
         calculateDealerAmount();
     }

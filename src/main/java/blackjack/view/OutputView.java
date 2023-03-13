@@ -22,13 +22,13 @@ public class OutputView {
     }
 
     public void printDealerInitCards(ParticipantCardsDto participantCardsDto) {
-        System.out.printf(DEALER_CARDS_FORMAT, participantCardsDto.getName(), participantCardsDto.getCards()
+        System.out.printf(DEALER_CARDS_FORMAT, participantCardsDto.getName(), participantCardsDto.getCardNames()
                                                                                                  .get(0));
     }
 
     public void printPlayerCards(ParticipantCardsDto participantCardsDto) {
         System.out.printf(PLAYER_CARDS_FORMAT,
-                participantCardsDto.getName(), String.join(", ", participantCardsDto.getCards()));
+                participantCardsDto.getName(), String.join(", ", participantCardsDto.getCardNames()));
     }
 
     public void printDealerState() {

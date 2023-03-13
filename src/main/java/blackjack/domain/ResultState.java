@@ -9,10 +9,10 @@ public enum ResultState {
     LOSE(-1),
     PUSH(0);
 
-    private final double times;
+    private final double yield;
 
-    ResultState(double times) {
-        this.times = times;
+    ResultState(double yield) {
+        this.yield = yield;
     }
 
     public static ResultState of(Player player, Dealer dealer) {
@@ -56,7 +56,7 @@ public enum ResultState {
         return ResultState.LOSE;
     }
 
-    public double getTimes() {
-        return times;
+    public double getYield() {
+        return yield;
     }
 }

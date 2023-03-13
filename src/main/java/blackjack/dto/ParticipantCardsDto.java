@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class ParticipantCardsDto {
 
     private final String name;
-    private final List<String> cards;
+    private final List<String> cardNames;
 
-    private ParticipantCardsDto(String name, List<String> cards) {
+    private ParticipantCardsDto(String name, List<String> cardNames) {
         this.name = name;
-        this.cards = cards;
+        this.cardNames = cardNames;
     }
 
     public static ParticipantCardsDto from(Participant participant) {
@@ -36,7 +36,7 @@ public class ParticipantCardsDto {
         return name;
     }
 
-    public List<String> getCards() {
-        return cards;
+    public List<String> getCardNames() {
+        return cardNames;
     }
 }
