@@ -10,6 +10,33 @@ public enum Result {
     DRAW(betting -> 0),
     LOSE(betting -> betting.getValue() * -1);
 
+    public static Result show(final int targetScore, final int compareScore, final int pivot) {
+        if (targetScore == pivot) {
+            return checkPivotResult(compareScore, pivot);
+        }
+        return checkResult(targetScore, compareScore, pivot);
+    }
+
+    private static Result checkPivotResult(final int compareScore, final int pivot) {
+        if (compareScore == pivot) {
+            return Result.DRAW;
+        }
+        return Result.BLACK_JACK_WIN;
+    }
+
+    private static Result checkResult(final int targetScore, final int compareScore, final int pivot) {
+        if (targetScore > pivot) {
+            return Result.LOSE;
+        }
+        if (compareScore > pivot || compareScore < targetScore) {
+            return Result.WIN;
+        }
+        if (compareScore > targetScore) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
+    }
+
     private final Function<Betting, Integer> function;
 
     Result(final Function<Betting, Integer> function) {

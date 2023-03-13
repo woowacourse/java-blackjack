@@ -45,35 +45,8 @@ public class BlackJackGame {
     public int getPlayerProfit(final PlayerName playerName) {
         final int dealerScore = participants.getDealerScore();
         final int playerScore = participants.getPlayerScore(playerName);
-        final Result result = showResult(dealerScore, playerScore);
+        final Result result = Result.show(playerScore, dealerScore, BLACK_JACK_SCORE);
         return result.calculateProfit(bettingTable.getPlayerBetting(playerName));
-    }
-
-    private Result showResult(final int dealerScore, final int playerScore) {
-        if (playerScore == BLACK_JACK_SCORE) {
-            return checkBlackJackResult(dealerScore);
-        }
-        return checkResult(dealerScore, playerScore);
-    }
-
-    private Result checkBlackJackResult(final int dealerScore) {
-        if (dealerScore == BLACK_JACK_SCORE) {
-            return Result.DRAW;
-        }
-        return Result.BLACK_JACK_WIN;
-    }
-
-    private Result checkResult(final int dealerScore, final int playerScore) {
-        if (playerScore > BLACK_JACK_SCORE) {
-            return Result.LOSE;
-        }
-        if (dealerScore > BLACK_JACK_SCORE || dealerScore < playerScore) {
-            return Result.WIN;
-        }
-        if (dealerScore > playerScore) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
     }
 
     public int getDealerProfit() {
