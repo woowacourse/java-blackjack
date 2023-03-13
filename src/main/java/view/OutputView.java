@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     private static void printHideCard(Dealer dealer) {
-        Card dealerCard = dealer.getCards().get(0);
+        Card dealerCard = dealer.getFirstCard();
         System.out.printf("%s: %s%n", dealer.getName(), CardConverter.of(dealerCard));
     }
 
@@ -38,8 +38,8 @@ public class OutputView {
     private static String getAllCardsNames(Participant participant) {
         Cards cards = participant.getCards();
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        for (int i = 0; i < cards.getSize(); i++) {
-            stringJoiner.add(CardConverter.of(cards.get(i)));
+        for (Card card : cards) {
+            stringJoiner.add(CardConverter.of(card));
         }
         return stringJoiner.toString();
     }
