@@ -7,4 +7,8 @@ public class Score {
     public Score(int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
