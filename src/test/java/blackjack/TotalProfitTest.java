@@ -69,4 +69,25 @@ class TotalProfitTest {
                 .extracting("amount")
                 .containsExactly(0d, -1000d);
     }
+
+    @DisplayName("플레이어의 이익을 총합하여 딜러의 이익을 계산한다.")
+    @Test
+    void getDealerProfitTest() {
+        Players players = Players.of(pobi, crong, royce);
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
+        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+
+        pobi.start(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
+        crong.start(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
+        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+
+        TotalProfit totalProfit = TotalProfit.from(blackjackGame);
+
+        assertThat(totalProfit.getProfitBook().values())
+                .extracting("amount")
+                .containsExactly(1500d, 1000d, -1000d);
+
+        assertThat(totalProfit.getDealerProfit().getAmount())
+                .isEqualTo(1500d + 1000d + -1000d);
+    }
 }
