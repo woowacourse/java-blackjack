@@ -16,14 +16,14 @@ class PlayerTest {
     void matchGame_dealer_bust() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.SPADE, Rank.KING));
-        dealer.addCard(new Card(Suit.SPADE, Rank.FIVE));
-        dealer.addCard(new Card(Suit.SPADE, Rank.QUEEN));
+        dealer.addCard(Card.of(Suit.SPADE, Rank.KING));
+        dealer.addCard(Card.of(Suit.SPADE, Rank.FIVE));
+        dealer.addCard(Card.of(Suit.SPADE, Rank.QUEEN));
 
         Player player = new Player("encho");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
-        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.QUEEN));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.JACK));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -39,12 +39,12 @@ class PlayerTest {
     void matchGame_DealerAndPlayerBust() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard((new Card(Suit.SPADE, Rank.JACK)));
-        dealer.addCard(new Card(Suit.SPADE, Rank.ACE));
+        dealer.addCard((Card.of(Suit.SPADE, Rank.JACK)));
+        dealer.addCard(Card.of(Suit.SPADE, Rank.ACE));
 
         Player player = new Player("encho");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.ACE));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -61,8 +61,8 @@ class PlayerTest {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("encho");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.ACE));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -79,9 +79,9 @@ class PlayerTest {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("encho");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
-        player.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.JACK));
+        player.addCard(Card.of(Suit.DIAMOND, Rank.QUEEN));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -98,10 +98,10 @@ class PlayerTest {
         // given
         Player player1 = new Player("glen");
         Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.TWO));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player1.addCard(Card.of(Suit.DIAMOND, Rank.TWO));
+        player2.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player2.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+        player2.addCard(Card.of(Suit.DIAMOND, Rank.KING));
 
         // when
         GameResult gameResult = player1.matchGame(player2);
@@ -120,8 +120,8 @@ class PlayerTest {
             // given
             Player player1 = new Player("glen");
             Player player2 = new Player("encho");
-            player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-            player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+            player1.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+            player2.addCard(Card.of(Suit.DIAMOND, Rank.FIVE));
 
             // when
             GameResult gameResult = player1.matchGame(player2);
@@ -137,8 +137,8 @@ class PlayerTest {
             // given
             Player player1 = new Player("glen");
             Player player2 = new Player("encho");
-            player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-            player2.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+            player1.addCard(Card.of(Suit.DIAMOND, Rank.KING));
+            player2.addCard(Card.of(Suit.DIAMOND, Rank.ACE));
 
             // when
             GameResult gameResult = player1.matchGame(player2);
@@ -154,8 +154,8 @@ class PlayerTest {
             // given
             Player player1 = new Player("glen");
             Player player2 = new Player("encho");
-            player1.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-            player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+            player1.addCard(Card.of(Suit.DIAMOND, Rank.FIVE));
+            player2.addCard(Card.of(Suit.DIAMOND, Rank.FIVE));
 
             // when
             GameResult gameResult = player1.matchGame(player2);

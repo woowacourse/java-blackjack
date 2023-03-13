@@ -28,7 +28,7 @@ class DeckTest {
 
             // then
             assertThat(card)
-                    .isEqualTo(new Card(Suit.DIAMOND, Rank.THREE));
+                    .isEqualTo(Card.of(Suit.DIAMOND, Rank.THREE));
         }
 
         @Test
@@ -51,9 +51,9 @@ class DeckTest {
         @Override
         public List<Card> createDeck() {
             List<Card> cards = new ArrayList<>();
-            cards.add(new Card(Suit.DIAMOND, Rank.THREE));
-            cards.add(new Card(Suit.HEART, Rank.FOUR));
-            cards.add(new Card(Suit.SPADE, Rank.SIX));
+            cards.add(Card.of(Suit.DIAMOND, Rank.THREE));
+            cards.add(Card.of(Suit.HEART, Rank.FOUR));
+            cards.add(Card.of(Suit.SPADE, Rank.SIX));
             return cards;
         }
     }

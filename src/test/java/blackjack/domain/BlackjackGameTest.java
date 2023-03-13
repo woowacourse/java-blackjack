@@ -18,14 +18,14 @@ class BlackjackGameTest {
 
     String[] names = {"encho", "glen"};
     MockDeckMaker mockDeckMaker = new MockDeckMaker(new ArrayList<>(List.of(
-            new Card(Suit.DIAMOND, Rank.KING),
-            new Card(Suit.CLOVER, Rank.FOUR),
-            new Card(Suit.DIAMOND, Rank.JACK),
-            new Card(Suit.HEART, Rank.TWO),
-            new Card(Suit.SPADE, Rank.TEN),
-            new Card(Suit.CLOVER, Rank.ACE),
-            new Card(Suit.DIAMOND, Rank.TEN),
-            new Card(Suit.SPADE, Rank.SIX)
+            Card.of(Suit.DIAMOND, Rank.KING),
+            Card.of(Suit.CLOVER, Rank.FOUR),
+            Card.of(Suit.DIAMOND, Rank.JACK),
+            Card.of(Suit.HEART, Rank.TWO),
+            Card.of(Suit.SPADE, Rank.TEN),
+            Card.of(Suit.CLOVER, Rank.ACE),
+            Card.of(Suit.DIAMOND, Rank.TEN),
+            Card.of(Suit.SPADE, Rank.SIX)
     )));
 
     @Test

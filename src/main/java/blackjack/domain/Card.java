@@ -1,14 +1,32 @@
 package blackjack.domain;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toConcurrentMap;
 
 public class Card {
+
+    private static final Map<Integer, Card> CACHE;
+
+    static {
+        CACHE = Rank.stream()
+                .flatMap(rank -> Suit.stream()
+                        .map(suit -> new Card(suit, rank))
+                ).collect(toConcurrentMap(Card::hashCode, Function.identity()));
+    }
+
     private final Suit suit;
     private final Rank rank;
 
-    public Card(Suit suit, Rank rank) {
+    private Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
+    }
+
+    public static Card of(Suit suit, Rank rank) {
+        return CACHE.get(Objects.hash(suit, rank));
     }
 
     public boolean isAce() {
