@@ -1,9 +1,9 @@
 package domain;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import domain.card.Card;
 import domain.card.Denomination;
@@ -20,10 +20,11 @@ public class RandomCardGenerator implements CardGenerator {
 	});
 
 	static {
-		Arrays.stream(Denomination.values())
-			.forEach(letter -> Arrays.stream(Suit.values())
-				.map(suit -> new Card(suit, letter))
-				.forEach(CARDS::add));
+		Stream.of(Suit.values())
+			.flatMap(suit ->
+				Stream.of(Denomination.values())
+					.map(denomination -> new Card(suit, denomination)))
+			.forEach(CARDS::add);
 	}
 
 	@Override
