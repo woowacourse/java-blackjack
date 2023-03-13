@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -14,12 +15,12 @@ class BetAmountTest {
     @CsvSource({"999, true", "1000, false", "1000000, false", "1000001, true"})
     void validateBetAmount(int betAmount, boolean doThrow) {
         if (doThrow) {
-            assertThatThrownBy(() -> new BetAmount(betAmount))
+            assertThatThrownBy(() -> BetAmount.of(betAmount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 1,000원에서 1,000,000원 사이여야합니다.");
+                .hasMessage("베팅 금액은 1000원에서 1000000원 사이여야합니다.");
             return;
         }
 
-        assertDoesNotThrow(() -> new BetAmount(betAmount));
+        assertDoesNotThrow(() -> BetAmount.of(betAmount));
     }
 }

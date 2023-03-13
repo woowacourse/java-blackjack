@@ -2,19 +2,21 @@ package domain.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.BetAmount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameStateTest {
+
+    private final BetAmount betAmount = BetAmount.of(10000);
 
     @Test
     @DisplayName("승리시 배팅 금액만큼 수익을 얻는다.")
     void calculateWin() {
         //given
         Win win = GameStates.WIN;
-        int betAmount = 10000;
         //when
-        double gain = win.calculate(betAmount);
+        BetAmount gain = win.calculate(betAmount);
         //then
         assertThat(gain).isEqualTo(betAmount);
     }
@@ -24,11 +26,10 @@ class GameStateTest {
     void calculateBlackJack() {
         //given
         Win win = GameStates.BLACKJACK;
-        int betAmount = 10000;
         //when
-        double gain = win.calculate(betAmount);
+        BetAmount gain = win.calculate(betAmount);
         //then
-        assertThat(gain).isEqualTo(betAmount * 1.5);
+        assertThat(gain).isEqualTo(betAmount.multiply(1.5));
     }
 
     @Test
@@ -36,11 +37,10 @@ class GameStateTest {
     void calculateLose() {
         //given
         Lose lose = GameStates.LOSE;
-        int betAmount = 10000;
         //when
-        double gain = lose.calculate(betAmount);
+        BetAmount gain = lose.calculate(betAmount);
         //then
-        assertThat(gain).isEqualTo(betAmount * -1);
+        assertThat(gain).isEqualTo(betAmount.multiply(-1));
     }
 
     @Test
@@ -48,10 +48,9 @@ class GameStateTest {
     void calculateDraw() {
         //given
         Draw draw = GameStates.DRAW;
-        int betAmount = 10000;
         //when
-        double gain = draw.calculate(betAmount);
+        BetAmount gain = draw.calculate(betAmount);
         //then
-        assertThat(gain).isEqualTo(0);
+        assertThat(gain).isEqualTo(BetAmount.getZero());
     }
 }

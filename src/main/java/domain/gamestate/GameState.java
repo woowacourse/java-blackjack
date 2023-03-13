@@ -1,6 +1,8 @@
 package domain.gamestate;
 
+import domain.BetAmount;
+
 public interface GameState {
 
-    double calculate(int betAmount);
+    BetAmount calculate(BetAmount betAmount);
 }

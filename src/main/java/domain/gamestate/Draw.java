@@ -1,9 +1,11 @@
 package domain.gamestate;
 
+import domain.BetAmount;
+
 public class Draw implements GameState{
 
     @Override
-    public double calculate(int betAmount) {
-        return 0;
+    public BetAmount calculate(BetAmount betAmount) {
+        return BetAmount.getZero();
     }
 }

@@ -1,9 +1,11 @@
 package domain.gamestate;
 
+import domain.BetAmount;
+
 public class Win implements GameState {
 
     @Override
-    public double calculate(int betAmount) {
+    public BetAmount calculate(BetAmount betAmount) {
         return betAmount;
     }
 }

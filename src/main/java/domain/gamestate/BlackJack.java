@@ -1,9 +1,11 @@
 package domain.gamestate;
 
+import domain.BetAmount;
+
 public class BlackJack extends Win{
 
     @Override
-    public double calculate(int betAmount) {
-        return betAmount * 1.5;
+    public BetAmount calculate(BetAmount betAmount) {
+        return betAmount.multiply(1.5);
     }
 }
