@@ -30,9 +30,5 @@ public abstract class User {
         return cardGroup;
     }
 
-    final public boolean isBust() {
-        return cardGroup.isBustScore();
-    }
-
     public abstract CardGroup getFirstOpenCardGroup();
 }

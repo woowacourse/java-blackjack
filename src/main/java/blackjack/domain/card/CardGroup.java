@@ -40,10 +40,6 @@ public class CardGroup {
                 .count();
     }
 
-    public boolean isBustScore() {
-        return getScore().isBust();
-    }
-
     public CardGroup getSubCardGroup(int size) {
         final List<Card> subCardGroup = cards.stream()
                 .limit(size)
