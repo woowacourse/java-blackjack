@@ -14,7 +14,7 @@ public final class Player extends User {
     }
 
     private static void validateReservedWord(final String name) {
-        if (DEALER_NAME.equals(name)) {
+        if (Dealer.getDealerName().equals(name)) {
             throw new IllegalArgumentException("사용자 이름은 딜러일 수 없습니다.");
         }
     }

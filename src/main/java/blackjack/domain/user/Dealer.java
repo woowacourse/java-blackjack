@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 
 public final class Dealer extends User {
 
+    private static final String name = "딜러";
     private static final int INIT_CARD_SHOW_LIMIT = 1;
     private static final Score minScore = new Score(16);
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(name);
     }
 
     public List<Card> getDealerOneCards() {
@@ -70,5 +71,9 @@ public final class Dealer extends User {
         }
 
         return gameResult;
+    }
+
+    public static String getDealerName() {
+        return name;
     }
 }
