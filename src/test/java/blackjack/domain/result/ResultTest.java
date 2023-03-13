@@ -3,8 +3,12 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.domain.player.Challenger;
+import blackjack.domain.player.ChallengerName;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,7 +24,10 @@ class ResultTest {
     private Result result;
 
     void setPlayers() {
-        players = Players.from(List.of("ditoo", "bada", "oing"));
+        ChallengerNameAndMoneyDto ditoo = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
+        ChallengerNameAndMoneyDto bada = new ChallengerNameAndMoneyDto(new ChallengerName("bada"), Money.from(1000));
+        ChallengerNameAndMoneyDto oing = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        players = Players.from(List.of(ditoo, bada, oing));
         setBustedChallenger(players.getChallengers().get(0));
         setBlackjackChallenger(players.getChallengers().get(1));
         setLowPointChallenger(players.getChallengers().get(2));
@@ -76,35 +83,39 @@ class ResultTest {
         }
 
         @Test
-        @DisplayName("bust인 도전자는 딜러와 비긴다")
+        @DisplayName("bust인 도전자는 수익이 0원이다")
         void busted_challenger_draw_with_dealer() {
-            Player bustedChallenger = players.getChallengers().get(0);
+            Challenger bustedChallenger = players.getChallengers().get(0);
+            Money bettingMoney = bustedChallenger.getMoney();
+            double rate = Rank.DRAW.getRateOfReturn();
 
-            assertThat(result.getChallengerResult(bustedChallenger)).isEqualTo(Rank.DRAW);
+            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
-        @DisplayName("blackjack인 도전자는 딜러를 이긴다")
+        @DisplayName("blackjack인 도전자는 배팅액의 1.5배를 받는다")
         void blackjack_challenger_win_dealer() {
-            Player blackjackChallenger = players.getChallengers().get(1);
+            Challenger blackjackChallenger = players.getChallengers().get(1);
+            Money bettingMoney = blackjackChallenger.getMoney();
+            double rate = Rank.BLACKJACK.getRateOfReturn();
 
-            assertThat(result.getChallengerResult(blackjackChallenger)).isEqualTo(Rank.WIN);
+            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
         @DisplayName("작은 점수를 획득한 도전자는 딜러를 이긴다")
         void low_point_challenger_win_dealer() {
-            Player lowPointChallenger = players.getChallengers().get(2);
+            Challenger lowPointChallenger = players.getChallengers().get(2);
+            Money bettingMoney = lowPointChallenger.getMoney();
+            double rate = Rank.WIN.getRateOfReturn();
 
-            assertThat(result.getChallengerResult(lowPointChallenger)).isEqualTo(Rank.WIN);
+            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
-        @DisplayName("딜러는 1무 2패 이다")
+        @DisplayName("딜러의 총 수입은 -2,500원 이다")
         void dealer_result() {
-            assertThat(result.getDealerWinCount()).isZero();
-            assertThat(result.getDealerDrawCount()).isEqualTo(1);
-            assertThat(result.getDealerLoseCount()).isEqualTo(2);
+            assertThat(result.getDealerProfit().getAmount()).isEqualTo(-2500);
         }
     }
 
@@ -133,47 +144,51 @@ class ResultTest {
         }
 
         @Test
-        @DisplayName("bust인 도전자는 딜러에게 진다")
+        @DisplayName("bust인 도전자는 배팅액을 잃는다")
         void busted_challenger_draw_with_dealer() {
-            Player bustedChallenger = players.getChallengers().get(0);
+            Challenger bustedChallenger = players.getChallengers().get(0);
+            Money bettingMoney = bustedChallenger.getMoney();
+            double rate = Rank.LOSE.getRateOfReturn();
 
-            assertThat(result.getChallengerResult(bustedChallenger)).isEqualTo(Rank.LOSE);
+            assertThat(result.getChallengerProfit(bustedChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
-        @DisplayName("blackjack인 도전자는 딜러를 이긴다")
+        @DisplayName("blackjack인 도전자는 1.5배의 배팅액을 받는다")
         void blackjack_challenger_win_dealer() {
-            Player blackjackChallenger = players.getChallengers().get(1);
+            Challenger blackjackChallenger = players.getChallengers().get(1);
+            Money bettingMoney = blackjackChallenger.getMoney();
+            double rate = Rank.BLACKJACK.getRateOfReturn();
+            System.out.println(result.getChallengerProfit(blackjackChallenger).getAmount());
 
-            assertThat(result.getChallengerResult(blackjackChallenger)).isEqualTo(Rank.WIN);
+            assertThat(result.getChallengerProfit(blackjackChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
-        @DisplayName("작은 점수를 획득한 도전자는 딜러에게 진다")
+        @DisplayName("작은 점수를 획득한 도전자는 배팅액을 잃는다")
         void low_point_challenger_win_dealer() {
-            Player lowPointChallenger = players.getChallengers().get(2);
+            Challenger lowPointChallenger = players.getChallengers().get(2);
+            Money bettingMoney = lowPointChallenger.getMoney();
+            double rate = Rank.LOSE.getRateOfReturn();
 
-            assertThat(result.getChallengerResult(lowPointChallenger)).isEqualTo(Rank.LOSE);
+            assertThat(result.getChallengerProfit(lowPointChallenger)).isEqualTo(bettingMoney.multiplyBy(rate));
         }
 
         @Test
-        @DisplayName("같은 점수의 도전자는 딜러와 비긴다")
+        @DisplayName("같은 점수의 도전자는 수익이 없다")
         void draw_with_same_score() {
             Player sameScoreChallenger = players.getChallengers().get(2);
             Card diamondNine = new Card(Shape.DIAMOND, Number.NINE);
             sameScoreChallenger.pick(diamondNine);
             result = Result.from(players);
 
-            assertThat(result.getChallengerResult(sameScoreChallenger)).isEqualTo(Rank.DRAW);
-            assertThat(result.getDealerDrawCount()).isEqualTo(1);
+            assertThat(result.getChallengerProfit(sameScoreChallenger)).isEqualTo(Money.zero());
         }
 
         @Test
-        @DisplayName("딜러는 2승 1패 이다")
+        @DisplayName("딜러의 수익은 500원이다")
         void dealer_result() {
-            assertThat(result.getDealerWinCount()).isEqualTo(2);
-            assertThat(result.getDealerDrawCount()).isZero();
-            assertThat(result.getDealerLoseCount()).isEqualTo(1);
+            assertThat(result.getDealerProfit().getAmount()).isEqualTo(500);
         }
     }
 }

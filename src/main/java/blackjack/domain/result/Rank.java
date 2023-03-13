@@ -2,17 +2,18 @@ package blackjack.domain.result;
 
 public enum Rank {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
+    BLACKJACK(1.5);
 
-    private final String label;
+    private final double rateOfReturn;
 
-    Rank(final String label) {
-        this.label = label;
+    Rank(final double rateOfReturn) {
+        this.rateOfReturn = rateOfReturn;
     }
 
-    public String getLabel() {
-        return label;
+    public double getRateOfReturn() {
+        return rateOfReturn;
     }
 }

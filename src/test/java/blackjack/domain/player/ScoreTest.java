@@ -24,6 +24,15 @@ class ScoreTest {
         assertThat(score.isBust()).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {"20,false", "21,true", "22,false"})
+    @DisplayName("21점이면 블랙잭인지 확인해주는 기능 테스트")
+    void check_blackjack(int value, boolean expected) {
+        Score score = new Score(value);
+
+        assertThat(score.isBlackjack()).isEqualTo(expected);
+    }
+
     @Test
     @DisplayName("점수 덧셈 테스트")
     void add() {

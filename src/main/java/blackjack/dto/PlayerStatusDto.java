@@ -12,19 +12,19 @@ public class PlayerStatusDto {
     private final String name;
     private final List<String> cards;
 
-    protected PlayerStatusDto(String name, List<String> cards) {
+    protected PlayerStatusDto(final String name, final List<String> cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public static PlayerStatusDto from(Player player) {
+    public static PlayerStatusDto from(final Player player) {
         String name = player.getName();
         HoldingCards holdingCards = player.getHoldingCards();
         List<String> cards = extractCardInfo(holdingCards.getCards());
         return new PlayerStatusDto(name, cards);
     }
 
-    protected static List<String> extractCardInfo(List<Card> cards) {
+    protected static List<String> extractCardInfo(final List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getShape().getName() + card.getNumber().getName())
                 .collect(Collectors.toUnmodifiableList());

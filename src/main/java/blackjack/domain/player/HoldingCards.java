@@ -8,6 +8,7 @@ import java.util.List;
 public class HoldingCards {
 
     private static final int ACE_ADDITIONAL_POINT = 10;
+    private static final int INITIAL_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class HoldingCards {
                 .anyMatch(Card::isAce);
     }
 
-    private Score getSumOfContainingAce(Score score) {
+    private Score getSumOfContainingAce(final Score score) {
         Score scoreOfAddingAceAdditionalPoint = score.plus(new Score(ACE_ADDITIONAL_POINT));
         if (scoreOfAddingAceAdditionalPoint.isBust()) {
             return score;
@@ -51,5 +52,9 @@ public class HoldingCards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isInitialSize() {
+        return cards.size() == INITIAL_SIZE;
     }
 }

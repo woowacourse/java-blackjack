@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DealerNotFoundException;
-import blackjack.domain.player.exception.DuplicatedPlayerNameException;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +17,13 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        validateDuplicatedNames(names);
+    public static Players from(final List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
-        names.stream()
+        challengerNameAndMoneyDtos.stream()
                 .map(Challenger::new)
                 .forEach(players::add);
         return new Players(players);
-    }
-
-    private static void validateDuplicatedNames(final List<String> names) {
-        long distinctNameCount = names.stream()
-                .distinct()
-                .count();
-
-        if (names.size() != distinctNameCount) {
-            throw new DuplicatedPlayerNameException();
-        }
     }
 
     public void pickStartCards(final CardDeck cardDeck) {
@@ -45,16 +34,18 @@ public class Players {
         }
     }
 
-    public List<Player> getChallengers() {
-        List<Player> challengers = players.stream()
+    public List<Challenger> getChallengers() {
+        List<Challenger> challengers = players.stream()
                 .filter(Player::isChallenger)
+                .map(player -> (Challenger) player)
                 .collect(Collectors.toUnmodifiableList());
         return new ArrayList<>(challengers);
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
+                .map(player -> (Dealer) player)
                 .findFirst()
                 .orElseThrow(DealerNotFoundException::new);
     }

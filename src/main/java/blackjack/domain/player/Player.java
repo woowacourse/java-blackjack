@@ -26,6 +26,10 @@ public abstract class Player {
         return getTotalPoint().isBust();
     }
 
+    public boolean isBlackjack() {
+        return getTotalPoint().isBlackjack() && holdingCards.isInitialSize();
+    }
+
     public boolean moreScoreThan(final Player targetPlayer) {
         Score targetScore = targetPlayer.getTotalPoint();
         return getTotalPoint().isBiggerThan(targetScore);

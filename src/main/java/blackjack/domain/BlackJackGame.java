@@ -2,24 +2,29 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.AllPlayersStatusWithPointDto;
+import blackjack.dto.ChallengerNameAndMoneyDto;
+import blackjack.dto.ProfitDto;
 
 import java.util.List;
 
 public class BlackJackGame {
+
     private final CardDeck cardDeck;
     private final Players players;
 
-    private BlackJackGame(CardDeck cardDeck, Players players) {
+    private BlackJackGame(final CardDeck cardDeck, final Players players) {
         this.cardDeck = cardDeck;
         this.players = players;
     }
 
-    public static BlackJackGame from(List<String> names) {
+    public static BlackJackGame from(final List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
+        Players players = Players.from(challengerNameAndMoneyDtos);
         CardDeck cardDeck = CardDeck.create();
-        Players players = Players.from(names);
         cardDeck.shuffle();
         return new BlackJackGame(cardDeck, players);
     }
@@ -28,7 +33,7 @@ public class BlackJackGame {
         players.pickStartCards(cardDeck);
     }
 
-    public boolean canPick(Player player) {
+    public boolean canPick(final Player player) {
         return player.canPick();
     }
 
@@ -36,7 +41,11 @@ public class BlackJackGame {
         return getDealer().canPick();
     }
 
-    public void pick(Player player) {
+    public boolean isPlayerBlackjack(final Player player) {
+        return player.isBlackjack();
+    }
+
+    public void pick(final Player player) {
         Card pickedCard = cardDeck.pick();
         player.pick(pickedCard);
     }
@@ -48,15 +57,20 @@ public class BlackJackGame {
         }
     }
 
-    public Result makeResult() {
-        return Result.from(players);
+    public AllPlayersStatusWithPointDto getFinalResult() {
+        return AllPlayersStatusWithPointDto.of(players);
+    }
+
+    public ProfitDto calculateProfit() {
+        Result result = Result.from(players);
+        return ProfitDto.of(result, players);
     }
 
     public Player getDealer() {
         return players.getDealer();
     }
 
-    public List<Player> getChallengers() {
+    public List<Challenger> getChallengers() {
         return players.getChallengers();
     }
 }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,8 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pickStartCards(card1, card2);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pick(card1);
 
         assertThat(player.moreScoreThan(targetPlayer)).isTrue();
@@ -104,7 +106,8 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pick(card1);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pickStartCards(card1, card2);
 
         assertThat(player.moreScoreThan(targetPlayer)).isFalse();
@@ -117,9 +120,45 @@ class PlayerTest {
         Card card2 = new Card(Shape.CLOVER, Number.KING);
 
         player.pickStartCards(card1, card2);
-        Player targetPlayer = new Challenger("oing");
+        ChallengerNameAndMoneyDto dto = new ChallengerNameAndMoneyDto(new ChallengerName("oing"), Money.from(1000));
+        Player targetPlayer = new Challenger(dto);
         targetPlayer.pickStartCards(card1, card2);
 
         assertThat(player.isSameScore(targetPlayer)).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 2장이고, 21점이면 블랙잭이다")
+    void is_blackjack_true() {
+        Card spadeTen = new Card(Shape.SPADE, Number.TEN);
+        Card spadeAce = new Card(Shape.SPADE, Number.ACE);
+
+        player.pickStartCards(spadeTen, spadeAce);
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 2장이고, 20점이면 블랙잭이 아니다")
+    void not_blackjack_when_score_is_not_21() {
+        Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
+        Card heartKing = new Card(Shape.HEART, Number.KING);
+
+        player.pickStartCards(heartQueen, heartKing);
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드가 3장이고, 21점이면 블랙잭이 아니다")
+    void not_blackjack_when_card_count_is_not_2() {
+        Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
+        Card heartFour = new Card(Shape.HEART, Number.FOUR);
+        Card heartSeven = new Card(Shape.HEART, Number.SEVEN);
+
+        player.pickStartCards(heartQueen, heartFour);
+        player.pick(heartSeven);
+
+        assertThat(player.isBlackjack()).isFalse();
     }
 }

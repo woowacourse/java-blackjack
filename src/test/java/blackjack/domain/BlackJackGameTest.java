@@ -3,8 +3,12 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.domain.player.Challenger;
+import blackjack.domain.player.ChallengerName;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Score;
+import blackjack.domain.player.Players;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +25,9 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setup() {
-        blackJackGame = BlackJackGame.from(List.of("ditoo", "bada"));
+        ChallengerNameAndMoneyDto ditoo = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
+        ChallengerNameAndMoneyDto bada = new ChallengerNameAndMoneyDto(new ChallengerName("bada"), Money.from(1000));
+        blackJackGame = BlackJackGame.from(List.of(ditoo, bada));
     }
 
     @Test
@@ -59,10 +65,10 @@ class BlackJackGameTest {
 
         Card spadeTen = new Card(Shape.SPADE, Number.TEN);
         Card spadeJack = new Card(Shape.SPADE, Number.JACK);
-        Card spadeQueen = new Card(Shape.SPADE, Number.QUEEN);
+        Card spadeTwo = new Card(Shape.SPADE, Number.TWO);
 
         ditoo.pickStartCards(spadeTen, spadeJack);
-        ditoo.pick(spadeQueen);
+        ditoo.pick(spadeTwo);
 
         assertThat(blackJackGame.canPick(ditoo)).isFalse();
     }
@@ -72,8 +78,9 @@ class BlackJackGameTest {
     void dealer_pick_card_when_under_or_equals_to_16() {
         Player dealer = blackJackGame.getDealer();
 
-        Card card = new Card(Shape.HEART, Number.NINE);
-        dealer.pick(card);
+        Card heartNine = new Card(Shape.HEART, Number.NINE);
+        Card heartSeven = new Card(Shape.HEART, Number.SEVEN);
+        dealer.pickStartCards(heartNine, heartSeven);
 
         assertThat(blackJackGame.isDealerCanPick()).isTrue();
     }
@@ -84,8 +91,8 @@ class BlackJackGameTest {
         Player dealer = blackJackGame.getDealer();
 
         Card heartNine = new Card(Shape.HEART, Number.NINE);
-        Card heartTen = new Card(Shape.HEART, Number.TEN);
-        dealer.pickStartCards(heartNine, heartTen);
+        Card heartEight = new Card(Shape.HEART, Number.EIGHT);
+        dealer.pickStartCards(heartNine, heartEight);
 
         assertThat(blackJackGame.isDealerCanPick()).isFalse();
     }
@@ -101,7 +108,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("도전자를 선택하는 기능 대한 테스트")
     void get_challengers() {
-        List<Player> challengers = blackJackGame.getChallengers();
+        List<Challenger> challengers = blackJackGame.getChallengers();
 
         challengers.forEach(challenger -> assertThat(challenger.isChallenger()).isTrue());
     }
