@@ -1,15 +1,17 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.betting.BettingAreas;
+import blackjack.domain.betting.BettingResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Result;
 import blackjack.util.Retryable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,18 +27,39 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(generateParticipants());
+        Participants participants = generateParticipants();
+        BettingAreas bettingAreas = generateBettingAreas(participants.getPlayers());
+        BlackJackGame blackJackGame = new BlackJackGame(participants, bettingAreas);
+
         startGame(blackJackGame);
         playGame(blackJackGame);
         closeGame(blackJackGame);
     }
 
     private Participants generateParticipants() {
-        return Retryable.retryWhenIllegalArgumentException(() -> new Participants(requestPlayerNames()));
+        return Retryable.retryWhenException(() -> new Participants(requestPlayerNames()));
     }
 
     private List<String> requestPlayerNames() {
         return inputView.readPlayerNames();
+    }
+
+    private BettingAreas generateBettingAreas(final List<Player> players) {
+        Map<Player, BettingAmount> bettingAreas = new HashMap<>();
+
+        players.forEach(player ->
+                bettingAreas.put(player, generateBettingAmount(player.getName()))
+        );
+
+        return new BettingAreas(bettingAreas);
+    }
+
+    private BettingAmount generateBettingAmount(String playerName) {
+        return Retryable.retryWhenException(() -> new BettingAmount(requestBettingAmount(playerName)));
+    }
+
+    private int requestBettingAmount(String playerName) {
+        return inputView.readBettingAmount(playerName);
     }
 
     private void startGame(final BlackJackGame blackJackGame) {
@@ -68,6 +91,9 @@ public class BlackJackGameController {
     }
 
     private void playGame(final BlackJackGame blackJackGame) {
+        if (blackJackGame.isDealerBlackJack()) {
+            return;
+        }
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
     }
@@ -80,6 +106,10 @@ public class BlackJackGameController {
     }
 
     private void playEachPlayerTurn(final BlackJackGame blackJackGame, final Player player) {
+        if (player.isBlackJack()) {
+            return;
+        }
+
         final String playerName = player.getName();
         while (player.isAbleToReceive() && requestIsHit(playerName)) {
             blackJackGame.drawNewCard(player);
@@ -88,7 +118,7 @@ public class BlackJackGameController {
     }
 
     private boolean requestIsHit(final String playerName) {
-        return Retryable.retryWhenIllegalArgumentException(() -> inputView.readIsHit(playerName));
+        return Retryable.retryWhenException(() -> inputView.readIsHit(playerName));
     }
 
     private void showEachPlayerCards(final Player player) {
@@ -106,9 +136,9 @@ public class BlackJackGameController {
     private void closeGame(final BlackJackGame blackJackGame) {
         showFinalCards(blackJackGame.getParticipants());
 
-        final GameResult gameResult = blackJackGame.getGameResult();
-        showDealerResult(gameResult.getDealerResults());
-        showPlayersResult(gameResult, blackJackGame.getParticipants().getPlayers());
+        final BettingResult bettingResult = blackJackGame.getBettingResult();
+        showDealerResult(bettingResult.getDealerBettingResult());
+        showPlayersResult(bettingResult, blackJackGame.getParticipants().getPlayers());
     }
 
     private void showFinalCards(final Participants participants) {
@@ -116,22 +146,16 @@ public class BlackJackGameController {
                 outputView.printFinalCards(participant.getName(), participant.getCardNames(), participant.getScore()));
     }
 
-    private void showDealerResult(final Map<Result, Integer> dealerResults) {
-        Map<String, Integer> convertedDealerResult = dealerResults.keySet().stream()
-                .collect(Collectors.toMap(
-                        Result::getTerm,
-                        dealerResults::get
-                ));
-
-        outputView.printDealerResults(convertedDealerResult);
+    private void showDealerResult(final int dealerBettingResult) {
+        outputView.printDealerResults(dealerBettingResult);
     }
 
-    private void showPlayersResult(final GameResult gameResult, final List<Player> players) {
+    private void showPlayersResult(final BettingResult bettingResult, final List<Player> players) {
         players.forEach(
-                player -> showEachPlayerResult(player, gameResult.getPlayerResult(player)));
+                player -> showEachPlayerResult(player, bettingResult.getPlayerBettingResult(player)));
     }
 
-    private void showEachPlayerResult(final Player player, final Result playerResult) {
-        outputView.printPlayerResult(player.getName(), playerResult.getTerm());
+    private void showEachPlayerResult(final Player player, final int playerBettingResult) {
+        outputView.printPlayerResult(player.getName(), playerBettingResult);
     }
 }

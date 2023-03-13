@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
@@ -28,21 +27,13 @@ public class OutputView {
         System.out.println(name + "카드: " + String.join(", ", cardNames) + " - 결과: " + score);
     }
 
-    public void printDealerResults(Map<String, Integer> dealerResults) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.print("딜러: ");
-
-        dealerResults.keySet().forEach(result -> {
-            if (dealerResults.get(result) > 0) {
-                System.out.print(dealerResults.get(result) + result);
-            }
-        });
-
-        System.out.println();
+    public void printDealerResults(int bettingResult) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println("딜러: " + bettingResult);
     }
 
-    public void printPlayerResult(String playerName, String playerResult) {
-        System.out.println(playerName + ": " + playerResult);
+    public void printPlayerResult(String playerName, int bettingResult) {
+        System.out.println(playerName + ": " + bettingResult);
     }
 
     public void printErrorMessage(String errorMessage) {

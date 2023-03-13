@@ -26,13 +26,10 @@ class GameResultTest {
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.JACK));
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
 
-        dealer.isAbleToReceive();
-
         player = new Player("pobi");
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.FOUR));
         player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SIX));
         players = new Players(List.of(player));
-        player.isAbleToReceive();
     }
 
     @Test
@@ -48,7 +45,6 @@ class GameResultTest {
     @DisplayName("게임 결과 확인: 버스터 없이 비기는 경우")
     void gameResult2() {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
-        player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
@@ -61,7 +57,6 @@ class GameResultTest {
     void gameResult3() {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.TWO));
-        player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
@@ -74,7 +69,6 @@ class GameResultTest {
     void gameResult4() {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.KING));
-        player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
@@ -86,7 +80,6 @@ class GameResultTest {
     @DisplayName("게임 결과 확인: 딜러만 버스터인 경우")
     void gameResult5() {
         dealer.receiveCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
-        dealer.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
@@ -98,10 +91,8 @@ class GameResultTest {
     @DisplayName("게임 결과 확인: 둘 다 버스터인 경우")
     void gameResult6() {
         dealer.receiveCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
-        dealer.isAbleToReceive();
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.KING));
-        player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
@@ -120,7 +111,6 @@ class GameResultTest {
         player3.receiveCard(new Card(CardShape.DIAMOND, CardNumber.KING));
 
         players = new Players(List.of(player, player2, player3));
-        players.getPlayers().forEach(Player::isAbleToReceive);
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);

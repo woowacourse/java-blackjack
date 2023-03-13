@@ -1,23 +1,33 @@
 package blackjack.domain;
 
+import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.betting.BettingAreas;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BlackJackGameTest {
 
-    static BlackJackGame blackJackGame;
+    private static BlackJackGame blackJackGame;
 
     @BeforeEach
     void setUp() {
         Participants participants = new Participants(List.of("IO", "Bada"));
-        blackJackGame = new BlackJackGame(participants);
+        Map<Player, BettingAmount> bettingAmountMap = Map.of(
+                participants.getPlayers().get(0), new BettingAmount(1000),
+                participants.getPlayers().get(1), new BettingAmount(3000)
+        );
+
+        BettingAreas bettingAreas = new BettingAreas(bettingAmountMap);
+        blackJackGame = new BlackJackGame(participants, bettingAreas);
     }
 
     @Test

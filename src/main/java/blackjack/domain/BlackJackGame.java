@@ -1,33 +1,44 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.betting.BettingAreas;
+import blackjack.domain.betting.BettingResult;
+import blackjack.domain.betting.BettingYieldCalculator;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.GameResult;
 
 public class BlackJackGame {
-    public static final int INITIAL_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
-    private final Deck deck;
     private final Participants participants;
+    private final GameTable gameTable;
 
-    public BlackJackGame(Participants participants) {
-        deck = new Deck();
+    public BlackJackGame(Participants participants, BettingAreas bettingAreas) {
         this.participants = participants;
+        this.gameTable = new GameTable(bettingAreas);
     }
 
     public void drawInitialCards() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participants.getAllParticipants().forEach(participant -> participant.receiveCard(deck.getCard()));
+            participants.getAllParticipants().forEach(participant -> participant.receiveCard(gameTable.pickCard()));
         }
     }
 
     public void drawNewCard(Participant participant) {
-        participant.receiveCard(deck.getCard());
+        participant.receiveCard(gameTable.pickCard());
+    }
+
+    public boolean isDealerBlackJack(){
+        return participants.getDealer().isBlackJack();
     }
 
     public GameResult getGameResult() {
         return new GameResult(participants.getDealer(), participants.getPlayers());
+    }
+
+    public BettingResult getBettingResult() {
+        BettingYieldCalculator bettingYieldCalculator = new BettingYieldCalculator(participants.getDealer(), participants.getPlayers());
+        return new BettingResult(bettingYieldCalculator.getPlayersYields(), gameTable.getBettingAreas());
     }
 
     public Participants getParticipants() {
