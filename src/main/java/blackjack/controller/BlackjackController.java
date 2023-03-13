@@ -60,7 +60,7 @@ public class BlackjackController {
     }
 
     private void hitPlayerCard(final Player player, final BlackjackGame blackjackGame) {
-        while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
+        while (player.decideHit() && inputHitCommand(player).isQuit()) {
             blackjackGame.hitPlayerCard(player);
             outputView.printCurrentCards(player);
         }
@@ -97,9 +97,9 @@ public class BlackjackController {
         return inputPlayerAmount(name);
     }
 
-    private String inputHitCommand(final Player player) {
+    private HitCommand inputHitCommand(final Player player) {
         try {
-            return inputView.readHitCommand(player.getName());
+            return HitCommand.of(inputView.readHitCommand(player.getName()));
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
