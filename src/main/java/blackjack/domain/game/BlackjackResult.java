@@ -3,7 +3,6 @@ package blackjack.domain.game;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.vo.Score;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,20 +47,8 @@ public class BlackjackResult {
         return GameResult.LOSE;
     }
 
-    public int getTieCount() {
-        return Collections.frequency(blackjackResult.values(), GameResult.TIE);
-    }
-
-    public int getDealerWinCount() {
-        return Collections.frequency(blackjackResult.values(), GameResult.LOSE);
-    }
-
-    public int getDealerLoseCount() {
-        return Collections.frequency(blackjackResult.values(), GameResult.WIN);
-    }
-
-    public List<Player> getPlayer() {
-        return List.copyOf(blackjackResult.keySet());
+    public double getRatio(Player player) {
+        return blackjackResult.get(player).getRatio();
     }
 
     public GameResult get(Player player) {

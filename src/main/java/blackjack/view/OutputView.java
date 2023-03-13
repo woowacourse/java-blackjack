@@ -4,8 +4,6 @@ import static java.text.MessageFormat.format;
 
 import blackjack.constants.ErrorCode;
 import blackjack.domain.game.BettingResult;
-import blackjack.domain.game.BlackjackResult;
-import blackjack.domain.game.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.Participants;
@@ -13,7 +11,6 @@ import blackjack.domain.user.Player;
 import blackjack.domain.vo.Money;
 import blackjack.view.message.CardMessageConvertor;
 import blackjack.view.message.ErrorCodeMessage;
-import blackjack.view.message.GameResultMessage;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -80,16 +77,6 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public void printGameResult(BlackjackResult result) {
-        System.out.println(RESULT_MESSAGE);
-        System.out.printf(DEALER_RESULT_FORMAT, result.getDealerWinCount(), result.getTieCount(),
-                result.getDealerLoseCount());
-        for (Player player : result.getPlayer()) {
-            GameResult gameResult = result.get(player);
-            System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), getGameResultMessage(gameResult));
-        }
-    }
-
     public void printBettingResult(BettingResult result) {
         System.out.println(RESULT_MESSAGE);
         System.out.printf(DEALER_RESULT_FORMAT, result.getDealerBettingResult().getValue());
@@ -98,10 +85,6 @@ public class OutputView {
             Money money = bettingResults.get(player);
             System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), money.getValue());
         }
-    }
-
-    private String getGameResultMessage(GameResult gameResult) {
-        return GameResultMessage.from(gameResult).getMessage();
     }
 
     public void printError(ErrorCode errorCode) {
