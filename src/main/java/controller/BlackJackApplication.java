@@ -10,7 +10,7 @@ import view.Command;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class BlackJackApplication {
     }
 
     private Map<Name, Bet> getGamblerNameAndBets() {
-        Map<Name, Bet> nameAndBet = new HashMap<>();
+        Map<Name, Bet> nameAndBet = new LinkedHashMap<>();
         List<Name> gamblerNames = getGamblerNames();
         for (Name gamblerName : gamblerNames) {
             nameAndBet.put(gamblerName, getBet(gamblerName));

@@ -2,10 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -27,7 +24,7 @@ public class Players {
     }
 
     public Map<Player, Bet> battleAll() {
-        Map<Player, Bet> result = new HashMap<>();
+        Map<Player, Bet> result = new LinkedHashMap<>();
         gamblers.forEach(participant -> result.put(participant, dealer.battle(participant)));
         return result;
     }
