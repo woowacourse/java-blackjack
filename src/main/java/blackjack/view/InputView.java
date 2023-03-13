@@ -27,9 +27,8 @@ public class InputView {
                         + "아니오는 " + Command.NO.getCommand() + ")");
 
         final String input = scanner.nextLine();
-        Command command = Command.from(input);
 
-        return command.getCondition();
+        return Command.from(input).getCondition();
     }
 
     public int readBettingMoney(String name) {

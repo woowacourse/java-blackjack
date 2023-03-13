@@ -71,7 +71,7 @@ class CardPackTest {
         int originSize = cardPack.size();
 
         //when
-        Card card = cardPack.takeOne();
+        cardPack.takeOne();
 
         // then
         assertThat(cardPack.size()).isEqualTo(originSize - 1);

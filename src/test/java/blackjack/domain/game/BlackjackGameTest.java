@@ -78,9 +78,8 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer(dealerName);
 
         BlackjackGame blackjackGame = new BlackjackGame(new CardPack(List.of(
-                스페이드_8, 클로버_2,
-                스페이드_10, 다이아몬드_6,
-                스페이드_10, 하트_10
+                스페이드_10, 다이아몬드_6, // player
+                스페이드_10, 하트_10 // dealer
         )));
 
         // when

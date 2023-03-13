@@ -15,7 +15,6 @@ import static blackjack.domain.fixture.FixtureCard.하트_10;
 
 class HandTest {
 
-    private static final int BUST_SCORE = -1;
     private static final int MAX_CARD_SCORE = 21;
 
     @Test

@@ -49,9 +49,8 @@ class DealerTest {
         final Player player2 = new Player("p2");
         final Player player3 = new Player("p3");
 
-        final Players players = new Players(List.of(player1, player2, player3));
         final Dealer dealer = new Dealer(DEALER_NAME);
-
+        
         CardPack cardPack1 = new CardPack(List.of(클로버_10, 클로버_A));
         CardPack cardPack2 = new CardPack(List.of(클로버_10, 하트_10));
         CardPack cardPack3 = new CardPack(List.of(클로버_10, 하트_10, 다이아몬드_6));

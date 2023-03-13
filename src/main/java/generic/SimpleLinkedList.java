@@ -1,7 +1,5 @@
 package generic;
 
-import java.util.StringJoiner;
-
 public class SimpleLinkedList<E> implements SimpleList<E> {
 
     private Node head;
@@ -156,16 +154,5 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
                 ", tail=" + tail +
                 ", size=" + size +
                 '}';
-    }
-
-    private String toSimpleLinkedListString() {
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        Node node = head;
-        while (node != null) {
-            stringJoiner.add(node.value.toString());
-            node = node.next;
-        }
-
-        return "[" + stringJoiner + "]";
     }
 }
