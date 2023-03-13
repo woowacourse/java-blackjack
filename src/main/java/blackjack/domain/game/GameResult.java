@@ -6,13 +6,13 @@ public enum GameResult {
     LOSE("패"),
     DRAW("무");
 
-    private final String view;
+    private final String name;
 
     GameResult(final String view) {
-        this.view = view;
+        this.name = view;
     }
 
-    public String getView() {
-        return view;
+    public String getName() {
+        return name;
     }
 }
