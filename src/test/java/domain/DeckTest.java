@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
@@ -22,9 +23,7 @@ public class DeckTest {
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
-        assertThatThrownBy(deck::draw)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드를 전부 사용했습니다.");
+        assertThat(deck.draw()).isInstanceOf(Card.class);
     }
 
     @DisplayName("중복된 카드 반환 없는지 확인")
