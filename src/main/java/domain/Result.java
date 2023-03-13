@@ -12,4 +12,8 @@ public enum Result {
     Result(double odds) {
         this.odds = odds;
     }
+
+    public int calculateResult(int bettingMoney) {
+        return (int) (bettingMoney * odds);
+    }
 }
