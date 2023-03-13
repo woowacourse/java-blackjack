@@ -18,8 +18,8 @@ public class BettingTable {
         }
     }
 
-    public int sum() {
-        return bettingTable.values().stream()
+    public int getDealerProfit() {
+        return -bettingTable.values().stream()
                 .mapToInt(Money::getMoney)
                 .sum();
     }

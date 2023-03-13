@@ -64,7 +64,7 @@ public class OutputView {
         System.out.println();
         System.out.println(FINAL_PROFIT_MESSAGE);
         Map<Player, Money> result = bettingTable.getBettingTable();
-        System.out.println(dealer.getName() + NAME_DELIMITER + -bettingTable.sum());
+        System.out.println(dealer.getName() + NAME_DELIMITER + bettingTable.getDealerProfit());
         for (Player player : result.keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
                     result.get(player).getMoney());
