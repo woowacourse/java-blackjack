@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.AllPlayersStatusWithPointDto;
 import blackjack.dto.ProfitDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerStatusWithPointDto;
@@ -87,9 +88,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printEndStatus(PlayerStatusWithPointDto dealerStatus, List<PlayerStatusWithPointDto> challengersStatus) {
-        printDealerFinalStatus(dealerStatus);
-        for (PlayerStatusWithPointDto challenger : challengersStatus) {
+    public static void printEndStatus(AllPlayersStatusWithPointDto allPlayersStatusWithPointDto) {
+        printDealerFinalStatus(allPlayersStatusWithPointDto.getDealerDto());
+        for (PlayerStatusWithPointDto challenger : allPlayersStatusWithPointDto.getChallengersDto()) {
             printChallengerStatus(challenger);
             printPoint(challenger.getPoint());
         }

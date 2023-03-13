@@ -7,6 +7,7 @@ import blackjack.domain.player.ChallengerName;
 import blackjack.domain.player.ChallengerNames;
 import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
+import blackjack.dto.AllPlayersStatusWithPointDto;
 import blackjack.dto.ChallengerNameAndMoneyDto;
 import blackjack.dto.ProfitDto;
 import blackjack.dto.PlayerStatusDto;
@@ -46,7 +47,7 @@ public class BlackJackController {
         }
     }
 
-    private List<ChallengerNameAndMoneyDto> makeChallengerMoneyDtos(ChallengerNames challengerNames) {
+    private List<ChallengerNameAndMoneyDto> makeChallengerMoneyDtos(final ChallengerNames challengerNames) {
         List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos = new ArrayList<>();
         for (ChallengerName name : challengerNames.getChallengerNames()) {
             challengerNameAndMoneyDtos.add(makeChallengerMoneyDto(name));
@@ -54,7 +55,7 @@ public class BlackJackController {
         return challengerNameAndMoneyDtos;
     }
 
-    private ChallengerNameAndMoneyDto makeChallengerMoneyDto(ChallengerName name) {
+    private ChallengerNameAndMoneyDto makeChallengerMoneyDto(final ChallengerName name) {
         try {
             int money = InputView.inputMoney(name.getName());
             return new ChallengerNameAndMoneyDto(name, Money.from(money));
@@ -102,7 +103,7 @@ public class BlackJackController {
         }
     }
 
-    private void takeEachChallengerTurn(Player player) {
+    private void takeEachChallengerTurn(final Player player) {
         while (blackJackGame.canPick(player) && chooseGonnaPick(player)) {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
@@ -112,7 +113,7 @@ public class BlackJackController {
         }
     }
 
-    private boolean chooseGonnaPick(Player player) {
+    private boolean chooseGonnaPick(final Player player) {
         try {
             return InputView.inputPlayerChoice(player.getName());
         } catch (CustomException e) {
@@ -133,21 +134,8 @@ public class BlackJackController {
     }
 
     private void showPoint() {
-        PlayerStatusWithPointDto dealerStatus = makeDealerWithPointStatus();
-        List<PlayerStatusWithPointDto> challengersStatus = makeChallengersWithPointStatus();
-        OutputView.printEndStatus(dealerStatus, challengersStatus);
-    }
-
-    private PlayerStatusWithPointDto makeDealerWithPointStatus() {
-        Player dealer = blackJackGame.getDealer();
-        return PlayerStatusWithPointDto.from(dealer);
-    }
-
-    private List<PlayerStatusWithPointDto> makeChallengersWithPointStatus() {
-        return blackJackGame.getChallengers()
-                .stream()
-                .map(PlayerStatusWithPointDto::from)
-                .collect(Collectors.toUnmodifiableList());
+        AllPlayersStatusWithPointDto allPlayersStatusWithPointDto = blackJackGame.getFinalResult();
+        OutputView.printEndStatus(allPlayersStatusWithPointDto);
     }
 
     private void showProfits() {

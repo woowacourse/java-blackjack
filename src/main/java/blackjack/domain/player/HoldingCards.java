@@ -42,7 +42,7 @@ public class HoldingCards {
                 .anyMatch(Card::isAce);
     }
 
-    private Score getSumOfContainingAce(Score score) {
+    private Score getSumOfContainingAce(final Score score) {
         Score scoreOfAddingAceAdditionalPoint = score.plus(new Score(ACE_ADDITIONAL_POINT));
         if (scoreOfAddingAceAdditionalPoint.isBust()) {
             return score;

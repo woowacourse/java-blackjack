@@ -6,6 +6,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.AllPlayersStatusWithPointDto;
 import blackjack.dto.ChallengerNameAndMoneyDto;
 import blackjack.dto.ProfitDto;
 
@@ -50,6 +51,10 @@ public class BlackJackGame {
         if (dealer.canPick()) {
             pick(dealer);
         }
+    }
+
+    public AllPlayersStatusWithPointDto getFinalResult() {
+        return AllPlayersStatusWithPointDto.of(players);
     }
 
     public ProfitDto calculateProfit() {

@@ -22,13 +22,13 @@ public class ProfitDto {
     }
 
     public static ProfitDto of(Result result, Players players) {
-        Map<String, Integer> challengersProfit = storeChallengersProfit(result, players.getChallengers());
+        Map<String, Integer> challengersProfit = toChallengersProfit(result, players.getChallengers());
         String dealerName = players.getDealer().getName();
         int dealerProfit = result.getDealerProfit().getAmount();
         return new ProfitDto(challengersProfit, dealerName, dealerProfit);
     }
 
-    private static Map<String, Integer> storeChallengersProfit(Result result, List<Challenger> challengers) {
+    private static Map<String, Integer> toChallengersProfit(Result result, List<Challenger> challengers) {
         Map<String, Integer> challengersProfit = new LinkedHashMap<>();
         for (Challenger challenger : challengers) {
             Money challengerProfit = result.getChallengerProfit(challenger);

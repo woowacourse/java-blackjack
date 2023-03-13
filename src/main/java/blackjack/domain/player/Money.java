@@ -13,7 +13,7 @@ public final class Money {
 
     private final int amount;
 
-    private Money(int amount) {
+    private Money(final int amount) {
         this.amount = amount;
     }
 
@@ -21,32 +21,32 @@ public final class Money {
         return new Money(0);
     }
 
-    public static Money multiply(Money money, double rate) {
+    public static Money multiply(final Money money, final double rate) {
         int moneyAmount = (int) (money.amount * rate);
         return new Money(moneyAmount);
     }
 
-    public static Money sum(Money firstMoney, Money secondMoney) {
+    public static Money sum(final Money firstMoney, final Money secondMoney) {
         return new Money(firstMoney.amount + secondMoney.amount);
     }
 
-    public static Money from(int amount) {
+    public static Money from(final int amount) {
         validate(amount);
         return new Money(amount);
     }
 
-    private static void validate(int amount) {
+    private static void validate(final int amount) {
         validateAmount(amount);
         validateUnit(amount);
     }
 
-    private static void validateAmount(int amount) {
+    private static void validateAmount(final int amount) {
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
             throw new InvalidMoneyAmountException();
         }
     }
 
-    private static void validateUnit(int amount) {
+    private static void validateUnit(final int amount) {
         if (amount % UNIT != 0) {
             throw new InvalidMoneyUnitException();
         }
