@@ -10,6 +10,7 @@ import domain.card.Cards;
 import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
 import domain.money.BetAmount;
+import domain.money.Profit;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
@@ -57,7 +58,7 @@ class PlayerTest {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
         player.start(Cards.of(HEART_QUEEN, HEART_TEN));
 
-        BetAmount profitByResult = player.getProfitByResult(Result.WIN);
+        Profit profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1000);
     }
 
@@ -67,7 +68,7 @@ class PlayerTest {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
         player.start(Cards.of(HEART_QUEEN, HEART_ACE));
 
-        BetAmount profitByResult = player.getProfitByResult(Result.WIN);
+        Profit profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1500);
     }
 
@@ -77,7 +78,7 @@ class PlayerTest {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
         player.start(Cards.of(HEART_QUEEN, HEART_TEN));
 
-        BetAmount profitByResult = player.getProfitByResult(Result.LOSE);
+        Profit profitByResult = player.getProfitByResult(Result.LOSE);
         assertThat(profitByResult.getAmount()).isEqualTo(-1000);
     }
 }

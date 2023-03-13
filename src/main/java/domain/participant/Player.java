@@ -3,6 +3,7 @@ package domain.participant;
 import domain.blackjack.Result;
 import domain.card.Cards;
 import domain.money.BetAmount;
+import domain.money.Profit;
 
 public class Player extends Participant {
     private static final String FORBIDDEN_NAME_MESSAGE = "\"딜러\"라는 이름은 사용하실 수 없습니다.";
@@ -25,16 +26,16 @@ public class Player extends Participant {
         }
     }
 
-    public BetAmount getProfitByResult(Result playerResult) {
+    public Profit getProfitByResult(Result playerResult) {
         if (playerResult == Result.DRAW) {
-            return betAmount;
+            return betAmount.calculateEarnAmount(0);
         }
 
         if (playerResult == Result.LOSE) {
-            return betAmount.multiple(-1);
+            return betAmount.calculateEarnAmount(-1);
         }
 
-        return betAmount.multiple(gameState.getEarningRate());
+        return betAmount.calculateEarnAmount(gameState.getEarningRate());
     }
 
     @Override
