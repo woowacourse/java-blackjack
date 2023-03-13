@@ -1,10 +1,10 @@
 package domain.state;
 
 import domain.card.Card;
-import domain.game.Score;
+import domain.card.Score;
 import domain.state.exceptions.CanNotDrawCardException;
 import domain.state.exceptions.StayException;
-import domain.user.Hand;
+import domain.card.Hand;
 
 import java.util.List;
 

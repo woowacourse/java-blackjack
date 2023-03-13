@@ -1,7 +1,5 @@
 package domain.card;
 
-import domain.game.Score;
-
 import java.util.Objects;
 
 public class Card {

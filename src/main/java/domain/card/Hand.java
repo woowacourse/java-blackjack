@@ -1,7 +1,4 @@
-package domain.user;
-
-import domain.card.Card;
-import domain.game.Score;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;

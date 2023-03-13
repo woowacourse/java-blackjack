@@ -1,7 +1,5 @@
-package domain.user;
+package domain.card;
 
-import domain.card.Card;
-import domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +12,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class HandTest {
 
     @Test
-    @DisplayName("카드 풀에 카드가 저장된다")
+    @DisplayName("핸드에 카드가 저장된다")
     void makeHandTest() {
         List<Card> cards = List.of(
                 CLOVER_EIGHT,

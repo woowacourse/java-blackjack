@@ -1,7 +1,7 @@
 package domain.state;
 
 import domain.card.Card;
-import domain.game.Score;
+import domain.card.Score;
 
 import java.util.List;
 

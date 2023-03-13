@@ -1,7 +1,7 @@
 package domain.state;
 
 import domain.card.Card;
-import domain.user.Hand;
+import domain.card.Hand;
 
 public class Hit extends Running {
 

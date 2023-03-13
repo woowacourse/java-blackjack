@@ -1,6 +1,6 @@
 package domain.state;
 
-import domain.user.Hand;
+import domain.card.Hand;
 
 public class Bust extends Finished {
 
