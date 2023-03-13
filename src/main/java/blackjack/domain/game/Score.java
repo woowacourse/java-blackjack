@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final int MAX_HIT_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int MAX_HIT_SCORE = 20;
 
     private final int value;
 
@@ -18,6 +19,10 @@ public final class Score {
 
     public Score minus(final int value) {
         return new Score(this.value - value);
+    }
+
+    public boolean isBlackjack() {
+        return value == BLACKJACK_SCORE;
     }
 
     public boolean canHit() {
