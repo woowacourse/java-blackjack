@@ -9,6 +9,7 @@ import java.util.List;
 public class Dealer {
 
     private static final Score hitScoreLimit = new Score(16);
+    private static final int DEALER_HAND_SIZE_LIMIT = 2;
 
     private final Participant participant;
 
@@ -25,7 +26,7 @@ public class Dealer {
 
     public State hit(Card card) {
         State state = participant.hit(card);
-        if (state.isRunning() && state.cards().size() > 2) {
+        if (state.isRunning() && state.handSize() > DEALER_HAND_SIZE_LIMIT) {
             participant.stay();
         }
         return getState();

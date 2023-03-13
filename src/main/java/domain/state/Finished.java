@@ -50,4 +50,9 @@ public abstract class Finished implements State {
     public boolean isRunning() {
         return false;
     }
+
+    @Override
+    public int handSize() {
+        return hand.getCards().size();
+    }
 }

@@ -48,4 +48,9 @@ public class Ready implements State {
     public boolean isStay() {
         return false;
     }
+
+    @Override
+    public int handSize() {
+        throw new IllegalStateException("카드가 없습니다.");
+    }
 }

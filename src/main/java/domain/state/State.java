@@ -22,4 +22,6 @@ public interface State {
     boolean isRunning();
 
     boolean isStay();
+
+    int handSize();
 }

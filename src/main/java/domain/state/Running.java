@@ -60,4 +60,9 @@ public abstract class Running implements State {
     public boolean isStay() {
         return false;
     }
+
+    @Override
+    public int handSize() {
+        return hand.getCards().size();
+    }
 }
