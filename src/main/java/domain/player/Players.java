@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.card.Deck;
 import domain.game.BetAmounts;
-import view.AddCardCommand;
+import domain.game.AddCardCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.card.Deck;
 import domain.card.Score;
-import view.AddCardCommand;
+import domain.game.AddCardCommand;
 
 import java.util.Collections;
 import java.util.List;

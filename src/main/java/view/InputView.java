@@ -1,5 +1,7 @@
 package view;
 
+import domain.game.AddCardCommand;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

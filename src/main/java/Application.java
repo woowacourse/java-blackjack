@@ -2,7 +2,7 @@ import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.Player;
 import domain.strategy.RandomBasedShuffleStrategy;
-import view.AddCardCommand;
+import domain.game.AddCardCommand;
 import view.InputView;
 import view.OutputView;
 

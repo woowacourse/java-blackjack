@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Deck;
-import view.AddCardCommand;
+import domain.game.AddCardCommand;
 
 import java.util.List;
 import java.util.function.Consumer;
