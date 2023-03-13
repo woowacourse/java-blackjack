@@ -42,6 +42,18 @@ public abstract class Participant {
         }
     }
 
+    public boolean isBurst() {
+        return cards.isBurst();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public boolean isHighScoreThan(Participant otherParticipant) {
+        return cards.getScore() > otherParticipant.cards.getScore();
+    }
+
     public String getName() {
         return name;
     }
