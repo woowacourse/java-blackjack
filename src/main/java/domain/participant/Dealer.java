@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Cards;
 
 public class Dealer extends Participant {
@@ -10,6 +11,10 @@ public class Dealer extends Participant {
 
     public Dealer(Cards cards) {
         super(NAME, cards);
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
     @Override
