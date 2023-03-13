@@ -9,7 +9,7 @@ import model.card.Card;
 import model.card.Deck;
 import model.money.Bet;
 
-public class Player implements Receivable {
+public class Player {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
@@ -29,7 +29,6 @@ public class Player implements Receivable {
         user.receiveCard(card);
     }
 
-    @Override
     public boolean canReceiveCard() {
         return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
     }
@@ -71,7 +70,6 @@ public class Player implements Receivable {
         return LOSE;
     }
 
-    @Override
     public boolean isBlackJack() {
         return user.isBlackJack();
     }
