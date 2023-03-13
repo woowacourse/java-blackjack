@@ -2,12 +2,12 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -19,11 +19,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames, final Deck deck) {
+    public Players(final List<String> playerNames, final Queue<CardGroup> firstCardGroups) {
         validateNumberOfPlayerOverLimit(playerNames);
         validatePlayerHasDuplicate(playerNames);
         this.players = playerNames.stream()
-                .map(name -> new Player(name, new CardGroup(deck)))
+                .map(name -> new Player(name, firstCardGroups.poll()))
                 .collect(Collectors.toUnmodifiableList());
     }
 

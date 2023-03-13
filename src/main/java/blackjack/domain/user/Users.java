@@ -2,21 +2,21 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class Users {
 
     private final Dealer dealer;
     private final Players players;
 
-    public Users(final List<String> playerNames, final Deck deck) {
-        dealer = new Dealer(new CardGroup(deck));
-        this.players = new Players(playerNames, deck);
+    public Users(final List<String> playerNames, final Queue<CardGroup> firstCardGroups) {
+        dealer = new Dealer(firstCardGroups.poll());
+        this.players = new Players(playerNames, firstCardGroups);
     }
 
     public Map<Name, CardGroup> getUserNameAndFirstOpenCardGroups() {

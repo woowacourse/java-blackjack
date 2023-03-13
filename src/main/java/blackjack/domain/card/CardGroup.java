@@ -1,6 +1,8 @@
 package blackjack.domain.card;
 
 import blackjack.domain.result.Score;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,8 +10,13 @@ public class CardGroup {
 
     private final List<Card> cards;
 
-    public CardGroup(final List<Card> cards) {
+    private CardGroup(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public CardGroup(final Card... cards) {
+        this.cards = new ArrayList<>();
+        Collections.addAll(this.cards, cards);
     }
 
     public void add(final Card newCard) {

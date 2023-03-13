@@ -11,9 +11,11 @@ import blackjack.domain.user.Name;
 import blackjack.domain.user.Users;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
 
 public class BlackJackGame {
 
@@ -23,7 +25,15 @@ public class BlackJackGame {
     public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
         final Deck deck = new Deck(deckGenerator);
         this.gameTable = new GameTable(deck);
-        this.users = new Users(playerNames, deck);
+        this.users = new Users(playerNames, generateFirstCardGroup(playerNames.size(), deck));
+    }
+
+    private Queue<CardGroup> generateFirstCardGroup(final int firstCardGroupsCount, final Deck deck) {
+        final Queue<CardGroup> firstCardGroup = new LinkedList<>();
+        for (int index = 0; index <= firstCardGroupsCount; index++) {
+            firstCardGroup.add(new CardGroup(deck.draw(), deck.draw()));
+        }
+        return firstCardGroup;
     }
 
     public CardGroup getCardGroupBy(final Name userName) {

@@ -9,12 +9,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.RandomDeckGenerator;
-import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.CardResult;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,12 +25,20 @@ class UsersTest {
     private static final Name TEST_PLAYER_NAME3 = new Name("제이미");
     private static final Name DEALER_NAME = new Name(Dealer.DEALER_NAME);
 
-    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
+    final static List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
             new Card(CardShape.CLOVER, CardNumber.NINE),
             new Card(CardShape.HEART, CardNumber.JACK),
             new Card(CardShape.HEART, CardNumber.NINE),
             new Card(CardShape.DIAMOND, CardNumber.FOUR));
+
+    Queue<CardGroup> generateCardGroups() {
+        final Queue<CardGroup> cardGroups = new LinkedList<>();
+        for (int i = 0; i < testCards.size(); i = i + 2) {
+            cardGroups.add(new CardGroup(testCards.get(i), testCards.get(i + 1)));
+        }
+        return cardGroups;
+    }
 
     @Nested
     class validation {
@@ -43,7 +50,7 @@ class UsersTest {
                     , TEST_PLAYER_NAME3.getValue(), "네오", "솔라", "다니");
 
             final Runnable initialUsersByPlayerNamesLengthOver5 =
-                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+                    () -> new Users(playerNames, new LinkedList<>());
 
             assertThatThrownBy(initialUsersByPlayerNamesLengthOver5::run)
                     .isInstanceOf(IllegalArgumentException.class)
@@ -57,7 +64,7 @@ class UsersTest {
                     , TEST_PLAYER_NAME3.getValue(), TEST_PLAYER_NAME1.getValue());
 
             final Runnable initialUsers =
-                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+                    () -> new Users(playerNames, generateCardGroups());
 
             assertDoesNotThrow(initialUsers::run);
         }
@@ -67,7 +74,7 @@ class UsersTest {
     @DisplayName("유저들의 이름을 받고 CardGroup을 반환하는 기능 테스트")
     void getUsersStatus() {
         final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue())
-                , new Deck(new TestNonShuffledDeckGenerator(testCards)));
+                , generateCardGroups());
 
         final CardGroup philipCardGroup = users.getCardGroupBy(TEST_PLAYER_NAME1);
 
@@ -79,7 +86,7 @@ class UsersTest {
     @DisplayName("유저들의 첫 패를 반환하는 기능 테스트")
     void getUsersInitialStatus() {
         final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue())
-                , new Deck(new TestNonShuffledDeckGenerator(testCards)));
+                , generateCardGroups());
 
         final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = users.getUserNameAndFirstOpenCardGroups();
 
@@ -97,7 +104,7 @@ class UsersTest {
     @DisplayName("딜러의 스코어가 16이 넘는지 확인하는 기능 테스트")
     void isDealerOverDrawLimitTest() {
         final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()),
-                new Deck(new TestNonShuffledDeckGenerator(testCards)));
+                generateCardGroups());
 
         boolean dealerOverDrawLimit = users.isDealerUnderDrawLimit();
 
@@ -107,10 +114,9 @@ class UsersTest {
     @Test
     @DisplayName("딜러의 카드를 하나 추가하는 기능 테스트")
     void drawDealerTest() {
-        final Deck deck = new Deck(new TestNonShuffledDeckGenerator(testCards));
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), deck);
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), generateCardGroups());
 
-        users.drawDealer(deck.draw());
+        users.drawDealer(new Card(CardShape.HEART, CardNumber.NINE));
         final CardResult cardResult = users.getUserNameAndCardResults().get(DEALER_NAME);
 
         assertThat(cardResult.getCards().getCards())
@@ -122,7 +128,7 @@ class UsersTest {
     @Test
     @DisplayName("플레이어 리스트를 반환하는 기능 테스트")
     void getPlayersTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), new Deck(new RandomDeckGenerator()));
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), generateCardGroups());
 
         final List<Name> players = users.getPlayerNames();
 
@@ -133,7 +139,7 @@ class UsersTest {
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
         final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()),
-                new Deck(new TestNonShuffledDeckGenerator(testCards)));
+                generateCardGroups());
 
         final Map<Name, CardResult> userNameAndCardResults = users.getUserNameAndCardResults();
 
