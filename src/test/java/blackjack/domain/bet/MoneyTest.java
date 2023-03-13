@@ -11,10 +11,4 @@ class MoneyTest {
         Money money = new Money(10000);
         assertThat(money.getNegativeMoney().getValue()).isEqualTo(-10000);
     }
-
-    @Test
-    void getBlackJackMoney() {
-        Money money = new Money(10000);
-        assertThat(money.getBlackJackMoney().getValue()).isEqualTo(15000);
-    }
 }

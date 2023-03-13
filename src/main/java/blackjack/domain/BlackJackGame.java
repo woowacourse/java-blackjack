@@ -22,8 +22,8 @@ public class BlackJackGame {
         this.participants = Participants.of(playersName);
     }
 
-    public void addPlayerBetMoney(Player player, Money betMoney) {
-        participants.getDealer().addPlayerBetMoney(player, betMoney);
+    public void addBetMoneyToPlayer(Player player, Money betMoney) {
+        player.setBetMoney(betMoney);
     }
 
     public void handInitialCards() {

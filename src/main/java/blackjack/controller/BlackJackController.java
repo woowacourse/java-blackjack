@@ -36,7 +36,7 @@ public class BlackJackController {
 
     private void betMoney(Player player) {
         Money betMoney = InputView.askBetMoney(player.getName());
-        blackJackGame.addPlayerBetMoney(player, betMoney);
+        blackJackGame.addBetMoneyToPlayer(player, betMoney);
     }
 
     private void openInitialCards() {

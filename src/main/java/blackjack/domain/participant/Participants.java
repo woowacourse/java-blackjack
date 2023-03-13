@@ -25,7 +25,7 @@ public class Participants {
     }
 
     public GameResult getGameResult() {
-        return dealer.judgeGameResult(players);
+        return GameResult.of(dealer, players);
     }
 
     public Dealer getDealer() {
