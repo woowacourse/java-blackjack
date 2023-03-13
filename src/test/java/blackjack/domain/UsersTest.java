@@ -21,8 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class UsersTest {
 
-    private static final Card CARD_9 = new Card(Shape.HEART, CardNumber.NINE);
-    private static final Card CARD_10 = new Card(Shape.HEART, CardNumber.TEN);
     private static final Cards CARDS_20 = new Cards(List.of(new Card(Shape.HEART, CardNumber.TEN), new Card(Shape.HEART, CardNumber.TEN)));
     private static User 헙크;
     private static User 푸우;
@@ -38,7 +36,10 @@ public class UsersTest {
     @Test
     @DisplayName("Users가 한 명도 없으면 예외가 발생한다.")
     void invalidUsersCountTest() {
+        //given
         List<Name> data = new ArrayList<>();
+
+        //when,then
         assertThatThrownBy(() -> new Users(data, new RandomDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 최소 한 명 이상이여야 합니다.");
@@ -53,8 +54,15 @@ public class UsersTest {
     @Test
     @DisplayName("유저 이름으로 유저의 카드들을 가져온다.")
     void getCardsOfTest() {
+        //given
         final List<Card> 푸우카드 = HupkAndPooh.finUserByName(new Name("푸우")).getCards().getCards();
-        assertThat(푸우카드.containsAll(푸우.getCards().getCards()));
+
+        //when
+        final Cards cards = 푸우.getCards();
+        final List<Card> cardsData = cards.getCards();
+
+        //then
+        assertThat(푸우카드.containsAll(cardsData));
     }
 
 }

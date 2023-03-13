@@ -20,7 +20,7 @@ public class Dealer implements Player {
 
     private void validateCardsSize(final int size) {
         if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("딜러는 카드 2장 이상을 갖고 있어야 합니다.");
+            throw new IllegalArgumentException("딜러 카드 두 장을 초기에 가지고 있어야 합니다.");
         }
     }
 

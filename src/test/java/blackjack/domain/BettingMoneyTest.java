@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -9,20 +10,18 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class BettingMoneyTest {
 
-    @ParameterizedTest
-    @ValueSource(ints = {99, 98, 97, 96})
+    @Test
     @DisplayName("상금의 최솟값은 100이다.")
-    void invalidByRangeTest1(int value) {
-        assertThatThrownBy(() -> new BettingMoney(value))
+    void invalidByRangeTest1() {
+        assertThatThrownBy(() -> new BettingMoney(99))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상금의 최소값은 100 최대 값은 1,000,000입니다.");
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1_000_001, 1_000_002, 1_000_003})
+    @Test
     @DisplayName("상금의 최댓값은 1,000,000이다.")
-    void invalidByRangeTest2(int value) {
-        assertThatThrownBy(() -> new BettingMoney(value))
+    void invalidByRangeTest2() {
+        assertThatThrownBy(() -> new BettingMoney(1_000_001))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상금의 최소값은 100 최대 값은 1,000,000입니다.");
     }

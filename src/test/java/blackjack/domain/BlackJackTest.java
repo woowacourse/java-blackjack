@@ -144,41 +144,89 @@ public class BlackJackTest {
     }
 
     @Test
-    @DisplayName("모든 유저의 총 결과를 알 수 있다.")
-    void getAllUserResultTest() {
+    @DisplayName("블랙잭 승리한 유저를 알 수 있다.")
+    void getBlackJackUserResultTest() {
+        //given
         final Name 블랙잭승리 = new Name("BJWin");
-        final Name 승리자 = new Name("Win");
-        final Name 비긴자 = new Name("Draw");
-        final Name 패배자 = new Name("Lose");
 
         Integer[] 블랙잭승리카드 = {1, 10};
-        Integer[] 승리자카드 = {10, 10};
-        Integer[] 패배자카드 = {10, 8};
-        Integer[] 비긴자카드 = {10, 9};
         Integer[] 딜러카드 = {10, 9};
 
         final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(블랙잭승리카드));
-        테스트덱.addAll(new ArrayList<>(Arrays.asList(승리자카드)));
-        테스트덱.addAll(new ArrayList<>(Arrays.asList(패배자카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
+
+        final BlackJack blackJack = new BlackJack(List.of(블랙잭승리), new TestDeck(테스트덱));
+
+        //when
+        final Map<Result, List<User>> allUsersResult = blackJack.getAllUsersResult();
+
+
+        //then
+        assertThat(allUsersResult.get(Result.BLACK_JACK_WIN)).size().isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("승리한 유저의 결과를 알 수 있다.")
+    void getWinUserResultTest() {
+        //given
+        final Name 승리자 = new Name("Win");
+
+        Integer[] 승리자카드 = {10, 10};
+        Integer[] 딜러카드 = {10, 9};
+
+        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(승리자카드));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
+
+        final BlackJack blackJack = new BlackJack(List.of(승리자), new TestDeck(테스트덱));
+
+        //when
+        final Map<Result, List<User>> allUsersResult = blackJack.getAllUsersResult();
+
+        //then
+        assertThat(allUsersResult.get(Result.WIN)).size().isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("비긴 유저의 결과를 알 수 있다.")
+    void getDrawUserResultTest() {
+        //given
+        final Name 비긴자 = new Name("Draw");
+
+        Integer[] 비긴자카드 = {10, 9};
+        Integer[] 딜러카드 = {10, 9};
+
+        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(비긴자카드));
         테스트덱.addAll(new ArrayList<>(Arrays.asList(비긴자카드)));
         테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
 
-        final BlackJack blackJack = new BlackJack(List.of(블랙잭승리, 승리자, 비긴자, 패배자), new TestDeck(테스트덱));
+        final BlackJack blackJack = new BlackJack(List.of(비긴자), new TestDeck(테스트덱));
 
+        //when
         final Map<Result, List<User>> allUsersResult = blackJack.getAllUsersResult();
-        assertAll(() -> {
-                    assertThat(allUsersResult.get(Result.BLACK_JACK_WIN)).size().isEqualTo(1);
-                },
-                () -> {
-                    assertThat(allUsersResult.get(Result.WIN)).size().isEqualTo(1);
-                },
-                () -> {
-                    assertThat(allUsersResult.get(Result.DRAW)).size().isEqualTo(1);
 
-                },
-                () -> {
-                    assertThat(allUsersResult.get(Result.LOSE)).size().isEqualTo(1);
-                }
-        );
+        //then
+        assertThat(allUsersResult.get(Result.DRAW)).size().isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("패배한 유저의 결과를 알 수 있다.")
+    void getLoseUserResultTest() {
+        //given
+        final Name 패배자 = new Name("Lose");
+
+        Integer[] 패배자카드 = {10, 8};
+        Integer[] 딜러카드 = {10, 9};
+
+        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(패배자카드));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
+
+        final BlackJack blackJack = new BlackJack(List.of(패배자), new TestDeck(테스트덱));
+
+        //when
+        final Map<Result, List<User>> allUsersResult = blackJack.getAllUsersResult();
+
+        //then
+        assertThat(allUsersResult.get(Result.LOSE)).size().isEqualTo(1);
+    }
+
 }

@@ -46,10 +46,6 @@ public class User implements Player {
         return cards.getCards();
     }
 
-    public int pointCompare(final GamePoint point) {
-        return cards.getPoint().compareTo(point);
-    }
-
     public boolean isNameOf(final Name userName) {
         return this.name.equals(userName);
     }

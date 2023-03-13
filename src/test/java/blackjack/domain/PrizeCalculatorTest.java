@@ -9,6 +9,8 @@ import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +41,11 @@ public class PrizeCalculatorTest {
         nameStake.put(pooh, new BettingMoney(1000));
         final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
 
-        //when,then
-        assertThat(prizeCalculator.getProfit(pooh, Result.BLACK_JACK_WIN)).isEqualTo(1500);
+        //when
+        final int profit = prizeCalculator.getProfit(pooh, Result.BLACK_JACK_WIN);
+
+        //then
+        assertThat(profit).isEqualTo(1500);
     }
 
     @Test
@@ -69,45 +74,29 @@ public class PrizeCalculatorTest {
         assertThat(prizeCalculator.getProfit(pooh, Result.LOSE)).isEqualTo(-1000);
     }
 
-    @Test
+    @ParameterizedTest
+    @EnumSource(Result.class)
     @DisplayName("수익 결과 테스트")
-    void profitTest() {
+    void profitTest(Result result) {
         //given
         final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
 
         final Name poohName = new Name("푸우");
-        nameStake.put(poohName, new BettingMoney(1000));
-
-        final Name hupkName = new Name("헙크");
-        nameStake.put(hupkName, new BettingMoney(2000));
-
-        final Name youngName = new Name("영이");
-        nameStake.put(youngName, new BettingMoney(3000));
-
-        final Name nuguName = new Name("누구");
-        nameStake.put(nuguName, new BettingMoney(4000));
+        final int bettingValue = 1000;
+        nameStake.put(poohName, new BettingMoney(bettingValue));
 
         final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
 
         final User pooh = new User(poohName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User hupk = new User(hupkName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User youngE = new User(youngName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User nugu = new User(nuguName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
 
         final HashMap<Result, List<User>> resultData = new HashMap<>();
 
-        resultData.put(Result.BLACK_JACK_WIN, List.of(pooh));
-        resultData.put(Result.WIN, List.of(hupk));
-        resultData.put(Result.LOSE, List.of(youngE));
-        resultData.put(Result.DRAW, List.of(nugu));
+        resultData.put(result, List.of(pooh));
 
         //when
         prizeCalculator.enrollResult(resultData);
         final HashMap<Name, Integer> expectedProfit = new HashMap<>();
-        expectedProfit.put(poohName, 1500);
-        expectedProfit.put(hupkName, 2000);
-        expectedProfit.put(youngName, -3000);
-        expectedProfit.put(nuguName, 0);
+        expectedProfit.put(poohName, result.getProfit(bettingValue));
 
         //then
         assertThat(prizeCalculator.getProfit()).containsAllEntriesOf(expectedProfit);
@@ -122,34 +111,19 @@ public class PrizeCalculatorTest {
         final Name poohName = new Name("푸우");
         nameStake.put(poohName, new BettingMoney(1000));
 
-        final Name hupkName = new Name("헙크");
-        nameStake.put(hupkName, new BettingMoney(2000));
-
-        final Name youngName = new Name("영이");
-        nameStake.put(youngName, new BettingMoney(3000));
-
-        final Name nuguName = new Name("누구");
-        nameStake.put(nuguName, new BettingMoney(4000));
-
         final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
 
         final User pooh = new User(poohName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User hupk = new User(hupkName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User youngE = new User(youngName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
-        final User nugu = new User(nuguName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
 
         final HashMap<Result, List<User>> resultData = new HashMap<>();
 
         resultData.put(Result.BLACK_JACK_WIN, List.of(pooh));
-        resultData.put(Result.WIN, List.of(hupk));
-        resultData.put(Result.LOSE, List.of(youngE));
-        resultData.put(Result.DRAW, List.of(nugu));
 
         //when
         prizeCalculator.enrollResult(resultData);
         final int dealerProfit = prizeCalculator.getDealerProfit();
 
         //then
-        assertThat(dealerProfit).isEqualTo(-500);
+        assertThat(dealerProfit).isEqualTo(-1500);
     }
 }
