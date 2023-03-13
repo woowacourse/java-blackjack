@@ -34,6 +34,6 @@ public class CardConverter {
         "하트", SPADE, "스페이드");
 
     static String of(Card card) {
-        return NUMBER_MAP.get(card.getNumber()) + SUIT_MAP.get(card.getSuit());
+        return NUMBER_MAP.get(card.getDenomination()) + SUIT_MAP.get(card.getSuit());
     }
 }

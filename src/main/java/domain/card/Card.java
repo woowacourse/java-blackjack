@@ -21,7 +21,7 @@ public class Card {
         return suit;
     }
 
-    public Denomination getNumber() {
+    public Denomination getDenomination() {
         return denomination;
     }
 

@@ -23,7 +23,7 @@ public class Cards {
 
     private int getSum() {
         return cards.stream()
-            .map(Card::getNumber)
+            .map(Card::getDenomination)
             .mapToInt(Denomination::getValue)
             .sum();
     }
