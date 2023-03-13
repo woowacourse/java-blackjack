@@ -1,10 +1,8 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.DeckOfCards;
-import domain.card.Denomination;
-import domain.card.Suit;
+import domain.card.Hand;
 import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static domain.Textures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -73,9 +72,7 @@ class BlackJackTest {
     void givenDealerTotalScore_thenChecksOrLessSixTeen() {
         BlackJack blackJack = new BlackJack(
                 new Players(
-                        makeDealer(
-                                new Card(Suit.SPADE, Denomination.KING),
-                                new Card(Suit.HEART, Denomination.SIX)), Gambler.from(GIVEN_NAMES_BETS)
+                        makeDealer(SPADE_KING, HEART_SIX), Gambler.from(GIVEN_NAMES_BETS)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isTrue();
@@ -86,9 +83,7 @@ class BlackJackTest {
     void givenDealerTotalScore_thenChecksOrMoreSevenTeen() {
         BlackJack blackJack = new BlackJack(
                 new Players(
-                        makeDealer(
-                                new Card(Suit.SPADE, Denomination.KING),
-                                new Card(Suit.HEART, Denomination.SEVEN)), Gambler.from(GIVEN_NAMES_BETS)
+                        makeDealer(SPADE_KING, HEART_SEVEN), Gambler.from(GIVEN_NAMES_BETS)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isFalse();

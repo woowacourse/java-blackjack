@@ -2,11 +2,10 @@ package domain;
 
 import domain.card.Card;
 import domain.card.DeckOfCards;
-import domain.card.Denomination;
-import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.Textures.SPADE_QUEEN;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -29,7 +28,7 @@ class DeckOfCardsTest {
         Card card = deckOfCards.findAnyOneCard();
 
         assertAll(
-                () -> assertThat(card).isEqualTo(new Card(Suit.HEART, Denomination.FOUR)),
+                () -> assertThat(card).isEqualTo(SPADE_QUEEN),
                 () -> assertThat(deckOfCards)
                         .extracting("cards")
                         .asList()

@@ -2,25 +2,25 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.card.Denomination;
-import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
+import static domain.Textures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
+
     @Test
     @DisplayName("딜러에게 특정한 카드를 줄 수 있다.")
     void whenGivingCardToDealer() {
         Dealer dealer = new Dealer(Hand.makeEmptyHolder());
         Players players = new Players(dealer, Collections.emptyList());
 
-        Card card = new Card(Suit.SPADE, Denomination.FOUR);
+        Card card = SPADE_FOUR;
         players.giveCardByName(dealer.getName(), card);
 
         assertThat(dealer.getCards()).contains(card);
@@ -31,8 +31,7 @@ class PlayersTest {
     void givenDealerOrMore17_thenDealerShouldNotGetMoreCard() {
         Dealer dealer = new Dealer(
                 new Hand(List.of(
-                        new Card(Suit.HEART, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.SEVEN)
+                        HEART_TEN, DIAMOND_SEVEN
                 )));
         Players players = new Players(dealer, Collections.emptyList());
 
@@ -44,8 +43,7 @@ class PlayersTest {
     void givenDealerOrLess16_thenDealerShouldGetMoreCard() {
         Dealer dealer = new Dealer(
                 new Hand(List.of(
-                        new Card(Suit.HEART, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.FIVE)
+                        HEART_TEN, DIAMOND_FIVE
                 )));
         Players players = new Players(dealer, Collections.emptyList());
 

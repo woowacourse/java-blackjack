@@ -13,14 +13,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static domain.Textures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
+
     @Test
     @DisplayName("딜러가 상대 플레이어보다 점수가 높으면 참가자는 베팅액을 잃는다.")
     void givenDealerWinningFromPlayer() {
-        Dealer dealer = makeDealer(new Card(Suit.DIAMOND, Denomination.KING));
-        Gambler gambler = makeParticipant(new Card(Suit.DIAMOND, Denomination.NINE));
+        Dealer dealer = makeDealer(DIAMOND_KING);
+        Gambler gambler = makeParticipant(DIAMOND_NINE);
 
         Bet bet = dealer.battle(gambler);
 
@@ -30,8 +32,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 상대 플레이어보다 점수가 낮으면 참가자는 베팅액을 가져간다.")
     void givenDealerLosingFromPlayer() {
-        Dealer dealer = makeDealer(new Card(Suit.SPADE, Denomination.NINE));
-        Gambler gambler = makeParticipant(new Card(Suit.DIAMOND, Denomination.ACE));
+        Dealer dealer = makeDealer(DIAMOND_NINE);
+        Gambler gambler = makeParticipant(DIAMOND_ACE);
 
         Bet bet = dealer.battle(gambler);
 
@@ -41,8 +43,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 상대 플레이어와 점수가 같으면 참가자는 베팅액을 그대로 돌려받는다.")
     void givenDealerDrawingWithPlayer() {
-        Dealer dealer = makeDealer(new Card(Suit.DIAMOND, Denomination.NINE));
-        Gambler gambler = makeParticipant(new Card(Suit.HEART, Denomination.NINE));
+        Dealer dealer = makeDealer(DIAMOND_NINE);
+        Gambler gambler = makeParticipant(HEART_NINE);
 
         Bet bet = dealer.battle(gambler);
 
@@ -68,11 +70,11 @@ class DealerTest {
     @DisplayName("딜러만 버스트가 일어나면 참가자는 승리해 베팅액을 가져간다.")
     void givenDealerBust() {
         Dealer dealer = makeDealer(
-                new Card(Suit.HEART, Denomination.NINE),
-                new Card(Suit.HEART, Denomination.SEVEN),
-                new Card(Suit.DIAMOND, Denomination.SEVEN)
+                HEART_NINE,
+                HEART_SEVEN,
+                DIAMOND_SEVEN
         );
-        Gambler gambler = makeParticipant(new Card(Suit.DIAMOND, Denomination.NINE));
+        Gambler gambler = makeParticipant(DIAMOND_NINE);
 
         Bet bet = dealer.battle(gambler);
 
