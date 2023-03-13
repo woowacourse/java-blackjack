@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.*;
+import domain.participant.Dealer;
+import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

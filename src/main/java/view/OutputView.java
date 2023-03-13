@@ -1,6 +1,11 @@
 package view;
 
-import domain.*;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Players;
+import domain.result.DealerScore;
+import domain.result.PlayerScore;
 
 import java.util.List;
 import java.util.StringJoiner;

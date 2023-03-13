@@ -1,13 +1,13 @@
 package view;
 
-import domain.Card;
-import domain.CardType;
-import domain.CardValue;
+import domain.card.Card;
+import domain.card.CardType;
+import domain.card.CardValue;
 
 import java.util.Map;
 
-import static domain.CardType.*;
-import static domain.CardValue.*;
+import static domain.card.CardType.*;
+import static domain.card.CardValue.*;
 
 public class PrintConverter {
 

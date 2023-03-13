@@ -1,4 +1,6 @@
-package domain;
+package domain.result;
+
+import domain.participant.Player;
 
 public class Profit {
 

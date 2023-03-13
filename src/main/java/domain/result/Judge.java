@@ -1,4 +1,9 @@
-package domain;
+package domain.result;
+
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.result.PlayerScore;
+import domain.result.Profit;
 
 public class Judge {
 
