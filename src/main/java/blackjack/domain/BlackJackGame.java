@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
+import blackjack.domain.bet.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
@@ -19,6 +20,10 @@ public class BlackJackGame {
     public BlackJackGame(DeckGenerator deckGenerator, List<String> playersName) {
         this.deck = deckGenerator.generate();
         this.participants = Participants.of(playersName);
+    }
+
+    public void addPlayerBetMoney(Player player, Money betMoney) {
+        participants.getDealer().addPlayerBetMoney(player, betMoney);
     }
 
     public void handInitialCards() {
