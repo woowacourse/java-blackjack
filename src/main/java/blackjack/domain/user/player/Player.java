@@ -20,7 +20,7 @@ public class Player {
     }
 
     private void validateName(final String name) {
-        final String candidateName = name.trim();
+        final String candidateName = name.strip();
 
         validateBlank(candidateName);
         validateLength(candidateName);

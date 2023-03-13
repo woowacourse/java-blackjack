@@ -11,7 +11,7 @@ public class Participant {
     private final Cards cards;
 
     public Participant(final String name) {
-        this.name = name.trim();
+        this.name = name.strip();
         this.cards = new Cards();
     }
 
