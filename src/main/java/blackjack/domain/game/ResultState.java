@@ -1,5 +1,9 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+
 import java.util.function.Function;
 
 public enum ResultState {
@@ -9,13 +13,21 @@ public enum ResultState {
     TIE(betting -> betting * 0),
     LOSE(betting -> betting * -1);
 
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private final Function<Integer, Integer> moneyFunction;
 
     ResultState(final Function<Integer, Integer> moneyFunction) {
         this.moneyFunction = moneyFunction;
     }
 
-    public static ResultState resultPlayer(final Score playerScore, final Score dealerScore) {
+    public static ResultState resultPlayer(final Score playerScore, final Score dealerScore, final int playerHandSize) {
+        if (playerHandSize == BLACKJACK_CARD_COUNT && playerScore.isBust() && !dealerScore.isBlackjack()) {
+            return BLACKJACK;
+        }
+        return resultPlayerWithoutBlackjack(playerScore, dealerScore);
+    }
+
+    private static ResultState resultPlayerWithoutBlackjack(final Score playerScore, final Score dealerScore) {
         if (playerScore.isBlackjack() && !dealerScore.isBlackjack()) {
             return BLACKJACK;
         }

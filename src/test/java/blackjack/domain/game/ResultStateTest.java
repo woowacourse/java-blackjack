@@ -19,7 +19,7 @@ class ResultStateTest {
         void SecondScoreLess21() {
             secondScore = Score.from(20);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.BLACKJACK);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.BLACKJACK);
         }
 
         @Test
@@ -27,7 +27,7 @@ class ResultStateTest {
         void SecondScoreEqual21() {
             secondScore = Score.from(21);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.TIE);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.TIE);
         }
 
         @Test
@@ -35,7 +35,7 @@ class ResultStateTest {
         void SecondScoreGreater21() {
             secondScore = Score.from(22);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.BLACKJACK);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.BLACKJACK);
         }
     }
 
@@ -51,7 +51,7 @@ class ResultStateTest {
         void SecondScoreLess21() {
             secondScore = Score.from(19);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.WIN);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore,3)).isEqualTo(ResultState.WIN);
         }
 
         @Test
@@ -59,7 +59,7 @@ class ResultStateTest {
         void SecondScoreGreater21() {
             secondScore = Score.from(22);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.WIN);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.WIN);
         }
 
         @Test
@@ -67,7 +67,7 @@ class ResultStateTest {
         void SecondScoreEqual20() {
             secondScore = Score.from(20);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.TIE);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.TIE);
         }
 
         @Test
@@ -75,7 +75,7 @@ class ResultStateTest {
         void SecondScoreEqual21() {
             secondScore = Score.from(21);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.LOSE);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.LOSE);
         }
     }
 
@@ -91,7 +91,7 @@ class ResultStateTest {
         void SecondScoreLess21() {
             secondScore = Score.from(21);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.LOSE);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.LOSE);
         }
 
         @Test
@@ -99,7 +99,7 @@ class ResultStateTest {
         void SecondScoreGreater21() {
             secondScore = Score.from(22);
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore)).isEqualTo(ResultState.TIE);
+            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.TIE);
         }
     }
 

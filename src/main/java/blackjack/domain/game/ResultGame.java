@@ -29,7 +29,8 @@ public final class ResultGame {
         final Score dealerScore = dealer.getScore();
         for (final Participant player : players) {
             final int bettingMoney = resultBetting.get(player);
-            final ResultState playerGameResult = ResultState.resultPlayer(player.getScore(), dealerScore);
+            final ResultState playerGameResult
+                    = ResultState.resultPlayer(player.getScore(), dealerScore, player.handSize());
 
             resultBetting.put(player, playerGameResult.calculateProfit(bettingMoney));
         }

@@ -30,6 +30,9 @@ public abstract class Participant {
 
     public abstract boolean isDealer();
 
+    public int handSize() {
+        return hand.size();
+    }
 
     public Card getCard(final int index) {
         return hand.getCards().get(index);
