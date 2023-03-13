@@ -15,12 +15,11 @@ import org.junit.jupiter.api.Test;
 class StandTest {
 
     private State playerState;
-    private Hand hand;
 
     @BeforeEach
     void setUp() {
         List<Card> initialCards = List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.THREE, Shape.HEART));
-        hand = new Hand(new ArrayList<>(initialCards));
+        Hand hand = new Hand(new ArrayList<>(initialCards));
         playerState = new Stand(hand);
     }
 
@@ -61,5 +60,14 @@ class StandTest {
         State dealerState = new Stand(dealerHand);
 
         assertThat(playerState.calculateResult(dealerState)).isEqualTo(Result.TIE);
+    }
+
+    @DisplayName("딜러가 Blackjack이면, 결과 값은 LOSE로 계산된다.")
+    @Test
+    void calculateResultTestWhenDealerBlackjack() {
+        Hand dealerHand = new Hand(new ArrayList<>(List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.ACE, Shape.HEART))));
+        State dealerState = new Blackjack(dealerHand);
+
+        assertThat(playerState.calculateResult(dealerState)).isEqualTo(Result.LOSE);
     }
 }
