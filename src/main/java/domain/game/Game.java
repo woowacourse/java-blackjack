@@ -71,6 +71,14 @@ public class Game {
         if (player.getScore() < dealer.getScore()) {
             return ResultStatus.of(false, false, false);
         }
+        // Same score but player is blackjack
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return ResultStatus.of(true, false, true);
+        }
+        // Same score but dealer is blackjack
+        if (!player.isBlackJack() && dealer.isBlackJack()) {
+            return ResultStatus.of(false, false, false);
+        }
         return ResultStatus.of(false, true, false);
     }
     

@@ -34,7 +34,7 @@ public class Dealer implements Playable {
     
     @Override
     public MemberStatus getStatus() {
-        return MemberStatus.of(this.hand.calculateScore());
+        return MemberStatus.of(this.hand.calculateScore(), this.hand.size());
     }
     
     @Override
@@ -50,5 +50,10 @@ public class Dealer implements Playable {
     @Override
     public String getName() {
         return this.name;
+    }
+    
+    
+    public boolean isBlackJack() {
+        return this.getStatus().isBlackJack();
     }
 }

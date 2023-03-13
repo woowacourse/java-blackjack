@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Player implements Playable {
     
-    public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
     private final PlayerName name;
     
     private Hand hand = new Hand();
@@ -36,12 +35,12 @@ public class Player implements Playable {
     
     @Override
     public boolean isAbleToDraw() {
-        return this.hand.calculateScore() < PLAYER_DRAWABLE_BOUNDARY;
+        return this.hand.calculateScore() < DRAWABLE_BOUNDARY;
     }
     
     @Override
     public MemberStatus getStatus() {
-        return MemberStatus.of(this.hand.calculateScore());
+        return MemberStatus.of(this.hand.calculateScore(), this.hand.size());
     }
     
     @Override
@@ -56,6 +55,10 @@ public class Player implements Playable {
     
     public String getName() {
         return this.name.getValue();
+    }
+    
+    public boolean isBlackJack() {
+        return this.getStatus().isBlackJack();
     }
     
     @Override
@@ -75,7 +78,4 @@ public class Player implements Playable {
         return this.name.equals(player.name);
     }
     
-    public boolean isBlackJack() {
-        return this.hand.calculateScore() == PLAYER_DRAWABLE_BOUNDARY;
-    }
 }

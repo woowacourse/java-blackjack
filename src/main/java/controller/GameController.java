@@ -6,7 +6,6 @@ import domain.game.GameAction;
 import domain.game.GameBet;
 import domain.money.Bet;
 import domain.result.ProfitResult;
-import domain.result.StatusResult;
 import domain.user.GameMember;
 import domain.user.Playable;
 import domain.user.Player;
@@ -23,7 +22,6 @@ public class GameController {
         GameBet gameBet = this.collectBets(game);
         this.startGame(game);
         this.runGame(game);
-//        this.endGameWithStatus(game);
         this.endGameWithProfit(game, gameBet);
     }
     
@@ -105,13 +103,6 @@ public class GameController {
         return true;
     }
     
-    
-    private void endGameWithStatus(Game game) {
-        OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
-        StatusResult statusResult = game.generateGameResult();
-        OutputView.printDealerGameResult(statusResult.getDealerResult());
-        OutputView.printPlayersGameResult(statusResult.getResultMap());
-    }
     
     private void endGameWithProfit(Game game, GameBet gameBet) {
         OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
