@@ -11,16 +11,16 @@ public abstract class InitialStatus implements Status {
 
     @Override
     public Status draw(final Card card) {
-        throw new IllegalStateException("현재 상태에서는 카드를 뽑을 수 없습니다.");
+        throw new UnsupportedOperationException("현재 상태에서는 카드를 뽑을 수 없습니다.");
     }
 
     @Override
     public Status selectStand() {
-        throw new IllegalStateException("현재 상태에서는 Stand를 선택할 수 없습니다.");
+        throw new UnsupportedOperationException("현재 상태에서는 Stand를 선택할 수 없습니다.");
     }
 
     @Override
     public BigDecimal profitWeight() {
-        throw new IllegalStateException("현재 상태에서는 수익 가중치를 계산할 수 없습니다.");
+        throw new UnsupportedOperationException("현재 상태에서는 수익 가중치를 계산할 수 없습니다.");
     }
 }
