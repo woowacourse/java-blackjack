@@ -11,7 +11,7 @@ public class Blackjack extends GameState {
 
     @Override
     public GameState receive(Card card) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
