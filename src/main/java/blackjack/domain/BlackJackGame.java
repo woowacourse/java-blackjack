@@ -56,8 +56,13 @@ public class BlackJackGame {
         return users.isDrawable(playerName);
     }
 
-    public void drawDealer() {
-        users.drawDealer(gameTable.supplyCard());
+    public int drawDealerUntilUnderLimit() {
+        int dealerDrawCount = 0;
+        while (users.isDealerUnderDrawLimit()) {
+            users.drawDealer(gameTable.supplyCard());
+            dealerDrawCount++;
+        }
+        return dealerDrawCount;
     }
 
     public boolean shouldDealerDraw() {

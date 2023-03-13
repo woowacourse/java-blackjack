@@ -79,7 +79,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(),
                 new TestNonShuffledDeckGenerator(cards));
 
-        blackJackGame.drawDealer();
+        blackJackGame.drawDealerUntilUnderLimit();
         final int dealerCardSize = blackJackGame.getUserNameAndCardResults()
                 .get(DEALER_NAME)
                 .getCards()
