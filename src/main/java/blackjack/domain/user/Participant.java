@@ -8,23 +8,23 @@ import java.util.List;
 public class Participant {
 
     private final String name;
-    private final Cards cards;
+    private final Hand hand;
 
     public Participant(final String name) {
         this.name = name.strip();
-        this.cards = new Cards();
+        this.hand = new Hand();
     }
 
     public void drawCard(final CardPack cardPack) {
-        cards.add(cardPack.takeOne());
+        hand.add(cardPack.takeOne());
     }
 
     public List<Card> showCards() {
-        return cards.getCards();
+        return hand.getCards();
     }
 
     public Score getScore() {
-        return cards.getScore();
+        return hand.getScore();
     }
 
     public String getName() {
@@ -32,6 +32,6 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 }

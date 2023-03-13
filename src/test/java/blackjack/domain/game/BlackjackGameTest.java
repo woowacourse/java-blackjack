@@ -48,6 +48,29 @@ class BlackjackGameTest {
     }
 
     @Test
+    void 플레이어는_게임_시작시_카드를_2장뽑는다() {
+        // given
+        String dealerName = "딜러";
+
+        Player player = new Player("dummy");
+        Players players = new Players(List.of(player));
+        Dealer dealer = new Dealer(dealerName);
+
+        BlackjackGame blackjackGame = new BlackjackGame(new CardPack(List.of(
+                스페이드_8, 클로버_2,
+                스페이드_10, 다이아몬드_6,
+                스페이드_10, 하트_10
+        )));
+
+        // when
+        int betMoney = 1000;
+        blackjackGame.initDraw(dealer, players);
+
+        // then
+        Assertions.assertThat(player.showCards().size()).isEqualTo(2);
+    }
+
+    @Test
     void 딜러가_이기면_플레이어의_배팅금액만큼_수익을_얻는다() {
         // given
         String dealerName = "딜러";
@@ -71,7 +94,7 @@ class BlackjackGameTest {
 
         blackjackGame.playerDraw(player);
         blackjackGame.playerDraw(player);
-        
+
         // then
         Map<String, Integer> dealerProfit = blackjackGame.toDealerProfit(players, dealer);
         Integer dealerMoney = dealerProfit.get(dealerName);

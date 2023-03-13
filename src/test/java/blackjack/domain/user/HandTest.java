@@ -13,7 +13,7 @@ import static blackjack.domain.fixture.FixtureCard.클로버_9;
 import static blackjack.domain.fixture.FixtureCard.클로버_A;
 import static blackjack.domain.fixture.FixtureCard.하트_10;
 
-class CardsTest {
+class HandTest {
 
     private static final int BUST_SCORE = -1;
     private static final int MAX_CARD_SCORE = 21;
@@ -22,10 +22,10 @@ class CardsTest {
     void 카드를_받아_점수를_계산한다() {
         //given
         List<Card> dummy = List.of(클로버_10);
-        Cards cards = new Cards(dummy);
+        Hand hand = new Hand(dummy);
 
         // then
-        Assertions.assertThat(cards.getScore().getValue())
+        Assertions.assertThat(hand.getScore().getValue())
                 .isEqualTo(10);
     }
 
@@ -36,7 +36,7 @@ class CardsTest {
         void _카드_총합이_21이_넘어가면_1로_취급한다() {
             // given
             List<Card> cards = List.of(클로버_10, 클로버_9, 클로버_A);
-            Cards hand = new Cards(cards);
+            Hand hand = new Hand(cards);
 
             // then
             Assertions.assertThat(hand.getScore().getValue())
@@ -47,7 +47,7 @@ class CardsTest {
         void _카드_총합이_21이_넘어가지_않으면_11로_취급한다() {
             // given
             List<Card> cards = List.of(클로버_10, 클로버_A);
-            Cards hand = new Cards(cards);
+            Hand hand = new Hand(cards);
 
             // then
             Assertions.assertThat(hand.getScore().getValue())
@@ -59,7 +59,7 @@ class CardsTest {
     void _카드_총합이_21을_넘어가면_무조건_패배이다() {
         // given
         List<Card> cards = List.of(클로버_10, 스페이드_10, 하트_10);
-        Cards hand = new Cards(cards);
+        Hand hand = new Hand(cards);
 
         //then
         Assertions.assertThat(hand.getScore().getValue())
