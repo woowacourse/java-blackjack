@@ -7,11 +7,9 @@ import java.util.List;
 
 public class Participant {
     private static final int MAX_NUMBER = 21;
-    private final Name name;
     private final Cards cards;
 
-    public Participant(final Name name) {
-        this.name = name;
+    public Participant() {
         this.cards = new Cards();
     }
 
@@ -20,9 +18,7 @@ public class Participant {
     }
 
 
-    public String getName() {
-        return name.getValue();
-    }
+
 
     public List<Card> getCards() {
         return this.cards.getCards();

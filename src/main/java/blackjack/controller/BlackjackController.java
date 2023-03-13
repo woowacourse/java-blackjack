@@ -81,7 +81,7 @@ public class BlackjackController {
 
     private void hitDealer(BlackjackGame blackjackGame, Dealer dealer) {
         while (blackjackGame.playDealer(dealer)) {
-            outputView.outputDealerDrawCard(dealer.getName());
+            outputView.outputDealerDrawCard();
         }
     }
 

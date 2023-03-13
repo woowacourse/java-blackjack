@@ -56,7 +56,7 @@ public class Participants {
 
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 }

@@ -51,8 +51,8 @@ public class OutputView {
         return cardInfo.getLetter() + cardInfo.getShape();
     }
 
-    public void outputDealerDrawCard(final String name) {
-        System.out.println(CHANGE_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
+    public void outputDealerDrawCard() {
+        System.out.println(CHANGE_LINE + DEALER_NAME + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
         changeLine();
     }
 

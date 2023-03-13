@@ -6,11 +6,10 @@ import blackjack.domain.participant.comparator.Comparator;
 import blackjack.domain.participant.comparator.InitialComparator;
 
 public class Dealer extends Participant {
-    private static final String DEALER_NAME = "딜러";
     private final Comparator comparator;
 
     public Dealer() {
-        super(new Name(DEALER_NAME));
+        super();
         this.comparator = new InitialComparator(this);
     }
 
