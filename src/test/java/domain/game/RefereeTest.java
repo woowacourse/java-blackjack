@@ -24,7 +24,7 @@ class RefereeTest {
     
     @Test
     @DisplayName("딜러와 참가자의 배틀 결과를 계산 후 반환한다.")
-    void saveBattleResults() { // TODO
+    void saveBattleResults() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("아벨,포비", cards -> cards);
         blackJackGame.settingBetAmountToParticipantsBy(playerName -> 1000);

@@ -21,7 +21,6 @@ public class Application {
     }
     
     private String getParticipantNames() {
-        OutputView.printParticipantNamesGuide();
         return InputView.repeat(InputView::inputParticipantNames);
     }
     
@@ -45,8 +44,7 @@ public class Application {
     }
     
     private AddCardCommand inputCommand(Player participant) {
-        OutputView.printAddCardGuide(participant.getName());
-        return InputView.repeat(InputView::inputAddCardCommand);
+        return InputView.repeat(() -> InputView.inputAddCardCommand(participant.getName()));
     }
     
     private void printProfitResults(BlackJackGame blackJackGame, Referee referee) {

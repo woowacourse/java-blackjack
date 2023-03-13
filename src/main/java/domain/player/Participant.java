@@ -42,11 +42,6 @@ public class Participant extends Player {
         decideDrawOrFinish(deck, supplyCommand, printParticipantCardStatus);
     }
     
-    @Override
-    public double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount) {
-        return supplyBetAmount.applyAsDouble(getName());
-    }
-    
     private void decideDrawOrFinish(
             Deck deck,
             Function<Player, AddCardCommand> supplyCommand,
@@ -63,6 +58,11 @@ public class Participant extends Player {
             return;
         }
         decideDrawOrFinish(deck, supplyCommand, printParticipantCardStatus);
+    }
+    
+    @Override
+    public double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount) {
+        return supplyBetAmount.applyAsDouble(getName());
     }
     
     private void drawStopIfNotAddCardCommand(AddCardCommand command) {

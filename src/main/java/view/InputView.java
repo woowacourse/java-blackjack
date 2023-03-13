@@ -18,6 +18,7 @@ public class InputView {
     }
     
     public static String inputParticipantNames() {
+        OutputView.printParticipantNamesGuide();
         try {
             String inputParticipantNames = BUFFERED_READER.readLine();
             validateInputParticipantNames(inputParticipantNames);
@@ -40,14 +41,15 @@ public class InputView {
         }
     }
 
-    public static AddCardCommand inputAddCardCommand() {
+    public static AddCardCommand inputAddCardCommand(String playerName) {
+        OutputView.printAddCardGuide(playerName);
         try {
             String inputAddCardCommand = BUFFERED_READER.readLine();
             validateNullOrBlank(inputAddCardCommand);
             return AddCardCommand.valueOfCommand(inputAddCardCommand);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
-            return inputAddCardCommand();
+            return inputAddCardCommand(playerName);
         }
     }
 
