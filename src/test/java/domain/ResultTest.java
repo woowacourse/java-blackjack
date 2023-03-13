@@ -28,7 +28,7 @@ class ResultTest {
         assertThat(result.calculateWinningAmount(1_000)).isEqualTo(0);
     }
 
-    @DisplayName("블랙잭에 해당하는 경우 배팅 금액의 1배를 반환한다.")
+    @DisplayName("블랙잭에 해당하는 경우 배팅 금액의 1.5배를 반환한다.")
     @Test
     void 블랙잭_베팅금액_반환() {
         Result result = Result.BLACKJACK;

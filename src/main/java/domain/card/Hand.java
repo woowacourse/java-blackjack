@@ -14,11 +14,11 @@ public final class Hand {
     }
 
     public void add(Card card) {
-        cards.add(card);
+        this.cards.add(card);
     }
 
     public int calculateScore() {
-        int scoreBeforeCheckAce = cards.stream()
+        int scoreBeforeCheckAce = this.cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
         if (haveAce() && scoreBeforeCheckAce <= UPPER_LIMIT_TO_ADD) {
@@ -28,11 +28,11 @@ public final class Hand {
     }
 
     private boolean haveAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return this.cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {
-        return cards;
+        return this.cards;
     }
 
     public boolean isInitialState() {

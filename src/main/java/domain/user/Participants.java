@@ -28,7 +28,7 @@ public final class Participants {
 
     public void drawInitialCardsEachParticipant(Deck deck) {
         drawInitialCardsBy(dealer, deck);
-        players.getPlayers().forEach(player -> drawInitialCardsBy(player, deck));
+        this.players.getPlayers().forEach(player -> drawInitialCardsBy(player, deck));
     }
 
     private void drawInitialCardsBy(User user, Deck deck) {
@@ -75,20 +75,20 @@ public final class Participants {
         if (player.isBust()) {
             return true;
         }
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
+        if (this.dealer.isBlackjack() && !player.isBlackjack()) {
             return true;
         }
-        if (player.calculateScore() < dealer.calculateScore() && !dealer.isBust()) {
+        if (player.calculateScore() < this.dealer.calculateScore() && !this.dealer.isBust()) {
             return true;
         }
         return false;
     }
 
     private boolean isWon(Player player) {
-        if (dealer.isBust()) {
+        if (this.dealer.isBust()) {
             return true;
         }
-        if (!player.isBust() && player.calculateScore() > dealer.calculateScore()) {
+        if (!player.isBust() && player.calculateScore() > this.dealer.calculateScore()) {
             return true;
         }
         return false;
@@ -103,10 +103,10 @@ public final class Participants {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return this.dealer;
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return this.players.getPlayers();
     }
 }

@@ -12,10 +12,10 @@ public class AllWinningAmountDto {
     }
 
     public int getWinningAmountOfDealer() {
-        return winningAmountOfDealer;
+        return this.winningAmountOfDealer;
     }
 
     public Map<String, Integer> getPlayerNameWinningAmounts() {
-        return playerNameWinningAmounts;
+        return this.playerNameWinningAmounts;
     }
 }
