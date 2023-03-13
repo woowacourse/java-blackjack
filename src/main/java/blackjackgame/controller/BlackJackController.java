@@ -115,14 +115,19 @@ public class BlackJackController {
         Result result = new Result(dealer, guests.getGuests());
         Map<Guest, GameOutcome> guestGameOutcome = result.getGuestsResult();
         Map<String, Integer> bettingResult = new LinkedHashMap<>();
-        int dealerRevenue = 0;
+        bettingResult.put(dealer.getName(), 0);
+        int dealerRevenue = calculatePlayersRevenue(guestGameOutcome, bettingResult);
         bettingResult.put(dealer.getName(), dealerRevenue);
+        outputView.printBettingResult(bettingResult);
+    }
+
+    private int calculatePlayersRevenue(Map<Guest, GameOutcome> guestGameOutcome, Map<String, Integer> bettingResult) {
+        int dealerRevenue = 0;
         for(Guest guest : guestGameOutcome.keySet()) {
             int guestRevenue = guestGameOutcome.get(guest).calculateRevenue(guest.getBettingMoney());
             bettingResult.put(guest.getName(), guestRevenue);
             dealerRevenue -= guestRevenue;
         }
-        bettingResult.put(dealer.getName(), dealerRevenue);
-        outputView.printBettingResult(bettingResult);
+        return dealerRevenue;
     }
 }
