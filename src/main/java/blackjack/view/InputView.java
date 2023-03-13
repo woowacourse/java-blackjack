@@ -17,6 +17,11 @@ public class InputView {
         return readLine();
     }
 
+    public static int inputBetAmount(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        return Integer.parseInt(readLine());
+    }
+
     public static boolean askAdditionalCard(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readLine();
