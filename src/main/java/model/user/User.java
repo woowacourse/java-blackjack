@@ -5,10 +5,10 @@ import model.card.Deck;
 
 public class User {
 
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
-    public User(final String name) {
+    public User(final Name name) {
         this.name = name;
         this.hand = Hand.create();
     }
@@ -26,12 +26,11 @@ public class User {
         return hand.getTotalValue();
     }
 
-    public Result judgeResult(int dealerTotalValue) {
-        final int playerTotalValue = calculateTotalValue();
-        return Result.judge(dealerTotalValue, playerTotalValue);
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
-    public String getName() {
+    public Name getName() {
         return this.name;
     }
 

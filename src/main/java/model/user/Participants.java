@@ -1,45 +1,48 @@
 package model.user;
 
-import model.card.Deck;
-
+import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toUnmodifiableList;
+import model.card.Deck;
+import model.money.Bet;
 
 public class Participants {
 
     private final List<Player> players;
     private final Dealer dealer;
 
-    private Participants(final List<String> playersName, final Dealer dealer) {
-        this.players = createPlayers(playersName);
+    private Participants(final List<Player> playersName, final Dealer dealer) {
+        this.players = playersName;
         this.dealer = dealer;
     }
 
-    private static List<Player> createPlayers(List<String> playersName) {
-        return playersName.stream()
-                .map(Player::new)
-                .collect(toList());
+    public static Participants of(final List<Name> playersName, final List<Bet> bets, final Dealer dealer) {
+        return new Participants(createPlayers(playersName, bets), dealer);
     }
 
-    public static Participants from(final List<String> playersName) {
-        return new Participants(playersName, new Dealer());
-    }
+    private static List<Player> createPlayers(List<Name> playersName, List<Bet> bets) {
+        final List<Player> players = new ArrayList<>();
 
-    public List<Result> getFinalResult(final Dealer dealer) {
-        return createFinalResultWithoutDealer(dealer.calculateTotalValue());
-    }
+        for (int i = 0, size = playersName.size(); i < size; i++) {
+            players.add(new Player(playersName.get(i), bets.get(i)));
+        }
 
-    private List<Result> createFinalResultWithoutDealer(final int dealerTotalValue) {
-        return players.stream()
-                .map(player -> player.judgeResult(dealerTotalValue))
-                .collect(toUnmodifiableList());
+        return players;
     }
 
     public void receiveInitialCards(final Deck deck) {
         players.forEach(player -> player.receiveInitialCards(deck));
         dealer.receiveInitialCards(deck);
+    }
+
+    public long calculateTotalProfits() {
+        return players.stream()
+                .mapToLong(this::createTotalProfit)
+                .sum();
+    }
+
+    private long createTotalProfit(final Player player) {
+        final GameState gameState = player.judgeResult(dealer);
+        return gameState.calculateMoney(player.getBetMoney());
     }
 
     public List<Player> getPlayers() {
