@@ -1,4 +1,4 @@
-package domain;
+package domain.name;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

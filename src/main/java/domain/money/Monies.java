@@ -1,4 +1,4 @@
-package domain.bettingMoney;
+package domain.money;
 
 import java.util.Collections;
 import java.util.List;

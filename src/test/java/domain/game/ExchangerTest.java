@@ -1,10 +1,11 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Money;
-import domain.bettingMoney.Monies;
+import domain.Exchanger;
+import domain.money.BettingMoneyTable;
+import domain.money.Money;
+import domain.money.Monies;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;

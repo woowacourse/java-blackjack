@@ -1,8 +1,8 @@
 package domain.game;
 
 import domain.Exchanger;
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Money;
+import domain.money.BettingMoneyTable;
+import domain.money.Money;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.deck.Deck;

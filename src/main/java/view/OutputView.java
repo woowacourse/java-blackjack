@@ -1,9 +1,8 @@
 package view;
 
-import domain.bettingMoney.Money;
+import domain.money.Money;
 import domain.card.Card;
 import domain.dto.CardNames;
-import domain.game.Result;
 import java.util.List;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package domain.bettingMoney;
+package domain.money;
 
 public class Money {
     private final int value;

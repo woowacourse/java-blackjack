@@ -1,9 +1,9 @@
 package controller;
 
 import domain.HitCommand;
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Money;
-import domain.bettingMoney.Monies;
+import domain.money.BettingMoneyTable;
+import domain.money.Money;
+import domain.money.Monies;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;

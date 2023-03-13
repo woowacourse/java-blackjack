@@ -1,10 +1,10 @@
-package domain;
+package domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Money;
-import domain.bettingMoney.Monies;
+import domain.money.BettingMoneyTable;
+import domain.money.Money;
+import domain.money.Monies;
 import domain.name.Name;
 import domain.user.Player;
 import domain.user.Players;
@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MoneyTableTest {
+public class BettingMoneyTableTest {
 
     @DisplayName("특정 플레이어의 베팅 금액을 가져온다")
     @Test

@@ -1,7 +1,7 @@
 package domain;
 
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Money;
+import domain.money.BettingMoneyTable;
+import domain.money.Money;
 import domain.card.Hand;
 import domain.game.Referee;
 import domain.game.Result;

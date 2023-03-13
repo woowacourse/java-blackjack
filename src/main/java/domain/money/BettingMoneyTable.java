@@ -1,4 +1,4 @@
-package domain.bettingMoney;
+package domain.money;
 
 import domain.user.Player;
 import domain.user.Players;

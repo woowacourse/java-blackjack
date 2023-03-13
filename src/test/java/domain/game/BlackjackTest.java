@@ -2,8 +2,8 @@ package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.bettingMoney.BettingMoneyTable;
-import domain.bettingMoney.Monies;
+import domain.money.BettingMoneyTable;
+import domain.money.Monies;
 import domain.deck.DefaultDeckGenerator;
 import domain.name.Names;
 import domain.user.Player;
