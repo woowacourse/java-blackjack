@@ -1,11 +1,14 @@
 package domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Score {
 
+    private static final Map<Integer, Score> CACHE = new HashMap<>();
     public static final Score INITIAL_SCORE = Score.from(0);
-    private static final Score BLACKJACK = Score.from(21);
+    public static final Score MAX_SCORE = Score.from(21);
     private static final Score ACE_DECREASE = Score.from(10);
     private static final int NONE_ACE_COUNT = 0;
 
@@ -16,7 +19,7 @@ public class Score {
     }
 
     public static Score from(int value) {
-        return new Score(value);
+        return CACHE.computeIfAbsent(value, k -> new Score(value));
     }
 
     public Score add(Score other) {
@@ -38,19 +41,19 @@ public class Score {
     }
 
     private boolean isScoreDecreasableByAce(Score limit, int aceCount) {
-        return isNotBlackJack() && this.isGreaterThan(limit) && NONE_ACE_COUNT < aceCount;
+        return !isMaxScore() && this.isGreaterThan(limit) && NONE_ACE_COUNT < aceCount;
     }
 
     private Score minus(Score other) {
         return Score.from(this.getValue() - other.getValue());
     }
 
-    private boolean isNotBlackJack() {
-        return !this.equals(BLACKJACK);
+    public boolean isMaxScore() {
+        return this.equals(MAX_SCORE);
     }
 
     public boolean isBust() {
-        return this.isGreaterThan(BLACKJACK);
+        return this.isGreaterThan(MAX_SCORE);
     }
 
     public boolean isGreaterThan(Score compareTarget) {

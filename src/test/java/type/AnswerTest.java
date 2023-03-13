@@ -1,6 +1,7 @@
 package type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,11 +18,13 @@ class AnswerTest {
     }
 
     @Test
-    @DisplayName("입력값이 y, n 외의 값이 아니라면 false 가 반환된다.")
+    @DisplayName("입력값이 y, n 외의 값이 아니라면 에러가 발생한다.")
     void createWrongAnswer() {
         String answer = "a";
 
-        assertThat(Answer.isInputValid(answer)).isFalse();
+        assertThatThrownBy(() -> Answer.isMoreCardRequested(answer))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("y 나 n 만을 입력해주세요.");
     }
 
 }

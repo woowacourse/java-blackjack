@@ -13,15 +13,40 @@ public class Result {
     }
 
     private void calculate(Dealer dealer, Players players) {
+        if (dealer.isBlackjack()) {
+            calculateDealerBlackjack(players);
+            return;
+        }
         for (Player player : players.getPlayers()) {
             calculateWinLose(dealer, player);
         }
     }
 
+    private void calculateDealerBlackjack(Players players) {
+        for (Player player : players.getPlayers()) {
+            drawIfPlayerBlackjack(player);
+        }
+    }
+
+    private void drawIfPlayerBlackjack(Player player) {
+        if (player.isBlackjack()) {
+            gameResult.put(player.getName(), GameResult.DRAW);
+            return;
+        }
+        gameResult.put(player.getName(), GameResult.LOSE);
+    }
+
     private void calculateWinLose(Dealer dealer, Player player) {
+        blackjack(player);
         win(dealer, player);
         lose(dealer, player);
         draw(dealer, player);
+    }
+
+    private void blackjack(Player player) {
+        if (player.isBlackjack()) {
+            gameResult.put(player.getName(), GameResult.BLACKJACK);
+        }
     }
 
     private void win(Dealer dealer, Player player) {
@@ -31,7 +56,8 @@ public class Result {
     }
 
     private boolean isPlayerNotBustAndWin(Dealer dealer, Player player) {
-        return !player.isBust() && (dealer.isBust() || player.getTotalScore().isGreaterThan(dealer.getTotalScore()));
+        return player.isNotBust() && player.isNotBlackjack() && (dealer.isBust() || player.getTotalScore()
+                .isGreaterThan(dealer.getTotalScore()));
     }
 
     private void lose(Dealer dealer, Player player) {
@@ -41,7 +67,7 @@ public class Result {
     }
 
     private boolean isPlayerBustOrLose(Dealer dealer, Player player) {
-        return !dealer.isBust() && (player.isBust() || dealer.getTotalScore().isGreaterThan(player.getTotalScore()));
+        return player.isBust() || dealer.isNotBust() && dealer.getTotalScore().isGreaterThan(player.getTotalScore());
     }
 
     private void draw(Dealer dealer, Player player) {
@@ -51,15 +77,11 @@ public class Result {
     }
 
     private boolean isBothBustOrDraw(Dealer dealer, Player player) {
-        return dealer.isBust() && player.isBust() || dealer.getTotalScore().equals(player.getTotalScore());
+        return player.isNotBust() && dealer.isNotBust() && dealer.getTotalScore().equals(player.getTotalScore());
     }
 
-    public Map<String, GameResult> getResult() {
-        LinkedHashMap<String, GameResult> results = new LinkedHashMap<>();
-        for (Name name : gameResult.keySet()) {
-            results.put(name.getValue(), gameResult.get(name));
-        }
-        return results;
+    public Map<Name, GameResult> getPlayersWinResult() {
+        return gameResult;
     }
 
 }

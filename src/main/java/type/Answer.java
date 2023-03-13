@@ -9,6 +9,8 @@ public enum Answer {
     HIT("y", true),
     STAND("n", false);
 
+    private static final String INVALID_MORE_CARD_ERROR_MESSAGE = String.format("%s 나 %s 만을 입력해주세요.",
+            HIT.input, STAND.input);
     private static final Map<String, Boolean> REQUEST_ANSWER = Arrays.stream(values())
             .collect(Collectors.toMap(Answer::getInput, Answer::isHit));
 
@@ -21,11 +23,12 @@ public enum Answer {
     }
 
     public static boolean isMoreCardRequested(String input) {
-        return REQUEST_ANSWER.get(input);
-    }
-
-    public static boolean isInputValid(String input) {
-        return REQUEST_ANSWER.containsKey(input);
+        String foundInput = REQUEST_ANSWER.keySet()
+                .stream()
+                .filter(value -> value.equals(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE));
+        return REQUEST_ANSWER.get(foundInput);
     }
 
     private String getInput() {

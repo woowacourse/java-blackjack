@@ -1,10 +1,9 @@
 package view;
 
-import domain.GameResult;
-
 import dto.CardStatusDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -13,10 +12,9 @@ public class OutputView {
     private static final String DEALER_RECEIVE_CARD = "%s는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String NAME_DELIMITER = ", ";
     private static final String FINAL_SCORE = " - 결과: %d";
-    private static final String FINAL_RESULT_TITLE = "## 최종 승패";
-    private static final String RESULT_NAME_FORMAT = "%s: ";
+    private static final String FINAL_REVENUE_TITLE = "## 최종 수익";
     private static final String PARTICIPANT_CARD_STATUS_FORMAT = "%s 카드: %s ";
-    private static final String INTERVAL_SPACE = " ";
+    private static final String REVENUE_FORMAT = "%s: %d";
     private static final int NONE = 0;
 
     public OutputView() {
@@ -24,6 +22,12 @@ public class OutputView {
 
     public void printFirstCardDistribution(String dealerName, List<String> playerNames) {
         System.out.printf("\n" + INITIAL_CARD_DISTRIBUTION, dealerName, String.join(NAME_DELIMITER, playerNames));
+    }
+
+    public void printAllParticipantsInitialCard(List<String> names, List<List<CardStatusDto>> cards) {
+        for (int index = 0; index < names.size(); index++) {
+            printCardStatus(names.get(index), cards.get(index));
+        }
     }
 
     public void printCardStatus(String name, List<CardStatusDto> cardStatuses) {
@@ -41,73 +45,27 @@ public class OutputView {
         if (cardCount != NONE) {
             System.out.printf("\n\n" + DEALER_RECEIVE_CARD + "\n", dealerName, cardCount);
         }
+        System.out.println();
     }
 
-    public void printCardAndScore(String playerName, List<CardStatusDto> cardStatuses, int totalScore) {
+    public void printAllParticipantsCardAndScore(List<String> names, List<List<CardStatusDto>> cards,
+                                                 List<Integer> scores) {
+        for (int index = 0; index < names.size(); index++) {
+            printCardAndScore(names.get(index), cards.get(index), scores.get(index));
+        }
+    }
+
+    private void printCardAndScore(String playerName, List<CardStatusDto> cardStatuses, int totalScore) {
         printCardStatus(playerName, cardStatuses);
         System.out.printf(FINAL_SCORE, totalScore);
     }
 
-    public void printFinalResult(String dealerName, Map<String, GameResult> result) {
-        System.out.println("\n\n" + FINAL_RESULT_TITLE);
-        printDealerFinalResult(dealerName, result);
-        printPlayersFinalResult(result);
-    }
-
-    private void printDealerFinalResult(String dealerName, Map<String, GameResult> results) {
-        int winCount = 0;
-        int loseCount = 0;
-        int drawCount = 0;
-        for (GameResult result : results.values()) {
-            winCount = getWinCount(winCount, result);
-            drawCount = getDrawCount(drawCount, result);
-            loseCount = getLoseCount(loseCount, result);
+    public void printFinalResult(Map<String, Double> results) {
+        System.out.println("\n\n" + FINAL_REVENUE_TITLE);
+        for (Entry<String, Double> result : results.entrySet()) {
+            String playerRevenue = String.format(REVENUE_FORMAT, result.getKey(), result.getValue().intValue());
+            System.out.println(playerRevenue);
         }
-        printDealerResultCount(dealerName, winCount, loseCount, drawCount);
-    }
-
-    private int getWinCount(int winCount, GameResult result) {
-        if (result == GameResult.LOSE) {
-            winCount++;
-        }
-        return winCount;
-    }
-
-    private int getDrawCount(int drawCount, GameResult result) {
-        if (result == GameResult.DRAW) {
-            drawCount++;
-        }
-        return drawCount;
-    }
-
-    private int getLoseCount(int loseCount, GameResult result) {
-        if (result == GameResult.WIN) {
-            loseCount++;
-        }
-        return loseCount;
-    }
-
-    private void printDealerResultCount(String dealerName, int winCount, int loseCount, int drawCount) {
-        System.out.printf(RESULT_NAME_FORMAT, dealerName);
-        if (winCount != NONE) {
-            System.out.print(winCount + getGameResultExpression(GameResult.WIN));
-        }
-        if (drawCount != NONE) {
-            System.out.print(drawCount + getGameResultExpression(GameResult.DRAW));
-        }
-        if (loseCount != NONE) {
-            System.out.print(loseCount + getGameResultExpression(GameResult.LOSE));
-        }
-    }
-
-    private String getGameResultExpression(GameResult gameResult) {
-        return gameResult.getExpression() + INTERVAL_SPACE;
-    }
-
-    private void printPlayersFinalResult(Map<String, GameResult> results) {
-        System.out.println();
-        results.forEach(
-                (name, result) -> System.out.printf(RESULT_NAME_FORMAT + getGameResultExpression(result) + "\n", name));
     }
 
 }

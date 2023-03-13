@@ -2,18 +2,19 @@ package domain;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACKJACK(1.5);
 
-    private final String expression;
+    private final double multiple;
 
-    GameResult(String expression) {
-        this.expression = expression;
+    GameResult(double multiple) {
+        this.multiple = multiple;
     }
 
-    public String getExpression() {
-        return expression;
+    public double getMultiple() {
+        return multiple;
     }
 
 }

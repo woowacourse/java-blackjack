@@ -19,7 +19,7 @@ public class InitialCardMaker {
         initialCards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             Arrays.stream(Letter.values())
-                    .forEach(value -> initialCards.add(new Card(shape, value)));
+                    .forEach(value -> initialCards.add(Card.of(shape, value)));
         }
     }
 
