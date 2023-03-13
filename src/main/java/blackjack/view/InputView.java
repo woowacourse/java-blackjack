@@ -8,10 +8,13 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String ASK_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ASK_BETTING_AMOUNT_MESSAGE = "%s의 베팅 금액은?" + System.lineSeparator();
+    private static final String ASK_HIT_OR_STAY_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> askPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        System.out.println(ASK_PLAYER_NAMES_MESSAGE);
         final String line = scanner.nextLine();
         return parseByDelimiter(line);
     }
@@ -23,7 +26,7 @@ public class InputView {
     }
 
     public static int askBettingAmount(final String playerName) {
-        System.out.printf("%s의 베팅 금액은?" + System.lineSeparator(), playerName);
+        System.out.printf(ASK_BETTING_AMOUNT_MESSAGE, playerName);
         final String line = scanner.nextLine();
         return parseInteger(line);
     }
@@ -38,7 +41,7 @@ public class InputView {
 
     public static HitCommand askToHit(final String playerName) {
         System.out.println();
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), playerName);
+        System.out.printf(ASK_HIT_OR_STAY_MESSAGE, playerName);
         return HitCommand.find(scanner.nextLine());
     }
 }

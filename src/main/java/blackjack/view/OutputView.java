@@ -10,15 +10,17 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final String KEY_VALUE_FORMAT = "%s : %s%n";
-    private static final String OPEN_CARD_MESSAGE_FORMAT = "%n%s와 %s에게 2장을 나누었습니다.%n";
-    private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT = "%s는 16 이하라 %d장의 카드를 더 받았습니다.%n";
-    private static final String CARD_RESULTS_FORMAT = "%s 카드: %s - 결과: %d%n";
+    private static final String KEY_VALUE_FORMAT = "%s : %s" + System.lineSeparator();
+    private static final String OPEN_CARD_MESSAGE_FORMAT = "%s와 %s에게 2장을 나누었습니다." + System.lineSeparator();
+    private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT =
+            "%s는 16 이하라 %d장의 카드를 더 받았습니다." + System.lineSeparator();
+    private static final String CARD_RESULTS_FORMAT = "%s 카드: %s - 결과: %d" + System.lineSeparator();
     private static final String TOTAL_PROFIT_HEADER = "## 최종 수익";
-    private static final String INPUT_ERROR_MESSAGE_FORMAT = "%n[입력 오류] %s%n";
+    private static final String INPUT_ERROR_MESSAGE_FORMAT = "[입력 오류] %s" + System.lineSeparator();
 
     public static void showOpenCards(final String dealerName, final List<String> playerNames,
                                      final List<HandStatus> handStatuses) {
+        System.out.println();
         System.out.printf(OPEN_CARD_MESSAGE_FORMAT, dealerName, String.join(DELIMITER, playerNames));
         handStatuses.forEach(OutputView::showPlayerCard);
     }
@@ -50,6 +52,7 @@ public class OutputView {
     }
 
     public static void showInputErrorMessage(final String message) {
+        System.out.println();
         System.out.printf(INPUT_ERROR_MESSAGE_FORMAT, message);
     }
 
