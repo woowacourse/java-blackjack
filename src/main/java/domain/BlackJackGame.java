@@ -31,11 +31,11 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, WinningStatus> calculatePlayersResult() {
-        Map<Player, WinningStatus> playersResult = new HashMap<>();
+    public Map<Player, Integer> calculatePlayersResult() {
+        Map<Player, Integer> playersResult = new HashMap<>();
         for (Player player : participants.getPlayers()) {
-            WinningStatus playerWinningStatus = decideWinningStatus(player, participants.getDealer().calculateScore());
-            playersResult.put(player, playerWinningStatus);
+            int playerFinalResult = decideFinalResult(player, participants.getDealer().calculateScore());
+            playersResult.put(player, playerFinalResult);
         }
         return playersResult;
     }
@@ -69,29 +69,30 @@ public class BlackJackGame {
         return dealerResult.getOrDefault(WinningStatus.LOSE, 0);
     }
 
-    private WinningStatus decideWinningStatus(final Player player, int dealerScore) {
+    private int decideFinalResult(final Player player, int dealerScore) {
         int playerScore = player.calculateScore();
+        int bettingMoney = player.getBettingMoney();
         if (dealerScore > BLACKJACK_NUMBER) {
-            return decideWinningStatusDealerBust(playerScore);
+            return decideFinalResultDealerBust(playerScore, bettingMoney);
         }
-        return decideWinningStatusDealerNotBust(dealerScore, playerScore);
+        return decideFinalResultDealerNotBust(dealerScore, playerScore, bettingMoney);
     }
 
-    private WinningStatus decideWinningStatusDealerNotBust(int dealerScore, int score) {
+    private int decideFinalResultDealerNotBust(int dealerScore, int score, int bettingMoney) {
         if (score <= BLACKJACK_NUMBER && score > dealerScore) {
-            return WinningStatus.WIN;
+            return Result.WIN.calculateResult(bettingMoney);
         }
         if (score == dealerScore) {
-            return WinningStatus.TIE;
+            return Result.TIE.calculateResult(bettingMoney);
         }
-        return WinningStatus.LOSE;
+        return Result.LOSE.calculateResult(bettingMoney);
     }
 
-    private WinningStatus decideWinningStatusDealerBust(int score) {
+    private int decideFinalResultDealerBust(int score, int bettingMoney) {
         if (score > BLACKJACK_NUMBER) {
-            return WinningStatus.TIE;
+            return Result.TIE.calculateResult(bettingMoney);
         }
-        return WinningStatus.WIN;
+        return Result.WIN.calculateResult(bettingMoney);
     }
 
     public Participants getParticipants() {

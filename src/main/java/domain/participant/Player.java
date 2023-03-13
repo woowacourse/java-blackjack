@@ -18,4 +18,8 @@ public class Player extends Participant {
             this.receiveCard(deck.getCard());
         }
     }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
+    }
 }

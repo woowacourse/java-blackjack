@@ -92,10 +92,10 @@ public class OutputView {
         System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
     }
 
-    public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
+    public void printPlayerResult(final Map<Player, Integer> playersResult) {
         for (Player player : playersResult.keySet()) {
-            WinningStatus winningStatus = playersResult.get(player);
-            System.out.printf("%s: %s" + System.lineSeparator(), player.getName(), printWinningStatus(winningStatus));
+            int result = playersResult.get(player);
+            System.out.printf("%s: %d" + System.lineSeparator(), player.getName(), result);
         }
     }
 
