@@ -15,7 +15,7 @@ public class Blackjack extends Finished {
 
     @Override
     public boolean isBlackJack() {
-        return false;
+        return true;
     }
 
     @Override
