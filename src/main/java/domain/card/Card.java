@@ -1,5 +1,9 @@
 package domain.card;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.result.Score;
+
 public class Card {
 
     private final String name;
@@ -20,5 +24,15 @@ public class Card {
 
     public int getValue() {
         return value;
+    }
+
+    public Score comparePlayerDealer(Player player, Dealer dealer) {
+        if (player.isBust() || player.getScoreSum() - dealer.getScoreSum() < 0) {
+            return Score.LOSE;
+        }
+        if (dealer.isBust() || player.getScoreSum() - dealer.getScoreSum() > 0) {
+            return Score.WIN;
+        }
+        return Score.DRAW;
     }
 }

@@ -20,14 +20,13 @@ public class HandCards {
     }
 
     public int calculateScore() {
-        int scoreSum = ZERO_SCORE;
-        for (Card card : cards) {
-            scoreSum += card.getValue();
-        }
-        return getAceCase(aceCheck(), scoreSum);
+        int scoreSum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        return getAceCase(hasAce(), scoreSum);
     }
 
-    private boolean aceCheck() {
+    private boolean hasAce() {
         boolean hasAce = false;
         for (Card card : cards) {
             hasAce = hasAce || card.isAce();

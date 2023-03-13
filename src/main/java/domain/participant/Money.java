@@ -3,11 +3,16 @@ package domain.participant;
 public class Money {
     private static final String MONEY_REGEX_FORMAT = "^[0-9]+$";
     public static final String BETTING_AMOUNT_ZERO_MESSAGE = "[ERROR] 베팅 금액은 0이 될 수 없습니다.";
-    private int amount;
+
+    private final int amount;
 
     public Money(String amount) {
         validateAmountRegex(amount);
         this.amount = validateAmount(Integer.parseInt(amount));
+    }
+
+    public Money(int amount) {
+        this.amount = validateAmount(amount);
     }
 
     public Money() {
@@ -25,10 +30,6 @@ public class Money {
             throw new IllegalArgumentException(BETTING_AMOUNT_ZERO_MESSAGE);
         }
         return number;
-    }
-
-    public void plusAmount(int money) {
-        this.amount += money;
     }
 
     public int getAmount() {

@@ -17,7 +17,7 @@ public class BettingResults {
     }
 
     public void plusBettingResult(Participant participant, int changeMoney) {
-        bettingResults.get(participant).plusAmount(changeMoney);
+        bettingResults.put(participant, new Money(bettingResults.get(participant).getAmount() + changeMoney));
     }
 
     public Money getParticipantBet(Participant participant) {

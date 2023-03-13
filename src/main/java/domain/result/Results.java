@@ -34,66 +34,25 @@ public class Results {
 
     private void dealerBustCase(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            playerWin(results.get(player.getName()), results.get(dealer.getName()));
-            playerWinBetting(player, dealer);
+            Score.playerWin(results.get(player.getName()), results.get(dealer.getName()));
+            Score.playerWinBetting(bettingResults, player, dealer);
         }
     }
 
     public void fight(Player player, Dealer dealer) {
-        Score playerWinOrLose = comparePlayerDealer(player, dealer);
-        if (playerWinOrLose.equals(Score.WIN)) {
-            playerWin(results.get(player.getName()), results.get(dealer.getName()));
-            playerWinBetting(player, dealer);
+        Score playerWinOrLose = Score.comparePlayerDealer(player, dealer);
+        if (Score.WIN.equals(playerWinOrLose)) {
+            Score.playerWin(results.get(player.getName()), results.get(dealer.getName()));
+            Score.playerWinBetting(bettingResults, player, dealer);
         }
-        if (playerWinOrLose.equals(Score.LOSE)) {
-            dealerWin(results.get(player.getName()), results.get(dealer.getName()));
-            playerLoseBetting(player, dealer);
+        if (Score.LOSE.equals(playerWinOrLose)) {
+            Score.dealerWin(results.get(player.getName()), results.get(dealer.getName()));
+            Score.playerLoseBetting(bettingResults, player, dealer);
         }
-        if (playerWinOrLose.equals(Score.DRAW)) {
-            draw(results.get(player.getName()), results.get(dealer.getName()));
-            drawBetting(player);
+        if (Score.DRAW.equals(playerWinOrLose)) {
+            Score.draw(results.get(player.getName()), results.get(dealer.getName()));
+            Score.drawBetting(bettingResults, player);
         }
-    }
-
-    private Score comparePlayerDealer(Player player, Dealer dealer) {
-        if (player.isBust() || player.getScoreSum() - dealer.getScoreSum() < 0) {
-            return Score.LOSE;
-        }
-        if (dealer.isBust() || player.getScoreSum() - dealer.getScoreSum() > 0) {
-            return Score.WIN;
-        }
-        return Score.DRAW;
-    }
-
-    private void playerWin(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
-        playerResult.computeIfPresent(Score.WIN, (k, v) -> v + 1);
-        dealerResult.computeIfPresent(Score.LOSE, (k, v) -> v + 1);
-    }
-
-    private void dealerWin(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
-        playerResult.computeIfPresent(Score.LOSE, (k, v) -> v + 1);
-        dealerResult.computeIfPresent(Score.WIN, (k, v) -> v + 1);
-    }
-
-    private void draw(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
-        playerResult.computeIfPresent(Score.DRAW, (k, v) -> v + 1);
-        dealerResult.computeIfPresent(Score.DRAW, (k, v) -> v + 1);
-    }
-
-    private void playerWinBetting(Player player, Dealer dealer) {
-        if (player.isBlackJack()) {
-            bettingResults.plusBettingResult(player, bettingResults.getParticipantBet(player).getAmount() / 2);
-        }
-        bettingResults.plusBettingResult(dealer, -bettingResults.getParticipantBet(player).getAmount());
-    }
-
-    private void playerLoseBetting(Player player, Dealer dealer) {
-        bettingResults.plusBettingResult(dealer, bettingResults.getParticipantBet(player).getAmount());
-        bettingResults.plusBettingResult(player, -(2 * bettingResults.getParticipantBet(player).getAmount()));
-    }
-
-    private void drawBetting(Player player) {
-        bettingResults.plusBettingResult(player, -bettingResults.getParticipantBet(player).getAmount());
     }
 
     private Map<Score, Integer> initResults() {

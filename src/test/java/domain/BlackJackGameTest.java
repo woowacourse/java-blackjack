@@ -20,8 +20,8 @@ public class BlackJackGameTest {
     void shouldSuccessDistributeCard(int num) {
         Deck deck = new Deck();
         Players players = new Players(List.of(new Player(new Name("dino")), new Player(new Name("sungha"))));
-        BlackJackGame blackJackGame = new BlackJackGame(players, new Dealer());
-        blackJackGame.distributeCard(deck, players.getPlayers().get(0), num);
+        BlackJackGame blackJackGame = new BlackJackGame(players, new Dealer(), new Deck());
+        blackJackGame.distributeCard(players.getPlayers().get(0), num);
 
         assertThat(players.getPlayers().get(0).getHandCards().getCards().size()).isEqualTo(num);
     }
