@@ -7,22 +7,22 @@ import java.util.Map;
 public class DealerResultResponse {
 
     private final String name;
-    private final Map<Result, Integer> resultMap;
+    private final int profit;
 
-    private DealerResultResponse(final String name, final Map<Result, Integer> resultMap) {
+    public DealerResultResponse(final String name, final int profit) {
         this.name = name;
-        this.resultMap = resultMap;
+        this.profit = profit;
     }
 
-    public static DealerResultResponse of(final Dealer dealer, final Map<Result, Integer> resultMap) {
-        return new DealerResultResponse(dealer.getName(), resultMap);
+    public static DealerResultResponse of(final Dealer dealer, final int profit) {
+        return new DealerResultResponse(dealer.getName(), profit);
     }
 
     public String getName() {
         return name;
     }
 
-    public Map<Result, Integer> getResultMap() {
-        return resultMap;
+    public int getProfit() {
+        return profit;
     }
 }
