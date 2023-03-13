@@ -9,4 +9,8 @@ public enum GameAction {
         }
         return STAND;
     }
+    
+    public boolean isHit() {
+        return this == HIT;
+    }
 }

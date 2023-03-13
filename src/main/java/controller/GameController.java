@@ -80,7 +80,7 @@ public class GameController {
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {
         GameAction action = this.generateGameActionUntilValid(player.getName());
-        if (action == GameAction.HIT) {
+        if (action.isHit()) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
             return true;
