@@ -25,7 +25,7 @@ class UsersTest {
     @DisplayName("GetDealerProfit")
     void test_getDealerProfit() {
         addCards(users.players().get(0), "10", "A");
-        addCards(users.players().get(2), "10", "5");
+        addCards(users.players().get(1), "10", "5");
         addCards(users.dealer(), "10", "7");
 
         assertThat(users.getDealerProfit())
