@@ -1,5 +1,6 @@
 package domain.blackjack.gamestate;
 
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -13,6 +14,8 @@ public abstract class GameState {
     public abstract GameState receive(Card card);
 
     public abstract boolean isAbleToReceiveCard();
+
+    public abstract Result competeToOtherState(GameState otherState);
 
     public abstract double getEarningRate();
 

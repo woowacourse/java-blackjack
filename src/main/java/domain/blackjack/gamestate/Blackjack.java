@@ -1,5 +1,6 @@
 package domain.blackjack.gamestate;
 
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -17,6 +18,15 @@ public class Blackjack extends GameState {
     @Override
     public boolean isAbleToReceiveCard() {
         return false;
+    }
+
+    @Override
+    public Result competeToOtherState(GameState otherState) {
+        if (otherState instanceof Blackjack) {
+            return Result.DRAW;
+        }
+
+        return Result.WIN;
     }
 
     @Override
