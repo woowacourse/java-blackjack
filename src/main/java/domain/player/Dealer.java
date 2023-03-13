@@ -33,11 +33,16 @@ public class Dealer extends Player {
     }
     
     @Override
-    public void drawOrFinishBy(
+    public void drawOrFinishParticipantBy(
             Deck deck, Function<Player,
             AddCardCommand> ignore,
             Consumer<List<Player>> printParticipantCardStatus
     ) {
+        throw new UnsupportedOperationException("딜러가 사용할 수 없는 기능입니다.");
+    }
+    
+    @Override
+    public void drawOrFinishDealerBy(Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
         if (isFinished()) {
             return;
         }

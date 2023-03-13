@@ -28,9 +28,14 @@ public abstract class Player {
     
     public abstract boolean isFinished();
     
-    public abstract void drawOrFinishBy(
+    public abstract void drawOrFinishParticipantBy(
             Deck deck,
             Function<Player, AddCardCommand> supplyCommand,
+            Consumer<List<Player>> printParticipantCardStatus
+    );
+    
+    public abstract void drawOrFinishDealerBy(
+            Deck deck,
             Consumer<List<Player>> printParticipantCardStatus
     );
     

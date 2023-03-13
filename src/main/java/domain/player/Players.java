@@ -59,12 +59,12 @@ public class Players {
             Consumer<List<Player>> printParticipantCardStatus
     ) {
         for (Player participant : getParticipants()) {
-            participant.drawOrFinishBy(deck, supplyCommand, printParticipantCardStatus);
+            participant.drawOrFinishParticipantBy(deck, supplyCommand, printParticipantCardStatus);
         }
     }
     
     public void giveCardToDealerBy(Deck deck, Consumer<List<Player>> printGiveDealerCardMessage) {
-        getDealer().drawOrFinishBy(deck, null, printGiveDealerCardMessage);
+        getDealer().drawOrFinishDealerBy(deck, printGiveDealerCardMessage);
     }
     
     public double findBetAmountByPlayer(Player player) {
