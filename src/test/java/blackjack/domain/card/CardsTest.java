@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardsTest {
@@ -64,4 +65,17 @@ public class CardsTest {
         // when, then
         assertThat(cards.calculateScore()).isEqualTo(11);
     }
+
+    @DisplayName("카드가 없다면 카드의 첫번째 요소를 반환할 때 예외가 발생한다.")
+    @Test
+    void Should_ThrowException_When_NoCard() {
+        // given
+        Cards cards = new Cards();
+
+        // when, then
+        assertThatThrownBy(() -> cards.getOneCard())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드가 없습니다.");
+    }
+
 }

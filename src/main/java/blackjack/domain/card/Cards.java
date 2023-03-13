@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Cards {
 
+    public static final String INVALID_EMPTY_CARDS_MESSAGE = "카드가 없습니다.";
     private final List<Card> cards;
 
     public Cards() {
@@ -28,7 +29,14 @@ public class Cards {
     }
 
     public Card getOneCard() {
+        validateIsEmpty();
         return cards.get(0);
+    }
+
+    private void validateIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_EMPTY_CARDS_MESSAGE);
+        }
     }
 
     public List<Card> getCards() {
