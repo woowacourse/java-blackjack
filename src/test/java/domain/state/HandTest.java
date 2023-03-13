@@ -22,4 +22,16 @@ class HandTest {
 
         assertThat(hand.getCards().size()).isEqualTo(2);
     }
+
+    @DisplayName("Hand 점수 계산 테스트")
+    @Test
+    void calculateScoreTest() {
+        List<Card> initialCards = List.of(new Card(Value.ACE, Shape.HEART), new Card(Value.KING, Shape.HEART));
+        Hand hand = new Hand(new ArrayList<>(initialCards));
+
+        assertThat(hand.calculateScore().getValue()).isEqualTo(21);
+
+        hand.addCard(new Card(Value.ACE, Shape.HEART));
+        assertThat(hand.calculateScore().getValue()).isEqualTo(12);
+    }
 }
