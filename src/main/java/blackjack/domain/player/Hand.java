@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class Hand {
             aceSize--;
         }
         return totalScore;
+    }
+
+    public Status status(){
+        return Status.of(playerCards.size(),totalScore.getTotalScore());
     }
 
     private int calculateCardSize() {
