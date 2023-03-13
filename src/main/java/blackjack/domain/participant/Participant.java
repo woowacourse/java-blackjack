@@ -18,8 +18,6 @@ public class Participant {
     }
 
 
-
-
     public List<Card> getCards() {
         return this.cards.getCards();
     }
