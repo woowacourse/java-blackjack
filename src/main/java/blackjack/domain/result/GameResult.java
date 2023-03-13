@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.Game;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Players;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,15 +15,13 @@ public class GameResult {
 
     private final Map<Player, Integer> playerBettingResults;
 
-    public GameResult(Game game) {
+    public GameResult(Dealer dealer, Players players) {
         this.playerBettingResults = new LinkedHashMap<>();
-        accumulationResult(game);
+        accumulationResult(dealer, players);
     }
 
-    private void accumulationResult(Game game) {
-        Dealer dealer = game.getDealer();
-
-        for (Player player : game.getPlayers()) {
+    private void accumulationResult(Dealer dealer, Players players) {
+        for (Player player : players) {
             Result playerResult = ResultReferee.getPlayerResult(player, dealer);
             calculatePrize(player, playerResult);
         }

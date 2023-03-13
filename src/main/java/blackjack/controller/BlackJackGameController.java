@@ -117,9 +117,11 @@ public class BlackJackGameController {
     }
 
     private void finish(Game game) {
-        outputView.printGameResult(game.getDealer(), game.getPlayers());
+        Dealer dealer = game.getDealer();
+        Players players = game.getPlayers();
+        outputView.printGameResult(dealer, players);
 
-        GameResult gameResult = new GameResult(game);
+        GameResult gameResult = new GameResult(dealer, players);
         outputView.printBettingResult(gameResult.getDealerBettingResults(), gameResult.getPlayerBettingResults());
     }
 }
