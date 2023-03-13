@@ -35,17 +35,14 @@ flowchart TD
 ```
 
 ```mermaid
----
-title: Hand 상태
----
-flowchart BT
-    AbstractHand -.-> Hand
-    Running --> AbstractHand
-    Finished --> AbstractHand
-    Hit --> Running
-    Blackjack --> Finished
-    Bust --> Finished
-    Stay --> Finished
+classDiagram
+    Hand <|.. AbstractHand
+    AbstractHand <|-- Running
+    AbstractHand <|-- Finished
+    Running <|-- Hit
+    Finished <|-- Blackjack
+    Finished <|-- Stay
+    Finished <|-- Bust
     
 ```
 
