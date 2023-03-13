@@ -24,8 +24,8 @@ class BetTest {
     @Test
     void calculateBetByOutcomeWinWithBlackJackTest() {
         Bet bet = new Bet(1000);
+        int expectedMoney = (int) (bet.getMoney() * Bet.BLACKJACK_WIN_RATIO);
         bet.calculateBetByOutcome(Outcome.WIN, true);
-        int expectedMoney = 1500;
 
         assertEquals(expectedMoney, bet.getMoney());
     }
@@ -34,8 +34,8 @@ class BetTest {
     @Test
     void calculateBetByOutcomeWinWithoutBlackJackTest() {
         Bet bet = new Bet(1000);
+        int expectedMoney = bet.getMoney();
         bet.calculateBetByOutcome(Outcome.WIN, false);
-        int expectedMoney = 1000;
 
         assertEquals(expectedMoney, bet.getMoney());
     }
@@ -44,8 +44,8 @@ class BetTest {
     @Test
     void calculateBetByOutcomeDraw() {
         Bet bet = new Bet(1000);
+        int expectedMoney = (int) (bet.getMoney() * Bet.DRAW_RATIO);
         bet.calculateBetByOutcome(Outcome.DRAW, false);
-        int expectedMoney = 0;
 
         assertEquals(expectedMoney, bet.getMoney());
     }
@@ -54,8 +54,8 @@ class BetTest {
     @Test
     void calculateBetByOutcomeLose() {
         Bet bet = new Bet(1000);
+        int expectedMoney = (int) (bet.getMoney() * Bet.LOSE_RATIO);
         bet.calculateBetByOutcome(Outcome.LOSE, false);
-        int expectedMoney = -1000;
 
         assertEquals(expectedMoney, bet.getMoney());
     }
