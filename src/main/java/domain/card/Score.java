@@ -18,7 +18,7 @@ public class Score {
     }
     
     public Score plusTenIfNotBust() {
-        if (addScore(ACE_BOTH_SCORE_DIFFERENCE).isLessThenOrEqualTo(MAX)) {
+        if (addScore(ACE_BOTH_SCORE_DIFFERENCE).isLessThenOrEqualToMaxScore()) {
             return addScore(ACE_BOTH_SCORE_DIFFERENCE);
         }
         
@@ -29,8 +29,8 @@ public class Score {
         return new Score(score + otherScore.score);
     }
     
-    private boolean isLessThenOrEqualTo(Score otherScore) {
-        return isLessThen(otherScore) || isSameTo(otherScore);
+    private boolean isLessThenOrEqualToMaxScore() {
+        return isLessThen(Score.MAX) || isSameTo(Score.MAX);
     }
     
     public boolean isLessThen(Score otherScore) {
