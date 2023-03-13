@@ -46,7 +46,7 @@ public class Hand {
     }
     
     public boolean isBlackJack() {
-        return getTotalScore().isSameTo(BLACKJACK);
+        return getTotalScore().equals(BLACKJACK);
     }
     
     public List<Card> getCards() {

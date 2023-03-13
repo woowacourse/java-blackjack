@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.Objects;
+
 public class Score {
     private static final Score MAX = new Score(21);
     private static final Score ACE_BOTH_SCORE_DIFFERENCE = new Score(10);
@@ -31,7 +33,7 @@ public class Score {
     }
     
     private boolean isLessThenOrEqualToMaxScore() {
-        return isLessThen(Score.MAX) || isSameTo(Score.MAX);
+        return isLessThen(Score.MAX) || equals(Score.MAX);
     }
     
     public boolean isLessThen(Score otherScore) {
@@ -46,11 +48,20 @@ public class Score {
         return this.score > otherScore.score;
     }
     
-    public boolean isSameTo(Score otherScore) {
-        return this.score == otherScore.score;
-    }
-    
     public int getScore() {
         return score;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

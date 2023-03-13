@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Number;
+import domain.card.Score;
 import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +45,6 @@ class ParticipantTest {
         abel.draw(new Card(Shape.HEART, Number.FIVE));
         abel.draw(new Card(Shape.DIAMOND, number));
         
-        assertThat(abel.getTotalScore().getScore()).isEqualTo(totalScore);
+        assertThat(abel.getTotalScore()).isEqualTo(new Score(totalScore));
     }
 }

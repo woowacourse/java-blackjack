@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Number;
+import domain.card.Score;
 import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ class DealerTest {
         dealer.draw(new Card(Shape.HEART, Number.FIVE));
         dealer.draw(new Card(Shape.DIAMOND, number));
         
-        assertThat(dealer.getTotalScore().getScore()).isEqualTo(totalScore);
+        assertThat(dealer.getTotalScore()).isEqualTo(new Score(totalScore));
     }
     
     @Test

@@ -19,7 +19,7 @@ class HandTest {
     void givenCard_whenGetScore() {
         hand.addCard(new Card(Shape.SPADE, Number.THREE));
 
-        assertThat(hand.getTotalScore().getScore()).isEqualTo(3);
+        assertThat(hand.getTotalScore()).isEqualTo(new Score(3));
     }
 
     @Test
@@ -28,8 +28,8 @@ class HandTest {
         hand.addCard(new Card(Shape.SPADE, Number.THREE));
         hand.addCard(new Card(Shape.HEART, Number.ACE));
         hand.addCard(new Card(Shape.SPADE, Number.SEVEN));
-
-        assertThat(hand.getTotalScore().getScore()).isEqualTo(21);
+    
+        assertThat(hand.getTotalScore()).isEqualTo(new Score(21));
     }
 
     @Test
@@ -38,8 +38,8 @@ class HandTest {
         hand.addCard(new Card(Shape.SPADE, Number.THREE));
         hand.addCard(new Card(Shape.HEART, Number.ACE));
         hand.addCard(new Card(Shape.SPADE, Number.EIGHT));
-
-        assertThat(hand.getTotalScore().getScore()).isEqualTo(12);
+    
+        assertThat(hand.getTotalScore()).isEqualTo(new Score(12));
     }
 
     @Test
@@ -68,7 +68,7 @@ class HandTest {
         hand.addCard(new Card(Shape.HEART, Number.ACE));
         hand.addCard(new Card(Shape.SPADE, Number.ACE));
     
-        assertThat(hand.getTotalScore().getScore()).isEqualTo(12);
+        assertThat(hand.getTotalScore()).isEqualTo(new Score(12));
     }
     
     @Test
@@ -78,8 +78,8 @@ class HandTest {
         hand.addCard(new Card(Shape.SPADE, Number.ACE));
         hand.addCard(new Card(Shape.DIAMOND, Number.ACE));
         hand.addCard(new Card(Shape.CLOVER, Number.ACE));
-        
-        assertThat(hand.getTotalScore().getScore()).isEqualTo(14);
+    
+        assertThat(hand.getTotalScore()).isEqualTo(new Score(14));
     }
     
     @Test

@@ -28,14 +28,14 @@ class ScoreTest {
     @DisplayName("21이 안넘는 경우 10을 더해서 반환한다.")
     void add() {
         Score score = tenScore.plusTenIfNotBust();
-        assertThat(score.getScore()).isEqualTo(20);
+        assertThat(score).isEqualTo(new Score(20));
     }
     
     @Test
     @DisplayName("21을 넘는 경우 그대로 반환한다.")
     void notAdd() {
         Score score = new Score(15).plusTenIfNotBust();
-        assertThat(score.getScore()).isEqualTo(15);
+        assertThat(score).isEqualTo(new Score(15));
     }
     
     @Test
@@ -55,15 +55,14 @@ class ScoreTest {
     @Test
     @DisplayName("같은 스코어인지 확인")
     void isSameScore() {
-        boolean isSame = new Score(21).isSameTo(new Score(21));
-        assertThat(isSame).isTrue();
+        assertThat(new Score(21)).isEqualTo(new Score(21));
     }
     
     @Test
     @DisplayName("다른 스코어인지 확인")
     void isNotSameScore() {
-        boolean isSame = new Score(21).isSameTo(new Score(20));
-        assertThat(isSame).isFalse();
+        boolean isEquals = new Score(21).equals(new Score(20));
+        assertThat(isEquals).isFalse();
     }
 
     @ParameterizedTest
