@@ -33,14 +33,14 @@ public class UserTest {
         start = System.nanoTime();
         assertTrue(dealer instanceof Dealer);
         end = System.nanoTime();
-        System.out.println("instanceof: " + (end-start));
+        System.out.println("instanceof: " + (end - start));
 
         double endSec = (double) end / 1_000_000_000;
         System.out.println(endSec + " seconds");
         start = System.nanoTime();
         assertTrue(dealer.isDealer());
         end = System.nanoTime();
-        System.out.println("다형성: " + (end-start));
+        System.out.println("다형성: " + (end - start));
         endSec = (double) end / 1_000_000_000;
         System.out.println(endSec + " seconds");
     }

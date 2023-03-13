@@ -11,7 +11,7 @@ public class Money {
         return value;
     }
 
-    public Money multiply(double multipleValue){
+    public Money multiply(double multipleValue) {
         Double resultValue = value * multipleValue;
         return new Money(resultValue.intValue());
     }

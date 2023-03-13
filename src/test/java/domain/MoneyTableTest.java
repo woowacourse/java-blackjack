@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.bettingMoney.Money;
 import domain.bettingMoney.BettingMoneyTable;
+import domain.bettingMoney.Money;
 import domain.bettingMoney.Monies;
 import domain.name.Name;
 import domain.user.Player;

@@ -1,6 +1,8 @@
 package controller;
 
 import domain.HitCommand;
+import domain.bettingMoney.BettingMoneyTable;
+import domain.bettingMoney.Monies;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
@@ -9,6 +11,7 @@ import domain.game.Result;
 import domain.name.Names;
 import domain.user.Player;
 import domain.user.Users;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -27,16 +30,32 @@ public class BlackJackController {
         }
     }
 
+    /*
+    pobi의 배팅 금액은?
+    10000
+
+    jason의 배팅 금액은?
+    20000
+     */
     private void initGame() {
         Users users = Users.from(initPlayerNames());
-
-        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck());
+        BettingMoneyTable bettingMoneyTable = initBettingMoneyTable(users.getPlayers());
+        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck(), bettingMoneyTable);
         printInitMessages(users.getPlayerNames());
     }
 
     private Names initPlayerNames() {
         Names playerNames = Names.of(InputView.askPlayerNames());
         return playerNames;
+    }
+
+    private BettingMoneyTable initBettingMoneyTable(List<Player> players) {
+        List<Integer> bettingMonies = new ArrayList<>();
+        for (Player player : players) {
+            int money = InputView.askBettingMoneyToPlayer(player.getName());
+            bettingMonies.add(money);
+        }
+        return BettingMoneyTable.of(players, Monies.of(bettingMonies));
     }
 
     private void printInitMessages(final List<String> playerNames) {

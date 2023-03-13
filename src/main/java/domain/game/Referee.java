@@ -19,26 +19,26 @@ public class Referee {
     }
 
     public static Result judgePlayerResult(final Score playerScore, final Score dealerScore) {
-        if(dealerScore.isBust()){
+        if (dealerScore.isBust()) {
             return Result.WIN;
         }
-        if(playerScore.isBust() || dealerScore.isGreaterThan(playerScore)){
+        if (playerScore.isBust() || dealerScore.isGreaterThan(playerScore)) {
             return Result.LOSE;
         }
-        if(playerScore.isGreaterThan(dealerScore)){
+        if (playerScore.isGreaterThan(dealerScore)) {
             return Result.WIN;
         }
         return Result.PUSH;
     }
 
-    public static Result judgePlayerResult(final Hand playerHand, final Hand dealerHand){
-        if(playerHand.isBlackjack() && dealerHand.isBlackjack()){
+    public static Result judgePlayerResult(final Hand playerHand, final Hand dealerHand) {
+        if (playerHand.isBlackjack() && dealerHand.isBlackjack()) {
             return Result.PUSH;
         }
-        if(playerHand.isBlackjack()){
+        if (playerHand.isBlackjack()) {
             return Result.WIN;
         }
-        if(dealerHand.isBlackjack()){
+        if (dealerHand.isBlackjack()) {
             return Result.LOSE;
         }
         return judgePlayerResult(playerHand.getSumOfScores(), dealerHand.getSumOfScores());

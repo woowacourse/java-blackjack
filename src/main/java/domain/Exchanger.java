@@ -24,14 +24,14 @@ public class Exchanger {
         return bettingMoney.multiply(getExchangeRate(playerHand, result));
     }
 
-    private double getExchangeRate(Hand playerHand, Result result){
+    private double getExchangeRate(Hand playerHand, Result result) {
         if (playerHand.isBlackjack() && result.equals(Result.WIN)) {
             return 1.5;
         }
-        if(result.equals(Result.WIN)){
+        if (result.equals(Result.WIN)) {
             return 1;
         }
-        if(result.equals(Result.LOSE)){
+        if (result.equals(Result.LOSE)) {
             return -1;
         }
         return 0;

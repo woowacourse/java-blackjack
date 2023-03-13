@@ -3,6 +3,7 @@ package domain.bettingMoney;
 import domain.user.Player;
 import domain.user.Players;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BettingMoneyTable {
@@ -10,6 +11,14 @@ public class BettingMoneyTable {
 
     private BettingMoneyTable(Map<Player, Money> bettingMoneyTable) {
         this.bettingMoneyTable = bettingMoneyTable;
+    }
+
+    public static BettingMoneyTable of(List<Player> players, Monies monies) {
+        Map<Player, Money> bettingMoneyTable = new HashMap<>();
+        for (int i = 0; i < monies.size(); i++) {
+            bettingMoneyTable.put(players.get(i), monies.get(i));
+        }
+        return new BettingMoneyTable(bettingMoneyTable);
     }
 
     public static BettingMoneyTable of(Players players, Monies monies) {
