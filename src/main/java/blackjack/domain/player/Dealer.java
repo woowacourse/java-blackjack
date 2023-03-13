@@ -16,7 +16,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        return hand.calculateScore().isNotOver(MAX_SCORE_TO_RECEIVE);
+        return getHand().calculateScore().isNotOver(MAX_SCORE_TO_RECEIVE);
     }
 
 

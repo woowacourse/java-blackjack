@@ -20,8 +20,8 @@ public class Player extends Participant {
     }
 
     public double calculateProfit(Dealer dealer) {
-        return playerStatus.calculateProfit(dealer.isBlackJack(), dealer.hand.calculateScore(),
-                hand.calculateScore(), bettingMoney);
+        return playerStatus.calculateProfit(dealer.isBlackJack(), dealer.getHand().calculateScore(),
+                getHand().calculateScore(), bettingMoney);
     }
 
     public String getName() {

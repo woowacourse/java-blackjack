@@ -29,7 +29,7 @@ public abstract class PlayerStatus {
         return new Stay(hand);
     }
 
-    protected final Hand hand() {
+    public final Hand hand() {
         return hand;
     }
 }

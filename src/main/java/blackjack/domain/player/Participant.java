@@ -7,12 +7,10 @@ import blackjack.domain.player.state.PlayerStatus;
 import java.util.List;
 
 public abstract class Participant {
-    protected final Hand hand;
     protected PlayerStatus playerStatus;
 
     protected Participant(List<Card> cards) {
-        this.hand = new Hand(cards);
-        this.playerStatus = PlayerStatus.checkInitialBlackJack(hand);
+        this.playerStatus = PlayerStatus.checkInitialBlackJack(new Hand(cards));
     }
 
     abstract boolean isAbleToReceive();
@@ -30,6 +28,6 @@ public abstract class Participant {
     }
 
     public Hand getHand() {
-        return hand;
+        return playerStatus.hand();
     }
 }
