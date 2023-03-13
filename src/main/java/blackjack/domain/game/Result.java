@@ -1,45 +1,47 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Score;
 
 public enum Result {
-    WIN,
-    DRAW,
-    LOSE;
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
     private static final Score BLACKJACK_SCORE = new Score(21);
 
-    public static Result calculatePlayerResult(Score playerScore, Score dealerScore) {
-        if (isBust(playerScore)) {
-            return LOSE;
-        }
-        if (isBust(dealerScore)) {
-            return WIN;
-        }
-        return calculateResultByScore(playerScore, dealerScore);
+    private final double yield;
+
+    Result(double yield) {
+        this.yield = yield;
     }
 
-    private static Result calculateResultByScore(Score targetScore, Score oppositeScore) {
-        if (targetScore.isGreaterThan(oppositeScore)) {
+    public Money calculateYield(Money money) {
+        return money.multiply(this.yield);
+    }
+
+    public static Result calculateResult(Hand playerHand, Hand dealerHand) {
+        if (playerHand.isBlackJack() && !dealerHand.isBlackJack()) {
+            return BLACKJACK;
+        }
+        if (playerHand.isBust()) {
+            return LOSE;
+        }
+        if (dealerHand.isBust()) {
             return WIN;
         }
-        if (targetScore.isLessThan(oppositeScore)) {
+        return calculateResultByScore(playerHand.calculateScore(), dealerHand.calculateScore());
+    }
+
+    private static Result calculateResultByScore(Score playerScore, Score dealerScore) {
+        if (playerScore.isGreaterThan(dealerScore)) {
+            return WIN;
+        }
+        if (playerScore.isLessThan(dealerScore)) {
             return LOSE;
         }
         return DRAW;
     }
 
-    private static boolean isBust(Score score) {
-        return score.isGreaterThan(BLACKJACK_SCORE);
-    }
-
-    public static Result oppositeResult(Result result) {
-        if (result.equals(WIN)) {
-            return LOSE;
-        }
-        if (result.equals(LOSE)) {
-            return WIN;
-        }
-        return DRAW;
-    }
 }
