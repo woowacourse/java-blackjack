@@ -7,7 +7,7 @@ import static domain.card.Shape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.bank.BettingMoney;
+import domain.money.BettingMoney;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Name;

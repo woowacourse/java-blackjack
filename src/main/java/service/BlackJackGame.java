@@ -1,6 +1,6 @@
 package service;
 
-import domain.bank.BettingMoney;
+import domain.money.BettingMoney;
 import domain.card.Card;
 import domain.card.CardBox;
 import domain.card.Cards;

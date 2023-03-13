@@ -1,6 +1,4 @@
-package domain.bank;
-
-import domain.bank.Money;
+package domain.money;
 
 /**
  * @author 우가

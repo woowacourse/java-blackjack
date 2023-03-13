@@ -9,7 +9,7 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.bank.BettingMoney;
+import domain.money.BettingMoney;
 import domain.card.Card;
 import domain.card.CardBox;
 import domain.card.Cards;

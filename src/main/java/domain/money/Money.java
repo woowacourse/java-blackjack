@@ -1,4 +1,4 @@
-package domain.bank;
+package domain.money;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.bank.Money;
+import domain.money.Money;
 import domain.card.Card;
 import domain.card.Cards;
 

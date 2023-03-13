@@ -1,6 +1,6 @@
 package domain.fixture;
 
-import domain.bank.BettingMoney;
+import domain.money.BettingMoney;
 import domain.card.Card;
 import domain.card.CardInfo;
 import domain.card.Cards;

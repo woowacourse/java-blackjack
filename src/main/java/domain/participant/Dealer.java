@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.BlackJackWinningResult;
-import domain.bank.Money;
+import domain.money.Money;
 import domain.card.Card;
 import domain.card.CardBox;
 import domain.card.Cards;
