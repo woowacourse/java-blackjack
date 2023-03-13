@@ -32,9 +32,9 @@ public class Application {
     }
 
     private void run() {
-        CardDeck cardDeck = initDeck();
         Players players = initPlayers();
         BettingTable bettingTable = initBettingTable(players);
+        CardDeck cardDeck = initDeck();
         initCards(players, cardDeck);
         Dealer dealer = new Dealer(getInitCards(cardDeck));
 
@@ -83,7 +83,6 @@ public class Application {
         while (player.canAddCard() && (canContinue = InputView.readYesOrNo(player.getName()))) {
             player.hit(cardDeck.pick());
             OutputView.printCard(player);
-
         }
         if (canContinue) {
             return;
