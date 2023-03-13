@@ -25,14 +25,11 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = Dealer.from(new ArrayList<>());
-        participants = Participants.of(dealer, List.of("pobi", "crong", "dali"));
+        participants = Participants.of(dealer, List.of("pobi"));
         resultBetting = new HashMap<>();
 
         resultGame = ResultGame.from(resultBetting);
-
-        for (final Participant player : participants.getPlayers()) {
-            resultGame.betMoney(player, Betting.from(0));
-        }
+        resultGame.betMoney(participants.getPlayers().get(0), Betting.from(10000));
     }
 
     @Test
@@ -46,7 +43,6 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_TEN);
 
-        resultGame.betMoney(pobi, Betting.from(10000));
         resultGame.calculateResult(participants);
 
         Assertions.assertThat(resultGame.getDealerResult().getValue()).isEqualTo(-15000);
@@ -63,7 +59,6 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        resultGame.betMoney(pobi, Betting.from(10000));
         resultGame.calculateResult(participants);
 
         Assertions.assertThat(resultGame.getDealerResult().getValue()).isEqualTo(-10000);
@@ -80,7 +75,6 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        resultGame.betMoney(pobi, Betting.from(10000));
         resultGame.calculateResult(participants);
 
         Assertions.assertThat(resultGame.getDealerResult().getValue()).isEqualTo(0);
@@ -97,7 +91,6 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_EIGHT);
 
-        resultGame.betMoney(pobi, Betting.from(10000));
         resultGame.calculateResult(participants);
 
         Assertions.assertThat(resultGame.getDealerResult().getValue()).isEqualTo(10000);
@@ -107,8 +100,6 @@ public class ResultGameTest {
     @DisplayName("플레이어의 베팅 금액을 제대로 반환하는지 테스트")
     void getPlayerResultTest() {
         Participant pobi = participants.getPlayers().get(0);
-
-        resultGame.betMoney(pobi, Betting.from(10000));
 
         Assertions.assertThat(resultGame.getPlayerResult(pobi).getValue()).isEqualTo(10000);
     }

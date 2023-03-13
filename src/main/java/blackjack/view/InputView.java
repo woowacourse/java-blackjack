@@ -33,9 +33,9 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Integer readBettingMoney(final String name) {
+    public String readBettingMoney(final String name) {
         System.out.println(NEW_LINE + String.format(INPUT_BETTING_MONEY_MESSAGE, name));
-        return Integer.valueOf(scanner.nextLine());
+        return scanner.nextLine();
     }
 
     public String readOrderCard(final String name) {
