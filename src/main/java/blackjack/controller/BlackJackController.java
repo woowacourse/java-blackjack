@@ -11,7 +11,6 @@ import blackjack.dto.AllPlayersStatusWithPointDto;
 import blackjack.dto.ChallengerNameAndMoneyDto;
 import blackjack.dto.ProfitDto;
 import blackjack.dto.PlayerStatusDto;
-import blackjack.dto.PlayerStatusWithPointDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,7 +25,7 @@ public class BlackJackController {
     public void run() {
         init();
         start();
-        takeTurn();
+        takeTurnWhenNotBlackjack();
         showResult();
         InputView.terminate();
     }
@@ -88,7 +87,7 @@ public class BlackJackController {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private void takeTurn() {
+    private void takeTurnWhenNotBlackjack() {
         try {
             takeAllChallengersTurn();
             takeDealerTurn();
@@ -104,6 +103,19 @@ public class BlackJackController {
     }
 
     private void takeEachChallengerTurn(final Player player) {
+        if (blackJackGame.isPlayerBlackjack(player)) {
+            printBlackjackMessage(player);
+            return;
+        }
+        takeTurnWhenNotBlackjack(player);
+    }
+
+    private void printBlackjackMessage(final Player player) {
+        OutputView.printBlackjackMessage(player.getName());
+        OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
+    }
+
+    private void takeTurnWhenNotBlackjack(Player player) {
         while (blackJackGame.canPick(player) && chooseGonnaPick(player)) {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));

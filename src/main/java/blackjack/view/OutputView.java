@@ -14,6 +14,7 @@ public class OutputView {
     private static final String GIVE_START_CARD_COMPLETE_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String DEALER_CAN_PICK_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_CAN_NOT_PICK_MESSAGE = "딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.";
+    private static final String BLACKJACK_MESSAGE = "는 블랙잭이어서 카드를 받지 않았습니다.";
     private static final String FINAL_PROFIT_HEADER_MESSAGE = "## 최종 수익";
     private static final String CARD = "카드";
     private static final String ITEM_DELIMITER = ", ";
@@ -71,6 +72,11 @@ public class OutputView {
         System.out.print(PLAYER_NAME_PARTITION);
         String cards = String.join(ITEM_DELIMITER, challenger.getCards());
         System.out.print(cards);
+    }
+
+    public static void printBlackjackMessage(final String name) {
+        System.out.println();
+        System.out.println(name + BLACKJACK_MESSAGE);
     }
 
     private static List<String> toChallengerNames(final List<PlayerStatusDto> challengersStatus) {

@@ -41,6 +41,10 @@ public class BlackJackGame {
         return getDealer().canPick();
     }
 
+    public boolean isPlayerBlackjack(final Player player) {
+        return player.isBlackjack();
+    }
+
     public void pick(final Player player) {
         Card pickedCard = cardDeck.pick();
         player.pick(pickedCard);
