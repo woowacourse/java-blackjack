@@ -14,16 +14,16 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readCommand(String name) {
-        System.out.println();
-        System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
-        return scanner.nextLine();
-    }
-
     public int readBettingMoney(String name) {
         System.out.println();
         System.out.printf(READ_BETTING_MONEY, name);
         return Integer.parseInt(scanner.nextLine());
+    }
+
+    public String readCommand(String name) {
+        System.out.println();
+        System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
+        return scanner.nextLine();
     }
 
 }

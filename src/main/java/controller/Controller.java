@@ -26,12 +26,6 @@ public class Controller {
         outputView.printWinnerResult(dealer, bettingTable);
     }
 
-    private void startGame(Dealer dealer, Players players, BlackjackGame game) {
-        game.shuffleCardDeck();
-        distributeInitialCard(dealer, players, game);
-        selectAdditionalCard(players, game);
-        addWhenUnderStandard(dealer, game);
-    }
 
     private BettingTable createBettingTable(Players players) {
         BettingTable bettingTable = new BettingTable();
@@ -39,6 +33,13 @@ public class Controller {
             bettingTable.add(player, new Money(inputView.readBettingMoney(player.getName())));
         }
         return bettingTable;
+    }
+
+    private void startGame(Dealer dealer, Players players, BlackjackGame game) {
+        game.shuffleCardDeck();
+        distributeInitialCard(dealer, players, game);
+        selectAdditionalCard(players, game);
+        addWhenUnderStandard(dealer, game);
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
