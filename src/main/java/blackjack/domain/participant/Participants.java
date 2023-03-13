@@ -61,6 +61,12 @@ public final class Participants {
         }
     }
 
+    public List<String> getNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<Participant> getAll() {
         return participants;
     }
@@ -75,11 +81,5 @@ public final class Participants {
 
     public List<Participant> getPlayers() {
         return participants.subList(1, participants.size());
-    }
-
-    public List<String> getNames() {
-        return participants.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList());
     }
 }

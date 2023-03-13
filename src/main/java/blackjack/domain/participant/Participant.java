@@ -35,14 +35,14 @@ public abstract class Participant {
         return hand.getCards().get(index);
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
     public List<String> getCardNames() {
         return hand.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 
     @Override
