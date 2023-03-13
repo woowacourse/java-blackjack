@@ -1,14 +1,12 @@
 package view;
 
 import domain.card.Card;
-import domain.gameresult.GameResultReadOnly;
-import domain.gameresult.Result;
+import domain.gameresult.GameResult;
 import domain.player.PlayerReadOnly;
 import domain.player.PlayersReadOnly;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -88,37 +86,11 @@ public class OutputView {
         }
     }
 
-    public static void printPlayersGameResults(GameResultReadOnly gameResult) {
+    public static void printPlayersGameResults(GameResult gameResult) {
         printEmptyLine();
         println("## 최종 승패");
-        printDealerGameResult(gameResult.getDealerResult());
-        printParticipantsGameResult(gameResult.getParticipantsResult());
-    }
-
-    private static void printDealerGameResult(Map<Result, Integer> gameResult) {
-        System.out.printf("딜러: %s%n", parsePlayerGameResultDisplay(gameResult));
-    }
-
-    private static String parsePlayerGameResultDisplay(Map<Result, Integer> gameResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        parseResultToMessage(stringBuilder, gameResult.get(Result.WIN), Result.WIN);
-        parseResultToMessage(stringBuilder, gameResult.get(Result.DRAW), Result.DRAW);
-        parseResultToMessage(stringBuilder, gameResult.get(Result.LOSE), Result.LOSE);
-        return stringBuilder.toString();
-    }
-
-    private static void parseResultToMessage(StringBuilder stringBuilder, Integer winningCount, Result result) {
-        if (winningCount > 0) {
-            stringBuilder.append(String.format("%d%s ", winningCount, result.getDescription()));
-        }
-    }
-
-    private static void printParticipantsGameResult(Map<String, Result> participantResults) {
-        participantResults
-                .forEach(
-                        (name, result) -> println(String.format("%s: %s", name, result.getDescription()))
-                );
-
+        gameResult.doLogicWithNameAndBetValue((name, result) ->
+                println(String.format("%s: %d", name, result)));
     }
 
     public static void println(String message) {
