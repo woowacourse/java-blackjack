@@ -1,17 +1,19 @@
 package blackjack.domain;
 
+import java.util.function.Function;
+
 public enum ResultType {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(bettingAmount -> bettingAmount),
+    LOSE(bettingAmount -> -bettingAmount),
+    DRAW(bettingAmount -> 0),
+    BLACKJACK(bettingAmount -> (int) (bettingAmount * 1.5));
+    private final Function<Integer, Integer> expression;
 
-    private final String message;
-
-    ResultType(String message) {
-        this.message = message;
+    ResultType(Function<Integer, Integer> expression) {
+        this.expression = expression;
     }
 
-    public String getMessage() {
-        return message;
+    public Integer calculateBettingAmount(int bettingAMount) {
+        return expression.apply(bettingAMount);
     }
 }

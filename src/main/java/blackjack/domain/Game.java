@@ -19,7 +19,11 @@ public class Game {
         Dealer dealer = getDealer();
         for (int i = 0; i < 2; i++) {
             Hit(dealer);
+            initializePlayer(players);
         }
+    }
+
+    private void initializePlayer(Players players) {
         for (Player player : players.getPlayers()) {
             Hit(player);
         }

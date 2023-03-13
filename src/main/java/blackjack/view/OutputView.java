@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final int ZERO = 0;
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String DELIMITER = ", ";
 
@@ -58,32 +57,19 @@ public class OutputView {
         }
     }
 
-    public void printFinalVictoryOrDefeat(Map<String, Integer> dealerResult, Map<String, String> playerResult) {
+    public void printFinalVictoryOrDefeat(int dealerResult, Map<String, Integer> playerResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
         printFinalVictoryOrDefeatDealer(dealerResult);
         printFinalVictoryOrDefeatPlayers(playerResult);
     }
 
-    private void printFinalVictoryOrDefeatDealer(Map<String, Integer> dealerResult) {
-        StringBuilder resultMsg = new StringBuilder("딜러: ");
-        for (String victoryOrDefeat : dealerResult.keySet()) {
-            Integer resultCount = dealerResult.get(victoryOrDefeat);
-            makeFinalVictoryOrDefeatDealer(resultCount, resultMsg, victoryOrDefeat);
-        }
-        System.out.println(resultMsg);
+    private void printFinalVictoryOrDefeatDealer(int dealerResult) {
+        System.out.println("딜러: " + dealerResult);
     }
 
-    private void makeFinalVictoryOrDefeatDealer(Integer resultCount, StringBuilder resultMsg, String victoryOrDefeat) {
-        if (resultCount != ZERO) {
-            resultMsg.append(resultCount)
-                    .append(victoryOrDefeat)
-                    .append(" ");
-        }
-    }
-
-    private void printFinalVictoryOrDefeatPlayers(Map<String, String> playerResult) {
+    private void printFinalVictoryOrDefeatPlayers(Map<String, Integer> playerResult) {
         for (String playerName : playerResult.keySet()) {
             System.out.println(playerName
                     + ": "
