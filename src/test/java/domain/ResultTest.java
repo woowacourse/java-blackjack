@@ -12,4 +12,11 @@ class ResultTest {
         int bettingMoney = 1000;
         assertThat(Result.WIN.calculateResult(bettingMoney)).isEqualTo(1000);
     }
+
+    @DisplayName("플레이어가 무인 경우 0의 수익을 얻는다.")
+    @Test
+    void tieTest() {
+        int bettingMoney = 1000;
+        assertThat(Result.TIE.calculateResult(bettingMoney)).isEqualTo(0);
+    }
 }
