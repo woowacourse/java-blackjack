@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Cards {
     private static final int BLACK_JACK = 21;
     private static final int DECREASE_ACE_VALUE = -10;
+    public static final int BLACKJACK_CARDS_SIZE = 2;
 
     private List<Card> cards;
 
@@ -42,7 +43,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return getSum() == BLACK_JACK && cards.size() == 2;
+        return getSum() == BLACK_JACK && cards.size() == BLACKJACK_CARDS_SIZE;
     }
 
     public List<Card> getCards() {
