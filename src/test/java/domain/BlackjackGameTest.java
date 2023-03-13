@@ -11,12 +11,12 @@ public class BlackjackGameTest {
     private Dealer dealer;
     private Players players;
     private CardDeck cardDeck;
-    private Queue<Card> initalCardDeck = new LinkedList<>();
 
     @BeforeEach
     void set() {
         dealer = new Dealer();
         players = new Players("pobi,jason");
+        Queue<Card> initalCardDeck = new LinkedList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             initalCardDeck.add(new Card(cardNumber, CardPattern.SPADE));
         }
@@ -53,9 +53,10 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
         blackjackGame.distributeInitialCard();
 
-        Map<String, ResultType> playerResult = new LinkedHashMap<>();
-        playerResult.put("pobi", ResultType.LOSE);
-        playerResult.put("jason", ResultType.LOSE);
+        Map<Player, ResultType> playerResult = new LinkedHashMap<>();
+        List<Player> gamePlayers = players.getPlayers();
+        playerResult.put(gamePlayers.get(0), ResultType.LOSE);
+        playerResult.put(gamePlayers.get(1), ResultType.LOSE);
         Assertions.assertThat(blackjackGame.getGameResult().getPlayerResult()).isEqualTo(playerResult);
     }
 
