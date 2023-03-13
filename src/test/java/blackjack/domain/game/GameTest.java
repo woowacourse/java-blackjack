@@ -22,7 +22,7 @@ class GameTest {
         // given
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName" + i), Betting.of(2000)));
+            players.add(new Player(new Name("newName" + i), new Betting(2000)));
         }
 
         Stack<Card> cards = new Stack<>();

@@ -9,13 +9,9 @@ public class Betting {
     private static final int MIN_BOUND = 1;
     private final int betting;
 
-    private Betting(int betting) {
-        this.betting = betting;
-    }
-
-    public static Betting of(int betting) {
+    public Betting(int betting) {
         validate(betting);
-        return new Betting(betting);
+        this.betting = betting;
     }
 
     private static void validate(int betting) {

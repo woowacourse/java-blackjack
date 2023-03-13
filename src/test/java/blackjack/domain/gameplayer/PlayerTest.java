@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
-    private static final Betting betting = Betting.of(1000);
+    private static final Betting betting = new Betting(1000);
     private static final Name name = new Name("kong");
 
     private Player player;

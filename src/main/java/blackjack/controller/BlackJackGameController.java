@@ -74,7 +74,7 @@ public class BlackJackGameController {
     private Player generatePlayer(Name name) {
         try {
             int betting = inputView.readBetting(name.getName());
-            return new Player(name, Betting.of(betting));
+            return new Player(name, new Betting(betting));
         } catch (IllegalArgumentException exception) {
             LogType.ERROR_MESSAGE.log(exception.getMessage());
             return generatePlayer(name);

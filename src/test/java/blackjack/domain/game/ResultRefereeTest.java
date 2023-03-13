@@ -32,7 +32,7 @@ class ResultRefereeTest {
 
     @BeforeEach
     void init() {
-        kong = new Player(new Name("tori"), Betting.of(2000));
+        kong = new Player(new Name("tori"), new Betting(2000));
         dealer = new Dealer();
     }
 
