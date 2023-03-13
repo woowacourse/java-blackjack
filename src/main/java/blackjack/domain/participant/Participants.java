@@ -43,7 +43,10 @@ public class Participants {
     }
 
     private List<Player> makePlayer(Map<String, Integer> players) {
-        return players.entrySet().stream().map(entry -> new Player(new Name(entry.getKey()), entry.getValue())).collect(Collectors.toList());
+        return players.entrySet()
+                .stream()
+                .map(entry -> new Player(new Name(entry.getKey()), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {
