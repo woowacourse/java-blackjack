@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
-    public static final int BLACKJACK_CARD_COUNT = 2;
-    public static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final int BLACKJACK_SCORE = 21;
 
     protected final List<Card> cards;
     protected final Score score;
