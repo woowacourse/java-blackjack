@@ -1,6 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Shape;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,8 +111,7 @@ class UserTest {
         for (int i = 0; i < 12; i++) {
             푸우.draw(new Card(Shape.HEART, CardNumber.ACE));
         }
-        assertThat(푸우.getGamePoint())
-                .extracting("gamePoint")
+        assertThat(푸우.getGameScore().getValue())
                 .isEqualTo(14);
     }
 

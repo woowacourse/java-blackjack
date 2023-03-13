@@ -45,7 +45,7 @@ public class DtoParser {
     public static FinalStatusDto getFinalStatusDto(BlackJack blackJack) {
         return new FinalStatusDto(
                 getDealerDto(blackJack.getDealer()),
-                blackJack.getDealer().getGamePoint().getValue(),
+                blackJack.getDealer().getGameScore().getValue(),
                 makeUserAndScore(blackJack.getUsers().getUsers())
         );
     }
@@ -53,7 +53,7 @@ public class DtoParser {
     private static Map<UserDto, Integer> makeUserAndScore(final List<User> users) {
         final Map<UserDto, Integer> resultMap = new HashMap<>();
         for (User user : users) {
-            resultMap.put(getUserDto(user), user.getGamePoint().getValue());
+            resultMap.put(getUserDto(user), user.getGameScore().getValue());
         }
         return resultMap;
     }

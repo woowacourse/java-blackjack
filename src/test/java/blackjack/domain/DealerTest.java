@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Shape;
 import blackjack.domain.user.Dealer;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DealerTest {
     private Dealer defaultDealer;
@@ -158,8 +158,7 @@ public class DealerTest {
         dealer.draw(new Card(Shape.HEART, CardNumber.TEN));
 
         //then
-        assertThat(dealer.getGamePoint())
-                .extracting("gamePoint")
+        assertThat(dealer.getGameScore().getValue())
                 .isEqualTo(0);
     }
 }

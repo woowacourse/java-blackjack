@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.card.Score;
 
 import java.util.List;
 
@@ -38,12 +38,12 @@ public class Dealer implements Player {
 
     @Override
     public boolean canReceive() {
-        return cards.haveLowerGamePointThan(16) && !cards.isBust();
+        return cards.getScore().getValue() <= 16 && !cards.isBust();
     }
 
     @Override
-    public GamePoint getGamePoint() {
-        return cards.getPoint();
+    public Score getGameScore() {
+        return cards.getScore();
     }
 
     public Name getName() {
@@ -53,4 +53,5 @@ public class Dealer implements Player {
     public Cards getCards() {
         return cards;
     }
+
 }

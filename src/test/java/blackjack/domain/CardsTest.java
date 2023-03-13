@@ -1,14 +1,12 @@
 package blackjack.domain;
 
 import blackjack.domain.card.*;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CardsTest {
@@ -46,7 +44,7 @@ public class CardsTest {
                 new Card(Shape.HEART, CardNumber.THREE)
         );
         final Cards cards = new Cards(data);
-        final GamePoint point = cards.getPoint();
+        final Score point = cards.getScore();
         final int value = point.getValue();
         assertThat(value).isEqualTo(16);
 
@@ -54,7 +52,7 @@ public class CardsTest {
 
         //when
         final Cards addedCards = cards.add(card);
-        final GamePoint addedCardsPoint = addedCards.getPoint();
+        final Score addedCardsPoint = addedCards.getScore();
         final int addedValue = addedCardsPoint.getValue();
 
         //then

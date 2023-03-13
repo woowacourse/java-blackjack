@@ -39,4 +39,8 @@ public class Card {
     public CardNumber getCardNumber() {
         return cardNumber;
     }
+
+    public int getCardNUmberValue() {
+        return cardNumber.getDefaultScore();
+    }
 }

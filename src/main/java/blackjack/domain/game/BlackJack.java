@@ -7,7 +7,10 @@ import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlackJack {
 
@@ -47,7 +50,7 @@ public class BlackJack {
     public List<User> getUserOf(Result result) {
         final List<User> resultUsers = new ArrayList<>();
         for (User user : users.getUsers()) {
-            if (Result.of(user.getGamePoint(), dealer.getGamePoint()) == result) {
+            if (Result.of(user.getCards(), dealer.getCards()) == result) {
                 resultUsers.add(user);
             }
         }

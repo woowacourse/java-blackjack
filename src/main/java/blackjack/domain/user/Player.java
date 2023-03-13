@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.card.Score;
 
 public interface Player {
 
@@ -9,6 +9,6 @@ public interface Player {
 
     boolean canReceive();
 
-    GamePoint getGamePoint();
+    Score getGameScore();
 
 }

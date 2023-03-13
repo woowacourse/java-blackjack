@@ -5,12 +5,11 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int ACE_BONUS_VALUE = 10;
     private final List<Card> cards;
-    private final GamePoint point;
 
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        this.point = new GamePoint(cards);
     }
 
     public Cards add(final Card card) {
@@ -20,22 +19,39 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return point.isBusted();
+        return sumCardValue() > 21;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && containAce() && sumCardValue() == 11;
     }
 
     public int size() {
         return cards.size();
     }
 
-    public boolean haveLowerGamePointThan(final int value) {
-        return point.isLowerThan(value);
-    }
-
     public List<Card> getCards() {
         return cards;
     }
 
-    public GamePoint getPoint() {
-        return new GamePoint(cards);
+    public Score getScore() {
+        final int cardSum = sumCardValue();
+        if (containAce() && cardSum + ACE_BONUS_VALUE <= Score.MAX_SCORE_VALUE) {
+            return new Score(cardSum + ACE_BONUS_VALUE);
+        }
+        return new Score(cardSum);
     }
+
+    private boolean containAce() {
+        return cards.stream()
+                .anyMatch((card) -> card.isAce());
+    }
+
+    private int sumCardValue() {
+        return cards.stream()
+                .map(Card::getCardNUmberValue)
+                .reduce(Integer::sum)
+                .orElseGet(() -> 0);
+    }
+
 }
