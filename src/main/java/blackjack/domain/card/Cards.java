@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
 
     public static final String INVALID_EMPTY_CARDS_MESSAGE = "카드가 없습니다.";
     public static final int FIRST_CARD_INDEX = 0;

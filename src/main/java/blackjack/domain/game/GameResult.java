@@ -7,7 +7,7 @@ import blackjack.domain.gameplayer.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameResult {
+public final class GameResult {
     private static final double BLACKJACK_PRIZE_RATE = 2.5;
     private static final int PLAYER_WIN_PRIZE_RATE = 2;
     private static final int PLAYER_LOSE_PRIZE_RATE = -1;

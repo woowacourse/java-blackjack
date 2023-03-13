@@ -35,8 +35,8 @@ public class BlackJackGameController {
     private Game init() {
         Deck deck = initDeck();
         List<Name> names = initNames();
-        List<Player> players = initPlayers(names);
-        Game game = new Game(deck, new Dealer(), new Players(players));
+        Players players = initPlayers(names);
+        Game game = new Game(deck, new Dealer(), players);
 
         outputView.printStart(game.getPlayers(), game.getDealer());
         return game;
@@ -62,7 +62,16 @@ public class BlackJackGameController {
                 .collect(Collectors.toList());
     }
 
-    private List<Player> initPlayers(List<Name> names) {
+    private Players initPlayers(List<Name> names) {
+        try {
+            return new Players(generatePlayers(names));
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
+            return initPlayers(initNames());
+        }
+    }
+
+    private List<Player> generatePlayers(List<Name> names) {
         List<Player> players = new ArrayList<>();
         for (Name name : names) {
             Player player = generatePlayer(name);

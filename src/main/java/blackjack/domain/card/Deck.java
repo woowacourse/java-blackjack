@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.Stack;
 
-public class Deck {
+public final class Deck {
 
     private static final String INVALID_DRAW_MESSAGE = "덱이 비어있습니다.";
 

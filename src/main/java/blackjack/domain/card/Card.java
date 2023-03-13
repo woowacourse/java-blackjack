@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public class Card {
+public final class Card {
     private final CardSymbol cardSymbol;
     private final CardNumber cardNumber;
 

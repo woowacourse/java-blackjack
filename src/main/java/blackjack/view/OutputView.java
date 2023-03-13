@@ -8,7 +8,7 @@ import blackjack.domain.gameplayer.Players;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String INIT_END_MESSAGE = "에게 2장을 나누었습니다.";

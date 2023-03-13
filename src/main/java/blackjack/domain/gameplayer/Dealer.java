@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class Dealer extends BlackJackParticipant {
+public final class Dealer extends BlackJackParticipant {
     public static final Score hitUpperBound = Score.of(17);
 
     public Dealer() {

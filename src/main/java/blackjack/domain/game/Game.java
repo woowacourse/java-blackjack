@@ -5,7 +5,7 @@ import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
 
-public class Game {
+public final class Game {
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;

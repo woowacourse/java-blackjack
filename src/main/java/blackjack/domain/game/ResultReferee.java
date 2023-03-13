@@ -4,7 +4,7 @@ import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Score;
 
-public class ResultReferee {
+public final class ResultReferee {
 
     public static Result getPlayerResult(Player player, Dealer dealer) {
         if (player.isBurst()) {
