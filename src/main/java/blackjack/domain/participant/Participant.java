@@ -22,7 +22,7 @@ public abstract class Participant {
     }
 
     public Score getScore() {
-        return hand.getScore();
+        return hand.calculateScore();
     }
 
     public abstract boolean isHit();

@@ -24,21 +24,21 @@ public final class Hand {
         cards.add(card);
     }
 
-    public Score getScore() {
-        final int aceCount = getAceCardCount();
-        final Score score = originalScore();
+    public Score calculateScore() {
+        final int aceCount = aceCardCount();
+        final Score score = calculateOriginalScore();
 
-        return calculateScore(aceCount, score);
+        return calculateDowngradeAceCardScore(aceCount, score);
     }
 
-    private Score calculateScore(final int aceCount, final Score score) {
+    private Score calculateDowngradeAceCardScore(final int aceCount, final Score score) {
         if (isNeedDowngradeScoreAceCard(aceCount, score)) {
             return calculateScoreRegardAce(aceCount, score);
         }
         return score;
     }
 
-    private Score originalScore() {
+    private Score calculateOriginalScore() {
         final int score = cards.stream()
                 .map(Card::getValue)
                 .reduce(ZERO, Integer::sum);
@@ -62,7 +62,7 @@ public final class Hand {
         return aceCount > ZERO;
     }
 
-    private int getAceCardCount() {
+    private int aceCardCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();

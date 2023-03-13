@@ -38,7 +38,7 @@ public class HandTest {
         cards.add(DIAMOND_JACK);
 
         // that
-        assertThat(cards.getScore()).isEqualTo(expected);
+        assertThat(cards.calculateScore()).isEqualTo(expected);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class HandTest {
         cards.add(DIAMOND_ACE);
 
         // that
-        assertThat(cards.getScore()).isEqualTo(expected);
+        assertThat(cards.calculateScore()).isEqualTo(expected);
     }
 
     @Test
@@ -84,6 +84,6 @@ public class HandTest {
         cards.add(DIAMOND_NINE);
 
         // that
-        assertThat(cards.getScore()).isEqualTo(expected);
+        assertThat(cards.calculateScore()).isEqualTo(expected);
     }
 }
