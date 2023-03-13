@@ -20,6 +20,7 @@ class PlayerTest {
     private static final Card HEART_THREE = new Card(TrumpCardType.HEART, TrumpCardNumber.THREE);
     private static final Card HEART_TEN = new Card(TrumpCardType.HEART, TrumpCardNumber.TEN);
     private static final Card HEART_QUEEN = new Card(TrumpCardType.HEART, TrumpCardNumber.QUEEN);
+    private static final Card HEART_ACE = new Card(TrumpCardType.HEART, TrumpCardNumber.ACE);
 
     @DisplayName("플레이어는 버스트된 경우 카드를 받을 수 없다.")
     @Test
@@ -58,5 +59,15 @@ class PlayerTest {
 
         BetAmount profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1000);
+    }
+
+    @DisplayName("블랙잭으로 승리하면 배팅 금액의 1.5배의 이익이 발생한다.")
+    @Test
+    void getProfitByResultWinBlackjackTest() {
+        Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
+        player.start(Cards.of(HEART_QUEEN, HEART_ACE));
+
+        BetAmount profitByResult = player.getProfitByResult(Result.WIN);
+        assertThat(profitByResult.getAmount()).isEqualTo(1500);
     }
 }
