@@ -38,7 +38,7 @@ public class TotalProfit {
                 .mapToDouble(Profit::getAmount)
                 .sum();
 
-        return new Profit(dealerProfit);
+        return new Profit(dealerProfit * -1);
     }
 
 }

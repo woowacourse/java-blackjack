@@ -88,6 +88,6 @@ class TotalProfitTest {
                 .containsExactly(1500d, 1000d, -1000d);
 
         assertThat(totalProfit.getDealerProfit().getAmount())
-                .isEqualTo(1500d + 1000d + -1000d);
+                .isEqualTo((-1) * (1500d + 1000d + -1000d));
     }
 }
