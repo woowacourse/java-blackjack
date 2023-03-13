@@ -17,7 +17,7 @@ public class Hand {
     }
 
 
-    public static Hand makeEmptyHolder() {
+    public static Hand withEmptyHolder() {
         return new Hand(new ArrayList<>());
     }
 

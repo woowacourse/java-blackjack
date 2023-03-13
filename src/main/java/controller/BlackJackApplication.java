@@ -17,7 +17,7 @@ import java.util.Map;
 public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(
-                new Players(new Dealer(Hand.makeEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
+                new Players(new Dealer(Hand.withEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
                 DeckOfCards.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);

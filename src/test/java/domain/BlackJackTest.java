@@ -103,7 +103,7 @@ class BlackJackTest {
 
     private static Dealer makeDealer(Card... cards) {
         if (cards.length == 0) {
-            return new Dealer(Hand.makeEmptyHolder());
+            return new Dealer(Hand.withEmptyHolder());
         }
         return new Dealer(new Hand(List.of(cards)));
     }

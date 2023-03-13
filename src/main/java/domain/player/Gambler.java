@@ -13,7 +13,7 @@ public class Gambler extends Player {
 
     public static List<Gambler> from(Map<Name, Bet> nameAndBet) {
         List<Gambler> gamblers = new ArrayList<>();
-        nameAndBet.forEach((name, bet) -> gamblers.add(new Gambler(Hand.makeEmptyHolder(), name, bet)));
+        nameAndBet.forEach((name, bet) -> gamblers.add(new Gambler(Hand.withEmptyHolder(), name, bet)));
         return gamblers;
     }
 
