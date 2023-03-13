@@ -19,14 +19,6 @@ public class OutputView {
         throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
     }
     
-    public static void printParticipantNamesGuide() {
-        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-    }
-    
-    public static void printParticipantBetAmountInputGuide(Player participant) {
-        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, participant.getName());
-    }
-    
     public static void printPlayersInformation(BlackJackGame blackJackGame) {
         printPlayerNames(blackJackGame);
         printPlayerCardsStatus(blackJackGame);
@@ -80,10 +72,6 @@ public class OutputView {
     
     private static void printPlayerCardStatus(Player player, String format, String cardsDisplay) {
         System.out.printf(format, player.getName(), cardsDisplay);
-    }
-    
-    public static void printAddCardGuide(String name) {
-        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, name);
     }
     
     public static void printGiveDealerCardMessage() {
