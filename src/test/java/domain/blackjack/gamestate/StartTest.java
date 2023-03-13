@@ -7,6 +7,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class StartTest {
     private static final Card SPADE_ACE = new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE);
     private static final Card SPADE_NINE = new Card(TrumpCardType.SPADE, TrumpCardNumber.NINE);
 
-    @DisplayName("게임 상태는 카드와 함께 시작한다.")
+    @DisplayName("게임은 카드와 함께 시작한다.")
     @Test
     void createGameStateSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
@@ -26,6 +27,14 @@ class StartTest {
         assertThat(stateCards.getCards()).containsExactly(
                 SPADE_TEN, SPADE_NINE
         );
+    }
+
+    @DisplayName("게임은 2장의 카드로만 시작할 수 있다.")
+    @Test
+    void createGameStateFailTest() {
+        Cards cards = Cards.of(SPADE_TEN, SPADE_NINE, SPADE_ACE);
+        Assertions.assertThatThrownBy(() -> Start.from(cards))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("게임 시작시 숫자의 합이 21이면 블랙잭 상태가 된다.")
@@ -39,3 +48,4 @@ class StartTest {
         assertThat(gameState).isInstanceOf(Blackjack.class);
     }
 }
+현
