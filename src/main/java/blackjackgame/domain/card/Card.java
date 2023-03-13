@@ -3,6 +3,8 @@ package blackjackgame.domain.card;
 import java.util.HashMap;
 import java.util.Map;
 
+import blackjackgame.domain.Score;
+
 public class Card {
     private final static Map<String, Card> cache = new HashMap<>(52);
 
@@ -26,15 +28,16 @@ public class Card {
         return symbol.getSymbol();
     }
 
-    public int getScore() {
-        return cardValue.getScore();
-    }
-
-    public String getValue() {
-        return cardValue.getValue();
-    }
-
     public boolean isAce() {
-        return cardValue.getValue().equals(CardValue.ACE.getValue());
+        return cardValue == CardValue.ACE;
+    }
+
+    public Score score() {
+        return new Score(cardValue.getScore());
+    }
+
+    @Override
+    public String toString() {
+        return symbol.getSymbol() + cardValue.getValue();
     }
 }

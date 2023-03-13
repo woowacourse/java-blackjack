@@ -1,5 +1,6 @@
 package blackjackgame.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -14,6 +15,35 @@ public class InputView {
             guestsName = scanner.nextLine();
         } while (isBlank(guestsName));
         return List.of(guestsName.split(","));
+    }
+
+    public List<Integer> requestMoney(List<String> names) {
+        List<Integer> moneys = new ArrayList<>();
+        String money;
+        for (String name : names){
+            do {
+                System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
+                money = scanner.nextLine();
+            } while (isMoney(money));
+            moneys.add(Integer.parseInt(money));
+        }
+        return moneys;
+    }
+
+    private boolean isMoney(String money) {
+        try{
+            validateAmount(Integer.parseInt(money));
+            return true;
+        } catch (NumberFormatException e){
+            printErrorMsg("배팅금은 100 보다 큰 숫자로 입력해주세요");
+            return false;
+        }
+    }
+
+    private static void validateAmount(int money) {
+        if(money < 100){
+            throw new NumberFormatException();
+        }
     }
 
     private boolean isBlank(String guestsName) {
@@ -39,4 +69,5 @@ public class InputView {
     public void printErrorMsg(final String message) {
         System.out.println("[ERROR] " + message);
     }
+
 }

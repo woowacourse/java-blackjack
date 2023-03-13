@@ -14,7 +14,7 @@ public abstract class Player {
         this.state = state;
     }
 
-    protected abstract List<Card> startingCards();
+    public abstract List<Card> startingCards();
 
     protected abstract boolean canHit();
 

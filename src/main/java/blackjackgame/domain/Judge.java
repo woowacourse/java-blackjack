@@ -1,21 +1,12 @@
 package blackjackgame.domain;
 
-import static blackjackgame.domain.GameOutcome.*;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import blackjackgame.domain.player.Dealer;
-import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Guests;
-
 public class Judge {
-    private static final int BLACKJACK_MAX_SCORE = 21;
+    /*private static final int BLACKJACK_MAX_SCORE = 21;
 
     private final Dealer dealer;
-    private final Guests guests;
+    private final Players guests;
 
-    public Judge(Dealer dealer, Guests guests) {
+    public Judge(Dealer dealer, Players guests) {
         this.dealer = dealer;
         this.guests = guests;
     }
@@ -23,7 +14,7 @@ public class Judge {
     public Map<Guest, GameOutcome> guestsResult() {
         Map<Guest, GameOutcome> guestsResult = new LinkedHashMap<>();
         int dealerScore = dealer.getScore();
-        for (final Guest guest : guests.getGuests()) {
+        for (final Guest guest : guests.getPlayers()) {
             guestsResult.put(guest, judgeFromScore(dealerScore, guest.getScore()));
         }
         return guestsResult;
@@ -38,6 +29,6 @@ public class Judge {
             return WIN;
         }
         return DRAW;
-    }
+    }*/
 
 }

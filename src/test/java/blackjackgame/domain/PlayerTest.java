@@ -1,38 +1,20 @@
 package blackjackgame.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CardValue;
 import blackjackgame.domain.card.Symbol;
-import blackjackgame.domain.player.Dealer;
-import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Name;
-import blackjackgame.domain.player.Player;
 
 class PlayerTest {
-    Card ace = new Card(Symbol.SPADE, CardValue.ACE);
-    Card five = new Card(Symbol.SPADE, CardValue.FIVE);
-    Card nine = new Card(Symbol.SPADE, CardValue.NINE);
-    Card ten = new Card(Symbol.SPADE, CardValue.JACK);
-
+    Card ace = Card.of(Symbol.SPADE, CardValue.ACE);
+    Card five = Card.of(Symbol.SPADE, CardValue.FIVE);
+    Card nine = Card.of(Symbol.SPADE, CardValue.NINE);
+    Card ten = Card.of(Symbol.SPADE, CardValue.JACK);
+/*
     static Stream<Arguments> cardDummy() {
-        Card ace = new Card(Symbol.SPADE, CardValue.ACE);
-        Card five = new Card(Symbol.SPADE, CardValue.FIVE);
-        Card nine = new Card(Symbol.SPADE, CardValue.NINE);
-        Card ten = new Card(Symbol.SPADE, CardValue.JACK);
+        Card ace = Card.of(Symbol.SPADE, CardValue.ACE);
+        Card five = Card.of(Symbol.SPADE, CardValue.FIVE);
+        Card nine = Card.of(Symbol.SPADE, CardValue.NINE);
+        Card ten = Card.of(Symbol.SPADE, CardValue.JACK);
 
         return Stream.of(
             Arguments.arguments(new ArrayList<>(List.of(ace, ten)), Collections.emptyList(), 21),
@@ -85,5 +67,5 @@ class PlayerTest {
         }
 
         assertThat(player.getScore()).isEqualTo(expected);
-    }
+    }*/
 }

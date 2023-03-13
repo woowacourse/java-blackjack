@@ -16,10 +16,10 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<Player> playerNames) {
-        validateGuestNumbers(playerNames);
-        validateDuplicate(playerNames);
-        this.players = playerNames;
+    public Players(final List<Player> guests) {
+        validateGuestNumbers(guests);
+        validateDuplicate(guests);
+        this.players = guests;
     }
 
     private void validateGuestNumbers(final List<Player> playerNames) {
@@ -70,4 +70,5 @@ public class Players {
         }
         throw new IllegalStateException();
     }
+
 }
