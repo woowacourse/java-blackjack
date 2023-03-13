@@ -12,8 +12,8 @@ public class Dealer extends Player {
         super(hand, Name.dealerName(), new Bet(10000));
     }
 
-    public void battle(Player participant) {
-        GameResultDecider.decideGameResult(this, participant);
+    public Bet battle(Player participant) {
+        return GameResultDecider.decideGameResult(this, participant);
     }
 
     @Override

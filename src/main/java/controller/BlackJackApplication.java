@@ -1,9 +1,9 @@
 package controller;
 
 import domain.BlackJack;
-import domain.card.Hand;
 import domain.card.DeckOfCards;
-import domain.gameresult.GameResultReadOnly;
+import domain.card.Hand;
+import domain.gameresult.GameResult;
 import domain.player.*;
 import domain.strategy.RandomBasedIndexGenerator;
 import view.Command;
@@ -24,7 +24,7 @@ public class BlackJackApplication {
 
         giveCardToPlayers(blackJack);
         OutputView.printPlayersFinalInformation(blackJack.getPlayers());
-        GameResultReadOnly gameResult = blackJack.battle();
+        GameResult gameResult = blackJack.battle();
         OutputView.printPlayersGameResults(gameResult);
     }
 

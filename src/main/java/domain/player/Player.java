@@ -9,7 +9,7 @@ import java.util.Objects;
 public abstract class Player {
     private final Hand hand;
     private final Name name;
-    private Bet bet;
+    private final Bet bet;
 
     public Player(Hand hand, Name name, Bet bet) {
         this.hand = hand;
@@ -60,11 +60,15 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-    public void profit() {
-        this.bet = bet.multiplyDouble();
+    public Bet win() {
+        return bet;
     }
 
-    public void lose() {
-        this.bet = Bet.makeEmptyBet();
+    public Bet lose() {
+        return bet.toNegative();
+    }
+
+    public Bet draw() {
+        return Bet.empty();
     }
 }

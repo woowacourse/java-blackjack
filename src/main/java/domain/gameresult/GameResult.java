@@ -3,13 +3,16 @@ package domain.gameresult;
 import domain.player.Bet;
 import domain.player.Player;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, Bet> resultOfPlayers = new HashMap<>();
+    private final Map<Player, Bet> resultOfPlayers;
 
-//    public void saveResultWithMultiplying(Player player, float multiply) {
-//        resultOfPlayers.put(player, player.getBetWithMultiplying(multiply));
-//    }
+    public GameResult(Map<Player, Bet> resultOfPlayers) {
+        this.resultOfPlayers = resultOfPlayers;
+    }
+
+    public static GameResult from(Map<Player, Bet> result) {
+        return new GameResult(result);
+    }
 }

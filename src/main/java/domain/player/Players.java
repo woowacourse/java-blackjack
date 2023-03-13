@@ -1,10 +1,11 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.gameresult.GameResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -25,8 +26,10 @@ public class Players {
         return dealer.getScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
-    public void battleAll() {
-        gamblers.forEach(participant -> dealer.battle(participant));
+    public Map<Player, Bet> battleAll() {
+        Map<Player, Bet> result = new HashMap<>();
+        gamblers.forEach(participant -> result.put(participant, dealer.battle(participant)));
+        return result;
     }
 
     public Player findByName(String name) {

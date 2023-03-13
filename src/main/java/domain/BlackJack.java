@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.DeckOfCards;
-import domain.gameresult.GameResultReadOnly;
+import domain.gameresult.GameResult;
 import domain.player.Dealer;
 import domain.player.PlayerReadOnly;
 import domain.player.Players;
@@ -54,7 +54,7 @@ public class BlackJack {
                 .getParticipants();
     }
 
-    public GameResultReadOnly battle() {
-        return GameResultReadOnly.from(players.battleAll());
+    public GameResult battle() {
+        return GameResult.from(players.battleAll());
     }
 }

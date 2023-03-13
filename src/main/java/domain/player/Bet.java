@@ -12,8 +12,12 @@ public class Bet {
         return new Bet(value);
     }
 
-    public static Bet makeEmptyBet() {
+    public static Bet empty() {
         return new Bet(0);
+    }
+
+    public Bet toNegative() {
+        return new Bet(value * -1);
     }
 
     private static void validateValue(int value) {
@@ -25,7 +29,14 @@ public class Bet {
         }
     }
 
-    public Bet multiplyDouble() {
-        return new Bet(this.value * 2);
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "value=" + value +
+                '}';
     }
 }
