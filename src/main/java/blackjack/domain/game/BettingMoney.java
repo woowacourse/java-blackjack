@@ -4,14 +4,16 @@ import blackjack.constants.ErrorCode;
 import blackjack.domain.game.exception.InvalidMoneyValueException;
 import blackjack.domain.vo.Money;
 
-public class BettingMoney extends Money {
+public class BettingMoney {
     private static final int BETTING_MONEY_UNIT = 1000;
     private static final int MAX_BETTING_MONEY_BOUND = 10_000_000;
 
+    private final Money money;
+
     public BettingMoney(int value) {
-        super(value);
         validateUnit(value);
         validateMaxBound(value);
+        this.money = new Money(value);
     }
 
     private void validateUnit(int value) {
@@ -32,5 +34,13 @@ public class BettingMoney extends Money {
 
     private boolean isValidBound(int value) {
         return value > MAX_BETTING_MONEY_BOUND;
+    }
+
+    public Money calculateProfit(double ratio) {
+        return money.multiply(ratio);
+    }
+
+    public int getValue() {
+        return money.getValue();
     }
 }

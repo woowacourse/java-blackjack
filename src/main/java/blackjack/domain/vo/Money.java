@@ -27,6 +27,10 @@ public class Money {
         return new Money(multiply.intValue());
     }
 
+    public Money minus(Money other) {
+        return new Money(this.value.subtract(other.value));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -49,9 +53,5 @@ public class Money {
         return "Money{" +
                 "value=" + value +
                 '}';
-    }
-
-    public Money minus(Money other) {
-        return new Money(this.value.subtract(other.value));
     }
 }

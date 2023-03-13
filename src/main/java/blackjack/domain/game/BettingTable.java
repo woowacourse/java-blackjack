@@ -13,19 +13,28 @@ public class BettingTable {
         this.bets = new LinkedHashMap<>();
     }
 
-    public void put(Player player, BettingMoney money) {
+    public BettingTable(Map<Player, BettingMoney> bets) {
+        this.bets = new LinkedHashMap<>(bets);
+    }
+
+    public BettingTable put(Player player, BettingMoney money) {
         bets.put(player, money);
+        return new BettingTable(bets);
     }
 
     public BettingResult calculateResult(BlackjackResult blackjackResult) {
         Map<Player, Money> bettingResults = bets.keySet().stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> bets.get(player).multiply(blackjackResult.get(player).getRatio()),
+                        player -> getBettingMoney(player).calculateProfit(blackjackResult.getRatio(player)),
                         (o1, o2) -> o1,
                         LinkedHashMap::new
                 ));
         return new BettingResult(bettingResults);
+    }
+
+    private BettingMoney getBettingMoney(Player player) {
+        return bets.get(player);
     }
 
     public Map<Player, BettingMoney> getBets() {
