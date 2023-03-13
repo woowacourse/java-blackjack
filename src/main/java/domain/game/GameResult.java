@@ -38,7 +38,7 @@ public class GameResult {
             playerPrizes.put(player.getName(), player.getPrize());
             return;
         }
-        if(dealer.isBlackjack() && player.isBlackjack()) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             playerPrizes.put(player.getName(), player.getBatting());
             return;
         }

@@ -67,7 +67,7 @@ public class OutputView {
     }
 
     public void printFinalResultHeaderMessage() {
-        System.out.println("## 최종 수익");
+        System.out.println("\n## 최종 수익");
     }
 
     public void printDealerPrizeResult(int dealerPrize) {

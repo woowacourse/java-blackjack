@@ -67,19 +67,15 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public List<Card> getCards(Name name) {
-        if(dealerName.equals(name))
+        if (dealerName.equals(name))
             return dealer.getCards();
 
         return findPlayerByName(name).getCards();
     }
 
     public Score getScore(Name name) {
-        if(dealerName.equals(name))
+        if (dealerName.equals(name))
             return dealer.getScore();
 
         return findPlayerByName(name).getScore();
@@ -98,15 +94,13 @@ public class BlackjackGame {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 User 이름입니다."));
     }
 
-    public HashMap<Name, Integer> makePlayerProfitResult() {
-        HashMap<Name, Integer> playerProfitResult = new LinkedHashMap<>();
-        players.forEach(player -> playerProfitResult.put(player.getName(), player.getPrize()));
-        return playerProfitResult;
-    }
-
     public Map<Name, Integer> calculatePlayerResult() {
         GameResult gameResult = new GameResult(getAllUserNames().subList(1, getAllUserNames().size()));
         gameResult.saveResults(dealer, players);
         return gameResult.getPlayerPrizes();
+    }
+
+    public int dealerDrawCount() {
+        return dealer.drawCount();
     }
 }

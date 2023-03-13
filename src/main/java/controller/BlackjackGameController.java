@@ -31,26 +31,6 @@ public class BlackjackGameController {
     public void run() {
         BlackjackGame blackjackGame = setUp();
         playGame(blackjackGame);
-
-    }
-
-    private void showFinalProfit(BlackjackGame blackjackGame) {
-        // 플레이어 순서대로 이름, 금액
-        // 딜러는 모든 플레이어 최종 수익의 합의 반대 부호
-//        HashMap<Name, Integer> playerFinalPrizes = blackjackGame.makePlayerProfitResult();
-        Map<Name, Integer> playerPrizes =  blackjackGame.calculatePlayerResult();
-        outputView.printFinalResultHeaderMessage();
-
-        playerPrizes.values().stream()
-                .mapToInt(num -> num)
-                .sum();
-        outputView.printDealerPrizeResult(playerPrizes.values().stream()
-                .mapToInt(num -> num)
-                .sum() * -1);
-
-        outputView.printPlayerPrizeResult(playerPrizes);
-
-
     }
 
     private BlackjackGame setUp() {
@@ -71,28 +51,16 @@ public class BlackjackGameController {
                 .collect(Collectors.toList());
     }
 
-    private List<Name> readUserNames() {
-        outputView.printInputPlayerNameMessage();
-        Names names = new Names(inputView.readPlayersName());
-        return names.getNames();
-    }
-
-    private int readPlayerBatting(Name name) {
-        outputView.printInputPlayerBattingMessage(unwrapName(name));
-        return inputView.readPlayerBatting();
-    }
-
     private void playGame(BlackjackGame blackjackGame) {
         showSetUpResult(blackjackGame.makeSetUpResult());
         progressPlayersTurn(blackjackGame);
         progressDealerTurn(blackjackGame);
         showUserCardResults(blackjackGame);
         showFinalProfit(blackjackGame);
-//        showFinalResult(gameResult);
     }
 
     private void progressPlayersTurn(BlackjackGame blackjackGame) {
-        while(blackjackGame.hasReadyPlayer()) {
+        while (blackjackGame.hasReadyPlayer()) {
             progressPlayerTurn(blackjackGame);
         }
     }
@@ -112,11 +80,20 @@ public class BlackjackGameController {
     private void progressDealerTurn(BlackjackGame blackJackGame) {
         blackJackGame.drawCardUntilDealerFinished();
 
-        Dealer dealer = blackJackGame.getDealer();
-
-        if (dealer.drawCount() > 0) {
-            outputView.printDealerDrawResult(dealer.drawCount());
+        if (blackJackGame.dealerDrawCount() > 0) {
+            outputView.printDealerDrawResult(blackJackGame.dealerDrawCount());
         }
+    }
+
+    private List<Name> readUserNames() {
+        outputView.printInputPlayerNameMessage();
+        Names names = new Names(inputView.readPlayersName());
+        return names.getNames();
+    }
+
+    private int readPlayerBatting(Name name) {
+        outputView.printInputPlayerBattingMessage(unwrapName(name));
+        return inputView.readPlayerBatting();
     }
 
     private DrawCommand readDrawCommand(Player player) {
@@ -140,11 +117,15 @@ public class BlackjackGameController {
                 unwrapScore(blackjackGame.getScore(name))));
     }
 
+    private void showFinalProfit(BlackjackGame blackjackGame) {
+        Map<Name, Integer> playerPrizes = blackjackGame.calculatePlayerResult();
 
-    private List<String> unwrapNames(List<Name> names) {
-        return names.stream()
-                .map(Name::getName)
-                .collect(Collectors.toList());
+        outputView.printFinalResultHeaderMessage();
+
+        outputView.printDealerPrizeResult(playerPrizes.values().stream()
+                .mapToInt(num -> num)
+                .sum() * -1);
+        outputView.printPlayerPrizeResult(playerPrizes);
     }
 
     private String unwrapName(Name name) {

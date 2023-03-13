@@ -20,6 +20,6 @@ public class Dealer extends User {
     }
 
     public List<Card> getOnlyFirstCard() {
-        return getCards().subList(0,1);
+        return getCards().subList(0, 1);
     }
 }
