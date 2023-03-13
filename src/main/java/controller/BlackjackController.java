@@ -33,9 +33,8 @@ public class BlackjackController {
     }
 
     private void addCardToDealerIfPossible() {
-        if (participants.getDealer().canAdd()) {
+        if (participants.addCardToDealerIfPossible()) {
             OutputView.announceAddCardToDealer();
-            participants.addCardToDealerIfPossible();
         }
     }
 }

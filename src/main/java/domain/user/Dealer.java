@@ -55,8 +55,12 @@ public class Dealer extends AbstractUser {
         return deck.draw();
     }
 
-    public void drawCardDealer() {
-        cardHand.add(deck.draw());
+    public boolean drawCardDealer() {
+        if (this.canAdd()) {
+            cardHand.add(deck.draw());
+            return true;
+        }
+        return false;
     }
 
     public void calculateAllResults(List<Player> users) {

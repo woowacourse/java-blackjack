@@ -56,8 +56,8 @@ public class Participants {
         return this.players.getPlayers();
     }
 
-    public void addCardToDealerIfPossible() {
-        this.dealer.drawCardDealer();
+    public boolean addCardToDealerIfPossible() {
+        return this.dealer.drawCardDealer();
     }
 
     public void calculateAllResults() {
