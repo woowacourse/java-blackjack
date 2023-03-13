@@ -86,8 +86,8 @@ public class OutputView {
         printBet(dealerName, -totalBet);
     }
 
-    public void printPlayerBetResult(PurseResponse purseResponse) {
-        final Map<String, Long> purses = purseResponse.getPurses();
+    public void printPlayerBetResult(BetResponse betResponse) {
+        final Map<String, Long> purses = betResponse.getPurses();
         purses.keySet()
                 .forEach(playerName -> printBet(playerName, purses.get(playerName)));
     }

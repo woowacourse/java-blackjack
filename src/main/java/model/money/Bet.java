@@ -6,11 +6,13 @@ import model.user.GameState;
 public class Bet {
 
     private static final double MULTIPLE_VALUE = 1.5;
-    private static final Bet zero = new Bet(0);
+    private static final int MINIMUM_BET = 10_000;
+    private static final Bet minimumBet = new Bet(MINIMUM_BET);
 
     private final long money;
 
     public Bet(final long money) {
+        validateBet(money);
         this.money = money;
     }
 
@@ -18,8 +20,10 @@ public class Bet {
         this(Long.parseLong(bet));
     }
 
-    public static Bet zero() {
-        return zero;
+    private void validateBet(final long money) {
+        if (money < MINIMUM_BET) {
+            throw new IllegalArgumentException(String.format("배팅은 %s원 초과로 해야합니다.", MINIMUM_BET));
+        }
     }
 
     public Bet add(final Bet bet) {
@@ -51,7 +55,7 @@ public class Bet {
     }
 
     private Bet draw() {
-        return zero;
+        return minimumBet;
     }
 
     public Bet blackJack() {

@@ -18,7 +18,7 @@ import ui.input.ReceiveCommand;
 import ui.output.BlackJackGameResponse;
 import ui.output.HandResponse;
 import ui.output.OutputView;
-import ui.output.PurseResponse;
+import ui.output.BetResponse;
 import ui.output.UserResponse;
 
 public class BlackJackController {
@@ -156,6 +156,6 @@ public class BlackJackController {
     private void printBetResult(Dealer dealer, Participants participants) {
         outputView.printBetResult();
         outputView.printDealerBetResult(dealer.getName(), participants.getTotalProfits());
-        outputView.printPlayerBetResult(PurseResponse.create(participants));
+        outputView.printPlayerBetResult(BetResponse.create(participants));
     }
 }

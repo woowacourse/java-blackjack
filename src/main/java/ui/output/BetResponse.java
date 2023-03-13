@@ -7,15 +7,15 @@ import model.user.GameState;
 import model.user.Participants;
 import model.user.Player;
 
-public class PurseResponse {
+public class BetResponse {
 
     private final Map<String, Long> purses;
 
-    public PurseResponse(Map<String, Long> purses) {
-        this.purses = purses;
+    public BetResponse(Map<String, Long> bets) {
+        this.purses = bets;
     }
 
-    public static PurseResponse create(Participants participants) {
+    public static BetResponse create(Participants participants) {
         Map<String, Long> response = new LinkedHashMap<>();
         final List<Player> players = participants.getPlayers();
         for (Player player : players) {
@@ -23,7 +23,7 @@ public class PurseResponse {
             response.put(playerName, getProfit(participants, player));
         }
 
-        return new PurseResponse(response);
+        return new BetResponse(response);
     }
 
     private static long getProfit(final Participants participants, final Player player) {
