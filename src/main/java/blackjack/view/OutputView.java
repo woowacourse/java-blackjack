@@ -12,14 +12,10 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String COMMA = ", ";
     private static final String COLON = ": ";
-    private static final String BLANK = " ";
     private static final String GIVE_TWO_CARD_MESSAGE = "에게 두 장을 나누었습니다.";
     private static final String NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
     private static final String RESULT_DELIMITER = " - 결과 : ";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
-    private static final String WIN_MESSAGE = "승";
-    private static final String TIE_MESSAGE = "무";
-    private static final String LOSE_MESSAGE = "패";
     private static final String ERROR_PREFIX_MESSAGE = "[ERROR] ";
 
     public void printInitialCards(final Participants participants) {
