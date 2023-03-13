@@ -26,8 +26,12 @@ public class OutputView {
         return String.join(", ", cardTexts);
     }
 
+    public static String dealerHavingCardFirst(Dealer dealer) {
+        return cardPrintMapper.transformToPrintCard(dealer.getFirstCard());
+    }
+
     public static void printCardsStatusOfDealer(Dealer dealer) {
-        System.out.printf("%s카드: %s", "딜러", userHavingCards(dealer));
+        System.out.printf("%s카드: %s", "딜러", dealerHavingCardFirst(dealer));
         System.out.println();
     }
 

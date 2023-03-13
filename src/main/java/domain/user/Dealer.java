@@ -114,4 +114,8 @@ public class Dealer extends AbstractUser {
     public PlayerRevenues getPlayerRevenues() {
         return this.playerRevenues;
     }
+
+    public Card getFirstCard() {
+        return cardHand.getCards().get(0);
+    }
 }
