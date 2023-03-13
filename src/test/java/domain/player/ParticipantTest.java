@@ -30,8 +30,7 @@ class ParticipantTest {
     @ParameterizedTest(name = "number : {0}, isBust : {1}")
     @CsvSource(value = {"FIVE,false", "SIX,true"})
     void isBust(Number number, boolean isBust) {
-        abel.draw(new Card(Shape.HEART, Number.QUEEN));
-        abel.draw(new Card(Shape.HEART, Number.SIX));
+        abel.initCards(new Card(Shape.HEART, Number.QUEEN), new Card(Shape.HEART, Number.SIX));
         abel.draw(new Card(Shape.DIAMOND, number));
         
         assertThat(abel.isBust()).isEqualTo(isBust);
@@ -41,8 +40,7 @@ class ParticipantTest {
     @ParameterizedTest(name = "number : {0}, totalScore : {1}")
     @CsvSource(value = {"FIVE,21", "SIX,12"})
     void getTotalScore(Number number, int totalScore) {
-        abel.draw(new Card(Shape.HEART, Number.ACE));
-        abel.draw(new Card(Shape.HEART, Number.FIVE));
+        abel.initCards(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.FIVE));
         abel.draw(new Card(Shape.DIAMOND, number));
         
         assertThat(abel.getTotalScore()).isEqualTo(new Score(totalScore));

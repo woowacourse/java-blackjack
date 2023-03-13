@@ -19,6 +19,9 @@ public abstract class State {
     public abstract double calculateProfit(double betAmount);
     public abstract State drawStop();
     public abstract boolean isFinished();
+    public State drawStart() {
+        throw new UnsupportedOperationException("드로우 시작 상태로 전이하는 기능은 Ready 상태일때만 사용 가능합니다.");
+    }
     
     public Score score() {
         return hand.getTotalScore();
@@ -30,10 +33,6 @@ public abstract class State {
     
     protected Hand getHand() {
         return hand;
-    }
-    
-    protected boolean isNotEnoughInitCardsCount() {
-        return hand.isNotEnoughInitCardsCount();
     }
     
     protected boolean isBlackJack() {
@@ -51,5 +50,12 @@ public abstract class State {
     @Override
     public int hashCode() {
         return Objects.hash(hand);
+    }
+    
+    @Override
+    public String toString() {
+        return "State{" +
+                "hand=" + hand +
+                '}';
     }
 }

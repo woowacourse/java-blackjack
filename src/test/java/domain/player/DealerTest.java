@@ -30,8 +30,7 @@ class DealerTest {
     @ParameterizedTest(name = "number : {0}, isBust : {1}")
     @CsvSource(value = {"FIVE,false", "SIX,true"})
     void isBust(Number number, boolean isBust) {
-        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
-        dealer.draw(new Card(Shape.HEART, Number.SIX));
+        dealer.initCards(new Card(Shape.HEART, Number.QUEEN), new Card(Shape.HEART, Number.SIX));
         dealer.draw(new Card(Shape.DIAMOND, number));
         
         assertThat(dealer.isBust()).isEqualTo(isBust);
@@ -41,8 +40,7 @@ class DealerTest {
     @ParameterizedTest(name = "number : {0}, totalScore : {1}")
     @CsvSource(value = {"FIVE,21", "SIX,12"})
     void getTotalScore(Number number, int totalScore) {
-        dealer.draw(new Card(Shape.HEART, Number.ACE));
-        dealer.draw(new Card(Shape.HEART, Number.FIVE));
+        dealer.initCards(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.FIVE));
         dealer.draw(new Card(Shape.DIAMOND, number));
         
         assertThat(dealer.getTotalScore()).isEqualTo(new Score(totalScore));
@@ -51,8 +49,7 @@ class DealerTest {
     @Test
     @DisplayName("스코어가 17 이상인 경우 true 반환")
     void isFinished() {
-        dealer.draw(new Card(Shape.HEART, Number.EIGHT));
-        dealer.draw(new Card(Shape.HEART, Number.NINE));
+        dealer.initCards(new Card(Shape.HEART, Number.EIGHT), new Card(Shape.HEART, Number.NINE));
         
         assertThat(dealer.isFinished()).isTrue();
     }
@@ -60,8 +57,7 @@ class DealerTest {
     @Test
     @DisplayName("스코어가 16 이하인 경우 false 반환")
     void isNotFinished() {
-        dealer.draw(new Card(Shape.HEART, Number.EIGHT));
-        dealer.draw(new Card(Shape.HEART, Number.SEVEN));
+        dealer.initCards(new Card(Shape.HEART, Number.EIGHT), new Card(Shape.HEART, Number.SEVEN));
         
         assertThat(dealer.isFinished()).isFalse();
     }

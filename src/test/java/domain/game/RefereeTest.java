@@ -27,22 +27,19 @@ class RefereeTest {
     void saveBattleResults() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("아벨,포비", cards -> cards);
-        blackJackGame.settingBetAmountToParticipantsBy(playerName -> 1000);
         Player dealer = blackJackGame.getDealer();
         List<Player> participants = blackJackGame.getParticipants();
         Player abel = participants.get(0);
         Player pobi = participants.get(1);
-        
-        dealer.draw(new Card(Shape.HEART, Number.JACK));
-        dealer.draw(new Card(Shape.HEART, Number.QUEEN));
+    
+        dealer.initCards(new Card(Shape.HEART, Number.JACK), new Card(Shape.HEART, Number.QUEEN));
         dealer.drawStop();
-        
-        abel.draw(new Card(Shape.DIAMOND, Number.ACE));
-        abel.draw(new Card(Shape.DIAMOND, Number.QUEEN));
-        
-        pobi.draw(new Card(Shape.SPADE, Number.KING));
-        pobi.draw(new Card(Shape.SPADE, Number.NINE));
+    
+        abel.initCards(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.QUEEN));
+    
+        pobi.initCards(new Card(Shape.HEART, Number.KING), new Card(Shape.HEART, Number.NINE));
         pobi.drawStop();
+        blackJackGame.settingBetAmountToParticipantsBy(playerName -> 1000);
         
         // when
         referee.saveBattleResults(blackJackGame);

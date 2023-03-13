@@ -35,4 +35,11 @@ public class PlayerName {
     public int hashCode() {
         return Objects.hash(name);
     }
+    
+    @Override
+    public String toString() {
+        return "PlayerName{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

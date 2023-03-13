@@ -3,9 +3,9 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Score;
+import domain.game.AddCardCommand;
 import domain.player.state.Ready;
 import domain.player.state.State;
-import domain.game.AddCardCommand;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,6 @@ public abstract class Player {
     private final PlayerName name;
     
     protected Player(String name) {
-        this.state = new Ready();
         this.name = new PlayerName(name);
     }
     
@@ -40,6 +39,11 @@ public abstract class Player {
     );
     
     public abstract double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount);
+    
+    public void initCards(Card firstCard, Card secondCard) {
+        state = new Ready(firstCard, secondCard)
+                .drawStart();
+    }
     
     public void draw(Card card) {
         state = state.draw(card);
@@ -80,5 +84,13 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(state, name);
+    }
+    
+    @Override
+    public String toString() {
+        return "Player{" +
+                "state=" + state +
+                ", name=" + name +
+                '}';
     }
 }

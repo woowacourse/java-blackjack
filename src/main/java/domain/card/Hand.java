@@ -8,15 +8,19 @@ public class Hand {
     private static final Score BLACKJACK = new Score(21);
     
     private final List<Card> cards;
-
+    
     public Hand() {
         this.cards = new ArrayList<>();
     }
-
+    
+    public void addAllCard(Card firstCard, Card secondCard) {
+        cards.addAll(List.of(firstCard, secondCard));
+    }
+    
     public void addCard(Card card) {
         cards.add(card);
     }
-
+    
     public Score getTotalScore() {
         Score totalScore = score();
         if (containsAce()) {
@@ -36,7 +40,7 @@ public class Hand {
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
-
+    
     public boolean isBust() {
         return getTotalScore().isBust();
     }

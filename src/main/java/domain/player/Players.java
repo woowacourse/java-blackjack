@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.game.BetAmounts;
 import domain.game.AddCardCommand;
@@ -12,8 +13,6 @@ import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class Players {
-    private static final int INIT_GIVE_CARD_COUNT = 2;
-    
     private final List<Player> players;
     private final BetAmounts betAmounts;
     
@@ -41,9 +40,9 @@ public class Players {
     }
     
     private void giveTwoCardToPerPlayer(Player player, Deck deck) {
-        for (int divideCardCount = 0; divideCardCount < INIT_GIVE_CARD_COUNT; divideCardCount++) {
-            player.draw(deck.draw());
-        }
+        Card firstCard = deck.draw();
+        Card secondCard = deck.draw();
+        player.initCards(firstCard, secondCard);
     }
     
     public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
