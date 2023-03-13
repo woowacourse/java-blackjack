@@ -79,4 +79,13 @@ public abstract class Player {
     public Bet blackJack() {
         return bet.multiply(1.5f);
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "hand=" + hand +
+                ", name=" + name +
+                ", bet=" + bet +
+                '}';
+    }
 }

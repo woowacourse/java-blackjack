@@ -71,4 +71,11 @@ public class Hand {
     public boolean isBlackJack() {
         return cards.size() == 2 && BLACKJACK_SCORE == getScore();
     }
+
+    @Override
+    public String toString() {
+        return "Hand{" +
+                "cards=" + cards +
+                '}';
+    }
 }

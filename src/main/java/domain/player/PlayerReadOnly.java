@@ -34,4 +34,11 @@ public class PlayerReadOnly {
     public Card getCardIndexOf(int index) {
         return player.getCardIndexOf(index);
     }
+
+    @Override
+    public String toString() {
+        return "PlayerReadOnly{" +
+                "player=" + player +
+                '}';
+    }
 }
