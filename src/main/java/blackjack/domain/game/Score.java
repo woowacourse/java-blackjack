@@ -6,8 +6,9 @@ import java.util.Objects;
 
 public class Score {
 
-    private static final int BLACKJACK = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
+    private static final Score min = new Score(0);
+    private static final Score max = new Score(21);
+    private static final Score aceAdditionalValue = new Score(10);
     private static final List<Score> cache = new ArrayList<>();
 
     private final int value;
@@ -17,18 +18,22 @@ public class Score {
     }
 
     public Score plusTenIfNotBusted() {
-        if (value + ACE_ADDITIONAL_VALUE > BLACKJACK) {
+        if (value + aceAdditionalValue.value > max.value) {
             return this;
         }
-        return new Score(value + ACE_ADDITIONAL_VALUE);
+        return new Score(value + aceAdditionalValue.value);
+    }
+
+    public boolean isMax() {
+        return this == max;
+    }
+
+    public boolean isOverThanMax() {
+        return value > max.value;
     }
 
     public boolean isBiggerThan(final Score other) {
         return value > other.value;
-    }
-
-    public boolean isOverBlackjack() {
-        return value > BLACKJACK;
     }
 
     @Override

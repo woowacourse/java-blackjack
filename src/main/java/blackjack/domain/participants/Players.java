@@ -2,8 +2,6 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
-import blackjack.domain.game.GameReferee;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 
 import java.util.LinkedHashMap;
@@ -59,7 +57,7 @@ public class Players {
 
     private static List<Player> createPlayers(final List<String> playerNames) {
         return playerNames.stream()
-                .map(Player::new)
+                .map((name) -> new Player(new User(name)))
                 .collect(Collectors.toList());
     }
 
@@ -101,26 +99,11 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
     }
 
-    public Map<String, ResultType> calculateResult(final GameReferee gameReferee) {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName,
-                        gameReferee::findResultOfPlayer,
-                        (x, y) -> y,
-                        LinkedHashMap::new));
-    }
 
     public Map<String, List<Card>> findPlayerNameToCards() {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName,
-                        Participant::getCards,
-                        (x, y) -> y,
-                        LinkedHashMap::new));
-    }
-
-    public Map<Map<String, List<Card>>, Score> findPlayerStatusByName() {
-        return players.stream()
-                .collect(Collectors.toMap(player -> Map.of(player.getName(), player.getCards()),
-                        Player::currentScore,
+                        Player::getCards,
                         (x, y) -> y,
                         LinkedHashMap::new));
     }

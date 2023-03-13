@@ -4,7 +4,6 @@ import static blackjack.controller.Repeater.repeatUntilNoException;
 
 import blackjack.domain.DeckFactory;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultOfGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -76,7 +75,6 @@ public class BlackJackController {
 
     private void printResult(final BlackjackGame blackJackGame) {
         printFinalStatusOfParticipants(blackJackGame);
-        printResultOfGame(blackJackGame);
     }
 
     private void printFinalStatusOfParticipants(final BlackjackGame blackJackGame) {
@@ -91,9 +89,5 @@ public class BlackJackController {
         }
     }
 
-    private void printResultOfGame(final BlackjackGame blackJackGame) {
-        final ResultOfGame result = blackJackGame.findResultOfGame();
-        outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
-    }
 
 }

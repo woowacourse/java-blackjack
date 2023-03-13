@@ -82,10 +82,5 @@ public class BlackjackGame {
         return players.findScoreOfPlayerByName(playerName);
     }
 
-    public ResultOfGame findResultOfGame() {
-        final Map<String, ResultType> playerResult = players.calculateResult(new GameReferee(dealer));
-        final Map<ResultType, Integer> dealerResult = Dealer.calculateResult(playerResult);
-        return new ResultOfGame(playerResult, dealerResult);
-    }
 
 }

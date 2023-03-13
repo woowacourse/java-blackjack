@@ -1,24 +1,61 @@
 package blackjack.domain.participants;
 
-public class Player extends Participant {
+import blackjack.domain.card.Card;
+import blackjack.domain.game.Score;
 
-    private final Name name;
+import java.util.List;
 
-    public Player(final String name) {
-        this.name = new Name(name);
+public class Player {
+
+    private final User user;
+    private final CardPocket cardPocket;
+    private Money bettingMoney;
+
+
+    public Player(final User user) {
+        this.user = user;
+        cardPocket = new CardPocket();
+        bettingMoney = new Money();
     }
 
-    @Override
+    public void bet(final Money money) {
+        bettingMoney = bettingMoney.add(money);
+    }
+
+    public void drawCard(final Card card) {
+        cardPocket.addCard(card);
+    }
+
     public boolean isDrawable() {
         return !isBusted();
     }
 
+    public boolean isBlackjack() {
+        return cardPocket.isBlackjack();
+    }
+
+    public boolean isBusted() {
+        return cardPocket.isBusted();
+    }
+
+    public void hit(final Card card) {
+        cardPocket.addCard(card);
+    }
+
+    public Score currentScore() {
+        return cardPocket.getScore();
+    }
+
+    public List<Card> getCards() {
+        return cardPocket.getPossessedCards();
+    }
+
     public String getName() {
-        return name.getName();
+        return user.getName();
     }
 
     public boolean hasName(final String playerName) {
-        return name.getName()
+        return user.getName()
                 .equals(playerName);
     }
 

@@ -45,8 +45,13 @@ public class CardPocket {
                 .sum());
     }
 
+
     public boolean isBusted() {
-        return getScore().isOverBlackjack();
+        return getScore().isOverThanMax();
+    }
+
+    public boolean isBlackjack() {
+        return getScore().isMax() && possessedCards.size() == 2;
     }
 
     @Override
