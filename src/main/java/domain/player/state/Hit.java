@@ -15,6 +15,6 @@ public class Hit extends Running {
             return new Bust(getHand());
         }
         
-        return this;
+        return new Hit(getHand());
     }
 }

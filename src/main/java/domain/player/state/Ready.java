@@ -5,14 +5,18 @@ import domain.card.Hand;
 
 public class Ready extends Running {
     public Ready() {
-        super(new Hand());
+        this(new Hand());
+    }
+    
+    private Ready(Hand hand) {
+        super(hand);
     }
     
     @Override
     public State draw(Card card) {
         getHand().addCard(card);
         if (isNotEnoughInitCardsCount()) {
-            return this;
+            return new Ready(getHand());
         }
         
         if (isBlackJack()) {
