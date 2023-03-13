@@ -106,11 +106,11 @@ public final class Players {
                 .orElseThrow(() -> new IllegalArgumentException("카드를 뽑을 수 있는 플레이어가 존재하지 않습니다."));
     }
 
-    public Map<Name, Result> play() {
-        final Map<Name, Result> result = new LinkedHashMap<>();
+    public Map<Player, Result> play() {
+        final Map<Player, Result> result = new LinkedHashMap<>();
         final Player dealer = getDealer();
         for (Player player : gamblers()) {
-            result.put(player.name(), player.play(dealer.hand()));
+            result.put(player, player.play(dealer.hand()));
         }
         return result;
     }
@@ -126,9 +126,7 @@ public final class Players {
                 .orElseThrow(() -> new NoSuchElementException("딜러가 존재하지 않습니다."));
     }
 
-    public List<Name> getGamblerNames() {
-        return gamblers().stream()
-                .map(Player::name)
-                .collect(toList());
+    public List<Player> getGamblers() {
+        return gamblers();
     }
 }

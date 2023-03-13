@@ -2,7 +2,6 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +27,8 @@ public final class InputView {
                 .collect(toList());
     }
 
-    public int readBet(final Name name) {
-        System.out.println(name.getValue() + "의 배팅 금액은?");
+    public int readBet(final Player player) {
+        System.out.println(player.getNameValue() + "의 배팅 금액은?");
 
         try {
             return Integer.parseInt(scanner.nextLine());

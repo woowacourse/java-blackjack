@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -46,12 +45,12 @@ public final class BlackjackController {
     }
 
     private void addBets(final Retry retry) {
-        for (final Name player : blackjackGame.getGamblerNames()) {
+        for (final Player player : blackjackGame.getGamblers()) {
             addBet(player, retry);
         }
     }
 
-    private void addBet(final Name player, Retry retry) {
+    private void addBet(final Player player, Retry retry) {
         while (retry.isRepeatable()) {
             try {
                 blackjackGame.addBet(player, inputView.readBet(player));

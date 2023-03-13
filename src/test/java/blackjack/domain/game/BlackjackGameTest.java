@@ -100,16 +100,16 @@ public class BlackjackGameTest {
 
     @Test
     void 게임_결과를_반환한다() {
-        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE);
         final BlackjackGame blackjackGame = new BlackjackGame();
-        final Name player = Name.from("허브");
-        blackjackGame.addPlayers(List.of(player.getValue()));
+        blackjackGame.addPlayers(List.of("히브"));
+        final Player player = blackjackGame.getGamblers().get(0);
         blackjackGame.addBet(player, 1000);
+        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE);
         blackjackGame.initialDraw(deck);
 
         final Bets result = blackjackGame.play();
 
-        final Map<Name, Money> bets = result.getBets();
+        final Map<Player, Money> bets = result.getBets();
         assertThat(bets.get(player)).isEqualTo(Money.initialBet(1500));
     }
 
@@ -140,8 +140,10 @@ public class BlackjackGameTest {
         final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("허브", "후추"));
 
-        final List<Name> result = blackjackGame.getGamblerNames();
+        final List<Player> result = blackjackGame.getGamblers();
 
-        assertThat(result).containsExactly(Name.from("허브"), Name.from("후추"));
+        assertThat(result)
+                .extracting(Player::getNameValue)
+                .containsExactly("허브", "후추");
     }
 }

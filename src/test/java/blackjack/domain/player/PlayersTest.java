@@ -158,7 +158,7 @@ public class PlayersTest {
         players.initialDraw(deck);
         players.stay(Name.from("허브"));
 
-        Map<Name, Result> result = players.play();
+        final Map<Player, Result> result = players.play();
 
         assertThat(result.values()).containsExactly(BLACKJACK_WIN, PUSH);
     }
@@ -188,8 +188,10 @@ public class PlayersTest {
         final Players players = Players.create();
         players.addPlayers(List.of("후추", "허브"));
 
-        final List<Name> result = players.getGamblerNames();
+        final List<Player> result = players.getGamblers();
 
-        assertThat(result).containsExactly(Name.from("후추"), Name.from("허브"));
+        assertThat(result)
+                .extracting(Player::getNameValue)
+                .containsExactly("후추", "허브");
     }
 }

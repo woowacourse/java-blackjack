@@ -1,29 +1,29 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Result;
-import blackjack.domain.player.Name;
+import blackjack.domain.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Bets {
-    private final Map<Name, Money> bets;
+    private final Map<Player, Money> bets;
 
     public Bets() {
         bets = new HashMap<>();
     }
 
-    public void addBet(final Name player, final int amount) {
+    public void addBet(final Player player, final int amount) {
         bets.put(player, Money.initialBet(amount));
     }
 
-    public void calculateProfit(final Map<Name, Result> results) {
-        for (Name name : results.keySet()) {
-            final Result result = results.get(name);
-            bets.computeIfPresent(name, (ignore, money) -> money.calculatePrize(result));
+    public void calculateProfit(final Map<Player, Result> results) {
+        for (Player player : results.keySet()) {
+            final Result result = results.get(player);
+            bets.computeIfPresent(player, (ignore, money) -> money.calculatePrize(result));
         }
     }
 
-    public Map<Name, Money> getBets() {
+    public Map<Player, Money> getBets() {
         return new HashMap<>(bets);
     }
 

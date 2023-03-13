@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.Money;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
@@ -71,10 +70,10 @@ public final class OutputView {
         System.out.println(generateBetResultMessage(bets.getBets(), players));
     }
 
-    private String generateBetResultMessage(final Map<Name, Money> bets, final List<Player> players) {
+    private String generateBetResultMessage(final Map<Player, Money> bets, final List<Player> players) {
         return players.stream()
                 .filter(player -> !player.isDealer())
-                .map(player -> String.format("%s: %s", player.getNameValue(), bets.get(player.name()).getValue()))
+                .map(player -> String.format("%s: %s", player.getNameValue(), bets.get(player).getValue()))
                 .collect(joining(NEW_LINE));
     }
 

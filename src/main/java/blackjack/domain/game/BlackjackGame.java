@@ -19,8 +19,8 @@ public final class BlackjackGame {
         players.addPlayers(names);
     }
 
-    public void addBet(final Name name, final int amount) {
-        bets.addBet(name, amount);
+    public void addBet(final Player player, final int amount) {
+        bets.addBet(player, amount);
     }
 
     public void initialDraw(final Deck deck) {
@@ -60,7 +60,7 @@ public final class BlackjackGame {
         return players.getDealer();
     }
 
-    public List<Name> getGamblerNames() {
-        return players.getGamblerNames();
+    public List<Player> getGamblers() {
+        return players.getGamblers();
     }
 }
