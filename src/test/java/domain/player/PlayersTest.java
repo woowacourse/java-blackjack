@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PlayersTest {
 
@@ -32,9 +32,9 @@ class PlayersTest {
     @DisplayName("존재하지 않는 이름의 플레이어를 찾으면 예외를 던진다.")
     @Test
     void findPlayerFailTest() {
-        String expectedPlayerName = "crong";
-        assertThrows(IllegalArgumentException.class, () -> players.findPlayer("croong"))
-                .getMessage().equals("[ERROR]: 해당 이름을 가진 플레이어가 존재하지 않습니다.");
+        assertThatThrownBy(() -> players.findPlayer("croong"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR]: 해당 이름을 가진 플레이어가 존재하지 않습니다.");
     }
 
     @DisplayName("존재하는 이름의 플레이어를 찾는다.")

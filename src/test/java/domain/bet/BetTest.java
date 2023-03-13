@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BetTest {
 
@@ -15,9 +15,9 @@ class BetTest {
     @ParameterizedTest
     @ValueSource(ints = {-100, 0, -1})
     void constructBetTest(final int money) {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Bet(money))
-                .getMessage().equals("[ERROR]: 배팅금액은 0원 초과여야 합니다.");
+        assertThatThrownBy(() -> new Bet(money))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR]: 배팅금액은 0원 초과여야 합니다.");
     }
 
     @DisplayName("블랙잭으로 이겼을 때 배팅금액의 1.5배를 받는다.")

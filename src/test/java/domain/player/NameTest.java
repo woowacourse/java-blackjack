@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NameTest {
 
@@ -12,7 +12,8 @@ public class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "1234567890123456", "12345678901234567"})
     void validateLengthTest(String name) {
-        assertThrows(IllegalArgumentException.class, () -> new Name(name))
-                .getMessage().equals("[ERROR]: 이름은 1자이상 15자이하로 입력해주세요.");
+        assertThatThrownBy(() -> new Name(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR]: 이름은 1자이상 15자이하로 입력해주세요.");
     }
 }
