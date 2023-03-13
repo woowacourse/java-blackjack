@@ -32,7 +32,7 @@ public final class Score {
         return min;
     }
 
-    public int score() {
+    public int getScore() {
         return score;
     }
 
