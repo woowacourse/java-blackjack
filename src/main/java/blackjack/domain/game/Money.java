@@ -37,8 +37,12 @@ public final class Money {
         }
     }
 
-    public Money multiply(final double ratio) {
+    private Money multiply(final double ratio) {
         return new Money(money.multiply(BigDecimal.valueOf(ratio)).intValue());
+    }
+
+    public Money calculatePrize(final GameResult result) {
+        return multiply(result.getRatio());
     }
 
     @Override

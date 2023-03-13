@@ -41,12 +41,13 @@ class MoneyTest {
     }
 
     @Test
-    void 베팅_금액은_비율을_받아_() {
+    void 베팅_금액은_게임결과를_받아_상금을_계산한다() {
         //given
-        final double ratio = 1.5;
+        final GameResult result = GameResult.BLACKJACK;
+        final Money money = Money.betting(1000);
 
         //when
-        Money multipliedMoney = Money.betting(1000).multiply(ratio);
+        Money multipliedMoney = money.calculatePrize(result);
 
         //then
         assertThat(multipliedMoney).isEqualTo(Money.betting(1500));
