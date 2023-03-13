@@ -20,6 +20,6 @@ public class Blackjack extends Finished {
 
     @Override
     public Result calculateResult() {
-        return null;
+        return Result.BLACKJACK;
     }
 }
