@@ -26,7 +26,7 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public abstract boolean isHit();
+    public abstract boolean canHit();
 
     public abstract boolean isDealer();
 

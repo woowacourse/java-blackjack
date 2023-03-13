@@ -30,7 +30,7 @@ class PlayerTest {
         player.drawCard(DIAMOND_TWO);
 
         // then
-        Assertions.assertThat(player.isHit()).isTrue();
+        Assertions.assertThat(player.canHit()).isTrue();
     }
 
     @Test
@@ -40,6 +40,6 @@ class PlayerTest {
         player.drawCard(DIAMOND_THREE);
 
         // then
-        Assertions.assertThat(player.isHit()).isFalse();
+        Assertions.assertThat(player.canHit()).isFalse();
     }
 }

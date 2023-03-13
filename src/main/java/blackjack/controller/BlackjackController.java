@@ -32,7 +32,7 @@ public final class BlackjackController {
         participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
         outputView.printInitialCards(participants);
 
-        hitParticipants(participants, deck);
+        drawCardsParticipants(participants, deck);
         outputView.printAllCardsAndScore(participants);
 
         outputView.printResult(participants, ResultGame.from(new HashMap<>(), participants));
@@ -45,36 +45,32 @@ public final class BlackjackController {
         return Participants.of(dealer, playerNames);
     }
 
-    private void hitParticipants(final Participants participants, final Deck deck) {
-        hitPlayers(participants, deck);
-        hitDealer(participants, deck);
+    private void drawCardsParticipants(final Participants participants, final Deck deck) {
+        drawCardsPlayers(participants.getPlayers(), deck);
+        drawCardsDealer(participants.getDealer(), deck);
     }
 
-    private void hitPlayers(final Participants participants, final Deck deck) {
-        final List<Participant> players = participants.getPlayers();
-
+    private void drawCardsPlayers(final List<Participant> players, final Deck deck) {
         for (final Participant player : players) {
             hitEachPlayer(player, deck);
         }
     }
 
     private void hitEachPlayer(final Participant player, final Deck deck) {
-        while (player.isHit() && isMoreHit(player)) {
+        while (player.canHit() && isHitOrStay(player)) {
             player.drawCard(deck.draw());
             outputView.printParticipantNameAndCards(player);
         }
     }
 
-    private boolean isMoreHit(final Participant player) {
+    private boolean isHitOrStay(final Participant player) {
         final Order order = Order.from(inputView.readOrderCard(player.getName()));
 
-        return order.isYES();
+        return order.isHit();
     }
 
-    private void hitDealer(final Participants participants, final Deck deck) {
-        final Participant dealer = participants.getDealer();
-
-        while (dealer.isHit()) {
+    private void drawCardsDealer(final Participant dealer, final Deck deck) {
+        while (dealer.canHit()) {
             outputView.printDealerDrawCard();
             dealer.drawCard(deck.draw());
         }

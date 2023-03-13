@@ -15,7 +15,7 @@ public final class Player extends Participant {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean canHit() {
         return getScore().canHit();
     }
 

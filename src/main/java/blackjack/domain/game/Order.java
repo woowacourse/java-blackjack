@@ -22,7 +22,7 @@ public enum Order {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_VALUE_MESSAGE));
     }
 
-    public boolean isYES() {
+    public boolean isHit() {
         return this.equals(Order.YES);
     }
 

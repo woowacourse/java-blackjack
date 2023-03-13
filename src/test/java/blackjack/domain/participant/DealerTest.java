@@ -21,7 +21,7 @@ public class DealerTest {
         dealer.drawCard(DIAMOND_JACK);
 
         //then
-        Assertions.assertThat(dealer.isHit()).isTrue();
+        Assertions.assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -35,6 +35,6 @@ public class DealerTest {
         dealer.drawCard(DIAMOND_JACK);
 
         //then
-        Assertions.assertThat(dealer.isHit()).isFalse();
+        Assertions.assertThat(dealer.canHit()).isFalse();
     }
 }

@@ -20,10 +20,10 @@ class OrderTest {
 
     @ParameterizedTest
     @CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
-    @DisplayName("입력값에 따라 isYES 메서드의 반환값이 다른지 테스트")
+    @DisplayName("입력값에 따라 isHit 메서드의 반환값이 다른지 테스트")
     void isYESTest(final String input, final boolean expected) {
         final Order order = Order.from(input);
 
-        assertThat(order.isYES()).isEqualTo(expected);
+        assertThat(order.isHit()).isEqualTo(expected);
     }
 }
