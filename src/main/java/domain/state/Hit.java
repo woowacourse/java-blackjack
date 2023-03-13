@@ -12,6 +12,4 @@ public class Hit extends Running {
     public Hit(final Hand hand) {
         super(hand);
     }
-
-
 }
