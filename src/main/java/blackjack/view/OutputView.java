@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.participants.Money;
 
 import java.util.List;
@@ -73,37 +72,6 @@ public class OutputView {
 
     public void printFinalStatusOfPlayer(final String playerName, final List<Card> playerCard, final int playerScore) {
         System.out.println(playerName + DELIMITER + convertCards(playerCard) + RESULT + playerScore);
-    }
-
-
-    public void printFinalResult(final Map<ResultType, Integer> dealerResult, final Map<String, ResultType> playerResult) {
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayersResult(playerResult);
-    }
-
-    private void printDealerResult(final Map<ResultType, Integer> dealerResult) {
-        System.out.print(DEALER + DELIMITER);
-        printDealerResultByType(dealerResult, ResultType.WIN);
-        printDealerResultByType(dealerResult, ResultType.TIE);
-        printDealerResultByType(dealerResult, ResultType.LOSE);
-        System.out.println();
-    }
-
-    private void printDealerResultByType(final Map<ResultType, Integer> dealerResult, final ResultType resultType) {
-        if (dealerResult.containsKey(resultType)) {
-            System.out.print(dealerResult.get(resultType) + OutputViewResultType.from(resultType)
-                    .getPrintResultType());
-        }
-    }
-
-    private void printPlayersResult(final Map<String, ResultType> playersResult) {
-        playersResult.forEach(this::printPlayerResult);
-    }
-
-    private void printPlayerResult(final String name, final ResultType resultType) {
-        System.out.println(name + DELIMITER + OutputViewResultType.from(resultType)
-                .getPrintResultType());
     }
 
     public void printProfitOfGameParticipants(final Money revenueOfDealer, final Map<String, Money> revenueOfPlayers) {
