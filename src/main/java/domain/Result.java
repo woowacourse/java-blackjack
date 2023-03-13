@@ -56,18 +56,39 @@ public class Result {
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
         return dealerAndPlayerAreNotBlackJack(player, dealer)
-                && !player.isBust() && (dealer.isBust() || dealer.getTotalScoreValue() < player.getTotalScoreValue());
+                && !player.isBust() 
+                && dealerIsBustOrDealerScoreLessThanPlayerScore(dealer, player);
+    }
+
+    private boolean dealerIsBustOrDealerScoreLessThanPlayerScore(Dealer dealer, Player player) {
+        return dealer.isBust() || dealer.getTotalScoreValue() < player.getTotalScoreValue();
     }
 
     private boolean isPlayerLose(Dealer dealer, Player player) {
         return dealerAloneIsBlackJack(player, dealer)
-                || (!dealer.isBust() && (player.isBust() || dealer.getTotalScoreValue() > player.getTotalScoreValue()));
+                || dealerIsNotBustAndPlayerIsBustOrPlayerScoreLessThanDealerScore(dealer, player);
+    }
+
+    private boolean dealerIsNotBustAndPlayerIsBustOrPlayerScoreLessThanDealerScore(Dealer dealer, Player player) {
+        return !dealer.isBust() && playerIsBustOrPlayerScoreLessThanDealerScore(dealer, player);
+    }
+
+    private boolean playerIsBustOrPlayerScoreLessThanDealerScore(Dealer dealer, Player player) {
+        return player.isBust() || dealer.getTotalScoreValue() > player.getTotalScoreValue();
     }
 
     private boolean isPlayerDraw(Dealer dealer, Player player) {
         return dealerAndPlayerAreBlackJack(player, dealer)
-                || (dealer.isBust() && player.isBust())
-                || (dealerAndPlayerAreNotBlackJack(player, dealer) && dealer.getTotalScoreValue() == player.getTotalScoreValue());
+                || dealerAndPlayerAreBust(dealer, player)
+                || dealerAndPlayerHasSameScoreAndAreNotBlackJack(dealer, player);
+    }
+
+    private boolean dealerAndPlayerHasSameScoreAndAreNotBlackJack(Dealer dealer, Player player) {
+        return dealer.getTotalScoreValue() == player.getTotalScoreValue() && dealerAndPlayerAreNotBlackJack(player, dealer);
+    }
+
+    private boolean dealerAndPlayerAreBust(Dealer dealer, Player player) {
+        return dealer.isBust() && player.isBust();
     }
 
     private boolean dealerAndPlayerAreNotBlackJack(Player player, Dealer dealer) {
