@@ -60,7 +60,7 @@ public class MainController {
 
     private void printFinalResult(BlackJackGame blackJackGame) {
         Map<Player, Integer> playersResult = blackJackGame.calculatePlayersResult();
-        List<Integer> dealerResult = blackJackGame.calculateDealerResult(playersResult);
+        int dealerResult = blackJackGame.calculateDealerResult(playersResult);
         outputView.printFinalResultMessage();
         outputView.printDealerResult(dealerResult);
         outputView.printPlayerResult(playersResult);
