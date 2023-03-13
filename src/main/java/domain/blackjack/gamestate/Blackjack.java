@@ -31,6 +31,6 @@ public class Blackjack extends GameState {
 
     @Override
     public double getEarningRate() {
-        return 0;
+        return 1.5;
     }
 }
