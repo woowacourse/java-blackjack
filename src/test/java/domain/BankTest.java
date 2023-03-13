@@ -38,22 +38,6 @@ public class BankTest {
     }
 
     @Test
-    void 은행은_해당_플레이어의_돈을_반환한다() {
-        Bank bank = new Bank(of(우가, 빙봉), of(만원, 이만원));
-
-        assertThat(bank.withdrawOfPlayer(우가)).isEqualTo(만원);
-    }
-
-    @Test
-    void 은행은_해당_플레이어의_돈을_반환한다_없는_플레이어인경우_예외가_발생한다() {
-        Bank bank = new Bank(of(우가), of(만원));
-
-        assertThatThrownBy(() -> bank.withdrawOfPlayer(빙봉))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어를 확인해주세요.");
-    }
-
-    @Test
     void 은행은_수익률을_곱한_돈을_해당_플레이어에_저장한다() {
         Bank bank = new Bank(of(우가, 빙봉), of(만원, 이만원));
 

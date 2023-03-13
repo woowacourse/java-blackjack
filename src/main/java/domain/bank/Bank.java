@@ -34,17 +34,6 @@ public class Bank {
         }
     }
 
-    public Money withdrawOfPlayer(final Player player) {
-        validateExist(player);
-        return accountBook.get(player);
-    }
-
-    private void validateExist(final Player player) {
-        if (!accountBook.containsKey(player)) {
-            throw new IllegalArgumentException("플레이어를 확인해주세요.");
-        }
-    }
-
     public void multiplyInterestOfPlayer(final Player player, final double profit) {
         Money money = accountBook.get(player);
         accountBook.put(player, money.calculateMoneyByProfit(profit));
