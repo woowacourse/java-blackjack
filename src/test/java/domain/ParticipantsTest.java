@@ -2,6 +2,8 @@ package domain;
 
 import static domain.card.CardInfo.A;
 import static domain.card.CardInfo.TEN;
+import static domain.card.CardInfo.THREE;
+import static domain.card.CardInfo.TWO;
 import static domain.card.Shape.HEART;
 import static domain.fixture.PlayerFixture.빙봉;
 import static domain.fixture.PlayerFixture.우가;
@@ -76,6 +78,19 @@ class ParticipantsTest {
         assertThat(participants.getProfits()).containsExactly(-1.0, 0.0);
     }
 
+    @Test
+    void 딜러가졌을때_참가자블랙잭확인후_수익률을_반환한다() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, THREE));
+
+        Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
+
+        assertThat(participants.getProfits()).containsExactly(1.0, 1.5);
+    }
+
     Dealer readDealer() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(HEART, A));
@@ -83,6 +98,7 @@ class ParticipantsTest {
 
         return new Dealer(new CardBox(), new Cards(cards));
     }
+
 
     Players readPlayers() {
         List<Player> players = new ArrayList<>();
