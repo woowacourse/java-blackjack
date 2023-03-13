@@ -9,6 +9,7 @@ public class InputView {
 
     private static final String NEW_LINE = "\n";
     private static final String INPUT_PLAYERS_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String INPUT_BETTING_MONEY_MESSAGE = "%s의 배팅 금액은?";
     private static final String INPUT_ORDER_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String COMMA = ",";
     private static final int LIMIT = -1;
@@ -30,6 +31,11 @@ public class InputView {
         return Arrays.stream(input.split(COMMA, LIMIT))
                 .map(String::strip)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Integer readBettingMoney(final String name) {
+        System.out.println(NEW_LINE + String.format(INPUT_BETTING_MONEY_MESSAGE, name));
+        return Integer.valueOf(scanner.nextLine());
     }
 
     public String readOrderCard(final String name) {
