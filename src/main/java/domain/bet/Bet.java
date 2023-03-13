@@ -4,6 +4,10 @@ import domain.result.Outcome;
 
 public final class Bet {
 
+    private static final double BLACKJACK_WIN_RATIO = 1.5;
+    private static final double DRAW_RATIO = 0;
+    private static final double LOSE_RATIO = -1.0;
+
     private int money;
 
     public Bet(final int money) {
@@ -19,15 +23,15 @@ public final class Bet {
 
     public void calculateBetByOutcome(final Outcome outcome, final boolean isBlackJack) {
         if (Outcome.WIN == outcome && isBlackJack) {
-            this.money = (int) (this.money * 1.5);
+            this.money = (int) (this.money * BLACKJACK_WIN_RATIO);
             return;
         }
         if (Outcome.DRAW == outcome) {
-            this.money = 0;
+            this.money = (int) (this.money * DRAW_RATIO);
             return;
         }
         if (Outcome.LOSE == outcome) {
-            this.money = this.money * (-1);
+            this.money = (int) (this.money * LOSE_RATIO);
         }
     }
 
