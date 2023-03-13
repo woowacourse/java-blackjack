@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -33,12 +32,5 @@ public class NameTest {
         Name name = new Name(inputName);
 
         assertThat(name).isNotNull();
-    }
-
-    @Test
-    void createNameWithDealer() {
-        assertThatThrownBy(() -> new Name("딜러"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름은 딜러가 될 수 없습니다.");
     }
 }

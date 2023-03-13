@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -73,5 +74,12 @@ public class PlayerTest {
                 Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false),
                 Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.TEN), new Card(Suit.SPADE, Denomination.TEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false)
         );
+    }
+
+    @Test
+    void createNameWithDealer() {
+        assertThatThrownBy(() -> new Player(new Name("딜러")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름은 딜러가 될 수 없습니다.");
     }
 }
