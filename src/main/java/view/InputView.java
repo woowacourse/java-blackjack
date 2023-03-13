@@ -30,9 +30,9 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String askMoreCard(String name) {
+    public Answer askMoreCard(String name) {
         System.out.printf("\n\n" + ASK_MORE_CARD_FORMAT + "\n", name);
-        return Scanner.nextLine();
+        return Answer.from(Scanner.nextLine());
     }
 
     public int requestBettingAmount(String name) {

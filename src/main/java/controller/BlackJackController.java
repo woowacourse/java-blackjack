@@ -67,7 +67,7 @@ public class BlackJackController {
         Answer isCardRequested = Answer.MORE_CARD;
 
         while (player.isMoreCardAble() && isCardRequested.isMoreCard()) {
-            isCardRequested = Answer.from(inputView.askMoreCard(player.getNameValue()));
+            isCardRequested = inputView.askMoreCard(player.getNameValue());
             proceedOnce(gameManager, player, isCardRequested);
         }
     }
