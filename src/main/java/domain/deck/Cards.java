@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
     private static final int BLACK_JACK = 21;
     private static final int DECREASE_ACE_VALUE = -10;
+
     private final List<Card> cards;
 
     public Cards() {

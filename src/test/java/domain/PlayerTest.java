@@ -14,22 +14,22 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어를 생성한다.")
     void createPlayerTest() {
-        Assertions.assertDoesNotThrow(() -> new Player("pobi"));
+        Assertions.assertDoesNotThrow(() -> new Player("pobi",new BettingMoney(0)));
     }
 
     @Test
     @DisplayName("카드를 받는다.")
     void receiveCard() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi",new BettingMoney(0));
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE);
         player.addCard(card);
-        assertThat(player.getPlayerCards().get(0)).isEqualTo(card);
+        assertThat(player.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
     @DisplayName("카드값의 합이 21 초과 여부를 확인 할 수 있다.")
     void checkOver21Test() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi",new BettingMoney(0));
         Card card1 = new Card(CardNumber.KING,CardPattern.SPADE);
         Card card2 = new Card(CardNumber.KING,CardPattern.DIAMOND);
         Card card3 = new Card(CardNumber.KING,CardPattern.DIAMOND);
@@ -40,6 +40,4 @@ public class PlayerTest {
 
         assertThat(player.isOverPlayerBlackJack()).isTrue();
     }
-
-
 }
