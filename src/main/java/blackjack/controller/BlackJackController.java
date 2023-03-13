@@ -3,7 +3,7 @@ package blackjack.controller;
 import static blackjack.controller.Repeater.repeatUntilNoException;
 
 import blackjack.domain.DeckFactory;
-import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultOfGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
@@ -22,7 +22,7 @@ public class BlackJackController {
     }
 
     public void generate(final DeckFactory deckFactory) {
-        final BlackJackGame blackJackGame = createBlackJackGame(deckFactory);
+        final BlackjackGame blackJackGame = createBlackJackGame(deckFactory);
 
         initInitialCards(blackJackGame);
         printInitialCard(blackJackGame);
@@ -30,26 +30,26 @@ public class BlackJackController {
         printResult(blackJackGame);
     }
 
-    private BlackJackGame createBlackJackGame(final DeckFactory deckFactory) {
+    private BlackjackGame createBlackJackGame(final DeckFactory deckFactory) {
         return repeatUntilNoException(
-                () -> BlackJackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
+                () -> BlackjackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
     }
 
-    private void initInitialCards(final BlackJackGame blackJackGame) {
+    private void initInitialCards(final BlackjackGame blackJackGame) {
         blackJackGame.distributeInitialCards();
     }
 
-    private void printInitialCard(final BlackJackGame blackJackGame) {
+    private void printInitialCard(final BlackjackGame blackJackGame) {
         outputView.printInitialCards(blackJackGame.findDealerInitialCard(),
                 blackJackGame.findPlayerNameToCards());
     }
 
-    private void play(final BlackJackGame blackJackGame) {
+    private void play(final BlackjackGame blackJackGame) {
         drawPlayersCards(blackJackGame);
         drawDealerCards(blackJackGame);
     }
 
-    private void drawPlayersCards(final BlackJackGame blackJackGame) {
+    private void drawPlayersCards(final BlackjackGame blackJackGame) {
         for (final String playerName : blackJackGame.findPlayerNames()) {
             drawPlayerCard(playerName, blackJackGame);
         }
@@ -60,7 +60,7 @@ public class BlackJackController {
                 () -> inputView.inputCommand(playerName), outputView::printError);
     }
 
-    private void drawPlayerCard(final String playerName, final BlackJackGame blackJackGame) {
+    private void drawPlayerCard(final String playerName, final BlackjackGame blackJackGame) {
         DrawCommand drawCommand = DrawCommand.DRAW;
         while (blackJackGame.isPlayerDrawable(playerName) && drawCommand == DrawCommand.DRAW) {
             drawCommand = inputDrawCommand(playerName);
@@ -69,17 +69,17 @@ public class BlackJackController {
         }
     }
 
-    private void drawDealerCards(final BlackJackGame blackJackGame) {
+    private void drawDealerCards(final BlackjackGame blackJackGame) {
         IntStream.range(0, blackJackGame.findDealerDrawCount())
                 .forEach(ignored -> outputView.printDealerCardDrawMessage(blackJackGame.findDealerDrawPoint()));
     }
 
-    private void printResult(final BlackJackGame blackJackGame) {
+    private void printResult(final BlackjackGame blackJackGame) {
         printFinalStatusOfParticipants(blackJackGame);
         printResultOfGame(blackJackGame);
     }
 
-    private void printFinalStatusOfParticipants(final BlackJackGame blackJackGame) {
+    private void printFinalStatusOfParticipants(final BlackjackGame blackJackGame) {
         outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore()
                 .getValue());
 
@@ -91,7 +91,7 @@ public class BlackJackController {
         }
     }
 
-    private void printResultOfGame(final BlackJackGame blackJackGame) {
+    private void printResultOfGame(final BlackjackGame blackJackGame) {
         final ResultOfGame result = blackJackGame.findResultOfGame();
         outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
     }
