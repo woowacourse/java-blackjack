@@ -1,11 +1,11 @@
 package blackjackgame.domain.game;
 
-import static blackjackgame.domain.Fixtures.aceKing;
-import static blackjackgame.domain.Fixtures.aceThreeFour;
-import static blackjackgame.domain.Fixtures.eightNine;
-import static blackjackgame.domain.Fixtures.jackKingAce;
-import static blackjackgame.domain.Fixtures.jackKingNine;
-import static blackjackgame.domain.Fixtures.sixFour;
+import static blackjackgame.domain.Fixtures.ACE_KING_CARDS;
+import static blackjackgame.domain.Fixtures.ACE_THREE_FOUR_CARDS;
+import static blackjackgame.domain.Fixtures.EIGHT_NINE_CARDS;
+import static blackjackgame.domain.Fixtures.JACK_KING_ACE_CARDS;
+import static blackjackgame.domain.Fixtures.JACK_KING_NINE_CARDS;
+import static blackjackgame.domain.Fixtures.SIX_FOUR_CARDS;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjackgame.domain.card.Card;
@@ -45,7 +45,7 @@ class RefereeTest {
     @MethodSource("generateEveryCaseOfHands")
     void judgeWinnerTest_playerBust(List<Card> cards) {
         dealer.receiveCards(cards);
-        player.receiveCards(jackKingNine);
+        player.receiveCards(JACK_KING_NINE_CARDS);
 
         referee.judgeWinner();
 
@@ -55,18 +55,18 @@ class RefereeTest {
 
     static Stream<List<Card>> generateEveryCaseOfHands() {
         return Stream.of(
-                jackKingNine,
-                sixFour,
-                aceThreeFour,
-                aceKing
+                JACK_KING_NINE_CARDS,
+                SIX_FOUR_CARDS,
+                ACE_THREE_FOUR_CARDS,
+                ACE_KING_CARDS
         );
     }
 
     @DisplayName("플레이어는 버스트가 아니고 딜러만 버스트일 경우 플레이어가 승리한다.")
     @Test
     void judgeWinnerTest_playerNormalAndDealerBust() {
-        dealer.receiveCards(jackKingNine);
-        player.receiveCards(eightNine);
+        dealer.receiveCards(JACK_KING_NINE_CARDS);
+        player.receiveCards(EIGHT_NINE_CARDS);
 
         referee.judgeWinner();
 
@@ -78,8 +78,8 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 딜러의 점수가 플레이어의 점수보다 높으면 딜러가 승리한다.")
     @Test
     void judgeWinnerTest_dealerWin() {
-        dealer.receiveCards(eightNine);
-        player.receiveCards(sixFour);
+        dealer.receiveCards(EIGHT_NINE_CARDS);
+        player.receiveCards(SIX_FOUR_CARDS);
 
         referee.judgeWinner();
 
@@ -91,8 +91,8 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 승리한다.")
     @Test
     void judgeWinnerTest_playerWin() {
-        dealer.receiveCards(sixFour);
-        player.receiveCards(eightNine);
+        dealer.receiveCards(SIX_FOUR_CARDS);
+        player.receiveCards(EIGHT_NINE_CARDS);
 
         referee.judgeWinner();
 
@@ -104,8 +104,8 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어 모두 버스트가 아니며 점수가 같고, 블랙잭이 아니면 무승부다.")
     @Test
     void judgeWinnerTest_bothNormalSameScore() {
-        player.receiveCards(eightNine);
-        dealer.receiveCards(eightNine);
+        player.receiveCards(EIGHT_NINE_CARDS);
+        dealer.receiveCards(EIGHT_NINE_CARDS);
 
         referee.judgeWinner();
 
@@ -116,8 +116,8 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어가 동점이지만, 플레이어만 블랙잭이면 플레이어가 승리하며 배팅금액 1.5배의 수익을 얻는다.")
     @Test
     void judgeWinnerTest_playerWinWithBlackJack() {
-        player.receiveCards(aceKing);
-        dealer.receiveCards(jackKingAce);
+        player.receiveCards(ACE_KING_CARDS);
+        dealer.receiveCards(JACK_KING_ACE_CARDS);
 
         referee.judgeWinner();
 
@@ -128,8 +128,8 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어가 동점이지만, 딜러만 블랙잭이면 플레이어는 패배한다.")
     @Test
     void judgeWinnerTest_dealerWinWithBlackJack() {
-        player.receiveCards(jackKingAce);
-        dealer.receiveCards(aceKing);
+        player.receiveCards(JACK_KING_ACE_CARDS);
+        dealer.receiveCards(ACE_KING_CARDS);
 
         referee.judgeWinner();
 

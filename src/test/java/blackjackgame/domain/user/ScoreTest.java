@@ -1,10 +1,10 @@
 package blackjackgame.domain.user;
 
-import static blackjackgame.domain.Fixtures.aceAceAceAce;
-import static blackjackgame.domain.Fixtures.aceKing;
-import static blackjackgame.domain.Fixtures.aceThreeFour;
-import static blackjackgame.domain.Fixtures.eightNine;
-import static blackjackgame.domain.Fixtures.jackKingAce;
+import static blackjackgame.domain.Fixtures.ACE_ACE_ACE_ACE_CARDS;
+import static blackjackgame.domain.Fixtures.ACE_KING_CARDS;
+import static blackjackgame.domain.Fixtures.ACE_THREE_FOUR_CARDS;
+import static blackjackgame.domain.Fixtures.EIGHT_NINE_CARDS;
+import static blackjackgame.domain.Fixtures.JACK_KING_ACE_CARDS;
 
 import blackjackgame.domain.card.Card;
 import java.util.List;
@@ -23,7 +23,7 @@ class ScoreTest {
     void calculateScoreTest() {
         Score score = new Score();
         Hands hands = new Hands();
-        hands.add(eightNine);
+        hands.add(EIGHT_NINE_CARDS);
 
         score.setScore(hands);
 
@@ -44,8 +44,8 @@ class ScoreTest {
 
     static Stream<Arguments> calculateScoreWithAceCase_greaterThan21() {
         return Stream.of(
-                Arguments.of(aceAceAceAce, 14),
-                Arguments.of(jackKingAce, 21)
+                Arguments.of(ACE_ACE_ACE_ACE_CARDS, 14),
+                Arguments.of(JACK_KING_ACE_CARDS, 21)
         );
     }
 
@@ -63,8 +63,8 @@ class ScoreTest {
 
     static Stream<Arguments> calculateScoreWithAceCase_lessThan22() {
         return Stream.of(
-                Arguments.of(aceKing, 21),
-                Arguments.of(aceThreeFour, 18)
+                Arguments.of(ACE_KING_CARDS, 21),
+                Arguments.of(ACE_THREE_FOUR_CARDS, 18)
         );
     }
 }

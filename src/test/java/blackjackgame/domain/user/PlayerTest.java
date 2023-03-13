@@ -1,6 +1,6 @@
 package blackjackgame.domain.user;
 
-import static blackjackgame.domain.Fixtures.jackKingNine;
+import static blackjackgame.domain.Fixtures.JACK_KING_NINE_CARDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjackgame.domain.card.Card;
@@ -39,7 +39,7 @@ class PlayerTest {
     @DisplayName("합산 점수가 21을 초과하면 Bust 상태가 된다.")
     @Test
     void calculateStatusTest() {
-        player.receiveCards(jackKingNine);
+        player.receiveCards(JACK_KING_NINE_CARDS);
         UserStatus result = player.getStatus();
 
         assertThat(player.getScore()).isGreaterThan(21);

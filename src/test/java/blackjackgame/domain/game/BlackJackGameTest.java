@@ -116,8 +116,8 @@ class BlackJackGameTest {
     @DisplayName("플레이어가 수익을 잃은만큼 딜러가 수익을 얻는다.")
     @Test
     void calculateDealerProfit_dealerWin() {
-        dealer.receiveCards(eightNine);
-        player.receiveCards(sixFour);
+        dealer.receiveCards(EIGHT_NINE_CARDS);
+        player.receiveCards(SIX_FOUR_CARDS);
 
         int dealerProfit = blackJackGame.calculateDealerProfit();
         int playerProfit = player.getProfitAmount();
