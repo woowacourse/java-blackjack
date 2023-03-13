@@ -42,11 +42,6 @@ public class Participant extends Player {
         decideDrawOrFinish(deck, supplyCommand, printParticipantCardStatus);
     }
     
-    @Override
-    public void drawOrFinishDealerBy(Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
-        throw new UnsupportedOperationException("참가자가 사용할 수 없는 기능입니다.");
-    }
-    
     private void decideDrawOrFinish(
             Deck deck,
             Function<Player, AddCardCommand> supplyCommand,
@@ -63,6 +58,11 @@ public class Participant extends Player {
             return;
         }
         decideDrawOrFinish(deck, supplyCommand, printParticipantCardStatus);
+    }
+    
+    @Override
+    public void drawOrFinishDealerBy(Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
+        throw new UnsupportedOperationException("참가자가 사용할 수 없는 기능입니다.");
     }
     
     @Override
