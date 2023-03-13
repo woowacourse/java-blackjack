@@ -21,6 +21,7 @@ class TotalProfitTest {
     private static final Card DIAMOND_TEN = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.TEN);
     private static final Card DIAMOND_ACE = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.ACE);
     private static final Card DIAMOND_NINE = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.NINE);
+    private static final Card SPADE_NINE = new Card(TrumpCardType.SPADE, TrumpCardNumber.NINE);
     private static final Card DIAMOND_EIGHT = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.EIGHT);
 
     private Player pobi;
@@ -50,5 +51,22 @@ class TotalProfitTest {
         assertThat(totalProfit.getProfitBook().values())
                 .extracting("amount")
                 .containsExactly(1500d, 1000d, -1000d);
+    }
+
+    @DisplayName("블랙잭 게임으로부터 딜러와 플레이어의 경합 결과가 생성된다. 무승부 결과 포함")
+    @Test
+    void createDealerResultSuccessContainsDrawTest() {
+        Players players = Players.of(crong, royce);
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
+        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+
+        crong.start(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
+        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+
+        TotalProfit totalProfit = TotalProfit.from(blackjackGame);
+
+        assertThat(totalProfit.getProfitBook().values())
+                .extracting("amount")
+                .containsExactly(0d, -1000d);
     }
 }
