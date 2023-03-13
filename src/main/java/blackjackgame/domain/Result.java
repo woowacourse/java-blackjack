@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Result {
     public static Map<Guest, GameOutcome> getGuestsResult(final List<Guest> guests, final Dealer dealer) {
         Map<Guest, GameOutcome> guestsResult = guests.stream()
-                .collect(Collectors.toMap(guest -> guest, guest -> guest.calculateOutcome(dealer), (guest1,guest2) -> guest1, LinkedHashMap::new));
+                .collect(Collectors.toMap(guest -> guest, guest -> guest.calculateOutcome(dealer), (guest1, guest2) -> guest1, LinkedHashMap::new));
         return Collections.unmodifiableMap(guestsResult);
     }
 
@@ -30,7 +30,7 @@ public class Result {
         Map<String, Integer> bettingResult = new LinkedHashMap<>();
         int dealerRevenue = 0;
         bettingResult.put(dealer.getName(), dealerRevenue);
-        for(Guest guest : guests) {
+        for (Guest guest : guests) {
             GameOutcome gameOutcome = guest.calculateOutcome(dealer);
             int guestRevenue = gameOutcome.calculateRevenue(guest.getBettingMoney());
             bettingResult.put(guest.getName(), guestRevenue);

@@ -35,15 +35,13 @@ public class OutputView {
     }
 
     public void printScore(final String playerName, final List<CardDto> cards, final int score) {
-        System.out.println();
         System.out.println(formattingCards(playerName, cards) + " - 결과: " + score);
     }
 
     public void printBettingResult(final Map<String, Integer> bettingResult) {
         System.out.println();
-        System.out.println();
         System.out.println("## 최종 수익");
-        for(String name : bettingResult.keySet()) {
+        for (String name : bettingResult.keySet()) {
             System.out.println(name + ": " + bettingResult.get(name));
         }
     }

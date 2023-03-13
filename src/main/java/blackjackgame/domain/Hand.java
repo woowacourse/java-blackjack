@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static blackjackgame.domain.GameOutcome.*;
-import static blackjackgame.domain.GameOutcome.DRAW;
 
 public class Hand {
     private static final int MAX_BASIC_SCORE = 11;
@@ -48,11 +47,7 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public GameOutcome calculateOutcomeComparedBy(Hand otherHand) {
-        return judgeOutcome(otherHand);
-    }
-
-    private GameOutcome judgeOutcome(final Hand otherHand) {
+    public GameOutcome calculateOutcomeComparedBy(final Hand otherHand) {
         if (isBlackJack(this)) {
             return judgeResultWhenBlackJack(otherHand);
         }

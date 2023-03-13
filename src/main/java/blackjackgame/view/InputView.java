@@ -39,7 +39,7 @@ public class InputView {
     public AddCardRequest readWantMoreCard(final String playerName) {
         System.out.println();
         System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)"
-                ,playerName, YES.value(), NO.value()));
+                , playerName, YES.value(), NO.value()));
         try {
             return AddCardRequest.validate(scanner.nextLine());
         } catch (IllegalArgumentException e) {

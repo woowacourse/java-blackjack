@@ -15,15 +15,15 @@ public enum AddCardRequest {
 
     public static AddCardRequest validate(final String input) {
         return Arrays.stream(AddCardRequest.values())
-            .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(getErrorRequestMsg()));
+                .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(getErrorRequestMsg()));
     }
 
     private static String getErrorRequestMsg() {
         List<String> values = Arrays.stream(AddCardRequest.values())
-            .map(AddCardRequest::value)
-            .collect(Collectors.toList());
+                .map(AddCardRequest::value)
+                .collect(Collectors.toList());
         return String.join(",", values) + " 만 입력해주세요";
     }
 

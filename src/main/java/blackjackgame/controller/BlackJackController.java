@@ -1,12 +1,13 @@
 package blackjackgame.controller;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import blackjackgame.domain.*;
 import blackjackgame.view.AddCardRequest;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -88,8 +89,7 @@ public class BlackJackController {
         }
     }
 
-    private void askGuestHitCard(final Deck deck, final Guest guest,
-                                 final AddCardRequest addCardRequest) {
+    private void askGuestHitCard(final Deck deck, final Guest guest, final AddCardRequest addCardRequest) {
         if (addCardRequest == AddCardRequest.YES) {
             guest.addCard(deck.pickOne());
         }
@@ -112,22 +112,6 @@ public class BlackJackController {
     }
 
     private void printBettingResult(final Guests guests, final Dealer dealer) {
-        Result result = new Result(dealer, guests.getGuests());
-        Map<Guest, GameOutcome> guestGameOutcome = result.getGuestsResult();
-        Map<String, Integer> bettingResult = new LinkedHashMap<>();
-        bettingResult.put(dealer.getName(), 0);
-        int dealerRevenue = calculatePlayersRevenue(guestGameOutcome, bettingResult);
-        bettingResult.put(dealer.getName(), dealerRevenue);
-        outputView.printBettingResult(bettingResult);
-    }
-
-    private int calculatePlayersRevenue(Map<Guest, GameOutcome> guestGameOutcome, Map<String, Integer> bettingResult) {
-        int dealerRevenue = 0;
-        for(Guest guest : guestGameOutcome.keySet()) {
-            int guestRevenue = guestGameOutcome.get(guest).calculateRevenue(guest.getBettingMoney());
-            bettingResult.put(guest.getName(), guestRevenue);
-            dealerRevenue -= guestRevenue;
-        }
-        return dealerRevenue;
+        outputView.printBettingResult(Result.getPlayersRevenue(guests.getGuests(), dealer));
     }
 }
