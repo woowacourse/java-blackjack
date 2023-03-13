@@ -7,7 +7,9 @@ import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.bank.BettingMoney;
 import domain.card.Card;
 import domain.card.CardBox;
 import domain.card.Cards;
@@ -77,7 +79,7 @@ class DealerTest {
 
         Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
         Player player = new Player(new Name("우가"), new Cards(List.of(new Card(HEART, TEN), new Card(SPADE, TEN),
-                new Card(CLOVER, TEN))));
+                new Card(CLOVER, TEN))), new BettingMoney(1000));
 
         assertThat(dealer.checkWinningResult(player)).isEqualTo(WIN);
 
@@ -100,8 +102,26 @@ class DealerTest {
         cards.add(new Card(CLOVER, TEN));
 
         Dealer dealer = new Dealer(new CardBox(), new Cards(cards));
-        Player player = new Player(new Name("우가"), new Cards(List.of(new Card(HEART, TEN))));
+        Player player = new Player(new Name("우가"), new Cards(List.of(new Card(HEART, TEN))), new BettingMoney(1000));
 
         assertThat(dealer.checkWinningResult(player)).isEqualTo(LOSE);
+    }
+
+    @Test
+    void 딜러는_최종수익의_반대값을_받아_교체한다() {
+        Dealer dealer = new Dealer(new CardBox(), new Cards(List.of(new Card(HEART, A))));
+
+        assertDoesNotThrow(
+                () -> dealer.changeMoney(20000)
+        );
+    }
+
+    @Test
+    void 딜러는_카드를_뽑는다() {
+        Dealer dealer = new Dealer(new CardBox(), new Cards(List.of(new Card(HEART, A))));
+
+        assertDoesNotThrow(
+                dealer::draw
+        );
     }
 }
