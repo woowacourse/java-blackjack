@@ -34,7 +34,7 @@ public class HandTest {
             hand.add(card);
         }
 
-        assertThat(hand.sum().getValue()).isEqualTo(expectedSum);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(expectedSum);
     }
 
     static Stream<Arguments> generateHand() {
@@ -44,28 +44,30 @@ public class HandTest {
                 Arguments.of(List.of(Card.of(Suit.DIAMOND, Denomination.TEN), Card.of(Suit.SPADE, Denomination.TEN)), 20),
                 Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.THREE), Card.of(Suit.CLOVER, Denomination.TWO)), 5),
                 Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.SEVEN), Card.of(Suit.SPADE, Denomination.SEVEN), Card.of(Suit.DIAMOND, Denomination.SEVEN)), 21),
-                Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.TEN), Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.DIAMOND, Denomination.SEVEN)), 28)
+                Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.TEN), Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.DIAMOND, Denomination.SEVEN)), 18)
         );
     }
 
-    @ParameterizedTest(name = "createdHand={0}, expectedCount={1}")
-    @MethodSource("generateHandWithACE")
-    @DisplayName("에이스의 카드 개수를 구한다.")
-    void countACE(List<Card> createdHand, int expectedCount) {
+    @Test
+    @DisplayName("보유한 카드가 블랙잭인지 판단한다.")
+    void isBlackJack() {
         Hand hand = new Hand();
 
-        for (Card card : createdHand) {
-            hand.add(card);
-        }
+        hand.add(Card.of(Suit.SPADE, Denomination.ACE));
+        hand.add(Card.of(Suit.SPADE, Denomination.KING));
 
-        assertThat(hand.getAceCount()).isEqualTo(expectedCount);
+        assertThat(hand.isBlackJack()).isTrue();
     }
 
-    static Stream<Arguments> generateHandWithACE() {
-        return Stream.of(
-                Arguments.of(List.of(Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.CLOVER, Denomination.ACE)), 2),
-                Arguments.of(List.of(Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.HEART, Denomination.ACE), Card.of(Suit.CLOVER, Denomination.ACE)), 3),
-                Arguments.of(List.of(Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.HEART, Denomination.ACE), Card.of(Suit.CLOVER, Denomination.ACE), Card.of(Suit.DIAMOND, Denomination.ACE)), 4)
-        );
+    @Test
+    @DisplayName("보유한 카드가 버스트인지 판단한다.")
+    void isBust() {
+        Hand hand = new Hand();
+
+        hand.add(Card.of(Suit.SPADE, Denomination.KING));
+        hand.add(Card.of(Suit.CLOVER, Denomination.KING));
+        hand.add(Card.of(Suit.DIAMOND, Denomination.KING));
+
+        assertThat(hand.isBust()).isTrue();
     }
 }
