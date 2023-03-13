@@ -22,8 +22,8 @@ public class Participant {
         cards.add(card);
     }
 
-    private boolean isElevenAce() {
-        return hasAce() && (calculateSumOfRank() + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
+    private boolean isElevenAce(final int sum) {
+        return hasAce() && (sum + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
     }
 
     private boolean hasAce() {
@@ -35,7 +35,7 @@ public class Participant {
         int sum = cards.stream()
                 .mapToInt(card -> card.getRank().getValue())
                 .sum();
-        if (isElevenAce()) {
+        if (isElevenAce(sum)) {
             sum += 10;
         }
         return sum;
