@@ -6,7 +6,7 @@ public class Blackjack extends Finished {
 
     private static final double PROFIT_RATE = 1.5;
 
-    Blackjack(Hand hand) {
+    Blackjack(final Hand hand) {
         super(hand);
     }
 

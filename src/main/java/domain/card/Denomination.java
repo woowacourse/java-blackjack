@@ -18,7 +18,7 @@ public enum Denomination {
 
     private final int value;
 
-    Denomination(int value) {
+    Denomination(final int value) {
         this.value = value;
     }
 

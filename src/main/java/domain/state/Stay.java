@@ -6,7 +6,7 @@ public class Stay extends Finished {
 
     private static final int PROFIT_RATE = 1;
 
-    Stay(Hand hand) {
+    Stay(final Hand hand) {
         super(hand);
     }
 

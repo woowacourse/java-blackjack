@@ -13,12 +13,12 @@ public enum CardSuitMapper {
     private final Suit suit;
     private final String cardName;
 
-    CardSuitMapper(Suit suit, String cardName) {
+    CardSuitMapper(final Suit suit, final String cardName) {
         this.suit = suit;
         this.cardName = cardName;
     }
 
-    public static String getCardName(Suit suit) {
+    public static String getCardName(final Suit suit) {
         return Arrays.stream(CardSuitMapper.values())
                 .filter(it -> it.suit == suit)
                 .findAny()

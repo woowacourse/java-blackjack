@@ -5,11 +5,11 @@ import domain.card.Hand;
 
 public class Hit extends Running {
 
-    Hit(Card card) {
+    Hit(final Card card) {
         this(new Hand(card));
     }
 
-    public Hit(Hand hand) {
+    public Hit(final Hand hand) {
         super(hand);
     }
 

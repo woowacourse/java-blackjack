@@ -11,12 +11,12 @@ public class Participant {
     private final Name name;
     private State state;
 
-    public Participant(String playerName) {
+    public Participant(final String playerName) {
         this.name = new Name(playerName);
         state = new Ready();
     }
 
-    public State hit(Card card) {
+    public State hit(final Card card) {
         return state = state.draw(card);
     }
 

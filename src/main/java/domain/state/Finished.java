@@ -12,12 +12,12 @@ public abstract class Finished implements State {
 
     private final Hand hand;
 
-    Finished(Hand hand) {
+    Finished(final Hand hand) {
         this.hand = hand;
     }
 
     @Override
-    public double profit(int base) {
+    public double profit(final int base) {
         return base * profitRate();
     }
 
@@ -29,7 +29,7 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public State draw(Card card) {
+    public State draw(final Card card) {
         throw new CanNotDrawCardException();
     }
 

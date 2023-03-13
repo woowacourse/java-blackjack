@@ -8,19 +8,19 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public Hand(Card card) {
+    public Hand(final Card card) {
         this.cards = new ArrayList<>(List.of(card));
     }
 
-    public Hand(Card card1, Card card2) {
+    public Hand(final Card card1, final Card card2) {
         this.cards = new ArrayList<>(List.of(card1, card2));
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

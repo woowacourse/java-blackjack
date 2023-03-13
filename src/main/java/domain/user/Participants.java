@@ -11,13 +11,13 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(Dealer dealer, List<Player> players) {
+    public Participants(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = List.copyOf(players);
     }
 
 
-    public void hitAll(Deck deck) {
+    public void hitAll(final Deck deck) {
         dealer.hit(deck.serve());
 
         for (Player player : players) {
@@ -25,19 +25,19 @@ public class Participants {
         }
     }
 
-    public void hitPlayer(String name, Deck deck) {
+    public void hitPlayer(final String name, final Deck deck) {
         Player player = findPlayer(name);
         player.hit(deck.serve());
     }
 
-    public Player findPlayer(String name) {
+    public Player findPlayer(final String name) {
         return players.stream()
                 .filter(player -> player.name().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST_EXCEPTION_MESSAGE));
     }
 
-    public boolean hitDealer(Deck deck) {
+    public boolean hitDealer(final Deck deck) {
         if (dealer.canHit()) {
             dealer.hit(deck.serve());
             return true;
@@ -46,11 +46,11 @@ public class Participants {
         return false;
     }
 
-    public void stayPlayer(String name) {
+    public void stayPlayer(final String name) {
         findPlayer(name).stay();
     }
 
-    public boolean isRunning(String name) {
+    public boolean isRunning(final String name) {
         return findPlayer(name).getState().isRunning();
     }
 
@@ -60,7 +60,7 @@ public class Participants {
                 .reduce(0, Integer::sum);
     }
 
-    public int profit(Player player) {
+    public int profit(final Player player) {
         if (player.getState().isStay() && dealer.getState().isStay()) {
             return player.calculateStay(dealer);
         }

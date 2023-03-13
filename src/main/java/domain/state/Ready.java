@@ -18,12 +18,12 @@ public class Ready implements State {
     }
 
     @Override
-    public State draw(Card card) {
+    public State draw(final Card card) {
         return new Hit(card);
     }
 
     @Override
-    public double profit(int base) {
+    public double profit(final int base) {
         throw new ProfitException();
     }
 

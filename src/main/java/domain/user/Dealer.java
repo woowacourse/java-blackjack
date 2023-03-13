@@ -13,7 +13,7 @@ public class Dealer {
 
     private final Participant participant;
 
-    public Dealer(String dealerName) {
+    public Dealer(final String dealerName) {
         this.participant = new Participant(dealerName);
     }
 
@@ -25,7 +25,7 @@ public class Dealer {
         return getState().score();
     }
 
-    public State hit(Card card) {
+    public State hit(final Card card) {
         State state = participant.hit(card);
         if (state.isRunning() && state.handSize() > DEALER_HAND_SIZE_LIMIT) {
             participant.stay();

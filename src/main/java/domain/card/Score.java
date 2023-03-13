@@ -10,7 +10,7 @@ public class Score {
 
     private final int value;
 
-    public Score(int value) {
+    public Score(final int value) {
         this.value = value;
     }
 

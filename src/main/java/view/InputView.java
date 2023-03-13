@@ -30,7 +30,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public int inputBetting(String player) {
+    public int inputBetting(final String player) {
         System.out.println(player + "의 배팅 금액은?");
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -40,7 +40,7 @@ public class InputView {
         }
     }
 
-    public Command inputCardCommand(String player) {
+    public Command inputCardCommand(final String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
         String input = scanner.nextLine();
         validator.validateNotBlank(input);

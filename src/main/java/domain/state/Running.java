@@ -34,7 +34,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public double profit(int base) {
+    public double profit(final int base) {
         throw new ProfitException();
     }
 

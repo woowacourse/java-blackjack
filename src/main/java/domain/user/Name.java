@@ -7,12 +7,12 @@ public class Name {
 
     private final String value;
 
-    public Name(String value) {
+    public Name(final String value) {
         validate(value);
         this.value = value;
     }
 
-    private void validate(String target) {
+    private void validate(final String target) {
         if (target.length() < MIN_NAME_LENGTH || target.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(NAME_LENGTH_EXCEPTION_MESSAGE);
         }

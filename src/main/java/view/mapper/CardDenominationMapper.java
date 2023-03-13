@@ -23,12 +23,12 @@ public enum CardDenominationMapper {
     private final Denomination denomination;
     private final String value;
 
-    CardDenominationMapper(Denomination denomination, String value) {
+    CardDenominationMapper(final Denomination denomination, final String value) {
         this.denomination = denomination;
         this.value = value;
     }
 
-    public static String getCardNumber(Denomination denomination) {
+    public static String getCardNumber(final Denomination denomination) {
         return Arrays.stream(CardDenominationMapper.values())
                 .filter(it -> it.denomination == denomination)
                 .findAny()

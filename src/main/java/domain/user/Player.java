@@ -11,12 +11,12 @@ public class Player {
     private final Participant participant;
     private final int betting;
 
-    public Player(String PlayerName, final int betting) {
+    public Player(final String PlayerName, final int betting) {
         this.participant = new Participant(PlayerName);
         this.betting = betting;
     }
 
-    public State hit(Card card) {
+    public State hit(final Card card) {
         return participant.hit(card);
     }
 
@@ -29,7 +29,7 @@ public class Player {
         return (int) state.profit(betting);
     }
 
-    public int calculateStay(Dealer dealer) {
+    public int calculateStay(final Dealer dealer) {
         if (getScore().isMoreThan(dealer.getScore())) {
             return calculate();
         }

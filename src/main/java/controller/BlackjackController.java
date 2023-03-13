@@ -24,7 +24,7 @@ public class BlackjackController {
     private final OutputView outputView;
     private BlackjackGame blackjackGame;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -83,14 +83,14 @@ public class BlackjackController {
         }
     }
 
-    private void playTurn(Player player) {
+    private void playTurn(final Player player) {
         while (blackjackGame.isRunning(player.name())) {
             hitOrStay(player);
             outputView.printNameAndCards(player.name(), cardString(player));
         }
     }
 
-    private void hitOrStay(Player player) {
+    private void hitOrStay(final Player player) {
         Command command = inputView.inputCardCommand(player.name());
         if (command == Command.Y) {
             blackjackGame.hitPlayer(player.name());
@@ -128,7 +128,7 @@ public class BlackjackController {
         outputView.printProfit(profitMap);
     }
 
-    private List<String> cardString(Dealer dealer) {
+    private List<String> cardString(final Dealer dealer) {
         List<String> cardString = new ArrayList<>();
         for (Card card : dealer.cards()) {
             cardString.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
@@ -137,7 +137,7 @@ public class BlackjackController {
         return cardString;
     }
 
-    private List<String> cardString(Player player) {
+    private List<String> cardString(final Player player) {
         List<String> cardString = new ArrayList<>();
         for (Card card : player.cards()) {
             cardString.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +

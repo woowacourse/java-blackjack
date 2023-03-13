@@ -13,7 +13,7 @@ public class Deck {
     private final NumberGenerator numberGenerator;
     private final List<Card> cards;
 
-    public Deck(NumberGenerator numberGenerator) {
+    public Deck(final NumberGenerator numberGenerator) {
         this.numberGenerator = numberGenerator;
         this.cards = new ArrayList<>();
         initializeCards();
@@ -25,7 +25,7 @@ public class Deck {
         }
     }
 
-    private void mapCardNumbers(Suit suit) {
+    private void mapCardNumbers(final Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             cards.add(Card.of(suit, denomination));
         }

@@ -11,7 +11,7 @@ public class BlackjackGame {
     private final Participants participants;
     private final Deck deck;
 
-    public BlackjackGame(Dealer dealer, List<Player> players, Deck deck) {
+    public BlackjackGame(final Dealer dealer, final List<Player> players, final Deck deck) {
         this.participants = new Participants(dealer, players);
         this.deck = deck;
     }
@@ -20,7 +20,7 @@ public class BlackjackGame {
         participants.hitAll(deck);
     }
 
-    public void hitPlayer(String name) {
+    public void hitPlayer(final String name) {
         participants.hitPlayer(name, deck);
     }
 
@@ -28,11 +28,11 @@ public class BlackjackGame {
         return participants.hitDealer(deck);
     }
 
-    public void stayPlayer(String name) {
+    public void stayPlayer(final String name) {
         participants.stayPlayer(name);
     }
 
-    public boolean isRunning(String name) {
+    public boolean isRunning(final String name) {
         return participants.isRunning(name);
     }
 
@@ -44,7 +44,7 @@ public class BlackjackGame {
         return participants.profit(player);
     }
 
-    public Player findPlayer(String name) {
+    public Player findPlayer(final String name) {
         return participants.findPlayer(name);
     }
 
