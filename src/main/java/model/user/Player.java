@@ -7,15 +7,18 @@ import static model.user.GameState.WIN;
 
 import model.card.Card;
 import model.card.Deck;
+import model.money.Bet;
 
 public class Player implements Receivable {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
     private final User user;
+    private final Bet bet;
 
-    public Player(final String name) {
+    public Player(final String name, final Bet bet) {
         this.user = new User(name);
+        this.bet = bet;
     }
 
     public void receiveInitialCards(final Deck deck) {
@@ -79,5 +82,9 @@ public class Player implements Receivable {
 
     public Hand getHand() {
         return user.getHand();
+    }
+
+    public long getBetMoney() {
+        return bet.getMoney();
     }
 }

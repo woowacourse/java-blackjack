@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Deck;
 import model.card.RandomShuffleMaker;
+import model.money.Bet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,7 +29,7 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = new Player("ethan");
+        player = new Player("ethan", new Bet(10_000));
         dealer = new Dealer();
     }
 

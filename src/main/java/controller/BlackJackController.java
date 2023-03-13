@@ -1,9 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import model.card.Deck;
 import model.money.Bet;
-import model.money.Purse;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
@@ -27,23 +29,35 @@ public class BlackJackController {
 
     public void init(final Deck deck) {
         final Dealer dealer = new Dealer();
-        final Participants participants = getParticipants(dealer);
-        final Purse purse = Purse.create(participants.getPlayers());
 
-        betMoney(participants, purse);
+        final Participants participants = getParticipants(dealer);
+
         distributeCards(deck, dealer, participants);
-        printResult(dealer, participants, purse);
+        printResult(dealer, participants);
     }
 
     private Participants getParticipants(final Dealer dealer) {
-        return Participants.of(Arrays.asList(inputView.getPlayersName().split(",")), dealer);
+        final List<String> playerNames = getPlayerNames();
+        final List<Bet> bets = getBets(playerNames);
+
+        return Participants.of(playerNames, bets, dealer);
     }
 
-    private void betMoney(Participants participants, Purse purse) {
-        for (Player player : participants.getPlayers()) {
-            final Bet bet = new Bet(inputView.getBet(player.getName()));
-            purse.addMoney(player, bet);
+    private List<String> getPlayerNames() {
+        final String[] playersName = inputView.getPlayersName().split(",");
+        return Arrays.stream(playersName)
+                .collect(Collectors.toList());
+    }
+
+    private List<Bet> getBets(final List<String> playerNames) {
+        List<Bet> bets = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            final Bet bet = new Bet(inputView.getBet(playerName));
+            bets.add(bet);
         }
+
+        return bets;
     }
 
     private void distributeCards(Deck deck, Dealer dealer, Participants participants) {
@@ -103,7 +117,8 @@ public class BlackJackController {
     private void receiveCardForPlayer(final Deck deck, final Player player, final ReceiveCommand receiveCommand) {
         if (ReceiveCommand.isHit(receiveCommand)) {
             player.receiveCard(deck.pick());
-            final HandResponse handResponse = HandResponse.of(player.calculateTotalValue(), player.getHand().getCards());
+            final HandResponse handResponse = HandResponse.of(player.calculateTotalValue(),
+                    player.getHand().getCards());
             outputView.printPlayerCardStatus(new UserResponse(player.getName(), handResponse));
         }
     }
@@ -115,14 +130,13 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(Dealer dealer, Participants participants, Purse purse) {
-        purse.calculateMoneyAll(participants.getPlayers(), dealer);
-        printBetResult(dealer, purse);
+    private void printResult(Dealer dealer, Participants participants) {
+        printBetResult(dealer, participants);
     }
 
-    private void printBetResult(Dealer dealer, Purse purse) {
+    private void printBetResult(Dealer dealer, Participants participants) {
         outputView.printBetResult();
-        outputView.printDealerBetResult(dealer.getName(), purse.getTotalBet());
-        outputView.printPlayerBetResult(PurseResponse.create(purse.getPursesAll()));
+        outputView.printDealerBetResult(dealer.getName(), participants.getTotalProfits());
+        outputView.printPlayerBetResult(PurseResponse.create(participants));
     }
 }
