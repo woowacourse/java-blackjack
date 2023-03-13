@@ -13,30 +13,33 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BustTest {
-    private State bust;
+    private State playerState;
+    private Hand hand;
 
     @BeforeEach
     void setUp() {
         List<Card> initialCards = List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.QUEEN, Shape.HEART), new Card(Value.KING, Shape.HEART));
-        Hand hand = new Hand(new ArrayList<>(initialCards));
-        bust = new Bust(hand);
+        hand = new Hand(new ArrayList<>(initialCards));
+        playerState = new Bust(hand);
     }
 
     @DisplayName("현재 상태가 Bust인지 확인하는 테스트")
     @Test
     void isBustTest() {
-        assertThat(bust.isBust()).isTrue();
+        assertThat(playerState.isBust()).isTrue();
     }
 
     @DisplayName("현재 상태가 BlackJack인지 확인하는 테스트")
     @Test
     void isBlackJackTest() {
-        assertThat(bust.isBlackJack()).isFalse();
+        assertThat(playerState.isBlackJack()).isFalse();
     }
 
     @DisplayName("상태가 Bust일 때, 결과 값은 LOSE로 계산된다.")
     @Test
     void calculateResultTest() {
-        assertThat(bust.calculateResult()).isEqualTo(Result.LOSE);
+        State dealerState = new Bust(hand);
+
+        assertThat(playerState.calculateResult(dealerState)).isEqualTo(Result.LOSE);
     }
 }

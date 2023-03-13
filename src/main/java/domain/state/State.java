@@ -11,5 +11,5 @@ public interface State {
 
     boolean isBlackJack();
 
-    Result calculateResult();
+    Result calculateResult(final State dealerState);
 }

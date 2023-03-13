@@ -15,11 +15,12 @@ import org.junit.jupiter.api.Test;
 class BlackjackTest {
 
     private State blackjack;
+    private Hand hand;
 
     @BeforeEach
     void setUp() {
         List<Card> initialCards = List.of(new Card(Value.ACE, Shape.HEART), new Card(Value.QUEEN, Shape.HEART));
-        Hand hand = new Hand(new ArrayList<>(initialCards));
+        hand = new Hand(new ArrayList<>(initialCards));
         blackjack = new Blackjack(hand);
     }
 
@@ -38,6 +39,7 @@ class BlackjackTest {
     @DisplayName("상태가 Blackjack일 때, 결과 값은 BLACKJACK으로 계산된다.")
     @Test
     void calculateResultTest() {
-        assertThat(blackjack.calculateResult()).isEqualTo(Result.BLACKJACK);
+        State dealerState = new Blackjack(hand);
+        assertThat(blackjack.calculateResult(dealerState)).isEqualTo(Result.BLACKJACK);
     }
 }

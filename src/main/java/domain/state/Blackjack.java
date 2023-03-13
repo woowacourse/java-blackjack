@@ -19,7 +19,7 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public Result calculateResult() {
+    public Result calculateResult(final State dealerState) {
         return Result.BLACKJACK;
     }
 }

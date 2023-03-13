@@ -19,7 +19,7 @@ public class Hit extends Running {
     }
 
     @Override
-    public Result calculateResult() {
+    public Result calculateResult(final State dealerState) {
         throw new UnsupportedOperationException();
     }
 }

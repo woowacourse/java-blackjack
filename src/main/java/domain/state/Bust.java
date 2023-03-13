@@ -19,7 +19,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    public Result calculateResult() {
+    public Result calculateResult(final State dealerState) {
         return Result.LOSE;
     }
 }
