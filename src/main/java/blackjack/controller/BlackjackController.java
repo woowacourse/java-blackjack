@@ -59,19 +59,19 @@ public class BlackjackController {
 
     private BettingZone generateBettingZone(final Players players) {
         final List<Player> allGamblers = players.getGamblers();
-        final Map<Player, Money> betMoneyByPlayers = allGamblers.stream()
+        final Map<Player, Money> bettingMoneyByPlayers = allGamblers.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         this::generateBettingMoney,
-                        (betMoney, betMoney2) -> betMoney,
+                        (bettingMoney, bettingMoney2) -> bettingMoney,
                         LinkedHashMap::new
                 ));
-        return new BettingZone(betMoneyByPlayers);
+        return new BettingZone(bettingMoneyByPlayers);
     }
 
     private Money generateBettingMoney(final Player player) {
         return repeatUntilGetValidInput(() -> {
-            final int amount = inputView.readBetMoney(player);
+            final int amount = inputView.readBettingMoney(player);
             return Money.createMoneyForBetting(amount);
         });
     }

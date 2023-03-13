@@ -17,9 +17,9 @@ public class MoneyTest {
     @ParameterizedTest(name = "배팅 금액을 생성한다. 입력 값: {0}")
     @ValueSource(ints = {1000, 100000000})
     void 베팅_금액을_생성한다(final int money) {
-        final Money betMoney = Money.createMoneyForBetting(money);
+        final Money bettingMoney = Money.createMoneyForBetting(money);
 
-        final int value = betMoney.getAmount();
+        final int value = bettingMoney.getAmount();
 
         assertThat(value).isEqualTo(money);
     }

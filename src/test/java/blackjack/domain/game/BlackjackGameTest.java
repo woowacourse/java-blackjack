@@ -33,11 +33,11 @@ public class BlackjackGameTest {
 
     private BlackjackGame generateBlackjackGame(final List<String> names) {
         final Players players = Players.from(names);
-        Map<Player, Money> betMoneyByPlayers = new LinkedHashMap<>();
+        Map<Player, Money> bettingMoneyByPlayers = new LinkedHashMap<>();
         for (Player gambler : players.getGamblers()) {
-            betMoneyByPlayers.put(gambler, Money.createMoneyForBetting(10000));
+            bettingMoneyByPlayers.put(gambler, Money.createMoneyForBetting(10000));
         }
-        return new BlackjackGame(players, new BettingZone(betMoneyByPlayers));
+        return new BlackjackGame(players, new BettingZone(bettingMoneyByPlayers));
     }
 
     @Test

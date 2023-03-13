@@ -29,12 +29,12 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public int readBetMoney(final Player player) {
+    public int readBettingMoney(final Player player) {
         System.out.println(NEW_LINE + player.getName() + "의 배팅 금액은?");
 
-        final String betMoney = scanner.nextLine();
+        final String bettingMoney = scanner.nextLine();
 
-        return toInt(betMoney);
+        return toInt(bettingMoney);
     }
 
     private int toInt(final String value) {

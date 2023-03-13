@@ -7,10 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingZone {
-    private final Map<Player, Money> betMoneyByPlayers;
+    private final Map<Player, Money> bettingMoneyByPlayers;
 
-    public BettingZone(final Map<Player, Money> betMoneyByPlayers) {
-        this.betMoneyByPlayers = betMoneyByPlayers;
+    public BettingZone(final Map<Player, Money> bettingMoneyByPlayers) {
+        this.bettingMoneyByPlayers = bettingMoneyByPlayers;
     }
 
     public Map<Player, Money> calculateProfitByPlayers(final Map<Player, Result> resultByPlayers) {
@@ -24,7 +24,7 @@ public class BettingZone {
     }
 
     private Money calculateProfit(final Player player, final Result result) {
-        final Money money = betMoneyByPlayers.get(player);
+        final Money money = bettingMoneyByPlayers.get(player);
         return money.multiply(result.getPayoutRatio());
     }
 }

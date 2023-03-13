@@ -47,7 +47,7 @@ public class Money {
 
     @Override
     public String toString() {
-        return "BetMoney{" +
+        return "Money{" +
                 "amount=" + amount +
                 '}';
     }
