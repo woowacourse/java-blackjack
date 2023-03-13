@@ -28,6 +28,11 @@ public class Start extends GameState {
     @Override
     public GameState receive(Card card) {
         cards.add(card);
+
+        if (BlackjackScore.from(cards).isGreaterThan(BlackjackScore.getMaxScore())) {
+            return new Bust(cards);
+        }
+
         return new Start(cards);
     }
 
