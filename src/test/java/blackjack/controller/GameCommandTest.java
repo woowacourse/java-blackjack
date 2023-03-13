@@ -38,7 +38,7 @@ class GameCommandTest {
     }
 
     @Test
-    @DisplayName("입력값이 y라면 paly인지 확인시 true를 반환한다")
+    @DisplayName("입력값이 y라면 play인지 확인시 true를 반환한다")
     void isPlayTest() {
         GameCommand gameCommand = from("y");
 
