@@ -26,4 +26,11 @@ class ResultTest {
         int bettingMoney = 1000;
         assertThat(Result.LOSE.calculateResult(bettingMoney)).isEqualTo(-1000);
     }
+
+    @DisplayName("플레이어가 블랙잭인 경우 베팅 금액의 1.5배만큼 수익을 얻는다.")
+    @Test
+    void blackjackTest() {
+        int bettingMoney = 1000;
+        assertThat(Result.BLACKJACK.calculateResult(bettingMoney)).isEqualTo(1500);
+    }
 }
