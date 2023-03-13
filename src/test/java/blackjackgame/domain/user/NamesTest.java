@@ -28,13 +28,13 @@ class NamesTest {
         );
     }
 
-    @DisplayName("존재하지 않으면 예외가 발생한다. ")
+    @DisplayName("존재하지 않으면 예외가 발생한다.")
     @Test
     void generateEmptyPlayers() {
         assertThrows(IllegalArgumentException.class, () -> new Players(new Names(Collections.emptyList()), List.of()));
     }
 
-    @DisplayName("5개를 초과하면 예외가 발생한다. ")
+    @DisplayName("5개를 초과하면 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("generateTooManyPlayers")
     void generateTooManyPlayersTest(List<String> playerNames) {
