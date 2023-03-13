@@ -50,11 +50,11 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hand);
+        return Objects.hash(name);
     }
 }
