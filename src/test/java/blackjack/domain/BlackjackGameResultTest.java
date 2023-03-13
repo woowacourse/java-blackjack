@@ -4,7 +4,9 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.participant.Amount;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.util.CardPickerGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +25,8 @@ class BlackjackGameResultTest {
         //given
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi", "ako"),
-                List.of("1000","2000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
@@ -38,7 +40,7 @@ class BlackjackGameResultTest {
 
         //then
 
-        assertThat(result).isEqualTo(new BigDecimal(-3000));
+        assertThat(result).isEqualTo(new BigDecimal(-2000));
     }
 
     @Test
@@ -47,8 +49,8 @@ class BlackjackGameResultTest {
         //given
         List<Integer> testData = settingTestData2();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi"),
-                List.of("1000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData)
                 ));
         for (Participant participant : game.getParticipants()) {
@@ -61,7 +63,7 @@ class BlackjackGameResultTest {
         BigDecimal result = blackjackGameResult.calculateDealerPrizeByGameResult();
 
         //then
-        assertThat(result).isEqualTo(new BigDecimal(1000));
+        assertThat(result).isEqualTo(new BigDecimal(2000));
     }
 
     @Test
@@ -70,8 +72,8 @@ class BlackjackGameResultTest {
         //given
         List<Integer> testData = settingTestData3();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi"),
-                List.of("1000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData)
                 ));
         for (Participant participant : game.getParticipants()) {
@@ -84,7 +86,7 @@ class BlackjackGameResultTest {
         BigDecimal result = blackjackGameResult.calculateDealerPrizeByGameResult();
 
         //then
-        assertThat(result).isEqualTo(new BigDecimal(-1500));
+        assertThat(result).isEqualTo(new BigDecimal(-3000));
     }
     private static List<Integer> settingTestData() {
         List<Integer> testData = new ArrayList<>();

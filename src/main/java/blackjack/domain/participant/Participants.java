@@ -15,14 +15,11 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(final List<String> playersName, final List<String> playersAmount, final Dealer dealer) {
+    public static Participants from(final List<ParticipantName> playersName, final List<Amount> playersAmount, final Dealer dealer) {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         for (int index = 0; index < playersName.size(); index++) {
-            participants.add(new Player(
-                    new ParticipantName(playersName.get(index)),
-                    new Amount(playersAmount.get(index))
-                    ));
+            participants.add(new Player(playersName.get(index), playersAmount.get(index)));
         }
         return new Participants(participants);
     }

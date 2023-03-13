@@ -57,7 +57,7 @@ public class OutputView {
         System.out.print("- 결과 : " + participant.calculateCardNumber() + NEW_LINE);
     }
 
-    public void printHitDealerCount(Dealer dealer) {
+    public void printHitDealerCount(final Dealer dealer) {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
     }
 
@@ -65,11 +65,15 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public void printDealerProceeds(BigDecimal dealerProceeds) {
+    public void printDealerProceeds(final BigDecimal dealerProceeds) {
         System.out.println("딜러: " + dealerProceeds);
     }
 
-    public void printPlayersProceeds(Map<Player, BigDecimal> playerResult) {
+    public void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
+    public void printPlayersProceeds(final Map<Player, BigDecimal> playerResult) {
         for (Player player : playerResult.keySet()) {
             System.out.println(player.getName()+": "+playerResult.get(player));
         }

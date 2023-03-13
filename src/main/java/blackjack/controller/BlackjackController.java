@@ -4,7 +4,9 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.participant.Amount;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
@@ -35,17 +37,9 @@ public class BlackjackController {
 
     private BlackjackGame initBlackjackGame() {
         Deck deck = Deck.create(new RandomCardPickerGenerator());
-        List<String> playersName = inputPlayerName();
-        List<String> playerAmount = creatPlayerAmount(playersName);
+        List<ParticipantName> playersName = inputPlayerName();
+        List<Amount> playerAmount = creatPlayerAmount(playersName);
         return BlackjackGame.of(playersName, playerAmount, deck);
-    }
-
-    private List<String> creatPlayerAmount(List<String> playersName) {
-        List<String> playerAmount = new ArrayList<>();
-        for (String name : playersName) {
-            playerAmount.add(inputPlayerAmount(name));
-        }
-        return playerAmount;
     }
 
     private void hitFirstSetting(final BlackjackGame blackjackGame) {
@@ -85,30 +79,46 @@ public class BlackjackController {
         outputView.printPlayersProceeds(blackjackGameResult.calculatePlayersPrizeByGameResult());
     }
 
-    private List<String> inputPlayerName() {
+    private List<ParticipantName> inputPlayerName() {
         try {
-            return inputView.readPlayerName();
+            return creatPlayersName(inputView.readPlayerName());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
         return inputPlayerName();
     }
 
-    private String inputPlayerAmount(String name) {
+    private Amount inputPlayerAmount(final String name) {
         try {
-            return inputView.readPlayerAmount(name);
+            return new Amount(inputView.readPlayerAmount(name));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
-        return inputView.readPlayerAmount(name);
+        return inputPlayerAmount(name);
     }
 
     private String inputHitCommand(final Player player) {
         try {
             return inputView.readHitCommand(player.getName());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
         return inputHitCommand(player);
+    }
+
+    private List<ParticipantName> creatPlayersName(final List<String> readPlayerName) {
+        List<ParticipantName> playersName = new ArrayList<>();
+        for (String name : readPlayerName) {
+            playersName.add(new ParticipantName(name));
+        }
+        return playersName;
+    }
+
+    private List<Amount> creatPlayerAmount(final List<ParticipantName> playersName) {
+        List<Amount> playerAmount = new ArrayList<>();
+        for (ParticipantName name : playersName) {
+            playerAmount.add(inputPlayerAmount(name.getName()));
+        }
+        return playerAmount;
     }
 }

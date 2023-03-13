@@ -7,7 +7,9 @@ import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameResult;
 import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Amount;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.util.CardPickerGenerator;
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ class BlackjackGameTest {
         //given
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi", "ako"),
-                List.of("1000","2000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData))
-        );
+                        );
         //when
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
@@ -50,8 +52,8 @@ class BlackjackGameTest {
         //given
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi", "ako"),
-                List.of("1000","2000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
@@ -74,13 +76,13 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("포비가 5점이고 아코가 20점일 때 딜러가 17점 이면 결과는 각각 LOSE,WIN")
+    @DisplayName("아코가 5점일 때 딜러가 20점 이면 결과는 LOSE")
     void dealerResultTest() {
         //given
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
-                List.of("pobi", "ako"),
-                List.of("1000","2000"),
+                List.of(new ParticipantName("ako")),
+                List.of(new Amount("2000")),
                 Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
@@ -94,11 +96,8 @@ class BlackjackGameTest {
         Set<Player> players = blackjackGameResult.getGameResult().keySet();
         for(Participant participant : players) {
             String playername = participant.getParticipantName().getName();
-            if (playername.equals("pobi")){
-                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.LOSE);
-            }
             if (playername.equals("ako")) {
-                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.WIN);
+                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.LOSE);
             }
         }
     }

@@ -1,10 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 
 import java.util.*;
 
@@ -20,11 +17,11 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame of(List<String> playersName,List<String> playersAmount, Deck deck) {
+    public static BlackjackGame of(final List<ParticipantName> playersName, final List<Amount> playersAmount, final Deck deck) {
         return new BlackjackGame(Participants.from(playersName, playersAmount, new Dealer()), deck);
     }
 
-    public BlackjackGameResult generatePlayersResult(BlackJackReferee referee) {
+    public BlackjackGameResult generatePlayersResult(final BlackJackReferee referee) {
         for (Player player : participants.findPlayers()) {
             referee.createResult(participants.findDealer(), player);
         }
@@ -44,7 +41,7 @@ public class BlackjackGame {
         }
     }
 
-    public void hitPlayerCard(Player player) {
+    public void hitPlayerCard(final Player player) {
         player.hit(deck.pick());
     }
 
