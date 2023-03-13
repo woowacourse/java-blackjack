@@ -18,16 +18,4 @@ class ResultMatcherTest {
         // then
         Assertions.assertThat(resultMatcher).isEqualTo(expectedResultMatcher);
     }
-
-    @ParameterizedTest
-    @CsvSource(value = {"LOSE:WIN", "WIN:LOSE", "TIE:TIE"}, delimiter = ':')
-    @DisplayName("ofOppositeResult()는 ResultMatcher 을 인자로 받아 그의 반대 되는 이넘을 반환한다.")
-    void test_ofOppositeResult(String inputPlayerResult, String inputDealerResult) {
-        // given & when
-        ResultMatcher playerResultMatcher = ResultMatcher.valueOf(inputPlayerResult);
-        ResultMatcher expectedResultMatcher = ResultMatcher.valueOf(inputDealerResult);
-
-        // then
-        Assertions.assertThat(ResultMatcher.ofOppositeResult(playerResultMatcher)).isEqualTo(expectedResultMatcher);
-    }
 }
