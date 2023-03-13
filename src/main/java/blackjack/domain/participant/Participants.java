@@ -11,6 +11,7 @@ public final class Participants {
 
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
+    private static final String NOT_EXIST_DEALER_ERROR_MESSAGE = "딜러가 존재하지 않습니다.";
 
     private final List<Participant> participants = new ArrayList<>();
 
@@ -65,7 +66,11 @@ public final class Participants {
     }
 
     public Participant getDealer() {
-        return participants.get(0);
+        return participants.stream()
+                .filter(Participant::isDealer)
+                .map(Dealer.class::cast)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER_ERROR_MESSAGE));
     }
 
     public List<Participant> getPlayers() {

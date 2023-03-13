@@ -47,10 +47,7 @@ public class OutputView {
     }
 
     private String getNameAndCards(final Participant participant) {
-        final List<String> cardNames = participant.getHand()
-                .stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toUnmodifiableList());
+        final List<String> cardNames = participant.getCardNames();
 
         return participant.getName() + COLON + String.join(COMMA, cardNames);
     }

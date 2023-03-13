@@ -6,6 +6,7 @@ import blackjack.domain.game.Score;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class Participant {
 
@@ -27,6 +28,9 @@ public abstract class Participant {
 
     public abstract boolean isHit();
 
+    public abstract boolean isDealer();
+
+
     public Card getCard(final int index) {
         return hand.getCards().get(index);
     }
@@ -37,6 +41,12 @@ public abstract class Participant {
 
     public List<Card> getHand() {
         return hand.getCards();
+    }
+
+    public List<String> getCardNames() {
+        return getHand().stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList());
     }
 
     @Override
