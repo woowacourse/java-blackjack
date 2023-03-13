@@ -24,6 +24,19 @@ public final class InputView {
                 .collect(Collectors.toList());
     }
 
+    public Integer betRequest(final Name name) {
+        System.out.printf("%s의 배팅 금액은?\n", name.getValue());
+        return toNumber(readLine());
+    }
+
+    private Integer toNumber(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("숫자를 입력해야 합니다.", exception);
+        }
+    }
+
     public boolean cardRequest(Name name) {
         System.out.printf(
                 "%s는 한 장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n",
@@ -48,4 +61,6 @@ public final class InputView {
     private String readLine() {
         return scanner.nextLine();
     }
+
+
 }

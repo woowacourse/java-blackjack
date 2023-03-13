@@ -1,4 +1,4 @@
-package domain.game;
+package domain.deck;
 
 import domain.card.Card;
 import domain.card.CardNumber;
@@ -8,23 +8,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Deck {
+public final class ShuffledDeck implements DeckStrategy {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public Deck() {
+    public ShuffledDeck() {
         for (CardShape cardShape : CardShape.values()) {
-            getMakeCardsOf(cardShape);
+            initDeck(cardShape);
         }
         Collections.shuffle(cards);
     }
 
-    private void getMakeCardsOf(final CardShape cardShape) {
+    private void initDeck(final CardShape cardShape) {
         for (int i = CardNumber.getMinValue(); i <= CardNumber.getMaxValue(); i++) {
-            cards.add(Card.create(cardShape, CardNumber.of(i)));
+            cards.add(Card.of(cardShape, CardNumber.of(i)));
         }
     }
 
+    @Override
     public Card drawCard() {
         try {
             return cards.remove(cards.size() - 1);

@@ -1,11 +1,13 @@
 package domain.participant;
 
-import domain.game.Deck;
+import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Players {
 
@@ -14,15 +16,16 @@ public final class Players {
     private final List<Player> players;
 
     private Players(final List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
-    public static Players create(final List<Name> names) {
+    public static Players create(final List<Name> names, final List<Integer> bets) {
         validatePlayersCount(names);
         validateDuplicateName(names);
-        final List<Player> players = names.stream()
-                .map(Player::of)
+        final List<Player> players = IntStream.range(0, names.size())
+                .mapToObj(index -> Player.of(names.get(index), bets.get(index)))
                 .collect(Collectors.toList());
+
         return new Players(players);
     }
 
@@ -39,9 +42,9 @@ public final class Players {
         }
     }
 
-    public void takeCard(final Deck deck, final int count) {
+    public void takeCard(final DeckStrategy deck, final int count) {
         for (Player player : players) {
-            player.takeCard(deck, count);
+            player.takeInitialCards(deck, count);
         }
     }
 

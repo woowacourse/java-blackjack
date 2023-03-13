@@ -1,10 +1,10 @@
 package domain.participant;
 
-import domain.game.Deck;
+import domain.deck.ShuffledDeck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.game.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,16 +25,16 @@ class PlayerTest {
     @BeforeEach
     void init() {
         initialData = List.of(
-                Card.create(CardShape.HEART, CardNumber.of(1)),
-                Card.create(CardShape.HEART, CardNumber.of(2))
+                Card.of(CardShape.HEART, CardNumber.of(1)),
+                Card.of(CardShape.HEART, CardNumber.of(2))
         );
-        player = Player.create(Name.of("HK"), Cards.create(initialData));
+        player = Player.create(Name.of("HK"), Hand.create(initialData), 10_000);
     }
 
     @DisplayName("플레이어는 '딜러'라는 이름을 가지면 예외가 발생한다.")
     @Test
     void invalidNameTest() {
-        assertThatThrownBy(() -> Player.of(Name.of("딜러")))
+        assertThatThrownBy(() -> Player.of(Name.of("딜러"), 10_000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("'딜러'라는 이름을 가질 수 없습니다.");
     }
@@ -42,7 +42,7 @@ class PlayerTest {
     @DisplayName("플레이어는 한 장의 카드를 받을 수 있다.")
     @Test
     void playerTakeCardsTest() {
-        player.takeCard(Card.create(CardShape.HEART, CardNumber.of(3)));
+        player.takeCard(Card.of(CardShape.HEART, CardNumber.of(3)));
 
         assertThat(player)
                 .extracting("cards")
@@ -55,7 +55,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void playerTakeCardTest(int value) {
-        player.takeCard(new Deck(), value);
+        player.takeInitialCards(new ShuffledDeck(), value);
 
         assertThat(player)
                 .extracting("cards")
@@ -68,7 +68,7 @@ class PlayerTest {
     @Test
     void calculateGamePoint() {
         for (int i = 0; i < 12; i++) {
-            player.takeCard(Card.create(CardShape.HEART, CardNumber.of(1)));
+            player.takeCard(Card.of(CardShape.HEART, CardNumber.of(1)));
         }
         assertThat(player.calculatePoint())
                 .extracting("gamePoint")

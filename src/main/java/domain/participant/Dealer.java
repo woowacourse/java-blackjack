@@ -1,9 +1,8 @@
 package domain.participant;
 
-import domain.card.Cards;
+import domain.card.Card;
+import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
-
-import java.util.List;
 
 public final class Dealer extends Participant {
 
@@ -17,11 +16,21 @@ public final class Dealer extends Participant {
         return new Dealer(Name.of(DEALER_NAME));
     }
 
+    public void takeInitialCards(final DeckStrategy deck, final int count) {
+        for (int i = 0; i < count; i++) {
+            this.hand = hand.add(deck.drawCard());
+        }
+    }
+
+    public void takeCard(final Card card) {
+        this.hand = hand.add(card);
+    }
+
     public boolean needMoreCard() {
         return calculatePoint().isLowerThan(STANDARD_OF_NEED_MORE_CARD) && !this.isBusted();
     }
 
-    public Cards getFirstCard() {
-        return Cards.create(List.of(cards.getFirstCard()));
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 }

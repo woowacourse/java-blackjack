@@ -1,7 +1,6 @@
 package template;
 
 public final class Repeater {
-
     private static final String ERROR_HEAD = "[ERROR] ";
 
     private Repeater() {

@@ -12,7 +12,6 @@ public final class Application {
                     new InputView(scanner),
                     new OutputView()
             );
-
             blackJackController.process();
         } catch (Exception exception) {
             exception.printStackTrace();

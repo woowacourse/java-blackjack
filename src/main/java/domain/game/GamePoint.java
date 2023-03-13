@@ -18,16 +18,20 @@ public final class GamePoint {
         this.gamePoint = gamePoint;
     }
 
-    public static GamePoint create(final List<Card> cards) {
+    private GamePoint(final List<Card> cards) {
         int point = getPoint(calculateMaxPoint(cards), getCountOfAce(cards));
-        return new GamePoint(calculateBust(point));
+        this.gamePoint = calculateBust(point);
+    }
+
+    public static GamePoint create(final List<Card> cards) {
+        return new GamePoint(cards);
     }
 
     public static GamePoint of(final int gamePoint) {
         return new GamePoint(gamePoint);
     }
 
-    private static int getPoint(int point, int aceCount) {
+    private int getPoint(int point, int aceCount) {
         while (point > BLACK_JACK && aceCount > 0) {
             point -= 10;
             aceCount -= 1;
@@ -35,26 +39,26 @@ public final class GamePoint {
         return calculateBust(point);
     }
 
-    private static int calculateMaxPoint(final List<Card> cards) {
+    private int calculateMaxPoint(final List<Card> cards) {
         return cards.stream()
-                .mapToInt(GamePoint::transform)
+                .mapToInt(this::transform)
                 .sum();
     }
 
-    private static int getCountOfAce(final List<Card> cards) {
+    private int getCountOfAce(final List<Card> cards) {
         return (int) cards.stream()
                 .filter(card -> card.isSameAs(ACE))
                 .count();
     }
 
-    private static int calculateBust(final int point) {
+    private int calculateBust(final int point) {
         if (point > BLACK_JACK) {
             return BUST;
         }
         return point;
     }
 
-    private static int transform(Card card) {
+    private int transform(Card card) {
         if (card.isSameAs(ACE)) {
             return ACE_UPPER;
         }
@@ -65,7 +69,7 @@ public final class GamePoint {
     }
 
     public boolean isBusted() {
-        return gamePoint == BUST;
+        return BUST == gamePoint;
     }
 
     public int getPoint() {

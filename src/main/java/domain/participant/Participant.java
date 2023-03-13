@@ -1,59 +1,44 @@
 package domain.participant;
 
-import domain.game.Deck;
 import domain.game.GamePoint;
-import domain.card.Card;
-import domain.card.Cards;
+import domain.game.Hand;
 
 import java.util.Collections;
 
 public abstract class Participant {
 
-    private static final int INITIAL_CARD_COUNT = 2;
     protected static final String DEALER_NAME = "딜러";
 
     private final Name name;
-    protected Cards cards;
+    protected Hand hand;
 
-    protected Participant(Name name) {
+    protected Participant(final Name name) {
         this.name = name;
-        this.cards = Cards.create(Collections.emptyList());
+        this.hand = Hand.create(Collections.emptyList());
     }
 
-    protected Participant(Name name, Cards cards) {
-//        validateCardsSize(cards.size());
+    protected Participant(final Name name, final Hand hand) {
         this.name = name;
-        this.cards = cards;
-    }
-
-    private void validateCardsSize(final int size) {
-        if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("유저는 카드 2장 이상을 갖고 있어야 합니다.");
-        }
-    }
-    public void takeCard(final Card card) {
-        this.cards = cards.add(card);
-    }
-
-    public void takeCard(final Deck deck, final int count) {
-        for (int i = 0; i < count; i++) {
-            this.cards = cards.add(deck.drawCard());
-        }
-    }
-
-    public Cards getCards() {
-        return cards;
+        this.hand = hand;
     }
 
     public GamePoint calculatePoint() {
-        return cards.getGamePoint();
+        return hand.getGamePoint();
     }
 
     public boolean isBusted() {
-        return cards.isBusted();
+        return hand.isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
     public Name getName() {
         return name;
+    }
+
+    public Hand getCards() {
+        return hand;
     }
 }

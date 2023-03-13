@@ -1,26 +1,43 @@
 package domain.participant;
 
+import domain.card.Card;
+import domain.deck.DeckStrategy;
+import domain.game.Bet;
 import domain.game.GamePoint;
-import domain.card.Cards;
+import domain.game.Hand;
 
 public final class Player extends Participant {
 
-    private Player(final Name name) {
+    private final Bet bet;
+
+    private Player(final Name name, final int bet) {
         super(name);
+        this.bet = Bet.of(bet);
     }
 
-    private Player(final Name name, final Cards cards) {
-        super(name, cards);
+    private Player(final Name name, final Hand hand, final int bet) {
+        super(name, hand);
+        this.bet = Bet.of(bet);
     }
 
-    public static Player of(final Name name) {
+    public static Player of(final Name name, final int bet) {
         validateName(name);
-        return new Player(name);
+        return new Player(name, bet);
     }
 
-    public static Player create(final Name name, final Cards cards) {
+    public static Player create(final Name name, final Hand hand, final int bet) {
         validateName(name);
-        return new Player(name, cards);
+        return new Player(name, hand, bet);
+    }
+
+    public void takeInitialCards(final DeckStrategy deck, final int count) {
+        for (int i = 0; i < count; i++) {
+            hand = hand.add(deck.drawCard());
+        }
+    }
+
+    public void takeCard(final Card card) {
+        hand = hand.add(card);
     }
 
     private static void validateName(final Name name) {
@@ -40,5 +57,9 @@ public final class Player extends Participant {
 
     public boolean hasGreaterThan(final GamePoint gamePoint) {
         return calculatePoint().isGreaterThan(gamePoint);
+    }
+
+    public int getBet() {
+        return bet.getBet();
     }
 }
