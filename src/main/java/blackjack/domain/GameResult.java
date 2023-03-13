@@ -12,53 +12,53 @@ public class GameResult {
     public GameResult(Dealer dealer, Players players) {
         this.dealerResult = 0;
         this.playersResult = new LinkedHashMap<>();
-        calculateProfit(dealer, players);
+        calculateProfit(dealer.getScore(), players);
     }
 
-    private void calculateProfit(Dealer dealer, Players players) {
+    private void calculateProfit(int dealerScore, Players players) {
         for (Player player : players.getPlayers()) {
-            calculateProfitWithDealerAndPlayer(dealer, player);
+            calculateProfitWithDealerAndPlayer(dealerScore, player);
         }
     }
 
-    private void calculateProfitWithDealerAndPlayer(Dealer dealer, Player player) {
+    private void calculateProfitWithDealerAndPlayer(int dealerScore, Player player) {
         if (player.getScore() == BLACKJACK) {
-            playerScoreIsBlackJack(dealer, player);
+            playerScoreIsBlackJack(dealerScore, player);
             return;
         }
         if (player.getScore() < BLACKJACK) {
-            playerScoreLessThanBlackJack(dealer, player);
+            playerScoreLessThanBlackJack(dealerScore, player);
             return;
         }
         playerLose(player);
     }
 
-    private void playerScoreIsBlackJack(Dealer dealer, Player player) {
-        if (dealer.getScore() == BLACKJACK) {
+    private void playerScoreIsBlackJack(int dealerScore, Player player) {
+        if (dealerScore == BLACKJACK) {
             draw(player);
             return;
         }
-        if (dealer.getScore() != BLACKJACK && player.getAllCards().size() == 2) {
+        if (player.getAllCards().size() == 2) {
             playerBlackJack(player);
             return;
         }
         playerWin(player);
     }
 
-    private void playerScoreLessThanBlackJack(Dealer dealer, Player player) {
-        if (dealer.getScore() == BLACKJACK) {
+    private void playerScoreLessThanBlackJack(int dealerScore, Player player) {
+        if (dealerScore == BLACKJACK) {
             playerLose(player);
             return;
         }
-        if (dealer.getScore() > BLACKJACK) {
+        if (dealerScore > BLACKJACK) {
             playerWin(player);
             return;
         }
-        dealerScoreLessThanBlackJack(dealer, player);
+        dealerScoreLessThanBlackJack(dealerScore, player);
     }
 
-    private void dealerScoreLessThanBlackJack(Dealer dealer, Player player) {
-        if (dealer.getScore() < player.getScore()) {
+    private void dealerScoreLessThanBlackJack(int dealerScore, Player player) {
+        if (dealerScore < player.getScore()) {
             playerWin(player);
             return;
         }
