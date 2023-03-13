@@ -93,7 +93,7 @@ public class Players {
     public List<Player> getGamblers() {
         return players.stream()
                 .filter(player -> !player.isDealer())
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Player> getPlayers() {
