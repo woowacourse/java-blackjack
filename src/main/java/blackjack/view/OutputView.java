@@ -40,7 +40,8 @@ public class OutputView {
     }
 
     public void printDealerResult(List<String> dealerCards, int calculateScore) {
-        System.out.println("딜러 카드: " + String.join(DELIMITER, dealerCards)
+        System.out.println(System.lineSeparator()
+                + "딜러 카드: " + String.join(DELIMITER, dealerCards)
                 + " - 결과: "
                 + calculateScore);
     }

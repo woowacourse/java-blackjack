@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.BattingAmount;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Game;
@@ -42,6 +43,10 @@ public class BlackJackGameController {
     }
 
     private void gameStart(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            BattingAmount battingAmount = new BattingAmount(inputView.readBattingAmount(player.getName()));
+            player.setBattingAmount(battingAmount);
+        }
         Map<String, List<String>> playersToPrintFormat = playersToPrintFormat(players);
         String dealerFirstCardToPrintFormat = dealerFirstCardToPrintFormat(dealer);
         outputView.printGameStartMessage(playersToPrintFormat, dealerFirstCardToPrintFormat);

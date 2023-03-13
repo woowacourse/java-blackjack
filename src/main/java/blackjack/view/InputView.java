@@ -21,7 +21,7 @@ public class InputView {
 
     public int readBattingAmount(String name) {
         try {
-            System.out.println(name + "의 배팅 금액은?");
+            System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("배팅 금액은 숫자로 입력되어야 합니다.");

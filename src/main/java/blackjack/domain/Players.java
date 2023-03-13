@@ -33,14 +33,6 @@ public class Players {
         return playersScore;
     }
 
-    public void addCardToPlayer(int i, Card card) {
-        players.get(i).addCard(card);
-    }
-
-    public Player getPlayer(int i) {
-        return players.get(i);
-    }
-
     public int getCount() {
         return players.size();
     }
