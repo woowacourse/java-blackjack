@@ -54,10 +54,6 @@ public class Score {
         return score < BUST_SCORE;
     }
 
-    public boolean isGreaterThanBustScore() {
-        return score >= BUST_SCORE;
-    }
-
     public int getScore() {
         return score;
     }
