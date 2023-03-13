@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjackgame.domain.Judge;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.player.Dealer;
 import blackjackgame.domain.player.Guest;
@@ -26,16 +25,25 @@ public class BlackJackController {
 
     public void run() {
         final Deck deck = new Deck();
+        final Dealer dealer = Dealer.from(deck.firstPickCards());
         final Players players = initializeGuests(deck);
-        players.add(Dealer.from(deck.firstPickCards()));
+        players.add(dealer);
+
         outputView.printStartingCards(players.startingCards());
 
         hitGuestsCard(players.guests(), deck);
         hitDealerCard(players.dealer(), deck);
-
         printScore(players);
-        printProfit(players);
     }
+
+    /*private Money initializeMoney(Players players) {
+        Map<Player, Integer> betting = new HashMap<>();
+        for (Guest guest : players.guests()) {
+            int money = inputView.requestMoney(guest.getName());
+            betting.put(guest, money);
+        }
+        return new Money(betting);
+    }*/
 
     private Players initializeGuests(Deck deck) {
         Players guests = null;
@@ -51,19 +59,18 @@ public class BlackJackController {
 
     private Players generateGuests(Deck deck) {
         List<String> guestNames = inputView.readGuestsName();
-        List<Integer> moneys = guestNames.stream()
-            .map(inputView::readBettingMoney)
-            .collect(Collectors.toList());
+        List<Integer> moneys = inputView.requestMoney(guestNames);
+        List<Player> guests = new ArrayList<>();
 
         List<Name> names = guestNames.stream()
             .map(Name::new)
             .collect(Collectors.toList());
 
-        List<Player> guests = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             Guest guest = Guest.of(deck.firstPickCards(), names.get(i), moneys.get(i));
             guests.add(guest);
         }
+
         return new Players(guests);
     }
 
@@ -100,8 +107,11 @@ public class BlackJackController {
         }
     }
 
-    private void printProfit(final Players players) {
-        Judge judge = new Judge(players.dealer(), players.guests());
-        outputView.printProfit(judge.playersProfit());
+    private void judgeAndPrintResult(final Players guests, final Dealer dealer) {
+        /*Judge judge = new Judge(dealer, guests);
+        Result result = new Result(judge.guestsResult());
+        result.generateDealer();
+
+        outputView.printResult(ResultDto.from(result));*/
     }
 }

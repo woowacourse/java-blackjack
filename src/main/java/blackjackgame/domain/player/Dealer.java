@@ -22,7 +22,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    protected List<Card> startingCards() {
+    public List<Card> startingCards() {
         return List.of(cards().get(1));
     }
 
