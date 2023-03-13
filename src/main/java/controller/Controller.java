@@ -59,11 +59,11 @@ public class Controller {
             command = Command.from(inputView.readCommand(player.getName()));
             selectByCommand(game, player, command);
             outputView.printPlayerCardsInformation(player);
-        } while (!player.isOverBlackJack() && command.equals(Command.YES));
+        } while (!player.isOverBlackJack() && command == Command.YES);
     }
 
     private void selectByCommand(BlackjackGame game, Player player, Command command) {
-        if (command.equals(Command.YES)) {
+        if (command == Command.YES) {
             game.distributePlayer(player);
         }
     }
