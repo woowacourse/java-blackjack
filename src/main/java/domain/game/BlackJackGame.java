@@ -49,7 +49,7 @@ public final class BlackJackGame {
 
     public List<String> fetchParticipantNames() {
         List<String> participantNames = new ArrayList<>();
-        participantNames.add(participants.getDealer().getName());
+        participantNames.add(fetchDealerName());
         participantNames.addAll(fetchPlayerNames());
         return participantNames;
     }
@@ -67,7 +67,7 @@ public final class BlackJackGame {
     public List<String> fetchParticipantInitHand(final String participantName) {
         List<String> participantHand = fetchParticipantHand(participantName);
 
-        if (participantName.equals(participants.getDealer().getName())) {
+        if (participantName.equals(fetchDealerName())) {
             participantHand = participantHand.subList(0, 1);
         }
 
@@ -75,7 +75,7 @@ public final class BlackJackGame {
     }
 
     public List<String> fetchParticipantHand(final String participantName) {
-        if (participantName.equals(participants.getDealer().getName())) {
+        if (participantName.equals(fetchDealerName())) {
             return participants.getDealer().fetchHand().stream().map(Card::toString).collect(toList());
         }
 
