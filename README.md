@@ -106,8 +106,8 @@
 - [x] 디미터 법칙 위반된 코드 한 줄에 점을 하나만 찍도록 수정
 - [x] calculateScore 메소드 hand로 위치 변경
 - [x] 전체 코드에 사용되는 것이 아니면 @BeforeEach 제거
-- [ ] `calculateVictoryOrDefeatWithDealerAndPlayer` 메서드 private로 수정
-- [ ] GameResultTest에 `calculateVictoryOrDefeatWithDealerAndPlayer` 를 사용한 테스트 생성자를 통해 진행하도록 수정
+- [x] `calculateVictoryOrDefeatWithDealerAndPlayer` 메서드 private로 수정
+- [x] GameResultTest에 `calculateVictoryOrDefeatWithDealerAndPlayer` 를 사용한 테스트 생성자를 통해 진행하도록 수정
 
 --- 
 
@@ -117,7 +117,7 @@
 
 - [x] 플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다.
 - [x] 플레이어는 카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.
-- [ ] 플레이어는 처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다.
+- [x] 플레이어는 처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다.
 - [x] 딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.
 - [x] 딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.
 - [x] 배당율은 건 금액만큼을 받는 게 기본이다. (100원을 걸어 이기면 200원을 받고 지면 건 금액인 100원을 잃는다.)

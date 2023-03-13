@@ -35,11 +35,11 @@ public class GameResult {
 
     private void playerScoreIsBlackJack(Dealer dealer, Player player) {
         if (dealer.getScore() == BLACKJACK) {
-            if (player.getAllCards().size() == 2) {
-                playerBlackJack(player);
-                return;
-            }
             draw(player);
+            return;
+        }
+        if (dealer.getScore() != BLACKJACK && player.getAllCards().size() == 2) {
+            playerBlackJack(player);
             return;
         }
         playerWin(player);

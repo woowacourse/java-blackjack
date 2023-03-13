@@ -5,94 +5,163 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
-    private static final int BLACKJACK = 21;
-    private static final int LESS_THAN_BLACKJACK = 20;
-    private static final int BURST = 22;
     private static final String PLAYER_NAME = "tori";
+    private static final Card JACK_HEARTS = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+    private static final Card JACK_CLUBS = new Card(CardNumber.JACK, CardSymbol.CLUBS);
+    private static final Card JACK_SPADES = new Card(CardNumber.JACK, CardSymbol.SPADES);
+    private static final Card JACK_DIAMONDS = new Card(CardNumber.JACK, CardSymbol.DIAMONDS);
+    private static final Card NINE_HEARTS = new Card(CardNumber.NINE, CardSymbol.HEARTS);
+    private static final Card TWO_HEARTS = new Card(CardNumber.TWO, CardSymbol.HEARTS);
+    private static final Card ACE_HEARTS = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+    private static final Card ACE_SPADES = new Card(CardNumber.ACE, CardSymbol.SPADES);
+    private static final int BETTING_AMOUNT = 10000;
 
-    private GameResult gameResult;
+    private Dealer dealer;
+    private Players players;
+    private Player player;
 
     @BeforeEach
     void setup() {
-        GamePlayer gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("tori", "name2", "name3")));
-        Game game = Game.from(gamePlayer);
-        gameResult = new GameResult(game.getDealer(), game.getPlayers());
+        dealer = new Dealer();
+        players = Players.from(List.of("tori"));
+        player = players.getPlayers().get(0);
+        player.setBettingAmount(new BettingAmount(BETTING_AMOUNT));
     }
 
-    @DisplayName("GameResult가 생성되면 처음 딜러의 수익은 0이다.")
-    @Test
-    void Should_Create_When_NewGameResult() {
-        GamePlayer gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("tori", "name2", "name3")));
-        Game game = Game.from(gamePlayer);
-        GameResult gameResult = new GameResult(game.getDealer(), game.getPlayers());
-
-        assertThat(gameResult.getDealerResult()).isEqualTo(0);
-    }
-
-/*    @DisplayName("플레이어와 딜러의 점수를 통해 승패를 결정한다.")
+    @DisplayName("플레이어와 딜러의 점수를 통해 승패를 결정한다.")
     @Nested
     class calculate {
-        @DisplayName("플레이어가 블랙잭일 때")
+        @DisplayName("플레이어가 블랙잭일 때 가진 카드가 2개이면")
         @Nested
-        class playerIsBlackJack {
-            @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다.)
+        class playerIsBlackJackCardsSizeIsTwo {
+            @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다.")
             @Test
             void Should_Draw_When_DealerBlackJack() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(BLACKJACK, BLACKJACK, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(ACE_SPADES);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(ACE_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("무");
+
+                assertThat(playerResult).isEqualTo(0);
             }
 
-            @DisplayName("딜러가 블랙잭이 아니면 플레이어의 결과는 승이다.")
+            @DisplayName("딜러가 블랙잭이 아니면 플레이어는 1.5배의 금액을 돌려받는다.")
+            @Test
+            void Should_BlackJack_When_DealerNotBlackJack() {
+                player.addCard(JACK_HEARTS);
+                player.addCard(ACE_SPADES);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(JACK_SPADES);
+
+                GameResult gameResult = new GameResult(dealer, players);
+                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+
+                assertThat(playerResult).isEqualTo((int) (BETTING_AMOUNT * 1.5));
+            }
+        }
+
+        @DisplayName("플레이어가 블랙잭일 때 가진 카드가 2개가 아니면")
+        @Nested
+        class playerIsBlackJack {
+            @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다.")
+            @Test
+            void Should_Draw_When_DealerBlackJack() {
+                player.addCard(JACK_HEARTS);
+                player.addCard(NINE_HEARTS);
+                player.addCard(TWO_HEARTS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(ACE_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
+                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+
+                assertThat(playerResult).isEqualTo(0);
+            }
+
+            @DisplayName("딜러가 블랙잭이 아니면 플레이어는 배팅한 금액만큼 돌려받는다.")
             @Test
             void Should_WIN_When_DealerNotBlackJack() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(LESS_THAN_BLACKJACK, BLACKJACK, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(NINE_HEARTS);
+                player.addCard(TWO_HEARTS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(JACK_SPADES);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("승");
+
+                assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
             }
         }
 
         @DisplayName("플레이어가 블랙잭보다 작을 때")
         @Nested
         class playerLessThanBlackJack {
-            @DisplayName("딜러가 블랙잭이면 플레이어의 결과는 패이다.")
+            @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerBlackJack() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(BLACKJACK, LESS_THAN_BLACKJACK, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(JACK_CLUBS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(ACE_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("패");
+
+                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
             }
 
-            @DisplayName("딜러가 버스트이면 플레이어의 결과는 승이다.")
+            @DisplayName("딜러가 버스트이면 플레이어는 배팅한 금액만큼 돌려받는다.")
             @Test
             void Should_WIN_When_DealerBurst() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(BURST, LESS_THAN_BLACKJACK, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(JACK_CLUBS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(JACK_SPADES);
+                dealer.addCard(TWO_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("승");
+
+                assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
             }
 
             @DisplayName("딜러가 블랙잭보다 작을 때")
             @Nested
             class dealerLessThanBlackJack {
-                @DisplayName("플레이어의 합이 딜러보다 높으면 플레이어의 결과는 승이다.")
+                @DisplayName("플레이어의 합이 딜러보다 높으면 플레이어는 배팅한 금액만큼 돌려받는다.")
                 @Test
                 void Should_WIN_When_PlayerMoreThanDealer() {
-                    gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(
-                            LESS_THAN_BLACKJACK - 1, LESS_THAN_BLACKJACK, PLAYER_NAME);
+                    player.addCard(JACK_HEARTS);
+                    player.addCard(JACK_CLUBS);
+                    dealer.addCard(JACK_DIAMONDS);
+                    dealer.addCard(NINE_HEARTS);
+
+                    GameResult gameResult = new GameResult(dealer, players);
                     int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                    assertThat(playerResult).isEqualTo("승");
+
+                    assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
                 }
 
-                @DisplayName("플레이어의 합이 딜러보다 작으면 플레이어의 결과는 패이다.")
+                @DisplayName("플레이어의 합이 딜러보다 작으면 플레이어는 배팅한 금액만큼 잃는다.")
                 @Test
                 void Should_LOSE_When_PlayerLessThanDealer() {
-                    gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(
-                            LESS_THAN_BLACKJACK - 1, LESS_THAN_BLACKJACK - 1, PLAYER_NAME);
+                    player.addCard(JACK_HEARTS);
+                    player.addCard(NINE_HEARTS);
+                    dealer.addCard(JACK_DIAMONDS);
+                    dealer.addCard(JACK_SPADES);
+
+                    GameResult gameResult = new GameResult(dealer, players);
                     int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                    assertThat(playerResult).isEqualTo("패");
+
+                    assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
                 }
             }
         }
@@ -100,30 +169,51 @@ class GameResultTest {
         @DisplayName("플레이어가 버스트일 때")
         @Nested
         class playerBurst {
-            @DisplayName("딜러가 블랙잭이면 플레이어의 결과는 패이다.")
+            @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerBlackJack() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(BLACKJACK, BURST, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(JACK_CLUBS);
+                player.addCard(TWO_HEARTS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(ACE_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("패");
+
+                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
             }
 
-            @DisplayName("딜러가 버스트이면 플레이어의 결과는 패이다.")
+            @DisplayName("딜러가 버스트이면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerBurst() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(BURST, BURST, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(JACK_CLUBS);
+                player.addCard(TWO_HEARTS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(JACK_SPADES);
+                dealer.addCard(NINE_HEARTS);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("패");
+
+                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
             }
 
-            @DisplayName("딜러가 블랙잭보다 작으면 플레이어의 결과는 패이다.")
+            @DisplayName("딜러가 블랙잭보다 작으면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerLessThanBlackJack() {
-                gameResult.calculateVictoryOrDefeatWithDealerAndPlayer(LESS_THAN_BLACKJACK, BURST, PLAYER_NAME);
+                player.addCard(JACK_HEARTS);
+                player.addCard(JACK_CLUBS);
+                player.addCard(TWO_HEARTS);
+                dealer.addCard(JACK_DIAMONDS);
+                dealer.addCard(JACK_SPADES);
+
+                GameResult gameResult = new GameResult(dealer, players);
                 int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
-                assertThat(playerResult).isEqualTo("패");
+
+                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
             }
         }
-
-    }*/
+    }
 }
