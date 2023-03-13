@@ -85,7 +85,7 @@ public class BlackjackGameTest {
         Dealer dealer = blackjackGame.getDealer();
         dealer.hit(SPADE_EIGHT);
         dealer.hit(CLOVER_EIGHT);
-        blackjackGame.hitDealer();
+        dealer.hit(SPADE_THREE);
 
         assertThat(dealer.getState().isStay()).isTrue();
     }

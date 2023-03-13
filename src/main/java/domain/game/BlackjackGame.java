@@ -33,9 +33,6 @@ public class BlackjackGame {
     public boolean hitDealer() {
         if (dealer.canHit()) {
             dealer.hit(deck.serve());
-            if (dealer.getState().isRunning()) {
-                dealer.stay();
-            }
             return true;
         }
         dealer.stay();

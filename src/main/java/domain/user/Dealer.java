@@ -24,7 +24,11 @@ public class Dealer {
     }
 
     public State hit(Card card) {
-        return participant.hit(card);
+        State state = participant.hit(card);
+        if (state.isRunning() && state.cards().size() > 2) {
+            participant.stay();
+        }
+        return getState();
     }
 
     public State stay() {
