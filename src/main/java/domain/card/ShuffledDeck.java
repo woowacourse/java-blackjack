@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public final class ShuffledDeck implements Deck {
+    private static final List<Integer> AVAILABLE_DECK_COUNT = List.of(1, 2, 4, 6, 8);
+
     private final Deque<Card> deck;
 
     public ShuffledDeck(Deque<Card> deck) {
@@ -15,6 +17,7 @@ public final class ShuffledDeck implements Deck {
     }
 
     public static ShuffledDeck createByCount(int deckCount) {
+        validateDeckCount(deckCount);
         List<Card> cards = generateShuffledCardsByDeckCount(deckCount);
         Deque<Card> deck = new ArrayDeque<>(cards);
         return new ShuffledDeck(deck);
@@ -39,6 +42,14 @@ public final class ShuffledDeck implements Deck {
         for (Rank rank : Rank.values()){
             cards.add(new Card(suit, rank));
         }
+    }
+
+    private static void validateDeckCount(int deckCount) {
+        if (AVAILABLE_DECK_COUNT.contains(deckCount)) {
+            return;
+        }
+        throw new IllegalArgumentException(String.format(
+                "%s개의 덱만 사용 가능합니다.", AVAILABLE_DECK_COUNT.toString()));
     }
 
     @Override

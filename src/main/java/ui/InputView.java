@@ -1,7 +1,5 @@
 package ui;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import util.ExceptionCounter;
 import domain.user.Player;
 import java.util.Arrays;
@@ -14,19 +12,14 @@ public class InputView {
     private static final String YES_COMMAND = "y";
     private static final String NO_COMMAND = "n";
 
-    public static Map<String, Integer> readPlayersNameAndBettingAmount() {
+    public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        List<String> nameInputs = Arrays.stream(SCANNER.nextLine().split(","))
+        return Arrays.stream(SCANNER.nextLine().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
-        Map<String, Integer> playerBettingAmountTable = new LinkedHashMap<>();
-        nameInputs.forEach(nameInput ->
-                playerBettingAmountTable.put(nameInput, readPlayerBettingAmountOf(nameInput))
-        );
-        return playerBettingAmountTable;
     }
 
-    private static Integer readPlayerBettingAmountOf(String nameInput) {
+    public static Integer readPlayerBettingAmountOf(String nameInput) {
         System.out.println();
         System.out.printf("%s의 배팅 금액은?", nameInput);
         System.out.println();
