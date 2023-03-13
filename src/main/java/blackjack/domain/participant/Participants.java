@@ -10,6 +10,7 @@ public class Participants {
     private static final String PLAYERS_COUNT_LIMIT_MASSAGE = "참여자는 8명 이하여야 합니다.";
     private static final int PLAYERS_COUNT_LIMIT = 8;
     private static final int DEALER_COEFFICIENT = -1;
+    private static final int NO_PLAYER_COUNT = 1;
     private final int totalBetting;
     private final Dealer dealer;
     private final List<Player> players;
@@ -33,22 +34,11 @@ public class Participants {
 
     private void validate(Set<String> players) {
         validatePlayerLimit(players);
-        validateEmptyNames(players);
     }
 
     private void validatePlayerLimit(Set<String> players) {
-        if (players.size() > PLAYERS_COUNT_LIMIT) {
+        if (players.size() > PLAYERS_COUNT_LIMIT || NO_PLAYER_COUNT >players.size()) {
             throw new IllegalArgumentException(PLAYERS_COUNT_LIMIT_MASSAGE);
-        }
-    }
-
-    private void validateEmptyNames(final Set<String> players) {
-        players.forEach(Participants::checkNameIsEmpty);
-    }
-
-    private static void checkNameIsEmpty(String player) {
-        if (player.length() == 0) {
-            throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
         }
     }
 
