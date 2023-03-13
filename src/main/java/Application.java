@@ -1,17 +1,20 @@
-import domain.GameResult;
+import domain.BetAmount;
+import domain.BettingTable;
 import domain.Judge;
 import domain.card.CardDeck;
 import domain.card.Cards;
+import domain.gamestate.GameState;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import view.DealerResult;
+import java.util.Map;
+import view.Gain;
+import view.Gains;
 import view.InputView;
 import view.OutputView;
-import view.PlayerResult;
-import view.PlayerResults;
 
 public class Application {
 
@@ -30,10 +33,13 @@ public class Application {
 
     private void run() {
         CardDeck cardDeck = initDeck();
+        Players players = initPlayers();
+        BettingTable bettingTable = initBettingTable(players);
+        initCards(players, cardDeck);
         Dealer dealer = new Dealer(getInitCards(cardDeck));
-        Players players = initPlayers(cardDeck);
+
         play(cardDeck, dealer, players);
-        end(dealer, players);
+        end(dealer, players, bettingTable);
     }
 
     private CardDeck initDeck() {
@@ -42,11 +48,22 @@ public class Application {
         return cardDeck;
     }
 
-    private Players initPlayers(CardDeck cardDeck) {
+    private Players initPlayers() {
         List<String> names = InputView.readNames();
-        Players players = Players.of(names);
+        return Players.of(names);
+    }
+
+    private BettingTable initBettingTable(Players players) {
+        Map<Player, BetAmount> result = new HashMap<>();
+        for (Player player : players) {
+            int betAmount = InputView.readBetAmount(player.getName());
+            result.put(player, BetAmount.of(betAmount));
+        }
+        return new BettingTable(result);
+    }
+
+    private void initCards(Players players, CardDeck cardDeck) {
         players.forEach(player -> player.initCards(getInitCards(cardDeck)));
-        return players;
     }
 
     private void play(CardDeck cardDeck, Dealer dealer, Players players) {
@@ -74,20 +91,21 @@ public class Application {
         OutputView.printCard(player);
     }
 
-    private void end(Dealer dealer, Players players) {
+    private void end(Dealer dealer, Players players, BettingTable bettingTable) {
         OutputView.printResults(dealer, players);
-        PlayerResults playerResults = judgePlayerScores(dealer, players);
-        DealerResult dealerResult = playerResults.getDealerResult();
-        OutputView.printWinOrLose(dealerResult, playerResults);
+        Gains playerGaines = judgePlayerGaines(dealer, players, bettingTable);
+        Gain dealerGain = playerGaines.getDealerGain();
+        OutputView.printGains(dealerGain, playerGaines);
     }
 
-    private PlayerResults judgePlayerScores(Dealer dealer, Players players) {
-        List<PlayerResult> playerResults = new ArrayList<>();
+    private Gains judgePlayerGaines(Dealer dealer, Players players, BettingTable bettingTable) {
+        List<Gain> gains = new ArrayList<>();
 
         for (Player player : players) {
-            GameResult gameResult = Judge.of(dealer, player);
-            playerResults.add(new PlayerResult(player.getName(), gameResult));
+            GameState gameState = Judge.gameResult(dealer, player);
+            gains.add(
+                new Gain(player.getName(), gameState.calculate(bettingTable.getBetAmount(player))));
         }
-        return new PlayerResults(playerResults);
+        return new Gains(gains);
     }
 }
