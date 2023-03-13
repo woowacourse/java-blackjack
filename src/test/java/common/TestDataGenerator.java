@@ -33,6 +33,10 @@ public class TestDataGenerator {
         return Player.of(new ParticipantName(name), BetAmount.from(1000));
     }
 
+    public static Player getPlayerWithNameAndBetAmount(String name, int betAmount) {
+        return Player.of(new ParticipantName(name), BetAmount.from(betAmount));
+    }
+
     public static Dealer getDealer() {
         return new Dealer();
     }

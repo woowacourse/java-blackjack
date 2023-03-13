@@ -4,14 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import common.TestDataGenerator;
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.TrumpCardNumber;
+import domain.card.TrumpCardType;
 import domain.money.BetAmount;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
-import domain.card.TrumpCardNumber;
-import domain.card.TrumpCardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +48,15 @@ class PlayerTest {
         ParticipantName dealerName = ParticipantName.getDealerName();
         assertThatThrownBy(() -> Player.of(dealerName, BetAmount.from(1000)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("플레이어는 승리하면 배팅 금액과 동일한 금액의 이익이 발생한다.")
+    @Test
+    void getProfitByResultWinTest() {
+        Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
+        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+
+        BetAmount profitByResult = player.getProfitByResult(Result.WIN);
+        assertThat(profitByResult.getAmount()).isEqualTo(1000);
     }
 }
