@@ -1,18 +1,20 @@
 package domain;
 
+import java.util.function.IntUnaryOperator;
+
 public enum Result {
-    WIN(1),
-    LOSE(-1),
-    DRAW(0),
-    BLACKJACK(1.5);
+    WIN(bettingAmount -> bettingAmount),
+    LOSE(bettingAmount -> bettingAmount * -1),
+    DRAW(bettingAmount -> 0),
+    BLACKJACK(bettingAmount -> (int) (bettingAmount * 1.5));
 
-    private final double odds;
+    private final IntUnaryOperator operator;
 
-    Result(double odds) {
-        this.odds = odds;
+    Result(IntUnaryOperator operator) {
+        this.operator = operator;
     }
 
     public int calculateWinningAmount(int bettingAmountValue) {
-        return (int) (odds * bettingAmountValue);
+        return operator.applyAsInt(bettingAmountValue);
     }
 }
