@@ -126,20 +126,20 @@ public class BlackjackController {
     }
 
     private List<String> cardString(Dealer dealer) {
-        List<String> res = new ArrayList<>();
+        List<String> cardString = new ArrayList<>();
         for (Card card : dealer.cards()) {
-            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
+            cardString.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
                     CardSuitMapper.getCardName(card.getSuit()));
         }
-        return res;
+        return cardString;
     }
 
     private List<String> cardString(Player player) {
-        List<String> res = new ArrayList<>();
+        List<String> cardString = new ArrayList<>();
         for (Card card : player.cards()) {
-            res.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
+            cardString.add(CardDenominationMapper.getCardNumber(card.getDenomination()) +
                     CardSuitMapper.getCardName(card.getSuit()));
         }
-        return res;
+        return cardString;
     }
 }
