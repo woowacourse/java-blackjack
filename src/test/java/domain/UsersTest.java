@@ -25,7 +25,7 @@ class UsersTest {
     }
 
     @Test
-    @DisplayName("GetDealerProfit")
+    @DisplayName("딜러 최종 수익을 계산한다.")
     void test_getDealerProfit() {
         addCards(users.players().get(0), "10", "A");
         addCards(users.players().get(1), "10", "5");

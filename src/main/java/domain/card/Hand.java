@@ -13,7 +13,7 @@ public class Hand {
 
     public Score calculateScore() {
         var countAce = countAce();
-        Score score = sum();
+        Score score = sumScoreOfCards();
 
         for (int i = 0; i < countAce; i++) {
             score = score.addScoreByAce();
@@ -28,7 +28,7 @@ public class Hand {
                 .count();
     }
 
-    private Score sum() {
+    private Score sumScoreOfCards() {
         return cards.stream()
                 .map(Card::score)
                 .reduce(Score.zero(), Score::sum);
