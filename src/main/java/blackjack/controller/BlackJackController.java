@@ -7,10 +7,8 @@ import blackjack.domain.player.ChallengerName;
 import blackjack.domain.player.ChallengerNames;
 import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerNameAndMoneyDto;
-import blackjack.dto.ChallengerProfitDto;
-import blackjack.dto.DealerProfitDto;
+import blackjack.dto.ProfitDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerStatusWithPointDto;
 import blackjack.view.InputView;
@@ -146,16 +144,14 @@ public class BlackJackController {
     }
 
     private List<PlayerStatusWithPointDto> makeChallengersWithPointStatus() {
-        List<Challenger> challengers = blackJackGame.getChallengers();
-        return challengers.stream()
+        return blackJackGame.getChallengers()
+                .stream()
                 .map(PlayerStatusWithPointDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private void showProfits() {
-        Result result = blackJackGame.makeResult();
-        ChallengerProfitDto challengerProfitDto = new ChallengerProfitDto(result, blackJackGame.getChallengers());
-        DealerProfitDto dealerProfitDto = new DealerProfitDto(blackJackGame.getDealer(), result.getDealerProfit());
-        OutputView.printProfits(challengerProfitDto, dealerProfitDto);
+        ProfitDto profitDto = blackJackGame.calculateProfit();
+        OutputView.printProfits(profitDto);
     }
 }

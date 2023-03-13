@@ -7,10 +7,12 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerNameAndMoneyDto;
+import blackjack.dto.ProfitDto;
 
 import java.util.List;
 
 public class BlackJackGame {
+
     private final CardDeck cardDeck;
     private final Players players;
 
@@ -50,8 +52,9 @@ public class BlackJackGame {
         }
     }
 
-    public Result makeResult() {
-        return Result.from(players);
+    public ProfitDto calculateProfit() {
+        Result result = Result.from(players);
+        return ProfitDto.of(result, players);
     }
 
     public Player getDealer() {

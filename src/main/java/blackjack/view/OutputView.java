@@ -1,7 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.ChallengerProfitDto;
-import blackjack.dto.DealerProfitDto;
+import blackjack.dto.ProfitDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerStatusWithPointDto;
 
@@ -111,20 +110,20 @@ public class OutputView {
         System.out.println(RESULT_PREFIX + point);
     }
 
-    public static void printProfits(ChallengerProfitDto challengerProfitDto, DealerProfitDto dealerProfitDto) {
+    public static void printProfits(ProfitDto profitDto) {
         System.out.println();
         System.out.println(FINAL_PROFIT_HEADER_MESSAGE);
-        printDealerProfit(dealerProfitDto);
-        printChallengersProfit(challengerProfitDto);
+        printDealerProfit(profitDto);
+        printChallengersProfit(profitDto);
     }
 
-    private static void printDealerProfit(DealerProfitDto dealerProfitDto) {
-        System.out.print(dealerProfitDto.getName() + PLAYER_NAME_PARTITION);
-        System.out.println(dealerProfitDto.getProfit());
+    private static void printDealerProfit(ProfitDto profitDto) {
+        System.out.print(profitDto.getDealerName() + PLAYER_NAME_PARTITION);
+        System.out.println(profitDto.getDealerProfit());
     }
 
-    private static void printChallengersProfit(ChallengerProfitDto challengerProfitDto) {
-        Map<String, Integer> nameAndRanks = challengerProfitDto.getNameAndProfits();
+    private static void printChallengersProfit(ProfitDto profitDto) {
+        Map<String, Integer> nameAndRanks = profitDto.getChallengersProfit();
         for (String name : nameAndRanks.keySet()) {
             System.out.println(name + PLAYER_NAME_PARTITION + nameAndRanks.get(name));
         }
