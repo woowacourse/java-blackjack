@@ -14,7 +14,7 @@ public class GameResult {
 
     private final Map<Player, Integer> playerBettingResults;
 
-    public GameResult(Dealer dealer, Players players) {
+    GameResult(Dealer dealer, Players players) {
         this.playerBettingResults = new LinkedHashMap<>();
         accumulationResult(dealer, players);
     }

@@ -34,6 +34,10 @@ public class Game {
         giveCardToDealer();
     }
 
+    public GameResult createGameResult() {
+        return new GameResult(dealer, players);
+    }
+
     public boolean canContinueDealer() {
         return dealer.canContinue();
     }
