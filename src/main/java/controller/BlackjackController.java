@@ -14,14 +14,9 @@ public class BlackjackController {
             Deck deck = Deck.create();
             Participants participants = Participants.of(getPlayersName());
 
-            initBetting(participants);
+            doGame(deck, participants);
 
-            initParticipantsHand(deck, participants);
-            runPlayersTurn(deck, participants);
-            runDealerTurn(deck, participants);
-
-            OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
-            OutputView.printBettingResult(participants.getBettingResult());
+            printResult(participants);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
@@ -34,6 +29,19 @@ public class BlackjackController {
             OutputView.printError(e);
             return getPlayersName();
         }
+    }
+
+    private void doGame(Deck deck, Participants participants) {
+        initBetting(participants);
+
+        initParticipantsHand(deck, participants);
+        runPlayersTurn(deck, participants);
+        runDealerTurn(deck, participants);
+    }
+
+    private void printResult(Participants participants) {
+        OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
+        OutputView.printBettingResult(participants.getBettingResult());
     }
 
     private void initBetting(Participants participants) {

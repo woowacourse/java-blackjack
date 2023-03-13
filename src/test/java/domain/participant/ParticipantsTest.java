@@ -184,7 +184,7 @@ class ParticipantsTest {
 
         // then
         assertThat(participants.getBettingResult()).contains(
-                // 딜러 버스트 vs 플레이어 버스트
+                // 딜러 블랙잭 vs 플레이어 블랙잭
                 Map.entry(player, 0)
         );
     }
