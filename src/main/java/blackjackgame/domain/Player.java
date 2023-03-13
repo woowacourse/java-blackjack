@@ -24,4 +24,8 @@ public abstract class Player {
     public List<Card> getHand() {
         return hand.getCards();
     }
+
+    public GameOutcome calculateOutcome(final Player other) {
+        return hand.calculateOutcomeComparedBy(other.hand);
+    }
 }
