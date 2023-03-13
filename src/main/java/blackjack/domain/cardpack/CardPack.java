@@ -27,7 +27,7 @@ public final class CardPack {
 
     private void matchingNumberByShape(final CardShape currentShape) {
         for (final CardNumber currentNumber : CardNumber.values()) {
-            cards.add(new Card(currentNumber, currentShape));
+            cards.add(Card.of(currentNumber, currentShape));
         }
     }
 

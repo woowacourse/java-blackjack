@@ -28,6 +28,6 @@ class UserTest {
         // then
         List<Card> userCards = user.getCards();
         Assertions.assertThat(userCards.get(0))
-                .isEqualTo(new Card(CardNumber.ACE, CardShape.SPADE));
+                .isEqualTo(Card.of(CardNumber.ACE, CardShape.SPADE));
     }
 }

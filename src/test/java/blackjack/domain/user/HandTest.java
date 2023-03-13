@@ -17,8 +17,8 @@ class HandTest {
     @Test
     void Hand_는_카드를_받아_생성된다() {
         //given
-        Card card1 = new Card(CardNumber.QUEEN, CardShape.SPADE);
-        Card card2 = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        Card card2 = Card.of(CardNumber.QUEEN, CardShape.SPADE);
 
         //then
         assertDoesNotThrow(() -> new Hand(card1, card2));
@@ -27,8 +27,8 @@ class HandTest {
     @Test
     void Hand_는_자신이_들고있는_카드의_점수를_계산한다() {
         //given
-        Card card1 = new Card(CardNumber.QUEEN, CardShape.SPADE);
-        Card card2 = new Card(CardNumber.FIVE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        Card card2 = Card.of(CardNumber.FIVE, CardShape.SPADE);
         Hand hand = new Hand(card1, card2);
 
         //when
@@ -41,9 +41,9 @@ class HandTest {
     @Test
     void Hand_ACE_가있을_시_21을_넘으면_점수에서_10을_뺸다() {
         //given
-        Card card1 = new Card(CardNumber.QUEEN, CardShape.SPADE);
-        Card card2 = new Card(CardNumber.JACK, CardShape.SPADE);
-        Card ace = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        Card card2 = Card.of(CardNumber.JACK, CardShape.SPADE);
+        Card ace = Card.of(CardNumber.ACE, CardShape.SPADE);
         Hand hand = new Hand(card1, card2, ace);
 
         //when

@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.cardpack.MasterShuffleStrategy;
 import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,7 +14,7 @@ class BlackjackGameTest {
     @Test
     void 게임은_시작_처음_2회_카드를_뽑는다() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame();
+        BlackjackGame blackjackGame = new BlackjackGame(new MasterShuffleStrategy());
         Dealer dealer = new Dealer();
 
         // when

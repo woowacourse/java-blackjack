@@ -23,6 +23,6 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(player.getCards())
-                .containsExactly(new Card(CardNumber.KING, CardShape.CLOVER));
+                .containsExactly(Card.of(CardNumber.KING, CardShape.CLOVER));
     }
 }
