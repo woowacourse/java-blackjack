@@ -1,5 +1,7 @@
 package domain.state;
 
+import domain.Result;
+
 public class Bust extends Finished {
 
     public Bust(Hand hand) {
@@ -14,5 +16,10 @@ public class Bust extends Finished {
     @Override
     public boolean isBlackJack() {
         return false;
+    }
+
+    @Override
+    public Result calculateResult() {
+        return Result.LOSE;
     }
 }

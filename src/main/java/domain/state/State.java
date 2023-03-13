@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.Result;
 import domain.card.Card;
 
 public interface State {
@@ -9,4 +10,6 @@ public interface State {
     boolean isBust();
 
     boolean isBlackJack();
+
+    Result calculateResult();
 }
