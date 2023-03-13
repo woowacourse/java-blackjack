@@ -56,6 +56,6 @@ public class Playing extends GameState {
 
     @Override
     public double getEarningRate() {
-        return 1;
+        return DEFAULT_EARN_RATE;
     }
 }

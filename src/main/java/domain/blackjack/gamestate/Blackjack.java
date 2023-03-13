@@ -5,6 +5,8 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Blackjack extends GameState {
+    private static final double BLACKJACK_EARN_RATE = 1.5;
+
     Blackjack(Cards cards) {
         super(cards);
     }
@@ -30,6 +32,6 @@ public class Blackjack extends GameState {
 
     @Override
     public double getEarningRate() {
-        return 1.5;
+        return BLACKJACK_EARN_RATE;
     }
 }
