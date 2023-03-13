@@ -2,6 +2,8 @@ package domain.state;
 
 import domain.card.Card;
 import domain.game.Score;
+import domain.state.exceptions.CanNotDrawCardException;
+import domain.state.exceptions.StayException;
 import domain.user.Hand;
 
 import java.util.List;
@@ -28,12 +30,12 @@ public abstract class Finished implements State {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalStateException("카드를 뽑을 수 없는 상태");
+        throw new CanNotDrawCardException();
     }
 
     @Override
     public State stay() {
-        throw new IllegalStateException("게임이 끝났습니다");
+        throw new StayException();
     }
 
     @Override
