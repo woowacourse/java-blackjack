@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +50,7 @@ public class Cards {
     private void validateDuplicated(final List<Card> cards) {
         int size = new HashSet<>(cards).size();
         if (cards.size() != size) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("같은 카드는 들어갈 수 없어요.");
         }
     }
 

@@ -13,7 +13,7 @@ public class Name {
 
     private void validateName(final String name) {
         if (isNullAndEmpty(name) || validateLength(name)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("이름은 공백제외, 최대 5글자까지 가능합니다.");
         }
     }
 
