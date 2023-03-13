@@ -23,8 +23,8 @@ public class GameResultAmount {
         resultOfBetting.put(Dealer.DEALER_NAME, calculateDealerAmount(amount));
     }
 
-    private int calculateDealerAmount(int money) {
-        return resultOfBetting.getOrDefault(Dealer.DEALER_NAME, 0) - money;
+    private int calculateDealerAmount(int amount) {
+        return resultOfBetting.get(Dealer.DEALER_NAME) - amount;
     }
 
     public Map<Name, Integer> getResultOfBetting() {
