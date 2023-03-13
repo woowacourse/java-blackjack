@@ -4,24 +4,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import common.TestDataGenerator;
 import domain.blackjack.BlackjackGame;
+import domain.blackjack.TotalProfit;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.blackjack.DealerResult;
+import domain.card.TrumpCardNumber;
+import domain.card.TrumpCardType;
 import domain.money.BetAmount;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.blackjack.Result;
-import domain.card.TrumpCardNumber;
-import domain.card.TrumpCardType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DealerResultTest {
+class TotalProfitTest {
     private static final Card DIAMOND_TEN = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.TEN);
+    private static final Card DIAMOND_ACE = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.ACE);
     private static final Card DIAMOND_NINE = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.NINE);
-    private static final Card SPADE_NINE = new Card(TrumpCardType.SPADE, TrumpCardNumber.NINE);
     private static final Card DIAMOND_EIGHT = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.EIGHT);
 
     private Player pobi;
@@ -42,13 +41,14 @@ class DealerResultTest {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
         blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
 
-        pobi.start(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
+        pobi.start(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
         crong.start(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
         royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
-        DealerResult dealerResult = DealerResult.from(blackjackGame);
+        TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
-        assertThat(dealerResult.getResultsAgainstParticipants().values())
-                .containsExactly(Result.DRAW, Result.LOSE, Result.WIN);
+        assertThat(totalProfit.getProfitBook().values())
+                .extracting("amount")
+                .containsExactly(1500d, 1000d, -1000d);
     }
 }
