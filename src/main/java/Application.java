@@ -119,7 +119,7 @@ public class Application {
     }
 
     private static void playDealerTurn(BlackJackGame blackJackGame) {
-        if (blackJackGame.shouldDealerHit()) {
+        while (blackJackGame.shouldDealerHit()) {
             blackJackGame.dealerHit();
             OutputView.printDealerPickCardMessage();
         }
