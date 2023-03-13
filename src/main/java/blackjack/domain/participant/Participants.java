@@ -62,4 +62,13 @@ public class Participants {
                 .map(Player::getName)
                 .collect(Collectors.toList());
     }
+
+    public void openDealerOneCard() {
+        this.dealer.reverseAllExceptOne();
+    }
+
+    public void openDealerAllCards() {
+        this.dealer.openAllCard();
+    }
+
 }

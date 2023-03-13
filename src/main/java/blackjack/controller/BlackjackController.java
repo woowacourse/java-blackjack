@@ -55,7 +55,7 @@ public class BlackjackController {
         final List<String> playerNames = participants.getPlayerNames();
         outputView.outputSplitMessage(playerNames);
         blackjackGame.giveTwoCardEveryone(participants);
-        participants.getDealer().reverseAllExceptOne();
+        participants.openDealerOneCard();
         outputView.outputParticipantCards(new ParticipantsDto(participants));
     }
 
@@ -87,7 +87,7 @@ public class BlackjackController {
     private void showResult(Participants participants) {
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
-        participants.getDealer().openAllCard();
+        participants.openDealerAllCards();
         outputView.outputCardsAndScore(new ParticipantsDto(participants));
         outputView.outputRevenue(new ParticipantsDto(participants));
     }
