@@ -2,6 +2,7 @@ package domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Result;
 import domain.card.Card;
 import domain.card.Shape;
 import domain.card.Value;
@@ -31,5 +32,11 @@ class BustTest {
     @Test
     void isBlackJackTest() {
         assertThat(bust.isBlackJack()).isFalse();
+    }
+
+    @DisplayName("상태가 Bust일 때, 결과 값은 LOSE로 계산된다.")
+    @Test
+    void calculateResultTest() {
+        assertThat(bust.calculateResult()).isEqualTo(Result.LOSE);
     }
 }
