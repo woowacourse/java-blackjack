@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.DomainException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class NamesTest {
     void duplicateNames() {
         Assertions.assertThatThrownBy(() ->
                         new Names(List.of(new Name("leo"), new Name("leo"))))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
 
     }
 
@@ -26,13 +27,13 @@ class NamesTest {
                                     new Name("leo3"), new Name("leo4"),
                                     new Name("leo5"), new Name("leo6"),
                                     new Name("leo7"), new Name("leo8"))))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 
     @Test
     @DisplayName("참가자가 한 명도 없을 경우 예외가 발생한다.")
     void zeroNames() {
         Assertions.assertThatThrownBy(() -> new Names(List.of()))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 }

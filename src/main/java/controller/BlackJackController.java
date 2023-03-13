@@ -1,5 +1,6 @@
 package controller;
 
+import domain.DomainException;
 import domain.card.Deck;
 import domain.card.RandomShuffleStrategy;
 import domain.participant.*;
@@ -42,7 +43,7 @@ public class BlackJackController {
                     .map(Name::new)
                     .collect(Collectors.toList());
             return new Names(names);
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             OutputView.printExceptionMessage(e);
             return makeNames();
         }
@@ -53,7 +54,7 @@ public class BlackJackController {
                     .map(name -> Player.create(name, InputView.requestBetAmount(name)))
                     .collect(Collectors.toList());
             return Participants.from(players);
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             OutputView.printExceptionMessage(e);
             return makeParticipants(names);
         }
@@ -98,7 +99,7 @@ public class BlackJackController {
     private void playerHitOrStay(Participant player, Deck deck) {
         try {
             drawCardByInput(player, deck);
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             OutputView.printExceptionMessage(e);
             playerHitOrStay(player, deck);
         }

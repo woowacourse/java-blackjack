@@ -1,5 +1,7 @@
 package view;
 
+import domain.DomainException;
+import domain.ExceptionCode;
 import domain.participant.BetAmount;
 import domain.participant.Name;
 
@@ -28,7 +30,7 @@ public class InputView {
             int betAmount = Integer.parseInt(scanner.nextLine());
             return new BetAmount(new BigDecimal(betAmount));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ExceptionMessage.TYPE_MISS_MATCH_BET_AMOUNT.getMessage());
+            throw new DomainException(ExceptionCode.TYPE_MISS_MATCH_BET_AMOUNT);
         }
     }
 
@@ -53,7 +55,7 @@ public class InputView {
 
     private static void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_DRAWING_CARD_REQUEST.getMessage());
+            throw new DomainException(ExceptionCode.INVALID_DRAWING_CARD_REQUEST);
         }
     }
 }

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +18,7 @@ public class BetAmountTest {
     @DisplayName("배팅 금액이 1000원 미만이면 예외가 발생한다.")
     void validBetAmount(int betAmount) {
         assertThatThrownBy(() -> new BetAmount(new BigDecimal(betAmount)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 
     @Test

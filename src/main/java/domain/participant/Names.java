@@ -1,6 +1,7 @@
 package domain.participant;
 
-import view.ExceptionMessage;
+import domain.DomainException;
+import domain.ExceptionCode;
 
 import java.util.List;
 
@@ -21,13 +22,13 @@ public class Names {
 
     private void validateNumberOfNames(List<Name> names) {
         if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
+            throw new DomainException(ExceptionCode.INVALID_NUMBER_OF_PLAYER);
         }
     }
 
     private void validateNoDuplication(List<Name> names) {
         if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException(ExceptionMessage.NAME_IS_DUPLICATED.getMessage());
+            throw new DomainException(ExceptionCode.NAME_IS_DUPLICATED);
         }
     }
 

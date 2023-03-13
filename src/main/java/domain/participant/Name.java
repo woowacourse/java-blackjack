@@ -1,6 +1,7 @@
 package domain.participant;
 
-import view.ExceptionMessage;
+import domain.DomainException;
+import domain.ExceptionCode;
 
 import java.util.Objects;
 
@@ -24,26 +25,26 @@ public class Name {
 
     private void validateNotNull(String name) {
         if (name == null) {
-            throw new IllegalArgumentException(ExceptionMessage.NAME_IS_NULL.getMessage());
+            throw new DomainException(ExceptionCode.NAME_IS_NULL);
         }
     }
 
     private void validateNotEmpty(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException(ExceptionMessage.NAME_IS_EMPTY.getMessage());
+            throw new DomainException(ExceptionCode.NAME_IS_EMPTY);
         }
     }
 
 
     private void validateDoesNotContainComma(String name) {
         if (name.contains(INVALID_NAME_CHARACTER)) {
-            throw new IllegalArgumentException(ExceptionMessage.NAME_CONTAINS_COMMA.getMessage());
+            throw new DomainException(ExceptionCode.NAME_CONTAINS_COMMA);
         }
     }
 
     private void validateNameLength(String name) {
         if (name.length() > MAX_PLAYER_NAME_LENGTH) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_NAME_LENGTH.getMessage());
+            throw new DomainException(ExceptionCode.INVALID_NAME_LENGTH);
         }
     }
 

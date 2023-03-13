@@ -1,6 +1,7 @@
 package domain.participant;
 
-import view.ExceptionMessage;
+import domain.DomainException;
+import domain.ExceptionCode;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class BetAmount {
     public BetAmount(BigDecimal betAmount) {
         this.betAmount = betAmount;
         if (betAmount.compareTo(MIN_BETTING_AMOUNT) < LESS_THAN_MIN_BETTING_COUNT) {
-            throw new IllegalArgumentException(ExceptionMessage.LEAK_BET_AMOUNT.getMessage());
+            throw new DomainException(ExceptionCode.LEAK_BET_AMOUNT);
         }
     }
 

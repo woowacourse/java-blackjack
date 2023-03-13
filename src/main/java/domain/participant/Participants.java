@@ -1,7 +1,8 @@
 package domain.participant;
 
+import domain.DomainException;
+import domain.ExceptionCode;
 import domain.card.Deck;
-import view.ExceptionMessage;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,11 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// TODO: 2023/03/13 list, dealer분리 
 public class Participants {
+//    private final List<Participant> players;
+//    private final Participant dealer;
 
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
+//        this.players = participants;
+//        dealer = new Dealer();
         this.participants = participants;
     }
 
@@ -34,7 +40,7 @@ public class Participants {
         return participants.stream()
                 .filter(participant -> participant.getClass().equals(Dealer.class))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(ExceptionMessage.NO_DEALER.getMessage())
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_DEALER)
                 );
     }
 

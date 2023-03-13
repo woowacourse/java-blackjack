@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,20 +14,20 @@ class NameTest {
     @NullAndEmptySource
     void validatePlayerNameTest(String name) {
         assertThatThrownBy(() -> new Name(name))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 
     @Test
     @DisplayName("플레이어의 이름에 쉼표(,)가 포함 될 수 없다.")
     void validateNoComma() {
         assertThatThrownBy(() -> new Name("이,름"))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(DomainException.class);
     }
 
     @Test
     @DisplayName("플레이어의 이름의 길이가 10이상이 될 수 없다.")
     void validateNameLength() {
         assertThatThrownBy(() -> new Name("이건 열 글자 넘는."))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 }

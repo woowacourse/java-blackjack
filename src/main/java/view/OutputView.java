@@ -1,5 +1,7 @@
 package view;
 
+import domain.DomainException;
+import domain.ExceptionCode;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -69,8 +71,10 @@ public class OutputView {
         System.out.println(RESULT_TAG);
     }
 
-    public static void printExceptionMessage(IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+    public static void printExceptionMessage(DomainException e) {
+        ExceptionCode exceptionCode = e.getExceptionCode();
+        ExceptionMessage.getExceptionMessage(exceptionCode);
+        System.out.println(ExceptionMessage.getExceptionMessage(exceptionCode));
     }
 
     private static void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {

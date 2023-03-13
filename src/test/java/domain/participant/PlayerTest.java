@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.DomainException;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -30,7 +31,7 @@ class PlayerTest {
     @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
     void validateNoDealer() {
         assertThatThrownBy(() -> Player.create(new Name("딜러"), new BetAmount(new BigDecimal(1500))))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(DomainException.class);
     }
 
     @Test

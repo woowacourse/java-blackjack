@@ -1,5 +1,12 @@
 package view;
 
+import domain.ExceptionCode;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum ExceptionMessage {
     INVALID_DRAWING_CARD_REQUEST("입력은 y 혹은 n이어야 합니다."),
     INVALID_NUMBER_OF_PLAYER("플레이어의 수는 1명 이상, 7명 이하여야 합니다."),
@@ -20,7 +27,15 @@ public enum ExceptionMessage {
         this.message = message;
     }
 
+    private static final Map<String, String> exceptionMessages =
+            Collections.unmodifiableMap(Stream.of(values())
+                    .collect(Collectors.toMap(ExceptionMessage::name, ExceptionMessage::getMessage)));
+
     public String getMessage() {
         return message;
+    }
+
+    public static String getExceptionMessage(ExceptionCode exceptionCode) {
+        return exceptionMessages.get(exceptionCode.name());
     }
 }
