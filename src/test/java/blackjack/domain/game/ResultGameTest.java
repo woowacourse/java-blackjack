@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,7 +26,7 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        Map<String, Integer> players = new HashMap<>();
+        Map<String, Integer> players = new LinkedHashMap<>();
         players.put("pobi", 1000);
         players.put("crong", 1000);
         players.put("dali", 1000);
@@ -135,16 +136,4 @@ public class ResultGameTest {
 
         assertThat(participants.getPlayers().get(0).getRevenue()).isEqualTo(1500);
     }
-
-    @Test
-    @DisplayName("플레이어 해쉬맵을 가져오는 테스트")
-    void getPlayersResultTest() {
-        ResultGame resultGame = new ResultGame(participants);
-        resultGame.calculateResult();
-
-        Assertions.assertThat(resultGame.getPlayersResult().keySet())
-                .contains(participants.getPlayers().get(0)
-                        , participants.getPlayers().get(1));
-    }
-
 }
