@@ -34,7 +34,7 @@ public final class Score {
     }
 
     public boolean isBust() {
-        return value > MAX_HIT_SCORE;
+        return value > BLACKJACK_SCORE;
     }
 
     public boolean isGreaterThan(final Score other) {
