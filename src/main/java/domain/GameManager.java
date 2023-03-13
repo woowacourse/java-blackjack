@@ -3,6 +3,7 @@ package domain;
 import util.CardsMaker;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameManager {
@@ -52,6 +53,11 @@ public class GameManager {
         while (dealer.isMoreCardAble()) {
             dealer.pick(cardDistributor.distribute());
         }
+    }
+
+    public Map<Name, Integer> getCameResultAmount() {
+        return new GameResultAmount(participants.getResult())
+                .getResultOfBetting();
     }
 
     public int getDealerMoreCardCount() {

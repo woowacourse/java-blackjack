@@ -83,23 +83,13 @@ public class BlackJackController {
     private void end(GameManager gameManager) {
         printFinalCard(gameManager.getDealer());
         gameManager.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(getResultOfBetting(gameManager));
+        outputView.printFinalResult(gameManager.getCameResultAmount());
     }
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameValue(),
                 getCardStatus(participant.getCards()),
                 participant.getTotalScoreValue());
-    }
-
-    private Map<Name, Integer> getResultOfBetting(GameManager gameManager) {
-        return new GameResultAmount(getResult(gameManager.getDealer(), gameManager.getPlayers()))
-                .getResultOfBetting();
-    }
-
-    private Map<Player, GameResult> getResult(Dealer dealer, List<Player> players) {
-        return new Result(dealer, players)
-                .getResult();
     }
 
     private List<CardStatusDto> getCardStatus(List<Card> cards) {

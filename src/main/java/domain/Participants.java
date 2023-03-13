@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -43,6 +44,10 @@ public class Participants {
         return dealer.showOneCard();
     }
 
+    public Map<Player, GameResult> getResult() {
+        return new Result(dealer, players.getPlayers())
+                .getResult();
+    }
 
     public int getDealerCardsCount() {
         return dealer.getCards()
