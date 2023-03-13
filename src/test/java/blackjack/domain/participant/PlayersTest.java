@@ -48,9 +48,14 @@ class PlayersTest {
     @Test
     void should_HaveAllCardsOfPlayer_When_GetPlayerCards() {
         Player player = players.getPlayers().get(0);
-        player.take(new Card(SPADE, ACE));
-        player.take(new Card(SPADE, TWO));
-        assertThat(players.getPlayers().get(0).getCards()).containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
+
+        Card card1 = new Card(SPADE, ACE);
+        player.take(card1);
+
+        Card card2 = new Card(SPADE, TWO);
+        player.take(card2);
+
+        assertThat(player.getCards()).containsExactly(card1, card2);
     }
 
     @Test

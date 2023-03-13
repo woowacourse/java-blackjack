@@ -26,10 +26,15 @@ class BlackJackGameTest {
         List<String> playerNames = List.of("odo", "doy");
         Participants participants = Participants.of(playerNames);
 
+        Card card1 = new Card(DIAMOND, THREE);
+        Card card2 = new Card(DIAMOND, FOUR);
+        Card card3 = new Card(HEART, THREE);
+        Card card4 = new Card(HEART, FOUR);
+
         DeckGenerator mockGenerator = new MockDeckGenerator((List.of(
                 new Card(SPADE, ACE), new Card(SPADE, TWO),
-                new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR),
-                new Card(HEART, THREE), new Card(HEART, FOUR)
+                card1, card2,
+                card3, card4
         )));
         participants.handInitialCards(mockGenerator.generate());
 
@@ -37,10 +42,10 @@ class BlackJackGameTest {
         List<Card> doyCards = participants.getPlayers().get(1).getCards();
 
         assertThat(odoCards)
-                .containsExactly(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
+                .containsExactly(card1, card2);
 
         assertThat(doyCards)
-                .containsExactly(new Card(HEART, THREE), new Card(HEART, FOUR));
+                .containsExactly(card3, card4);
     }
 
 }
