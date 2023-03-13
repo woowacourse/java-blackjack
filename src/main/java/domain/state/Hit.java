@@ -15,6 +15,9 @@ public class Hit extends Running {
         if (this.hand.isBust()) {
             return new Bust(this.hand);
         }
+        if (this.hand.isBlackJack()) {
+            return new Blackjack(this.hand);
+        }
         return new Hit(this.hand);
     }
 

@@ -46,6 +46,10 @@ public class Hand {
         return calculateScore().getValue() > BLACKJACK_NUMBER;
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore().getValue() == BLACKJACK_NUMBER;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
