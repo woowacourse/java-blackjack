@@ -28,17 +28,25 @@ public class InputView {
         do {
             System.out.println("\n" + name + "의 베팅 금액은?");
             input = SCANNER.nextLine();
-        } while (!validateIntentionBettingInput(input));
+        } while (validateInputBetting(input));
         return Integer.parseInt(input);
     }
 
-    private static boolean validateIntentionBettingInput(String input) {
+    private static boolean validateInputBetting(String input) {
         try {
-            new InputPlayerDTO("name", Integer.parseInt(input));
-            return true;
+            int amount = Integer.parseInt(input);
+            validationMinusAmount(amount);
+            new InputPlayerDTO("name", amount);
+            return false;
         } catch (Exception e) {
             System.out.println("베팅 금액은 정수로 입력해야 합니다.");
-            return false;
+            return true;
+        }
+    }
+
+    private static void validationMinusAmount(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("베팅 금액은 정수여야 합니다.");
         }
     }
 
