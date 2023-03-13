@@ -13,7 +13,7 @@ public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final Participants participants;
-    private final BettingTable bettingTable;
+    private BettingTable bettingTable;
 
     public BlackjackGame(Participants participants, CardDeck cardDeck, BettingTable bettingTable) {
         this.participants = participants;
@@ -53,7 +53,7 @@ public class BlackjackGame {
     }
 
     public void bet(Player player, BettingMoney money) {
-        bettingTable.put(player, money);
+        this.bettingTable = bettingTable.put(player, money);
     }
 
     public BettingResult getBettingResult() {
