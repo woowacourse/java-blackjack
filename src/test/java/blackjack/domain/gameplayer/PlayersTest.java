@@ -19,7 +19,7 @@ class PlayersTest {
         // given
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName" + i)));
+            players.add(new Player(new Name("newName" + i), new Betting(2000)));
         }
 
         // when, then
@@ -33,7 +33,7 @@ class PlayersTest {
         // given
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            players.add(new Player(new Name("newName" + i)));
+            players.add(new Player(new Name("newName" + i), new Betting(2000)));
         }
 
         // when, then
@@ -47,9 +47,9 @@ class PlayersTest {
     void Should_ThrowException_When_DuplicatedNames() {
         // given
         List<Player> players = new ArrayList<>();
-        players.add(new Player(new Name("kong")));
-        players.add(new Player(new Name("tori")));
-        players.add(new Player(new Name("kong")));
+        players.add(new Player(new Name("kong"), new Betting(2000)));
+        players.add(new Player(new Name("tori"), new Betting(2000)));
+        players.add(new Player(new Name("kong"), new Betting(2000)));
 
         // when, then
         assertThatThrownBy(() -> new Players(players))

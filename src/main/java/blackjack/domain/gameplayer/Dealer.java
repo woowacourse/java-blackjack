@@ -1,41 +1,29 @@
 package blackjack.domain.gameplayer;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Dealer implements Person {
-    private final List<Card> cards;
+public final class Dealer extends BlackJackParticipant {
+    public static final Score hitUpperBound = Score.of(17);
 
     public Dealer() {
-        this.cards = new ArrayList<>();
-    }
-
-    @Override
-    public void addCard(Card card) {
-        cards.add(card);
+        super(new Cards());
     }
 
     @Override
     public boolean canContinue() {
         Score totalScore = calculateScore();
-        return totalScore.isLessThan(Score.dealerHitUpperBound);
-    }
-
-    @Override
-    public Score calculateScore() {
-        return Score.from(cards);
+        return totalScore.isLessThan(hitUpperBound);
     }
 
     @Override
     public List<Card> showCards() {
-        return List.of(cards.get(0));
+        return List.of(cards.getOneCard());
     }
 
     public List<Card> showAllCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }

@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
-public class Card {
+public final class Card {
     private final CardSymbol cardSymbol;
     private final CardNumber cardNumber;
 
@@ -11,7 +9,7 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
-    public List<Integer> getScore() {
+    public int getScore() {
         return cardNumber.getScore();
     }
 

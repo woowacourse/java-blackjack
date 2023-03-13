@@ -1,11 +1,10 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class DeckFactory {
+public final class DeckFactory {
 
     public static Deck createDeck(DeckType deckType) {
         if (deckType == DeckType.BLACKJACK) {

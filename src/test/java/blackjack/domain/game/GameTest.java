@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -21,10 +21,8 @@ class GameTest {
         // given
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName" + i)));
+            players.add(new Player(new Name("newName" + i), new Betting(2000)));
         }
-
-        GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
 
         Stack<Card> cards = new Stack<>();
 
@@ -37,6 +35,6 @@ class GameTest {
         Deck deck = new Deck(cards);
 
         // When, then
-        assertDoesNotThrow(() -> new Game(deck, gamePlayer));
+        assertDoesNotThrow(() -> new Game(deck, new Dealer(), new Players(players)));
     }
 }

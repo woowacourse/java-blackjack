@@ -1,17 +1,18 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.DeckType;
+import blackjack.domain.game.Game;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.gameplayer.*;
+import blackjack.utils.Command;
+import blackjack.utils.LogType;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
@@ -26,61 +27,67 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        Game game = start();
+        Game game = init();
         play(game);
         finish(game);
     }
 
-    private Game start() {
-        Game game = initGame();
-        printStartCards(game);
-        return game;
-    }
-
-    private Game initGame() {
+    private Game init() {
         Deck deck = initDeck();
-        GamePlayer gamePlayer = new GamePlayer(new Players(initPlayers()), new Dealer());
-        return new Game(deck, gamePlayer);
-    }
+        List<Name> names = initNames();
+        Players players = initPlayers(names);
+        Game game = new Game(deck, new Dealer(), players);
 
-    private List<Player> initPlayers() {
-        try {
-            List<String> playersName = inputView.readPlayersName();
-            return generatePlayers(playersName);
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]" + e.getMessage());
-            return initPlayers();
-        }
-    }
-
-    private List<Player> generatePlayers(List<String> playersName) {
-        return playersName.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList());
+        outputView.printStart(game.getPlayers(), game.getDealer());
+        return game;
     }
 
     private Deck initDeck() {
         return DeckFactory.createDeck(DeckType.BLACKJACK);
     }
 
-    private void printStartCards(Game game) {
-        outputView.printStartMsg(game.showPlayersName());
-        outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
-        for (Player player : game.getPlayers()) {
-            printPlayerCards(player);
+    private List<Name> initNames() {
+        try {
+            List<String> playersName = inputView.readPlayersName();
+            return generateName(playersName);
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
+            return initNames();
         }
     }
 
-    private void printPlayerCards(Player player) {
-        String playerName = player.showName();
-        List<String> cards = getCardNames(player.showCards());
-        outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
+    private List<Name> generateName(List<String> playersName) {
+        return playersName.stream()
+                .map(name -> new Name(name))
+                .collect(Collectors.toList());
     }
 
-    private List<String> getCardNames(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
-                .collect(Collectors.toList());
+    private Players initPlayers(List<Name> names) {
+        try {
+            return new Players(generatePlayers(names));
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
+            return initPlayers(initNames());
+        }
+    }
+
+    private List<Player> generatePlayers(List<Name> names) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            Player player = generatePlayer(name);
+            players.add(player);
+        }
+        return players;
+    }
+
+    private Player generatePlayer(Name name) {
+        try {
+            int betting = inputView.readBetting(name.getName());
+            return new Player(name, new Betting(betting));
+        } catch (IllegalArgumentException exception) {
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
+            return generatePlayer(name);
+        }
     }
 
     private void play(Game game) {
@@ -93,7 +100,7 @@ public class BlackJackGameController {
     private void playerTurn(Game game, Player player) {
         while (isCheckPlayerCommand(player)) {
             game.giveCardTo(player);
-            printPlayerCards(player);
+            outputView.printPlayerWithCards(player, LINE_SEPARATOR);
         }
     }
 
@@ -101,7 +108,7 @@ public class BlackJackGameController {
         try {
             return player.canContinue() && isCommandHit(player);
         } catch (IllegalArgumentException exception) {
-            System.out.println("[ERROR] " + exception.getMessage());
+            LogType.ERROR_MESSAGE.log(exception.getMessage());
             return isCheckPlayerCommand(player);
         }
     }
@@ -112,45 +119,18 @@ public class BlackJackGameController {
     }
 
     private void dealerTurn(Game game) {
-        while (game.isHitDealer()) {
+        while (game.canContinueDealer()) {
             outputView.printDealerHit();
             game.giveCardToDealer();
         }
     }
 
     private void finish(Game game) {
-        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore().getScore());
+        Dealer dealer = game.getDealer();
+        Players players = game.getPlayers();
+        outputView.printGameResult(dealer, players);
 
-        for (Player player : game.getPlayers()) {
-            printOnePlayerResult(player);
-        }
-
-        GameResult gameResult = new GameResult(game);
-        outputView.printEndMsg();
-        outputView.printDealerWinningResult(getFormattedDealerResult(gameResult.getDealerResult()));
-        outputView.printPlayerWinningResult(getFormattedPlayerResult(gameResult.getPlayerResult()));
-    }
-
-    private Map<String, Integer> getFormattedDealerResult(Map<Result, Integer> dealerResult) {
-        Map<String, Integer> formattedDealerResult = new HashMap<>();
-        for (Result result : dealerResult.keySet()) {
-            formattedDealerResult.put(result.getResult(), dealerResult.get(result));
-        }
-        return formattedDealerResult;
-    }
-
-    private Map<String, String> getFormattedPlayerResult(Map<Player, Result> playerResult) {
-        Map<String, String> formattedPlayerResult = new HashMap<>();
-        for (Player player : playerResult.keySet()) {
-            formattedPlayerResult.put(player.showName(), playerResult.get(player).getResult());
-        }
-        return formattedPlayerResult;
-    }
-
-    private void printOnePlayerResult(Player player) {
-        String playerName = player.showName();
-        List<String> playerCards = getCardNames(player.showCards());
-        Score score = player.calculateScore();
-        outputView.printPlayerResult(playerName, playerCards, score.getScore());
+        GameResult gameResult = game.createGameResult();
+        outputView.printBettingResult(gameResult.getDealerBettingResults(), gameResult.getPlayerBettingResults());
     }
 }
