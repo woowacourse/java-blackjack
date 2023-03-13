@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Score {
 
-    private static final Score aceSubtraction = new Score(10);
-    private static final Score max = new Score(21);
-    private static final Score min = new Score(0);
+    private static final Score ACE_SUBTRACTION = new Score(10);
+    private static final Score BLACKJACK = new Score(21);
+    private static final Score MIN = new Score(0);
 
     private final int value;
 
@@ -15,16 +15,16 @@ public class Score {
     }
 
     public static Score min() {
-        return min;
+        return MIN;
     }
 
-    public static Score max() {
-        return max;
+    public static Score blackjack() {
+        return BLACKJACK;
     }
 
     public Score minusTenIfBust() {
-        if (isMoreThan(max)) {
-            return sub(aceSubtraction);
+        if (isMoreThan(BLACKJACK)) {
+            return sub(ACE_SUBTRACTION);
         }
 
         return this;
@@ -35,7 +35,7 @@ public class Score {
     }
 
     public boolean isOverMax() {
-        return isMoreThan(max);
+        return isMoreThan(BLACKJACK);
     }
 
     public Score sum(Score other) {
@@ -55,7 +55,7 @@ public class Score {
     }
 
     public boolean isMax() {
-        return max.equals(this);
+        return BLACKJACK.equals(this);
     }
 
     @Override
