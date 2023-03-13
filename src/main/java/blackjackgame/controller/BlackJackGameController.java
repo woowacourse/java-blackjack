@@ -36,7 +36,7 @@ public class BlackJackGameController {
     public void run() {
         BlackJackGame blackJackGame = generateBlackJackGame();
         blackJackGame.drawDefaultCard();
-        outputView.printSetUpResult(blackJackGame.getSetUpResult());
+        printSetUpResult(blackJackGame.getSetUpResult());
         progressPlayersTurn(blackJackGame);
         progressDealerTurn(blackJackGame);
         printUsersCardResult(blackJackGame);
@@ -82,6 +82,17 @@ public class BlackJackGameController {
     private Bet readPlayerBetAmount(Name playerName) {
         outputView.printInputPlayerBetAmountMessage(playerName.getName());
         return new Bet(inputView.readPlayerBetAmount());
+    }
+
+    private void printSetUpResult(Map<User, List<Card>> cardsByUser) {
+        Map<NameDto, List<Card>> cardsByName = new LinkedHashMap<>();
+
+        for (Entry<User, List<Card>> userCardsEntry : cardsByUser.entrySet()) {
+            String name = userCardsEntry.getKey().getName();
+            cardsByName.put(new NameDto(name), userCardsEntry.getValue());
+        }
+
+        outputView.printSetUpResult(cardsByName);
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {

@@ -9,7 +9,6 @@ import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.Profit;
 import blackjackgame.domain.user.User;
-import blackjackgame.domain.user.dto.NameDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +28,7 @@ public class BlackJackGame {
 
     public void drawDefaultCard() {
         dealer.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
-        for (Player player : players.getPlayers()) {
-            player.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
-        }
+        players.receiveCards(cards, INITIAL_CARD_COUNT);
     }
 
     public void takePlayerAction(Player player, UserAction action) {
@@ -53,15 +50,10 @@ public class BlackJackGame {
         }
     }
 
-    public Map<NameDto, List<Card>> getSetUpResult() {
-        Map<NameDto, List<Card>> setUpResult = new LinkedHashMap<>();
-
-        setUpResult.put(new NameDto(dealer.getName()), List.of(dealer.getFirstCard()));
-
-        for (Player player : players.getPlayers()) {
-            setUpResult.put(new NameDto(player.getName()), player.getCards());
-        }
-
+    public Map<User, List<Card>> getSetUpResult() {
+        Map<User, List<Card>> setUpResult = new LinkedHashMap<>();
+        setUpResult.put(dealer, List.of(dealer.getFirstCard()));
+        setUpResult.putAll(players.getHandsByPlayer());
         return setUpResult;
     }
 
@@ -77,11 +69,8 @@ public class BlackJackGame {
     public int calculateDealerProfit() {
         judgeWinner();
 
-        int dealerProfit = 0;
-        for (Player player : players.getPlayers()) {
-            dealerProfit -= player.getProfitAmount();
-        }
-        return dealerProfit;
+        int playerProfitSum = players.calculateProfitSum();
+        return -playerProfitSum;
     }
 
     public boolean isDealerDrawExtraCount() {
