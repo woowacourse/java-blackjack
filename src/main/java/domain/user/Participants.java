@@ -6,16 +6,28 @@ import java.util.List;
 
 public class Participants {
 
-    private static final String PLAYER_NOT_EXIST_EXCEPTION_MESSAGE = "해당 이름의 플레이어는 존재하지 않습니다.";
+    private static final String PLAYER_NOT_EXIST_EXCEPTION_MESSAGE = "[ERROR] 해당 이름의 플레이어는 존재하지 않습니다.";
+    private static final String DUPLICATE_NAME_EXCEPTION_MESSAGE = "[ERROR] 중복된 이름이 존재합니다.";
 
     private final Dealer dealer;
     private final List<Player> players;
 
     public Participants(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
+        validate(players);
         this.players = List.copyOf(players);
     }
 
+    private void validate(List<Player> players) {
+        int distinctSize = (int) players.stream()
+                .map(Player::name)
+                .distinct()
+                .count();
+
+        if (distinctSize != players.size()) {
+            throw new IllegalArgumentException(DUPLICATE_NAME_EXCEPTION_MESSAGE);
+        }
+    }
 
     public void hitAll(final Deck deck) {
         dealer.hit(deck.serve());

@@ -21,13 +21,22 @@ public class InputView {
     }
 
     public List<String> inputParticipantsName() {
-        System.out.println(INPUT_PLAYER_MESSAGE);
-        String line = scanner.nextLine();
-        validator.validateNotBlank(line);
+        try {
+            System.out.println(INPUT_PLAYER_MESSAGE);
+            String line = scanner.nextLine();
+            validator.validateNotBlank(line);
 
-        return Arrays.stream(line.split(","))
-                .map(String::trim)
-                .collect(Collectors.toList());
+            List<String> participantsName = Arrays.stream(line.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toList());
+
+            validator.validateDuplicate(participantsName);
+
+            return participantsName;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputParticipantsName();
+        }
     }
 
     public int inputBetting(final String player) {
