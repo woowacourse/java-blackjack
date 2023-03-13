@@ -106,7 +106,7 @@ class ResultStateTest {
     @Test
     @DisplayName("게임 결과가 블랙잭일 때, 베팅 금액의 1.5배를 반환하는지 확인")
     void calculateProfitTestByBlackjack() {
-        Betting betting = Betting.from(10000);
+        final Betting betting = Betting.from(10000);
 
         Assertions.assertThat(ResultState.BLACKJACK.calculateProfit(betting)).isEqualTo(15000);
     }
@@ -114,7 +114,7 @@ class ResultStateTest {
     @Test
     @DisplayName("게임 결과가 승리일 때, 베팅 금액의 1배를 반환하는지 확인")
     void calculateProfitTestByWin() {
-        Betting betting = Betting.from(10000);
+        final Betting betting = Betting.from(10000);
 
         Assertions.assertThat(ResultState.WIN.calculateProfit(betting)).isEqualTo(10000);
     }
@@ -123,7 +123,7 @@ class ResultStateTest {
     @Test
     @DisplayName("게임 결과가 무승부일 때, 베팅 금액의 0배를 반환하는지 확인")
     void calculateProfitTestByTie() {
-        Betting betting = Betting.from(10000);
+        final Betting betting = Betting.from(10000);
 
         Assertions.assertThat(ResultState.TIE.calculateProfit(betting)).isEqualTo(0);
     }

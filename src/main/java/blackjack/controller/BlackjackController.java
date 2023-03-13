@@ -40,7 +40,7 @@ public final class BlackjackController {
         outputView.printBettingResult(participants, resultGame);
     }
 
-    private void drawParticipants(Participants participants, Deck deck) {
+    private void drawParticipants(final Participants participants, final Deck deck) {
         drawCardsParticipants(participants, deck);
         outputView.printAllCardsAndScore(participants);
     }
@@ -53,13 +53,13 @@ public final class BlackjackController {
     }
 
     private void initialBettingMoney(final Participants participants, final ResultGame resultGame) {
-        for (final Participant player: participants.getPlayers()) {
+        for (final Participant player : participants.getPlayers()) {
             final Betting betting = Betting.from(inputView.readBettingMoney(player.getName()));
             resultGame.betMoney(player, betting);
         }
     }
 
-    private void startDrawParticipants(Participants participants, Deck deck) {
+    private void startDrawParticipants(final Participants participants, final Deck deck) {
         participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
         outputView.printInitialCards(participants);
     }

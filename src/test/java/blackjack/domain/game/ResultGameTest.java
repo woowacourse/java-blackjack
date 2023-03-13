@@ -20,6 +20,7 @@ public class ResultGameTest {
     private Participants participants;
     private Map<Participant, Betting> resultBetting;
     private ResultGame resultGame;
+    private Participant pobi;
 
 
     @BeforeEach
@@ -29,7 +30,9 @@ public class ResultGameTest {
         resultBetting = new HashMap<>();
 
         resultGame = ResultGame.from(resultBetting);
-        resultGame.betMoney(participants.getPlayers().get(0), Betting.from(10000));
+
+        pobi = participants.getPlayers().get(0);
+        resultGame.betMoney(pobi, Betting.from(10000));
     }
 
     @Test
@@ -39,7 +42,6 @@ public class ResultGameTest {
         dealer.drawCard(HEART_EIGHT);
         dealer.drawCard(HEART_TWO);
 
-        Participant pobi = participants.getPlayers().get(0);
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_TEN);
 
@@ -55,7 +57,6 @@ public class ResultGameTest {
         dealer.drawCard(HEART_SEVEN);
         dealer.drawCard(HEART_TWO);
 
-        Participant pobi = participants.getPlayers().get(0);
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
@@ -71,7 +72,6 @@ public class ResultGameTest {
         dealer.drawCard(HEART_EIGHT);
         dealer.drawCard(HEART_TWO);
 
-        Participant pobi = participants.getPlayers().get(0);
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
@@ -87,7 +87,6 @@ public class ResultGameTest {
         dealer.drawCard(HEART_EIGHT);
         dealer.drawCard(HEART_TWO);
 
-        Participant pobi = participants.getPlayers().get(0);
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_EIGHT);
 
@@ -99,8 +98,6 @@ public class ResultGameTest {
     @Test
     @DisplayName("플레이어의 베팅 금액을 제대로 반환하는지 테스트")
     void getPlayerResultTest() {
-        Participant pobi = participants.getPlayers().get(0);
-
         Assertions.assertThat(resultGame.getPlayerResult(pobi).getValue()).isEqualTo(10000);
     }
 }

@@ -1,8 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Letter;
-import blackjack.domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
