@@ -36,7 +36,7 @@ public abstract class User {
         return userData.getName();
     }
 
-    public final void endGame() {
+    public final void doStay() {
         userData.doStay();
     }
 }
