@@ -1,38 +1,49 @@
 package blackjack.domain.card;
 
+import static java.util.Collections.shuffle;
+
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class Deck {
+public final class Deck {
 
-    private static final int FIRST_CARD = 0;
-    private static final int DECK_SIZE = 52;
-
-    private final List<Card> deck = new ArrayList<>(DECK_SIZE);
+    private final Deque<Card> deck;
 
     public Deck() {
-        initDeck();
+        List<Card> cards = init();
+        deck = new ConcurrentLinkedDeque<>(cards);
     }
 
-    private void initDeck() {
-        for (Number number : Number.values()) {
-            createCard(number);
+    private List<Card> init() {
+        List<Card> cards = new ArrayList<>();
+        for (Denomination denomination : Denomination.values()) {
+            fillCards(denomination, cards);
         }
+        shuffle(cards);
+
+        return cards;
     }
 
-    private void createCard(final Number number) {
+    private void fillCards(final Denomination denomination, final List<Card> cards) {
         for (Suit suit : Suit.values()) {
-            deck.add(new Card(number, suit));
+            cards.add(new Card(denomination, suit));
         }
     }
 
     public Card drawCard() {
-        Collections.shuffle(deck);
-        return deck.remove(FIRST_CARD);
+        if (deck.isEmpty()) {
+            throw new IllegalStateException("현재 남아있는 카드가 존재하지 않습니다.");
+        }
+        return deck.pop();
     }
 
-    public boolean containsCard(Card card) {
-        return deck.contains(card);
+    public List<Card> drawTwoCard() {
+        return new ArrayList<>(List.of(drawCard(), drawCard()));
+    }
+
+    public List<Card> getDeck() {
+        return List.copyOf(deck);
     }
 }

@@ -1,35 +1,20 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-public class CardTest {
+class CardTest {
 
-    @Test
-    @DisplayName("Ace인 경우 isAce() 테스트")
-    void isAceTest_ace() {
-        // given
-        Card card = new Card(Number.ACE, Suit.HEART);
+    @ParameterizedTest(name = "{0} 카드의 점수를 반환한다.")
+    @CsvSource(value = {"ACE:1", "TWO:2", "J:10", "Q:10", "K:10"}, delimiter = ':')
+    void scoreTest(final Denomination denomination, final int expect) {
+        Card card = new Card(denomination, HEART);
 
-        // when
-        boolean result = card.isAce();
-
-        // then
-        assertThat(result).isTrue();
-     }
-
-     @Test
-     @DisplayName("Ace가 아닌 경우 isAce() 테스트")
-     void isAceTest_notAce() {
-         // given
-         Card card = new Card(Number.K, Suit.HEART);
-
-         // when
-         boolean result = card.isAce();
-
-         // then
-         assertThat(result).isFalse();
-      }
+        assertThat(card.score()).isEqualTo(expect);
+    }
 }

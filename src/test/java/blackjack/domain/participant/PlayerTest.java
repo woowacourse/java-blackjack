@@ -1,40 +1,45 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.K;
+import static blackjack.domain.card.Denomination.TWO;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.Hand;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-public class PlayerTest {
-    
+class PlayerTest {
+
+    private Player player;
+
+    @BeforeEach
+    void setUp() {
+        this.player = new Player("player1");
+    }
+
     @Test
-    @DisplayName("이름의 길이는 최소 1글자에서 최대 5글자이다.")
-    void validateNameLength() {
-        // given
-        String name = "millie";
+    @DisplayName("Hand를 받는다.")
+    void receiveHandTest() {
+        Hand hand = new Hand(List.of(new Card(ACE, HEART), new Card(TWO, SPADE)));
 
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                new Player(name)
-        ).withMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다. 입력값: " + name);
-     }
+        player.receiveHand(hand);
 
-     @Test
-     @DisplayName("카드를 새로 받는 기능 테스트")
-     void addCardTest() {
-         // given
-         Player player = new Player("doggy");
-         List<Card> cards = player.getCards();
+        assertThat(player.getHand().getHand().size()).isEqualTo(2);
+    }
 
-         // when
-         player.receiveCard(new Card(Number.ACE, Suit.HEART));
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjackTest() {
+        Hand hand = new Hand(List.of(new Card(ACE, HEART), new Card(K, SPADE)));
 
-         // then
-         assertThat(cards.size()).isEqualTo(1);
-      }
+        player.receiveHand(hand);
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
 }

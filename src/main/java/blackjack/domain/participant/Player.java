@@ -1,43 +1,30 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import java.util.List;
+import java.util.Objects;
 
-public final class Player {
+public class Player extends Participant {
 
-    private static final int MIN_NAME_LENGTH = 1;
-    private static final int MAX_NAME_LENGTH = 5;
-
-    private final Participant participant;
+    private final String name;
 
     public Player(final String name) {
-        validateNameLength(name);
-        this.participant = new Participant(name);
-    }
-
-    private void validateNameLength(final String name) {
-        if (MAX_NAME_LENGTH < name.length() || name.length() < MIN_NAME_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 이름 길이는 최소 " + MIN_NAME_LENGTH + "글자에서 최대 " + MAX_NAME_LENGTH + "글자 입니다. 입력값: " + name);
-        }
-    }
-
-    public void receiveCard(final Card card) {
-        participant.receiveCard(card);
-    }
-
-    public int calculateTotalScore() {
-        return participant.calculateTotalScore();
-    }
-
-    public boolean isBust() {
-        return participant.isBust();
-    }
-
-    public List<Card> getCards() {
-        return participant.getCards();
+        super();
+        this.name = name;
     }
 
     public String getName() {
-        return participant.getName();
+        return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

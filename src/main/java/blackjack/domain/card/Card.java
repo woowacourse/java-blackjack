@@ -4,24 +4,28 @@ import java.util.Objects;
 
 public final class Card {
 
-    private final Number number;
+    private final Denomination denomination;
     private final Suit suit;
 
-    public Card(final Number number, final Suit suit) {
-        this.number = number;
+    public Card(final Denomination denomination, final Suit suit) {
+        this.denomination = denomination;
         this.suit = suit;
     }
 
     public int score() {
-        return Number.scoreOf(number);
+        return denomination.getScore();
     }
 
     public boolean isAce() {
-        return this.number == Number.ACE;
+        return denomination.isAce();
     }
 
-    public String combineNumberAndPattern() {
-        return number.getState() + suit.getName();
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override
@@ -29,11 +33,11 @@ public final class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return number == card.number && suit == card.suit;
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, suit);
+        return Objects.hash(denomination, suit);
     }
 }

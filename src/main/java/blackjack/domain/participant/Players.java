@@ -1,52 +1,61 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.card.Card;
-import java.util.Collections;
+import blackjack.domain.card.Hand;
+import blackjack.domain.money.Money;
+import blackjack.domain.result.Result;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public final class Players {
 
-    private static final int MIN_PLAYER_COUNT = 2;
-    private static final int MAX_PLAYER_COUNT = 8;
+    private static final int MIN_PLAYERS_COUNT = 2;
+    private static final int MAX_PLAYERS_COUNT = 8;
+    static final String PLAYERS_COUNT_ERROR_MESSAGE = "플레이어는 최소 " + MIN_PLAYERS_COUNT + "명에서 최대 " + MAX_PLAYERS_COUNT + "명입니다. 입력값: ";
 
     private final List<Player> players;
 
-    public Players(final List<String> names) {
-        validateLength(names);
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(toList());
+    public Players(final List<Player> players) {
+        isValidCount(players);
+        this.players = new ArrayList<>(players);
     }
 
-    private void validateLength(final List<String> names) {
-        if (MAX_PLAYER_COUNT < names.size() || names.size() < MIN_PLAYER_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 참가자의 수는 최소 " + MIN_PLAYER_COUNT + "명에서 최대 " + MAX_PLAYER_COUNT + "명이어야 합니다. 입력값: " + names);
+    private void isValidCount(final List<Player> players) {
+        if (players.size() < MIN_PLAYERS_COUNT || players.size() > MAX_PLAYERS_COUNT) {
+            throw new IllegalArgumentException(PLAYERS_COUNT_ERROR_MESSAGE + players);
         }
     }
 
-    public void receiveSettingCards(final List<Card> cards) {
-        validateSize(cards);
+    public void distributeHands(final List<Hand> hands) {
+        validateCardsSize(hands);
 
-        int cardIndex = 0;
-        for (Player player : players) {
-            List<Card> twoCards = List.of(cards.get(cardIndex), cards.get(cardIndex + 1));
-            distribute(player, twoCards);
-            cardIndex += INIT_CARD_COUNT;
+        for (int i = 0; i < hands.size(); i++) {
+            Hand hand = hands.get(i);
+            Player player = players.get(i);
+
+            player.receiveHand(hand);
         }
     }
 
-    private void distribute(final Player player, final List<Card> cards) {
-        for (Card card : cards) {
-            player.receiveCard(card);
+    private void validateCardsSize(final List<Hand> cards) {
+        if (cards.size() != players.size()) {
+            throw new IllegalArgumentException("세팅 카드와 플레이어의 수가 일치하지 않습니다.");
         }
     }
 
-    private void validateSize(final List<Card> cards) {
-        if (cards.size() != players.size() * INIT_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 세팅 카드의 개수는 인원수의 " + INIT_CARD_COUNT + "배여야 합니다. 입력값:" + cards);
+    public Map<Player, Result> compareHandTo(Hand dealerHand) {
+        return players.stream()
+                .collect(toMap(
+                        player -> player,
+                        player -> player.compareHandTo(dealerHand)
+                ));
+    }
+
+    public void dealOutMoney(final Map<Player, Money> exchanges) {
+        for (Player player : exchanges.keySet()) {
+            player.receiveMoney(exchanges.get(player));
         }
     }
 
@@ -55,6 +64,6 @@ public final class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(this.players);
     }
 }

@@ -1,38 +1,56 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.money.Money;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import java.util.List;
+import blackjack.domain.card.Hand;
+import java.util.ArrayList;
 
-final public class Participant {
+public abstract class Participant {
 
-    public static final int INIT_CARD_COUNT = 2;
+    private static final int INIT_MONEY = 0;
 
-    private final String name;
-    private final Cards cards;
+    private Hand hand;
+    private Money money;
 
-    public Participant(final String name) {
-        this.name = name;
-        this.cards = new Cards();
+    public Participant() {
+        this.hand = new Hand(new ArrayList<>());
+        this.money = new Money(INIT_MONEY);
     }
 
     public void receiveCard(final Card card) {
-        this.cards.add(card);
+        this.hand = this.hand.add(card);
     }
 
-    public int calculateTotalScore() {
-        return this.cards.calculateTotalScore();
+    public void receiveHand(final Hand hand) {
+        this.hand = hand;
+    }
+
+    public void receiveMoney(final Money money) {
+        this.money = this.money.add(money);
+    }
+
+    public int totalScore() {
+        return this.hand.totalScore();
     }
 
     public boolean isBust() {
-        return this.cards.isBust();
+        return this.hand.isBust();
     }
 
-    public String getName() {
-        return name;
+    public boolean isBlackjack() {
+        return this.hand.isBlackjack();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Result compareHandTo(Hand anotherHand) {
+        return this.hand.compareHandTo(anotherHand);
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public int getMoney() {
+        return money.getMoney();
     }
 }
