@@ -3,7 +3,7 @@ package blackjackgame.domain.user;
 import blackjackgame.domain.Denomination;
 
 public class Score {
-    private static final int MAX_SCORE = 21;
+    private static final int BUST_SCORE = 22;
     private static final int DEALER_REQUIRED_MIN_SCORE = 17;
     private static final int INITIAL_ACE_COUNT = 0;
     private static final int ACE_ONE = 1;
@@ -18,14 +18,14 @@ public class Score {
         int aceCount = hands.countOfAce();
         int totalScore = hands.sum();
 
-        if (totalScore > MAX_SCORE) {
+        if (totalScore >= BUST_SCORE) {
             totalScore = calculateAceAsOne(aceCount, totalScore);
         }
         score = totalScore;
     }
 
     private int calculateAceAsOne(int aceCount, int score) {
-        while (aceCount > INITIAL_ACE_COUNT && score > MAX_SCORE) {
+        while (aceCount > INITIAL_ACE_COUNT && score >= BUST_SCORE) {
             score -= Denomination.ACE.getScore();
             score += ACE_ONE;
             aceCount--;
@@ -34,14 +34,14 @@ public class Score {
     }
 
     public PlayerStatus calculatePlayerStatus() {
-        if (score > MAX_SCORE) {
+        if (score >= BUST_SCORE) {
             return PlayerStatus.BUST;
         }
         return PlayerStatus.HITTABLE;
     }
 
     public DealerStatus calculateDealerStatus() {
-        if (score > MAX_SCORE) {
+        if (score >= BUST_SCORE) {
             return DealerStatus.BUST;
         }
         if (score < DEALER_REQUIRED_MIN_SCORE) {
@@ -51,11 +51,11 @@ public class Score {
     }
 
     public boolean isLessThanBustScore() {
-        return score <= MAX_SCORE;
+        return score < BUST_SCORE;
     }
 
     public boolean isGreaterThanBustScore() {
-        return score > MAX_SCORE;
+        return score >= BUST_SCORE;
     }
 
     public int getScore() {
