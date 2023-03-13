@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,8 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +22,7 @@ public class PlayerTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름은 5자 이하여야 합니다.");
     }
-    
+
     @Test
     @DisplayName("player는 카드를 받기전에 뽑을 수 없다.")
     void validateHit() {
@@ -41,7 +39,8 @@ public class PlayerTest {
         //given
         String name = "hoy";
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.CLOVER, Denomination.SIX)));
+            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
+                new Card(Suit.CLOVER, Denomination.SIX)));
         //when
         Player player = new Player(name);
         player.initCards(cards);

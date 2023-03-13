@@ -1,9 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.Denomination;
-import domain.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

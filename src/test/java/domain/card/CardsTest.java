@@ -1,11 +1,7 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Denomination;
-import domain.card.Suit;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +51,7 @@ class CardsTest {
 
         assertThat(cards.getScore()).isEqualTo(16);
     }
-    
+
     @Test
     @DisplayName("A카드를 여러장 갖고있을 때, ")
     void cardsWithManyA() {

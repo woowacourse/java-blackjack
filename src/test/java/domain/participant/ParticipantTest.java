@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.participant.Participant;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
