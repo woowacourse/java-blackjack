@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
 public final class Stay extends Finished {
-    Stay(final Cards cards) {
+    protected Stay(final Cards cards) {
         super(cards);
     }
 

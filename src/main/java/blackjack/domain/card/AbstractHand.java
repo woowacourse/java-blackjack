@@ -3,7 +3,7 @@ package blackjack.domain.card;
 public abstract class AbstractHand implements Hand {
     private final Cards cards;
 
-    AbstractHand(final Cards cards) {
+    protected AbstractHand(final Cards cards) {
         this.cards = cards;
     }
 

@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
 public abstract class Finished extends AbstractHand {
-    Finished(final Cards cards) {
+    protected Finished(final Cards cards) {
         super(cards);
     }
 

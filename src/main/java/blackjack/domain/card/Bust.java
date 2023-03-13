@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
 public class Bust extends Finished {
-    Bust(final Cards cards) {
+    protected Bust(final Cards cards) {
         super(cards);
     }
 

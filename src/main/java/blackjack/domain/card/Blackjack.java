@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
 public class Blackjack extends Finished {
-    Blackjack(final Cards cards) {
+    protected Blackjack(final Cards cards) {
         super(cards);
     }
 
