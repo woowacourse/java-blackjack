@@ -19,12 +19,20 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int readBattingAmount(String name) {
+    public int readBettingAmount(String name) {
         try {
             System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
-            return Integer.parseInt(scanner.nextLine());
+            String input = scanner.nextLine();
+            validateIsBlank(input);
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("배팅 금액은 숫자로 입력되어야 합니다.");
+        }
+    }
+
+    private static void validateIsBlank(String input) {
+        if (input.isBlank()) {
+            throw new IllegalArgumentException("공백은 입력될 수 없습니다.");
         }
     }
 }

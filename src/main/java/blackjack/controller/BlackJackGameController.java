@@ -27,7 +27,7 @@ public class BlackJackGameController {
 
     public void run() {
         Game game = Game.from(new GamePlayer(new Dealer(), makePlayers()));
-        gameStart(game.getPlayers(), game.getDealer());
+        gameStart(game.getDealer(), game.getPlayers());
         gamePlay(game);
         gameEnd(game.getDealer(), game.getPlayers());
         gameResult(game);
@@ -42,14 +42,23 @@ public class BlackJackGameController {
         }
     }
 
-    private void gameStart(Players players, Dealer dealer) {
+    private void gameStart(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            BettingAmount bettingAmount = new BettingAmount(inputView.readBattingAmount(player.getName()));
+            BettingAmount bettingAmount = readBettingAmount(player.getName());
             player.setBettingAmount(bettingAmount);
         }
         Map<String, List<String>> playersToPrintFormat = playersToPrintFormat(players);
         String dealerFirstCardToPrintFormat = dealerFirstCardToPrintFormat(dealer);
         outputView.printGameStartMessage(playersToPrintFormat, dealerFirstCardToPrintFormat);
+    }
+
+    private BettingAmount readBettingAmount(String name) {
+        try {
+            return new BettingAmount(inputView.readBettingAmount(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return readBettingAmount(name);
+        }
     }
 
     private void gamePlay(Game game) {
