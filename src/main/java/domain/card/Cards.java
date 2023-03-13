@@ -23,14 +23,13 @@ public class Cards {
 
     private int getSum() {
         return cards.stream()
-            .map(Card::getDenomination)
-            .mapToInt(Denomination::getValue)
+            .mapToInt(Card::getDenominationValue)
             .sum();
     }
 
     private boolean hasA() {
         return cards.stream()
-            .anyMatch(card -> card.is(Denomination.A));
+            .anyMatch(Card::isA);
     }
 
     private int calculateAValues(int sum) {

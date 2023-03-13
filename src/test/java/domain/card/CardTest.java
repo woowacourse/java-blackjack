@@ -18,12 +18,12 @@ class CardTest {
     }
 
     @Test
-    @DisplayName("카드의 숫자를 입력했을 때 해당 카드의 숫자와 일치하는지 판단한다.")
-    void isTest() {
+    @DisplayName("카드가 A인지 판단한다.")
+    void isATest() {
 
-        Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
+        Card card = Card.of(Suit.CLOVER, Denomination.A);
 
-        assertThat(card.is(Denomination.EIGHT)).isTrue();
+        assertThat(card.isA()).isTrue();
     }
 }
 

@@ -25,8 +25,12 @@ public class Card {
         return denomination;
     }
 
-    public boolean is(Denomination denomination) {
-        return denomination.equals(this.denomination);
+    public int getDenominationValue() {
+        return denomination.getValue();
+    }
+
+    public boolean isA() {
+        return denomination.equals(Denomination.A);
     }
 
     @Override
