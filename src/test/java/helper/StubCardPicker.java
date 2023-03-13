@@ -1,7 +1,7 @@
 package helper;
 
-import balckjack.domain.Card;
-import balckjack.strategy.CardPicker;
+import blackjack.domain.Card;
+import blackjack.strategy.CardPicker;
 
 public class StubCardPicker implements CardPicker {
 
