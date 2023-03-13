@@ -21,9 +21,9 @@ class MoneyTest {
     }
 
     @Test
-    void 베팅_금액은_10000_초과는_예외가_발생한다() {
+    void 베팅_금액은_100_000_초과는_예외가_발생한다() {
         //given
-        final int bet = 10_100;
+        final int bet = 100_100;
 
         //then
         assertThatThrownBy(() -> Money.betting(bet))

@@ -5,8 +5,9 @@ import java.util.Objects;
 
 public final class Money {
 
+    private static final Money min = new Money(0);
     private static final int MIN_BET_MONEY = 100;
-    private static final int MAX_BET_MONEY = 10_000;
+    private static final int MAX_BET_MONEY = 100_000;
     private static final int BET_MONEY_UNIT = 100;
 
     private final BigDecimal money;
@@ -37,12 +38,24 @@ public final class Money {
         }
     }
 
-    private Money multiply(final double ratio) {
+    public Money add(final Money otherMoney) {
+        return new Money(this.money.add(otherMoney.money).intValue());
+    }
+
+    public Money multiply(final double ratio) {
         return new Money(money.multiply(BigDecimal.valueOf(ratio)).intValue());
     }
 
     public Money calculatePrize(final GameResult result) {
         return multiply(result.getRatio());
+    }
+
+    public static Money getMin() {
+        return min;
+    }
+
+    public int getValue() {
+        return money.intValue();
     }
 
     @Override
