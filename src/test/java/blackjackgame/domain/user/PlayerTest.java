@@ -16,7 +16,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Name("플레이어"), new Bet(5000));
+        player = new Player(new Name("플레이어"), new Bet(5_000));
     }
 
     @DisplayName("생성 직후엔 빈 카드패를 가지고 있다.")
