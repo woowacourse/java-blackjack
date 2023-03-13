@@ -3,18 +3,18 @@ package domain.user;
 import domain.state.UserReady;
 
 public final class Player extends User {
-    private int batting;
+    private int betting;
 
-    public Player(Name name, int batting) {
+    public Player(Name name, int betting) {
         super(new UserData(name, new UserReady()));
-        this.batting = batting;
+        this.betting = betting;
     }
 
     public int getPrize() {
-        return getUserData().getPrize(batting);
+        return getUserData().getPrize(betting);
     }
 
-    public int getBatting() {
-        return batting;
+    public int getBetting() {
+        return betting;
     }
 }

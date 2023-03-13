@@ -31,7 +31,7 @@ public class GameResult {
 
     private void compareDealerStatusWithPlayer(Dealer dealer, Player player) {
         if (dealer.isBust() && player.getPrize() > 0) {
-            playerPrizes.put(player.getName(), player.getBatting());
+            playerPrizes.put(player.getName(), player.getBetting());
             return;
         }
         if (dealer.isBust() && player.getPrize() < 0) {
@@ -39,7 +39,7 @@ public class GameResult {
             return;
         }
         if (dealer.isBlackjack() && player.isBlackjack()) {
-            playerPrizes.put(player.getName(), player.getBatting());
+            playerPrizes.put(player.getName(), player.getBetting());
             return;
         }
         compareScore(dealer, player);
@@ -47,7 +47,7 @@ public class GameResult {
 
     private void compareScore(Dealer dealer, Player player) {
         if (player.getScore().isLessThan(dealer.getScore())) {
-            playerPrizes.put(player.getName(), player.getBatting() * -1);
+            playerPrizes.put(player.getName(), player.getBetting() * -1);
             return;
         }
         if (player.getScore().equals(dealer.getScore())) {
