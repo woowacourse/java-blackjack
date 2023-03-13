@@ -19,7 +19,7 @@ public class Challenger extends Player {
 
     @Override
     public Boolean canPick() {
-        return hand.getSum() <= BLACKJACK_POINT;
+        return holdingCards.getSum() <= BLACKJACK_POINT;
     }
 
     @Override

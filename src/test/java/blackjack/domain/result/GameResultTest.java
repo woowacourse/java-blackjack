@@ -2,9 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.CardFixture;
 import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -22,13 +20,9 @@ class GameResultTest {
     void setPlayers() {
         players = Players.from(List.of("oing", "ditoo"));
 
-        Card heartKing = new Card(Shape.HEART, Symbol.KING);
-        Card heartSeven = new Card(Shape.HEART, Symbol.SEVEN);
-        Card heartThree = new Card(Shape.HEART, Symbol.THREE);
-
-        players.getDealer().pickCard(heartSeven);
-        players.getChallengers().get(0).pickCard(heartThree);
-        players.getChallengers().get(1).pickCard(heartKing);
+        players.getDealer().pickCard(CardFixture.HEART_SEVEN);
+        players.getChallengers().get(0).pickCard(CardFixture.HEART_FOUR);
+        players.getChallengers().get(1).pickCard(CardFixture.CLOVER_KING);
         gameResult = GameResult.from(players, List.of(Money.bet(10000), Money.bet(20000)));
     }
 

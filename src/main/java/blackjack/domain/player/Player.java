@@ -1,35 +1,35 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.card.HoldingCards;
 
 public abstract class Player {
     protected static final int BLACKJACK_POINT = 21;
 
-    protected final Hand hand;
+    protected final HoldingCards holdingCards;
     protected Status status;
 
     protected Player() {
-        this.hand = new Hand();
+        this.holdingCards = new HoldingCards();
         this.status = Status.NORMAL;
     }
 
     public void pickStartCards(Card firstCard, Card secondCard) {
-        hand.initialize(firstCard, secondCard);
+        holdingCards.initialize(firstCard, secondCard);
         updateStatus();
     }
 
     public void pickCard(Card card) {
-        hand.add(card);
+        holdingCards.add(card);
         updateStatus();
     }
 
     private void updateStatus() {
-        if (hand.getSum() == BLACKJACK_POINT) {
+        if (holdingCards.getSum() == BLACKJACK_POINT) {
             status = Status.BLACKJACK;
             return;
         }
-        if (hand.getSum() > BLACKJACK_POINT) {
+        if (holdingCards.getSum() > BLACKJACK_POINT) {
             status = Status.BUST;
             return;
         }
@@ -37,25 +37,19 @@ public abstract class Player {
     }
 
     public int getTotalPoint() {
-        return hand.getSum();
+        return holdingCards.getSum();
     }
 
     public boolean isBust() {
-        if (status == Status.BUST) {
-            return true;
-        }
-        return false;
+        return status == Status.BUST;
     }
 
     public boolean isBlackJack() {
-        if (status == Status.BLACKJACK) {
-            return true;
-        }
-        return false;
+        return status == Status.BLACKJACK;
     }
 
-    public Hand getHoldingCards() {
-        return hand;
+    public HoldingCards getHoldingCards() {
+        return holdingCards;
     }
 
     public abstract Boolean canPick();

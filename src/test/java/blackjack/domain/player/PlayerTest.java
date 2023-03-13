@@ -2,9 +2,8 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.CardFixture;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Symbol;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,24 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
 
+
     private Player player;
+
+    private static Stream<Arguments> provideCards_bust() {
+        return Stream.of(
+                Arguments.of(List.of(CardFixture.CLOVER_KING, CardFixture.CLOVER_FIVE), false),
+                Arguments.of(List.of(CardFixture.CLOVER_KING, CardFixture.CLOVER_FIVE, CardFixture.HEART_EIGHT), true),
+                Arguments.of(List.of(CardFixture.CLOVER_ACE, CardFixture.HEART_ACE, CardFixture.SPADE_ACE,
+                        CardFixture.CLOVER_FIVE), false)
+        );
+    }
+
+    private static Stream<Arguments> provideCards_blackjack() {
+        return Stream.of(
+                Arguments.of(List.of(CardFixture.CLOVER_KING, CardFixture.CLOVER_ACE), true),
+                Arguments.of(List.of(CardFixture.CLOVER_ACE, CardFixture.CLOVER_FIVE), false)
+        );
+    }
 
     @BeforeEach
     void setup() {
@@ -38,26 +54,22 @@ class PlayerTest {
         };
     }
 
-
     @Test
     @DisplayName("플레이어는 초기 카드 2장을 받는다")
     void start_with_two_cards() {
-        Card card1 = new Card(Shape.HEART, Symbol.FOUR);
-        Card card2 = new Card(Shape.CLOVER, Symbol.KING);
-        player.pickStartCards(card1, card2);
+        player.pickStartCards(CardFixture.HEART_FOUR, CardFixture.CLOVER_KING);
 
         assertThat(player.getHoldingCards().getCards())
-                .containsExactly(card1, card2);
+                .containsExactly(CardFixture.HEART_FOUR, CardFixture.CLOVER_KING);
     }
 
     @Test
     @DisplayName("추가 카드를 뽑는다.")
     void pick_card() {
-        Card card = new Card(Shape.DIAMOND, Symbol.JACK);
-        player.pickCard(card);
+        player.pickCard(CardFixture.DIAMOND_JACK);
 
         assertThat(player.getHoldingCards().getCards())
-                .contains(card);
+                .contains(CardFixture.DIAMOND_JACK);
     }
 
     @ParameterizedTest
@@ -71,29 +83,6 @@ class PlayerTest {
         assertThat(player.isBust()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCards_bust() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.FIVE)),
-                        false),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.FIVE),
-                                new Card(Shape.HEART, Symbol.EIGHT)),
-                        true),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.CLOVER, Symbol.ACE),
-                                new Card(Shape.SPADE, Symbol.ACE),
-                                new Card(Shape.HEART, Symbol.ACE),
-                                new Card(Shape.CLOVER, Symbol.FIVE)),
-                        false)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("provideCards_blackjack")
     @DisplayName("블랙잭인지 확인")
@@ -103,20 +92,5 @@ class PlayerTest {
         }
 
         assertThat(player.isBlackJack()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> provideCards_blackjack() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.DIAMOND, Symbol.QUEEN),
-                                new Card(Shape.CLOVER, Symbol.ACE)),
-                        true),
-                Arguments.of(
-                        List.of(
-                                new Card(Shape.CLOVER, Symbol.ACE),
-                                new Card(Shape.SPADE, Symbol.FIVE)),
-                        false)
-        );
     }
 }

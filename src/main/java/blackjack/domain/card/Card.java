@@ -13,7 +13,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return symbol.equals(Symbol.ACE);
+        return symbol == Symbol.ACE;
     }
 
     @Override

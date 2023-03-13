@@ -5,9 +5,10 @@ import blackjack.exception.InvalidBetMoneyException;
 import java.util.Objects;
 
 public class Money {
+    public static final Money ZERO = new Money(0);
     private static final int MAX_BET_MONEY = 100000;
     private static final int MIN_BET_MONEY = 10000;
-    public static final Money ZERO = new Money(0);
+
     private final int value;
 
     private Money(int value) {
@@ -38,10 +39,6 @@ public class Money {
         return new Money(-this.value);
     }
 
-    public int getValue() {
-        return value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -57,5 +54,9 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

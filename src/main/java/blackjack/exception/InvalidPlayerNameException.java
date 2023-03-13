@@ -1,6 +1,5 @@
 package blackjack.exception;
 
-import blackjack.exception.CustomException;
 import blackjack.domain.player.Dealer;
 
 public class InvalidPlayerNameException extends CustomException {

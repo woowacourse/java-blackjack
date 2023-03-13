@@ -5,7 +5,6 @@ import blackjack.domain.result.Result;
 public class Dealer extends Player {
 
     public static final String NAME = "딜러";
-
     public static final int MAXIMUM_POINT = 16;
 
     public Result judge(Player challenger) {
@@ -29,9 +28,6 @@ public class Dealer extends Player {
     }
 
     private Result resultWhenDealerIsBlackJack(Player challenger) {
-        if (challenger.isBust()) {
-            return Result.LOSE;
-        }
         if (challenger.isBlackJack()) {
             return Result.DRAW;
         }
@@ -62,7 +58,7 @@ public class Dealer extends Player {
 
     @Override
     public Boolean canPick() {
-        return hand.getSum() <= MAXIMUM_POINT;
+        return holdingCards.getSum() <= MAXIMUM_POINT;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.game.Money;
-import blackjack.exception.CustomException;
 import blackjack.exception.InvalidChoiceException;
 import blackjack.exception.NotIntegerException;
 import java.util.Arrays;
@@ -52,7 +50,7 @@ public class InputView {
     }
 
     public static int inputPlayerBetMoney(String name) {
-        System.out.println(name+ REQUEST_PLAYER_BET_MONEY);
+        System.out.println(name + REQUEST_PLAYER_BET_MONEY);
         String betMoney = scanner.nextLine();
         return validateBetMoney(betMoney);
     }

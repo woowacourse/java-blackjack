@@ -91,7 +91,7 @@ public class OutputView {
         System.out.println(RESULT_PREFIX + point);
     }
 
-    public static void printEndRank(ChallengerResultDto challengerResultDto) {
+    public static void printRevenue(ChallengerResultDto challengerResultDto) {
         System.out.println();
         System.out.println(FINAL_RESULT_HEADER_MESSAGE);
         Map<String, Integer> nameAndResult = challengerResultDto.getNameAndResult();

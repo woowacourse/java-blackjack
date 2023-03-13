@@ -1,9 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.game.Money;
-import blackjack.exception.CustomException;
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -11,6 +10,7 @@ import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResult;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.PlayerStatusDto;
+import blackjack.exception.CustomException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -22,6 +22,13 @@ import java.util.stream.Collectors;
 public class BlackJackController {
 
     private BlackJackGame blackJackGame;
+
+    private static List<String> makeCardInfo(List<Card> inputCards) {
+        List<String> cardInfo = new ArrayList<>();
+        inputCards.stream()
+                .forEach(card -> cardInfo.add(card.getSymbol().getName() + card.getShape().getName()));
+        return cardInfo;
+    }
 
     public void run() {
         init();
@@ -132,7 +139,7 @@ public class BlackJackController {
 
     private void showResult() {
         showPoint();
-        showRank();
+        showRevenue();
     }
 
     private void showPoint() {
@@ -141,11 +148,11 @@ public class BlackJackController {
         OutputView.printEndStatus(dealerStatus, challengersStatus);
     }
 
-    private void showRank() {
+    private void showRevenue() {
         GameResult resultMap = blackJackGame.makeResult();
 
         ChallengerResultDto challengerResultDto = makeChallengerResultDto(resultMap, blackJackGame.getChallengers());
-        OutputView.printEndRank(challengerResultDto);
+        OutputView.printRevenue(challengerResultDto);
     }
 
     private PlayerStatusDto makePlayerStatusDto(Player player) {
@@ -155,18 +162,12 @@ public class BlackJackController {
         return new PlayerStatusDto(playerName, makeCardInfo(inputCards), playerPoint);
     }
 
-    private static List<String> makeCardInfo(List<Card> inputCards) {
-        List<String> cardInfo = new ArrayList<>();
-        inputCards.stream()
-                .forEach(card -> cardInfo.add(card.getSymbol().getName() + card.getShape().getName()));
-        return cardInfo;
-    }
-
     private ChallengerResultDto makeChallengerResultDto(GameResult gameResult, List<Challenger> challengers) {
         Map<String, Integer> nameAndResult = new LinkedHashMap<>();
         nameAndResult.put(Dealer.NAME, gameResult.getDealerRevenue().getValue());
         challengers.stream()
-                .forEach(challenger -> nameAndResult.put(challenger.getName(), gameResult.getChallengerRevenue(challenger).getValue()));
+                .forEach(challenger -> nameAndResult.put(challenger.getName(),
+                        gameResult.getChallengerRevenue(challenger).getValue()));
         return new ChallengerResultDto(nameAndResult);
     }
 }
