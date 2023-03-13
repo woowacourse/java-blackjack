@@ -17,12 +17,10 @@ class HandTest {
     @Test
     @DisplayName("플레이어에게 카드를 추가할 수 있다")
     void whenGivingCard_thenSuccess() {
-        Card card = CLOVER_THREE;
-
         Hand hand = new Hand(new ArrayList<>());
-        hand.addCard(card);
+        hand.draw(CLOVER_THREE);
 
-        assertThat(hand.getCards()).contains(card);
+        assertThat(hand.getCards()).contains(CLOVER_THREE);
     }
 
     @Test

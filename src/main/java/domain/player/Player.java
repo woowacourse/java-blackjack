@@ -18,7 +18,7 @@ public abstract class Player {
     }
 
     public void draw(Card card) {
-        hand.addCard(card);
+        hand.draw(card);
     }
 
     public int getScore() {
@@ -41,7 +41,9 @@ public abstract class Player {
         return hand.getCardIndexOf(index);
     }
 
-    public abstract boolean isNameEqualTo(String playerName);
+    public boolean isNameEqualTo(String playerName) {
+        return getName().equals(playerName);
+    }
 
     public String getName() {
         return this.name.getName();
@@ -60,7 +62,11 @@ public abstract class Player {
     }
 
     public Bet draw() {
-        return Bet.empty();
+        return Bet.zero();
+    }
+
+    public Bet blackJack() {
+        return bet.multiply(1.5f);
     }
 
     @Override
@@ -68,16 +74,12 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return name.equals(player.name);
+        return hand.equals(player.hand) && name.equals(player.name) && bet.equals(player.bet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
-    }
-
-    public Bet blackJack() {
-        return bet.multiply(1.5f);
+        return Objects.hash(hand, name, bet);
     }
 
     @Override

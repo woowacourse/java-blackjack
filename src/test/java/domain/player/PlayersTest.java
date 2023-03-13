@@ -61,7 +61,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
+    @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 없으면 예외가 발생한다.")
     void givenInvalidName_thenThrowsException() {
         Gambler gambler = new Gambler(Hand.withEmptyHolder(), Name.of("테스트"), Bet.from(3000));
         Players players = new Players(new Dealer(Hand.withEmptyHolder()), List.of(gambler));

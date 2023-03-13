@@ -1,4 +1,4 @@
-package domain;
+package domain.gameresult;
 
 import domain.card.Card;
 import domain.card.Denomination;
@@ -16,15 +16,14 @@ import java.util.List;
 import static domain.Textures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DealerTest {
-
+class ScoreComparatorTest {
     @Test
     @DisplayName("딜러가 상대 플레이어보다 점수가 높으면 참가자는 베팅액을 잃는다.")
     void givenDealerWinningFromPlayer() {
         Dealer dealer = makeDealer(DIAMOND_KING);
         Gambler gambler = makeParticipant(DIAMOND_NINE);
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(-3000);
     }
@@ -35,7 +34,7 @@ class DealerTest {
         Dealer dealer = makeDealer(DIAMOND_NINE);
         Gambler gambler = makeParticipant(DIAMOND_ACE);
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(3000);
     }
@@ -46,7 +45,7 @@ class DealerTest {
         Dealer dealer = makeDealer(DIAMOND_NINE);
         Gambler gambler = makeParticipant(HEART_NINE);
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(0);
     }
@@ -61,7 +60,7 @@ class DealerTest {
                 new Card(Suit.DIAMOND, Denomination.SEVEN)
         );
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(-3000);
     }
@@ -76,7 +75,7 @@ class DealerTest {
         );
         Gambler gambler = makeParticipant(DIAMOND_NINE);
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(3000);
     }
@@ -95,7 +94,7 @@ class DealerTest {
                 DIAMOND_SEVEN
         );
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(3000);
     }
@@ -112,7 +111,7 @@ class DealerTest {
                 DIAMOND_KING
         );
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(4500);
     }
@@ -130,7 +129,7 @@ class DealerTest {
                 SPADE_FOUR
         );
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue())
                 .as("21점이긴 하나, 블랙잭이 아니므로 1.5배를 곱하지 않는다.")
@@ -149,7 +148,7 @@ class DealerTest {
                 DIAMOND_KING
         );
 
-        Bet bet = dealer.battle(gambler);
+        Bet bet = ScoreComparator.compare(dealer, gambler);
 
         assertThat(bet.getValue()).isEqualTo(0);
     }

@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Hand;
-import domain.gameresult.GameResultDecider;
+import domain.gameresult.ScoreComparator;
 
 public class Dealer extends Player {
 
@@ -12,12 +12,7 @@ public class Dealer extends Player {
         super(hand, Name.dealerName(), new Bet(10000));
     }
 
-    public Bet battle(Player participant) {
-        return GameResultDecider.decideGameResult(this, participant);
-    }
-
-    @Override
-    public boolean isNameEqualTo(String name) {
-        return getName().equals(name);
+    public Bet compareWith(Gambler participant) {
+        return ScoreComparator.compare(this, participant);
     }
 }

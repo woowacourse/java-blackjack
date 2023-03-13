@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Hand {
@@ -16,12 +17,11 @@ public class Hand {
         this.cards = cards;
     }
 
-
     public static Hand withEmptyHolder() {
         return new Hand(new ArrayList<>());
     }
 
-    public void addCard(Card card) {
+    public void draw(Card card) {
         cards.add(card);
     }
 
@@ -70,6 +70,19 @@ public class Hand {
 
     public boolean isBlackJack() {
         return cards.size() == 2 && BLACKJACK_SCORE == getScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hand hand = (Hand) o;
+        return cards.equals(hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     @Override

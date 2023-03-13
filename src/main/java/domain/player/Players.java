@@ -23,9 +23,9 @@ public class Players {
         return dealer.getScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
-    public Map<Player, Bet> battleAll() {
+    public Map<Player, Bet> compareAll() {
         Map<Player, Bet> result = new LinkedHashMap<>();
-        gamblers.forEach(participant -> result.put(participant, dealer.battle(participant)));
+        gamblers.forEach(participant -> result.put(participant, dealer.compareWith(participant)));
         return result;
     }
 

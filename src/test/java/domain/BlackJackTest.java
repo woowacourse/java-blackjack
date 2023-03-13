@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.DeckOfCards;
+import domain.card.Deck;
 import domain.card.Hand;
 import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ class BlackJackTest {
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
                 new Players(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
-                DeckOfCards.create(maxIndex -> 0)
+                Deck.create(maxIndex -> 0)
         );
         blackJack.initializeCardsOfPlayers();
         List<PlayerReadOnly> players = blackJack.getPlayers().getAllPlayers();
@@ -44,7 +44,7 @@ class BlackJackTest {
         List<Gambler> gamblers = Gambler.from(GIVEN_NAMES_BETS);
         BlackJack blackJack = new BlackJack(
                 new Players(dealer, gamblers),
-                DeckOfCards.create(maxIndex -> 0)
+                Deck.create(maxIndex -> 0)
         );
         blackJack.giveCardToAllPlayers();
 
@@ -57,7 +57,7 @@ class BlackJackTest {
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
                 new Players(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
-                DeckOfCards.create(maxIndex -> 0)
+                Deck.create(maxIndex -> 0)
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
 
@@ -95,7 +95,7 @@ class BlackJackTest {
         Dealer dealer = makeDealer();
         BlackJack blackJack = new BlackJack(
                 new Players(dealer, Gambler.from(GIVEN_NAMES_BETS)),
-                DeckOfCards.create(maxIndex -> 0)
+                Deck.create(maxIndex -> 0)
         );
         blackJack.giveCardToDealer();
         assertThat(dealer.getCards()).hasSize(1);

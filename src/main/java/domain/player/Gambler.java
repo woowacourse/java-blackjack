@@ -16,9 +16,4 @@ public class Gambler extends Player {
         nameAndBet.forEach((name, bet) -> gamblers.add(new Gambler(Hand.withEmptyHolder(), name, bet)));
         return gamblers;
     }
-
-    @Override
-    public boolean isNameEqualTo(String playerName) {
-        return getName().equals(playerName);
-    }
 }

@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackJack;
-import domain.card.DeckOfCards;
+import domain.card.Deck;
 import domain.card.Hand;
 import domain.gameresult.GameResult;
 import domain.player.*;
@@ -16,16 +16,26 @@ import java.util.Map;
 
 public class BlackJackApplication {
     public void startGame() {
+        BlackJack blackJack = startBlackJack();
+
+        drawAllPlayers(blackJack);
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+
+        compareScore(blackJack);
+    }
+
+    private static void compareScore(BlackJack blackJack) {
+        GameResult gameResult = blackJack.compareScore();
+        OutputView.printPlayersGameResults(gameResult);
+    }
+
+    private BlackJack startBlackJack() {
         BlackJack blackJack = new BlackJack(
                 new Players(new Dealer(Hand.withEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
-                DeckOfCards.create(new RandomBasedIndexGenerator())
+                Deck.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);
-
-        giveCardToPlayers(blackJack);
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
-        GameResult gameResult = blackJack.battle();
-        OutputView.printPlayersGameResults(gameResult);
+        return blackJack;
     }
 
     private Map<Name, Bet> getGamblerNameAndBets() {
@@ -52,7 +62,7 @@ public class BlackJackApplication {
         OutputView.printPlayersInformation(blackJack.getPlayers());
     }
 
-    private void giveCardToPlayers(BlackJack blackJack) {
+    private void drawAllPlayers(BlackJack blackJack) {
         giveCardToParticipants(blackJack);
         if (!blackJack.shouldDealerGetCard()) {
             return;

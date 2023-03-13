@@ -1,5 +1,7 @@
 package domain.player;
 
+import java.util.Objects;
+
 public class Bet {
     private final int value;
 
@@ -12,7 +14,7 @@ public class Bet {
         return new Bet(value);
     }
 
-    public static Bet empty() {
+    public static Bet zero() {
         return new Bet(0);
     }
 
@@ -35,6 +37,19 @@ public class Bet {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bet bet = (Bet) o;
+        return value == bet.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     @Override

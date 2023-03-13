@@ -20,7 +20,7 @@ class GameResultTest {
                 new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
                 new Dealer(Hand.withEmptyHolder()), Bet.from(10000)
         );
-        assertDoesNotThrow(() -> new GameResult(result));
+        assertDoesNotThrow(() -> GameResult.from(result));
     }
 
     @Test
@@ -30,7 +30,7 @@ class GameResultTest {
                 new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
                 new Gambler(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000)
         );
-        GameResult gameResult = new GameResult(result);
+        GameResult gameResult = GameResult.from(result);
 
         List<String> names = new ArrayList<>();
         List<Integer> bets = new ArrayList<>();

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.DeckOfCards;
+import domain.card.Deck;
 import domain.gameresult.GameResult;
 import domain.player.Dealer;
 import domain.player.PlayerReadOnly;
@@ -13,11 +13,11 @@ public class BlackJack {
     public static final int INITIALIZING_CARD_COUNT = 2;
 
     private final Players players;
-    private final DeckOfCards deckOfCards;
+    private final Deck deck;
 
-    public BlackJack(Players players, DeckOfCards deckOfCards) {
+    public BlackJack(Players players, Deck deck) {
         this.players = players;
-        this.deckOfCards = deckOfCards;
+        this.deck = deck;
     }
 
     public void initializeCardsOfPlayers() {
@@ -28,12 +28,12 @@ public class BlackJack {
 
     public void giveCardToAllPlayers() {
         for (String name : players.getAllPlayerNames()) {
-            players.giveCardByName(name, deckOfCards.findAnyOneCard());
+            players.giveCardByName(name, deck.findAnyOneCard());
         }
     }
 
     public void giveCard(PlayerReadOnly participant) {
-        players.giveCardByName(participant.getName(), deckOfCards.findAnyOneCard());
+        players.giveCardByName(participant.getName(), deck.findAnyOneCard());
     }
 
     public boolean shouldDealerGetCard() {
@@ -54,7 +54,7 @@ public class BlackJack {
                 .getParticipants();
     }
 
-    public GameResult battle() {
-        return GameResult.from(players.battleAll());
+    public GameResult compareScore() {
+        return GameResult.from(players.compareAll());
     }
 }
