@@ -3,14 +3,12 @@ package blackjackgame.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjackgame.domain.Judge;
-import blackjackgame.domain.Result;
-import blackjackgame.domain.ResultDto;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.player.Dealer;
 import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Guests;
 import blackjackgame.domain.player.Name;
+import blackjackgame.domain.player.Player;
+import blackjackgame.domain.player.Players;
 import blackjackgame.view.AddCardResponse;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
@@ -26,23 +24,22 @@ public class BlackJackController {
 
     public void run() {
         final Deck deck = new Deck();
-        final Guests guests = generateGuests(deck);
-        final Dealer dealer = new Dealer(deck.firstPickCards());
+        final Dealer dealer = Dealer.from(deck.firstPickCards());
+        final Players players = initializeGuests(deck);
+        players.add(dealer);
 
-        printFirstCards(guests, dealer);
+        outputView.printStartingCards(players.startingCards());
 
-        askGuestsHitCard(guests.getGuests(), deck);
-        askDealerHitCardRepeat(dealer, deck);
-
-        printPlayersCardScore(guests, dealer);
-        judgeAndPrintResult(guests, dealer);
+        hitGuestsCard(players.guests(), deck);
+        hitDealerCard(players.dealer(), deck);
+        printScore(players);
     }
 
-    private Guests generateGuests(Deck deck) {
-        Guests guests = null;
+    private Players initializeGuests(Deck deck) {
+        Players guests = null;
         do {
             try {
-                guests = getGuests(deck);
+                guests = generateGuests(deck);
             } catch (IllegalArgumentException e) {
                 inputView.printErrorMsg(e.getMessage());
             }
@@ -50,7 +47,7 @@ public class BlackJackController {
         return guests;
     }
 
-    private Guests getGuests(Deck deck) {
+    private Players generateGuests(Deck deck) {
         List<String> guestNames = inputView.readGuestsName();
 
         List<Name> names = guestNames.stream()
@@ -70,7 +67,7 @@ public class BlackJackController {
         }
     }
 
-    private void askGuestsHitCard(final List<Guest> guests, final Deck deck) {
+    private void hitGuestsCard(final List<Guest> guests, final Deck deck) {
         for (Guest guest : guests) {
             AddCardResponse addCardResponse = AddCardResponse.YES;
             while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
@@ -82,25 +79,24 @@ public class BlackJackController {
 
     private void hitAndPrintCards(Deck deck, Guest guest, AddCardResponse addCardResponse) {
         if (addCardResponse == AddCardResponse.YES) {
-            guest.addCard(deck.pickOne());
-            outputView.printCards(guest.getName(), guest.getCards());
+            guest.draw(deck.pickOne());
+            outputView.printCards(guest.getName(), guest.cards());
+        } else {
+            guest.stay();
         }
     }
 
-    private void askDealerHitCardRepeat(final Dealer dealer, final Deck deck) {
+    private void hitDealerCard(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
-            dealer.addCard(deck.pickOne());
+            dealer.draw(deck.pickOne());
             outputView.dealerAddCard();
         }
     }
 
-    private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
-        outputView.printCards(dealer.getName(), dealer.getCards());
-        outputView.printScore(dealer.getScore());
-
-        for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), guest.getCards());
-            outputView.printScore(guest.getScore());
+    private void printScore(Players players) {
+        for (final Player player : players.getAllPlayers()) {
+            outputView.printCards(player.getName(), player.cards());
+            outputView.printScore(player.scoreValue());
         }
     }
 
