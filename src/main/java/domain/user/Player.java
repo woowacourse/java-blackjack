@@ -10,7 +10,7 @@ public final class Player extends User {
 
     public static Player of(String nameValue, int bettingAmountValue) {
         return new Player(
-                UserInformation.from(new PlayerName(nameValue), bettingAmountValue),
+                new UserInformation(new PlayerName(nameValue), new BettingAmount(bettingAmountValue)),
                 new Hand()
         );
     }

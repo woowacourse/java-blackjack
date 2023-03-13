@@ -71,8 +71,9 @@ public class BlackjackController {
     }
 
     private UserInformation generateUserInformation(UserName userName) {
-        return repeat(() -> UserInformation.from(
-                userName, InputView.readPlayerBettingAmountOf(userName.getValue()))
+        return repeat(() -> new UserInformation(
+                userName,
+                new BettingAmount(InputView.readPlayerBettingAmountOf(userName.getValue())))
         );
     }
 
