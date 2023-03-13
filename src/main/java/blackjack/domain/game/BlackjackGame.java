@@ -2,20 +2,26 @@ package blackjack.domain.game;
 
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.cardpack.ShuffleStrategy;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public final class BlackjackGame {
 
     private static final int INIT_DRAW_COUNT = 2;
 
     private final CardPack cardPack;
+    private final Bets bets;
 
-    BlackjackGame(final CardPack cardPack) {
-        this.cardPack = cardPack;
+    public BlackjackGame() {
+        this.cardPack = new CardPack();
+        this.bets = new Bets();
     }
 
-    public BlackjackGame(final CardPack cardPack, final ShuffleStrategy strategy) {
-        this(cardPack);
+    public BlackjackGame(final ShuffleStrategy strategy) {
+        this();
         initCardPack(strategy);
     }
 
@@ -31,5 +37,17 @@ public final class BlackjackGame {
 
     public void draw(User user) {
         user.drawCard(cardPack);
+    }
+
+    public void addBetting(final Player player, final Money money) {
+        bets.betting(player, money);
+    }
+
+    public Map<User, Money> getUserProfit(final Map<User, Result> result) {
+        final Map<User, Money> profitResult = new LinkedHashMap<>();
+        bets.updatePrizes(result);
+        profitResult.put(new Dealer(), bets.getDealerProfit());
+        profitResult.putAll(bets.getBets());
+        return profitResult;
     }
 }
