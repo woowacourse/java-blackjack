@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.Result;
 import domain.card.Card;
 
 public class Hit extends Running {
@@ -15,5 +16,10 @@ public class Hit extends Running {
             return new Bust(hand);
         }
         return new Hit(hand);
+    }
+
+    @Override
+    public Result calculateResult() {
+        throw new UnsupportedOperationException();
     }
 }
