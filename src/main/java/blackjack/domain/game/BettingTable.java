@@ -1,30 +1,37 @@
 package blackjack.domain.game;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.user.Player;
 import blackjack.domain.vo.Money;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BettingTable {
     private final Map<Player, BettingMoney> bets;
 
     public BettingTable() {
-        this.bets = new LinkedHashMap<>();
+        this.bets = Map.of();
     }
 
     public BettingTable(Map<Player, BettingMoney> bets) {
-        this.bets = new LinkedHashMap<>(bets);
+        this.bets = bets;
     }
 
     public BettingTable put(Player player, BettingMoney money) {
-        bets.put(player, money);
-        return new BettingTable(bets);
+        Map<Player, BettingMoney> collect = bets.keySet().stream()
+                .collect(toMap(
+                        it -> it,
+                        bets::get
+                ));
+        collect.put(player, money);
+        return new BettingTable(Collections.unmodifiableMap(collect));
     }
 
     public BettingResult calculateResult(BlackjackResult blackjackResult) {
         Map<Player, Money> bettingResults = bets.keySet().stream()
-                .collect(Collectors.toMap(
+                .collect(toMap(
                         player -> player,
                         player -> getBettingMoney(player).calculateProfit(blackjackResult.getRatio(player)),
                         (o1, o2) -> o1,
