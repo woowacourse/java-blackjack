@@ -10,16 +10,16 @@ public class InputView {
 
     public String getPlayersName() {
         System.out.println(INPUT_PLAYERS_NAME);
-        return SCANNER.next();
+        return SCANNER.nextLine();
     }
 
     public String getPlayerInputGetMoreCard(final String playerName) {
         System.out.printf((RECEIVE_MORE_CARD) + "%n", playerName);
-        return SCANNER.next();
+        return SCANNER.nextLine();
     }
 
     public String getBet(String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
-        return SCANNER.next();
+        return SCANNER.nextLine();
     }
 }

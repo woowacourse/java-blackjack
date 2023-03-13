@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import model.card.Deck;
 import model.money.Bet;
 import model.user.Dealer;
@@ -39,10 +41,20 @@ public class BlackJackController {
     }
 
     private Participants getParticipants(final Dealer dealer) {
-        final List<Name> playerNames = getPlayerNames();
-        final List<Bet> bets = getBets(playerNames);
+        final List<Name> playerNames = retryBy(this::getPlayerNames);
+        final List<Bet> bets = retryBy(this::getBets, playerNames);
 
         return Participants.of(playerNames, bets, dealer);
+    }
+
+    private <T> T retryBy(final Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private List<Name> getPlayerNames() {
@@ -97,9 +109,19 @@ public class BlackJackController {
     private void receiveCardForPlayer(final Deck deck, final Player player) {
         boolean canReceive = player.canReceiveCard();
         while (canReceive) {
-            final ReceiveCommand inputCommand = getInputMoreCardCommand(player);
+            final ReceiveCommand inputCommand = retryBy(this::getInputMoreCardCommand, player);
             receiveCardForPlayer(deck, player, inputCommand);
             canReceive = canPlayerReceiveCard(player, inputCommand);
+        }
+    }
+
+    private <T, R> R retryBy(final Function<T, R> function, T input) {
+        while (true) {
+            try {
+                return function.apply(input);
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 
@@ -108,13 +130,7 @@ public class BlackJackController {
     }
 
     private ReceiveCommand getInputMoreCardCommand(final Player player) {
-        while (true) {
-            try {
-                return ReceiveCommand.of(inputView.getPlayerInputGetMoreCard(player.getName()));
-            } catch (final IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        return ReceiveCommand.of(inputView.getPlayerInputGetMoreCard(player.getName()));
     }
 
     private void receiveCardForPlayer(final Deck deck, final Player player, final ReceiveCommand receiveCommand) {
