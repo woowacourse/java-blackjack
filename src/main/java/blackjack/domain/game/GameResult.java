@@ -1,25 +1,21 @@
 package blackjack.domain.game;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
 
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0),
-    BLACK_JACK("블랙잭", 1.5);
+    WIN(new BigDecimal(1)),
+    LOSE(new BigDecimal(-1)),
+    DRAW(new BigDecimal(0)),
+    BLACK_JACK(new BigDecimal("1.5"));
 
-    private final String view;
-    private final double times;
+    private final BigDecimal times;
 
-    GameResult(final String view, final double times) {
-        this.view = view;
+    GameResult(final BigDecimal times) {
         this.times = times;
     }
 
     public Money getProfit(Money money) {
-        return new Money((int) (money.getValue() * times));
-    }
-
-    public String getView() {
-        return view;
+        return money.multiple(times);
     }
 }

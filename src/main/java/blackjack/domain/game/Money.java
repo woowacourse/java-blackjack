@@ -1,23 +1,28 @@
 package blackjack.domain.game;
 
-// TODO : BigDecimal 적용하기
+import java.math.BigDecimal;
+
 public class Money {
 
-    private final int value;
+    private final BigDecimal value;
 
     public Money(final int value) {
+        this.value = BigDecimal.valueOf(value);
+    }
+
+    public Money(final BigDecimal value) {
         this.value = value;
     }
 
-    public Money add(Money money) {
-        return new Money(this.value + money.value);
+    public Money add(final Money money) {
+        return new Money(value.add(money.value));
     }
 
-    public Money multiple(Money money) {
-        return new Money(this.value * money.value);
+    public Money multiple(final BigDecimal times) {
+        return new Money(value.multiply(times));
     }
 
-    public int getValue() {
-        return value;
+    public Integer getValue() {
+        return value.intValue();
     }
 }

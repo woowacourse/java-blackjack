@@ -22,14 +22,16 @@ public class Dealer {
     public GameResult declareGameResult(final int playerScore) {
         Score score = this.getScore();
         int dealerScore = score.getValue();
-        if (score.isBust()) {
-            return GameResult.LOSE;
-        }
+
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
 
-        return GameResult.DRAW;
+        if (playerScore == dealerScore) {
+            return GameResult.DRAW;
+        }
+
+        return GameResult.LOSE;
     }
 
     public void drawCard(final CardPack cardPack) {

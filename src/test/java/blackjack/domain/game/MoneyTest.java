@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MoneyTest {
 
@@ -26,7 +28,7 @@ class MoneyTest {
         Money money = new Money(2);
 
         //when
-        money = money.multiple(new Money(6));
+        money = money.multiple(BigDecimal.valueOf(6));
 
         //then
         Assertions.assertThat(money.getValue()).isEqualTo(12);
