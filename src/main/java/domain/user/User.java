@@ -33,23 +33,17 @@ public abstract class User {
     }
 
     private void updateStatus() {
-        status = checkBustAndStay();
+        if (!canHit()) {
+            status = STAY;
+        }
+
+        if (score().isBusted()) {
+            status = BUST;
+        }
 
         if (isBlackjack()) {
             status = BLACKJACK;
         }
-    }
-
-    private Status checkBustAndStay() {
-        if (score().isBusted()) {
-            return BUST;
-        }
-
-        if (!canHit()) {
-            return STAY;
-        }
-
-        return PLAYING;
     }
 
     public void updateStatusToStay(boolean isYes) {
