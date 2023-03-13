@@ -70,4 +70,14 @@ class PlayerTest {
         BetAmount profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1500);
     }
+
+    @DisplayName("패배하면 배팅 금액 만큼의 손해가 발생한다.")
+    @Test
+    void getProfitByResultLoseTest() {
+        Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
+        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+
+        BetAmount profitByResult = player.getProfitByResult(Result.LOSE);
+        assertThat(profitByResult.getAmount()).isEqualTo(-1000);
+    }
 }
