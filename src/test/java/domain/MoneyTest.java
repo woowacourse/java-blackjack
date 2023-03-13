@@ -16,6 +16,13 @@ class MoneyTest {
     }
 
     @Test
+    @DisplayName("money는 100,000 초과 값으로 생성하면 예외가 발생한다.")
+    void test_create_fail() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Money(100_001));
+    }
+
+    @Test
     @DisplayName("amount가 0인 money를 생성한다.")
     void test_zero() {
         assertThat(Money.zero())

@@ -3,12 +3,20 @@ package domain;
 import java.util.Objects;
 
 public class Money {
-    private final static Money ZERO = new Money(0);
+    private static final int MAX_AMOUNT = 100_000;
+    private static final Money ZERO = new Money(0);
 
     private final int amount;
 
     public Money(int amount) {
+        validateAmount(amount);
         this.amount = amount;
+    }
+
+    private void validateAmount(int amount) {
+        if (amount >= MAX_AMOUNT) {
+            throw new IllegalArgumentException("배팅 금액은 100,000 이하로 입력해야합니다.");
+        }
     }
 
     public static Money zero() {
