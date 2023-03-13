@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
+import java.util.List;
 import java.util.Map;
 
 public final class BlackjackGame {
@@ -54,5 +55,9 @@ public final class BlackjackGame {
 
     public Players getPlayers() {
         return players;
+    }
+
+    public List<Player> getPlayersValues() {
+        return players.getPlayers();
     }
 }

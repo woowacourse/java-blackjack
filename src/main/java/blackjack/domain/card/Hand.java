@@ -5,7 +5,7 @@ import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
 
 import blackjack.domain.result.Result;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Hand {
@@ -18,7 +18,7 @@ public final class Hand {
     private final List<Card> hand;
 
     public Hand(final List<Card> hand) {
-        this.hand = hand;
+        this.hand = new ArrayList<>(hand);
     }
 
     public int totalScore() {
@@ -41,8 +41,9 @@ public final class Hand {
     }
 
     public Hand add(Card card) {
-        this.hand.add(card);
-        return new Hand(this.hand);
+        List<Card> newHand = new ArrayList<>(this.hand);
+        newHand.add(card);
+        return new Hand(newHand);
     }
 
     private boolean containsAce() {
@@ -93,6 +94,6 @@ public final class Hand {
     }
 
     public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
+        return List.copyOf(this.hand);
     }
 }

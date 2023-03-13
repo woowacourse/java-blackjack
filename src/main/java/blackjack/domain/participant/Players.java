@@ -2,10 +2,10 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.card.Hand;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.Result;
-import blackjack.domain.card.Hand;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public final class Players {
 
     public Players(final List<Player> players) {
         isValidCount(players);
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     private void isValidCount(final List<Player> players) {
@@ -64,6 +64,6 @@ public final class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(this.players);
     }
 }

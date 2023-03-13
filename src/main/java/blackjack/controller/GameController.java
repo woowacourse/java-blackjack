@@ -44,7 +44,7 @@ public final class GameController {
     }
 
     private void betMoney(final BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.getPlayers().getPlayers()) {
+        for (Player player : blackjackGame.getPlayersValues()) {
             int bettingMoney = inputView.readBettingMoney(player);
             blackjackGame.saveBettingMoney(player, new Money(bettingMoney));
         }
@@ -54,7 +54,7 @@ public final class GameController {
         blackjackGame.settingGame();
         outputView.printSettingGameMessage(blackjackGame.getDealer(), blackjackGame.getPlayers());
 
-        for (Player player : blackjackGame.getPlayers().getPlayers()) {
+        for (Player player : blackjackGame.getPlayersValues()) {
             play(blackjackGame.getDealer(), player);
         }
 
