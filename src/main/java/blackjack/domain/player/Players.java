@@ -6,11 +6,11 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Result;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public final class Players {
     private static final int COUNT_LOWER_BOUND = 1;
@@ -30,10 +30,10 @@ public final class Players {
     public void addPlayers(final List<String> names) {
         validateDuplicate(names);
         validatePlayerCount(players.size() + names.size() - DEALER_COUNT);
-        for (String name : names) {
-            final Gambler gambler = Gambler.create(name);
-            players.add(gambler);
-        }
+        final List<Player> players = names.stream()
+                .map(Gambler::create)
+                .collect(toList());
+        this.players.addAll(players);
     }
 
     private void validateDuplicate(final List<String> names) {
@@ -43,7 +43,11 @@ public final class Players {
     }
 
     private boolean isNameDuplicate(final List<String> names) {
-        return names.size() != new HashSet<>(names).size();
+        final List<String> nonDuplicatedNames = names.stream()
+                .filter(Objects::nonNull)
+                .distinct()
+                .collect(toList());
+        return names.size() != nonDuplicatedNames.size();
     }
 
     private void validatePlayerCount(final int count) {
