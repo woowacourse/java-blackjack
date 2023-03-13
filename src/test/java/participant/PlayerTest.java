@@ -81,4 +81,14 @@ class PlayerTest {
         Profit profitByResult = player.getProfitByResult(Result.LOSE);
         assertThat(profitByResult.getAmount()).isEqualTo(-1000);
     }
+
+    @DisplayName("비기면 이익이 존재하지 않는다.")
+    @Test
+    void getProfitByResultDrawTest() {
+        Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
+        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+
+        Profit profitByResult = player.getProfitByResult(Result.DRAW);
+        assertThat(profitByResult.getAmount()).isEqualTo(0);
+    }
 }
