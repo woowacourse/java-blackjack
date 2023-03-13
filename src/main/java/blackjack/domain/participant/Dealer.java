@@ -2,13 +2,17 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.WinTieLose;
+import blackjack.domain.participant.comparator.Comparator;
+import blackjack.domain.participant.comparator.InitialComparator;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final String NON_CASE = "해당하는 경우가 없습니다.";
+    private final Comparator comparator;
 
     public Dealer() {
         super(new Name(DEALER_NAME));
+        this.comparator = new InitialComparator(this);
     }
 
     public boolean canNotHit() {
@@ -25,37 +29,6 @@ public class Dealer extends Participant {
     }
 
     public WinTieLose compareScoreWith(Player player) {
-        if (player.isBlackjack()) {
-            return checkBlackjackCase(player);
-        }
-        if (isTie(player.getTotalScore())) {
-            return WinTieLose.TIE;
-        }
-        if (isWin(player.getTotalScore())) {
-            return WinTieLose.WIN;
-        }
-        if (isLose(player.getTotalScore())) {
-            return WinTieLose.LOSE;
-        }
-        throw new NullPointerException(NON_CASE);
-    }
-
-    private WinTieLose checkBlackjackCase(Player player) {
-        if (this.isBlackjack()) {
-            return WinTieLose.TIE;
-        }
-        return WinTieLose.BLACKJACK;
-    }
-
-    private boolean isLose(int playerScore) {
-        return playerScore < this.getTotalScore();
-    }
-
-    private boolean isWin(int playerScore) {
-        return playerScore > this.getTotalScore();
-    }
-
-    private boolean isTie(int playerScore) {
-        return playerScore == this.getTotalScore();
+        return comparator.compareWithPlayer(player);
     }
 }
