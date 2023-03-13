@@ -6,6 +6,7 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class BlackJackGame {
         return handResults;
     }
 
-    public Map<String, Integer> computeTotalProfitResult() {
+    public Map<String, BigDecimal> computeTotalProfitResult() {
         final TotalProfitCalculator totalProfitCalculator = new TotalProfitCalculator();
         return totalProfitCalculator.calculateProfitByParticipant(participants.players(), participants.dealer());
     }

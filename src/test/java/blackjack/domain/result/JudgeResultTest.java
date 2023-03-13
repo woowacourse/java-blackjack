@@ -15,6 +15,7 @@ import static blackjack.domain.result.JudgeResult.PUSH;
 import static blackjack.domain.result.JudgeResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -76,9 +77,9 @@ class JudgeResultTest {
     @DisplayName("각 결과마다 다르게 수익을 계산한다.")
     @Test
     void should_ReturnProfitRate_When_GivenJudgeResult() {
-        assertThat(BLACKJACK_WIN.profit(BETTING_MONEY_1000)).isEqualTo(1500);
-        assertThat(WIN.profit(BETTING_MONEY_1000)).isEqualTo(1000);
-        assertThat(LOSE.profit(BETTING_MONEY_1000)).isEqualTo(-1000);
-        assertThat(PUSH.profit(BETTING_MONEY_1000)).isEqualTo(0);
+        assertThat(BLACKJACK_WIN.profit(BETTING_MONEY_1000)).isEqualTo(new BigDecimal("1500.0"));
+        assertThat(WIN.profit(BETTING_MONEY_1000)).isEqualTo(new BigDecimal("1000.0"));
+        assertThat(LOSE.profit(BETTING_MONEY_1000)).isEqualTo(new BigDecimal("-1000.0"));
+        assertThat(PUSH.profit(BETTING_MONEY_1000)).isEqualTo(BigDecimal.ZERO);
     }
 }

@@ -3,6 +3,8 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String KEY_VALUE_FORMAT = "%s : %s" + System.lineSeparator();
+    private static final DecimalFormat PROFIT_FORMAT = new DecimalFormat("#.##");
     private static final String OPEN_CARD_MESSAGE_FORMAT = "%s와 %s에게 2장을 나누었습니다." + System.lineSeparator();
     private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT =
             "%s는 16 이하라 %d장의 카드를 더 받았습니다." + System.lineSeparator();
@@ -56,9 +59,10 @@ public class OutputView {
         System.out.printf(INPUT_ERROR_MESSAGE_FORMAT, message);
     }
 
-    public static void showTotalProfitResult(final Map<String, Integer> totalProfitResult) {
+    public static void showTotalProfitResult(final Map<String, BigDecimal> totalProfitResult) {
         System.out.println();
         System.out.println(TOTAL_PROFIT_HEADER);
-        totalProfitResult.forEach((name, profit) -> System.out.printf(KEY_VALUE_FORMAT, name, profit));
+        totalProfitResult.forEach(
+                (name, profit) -> System.out.printf(KEY_VALUE_FORMAT, name, PROFIT_FORMAT.format(profit)));
     }
 }

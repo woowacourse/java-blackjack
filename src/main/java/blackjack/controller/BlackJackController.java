@@ -9,6 +9,7 @@ import blackjack.domain.participants.Player;
 import blackjack.util.InputHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class BlackJackController {
     }
 
     private BettingMoney enrollBettingMoneyFor(final String playerName) {
-        final int amount = InputHandler.retryForIllegalArgument(playerName, InputView::askBettingAmount,
+        final BigDecimal amount = InputHandler.retryForIllegalArgument(playerName, InputView::askBettingAmount,
                 OutputView::showInputErrorMessage);
         return new BettingMoney(amount);
     }

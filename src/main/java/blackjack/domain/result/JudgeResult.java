@@ -3,17 +3,18 @@ package blackjack.domain.result;
 import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
+import java.math.BigDecimal;
 
 public enum JudgeResult {
 
-    BLACKJACK_WIN(1.5),
-    WIN(1),
-    PUSH(0),
-    LOSE(-1);
+    BLACKJACK_WIN(new BigDecimal("1.5")),
+    WIN(new BigDecimal("1.0")),
+    PUSH(new BigDecimal("0")),
+    LOSE(new BigDecimal("-1.0"));
 
-    private final double profitRate;
+    private final BigDecimal profitRate;
 
-    JudgeResult(final double profitRate) {
+    JudgeResult(final BigDecimal profitRate) {
         this.profitRate = profitRate;
     }
 
@@ -40,7 +41,7 @@ public enum JudgeResult {
         return PUSH;
     }
 
-    public int profit(final BettingMoney bettingMoney) {
-        return (int) (profitRate * (bettingMoney.getAmount()));
+    public BigDecimal profit(final BettingMoney bettingMoney) {
+        return profitRate.multiply(bettingMoney.getAmount());
     }
 }

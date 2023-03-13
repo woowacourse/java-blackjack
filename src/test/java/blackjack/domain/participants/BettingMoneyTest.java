@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,11 +14,11 @@ class BettingMoneyTest {
 
     @DisplayName("베팅 금액이 1000 이하이면 예외를 발생시킨다.")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 999})
-    void should_ThrowException_When_AmountIsUnder0(final int amount) {
+    @ValueSource(strings = {"-1", "0", "999"})
+    void should_ThrowException_When_AmountIsUnder0(final String amount) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new BettingMoney(amount), "베팅 금액은 0보다 큰 수여야 합니다."
+                () -> new BettingMoney(new BigDecimal(amount)), "베팅 금액은 0보다 큰 수여야 합니다."
         );
     }
 }

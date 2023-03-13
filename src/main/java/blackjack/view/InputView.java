@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.HitCommand;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -25,17 +26,17 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int askBettingAmount(final String playerName) {
+    public static BigDecimal askBettingAmount(final String playerName) {
         System.out.printf(ASK_BETTING_AMOUNT_MESSAGE, playerName);
         final String line = scanner.nextLine();
-        return parseInteger(line);
+        return parseBigDecimal(line);
     }
 
-    private static int parseInteger(final String line) {
+    private static BigDecimal parseBigDecimal(final String line) {
         try {
-            return Integer.parseInt(line);
+            return new BigDecimal(line);
         } catch (final NumberFormatException exception) {
-            throw new IllegalArgumentException("입력값이 정수가 아닙니다.");
+            throw new IllegalArgumentException("입력값이 숫자가 아닙니다.");
         }
     }
 

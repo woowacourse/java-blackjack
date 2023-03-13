@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
-import static blackjack.domain.participants.PlayerTest.BETTING_MONEY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -22,7 +22,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setParticipant() {
-        player = new Player("test", BETTING_MONEY);
+        player = new Player("test", BETTING_MONEY_1000);
     }
 
     @DisplayName("참가자는 카드를 받으면 카드의 수가 1 증가한다.")

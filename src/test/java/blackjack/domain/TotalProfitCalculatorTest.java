@@ -8,6 +8,7 @@ import static blackjack.domain.ParticipantFixtures.PLAYER_BLACKJACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +24,14 @@ class TotalProfitCalculatorTest {
     void should_ReturnProfitByName_When_GivenDealerAndPlayers() {
         final TotalProfitCalculator totalProfitCalculator = new TotalProfitCalculator();
 
-        final Map<String, Integer> result = totalProfitCalculator.calculateProfitByParticipant(List.of(
-                PLAYER_BLACKJACK, PLAYER_20, PLAYER_16, PLAYER_17
-        ), DEALER_17);
+        final Map<String, BigDecimal> result = totalProfitCalculator.calculateProfitByParticipant(List.of(
+                PLAYER_BLACKJACK, PLAYER_20, PLAYER_16, PLAYER_17), DEALER_17);
 
         assertThat(result).containsExactly(
-                entry(DEALER_17.getName(), -1500), entry(PLAYER_BLACKJACK.getName(), 1500),
-                entry(PLAYER_20.getName(), 1000), entry(PLAYER_16.getName(), -1000), entry(PLAYER_17.getName(), 0)
-        );
+                entry(DEALER_17.getName(), new BigDecimal("-1500.0")),
+                entry(PLAYER_BLACKJACK.getName(), new BigDecimal("1500.0")),
+                entry(PLAYER_20.getName(), new BigDecimal("1000.0")),
+                entry(PLAYER_16.getName(), new BigDecimal("-1000.0")),
+                entry(PLAYER_17.getName(), BigDecimal.ZERO));
     }
 }

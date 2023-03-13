@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.participants.PlayerTest.BETTING_MONEY;
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
@@ -17,8 +17,8 @@ class PlayersTest {
 
     private static Stream<List<Player>> playersCountOutOfBounds() {
         return Stream.of(
-                List.of(new Player("test", BETTING_MONEY)),
-                Collections.nCopies(9, new Player("test", BETTING_MONEY))
+                List.of(new Player("test", BETTING_MONEY_1000)),
+                Collections.nCopies(9, new Player("test", BETTING_MONEY_1000))
         );
     }
 

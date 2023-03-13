@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
@@ -20,14 +21,13 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
 
-    public static final BettingMoney BETTING_MONEY = new BettingMoney(1000);
     final Card CARD_FIRST = new Card(SPADE, JACK);
     final Card CARD_SECOND = new Card(DIAMOND, JACK);
 
     @DisplayName("플레이어는 이름과 베팅 금액을 가진다.")
     @Test
     void should_NotThrowException_When_CreateWithNameAndBettingMoney() {
-        assertThatCode(() -> new Player("이름", BETTING_MONEY))
+        assertThatCode(() -> new Player("이름", BETTING_MONEY_1000))
                 .doesNotThrowAnyException();
     }
 
@@ -35,7 +35,7 @@ class PlayerTest {
     @ParameterizedTest
     @NullAndEmptySource
     void should_ThrowException_When_NameIsEmpty(final String name) {
-        assertThatThrownBy(() -> new Player(name, BETTING_MONEY))
+        assertThatThrownBy(() -> new Player(name, BETTING_MONEY_1000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 빈 문자열이거나 공백일 수 없습니다.");
     }
@@ -43,7 +43,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드 오픈 시 모든 카드를 확인한다.")
     @Test
     void should_OpenAllCard_When_PlayerOpenHandStatus() {
-        final Player player = new Player("이름", BETTING_MONEY);
+        final Player player = new Player("이름", BETTING_MONEY_1000);
         player.take(CARD_FIRST);
         player.take(CARD_SECOND);
 
@@ -57,7 +57,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드 합이 21 미만이면 히트 가능하다.")
     @Test
     void should_ReturnTrue_OfIsAbleToHit_When_HandSumUnder17() {
-        final Player player = new Player("이름", BETTING_MONEY);
+        final Player player = new Player("이름", BETTING_MONEY_1000);
 
         player.take(CARD_FIRST);
         player.take(CARD_SECOND);

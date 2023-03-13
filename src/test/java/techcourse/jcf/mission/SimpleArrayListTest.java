@@ -72,19 +72,4 @@ class SimpleArrayListTest {
         // 2. 메서드를 호출할 때 제네릭 메서드의 데이터 타입을 정한다.
         // 파라미터의 타입이 SimpleList<E>일 때, 메서드 호출 코드 작성 시 전달한 파라미터값에 따라 타입을 정한다.
     }
-
-    @Test
-    void genericArrayTest() {
-//        // 실제로는 아래처럼 SimpleList<Printer>라는 제네릭 타입의 배열을 직접 생성하려고 하면 컴파일 에러가 발생한다.
-//        final SimpleList<Printer>[] printerLists = new SimpleArrayList<Printer>[1];
-//        // 만약 에러가 발생하지 않는다면,
-//        // 배열은 공변하므로 printerLists라는 배열은 모든 클래스가 상속하는 Object 타입의 배열로 형변환이 가능하다.
-//        final Object[] objects = printerLists;
-//        // Object 배열에 SimpleList<Printer> 외의 전혀 다른 타입을 저장할 수 있게 된다.
-//        objects[0] = new SimpleArrayList<>(1);
-//
-//        // printer 타입의 값을 꺼내기를 기대하지만, Integer 타입의 값 1을 꺼내게 된다.
-//        // 런타임 시점에 형변환 오류가 발생한다.
-//        final Printer printer = objects[0].get(0);
-    }
 }

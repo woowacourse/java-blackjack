@@ -16,11 +16,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ParticipantFixtures {
 
-    public static final BettingMoney BETTING_MONEY_1000 = new BettingMoney(1000);
+    public static final BettingMoney BETTING_MONEY_1000 = new BettingMoney(new BigDecimal("1000"));
 
     public static final Dealer DEALER_17 = new Dealer("딜러", List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
     public static final Dealer DEALER_BLACKJACK = new Dealer("딜러",
