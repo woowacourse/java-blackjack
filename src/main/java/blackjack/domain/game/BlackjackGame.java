@@ -36,11 +36,8 @@ public class BlackjackGame {
     }
 
     public Map<Player, Money> calculateBettingProfit() {
-        return bettingZone.calculateProfitByPlayers(getResultByPlayers());
-    }
-
-    private Map<Player, Result> getResultByPlayers() {
-        return players.compareHands();
+        final Map<Player, Result> resultByPlayers = players.compareHands();
+        return bettingZone.calculateProfitByPlayers(resultByPlayers);
     }
 
     public Dealer getDealer() {
