@@ -3,9 +3,9 @@ package view;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.Player;
+import domain.player.Players;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,29 +19,29 @@ public class OutputView {
         throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
     }
     
-    public static void printPlayersInformation(BlackJackGame blackJackGame) {
-        printPlayerNames(blackJackGame);
-        printPlayerCardsStatus(blackJackGame);
+    public static void printPlayersInformation(Players players) {
+        printPlayerNames(players);
+        printPlayerCardsStatus(players);
     }
     
-    private static void printPlayerNames(BlackJackGame blackJackGame) {
-        Player dealer = blackJackGame.getDealer();
-        List<String> participantsNames = parseParticipantsNames(blackJackGame);
+    private static void printPlayerNames(Players players) {
+        Player dealer = players.getDealer();
+        List<String> participantsNames = parseParticipantsNames(players);
         
         System.out.printf(NEW_LINE + "%s와 %s에게 2장을 나누어주었습니다." + NEW_LINE,
                 dealer.getName(),
                 String.join(", ", participantsNames));
     }
     
-    private static List<String> parseParticipantsNames(BlackJackGame blackJackGame) {
-        return blackJackGame.getParticipants().stream()
+    private static List<String> parseParticipantsNames(Players players) {
+        return players.getParticipants().stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
     
-    private static void printPlayerCardsStatus(BlackJackGame blackJackGame) {
-        printDealerCardStatus(blackJackGame.getDealer());
-        printParticipantCardStatus(blackJackGame.getParticipants());
+    private static void printPlayerCardsStatus(Players players) {
+        printDealerCardStatus(players.getDealer());
+        printParticipantCardStatus(players.getParticipants());
     }
     
     private static void printDealerCardStatus(Player dealer) {
@@ -78,21 +78,21 @@ public class OutputView {
         println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
     
-    public static void printPlayersFinalInformation(List<Player> players) {
+    public static void printPlayersFinalInformation(Players players) {
         println("");
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             printPlayerCardStatus(player, PLAYER_CARD_STATUS_FORMAT, parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore().getScore());
         }
     }
     
-    public static void printPlayersGameResults(BlackJackGame blackJackGame, Referee referee) {
+    public static void printPlayersGameResults(Players players, Referee referee) {
         println(NEW_LINE + "## 최종 수익");
-        println(parsePlayersResult(blackJackGame, referee));
+        println(parsePlayersResult(players, referee));
     }
     
-    private static String parsePlayersResult(BlackJackGame blackJackGame, Referee referee) {
-        return blackJackGame.getPlayers().stream()
+    private static String parsePlayersResult(Players players, Referee referee) {
+        return players.getPlayers().stream()
                 .map(player -> parsePlayerGameResult(player, referee))
                 .collect(Collectors.joining(NEW_LINE));
     }

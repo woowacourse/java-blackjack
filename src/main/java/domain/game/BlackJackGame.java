@@ -46,8 +46,8 @@ public class BlackJackGame {
         return players.getParticipants();
     }
     
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    public Players getPlayers() {
+        return players;
     }
     
     public double findBetAmountByPlayer(Player player) {

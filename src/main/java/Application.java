@@ -26,7 +26,7 @@ public class Application {
     
     private void initializedBlackjackGame(BlackJackGame blackJackGame) {
         blackJackGame.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJackGame);
+        OutputView.printPlayersInformation(blackJackGame.getPlayers());
     }
     
     private void settingParticipantsBetAmount(BlackJackGame blackJackGame) {
@@ -49,6 +49,6 @@ public class Application {
     
     private void printProfitResults(BlackJackGame blackJackGame, Referee referee) {
         referee.saveBattleResults(blackJackGame);
-        OutputView.printPlayersGameResults(blackJackGame, referee);
+        OutputView.printPlayersGameResults(blackJackGame.getPlayers(), referee);
     }
 }
