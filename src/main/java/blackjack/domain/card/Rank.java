@@ -15,11 +15,11 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String letter;
+    private final String symbol;
     private final int score;
 
-    Rank(final String letter, final int score) {
-        this.letter = letter;
+    Rank(final String symbol, final int score) {
+        this.symbol = symbol;
         this.score = score;
     }
 
@@ -27,11 +27,11 @@ public enum Rank {
         return this == ACE;
     }
 
-    public String getLetter() {
-        return letter;
+    public int score() {
+        return score;
     }
 
-    public int getScore() {
-        return score;
+    public String getSymbol() {
+        return symbol;
     }
 }

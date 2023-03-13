@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Shape;
 
-public class CardFixtures {
+public class CardFixture {
     public static final Card ACE_SPADE = new Card(Rank.ACE, Shape.SPADE);
     public static final Card TWO_SPADE = new Card(Rank.TWO, Shape.SPADE);
     public static final Card THREE_SPADE = new Card(Rank.THREE, Shape.SPADE);

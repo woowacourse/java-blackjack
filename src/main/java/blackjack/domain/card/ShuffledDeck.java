@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class ShuffledDeck implements Deck {
+public final class ShuffledDeck implements Deck {
     private static final Deck DECK;
 
     static {
@@ -25,14 +25,14 @@ public class ShuffledDeck implements Deck {
         this.cards = cards;
     }
 
-    public static Deck getInstance() {
-        return DECK;
-    }
-
     @Override
     public Card draw() {
         final Card card = cards.removeFirst();
         cards.addLast(card);
         return card;
+    }
+
+    public static Deck getInstance() {
+        return DECK;
     }
 }

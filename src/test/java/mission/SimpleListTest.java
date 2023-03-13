@@ -4,12 +4,16 @@ import static mission.SimpleList.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 public class SimpleListTest {
 
     @Test
-    void mission2() {
+    void 배열을_받아_SimpleList로_변환한다() {
         final String[] arrays = {"first", "second"};
         final SimpleList<String> result = SimpleList.<String>fromArrayToList(arrays);
 
@@ -20,7 +24,7 @@ public class SimpleListTest {
     }
 
     @Test
-    void mission3() {
+    void 숫자_타입의_SimpleList를_받아_모든_값을_더한다() {
         final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
         final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
 
@@ -31,7 +35,7 @@ public class SimpleListTest {
     }
 
     @Test
-    void mission4() {
+    void 숫자_타입의_SimpleList를_받아_음수를_제외하고_반환한다() {
         final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
         final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
 
@@ -49,7 +53,7 @@ public class SimpleListTest {
     }
 
     @Test
-    void mission5() {
+    void 리스트의_값을_다른_리스트로_복사한다() {
         class Printer {
         }
         class LaserPrinter extends Printer {

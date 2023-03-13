@@ -1,23 +1,22 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.player.Players.from;
-import static blackjack.domain.player.Result.PUSH;
-import static blackjack.domain.player.Result.WIN;
-import static blackjack.util.CardFixtures.ACE_DIAMOND;
-import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.EIGHT_SPADE;
-import static blackjack.util.CardFixtures.JACK_CLOVER;
-import static blackjack.util.CardFixtures.JACK_SPADE;
-import static blackjack.util.CardFixtures.KING_HEART;
-import static blackjack.util.CardFixtures.NINE_CLOVER;
-import static blackjack.util.CardFixtures.NINE_HEART;
-import static blackjack.util.CardFixtures.NINE_SPADE;
-import static blackjack.util.CardFixtures.SEVEN_SPADE;
-import static blackjack.util.CardFixtures.TWO_SPADE;
+import static blackjack.domain.card.Result.BLACKJACK_WIN;
+import static blackjack.domain.card.Result.PUSH;
+import static blackjack.util.CardFixture.ACE_DIAMOND;
+import static blackjack.util.CardFixture.ACE_SPADE;
+import static blackjack.util.CardFixture.EIGHT_SPADE;
+import static blackjack.util.CardFixture.JACK_CLOVER;
+import static blackjack.util.CardFixture.JACK_SPADE;
+import static blackjack.util.CardFixture.KING_HEART;
+import static blackjack.util.CardFixture.NINE_CLOVER;
+import static blackjack.util.CardFixture.NINE_HEART;
+import static blackjack.util.CardFixture.SEVEN_SPADE;
+import static blackjack.util.CardFixture.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Result;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.Map;
@@ -35,112 +34,164 @@ public class PlayersTest {
 
     @Test
     void 입력받은_플레이어의_이름이_중복되는_경우_예외를_던진다() {
+        final Players players = Players.create();
         final List<String> names = List.of("name", "name");
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> players.addPlayers(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.DUPLICATE_NAMES_MESSAGE + names);
+                .hasMessage("플레이어의 이름이 중복될 수 없습니다. 입력값:" + names);
     }
 
     @ParameterizedTest(name = "입력받은 플레이어가 {0}명인 경우 예외를 던진다.")
     @ValueSource(ints = {0, 7})
     void 입력받은_플레이어가_1명_미만_6명_초과인_경우_예외를_던진다(final int count) {
+        final Players players = Players.create();
         final List<String> names = IntStream.range(0, count)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> players.addPlayers(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.INVALID_NAME_COUNT + count);
+                .hasMessage("플레이어는 최소 1명 이상, 최대 6명 이하여야 합니다. 입력값:" + count);
     }
 
     @Test
-    void 플레이어들이_정상_생성된다() {
+    void 플레이어들이_정상적으로_추가된다() {
+        final Players players = Players.create();
         final List<String> names = List.of("후추", "허브");
 
-        final Players players = from(names);
+        players.addPlayers(names);
 
         assertThat(players.getPlayers()).hasSize(3);
     }
 
     @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
-        final List<String> names = List.of("후추", "허브");
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
         final Deck deck = new FixedDeck(ACE_SPADE, KING_HEART, JACK_SPADE, TWO_SPADE, EIGHT_SPADE, JACK_SPADE);
-        final Players players = from(names);
 
         players.initialDraw(deck);
 
         assertThat(players.getPlayers())
-                .extracting(Player::calculateScore)
+                .extracting(Player::score)
                 .containsExactly(21, 12, 18);
     }
 
     @Test
-    void 플레이어에게_카드를_뽑게한다() {
-        final Players players = Players.from(List.of("허브"));
-        final Deck deck = new FixedDeck(JACK_SPADE);
-        final int gamblerIndex = 1;
-        final Player player = players.getPlayers().get(gamblerIndex);
+    void 딜러가_카드를_가능할_때_까지_뽑는다() {
+        final Players players = Players.create();
+        final Deck deck = new FixedDeck(ACE_DIAMOND, TWO_SPADE, EIGHT_SPADE);
+        players.initialDraw(deck);
 
-        players.drawTo(player, deck);
+        players.drawToDealer(deck);
 
-        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+        final Player dealer = players.getDealer();
+        assertThat(dealer.score()).isEqualTo(21);
     }
 
     @Test
-    void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Players players = Players.from(List.of("허브"));
-        final int gamblerIndex = 1;
-        final Player player = players.getPlayers().get(gamblerIndex);
+    void 입력한_플레이어의_카드를_추가한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+        final Deck deck = new FixedDeck(JACK_SPADE);
 
-        players.stay(player);
+        players.drawTo(Name.from("후추"), deck);
 
-        assertThat(player.isDrawable()).isFalse();
+        final Player player = players.findDrawablePlayer();
+        assertThat(player.getSymbols()).containsExactly("J스페이드");
+    }
+
+    @Test
+    void 카드를_뽑을_수_있는_플레이어가_없다면_예외를_던진다() {
+        final Players players = Players.create();
+
+        assertThatThrownBy(players::findDrawablePlayer)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드를 뽑을 수 있는 플레이어가 존재하지 않습니다.");
+    }
+
+    @Test
+    void 입력한_플레이어의_상태를_카드를_더_뽑을_수_없는_상태로_변경한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+
+        players.stay(Name.from("후추"));
+
+        assertThat(players.isExistDrawablePlayer()).isFalse();
+    }
+
+    @Test
+    void 카드를_뽑을_수_있는_플레이어들이_존재하는지_확인한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+
+        final boolean result = players.isExistDrawablePlayer();
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void 카드를_뽑을_수_있는_플레이어들이_없다면_거짓을_반환한다() {
+        final Players players = Players.create();
+
+        final boolean result = players.isExistDrawablePlayer();
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    void 카드를_뽑을_수_있는_플레이어를_반환한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+
+        final Player player = players.findDrawablePlayer();
+
+        assertThat(player.getNameValue()).isEqualTo("후추");
+    }
+
+    @Test
+    void 게임_결과를_반환한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
+        final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, ACE_SPADE, NINE_HEART, NINE_CLOVER);
+        players.initialDraw(deck);
+        players.stay(Name.from("허브"));
+
+        final Map<Player, Result> result = players.play();
+
+        assertThat(result.values()).containsExactly(BLACKJACK_WIN, PUSH);
     }
 
     @Test
     void 플레이어들을_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
 
-        List<Player> result = players.getPlayers();
+        final List<Player> result = players.getPlayers();
 
-        assertThat(result).extracting(Player::getName)
+        assertThat(result).extracting(Player::getNameValue)
                 .containsExactly("딜러", "후추", "허브");
     }
 
     @Test
     void 딜러를_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = Players.create();
 
         final Player player = players.getDealer();
 
-        assertThat(player.getName()).isEqualTo("딜러");
+        assertThat(player.getNameValue()).isEqualTo("딜러");
     }
 
     @Test
-    void 딜러가_카드를_가능할_때_까지_뽑는다() {
-        final List<String> names = List.of("후추");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, TWO_SPADE, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
-        final Players players = from(names);
-        players.initialDraw(deck);
+    void 겜블러의_이름을_반환한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
 
-        players.drawToDealer(deck);
+        final List<Player> result = players.getGamblers();
 
-        assertThat(players.getDealer().calculateScore()).isEqualTo(21);
-    }
-
-    @Test
-    void 게임_결과를_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER);
-        final Players players = from(names);
-        players.initialDraw(deck);
-
-        Map<Player, Result> result = players.play();
-
-        assertThat(result.values()).containsExactly(WIN, PUSH);
+        assertThat(result)
+                .extracting(Player::getNameValue)
+                .containsExactly("후추", "허브");
     }
 }

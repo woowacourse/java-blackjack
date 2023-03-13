@@ -12,6 +12,6 @@ public class ShapeTest {
 
     @Test
     void 심볼을_반환한다() {
-        assertThat(Shape.DIAMOND.getLetter()).isEqualTo("다이아몬드");
+        assertThat(Shape.DIAMOND.getSymbol()).isEqualTo("다이아몬드");
     }
 }

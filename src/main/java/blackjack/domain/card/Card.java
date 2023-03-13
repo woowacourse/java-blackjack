@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public class Card {
+public final class Card {
     private final Rank rank;
     private final Shape shape;
 
@@ -13,6 +13,10 @@ public class Card {
         return rank.isAce();
     }
 
+    public int score() {
+        return rank.score();
+    }
+
     @Override
     public String toString() {
         return "Card{" +
@@ -21,11 +25,7 @@ public class Card {
                 '}';
     }
 
-    public int getScore() {
-        return rank.getScore();
-    }
-
-    public String getLetter() {
-        return rank.getLetter() + shape.getLetter();
+    public String getSymbol() {
+        return rank.getSymbol() + shape.getSymbol();
     }
 }

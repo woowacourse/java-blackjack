@@ -66,7 +66,7 @@ public class SimpleArrayListTest {
                 .isInstanceOf(IndexOutOfBoundsException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "입력한 값이 존재하는지 확인한다. 리스트: [\"hello\"] 입력:{0}, 결과:{1}")
     @CsvSource({"hello, true", "hi, false"})
     void 입력한_값이_존재하는지_확인한다(final String value, final boolean result) {
         sut.add("hello");

@@ -13,26 +13,37 @@ flowchart TD
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
     BlackjackController --> OutputView
-
-    BlackjackGame --> BlackjackGameResult
+    
+    BlackjackGame --> Bets --> Money
     BlackjackGame --> Players
-
+    
     subgraph 카드
         ShuffledDeck --> Card
         Card --> Rank
         Card --> Shape
         Cards --> Card
-        Hand -- 사용자의 패 --> Cards
-        Hand -- 핸드의 상태 --> State
+        Hand --> Cards
     end
-
+    
     Players --> 플레이어 --> Hand
-
+    
     subgraph 플레이어
         direction BT
         Gambler -.-> Player
         Dealer -.-> Player
     end
+```
+
+```mermaid
+classDiagram
+    Hand <|.. AbstractHand
+    AbstractHand <|-- Running
+    AbstractHand <|-- Finished
+    Running <|-- Hit
+    Finished <|-- Blackjack
+    Finished <|-- Stay
+    Finished <|-- Bust
+    
 ```
 
 ### 블랙잭 게임 개요
@@ -64,6 +75,11 @@ flowchart TD
           | BLACKJACK | 무승부 | 겜블러 승 | 겜블러 승 |
           | STOP | 딜러 승 | 값 비교 | 겜블러 승 |
           | BUST | 딜러 승 | 딜러 승 | 겜블러 패 |
+    - [x] 베팅 결과에 따라 수익이 결정된다.
+      - [x] 블랙잭으로 승리한 경우 베팅 금액의 1.5배를 추가로 받는다.
+      - [x] 승리한 경우 베팅 금액만큼 추가로 받는다.
+      - [x] 무승부인 경우 베팅 금액을 그대로 돌려 받는다.
+      - [x] 패배인 경우 베팅 금액을 모두 잃는다.
 
 **카드**
 
@@ -93,7 +109,7 @@ flowchart TD
         - [x] 갬블러의 이름은 최소 1자, 최대 5자로 구성된다.
         - [x] 갬블러의 이름이 null, 빈값, 5자를 초과하는 경우 예외를 던진다.
     - [x] 갬블러는 게임 시작 시 카드 2장을 받는다.
-    - [ ] 카드 점수의 합이 21을 넘지 않으면 다음과 같은 행동 중 하나를 선택할 수 있다.
+    - [x] 카드 점수의 합이 21을 넘지 않으면 다음과 같은 행동 중 하나를 선택할 수 있다.
         - [x] HIT: 카드를 한 장 더 받는다.
         - [x] STAY: 멈춘다.
 
@@ -101,6 +117,8 @@ flowchart TD
 
 - [x] 블랙잭 게임에 참가할 사람들의 이름을 입력받는다.
     - [x] 쉼표`,` 기준으로 분리하여 입력받는다.
+- [x] 플레이어의 베팅 금액을 입력받는다.
+    - [x] 숫자가 아닌 값을 입력하면 예외를 던진다. 
 - [x] 카드를 더 받을지 입력받는다.
     - [x] 카드를 더 받는 경우 y를 입력받는다.
     - [x] 카드를 더 받지 않는 경우 n을 입력받는다.
@@ -125,10 +143,10 @@ flowchart TD
   jason카드: 7클로버, K스페이드 - 결과: 17
   ```
 
-- [x] 최종 결과를 출력한다.
+- [x] 최종 수익을 출력한다.
   ```
-  ## 최종 승패
-  딜러: 1승 1패
-  pobi: 승
-  jason: 패
+  ## 최종 수익
+  딜러: 10000
+  pobi: 10000
+  jason: -20000
   ```

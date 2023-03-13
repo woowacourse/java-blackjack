@@ -1,97 +1,109 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
+import blackjack.domain.game.Bets;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackGameResult;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final BlackjackGame blackjackGame;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
+    public BlackjackController(
+            final InputView inputView,
+            final OutputView outputView,
+            final BlackjackGame blackjackGame
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackjackGame = blackjackGame;
     }
 
-    public void run() {
-        final BlackjackGame blackjackGame = initializeGame();
-        initialDraw(blackjackGame);
-        draw(blackjackGame);
-        play(blackjackGame);
+    public void run(final Retry retry) {
+        addPlayers(retry);
+        addBets(retry);
+        initialDraw();
+        draw(retry);
+        play();
     }
 
-    private BlackjackGame initializeGame() {
-        final Players players = createPlayers(new Retry());
-        return new BlackjackGame(players);
-    }
-
-    private Players createPlayers(final Retry retry) {
+    private void addPlayers(Retry retry) {
         while (retry.isRepeatable()) {
             try {
-                return Players.from(inputView.readPlayers());
+                blackjackGame.addPlayers(inputView.readPlayers());
+                return;
             } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-                retry.decrease();
+                outputView.printException(e.getMessage());
+                retry = retry.decrease();
             }
         }
-        throw new IllegalArgumentException(retry.getFailMessage());
+        throw retry.getException();
     }
 
-    private void initialDraw(final BlackjackGame blackjackGame) {
+    private void addBets(final Retry retry) {
+        for (final Player player : blackjackGame.getGamblers()) {
+            addBet(player, retry);
+        }
+    }
+
+    private void addBet(final Player player, Retry retry) {
+        while (retry.isRepeatable()) {
+            try {
+                blackjackGame.addBet(player, inputView.readBet(player));
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printException(e.getMessage());
+                retry = retry.decrease();
+            }
+        }
+        throw retry.getException();
+    }
+
+    private void initialDraw() {
         blackjackGame.initialDraw(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
-    private void draw(final BlackjackGame blackjackGame) {
-        for (final Player player : blackjackGame.getPlayers()) {
-            drawOnce(blackjackGame, player);
+    private void draw(final Retry retry) {
+        while (blackjackGame.isExistDrawablePlayer()) {
+            final Player player = blackjackGame.findDrawablePlayer();
+            final BlackjackCommand command = readCommand(player, retry);
+            decide(player, command);
+            outputView.printPlayerDraw(player);
         }
         blackjackGame.drawToDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(blackjackGame.getDealer());
         for (final Player player : blackjackGame.getPlayers()) {
-            outputView.printPlayerResult(player);
+            outputView.printPlayerCardsWithScore(player);
         }
     }
 
-    private void drawOnce(final BlackjackGame blackjackGame, final Player player) {
-        while (isDrawable(player)) {
-            final BlackjackCommand command = createCommand(player, new Retry());
-            decideAction(blackjackGame, player, command);
-            outputView.printDrawResult(player);
-        }
-    }
-
-    private boolean isDrawable(final Player player) {
-        return player.isDrawable() && !player.isDealer();
-    }
-
-    private BlackjackCommand createCommand(final Player player, final Retry retry) {
+    private BlackjackCommand readCommand(final Player player, Retry retry) {
         while (retry.isRepeatable()) {
             try {
                 return BlackjackCommand.from(inputView.readCommand(player));
             } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-                retry.decrease();
+                outputView.printException(e.getMessage());
+                retry = retry.decrease();
             }
         }
-        throw new IllegalArgumentException(retry.getFailMessage());
+        throw retry.getException();
     }
 
-    private void decideAction(final BlackjackGame blackjackGame, final Player player, final BlackjackCommand command) {
-        if (command.isHit()) {
-            blackjackGame.drawTo(player, ShuffledDeck.getInstance());
+    private void decide(final Player player, final BlackjackCommand command) {
+        if (command == BlackjackCommand.HIT) {
+            blackjackGame.drawTo(player.name(), ShuffledDeck.getInstance());
             return;
         }
-        blackjackGame.stay(player);
+        blackjackGame.stay(player.name());
     }
 
-    private void play(final BlackjackGame blackjackGame) {
-        final BlackjackGameResult result = blackjackGame.play();
-        outputView.printGameResult(result);
+    private void play() {
+        final Bets bets = blackjackGame.play();
+        outputView.printBetResult(bets, blackjackGame.getPlayers());
     }
 }

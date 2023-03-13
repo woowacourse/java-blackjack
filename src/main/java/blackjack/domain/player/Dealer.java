@@ -1,8 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Hit;
 
-public class Dealer extends AbstractPlayer {
+public final class Dealer extends Player {
     private static final int SCORE_LOWER_BOUND = 16;
 
     private Dealer(final Name name, final Hand hand) {
@@ -10,20 +11,16 @@ public class Dealer extends AbstractPlayer {
     }
 
     public static Dealer create() {
-        return new Dealer(Name.createDealerName(), new Hand());
+        return new Dealer(Name.createDealerName(), new Hit());
     }
 
     @Override
     public boolean isDrawable() {
-        return hand.isPlayable() && hand.calculateScore() <= SCORE_LOWER_BOUND;
+        return hand().isDrawable() && hand().score() <= SCORE_LOWER_BOUND;
     }
 
     @Override
     public boolean isDealer() {
         return true;
-    }
-
-    public int getCardCount() {
-        return hand.getCardLetters().size();
     }
 }
