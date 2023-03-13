@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Result;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,28 +15,28 @@ public class PlayerResult {
 
     public void calculatePlayerResult(Player player, Dealer dealer) {
         if (player.isBlackJack()) {
-            playerResult.put(player, judgeResultWhenBlackJackPlayer(dealer));
+            playerResult.put(player, judgeResultBlackJackPlayer(dealer));
             return;
         }
         if (player.isBust()) {
-            playerResult.put(player, judgeResultWhenBustPlayer());
+            playerResult.put(player, judgeResultBustPlayer());
             return;
         }
-        playerResult.put(player, judgeResultWhenNotBustPlayer(player, dealer));
+        playerResult.put(player, judgeResultStayPlayer(player, dealer));
     }
 
-    private Result judgeResultWhenBlackJackPlayer(Dealer dealer) {
+    private Result judgeResultBlackJackPlayer(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return Result.PUSH;
         }
-        return Result.WIN;
+        return Result.BLACKJACK;
     }
 
-    private Result judgeResultWhenBustPlayer() {
+    private Result judgeResultBustPlayer() {
         return Result.LOSE;
     }
 
-    private Result judgeResultWhenNotBustPlayer(Player player, Dealer dealer) {
+    private Result judgeResultStayPlayer(Player player, Dealer dealer) {
         if (dealer.isBust() || player.calculateSumOfRank() > dealer.calculateSumOfRank()) {
             return Result.WIN;
         }

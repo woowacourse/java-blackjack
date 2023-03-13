@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String NEW_LINE = System.lineSeparator();
+    private static final String NATURAL_NUMBER_REGEX = "^[1-9]+[0-9]*$";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -20,10 +21,23 @@ public class InputView {
         return validateInput(scanner.nextLine());
     }
 
+    public static int readBettingMoney(String playerName) {
+        System.out.println(NEW_LINE + playerName + "의 배팅 금액은?");
+        String input = validateInput(scanner.nextLine());
+        validateNaturalNumber(input);
+        return Integer.parseInt(input);
+    }
+
     private static String validateInput(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("공백은 입력이 불가능합니다.");
         }
         return input;
+    }
+
+    private static void validateNaturalNumber(String input) {
+        if (!input.matches(NATURAL_NUMBER_REGEX)) {
+            throw new IllegalArgumentException("자연수를 입력해주세요.");
+        }
     }
 }

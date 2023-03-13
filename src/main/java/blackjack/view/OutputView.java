@@ -3,10 +3,10 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Result;
+import blackjack.dto.BlackJackProfitDto;
+import blackjack.dto.PlayerProfitDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,7 +14,6 @@ public class OutputView {
 
     private static final String SPLIT_DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
-    private static final StringBuilder finalResult = new StringBuilder();
 
     private OutputView() {
     }
@@ -55,8 +54,8 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardsWithSum(final List<Player> players, final Dealer dealer) {
-        System.out.println();
+    public static void printCardsWithSum(final Dealer dealer, final List<Player> players) {
+        System.out.println(NEW_LINE);
         printParticipantCards("딜러", dealer.getCards());
         System.out.println(" - 결과: " + dealer.calculateSumOfRank());
         for (Player player : players) {
@@ -65,18 +64,17 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
-        for (final Result result : dealerResult.keySet()) {
-            generateDealerResult(dealerResult, result);
-        }
-        System.out.println(NEW_LINE + "## 최종 승패");
-        System.out.println("딜러: " + finalResult);
-        for (final Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + ": " + playerResult.get(player).getValue());
+    public static void printFinalProfit(final BlackJackProfitDto blackJackProfitDto) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println("딜러: " + blackJackProfitDto.getDealerProfit());
+
+        final List<PlayerProfitDto> playersProfitDto = blackJackProfitDto.getPlayerProfit();
+        for (final PlayerProfitDto playerProfitDto : playersProfitDto) {
+            System.out.println(playerProfitDto.getName() + ": " + playerProfitDto.getProfit());
         }
     }
 
-    private static void generateDealerResult(Map<Result, Integer> dealerResult, Result result) {
-        finalResult.append(dealerResult.get(result)).append(result.getValue());
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }

@@ -1,11 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 
-import java.util.EnumMap;
 import java.util.Map;
 
 public class BlackJackGame {
@@ -20,42 +18,42 @@ public class BlackJackGame {
         this.players = new Players(inputNames);
     }
 
-    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        final Card card = Deck.from(shufflingMachine.draw());
+    public void handOutInitCards(final Deck deck) {
+        handOutInitCardsTo(deck, dealer);
+        players.getPlayers()
+                .forEach(player -> handOutInitCardsTo(deck, player));
+    }
+
+    private void handOutInitCardsTo(final Deck deck, final Participant participant) {
+        for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
+            handOutCardTo(deck, participant);
+        }
+    }
+
+    public void handOutCardTo(final Deck deck, final Participant participant) {
+        final Card card = deck.draw();
         participant.receiveCard(card);
     }
 
-    public void handOutInitCards(final ShufflingMachine shufflingMachine) {
-        handOutInitCardsTo(shufflingMachine, dealer);
-        players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
-    }
-
-    private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
-            final Card card = Deck.from(shufflingMachine.draw());
-            participant.receiveCard(card);
-        }
-    }
-
-    public Map<Result, Integer> calculateDealerResult(final PlayerResult playerResult) {
-        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+    public void calculateParticipantResult(final DealerResult dealerResult, final PlayerResult playerResult) {
         for (final Player player : players.getPlayers()) {
             playerResult.calculatePlayerResult(player, dealer);
-            final Result resultForDealer = changeResultForDealer(playerResult.getPlayerResult(player));
-            dealerResult.put(resultForDealer, dealerResult.getOrDefault(resultForDealer, 0) + 1);
+            dealerResult.calculateDealerResult(playerResult.getPlayerResult(player));
         }
-        return dealerResult;
     }
 
-    private Result changeResultForDealer(final Result result) {
-        if (result.equals(Result.WIN)) {
-            return Result.LOSE;
+    public Map<Player, Money> calculatePlayerProfit(final PlayerResult playerResult, final Map<Player, Money> playerBetting) {
+        for (final Player player : players.getPlayers()) {
+            final Result result = playerResult.getPlayerResult(player);
+            final Money bettingMoney = playerBetting.get(player);
+            playerBetting.put(player, bettingMoney.calculateProfit(result.getRate()));
         }
-        if (result.equals(Result.LOSE)) {
-            return Result.WIN;
-        }
-        return Result.PUSH;
+        return playerBetting;
+    }
+
+    public Money calculateDealerProfit(final Map<Player, Money> playerProfit) {
+        return playerProfit.values().stream()
+                .reduce(Money.dealer(), Money::minus);
     }
 
     public Dealer getDealer() {

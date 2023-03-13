@@ -1,15 +1,13 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ShufflingMachine;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.*;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -20,10 +18,10 @@ class BlackJackGameTest {
     void checkCardSizeOfParticipantsAfterInitialHandOut() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
-        ShufflingMachine shufflingMachine = new ShufflingMachine();
+        Deck deck = new Deck();
 
         // when
-        blackJackGame.handOutInitCards(shufflingMachine);
+        blackJackGame.handOutInitCards(deck);
 
         Players players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
@@ -42,11 +40,11 @@ class BlackJackGameTest {
     void handOutCardTo() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
-        ShufflingMachine shufflingMachine = new ShufflingMachine();
+        Deck deck = new Deck();
         Dealer dealer = blackJackGame.getDealer();
 
         // when
-        blackJackGame.handOutCardTo(shufflingMachine, dealer);
+        blackJackGame.handOutCardTo(deck, dealer);
         int dealerCardSize = dealer.getCards().size();
 
         // then
@@ -81,13 +79,14 @@ class BlackJackGameTest {
         }
 
         PlayerResult playerResult = new PlayerResult();
-        Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResult(playerResult);
+        DealerResult dealerResult = new DealerResult();
+        blackJackGame.calculateParticipantResult(dealerResult, playerResult);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerResult.get(Result.WIN)).isEqualTo(2);
-            softly.assertThat(dealerResult.get(Result.LOSE)).isNull();
-            softly.assertThat(dealerResult.get(Result.PUSH)).isNull();
+            softly.assertThat(dealerResult.getValue(Result.WIN)).isEqualTo(2);
+            softly.assertThat(dealerResult.getValue(Result.LOSE)).isNull();
+            softly.assertThat(dealerResult.getValue(Result.PUSH)).isNull();
         });
     }
 }
