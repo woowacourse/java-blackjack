@@ -9,7 +9,7 @@ import domain.strategy.RandomNumberGenerator;
 import domain.user.Dealer;
 import domain.user.Player;
 import view.InputView;
-import view.OutputView2;
+import view.OutputView;
 import view.mapper.CardDenominationMapper;
 import view.mapper.CardSuitMapper;
 
@@ -21,10 +21,10 @@ import java.util.Map;
 public class BlackjackController {
 
     private final InputView inputView;
-    private final OutputView2 outputView;
+    private final OutputView outputView;
     private BlackjackGame blackjackGame;
 
-    public BlackjackController(InputView inputView, OutputView2 outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -39,11 +39,7 @@ public class BlackjackController {
     }
 
     public void init() {
-        List<String> playersName = inputView.inputParticipantsName();
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playersName) {
-            players.add(new Player(playerName, inputView.inputBetting(playerName)));
-        }
+        List<Player> players = inputPlayers();
 
         Dealer dealer = new Dealer("딜러");
 
@@ -51,6 +47,15 @@ public class BlackjackController {
         Deck deck = new Deck(numberGenerator);
 
         blackjackGame = new BlackjackGame(dealer, players, deck);
+    }
+
+    private List<Player> inputPlayers() {
+        List<String> playersName = inputView.inputParticipantsName();
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playersName) {
+            players.add(new Player(playerName, inputView.inputBetting(playerName)));
+        }
+        return players;
     }
 
     public void start() {
