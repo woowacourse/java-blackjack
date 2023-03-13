@@ -253,7 +253,7 @@
   - 컨트롤러는 입/출력과 비즈니스 로직 사이의 연결만 하고 게임 진행에 관련된 로직, 즉, 비즈니스 로직은 없는 게 좋은 걸까?
 - [x] getDealerExtraCount가 0보다 큰지 비교하는 로직은 컨트롤러가 아니라 도메인 자체에서 가져도 되지 않을까?
 - [x] HIT과 STAY가 관리되는 클래스 이름으로 DrawCommand가 적당할까?
-- [ ] 인스턴스 변수 3개 미만으로 관리하기
+- [x] 인스턴스 변수 3개 미만으로 관리하기
 - [x] Referee.judgeWinner()는 결국 getBetResut()와 세트로 동작하는 메서드이다. 이를 public 메서드로 분리할 필요가 있을까?
   - judgeWinner와 getBetResult는 결과를 얻기 위해서는 꼭 함께 호출돼야 합니다.
   - 그렇기 때문에 BlackJackGame.calculateDealerProfit 메서드 안에서 Referee.judgeWinner를 호출하도록 하고 BlackJackGame.judgeWinner는 private으로 수정했습니다.
@@ -276,7 +276,7 @@
 - [x] 테스트 케이스에서 카드 변수로 묶어놓기
 - [x] Players -> Names 클래스명 수정에 따라 테스트 메서드 수정(프로덕트 코드 포함)
 - [x] 천 단위 이상은 5_000과 같이 언더바 사용
-- [ ] Players.getPlayers()를 통해 진행되는 로직은 Players내에서 해결할 수 있지 않을까?
+- [x] Players.getPlayers()를 통해 진행되는 로직은 Players내에서 해결할 수 있지 않을까?
 
 ### 게임 도메인의 역할?
 - [x] 딜러의 카드를 2장 뽑는다.
