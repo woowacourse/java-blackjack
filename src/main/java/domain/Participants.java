@@ -30,6 +30,9 @@ public class Participants {
         cards.forEach(player::addCard);
     }
 
+    public void drawCardPlayer(Player player) {
+        player.addCard(dealer.drawCard());
+    }
 
     public Dealer getDealer() {
         return this.dealer;
