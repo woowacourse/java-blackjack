@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 /**
  * @author 우가
@@ -32,10 +32,6 @@ public enum CardInfo {
 
     public String getName() {
         return name;
-    }
-
-    public int sum(final CardInfo other) {
-        return this.value + other.value;
     }
 
     public boolean isACE() {

@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Cards;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,6 @@ public class Players {
             throw new IllegalArgumentException("블랙잭은 최소 한명이상 가능합니다.");
         }
     }
-//
-//    public void playerDrawAddCard(final int index, final CardBox cardBox) {
-//        boolean flag = true;
-//        while (flag) {
-//            flag = !players.get(index).addCard(cardBox);
-//        }
-//    }
 
     public List<String> getNames() {
         return players.stream()
@@ -52,7 +46,7 @@ public class Players {
         return players.get(index).isNotBurst();
     }
 
-    public List<Cards> getCardss() {
+    public List<Cards> getCards() {
         return players.stream()
                 .map(Player::getCards)
                 .collect(Collectors.toList());
@@ -64,7 +58,14 @@ public class Players {
 
     public List<List<String>> cardsToString() {
         return players.stream()
-                .map(Player::printInitCards)
+                .map(Player::getCards)
+                .map(Cards::cardsToString)
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> getMonies() {
+        return players.stream()
+                .map(Player::getMoney)
                 .collect(Collectors.toList());
     }
 }

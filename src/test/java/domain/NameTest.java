@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.participant.Name;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,19 +13,21 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class NameTest {
+class NameTest {
 
     @Test
     void 이름이_5글자_초과시_예외를_발생한다() {
         assertThatThrownBy(() -> new Name("jackson"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 공백제외, 최대 5글자까지 가능합니다.");
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     void 이름이_null이거나_비어있을_경우_예외를_발생한다(String name) {
         assertThatThrownBy(() -> new Name(name))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 공백제외, 최대 5글자까지 가능합니다.");
     }
 
     @ParameterizedTest

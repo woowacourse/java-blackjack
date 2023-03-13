@@ -1,6 +1,8 @@
-package domain;
+package domain.participant;
 
-import java.util.List;
+import domain.money.Money;
+import domain.card.Card;
+import domain.card.Cards;
 
 /**
  * @author 우가
@@ -9,15 +11,17 @@ import java.util.List;
  */
 public abstract class Participant {
 
-    private final Name name;
     protected final Cards cards;
+    protected Money money;
 
-    protected Participant(final Name name, final Cards cards) {
-        this.name = name;
+    protected Participant(final Money money, final Cards cards) {
         this.cards = cards;
+        this.money = money;
     }
 
-    public abstract List<String> printInitCards();
+    public int getMoney() {
+        return this.money.getMoney();
+    }
 
     public boolean addCard(final Card card) {
         return cards.addCard(card);
@@ -25,10 +29,6 @@ public abstract class Participant {
 
     public int sumOfCards() {
         return cards.sumOfCards();
-    }
-
-    public String getName() {
-        return name.getName();
     }
 
     public Cards getCards() {

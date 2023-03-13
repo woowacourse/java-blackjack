@@ -1,14 +1,14 @@
 package service;
 
-import domain.Card;
-import domain.CardBox;
-import domain.Cards;
-import domain.Dealer;
-import domain.Name;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
-import domain.Players;
+import domain.money.BettingMoney;
+import domain.card.Card;
+import domain.card.CardBox;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Participants;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,22 +27,54 @@ public class BlackJackGame {
 
     public void run() {
         Participants participants = makeParticipants();
+
         printInitGameMessage(participants);
-
-        askPlayer(participants);
-
-        dealerDrawCardByMinimumCondition(participants.getDealer());
+        askPlayerMoreDrawCard(participants);
+        drawDealerCardByMinimumCondition(participants.getDealer());
+        calculateProfitMoneyOfPlayer(participants);
 
         printCardResult(participants);
-        printWinningResult(participants);
+        printGameResult(participants);
+    }
+
+    private void printGameResult(final Participants participants) {
+        outputView.printDealerGameResult(participants.getDealerProfit());
+        outputView.printPlayersGameResult(participants.getPlayerNames(), participants.getPlayerMonies());
+    }
+
+    private void calculateProfitMoneyOfPlayer(final Participants participants) {
+        List<Player> players = participants.getPlayersToList();
+        List<Double> profits = participants.getProfits();
+        for (int index = 0; index < players.size(); index++) {
+            players.get(index).multiplyInterestOfPlayer(profits.get(index));
+        }
+        participants.calculateDealerMoney();
+    }
+
+    private List<BettingMoney> askPlayersBettingMoney(final List<Name> names) {
+        List<BettingMoney> bettingMonies = new ArrayList<>();
+        for (Name name : names) {
+            outputView.printPlayerNameForBetting(name.getName());
+            bettingMonies.add(getBettingMoney());
+        }
+        return bettingMonies;
+    }
+
+    private BettingMoney getBettingMoney() {
+        try {
+            return new BettingMoney(inputView.getBettingMoney());
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return getBettingMoney();
+        }
     }
 
     private Participants makeParticipants() {
         List<Name> names = getNames();
+        List<BettingMoney> bettingMonies = askPlayersBettingMoney(names);
         Dealer dealer = makeDealer();
-        List<Participant> participantsByPlayer = initPlayers(dealer, names);
-        participantsByPlayer.add(0, dealer);
-        return new Participants(participantsByPlayer);
+        Players players = initPlayers(dealer, names, bettingMonies);
+        return new Participants(dealer, players);
     }
 
     private List<Name> getNames() {
@@ -54,27 +86,28 @@ public class BlackJackGame {
         CardBox cardBox = new CardBox();
         List<Card> cards = new ArrayList<>();
         cards.add(cardBox.get());
-        Cards cardss = new Cards(cards);
-        return new Dealer(cardBox, cardss);
+        return new Dealer(cardBox, new Cards(cards));
     }
 
-    private List<Participant> initPlayers(final Dealer dealer, final List<Name> names) {
-        List<Participant> participants = new ArrayList<>();
-        for (Name name : names) {
-            participants.add(makePlayer(dealer, name));
+    private Players initPlayers(final Dealer dealer, final List<Name> names, final List<BettingMoney> bettingMonies) {
+        List<Player> players = new ArrayList<>();
+        for (int index = 0; index < names.size(); index++) {
+            Name name = names.get(index);
+            BettingMoney bettingMoney = bettingMonies.get(index);
+            players.add(makePlayer(dealer, name, bettingMoney));
         }
         Card drewInitLastCardOfDealer = dealer.draw();
         dealer.addCard(drewInitLastCardOfDealer);
-        return participants;
+        return new Players(players);
     }
 
     private void printInitGameMessage(final Participants participants) {
         outputView.printPlayerNames(participants.getPlayerNames());
-        outputView.printCardsPerDealer(participants.getDealerName(), participants.getDealer().printInitCards());
-        outputView.printCardsPerPlayer(participants.getPlayerNames(), copiedBoxedCards(participants.getPlayers()));
+        outputView.printCardsPerDealer(participants.getDealerFirstCard());
+        outputView.printCardsPerPlayer(participants.getPlayerNames(), participants.copiedPlayersCardsToList());
     }
 
-    private void askPlayer(final Participants participants) {
+    private void askPlayerMoreDrawCard(final Participants participants) {
         for (Player player : participants.getPlayersToList()) {
             drawCard(player, participants.getDealer());
         }
@@ -89,7 +122,7 @@ public class BlackJackGame {
         outputView.printCurrentPlayerResult(player.getName(), player.getCards().cardsToString());
     }
 
-    private void dealerDrawCardByMinimumCondition(final Dealer dealer) {
+    private void drawDealerCardByMinimumCondition(final Dealer dealer) {
         outputView.newLine();
         while (dealer.isSumUnderStandard()) {
             outputView.noticeDealerUnderStandard();
@@ -99,8 +132,7 @@ public class BlackJackGame {
 
     private void printCardResult(final Participants participants) {
         outputView.newLine();
-        Dealer dealer = participants.getDealer();
-        outputView.printAllCardResult(dealer.getName(), dealer.getCards().cardsToString(), dealer.sumOfCards());
+        outputView.printAllDealerCardResult(participants.getDealerCards(), participants.sumOfDealerCards());
 
         for (final Player player : participants.getPlayersToList()) {
             outputView.printAllCardResult(player.getName(), player.getCards().cardsToString(),
@@ -108,11 +140,11 @@ public class BlackJackGame {
         }
     }
 
-    private Player makePlayer(final Dealer dealer, final Name name) {
+    private Player makePlayer(final Dealer dealer, final Name name, final BettingMoney bettingMoney) {
         Card firstDrewCard = dealer.draw();
         Card seconddrewCard = dealer.draw();
         Cards cards = makeInitCards(firstDrewCard, seconddrewCard);
-        return new Player(name, cards);
+        return new Player(name, cards, bettingMoney);
     }
 
     private Cards makeInitCards(final Card firstDrewCard, final Card seconddrewCard) {
@@ -126,13 +158,5 @@ public class BlackJackGame {
         return playerNames.stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
-    }
-
-    private List<List<String>> copiedBoxedCards(final Players players) {
-        return players.cardsToString();
-    }
-
-    private void printWinningResult(final Participants participants) {
-        outputView.printWinningResult(participants.getWinningResult(), participants.getPlayerNames());
     }
 }
