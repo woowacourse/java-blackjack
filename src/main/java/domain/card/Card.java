@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public final class Card {
     private static final int HIGH_ACE_VALUE = 11;
+
     private final Suit suit;
     private final Rank rank;
 
