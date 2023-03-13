@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
+    public static final int INITIAL_CARD_SIZE = 2;
     protected final Name name;
     protected Hand hand;
 
@@ -38,6 +39,6 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.getCards().size() == 2 && hand.calculateScore().isBlackjack();
+        return hand.getCards().size() == INITIAL_CARD_SIZE && hand.calculateScore().isBlackjack();
     }
 }

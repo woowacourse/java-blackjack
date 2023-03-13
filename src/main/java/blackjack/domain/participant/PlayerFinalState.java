@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Score;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.Player;
 import java.util.function.BiFunction;
@@ -31,8 +30,7 @@ public enum PlayerFinalState {
     }
 
     private static PlayerFinalState of(Participant participant) {
-        Score score = participant.calculateScore();
-        if (participant.showCards().size() == 2 && score.isBlackjack()) {
+        if (participant.isBlackjack()) {
             return BLACKJACK;
         }
         if (participant.isBust()) {
