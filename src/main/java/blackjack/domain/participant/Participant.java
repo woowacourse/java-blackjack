@@ -39,6 +39,10 @@ public abstract class Participant {
         return cards.size() == BLACKJACK_CARD_COUNT && score.getScore() == BLACKJACK_SCORE;
     }
 
+    public boolean isBust() {
+        return score.getScore() > BLACKJACK_SCORE;
+    }
+
     public List<String> getCardNames() {
         return cards.stream()
                 .map(Card::getCardName)

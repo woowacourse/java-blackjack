@@ -1,7 +1,6 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 import java.util.Collections;
@@ -14,7 +13,6 @@ public class BettingYieldCalculator {
     public static final double PLAYER_YIELD_WIN = 1;
     public static final double PLAYER_YIELD_PUSH = 0;
     public static final double PLAYER_YIELD_LOSE = -1;
-    private static final int MAX_BLACKJACK_SCORE = 21;
 
     private final Map<Player, Double> playersYields = new HashMap<>();
 
@@ -49,23 +47,19 @@ public class BettingYieldCalculator {
             return;
         }
 
-        if (isBust(player) || isBust(dealer)) {
+        if (player.isBust() || dealer.isBust()) {
             compareBust(dealer, player);
             return;
         }
         compareScore(dealer, player);
     }
 
-    private boolean isBust(Participant participant) {
-        return participant.getScore() > MAX_BLACKJACK_SCORE;
-    }
-
     private void compareBust(Dealer dealer, Player player) {
-        if (isBust(player)) {
+        if (player.isBust()) {
             savePlayerLose(player);
             return;
         }
-        if (isBust(dealer)) {
+        if (dealer.isBust()) {
             savePlayerWin(player);
         }
     }
