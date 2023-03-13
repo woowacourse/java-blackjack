@@ -32,14 +32,23 @@ public class InputView {
 
     public int inputBetting(String player) {
         System.out.println(player + "의 배팅 금액은?");
-        return Integer.parseInt(scanner.nextLine());
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("숫자만 입력 가능합니다. 다시 입력하세요");
+            return inputBetting(player);
+        }
     }
 
     public Command inputCardCommand(String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
         String input = scanner.nextLine();
         validator.validateNotBlank(input);
-
-        return Command.from(input);
+        try {
+            return Command.from(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println("명령어는 y, n만 입력 가능합니다.");
+            return inputCardCommand(player);
+        }
     }
 }
