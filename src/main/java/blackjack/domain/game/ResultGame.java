@@ -8,18 +8,18 @@ import java.util.Map;
 
 public final class ResultGame {
 
-    private final Map<Participant, Betting> resultBetting;
+    private final Map<Participant, Integer> resultBetting;
 
-    private ResultGame(final Map<Participant, Betting> resultBetting) {
+    private ResultGame(final Map<Participant, Integer> resultBetting) {
         this.resultBetting = resultBetting;
     }
 
-    public static ResultGame from(final Map<Participant, Betting> resultBetting) {
+    public static ResultGame from(final Map<Participant, Integer> resultBetting) {
         return new ResultGame(resultBetting);
     }
 
     public void betMoney(final Participant participant, final Betting betting) {
-        resultBetting.put(participant, betting);
+        resultBetting.put(participant, betting.getValue());
     }
 
     public void calculateResult(final Participants participants) {
@@ -28,22 +28,21 @@ public final class ResultGame {
 
         final Score dealerScore = dealer.getScore();
         for (final Participant player : players) {
-            final Betting bettingMoney = resultBetting.get(player);
+            final int bettingMoney = resultBetting.get(player);
             final ResultState playerGameResult = ResultState.resultPlayer(player.getScore(), dealerScore);
 
-            resultBetting.put(player, Betting.from(playerGameResult.calculateProfit(bettingMoney)));
+            resultBetting.put(player, playerGameResult.calculateProfit(bettingMoney));
         }
     }
 
-    public Betting getDealerResult() {
+    public int getDealerResult() {
         final int playerAllMoney = resultBetting.values().stream()
-                .map(Betting::getValue)
-                .reduce(0, Integer::sum);
+                .reduce(0, java.lang.Integer::sum);
 
-        return Betting.from(-playerAllMoney);
+        return -playerAllMoney;
     }
 
-    public Betting getPlayerResult(final Participant player) {
+    public int getPlayerResult(final Participant player) {
         return resultBetting.get(player);
     }
 }

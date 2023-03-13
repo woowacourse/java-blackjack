@@ -108,7 +108,7 @@ class ResultStateTest {
     void calculateProfitTestByBlackjack() {
         final Betting betting = Betting.from(10000);
 
-        Assertions.assertThat(ResultState.BLACKJACK.calculateProfit(betting)).isEqualTo(15000);
+        Assertions.assertThat(ResultState.BLACKJACK.calculateProfit(betting.getValue())).isEqualTo(15000);
     }
 
     @Test
@@ -116,7 +116,7 @@ class ResultStateTest {
     void calculateProfitTestByWin() {
         final Betting betting = Betting.from(10000);
 
-        Assertions.assertThat(ResultState.WIN.calculateProfit(betting)).isEqualTo(10000);
+        Assertions.assertThat(ResultState.WIN.calculateProfit(betting.getValue())).isEqualTo(10000);
     }
 
 
@@ -125,7 +125,7 @@ class ResultStateTest {
     void calculateProfitTestByTie() {
         final Betting betting = Betting.from(10000);
 
-        Assertions.assertThat(ResultState.TIE.calculateProfit(betting)).isEqualTo(0);
+        Assertions.assertThat(ResultState.TIE.calculateProfit(betting.getValue())).isEqualTo(0);
     }
 
 
@@ -134,6 +134,6 @@ class ResultStateTest {
     void calculateProfitTestByLose() {
         Betting betting = Betting.from(10000);
 
-        Assertions.assertThat(ResultState.LOSE.calculateProfit(betting)).isEqualTo(-10000);
+        Assertions.assertThat(ResultState.LOSE.calculateProfit(betting.getValue())).isEqualTo(-10000);
     }
 }

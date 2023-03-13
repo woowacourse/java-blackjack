@@ -4,14 +4,14 @@ import java.util.function.Function;
 
 public enum ResultState {
 
-    BLACKJACK(betting -> (int) (betting.getValue() * 1.5)),
-    WIN(betting -> betting.getValue() * 1),
-    TIE(betting -> betting.getValue() * 0),
-    LOSE(betting -> betting.getValue() * -1);
+    BLACKJACK(betting -> (int) (betting * 1.5)),
+    WIN(betting -> betting * 1),
+    TIE(betting -> betting * 0),
+    LOSE(betting -> betting * -1);
 
-    private final Function<Betting, Integer> moneyFunction;
+    private final Function<Integer, Integer> moneyFunction;
 
-    ResultState(final Function<Betting, Integer> moneyFunction) {
+    ResultState(final Function<Integer, Integer> moneyFunction) {
         this.moneyFunction = moneyFunction;
     }
 
@@ -32,7 +32,7 @@ public enum ResultState {
         return scoreFirst.isBust() && scoreSecond.isBust();
     }
 
-    public int calculateProfit(Betting betting) {
+    public int calculateProfit(int betting) {
         return moneyFunction.apply(betting);
     }
 }
