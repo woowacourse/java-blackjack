@@ -1,5 +1,6 @@
 package blackjackgame.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,22 +50,21 @@ public class BlackJackController {
 
     private Players generateGuests(Deck deck) {
         List<String> guestNames = inputView.readGuestsName();
+        List<Integer> moneys = guestNames.stream()
+            .map(inputView::readBettingMoney)
+            .collect(Collectors.toList());
 
         List<Name> names = guestNames.stream()
             .map(Name::new)
             .collect(Collectors.toList());
 
-        List<Guest> guests = names.stream()
-            .map(name -> new Guest(name, deck.firstPickCards()))
-            .collect(Collectors.toList());
-        return new Guests(guests);
-    }
+        List<Player> guests = new ArrayList<>();
 
-    private void printFirstCards(final Guests guests, final Dealer dealer) {
-        outputView.printFirstDealerCards(dealer.getName(), dealer.getCards());
-        for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), guest.getCards());
+        for (int i = 0; i < names.size(); i++) {
+            Guest guest = Guest.of(deck.firstPickCards(), names.get(i), moneys.get(i));
+            guests.add(guest);
         }
+        return new Players(guests);
     }
 
     private void hitGuestsCard(final List<Guest> guests, final Deck deck) {
