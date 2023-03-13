@@ -54,31 +54,33 @@ public class BlackjackGame {
         playerMoney.put(player, money);
     }
 
-    public Map<String, Money> toPlayerProfit(Players players, Dealer dealer) {
-        Map<String, Money> result = new LinkedHashMap<>();
+    public Map<String, Integer> toPlayerProfit(Players players, Dealer dealer) {
+        Map<String, Integer> result = new LinkedHashMap<>();
         Map<Player, GameResult> playerProfits = players.toResults(dealer);
 
         for (final Player player : playerProfits.keySet()) {
             GameResult gameResult = playerProfits.get(player);
             Money money = playerMoney.get(player);
-            result.put(player.getName(), gameResult.getProfit(money));
+            Money profit = gameResult.getProfit(money);
+            result.put(player.getName(), profit.getValue());
         }
 
         return result;
     }
 
-    public Map<String, Money> toDealerProfit(Players players, Dealer dealer) {
-        Map<String, Money> result = new LinkedHashMap<>();
-        Map<String, Money> playersProfit = toPlayerProfit(players, dealer);
-        Money dealerMoney = new Money(0);
+    public Map<String, Integer> toDealerProfit(Players players, Dealer dealer) {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        Map<String, Integer> playersProfit = toPlayerProfit(players, dealer);
 
-        for (final String playerName : playersProfit.keySet()) {
-            Money playerProfit = playersProfit.get(playerName);
-            dealerMoney = dealerMoney.add(playerProfit);
-        }
+        Integer playersProfitSum = playersProfit.values().stream()
+                .reduce(Integer::sum)
+                .orElseThrow(() -> new IllegalArgumentException("사용자의 금액이 존재하지 않습니다."));
+        Money money = new Money(playersProfitSum);
 
-        result.put(dealer.getName(), dealerMoney.multiple(new Money(-1)));
+        Money dealerProfit = money.multiple(new Money(-1));
+        result.put(dealer.getName(), dealerProfit.getValue());
 
         return result;
     }
+
 }

@@ -1,25 +1,25 @@
 package blackjack.dto;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Score;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DealerDto {
 
     private final String name;
-    private final List<Card> cards;
-    private final Score score;
+    private final List<CardDto> cards;
+    private final int score;
 
     public DealerDto(final Dealer dealer) {
         this.name = dealer.getName();
-        this.cards = new ArrayList<>(dealer.showCards());
-        this.score = dealer.getScore();
+        this.score = dealer.getScore().getValue();
+        this.cards = dealer.showCards().stream()
+                .map(CardDto::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Card> getCards() {
+    public List<CardDto> getCards() {
         return cards;
     }
 
@@ -27,7 +27,7 @@ public class DealerDto {
         return name;
     }
 
-    public Score getScore() {
+    public int getScore() {
         return score;
     }
 }

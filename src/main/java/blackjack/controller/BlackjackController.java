@@ -5,6 +5,7 @@ import blackjack.domain.game.Money;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.player.Player;
 import blackjack.domain.user.player.Players;
+import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
@@ -77,7 +78,8 @@ public class BlackjackController {
     private void processPlayerDraw(final Player player) {
         while (!player.isBust() && isCommandContinue(player)) {
             blackjackGame.playerDraw(player);
-            outputView.printParticipantCards(player.getName(), player.showCards());
+            List<CardDto> cards = player.showCards().stream().map(CardDto::new).collect(Collectors.toList());
+            outputView.printParticipantCards(player.getName(), cards);
         }
     }
 
@@ -104,8 +106,8 @@ public class BlackjackController {
     }
 
     private void printResult(final Dealer dealer, final Players players) {
-        Map<String, Money> playersResult = blackjackGame.toPlayerProfit(players, dealer);
-        Map<String, Money> dealerResult = blackjackGame.toDealerProfit(players, dealer);
+        Map<String, Integer> playersResult = blackjackGame.toPlayerProfit(players, dealer);
+        Map<String, Integer> dealerResult = blackjackGame.toDealerProfit(players, dealer);
         outputView.printGameResult(dealerResult, playersResult);
     }
 

@@ -36,6 +36,7 @@ public class Card {
         return number == card.number && shape == card.shape;
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(number, shape);

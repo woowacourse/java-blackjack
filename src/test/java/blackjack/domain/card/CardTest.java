@@ -24,6 +24,7 @@ class CardTest {
         // given
         Card card = 다이아몬드_6;
 
+
         // when
         CardShape shape = card.getShape();
 
