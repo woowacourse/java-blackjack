@@ -17,7 +17,7 @@ public class DealerTest {
 
     @BeforeEach
     void init() {
-        dealer = new Dealer(new HandCards(Collections.emptyList()));
+        dealer = new Dealer(new Hand(Collections.emptyList()));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class DealerTest {
     void isCardValueUnder17() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.FIVE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
-        assertThat(dealer.checkCardsCondition()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -33,7 +33,7 @@ public class DealerTest {
     void isCardValueOver16() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SEVEN));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.NINE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.THREE));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class DealerTest {
     void isFalseWhenSoft17() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
-        assertThat(dealer.checkCardsCondition()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class DealerTest {
     void isTrueWhenDoubleAce() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
-        assertThat(dealer.checkCardsCondition()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -67,6 +67,6 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        assertThat(dealer.checkCardsCondition()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 }

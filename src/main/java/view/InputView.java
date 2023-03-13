@@ -18,4 +18,8 @@ public class InputView {
         InputValidator.validateReceiveOrNot(receiveOrNot);
         return receiveOrNot;
     }
+
+    public static String inputBettingMoney() {
+        return SCANNER.nextLine();
+    }
 }

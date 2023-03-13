@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
 import domain.card.Card;
@@ -23,12 +21,12 @@ class ParticipantsTest {
         List<Card> cards1 = List.of(new Card(Suit.CLOVER, Denomination.SIX), new Card(Suit.SPADE, Denomination.TEN));
         List<Card> cards2 = List.of(new Card(Suit.CLOVER, Denomination.NINE), new Card(Suit.SPADE, Denomination.SEVEN));
         List<Card> cards3 = List.of(new Card(Suit.CLOVER, Denomination.FIVE), new Card(Suit.SPADE, Denomination.SIX));
-        Player player1 = new Player(new Name("seongha"), new HandCards(cards1));
-        Player player2 = new Player(new Name("dino"), new HandCards(cards2));
+        Player player1 = new Player(new Name("seongha"), new Hand(cards1));
+        Player player2 = new Player(new Name("dino"), new Hand(cards2));
         List<Player> gamePlayers = List.of(player1, player2);
 
         this.players = new Players(gamePlayers);
-        this.dealer = new Dealer(new HandCards(cards3));
+        this.dealer = new Dealer(new Hand(cards3));
         this.participants = new Participants(players, dealer);
     }
 

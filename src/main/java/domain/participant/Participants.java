@@ -9,8 +9,6 @@ import util.Constants;
 
 public class Participants {
 
-    private static final String NOT_MATCH_DEALER_NAME = "[ERROR] 딜러 이름이 일치하지 않습니다.";
-
     private final Players players;
     private final Dealer dealer;
 
@@ -46,20 +44,23 @@ public class Participants {
         return players.findPlayerByPlayerName(playerName);
     }
 
+    public Participant findParticipantByParticipantName(String participantName) {
+        if (participantName.equals(Constants.DEALER_NAME)) {
+            return dealer;
+        }
+        return players.findPlayerByPlayerName(participantName);
+    }
+
     public boolean canDealerDrawCard() {
-        return dealer.checkCardsCondition();
+        return dealer.canHit();
     }
 
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }
 
-    public int getDealerCardValueSum() {
-        return dealer.getOptimalCardValueSum();
-    }
-
-    public Players getPlayers() {
-        return players;
+    public List<Player> getRawPlayers() {
+        return players.getPlayers();
     }
 
     public Dealer getDealer() {

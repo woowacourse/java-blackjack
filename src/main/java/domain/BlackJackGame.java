@@ -1,44 +1,62 @@
 package domain;
 
 import java.util.List;
-import java.util.Map;
 
+import domain.betting.BettingMoney;
 import domain.card.Deck;
 import domain.participant.*;
-import domain.result.ResultCalculator;
 
 public class BlackJackGame {
+
+    private static final String ADDITIONAL_DRAW_CARD_OK_SIGN = "y";
 
     private final Deck deck;
     private final Participants participants;
 
     public BlackJackGame(List<String> playerNames) {
-        this.deck = InitGameSetter.generateDeck();
+        this.deck = new Deck();
         Players players = InitGameSetter.generatePlayers(deck, playerNames);
         Dealer dealer = InitGameSetter.generateDealer(deck);
         this.participants = new Participants(players, dealer);
+    }
+
+    public boolean isDealerBlackjack() {
+        Dealer dealer = participants.getDealer();
+        return dealer.isBlackjack();
     }
 
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
     }
 
-    public List<String> findCardNamesByParticipantName(String participantName) {
-        return participants.findCardNamesByParticipantName(participantName);
+    public Player findPlayerByPlayerName(String playerName) {
+        return participants.findPlayerByPlayerName(playerName);
     }
 
-    public Players getPlayers() {
-        return participants.getPlayers();
+    public ParticipantResultDto generateParticipantResultByParticipantName(String participantName) {
+        List<String> findCardNames = participants.findCardNamesByParticipantName(participantName);
+        return new ParticipantResultDto(participantName, findCardNames);
     }
 
-    public boolean canPlayerDrawCard(Player player) {
-        return player.checkCardsCondition();
+    public ParticipantFinalResultDto generateParticipantFinalResultByParticipantName(String participantName) {
+        ParticipantResultDto participantResultDto = generateParticipantResultByParticipantName(participantName);
+
+        Participant findParticipant = participants.findParticipantByParticipantName(participantName);
+        int totalValueSum = findParticipant.calculateOptimalCardValueSum();
+
+        return new ParticipantFinalResultDto(participantResultDto, totalValueSum);
     }
 
-    public AdditionalDrawStatus distributePlayerCardOrPass(Player player, String receiveOrNot) {
+    public boolean canPlayerDrawCard(String playerName) {
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        return findPlayer.canHit();
+    }
+
+    public AdditionalDrawStatus distributePlayerCardOrPass(String playerName, String receiveOrNot) {
         AdditionalDrawStatus additionalDrawStatus = AdditionalDrawStatus.PASS;
-        if (receiveOrNot.equals("y")) {
-            player.takeCard(deck.drawCard());
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        if (receiveOrNot.equals(ADDITIONAL_DRAW_CARD_OK_SIGN)) {
+            findPlayer.takeCard(deck.drawCard());
             additionalDrawStatus = AdditionalDrawStatus.DRAW;
         }
         return additionalDrawStatus;
@@ -53,22 +71,11 @@ public class BlackJackGame {
         return participants.canDealerDrawCard();
     }
 
-    public int getDealerCardValueSum() {
-        return participants.getDealerCardValueSum();
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 
-    public int findPlayerCardValueSumByPlayerName(String playerName) {
-        Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        return findPlayer.getOptimalCardValueSum();
-    }
-
-    public Map<String, String> calculateResult() {
-        Players players = participants.getPlayers();
-        Dealer dealer = participants.getDealer();
-        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
-        for (Player player : players.getPlayers()) {
-            resultCalculator.calculate(player, dealer);
-        }
-        return resultCalculator.getFinalFightResults();
+    public List<Player> getRawPlayers() {
+        return participants.getRawPlayers();
     }
 }
