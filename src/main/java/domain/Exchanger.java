@@ -7,6 +7,7 @@ import domain.game.Referee;
 import domain.game.Result;
 import domain.user.Dealer;
 import domain.user.Player;
+import java.util.List;
 
 public class Exchanger {
     private final BettingMoneyTable bettingMoneyTable;
@@ -35,5 +36,13 @@ public class Exchanger {
             return -1;
         }
         return 0;
+    }
+
+    public Money getDealerWinningMoney(List<Money> winningMoneyOfPlayers){
+        int dealerWinningMoney = 0;
+        for(Money winningMoneyOfPlayer : winningMoneyOfPlayers){
+            dealerWinningMoney += winningMoneyOfPlayer.multiply(-1).getValue();
+        }
+        return new Money(dealerWinningMoney);
     }
 }
