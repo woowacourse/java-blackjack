@@ -5,30 +5,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Guests {
-    private static final int MIN_GUESTS_NUMBER = 1;
-    private static final int MAX_GUESTS_NUMBER = 10;
-
     private final List<Guest> guests;
 
-    public static void validateGuestNames(final List<String> guestNames) {
-        validateGuestNumbers(guestNames);
-        validateDuplicate(guestNames);
-    }
-
-    private static void validateGuestNumbers(final List<String> playerNames) {
-        if (playerNames.size() < MIN_GUESTS_NUMBER || playerNames.size() > MAX_GUESTS_NUMBER) {
-            throw new IllegalArgumentException("참여자는 " + MIN_GUESTS_NUMBER + "명 이상 " + MAX_GUESTS_NUMBER + "명 이하여야 합니다.");
-        }
-    }
-
-    private static void validateDuplicate(final List<String> playerNames) {
-        if (playerNames.size() != playerNames.stream().distinct().count()) {
-            throw new IllegalArgumentException("참여자의 이름은 중복될 수 없습니다.");
-        }
-    }
-
     public Guests(final List<Name> playerNames, final List<BettingMoney> bettingMonies, final Deck deck) {
+        validate(playerNames, bettingMonies);
         this.guests = generateGuests(playerNames, bettingMonies, deck);
+    }
+
+    private void validate(final List<Name> playerNames, final List<BettingMoney> bettingMonies) {
+        if (playerNames.size() != bettingMonies.size()) {
+            throw new IllegalArgumentException("플레이어의 수만큼 베팅 금액이 입력되어야 합니다.");
+        }
     }
 
     private List<Guest> generateGuests(final List<Name> playerNames, final List<BettingMoney> bettingMonies, final Deck deck) {

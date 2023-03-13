@@ -7,7 +7,6 @@ import blackjackgame.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -40,10 +39,8 @@ public class BlackJackController {
     private List<Name> askGuestNames() {
         try {
             List<String> guestNames = inputView.readGuestNames();
-            Guests.validateGuestNames(guestNames);
-            return guestNames.stream()
-                    .map(Name::new)
-                    .collect(Collectors.toUnmodifiableList());
+            Names names = new Names(guestNames);
+            return names.getNames();
         } catch (IllegalArgumentException e) {
             inputView.printErrorMsg(e.getMessage());
             return askGuestNames();
