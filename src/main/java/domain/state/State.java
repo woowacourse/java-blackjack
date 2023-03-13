@@ -19,6 +19,16 @@ public abstract class State {
 
     public abstract boolean isFinished();
 
+    public abstract int calculatePrize(int base);
+
+    public final boolean isBust() {
+        return hand.isBust();
+    }
+
+    public final boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public final List<Card> getCards() {
         return hand.getCards();
     }

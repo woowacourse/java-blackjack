@@ -13,6 +13,7 @@ import domain.user.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import view.InputView;
@@ -30,6 +31,26 @@ public class BlackjackGameController {
     public void run() {
         BlackjackGame blackjackGame = setUp();
         playGame(blackjackGame);
+
+    }
+
+    private void showFinalProfit(BlackjackGame blackjackGame) {
+        // 플레이어 순서대로 이름, 금액
+        // 딜러는 모든 플레이어 최종 수익의 합의 반대 부호
+//        HashMap<Name, Integer> playerFinalPrizes = blackjackGame.makePlayerProfitResult();
+        Map<Name, Integer> playerPrizes =  blackjackGame.calculatePlayerResult();
+        outputView.printFinalResultHeaderMessage();
+
+        playerPrizes.values().stream()
+                .mapToInt(num -> num)
+                .sum();
+        outputView.printDealerPrizeResult(playerPrizes.values().stream()
+                .mapToInt(num -> num)
+                .sum() * -1);
+
+        outputView.printPlayerPrizeResult(playerPrizes);
+
+
     }
 
     private BlackjackGame setUp() {
@@ -46,7 +67,7 @@ public class BlackjackGameController {
 
     private List<Player> setUpPlayers() {
         return readUserNames().stream()
-                .map(Player::new)
+                .map(name -> new Player(name, readPlayerBatting(name)))
                 .collect(Collectors.toList());
     }
 
@@ -56,11 +77,18 @@ public class BlackjackGameController {
         return names.getNames();
     }
 
+    private int readPlayerBatting(Name name) {
+        outputView.printInputPlayerBattingMessage(unwrapName(name));
+        return inputView.readPlayerBatting();
+    }
+
     private void playGame(BlackjackGame blackjackGame) {
         showSetUpResult(blackjackGame.makeSetUpResult());
         progressPlayersTurn(blackjackGame);
         progressDealerTurn(blackjackGame);
         showUserCardResults(blackjackGame);
+        showFinalProfit(blackjackGame);
+//        showFinalResult(gameResult);
     }
 
     private void progressPlayersTurn(BlackjackGame blackjackGame) {

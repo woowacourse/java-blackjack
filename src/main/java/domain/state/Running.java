@@ -13,6 +13,11 @@ public abstract class Running extends State {
     }
 
     @Override
+    public int calculatePrize(int base) {
+        throw new IllegalStateException("[ERROR] 아직 게임이 끝나지 않아 결과를 확인할 수 없습니다.");
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

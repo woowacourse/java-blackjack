@@ -24,6 +24,14 @@ public abstract class User {
         return userData.hasResult();
     }
 
+    public boolean isBust() {
+        return userData.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return userData.isBlackjack();
+    }
+
     public final List<Card> getCards() {
         return userData.getCards();
     }
@@ -38,5 +46,11 @@ public abstract class User {
 
     public final void doStay() {
         userData.doStay();
+    }
+
+    public abstract int getPrize();
+
+    protected UserData getUserData() {
+        return userData;
     }
 }

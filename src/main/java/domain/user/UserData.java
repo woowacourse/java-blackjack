@@ -28,6 +28,14 @@ public final class UserData {
         return state.isFinished();
     }
 
+    public boolean isBust() {
+        return state.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
     public List<Card> getCards() {
         return state.getCards();
     }
@@ -38,5 +46,9 @@ public final class UserData {
 
     public Name getName() {
         return name;
+    }
+
+    public int getPrize(int batting) {
+        return state.calculatePrize(batting);
     }
 }

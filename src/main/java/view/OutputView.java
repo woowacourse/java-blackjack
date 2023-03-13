@@ -5,6 +5,7 @@ import domain.user.Name;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -59,5 +60,25 @@ public class OutputView {
             System.out.println(name.getName() + "카드 : " + cards);
         }
         System.out.println();
+    }
+
+    public void printInputPlayerBattingMessage(String name) {
+        System.out.printf("\n%s의 배팅 금액은?\n", name);
+    }
+
+    public void printFinalResultHeaderMessage() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printDealerPrizeResult(int dealerPrize) {
+        System.out.printf("딜러: %d\n", dealerPrize);
+    }
+
+    public void printPlayerPrizeResult(Map<Name, Integer> playerFinalPrizes) {
+        for(Entry<Name, Integer> prizeByPlayer : playerFinalPrizes.entrySet()) {
+            String name = prizeByPlayer.getKey().getName();
+            int playerPrize = prizeByPlayer.getValue();
+            System.out.printf("%s: %d\n", name, playerPrize);
+        }
     }
 }

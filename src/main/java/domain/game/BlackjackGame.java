@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
     public static final Name dealerName = new Name("딜러");
+
     private final List<Player> players;
     private final Dealer dealer;
     private final GameDeck gameDeck;
@@ -94,5 +96,17 @@ public class BlackjackGame {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 User 이름입니다."));
+    }
+
+    public HashMap<Name, Integer> makePlayerProfitResult() {
+        HashMap<Name, Integer> playerProfitResult = new LinkedHashMap<>();
+        players.forEach(player -> playerProfitResult.put(player.getName(), player.getPrize()));
+        return playerProfitResult;
+    }
+
+    public Map<Name, Integer> calculatePlayerResult() {
+        GameResult gameResult = new GameResult(getAllUserNames().subList(1, getAllUserNames().size()));
+        gameResult.saveResults(dealer, players);
+        return gameResult.getPlayerPrizes();
     }
 }

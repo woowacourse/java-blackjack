@@ -20,4 +20,8 @@ public class InputView {
     public DrawCommand readDrawCommand() {
         return DrawCommand.of(scanner.nextLine());
     }
+
+    public int readPlayerBatting() {
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

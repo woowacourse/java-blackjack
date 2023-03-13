@@ -22,7 +22,7 @@ class PlayerTest {
     @DisplayName("처음에 2장의 카드를 받는다.")
     void generatePlayerTest() {
         //given
-        Player player = new Player(new Name("player"));
+        Player player = new Player(new Name("player"), 1000);
         player.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
 
         //when
@@ -36,7 +36,7 @@ class PlayerTest {
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
     void receiveCardTest() {
         //given
-        Player player = new Player(new Name("player"));
+        Player player = new Player(new Name("player"), 1000);
         player.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
 
         //when

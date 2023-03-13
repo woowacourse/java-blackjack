@@ -19,7 +19,14 @@ public abstract class Finished extends State {
     }
 
     @Override
+    public final int calculatePrize(int base) {
+        return (int) Math.ceil(getProfit() * base);
+    }
+
+    @Override
     public final boolean isFinished() {
         return true;
     }
+
+    public abstract double getProfit();
 }
