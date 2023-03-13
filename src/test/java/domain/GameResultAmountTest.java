@@ -30,7 +30,7 @@ public class GameResultAmountTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerWin() {
-        Map<Player, GameResult> result = Map.of(createPlayer(), GameResult.WIN);
+        Map<Player, GameResult> result = Map.of(player, GameResult.WIN);
         BettingAmount bettingAmount = new BettingAmount(amount);
         GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
 
@@ -43,7 +43,7 @@ public class GameResultAmountTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerLose() {
-        Map<Player, GameResult> result = Map.of(createPlayer(), GameResult.LOSE);
+        Map<Player, GameResult> result = Map.of(player, GameResult.LOSE);
         BettingAmount bettingAmount = new BettingAmount(amount);
         GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
 
@@ -56,7 +56,7 @@ public class GameResultAmountTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerDraw() {
-        Map<Player, GameResult> result = Map.of(createPlayer(), GameResult.DRAW);
+        Map<Player, GameResult> result = Map.of(player, GameResult.DRAW);
         BettingAmount bettingAmount = new BettingAmount(amount);
         GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
 
@@ -64,12 +64,6 @@ public class GameResultAmountTest {
 
         assertThat(resultOfBetting.get(new Name("딜러")).getResultAmount()).isEqualTo(0);
         assertThat(resultOfBetting.get(new Name("aa")).getResultAmount()).isEqualTo(0);
-    }
-
-    public Player createPlayer() {
-        Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        player.betAmount(10000);
-        return player;
     }
 
 }

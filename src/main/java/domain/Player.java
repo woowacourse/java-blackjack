@@ -6,8 +6,6 @@ public class Player extends Participant {
 
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
 
-    private Amount bettingAmount;
-
     public Player(Name name, Cards cards) {
         super(name, cards);
         validate(name);
@@ -17,14 +15,6 @@ public class Player extends Participant {
         if (name.equals(Dealer.DEALER_NAME)) {
             throw new IllegalArgumentException(BAN_NAME_ERROR_MESSAGE);
         }
-    }
-
-    public void betAmount(int bettingAmount) {
-        this.bettingAmount = new Amount(bettingAmount);
-    }
-
-    public int getAmount() {
-        return bettingAmount.getValue();
     }
 
     public boolean isBust() {

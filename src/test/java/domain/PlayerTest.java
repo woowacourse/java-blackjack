@@ -99,15 +99,4 @@ public class PlayerTest {
         assertThat(player.isBlackJack()).isFalse();
     }
 
-    @Test
-    @DisplayName("Betting 에서 Player 의 배팅 금액을 알아낸다.")
-    void getBettingAmount() {
-        Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-        player.betAmount(10000);
-
-        int amount = player.getAmount();
-
-        assertThat(amount).isEqualTo(10000);
-    }
-
 }
