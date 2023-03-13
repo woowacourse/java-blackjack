@@ -1,12 +1,12 @@
 package blackjack.domain;
 
-public class Stake {
+public class BettingMoney {
     private static final int MIN_VALUE = 100;
     private static final int MAX_VALUE = 1000000;
     private static final int STATE_MULTIPLE = 10;
     private final int value;
 
-    public Stake(final int value) {
+    public BettingMoney(final int value) {
         validate(value);
         this.value = value;
     }

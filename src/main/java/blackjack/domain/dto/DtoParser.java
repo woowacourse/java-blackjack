@@ -1,6 +1,6 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.Settlement;
+import blackjack.domain.PrizeCalculator;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackJack;
 import blackjack.domain.user.Dealer;
@@ -62,20 +62,20 @@ public class DtoParser {
         return new UserDto(dealer.getName().getValue(), makeCardToDto(dealer.openCards()));
     }
 
-    public static GameResultDto getGameResultDto(final Settlement settlement) {
+    public static GameResultDto getGameResultDto(final PrizeCalculator prizeCalculator) {
         final LinkedHashMap<String, Integer> nameAndProfit = new LinkedHashMap<>();
-        enrollDealerProfit(nameAndProfit, settlement);
-        enrollUserProfit(nameAndProfit, settlement);
+        enrollDealerProfit(nameAndProfit, prizeCalculator);
+        enrollUserProfit(nameAndProfit, prizeCalculator);
         return new GameResultDto(nameAndProfit);
     }
 
-    private static void enrollDealerProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
-        final int dealerProfit = settlement.getDealerProfit();
+    private static void enrollDealerProfit(final LinkedHashMap<String, Integer> nameAndProfit, final PrizeCalculator prizeCalculator) {
+        final int dealerProfit = prizeCalculator.getDealerProfit();
         nameAndProfit.put("딜러", dealerProfit);
     }
 
-    private static void enrollUserProfit(final LinkedHashMap<String, Integer> nameAndProfit, final Settlement settlement) {
-        final Map<Name, Integer> profit = settlement.getProfit();
+    private static void enrollUserProfit(final LinkedHashMap<String, Integer> nameAndProfit, final PrizeCalculator prizeCalculator) {
+        final Map<Name, Integer> profit = prizeCalculator.getProfit();
         for (Name name : profit.keySet()) {
             nameAndProfit.put(name.getValue(), profit.get(name));
         }

@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.RandomDeck;
-import blackjack.domain.Settlement;
-import blackjack.domain.Stake;
+import blackjack.domain.PrizeCalculator;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.dto.DtoParser;
 import blackjack.domain.game.BlackJack;
 import blackjack.domain.user.Name;
@@ -28,25 +28,25 @@ public class BlackJackController {
 
     public void run() {
         final List<Name> namesByView = getNamesByView();
-        final Settlement settlement = enrollStake(namesByView);
+        final PrizeCalculator prizeCalculator = enrollStake(namesByView);
         final BlackJack blackJack = makeBlackJackBy(namesByView);
         drawCardBy(blackJack, namesByView);
-        finalizeDealerCardStatus(blackJack, settlement);
-        printCompletedGame(blackJack, settlement);
+        finalizeDealerCardStatus(blackJack, prizeCalculator);
+        printCompletedGame(blackJack, prizeCalculator);
     }
 
-    private Settlement enrollStake(final List<Name> names) {
-        final Map<Name, Stake> stakeData = new LinkedHashMap<>();
+    private PrizeCalculator enrollStake(final List<Name> names) {
+        final Map<Name, BettingMoney> stakeData = new LinkedHashMap<>();
         for (Name name : names) {
             stakeData.put(name, getStakeOf(name));
         }
-        return new Settlement(stakeData);
+        return new PrizeCalculator(stakeData);
     }
 
-    private Stake getStakeOf(final Name name) {
+    private BettingMoney getStakeOf(final Name name) {
         try {
             final int stake = inputView.getStakeOf(name.getValue());
-            return new Stake(stake);
+            return new BettingMoney(stake);
         } catch (IllegalArgumentException e) {
             outputView.printException(e);
             return getStakeOf(name);
@@ -59,14 +59,14 @@ public class BlackJackController {
         return blackJack;
     }
 
-    private void printCompletedGame(final BlackJack blackJack, final Settlement settlement) {
+    private void printCompletedGame(final BlackJack blackJack, final PrizeCalculator prizeCalculator) {
         outputView.printFinalPlayersStatus(DtoParser.getFinalStatusDto(blackJack));
-        outputView.printResult(DtoParser.getGameResultDto(settlement));
+        outputView.printResult(DtoParser.getGameResultDto(prizeCalculator));
     }
 
-    private void finalizeDealerCardStatus(final BlackJack blackJack, final Settlement settlement) {
+    private void finalizeDealerCardStatus(final BlackJack blackJack, final PrizeCalculator prizeCalculator) {
         final int cardCount = blackJack.giveCardToDealerUntilDontNeed(randomDeck);
-        settlement.enrollResult(blackJack.getAllUsersResult());
+        prizeCalculator.enrollResult(blackJack.getAllUsersResult());
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 

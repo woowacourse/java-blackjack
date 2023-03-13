@@ -9,19 +9,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Settlement {
+public class PrizeCalculator {
 
-    private final Map<Name, Stake> userPrize;
+    private final Map<Name, BettingMoney> userPrize;
     private final Map<Name, Integer> profit;
 
-    public Settlement(Map<Name, Stake> userPrize) {
+    public PrizeCalculator(Map<Name, BettingMoney> userPrize) {
         this.userPrize = Map.copyOf(userPrize);
         this.profit = new LinkedHashMap<>();
     }
 
     public int getProfit(final Name name, final Result result) {
-        final Stake stake = userPrize.get(name);
-        return result.getProfit(stake.getStake());
+        final BettingMoney bettingMoney = userPrize.get(name);
+        return result.getProfit(bettingMoney.getStake());
     }
 
     public void enrollResult(Map<Result, List<User>> resultData) {
