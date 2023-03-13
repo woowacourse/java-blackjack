@@ -22,7 +22,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.elements = new Object[initialCapacity];
     }
 
-    public SimpleArrayList(E ... array){
+    public SimpleArrayList(E... array) {
         elements = Objects.requireNonNull(array);
         size = array.length;
     }

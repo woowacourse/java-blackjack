@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Suit;
-import blackjack.domain.player.Hand;
 import blackjack.domain.result.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +16,21 @@ class HandTest {
     void score() {
         Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.EIGHT), Card.of(Suit.CLOVER, Letter.FIVE));
         assertThat(hand.calculateScore()).isEqualTo(new Score(13));
+    }
+
+    @Test
+    @DisplayName("blackjack 확인")
+    void isBlackJack() {
+        Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.HEART, Letter.TEN));
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("bust 확인")
+    void isBust() {
+        Hand hand = new Hand(Card.of(Suit.HEART, Letter.EIGHT),
+                Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.EIGHT));
+        assertThat(hand.isBust()).isTrue();
     }
 
     @Nested
@@ -58,20 +72,5 @@ class HandTest {
             Hand hand = new Hand(Card.of(Suit.HEART, Letter.ACE), Card.of(Suit.DIAMOND, Letter.TEN));
             assertThat(hand.calculateScore()).isEqualTo(new Score(21));
         }
-    }
-
-    @Test
-    @DisplayName("blackjack 확인")
-    void isBlackJack() {
-        Hand hand = new Hand(Card.of(Suit.DIAMOND, Letter.ACE), Card.of(Suit.HEART, Letter.TEN));
-        assertThat(hand.isBlackJack()).isTrue();
-    }
-
-    @Test
-    @DisplayName("bust 확인")
-    void isBust() {
-        Hand hand = new Hand(Card.of(Suit.HEART, Letter.EIGHT),
-                Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.EIGHT));
-        assertThat(hand.isBust()).isTrue();
     }
 }

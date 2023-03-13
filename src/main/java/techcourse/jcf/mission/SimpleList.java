@@ -25,7 +25,7 @@ public interface SimpleList<E> {
     }
 
     static void copy(SimpleList<? extends Printer> from, SimpleList<? super Printer> to) {
-        for (int index = 0; index < from.size(); index++){
+        for (int index = 0; index < from.size(); index++) {
             to.add(from.get(index));
         }
     }

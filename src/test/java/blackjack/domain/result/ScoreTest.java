@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.result.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

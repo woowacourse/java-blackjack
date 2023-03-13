@@ -1,7 +1,10 @@
 package techcourse.jcf.mission;
 
-class Printer { }
-class LaserPrinter extends Printer { }
+class Printer {
+}
+
+class LaserPrinter extends Printer {
+}
 
 public class MissionFive {
     public static void main(String[] args) {

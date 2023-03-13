@@ -1,9 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Letter;
-import blackjack.domain.card.Suit;
-
 import java.util.*;
 
 public class Deck {
@@ -28,18 +24,18 @@ public class Deck {
         }
     }
 
-    public Card getCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException(NO_REMAIN_CARD_ERROR_MESSAGE);
-        }
-        return cards.poll();
-    }
-
     public List<Card> getCards(int count) {
         List<Card> cards = new ArrayList<>();
         for (int index = 0; index < count; index++) {
             cards.add(getCard());
         }
         return cards;
+    }
+
+    public Card getCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(NO_REMAIN_CARD_ERROR_MESSAGE);
+        }
+        return cards.poll();
     }
 }

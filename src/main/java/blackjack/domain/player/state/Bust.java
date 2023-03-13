@@ -10,7 +10,8 @@ public class Bust extends Finished {
     }
 
     @Override
-    public double calculateProfit(boolean isDealerBlackJack, Score dealerScore, Score playerScore, BettingMoney bettingMoney) {
+    public double calculateProfit(boolean isDealerBlackJack,
+                                  Score dealerScore, Score playerScore, BettingMoney bettingMoney) {
         return bettingMoney.getValue() * NEGATIVE;
     }
 }

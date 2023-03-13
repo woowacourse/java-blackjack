@@ -8,10 +8,10 @@ public class MissionFour {
         final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
         final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
 
-        for (int index = 0; index < filteredDoubleValues.size(); index++){
+        for (int index = 0; index < filteredDoubleValues.size(); index++) {
             System.out.println(filteredDoubleValues.get(index));
         }
-        for (int index = 0; index < filteredIntValues.size(); index++){
+        for (int index = 0; index < filteredIntValues.size(); index++) {
             System.out.println(filteredIntValues.get(index));
         }
     }
