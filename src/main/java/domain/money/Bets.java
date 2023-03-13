@@ -16,7 +16,14 @@ public class Bets {
     }
 
     public void addBet(final Player player, final int amount) {
-        bets.put(player, Money.initialBet(amount));
+        validateBetAmount(amount);
+        bets.put(player, new Money(amount));
+    }
+
+    private static void validateBetAmount(final int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 1원 이상부터 가능합니다.");
+        }
     }
 
     public Map<Player, Money> calculatePlayersProfit(WinningResult winningResult) {
