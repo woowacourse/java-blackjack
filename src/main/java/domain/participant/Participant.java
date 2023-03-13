@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.bank.Money;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -10,12 +11,16 @@ import domain.card.Cards;
  */
 public abstract class Participant {
 
-    private final Name name;
     protected final Cards cards;
+    protected Money money;
 
-    protected Participant(final Name name, final Cards cards) {
-        this.name = name;
+    protected Participant(final Money money, final Cards cards) {
         this.cards = cards;
+        this.money = money;
+    }
+
+    public int getMoney() {
+        return this.money.getMoney();
     }
 
     public boolean addCard(final Card card) {
@@ -24,10 +29,6 @@ public abstract class Participant {
 
     public int sumOfCards() {
         return cards.sumOfCards();
-    }
-
-    public String getName() {
-        return name.getName();
     }
 
     public Cards getCards() {

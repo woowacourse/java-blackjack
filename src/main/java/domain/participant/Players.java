@@ -62,4 +62,10 @@ public class Players {
                 .map(Cards::cardsToString)
                 .collect(Collectors.toList());
     }
+
+    public List<Integer> getMonies() {
+        return players.stream()
+                .map(Player::getMoney)
+                .collect(Collectors.toList());
+    }
 }

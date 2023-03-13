@@ -54,4 +54,11 @@ class PlayersTest {
                 () -> assertThat(players.getCardsSum(2)).isEqualTo(12)
         );
     }
+
+    @Test
+    void 모든_플레이어들의_가진돈을_반환한다() {
+        Players players = new Players(List.of(우가, 빙봉, 하마드));
+
+        assertThat(players.getMonies()).containsExactly(1000, 2000, 10000);
+    }
 }
