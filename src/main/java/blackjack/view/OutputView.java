@@ -7,8 +7,8 @@ import blackjack.dto.PlayerNamesDto;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
-    private static final String INIT_FORMAT = LINE_SEPARATOR
-            + "딜러와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR;
+    private static final String INIT_FORMAT =
+            LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR;
     private static final String DEALER_CARDS_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
@@ -22,13 +22,15 @@ public class OutputView {
     }
 
     public void printDealerInitCards(ParticipantCardsDto participantCardsDto) {
-        System.out.printf(DEALER_CARDS_FORMAT, participantCardsDto.getName(), participantCardsDto.getCardNames()
-                                                                                                 .get(0));
+        System.out.printf(DEALER_CARDS_FORMAT,
+                participantCardsDto.getName(), participantCardsDto.getFirstCardName());
     }
 
     public void printPlayerCards(ParticipantCardsDto participantCardsDto) {
         System.out.printf(PLAYER_CARDS_FORMAT,
-                participantCardsDto.getName(), String.join(", ", participantCardsDto.getCardNames()));
+                participantCardsDto.getName(),
+                String.join(", ", participantCardsDto.getCardNames())
+        );
     }
 
     public void printDealerState() {

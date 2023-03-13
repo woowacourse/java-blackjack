@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.ScoreState;
+
 public class Player extends Participant {
     private static final String INVALID_NAME = "딜러";
 
@@ -24,9 +26,8 @@ public class Player extends Participant {
     }
 
     public boolean canHit() {
-        return this.getState()
-                   .isHit() || this.getState()
-                                   .isStay();
+        ScoreState state = this.getState();
+        return state.isHit() || state.isStay();
     }
 
     public void multipleBetAmount(double times) {

@@ -16,8 +16,8 @@ public class InputView {
 
     public List<String> readNames() {
         System.out.println(INPUT_NAME_MESSAGE);
-        return Arrays.stream(scanner.nextLine()
-                                    .split(","))
+        String input = scanner.nextLine();
+        return Arrays.stream(input.split(","))
                      .collect(Collectors.toList());
     }
 

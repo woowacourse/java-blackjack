@@ -40,21 +40,20 @@ class BlackjackGameTest {
 
         Participants participants = Participants.from(names);
         List<Player> players = participants.getPlayers();
-        players.get(0)
-               .initBetAmount(1000);
-        players.get(1)
-               .initBetAmount(1000);
+        Player player1 = players.get(0);
+        Player player2 = players.get(1);
+        player1.initBetAmount(1000);
+        player2.initBetAmount(1000);
         List<Card> cards = new ArrayList<>(List.of(
                 new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
                 new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING),
-                new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART, CardNumber.THREE)));
+                new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART, CardNumber.THREE)
+        ));
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
         blackjackGame.calculateBetAmount();
 
-        Assertions.assertEquals(-1000, players.get(0)
-                                              .getBetAmount());
-        Assertions.assertEquals(1000, players.get(1)
-                                             .getBetAmount());
+        Assertions.assertEquals(-1000, player1.getBetAmount());
+        Assertions.assertEquals(1000, player2.getBetAmount());
     }
 }

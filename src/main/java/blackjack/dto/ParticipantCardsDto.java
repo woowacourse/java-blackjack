@@ -1,6 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSuit;
 import blackjack.domain.participant.Participant;
 
 import java.util.List;
@@ -27,13 +29,17 @@ public class ParticipantCardsDto {
     }
 
     private static String getCardName(Card card) {
-        return card.getNumber()
-                   .getValue() + card.getSuit()
-                                     .getValue();
+        CardNumber cardNumber = card.getNumber();
+        CardSuit cardSuit = card.getSuit();
+        return cardNumber.getValue() + cardSuit.getValue();
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getFirstCardName() {
+        return cardNames.get(0);
     }
 
     public List<String> getCardNames() {
