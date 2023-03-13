@@ -19,10 +19,7 @@ public class GameController {
         List<Name> names = (InputView.repeat(() -> new Names(InputView.inputPeopleNames()))).getNames();
         Players players = initializePlayers(names);
 
-        for (Player player : players.getPlayers()) {
-            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(player.getPlayerName()));
-            player.inputBetAmount(betAmount);
-        }
+        inputPlayerBetAmount(players.getPlayers());
 
         giveFirstCardsForUsers(players, dealer, deck);
 
@@ -38,6 +35,13 @@ public class GameController {
 
         OutputView.printResults(dealer, players.getPlayers());
         printScore(players, dealer);
+    }
+
+    private void inputPlayerBetAmount(List<Player> players) {
+        for (Player player : players) {
+            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(player.getPlayerName()));
+            player.inputBetAmount(betAmount);
+        }
     }
 
     private Players initializePlayers(List<Name> names) {
