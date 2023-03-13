@@ -13,18 +13,18 @@ public class BettingMoneyTable {
         this.bettingMoneyTable = bettingMoneyTable;
     }
 
-    public static BettingMoneyTable of(List<Player> players, Monies monies) {
+    public static BettingMoneyTable of(List<Player> players, BettingMonies bettingMonies) {
         Map<Player, Money> bettingMoneyTable = new HashMap<>();
-        for (int i = 0; i < monies.size(); i++) {
-            bettingMoneyTable.put(players.get(i), monies.get(i));
+        for (int i = 0; i < bettingMonies.size(); i++) {
+            bettingMoneyTable.put(players.get(i), bettingMonies.get(i));
         }
         return new BettingMoneyTable(bettingMoneyTable);
     }
 
-    public static BettingMoneyTable of(Players players, Monies monies) {
+    public static BettingMoneyTable of(Players players, BettingMonies bettingMonies) {
         Map<Player, Money> bettingMoneyTable = new HashMap<>();
-        for (int i = 0; i < monies.size(); i++) {
-            bettingMoneyTable.put(players.get(i), monies.get(i));
+        for (int i = 0; i < bettingMonies.size(); i++) {
+            bettingMoneyTable.put(players.get(i), bettingMonies.get(i));
         }
         return new BettingMoneyTable(bettingMoneyTable);
     }

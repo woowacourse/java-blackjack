@@ -2,9 +2,6 @@ package domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.money.BettingMoneyTable;
-import domain.money.Money;
-import domain.money.Monies;
 import domain.name.Name;
 import domain.user.Player;
 import domain.user.Players;
@@ -20,8 +17,8 @@ public class BettingMoneyTableTest {
         Player player1 = new Player(new Name("hongo"));
         Player player2 = new Player(new Name("joan"));
         Players players = Players.of(List.of(player1, player2));
-        Monies monies = Monies.of(List.of(10000, 20000));
-        BettingMoneyTable bettingMoneyTable = BettingMoneyTable.of(players, monies);
+        BettingMonies bettingMonies = BettingMonies.of(List.of(10000, 20000));
+        BettingMoneyTable bettingMoneyTable = BettingMoneyTable.of(players, bettingMonies);
         assertThat(bettingMoneyTable.findByPlayer(player1)).isEqualTo(new Money(10000));
         assertThat(bettingMoneyTable.findByPlayer(player2)).isEqualTo(new Money(20000));
     }

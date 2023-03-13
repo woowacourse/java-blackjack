@@ -15,6 +15,7 @@ public class OutputView {
     public static void printPlayerCards(final Map<String, CardNames> playerToCard) {
         playerToCard.forEach((playerName, cards) ->
                 System.out.println(getEachPlayerCards(playerName, cards)));
+        System.out.println();
     }
 
     public static void printDealerCardWithScore(final CardNames cards, final int score) {
@@ -57,7 +58,6 @@ public class OutputView {
     public static void printInitHitMessage(final List<String> playerNames) {
         System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
-        System.out.println();
     }
 
     public static void printErrorMessage(final String message) {

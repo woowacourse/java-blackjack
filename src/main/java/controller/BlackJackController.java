@@ -1,9 +1,10 @@
 package controller;
 
 import domain.HitCommand;
+import domain.money.BettingMoney;
 import domain.money.BettingMoneyTable;
 import domain.money.Money;
-import domain.money.Monies;
+import domain.money.BettingMonies;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
@@ -43,12 +44,12 @@ public class BlackJackController {
     }
 
     private BettingMoneyTable initBettingMoneyTable(List<Player> players) {
-        List<Integer> bettingMonies = new ArrayList<>();
+        List<BettingMoney> bettingMonies = new ArrayList<>();
         for (Player player : players) {
             int money = InputView.askBettingMoneyToPlayer(player.getName());
-            bettingMonies.add(money);
+            bettingMonies.add(BettingMoney.of(money));
         }
-        return BettingMoneyTable.of(players, Monies.of(bettingMonies));
+        return BettingMoneyTable.of(players, BettingMonies.of(bettingMonies));
     }
 
     private void printInitMessages(final List<String> playerNames) {

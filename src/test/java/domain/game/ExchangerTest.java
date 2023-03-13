@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.Exchanger;
 import domain.money.BettingMoneyTable;
 import domain.money.Money;
-import domain.money.Monies;
+import domain.money.BettingMonies;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
@@ -29,8 +29,8 @@ public class ExchangerTest {
     private final Player player = new Player(new Name("hongo"));
     private final Dealer dealer = new Dealer();
     private final Players players = Players.of(List.of(player));
-    private final Monies monies = Monies.of(List.of(10000));
-    private final BettingMoneyTable bettingMoneyTable = BettingMoneyTable.of(players, monies);
+    private final BettingMonies bettingMonies = BettingMonies.of(List.of(10000));
+    private final BettingMoneyTable bettingMoneyTable = BettingMoneyTable.of(players, bettingMonies);
     private final Exchanger exchanger = new Exchanger(bettingMoneyTable);
 
     @DisplayName("플레이어가 블랙잭으로 승리하여 1.5배의 수익을 얻는다")

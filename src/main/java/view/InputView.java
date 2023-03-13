@@ -23,7 +23,6 @@ public class InputView {
         System.out.println();
         int bettingMoney = scanner.nextInt();
         scanner.nextLine();
-        System.out.println();
         return bettingMoney;
     }
 
