@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.state.*;
+import domain.state.exceptions.CanNotDrawCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -70,7 +71,7 @@ class ParticipantTest {
             participant.hit(CLOVER_TEN);
             participant.hit(DIAMOND_TEN);
 
-            assertThatThrownBy(() -> participant.hit(CLOVER_FIVE)).isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> participant.hit(CLOVER_FIVE)).isInstanceOf(CanNotDrawCardException.class);
         }
 
         @DisplayName("Stay상태에서 hit할 수 없다.")
@@ -82,7 +83,7 @@ class ParticipantTest {
             participant.hit(CLOVER_TEN);
             participant.stay();
 
-            assertThatThrownBy(() -> participant.hit(CLOVER_FIVE)).isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> participant.hit(CLOVER_FIVE)).isInstanceOf(CanNotDrawCardException.class);
         }
     }
 

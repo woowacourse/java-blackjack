@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.state.exceptions.CanNotDrawCardException;
 import org.junit.jupiter.api.Test;
 
 import static domain.Fixtures.HEART_TEN;
@@ -27,6 +28,6 @@ class BustTest {
                 .draw(SPADE_TEN);
 
         assertThatThrownBy(() -> state.draw(SPADE_TEN))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(CanNotDrawCardException.class);
     }
 }

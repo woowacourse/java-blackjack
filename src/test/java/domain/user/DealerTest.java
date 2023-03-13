@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.state.*;
+import domain.state.exceptions.CanNotDrawCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ class DealerTest {
             dealer.hit(CLOVER_TEN);
             dealer.stay();
 
-            assertThatThrownBy(() -> dealer.hit(CLOVER_FIVE)).isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> dealer.hit(CLOVER_FIVE)).isInstanceOf(CanNotDrawCardException.class);
         }
     }
 
