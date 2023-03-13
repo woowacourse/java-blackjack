@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.blackjack.Result;
 import domain.card.Cards;
 import domain.money.BetAmount;
 
@@ -22,6 +23,18 @@ public class Player extends Participant {
         if (participantName.equals(dealerName)) {
             throw new IllegalArgumentException(FORBIDDEN_NAME_MESSAGE);
         }
+    }
+
+    public BetAmount getProfitByResult(Result playerResult) {
+        if (playerResult == Result.DRAW) {
+            return betAmount;
+        }
+
+        if (playerResult == Result.LOSE) {
+            return betAmount.multiple(-1);
+        }
+
+        return betAmount.multiple(gameState.getEarningRate());
     }
 
     @Override
