@@ -61,6 +61,10 @@ public class BlackjackScore {
         return Result.LOSE;
     }
 
+    public boolean isBusted() {
+        return this.isGreaterThan(MAX_SCORE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

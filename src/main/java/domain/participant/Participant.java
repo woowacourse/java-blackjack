@@ -35,7 +35,7 @@ public abstract class Participant {
     }
 
     public boolean isBusted() {
-        return calculateBlackjackScore().isGreaterThan(BlackjackScore.getMaxScore());
+        return calculateBlackjackScore().isBusted();
     }
 
     public abstract Cards getInitialOpeningCards();

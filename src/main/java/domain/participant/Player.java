@@ -31,7 +31,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        return !isBusted();
+        return gameState.isAbleToReceiveCard();
     }
-
 }
