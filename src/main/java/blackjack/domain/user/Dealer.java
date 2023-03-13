@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Dealer extends User {
+public final class Dealer extends User {
 
     private static final int INIT_CARD_SHOW_LIMIT = 1;
     private static final Score minScore = new Score(16);

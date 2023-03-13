@@ -12,7 +12,7 @@ import blackjack.domain.user.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     public void printCardInitDrawResultMessage(final Players players, final Dealer dealer) {
         final List<String> playerNames = extractPlayerNames(players);
@@ -70,7 +70,7 @@ public class OutputView {
 
     private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {
         if (count != 0) {
-            stringBuilder.append(count).append(score.getView()).append(" ");
+            stringBuilder.append(count).append(score.getName()).append(" ");
         }
     }
 

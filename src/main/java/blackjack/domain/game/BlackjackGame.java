@@ -4,7 +4,7 @@ import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.cardpack.ShuffleStrategy;
 import blackjack.domain.user.User;
 
-public class BlackjackGame {
+public final class BlackjackGame {
 
     private static final int INIT_DRAW_COUNT = 2;
 

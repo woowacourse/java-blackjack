@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import java.util.List;
 
-public class Players {
+public final class Players {
 
     private static final int MAX_PLAYER_COUNT = 13;
 

@@ -6,7 +6,7 @@ import blackjack.domain.card.CardShape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPack {
+public final class CardPack {
 
     private final List<Card> cards;
 
