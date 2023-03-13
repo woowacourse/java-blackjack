@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.utils.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

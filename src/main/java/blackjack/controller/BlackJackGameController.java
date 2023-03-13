@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Command;
+import blackjack.utils.Command;
 import blackjack.domain.game.Game;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
