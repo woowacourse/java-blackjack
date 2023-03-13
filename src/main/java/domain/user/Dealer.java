@@ -36,8 +36,8 @@ public class Dealer {
         return participant.stay();
     }
 
-    public String getName() {
-        return participant.getName().getValue();
+    public String name() {
+        return participant.name();
     }
 
     public State getState() {

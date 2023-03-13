@@ -47,8 +47,8 @@ public class Player {
         return getState().score();
     }
 
-    public String getName() {
-        return participant.getName().getValue();
+    public String name() {
+        return participant.name();
     }
 
     public State getState() {

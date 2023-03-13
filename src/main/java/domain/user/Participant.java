@@ -24,8 +24,8 @@ public class Participant {
         return state = state.stay();
     }
 
-    public Name getName() {
-        return name;
+    public String name() {
+        return name.getValue();
     }
 
     public State getState() {

@@ -46,7 +46,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer("딜러");
 
         for (Player player : players) {
-            player.setBetting(inputView.inputBetting(player.getName()));
+            player.setBetting(inputView.inputBetting(player.name()));
         }
 
         NumberGenerator numberGenerator = new RandomNumberGenerator();
@@ -64,9 +64,9 @@ public class BlackjackController {
 
         Map<String, List<String>> participants = new LinkedHashMap<>();
 
-        participants.put(dealer.getName(), cardString(dealer));
+        participants.put(dealer.name(), cardString(dealer));
         for (Player player : players) {
-            participants.put(player.getName(), cardString(player));
+            participants.put(player.name(), cardString(player));
         }
 
         outputView.printGameStarted(participants);
@@ -81,18 +81,18 @@ public class BlackjackController {
     }
 
     private void playTurn(Player player) {
-        while(blackjackGame.isRunning(player.getName())) {
+        while(blackjackGame.isRunning(player.name())) {
             hitOrStay(player);
-            outputView.printNameAndCards(player.getName(), cardString(player));
+            outputView.printNameAndCards(player.name(), cardString(player));
         }
     }
 
     private void hitOrStay(Player player) {
-        Command command = inputView.inputCardCommand(player.getName());
+        Command command = inputView.inputCardCommand(player.name());
         if (command == Command.Y) {
-            blackjackGame.hitPlayer(player.getName());
+            blackjackGame.hitPlayer(player.name());
         } else if (command == Command.N) {
-            blackjackGame.stayPlayer(player.getName());
+            blackjackGame.stayPlayer(player.name());
         }
     }
 
@@ -106,9 +106,9 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         List<Player> players = blackjackGame.getPlayers();
 
-        outputView.printResult(dealer.getName(), cardString(dealer), dealer.getScore().value());
+        outputView.printResult(dealer.name(), cardString(dealer), dealer.getScore().value());
         for (Player player : players) {
-            outputView.printResult(player.getName(), cardString(player), player.getScore().value());
+            outputView.printResult(player.name(), cardString(player), player.getScore().value());
         }
     }
 
@@ -118,9 +118,9 @@ public class BlackjackController {
 
         Map<String, Integer> profitMap = new LinkedHashMap<>();
 
-        profitMap.put(dealer.getName(), blackjackGame.dealerProfit());
+        profitMap.put(dealer.name(), blackjackGame.dealerProfit());
         for (Player player : players) {
-            profitMap.put(player.getName(), blackjackGame.profit(player));
+            profitMap.put(player.name(), blackjackGame.profit(player));
         }
         outputView.printProfit(profitMap);
     }
