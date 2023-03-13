@@ -3,11 +3,9 @@ package blackjack.game;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultMatcher;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +19,16 @@ public class GameController {
         List<Name> names = (InputView.repeat(() -> new Names(InputView.inputPeopleNames()))).getNames();
         Players players = initializePlayers(names);
 
+        for (Player player : players.getPlayers()) {
+            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(player.getPlayerName()));
+            player.inputBetAmount(betAmount);
+        }
+
         giveFirstCardsForUsers(players, dealer, deck);
+
+        for (Player player : players.getPlayers()) {
+            player.checkBlackJack(player.getTotalScore());
+        }
 
         OutputView.printReadyMessage(names);
         printUserFirstCards(players.getPlayers(), dealer);
@@ -82,8 +89,7 @@ public class GameController {
 
     private void printScore(Players players, Dealer dealer) {
         GameResult gameResult = new GameResult(players.getPlayers(), dealer);
-        Map<String, ResultMatcher> playersScore = gameResult.getPlayerGameResults();
-        EnumMap<ResultMatcher, Integer> dealerScore = gameResult.calculateDealerScore(playersScore);
-        OutputView.printScore(playersScore, dealerScore);
+        Map<String, Integer> playersScore = gameResult.getPlayerGameResults();
+        OutputView.printScore(playersScore, gameResult.calculateDealerProfit());
     }
 }

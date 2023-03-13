@@ -27,6 +27,14 @@ public class Player extends User {
         }
     }
 
+    public ResultMatcher getResultMatcher() {
+        return resultMatcher;
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
+    }
+
     @Override
     public boolean isUnderLimit() {
         return hand.getTotalScore() < SCORE_LIMIT;

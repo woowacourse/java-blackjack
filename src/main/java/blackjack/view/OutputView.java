@@ -4,9 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.ResultMatcher;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,17 +40,12 @@ public class OutputView {
         }
     }
 
-    public static void printScore(Map<String, ResultMatcher> playersScore, EnumMap<ResultMatcher, Integer> dealerScore) {
+    public static void printScore(Map<String, Integer> playersScore, int dealerScore) {
         System.out.println("\n## 최종 승패");
-        System.out.print("딜러: ");
-        for (Map.Entry<ResultMatcher, Integer> score : dealerScore.entrySet()) {
-            if (score.getValue() > 0) {
-                System.out.print(score.getValue() + score.getKey().getResult() + " ");
-            }
-        }
         System.out.println();
-        for (Map.Entry<String, ResultMatcher> score : playersScore.entrySet()) {
-            System.out.println(score.getKey() + ": " + score.getValue().getResult());
+        System.out.println("딜러: " + dealerScore);
+        for (Map.Entry<String, Integer> score : playersScore.entrySet()) {
+            System.out.println(score.getKey() + ": " + score.getValue());
         }
     }
 

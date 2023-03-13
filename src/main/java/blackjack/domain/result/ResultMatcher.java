@@ -1,14 +1,15 @@
 package blackjack.domain.result;
 
 public enum ResultMatcher {
-    WIN("승"),
-    TIE("무"),
-    LOSE("패");
+    BLACKJACK(1.5),
+    WIN(1.0),
+    TIE(0),
+    LOSE(-1.0);
 
-    private final String playerResult;
+    private final double ratio;
 
-    ResultMatcher(String playerResult) {
-        this.playerResult = playerResult;
+    ResultMatcher(double ratio) {
+        this.ratio = ratio;
     }
 
     public static ResultMatcher calculateResult(int playerScore, int dealerScore) {
@@ -27,17 +28,7 @@ public enum ResultMatcher {
         return TIE;
     }
 
-    public static ResultMatcher ofOppositeResult(ResultMatcher resultMatcher) {
-        if (resultMatcher == WIN) {
-            return LOSE;
-        }
-        if (resultMatcher == LOSE) {
-            return WIN;
-        }
-        return TIE;
-    }
-
-    public String getResult() {
-        return this.playerResult;
+    public double getRatio() {
+        return ratio;
     }
 }
