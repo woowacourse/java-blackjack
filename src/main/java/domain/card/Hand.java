@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Hand {
 
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private final List<Card> cards;
 
     public Hand(final List<Card> cards) {
@@ -52,7 +53,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score().isMax() && cards.size() == 2;
+        return score().isMax() && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     @Override
