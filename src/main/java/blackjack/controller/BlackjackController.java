@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
