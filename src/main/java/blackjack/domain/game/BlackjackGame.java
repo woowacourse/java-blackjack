@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Players;
 import blackjack.view.DrawCommand;
 
@@ -24,6 +25,10 @@ public class BlackjackGame {
         return new BlackjackGame(Players.from(playerNames), deck);
     }
 
+    public void placePlayerBets(final String playerName, final Money money) {
+        players.placeBetsByName(playerName, money);
+    }
+
     public void distributeInitialCards() {
         dealer.drawCard(deck.popCard());
         dealer.drawCard(deck.popCard());
@@ -31,8 +36,7 @@ public class BlackjackGame {
     }
 
     public Card findDealerInitialCard() {
-        return dealer.getCards()
-                .get(0);
+        return dealer.getInitialCard();
     }
 
     public Map<String, List<Card>> findPlayerNameToCards() {
@@ -81,6 +85,5 @@ public class BlackjackGame {
     public Score findScoreOfPlayerByName(final String playerName) {
         return players.findScoreOfPlayerByName(playerName);
     }
-
 
 }

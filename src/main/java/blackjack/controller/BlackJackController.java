@@ -4,6 +4,7 @@ import static blackjack.controller.Repeater.repeatUntilNoException;
 
 import blackjack.domain.DeckFactory;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participants.Money;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,12 +22,12 @@ public class BlackJackController {
     }
 
     public void generate(final DeckFactory deckFactory) {
-        final BlackjackGame blackJackGame = createBlackJackGame(deckFactory);
+        final BlackjackGame blackjackGame = createBlackJackGame(deckFactory);
 
-        initInitialCards(blackJackGame);
-        printInitialCard(blackJackGame);
-        play(blackJackGame);
-        printResult(blackJackGame);
+        startGame(blackjackGame);
+        printInitialCard(blackjackGame);
+        playGame(blackjackGame);
+        printResult(blackjackGame);
     }
 
     private BlackjackGame createBlackJackGame(final DeckFactory deckFactory) {
@@ -34,23 +35,35 @@ public class BlackJackController {
                 () -> BlackjackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
     }
 
-    private void initInitialCards(final BlackjackGame blackJackGame) {
-        blackJackGame.distributeInitialCards();
+    private void startGame(final BlackjackGame blackjackGame) {
+        makePlayersPlaceWagers(blackjackGame);
+        blackjackGame.distributeInitialCards();
     }
 
-    private void printInitialCard(final BlackjackGame blackJackGame) {
-        outputView.printInitialCards(blackJackGame.findDealerInitialCard(),
-                blackJackGame.findPlayerNameToCards());
+    private void makePlayersPlaceWagers(final BlackjackGame blackjackGame) {
+        for (final String playerName : blackjackGame.findPlayerNames()) {
+            blackjackGame.placePlayerBets(playerName, inputBettingMoney(playerName));
+        }
     }
 
-    private void play(final BlackjackGame blackJackGame) {
-        drawPlayersCards(blackJackGame);
-        drawDealerCards(blackJackGame);
+    private Money inputBettingMoney(final String playerName) {
+        return repeatUntilNoException(
+                () -> new Money(inputView.inputBettingMoney(playerName)), outputView::printError);
     }
 
-    private void drawPlayersCards(final BlackjackGame blackJackGame) {
-        for (final String playerName : blackJackGame.findPlayerNames()) {
-            drawPlayerCard(playerName, blackJackGame);
+    private void printInitialCard(final BlackjackGame blackjackGame) {
+        outputView.printInitialCards(blackjackGame.findDealerInitialCard(),
+                blackjackGame.findPlayerNameToCards());
+    }
+
+    private void playGame(final BlackjackGame blackjackGame) {
+        drawPlayersCards(blackjackGame);
+        drawDealerCards(blackjackGame);
+    }
+
+    private void drawPlayersCards(final BlackjackGame blackjackGame) {
+        for (final String playerName : blackjackGame.findPlayerNames()) {
+            drawPlayerCard(playerName, blackjackGame);
         }
     }
 
@@ -59,32 +72,32 @@ public class BlackJackController {
                 () -> inputView.inputCommand(playerName), outputView::printError);
     }
 
-    private void drawPlayerCard(final String playerName, final BlackjackGame blackJackGame) {
+    private void drawPlayerCard(final String playerName, final BlackjackGame blackjackGame) {
         DrawCommand drawCommand = DrawCommand.DRAW;
-        while (blackJackGame.isPlayerDrawable(playerName) && drawCommand == DrawCommand.DRAW) {
+        while (blackjackGame.isPlayerDrawable(playerName) && drawCommand == DrawCommand.DRAW) {
             drawCommand = inputDrawCommand(playerName);
-            blackJackGame.drawCardOfPlayerByName(playerName, drawCommand);
-            outputView.printCurrentCardsOfPlayer(playerName, blackJackGame.findCardsOfPlayerByName(playerName));
+            blackjackGame.drawCardOfPlayerByName(playerName, drawCommand);
+            outputView.printCurrentCardsOfPlayer(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
         }
     }
 
-    private void drawDealerCards(final BlackjackGame blackJackGame) {
-        IntStream.range(0, blackJackGame.findDealerDrawCount())
-                .forEach(ignored -> outputView.printDealerCardDrawMessage(blackJackGame.findDealerDrawPoint()));
+    private void drawDealerCards(final BlackjackGame blackjackGame) {
+        IntStream.range(0, blackjackGame.findDealerDrawCount())
+                .forEach(ignored -> outputView.printDealerCardDrawMessage(blackjackGame.findDealerDrawPoint()));
     }
 
-    private void printResult(final BlackjackGame blackJackGame) {
-        printFinalStatusOfParticipants(blackJackGame);
+    private void printResult(final BlackjackGame blackjackGame) {
+        printFinalStatusOfParticipants(blackjackGame);
     }
 
-    private void printFinalStatusOfParticipants(final BlackjackGame blackJackGame) {
-        outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore()
+    private void printFinalStatusOfParticipants(final BlackjackGame blackjackGame) {
+        outputView.printFinalStatusOfDealer(blackjackGame.findDealerCard(), blackjackGame.findDealerScore()
                 .getValue());
 
-        for (final String playerName : blackJackGame.findPlayerNames()) {
+        for (final String playerName : blackjackGame.findPlayerNames()) {
             outputView.printFinalStatusOfPlayer(playerName,
-                    blackJackGame.findCardsOfPlayerByName(playerName),
-                    blackJackGame.findScoreOfPlayerByName(playerName)
+                    blackjackGame.findCardsOfPlayerByName(playerName),
+                    blackjackGame.findScoreOfPlayerByName(playerName)
                             .getValue());
         }
     }

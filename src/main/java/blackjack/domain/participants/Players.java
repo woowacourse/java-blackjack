@@ -61,6 +61,15 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public void placeBetsByName(final String playerName, final Money money) {
+        players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
+                .bet(money);
+
+    }
+
     public void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
             player.drawCard(deck.popCard());
