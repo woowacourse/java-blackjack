@@ -27,7 +27,7 @@ public class GameResult {
     }
 
     private void calculatePrize(Player player, Result playerResult) {
-        int playerBetting = calculatePlayerBetting(player.getBetting().getBettingMoney(), playerResult);
+        int playerBetting = calculatePlayerBetting(player.getBetting().getMoney(), playerResult);
 
         playerBettingResults.put(player, playerBetting);
     }

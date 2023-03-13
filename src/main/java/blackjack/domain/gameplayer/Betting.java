@@ -28,7 +28,7 @@ public class Betting {
         return betting < MIN_BOUND || betting > MAX_BOUND;
     }
 
-    public int getBettingMoney() {
+    public int getMoney() {
         return betting;
     }
 
