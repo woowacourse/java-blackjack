@@ -1,7 +1,7 @@
 package domain.state;
 
 public abstract class Running implements State {
-    private final Hand hand;
+    protected final Hand hand;
 
     public Running(final Hand hand) {
         this.hand = hand;

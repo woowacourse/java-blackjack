@@ -4,7 +4,7 @@ import domain.card.Card;
 
 public interface State {
 
-    State draw(final Card card);
+    State drawCard(final Card card);
 
     boolean isBust();
 

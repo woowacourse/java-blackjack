@@ -9,7 +9,11 @@ public class Hit extends Running {
     }
 
     @Override
-    public State draw(Card card) {
-        return null;
+    public State drawCard(Card card) {
+        this.hand.addCard(card);
+        if (hand.isBust()) {
+            return new Bust(hand);
+        }
+        return new Hit(hand);
     }
 }

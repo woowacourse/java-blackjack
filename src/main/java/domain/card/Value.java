@@ -19,11 +19,7 @@ public enum Value {
         return value;
     }
 
-    public int getScore(final int totalScore) {
-        boolean isOverBlackJack = totalScore + score >= BLACKJAK_NUMBER;
-        if (isAce() && isOverBlackJack) {
-            return ACE_LOWER_VALUE;
-        }
+    public int getScore() {
         return score;
     }
 

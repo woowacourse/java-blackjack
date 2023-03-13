@@ -42,6 +42,10 @@ public class Hand {
         return score;
     }
 
+    public boolean isBust() {
+        return calculateScore().getValue() > BLACKJACK_NUMBER;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
