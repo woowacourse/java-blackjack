@@ -1,5 +1,7 @@
 package blackjack.domain.vo;
 
+import blackjack.constants.ErrorCode;
+import blackjack.domain.vo.exception.InvalidScoreException;
 import java.util.Objects;
 
 public class Score {
@@ -13,7 +15,7 @@ public class Score {
 
     private void validate(int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("점수는 음수가 될 수 없습니다");
+            throw new InvalidScoreException(ErrorCode.INVALID_SCORE);
         }
     }
 

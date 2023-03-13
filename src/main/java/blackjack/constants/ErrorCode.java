@@ -9,5 +9,6 @@ public enum ErrorCode {
     INVALID_COMMAND,
     INVALID_MONEY_UNIT,
     INVALID_MONEY_BOUND,
+    INVALID_SCORE,
     ;
 }

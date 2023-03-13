@@ -16,7 +16,7 @@ public enum ErrorCodeMessage {
     INVALID_COMMAND(ErrorCode.INVALID_COMMAND, "Y 또는 N을 입력해주세요."),
     INVALID_MONEY_UNIT(ErrorCode.INVALID_MONEY_UNIT, "금액은 1000원 단위로 입력 가능합니다."),
     INVALID_MONEY_BOUND(ErrorCode.INVALID_MONEY_BOUND, "금액은 10,000,000원 이하만 입력 가능합니다."),
-    ;
+    INVALID_SCORE(ErrorCode.INVALID_SCORE, "점수는 음수가 될 수 없습니다.");
 
     private static final Map<ErrorCode, ErrorCodeMessage> SUIT_MESSAGE = Arrays.stream(values())
             .collect(Collectors.toMap(ErrorCodeMessage::getCode, Function.identity()));
