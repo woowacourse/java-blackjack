@@ -37,8 +37,12 @@ public class BlackjackController {
 
     private void playersBetting(final Players players, final BlackjackGame blackjackGame) {
         players.getPlayers().forEach(player ->
-                blackjackGame.addBetting(player, Money.betting(repeatInput(() -> inputView.readBettingMoney(player))))
+                blackjackGame.addBetting(player, getPlayerBettingMoney(player))
         );
+    }
+
+    private Money getPlayerBettingMoney(final Player player) {
+        return repeatInput(() -> Money.betting(inputView.readBettingMoney(player)));
     }
 
     private void startGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
