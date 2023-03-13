@@ -21,8 +21,12 @@ public class Card {
         }
     }
 
-    public int getScore(final int totalScore) {
-        return value.getScore(totalScore);
+    public int getScore() {
+        return value.getScore();
+    }
+
+    public boolean isAce() {
+        return value.isAce();
     }
 
     public String getValue(){

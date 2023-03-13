@@ -20,7 +20,7 @@ public class Participant {
     public int calculateScore() {
         int totalScore = 0;
         for (Card card : cards) {
-            totalScore += card.getScore(totalScore);
+            totalScore += card.getScore();
         }
         return totalScore;
     }
