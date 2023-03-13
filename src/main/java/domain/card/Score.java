@@ -34,7 +34,7 @@ public class Score {
         return value > other.value;
     }
 
-    public boolean isOverMax() {
+    public boolean isOverBlackjack() {
         return isMoreThan(BLACKJACK);
     }
 
@@ -54,7 +54,7 @@ public class Score {
         return value <= other.value;
     }
 
-    public boolean isMax() {
+    public boolean isBlackjack() {
         return BLACKJACK.equals(this);
     }
 

@@ -45,7 +45,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return score().isOverMax();
+        return score().isOverBlackjack();
     }
 
     public List<Card> getCards() {
@@ -53,7 +53,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score().isMax() && cards.size() == BLACKJACK_CARD_SIZE;
+        return score().isBlackjack() && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     @Override
