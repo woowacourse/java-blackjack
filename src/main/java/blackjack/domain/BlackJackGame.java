@@ -1,21 +1,28 @@
 package blackjack.domain;
 
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.BettingManager;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class BlackJackGame {
 
     private final Participants participants;
     private final Deck deck;
+    private final BettingManager bettingManager;
 
-    public BlackJackGame(final Participants participants, final Deck deck, final int drawCount) {
+    public BlackJackGame(final Participants participants, final Deck deck, final BettingManager bettingManager, final int drawCount) {
         this.participants = participants;
         this.deck = deck;
+        this.bettingManager = bettingManager;
         initGame(drawCount);
     }
 
@@ -42,6 +49,26 @@ public class BlackJackGame {
     public boolean existDrawablePlayer() {
         return players().stream()
                 .anyMatch(Player::isDrawable);
+    }
+
+    public int getDealerProfit() {
+        int dealerProfit = 0;
+        for (final Player player : players()) {
+            final Betting playerBetting = bettingManager.findBettingByName(player.getName());
+            final Result dealerResult = dealer().compareScoreTo(player);
+            dealerProfit += dealerResult.calculateProfit(playerBetting.getAmount());
+        }
+        return dealerProfit;
+    }
+
+    public Map<Player, Integer> getPlayerProfits() {
+        Map<Player, Integer> playerProfits = new HashMap<>();
+        for (final Player player : players()) {
+            final Betting playerBetting = bettingManager.findBettingByName(player.getName());
+            final Result playerResult = dealer().compareScoreTo(player).reverseResult();
+            playerProfits.put(player, playerResult.calculateProfit(playerBetting.getAmount()));
+        }
+        return playerProfits;
     }
 
     public boolean isDealerDrawable() {

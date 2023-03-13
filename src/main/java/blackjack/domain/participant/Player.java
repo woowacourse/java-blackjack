@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.Result;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -20,11 +19,6 @@ public class Player extends Participant {
     @Override
     public boolean isDrawable() {
         return !cards.isMaximumScore() && !cards.isTotalScoreOver() && drawable;
-    }
-
-    public Result getPlayerResult(final Dealer dealer) {
-        final Result dealerResult = dealer.compareScoreTo(this);
-        return dealerResult.reverseResult();
     }
 
     @Override
