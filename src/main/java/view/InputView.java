@@ -23,7 +23,7 @@ public class InputView {
     public int readBettingMoney(String name) {
         System.out.println();
         System.out.printf(READ_BETTING_MONEY, name);
-        return Integer.valueOf(scanner.nextLine());
+        return Integer.parseInt(scanner.nextLine());
     }
 
 }
