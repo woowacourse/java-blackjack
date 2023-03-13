@@ -25,11 +25,11 @@ public final class Player extends Participant {
     }
 
     public WinningStatus compete(final Dealer dealer) {
-        if (dealer.isBust()) {
-            return WinningStatus.WIN;
-        }
         if (this.isBust()) {
             return WinningStatus.LOSE;
+        }
+        if (dealer.isBust()) {
+            return WinningStatus.WIN;
         }
 
         Cards cards = status.cards();
