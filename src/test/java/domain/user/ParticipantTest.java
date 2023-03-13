@@ -22,7 +22,7 @@ class ParticipantTest {
 
     @DisplayName("hit했을 때 정상 상태")
     @Nested
-    class NormalStateByHit{
+    class NormalStateByHit {
 
         @DisplayName("ACE를 hit하면 State는 Hit상태이다")
         @Test
@@ -60,7 +60,7 @@ class ParticipantTest {
 
     @DisplayName("hit했을 때 비정상 상태")
     @Nested
-    class AbnormalStateByHit{
+    class AbnormalStateByHit {
 
         @DisplayName("Bust상태에서 hit할 수 없다.")
         @Test

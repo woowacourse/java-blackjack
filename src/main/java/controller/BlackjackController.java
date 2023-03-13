@@ -84,7 +84,7 @@ public class BlackjackController {
     }
 
     private void playTurn(Player player) {
-        while(blackjackGame.isRunning(player.name())) {
+        while (blackjackGame.isRunning(player.name())) {
             hitOrStay(player);
             outputView.printNameAndCards(player.name(), cardString(player));
         }

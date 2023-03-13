@@ -20,6 +20,7 @@ public class Dealer {
     public boolean canHit() {
         return participantScore().isLessThanOrEqual(hitScoreLimit);
     }
+
     private Score participantScore() {
         return getState().score();
     }

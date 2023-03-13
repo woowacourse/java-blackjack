@@ -25,7 +25,7 @@ public class BlackjackGameTest {
         NumberGenerator numberGenerator = threshold -> 0;
         Deck deck = new Deck(numberGenerator);
 
-        blackjackGame = new BlackjackGame(dealer, List.of(maco,teo), deck);
+        blackjackGame = new BlackjackGame(dealer, List.of(maco, teo), deck);
     }
 
     @DisplayName("모든 참여자가 hit하면 딜러는 카드를 1장 가지고 있다.")

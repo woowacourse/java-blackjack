@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public Hand(Card card1, Card card2) {
-            this.cards = new ArrayList<>(List.of(card1, card2));
+        this.cards = new ArrayList<>(List.of(card1, card2));
     }
 
     public void add(Card card) {

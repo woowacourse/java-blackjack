@@ -1,9 +1,9 @@
 package domain.state;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Score;
 import domain.state.exceptions.ProfitException;
-import domain.card.Hand;
 
 import java.util.List;
 
@@ -42,6 +42,7 @@ public abstract class Running implements State {
     public State stay() {
         return new Stay(hand);
     }
+
     @Override
     public List<Card> cards() {
         return hand.getCards();

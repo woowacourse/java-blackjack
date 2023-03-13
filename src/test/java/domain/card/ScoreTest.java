@@ -11,9 +11,9 @@ class ScoreTest {
     @Test
     void minusTenIfBust_minus() {
         Score score = new Score(22);
-       Score newScore = score.minusTenIfBust();
+        Score newScore = score.minusTenIfBust();
 
-       assertThat(newScore).isEqualTo(new Score(12));
+        assertThat(newScore).isEqualTo(new Score(12));
     }
 
     @DisplayName("21이면 빼지 않는다")

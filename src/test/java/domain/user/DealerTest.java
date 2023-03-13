@@ -21,7 +21,7 @@ class DealerTest {
 
     @DisplayName("16이하에서 hit할 수 있다")
     @Nested
-    class NormalStateByHit{
+    class NormalStateByHit {
 
         @DisplayName("ACE를 hit하면 State는 Hit상태이다")
         @Test
@@ -58,7 +58,7 @@ class DealerTest {
 
     @DisplayName("16초과에서 hit할 수 없다")
     @Nested
-    class AbnormalStateByHit{
+    class AbnormalStateByHit {
 
         @DisplayName("처음 뽑은 카드 두장의 합이 17이면 카드를 뽑지 못한다.")
         @Test
