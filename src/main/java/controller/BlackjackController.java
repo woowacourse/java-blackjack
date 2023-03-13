@@ -24,7 +24,8 @@ public class BlackjackController {
     public void run() {
         participants.initGame();
         OutputView.printCardsStatus(participants.getDealer(), participants.getPlayers());
-        giveCardPlayers();
+        participants.drawCardForPlayers(InputView::readWhetherDrawCardOrNot,
+                OutputView::printCardsStatusOfPlayer);
         addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
         participants.calculateAllResults();
@@ -35,21 +36,6 @@ public class BlackjackController {
         if (participants.getDealer().canAdd()) {
             OutputView.announceAddCardToDealer();
             participants.addCardToDealerIfPossible();
-        }
-    }
-
-    private void giveCardPlayers() {
-        participants.getPlayers().forEach(this::giveCardUntilImpossible);
-    }
-
-    private void giveCardUntilImpossible(Player player) {
-        boolean whetherDrawCard = false;
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player))) {
-            participants.drawCardPlayer(player);
-            OutputView.printCardsStatusOfPlayer(player);
-        }
-        if (!whetherDrawCard) {
-            OutputView.printCardsStatusOfPlayer(player);
         }
     }
 }

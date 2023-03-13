@@ -4,6 +4,8 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Participants {
 
@@ -30,8 +32,20 @@ public class Participants {
         cards.forEach(player::addCard);
     }
 
-    public void drawCardPlayer(Player player) {
-        player.addCard(dealer.drawCard());
+    public void drawCardForPlayers(Function<Player, Boolean> playerInput, Consumer<Player> completeAction) {
+        players.getPlayers().forEach(player -> drawCardForPlayer(player, playerInput, completeAction));
+    }
+
+    private void drawCardForPlayer(Player player, Function<Player, Boolean> playerInput,
+                                   Consumer<Player> completeAction) {
+        boolean whetherDrawCard = false;
+        while (player.canAdd() && (whetherDrawCard = playerInput.apply(player))) {
+            player.addCard(dealer.drawCard());
+            completeAction.accept(player);
+        }
+        if (!whetherDrawCard) {
+            completeAction.accept(player);
+        }
     }
 
     public Dealer getDealer() {
