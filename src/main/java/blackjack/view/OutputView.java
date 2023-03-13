@@ -71,12 +71,10 @@ public class OutputView {
         return String.valueOf(score);
     }
 
-    public void printGameResult(final Map<String, Integer> dealerMoney, final Map<String, Integer> playerMoney) {
+    public void printGameResult(final Integer dealerMoney, final Map<String, Integer> playerMoney) {
         System.out.println("## 최종 수익");
 
-        for (final String dealerName : dealerMoney.keySet()) {
-            System.out.println(dealerName + DELIMITER_COLON + dealerMoney.get(dealerName));
-        }
+        System.out.println(DEALER_DEFAULT_NAME + DELIMITER_COLON + dealerMoney);
 
         playerMoney.keySet().forEach(userName -> System.out.println(userName + DELIMITER_COLON + playerMoney.get(userName)));
     }

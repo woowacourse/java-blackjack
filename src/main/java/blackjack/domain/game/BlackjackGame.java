@@ -7,7 +7,6 @@ import blackjack.domain.user.player.Player;
 import blackjack.domain.user.player.Players;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -71,8 +70,7 @@ public class BlackjackGame {
         return result;
     }
 
-    public Map<String, Integer> toDealerProfit(Players players, Dealer dealer) {
-        Map<String, Integer> result = new HashMap<>();
+    public Integer toDealerProfit(Players players, Dealer dealer) {
         Map<String, Integer> playersProfit = toPlayerProfit(players, dealer);
 
         Integer playersProfitSum = playersProfit.values().stream()
@@ -80,9 +78,7 @@ public class BlackjackGame {
                 .orElseThrow(() -> new IllegalArgumentException("사용자의 금액이 존재하지 않습니다."));
 
         Money dealerProfit = parseToDealerProfit(playersProfitSum);
-        result.put(dealer.getName(), dealerProfit.getValue());
-
-        return result;
+        return dealerProfit.getValue();
     }
 
     private Money parseToDealerProfit(final Integer playersProfitSum) {

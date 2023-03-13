@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static blackjack.domain.fixture.FixtureCard.다이아몬드_6;
 import static blackjack.domain.fixture.FixtureCard.스페이드_10;
@@ -95,10 +94,9 @@ class BlackjackGameTest {
         blackjackGame.playerDraw(player);
         blackjackGame.playerDraw(player);
 
-        // then
-        Map<String, Integer> dealerProfit = blackjackGame.toDealerProfit(players, dealer);
-        Integer dealerMoney = dealerProfit.get(dealerName);
+        Integer dealerProfit = blackjackGame.toDealerProfit(players, dealer);
 
-        Assertions.assertThat(dealerMoney).isEqualTo(betMoney);
+        // then
+        Assertions.assertThat(dealerProfit).isEqualTo(betMoney);
     }
 }

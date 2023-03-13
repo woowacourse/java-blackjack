@@ -107,7 +107,7 @@ public class BlackjackController {
 
     private void printResult(final Dealer dealer, final Players players) {
         Map<String, Integer> playersResult = blackjackGame.toPlayerProfit(players, dealer);
-        Map<String, Integer> dealerResult = blackjackGame.toDealerProfit(players, dealer);
+        Integer dealerResult = blackjackGame.toDealerProfit(players, dealer);
         outputView.printGameResult(dealerResult, playersResult);
     }
 
