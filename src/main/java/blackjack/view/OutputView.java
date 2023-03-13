@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.*;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -86,7 +87,7 @@ public class OutputView {
     private void showDealerResult(Double dealerResult) {
         printMessage(LINE_SEPARATOR);
         printMessage(FINAL_RESULT);
-        printMessage(DEALER_NAME + DELIMITER + dealerResult);
+        showPlayerResult(DEALER_NAME, dealerResult);
     }
 
     private void showAllPlayerResult(Map<String, Double> playerResult) {
@@ -96,7 +97,8 @@ public class OutputView {
     }
 
     private void showPlayerResult(String name, Double result) {
-        printMessage(name + DELIMITER + result);
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+        printMessage(name + DELIMITER + decimalFormat.format(result));
     }
 
     private String convertCard(List<CardDTO> inputHand) {
