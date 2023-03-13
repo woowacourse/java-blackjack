@@ -2,8 +2,7 @@ package blackjack.controller;
 
 import blackjack.controller.dto.DealerStateResponse;
 import blackjack.controller.dto.ParticipantResponse;
-import blackjack.controller.dto.ParticipantResponses;
-import blackjack.controller.dto.ParticipantResultResponses;
+import blackjack.controller.dto.ParticipantResultResponse;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.BettingTable;
@@ -61,7 +60,7 @@ public class BlackJackController {
     private void initialGame(final BlackJackGame blackJackGame) {
         blackJackGame.initialDraw();
         final ParticipantResponse dealer = ParticipantResponse.ofDealerWithHidden(blackJackGame);
-        final List<ParticipantResponse> players = ParticipantResponses.listOfPlayer(blackJackGame);
+        final List<ParticipantResponse> players = ParticipantResponse.listOfPlayer(blackJackGame);
         outputView.printDealCards(dealer, players, blackJackGame.getInitialDrawCount());
     }
 
@@ -89,8 +88,8 @@ public class BlackJackController {
 
     private void printResult(final BlackJackGame blackJackGame) {
         final ParticipantResponse dealer = ParticipantResponse.ofDealer(blackJackGame);
-        final List<ParticipantResponse> players = ParticipantResponses.listOfPlayer(blackJackGame);
+        final List<ParticipantResponse> players = ParticipantResponse.listOfPlayer(blackJackGame);
         outputView.printCardsWithScore(dealer, players);
-        outputView.printFinalResult(ParticipantResultResponses.listOfParticipants(blackJackGame));
+        outputView.printFinalResult(ParticipantResultResponse.listOfParticipants(blackJackGame));
     }
 }

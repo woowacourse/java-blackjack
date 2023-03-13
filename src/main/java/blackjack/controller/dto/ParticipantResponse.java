@@ -3,6 +3,8 @@ package blackjack.controller.dto;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.PlayerName;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParticipantResponse {
 
@@ -31,6 +33,14 @@ public class ParticipantResponse {
     public static ParticipantResponse ofDealerWithHidden(final BlackJackGame blackJackGame) {
         final Hand hand = blackJackGame.getDealerHiddenHand();
         return new ParticipantResponse(blackJackGame.getDealerName(), CardsResponse.of(HIDDEN_SCORE, hand));
+    }
+
+    public static List<ParticipantResponse> listOfPlayer(final BlackJackGame blackJackGame) {
+        final List<ParticipantResponse> players = new ArrayList<>();
+        final List<PlayerName> playerNames = blackJackGame.getPlayerNames();
+
+        playerNames.forEach(playerName -> players.add(ParticipantResponse.ofPlayer(playerName, blackJackGame)));
+        return players;
     }
 
     public String getName() {
