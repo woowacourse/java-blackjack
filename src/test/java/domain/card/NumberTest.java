@@ -22,20 +22,4 @@ class NumberTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
-
-    @Nested
-    class 문자열값반환 {
-        @ParameterizedTest(name = "ENUM->{0}, 점수->{1}")
-        @CsvSource(value = {"ACE:A", "TWO:2", "THREE:3", "FOUR:4", "FIVE:5", "SIX:6", "SEVEN:7", "EIGHT:8", "NINE:9",
-                "TEN:10", "KING:K", "QUEEN:Q", "JACK:J"}, delimiter = ':')
-        void should_자신을표현하는문자열을반환한다_when_value호출(Number number, String expected) {
-            //given
-
-            //when
-            String actual = number.value();
-
-            //then
-            assertThat(actual).isEqualTo(expected);
-        }
-    }
 }
