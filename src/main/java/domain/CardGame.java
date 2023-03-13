@@ -8,76 +8,73 @@ import java.util.List;
 
 public class CardGame {
 
-//    public void run() {
-//        CardDeck cardDeck = initDeck();
-//        Dealer dealer = new Dealer(getInitCards(cardDeck));
-//        List<Player> players = makePlayers(cardDeck);
-//        play(cardDeck, dealer, players);
-//        end(dealer, players);
-//    }
-//
-//    private CardDeck initDeck() {
-//        CardDeck cardDeck = new CardDeck();
-//        cardDeck.shuffle();
-//        return cardDeck;
-//    }
-//
-//    private static Cards getInitCards(CardDeck cardDeck) {
-//        return new Cards(new ArrayList<>(List.of(cardDeck.pick(), cardDeck.pick())));
-//    }
-//
-//    private List<Player> makePlayers(CardDeck cardDeck) {
-//        List<String> names = InputView.readNames();
-//        List<Player> players = new ArrayList<>();
-//        for (String name : names) {
-//            Cards playerCards = getInitCards(cardDeck);
-//            players.add(new Player(name, playerCards));
-//        }
-//
-//        return players;
-//    }
-//
-//    private void play(CardDeck cardDeck, Dealer dealer, List<Player> players) {
-//        OutputView.printStart(dealer, players);
-//        for (Player player : players) {
-//            draw(cardDeck, player);
-//        }
-//
-//        while (dealer.canAddCard()) {
-//            Card card = dealer.pickCard(cardDeck);
-//            dealer.hit(card);
-//            OutputView.printHit();
-//        }
-//    }
-//
-//    private void draw(CardDeck cardDeck, Player player) {
-//        boolean isContinue = false;
-//        while (player.canAddCard() && (isContinue = InputView.readYesOrNo(player.getName()))) {
-//            Card card = player.pickCard(cardDeck);
-//            player.hit(card);
-//            OutputView.printCard(player);
-//
-//        }
-//        if (isContinue) {
-//            return;
-//        }
-//        OutputView.printCard(player);
-//    }
-//
-//    private void end(Dealer dealer, List<Player> players) {
-//        OutputView.printResults(dealer, players);
-//        List<PlayerScore> playerScores = judgePlayerScores(dealer, players);
-//        DealerScore dealerScore = new DealerScore(playerScores);
-//        OutputView.printWinOrLose(dealerScore, playerScores);
-//    }
-//
-//    private List<PlayerScore> judgePlayerScores(Dealer dealer, List<Player> players) {
-//        List<PlayerScore> playerScores = new ArrayList<>();
-//
-//        for (Player player : players) {
-//            GameResult gameResult = Judge.of(dealer, player);
-//            playerScores.add(new PlayerScore(player.getName(), gameResult));
-//        }
-//        return playerScores;
-//    }
+    public void run() {
+        CardDeck cardDeck = CardDeck.generateCardDeck();
+        Dealer dealer = new Dealer(Name.generateDealerName(), generateInitCards(cardDeck));
+        Players players = makePlayers(cardDeck);
+        play(cardDeck, dealer, players);
+        end(dealer, players);
+    }
+
+    private static Cards generateInitCards(CardDeck cardDeck) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(cardDeck.pickCard());
+        cards.add(cardDeck.pickCard());
+        return new Cards(cards);
+    }
+
+    private Players makePlayers(CardDeck cardDeck) {
+        List<String> names = InputView.readNames();
+        List<Integer> playersMoney = getPlayersMoney(names);
+        return Players.of(names, cardDeck, playersMoney);
+    }
+
+    private List<Integer> getPlayersMoney(List<String> names) {
+        List<Integer> playersMoney = new ArrayList<>();
+        for (String name : names) {
+            playersMoney.add(InputView.readMoney(name));
+        }
+        return playersMoney;
+    }
+
+    private void play(CardDeck cardDeck, Dealer dealer, Players players) {
+        OutputView.printStart(dealer, players);
+        for (Player player : players.getPlayers()) {
+            draw(cardDeck, player);
+        }
+
+        while (dealer.canReceiveOneMoreCard()) {
+            dealer.pickCard(cardDeck);
+            OutputView.printHit();
+        }
+    }
+
+    private void draw(CardDeck cardDeck, Player player) {
+        boolean isContinue = false;
+        while (player.canReceiveOneMoreCard() && (isContinue = InputView.readYesOrNo(player.getName()))) {
+            player.pickCard(cardDeck);
+            OutputView.printCard(player);
+
+        }
+        if (isContinue) {
+            return;
+        }
+        OutputView.printCard(player);
+    }
+
+    private void end(Dealer dealer, Players players) {
+        OutputView.printResults(dealer, players);
+        List<PlayerScore> playerScores = judgePlayerScores(dealer, players);
+        DealerScore dealerScore = DealerScore.generateDealerScore(playerScores);
+        OutputView.printProfits(dealerScore, playerScores);
+    }
+
+    private List<PlayerScore> judgePlayerScores(Dealer dealer, Players players) {
+        List<PlayerScore> playerScores = new ArrayList<>();
+
+        for (Player player : players.getPlayers()) {
+            playerScores.add(Judge.judgeScore(player, dealer));
+        }
+        return playerScores;
+    }
 }

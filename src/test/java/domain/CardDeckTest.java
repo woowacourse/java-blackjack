@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardDeckTest {
+
     @Test
     @DisplayName("카드덱을 생성하면 카드 타입과 값 별로 52장의 카드가 만들어진다")
     void generateCardDeck() {
@@ -32,23 +33,4 @@ class CardDeckTest {
                 () -> assertThat(cardDeck.getCardDeck()).doesNotContain(poppedCard)
         );
     }
-
-//
-//    @Test
-//    @DisplayName("카드 덱에서 카드를 뽑는다")
-//    void pickCard() {
-//        //given
-//        CardDeck cardDeck = new CardDeck();
-//
-//        //when
-//        Suit[] suits = Suit.values();
-//        Suit lastSuit = suits[suits.length - 1];
-//
-//        Number[] numbers = Number.values();
-//        Number lastNumber = numbers[numbers.length - 1];
-//
-//        //then
-//        Assertions.assertThat(cardDeck.pick())
-//            .isEqualTo(new Card(lastSuit, lastNumber));
-//    }
 }

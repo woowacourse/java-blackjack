@@ -33,6 +33,14 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
+    public int getSumOfCards() {
+        return cards.calculateSum();
+    }
+
+    public boolean isBurst() {
+        return cards.calculateSum() > STANDARD_SUM_OF_BLACKJACK;
+    }
+
     public abstract boolean canReceiveOneMoreCard();
 
     public String getName() {
