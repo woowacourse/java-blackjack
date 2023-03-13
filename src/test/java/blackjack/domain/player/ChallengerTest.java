@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import blackjack.domain.CardFixture;
 import blackjack.domain.card.Card;
-import blackjack.exception.InvalidPlayerNameException;
+import blackjack.exception.InvalidArgumentException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ class ChallengerTest {
     @Test
     @DisplayName("이름이 '딜러'인 경우 예외가 발생한다")
     void validate_name() {
-        assertThrows(InvalidPlayerNameException.class, () -> new Challenger("딜러"));
+        assertThrows(InvalidArgumentException.class, () -> new Challenger("딜러"));
     }
 
     @ParameterizedTest

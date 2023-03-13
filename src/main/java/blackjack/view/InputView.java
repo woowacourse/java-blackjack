@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.exception.InvalidChoiceException;
+import blackjack.exception.InvalidArgumentException;
 import blackjack.exception.NotIntegerException;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +46,7 @@ public class InputView {
         if (lowerCase.equals(NO)) {
             return false;
         }
-        throw new InvalidChoiceException();
+        throw new InvalidArgumentException("올바르지 않은 입력입니다. y 또는 n 중에 골라주세요.");
     }
 
     public static int inputPlayerBetMoney(String name) {

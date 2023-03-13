@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.exception.DuplicatedPlayerNameException;
+import blackjack.exception.DuplicatedArgumentException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ public class Players {
                 .count();
 
         if (names.size() != distinctNameCount) {
-            throw new DuplicatedPlayerNameException();
+            throw new DuplicatedArgumentException("중복된 이름입니다.");
         }
     }
 

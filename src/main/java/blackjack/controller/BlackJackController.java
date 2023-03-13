@@ -10,7 +10,7 @@ import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResult;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.PlayerStatusDto;
-import blackjack.exception.CustomException;
+import blackjack.exception.BlackJackGameException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class BlackJackController {
             List<String> playerNames = InputView.inputPlayerNames();
             Players players = Players.from(playerNames);
             bet(players);
-        } catch (CustomException e) {
+        } catch (BlackJackGameException e) {
             OutputView.printErrorMessage(e);
             init();
         }
@@ -60,7 +60,7 @@ public class BlackJackController {
         try {
             int inputMoney = InputView.inputPlayerBetMoney(challenger.getName());
             betAmounts.add(Money.bet(inputMoney));
-        } catch (CustomException e) {
+        } catch (BlackJackGameException e) {
             OutputView.printErrorMessage(e);
             betEachPlayer(challenger, betAmounts);
         }
@@ -93,7 +93,7 @@ public class BlackJackController {
         try {
             takeAllChallengersTurn();
             takeDealerTurn();
-        } catch (CustomException e) {
+        } catch (BlackJackGameException e) {
             OutputView.printErrorMessage(e);
         }
     }
@@ -113,7 +113,7 @@ public class BlackJackController {
     private void checkChoice(Player player) {
         try {
             inputChoice(player);
-        } catch (CustomException e) {
+        } catch (BlackJackGameException e) {
             OutputView.printErrorMessage(e);
             checkChoice(player);
         }

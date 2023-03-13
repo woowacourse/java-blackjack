@@ -1,11 +1,12 @@
 package blackjack.domain.game;
 
 import blackjack.domain.result.Result;
-import blackjack.exception.InvalidBetMoneyException;
+import blackjack.exception.InvalidArgumentException;
 import java.util.Objects;
 
 public class Money {
     public static final Money ZERO = new Money(0);
+
     private static final int MAX_BET_MONEY = 100000;
     private static final int MIN_BET_MONEY = 10000;
 
@@ -22,7 +23,8 @@ public class Money {
 
     private static void validateBetMoney(int money) {
         if (money < MIN_BET_MONEY || MAX_BET_MONEY < money) {
-            throw new InvalidBetMoneyException(MIN_BET_MONEY, MAX_BET_MONEY);
+            throw new InvalidArgumentException(
+                    String.format("배팅 금액은 %d원 이상 %d원 이하만 가능합니다.", MIN_BET_MONEY, MAX_BET_MONEY));
         }
     }
 

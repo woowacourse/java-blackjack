@@ -1,10 +1,10 @@
 package blackjack.exception;
 
-public class CustomException extends RuntimeException {
+public class BlackJackGameException extends RuntimeException {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
-    public CustomException(String message) {
+    public BlackJackGameException(String message) {
         super(ERROR_PREFIX + message);
     }
 }

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import blackjack.exception.InvalidBetMoneyException;
+import blackjack.exception.InvalidArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ public class MoneyTest {
     @ValueSource(ints = {-10000, 0, 200000})
     @DisplayName("배팅 금액이 10000원 미만이거나 100000원 초과이면 예외가 발생한다")
     void error_bet(int value) {
-        assertThrows(InvalidBetMoneyException.class, () -> Money.bet(value));
+        assertThrows(InvalidArgumentException.class, () -> Money.bet(value));
     }
 
     @Test
