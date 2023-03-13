@@ -11,7 +11,7 @@ public class Name {
     }
 
     private void validate(String value) {
-        if (value.isEmpty()) {
+        if (value.isBlank()) {
             throw new IllegalArgumentException(EMPTY_NAME_MASSAGE);
         }
     }
