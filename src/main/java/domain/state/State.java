@@ -14,4 +14,6 @@ public interface State {
     Result calculateResult(final State dealerState);
 
     Score calculateScore();
+
+    Hand getHand();
 }

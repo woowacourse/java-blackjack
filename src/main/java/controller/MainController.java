@@ -71,6 +71,7 @@ public class MainController {
             outputView.printFillDealerCards();
             dealer.receiveCard(deck.getCard());
         }
+        dealer.convertStand();
     }
 
     private void receiveAdditionalPlayerCard(Deck deck, Participants participants) {
@@ -87,6 +88,7 @@ public class MainController {
             repeat = player.calculateScore() < BlackJackGame.BLACKJACK_NUMBER && command.isHit();
             outputView.printSingleState(player);
         }
+        player.convertStand();
     }
 
     private PlayerCommand initializeCommand(String playerName) {

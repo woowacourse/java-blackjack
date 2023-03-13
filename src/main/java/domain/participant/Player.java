@@ -1,8 +1,10 @@
 package domain.participant;
 
 import domain.PlayerCommand;
+import domain.Result;
 import domain.card.Card;
 import domain.card.Deck;
+import domain.state.State;
 import java.util.List;
 
 public class Player extends Participant {
@@ -21,5 +23,9 @@ public class Player extends Participant {
 
     public int getBettingMoney() {
         return bettingMoney.getValue();
+    }
+
+    public Result calculateFinalResult(final State dealerState) {
+        return this.state.calculateResult(dealerState);
     }
 }

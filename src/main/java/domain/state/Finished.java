@@ -19,4 +19,9 @@ public abstract class Finished implements State {
     public Score calculateScore() {
         return hand.calculateScore();
     }
+
+    @Override
+    public Hand getHand() {
+        return hand;
+    }
 }

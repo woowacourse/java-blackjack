@@ -32,8 +32,8 @@ public class BlackJackGame {
     public Map<Player, Integer> calculatePlayersResult() {
         Map<Player, Integer> playersResult = new HashMap<>();
         for (Player player : participants.getPlayers()) {
-            int playerFinalResult = decideFinalResult(player, participants.getDealer().calculateScore());
-            playersResult.put(player, playerFinalResult);
+            Result playerFinalResult = player.calculateFinalResult(participants.getDealer().getState());
+            playersResult.put(player, playerFinalResult.calculateResult(player.getBettingMoney()));
         }
         return playersResult;
     }
@@ -43,32 +43,6 @@ public class BlackJackGame {
                 .mapToInt(Integer::intValue)
                 .sum();
         return -totalPlayerResults;
-    }
-
-    private int decideFinalResult(final Player player, int dealerScore) {
-        int playerScore = player.calculateScore();
-        int bettingMoney = player.getBettingMoney();
-        if (dealerScore > BLACKJACK_NUMBER) {
-            return decideFinalResultDealerBust(playerScore, bettingMoney);
-        }
-        return decideFinalResultDealerNotBust(dealerScore, playerScore, bettingMoney);
-    }
-
-    private int decideFinalResultDealerNotBust(int dealerScore, int score, int bettingMoney) {
-        if (score <= BLACKJACK_NUMBER && score > dealerScore) {
-            return Result.WIN.calculateResult(bettingMoney);
-        }
-        if (score == dealerScore) {
-            return Result.TIE.calculateResult(bettingMoney);
-        }
-        return Result.LOSE.calculateResult(bettingMoney);
-    }
-
-    private int decideFinalResultDealerBust(int score, int bettingMoney) {
-        if (score > BLACKJACK_NUMBER) {
-            return Result.LOSE.calculateResult(bettingMoney);
-        }
-        return Result.WIN.calculateResult(bettingMoney);
     }
 
     public Participants getParticipants() {

@@ -1,28 +1,34 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.state.Hand;
+import domain.state.Hit;
+import domain.state.Stand;
+import domain.state.State;
 import java.util.List;
 
 public class Participant {
 
     private final Name name;
-    protected final List<Card> cards;
+    protected State state;
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
-        this.cards = cards;
+        this.state = new Hit(new Hand(cards));
     }
 
     public void receiveCard(Card card) {
-        this.cards.add(card);
+        this.state = this.state.drawCard(card);
     }
 
     public int calculateScore() {
-        int totalScore = 0;
-        for (Card card : cards) {
-            totalScore += card.getScore();
+        return this.state.calculateScore().getValue();
+    }
+
+    public void convertStand() {
+        if (!this.state.isBust() && !this.state.isBlackJack()) {
+            this.state = new Stand(this.state.getHand());
         }
-        return totalScore;
     }
 
     public String getName() {
@@ -30,6 +36,6 @@ public class Participant {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return this.state.getHand().getCards();
     }
 }

@@ -23,6 +23,9 @@ public class Stand extends Finished {
         if (dealerState.isBlackJack()) {
             return Result.LOSE;
         }
+        if (dealerState.isBust()) {
+            return Result.WIN;
+        }
         return compareScore(dealerState);
     }
 

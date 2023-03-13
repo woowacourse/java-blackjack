@@ -21,4 +21,9 @@ public abstract class Running implements State {
     public Score calculateScore() {
         return hand.calculateScore();
     }
+
+    @Override
+    public Hand getHand() {
+        return hand;
+    }
 }
