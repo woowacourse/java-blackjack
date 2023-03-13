@@ -31,6 +31,10 @@ public class Card {
         return number.score();
     }
 
+    public String symbol() {
+        return number.symbol();
+    }
+
     public String suit() {
         return suit.value();
     }

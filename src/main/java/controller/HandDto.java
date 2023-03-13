@@ -13,7 +13,7 @@ public class HandDto {
         this.name = participant.name();
         this.cards = participant.getHand()
                                 .stream()
-                                .map(card -> String.join("", String.valueOf(card.score()), card.suit()))
+                                .map(card -> String.join("", card.symbol(), card.suit()))
                                 .collect(Collectors.toUnmodifiableList());
     }
 

@@ -1,39 +1,43 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.InstanceOfAssertFactories.collection;
-
-import java.util.Collections;
-import java.util.List;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.collection;
+
 class PlayersTest {
-    
+
     @Nested
     class 생성 {
         @Test
         void should_플레이어를생성한다_when_from호출() {
             //given
-            List<String> playerNames = List.of("에밀", "포이");
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000,
+                    "포이", 500);
 
             //when
-            Players players = Players.from(playerNames);
+            final Players players = Players.from(bettingAmounts);
 
             //then
-            List<Player> playerList = players.getPlayers();
-            
-            assertThat(playerList).containsSequence(new Player("에밀"), new Player("포이"));
+            final List<Player> playerList = players.getPlayers();
+
+            assertThat(playerList).contains(new Player("에밀"), new Player("포이"));
         }
+
         @Test
         void should_예외를던진다_when_플레이어가0명인경우() {
             //given
-            List<String> playerNames = Collections.EMPTY_LIST;
+            final Map<String, Integer> playerNames = Collections.EMPTY_MAP;
 
             //when
-            ThrowingCallable throwingCallable = () -> Players.from(playerNames);
+            final ThrowingCallable throwingCallable = () -> Players.from(playerNames);
 
             //then
             assertThatThrownBy(throwingCallable)
@@ -41,22 +45,25 @@ class PlayersTest {
                     .hasMessage("플레이어는 1명 이상이어야 합니다.");
         }
     }
+
     @Nested
     class 카드받기 {
         @Test
         void should_플레이어는카드를한장씩받는다_when_receiveCard호출() {
             //given
-            List<String> playerNames = List.of("에밀", "포이");
-            Players players = Players.from(playerNames);
-            Deck deck = Deck.createFullDeck();
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000,
+                    "포이", 500);
+            final Players players = Players.from(bettingAmounts);
+            final Deck deck = Deck.createFullDeck();
 
             //when
             players.receiveCard(deck);
 
             //then
             assertThat(players).extracting("players", collection(Player.class))
-                    .filteredOn((player) -> player.getHand().size() == 1)
-                    .hasSize(2);
+                               .filteredOn((player) -> player.getHand()
+                                                             .size() == 1)
+                               .hasSize(2);
         }
     }
 
@@ -65,8 +72,10 @@ class PlayersTest {
         @Test
         void should_hasDrawablePlayer가true반환_when_카드를뽑을수있는플레이어존재() {
             //given
-            Players players = Players.from(List.of("포이"));
-            Deck deck = Deck.createFullDeck();
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000,
+                    "포이", 500);
+            final Players players = Players.from(bettingAmounts);
+            final Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));
@@ -75,7 +84,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
+            final boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
 
             //then
             assertThat(existingDrawablePlayer).isTrue();
@@ -84,8 +93,9 @@ class PlayersTest {
         @Test
         void should_hasDrawablePlayer가false반환_when_카드를뽑을수있는플레이어없을때() {
             //given
-            Players players = Players.from(List.of("포이"));
-            Deck deck = Deck.createFullDeck();
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000);
+            final Players players = Players.from(bettingAmounts);
+            final Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));
@@ -95,7 +105,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
+            final boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
 
             //then
             assertThat(existingDrawablePlayer).isFalse();
@@ -107,18 +117,20 @@ class PlayersTest {
         @Test
         void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
             //given
-            Players players = Players.from(List.of("포이", "에밀"));
-            Deck deck = Deck.createFullDeck();
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000);
+            final Players players = Players.from(bettingAmounts);
+            final Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.FOUR));
                 cards.add(Card.of(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
-            String expected = "포이";
+            final String expected = "에밀";
 
             //when
-            String actual = players.getPlayerToDecide().name();
+            final String actual = players.getPlayerToDecide()
+                                         .name();
 
             //then
             assertThat(actual).isEqualTo(expected);
@@ -127,8 +139,10 @@ class PlayersTest {
         @Test
         void should_예외를반환한다_when_카드를받을수있는플레이어가없을시() {
             //given
-            Players players = Players.from(List.of("포이", "에밀"));
-            Deck deck = Deck.createFullDeck();
+            final Map<String, Integer> bettingAmounts = Map.of("에밀", 1000,
+                    "포이", 500);
+            final Players players = Players.from(bettingAmounts);
+            final Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));
@@ -140,7 +154,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            ThrowingCallable throwingCallable = players::getPlayerToDecide;
+            final ThrowingCallable throwingCallable = players::getPlayerToDecide;
 
             //then
             assertThatThrownBy(throwingCallable)

@@ -8,6 +8,7 @@ public class Hand {
     public static final int ADDITIONAL_SCORE_OF_ACE = 10;
     private static final int BUST_LOWER_BOUND = 22;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int NUMBER_OF_CARDS_BLACKJACK = 2;
 
     private final Deque<Card> cards;
 
@@ -20,7 +21,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK_SCORE && cards.size() == 2;
+        return calculateScore() == BLACKJACK_SCORE && cards.size() == NUMBER_OF_CARDS_BLACKJACK;
     }
 
     public boolean isBust() {

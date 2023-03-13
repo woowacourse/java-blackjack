@@ -7,10 +7,21 @@ public class Player extends Participant {
 
     private final Name name;
     private HitOrStand hitOrStand;
+    private int bettingAmount;
 
-    public Player(final String inputName) {
+
+    public Player(final String inputName, final int bettingAmount) {
         this.name = new Name(inputName);
         this.hitOrStand = HitOrStand.HIT;
+        this.bettingAmount = bettingAmount;
+    }
+
+    Player(final String inputName) {
+        this(inputName, 0);
+    }
+
+    public void bet(final int bettingAmount) {
+        this.bettingAmount = bettingAmount;
     }
 
     public boolean isDrawable() {
@@ -22,8 +33,9 @@ public class Player extends Participant {
         hitOrStand = HitOrStand.STAND;
     }
 
-    public PlayerOutcome computeWinLoss(final Hand dealerHand) {
-        return PlayerOutcome.of(hand, dealerHand);
+    public Integer computeEarning(final Hand dealerHand) {
+        return PlayerOutcome.of(hand, dealerHand)
+                            .calculateEarning(bettingAmount);
     }
 
     @Override

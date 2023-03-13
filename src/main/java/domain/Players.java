@@ -14,10 +14,11 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        return names.stream()
-                    .map(Player::new)
-                    .collect(collectingAndThen(toUnmodifiableList(), Players::new));
+    public static Players from(final Map<String, Integer> bettingAmounts) {
+        return bettingAmounts.keySet()
+                             .stream()
+                             .map(playerName -> new Player(playerName, bettingAmounts.get(playerName)))
+                             .collect(collectingAndThen(toUnmodifiableList(), Players::new));
     }
 
     private void validateNotEmpty(final List<Player> players) {
@@ -51,10 +52,10 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
         getPlayerToDecide().stand();
     }
 
-    public Map<String, PlayerOutcome> computeWinLoss(final Hand dealerHand) {
+    public Map<String, Integer> computePlayerEarnings(final Hand dealerHand) {
         return players.stream()
                       .collect(toUnmodifiableMap(Player::name
-                              , player -> player.computeWinLoss(dealerHand)));
+                              , player -> player.computeEarning(dealerHand)));
     }
 
     public List<Player> getPlayers() {

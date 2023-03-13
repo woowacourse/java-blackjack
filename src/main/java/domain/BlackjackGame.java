@@ -12,11 +12,6 @@ public class BlackjackGame {
     private Players players;
     private Dealer dealer;
     private Deck deck;
-    private BettingInfo playerBettingInfo;
-
-    public void makeBet(final Map<String, Integer> bettingAmounts) {
-        playerBettingInfo = new BettingInfo(bettingAmounts);
-    }
 
     public void dealFirstHands(final ShuffleStrategy shuffleStrategy) {
         Objects.requireNonNull(players, "플레이어가 없는 상태에서 카드를 나눠줄 수 없습니다.");
@@ -54,25 +49,32 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public List<String> getPlayerNames() {
-        return players.getPlayerNames();
+    public int getDealerEarning() {
+        return calculateTotalEarningOfPlayers() * -1;
+    }
+
+    private Integer calculateTotalEarningOfPlayers() {
+        return getPlayersEarnings().values()
+                                   .stream()
+                                   .reduce(Integer::sum)
+                                   .orElseThrow(IllegalStateException::new);
     }
 
     public Map<String, Integer> getPlayersEarnings() {
-        return playerBettingInfo.getEarnings(dealer.battleWith(players));
+        return dealer.calculateEarnings(players);
     }
 
     public List<Participant> getParticipants() {
         final List<Participant> participants = players.getPlayers()
                                                       .stream()
-                                                      .map(player -> (Participant) player)
+                                                      .map(Participant.class::cast)
                                                       .collect(Collectors.toList());
         participants.add(DEALER_POSITION, dealer);
         return participants;
     }
 
-    public void setParticipants(final List<String> playerNames) {
-        players = Players.from(playerNames);
+    public void setParticipants(final Map<String, Integer> bettingAmounts) {
+        players = Players.from(bettingAmounts);
         dealer = new Dealer();
     }
 }

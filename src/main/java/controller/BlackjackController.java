@@ -4,7 +4,7 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,26 +25,25 @@ public class BlackjackController {
         dealCardsToDealer(blackjackGame);
 
         outputView.printHandsWithScore(toHandScoreDtos(blackjackGame.getParticipants()));
-        outputView.printEarningsInfo(blackjackGame.getPlayersEarnings());
+        outputView.printEarningsInfo(blackjackGame.getDealerEarning(), blackjackGame.getPlayersEarnings());
     }
 
     private BlackjackGame startGame() {
         final BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.setParticipants(inputView.readPlayerNames());
-        setBettingAmounts(blackjackGame);
+        setParticipants(blackjackGame);
         blackjackGame.dealFirstHands(new RandomShuffleStrategy());
 
         outputView.printInitialHands(toHandDtos(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
-    private void setBettingAmounts(final BlackjackGame blackjackGame) {
-        final Map<String, Integer> bettingAmounts = new HashMap<>();
-        final List<String> playerNames = blackjackGame.getPlayerNames();
+    private void setParticipants(final BlackjackGame blackjackGame) {
+        final List<String> playerNames = inputView.readPlayerNames();
+        final Map<String, Integer> bettingAmounts = new LinkedHashMap<>();
         for (final String name : playerNames) {
             bettingAmounts.put(name, inputView.readBettingAmount(name));
         }
-        blackjackGame.makeBet(bettingAmounts);
+        blackjackGame.setParticipants(bettingAmounts);
     }
 
     private void dealCardsToPlayers(final BlackjackGame blackjackGame) {
