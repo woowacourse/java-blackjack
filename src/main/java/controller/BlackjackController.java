@@ -40,14 +40,13 @@ public class BlackjackController {
     }
 
     public void init() {
-        List<Player> players = inputView.inputParticipantsName().stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-        Dealer dealer = new Dealer("딜러");
-
-        for (Player player : players) {
-            player.setBetting(inputView.inputBetting(player.name()));
+        List<String> playersName = inputView.inputParticipantsName();
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playersName) {
+            players.add(new Player(playerName, inputView.inputBetting(playerName)));
         }
+
+        Dealer dealer = new Dealer("딜러");
 
         NumberGenerator numberGenerator = new RandomNumberGenerator();
         Deck deck = new Deck(numberGenerator);

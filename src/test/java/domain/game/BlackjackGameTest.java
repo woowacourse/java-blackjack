@@ -19,8 +19,8 @@ public class BlackjackGameTest {
     @BeforeEach
     void setUp() {
         Dealer dealer = new Dealer("딜러");
-        Player maco = new Player("maco");
-        Player teo = new Player("teo");
+        Player maco = new Player("maco", 10000);
+        Player teo = new Player("teo", 20000);
 
         NumberGenerator numberGenerator = threshold -> 0;
         Deck deck = new Deck(numberGenerator);
@@ -89,4 +89,5 @@ public class BlackjackGameTest {
 
         assertThat(dealer.getState().isStay()).isTrue();
     }
+
 }

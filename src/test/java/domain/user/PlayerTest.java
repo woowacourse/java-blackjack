@@ -14,7 +14,7 @@ public class PlayerTest {
     @DisplayName("Player를 생성하면 State는 Ready상태이다")
     @Test
     void newParticipant() {
-        Player player = new Player("maco");
+        Player player = new Player("maco", 10000);
 
         assertThat(player.getState()).isInstanceOf(Ready.class);
     }
@@ -26,7 +26,7 @@ public class PlayerTest {
         @DisplayName("ACE를 hit하면 State는 Hit상태이다")
         @Test
         void hit_ace_Hit() {
-            Player player = new Player("maco");
+            Player player = new Player("maco", 10000);
 
             State state = player.hit(SPADE_ACE);
 
@@ -36,7 +36,7 @@ public class PlayerTest {
         @DisplayName("ACE, TEN을 hit하면 Blackjack상태이다")
         @Test
         void hit_aceTen_Blackjack() {
-            Player player = new Player("maco");
+            Player player = new Player("maco", 10000);
 
             player.hit(SPADE_ACE);
             player.hit(SPADE_TEN);
@@ -47,7 +47,7 @@ public class PlayerTest {
         @DisplayName("TEN, TEN, FIVE를 hit하면 Bust상태이다")
         @Test
         void hit_aceTen_Bust() {
-            Player player = new Player("maco");
+            Player player = new Player("maco", 10000);
 
             player.hit(SPADE_TEN);
             player.hit(HEART_TEN);
@@ -64,7 +64,7 @@ public class PlayerTest {
         @DisplayName("Bust상태에서 hit할 수 없다.")
         @Test
         void hit_Bust_Exception() {
-            Player player = new Player("maco");
+            Player player = new Player("maco", 10000);
 
             player.hit(SPADE_TEN);
             player.hit(CLOVER_TEN);
@@ -76,7 +76,7 @@ public class PlayerTest {
         @DisplayName("Stay상태에서 hit할 수 없다.")
         @Test
         void hit_Stay_Exception() {
-            Player player = new Player("maco");
+            Player player = new Player("maco", 10000);
 
             player.hit(SPADE_TEN);
             player.hit(CLOVER_TEN);
@@ -89,7 +89,7 @@ public class PlayerTest {
     @DisplayName("stay하면 Stay상태이다")
     @Test
     void stay() {
-        Player player = new Player("maco");
+        Player player = new Player("maco", 10000);
 
         player.hit(SPADE_TEN);
         player.hit(HEART_TEN);

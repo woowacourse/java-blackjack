@@ -9,13 +9,10 @@ import java.util.List;
 public class Player {
 
     private final Participant participant;
-    private int betting;
+    private final int betting;
 
-    public Player(String PlayerName) {
+    public Player(String PlayerName, final int betting) {
         this.participant = new Participant(PlayerName);
-    }
-
-    public void setBetting(int betting) {
         this.betting = betting;
     }
 
