@@ -1,7 +1,20 @@
 package domain;
 
 public class PlayerScore {
-//
+
+    private final String name;
+    private final Profit profit;
+
+    public PlayerScore(String name, Profit profit) {
+        this.name = name;
+        this.profit = profit;
+    }
+
+    public Double getProfit() {
+        return profit.getProfit();
+    }
+
+    //
 //    private final String name;
 //    private final GameResult gameResult;
 //

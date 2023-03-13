@@ -16,4 +16,8 @@ public class Money {
             throw new IllegalArgumentException("[ERROR] 음수는 입력할 수 없습니다.");
         }
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

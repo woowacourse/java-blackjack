@@ -25,7 +25,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return cards.calculateSum() == STANDARD_SUM_OF_BLACKJACK;
+        return cards.calculateInitialSum() == STANDARD_SUM_OF_BLACKJACK;
     }
 
     public void pickCard(CardDeck cardDeck) {
@@ -41,5 +41,9 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public int getMoney() {
+        return money.getMoney();
     }
 }
