@@ -4,19 +4,32 @@ import java.util.List;
 import java.util.Objects;
 
 import blackjackgame.domain.card.Card;
+import blackjackgame.domain.state.Ready;
+import blackjackgame.domain.state.State;
 
 public class Guest extends Player {
-    private static final int BLACKJACK_MAX_SCORE = 21;
-
     private final Name name;
 
-    public Guest(final Name name, final List<Card> cards) {
-        super(cards);
+    private Guest(State state, final Name name) {
+        super(state);
         this.name = name;
     }
 
+    public static Guest of(List<Card> cards, Name name) {
+        State state = new Ready();
+        for (Card card : cards) {
+            state = state.draw(card);
+        }
+        return new Guest(state, name);
+    }
+
+    @Override
+    protected List<Card> startingCards() {
+        return cards();
+    }
+
     public boolean canHit() {
-        return getScore() < BLACKJACK_MAX_SCORE;
+        return isRunning();
     }
 
     public String getName() {
@@ -38,5 +51,9 @@ public class Guest extends Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public void stay() {
+        super.stay();
     }
 }
