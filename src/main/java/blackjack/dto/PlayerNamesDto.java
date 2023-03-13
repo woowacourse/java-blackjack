@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class PlayerNamesDto {
 
-    List<String> names;
+    private final List<String> names;
 
     private PlayerNamesDto(List<String> names) {
         this.names = names;
