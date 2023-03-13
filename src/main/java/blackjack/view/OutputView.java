@@ -3,8 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -50,31 +48,18 @@ public final class OutputView {
 
     public void printCardResult(final User user) {
         printUserCards(user.getName(), user.getCards());
-        System.out.println(" - 결과: " + user.getScore().score());
+        System.out.println(" - 결과: " + user.getScore().getScore());
     }
 
-    public void introduceGameResult() {
-        System.out.println("## 최종 승패");
-    }
-
-    public void printGameResult(final User user, final Result result) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (final GameResult score : result.getResult().keySet()) {
-            final Integer count = result.getResult().get(score);
-            stackResult(stringBuilder, score, count);
-        }
-
-        System.out.println(user.getName() + ": " + stringBuilder);
-    }
-
-    private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {
-        if (count != 0) {
-            stringBuilder.append(count).append(score.getName()).append(" ");
-        }
+    public void introduceProfitResult() {
+        System.out.println("## 최종 수익");
     }
 
     public static void printBust() {
         System.out.println(System.lineSeparator() + "BUST 되었습니다.");
+    }
+
+    public void printUserProfit(final String name, final int value) {
+        System.out.println(name + ": " + value);
     }
 }
