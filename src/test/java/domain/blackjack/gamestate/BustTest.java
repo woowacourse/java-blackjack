@@ -37,7 +37,7 @@ class BustTest {
         assertThat(bustState.isAbleToReceiveCard()).isFalse();
     }
 
-    @DisplayName("버스트 상태와 다른 상태들을 비교했을 때 항상 진다.")
+    @DisplayName("버스트 상태와 다른 상태들과 비교했을 때 항상 진다.")
     @Test
     void competeToOtherState() {
         GameState blackjackState = Playing.from(Cards.of(
