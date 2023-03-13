@@ -134,4 +134,20 @@ public class ResultGameTest {
 
         assertThat(participants.getPlayers().get(0).getRevenue()).isEqualTo(1500);
     }
+
+    @Test
+    @DisplayName("플레이어 버스트인 경우")
+    void bustPlayer(){
+
+        Player player = participants.getPlayers().get(0);
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TWO));
+
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
+        player.drawCard(new Card(Shape.HEART, Letter.TWO));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(participants.getPlayers().get(0).getRevenue()).isEqualTo(-1000);
+    }
 }

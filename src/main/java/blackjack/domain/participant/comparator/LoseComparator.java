@@ -20,7 +20,7 @@ public class LoseComparator implements Comparator {
     @Override
     public WinTieLose compareWithPlayer(Player player) {
         if (player.getTotalScore() < dealer.getTotalScore()) {
-            return WinTieLose.WIN;
+            return WinTieLose.LOSE;
         }
         setNext();
         return next.compareWithPlayer(player);
