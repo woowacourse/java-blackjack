@@ -1,7 +1,7 @@
 package domain.participants;
 
 import domain.BettingMoney;
-import domain.Command;
+import controller.Command;
 
 public class Player extends Participant {
     private static final int BLACK_JACK = 21;

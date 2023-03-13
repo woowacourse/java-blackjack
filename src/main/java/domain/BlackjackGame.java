@@ -1,7 +1,11 @@
 package domain;
 
+import controller.Command;
 import domain.deck.CardDeck;
-import domain.participants.*;
+import domain.participants.Dealer;
+import domain.participants.Participants;
+import domain.participants.Player;
+import domain.participants.Players;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_SET = 2;
@@ -10,7 +14,7 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
 
     public BlackjackGame(Dealer dealer, Players players, CardDeck cardDeck) {
-        this.participants = new Participants(dealer,players);
+        this.participants = new Participants(dealer, players);
         this.cardDeck = cardDeck;
     }
 

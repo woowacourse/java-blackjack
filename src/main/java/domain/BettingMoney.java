@@ -3,7 +3,7 @@ package domain;
 import java.util.Objects;
 
 public class BettingMoney {
-    private int money;
+    private final int money;
 
     public BettingMoney(int money) {
         this.money = money;

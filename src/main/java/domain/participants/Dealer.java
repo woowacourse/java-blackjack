@@ -12,7 +12,7 @@ public class Dealer extends Participant {
         return super.getCardsSum() > BOUND;
     }
 
-    public boolean dealerWin(int playerSum){
+    public boolean dealerWin(int playerSum) {
         return this.getCardsSum() > playerSum;
     }
 }

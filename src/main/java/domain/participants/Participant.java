@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Participant {
     private static final int BLACK_JACK = 21;
-
+    private static final int BLACK_JACK_COUNT = 2;
     private final Name name;
     private final Cards cards;
 
@@ -29,7 +29,7 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-        return (getCardsSum() == BLACK_JACK) && cards.getCards().size() == 2;
+        return (getCardsSum() == BLACK_JACK) && cards.getCards().size() == BLACK_JACK_COUNT;
     }
 
     public String getName() {

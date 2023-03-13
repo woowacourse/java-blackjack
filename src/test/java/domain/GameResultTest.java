@@ -16,9 +16,6 @@ public class  GameResultTest {
     @Test
     @DisplayName("GameResult 생성 성공 테스트")
     void createGameResultTest(){
-        Player player1 = new Player("pobi",new BettingMoney(0));
-        Player player2 = new Player("jason",new BettingMoney(0));
-        Dealer dealer = new Dealer();
         Assertions.assertThatNoException().isThrownBy(()->new GameResult());
     }
 

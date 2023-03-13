@@ -12,7 +12,7 @@ public enum Result {
         this.profitRate = profitRate;
     }
 
-    public int calculateResult(int betMoney){
+    public int calculateResult(int betMoney) {
         return (int) (betMoney * profitRate);
     }
 }
