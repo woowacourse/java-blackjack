@@ -20,6 +20,10 @@ public class Bet {
         return new Bet(value * -1);
     }
 
+    public Bet multiply(float multiplyValue) {
+        return new Bet((int) (this.value * multiplyValue));
+    }
+
     private static void validateValue(int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("베팅액은 0보다 커야 합니다.");

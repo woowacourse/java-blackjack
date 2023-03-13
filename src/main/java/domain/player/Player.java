@@ -29,6 +29,10 @@ public abstract class Player {
         return hand.isBust();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }
@@ -47,6 +51,18 @@ public abstract class Player {
         return bet;
     }
 
+    public Bet win() {
+        return bet;
+    }
+
+    public Bet lose() {
+        return bet.toNegative();
+    }
+
+    public Bet draw() {
+        return Bet.empty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,15 +76,7 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-    public Bet win() {
-        return bet;
-    }
-
-    public Bet lose() {
-        return bet.toNegative();
-    }
-
-    public Bet draw() {
-        return Bet.empty();
+    public Bet blackJack() {
+        return bet.multiply(1.5f);
     }
 }

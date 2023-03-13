@@ -8,6 +8,7 @@ public class Hand {
     public static final int ACE_SCORE_SWITCHING_LINE = 10;
     public static final int ACE_MAX_SCORE = 11;
     public static final int ACE_MIN_SCORE = 1;
+    public static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -65,5 +66,9 @@ public class Hand {
 
     public Card getCardIndexOf(int index) {
         return cards.get(index);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && BLACKJACK_SCORE == getScore();
     }
 }

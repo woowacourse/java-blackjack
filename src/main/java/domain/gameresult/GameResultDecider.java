@@ -11,14 +11,22 @@ public class GameResultDecider {
         if (dealer.isBust() || participant.isBust()) {
             return calculateBettingResultOnBust(dealer, participant);
         }
+
+        if (participant.isBlackJack()) {
+            return calculateBettingResultOnBlackjack(dealer, participant);
+        }
+
         return calculateBettingResultOnScore(dealer, participant);
     }
 
-    private static Bet calculateBettingResultOnBust(Dealer dealer, Player participant) {
-        if (dealer.isBust() && participant.isBust()) {
+    private static Bet calculateBettingResultOnBlackjack(Dealer dealer, Player participant) {
+        if (dealer.isBlackJack()) {
             return participant.draw();
-        } // 둘 다 버스트
+        } // 딜러도 블랙잭
+        return participant.blackJack(); // 참가자만 블랙잭
+    }
 
+    private static Bet calculateBettingResultOnBust(Dealer dealer, Player participant) {
         if (dealer.isBust()) {
             return participant.win();
         } // 딜러가 버스트

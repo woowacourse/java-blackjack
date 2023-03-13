@@ -82,17 +82,71 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러와 참가자 둘 다 버스트가 일어나면 참가자는 베팅액을 그대로 돌려받는다.")
+    @DisplayName("딜러와 참가자 둘 다 버스트가 일어나도 참가자는 승리해 배팅액을 가져간다.")
     void givenDealerParticipantBothBust() {
         Dealer dealer = makeDealer(
-                new Card(Suit.HEART, Denomination.NINE),
-                new Card(Suit.HEART, Denomination.SEVEN),
-                new Card(Suit.DIAMOND, Denomination.SEVEN)
+                HEART_NINE,
+                HEART_SEVEN,
+                DIAMOND_SEVEN
         );
         Gambler gambler = makeParticipant(
-                new Card(Suit.HEART, Denomination.NINE),
-                new Card(Suit.HEART, Denomination.SEVEN),
-                new Card(Suit.DIAMOND, Denomination.SEVEN)
+                HEART_NINE,
+                HEART_SEVEN,
+                DIAMOND_SEVEN
+        );
+
+        Bet bet = dealer.battle(gambler);
+
+        assertThat(bet.getValue()).isEqualTo(3000);
+    }
+
+    @Test
+    @DisplayName("참가자가 블랙잭이 일어나면 배팅한 금액의 1.5배를 가져간다.")
+    void givenParticipantBlackjack() {
+        Dealer dealer = makeDealer(
+                HEART_SEVEN,
+                DIAMOND_SEVEN
+        );
+        Gambler gambler = makeParticipant(
+                HEART_ACE,
+                DIAMOND_KING
+        );
+
+        Bet bet = dealer.battle(gambler);
+
+        assertThat(bet.getValue()).isEqualTo(4500);
+    }
+
+    @Test
+    @DisplayName("2장을 초과한 카드로 21점이 되었다면 블랙잭으로 인정하지 않는다.")
+    void givenParticipantNotBlackjack() {
+        Dealer dealer = makeDealer(
+                HEART_SEVEN,
+                DIAMOND_SEVEN
+        );
+        Gambler gambler = makeParticipant(
+                HEART_EIGHT,
+                HEART_NINE,
+                SPADE_FOUR
+        );
+
+        Bet bet = dealer.battle(gambler);
+
+        assertThat(bet.getValue())
+                .as("21점이긴 하나, 블랙잭이 아니므로 1.5배를 곱하지 않는다.")
+                .isEqualTo(3000);
+    }
+
+    @Test
+    @DisplayName("참가자와 딜러 둘 다 블랙잭이 일어나면 배팅한 금액을 그대로 돌려받는다.")
+    void givenParticipantDealerBlackjack() {
+        Dealer dealer = makeDealer(
+                SPADE_ACE,
+                SPADE_KING
+        );
+        Gambler gambler = makeParticipant(
+                HEART_ACE,
+                DIAMOND_KING
         );
 
         Bet bet = dealer.battle(gambler);
