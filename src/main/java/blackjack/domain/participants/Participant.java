@@ -13,14 +13,14 @@ public abstract class Participant {
     private final Hand hand;
 
     public Participant(final String name) {
-        this.name = name;
         validateName(name);
+        this.name = name;
         hand = new Hand(new ArrayList<>());
     }
 
     public Participant(final String name, final List<Card> cards) {
-        this.name = name;
         validateName(name);
+        this.name = name;
         this.hand = new Hand(cards);
     }
 
