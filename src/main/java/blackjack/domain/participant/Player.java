@@ -3,13 +3,11 @@ package blackjack.domain.participant;
 public class Player extends Participant {
 
     private static final int BLACKJACK_SCORE = 21;
-    
-    private final BettingMoney bettingMoney;
-    private final Name name;
+
+    private final PlayerInfo playerInfo;
 
     Player(final String name, final int bettingMoney) {
-        this.name = new Name(name);
-        this.bettingMoney = new BettingMoney(bettingMoney);
+        playerInfo = new PlayerInfo(name, bettingMoney);
     }
 
     @Override
@@ -19,15 +17,15 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return playerInfo.getName().getValue();
     }
 
     boolean hasName(final String playerName) {
-        return name.getValue()
+        return playerInfo.getName().getValue()
                 .equals(playerName);
     }
 
     public int calculateProfit(final double profit) {
-        return bettingMoney.profit(profit);
+        return playerInfo.getBettingMoney().profit(profit);
     }
 }
