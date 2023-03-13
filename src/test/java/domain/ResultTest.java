@@ -19,4 +19,11 @@ class ResultTest {
         int bettingMoney = 1000;
         assertThat(Result.TIE.calculateResult(bettingMoney)).isEqualTo(0);
     }
+
+    @DisplayName("플레이어가 패인 경우 베팅 금액만큼 수익을 잃는다.")
+    @Test
+    void loseTest() {
+        int bettingMoney = 1000;
+        assertThat(Result.LOSE.calculateResult(bettingMoney)).isEqualTo(-1000);
+    }
 }
