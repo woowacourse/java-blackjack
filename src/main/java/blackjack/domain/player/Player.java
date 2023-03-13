@@ -19,6 +19,11 @@ public class Player extends Participant {
         return playerStatus.isRunning();
     }
 
+    public double calculateProfit(Dealer dealer) {
+        return playerStatus.calculateProfit(dealer.isBlackJack(), dealer.hand.calculateScore(),
+                hand.calculateScore(), bettingMoney);
+    }
+
     public String getName() {
         return name.getName();
     }

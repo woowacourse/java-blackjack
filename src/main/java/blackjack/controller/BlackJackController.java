@@ -4,7 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Profit;
 import blackjack.view.DrawIntention;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -55,7 +55,11 @@ public class BlackJackController {
     private void playAllPlayer(final Deck deck, final Players players) {
         for (Player player : players.getPlayers()) {
             while (player.isAbleToReceive() && wantHit(player.getName())) {
-                hit(deck, player);
+                player.hit(deck.getCard());
+                outputView.printPlayerCards(player);
+            }
+            if (player.isAbleToReceive()) {
+                player.stay();
             }
         }
     }
@@ -63,11 +67,6 @@ public class BlackJackController {
     private boolean wantHit(final String playerName) {
         outputView.printRequestIntention(playerName);
         return DrawIntention.of(inputView.readPlayerIntention().toLowerCase()).equals(DrawIntention.YES);
-    }
-
-    private void hit(final Deck deck, final Player player) {
-        player.hit(deck.getCard());
-        outputView.printPlayerCards(player);
     }
 
     private void playDealer(final Deck deck, final Dealer dealer) {
@@ -79,9 +78,9 @@ public class BlackJackController {
 
     private void closeGame(final Dealer dealer, final Players players) {
         outputView.printFinalCards(dealer, players);
-        GameResult gameResult = new GameResult(dealer, players.getPlayers());
-        outputView.printDealerResults(gameResult.getDealerResults());
+        Profit profit = Profit.of(dealer, players);
+        outputView.printDealerResults(profit.calculateDealerScore());
         players.getPlayers().forEach(
-                player -> outputView.printPlayerResult(player, gameResult.getPlayerResult(player)));
+                player -> outputView.printPlayerResult(player, profit.getPlayerProfit(player.getName())));
     }
 }
