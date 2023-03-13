@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO: 2023/03/13 list, dealer분리 
 public class Participants {
     private final List<Player> players;
     private final Participant dealer;
@@ -37,21 +36,24 @@ public class Participants {
         return new ArrayList<>(players);
     }
 
-    public boolean shouldDealerHit() {
-        final Dealer dealer = (Dealer) findDealer();
-        return dealer.shouldHit();
+    public boolean shouldDealerHit(Deck deck) {
+        if (dealer.shouldHit()) {
+            dealer.receiveCard(deck.draw());
+            return true;
+        }
+        return false;
     }
 
     public Map<Participant, Integer> makePlayerFinalHandValue() {
         final Map<Participant, Integer> participantsHandValue = new LinkedHashMap<>();
-        for (Participant participant : findPlayers()) {
+        for (Participant participant : players) {
             participantsHandValue.put(participant, participant.getHandValue());
         }
         return participantsHandValue;
     }
 
     public List<String> getPlayersName() {
-        return findPlayers().stream()
+        return players.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
     }

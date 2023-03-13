@@ -117,8 +117,7 @@ public class BlackJackController {
     }
 
     private void dealerContinueDrawingCards(final Deck deck, final Participants participants) {
-        while (participants.shouldDealerHit()) {
-            participants.findDealer().receiveCard(deck.draw());
+        while (participants.shouldDealerHit(deck)) {
             OutputView.printDealerPickCardMessage();
         }
     }
