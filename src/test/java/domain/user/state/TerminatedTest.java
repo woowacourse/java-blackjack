@@ -29,7 +29,7 @@ class TerminatedTest {
     @Test
     void hitException() {
         assertThatThrownBy(() -> state.hit(Card.of(KING, DIAMOND)))
-            .isInstanceOf(IllegalStateException.class);
+            .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("카드를 더 받을 수 없다.")
@@ -42,7 +42,7 @@ class TerminatedTest {
     @Test
     void stayException() {
         assertThatThrownBy(state::stay)
-            .isInstanceOf(IllegalStateException.class)
+            .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("이미 종료되었습니다.");
     }
 }

@@ -11,7 +11,7 @@ public abstract class Terminated extends State {
 
     @Override
     public State hit(Card card) {
-        throw new IllegalStateException("더 이상 카드를 받을 수 없습니다.");
+        throw new UnsupportedOperationException("더 이상 카드를 받을 수 없습니다.");
     }
 
     @Override
@@ -21,6 +21,6 @@ public abstract class Terminated extends State {
 
     @Override
     public State stay() {
-        throw new IllegalStateException("이미 종료되었습니다.");
+        throw new UnsupportedOperationException("이미 종료되었습니다.");
     }
 }
