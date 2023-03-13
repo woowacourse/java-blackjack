@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.ResultType;
-import blackjack.domain.game.Score;
 
 import java.util.List;
 import java.util.Map;
@@ -75,15 +74,10 @@ public class OutputView {
         System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealerScore);
     }
 
-    public void printFinalStatusOfPlayers(final Map<Map<String, List<Card>>, Score> statusOfPlayers) {
-        statusOfPlayers.forEach(this::printFinalStatusOfPlayer);
-        System.out.println();
+    public void printFinalStatusOfPlayer(final String playerName, final List<Card> playerCard, final int playerScore) {
+        System.out.println(playerName + DELIMITER + convertCards(playerCard) + RESULT + playerScore);
     }
 
-    private void printFinalStatusOfPlayer(final Map<String, List<Card>> playerNameToCards, final Score playerScore) {
-        playerNameToCards.forEach((playerName, playerCards) ->
-                System.out.println(playerName + DELIMITER + convertCards(playerCards) + RESULT + playerScore.getValue()));
-    }
 
     public void printFinalResult(final Map<ResultType, Integer> dealerResult, final Map<String, ResultType> playerResult) {
         System.out.println("## 최종 승패");

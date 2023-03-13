@@ -125,4 +125,11 @@ public class Players {
                         LinkedHashMap::new));
     }
 
+    public Score findScoreOfPlayerByName(final String playerName) {
+        return players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
+                .currentScore();
+    }
 }

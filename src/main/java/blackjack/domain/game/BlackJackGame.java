@@ -30,8 +30,8 @@ public class BlackJackGame {
                 .get(0);
     }
 
-    public Map<String, List<Card>> findPlayerNameAndCards() {
-        return gameParticipants.findPlayerNameAndCards();
+    public Map<String, List<Card>> findPlayerNameToCards() {
+        return gameParticipants.findPlayerNameToCards();
     }
 
     public List<String> findPlayerNames() {
@@ -68,8 +68,8 @@ public class BlackJackGame {
         return gameParticipants.findDealerScore();
     }
 
-    public Map<Map<String, List<Card>>, Score> findPlayerStatusByName() {
-        return gameParticipants.findPlayerStatusByName();
+    public Score findScoreOfPlayerByName(final String playerName) {
+        return gameParticipants.findScoreOfPlayerByName(playerName);
     }
 
     public ResultOfGame findResultOfGame() {

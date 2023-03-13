@@ -27,7 +27,7 @@ public class GameParticipants {
         return dealer.getCards();
     }
 
-    public Map<String, List<Card>> findPlayerNameAndCards() {
+    public Map<String, List<Card>> findPlayerNameToCards() {
         return players.findPlayerNameToCards();
     }
 
@@ -74,4 +74,7 @@ public class GameParticipants {
         return new ResultOfGame(playerResult, dealerResult);
     }
 
+    public Score findScoreOfPlayerByName(final String playerName) {
+        return players.findScoreOfPlayerByName(playerName);
+    }
 }
