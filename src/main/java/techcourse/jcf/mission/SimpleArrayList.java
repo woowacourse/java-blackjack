@@ -1,7 +1,5 @@
 package techcourse.jcf.mission;
 
-import java.util.Arrays;
-
 public class SimpleArrayList<T> implements SimpleList<T> {
 
 
@@ -14,7 +12,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.stores = (T[]) new Object[INITIAL_SIZE];
     }
 
-    public SimpleArrayList(T...value) {
+    public SimpleArrayList(T... value) {
         size = value.length;
         this.stores = value;
     }
@@ -30,9 +28,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public boolean add(final T value) {
-        if (stores.length > size) {
-            resize();
-        }
         stores[size] = value;
         size++;
         return true;
@@ -41,9 +36,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public void add(final int index, final T value) {
         isInRange(index);
-        if (stores.length == size) {
-            resize();
-        }
+
         if (index == size) {
             add(value);
             return;
@@ -121,7 +114,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             stores[i + 1] = null;
         }
         size--;
-        resize();
         return null;
     }
 
@@ -131,26 +123,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             stores[i] = null;
         }
         size = 0;
-        resize();
-    }
-
-    private void resize() {
-        Object[] emptyArray = {};
-
-        if (Arrays.equals(stores, emptyArray)) {
-            stores = (T[]) new Object[INITIAL_SIZE];
-            return;
-        }
-
-        if (this.size == stores.length) {
-            stores = Arrays.copyOf(stores, stores.length + INITIAL_SIZE);
-            return;
-        }
-
-        if (this.size < (stores.length / 2)) {
-            stores = Arrays.copyOf(stores, stores.length / 2);
-        }
-
     }
 
     private void isInRange(final int index) {
