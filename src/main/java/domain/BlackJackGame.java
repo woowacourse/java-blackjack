@@ -66,7 +66,7 @@ public class BlackJackGame {
 
     private int decideFinalResultDealerBust(int score, int bettingMoney) {
         if (score > BLACKJACK_NUMBER) {
-            return Result.TIE.calculateResult(bettingMoney);
+            return Result.LOSE.calculateResult(bettingMoney);
         }
         return Result.WIN.calculateResult(bettingMoney);
     }
