@@ -21,16 +21,16 @@ class JudgeTest {
     void playerOver21() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.SPADE, Denomination.EIGHT))));
+            List.of(Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.SPADE, Denomination.EIGHT))));
         Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J),
-                    new Card(Suit.SPADE, Denomination.Q))));
+                List.of(Card.of(Suit.CLOVER, Denomination.J),
+                    Card.of(Suit.SPADE, Denomination.Q))));
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        player.hit(new Card(Suit.SPADE, Denomination.THREE));
+        player.hit(Card.of(Suit.SPADE, Denomination.THREE));
         GameState result = Judge.gameResult(dealer, player);
         //then
         Assertions.assertThat(result).isEqualTo(GameStates.LOSE);
@@ -41,11 +41,11 @@ class JudgeTest {
     void dealerGreaterThanPlayerUnder21() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.SPADE, Denomination.Q))));
+            List.of(Card.of(Suit.CLOVER, Denomination.J), Card.of(Suit.SPADE, Denomination.Q))));
         Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.THREE),
-                    new Card(Suit.SPADE, Denomination.TWO))));
+                List.of(Card.of(Suit.CLOVER, Denomination.THREE),
+                    Card.of(Suit.SPADE, Denomination.TWO))));
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
@@ -60,13 +60,13 @@ class JudgeTest {
         //given
         Dealer dealer = new Dealer(new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J),
-                    new Card(Suit.SPADE, Denomination.Q)))));
-        dealer.hit(new Card(Suit.SPADE, Denomination.THREE));
+                List.of(Card.of(Suit.CLOVER, Denomination.J),
+                    Card.of(Suit.SPADE, Denomination.Q)))));
+        dealer.hit(Card.of(Suit.SPADE, Denomination.THREE));
 
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.SPADE, Denomination.EIGHT)));
+            List.of(Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.SPADE, Denomination.EIGHT)));
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
@@ -80,12 +80,12 @@ class JudgeTest {
     void playerGreaterThanDealerUnder21() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.SIX),
-                new Card(Suit.SPADE, Denomination.Q))));
+            List.of(Card.of(Suit.CLOVER, Denomination.SIX),
+                Card.of(Suit.SPADE, Denomination.Q))));
         Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.J),
-                    new Card(Suit.SPADE, Denomination.Q))));
+                List.of(Card.of(Suit.CLOVER, Denomination.J),
+                    Card.of(Suit.SPADE, Denomination.Q))));
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
@@ -99,12 +99,12 @@ class JudgeTest {
     void draw() {
         //given
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.SIX),
-                new Card(Suit.SPADE, Denomination.Q))));
+            List.of(Card.of(Suit.CLOVER, Denomination.SIX),
+                Card.of(Suit.SPADE, Denomination.Q))));
         Cards cards = new Cards(
             new ArrayList<>(
-                List.of(new Card(Suit.CLOVER, Denomination.SIX),
-                    new Card(Suit.SPADE, Denomination.Q))));
+                List.of(Card.of(Suit.CLOVER, Denomination.SIX),
+                    Card.of(Suit.SPADE, Denomination.Q))));
         Player player = new Player("pobi");
         player.initCards(cards);
         //when

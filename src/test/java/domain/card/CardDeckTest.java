@@ -21,6 +21,6 @@ class CardDeckTest {
 
         //then
         Assertions.assertThat(cardDeck.pick())
-            .isEqualTo(new Card(lastSuit, lastDenomination));
+            .isEqualTo(Card.of(lastSuit, lastDenomination));
     }
 }

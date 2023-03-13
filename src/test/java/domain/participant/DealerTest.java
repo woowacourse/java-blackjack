@@ -17,8 +17,8 @@ public class DealerTest {
     void canAddCardTrue() {
         //given 
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.CLOVER, Denomination.SIX)));
+            List.of(Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.CLOVER, Denomination.SIX)));
 
         //when
         Dealer dealer = new Dealer(cards);
@@ -32,8 +32,8 @@ public class DealerTest {
     void canAddCardFalse() {
         //given
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.A),
-                new Card(Suit.CLOVER, Denomination.SIX)));
+            List.of(Card.of(Suit.CLOVER, Denomination.A),
+                Card.of(Suit.CLOVER, Denomination.SIX)));
 
         //when
         Dealer dealer = new Dealer(cards);

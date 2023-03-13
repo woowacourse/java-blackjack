@@ -19,7 +19,7 @@ public class CardDeck {
 
     private void initNumber(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
-            cardDeck.add(new Card(suit, denomination));
+            cardDeck.add(Card.of(suit, denomination));
         }
     }
 

@@ -28,7 +28,7 @@ public class PlayerTest {
     void validateHit() {
         Player hoy = new Player("hoy");
 
-        Assertions.assertThatThrownBy(() -> hoy.hit(new Card(Suit.SPADE, Denomination.A)))
+        Assertions.assertThatThrownBy(() -> hoy.hit(Card.of(Suit.SPADE, Denomination.A)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("카드를 먼저 받으세요.");
     }
@@ -39,8 +39,8 @@ public class PlayerTest {
         //given
         String name = "hoy";
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.CLOVER, Denomination.SIX)));
+            List.of(Card.of(Suit.CLOVER, Denomination.FIVE),
+                Card.of(Suit.CLOVER, Denomination.SIX)));
         //when
         Player player = new Player(name);
         player.initCards(cards);
@@ -54,7 +54,7 @@ public class PlayerTest {
         //given
         String name = "hoy";
         Cards cards = new Cards(
-            List.of(new Card(Suit.CLOVER, Denomination.J), new Card(Suit.CLOVER, Denomination.A)));
+            List.of(Card.of(Suit.CLOVER, Denomination.J), Card.of(Suit.CLOVER, Denomination.A)));
         //when
         Player player = new Player(name);
         player.initCards(cards);

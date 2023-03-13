@@ -16,9 +16,9 @@ class ParticipantTest {
     @DisplayName("초기 카드는 2장이어야 한다.")
     void validateCardsSize() {
         Cards cards = new Cards(List.of(
-            new Card(Suit.CLOVER, Denomination.FIVE),
-            new Card(Suit.CLOVER, Denomination.SIX),
-            new Card(Suit.CLOVER, Denomination.A)));
+            Card.of(Suit.CLOVER, Denomination.FIVE),
+            Card.of(Suit.CLOVER, Denomination.SIX),
+            Card.of(Suit.CLOVER, Denomination.A)));
 
         Participant participant = new Participant("roy") {
             @Override

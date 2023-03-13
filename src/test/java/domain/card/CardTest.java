@@ -14,14 +14,14 @@ class CardTest {
         Suit suit = Suit.CLOVER;
         Denomination denomination = Denomination.A;
 
-        assertDoesNotThrow(() -> new Card(suit, denomination));
+        assertDoesNotThrow(() -> Card.of(suit, denomination));
     }
 
     @Test
     @DisplayName("카드의 숫자를 입력했을 때 해당 카드의 숫자와 일치하는지 판단한다.")
     void isTest() {
 
-        Card card = new Card(Suit.CLOVER, Denomination.EIGHT);
+        Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
 
         assertThat(card.is(Denomination.EIGHT)).isTrue();
     }
