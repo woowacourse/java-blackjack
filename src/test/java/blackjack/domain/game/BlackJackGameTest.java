@@ -27,11 +27,11 @@ public class BlackJackGameTest {
     @BeforeEach
     void init() {
         players = Players.create(List.of("gray", "luca", "bada"));
-        Map<Name, Betting> bettingInfo = new HashMap<>();
+        Map<Name, BettingMoney> bettingInfo = new HashMap<>();
 
         List<Name> names = players.getNames();
         for (Name name : names) {
-            bettingInfo.put(name, new Betting(10000));
+            bettingInfo.put(name, new BettingMoney(10000));
         }
         bettingTable = new BettingTable(bettingInfo);
     }

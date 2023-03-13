@@ -47,7 +47,7 @@ public enum Result {
         return BLACKJACK;
     }
 
-    public int calculateProfit(Betting betting) {
-        return operator.applyAsInt(betting.getMoney());
+    public int calculateProfit(BettingMoney bettingMoney) {
+        return operator.applyAsInt(bettingMoney.getValue());
     }
 }

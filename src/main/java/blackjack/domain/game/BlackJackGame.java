@@ -80,9 +80,9 @@ public class BlackJackGame {
 
         for (Player player : players) {
             Result result = Result.calculatePlayerResult(player, dealer);
-            Betting initialBetting = bettingTable.getBetting(player.getName());
+            BettingMoney initialBettingMoney = bettingTable.getBetting(player.getName());
 
-            int profit = result.calculateProfit(initialBetting);
+            int profit = result.calculateProfit(initialBettingMoney);
             playersProfit.put(player.getName(), profit);
         }
         return playersProfit;

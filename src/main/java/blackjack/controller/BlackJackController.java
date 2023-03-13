@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.game.Betting;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.BettingTable;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Name;
@@ -97,18 +97,18 @@ public class BlackJackController {
     }
 
     private BettingTable generateBettingTable(List<Name> playerNames) {
-        Map<Name, Betting> bettingInfo = new HashMap<>();
+        Map<Name, BettingMoney> bettingInfo = new HashMap<>();
         for (Name playerName : playerNames) {
-            Betting betting = generateBetting(playerName);
-            bettingInfo.put(playerName, betting);
+            BettingMoney bettingMoney = generateBetting(playerName);
+            bettingInfo.put(playerName, bettingMoney);
         }
         return new BettingTable(bettingInfo);
     }
 
-    private Betting generateBetting(Name name) {
+    private BettingMoney generateBetting(Name name) {
         try {
             int betting = inputView.readBetting(name.getValue());
-            return new Betting(betting);
+            return new BettingMoney(betting);
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
             return generateBetting(name);
