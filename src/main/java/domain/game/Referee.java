@@ -18,15 +18,6 @@ public class Referee {
         return playerResults;
     }
 
-    /*
-    [ ] 딜러가 버스트인 경우, 플레이어가 무조건 승리한다
-  - [ ] 딜러가 버스트되지 않았고 플레이어가 버스트인 경우, 플레이어의 패배로 판단한다
-  - [ ] 딜러와 플레이어가 둘 다 버스트 되지 않았을 경우, 카드 총합이 더 높은 쪽이 승리한다
-  - [ ] 딜러와 플레이어가 둘 다 버스트 되지 않았을 경우, 둘의 카드 총합이 같으면 무승부로 판단한다
-  플레이어가 블랙잭이고, 딜러가 블랙잭이 아니라면 플레이어의 승리로 판단한다
-  딜러가 블랙잭이고 플레이어가 블랙잭이 아니라면 딜러의 승리로 판단한다
-  플레이어와 딜러 둘 다 블랙잭인경우, 무승부로 판단한다
-     */
     public static Result judgePlayerResult(final Score playerScore, final Score dealerScore) {
         if(dealerScore.isBust()){
             return Result.WIN;
