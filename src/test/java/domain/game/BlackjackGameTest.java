@@ -34,7 +34,7 @@ public class BlackjackGameTest {
         blackjackGame.hitAll();
 
         Dealer dealer = blackjackGame.getDealer();
-        assertThat(dealer.getState().cards().size()).isEqualTo(1);
+        assertThat(dealer.getState().handSize()).isEqualTo(1);
     }
 
     @DisplayName("모든 참여자가 hit하면 각 플레이어는 카드를 1장 가지고 있다.")
@@ -45,7 +45,7 @@ public class BlackjackGameTest {
         List<Player> players = blackjackGame.getPlayers();
 
         for (Player player : players) {
-            assertThat(player.getState().cards().size()).isEqualTo(1);
+            assertThat(player.getState().handSize()).isEqualTo(1);
         }
     }
 
@@ -56,7 +56,7 @@ public class BlackjackGameTest {
 
         Player maco = blackjackGame.findPlayer("maco");
 
-        assertThat(maco.cards().size()).isEqualTo(1);
+        assertThat(maco.getState().handSize()).isEqualTo(1);
     }
 
     @DisplayName("딜러는 16이하이면 hit할 수 있다")
