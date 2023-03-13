@@ -2,7 +2,7 @@ package controller;
 
 import domain.card.Card;
 import domain.game.BlackjackGame;
-import domain.game.Command;
+import view.Command;
 import domain.game.Deck;
 import domain.strategy.NumberGenerator;
 import domain.strategy.RandomNumberGenerator;

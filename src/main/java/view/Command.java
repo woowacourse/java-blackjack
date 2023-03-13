@@ -1,4 +1,4 @@
-package domain.game;
+package view;
 
 import java.util.Arrays;
 
