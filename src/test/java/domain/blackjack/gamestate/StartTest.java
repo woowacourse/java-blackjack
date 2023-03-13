@@ -48,4 +48,3 @@ class StartTest {
         assertThat(gameState).isInstanceOf(Blackjack.class);
     }
 }
-현

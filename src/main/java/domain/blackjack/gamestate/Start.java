@@ -9,8 +9,16 @@ public class Start extends GameState {
     }
 
     public static GameState from(Cards cards) {
+        validateSize(cards);
         return new Start(cards);
     }
+
+    private static void validateSize(Cards cards) {
+        if (cards.getCards().size() != 2) {
+            throw new IllegalStateException();
+        }
+    }
+
     @Override
     public GameState drawCard() {
         return null;
