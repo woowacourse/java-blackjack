@@ -23,10 +23,10 @@ public class ParticipantFixtures {
 
     public static final BettingMoney BETTING_MONEY_1000 = new BettingMoney(new BigDecimal("1000"));
 
-    public static final Dealer DEALER_17 = new Dealer("딜러", List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
-    public static final Dealer DEALER_BLACKJACK = new Dealer("딜러",
+    public static final Dealer DEALER_17 = new Dealer(List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
+    public static final Dealer DEALER_BLACKJACK = new Dealer(
             List.of(new Card(SPADE, QUEEN), new Card(CLUB, ACE)));
-    public static final Dealer DEALER_BUST = new Dealer("딜러",
+    public static final Dealer DEALER_BUST = new Dealer(
             List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN), new Card(CLUB, FIVE)));
     public static final Player PLAYER_BLACKJACK =
             new Player("playerBlackJack", List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),

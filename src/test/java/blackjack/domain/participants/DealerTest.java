@@ -21,7 +21,7 @@ class DealerTest {
     @DisplayName("딜러의 카드 합이 17 미만이면 히트 가능하다.")
     @Test
     void should_ReturnTrue_WhenSumOfCardsUnder17() {
-        final Dealer dealer = new Dealer("딜러", List.of(new Card(SPADE, QUEEN), new Card(CLUB, SIX)));
+        final Dealer dealer = new Dealer(List.of(new Card(SPADE, QUEEN), new Card(CLUB, SIX)));
 
         assertThat(dealer.isHitAble()).isTrue();
     }
@@ -29,7 +29,7 @@ class DealerTest {
     @DisplayName("딜러의 카드 합이 17 이상이면 더 이상 히트할 수 없다.")
     @Test
     void should_ReturnFalse_WhenSumOfCardsOver17() {
-        final Dealer dealer = new Dealer("딜러", List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
+        final Dealer dealer = new Dealer(List.of(new Card(SPADE, QUEEN), new Card(CLUB, SEVEN)));
 
         assertThat(dealer.isHitAble()).isFalse();
     }
@@ -38,7 +38,7 @@ class DealerTest {
     @Test
     void should_OpenOnlyFirstCard_When_DealerOpenHandStatus() {
         final Card firstCard = new Card(SPADE, QUEEN);
-        final Dealer dealer = new Dealer("딜러", List.of(firstCard, new Card(CLUB, SEVEN)));
+        final Dealer dealer = new Dealer(List.of(firstCard, new Card(CLUB, SEVEN)));
 
         final HandStatus status = dealer.toHandStatus();
         final List<Card> openedCards = status.getCards();

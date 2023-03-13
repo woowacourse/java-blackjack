@@ -14,8 +14,8 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public Dealer(final String name, final List<Card> cards) {
-        super(name, cards);
+    public Dealer(final List<Card> cards) {
+        super(NAME, cards);
     }
 
     @Override
@@ -25,7 +25,6 @@ public class Dealer extends Participant {
 
     @Override
     public HandStatus toHandStatus() {
-        // TODO cards()가 비어있을 경우 검증
         return new HandStatus(getName(), List.of(cards().get(INITIAL_DEALER_CARD_OPEN_INDEX)));
     }
 }
