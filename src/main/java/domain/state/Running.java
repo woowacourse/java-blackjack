@@ -11,7 +11,7 @@ public abstract class Running implements State {
 
     private final Hand hand;
 
-    public Running(Hand hand) {
+    Running(Hand hand) {
         this.hand = hand;
     }
 

@@ -12,7 +12,7 @@ public abstract class Finished implements State {
 
     private final Hand hand;
 
-    public Finished(Hand hand) {
+    Finished(Hand hand) {
         this.hand = hand;
     }
 

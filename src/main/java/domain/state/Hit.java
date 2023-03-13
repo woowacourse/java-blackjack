@@ -5,7 +5,7 @@ import domain.user.Hand;
 
 public class Hit extends Running {
 
-    public Hit(Card card) {
+    Hit(Card card) {
         this(new Hand(card));
     }
 

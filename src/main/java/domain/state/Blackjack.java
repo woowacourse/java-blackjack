@@ -4,7 +4,7 @@ import domain.user.Hand;
 
 public class Blackjack extends Finished {
 
-    public Blackjack(Hand hand) {
+    Blackjack(Hand hand) {
         super(hand);
     }
 
