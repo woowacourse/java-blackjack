@@ -3,9 +3,9 @@ package blackjack.domain.game;
 import java.util.Objects;
 
 public class Money {
-    static final String INVALID_BETTING_AMOUNT_RANGE_MESSAGE = "배팅 금액은 1,000 이상 100,000,000 이하여야 합니다. 입력값 :";
     private static final int MINIMUM_AMOUNT = 1_000;
     private static final int MAXIMUM_AMOUNT = 100_000_000;
+    static final String INVALID_BETTING_AMOUNT_RANGE_MESSAGE = "배팅 금액은 " + MINIMUM_AMOUNT + "이상 " + MAXIMUM_AMOUNT + "이하여야 합니다. 입력값 :";
 
     private final int amount;
 
