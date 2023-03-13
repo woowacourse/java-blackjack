@@ -27,8 +27,7 @@ class BlackJackGameTest {
     void setup() {
         ChallengerNameAndMoneyDto ditoo = new ChallengerNameAndMoneyDto(new ChallengerName("ditoo"), Money.from(1000));
         ChallengerNameAndMoneyDto bada = new ChallengerNameAndMoneyDto(new ChallengerName("bada"), Money.from(1000));
-        Players players = Players.from(List.of(ditoo, bada));
-        blackJackGame = BlackJackGame.from(players);
+        blackJackGame = BlackJackGame.from(List.of(ditoo, bada));
     }
 
     @Test

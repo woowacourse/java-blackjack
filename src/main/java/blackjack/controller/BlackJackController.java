@@ -7,7 +7,6 @@ import blackjack.domain.player.ChallengerName;
 import blackjack.domain.player.ChallengerNames;
 import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerNameAndMoneyDto;
 import blackjack.dto.ChallengerProfitDto;
@@ -35,8 +34,8 @@ public class BlackJackController {
 
     private void init() {
         ChallengerNames challengerNames = initChallengerNames();
-        Players players = initPlayers(challengerNames);
-        blackJackGame = BlackJackGame.from(players);
+        List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos = makeChallengerMoneyDtos(challengerNames);
+        blackJackGame = BlackJackGame.from(challengerNameAndMoneyDtos);
     }
 
     private ChallengerNames initChallengerNames() {
@@ -49,12 +48,12 @@ public class BlackJackController {
         }
     }
 
-    private Players initPlayers(ChallengerNames challengerNames) {
+    private List<ChallengerNameAndMoneyDto> makeChallengerMoneyDtos(ChallengerNames challengerNames) {
         List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos = new ArrayList<>();
         for (ChallengerName name : challengerNames.getChallengerNames()) {
             challengerNameAndMoneyDtos.add(makeChallengerMoneyDto(name));
         }
-        return Players.from(challengerNameAndMoneyDtos);
+        return challengerNameAndMoneyDtos;
     }
 
     private ChallengerNameAndMoneyDto makeChallengerMoneyDto(ChallengerName name) {

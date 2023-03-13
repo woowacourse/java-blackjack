@@ -6,6 +6,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.ChallengerNameAndMoneyDto;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public static BlackJackGame from(Players players) {
+    public static BlackJackGame from(List<ChallengerNameAndMoneyDto> challengerNameAndMoneyDtos) {
+        Players players = Players.from(challengerNameAndMoneyDtos);
         CardDeck cardDeck = CardDeck.create();
         cardDeck.shuffle();
         return new BlackJackGame(cardDeck, players);
