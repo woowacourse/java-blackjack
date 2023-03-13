@@ -1,11 +1,10 @@
 package blackjack.controller;
 
-import blackjack.model.CardUnit;
+import blackjack.model.BlackjackGame;
 import blackjack.model.participant.Players;
 import blackjack.model.WinningResult;
 import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
-import blackjack.model.state.DealerInitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -16,6 +15,7 @@ import java.util.Map;
 public class GameController {
 
     public static final String BLACKJACK_MESSAGE = " (블랙잭!!)";
+    public static final String DEALER_NAME = "딜러";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -26,77 +26,71 @@ public class GameController {
     }
 
     public void run() {
-        Players players = new Players(inputView.readNames());
-        Dealer dealer = new Dealer(new DealerInitialState());
+        BlackjackGame game = new BlackjackGame(initializingPlayers(), new Dealer());
         CardDeck cardDeck = new CardDeck();
 
-        distributeFirstCards(players, dealer, cardDeck);
-        printFirstCardDistribution(players, dealer);
+        distributeFirstCards(game, cardDeck);
 
-        playHitOrStand(players, dealer, cardDeck);
+        playHitOrStand(game, cardDeck);
 
-        printScoreResults(players, dealer);
-        printWinningResult(players, dealer);
+        printScoreResults(game);
+        printProfitResult(game);
     }
 
-    private void distributeFirstCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        players.distributeFirstCards(cardDeck);
-        dealer.draw(cardDeck);
-    }
-
-    private void printFirstCardDistribution(Players players, Dealer dealer) {
-        outputView.printDistributionMessage(players.getPlayerNames());
-
-        Map<String, List<Card>> dealerDistributedCards = new HashMap<>();
-        dealerDistributedCards.put(dealer.getName(), dealer.firstDistributedCard());
-        outputView.printHandCardUnits(new CardUnit(dealerDistributedCards).getHandCardUnits());
-
-        outputView.printHandCardUnits(new CardUnit(players.firstDistributedCards()).getHandCardUnits());
-    }
-
-    private void playHitOrStand(Players players, Dealer dealer, CardDeck cardDeck) {
-        for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
-            playerHitOrStand(players, cardDeck, playerId);
+    private Players initializingPlayers() {
+        List<String> playerNames = inputView.readNames();
+        Map<String, Integer> playerBetting = new HashMap<>();
+        for (String name : playerNames) {
+            playerBetting.put(name, inputView.readBetting(name));
         }
+        return new Players(playerBetting);
+    }
 
-        while (!dealer.isFinished()) {
-            dealer.draw(cardDeck);
+    private void distributeFirstCards(BlackjackGame game, CardDeck cardDeck) {
+        game.distributeCards(cardDeck);
+        outputView.printDistributionMessage(game.getPlayerNames());
+        outputView.printHandCardUnits(game.getDealerFirstDistributed());
+        outputView.printHandCardUnits(game.getPlayersFirstDistributed());
+    }
+
+    private void playHitOrStand(BlackjackGame game, CardDeck cardDeck) {
+        for (int id : game.getPlayerIds()) {
+            playerHitOrStand(game, cardDeck, id);
+        }
+        dealerHitOrStand(game, cardDeck);
+    }
+
+    private void dealerHitOrStand(BlackjackGame game, CardDeck cardDeck) {
+        while (!game.isDealerFinished()) {
+            game.drawDealerCard(cardDeck);
             outputView.printDealerHitMessage();
         }
     }
 
-    private void playerHitOrStand(Players players, CardDeck cardDeck, int playerId) {
-        while (!players.isPlayerFinished(playerId) && (inputView.readIsHit(players.getNameById(playerId)))) {
-            players.hit(cardDeck, playerId);
-            outputView.printHandCardUnits(new CardUnit(players.getHandCardsById(playerId)).getHandCardUnits());
-        }
-        players.changeToStand(playerId);
-    }
-
-    private void printScoreResults(Players players, Dealer dealer) {
-        printOneScoreResult(Integer.toString(dealer.cardScore().getScore()), dealer.isBlackjack(), dealer.handCards());
-
-        for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
-            String scoreResult = Integer.toString(players.getScoreById(playerId));
-            printOneScoreResult(scoreResult, players.isBlackjack(playerId), players.getHandCardsById(playerId));
+    private void playerHitOrStand(BlackjackGame game, CardDeck cardDeck, int playerId) {
+        while (!game.isPlayerFinished(playerId) && inputView.readIsHit(game.getPlayerName(playerId))) {
+            game.drawPlayerCard(cardDeck, playerId);
+            outputView.printHandCardUnits(game.getPlayerNameHandCard(playerId));
         }
     }
 
-    private void printOneScoreResult(String result, boolean isBlackjack, Map<String, List<Card>> handCards) {
-        if (isBlackjack) {
-            result += BLACKJACK_MESSAGE;
+    private void printScoreResults(BlackjackGame game) {
+        outputView.printScoreResult(game.getDealerNameHand(), game.getDealerScoreResult(BLACKJACK_MESSAGE));
+
+        for (int playerId : game.getPlayerIds()) {
+            outputView.printScoreResult(game.getPlayerNameHandCard(playerId), game.getPlayerScoreResult(playerId, BLACKJACK_MESSAGE));
         }
-        outputView.printScoreResult(new CardUnit(handCards).getHandCardUnits(), result);
     }
 
-    private void printWinningResult(Players players, Dealer dealer) {
-        Map<String, WinningResult> results = dealer.participantWinningResults(players);
+    private void printProfitResult(BlackjackGame game) {
+        Map<String, WinningResult> results = game.participantProfits();
+        outputView.printProfitResultMessage();
 
-        outputView.printWinningResultMessage();
-        outputView.printDealerWinningResult(results.remove(dealer.getName()).getResult());
+        WinningResult dealerResult = results.remove(DEALER_NAME);
+        outputView.printProfitResult(DEALER_NAME, dealerResult.getBetting());
         for (Map.Entry<String, WinningResult> playerResult : results.entrySet()) {
             WinningResult playerWinning = playerResult.getValue();
-            outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getResult());
+            outputView.printProfitResult(playerResult.getKey(), playerWinning.getBetting());
         }
     }
 }

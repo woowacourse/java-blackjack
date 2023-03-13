@@ -9,26 +9,17 @@
 ## 그래프
 ```mermaid
 graph TD
-    A[contrller] -.-> PS[Players]
-    A -.-> W[WinningResult]
-    A --> D[Dealer]
-    A -.-> CD[CardDeck]
-    
-    PS --> P[Player]
-    CD --> C[Card]
-    
-     Pa[Participant]--extends--- P
-     Pa[Participant]--extends--- D 
-    
-    D --> N[Name]
-    D --> H[HandCard]
-    P --> H
-    P --> N[Name]
-    D --> ST[State] 
-    P --> ST 
+    A[controller] -.-> G[BlackjackGame]
+    A -.-> CD[CardDeck] --> C[Card]
+    A -.-> WS
+    G --> PS[Players] --> P[Player] --> H[HandCard]
+    G --> D[Dealer] --> H
+    P -.-> CS[CardScore] 
 
-    C --> S[CardSuit]
-    C --> Num[CardNumber]
+    CS--> |create|WS
+    H--> |create|CS
+    WS[WinningfResult]
+
 ```
 
 ## 입력
@@ -37,6 +28,7 @@ graph TD
     - [x] 쉼표(,)를 기준으로 분리한다
 - [x] 참여자가 카드를 더 받을지 입력받는다
     - [x] "y" 나 "n"이 아니면 예외처리한다
+- [x] 플레이어들의 배팅 금액을 입력받는다.
 
 ## 출력
 
@@ -45,7 +37,7 @@ graph TD
 - [x] 참여자가 카드를 더 받은 후, 보유한 카드를 출력한다
 - [x] 딜러가 카드를 더 받았는지 여부를 출력한다
 - [x] 딜러와 플레이어들의 카드 점수 합산결과를 출력한다
-- [x] 게임을 완료한 후 각 플레이어별로 승패를 출력한다
+- [x] 게임을 완료한 후 각 플레이어별로 수익을 출력한다.
 
 ## Name
 
@@ -88,3 +80,9 @@ graph TD
 - [x] 카드의 숫자 계산은 카드 숫자를 기본으로 한다.
     - [x] Ace는 1또는 11로 계산한다.
     - [x] King, Queen, Jack은 각각 10으로 계산한다.
+
+### 배팅
+- [x] 카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.
+  - [x] 딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.
+- [x] 처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다.
+- [x] 딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.

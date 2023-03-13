@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class OutputView {
 
+    public static final String PRINT_DELIMITER = ": ";
     private static OutputView instance;
 
     private OutputView() {
@@ -27,7 +28,7 @@ public class OutputView {
         for (Map.Entry<String, List<String>> entry : playerHand.entrySet()) {
             String name = entry.getKey();
             String hand = String.join(",", entry.getValue());
-            System.out.println(name + ": " + hand);
+            System.out.println(name + PRINT_DELIMITER + hand);
         }
     }
 
@@ -40,21 +41,26 @@ public class OutputView {
         for (Map.Entry<String, List<String>> entry : hand.entrySet()) {
             String name = entry.getKey();
             String cards = String.join(",", entry.getValue());
-            System.out.println(name + ": " + cards + " - 결과: " + result);
+            System.out.println(name + PRINT_DELIMITER + cards + " - 결과: " + result);
         }
     }
 
-    public void printWinningResultMessage() {
+    public void printProfitResultMessage() {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
+    }
+
+
+    public void printProfitResult(String name, double profit) {
+        System.out.println(name + PRINT_DELIMITER + profit);
     }
 
     public void printDealerWinningResult(List<Integer> result) {
-        System.out.println("딜러: " + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
+        System.out.println("딜러" + PRINT_DELIMITER + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
     }
 
-    public void printPlayersWinningResult(String key, List<Integer> result) {
-        System.out.println(key + ": " + winningResult(result));
+    public void printPlayersWinningResult(String name, List<Integer> result) {
+        System.out.println(name + ": " + winningResult(result));
     }
 
     private String winningResult(List<Integer> result) {
