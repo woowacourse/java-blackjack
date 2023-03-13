@@ -78,13 +78,13 @@ public class Dealer extends AbstractUser {
 
     private Integer calculatePlayerRevenue(Player player) {
         if (player.isBust()) {
-            return -player.getBettingAmount();
+            return -player.getBettingAmount().getBettingAmount();
         }
         if (player.isBlackjack()) {
             return calculateIfBlackjackPlayer(player);
         }
         if (this.isBust()) {
-            return player.getBettingAmount();
+            return player.getBettingAmount().getBettingAmount();
         }
         return calculateMatchDealerAndPlayer(player);
     }
@@ -93,18 +93,18 @@ public class Dealer extends AbstractUser {
         if (this.isBlackjack()) {
             return 0;
         }
-        return (int) ((double) player.getBettingAmount() * 1.5);
+        return (int) ((double) player.getBettingAmount().getBettingAmount() * 1.5);
     }
 
     private Integer calculateMatchDealerAndPlayer(Player player) {
         Result result = calculatePlayerResult(player);
         if (result == Result.WIN) {
-            return player.getBettingAmount();
+            return player.getBettingAmount().getBettingAmount();
         }
         if (result == Result.DRAW) {
             return 0;
         }
-        return -player.getBettingAmount();
+        return -player.getBettingAmount().getBettingAmount();
     }
 
     public PlayerRevenues getPlayerRevenues() {

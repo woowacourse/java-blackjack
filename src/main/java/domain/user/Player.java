@@ -31,7 +31,7 @@ public class Player extends AbstractUser {
         return super.calculateScore() < BLACKJACK_SCORE;
     }
 
-    public int getBettingAmount() {
-        return bettingAmount.getBettingAmount();
+    public BettingAmount getBettingAmount() {
+        return bettingAmount;
     }
 }
