@@ -17,7 +17,7 @@ public final class GameResult {
         gameResult = initPlayerResults(dealer, players);
     }
 
-    public Map<Player, Outcome> initPlayerResults(final Dealer dealer, final Players players) {
+    private Map<Player, Outcome> initPlayerResults(final Dealer dealer, final Players players) {
         Map<Player, Outcome> playerResults = new LinkedHashMap<>();
         players.getPlayers()
                 .forEach(player -> {

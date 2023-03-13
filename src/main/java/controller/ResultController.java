@@ -11,14 +11,16 @@ import java.util.Map;
 public class ResultController {
 
     private final OutputView outputView;
+    private GameResult gameResult;
 
     public ResultController(final OutputView outputView) {
         this.outputView = outputView;
     }
 
     public void run(final Dealer dealer, final Players players) {
+        gameResult = new GameResult(dealer, players);
         printCardAndScore(dealer, players);
-        printGameResult(dealer, players);
+        printGameResult(players);
     }
 
     private void printCardAndScore(final Dealer dealer, final Players players) {
@@ -39,8 +41,7 @@ public class ResultController {
         outputView.printPlayerCardAndScore(player);
     }
 
-    private void printGameResult(final Dealer dealer, final Players players) {
-        GameResult gameResult = new GameResult(dealer, players);
+    private void printGameResult(final Players players) {
         Map<String, Integer> playerBetMoneyResults = gameResult.makePlayerBetMoneyResults(players);
         int dealerProfit = gameResult.calculateDealerBetMoneyResult(playerBetMoneyResults);
 
