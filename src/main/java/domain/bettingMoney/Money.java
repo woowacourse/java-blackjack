@@ -1,9 +1,9 @@
 package domain.bettingMoney;
 
-public class BettingMoney {
+public class Money {
     private final int value;
 
-    public BettingMoney(final int value) {
+    public Money(final int value) {
         this.value = value;
     }
 
@@ -11,9 +11,14 @@ public class BettingMoney {
         return value;
     }
 
+    public Money multiply(double multipleValue){
+        Double resultValue = value * multipleValue;
+        return new Money(resultValue.intValue());
+    }
+
     @Override
     public boolean equals(Object obj) {
-        BettingMoney other = (BettingMoney) obj;
+        Money other = (Money) obj;
         return value == other.value;
     }
 }

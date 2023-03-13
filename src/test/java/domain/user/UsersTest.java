@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.bettingMoney.BettingMoney;
+import domain.bettingMoney.Money;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Score;
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class UsersTest {
-    private final BettingMoney bettingMoney = new BettingMoney(1000);
+    private final Money money = new Money(1000);
 
     static Stream<List<String>> parameterProvider() {
         return Stream.of(

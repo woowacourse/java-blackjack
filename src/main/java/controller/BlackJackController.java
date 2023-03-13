@@ -59,7 +59,7 @@ public class BlackJackController {
         String playerName = player.getName();
         while (isHittablePlayer(player)) {
             blackJack.giveCard(playerName);
-            Hand playerHand = player.getCards();
+            Hand playerHand = player.getHand();
             OutputView.printEachPlayerCards(playerName, new CardNames(playerHand.getCardNames()));
         }
     }

@@ -56,14 +56,14 @@ public class Blackjack {
         List<Player> players = users.getPlayers();
         Map<String, CardNames> playerToCard = new LinkedHashMap<>();
         for (Player player : players) {
-            Hand playerHand = player.getCards();
+            Hand playerHand = player.getHand();
             playerToCard.put(player.getName(), new CardNames(playerHand.getCardNames()));
         }
         return playerToCard;
     }
 
     public CardNames getDealerCardNames() {
-        Hand dealerHand = users.getDealer().getCards();
+        Hand dealerHand = users.getDealer().getHand();
         return new CardNames(dealerHand.getCardNames());
     }
 

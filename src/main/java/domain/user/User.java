@@ -18,7 +18,7 @@ public abstract class User {
 
     public abstract boolean isPlayer();
 
-    public final Hand getCards() {
+    public final Hand getHand() {
         return hand;
     }
 
