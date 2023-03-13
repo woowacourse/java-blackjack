@@ -2,6 +2,7 @@ package domain.state;
 
 import domain.card.Card;
 import domain.game.Score;
+import domain.state.exceptions.ProfitException;
 import domain.user.Hand;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public abstract class Running implements State {
 
     @Override
     public double profit(int base) {
-        throw new IllegalStateException("수익을 계산할 수 없는 상태입니다.");
+        throw new ProfitException();
     }
 
     @Override
