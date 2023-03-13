@@ -28,7 +28,8 @@ class CardsTest {
     void 카드뭉치_안에는_같은_카드가_두개일_수_없다() {
         List<Card> cards = List.of(new Card(HEART, A), new Card(HEART, A));
         assertThatThrownBy(() -> new Cards(cards))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 카드는 들어갈 수 없어요.");
     }
 
     @Test
