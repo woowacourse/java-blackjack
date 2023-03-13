@@ -1,10 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.card.Cards;
-import blackjack.domain.gameresult.ResultReader;
-import blackjack.domain.gameresult.WinningResult;
 import blackjack.domain.betting.Revenue;
+import blackjack.domain.card.Cards;
+import blackjack.domain.gameresult.WinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -31,8 +30,7 @@ public class BlackjackController {
         Participants participants = generateParticipants();
         CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         Cards cards = Cards.generator(cardPickerGenerator);
-        ResultReader resultReader = new ResultReader();
-        BlackjackGame blackjackGame = new BlackjackGame(participants, cards, resultReader);
+        BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
 
         gameSetting(blackjackGame);
         playersHitCard(blackjackGame);

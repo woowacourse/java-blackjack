@@ -19,17 +19,16 @@ public class BlackjackGame {
 
     private final Participants participants;
     private final Cards cards;
-    private final ResultReader resultReader;
 
-    public BlackjackGame(Participants participants, Cards cards, ResultReader resultReader) {
+    public BlackjackGame(Participants participants, Cards cards) {
         this.participants = participants;
         this.cards = cards;
-        this.resultReader = resultReader;
     }
 
     public Map<Player, WinningResult> generateBlackjackResult() {
         Dealer dealer = participants.extractDealer();
         Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
+        ResultReader resultReader = new ResultReader();
 
         for (Player player : participants.extractPlayers()) {
             playersResult.put(player, resultReader.calulatePlayerResult(dealer, player));

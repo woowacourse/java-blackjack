@@ -2,13 +2,12 @@ package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.gameresult.ResultReader;
 import blackjack.domain.betting.Revenue;
+import blackjack.domain.card.Cards;
+import blackjack.domain.gameresult.WinningResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.gameresult.WinningResult;
 import blackjack.util.CardPickerGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +24,7 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"), List.of("1000", "1000"));
-        ResultReader resultReader = new ResultReader();
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator), resultReader);
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
 
         //when
         game.settingGame();
@@ -47,8 +45,7 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"), List.of("1000", "1000"));
-        ResultReader resultReader = new ResultReader();
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator), resultReader);
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
         game.settingGame();
 
         //when
@@ -77,8 +74,7 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("pobi", "ako");
         List<String> bettingMoneys = List.of("1000", "1000");
         Participants participants = Participants.generate(playerNames, bettingMoneys);
-        ResultReader resultReader = new ResultReader();
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator), resultReader);
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
         game.settingGame();
 
         //when
