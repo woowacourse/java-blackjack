@@ -1,4 +1,4 @@
-package domain.player.participant.betresult;
+package domain.player.participant.betresult.resultstate;
 
 import domain.player.participant.Money;
 
