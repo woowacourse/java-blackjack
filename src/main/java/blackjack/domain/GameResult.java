@@ -12,16 +12,16 @@ public class GameResult {
     public GameResult(Dealer dealer, Players players) {
         this.dealerResult = 0;
         this.playersResult = new LinkedHashMap<>();
-        calculateVictoryOrDefeat(dealer, players);
+        calculateProfit(dealer, players);
     }
 
-    private void calculateVictoryOrDefeat(Dealer dealer, Players players) {
+    private void calculateProfit(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            calculateVictoryOrDefeatWithDealerAndPlayer(dealer, player);
+            calculateProfitWithDealerAndPlayer(dealer, player);
         }
     }
 
-    private void calculateVictoryOrDefeatWithDealerAndPlayer(Dealer dealer, Player player) {
+    private void calculateProfitWithDealerAndPlayer(Dealer dealer, Player player) {
         if (player.getScore() == BLACKJACK) {
             playerScoreIsBlackJack(dealer, player);
             return;
@@ -66,26 +66,26 @@ public class GameResult {
     }
 
     private void playerWin(Player player) {
-        Integer playerBettingAmount = ResultType.WIN.calculateBettingAmount(player.getBettingAmountToInt());
+        Integer playerBettingAmount = ResultType.WIN.calculateProfit(player.getBettingAmountToInt());
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
 
     private void playerLose(Player player) {
-        Integer playerBettingAmount = ResultType.LOSE.calculateBettingAmount(player.getBettingAmountToInt());
+        Integer playerBettingAmount = ResultType.LOSE.calculateProfit(player.getBettingAmountToInt());
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
 
     private void playerBlackJack(Player player) {
-        Integer playerBettingAmount = ResultType.BLACKJACK.calculateBettingAmount(player.getBettingAmountToInt());
+        Integer playerBettingAmount = ResultType.BLACKJACK.calculateProfit(player.getBettingAmountToInt());
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
 
 
     private void draw(Player player) {
-        Integer playerBettingAmount = ResultType.DRAW.calculateBettingAmount(player.getBettingAmountToInt());
+        Integer playerBettingAmount = ResultType.DRAW.calculateProfit(player.getBettingAmountToInt());
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }

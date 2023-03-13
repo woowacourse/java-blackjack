@@ -57,19 +57,19 @@ public class OutputView {
         }
     }
 
-    public void printFinalVictoryOrDefeat(int dealerResult, Map<String, Integer> playerResult) {
+    public void printFinalProfit(int dealerResult, Map<String, Integer> playerResult) {
         System.out.println();
         System.out.println("## 최종 수익");
 
-        printFinalVictoryOrDefeatDealer(dealerResult);
-        printFinalVictoryOrDefeatPlayers(playerResult);
+        printFinalProfitDealer(dealerResult);
+        printFinalProfitPlayers(playerResult);
     }
 
-    private void printFinalVictoryOrDefeatDealer(int dealerResult) {
+    private void printFinalProfitDealer(int dealerResult) {
         System.out.println("딜러: " + dealerResult);
     }
 
-    private void printFinalVictoryOrDefeatPlayers(Map<String, Integer> playerResult) {
+    private void printFinalProfitPlayers(Map<String, Integer> playerResult) {
         for (String playerName : playerResult.keySet()) {
             System.out.println(playerName
                     + ": "

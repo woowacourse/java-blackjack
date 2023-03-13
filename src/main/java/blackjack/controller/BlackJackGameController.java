@@ -98,7 +98,7 @@ public class BlackJackGameController {
 
     private void gameResult(Game game) {
         GameResult gameResult = new GameResult(game.getDealer(), game.getPlayers());
-        outputView.printFinalVictoryOrDefeat(gameResult.getDealerResult(), gameResult.getPlayersResult());
+        outputView.printFinalProfit(gameResult.getDealerResult(), gameResult.getPlayersResult());
     }
 
     private Map<String, List<String>> playersToPrintFormat(Players players) {
