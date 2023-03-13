@@ -11,19 +11,15 @@ import java.util.stream.Collectors;
 
 public class Deck {
     private final Queue<Card> deck;
-    private final List<Symbol> symbols;
-    private final List<CardNumber> cardNumbers;
 
-    private Deck(List<Symbol> symbols, List<CardNumber> cardNumbers, Queue<Card> cards) {
-        this.symbols = symbols;
-        this.cardNumbers = cardNumbers;
+    private Deck(Queue<Card> cards) {
         this.deck = cards;
     }
 
     public static Deck of(List<Symbol> symbols, List<CardNumber> cardNumbers) {
         List<Card> cards = new LinkedList<>();
         generateCards(symbols, cardNumbers, cards);
-        Deck deck = new Deck(symbols, cardNumbers, new LinkedList<>(cards));
+        Deck deck = new Deck(new LinkedList<>(cards));
         return deck;
     }
 
