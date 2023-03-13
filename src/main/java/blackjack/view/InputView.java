@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String BETTING_MONEY_INPUT_MESSAGE = "의 배팅 금액은?";
     private static final String CARD_INPUT_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String YES_INPUT_MESSAGE = "y";
     private static final String NO_INPUT_MESSAGE = "n";
@@ -56,5 +57,17 @@ public class InputView {
 
     public void printMessage(String message) {
         System.out.println(message);
+    }
+
+    //TODO: 검증 다시 생각해보기
+    public double readBettingMoney(String name) {
+        printMessage(name + BETTING_MONEY_INPUT_MESSAGE);
+        try {
+            String input = input();
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            printMessage("숫자 타입만 입력 가능합니다.");
+            return readBettingMoney(name);
+        }
     }
 }

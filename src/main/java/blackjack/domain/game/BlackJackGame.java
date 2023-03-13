@@ -15,21 +15,26 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private final Participants participants;
-    private final Deck deck;
+    private Participants participants;
+    private PlayerMoney playerMoney;
+    private Deck deck;
 
-    private BlackJackGame(Participants participants, Deck deck) {
-        this.participants = participants;
-        this.deck = deck;
+    public  BlackJackGame() {
     }
 
-    public static BlackJackGame createByPlayerNames(List<String> names) {
-        Participants participants = Participants.create(names);
-        Deck deck = Deck.create(Card.getAllCards());
-        return new BlackJackGame(participants, deck);
+    public void registerPlayers(List<String> names) {
+        participants = Participants.create(names);
+        playerMoney = new PlayerMoney();
+    }
+
+    public void betMoney(String playerName, double inputMoney) {
+        Player player = participants.findPlayerByName(playerName);
+        Money money = new Money(inputMoney);
+        playerMoney.addPlayerMoney(player, money);
     }
 
     public void setUp() {
+        deck = Deck.create(Card.getAllCards());
         deck.shuffle();
 
         participants.drawInitialCard(deck);
@@ -98,10 +103,18 @@ public class BlackJackGame {
     }
 
     public DealerPlayerResultResponse findDealerPlayerResult() {
-        Map<String, Result> allPlayerResult = calculatePlayerResult();
-        Map<Result, Integer> dealerResult = calculateDealerResult(allPlayerResult);
+        Map<String, Double> allPlayerResult = calculatePlayerResult();
+        double dealerResult = calculateDealerResult(allPlayerResult);
 
         return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
+    }
+
+    private double calculateDealerResult(Map<String, Double> allPlayerResult) {
+        double result = 0;
+        for (String name : allPlayerResult.keySet()) {
+            result -= allPlayerResult.get(name);
+        }
+        return result;
     }
 
     private PlayerNameHandResponse convertNameHand(Player player) {
@@ -125,24 +138,15 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private Map<String, Result> calculatePlayerResult() {
-        Map<String, Result> allPlayerResult = new LinkedHashMap<>();
+    private Map<String, Double> calculatePlayerResult() {
+        Map<String, Double> allPlayerResult = new LinkedHashMap<>();
         Dealer dealer = participants.findDealer();
-        for (String playerName : participants.findAllPlayerNames()) {
-            Player player = participants.findPlayerByName(playerName);
-            Result result = Result.calculatePlayerResult(player.calculateScore(), dealer.calculateScore());
-            allPlayerResult.put(playerName, result);
+        Map<Player, Money> playerMoney = this.playerMoney.calculateYieldAllPlayer(dealer.getHand());
+        for (Player player : playerMoney.keySet()) {
+            String playerName = player.getName();
+            Double money = playerMoney.get(player).getValue();
+            allPlayerResult.put(playerName, money);
         }
         return allPlayerResult;
-    }
-
-    private Map<Result, Integer> calculateDealerResult(Map<String, Result> allPlayerResult) {
-        Map<Result, Integer> dealerResults = new LinkedHashMap<>();
-        for (String playerName : allPlayerResult.keySet()) {
-            Result dealerResult = Result.oppositeResult(allPlayerResult.get(playerName));
-            int count = dealerResults.getOrDefault(dealerResult, 0);
-            dealerResults.put(dealerResult, count + 1);
-        }
-        return dealerResults;
     }
 }

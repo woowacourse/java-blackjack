@@ -12,15 +12,18 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private BlackJackGame blackJackGame;
+    private final BlackJackGame blackJackGame;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView, BlackJackGame blackJackGame) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackJackGame = blackJackGame;
     }
 
     public void run() {
-        createBlackJackGame();
+        registerPlayers();
+
+        betMoneyAllPlayer();
 
         passInitialCard();
 
@@ -29,13 +32,30 @@ public class BlackJackController {
         finishGame();
     }
 
-    private void createBlackJackGame() {
+    private void betMoneyAllPlayer() {
+        List<String> allPlayerNames = blackJackGame.findAllPlayerNames();
+        for (String playerName : allPlayerNames) {
+            betMoney(playerName);
+        }
+    }
+
+    private void betMoney(String playerName) {
         try {
-            List<String> names = inputView.readNames();
-            blackJackGame = BlackJackGame.createByPlayerNames(names);
+            double inputMoney = inputView.readBettingMoney(playerName);
+            blackJackGame.betMoney(playerName, inputMoney);
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
-            createBlackJackGame();
+            betMoney(playerName);
+        }
+    }
+
+    private void registerPlayers() {
+        try {
+            List<String> names = inputView.readNames();
+            blackJackGame.registerPlayers(names);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            registerPlayers();
         }
     }
 

@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.game.Result;
 import blackjack.dto.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class OutputView {
     private static final String DEALER_POSSIBLE_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_IMPOSSIBLE_MESSAGE = "딜러는 17이상이라 카드를 받지 못합니다.";
     private static final String RESULT_MESSAGE = " - 결과: ";
-    private static final String FINAL_RESULT = "## 최종 승패";
+    private static final String FINAL_RESULT = "## 최종 수익";
 
     public void showError(String message) {
         printMessage(ERROR_HEADER + message);
@@ -84,20 +83,20 @@ public class OutputView {
         showAllPlayerResult(dealerPlayerResult.getPlayerResult());
     }
 
-    private void showDealerResult(Map<Result, Integer> results) {
+    private void showDealerResult(Double dealerResult) {
         printMessage(LINE_SEPARATOR);
         printMessage(FINAL_RESULT);
-        printMessage(DEALER_NAME + DELIMITER + ResultMapper.getDealerResult(results));
+        printMessage(DEALER_NAME + DELIMITER + dealerResult);
     }
 
-    private void showAllPlayerResult(Map<String, Result> playerResult) {
+    private void showAllPlayerResult(Map<String, Double> playerResult) {
         for (String name : playerResult.keySet()) {
             showPlayerResult(name, playerResult.get(name));
         }
     }
 
-    private void showPlayerResult(String name, Result result) {
-        printMessage(name + DELIMITER + ResultMapper.map(result));
+    private void showPlayerResult(String name, Double result) {
+        printMessage(name + DELIMITER + result);
     }
 
     private String convertCard(List<CardDTO> inputHand) {

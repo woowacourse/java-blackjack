@@ -6,10 +6,10 @@ import java.util.Arrays;
 
 public enum SuitMapper {
 
-    SPADE(Suit.SPADE, "스페이드"),
-    DIAMOND(Suit.DIAMOND, "다이아몬드"),
-    HEART(Suit.HEART, "하트"),
-    CLOVER(Suit.CLOVER, "클로버");
+    SPADE(Suit.SPADE, "♠️"),
+    DIAMOND(Suit.DIAMOND, "♦️"),
+    HEART(Suit.HEART, "♥️"),
+    CLOVER(Suit.CLOVER, "♣️");
 
     private final Suit suit;
     private final String value;
