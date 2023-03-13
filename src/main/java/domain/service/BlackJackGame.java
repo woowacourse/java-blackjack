@@ -1,6 +1,7 @@
 package domain.service;
 
 import domain.model.Dealer;
+import domain.model.Participant;
 import domain.model.Player;
 import domain.model.Players;
 import domain.vo.Profit;
@@ -29,17 +30,9 @@ public class BlackJackGame {
         cardDistributor.giveInitCards(players);
     }
 
-    public boolean giveCard(final Player player) {
-        if (player.canReceiveCard()) {
-            cardDistributor.giveCard(player);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean giveCard(final Dealer dealer) {
-        if (dealer.canReceiveCard()) {
-            cardDistributor.giveCard(dealer);
+    public boolean giveCard(final Participant participant) {
+        if (participant.canReceiveCard()) {
+            cardDistributor.giveCard(participant);
             return true;
         }
         return false;
