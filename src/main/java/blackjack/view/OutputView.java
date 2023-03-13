@@ -3,8 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.dto.HandResult;
 import blackjack.dto.HandStatus;
-import blackjack.view.outputWord.DenominationWord;
-import blackjack.view.outputWord.SuitWord;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,13 +29,9 @@ public class OutputView {
 
     private static String joinAllCardNames(final List<Card> cards) {
         final List<String> cardNames = cards.stream()
-                .map(OutputView::toCardName)
+                .map(Card::toWord)
                 .collect(Collectors.toList());
         return String.join(DELIMITER, cardNames);
-    }
-
-    private static String toCardName(final Card card) {
-        return DenominationWord.toWord(card.getDenomination()) + SuitWord.toWord(card.getSuit());
     }
 
     public static void showDealerHitResult(final String dealerName, final int hitCount) {
