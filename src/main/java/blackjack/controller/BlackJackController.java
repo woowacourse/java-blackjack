@@ -19,6 +19,7 @@ public class BlackJackController {
     public void run() {
         generateGame();
         startGame();
+        playGame();
         showResult();
     }
 
@@ -31,9 +32,6 @@ public class BlackJackController {
         blackJackGame.getPlayers().forEach(this::betMoney);
         blackJackGame.handInitialCards();
         openInitialCards();
-
-        blackJackGame.getPlayers().forEach(this::hitOrStay);
-        hitOrStayForDealer(blackJackGame.getDealer());
     }
 
     private void betMoney(Player player) {
@@ -50,6 +48,11 @@ public class BlackJackController {
         OutputView.showDealerFirstCard(dealerFirstCard);
 
         blackJackGame.getPlayers().forEach(OutputView::showPlayerCard);
+    }
+
+    private void playGame() {
+        blackJackGame.getPlayers().forEach(this::hitOrStay);
+        hitOrStayForDealer(blackJackGame.getDealer());
     }
 
     private void hitOrStay(Player player) {
