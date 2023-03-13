@@ -8,18 +8,17 @@ import java.util.function.BiFunction;
 public enum PlayerFinalState {
     BLACKJACK((player, dealer) -> {
         if (dealer.isBlackjack()) {
-            return 1.0;
+            return Constants.PLUS_100_PERCENT;
         }
-        return 1.5;
+        return Constants.PLUS_150_PERCENT;
     }),
-    BUST((player, dealer) -> -1.0),
+    BUST((player, dealer) -> Constants.MINUS_100_PERCENT),
     STAY((player, dealer) -> {
         if (dealer.isBust() || player.calculateScore().isHigherThan(dealer.calculateScore())) {
-            return 1.0;
+            return Constants.PLUS_100_PERCENT;
         }
-        return -1.0;
+        return Constants.MINUS_100_PERCENT;
     });
-
     private final BiFunction<Player, Dealer, Double> earningRate;
 
     PlayerFinalState(BiFunction<Player, Dealer, Double> earningRate) {
@@ -40,5 +39,11 @@ public enum PlayerFinalState {
             return BUST;
         }
         return STAY;
+    }
+
+    private static class Constants {
+        public static final double MINUS_100_PERCENT = -1.0;
+        public static final double PLUS_100_PERCENT = 1.0;
+        public static final double PLUS_150_PERCENT = 1.5;
     }
 }
