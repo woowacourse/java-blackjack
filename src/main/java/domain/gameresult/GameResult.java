@@ -9,7 +9,7 @@ import java.util.function.BiConsumer;
 public class GameResult {
     private final Map<Player, Bet> resultOfPlayers;
 
-    public GameResult(Map<Player, Bet> resultOfPlayers) {
+    private GameResult(Map<Player, Bet> resultOfPlayers) {
         this.resultOfPlayers = resultOfPlayers;
     }
 
