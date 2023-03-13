@@ -7,6 +7,7 @@ import java.util.List;
 public class Cards {
 
     public static final String INVALID_EMPTY_CARDS_MESSAGE = "카드가 없습니다.";
+    public static final int FIRST_CARD_INDEX = 0;
     private final List<Card> cards;
 
     public Cards() {
@@ -30,7 +31,7 @@ public class Cards {
 
     public Card getOneCard() {
         validateIsEmpty();
-        return cards.get(0);
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     private void validateIsEmpty() {
