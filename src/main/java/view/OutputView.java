@@ -2,16 +2,13 @@ package view;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.result.ResultStatus;
 import domain.user.GameMember;
 import domain.user.Playable;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
     
-    public static final String FINAL_STATUS_MESSAGE = "## 최종 승패";
     public static final String DEALER_GET_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     
     public static void printReadyMessage(GameMember gameMember) {
@@ -26,26 +23,6 @@ public class OutputView {
     
     public static void printDealerReceivedCard() {
         System.out.println(System.lineSeparator() + DEALER_GET_CARD_MESSAGE);
-    }
-    
-    
-    public static void printDealerGameResult(Map<ResultStatus, Integer> dealerResult) {
-        System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
-        int winCount = dealerResult.get(ResultStatus.WIN);
-        int loseCount = dealerResult.get(ResultStatus.LOSE);
-        int drawCount = dealerResult.get(ResultStatus.DRAW);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러: ");
-        if (winCount > 0) {
-            stringBuilder.append(winCount).append("승 ");
-        }
-        if (drawCount > 0) {
-            stringBuilder.append(drawCount).append("무 ");
-        }
-        if (loseCount > 0) {
-            stringBuilder.append(loseCount).append("패");
-        }
-        System.out.println(stringBuilder);
     }
     
     
@@ -68,24 +45,6 @@ public class OutputView {
                 + card.getCardShape().getName();
     }
     
-    public static void printPlayersGameResult(final Map<Playable, ResultStatus> resultMap) {
-        System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
-        resultMap.forEach(OutputView::printPlayerStatusResult);
-    }
-    
-    private static void printPlayerStatusResult(final Playable player, final ResultStatus result) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(player.getName());
-        stringBuilder.append(": ");
-        if (result == ResultStatus.WIN || result == ResultStatus.WIN_BLACKJACK) {
-            stringBuilder.append("승");
-        } else if (result == ResultStatus.LOSE) {
-            stringBuilder.append("패");
-        } else {
-            stringBuilder.append("무");
-        }
-        System.out.println(stringBuilder);
-    }
     
     public static void printParticipantsNameCardsAndScore(final GameMember gameMember) {
         System.out.println();

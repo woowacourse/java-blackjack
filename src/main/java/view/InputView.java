@@ -13,6 +13,27 @@ public class InputView {
     public static final String NOT_NUMBER_ERROR_MESSAGE = "잘못된 입력입니다. 숫자만 입력 가능합니다.";
     private static final Scanner scanner = new Scanner(System.in);
     
+    public static String readPlayerNames() {
+        System.out.println(PARTICIPANTS_NAME_REQUEST_PROMPT_MESSAGE);
+        String names = readLine();
+        System.out.println();
+        return names;
+    }
+    
+    private static String readLine() {
+        return scanner.nextLine();
+    }
+    
+    public static int readBet(String participantName) {
+        System.out.printf(BETTING_MONEY_REQUEST_MESSAGE, participantName);
+        System.out.println();
+        try {
+            return Integer.parseInt(readLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(NOT_NUMBER_ERROR_MESSAGE);
+        }
+    }
+    
     public static boolean readAnswerForMoreCard(String participantName) {
         System.out.printf(MORE_CARD_REQUEST_MESSAGE, participantName);
         System.out.println();
@@ -29,24 +50,4 @@ public class InputView {
         throw new IllegalArgumentException(ILLEGAL_ANSWER_MESSAGE);
     }
     
-    private static String readLine() {
-        return scanner.nextLine();
-    }
-    
-    public static String readPlayerNames() {
-        System.out.println(PARTICIPANTS_NAME_REQUEST_PROMPT_MESSAGE);
-        String names = readLine();
-        System.out.println();
-        return names;
-    }
-    
-    public static int readBet(String participantName) {
-        System.out.printf(BETTING_MONEY_REQUEST_MESSAGE, participantName);
-        System.out.println();
-        try {
-            return Integer.parseInt(readLine());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(NOT_NUMBER_ERROR_MESSAGE);
-        }
-    }
 }

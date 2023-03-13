@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.game.GameStatus;
 import domain.user.Playable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,36 +8,36 @@ import java.util.Map;
 
 public class StatusResult {
     
-    private final Map<Playable, ResultStatus> resultMap = new HashMap<>();
+    private final Map<Playable, GameStatus> resultMap = new HashMap<>();
     
-    public void accumulate(Playable player, ResultStatus resultStatus) {
-        this.resultMap.put(player, resultStatus);
+    public void accumulate(Playable player, GameStatus gameStatus) {
+        this.resultMap.put(player, gameStatus);
     }
     
-    public Map<ResultStatus, Integer> getDealerResult() {
-        HashMap<ResultStatus, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(ResultStatus.WIN, 0);
-        dealerResult.put(ResultStatus.DRAW, 0);
-        dealerResult.put(ResultStatus.LOSE, 0);
-        for (ResultStatus resultStatus : this.resultMap.values()) {
-            if (resultStatus == ResultStatus.WIN || resultStatus == ResultStatus.WIN_BLACKJACK) {
-                dealerResult.put(ResultStatus.LOSE, dealerResult.get(ResultStatus.LOSE) + 1);
+    public Map<GameStatus, Integer> getDealerResult() {
+        HashMap<GameStatus, Integer> dealerResult = new HashMap<>();
+        dealerResult.put(GameStatus.WIN, 0);
+        dealerResult.put(GameStatus.DRAW, 0);
+        dealerResult.put(GameStatus.LOSE, 0);
+        for (GameStatus gameStatus : this.resultMap.values()) {
+            if (gameStatus == GameStatus.WIN || gameStatus == GameStatus.WIN_BLACKJACK) {
+                dealerResult.put(GameStatus.LOSE, dealerResult.get(GameStatus.LOSE) + 1);
             }
-            if (resultStatus == ResultStatus.DRAW) {
-                dealerResult.put(ResultStatus.DRAW, dealerResult.get(ResultStatus.DRAW) + 1);
+            if (gameStatus == GameStatus.DRAW) {
+                dealerResult.put(GameStatus.DRAW, dealerResult.get(GameStatus.DRAW) + 1);
             }
-            if (resultStatus == ResultStatus.LOSE) {
-                dealerResult.put(ResultStatus.WIN, dealerResult.get(ResultStatus.WIN) + 1);
+            if (gameStatus == GameStatus.LOSE) {
+                dealerResult.put(GameStatus.WIN, dealerResult.get(GameStatus.WIN) + 1);
             }
         }
         return dealerResult;
     }
     
-    public ResultStatus getPlayerResult(Playable player) {
+    public GameStatus getPlayerResult(Playable player) {
         return this.resultMap.get(player);
     }
     
-    public Map<Playable, ResultStatus> getResultMap() {
+    public Map<Playable, GameStatus> getResultMap() {
         return Collections.unmodifiableMap(this.resultMap);
     }
 }

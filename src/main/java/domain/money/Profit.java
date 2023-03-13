@@ -1,6 +1,6 @@
 package domain.money;
 
-import domain.result.ResultStatus;
+import domain.game.GameStatus;
 import java.util.Objects;
 
 public class Profit {
@@ -12,8 +12,8 @@ public class Profit {
     }
     
     
-    public static Profit create(final Bet bet, final ResultStatus status) {
-        return new Profit((int) (bet.getBet() * status.getWeight()));
+    public static Profit create(final Bet bet, final GameStatus gameStatus) {
+        return new Profit((int) (bet.getBet() * gameStatus.getWeight()));
     }
     
     public Profit add(final Profit profit) {

@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.card.Deck;
-import domain.result.ResultStatus;
 import domain.result.StatusResult;
 import domain.user.Dealer;
 import domain.user.GameMember;
@@ -55,31 +54,31 @@ public class Game {
         return this.gameMember.getPlayers();
     }
     
-    private ResultStatus comparePlayerWithDealer(Player player, Dealer dealer) {
+    private GameStatus comparePlayerWithDealer(Player player, Dealer dealer) {
         if (player.isBust() && !dealer.isBust()) {
-            return ResultStatus.of(false, false, false);
+            return GameStatus.of(false, false, false);
         }
         if (!player.isBust() && dealer.isBust()) {
-            return ResultStatus.of(true, false, player.isBlackJack());
+            return GameStatus.of(true, false, player.isBlackJack());
         }
         if (player.isBust() && dealer.isBust()) {
-            return ResultStatus.of(false, true, false);
+            return GameStatus.of(false, true, false);
         }
         if (player.getScore() > dealer.getScore()) {
-            return ResultStatus.of(true, false, player.isBlackJack());
+            return GameStatus.of(true, false, player.isBlackJack());
         }
         if (player.getScore() < dealer.getScore()) {
-            return ResultStatus.of(false, false, false);
+            return GameStatus.of(false, false, false);
         }
         // Same score but player is blackjack
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return ResultStatus.of(true, false, true);
+            return GameStatus.of(true, false, true);
         }
         // Same score but dealer is blackjack
         if (!player.isBlackJack() && dealer.isBlackJack()) {
-            return ResultStatus.of(false, false, false);
+            return GameStatus.of(false, false, false);
         }
-        return ResultStatus.of(false, true, false);
+        return GameStatus.of(false, true, false);
     }
     
     

@@ -1,6 +1,7 @@
 package domain.result;
 
 import domain.game.GameBet;
+import domain.game.GameStatus;
 import domain.money.Bet;
 import domain.user.Player;
 import org.assertj.core.api.Assertions;
@@ -19,10 +20,10 @@ class ProfitResultTest {
         Player split = new Player("split");
         Player pobi = new Player("pobi");
         Player crong = new Player("crong");
-        statusResult.accumulate(echo, ResultStatus.WIN);
-        statusResult.accumulate(split, ResultStatus.DRAW);
-        statusResult.accumulate(pobi, ResultStatus.WIN_BLACKJACK);
-        statusResult.accumulate(crong, ResultStatus.LOSE);
+        statusResult.accumulate(echo, GameStatus.WIN);
+        statusResult.accumulate(split, GameStatus.DRAW);
+        statusResult.accumulate(pobi, GameStatus.WIN_BLACKJACK);
+        statusResult.accumulate(crong, GameStatus.LOSE);
         gameBet.accumulate(echo, new Bet(1000));
         gameBet.accumulate(split, new Bet(1000));
         gameBet.accumulate(pobi, new Bet(1000));

@@ -1,6 +1,6 @@
-package domain.result;
+package domain.game;
 
-public enum ResultStatus {
+public enum GameStatus {
     WIN(1),
     WIN_BLACKJACK(1.5),
     DRAW(0),
@@ -8,11 +8,11 @@ public enum ResultStatus {
     
     private final double weight;
     
-    ResultStatus(double weight) {
+    GameStatus(double weight) {
         this.weight = weight;
     }
     
-    public static ResultStatus of(boolean isWin, boolean isDraw, boolean isBlackJack) {
+    public static GameStatus of(boolean isWin, boolean isDraw, boolean isBlackJack) {
         if (isWin && isBlackJack) {
             return WIN_BLACKJACK;
         }

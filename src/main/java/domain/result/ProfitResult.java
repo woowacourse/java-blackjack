@@ -1,6 +1,7 @@
 package domain.result;
 
 import domain.game.GameBet;
+import domain.game.GameStatus;
 import domain.money.Bet;
 import domain.money.Profit;
 import domain.user.Playable;
@@ -22,8 +23,8 @@ public class ProfitResult {
         return profitResult;
     }
     
-    private void accumulate(Playable player, Bet bet, ResultStatus status) {
-        this.profitMap.put(player, Profit.create(bet, status));
+    private void accumulate(Playable player, Bet bet, GameStatus gameStatus) {
+        this.profitMap.put(player, Profit.create(bet, gameStatus));
     }
     
     public Profit getDealerProfit() {
