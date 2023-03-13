@@ -7,6 +7,8 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final String PLAYER_NOT_EXIST_EXCEPTION_MESSAGE = "해당 이름의 플레이어는 존재하지 않습니다.";
+
     private final Dealer dealer;
     private final List<Player> players;
     private final Deck deck;
@@ -64,7 +66,7 @@ public class BlackjackGame {
          return players.stream()
                 .filter(player -> player.name().equals(name))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 플레이어는 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST_EXCEPTION_MESSAGE));
     }
 
     public Dealer getDealer() {
