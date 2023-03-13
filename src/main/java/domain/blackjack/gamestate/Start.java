@@ -1,5 +1,6 @@
 package domain.blackjack.gamestate;
 
+import domain.blackjack.BlackjackScore;
 import domain.card.Cards;
 
 public class Start extends GameState {
@@ -10,6 +11,10 @@ public class Start extends GameState {
 
     public static GameState from(Cards cards) {
         validateSize(cards);
+        if (BlackjackScore.from(cards).isEqualTo(BlackjackScore.getMaxScore())) {
+            return new Blackjack(cards);
+        }
+
         return new Start(cards);
     }
 

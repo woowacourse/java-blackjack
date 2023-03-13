@@ -39,12 +39,13 @@ class StartTest {
 
     @DisplayName("게임 시작시 숫자의 합이 21이면 블랙잭 상태가 된다.")
     @Test
-    void name() {
+    void createBlackjackFromStartSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_ACE);
         GameState gameState = Start.from(cards);
 
         Cards stateCards = gameState.getCards();
-        assertThat(BlackjackScore.from(stateCards)).isEqualTo(BlackjackScore.from(21));
+        assertThat(BlackjackScore.from(stateCards)).isEqualTo(BlackjackScore.getMaxScore());
         assertThat(gameState).isInstanceOf(Blackjack.class);
+        assertThat(gameState).isNotInstanceOf(Start.class);
     }
 }
