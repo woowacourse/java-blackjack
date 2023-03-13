@@ -14,7 +14,9 @@ import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -38,9 +40,12 @@ public class BlackjackController {
 
 
     private Participants makeParticipants() {
-//        final Dealer dealer = new Dealer();
-//        return new Participants(dealer, inputView.inputPlayers());
-        return null;
+        Map<String,Integer> players = new LinkedHashMap<>();
+        for(String name: inputView.inputPlayers()){
+            players.put(name, inputView.inputBetting(name));
+        }
+        final Dealer dealer = new Dealer();
+        return new Participants(dealer,players);
     }
 
     private Deck makeDeck() {
@@ -86,6 +91,6 @@ public class BlackjackController {
         resultGame.calculateResult();
         participants.getDealer().openAllCard();
         outputView.outputCardsAndScore(new ParticipantsDto(participants));
-        outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
+        outputView.outputRevenue(new ParticipantsDto(participants));
     }
 }

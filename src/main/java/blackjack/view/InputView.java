@@ -13,6 +13,7 @@ public class InputView {
     private static final String TARGET_SPACE = " ";
     private static final String REPLACEMENT = "";
     private static final String INPUT_PLAYER_DELIMITER = ",";
+    private static final String BETTING_MASSAGE = "의 배팅 금액은?";
 
     private final Scanner scanner;
 
@@ -24,7 +25,11 @@ public class InputView {
         System.out.println(INPUT_PLAYERS_MESSAGE);
         return List.of(scanner.nextLine().replace(TARGET_SPACE, REPLACEMENT).split(INPUT_PLAYER_DELIMITER));
     }
-
+    public int inputBetting(String name){
+        System.out.println();
+        System.out.println(name+ BETTING_MASSAGE);
+        return Integer.parseInt(scanner.nextLine());
+    }
     public boolean inputOrderCard(final String name) {
         System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
         String input = scanner.nextLine();

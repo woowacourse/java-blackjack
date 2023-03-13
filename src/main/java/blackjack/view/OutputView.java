@@ -23,6 +23,7 @@ public class OutputView {
     private static final String PLAYER_SCORE_DELIMITER = " : ";
     private static final String PLAYER_DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
+    private static final String REVENUE_RESULT_MASSAGE = "## 최종 수익";
 
     public void outputSplitMessage(final List<String> players) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -96,7 +97,17 @@ public class OutputView {
     private void outputPlayerResult(final String name, final String result) {
         System.out.println(name + PLAYER_SCORE_DELIMITER + result);
     }
-
+    public void outputRevenue(ParticipantsDto participantsDto){
+        System.out.println(REVENUE_RESULT_MASSAGE);
+        outputParticipantRevenue(DEALER_NAME,participantsDto.getDealerRevenue());
+        participantsDto.getPlayersRevenue()
+                .entrySet().forEach(entry->{
+                    outputParticipantRevenue(entry.getKey(),entry.getValue());
+                });
+    }
+    private void outputParticipantRevenue(String name, int revenue){
+        System.out.println(name + PLAYER_SCORE_DELIMITER + revenue);
+    }
     private void changeLine() {
         System.out.println();
     }

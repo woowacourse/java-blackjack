@@ -9,7 +9,8 @@ public class Participants {
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String PLAYERS_COUNT_LIMIT_MASSAGE = "참여자는 8명 이하여야 합니다.";
     private static final int PLAYERS_COUNT_LIMIT = 8;
-
+    private static final int DEALER_COEFFICIENT = -1;
+    private final int totalBetting;
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -17,6 +18,17 @@ public class Participants {
         validate(players.keySet());
         this.dealer = dealer;
         this.players = makePlayer(players);
+        this.totalBetting = makeTotalBetting(players);
+    }
+    public int getDealerRevenue(){
+        return DEALER_COEFFICIENT * players.stream()
+                .map(Player::getRevenue)
+                .reduce(0,Integer::sum);
+    }
+    private Integer makeTotalBetting(Map<String, Integer> players) {
+        return players.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .reduce(0, Integer::sum);
     }
 
     private void validate(Set<String> players) {
