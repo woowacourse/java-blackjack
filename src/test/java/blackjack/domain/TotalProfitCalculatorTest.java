@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import static blackjack.domain.ParticipantFixtures.BLACKJACK_WIN_PLAYER;
 import static blackjack.domain.ParticipantFixtures.DEALER_17;
-import static blackjack.domain.ParticipantFixtures.LOSE_PLAYER;
-import static blackjack.domain.ParticipantFixtures.PUSH_PLAYER;
-import static blackjack.domain.ParticipantFixtures.WIN_PLAYER;
+import static blackjack.domain.ParticipantFixtures.PLAYER_16;
+import static blackjack.domain.ParticipantFixtures.PLAYER_17;
+import static blackjack.domain.ParticipantFixtures.PLAYER_20;
+import static blackjack.domain.ParticipantFixtures.PLAYER_BLACKJACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
@@ -23,13 +23,13 @@ class TotalProfitCalculatorTest {
     void should_ReturnProfitByName_When_GivenDealerAndPlayers() {
         final TotalProfitCalculator totalProfitCalculator = new TotalProfitCalculator();
 
-        final Map<String, Integer> result = totalProfitCalculator.calculateProfitByParticipant(DEALER_17, List.of(
-                BLACKJACK_WIN_PLAYER, WIN_PLAYER, LOSE_PLAYER, PUSH_PLAYER
-        ));
+        final Map<String, Integer> result = totalProfitCalculator.calculateProfitByParticipant(List.of(
+                PLAYER_BLACKJACK, PLAYER_20, PLAYER_16, PLAYER_17
+        ), DEALER_17);
 
         assertThat(result).containsExactly(
-                entry(DEALER_17.getName(), -1500), entry(BLACKJACK_WIN_PLAYER.getName(), 1500),
-                entry(WIN_PLAYER.getName(), 1000), entry(LOSE_PLAYER.getName(), -1000), entry(PUSH_PLAYER.getName(), 0)
+                entry(DEALER_17.getName(), -1500), entry(PLAYER_BLACKJACK.getName(), 1500),
+                entry(PLAYER_20.getName(), 1000), entry(PLAYER_16.getName(), -1000), entry(PLAYER_17.getName(), 0)
         );
     }
 }

@@ -47,7 +47,6 @@ public class BlackJackController {
         return new BettingMoney(amount);
     }
 
-    // TODO playerNames 전달 불필요?
     private void startGame(final List<String> playerNames) {
         blackJackGame.handOut();
         OutputView.showOpenCards(DEALER_NAME, playerNames, blackJackGame.openHandStatuses());

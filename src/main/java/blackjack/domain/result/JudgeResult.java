@@ -1,6 +1,8 @@
 package blackjack.domain.result;
 
 import blackjack.domain.participants.BettingMoney;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 
 public enum JudgeResult {
 
@@ -15,26 +17,25 @@ public enum JudgeResult {
         this.profitRate = profitRate;
     }
 
-    // TODO score의 역할?
-    public static JudgeResult matchWithoutBlackJackConsider(final int selfScore, final int counterScore) {
+    public static JudgeResult of(final Player targetPlayer, final Dealer dealer) {
+        if (targetPlayer.isBust()) {
+            return JudgeResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return JudgeResult.WIN;
+        }
+        if (!dealer.isBlackJack() && targetPlayer.isBlackJack()) {
+            return JudgeResult.BLACKJACK_WIN;
+        }
+        return matchWithoutBlackJackConsider(targetPlayer.computeCardsScore(), dealer.computeCardsScore());
+    }
+
+    private static JudgeResult matchWithoutBlackJackConsider(final int selfScore, final int counterScore) {
         if (selfScore > counterScore) {
             return WIN;
         }
         if (selfScore < counterScore) {
             return LOSE;
-        }
-        return PUSH;
-    }
-
-    public JudgeResult counter() {
-        if (this == BLACKJACK_WIN) {
-            return LOSE;
-        }
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
         }
         return PUSH;
     }

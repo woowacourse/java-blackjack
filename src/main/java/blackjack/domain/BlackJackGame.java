@@ -66,6 +66,6 @@ public class BlackJackGame {
 
     public Map<String, Integer> computeTotalProfitResult() {
         final TotalProfitCalculator totalProfitCalculator = new TotalProfitCalculator();
-        return totalProfitCalculator.calculateProfitByParticipant(participants.dealer(), participants.players());
+        return totalProfitCalculator.calculateProfitByParticipant(participants.players(), participants.dealer());
     }
 }

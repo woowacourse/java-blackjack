@@ -1,7 +1,6 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.JudgeResult;
 import blackjack.dto.HandStatus;
 import java.util.List;
 
@@ -18,26 +17,6 @@ public class Dealer extends Participant {
         super(name, cards);
     }
 
-    public int computeProfitOf(final Player player) {
-        final JudgeResult playerResult = judge(player);
-        return playerResult.profit(player.getBettingMoney());
-
-    }
-
-    private JudgeResult judge(final Player player) {
-        if (player.isBust()) {
-            return JudgeResult.LOSE;
-        }
-        if (isBust()) {
-            return JudgeResult.WIN;
-        }
-        if (!isBlackJack() && player.isBlackJack()) {
-            return JudgeResult.BLACKJACK_WIN;
-        }
-        return JudgeResult.matchWithoutBlackJackConsider(player.computeCardsScore(), computeCardsScore());
-    }
-
-
     @Override
     public boolean isHitAble() {
         return computeCardsScore() < CARD_TAKE_LIMIT;
@@ -45,6 +24,7 @@ public class Dealer extends Participant {
 
     @Override
     public HandStatus toHandStatus() {
+        // TODO cards()가 비어있을 경우 검증
         return new HandStatus(getName(), List.of(cards().get(INITIAL_DEALER_CARD_OPEN_INDEX)));
     }
 }
