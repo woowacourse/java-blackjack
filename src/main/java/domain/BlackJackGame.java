@@ -4,7 +4,7 @@ import domain.card.Deck;
 import domain.participant.BettingMoney;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackGame {
@@ -30,7 +30,7 @@ public class BlackJackGame {
     }
 
     public Map<Player, Integer> calculatePlayersResult() {
-        Map<Player, Integer> playersResult = new HashMap<>();
+        Map<Player, Integer> playersResult = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
             Result playerFinalResult = player.calculateFinalResult(participants.getDealer().getState());
             playersResult.put(player, playerFinalResult.calculateResult(player.getBettingMoney()));
