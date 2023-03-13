@@ -106,7 +106,7 @@ public final class BlackJackGame {
     }
 
     public int fetchParticipantScore(String name) {
-        if (name.equals(participants.getDealer().getName())) {
+        if (name.equals(fetchDealerName())) {
             return participants.getDealer().fetchHandValue();
         }
 
