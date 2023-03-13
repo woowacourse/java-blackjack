@@ -35,6 +35,35 @@ public class BlackJackController {
         showResult(blackJackGame);
     }
 
+    private Players generatePlayers() {
+        try {
+            List<String> names = inputView.readNames();
+            return Players.create(names);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            return generatePlayers();
+        }
+    }
+
+    private BettingTable generateBettingTable(List<Name> playerNames) {
+        Map<Name, BettingMoney> bettingInfo = new HashMap<>();
+        for (Name playerName : playerNames) {
+            BettingMoney bettingMoney = generateBetting(playerName);
+            bettingInfo.put(playerName, bettingMoney);
+        }
+        return new BettingTable(bettingInfo);
+    }
+
+    private BettingMoney generateBetting(Name name) {
+        try {
+            int betting = inputView.readBetting(name.getValue());
+            return new BettingMoney(betting);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            return generateBetting(name);
+        }
+    }
+
     private void setUp(BlackJackGame blackJackGame) {
         blackJackGame.setUp();
 
@@ -50,6 +79,7 @@ public class BlackJackController {
         passExtraCardToPlayers(blackJackGame);
         passExtraCardToDealer(blackJackGame);
     }
+
 
     private void showResult(BlackJackGame blackJackGame) {
         outputView.showTotalScore(blackJackGame.getDealer(), blackJackGame.getPlayers());
@@ -84,34 +114,5 @@ public class BlackJackController {
 
     private boolean hasIntention(String name) {
         return inputView.readIntention(name);
-    }
-
-    private Players generatePlayers() {
-        try {
-            List<String> names = inputView.readNames();
-            return Players.create(names);
-        } catch (IllegalArgumentException e) {
-            outputView.showError(e.getMessage());
-            return generatePlayers();
-        }
-    }
-
-    private BettingTable generateBettingTable(List<Name> playerNames) {
-        Map<Name, BettingMoney> bettingInfo = new HashMap<>();
-        for (Name playerName : playerNames) {
-            BettingMoney bettingMoney = generateBetting(playerName);
-            bettingInfo.put(playerName, bettingMoney);
-        }
-        return new BettingTable(bettingInfo);
-    }
-
-    private BettingMoney generateBetting(Name name) {
-        try {
-            int betting = inputView.readBetting(name.getValue());
-            return new BettingMoney(betting);
-        } catch (IllegalArgumentException e) {
-            outputView.showError(e.getMessage());
-            return generateBetting(name);
-        }
     }
 }
