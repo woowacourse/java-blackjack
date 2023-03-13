@@ -14,7 +14,7 @@ import domain.people.Player;
 
 public final class BlackJackGame {
 
-    private static final int INIT_HAND_COUNT = 2;
+    public static final int INIT_HAND_COUNT = 2;
     private static final String HIT_REQUEST = "y";
 
     private final Deck deck;
@@ -111,10 +111,6 @@ public final class BlackJackGame {
         }
 
         return participants.findPlayer(name).orElseThrow().fetchHandValue(INIT_HAND_COUNT);
-    }
-
-    public int getInitHandCount() {
-        return INIT_HAND_COUNT;
     }
 
     public boolean hasBlackJack(String playerName) {

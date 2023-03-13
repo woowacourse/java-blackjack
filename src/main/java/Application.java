@@ -50,7 +50,7 @@ public class Application {
         blackJackGame.dealCardsToParticipants();
 
         List<String> playerNames = blackJackGame.fetchPlayerNames();
-        OutputView.printDealFinishMessage(playerNames, blackJackGame.getInitHandCount());
+        OutputView.printDealFinishMessage(playerNames, BlackJackGame.INIT_HAND_COUNT);
 
         printInitialHands(blackJackGame);
         printBlackJackPlayer(blackJackGame);
