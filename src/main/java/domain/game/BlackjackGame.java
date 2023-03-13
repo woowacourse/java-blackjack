@@ -12,7 +12,7 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(Dealer dealer, List<Player> players, Deck deck) {
-        this. participants = new Participants(dealer, players);
+        this.participants = new Participants(dealer, players);
         this.deck = deck;
     }
 
@@ -38,7 +38,6 @@ public class BlackjackGame {
 
     public int dealerProfit() {
         return participants.dealerProfit();
-
     }
 
     public int profit(Player player) {
