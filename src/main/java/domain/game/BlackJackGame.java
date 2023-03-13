@@ -39,8 +39,16 @@ public class BlackJackGame {
         user.hit(deck.pickCard());
     }
 
-    public void stay(String playerName) {
-        users.stayByName(playerName);
+    public void hitOrStay(final boolean isHit, final Player player) {
+        if (isHit) {
+            giveCard(player.getName());
+            return;
+        }
+        player.stayIfRunning();
+    }
+
+    public void stay(Player player) {
+        player.stayIfRunning();
     }
 
     public void stayDealerIfRunning() {
@@ -89,8 +97,8 @@ public class BlackJackGame {
         return Collections.unmodifiableMap(playerToScore);
     }
 
-    public List<Player> getHittablePlayers() {
-        return users.getHittablePlayers();
+    public List<Player> getPlayers() {
+        return users.getPlayers();
     }
 
     public List<Card> getDealerCards() {

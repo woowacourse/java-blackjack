@@ -49,8 +49,7 @@ public class Controller {
     }
 
     private void play(BlackJackGame blackJackGame) {
-        List<Player> hittablePlayers = blackJackGame.getHittablePlayers();
-        for (Player player : hittablePlayers) {
+        for (Player player : blackJackGame.getPlayers()) {
             askPlayerHitCommand(player, blackJackGame);
         }
         giveCardToDealer(blackJackGame);
@@ -58,22 +57,10 @@ public class Controller {
 
     private void askPlayerHitCommand(final Player player, final BlackJackGame blackJackGame) {
         String playerName = player.getName();
-        boolean isHittable = true;
-        while (isHittable) {
-            boolean isHit = hitOrStay(playerName, blackJackGame);
-            isHittable = isHit && player.isHittable();
+        while (player.isHittable()) {
+            blackJackGame.hitOrStay(inputView.askHitCommand(playerName), player);
             outputView.printEachPlayerCards(playerName, player.getCards());
         }
-    }
-
-    private boolean hitOrStay(final String playerName, final BlackJackGame blackJackGame) {
-        boolean isHit = inputView.askHitCommand(playerName);
-        if (!isHit) {
-            blackJackGame.stay(playerName);
-            return false;
-        }
-        blackJackGame.giveCard(playerName);
-        return true;
     }
 
     private void giveCardToDealer(BlackJackGame blackJackGame) {
