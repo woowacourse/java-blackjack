@@ -23,7 +23,7 @@ public enum Result {
         int dealerScore = dealer.calculateCurrentScore();
 
         if (player.isBlackJack()) {
-            return checkBlackJack(dealer);
+            return checkDealerBlackJack(dealer);
         }
 
         if (player.isBust()) {
@@ -40,7 +40,7 @@ public enum Result {
         return DRAW;
     }
 
-    private static Result checkBlackJack(Dealer dealer) {
+    private static Result checkDealerBlackJack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return DRAW;
         }
