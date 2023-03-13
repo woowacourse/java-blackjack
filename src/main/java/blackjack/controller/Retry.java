@@ -1,6 +1,10 @@
 package blackjack.controller;
 
 public final class Retry {
+
+    public static final String EXCEPTION_MESSAGE = "재입력 횟수를 초과하여 게임을 종료합니다.";
+    private static final IllegalArgumentException EXCEPTION = new IllegalArgumentException("재입력 횟수를 초과하였습니다.");
+
     private final int count;
 
     public Retry(final int count) {
@@ -15,7 +19,7 @@ public final class Retry {
         return new Retry(count - 1);
     }
 
-    public String getFailMessage() {
-        return "재입력 횟수를 초과하였습니다.";
+    public IllegalArgumentException getException() {
+        return EXCEPTION;
     }
 }

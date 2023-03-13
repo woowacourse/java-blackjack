@@ -28,4 +28,11 @@ public class RetryTest {
 
         assertThat(retry.isRepeatable()).isFalse();
     }
+
+    @Test
+    void 예외를_반환한다() {
+        final Retry retry = new Retry(1);
+
+        assertThat(retry.getException()).isInstanceOf(IllegalArgumentException.class);
+    }
 }
