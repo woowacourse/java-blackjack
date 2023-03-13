@@ -42,4 +42,11 @@ class BlackjackTest {
         State dealerState = new Blackjack(hand);
         assertThat(blackjack.calculateResult(dealerState)).isEqualTo(Result.BLACKJACK);
     }
+
+    @DisplayName("딜러와 플레이어 둘 다 Blackjack일 때, 결과 값은 TIE로 계산된다.")
+    @Test
+    void calculateResultTestWhenBothBlackjack() {
+        State dealerState = new Blackjack(hand);
+        assertThat(blackjack.calculateResult(dealerState)).isEqualTo(Result.TIE);
+    }
 }
