@@ -1,10 +1,10 @@
 package blackjack.domain;
 
 import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.NINE;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.TEN;
-import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +20,7 @@ import blackjack.domain.participant.PlayerName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -49,10 +50,7 @@ class BlackJackGameTest {
 
     @Test
     void 해당_플레이어는_카드를_뽑는다() {
-        final Participants participants = new Participants(
-                new Dealer(),
-                List.of(new Player("toney"), new Player("dazzle"))
-        );
+        final Participants participants = new Participants(new Dealer(), List.of(new Player("toney")));
         final BettingTable bettingTable = new BettingTable(new HashMap<>());
         final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
@@ -63,10 +61,7 @@ class BlackJackGameTest {
 
     @Test
     void 딜러는_카드를_뽑는다() {
-        final Participants participants = new Participants(
-                new Dealer(),
-                List.of(new Player("toney"), new Player("dazzle"))
-        );
+        final Participants participants = new Participants(new Dealer(), List.of(new Player("toney")));
         final BettingTable bettingTable = new BettingTable(new HashMap<>());
         final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
@@ -81,18 +76,22 @@ class BlackJackGameTest {
         @Nested
         class 플레이어가_블랙잭이라면 {
 
-            @Test
-            void 딜러에게_이긴경우_베팅금액과_보너스를_받는다() {
-                final Player player = new Player("toney");
+            private final Player player = new Player("toney");
+            private BettingTable bettingTable;
+
+            @BeforeEach
+            void setUp() {
                 player.drawCard(new Card(ACE, SPADE));
                 player.drawCard(new Card(QUEEN, SPADE));
-                final Participants participants = new Participants(
-                        new Dealer(),
-                        List.of(player, new Player("dazzle"))
-                );
+
                 final Map<PlayerName, Betting> betting = new HashMap<>();
                 betting.put(new PlayerName("toney"), new Betting(10000));
-                final BettingTable bettingTable = new BettingTable(betting);
+                bettingTable = new BettingTable(betting);
+            }
+
+            @Test
+            void 딜러에게_이긴경우_베팅금액과_보너스를_받는다() {
+                final Participants participants = new Participants(new Dealer(), List.of(player));
                 final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
                 final int profit = blackJackGame.getPlayerProfit(new PlayerName("toney"));
@@ -102,19 +101,10 @@ class BlackJackGameTest {
 
             @Test
             void 딜러와_비긴경우_수익은_없다() {
-                final Player player = new Player("toney");
-                player.drawCard(new Card(ACE, SPADE));
-                player.drawCard(new Card(QUEEN, SPADE));
                 final Dealer dealer = new Dealer();
                 dealer.drawCard(new Card(ACE, HEART));
                 dealer.drawCard(new Card(QUEEN, HEART));
-                final Participants participants = new Participants(
-                        dealer,
-                        List.of(player, new Player("dazzle"))
-                );
-                final Map<PlayerName, Betting> betting = new HashMap<>();
-                betting.put(new PlayerName("toney"), new Betting(10000));
-                final BettingTable bettingTable = new BettingTable(betting);
+                final Participants participants = new Participants(dealer, List.of(player));
                 final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
                 final int profit = blackJackGame.getPlayerProfit(new PlayerName("toney"));
@@ -126,21 +116,25 @@ class BlackJackGameTest {
         @Nested
         class 플레이어가_블랙잭이_아니라면 {
 
-            @Test
-            void 딜러에게_이긴경우_베팅금액만큼_받는다() {
-                final Player player = new Player("toney");
-                player.drawCard(new Card(TEN, SPADE));
+            private final Player player = new Player("toney");
+            private BettingTable bettingTable;
+
+            @BeforeEach
+            void setUp() {
+                player.drawCard(new Card(NINE, SPADE));
                 player.drawCard(new Card(QUEEN, SPADE));
-                final Dealer dealer = new Dealer();
-                dealer.drawCard(new Card(NINE, HEART));
-                dealer.drawCard(new Card(QUEEN, HEART));
-                final Participants participants = new Participants(
-                        dealer,
-                        List.of(player, new Player("dazzle"))
-                );
+
                 final Map<PlayerName, Betting> betting = new HashMap<>();
                 betting.put(new PlayerName("toney"), new Betting(10000));
-                final BettingTable bettingTable = new BettingTable(betting);
+                bettingTable = new BettingTable(betting);
+            }
+
+            @Test
+            void 딜러에게_이긴경우_베팅금액만큼_받는다() {
+                final Dealer dealer = new Dealer();
+                dealer.drawCard(new Card(EIGHT, HEART));
+                dealer.drawCard(new Card(QUEEN, HEART));
+                final Participants participants = new Participants(dealer, List.of(player));
                 final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
                 final int profit = blackJackGame.getPlayerProfit(new PlayerName("toney"));
@@ -150,19 +144,10 @@ class BlackJackGameTest {
 
             @Test
             void 딜러와_비긴경우_수익은_없다() {
-                final Player player = new Player("toney");
-                player.drawCard(new Card(TWO, SPADE));
-                player.drawCard(new Card(QUEEN, SPADE));
                 final Dealer dealer = new Dealer();
-                dealer.drawCard(new Card(TWO, HEART));
+                dealer.drawCard(new Card(NINE, HEART));
                 dealer.drawCard(new Card(QUEEN, HEART));
-                final Participants participants = new Participants(
-                        dealer,
-                        List.of(player, new Player("dazzle"))
-                );
-                final Map<PlayerName, Betting> betting = new HashMap<>();
-                betting.put(new PlayerName("toney"), new Betting(10000));
-                final BettingTable bettingTable = new BettingTable(betting);
+                final Participants participants = new Participants(dealer, List.of(player));
                 final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
                 final int profit = blackJackGame.getPlayerProfit(new PlayerName("toney"));
@@ -172,19 +157,10 @@ class BlackJackGameTest {
 
             @Test
             void 딜러에게_진경우_베팅금액만큼_잃는다() {
-                final Player player = new Player("toney");
-                player.drawCard(new Card(TWO, SPADE));
-                player.drawCard(new Card(QUEEN, SPADE));
                 final Dealer dealer = new Dealer();
                 dealer.drawCard(new Card(TEN, HEART));
                 dealer.drawCard(new Card(QUEEN, HEART));
-                final Participants participants = new Participants(
-                        dealer,
-                        List.of(player, new Player("dazzle"))
-                );
-                final Map<PlayerName, Betting> betting = new HashMap<>();
-                betting.put(new PlayerName("toney"), new Betting(10000));
-                final BettingTable bettingTable = new BettingTable(betting);
+                final Participants participants = new Participants(dealer, List.of(player));
                 final BlackJackGame blackJackGame = new BlackJackGame(participants, bettingTable);
 
                 final int profit = blackJackGame.getPlayerProfit(new PlayerName("toney"));
@@ -202,10 +178,7 @@ class BlackJackGameTest {
         final Dealer dealer = new Dealer();
         dealer.drawCard(new Card(NINE, HEART));
         dealer.drawCard(new Card(QUEEN, HEART));
-        final Participants participants = new Participants(
-                dealer,
-                List.of(player)
-        );
+        final Participants participants = new Participants(dealer, List.of(player));
         final Map<PlayerName, Betting> betting = new HashMap<>();
         betting.put(new PlayerName("toney"), new Betting(10000));
         final BettingTable bettingTable = new BettingTable(betting);

@@ -41,8 +41,7 @@ class HandTest {
 
     @Test
     void 카드를_추가한다() {
-        final List<Card> cards = List.of(new Card(ACE, SPADE), new Card(TWO, HEART));
-        final Hand hand = new Hand(cards);
+        final Hand hand = new Hand(List.of(new Card(ACE, SPADE), new Card(TWO, HEART)));
 
         final Hand newHand = hand.addCard(new Card(QUEEN, CLOVER));
 
