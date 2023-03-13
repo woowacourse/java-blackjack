@@ -27,13 +27,10 @@ public class Hand {
     }
     
     private Score score() {
-        return new Score(calculateTotalScore());
-    }
-    
-    private int calculateTotalScore() {
         return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+                .map(Card::getScore)
+                .reduce(Score::addScore)
+                .orElseThrow(() -> new IllegalStateException("스코어가 존재하지 않습니다."));
     }
     
     private boolean containsAce() {

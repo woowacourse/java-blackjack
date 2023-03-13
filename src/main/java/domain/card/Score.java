@@ -18,7 +18,7 @@ public class Score {
         return this;
     }
     
-    private Score addScore(Score otherScore) {
+    public Score addScore(Score otherScore) {
         return new Score(score + otherScore.score);
     }
     

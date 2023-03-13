@@ -15,11 +15,11 @@ public enum Number {
     QUEEN(10, "Q"),
     JACK(10, "J");
 
-    private final int score;
+    private final Score score;
     private final String symbol;
     
     Number(int score, String symbol) {
-        this.score = score;
+        this.score = new Score(score);
         this.symbol = symbol;
     }
 
@@ -27,7 +27,7 @@ public enum Number {
         return this == ACE;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
     
