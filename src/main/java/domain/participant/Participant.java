@@ -42,11 +42,6 @@ public abstract class Participant {
 
     public abstract boolean isAbleToReceiveCard();
 
-    public int getCurrentCardAmount() {
-        Cards cards = gameState.getCards();
-        return cards.getCards().size();
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(participantName, getCards());
@@ -58,5 +53,10 @@ public abstract class Participant {
 
     public String getName() {
         return participantName.getName();
+    }
+
+    public int getCurrentCardAmount() {
+        Cards cards = gameState.getCards();
+        return cards.getCards().size();
     }
 }

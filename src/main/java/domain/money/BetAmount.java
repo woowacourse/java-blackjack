@@ -34,8 +34,4 @@ public class BetAmount {
     public Profit calculateEarnAmount(double rate) {
         return new Profit(amount * rate);
     }
-
-    public double getAmount() {
-        return amount;
-    }
 }

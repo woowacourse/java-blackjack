@@ -4,13 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import common.TestDataGenerator;
 import domain.blackjack.BlackjackScore;
+import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.blackjack.Result;
 import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

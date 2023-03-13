@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Playing extends GameState {
-
     private Playing(Cards cards) {
         super(cards);
     }

@@ -6,9 +6,9 @@ import common.TestDataGenerator;
 import domain.blackjack.BlackjackScore;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.Participant;
 import domain.card.TrumpCardNumber;
 import domain.card.TrumpCardType;
+import domain.participant.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

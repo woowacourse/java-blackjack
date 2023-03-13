@@ -19,11 +19,22 @@ public class Player extends Participant {
         validateAllowedName(participantName);
         return new Player(participantName, betAmount);
     }
+
     private static void validateAllowedName(ParticipantName participantName) {
         ParticipantName dealerName = ParticipantName.getDealerName();
         if (participantName.equals(dealerName)) {
             throw new IllegalArgumentException(FORBIDDEN_NAME_MESSAGE);
         }
+    }
+
+    @Override
+    public boolean isAbleToReceiveCard() {
+        return gameState.isAbleToReceiveCard();
+    }
+
+    @Override
+    public Cards getInitialOpeningCards() {
+        return getCards();
     }
 
     public Profit getProfitByResult(Result playerResult) {
@@ -36,15 +47,5 @@ public class Player extends Participant {
         }
 
         return betAmount.calculateEarnAmount(gameState.getEarningRate());
-    }
-
-    @Override
-    public Cards getInitialOpeningCards() {
-        return getCards();
-    }
-
-    @Override
-    public boolean isAbleToReceiveCard() {
-        return gameState.isAbleToReceiveCard();
     }
 }

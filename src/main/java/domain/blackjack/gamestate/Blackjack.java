@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Blackjack extends GameState {
-
     Blackjack(Cards cards) {
         super(cards);
     }

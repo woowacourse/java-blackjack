@@ -33,6 +33,7 @@ public class TotalProfit {
     public Map<Participant, Profit> getProfitBook() {
         return Collections.unmodifiableMap(profitBook);
     }
+
     public Profit getDealerProfit() {
         double dealerProfit = profitBook.values().stream()
                 .mapToDouble(Profit::getAmount)
