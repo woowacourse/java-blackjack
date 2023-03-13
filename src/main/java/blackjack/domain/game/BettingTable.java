@@ -20,13 +20,12 @@ public class BettingTable {
     }
 
     public BettingTable put(Player player, BettingMoney money) {
-        Map<Player, BettingMoney> collect = bets.keySet().stream()
-                .collect(toMap(
-                        it -> it,
-                        bets::get
-                ));
-        collect.put(player, money);
-        return new BettingTable(Collections.unmodifiableMap(collect));
+        Map<Player, BettingMoney> newBets = new LinkedHashMap<>();
+        for (Player playerBefore : bets.keySet()) {
+            newBets.put(playerBefore, bets.get(playerBefore));
+        }
+        newBets.put(player, money);
+        return new BettingTable(Collections.unmodifiableMap(newBets));
     }
 
     public BettingResult calculateResult(BlackjackResult blackjackResult) {

@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.user.Player;
 import blackjack.domain.vo.Money;
+import java.util.Collections;
 import java.util.Map;
 
 public class BettingResult {
@@ -17,6 +18,6 @@ public class BettingResult {
     }
 
     public Map<Player, Money> getBettingResults() {
-        return Map.copyOf(bettingResults);
+        return Collections.unmodifiableMap(bettingResults);
     }
 }
