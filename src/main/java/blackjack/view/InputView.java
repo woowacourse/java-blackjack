@@ -1,10 +1,9 @@
 package blackjack.view;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
+import java.util.regex.Pattern;
 
 public class InputView {
     private static final String CHANGE_LINE = "\n";
@@ -17,7 +16,8 @@ public class InputView {
     private static final String INPUT_PLAYER_DELIMITER = ",";
     private static final String BETTING_MASSAGE = "의 배팅 금액은?";
     private static final String DUPLICATED_PLAYER_MASSAGE = "중복된 플레이어는 허용되지 않습니다";
-
+    private static final Pattern NON_NUMBER = Pattern.compile("[^0-9]");
+    private static final String NON_NUMBUER_MASSAGE = "베팅값은 숫자만 입력하셔야 합니다.";
     private final Scanner scanner;
 
     public InputView(final Scanner scanner) {
@@ -38,7 +38,13 @@ public class InputView {
     public int inputBetting(String name){
         System.out.println();
         System.out.println(name+ BETTING_MASSAGE);
-        return Integer.parseInt(scanner.nextLine());
+        return bettingValidate(scanner.nextLine());
+    }
+    private int bettingValidate(String input){
+        if(NON_NUMBER.matcher(input).matches()){
+            throw new IllegalArgumentException(NON_NUMBUER_MASSAGE);
+        }
+        return Integer.parseInt(input);
     }
     public boolean inputOrderCard(final String name) {
         System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
