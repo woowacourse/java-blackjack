@@ -16,10 +16,10 @@ class BustTest {
 
     @BeforeEach
     void setUp() {
-        GameState startState = Start.from(Cards.of(new Card(TrumpCardType.SPADE, TrumpCardNumber.QUEEN),
+        GameState state = Playing.from(Cards.of(new Card(TrumpCardType.SPADE, TrumpCardNumber.QUEEN),
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN)));
 
-        bustState = startState.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.KING));
+        bustState = state.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.KING));
     }
 
     @DisplayName("버스트 된 상태에서 카드 발급 요청 시 예외가 발생한다.")

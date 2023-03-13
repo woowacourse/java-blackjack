@@ -4,9 +4,9 @@ import domain.blackjack.BlackjackScore;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Start extends GameState {
+public class Playing extends GameState {
 
-    private Start(Cards cards) {
+    private Playing(Cards cards) {
         super(cards);
     }
 
@@ -16,7 +16,7 @@ public class Start extends GameState {
             return new Blackjack(cards);
         }
 
-        return new Start(cards);
+        return new Playing(cards);
     }
 
     private static void validateSize(Cards cards) {
@@ -33,7 +33,7 @@ public class Start extends GameState {
             return new Bust(cards);
         }
 
-        return new Start(cards);
+        return new Playing(cards);
     }
 
     @Override

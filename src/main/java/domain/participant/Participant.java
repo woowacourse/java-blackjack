@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.blackjack.BlackjackScore;
 import domain.blackjack.gamestate.GameState;
-import domain.blackjack.gamestate.Start;
+import domain.blackjack.gamestate.Playing;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public abstract class Participant {
     }
 
     public void start(Cards cards) {
-        this.gameState = Start.from(cards);
+        this.gameState = Playing.from(cards);
     }
 
     public void receive(Card card) {

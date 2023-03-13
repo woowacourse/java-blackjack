@@ -19,7 +19,7 @@ class BlackjackTest {
     void setUp() {
         Cards blackjack = Cards.of(new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE),
                 new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN));
-        blackjackState = Start.from(blackjack);
+        blackjackState = Playing.from(blackjack);
     }
 
     @DisplayName("블랙잭 상태에서 카드 발급 요청 시 예외가 발생한다.")

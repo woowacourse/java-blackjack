@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StartTest {
+class PlayingTest {
 
     private static final Card SPADE_TEN = new Card(TrumpCardType.SPADE, TrumpCardNumber.TEN);
     private static final Card SPADE_ACE = new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE);
@@ -22,7 +22,7 @@ class StartTest {
     @Test
     void createGameStateSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
-        GameState gameState = Start.from(cards);
+        GameState gameState = Playing.from(cards);
 
         Cards stateCards = gameState.getCards();
         assertThat(stateCards.getCards()).containsExactly(
@@ -34,7 +34,7 @@ class StartTest {
     @Test
     void createGameStateFailTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE, SPADE_ACE);
-        Assertions.assertThatThrownBy(() -> Start.from(cards))
+        Assertions.assertThatThrownBy(() -> Playing.from(cards))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -42,19 +42,19 @@ class StartTest {
     @Test
     void createBlackjackFromStartSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_ACE);
-        GameState gameState = Start.from(cards);
+        GameState gameState = Playing.from(cards);
 
         Cards stateCards = gameState.getCards();
         assertThat(BlackjackScore.from(stateCards)).isEqualTo(BlackjackScore.getMaxScore());
         assertThat(gameState).isInstanceOf(Blackjack.class);
-        assertThat(gameState).isNotInstanceOf(Start.class);
+        assertThat(gameState).isNotInstanceOf(Playing.class);
     }
 
     @DisplayName("게임 시작 후 카드를 추가로 받을 수 있다.")
     @Test
     void receiveSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
-        GameState gameState = Start.from(cards);
+        GameState gameState = Playing.from(cards);
 
         gameState = gameState.receive(SPADE_ACE);
         Cards stateCards = gameState.getCards();
@@ -65,13 +65,13 @@ class StartTest {
     @Test
     void createBustFromStartSuccessTest() {
         Cards cards = Cards.of(SPADE_TEN, SPADE_NINE);
-        GameState gameState = Start.from(cards);
+        GameState gameState = Playing.from(cards);
 
         gameState = gameState.receive(HEART_NINE);
         BlackjackScore stateScore = BlackjackScore.from(gameState.getCards());
         assertThat(stateScore.isGreaterThan(BlackjackScore.getMaxScore())).isTrue();
 
         assertThat(gameState).isInstanceOf(Bust.class);
-        assertThat(gameState).isNotInstanceOf(Start.class);
+        assertThat(gameState).isNotInstanceOf(Playing.class);
     }
 }
