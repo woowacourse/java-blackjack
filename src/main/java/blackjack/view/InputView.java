@@ -25,7 +25,7 @@ public class InputView {
     public static Map<String, Integer> readBettingMoney(final List<String> playerNames) {
         Map<String, Integer> playerStatuses = new HashMap<>();
         playerNames.forEach(playerName -> {
-            System.out.println(playerName + "의 베팅 금액은?");
+            System.out.println(System.lineSeparator() + playerName + "의 베팅 금액은?");
             String bettingMoney = scanner.nextLine();
             playerStatuses.put(playerName, toInt(bettingMoney));
         });

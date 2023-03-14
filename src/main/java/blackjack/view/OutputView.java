@@ -15,19 +15,18 @@ public class OutputView {
 
     public static void printParticipantsInitCards(final ParticipantCardsDTO cardsDTO) {
         List<ParticipantStatusDTO> participantCards = cardsDTO.getParticipantCards();
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_DEFAULT_NAME,
-                String.join(", ", cardsDTO.getPlayerNames()))
-                + System.lineSeparator());
+        System.out.printf(System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다." + System.lineSeparator(), DEALER_DEFAULT_NAME,
+                String.join(", ", cardsDTO.getPlayerNames()));
         String participantInitCards = participantCards.stream()
-                .map(participantStatus -> getParticipantCards(participantStatus.getName(), participantStatus.getCards())
-                        + System.lineSeparator())
-                .collect(Collectors.joining());
+                .map(participantStatus -> getParticipantCards(participantStatus.getName(), participantStatus.getCards()))
+                .collect(Collectors.joining(System.lineSeparator()));
 
-        System.out.println(participantInitCards + System.lineSeparator());
+        System.out.printf(participantInitCards + System.lineSeparator() + System.lineSeparator());
     }
 
     public static void printDealerHit(final int hitCount) {
-        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n" + System.lineSeparator(), hitCount);
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다." + System.lineSeparator(), hitCount);
+        System.out.println();
     }
 
     public static void printParticipantsCards(final ParticipantStatusDTO participantStatusDTO) {
