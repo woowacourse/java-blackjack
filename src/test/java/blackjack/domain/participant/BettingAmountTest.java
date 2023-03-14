@@ -9,7 +9,7 @@ class BettingAmountTest {
 
     @Test
     void validateZero() {
-        Assertions.assertThatThrownBy(() -> BETTING_AMOUNT.updateAmount(0))
+        Assertions.assertThatThrownBy(() -> BETTING_AMOUNT.updateBettingAmount(0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("1원 이상의 배팅금액을 입력해주세요.");
     }
@@ -18,6 +18,6 @@ class BettingAmountTest {
     void updateAmount() {
         BettingAmount bettingAmount = new BettingAmount(0);
 
-        Assertions.assertThat(bettingAmount.updateAmount(10000)).isEqualTo(new BettingAmount(10000));
+        Assertions.assertThat(bettingAmount.updateBettingAmount(10000)).isEqualTo(new BettingAmount(10000));
     }
 }

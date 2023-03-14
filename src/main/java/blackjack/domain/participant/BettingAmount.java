@@ -10,14 +10,14 @@ public class BettingAmount {
         this.value = value;
     }
 
-    private static void validateZero(int value) {
-        if (value == 0) {
+    private static void validateBettingAmount(int value) {
+        if (value <= 0) {
             throw new IllegalArgumentException("1원 이상의 배팅금액을 입력해주세요.");
         }
     }
 
-    public BettingAmount updateAmount(int bettingAmount) {
-        validateZero(bettingAmount);
+    public BettingAmount updateBettingAmount(int bettingAmount) {
+        validateBettingAmount(bettingAmount);
         return new BettingAmount(bettingAmount);
     }
 
