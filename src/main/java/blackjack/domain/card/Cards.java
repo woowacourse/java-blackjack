@@ -37,10 +37,6 @@ public class Cards {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Card> openAll() {
-        return new ArrayList<>(cards);
-    }
-
     public boolean isBust() {
         return calculate() > MAX_SCORE_NOT_BUST;
     }
@@ -57,5 +53,9 @@ public class Cards {
         if (new HashSet<>(cards).size() != INITIAL_SIZE) {
             throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

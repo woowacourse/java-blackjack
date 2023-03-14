@@ -23,7 +23,7 @@ public abstract class Participant {
     }
 
     public List<Card> openAll() {
-        return cards.openAll();
+        return cards.open(cards.getSize());
     }
 
     protected boolean isBlackJack() {
