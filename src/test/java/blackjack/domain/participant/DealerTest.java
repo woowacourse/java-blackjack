@@ -1,24 +1,20 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Number.FIVE;
-import static blackjack.domain.card.Number.QUEEN;
-import static blackjack.domain.card.Number.SEVEN;
-import static blackjack.domain.card.Number.SIX;
-import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.FIVE;
+import static blackjack.domain.card.Denomination.NINE;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.SIX;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
-import static blackjack.domain.participant.Result.DRAW;
-import static blackjack.domain.participant.Result.LOSE;
-import static blackjack.domain.participant.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -33,34 +29,31 @@ class DealerTest {
 
         @Test
         void 카드가_2장_이하이고_점수가_16점_이하라면_true_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SIX, HEART)
-            )); //16점
-            final Dealer dealer = new Dealer(cards);
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(QUEEN, CLOVER));
+            dealer.drawCard(new Card(SIX, HEART));
+            //16점
 
             assertThat(dealer.isDrawable()).isTrue();
         }
 
         @Test
         void 카드가_2장_이하이고_점수가_16점_초과라면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SEVEN, HEART)
-            )); //17점
-            final Dealer dealer = new Dealer(cards);
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(QUEEN, CLOVER));
+            dealer.drawCard(new Card(SEVEN, HEART));
+            //17점
 
             assertThat(dealer.isDrawable()).isFalse();
         }
 
         @Test
         void 카드가_2장_초과라면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(TWO, CLOVER),
-                    new Card(SIX, HEART),
-                    new Card(SEVEN, DIAMOND)
-            )); // 15점
-            final Dealer dealer = new Dealer(cards);
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(TWO, CLOVER));
+            dealer.drawCard(new Card(SIX, HEART));
+            dealer.drawCard(new Card(SEVEN, DIAMOND));
+            //15점
 
             assertThat(dealer.isDrawable()).isFalse();
         }
@@ -71,54 +64,35 @@ class DealerTest {
 
         @Test
         void 카드를_받을_수_없는_상태라면_예외를_던진다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            ));
-            final Cards cards = new Cards(cardPack);
-            final Dealer dealer = new Dealer(cards);
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(QUEEN, CLOVER));
+            dealer.drawCard(new Card(ACE, HEART));
+            //21점
 
-            assertThatThrownBy(() -> dealer.drawCard(new Card(TWO, DIAMOND)))
-                    .isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> dealer.drawCard(new Card(TWO, DIAMOND))).isInstanceOf(IllegalStateException.class);
         }
 
         @Test
         void 카드를_받을_수_있는_상태라면_카드를_받는다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SIX, HEART)
-            ));
-            final Cards cards = new Cards(cardPack);
-            final Dealer dealer = new Dealer(cards);
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(QUEEN, CLOVER));
+            dealer.drawCard(new Card(SIX, HEART));
+            //17점
 
             dealer.drawCard(new Card(TWO, DIAMOND));
+            //19점
 
             assertThat(dealer.isDrawable()).isFalse();
         }
     }
 
     @Test
-    void 카드를_받는다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(SIX, HEART)
-        ));
-        final Cards cards = new Cards(cardPack);
-        final Dealer dealer = new Dealer(cards);
-
-        dealer.drawCard(new Card(ACE, DIAMOND));
-
-        assertThat(dealer.isDrawable()).isFalse();
-    }
-
-    @Test
     void 점수를_확인한다() {
-        final Cards cards = new Cards(List.of(
-                new Card(TWO, CLOVER),
-                new Card(SIX, HEART),
-                new Card(SEVEN, DIAMOND)
-        ));
-        final Dealer dealer = new Dealer(cards);
+        final Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(TWO, CLOVER));
+        dealer.drawCard(new Card(SIX, HEART));
+        dealer.drawCard(new Card(SEVEN, DIAMOND));
+        //15점
 
         assertThat(dealer.getScore()).isEqualTo(15);
     }
@@ -145,65 +119,48 @@ class DealerTest {
     }
 
     @Nested
-    class showResult_메서드는 {
+    class isBlackJack_메서드는 {
 
-        @Nested
-        class 플레이어_점수가_블랙잭_점수를_초과하면 {
+        @Test
+        void 카드가_2장이고_점수가_21점이면_true_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(ACE, HEART));
+            dealer.drawCard(new Card(QUEEN, DIAMOND));
+            //21점
 
-            @Test
-            void LOSE_반환한다() {
-                final Dealer dealer = new Dealer();
-
-                assertThat(dealer.showResult(22)).isEqualTo(LOSE);
-            }
+            assertThat(dealer.isBlackJack()).isTrue();
         }
 
-        @Nested
-        class 딜러_점수가_블랙잭_점수를_초과하면 {
+        @Test
+        void 카드가_3장_이상이고_점수가_21점이면_false_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(SEVEN, HEART));
+            dealer.drawCard(new Card(NINE, DIAMOND));
+            dealer.drawCard(new Card(FIVE, DIAMOND));
+            //21점
 
-            @Test
-            void 플레이어_점수가_블랙잭_점수_이하라면_WIN_반환한다() {
-                final Dealer dealer = new Dealer();
-
-                assertThat(dealer.showResult(21)).isEqualTo(WIN);
-            }
+            assertThat(dealer.isBlackJack()).isFalse();
         }
 
-        @Nested
-        class 딜러와_플레이어_점수_모두_블랙잭_점수_이하라면 {
+        @Test
+        void 카드가_2장이고_점수가_21점이_아니면_false_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(SEVEN, HEART));
+            dealer.drawCard(new Card(NINE, DIAMOND));
+            //16점
 
-            @Test
-            void 딜러_점수가_플레이어_점수보다_낮으면_WIN_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
-                final Dealer dealer = new Dealer(cards);
-
-                assertThat(dealer.showResult(17)).isEqualTo(WIN);
-            }
-
-            @Test
-            void 딜러_점수가_플레이어_점수보다_높으면_LOSE_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
-                final Dealer dealer = new Dealer(cards);
-
-                assertThat(dealer.showResult(15)).isEqualTo(LOSE);
-            }
-
-            @Test
-            void 점수_같으면_DRAW_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
-                final Dealer dealer = new Dealer(cards);
-
-                assertThat(dealer.showResult(16)).isEqualTo(DRAW);
-            }
+            assertThat(dealer.isBlackJack()).isFalse();
         }
+    }
+
+    @Test
+    void 딜러의_마지막_카드는_확인할_수_없다() {
+        final Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(SEVEN, HEART));
+        dealer.drawCard(new Card(NINE, DIAMOND));
+
+        final Hand hand = dealer.getHiddenHand();
+
+        assertThat(hand.count()).isEqualTo(1);
     }
 }

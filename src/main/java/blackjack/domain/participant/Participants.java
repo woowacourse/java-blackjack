@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,28 +42,82 @@ public class Participants {
         }
     }
 
-    public void drawCard(final Deck deck, final int count) {
-        for (int i = 0; i < count; i++) {
-            participants.forEach(participant -> participant.drawCard(deck.draw()));
-        }
+    public void drawCardForPlayer(final PlayerName playerName, final Deck deck) {
+        final Player player = getPlayer(playerName);
+        player.drawCard(deck.draw());
     }
 
-    public Dealer getDealer() {
+    public void drawCardForDealer(final Deck deck) {
+        final Dealer dealer = getDealer();
+        dealer.drawCard(deck.draw());
+    }
+
+    public List<PlayerName> getPlayerNames() {
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public int getPlayerScore(final PlayerName playerName) {
+        return getPlayer(playerName).getScore();
+    }
+
+    public Hand getPlayerHand(final PlayerName playerName) {
+        return getPlayer(playerName).getHand();
+    }
+
+    public boolean isDrawablePlayer(final PlayerName playerName) {
+        return getPlayer(playerName).isDrawable();
+    }
+
+    public boolean isBlackJackPlayer(final PlayerName playerName) {
+        return getPlayer(playerName).isBlackJack();
+    }
+
+    private Player getPlayer(final PlayerName playerName) {
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
+    }
+
+    public String getDealerName() {
+        return getDealer().getName();
+    }
+
+    public int getDealerScore() {
+        return getDealer().getScore();
+    }
+
+    public Hand getDealerHand() {
+        return getDealer().getHand();
+    }
+
+    public Hand getDealerHiddenHand() {
+        return getDealer().getHiddenHand();
+    }
+
+    public int getDealerAdditionalDrawScore() {
+        return getDealer().getMaximumDrawableScore();
+    }
+
+    public boolean isDealerAdditionalDrawn() {
+        return getDealer().isAdditionalDrawn();
+    }
+
+    public boolean isDrawableDealer() {
+        return getDealer().isDrawable();
+    }
+
+    private Dealer getDealer() {
         return participants.stream()
                 .filter(Participant::isDealer)
                 .map(Dealer.class::cast)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러는 존재해야 합니다."));
-    }
-
-    public List<Player> getPlayers() {
-        return participants.stream()
-                .filter(participant -> !participant.isDealer())
-                .map(Player.class::cast)
-                .collect(Collectors.toList());
-    }
-
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
     }
 }

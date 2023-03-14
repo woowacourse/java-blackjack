@@ -1,37 +1,42 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Result.DRAW;
-import static blackjack.domain.participant.Result.LOSE;
-import static blackjack.domain.participant.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.betting.Betting;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ResultTest {
 
     @Nested
-    class reverse_메서드는 {
+    class calculateProfit_메서드는 {
 
         @Test
-        void WIN_이라면_LOSE_반환한다() {
-            final Result result = WIN;
+        void WIN_이라면_베팅만큼_수익을_얻는다() {
+            final Betting betting = new Betting(10000);
+            final Result result = Result.WIN;
 
-            assertThat(result.reverse()).isEqualTo(LOSE);
+            assertThat(result.calculateProfit(betting)).isEqualTo(10000);
         }
 
         @Test
-        void LOSE_라면_WIN_반환한다() {
-            final Result result = LOSE;
+        void DRAW_라면_수익이_0이_된다() {
+            final Betting betting = new Betting(10000);
+            final Result result = Result.DRAW;
 
-            assertThat(result.reverse()).isEqualTo(WIN);
+            assertThat(result.calculateProfit(betting)).isEqualTo(0);
         }
 
         @Test
-        void DRAW_라면_DRAW_반환한다() {
-            final Result result = DRAW;
+        void LOSE_라면_베팅만큼_돈을_잃는다() {
+            final Betting betting = new Betting(10000);
+            final Result result = Result.LOSE;
 
-            assertThat(result.reverse()).isEqualTo(DRAW);
+            assertThat(result.calculateProfit(betting)).isEqualTo(-10000);
         }
     }
 }

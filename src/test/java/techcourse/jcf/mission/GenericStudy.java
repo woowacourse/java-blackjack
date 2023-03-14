@@ -82,8 +82,10 @@ public class GenericStudy {
     @Test
     void 리스트를_다른_리스트로_복사한다() {
         class Printer {
+
         }
         class LaserPrinter extends Printer {
+
         }
 
         LaserPrinter laserPrinter = new LaserPrinter();

@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -8,27 +7,21 @@ public class Player extends Participant {
     private final PlayerName name;
 
     public Player(final String name) {
-        this(name, new Cards());
+        this.name = new PlayerName(name);
     }
 
-    public Player(final String name, final Cards cards) {
-        super(cards);
-        this.name = new PlayerName(name);
+    public PlayerName getName() {
+        return name;
     }
 
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotalScore() < BLACK_JACK_SCORE;
+        return hand.calculateTotalScore() < BLACK_JACK_SCORE;
     }
 
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public String getName() {
-        return name.getValue();
     }
 
     @Override

@@ -1,17 +1,15 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Number.JACK;
-import static blackjack.domain.card.Number.QUEEN;
-import static blackjack.domain.card.Number.TEN;
-import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.TEN;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
-import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,7 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class CardsTest {
+class HandTest {
 
     private static Stream<Arguments> generateCardsWithoutAce() {
         return Stream.of(
@@ -41,29 +39,28 @@ class CardsTest {
         );
     }
 
+    @Test
+    void 카드를_추가한다() {
+        final Hand hand = new Hand(List.of(new Card(ACE, SPADE), new Card(TWO, HEART)));
+
+        final Hand newHand = hand.addCard(new Card(QUEEN, CLOVER));
+
+        assertThat(newHand.count()).isEqualTo(3);
+    }
+
     @ParameterizedTest
     @MethodSource("generateCardsWithoutAce")
     void 점수를_계산한다(final List<Card> cardPack, final int totalScore) {
-        final Cards cards = new Cards(cardPack);
+        final Hand hand = new Hand(cardPack);
 
-        assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
+        assertThat(hand.calculateTotalScore()).isEqualTo(totalScore);
     }
 
     @ParameterizedTest
     @MethodSource("generateCardsWithAce")
     void 에이스가_포함된_경우_최적의_점수를_계산한다(final List<Card> cardPack, final int totalScore) {
-        final Cards cards = new Cards(cardPack);
+        final Hand hand = new Hand(cardPack);
 
-        assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
-    }
-
-    @Test
-    void 카드를_추가한다() {
-        final Cards cards = new Cards(new ArrayList<>());
-
-        final Card card = new Card(ACE, DIAMOND);
-        cards.addCard(card);
-
-        assertThat(cards.count()).isEqualTo(1);
+        assertThat(hand.calculateTotalScore()).isEqualTo(totalScore);
     }
 }

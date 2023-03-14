@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Number.KING;
-import static blackjack.domain.card.Number.QUEEN;
-import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
@@ -11,9 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -23,38 +20,25 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
 
-    @Test
-    void 이름을_확인한다() {
-        final Cards cards = new Cards(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(QUEEN, HEART)
-        ));
-        final Player player = new Player("dazzle", cards);
-
-        assertThat(player.getName()).isEqualTo("dazzle");
-    }
-
     @Nested
     class isDrawable_메소드는 {
 
         @Test
         void 점수가_21미만이면_true_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(QUEEN, HEART)
-            )); //20점
-            final Player player = new Player("kokodak", cards);
+            final Player player = new Player("kokodak");
+            player.drawCard(new Card(QUEEN, CLOVER));
+            player.drawCard(new Card(QUEEN, HEART));
+            //20점
 
             assertThat(player.isDrawable()).isTrue();
         }
 
         @Test
         void 점수가_21이상이면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            )); //21점
-            final Player player = new Player("kokodak", cards);
+            final Player player = new Player("kokodak");
+            player.drawCard(new Card(QUEEN, CLOVER));
+            player.drawCard(new Card(ACE, HEART));
+            //21점
 
             assertThat(player.isDrawable()).isFalse();
         }
@@ -65,27 +49,23 @@ class PlayerTest {
 
         @Test
         void 카드를_받을_수_없는_상태라면_예외를_던진다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            ));
-            final Cards cards = new Cards(cardPack);
-            final Player player = new Player("dazzle", cards);
+            final Player player = new Player("dazzle");
+            player.drawCard(new Card(QUEEN, CLOVER));
+            player.drawCard(new Card(ACE, HEART));
+            //21점
 
-            assertThatThrownBy(() -> player.drawCard(new Card(TWO, DIAMOND)))
-                    .isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> player.drawCard(new Card(TWO, DIAMOND))).isInstanceOf(IllegalStateException.class);
         }
 
         @Test
         void 카드를_받을_수_있는_상태라면_카드를_받는다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(KING, HEART)
-            ));
-            final Cards cards = new Cards(cardPack);
-            final Player player = new Player("dazzle", cards);
+            final Player player = new Player("dazzle");
+            player.drawCard(new Card(QUEEN, CLOVER));
+            player.drawCard(new Card(KING, HEART));
+            //20점
 
             player.drawCard(new Card(TWO, DIAMOND));
+            //22점
 
             assertThat(player.isDrawable()).isFalse();
         }
@@ -93,12 +73,10 @@ class PlayerTest {
 
     @Test
     void 점수를_확인한다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(KING, HEART)
-        ));
-        final Cards cards = new Cards(cardPack);
-        final Player player = new Player("dazzle", cards);
+        final Player player = new Player("dazzle");
+        player.drawCard(new Card(QUEEN, CLOVER));
+        player.drawCard(new Card(KING, HEART));
+        //20점
 
         assertThat(player.getScore()).isEqualTo(20);
     }
