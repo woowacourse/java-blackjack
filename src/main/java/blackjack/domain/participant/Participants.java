@@ -80,6 +80,9 @@ public final class Participants {
     }
 
     public List<Participant> getPlayers() {
-        return participants.subList(1, participants.size());
+        return participants.stream()
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
+                .collect(Collectors.toList());
     }
 }
