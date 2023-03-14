@@ -1,16 +1,20 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.FOUR;
-import static blackjack.domain.Number.THREE;
-import static blackjack.domain.Number.TWO;
-import static blackjack.domain.Symbol.DIAMOND;
-import static blackjack.domain.Symbol.HEART;
-import static blackjack.domain.Symbol.SPADE;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.FOUR;
+import static blackjack.domain.card.Number.THREE;
+import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Symbol.DIAMOND;
+import static blackjack.domain.card.Symbol.HEART;
+import static blackjack.domain.card.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.MockDeckGenerator;
+import blackjack.domain.participant.Participants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +26,15 @@ class BlackJackGameTest {
         List<String> playerNames = List.of("odo", "doy");
         Participants participants = Participants.of(playerNames);
 
+        Card card1 = new Card(DIAMOND, THREE);
+        Card card2 = new Card(DIAMOND, FOUR);
+        Card card3 = new Card(HEART, THREE);
+        Card card4 = new Card(HEART, FOUR);
+
         DeckGenerator mockGenerator = new MockDeckGenerator((List.of(
                 new Card(SPADE, ACE), new Card(SPADE, TWO),
-                new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR),
-                new Card(HEART, THREE), new Card(HEART, FOUR)
+                card1, card2,
+                card3, card4
         )));
         participants.handInitialCards(mockGenerator.generate());
 
@@ -33,10 +42,10 @@ class BlackJackGameTest {
         List<Card> doyCards = participants.getPlayers().get(1).getCards();
 
         assertThat(odoCards)
-                .containsExactly(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
+                .containsExactly(card1, card2);
 
         assertThat(doyCards)
-                .containsExactly(new Card(HEART, THREE), new Card(HEART, FOUR));
+                .containsExactly(card3, card4);
     }
 
 }
