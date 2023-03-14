@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.state.State;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -14,5 +15,9 @@ public class Dealer extends Participant {
         while (calculateScore() <= 16) {
             this.receiveCard(deck.getCard());
         }
+    }
+
+    public State getState() {
+        return this.state;
     }
 }

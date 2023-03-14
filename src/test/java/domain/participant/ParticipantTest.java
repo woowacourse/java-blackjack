@@ -22,6 +22,12 @@ class ParticipantTest {
         participant = new Participant(mango, initialCards);
     }
 
+    @DisplayName("참가자 이름 확인을 통해 딜러 생성에 성공하였는지 알 수 있다.")
+    @Test
+    void createTest() {
+        assertThat(participant.getName()).isEqualTo("망고");
+    }
+
     @DisplayName("Ace 카드가 없는 경우, 카드의 숫자를 더해 계산할 수 있다.")
     @Test
     void scoreTest(){

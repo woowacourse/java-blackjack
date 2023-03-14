@@ -20,7 +20,13 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         List<Card> cards = new ArrayList<>(List.of(new Card(Value.KING, Shape.HEART), new Card(Value.THREE, Shape.SPADE)));
-        player = new Player(new Name("깃짱"), cards);
+        player = new Player(new Name("깃짱"), cards, new BettingMoney(1000));
+    }
+
+    @DisplayName("플레이어 이름 확인을 통해 딜러 생성에 성공하였는지 알 수 있다.")
+    @Test
+    void createTest() {
+        assertThat(player.getName()).isEqualTo("깃짱");
     }
 
     @DisplayName("플레이어의 점수를 알 수 있다.")

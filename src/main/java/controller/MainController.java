@@ -2,11 +2,12 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.PlayerCommand;
-import domain.WinningStatus;
 import domain.card.Deck;
+import domain.participant.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -24,7 +25,7 @@ public class MainController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(inputView.readPlayerNames());
+        BlackJackGame blackJackGame = new BlackJackGame(readPlayers());
         Participants participants = blackJackGame.getParticipants();
 
         outputView.printInitialState(blackJackGame.getParticipants());
@@ -34,14 +35,32 @@ public class MainController {
         printFinalResult(blackJackGame);
     }
 
+    private Map<String, BettingMoney> readPlayers() {
+        Map<String, BettingMoney> playerBettingMoneys = new LinkedHashMap<>();
+        List<String> playerNames = inputView.readPlayerNames();
+        for (String playerName : playerNames) {
+            playerBettingMoneys.put(playerName, initializeBettingMoney(playerName));
+        }
+        return playerBettingMoneys;
+    }
+
+    private BettingMoney initializeBettingMoney(String playerName) {
+        try {
+            return new BettingMoney(inputView.readBettingMoney(playerName));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return initializeBettingMoney(playerName);
+        }
+    }
+
     private void receiveAdditionalCard(Deck deck, Participants participants, Dealer dealer) {
         receiveAdditionalPlayerCard(deck, participants);
         receiveAdditionalDealerCard(deck, dealer);
     }
 
     private void printFinalResult(BlackJackGame blackJackGame) {
-        Map<Player, WinningStatus> playersResult = blackJackGame.calculatePlayersResult();
-        List<Integer> dealerResult = blackJackGame.calculateDealerResult(playersResult);
+        Map<Player, Integer> playersResult = blackJackGame.calculatePlayersResult();
+        int dealerResult = blackJackGame.calculateDealerResult(playersResult);
         outputView.printFinalResultMessage();
         outputView.printDealerResult(dealerResult);
         outputView.printPlayerResult(playersResult);
@@ -52,6 +71,7 @@ public class MainController {
             outputView.printFillDealerCards();
             dealer.receiveCard(deck.getCard());
         }
+        dealer.convertStand();
     }
 
     private void receiveAdditionalPlayerCard(Deck deck, Participants participants) {
@@ -68,6 +88,7 @@ public class MainController {
             repeat = player.calculateScore() < BlackJackGame.BLACKJACK_NUMBER && command.isHit();
             outputView.printSingleState(player);
         }
+        player.convertStand();
     }
 
     private PlayerCommand initializeCommand(String playerName) {

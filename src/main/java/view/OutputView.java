@@ -1,6 +1,5 @@
 package view;
 
-import domain.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -11,11 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    private static final String WINNING_KEYWORD = "승,무,패";
-    private static final String WIN_KEYWORD = "승";
-    private static final String TIE_KEYWORD = "무";
-    private static final String LOSE_KEYWORD = "패";
     private static final OutputView instance = new OutputView();
 
     public static OutputView getInstance() {
@@ -80,32 +74,17 @@ public class OutputView {
     }
 
     public void printFinalResultMessage() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerResult(final List<Integer> dealerResult) {
-        StringBuilder dealerDisplay = new StringBuilder();
-        List<String> winningKeyword = List.of(WINNING_KEYWORD.split(","));
-        for (int i = 0; i < dealerResult.size(); i++) {
-            dealerDisplay.append(dealerResult.get(i)).append(winningKeyword.get(i));
-        }
-        System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
+    public void printDealerResult(final int dealerResult) {
+        System.out.printf("딜러: %d" + System.lineSeparator(), dealerResult);
     }
 
-    public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
+    public void printPlayerResult(final Map<Player, Integer> playersResult) {
         for (Player player : playersResult.keySet()) {
-            WinningStatus winningStatus = playersResult.get(player);
-            System.out.printf("%s: %s" + System.lineSeparator(), player.getName(), printWinningStatus(winningStatus));
+            int result = playersResult.get(player);
+            System.out.printf("%s: %d" + System.lineSeparator(), player.getName(), result);
         }
-    }
-
-    private String printWinningStatus(WinningStatus winningStatus) {
-        if (winningStatus.equals(WinningStatus.WIN)) {
-            return WIN_KEYWORD;
-        }
-        if (winningStatus.equals(WinningStatus.TIE)) {
-            return TIE_KEYWORD;
-        }
-        return LOSE_KEYWORD;
     }
 }

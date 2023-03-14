@@ -4,16 +4,29 @@ import java.util.Objects;
 
 public class Card {
 
+    public static final String NULL_ERROR_MESSAGE = "[ERROR] 카드 값이나 모양에는 null이 들어갈 수 없습니다.";
+
     private final Value value;
     private final Shape shape;
 
     public Card(final Value value, final Shape shape) {
+        validateNull(value, shape);
         this.value = value;
         this.shape = shape;
     }
 
-    public int getScore(final int totalScore) {
-        return value.getScore(totalScore);
+    private static void validateNull(Value value, Shape shape) {
+        if (value == null || shape == null) {
+            throw new IllegalArgumentException(NULL_ERROR_MESSAGE);
+        }
+    }
+
+    public int getScore() {
+        return value.getScore();
+    }
+
+    public boolean isAce() {
+        return value.isAce();
     }
 
     public String getValue(){
