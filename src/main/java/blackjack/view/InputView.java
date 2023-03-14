@@ -19,7 +19,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputPlayerAmount(String name) {
+    public static int inputPlayerBettingAmount(String name) {
         System.out.println(String.format("\n%s의 배팅금액은?", name));
         try {
             return Integer.parseInt(scanner.nextLine());

@@ -2,11 +2,11 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class Amount {
+public class BettingAmount {
 
     private final int value;
 
-    public Amount(int value) {
+    public BettingAmount(int value) {
         this.value = value;
     }
 
@@ -16,17 +16,17 @@ public class Amount {
         }
     }
 
-    public Amount updateAmount(int amount) {
-        validateZero(amount);
-        return new Amount(amount);
+    public BettingAmount updateAmount(int bettingAmount) {
+        validateZero(bettingAmount);
+        return new BettingAmount(bettingAmount);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Amount amount = (Amount) o;
-        return value == amount.value;
+        BettingAmount bettingAmount = (BettingAmount) o;
+        return value == bettingAmount.value;
     }
 
     @Override

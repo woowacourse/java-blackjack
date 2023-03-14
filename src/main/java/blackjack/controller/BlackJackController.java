@@ -31,13 +31,13 @@ public class BlackJackController {
     }
 
     private void bet(Players players) {
-        List<Integer> amounts = new ArrayList<>();
+        List<Integer> bettingAmounts = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
-            amounts.add(Repeater.repeatIfError(() -> InputView.inputPlayerAmount(player.getName().getValue()),
+            bettingAmounts.add(Repeater.repeatIfError(() -> InputView.inputPlayerBettingAmount(player.getName().getValue()),
                     OutputView::printErrorMessage));
         }
-        blackJackGame.bet(players, amounts);
+        blackJackGame.bet(players, bettingAmounts);
     }
 
     private Players inputPlayerNames() {

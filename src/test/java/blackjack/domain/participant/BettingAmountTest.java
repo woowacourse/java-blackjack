@@ -3,23 +3,21 @@ package blackjack.domain.participant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+class BettingAmountTest {
 
-class AmountTest {
-
-    private static final Amount amount = new Amount(0);
+    private static final BettingAmount BETTING_AMOUNT = new BettingAmount(0);
 
     @Test
     void validateZero() {
-        Assertions.assertThatThrownBy(() -> amount.updateAmount(0))
+        Assertions.assertThatThrownBy(() -> BETTING_AMOUNT.updateAmount(0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("1원 이상의 배팅금액을 입력해주세요.");
     }
 
     @Test
     void updateAmount() {
-        Amount amount = new Amount(0);
+        BettingAmount bettingAmount = new BettingAmount(0);
 
-        Assertions.assertThat(amount.updateAmount(10000)).isEqualTo(new Amount(10000));
+        Assertions.assertThat(bettingAmount.updateAmount(10000)).isEqualTo(new BettingAmount(10000));
     }
 }

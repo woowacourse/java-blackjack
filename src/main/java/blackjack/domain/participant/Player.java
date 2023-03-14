@@ -2,18 +2,18 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private Amount amount;
+    private BettingAmount bettingAmount;
 
     public Player(String name) {
         super(name);
-        amount = new Amount(0);
+        bettingAmount = new BettingAmount(0);
     }
 
     public void bet(int amount) {
-        this.amount = this.amount.updateAmount(amount);
+        this.bettingAmount = this.bettingAmount.updateAmount(amount);
     }
 
-    public Amount getAmount() {
-        return amount;
+    public BettingAmount getAmount() {
+        return bettingAmount;
     }
 }
