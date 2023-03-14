@@ -1,11 +1,13 @@
 package blackjack.domain;
 
+import java.math.BigInteger;
+
 public class BettingMoney {
-    private final int value;
+    private final BigInteger value;
 
     public BettingMoney(final int value) {
         validate(value);
-        this.value = value;
+        this.value = BigInteger.valueOf(value);
     }
 
     private void validate(final int value) {
@@ -26,6 +28,6 @@ public class BettingMoney {
     }
 
     public int getValue() {
-        return value;
+        return value.intValue();
     }
 }
