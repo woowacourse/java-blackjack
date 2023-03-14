@@ -44,10 +44,6 @@ public class Hand {
         return calculate().canMoreCard();
     }
 
-    public boolean isSumTwentyOne() {
-        return calculate().isSumTwentyOne();
-    }
-
     public boolean isBust() {
         return calculate().isBust();
     }

@@ -28,6 +28,10 @@ public abstract class Player {
         return hand.isBust();
     }
 
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
     public void hit(final Card card) {
         hand.addCard(card);
     }

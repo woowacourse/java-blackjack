@@ -9,7 +9,7 @@ public class DealerBust implements BetResult {
 
     @Override
     public Boolean canApply(final Participant participant, final Dealer dealer) {
-        return dealer.isBust() && (participant.isSumTwentyOne() || participant.canHit());
+        return dealer.isBust() && participant.isNotBust();
     }
 
     @Override
