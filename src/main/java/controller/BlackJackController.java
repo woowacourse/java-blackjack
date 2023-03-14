@@ -46,7 +46,7 @@ public class BlackJackController {
     private BettingMoneyTable initBettingMoneyTable(List<Player> players) {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         for (Player player : players) {
-            int money = InputView.askBettingMoneyToPlayer(player.getName());
+            String money = InputView.askBettingMoneyToPlayer(player.getName());
             bettingMonies.add(BettingMoney.of(money));
         }
         return BettingMoneyTable.of(players, BettingMonies.of(bettingMonies));
