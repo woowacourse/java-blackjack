@@ -27,18 +27,17 @@ public class ParticipantMoney {
     }
 
     private static int validType(final String money) {
-        int validMoney;
         try {
-            validMoney = Integer.parseInt(money);
+            return Integer.parseInt(money);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("베팅 금액은 정수 값이어야 합니다.");
         }
-        return validMoney;
     }
 
     private static void validateRange(final int money) {
         if (money < MIN_MONEY || money > MAX_MONEY) {
-            throw new IllegalArgumentException("베팅 금액은 1,000원 이상, 100,000,000원 이하여야 합니다.");
+            throw new IllegalArgumentException(String.format("베팅 금액은 %d원 이상, %d원 이하여야 합니다.",
+                    MIN_MONEY, MAX_MONEY));
         }
     }
 
