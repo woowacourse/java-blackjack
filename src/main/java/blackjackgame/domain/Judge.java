@@ -12,15 +12,8 @@ import blackjackgame.domain.player.Guest;
 import blackjackgame.domain.player.Player;
 
 public class Judge {
-    private final Dealer dealer;
-    private final List<Guest> guests;
 
-    public Judge(Dealer dealer, List<Guest> guests) {
-        this.dealer = dealer;
-        this.guests = guests;
-    }
-
-    public Map<Player, Double> playersProfit() {
+    public static Map<Player, Double> playersProfit(Dealer dealer, List<Guest> guests) {
         Map<Player, Double> profitResult = new LinkedHashMap<>();
         profitResult.put(dealer, 0d);
 
@@ -34,7 +27,7 @@ public class Judge {
         return profitResult;
     }
 
-    private double judgeProfit(Guest guest, Dealer dealer) {
+    private static double judgeProfit(Guest guest, Dealer dealer) {
         if (guest.isBlackJack() && !dealer.isBlackJack()) {
             return guest.bettingMoney() * BLACKJACK_WIN.profit();
         }

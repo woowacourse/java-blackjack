@@ -34,7 +34,7 @@ public class BlackJackController {
         hitDealerCard(players.dealer(), deck);
 
         printScore(players);
-        judgeAndPrintResult(players);
+        outputView.printProfit(Judge.playersProfit(players.dealer(), players.guests()));
     }
 
     private Players initializeGuests(Deck deck) {
