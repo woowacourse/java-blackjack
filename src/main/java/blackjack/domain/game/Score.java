@@ -45,6 +45,14 @@ public final class Score {
         return value == other.value;
     }
 
+    public boolean isLessThanOrEqualTo(final Score other) {
+        return value <= other.value;
+    }
+
+    public boolean isLessThan(final Score other) {
+        return value < other.value;
+    }
+
     public int getValue() {
         return value;
     }

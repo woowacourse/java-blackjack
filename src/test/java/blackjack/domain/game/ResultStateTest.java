@@ -1,106 +1,60 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
+import blackjack.dto.ResultParticipantDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static blackjack.domain.CardConstant.*;
 
 class ResultStateTest {
 
-    @Nested
-    @DisplayName("첫번째 점수가 21점이고")
-    class resultPlayerTestByFirstScore21 {
+    @Test
+    @DisplayName("블랙잭 상태를 제대로 가져오는지 확인")
+    void getStateForBlackjack() {
+        final ResultParticipantDto first = ResultParticipantDto.from(
+                Player.of(Name.from("pobi"), List.of(DIAMOND_ACE, DIAMOND_TEN)));
+        final ResultParticipantDto second = ResultParticipantDto.from(
+                Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
-        final Score firstScore = Score.from(21);
-        Score secondScore;
-
-        @Test
-        @DisplayName("두번째 점수가 21점 미만일 때, 블랙잭을 반환하는지 테스트")
-        void SecondScoreLess21() {
-            secondScore = Score.from(20);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.BLACKJACK);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 21점일 때, 무승부를 반환하는지 테스트")
-        void SecondScoreEqual21() {
-            secondScore = Score.from(21);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.TIE);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 21점 초과일 때, 블랙잭를 반환하는지 테스트")
-        void SecondScoreGreater21() {
-            secondScore = Score.from(22);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 2)).isEqualTo(ResultState.BLACKJACK);
-        }
+        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.BLACKJACK);
     }
 
-    @Nested
-    @DisplayName("첫번째 점수가 20점이고")
-    class resultPlayerTestByFirstScore20 {
+    @Test
+    @DisplayName("승리 상태를 제대로 가져오는지 확인")
+    void getStateForWin() {
+        final ResultParticipantDto first = ResultParticipantDto.from(
+                Player.of(Name.from("pobi"), List.of(DIAMOND_TEN, DIAMOND_NINE, DIAMOND_TWO)));
+        final ResultParticipantDto second = ResultParticipantDto.from(
+                Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
-        final Score firstScore = Score.from(20);
-        Score secondScore;
-
-        @Test
-        @DisplayName("두번째 점수가 20점 미만일 때, 승리를 반환하는지 테스트")
-        void SecondScoreLess21() {
-            secondScore = Score.from(19);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore,3)).isEqualTo(ResultState.WIN);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 21점 초과일 때, 승리를 반환하는지 테스트")
-        void SecondScoreGreater21() {
-            secondScore = Score.from(22);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.WIN);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 20점일 때, 무승부를 반환하는지 테스트")
-        void SecondScoreEqual20() {
-            secondScore = Score.from(20);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.TIE);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 21점일 때, 패배를 반환하는지 테스트")
-        void SecondScoreEqual21() {
-            secondScore = Score.from(21);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.LOSE);
-        }
+        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.WIN);
     }
 
-    @Nested
-    @DisplayName("첫번째 점수가 22점이고")
-    class resultPlayerTestByFirstScore22 {
+    @Test
+    @DisplayName("무승부 상태를 제대로 가져오는지 확인")
+    void getStateForTie() {
+        final ResultParticipantDto first = ResultParticipantDto.from(
+                Player.of(Name.from("pobi"), List.of(DIAMOND_ACE, DIAMOND_TEN)));
+        final ResultParticipantDto second = ResultParticipantDto.from(
+                Player.of(Name.from("crong"), List.of(SPACE_ACE, HEART_TEN)));
 
-        final Score firstScore = Score.from(22);
-        Score secondScore;
+        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.TIE);
+    }
 
-        @Test
-        @DisplayName("두번째 점수가 21점 이하일 때, 패배를 반환하는지 테스트")
-        void SecondScoreLess21() {
-            secondScore = Score.from(21);
+    @Test
+    @DisplayName("패배 상태를 제대로 가져오는지 확인")
+    void getStateForLose() {
+        final ResultParticipantDto first = ResultParticipantDto.from(
+                Player.of(Name.from("pobi"), List.of(DIAMOND_NINE)));
+        final ResultParticipantDto second = ResultParticipantDto.from(
+                Player.of(Name.from("crong"), List.of(HEART_TEN)));
 
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.LOSE);
-        }
-
-        @Test
-        @DisplayName("두번째 점수가 21점 초과일 때, 무승부를 반환하는지 테스트")
-        void SecondScoreGreater21() {
-            secondScore = Score.from(22);
-
-            Assertions.assertThat(ResultState.resultPlayer(firstScore, secondScore, 3)).isEqualTo(ResultState.TIE);
-        }
+        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.LOSE);
     }
 
     @Test
