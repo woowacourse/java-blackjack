@@ -8,15 +8,23 @@ import domain.participant.Player;
 public class Judge {
 
     public static GameState gameResult(Dealer dealer, Player player) {
-        if (player.isBurst() || dealer.isHighScoreThan(player) && !dealer.isBurst()) {
+        if (player.isBurst() || dealerIsHigherThanPlayer(dealer, player)) {
             return GameStates.LOSE;
         }
         if (dealer.isBurst() || player.isHighScoreThan(dealer)) {
-            if (player.isBlackJack()) {
-                return GameStates.BLACKJACK;
-            }
-            return GameStates.WIN;
+            return getWinState(player);
         }
         return GameStates.DRAW;
+    }
+
+    private static boolean dealerIsHigherThanPlayer(Dealer dealer, Player player) {
+        return dealer.isHighScoreThan(player) && !dealer.isBurst();
+    }
+
+    private static GameState getWinState(Player player) {
+        if (player.isBlackJack()) {
+            return GameStates.BLACKJACK;
+        }
+        return GameStates.WIN;
     }
 }
