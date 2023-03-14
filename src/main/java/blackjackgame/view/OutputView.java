@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public void printProfit(Map<Player, Double> profitResult) {
-        System.out.println(profitResult);
+        System.out.println();
         StringBuilder stringBuilder = new StringBuilder("## 최종 수익" + System.lineSeparator());
         for (Player player : profitResult.keySet()) {
             stringBuilder.append(player.getName())
