@@ -2,40 +2,50 @@ package domain.participant;
 
 import domain.card.Card;
 
-import java.util.List;
+public final class Participant {
 
-public abstract class Participant {
+    static final String DEALER_NAME = "딜러";
 
-    protected static final String DEALER_NAME = "딜러";
+    private final ParticipantName participantName;
+    private final ParticipantCard participantCard;
 
-    private final ParticipantName name;
-    protected ParticipantCard participantCard;
-
-    protected Participant(final String name) {
-        this.name = ParticipantName.create(name);
-
-        participantCard = ParticipantCard.create();
+    private Participant(final ParticipantName participantName, final ParticipantCard participantCard) {
+        this.participantName = participantName;
+        this.participantCard = participantCard;
     }
 
-    public final void addCard(final Card card) {
-        this.participantCard = this.participantCard.addCard(card);
+    public static Participant create(final String name) {
+        final ParticipantName participantName = ParticipantName.create(name);
+        final ParticipantCard participantCard = ParticipantCard.create();
+
+        return new Participant(participantName, participantCard);
     }
 
-    public final int calculateScore() {
-        final ParticipantScore participantScore = participantCard.calculateScore();
-
-        return participantScore.score();
+    void addCard(final Card drawCard) {
+        participantCard.addCard(drawCard);
     }
 
-    public abstract boolean canDraw();
+    ParticipantScore calculateScore() {
+        return participantCard.calculateScore();
+    }
 
-    public abstract List<Card> getStartCard();
+    public boolean canDraw(final int score) {
+        return participantCard.canDraw(score);
+    }
 
-    public final List<Card> getCard() {
-        return List.copyOf(participantCard.getCards());
+    boolean checkBust() {
+        return participantCard.checkBust();
+    }
+
+    boolean checkBlackJack() {
+        return participantCard.checkBust();
+    }
+
+    ParticipantCard participantCard() {
+        return participantCard;
     }
 
     public String getName() {
-        return name.getName();
+        return participantName.getName();
     }
 }
