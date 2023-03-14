@@ -17,7 +17,6 @@ public class OutputView {
     private static final String LINE_SEPARATOR = "";
     private static final String CARD = "카드";
     private static final String DEALER_POSSIBLE_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DEALER_IMPOSSIBLE_MESSAGE = "딜러는 17이상이라 카드를 받지 못합니다.";
     private static final String RESULT_MESSAGE = " - 결과: ";
     private static final String FINAL_RESULT = "## 최종 수익";
 
@@ -46,11 +45,6 @@ public class OutputView {
     public void showDealerDrawPossible() {
         printMessage(LINE_SEPARATOR);
         printMessage(DEALER_POSSIBLE_MESSAGE);
-    }
-
-    public void showDealerDrawImpossible() {
-        printMessage(LINE_SEPARATOR);
-        printMessage(DEALER_IMPOSSIBLE_MESSAGE);
     }
 
     public void showTotalScoreDealer(DealerHandScoreResponse dealerHandScore) {

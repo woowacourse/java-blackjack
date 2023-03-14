@@ -48,12 +48,15 @@ public class BlackJackGame {
         }
     }
 
-    public void passExtraCardToDealer() {
+    public boolean passExtraCardToDealer() {
         Dealer dealer = participants.findDealer();
-        if (dealer.canReceive()) {
+        boolean hasExtraCard = false;
+        while (dealer.canReceive()) {
             Card card = deck.draw();
             dealer.addCard(card);
+            hasExtraCard = true;
         }
+        return hasExtraCard;
     }
 
     public List<String> findAllPlayerNames() {

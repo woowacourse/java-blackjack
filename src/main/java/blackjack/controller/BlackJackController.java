@@ -96,11 +96,10 @@ public class BlackJackController {
     }
 
     private void passExtraCardToDealer() {
-        while (blackJackGame.canPassCardToDealer()) {
-            blackJackGame.passExtraCardToDealer();
-            outputView.showDealerDrawPossible();
-        }
-        outputView.showDealerDrawImpossible();
+            boolean hasExtraCard = blackJackGame.passExtraCardToDealer();
+            if (hasExtraCard) {
+                outputView.showDealerDrawPossible();
+            }
     }
 
     private void finishGame() {
