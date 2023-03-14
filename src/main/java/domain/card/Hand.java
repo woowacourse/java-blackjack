@@ -1,5 +1,7 @@
-package domain;
+package domain.card;
 
+import domain.Score;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -9,13 +11,9 @@ public class Hand {
         this.cards = cards;
     }
 
-    public Score score() {
-        return calculateScore();
-    }
-
-    private Score calculateScore() {
+    public Score calculateScore() {
         var countAce = countAce();
-        Score score = sum();
+        Score score = sumScoreOfCards();
 
         for (int i = 0; i < countAce; i++) {
             score = score.addScoreByAce();
@@ -30,18 +28,21 @@ public class Hand {
                 .count();
     }
 
-    private Score sum() {
-        return new Score(cards.stream()
+    private Score sumScoreOfCards() {
+        return cards.stream()
                 .map(Card::score)
-                .mapToInt(Score::getValue)
-                .sum());
+                .reduce(Score.zero(), Score::sum);
     }
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> cards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

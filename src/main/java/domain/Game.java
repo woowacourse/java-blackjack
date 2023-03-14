@@ -1,12 +1,16 @@
 package domain;
 
+import static domain.Status.PLAYING;
+import static domain.user.User.NUMBER_OF_FIRST_CARDS;
+
+import domain.card.Deck;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.User;
+import domain.user.Users;
 import java.util.List;
 
-import static domain.Status.BUST;
-import static domain.Status.STAY;
-
 public class Game {
-
     private final Deck deck;
     private final Users users;
 
@@ -15,8 +19,8 @@ public class Game {
         this.deck = deck;
     }
 
-    public void dealTwoCards() {
-        for (int i = 0; i < 2; i++) {
+    public void dealCardsInFirstTurn() {
+        for (int i = 0; i < NUMBER_OF_FIRST_CARDS; i++) {
             users.dealCardsFrom(deck);
         }
     }
@@ -29,7 +33,6 @@ public class Game {
         user.addCard(deck.drawCard());
     }
 
-
     public boolean canHitByDealerScore() {
         return canHitByPlayerScore(users.dealer());
     }
@@ -37,11 +40,7 @@ public class Game {
     public boolean canHitByPlayerScore(User user) {
         Status status = user.status();
 
-        return status != STAY && status != BUST;
-    }
-
-    public void updateStatusToStay(User user) {
-        user.updateStatusToStay();
+        return status == PLAYING;
     }
 
     public void dealCardToDealer() {
@@ -52,6 +51,10 @@ public class Game {
         }
     }
 
+    public void updateStatusToStay(boolean isYes, Player player) {
+        player.updateStatusToStay(isYes);
+    }
+
     public List<Player> getPlayers() {
         return users.players();
     }
@@ -59,5 +62,4 @@ public class Game {
     public Users getUsers() {
         return users;
     }
-
 }

@@ -1,9 +1,14 @@
-import domain.*;
+import domain.Game;
+import domain.Money;
+import domain.card.Deck;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Users;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application {
     private static final InputView inputView = new InputView();
@@ -22,19 +27,28 @@ public class Application {
     }
 
     private static List<Player> getPlayers() {
-        List<String> playerNames = inputView.readNames();
+        List<String> playerNames = inputView.enterNames();
         return createPlayersWith(playerNames);
     }
 
     private static List<Player> createPlayersWith(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            players.add(createPlayer(playerName));
+        }
+
+        return players;
+    }
+
+    private static Player createPlayer(String playerName) {
+        int bettingAmount = inputView.enterBettingAmount(playerName);
+        return new Player(playerName, new Money(bettingAmount));
     }
 
     private static void start(Game game) {
         Users users = game.getUsers();
-        game.dealTwoCards();
+        game.dealCardsInFirstTurn();
         outputView.printCardsFrom(users);
     }
 
@@ -52,10 +66,14 @@ public class Application {
     }
 
     private static void dealAnotherCardIfHit(Game game, Player player) {
-        if (inputView.askForAnotherCard(player.getName())) {
+        boolean isYes = inputView.askForAnotherCard(player.getName());
+
+        if (isYes) {
             game.dealCard(player);
             outputView.printPlayerCards(player);
         }
+
+        game.updateStatusToStay(isYes, player);
     }
 
     private static void dealCardToDealer(Game game) {
@@ -70,12 +88,14 @@ public class Application {
     private static void printResult(Game game) {
         Users users = game.getUsers();
         outputView.printCardsAndScores(users);
-        outputView.printResultNotice();
-        outputView.printDealerResults(users.getDealerResults());
-        for (Player player : users.players()) {
-            String name = player.getName();
-            outputView.printResult(name, users.getUserResult(player));
-        }
+        printFinalProfit(users);
     }
 
+    private static void printFinalProfit(Users users) {
+        outputView.printResultNotice();
+        Map<String, Money> profits = users.getPlayersProfits(users);
+
+        outputView.printDealerResults(users.getDealerProfit(profits));
+        outputView.printPlayersResult(profits);
+    }
 }

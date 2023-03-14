@@ -3,5 +3,6 @@ package domain;
 public enum Status {
     BUST,
     STAY,
-    PLAYING
+    PLAYING,
+    BLACKJACK
 }

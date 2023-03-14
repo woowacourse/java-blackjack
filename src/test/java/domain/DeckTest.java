@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.Deck;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,37 +9,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
+    private Deck deck;
+
+    @BeforeEach
+    void setUp() {
+        deck = new Deck();
+    }
+
     @Test
     @DisplayName("4개의 그림과 13개의 글자로 52장의 덱을 생성한다")
-    void a() {
-        var deck = new Deck();
-        var cards = deck.getCards();
+    void test_create() {
+        var cards = deck.cards();
 
         assertThat(cards).hasSize(52);
     }
 
     @Test
     @DisplayName("카드 한 장을 준다")
-    void aa() {
-        var deck = new Deck();
+    void test_drawCard_success() {
         deck.drawCard();
 
-        assertThat(deck.getCards()).hasSize(51);
+        assertThat(deck.cards()).hasSize(51);
     }
 
     @Test
     @DisplayName("뽑힌 카드는 덱에서 제거된다")
-    void aaa() {
-        var deck = new Deck();
+    void test_removeCardByDraw() {
         var card = deck.drawCard();
 
-        assertThat(card).isNotIn(deck.getCards());
+        assertThat(card).isNotIn(deck.cards());
     }
 
     @Test
     @DisplayName("카드가 없는 덱에서 카드를 뽑으면 IllegalStateException을 던진다")
-    void aaaa() {
-        var deck = new Deck();
+    void test_drawCardFromEmptyDeck() {
         for (int i = 0; i < 52; i++) {
             deck.drawCard();
         }

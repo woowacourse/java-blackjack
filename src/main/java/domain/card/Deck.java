@@ -1,12 +1,12 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
+    private static final int FIRST_INDEX = 0;
 
-    private final Random random = new Random();
     private final List<Card> cards;
 
     public Deck() {
@@ -15,12 +15,12 @@ public class Deck {
 
     private List<Card> buildDeck() {
         var cards = new ArrayList<Card>();
-        var suits = List.of(Suit.values());
 
-        for (Suit suit : suits) {
+        for (Suit suit : Suit.values()) {
             cards.addAll(buildCardsFrom(suit));
         }
 
+        Collections.shuffle(cards);
         return cards;
     }
 
@@ -36,8 +36,7 @@ public class Deck {
 
     public Card drawCard() {
         validateDrawCard();
-
-        return cards.remove(pickRandomCard());
+        return cards.remove(FIRST_INDEX);
     }
 
     private void validateDrawCard() {
@@ -46,12 +45,7 @@ public class Deck {
         }
     }
 
-    private int pickRandomCard() {
-        return random.nextInt(cards.size());
+    public List<Card> cards() {
+        return Collections.unmodifiableList(cards);
     }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
 }

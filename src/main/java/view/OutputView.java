@@ -1,11 +1,13 @@
 package view;
 
-import domain.*;
-
+import domain.Money;
+import domain.card.Card;
+import domain.user.Player;
+import domain.user.User;
+import domain.user.Users;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static domain.Result.*;
 
 public class OutputView {
     private static final String JOINING_DELIMITER = ", ";
@@ -14,7 +16,7 @@ public class OutputView {
     private static final String GIVE_TWO_CARDS_NOTICE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String ACCEPTED_ADD_CARD_TO_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DECLINED_ADD_CARD_TO_DEALER = "\n딜러는 16초과라 카드를 받지 않았습니다.\n";
-    private static final String FINAL_RESULT_NOTICE = "\n## 최종 승패";
+    private static final String FINAL_RESULT_NOTICE = "\n## 최종 수익";
     private static final String DEALER_NOTICE = "딜러: ";
     private static final String RESULT_NOTICE = " - 결과: ";
 
@@ -69,30 +71,23 @@ public class OutputView {
         String name = user.getName();
         String cardDisplays = getCardDisplays(user.cards());
 
-        System.out.println(name + CARD_NOTICE + cardDisplays + RESULT_NOTICE + user.score().getValue());
+        System.out.println(name + CARD_NOTICE + cardDisplays + RESULT_NOTICE + user.score().value());
     }
 
     public void printResultNotice() {
         System.out.println(FINAL_RESULT_NOTICE);
     }
 
-    public void printResult(String name, Result result) {
-        System.out.println(name + NAME_AND_VALUE_DELIMITER + result.message());
+    public void printPlayersResult(Map<String, Money> profits) {
+        profits.forEach(this::printResult);
     }
 
-    public void printDealerResults(List<Result> results) {
-        long winCount = getCount(results, WIN);
-        long loseCount = getCount(results, LOSE);
-        long drawCount = getCount(results, DRAW);
-
-        String result = winCount + WIN.message() + drawCount + DRAW.message() + loseCount + LOSE.message();
-        System.out.println(DEALER_NOTICE + result);
+    private void printResult(String name, Money money) {
+        System.out.println(name + NAME_AND_VALUE_DELIMITER + money.amount());
     }
 
-    private long getCount(List<Result> results, Result target) {
-        return results.stream()
-                .filter(result -> result.equals(target))
-                .count();
+    public void printDealerResults(Money money) {
+        System.out.println(DEALER_NOTICE + money.amount());
     }
 
     private String getCardDisplays(List<Card> cards) {
@@ -104,5 +99,4 @@ public class OutputView {
     private String getCardDisplay(Card card) {
         return card.letter() + card.suit().getName();
     }
-
 }

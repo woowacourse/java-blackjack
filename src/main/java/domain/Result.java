@@ -1,19 +1,18 @@
 package domain;
 
 public enum Result {
+    DRAW(0),
+    WIN(1),
+    LOSE(-1),
+    WIN_BY_BLACKJACK(1.5);
 
-    DRAW("무"),
-    WIN("승"),
-    LOSE("패");
+    private final double times;
 
-    private final String message;
-
-    Result(String message) {
-        this.message = message;
+    Result(double times) {
+        this.times = times;
     }
 
-    public String message() {
-        return message + " ";
+    public double times() {
+        return times;
     }
-
 }

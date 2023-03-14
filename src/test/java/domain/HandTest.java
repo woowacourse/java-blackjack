@@ -1,16 +1,17 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Hand;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.Suit.HEART;
+import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
-
     private final List<Card> cards = new ArrayList<>(List.of(
             new Card(HEART, "8"),
             new Card(HEART, "10"),
@@ -32,14 +33,14 @@ class HandTest {
     @Test
     @DisplayName("카드들을 통해 점수를 계산한다.")
     void test_score() {
-        assertThat(hand.score()).isEqualTo(new Score(19));
+        assertThat(hand.calculateScore()).isEqualTo(new Score(19));
     }
 
     @Test
     @DisplayName("카드를 추가한다.")
-    void test_() {
+    void test_addCard() {
         hand.add(new Card(HEART, "2"));
-        assertThat(hand.getCards()).hasSize(4);
-    }
 
+        assertThat(hand.cards()).hasSize(4);
+    }
 }

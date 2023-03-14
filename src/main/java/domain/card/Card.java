@@ -1,7 +1,8 @@
-package domain;
+package domain.card;
+
+import domain.Score;
 
 public class Card {
-
     private final Suit suit;
     private final Denomination denomination;
 
@@ -30,5 +31,4 @@ public class Card {
     public Suit suit() {
         return suit;
     }
-
 }
