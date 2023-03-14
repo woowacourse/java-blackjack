@@ -1,6 +1,7 @@
 package controller;
 
 import domain.HitCommand;
+import domain.game.Exchanger;
 import domain.money.BettingMoney;
 import domain.money.BettingMoneyTable;
 import domain.money.Money;
@@ -15,11 +16,13 @@ import domain.user.Users;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
     private Blackjack blackJack;
+    private Exchanger exchanger;
 
     public void run() {
         try {
@@ -34,7 +37,8 @@ public class BlackJackController {
     private void initGame() {
         Users users = Users.from(initPlayerNames());
         BettingMoneyTable bettingMoneyTable = initBettingMoneyTable(users.getPlayers());
-        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck(), bettingMoneyTable);
+        exchanger = new Exchanger(bettingMoneyTable);
+        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck());
         printInitMessages(users.getPlayerNames());
     }
 
@@ -96,8 +100,16 @@ public class BlackJackController {
     private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCardNames(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCardNames(), blackJack.getPlayerToScore());
-        Map<String, Money> winningMoneyOfPlayers = blackJack.calculateWinningMoneyOfPlayers();
-        Money winningMoneyOfDealer = blackJack.calculateWinningMoneyOfDealer(winningMoneyOfPlayers);
+        Map<String, Money> winningMoneyOfPlayers = calculateWinningMoneyOfPlayers();
+        Money winningMoneyOfDealer = calculateWinningMoneyOfDealer(winningMoneyOfPlayers);
         OutputView.printWinningMoneyOfPlayers(winningMoneyOfDealer, winningMoneyOfPlayers);
+    }
+
+    public Map<String, Money> calculateWinningMoneyOfPlayers() {
+        return blackJack.calculateWinningMoneyOfPlayers(exchanger);
+    }
+
+    public Money calculateWinningMoneyOfDealer(Map<String, Money> winningMoneyOfPlayers) {
+        return blackJack.calculateWinningMoneyOfDealer(exchanger, winningMoneyOfPlayers);
     }
 }

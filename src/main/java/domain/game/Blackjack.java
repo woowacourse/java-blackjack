@@ -19,18 +19,15 @@ import java.util.stream.Collectors;
 public class Blackjack {
     private final Users users;
     private final Deck deck;
-    private final Exchanger exchanger;
 
-    private Blackjack(final Users users, final Deck deck, final Exchanger exchanger) {
+    private Blackjack(final Users users, final Deck deck) {
         this.users = users;
         this.deck = deck;
-        this.exchanger = exchanger;
     }
 
-    public static Blackjack of(final Users users, final Deck deck, final BettingMoneyTable bettingMoneyTable) {
+    public static Blackjack of(final Users users, final Deck deck) {
         initCards(users, deck);
-        Exchanger exchanger = new Exchanger(bettingMoneyTable);
-        return new Blackjack(users, deck, exchanger);
+        return new Blackjack(users, deck);
     }
 
     private static void initCards(final Users users, final Deck deck) {
@@ -99,11 +96,11 @@ public class Blackjack {
         return users.getDealer().getScore().getValue();
     }
 
-    public Map<String, Money> calculateWinningMoneyOfPlayers() {
+    public Map<String, Money> calculateWinningMoneyOfPlayers(Exchanger exchanger) {
         return exchanger.getWinningMoneyOfPlayers(users.getPlayers(), users.getDealer());
     }
 
-    public Money calculateWinningMoneyOfDealer(Map<String, Money> winningMoneyOfPlayers) {
+    public Money calculateWinningMoneyOfDealer(Exchanger exchanger, Map<String, Money> winningMoneyOfPlayers) {
         List<Money> playerMonies = winningMoneyOfPlayers.values().stream().collect(Collectors.toList());
         return exchanger.getWinningMoneyOfDealer(playerMonies);
     }
