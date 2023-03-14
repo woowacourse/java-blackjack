@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.math.BigInteger;
 
 public class BettingMoney {
+    private static final int UNIT = 100;
     private final BigInteger value;
 
     public BettingMoney(final int value) {
@@ -22,7 +23,7 @@ public class BettingMoney {
     }
 
     private void validateInappropriateUnit(int uncheckedValue) {
-        if(uncheckedValue % 100 != 0) {
+        if(uncheckedValue % UNIT != 0) {
             throw new IllegalArgumentException("베팅 금액은 100 단위어야 합니다.");
         }
     }
