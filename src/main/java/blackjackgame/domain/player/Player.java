@@ -23,7 +23,7 @@ public abstract class Player {
 
     public abstract String getName();
 
-    public List<Card> cards() {
+    public final List<Card> cards() {
         return state.cards();
     }
 
@@ -39,23 +39,23 @@ public abstract class Player {
         return state.score().isLessThan(new Score(score));
     }
 
-    public void draw(Card card) {
+    public final void draw(Card card) {
         state = state.draw(card);
     }
 
-    protected void stay(){
+    protected final void stay() {
         state = state.stay();
     }
 
-    public boolean isBust(){
+    public final boolean isBust() {
         return state instanceof Bust;
     }
 
-    public boolean isBlackJack(){
+    public final boolean isBlackJack() {
         return state instanceof BlackJack;
     }
 
-    public boolean isStay(){
+    public final boolean isStay() {
         return state instanceof Stay;
     }
 }

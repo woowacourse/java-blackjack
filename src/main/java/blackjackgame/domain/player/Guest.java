@@ -55,7 +55,7 @@ public class Guest extends Player {
         return Objects.hash(name);
     }
 
-    public void stay() {
+    public void setStay() {
         super.stay();
     }
 
