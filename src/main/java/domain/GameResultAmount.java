@@ -8,18 +8,18 @@ public class GameResultAmount {
     private static final int INITIAL_AMOUNT = 0;
     private final Map<Name, ResultAmount> resultOfBetting;
 
-    public GameResultAmount(Map<Player, GameResult> result, Map<Player, Amount> bettingAmount) {
+    public GameResultAmount(Map<Player, GameResult> result) {
         resultOfBetting = new LinkedHashMap<>();
-        calculateResult(result, bettingAmount);
+        calculateResult(result);
     }
 
-    private void calculateResult(Map<Player, GameResult> result, Map<Player, Amount> bettingAmount) {
+    private void calculateResult(Map<Player, GameResult> result) {
         resultOfBetting.put(Dealer.DEALER_NAME, new ResultAmount(INITIAL_AMOUNT));
-        result.forEach((player, gameResult) -> calculateEachResult(player, bettingAmount, gameResult));
+        result.forEach(this::calculateEachResult);
     }
 
-    private void calculateEachResult(Player player, Map<Player, Amount> bettingAmount, GameResult gameResult) {
-        int amount = (int) (bettingAmount.get(player).getValue() * gameResult.getRateOfReturn());
+    private void calculateEachResult(Player player, GameResult gameResult) {
+        int amount = player.calculateResultAmount(gameResult);
         resultOfBetting.put(player.getName(), new ResultAmount(amount));
         resultOfBetting.put(Dealer.DEALER_NAME, calculateDealerAmount(amount));
     }

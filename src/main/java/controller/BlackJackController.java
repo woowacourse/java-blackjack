@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Amount;
-import domain.BettingAmount;
 import domain.Card;
 import domain.GameManager;
 import domain.Participant;
@@ -11,9 +10,7 @@ import view.Answer;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -28,20 +25,16 @@ public class BlackJackController {
 
     public void run() {
         GameManager gameManager = new GameManager(inputView.requestPlayerName());
-        BettingAmount bettingAmount = getBettingAmountOfPlayers(gameManager);
+        setBettingAmountOfPlayers(gameManager);
         printInitialDistribution(gameManager);
         progress(gameManager);
-        end(gameManager, bettingAmount);
+        end(gameManager);
     }
 
-    private BettingAmount getBettingAmountOfPlayers(GameManager gameManager) {
-        Map<Player, Amount> bettingAmountOfPlayers = new HashMap<>();
-
+    private void setBettingAmountOfPlayers(GameManager gameManager) {
         for (Player player : gameManager.getPlayers()) {
-            bettingAmountOfPlayers.put(player, getBettingAmount(player));
+            player.bet(getBettingAmount(player));
         }
-
-        return new BettingAmount(bettingAmountOfPlayers);
     }
 
     private Amount getBettingAmount(Player player) {
@@ -82,10 +75,10 @@ public class BlackJackController {
         outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
     }
 
-    private void end(GameManager gameManager, BettingAmount bettingAmount) {
+    private void end(GameManager gameManager) {
         printFinalCard(gameManager.getDealer());
         gameManager.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(gameManager.getCameResultAmount(bettingAmount));
+        outputView.printFinalResult(gameManager.getCameResultAmount());
     }
 
     private void printFinalCard(Participant participant) {

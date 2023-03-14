@@ -11,15 +11,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultAmountTest {
 
-    private final Player player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
-    private final Map<Player, Amount> amount = Map.of(player, new Amount(10000));
+    private Player player;
+
+    @BeforeEach
+    void beforeEach() {
+        player = new Player(new Name("aa"), new Cards(Collections.emptyList()));
+        player.bet(new Amount(10000));
+    }
 
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerBlackJackWin() {
         Map<Player, GameResult> result = Map.of(player, GameResult.BLACK_JACK_WIN);
-        BettingAmount bettingAmount = new BettingAmount(amount);
-        GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
+        GameResultAmount gameResultAmount = new GameResultAmount(result);
 
         Map<Name, ResultAmount> resultOfBetting = gameResultAmount.getResultOfBetting();
 
@@ -31,8 +35,7 @@ public class GameResultAmountTest {
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerWin() {
         Map<Player, GameResult> result = Map.of(player, GameResult.WIN);
-        BettingAmount bettingAmount = new BettingAmount(amount);
-        GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
+        GameResultAmount gameResultAmount = new GameResultAmount(result);
 
         Map<Name, ResultAmount> resultOfBetting = gameResultAmount.getResultOfBetting();
 
@@ -44,8 +47,7 @@ public class GameResultAmountTest {
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerLose() {
         Map<Player, GameResult> result = Map.of(player, GameResult.LOSE);
-        BettingAmount bettingAmount = new BettingAmount(amount);
-        GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
+        GameResultAmount gameResultAmount = new GameResultAmount(result);
 
         Map<Name, ResultAmount> resultOfBetting = gameResultAmount.getResultOfBetting();
 
@@ -57,8 +59,7 @@ public class GameResultAmountTest {
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerDraw() {
         Map<Player, GameResult> result = Map.of(player, GameResult.DRAW);
-        BettingAmount bettingAmount = new BettingAmount(amount);
-        GameResultAmount gameResultAmount = new GameResultAmount(result, bettingAmount.getBettingAmount());
+        GameResultAmount gameResultAmount = new GameResultAmount(result);
 
         Map<Name, ResultAmount> resultOfBetting = gameResultAmount.getResultOfBetting();
 
