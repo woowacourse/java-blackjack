@@ -1,10 +1,7 @@
 package blackjack.domain.game;
 
-import java.util.regex.Pattern;
-
 public class Betting {
 
-    private static final Pattern BETTING_FORMAT = Pattern.compile("[0-9]+");
     private static final int MAX_BETTING_RANGE = 1_000_000;
     private static final int MIN_BETTING_RANGE = 1_000;
     private static final String INVALID_FORMAT_ERROR_MESSAGE = "베팅 금액은 숫자만 가능합니다.";
@@ -29,7 +26,12 @@ public class Betting {
     }
 
     private boolean isNotNumber(final String value) {
-        return !BETTING_FORMAT.matcher(value).matches();
+        try {
+            Integer.parseInt(value);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
 
     private void validateRange(final String value) {
