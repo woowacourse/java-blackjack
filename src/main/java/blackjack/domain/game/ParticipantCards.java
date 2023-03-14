@@ -29,7 +29,7 @@ public class ParticipantCards {
 
     public int getMaxValueNearBlackJack() {
         final List<CardNumber> cardNumbers = cards.getCardNumbers();
-        final int aceCount = getAceCount(cardNumbers);
+        final int aceCount = countAce(cardNumbers);
         final int sumBeforeOptimize = getSumBeforeOptimize(cardNumbers);
         return getSumAfterOptimize(aceCount, sumBeforeOptimize);
     }
@@ -58,7 +58,7 @@ public class ParticipantCards {
         return new Cards(initCards);
     }
 
-    private int getAceCount(final List<CardNumber> cardNumbers) {
+    private int countAce(final List<CardNumber> cardNumbers) {
         return (int) cardNumbers.stream()
                 .filter(number -> number == ACE)
                 .count();
