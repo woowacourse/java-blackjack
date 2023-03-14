@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public enum GameResult {
 
-    WIN(new BigDecimal(1)),
-    LOSE(new BigDecimal(-1)),
-    DRAW(new BigDecimal(0)),
+    WIN(BigDecimal.valueOf(1)),
+    LOSE(BigDecimal.valueOf(-1)),
+    DRAW(BigDecimal.valueOf(0)),
     BLACK_JACK(new BigDecimal("1.5"));
 
     private final BigDecimal times;
