@@ -4,7 +4,7 @@ import domain.vo.Score;
 
 public class Dealer extends Participant {
 
-    private static final Score MIN_SCORE_THRESHOLD = new Score(16);
+    private static final Score MIN_SCORE_THRESHOLD = Score.of(16);
 
     public Dealer(final Cards cards) {
         super(cards);
@@ -16,6 +16,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return super.getScore().isLessThanOrEqualTo(MIN_SCORE_THRESHOLD);
+        return super.getScore().lessThanOrEqualTo(MIN_SCORE_THRESHOLD);
     }
 }

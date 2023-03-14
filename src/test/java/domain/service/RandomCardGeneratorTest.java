@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 class RandomCardGeneratorTest {
 
-    private CardGenerator randomCardGenerator;
+    private static final CardGenerator randomCardGenerator = RandomCardGenerator.getInstance();
 
     @Test
     @DisplayName("카드를 겸치지 않게 배분하기 테스트")
     public void testRandomGenerate() {
         //given
-        randomCardGenerator = new RandomCardGenerator();
+        randomCardGenerator.reset();
         Set<Card> cards = new HashSet<>();
 
         //when

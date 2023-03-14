@@ -1,6 +1,7 @@
 package domain.model;
 
-import domain.vo.Score;
+import domain.vo.Bet;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,14 +14,14 @@ public class Players {
     private static final String SIZE_NOT_MATCH_ERROR_MESSAGE = "플레이어와 카드의 개수가 일치하지 않습니다.";
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    public Players(final List<Player> players) {
         validate(players);
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        final List<Player> players = names.stream()
-            .map(name -> new Player(Cards.makeEmpty(), name))
+    public static Players from(final List<String> names, final List<Double> battings) {
+        final List<Player> players = IntStream.range(0, names.size())
+            .mapToObj(i -> new Player(Cards.makeEmpty(), names.get(i), Bet.of(battings.get(i))))
             .collect(Collectors.toList());
         return new Players(players);
     }
@@ -53,12 +54,6 @@ public class Players {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Score> getScores() {
-        return players.stream()
-            .map(Player::getScore)
-            .collect(Collectors.toUnmodifiableList());
-    }
-
     public void set(final int index, final Player element) {
         players.set(index, element);
     }
@@ -66,6 +61,10 @@ public class Players {
     public Player get(final int index) {
         final Player player = players.get(index);
         Set<Card> cards = new HashSet<>(player.getCards());
-        return new Player(new Cards(cards), player.getName());
+        return new Player(new Cards(cards), player.getName(), player.getBet());
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

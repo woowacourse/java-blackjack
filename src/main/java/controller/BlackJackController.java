@@ -2,10 +2,9 @@ package controller;
 
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Players;
 import domain.service.BlackJackGame;
-import domain.vo.Result;
-import java.util.Map;
+import domain.vo.Profit;
+import java.util.List;
 import java.util.stream.IntStream;
 import view.IOView;
 
@@ -20,34 +19,36 @@ public class BlackJackController {
     }
 
     public void play() {
-        final Players players = getPlayers();
-        final Dealer dealer = Dealer.withEmptyCards();
-        giveInitialCards(dealer, players);
-        getPlayerAdditionalCard(players);
-        getDealerAdditionalCard(dealer);
-        printTotalCardState(dealer, players);
-        printResult(dealer, players);
+        makePlayers();
+        giveInitialCards();
+        giveAdditionalCard();
+        printTotalCardState();
+        printProfits();
     }
 
-    private Players getPlayers() {
-        return Players.from(ioView.inputNames());
+    private void makePlayers() {
+        final List<String> names = ioView.inputNames();
+        final List<Double> bets = ioView.inputBattings(names);
+        blackJackGame.makePlayers(names, bets);
     }
 
-    private void giveInitialCards(final Dealer dealer, final Players players) {
-        blackJackGame.giveInitCards(dealer, players);
-        ioView.printInitialCards(dealer, players);
+    private void giveInitialCards() {
+        blackJackGame.giveInitCards();
+        ioView.printInitialCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
     }
 
-    private void getPlayerAdditionalCard(final Players players) {
-        IntStream.range(0, players.count()).forEach(index -> {
-            Player player = getPlayerAdditionalCard(players.get(index));
-            players.set(index, player);
-        });
+    private void giveAdditionalCard() {
+        final List<Player> players = blackJackGame.getPlayers();
+        IntStream.range(0, players.size()).
+            forEach(index -> {
+                final Player player = givePlayerAdditionalCard(players.get(index));
+                blackJackGame.setPlayers(index, player);
+            });
+        giveDealerAdditionalCard(blackJackGame.getDealer());
     }
 
-    private Player getPlayerAdditionalCard(final Player player) {
-        while (player.canReceiveCard() && getIntentReceiveCard(player)) {
-            blackJackGame.giveCard(player);
+    private Player givePlayerAdditionalCard(final Player player) {
+        while (getIntentReceiveCard(player) && blackJackGame.giveCard(player)) {
             ioView.printCard(player);
         }
         return player;
@@ -57,21 +58,20 @@ public class BlackJackController {
         return ioView.inputCardIntent(player.getName());
     }
 
-    private void getDealerAdditionalCard(final Dealer dealer) {
-        while (dealer.canReceiveCard()) {
+    private void giveDealerAdditionalCard(final Dealer dealer) {
+        while (blackJackGame.giveCard(dealer)) {
             ioView.printDealerReceiveNotice();
-            blackJackGame.giveCard(dealer);
         }
     }
 
-    private void printTotalCardState(final Dealer dealer, final Players players) {
-        ioView.printTotalCardState(dealer, players);
+    private void printTotalCardState() {
+        ioView.printTotalCardState(blackJackGame.getDealer(), blackJackGame.getPlayers());
     }
 
-    private void printResult(final Dealer dealer, final Players players) {
-        final Result dealerResult = blackJackGame.makeDealerResult(dealer, players);
-        ioView.printDealerResult(dealerResult);
-        final Map<Player, Result> playerResult = blackJackGame.makePlayersResult(dealer, players);
-        ioView.printResult(playerResult);
+    private void printProfits() {
+        final List<Profit> playerProfits = blackJackGame.calculatePlayersProfit(blackJackGame.getPlayers(),
+            blackJackGame.getDealer());
+        final Profit dealerProfit = blackJackGame.calculateDealerProfit(playerProfits);
+        ioView.printProfits(dealerProfit, playerProfits, blackJackGame.getPlayerNames());
     }
 }

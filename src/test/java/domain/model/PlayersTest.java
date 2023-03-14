@@ -4,8 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.vo.Bet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,11 @@ class PlayersTest {
     public void testCreatByFromWhenDuplicateNameExist() {
         //given
         final List<String> names = List.of("a", "a", "b");
+        final List<Double> battings = List.of(1000D, 2000D, 3000D);
 
         //when
         //then
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> Players.from(names, battings))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -29,10 +31,11 @@ class PlayersTest {
     public void testCreateSuccess() {
         //given
         final List<String> names = List.of("a", "b");
+        final List<Double> battings = List.of(1000D, 2000D);
 
         //when
         //then
-        assertDoesNotThrow(() -> Players.from(names));
+        assertDoesNotThrow(() -> Players.from(names, battings));
     }
 
     @Test
@@ -40,10 +43,14 @@ class PlayersTest {
     public void testSize() {
         //given
         final int size = 10;
-        List<String> names = IntStream.range(0, size)
-            .mapToObj(i -> "test" + i)
-            .collect(Collectors.toList());
-        Players players = Players.from(names);
+        final List<String> names = new ArrayList<>();
+        final List<Double> battings = new ArrayList<>();
+        IntStream.range(0, size)
+            .forEach(i -> {
+                names.add("test" + i);
+                battings.add((double) (i * 1000));
+            });
+        Players players = Players.from(names, battings);
 
         //when
         int result = players.count();
@@ -56,13 +63,14 @@ class PlayersTest {
     @DisplayName("원소 수정 테스트")
     public void testSet() {
         //given
-        Players players = Players.from(List.of("test1", "test2", "test3"));
-        Player player = new Player(Cards.makeEmpty(), "player");
+        Players players = Players.from(List.of("test1", "test2", "test3"), List.of(1000D, 2000D, 3000D));
+        Player player = new Player(Cards.makeEmpty(), "player", Bet.of(1D));
 
         //when
         players.set(1, player);
 
         //then
         assertThat(player.getName()).isEqualTo(players.get(1).getName());
+        assertThat(player.getBet().getValue()).isEqualTo(1D);
     }
 }
