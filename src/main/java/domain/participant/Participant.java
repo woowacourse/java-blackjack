@@ -9,6 +9,7 @@ import java.util.Objects;
 public abstract class Participant {
 
     protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
+
     protected final ParticipantCard hand;
     private final ParticipantName name;
 
