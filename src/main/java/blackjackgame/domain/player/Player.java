@@ -36,7 +36,7 @@ public abstract class Player {
     }
 
     public final boolean isLessThan(int score) {
-        return state.score().isLessThan(new Score(score));
+        return state.score().isLessThanOrEqual(new Score(score));
     }
 
     public final void draw(Card card) {

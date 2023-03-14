@@ -18,6 +18,13 @@ class CardTest {
         assertDoesNotThrow(() -> Card.of(Symbol.SPADE, FIVE));
     }
 
+    @DisplayName("카드가 이미 존재하는 캐싱값과 같은지 확인한다")
+    @Test
+    void Should_Same_When_CreateSameCard() {
+        Card diamond_ten = Card.of(Symbol.DIAMOND, TEN);
+        assertThat(diamond_ten).isSameAs(Card.of(Symbol.DIAMOND, TEN));
+    }
+
     @DisplayName("스페이스 5카드가 5의 점수를 가지는지 확인한다")
     @Test
     void Should_ReturnFive_When_FiveCard() {

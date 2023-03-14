@@ -29,11 +29,11 @@ public class Score {
         return this;
     }
 
-    private boolean isLessThanOrEqual(Score other) {
+    public boolean isLessThanOrEqual(Score other) {
         return this.isLessThan(other) || value == other.value;
     }
 
-    public boolean isLessThan(Score other) {
+    private boolean isLessThan(Score other) {
         return value < other.value;
     }
 

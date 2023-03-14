@@ -1,12 +1,21 @@
 package blackjackgame.domain;
 
+import static blackjackgame.domain.CardFixture.*;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import blackjackgame.domain.player.Guest;
+import blackjackgame.domain.player.Name;
+
 class GuestTest {
-    /*@DisplayName("게스트가 가진 카드들의 합이 21미만이면, true를 반환한다.")
+    @DisplayName("게스트가 가진 카드들의 합이 21미만이면, true를 반환한다.")
     @Test
     void Should_CanPickMoreCard_When_ScoreUnder21() {
-        Card five = Card.of(Symbol.SPADE, CardValue.FIVE);
-        Card eight = Card.of(Symbol.CLOVER, CardValue.EIGHT);
-        Guest guest = new Guest(new Name("name"), Arrays.asList(five, eight));
+        Guest guest = Guest.of(List.of(CLOVER_TEN, CLOVER_KING), new Name("name"), 500);
 
         assertThat(guest.canHit()).isTrue();
     }
@@ -14,13 +23,9 @@ class GuestTest {
     @DisplayName("게스트가 가진 카드들의 합이 21이상이면, false를 반환한다.")
     @Test
     void Should_CantPickMoreCard_When_ScoreOver21() {
-        Card jack = Card.of(Symbol.SPADE, CardValue.JACK);
-        Card five = Card.of(Symbol.CLOVER, CardValue.FIVE);
-        Card ten = Card.of(Symbol.HEART, CardValue.TEN);
-
-        Guest guest = new Guest(new Name("name"), new ArrayList<>(List.of(jack, five)));
-        guest.addCard(ten);
+        Guest guest = Guest.of(List.of(CLOVER_TEN, CLOVER_FIVE, CLOVER_KING), new Name("name"), 500);
 
         assertThat(guest.canHit()).isFalse();
-    }*/
+    }
+
 }

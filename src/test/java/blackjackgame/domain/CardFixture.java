@@ -13,6 +13,8 @@ public class CardFixture {
     public static final Card CLOVER_THREE = Card.of(Symbol.CLOVER, CardValue.THREE);
     public static final Card CLOVER_FOUR = Card.of(Symbol.CLOVER, CardValue.FOUR);
     public static final Card CLOVER_FIVE = Card.of(Symbol.CLOVER, CardValue.FIVE);
+    public static final Card CLOVER_SEVEN = Card.of(Symbol.CLOVER, CardValue.SEVEN);
     public static final Card CLOVER_NINE = Card.of(Symbol.CLOVER, CardValue.NINE);
+    public static final Card CLOVER_TEN = Card.of(Symbol.CLOVER, CardValue.TEN);
     public static final Card CLOVER_KING = Card.of(Symbol.CLOVER, CardValue.KING);
 }
