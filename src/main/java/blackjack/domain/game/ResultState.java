@@ -1,16 +1,12 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-
 import java.util.function.Function;
 
 public enum ResultState {
 
     BLACKJACK(betting -> (int) (betting * 1.5)),
-    WIN(betting -> betting * 1),
-    TIE(betting -> betting * 0),
+    WIN(betting -> betting),
+    TIE(betting -> 0),
     LOSE(betting -> betting * -1);
 
     private static final int BLACKJACK_CARD_COUNT = 2;
