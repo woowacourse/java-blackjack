@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.result.PlayerGameResult;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
