@@ -3,53 +3,38 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSuit;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-    private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
-    private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
-    private static final int WIN_MAX_VALUE = 21;
-    private static final int BLACKJACK_SIZE = 2;
     private static final String DEALER_NAME = "딜러";
 
     private final ParticipantName participantName;
-    private final List<Card> receivedCards = new ArrayList<>();
+    private final Hand hand;
 
-    public Participant(ParticipantName participantName) {
+    public Participant(ParticipantName participantName, Hand hand) {
         this.participantName = participantName;
+        this.hand = hand;
     }
 
     public void hit(Card card) {
-        receivedCards.add(card);
+        hand.hitCard(card);
     }
 
-    public List<Card> getReceivedCards() {
-        return receivedCards;
+    public Hand getHand() {
+        return hand;
     }
 
     public boolean participantHasAceCard() {
-        return receivedCards.stream()
-            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
-    }
-
-    public int calculateCardNumberAceCardValueOne() {
-        return receivedCards.stream()
-            .mapToInt(card -> card.getCardNumber().getValue())
-            .sum();
+        return hand.hasAceCard();
     }
 
     public boolean judgeBlackjack() {
-        return receivedCards.size() == BLACKJACK_SIZE && calculateCardNumber() == WIN_MAX_VALUE;
+        return hand.isBlackjack();
     }
 
     public int calculateCardNumber() {
-        int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
-        if (participantHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
-            return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
-        }
-        return totalSumAceCardValueOne;
+        return hand.calculateCardNumber();
     }
 
     public ParticipantName getParticipantName() {
@@ -59,16 +44,17 @@ public abstract class Participant {
     public String getName() {
         return participantName.getName();
     }
+
     public CardNumber getCardNumber(int index) {
-        return receivedCards.get(index).getCardNumber();
+        return hand.getReceivedCards().get(index).getCardNumber();
     }
 
     public CardSuit getCardSuit(int index) {
-        return receivedCards.get(index).getCardSuit();
+        return hand.getReceivedCards().get(index).getCardSuit();
     }
 
     public boolean isDealer() {
-       return participantName.equals(new ParticipantName(DEALER_NAME));
+        return participantName.equals(new ParticipantName(DEALER_NAME));
     }
 
     abstract boolean decideHit();

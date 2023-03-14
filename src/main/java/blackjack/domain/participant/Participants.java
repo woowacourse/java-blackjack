@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Hand;
+import blackjack.domain.betting.BettingMoney;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,11 +16,14 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants generate(List<String> playersName) {
+    public static Participants generate(List<String> playersName, List<String> bettingMoney) {
         List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer(new ParticipantName(DEALER_NAME)));
-        for (String playerName : playersName) {
-            participants.add(new Player(new ParticipantName(playerName)));
+        participants.add(new Dealer(new ParticipantName(DEALER_NAME), new Hand()));
+        for (int i = 0, end = playersName.size(); i < end; i++) {
+            participants.add(new Player(new ParticipantName(
+                playersName.get(i).trim()),
+                new Hand(),
+                new BettingMoney(bettingMoney.get(i))));
         }
         return new Participants(participants);
     }

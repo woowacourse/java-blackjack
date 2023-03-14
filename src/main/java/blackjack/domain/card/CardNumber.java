@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.stream.Stream;
-
 public enum CardNumber {
     ACE(1),
     TWO(2),

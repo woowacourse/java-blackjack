@@ -1,16 +1,15 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.gameresult.ResultReader;
+import blackjack.domain.gameresult.WinningResult;
+import blackjack.domain.betting.Revenue;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.gameResult.BlackjackResult;
-import blackjack.domain.gameResult.ResultReader;
-import blackjack.domain.gameResult.WinningResult;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
@@ -26,17 +25,31 @@ public class BlackjackGame {
         this.cards = cards;
     }
 
-    public BlackjackResult generateBlackjackResult() {
+    public Map<Player, WinningResult> generateBlackjackResult() {
         Dealer dealer = participants.extractDealer();
         Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
-        List<WinningResult> dealerResults = new ArrayList<>();
         ResultReader resultReader = new ResultReader();
 
         for (Player player : participants.extractPlayers()) {
-            dealerResults.add(resultReader.calulateDealerResult(dealer, player));
             playersResult.put(player, resultReader.calulatePlayerResult(dealer, player));
         }
-        return new BlackjackResult(playersResult, dealerResults);
+        return Collections.unmodifiableMap(playersResult);
+    }
+
+    public Map<Player, Revenue> generatePlayersRevenue(Map<Player, WinningResult> result) {
+        Map<Player, Revenue> playersRevenue = new LinkedHashMap<>();
+        for (Player player : result.keySet()) {
+            playersRevenue.put(player, Revenue.generateRevenue(player, result.get(player)));
+        }
+        return Collections.unmodifiableMap(playersRevenue);
+    }
+
+    public int generateDealerRevenue(Map<Player, Revenue> playerRevenue) {
+        int dealerRevenue = 0;
+        for (Player player : playerRevenue.keySet()) {
+            dealerRevenue += playerRevenue.get(player).getRevenue() * -1;
+        }
+        return dealerRevenue;
     }
 
     public void settingGame() {

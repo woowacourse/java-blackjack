@@ -1,6 +1,11 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
+
+    protected static final List<Card> cache = new ArrayList<>();
 
     private final CardNumber cardNumber;
     private final CardSuit cardSuit;
@@ -8,6 +13,14 @@ public class Card {
     public Card(CardNumber cardNumber, CardSuit cardSuit) {
         this.cardNumber = cardNumber;
         this.cardSuit = cardSuit;
+    }
+
+    static {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            for (CardSuit cardSuit : CardSuit.values()) {
+                cache.add(new Card(cardNumber, cardSuit));
+            }
+        }
     }
 
     public CardNumber getCardNumber() {
