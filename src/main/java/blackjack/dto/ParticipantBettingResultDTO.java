@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class ParticipantBettingResultDTO {
-    private final Map<String, Integer> bettingResults;
     private static final String DEALER_DEFAULT_NAME = "딜러";
+
+    private final Map<String, Integer> bettingResults;
 
     private ParticipantBettingResultDTO(final Map<String, Integer> bettingResults) {
         this.bettingResults = bettingResults;
