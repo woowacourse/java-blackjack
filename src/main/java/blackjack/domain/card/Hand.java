@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -22,12 +22,16 @@ public class Cards {
 
     public int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber().equals(Denomination.ACE))
+                .filter(Card::isAce)
                 .count();
     }
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 
     public int getCount() {

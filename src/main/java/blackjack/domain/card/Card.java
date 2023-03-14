@@ -10,6 +10,10 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
+    }
+
     public Suit getSymbol() {
         return suit;
     }

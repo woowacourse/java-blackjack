@@ -17,6 +17,13 @@ public class Players {
         this.players = players;
     }
 
+    private void validateCount(List<Player> players) {
+        int playersCount = players.size();
+        if (playersCount < MIN_COUNT || playersCount > MAX_COUNT) {
+            throw new IllegalArgumentException("참가자 수는 " + MIN_COUNT + "명 이상 " + MAX_COUNT + "명 이하 입니다.");
+        }
+    }
+
     private void validateDuplicate(List<Player> players) {
         long distinctCount = players.stream()
                 .distinct()
@@ -24,13 +31,6 @@ public class Players {
 
         if (distinctCount != players.size()) {
             throw new IllegalArgumentException("참가자는 중복을 허용하지 않습니다.");
-        }
-    }
-
-    private void validateCount(List<Player> players) {
-        int playersCount = players.size();
-        if (playersCount < MIN_COUNT || playersCount > MAX_COUNT) {
-            throw new IllegalArgumentException("참가자 수는 " + MIN_COUNT + "명 이상 " + MAX_COUNT + "명 이하 입니다.");
         }
     }
 
@@ -42,7 +42,20 @@ public class Players {
         return new Players(players);
     }
 
+    public Player findByName(Name name) {
+        return players.stream()
+                .filter(player -> player.equals(new Player(name)))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 참가자가 없습니다."));
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public List<Name> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 }

@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
     @Test
-    @DisplayName("딜러는 받은 카드를 자신의 패에 추가한다.")
+    @DisplayName("받은 카드를 자신의 패에 추가한다.")
     void addCardInCards() {
         Player player = new Player(new Name("pobi"));
 
@@ -29,7 +30,7 @@ public class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("generateCards")
-    @DisplayName("참여자는 자신의 카드 점수를 계산한다.")
+    @DisplayName("자신의 카드 점수를 계산한다.")
     void calculateCards(List<Card> cards, int expectedScore) {
         Player player = new Player(new Name("pobi"));
         for (Card card : cards) {
@@ -73,5 +74,12 @@ public class PlayerTest {
                 Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false),
                 Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.TEN), new Card(Suit.SPADE, Denomination.TEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false)
         );
+    }
+
+    @Test
+    void createNameWithDealer() {
+        assertThatThrownBy(() -> new Player(new Name("딜러")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름은 딜러가 될 수 없습니다.");
     }
 }

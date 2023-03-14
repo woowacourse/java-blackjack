@@ -6,21 +6,13 @@ public class Name {
 
     private static final int MAX_LENGTH = 5;
     private static final String SPACE = " ";
-    private static final String BAN_NAME = "딜러";
 
     private final String name;
 
     public Name(String name) {
         validateSpace(name);
         validateLength(name);
-        validateIsNameDealer(name);
         this.name = name;
-    }
-
-    private void validateIsNameDealer(String name) {
-        if (BAN_NAME.equals(name)) {
-            throw new IllegalArgumentException("이름은 딜러가 될 수 없습니다.");
-        }
     }
 
     private void validateSpace(String name) {
@@ -35,7 +27,7 @@ public class Name {
         }
     }
 
-    public String getName() {
+    public String getValue() {
         return name;
     }
 
@@ -44,11 +36,11 @@ public class Name {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Name name1 = (Name) o;
-        return Objects.equals(getName(), name1.getName());
+        return Objects.equals(getValue(), name1.getValue());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getValue());
     }
 }

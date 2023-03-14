@@ -9,6 +9,7 @@ public class InputView {
 
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String CARD_INPUT_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String BETTING_INPUT_MESSAGE = "의 배팅 금액은?";
     private static final String DELIMITER = ",";
 
     private final Scanner scanner = new Scanner(System.in);
@@ -28,6 +29,17 @@ public class InputView {
         } catch (IllegalArgumentException e) {
             printMessage(e.getMessage());
             return readIntention(name);
+        }
+    }
+
+    public int readBetting(String name) {
+        printMessage(name + BETTING_INPUT_MESSAGE);
+        try {
+            String inputBetting = input();
+            return Integer.parseInt(inputBetting);
+        } catch (IllegalArgumentException e) {
+            printMessage(e.getMessage());
+            return readBetting(name);
         }
     }
 
