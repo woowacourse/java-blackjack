@@ -10,14 +10,14 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardsDto;
 import blackjack.dto.ParticipantsDto;
-import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -38,8 +38,12 @@ public class BlackjackController {
 
 
     private Participants makeParticipants() {
+        Map<String, Integer> players = new LinkedHashMap<>();
+        for (String name : inputView.inputPlayers()) {
+            players.put(name, inputView.inputBetting(name));
+        }
         final Dealer dealer = new Dealer();
-        return new Participants(dealer, inputView.inputPlayers());
+        return new Participants(dealer, players);
     }
 
     private Deck makeDeck() {
@@ -51,7 +55,7 @@ public class BlackjackController {
         final List<String> playerNames = participants.getPlayerNames();
         outputView.outputSplitMessage(playerNames);
         blackjackGame.giveTwoCardEveryone(participants);
-        participants.getDealer().reverseAllExceptOne();
+        participants.openDealerOneCard();
         outputView.outputParticipantCards(new ParticipantsDto(participants));
     }
 
@@ -76,16 +80,15 @@ public class BlackjackController {
 
     private void hitDealer(BlackjackGame blackjackGame, Dealer dealer) {
         while (blackjackGame.playDealer(dealer)) {
-            outputView.outputDealerDrawCard(dealer.getName());
+            outputView.outputDealerDrawCard();
         }
     }
 
     private void showResult(Participants participants) {
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
-        participants.getDealer().openAllCard();
+        participants.openDealerAllCards();
         outputView.outputCardsAndScore(new ParticipantsDto(participants));
-        outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
+        outputView.outputRevenue(new ParticipantsDto(participants));
     }
-
 }

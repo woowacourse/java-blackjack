@@ -9,7 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
@@ -23,7 +24,10 @@ public class BlackjackGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        participants = new Participants(dealer, List.of("pobi", "crong"));
+        Map<String, Integer> players = new HashMap<>();
+        players.put("pobi", 0);
+        players.put("crong", 0);
+        participants = new Participants(dealer, players);
         deck = new Deck(DECK_MAKER.makeDeck(), (int size) -> 1);
     }
 
