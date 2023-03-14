@@ -14,9 +14,9 @@ import blackjack.domain.participant.Players;
 
 class GameResultTest {
 
-    @DisplayName("GameResult의 findDealerResult메서드는 Player의 승무패와 반대되는 값을 계산하여 반환한다.")
+    @DisplayName("GameResult의 findResult메서드는 Player가 승리했을 경우 반대인 패배를 반환한다.")
     @Test
-    void returnsReverseResultOfPlayer() {
+    void returnsLoseWhenPlayerWin() {
         // given
         Map<Player, ResultType> playerResult = new LinkedHashMap<>();
 
@@ -32,5 +32,45 @@ class GameResultTest {
 
         // then
         assertThat(dealerResult.get(ResultType.LOSE)).isEqualTo(2);
+    }
+    
+    @DisplayName("GameResult의 findResult메서드는 Player가 패배했을 경우 반대인 승리를 반환한다.")
+    @Test
+    void returnsWinWhenPlayerLose() {
+        // given
+        Map<Player, ResultType> playerResult = new LinkedHashMap<>();
+
+        Players players = Players.createPlayers("pobi,crong");
+        for (Player player : players.getPlayers()) {
+            playerResult.put(player, ResultType.LOSE);
+        }
+
+        GameResult gameResult = new GameResult(playerResult);
+
+        // when
+        Map<ResultType, Integer> dealerResult = gameResult.findDealerResult();
+
+        // then
+        assertThat(dealerResult.get(ResultType.WIN)).isEqualTo(2);
+    }
+
+    @DisplayName("GameResult의 findResult메서드는 Player가 무승부인 경우 무승부를 반환한다.")
+    @Test
+    void returnsDrawWhenPlayerDraw() {
+        // given
+        Map<Player, ResultType> playerResult = new LinkedHashMap<>();
+
+        Players players = Players.createPlayers("pobi,crong");
+        for (Player player : players.getPlayers()) {
+            playerResult.put(player, ResultType.PUSH);
+        }
+
+        GameResult gameResult = new GameResult(playerResult);
+
+        // when
+        Map<ResultType, Integer> dealerResult = gameResult.findDealerResult();
+
+        // then
+        assertThat(dealerResult.get(ResultType.PUSH)).isEqualTo(2);
     }
 }

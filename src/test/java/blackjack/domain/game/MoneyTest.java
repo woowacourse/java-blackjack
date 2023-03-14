@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,13 @@ class MoneyTest {
     @BeforeEach
     void setUp() {
         money = new Money("10000");
+    }
+
+    @DisplayName("Money를 생성한다.")
+    @Test
+    void createMoney() {
+        // when & then
+        assertDoesNotThrow(() -> money);
     }
 
     @DisplayName("Money는 숫자가 아니면 예외가 발생한다.")
