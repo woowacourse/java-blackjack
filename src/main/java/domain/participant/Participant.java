@@ -1,14 +1,12 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.HandCards;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
-    public static final int MIN_BUST_NUMBER = 21;
-
     private final Name name;
     private final HandCards handCards;
 
@@ -17,33 +15,41 @@ public abstract class Participant {
         this.handCards = new HandCards();
     }
 
-    public int calculateScore() {
-        int aceCount = handCards.getAceCount();
-        int scoreSum = handCards.getCards().stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        while (scoreSum > 21 && aceCount > 0) {
-            scoreSum -= 10;
-            aceCount--;
+    public void takeCard(Deck deck, int num) {
+        for (int generateIndex = 0; generateIndex < num; generateIndex++) {
+            drawCard(deck.generateCard());
         }
-        return scoreSum;
     }
+
+    public void drawCard(Card card) {
+        handCards.takeCard(card);
+    }
+
+    public int getScoreSum() {
+        return handCards.calculateScore();
+    }
+
+    public boolean isBust() {
+        return handCards.checkBust();
+    }
+
+    public boolean isBlackJack() {
+        return handCards.checkBlackJack();
+    }
+
+    abstract boolean isDrawable();
 
     public String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(handCards.getCards());
+    public HandCards getHandCards() {
+        return handCards;
     }
 
     public List<String> getCardNames() {
         return handCards.getCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public void drawCard(Card card) {
-        handCards.takeCard(card);
     }
 }

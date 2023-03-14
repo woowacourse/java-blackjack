@@ -4,26 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
+    private static final int MIN_BUST_NUMBER = 21;
+    private static final int ZERO_SCORE = 0;
+    private static final int INIT_CARD_SIZE = 2;
+    private static final int PLUS_ACE_COUNT = 10;
+
     private final List<Card> cards;
-    private int aceCount;
 
     public HandCards() {
         this.cards = new ArrayList<>();
-        this.aceCount = 0;
     }
 
     public void takeCard(Card card) {
         cards.add(card);
-        if (card.getName().contains("A")) {
-            aceCount++;
+    }
+
+    public int calculateScore() {
+        int scoreSum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        return getAceCase(hasAce(), scoreSum);
+    }
+
+    private boolean hasAce() {
+        boolean hasAce = false;
+        for (Card card : cards) {
+            hasAce = hasAce || card.isAce();
         }
+        return hasAce;
+    }
+
+    private int getAceCase(boolean hasAce, int scoreSum) {
+        if (hasAce && scoreSum + PLUS_ACE_COUNT <= MIN_BUST_NUMBER) {
+            return scoreSum + PLUS_ACE_COUNT;
+        }
+        return scoreSum;
+    }
+
+    public boolean checkBust() {
+        return calculateScore() > MIN_BUST_NUMBER;
+    }
+
+    public boolean checkBlackJack() {
+        return calculateScore() == MIN_BUST_NUMBER && cards.size() == INIT_CARD_SIZE;
     }
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public int getAceCount() {
-        return aceCount;
     }
 }

@@ -9,9 +9,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 class DeckTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"A하트, 11", "3하트, 3", "5다이아몬드, 5", "K스페이드, 10", "Q클로버, 10", "J하트, 10"})
+    @CsvSource(value = {"A하트, 1", "3하트, 3", "5다이아몬드, 5", "K스페이드, 10", "Q클로버, 10", "J하트, 10"})
     @DisplayName("각 카드에 해당하는 숫자를 정상적으로 추출한다.")
     void shouldSuccessExtractCardNumber(String card, int cardNumber) {
-        assertThat(Deck.extractCardNumber(card)).isEqualTo(cardNumber);
+        Deck deck = new Deck();
+        assertThat(deck.extractCardNumber(card)).isEqualTo(cardNumber);
     }
 }

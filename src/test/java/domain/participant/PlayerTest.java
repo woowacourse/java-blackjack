@@ -14,7 +14,7 @@ public class PlayerTest {
         Player player = new Player(new Name("seongha"));
         player.drawCard(new Card("10다이아몬드", 10));
         player.drawCard(new Card("3다이아몬드", 3));
-        assertThat(player.getCards().size()).isEqualTo(2);
+        assertThat(player.getHandCards().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class PlayerTest {
         Player player = new Player(new Name("seongha"));
         player.drawCard(new Card("10다이아몬드", 10));
         player.drawCard(new Card("6다이아몬드", 6));
-        assertThat(player.playerAbleToDraw()).isTrue();
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ public class PlayerTest {
         player.drawCard(new Card("10다이아몬드", 10));
         player.drawCard(new Card("6다이아몬드", 6));
         player.drawCard(new Card("8다이아몬드", 8));
-        assertThat(player.playerAbleToDraw()).isFalse();
+        assertThat(player.isDrawable()).isFalse();
     }
 }
