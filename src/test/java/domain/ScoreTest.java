@@ -1,6 +1,6 @@
 package domain;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 import domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +29,9 @@ class ScoreTest {
         Score score = Score.from(20);
         //when
         Score opponent = Score.from(19);
-        DealerStatus dealerStatus = score.compareScore(opponent);
+        Status status = score.compareScore(opponent);
         //then
-        assertThat(dealerStatus).isEqualTo(DealerStatus.WIN);
+        assertThat(status).isEqualTo(Status.WIN);
     }
 
     @Test
@@ -41,9 +41,42 @@ class ScoreTest {
         Score score = Score.from(10);
         //when
         Score opponent = Score.from(19);
-        DealerStatus dealerStatus = score.compareScore(opponent);
+        Status status = score.compareScore(opponent);
         //then
-        assertThat(dealerStatus).isEqualTo(DealerStatus.LOSE);
+        assertThat(status).isEqualTo(Status.LOSE);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1:2:true", "2:2:true", "3:2:false"}, delimiter = ':')
+    @DisplayName("더 큰 Score와 비교하면 false를 반환한다")
+    void compareValueTest(int origin, int compared, boolean expected) {
+        //given
+        Score score = Score.from(origin);
+        //when
+        boolean smallerOrEqual = score.isSmallerOrEqual(compared);
+        //then
+        assertThat(smallerOrEqual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("score는 같은 value를 다시 호출하면 같은 객체를 리턴한다")
+    void cacheScoreTest() {
+        Score from = Score.from(20);
+        Score from1 = Score.from(20);
+
+        assertThat(from).isSameAs(from1);
+    }
+
+    @Test
+    @DisplayName("value가 같으면 비긴다.")
+    void drawTest() {
+        //given
+        Score score1 = Score.from(10);
+        Score score2 = Score.from(10);
+        //when
+        Status status = score1.compareScore(score2);
+        //then
+        assertThat(status).isEqualTo(Status.DRAW);
     }
 
 }

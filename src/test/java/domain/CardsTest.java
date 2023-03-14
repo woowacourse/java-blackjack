@@ -45,6 +45,7 @@ class CardsTest {
         int expectedScore = 16;
         assertThat(cards.calculateScore().getValue()).isEqualTo(expectedScore);
     }
+
     @Test
     void A가_1점으로_계산되는_케이스() {
         //given

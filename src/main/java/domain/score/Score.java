@@ -1,11 +1,16 @@
 package domain.score;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 
-public class Score {
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
-    private static final int BUSTED_SCORE = -1;
+public final class Score {
+
     private static final int MAX_SCORE = 21;
+    private static final Map<Integer, Score> cache = new ConcurrentHashMap<>();
+
     private final int value;
 
     private Score(final int value) {
@@ -13,17 +18,28 @@ public class Score {
     }
 
     public static Score from(final int value) {
-        if (value > MAX_SCORE) {
-            return new Score(BUSTED_SCORE);
+        if (!cache.containsKey(value)) {
+            cache.put(value, new Score(value));
         }
-        return new Score(value);
+        return cache.get(value);
     }
 
-    public DealerStatus compareScore(final Score score) {
+    public Status compareScore(final Score score) {
         if (this.value > score.value) {
-            return DealerStatus.WIN;
+            return Status.WIN;
         }
-        return DealerStatus.LOSE;
+        if (this.value == score.value) {
+            return Status.DRAW;
+        }
+        return Status.LOSE;
+    }
+
+    public boolean isSmallerOrEqual(final int number) {
+        return value <= number;
+    }
+
+    public boolean isBlackjackCandidate() {
+        return value == MAX_SCORE;
     }
 
     public int getValue() {
@@ -31,6 +47,19 @@ public class Score {
     }
 
     public boolean isBusted() {
-        return value == BUSTED_SCORE;
+        return value > MAX_SCORE;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return value == score.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

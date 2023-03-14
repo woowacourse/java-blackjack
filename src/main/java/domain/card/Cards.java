@@ -5,7 +5,7 @@ import domain.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
 
     private static final int MAX_SCORE = 21;
     private static final int BIGGER_A_SCORE = 10;
@@ -17,7 +17,7 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -32,18 +32,17 @@ public class Cards {
         return Score.from(sum);
     }
 
-    private boolean canUseBiggerAce(int sum) {
+    private boolean canUseBiggerAce(final int sum) {
         return sum + BIGGER_A_SCORE <= MAX_SCORE && isContainAce();
     }
 
     private boolean isContainAce() {
         return cards.stream()
-                .map(Card::getName)
-                .anyMatch(name -> name.equals(Denomination.ACE.getName()));
+                .anyMatch(Card::isAceCard);
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && calculateScore().getValue() == MAX_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateScore().isBlackjackCandidate();
     }
 
     public List<Card> getCards() {

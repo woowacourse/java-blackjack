@@ -1,24 +1,28 @@
 package domain.card;
 
-public class Card {
+public final class Card {
 
     private final Suit suit;
     private final Denomination denomination;
 
-    public Card(Suit suit, Denomination denomination) {
+    public Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
+    }
+
+    public boolean isAceCard() {
+        return denomination.isAce();
     }
 
     public int getScore() {
         return denomination.getScore();
     }
 
-    public String getName() {
-        return denomination.getName();
+    public Suit getSuit() {
+        return suit;
     }
 
-    public String getSuit() {
-        return suit.getName();
+    public Denomination getDenomination() {
+        return denomination;
     }
 }

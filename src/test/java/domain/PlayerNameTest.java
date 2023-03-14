@@ -15,6 +15,7 @@ class PlayerNameTest {
     @ValueSource(strings = {"", " "})
     void playerName이_Blank_라면_예외처리(String nameInput) {
         assertThatThrownBy(() -> new PlayerName(nameInput))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("빈 칸");
     }
 }

@@ -2,106 +2,120 @@ package controller;
 
 import domain.card.Deck;
 import domain.player.Dealer;
-import domain.player.DealerStatus;
+import domain.player.Gambler;
 import domain.player.Player;
 import domain.player.Players;
+import domain.stake.Bet;
+import view.InputView;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static view.InputView.*;
 import static view.OutputView.*;
 
-public class BlackjackController {
-
-    private final Deck deck = new Deck();
+public final class BlackjackController {
 
     public void runGame() {
-        Players players = getPlayers();
+        Players players = repeatReadPlayers();
         Dealer dealer = new Dealer();
+        Deck deck = new Deck();
 
-        process(players, dealer);
+        process(players, dealer, deck);
     }
 
-    private Players getPlayers() {
+    private Players repeatReadPlayers() {
         try {
             return new Players(readPlayersName());
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            return getPlayers();
+            return repeatReadPlayers();
         }
     }
 
-    private void process(Players players, Dealer dealer) {
-        drawInitialCards(players, dealer);
+    private void process(final Players players, final Dealer dealer, final Deck deck) {
+        Map<Player, Bet> playerStakes = readStakes(players);
+        drawInitialCards(players, dealer, deck);
 
-        playersHitOrStand(players);
-        dealerHitOrStand(dealer);
+        readPlayersHit(players, deck);
+        drawIfDealerCanHit(dealer, deck);
 
-        printScores(players, dealer);
-        getResult(dealer, players);
+        showFinalScores(players, dealer);
+        showBetResults(dealer, players, playerStakes);
     }
 
-    private void drawInitialCards(final Players players, final Dealer dealer) {
+    private void drawInitialCards(final Players players, final Dealer dealer, final Deck deck) {
         printInitialPickGuideMessage(players);
         for (Player player : players.getPlayers()) {
-            player.drawCard(deck.pickCard());
-            player.drawCard(deck.pickCard());
+            player.drawInitialCards(deck);
         }
-        dealer.drawCard(deck.pickCard());
-        dealer.drawCard(deck.pickCard());
+        dealer.drawInitialCards(deck);
         printInitialCards(dealer, players);
     }
 
-    private void playersHitOrStand(Players players) {
+    private Map<Player, Bet> readStakes(final Players players) {
+        Map<Player, Bet> playerStakes = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerHitOrStand(player);
+            repeatReadSingleStake(playerStakes, player);
+        }
+        return playerStakes;
+    }
+
+    private void repeatReadSingleStake(final Map<Player, Bet> playerStakes, final Player player) {
+        try {
+            playerStakes.put(player, Bet.from(readBet(player)));
+        } catch (RuntimeException e) {
+            InputView.printErrorMessage(e);
+            repeatReadSingleStake(playerStakes, player);
         }
     }
 
-    private void playerHitOrStand(Player player) {
+    private void readPlayersHit(final Players players, final Deck deck) {
+        for (Player player : players.getPlayers()) {
+            readPlayerHit(player, deck);
+        }
+    }
+
+    private void readPlayerHit(final Player player, final Deck deck) {
         boolean canHit;
         do {
-            canHit = getIsHit(player);
-            playerHit(player, canHit);
+            canHit = repeatReadCanHit(player);
+            drawIfHit(player, canHit, deck);
             printSinglePlayer(player);
         } while (canHit && player.isNotBusted());
     }
 
-    private boolean getIsHit(Player player) {
+    private boolean repeatReadCanHit(final Player player) {
         try {
             return readIsHit(player);
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            return getIsHit(player);
+            return repeatReadCanHit(player);
         }
     }
 
-    private void playerHit(Player player, boolean canHit) {
+    private void drawIfHit(final Player player, final boolean canHit, final Deck deck) {
         if (canHit) {
             player.drawCard(deck.pickCard());
         }
     }
 
-    private void dealerHitOrStand(Dealer dealer) {
-        while (dealer.isHittable() && dealer.isNotBusted()) {
-            dealerHit(dealer);
+    private void drawIfDealerCanHit(final Dealer dealer, final Deck deck) {
+        while (dealer.isHittable()) {
+            printDealerDrawMessage();
+            dealer.drawCard(deck.pickCard());
         }
     }
 
-    private void dealerHit(Dealer dealer) {
-        dealer.drawCard(deck.pickCard());
-        printDealerDrawMessage();
-    }
-
-    private void printScores(Players players, Dealer dealer) {
+    private void showFinalScores(final Players players, final Dealer dealer) {
         printScore(dealer);
         for (Player player : players.getPlayers()) {
             printScore(player);
         }
     }
 
-    private void getResult(Dealer dealer, Players players) {
-        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
-        printResult(dealerStats, players);
+    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Bet> playerBets) {
+        Map<Gambler, Bet> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
+        printResult(finalStakeResults);
     }
 }

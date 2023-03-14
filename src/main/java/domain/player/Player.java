@@ -1,47 +1,34 @@
 package domain.player;
 
-import domain.card.Card;
-import domain.card.Cards;
 import domain.score.Score;
 
-import java.util.List;
+public final class Player extends Gambler{
 
-public class Player {
-
-    private final PlayerName playerName;
-    private final Cards cards;
-
-    public Player(PlayerName playerName) {
-        this.playerName = playerName;
-        this.cards = new Cards();
+    public Player(final PlayerName playerName) {
+        super(playerName);
     }
 
-    public void drawCard(Card card) {
-        cards.addCard(card);
+    public Status compareWithDealer(final Dealer dealer) {
+        if (isBothBlackjack(dealer)) {
+            return Status.DRAW;
+        }
+        if (this.isBlackjack()) {
+            return Status.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack() || this.isBusted()) {
+            return Status.LOSE;
+        }
+        if (dealer.isBusted()) {
+            return Status.WIN;
+        }
+        return this.compareNormalCase(dealer.getScore());
     }
 
-    public Score getScore() {
-        return cards.calculateScore();
+    private boolean isBothBlackjack(final Dealer dealer) {
+        return dealer.isBlackjack() && this.isBlackjack();
     }
 
-    public boolean isBusted() {
-        return getScore().isBusted();
+    private Status compareNormalCase(final Score score) {
+        return getScore().compareScore(score);
     }
-
-    public boolean isNotBusted() {
-        return !getScore().isBusted();
-    }
-
-    public boolean isBlackjack() {
-        return cards.isBlackJack();
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
-    public String getName() {
-        return playerName.getName();
-    }
-
 }
