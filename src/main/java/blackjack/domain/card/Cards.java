@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Cards {
-    private static final int INITIAL_SIZE = 2;
-    private static final int MAX_SCORE_NOT_BUST = 21;
+import static blackjack.common.BlackJackRule.INITIAL_CARD_SIZE;
+import static blackjack.common.BlackJackRule.MAX_SCORE_NOT_BUST;
 
+public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -28,7 +28,7 @@ public class Cards {
         List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toList());
-        return CardNumber.getMaxValueNearBlackJack(cardNumbers, MAX_SCORE_NOT_BUST);
+        return CardNumber.getMaxValueNearBlackJack(cardNumbers, MAX_SCORE_NOT_BUST.getValue());
     }
 
     public List<Card> open(int size) {
@@ -38,19 +38,19 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculate() > MAX_SCORE_NOT_BUST;
+        return calculate() > MAX_SCORE_NOT_BUST.getValue();
     }
 
     public boolean isBlackJack() {
-        return cards.size() == INITIAL_SIZE && calculate() == MAX_SCORE_NOT_BUST;
+        return cards.size() == INITIAL_CARD_SIZE.getValue() && calculate() == MAX_SCORE_NOT_BUST.getValue();
     }
 
     private void validate(final List<Card> cards) {
-        if (cards.size() != INITIAL_SIZE) {
+        if (cards.size() != INITIAL_CARD_SIZE.getValue()) {
             throw new IllegalArgumentException("첫 카드는 두 장이어야 합니다.");
         }
 
-        if (new HashSet<>(cards).size() != INITIAL_SIZE) {
+        if (new HashSet<>(cards).size() != INITIAL_CARD_SIZE.getValue()) {
             throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
     }

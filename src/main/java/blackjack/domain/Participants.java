@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Participants {
-    private static final int INITIAL_CARD_COUNT = 2;
+import static blackjack.common.BlackJackRule.INITIAL_CARD_SIZE;
 
+public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -24,7 +24,7 @@ public class Participants {
 
     private Cards makeInitialCards(final Deck deck) {
         List<Card> initialCards = new ArrayList<>();
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+        for (int i = 0; i < INITIAL_CARD_SIZE.getValue(); i++) {
             initialCards.add(deck.draw());
         }
         return new Cards(initialCards);

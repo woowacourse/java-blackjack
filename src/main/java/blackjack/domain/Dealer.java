@@ -5,10 +5,10 @@ import blackjack.domain.card.Cards;
 
 import java.util.List;
 
+import static blackjack.common.BlackJackRule.DEALER_MAX_HITTABLE_POINT;
 import static blackjack.domain.ResultType.*;
 
 public class Dealer extends Participant {
-    private static final int DEALER_MAX_HITTABLE_POINT = 16;
     private static final int INITIAL_OPEN_CARD_COUNT = 1;
     private static final String DEFAULT_NAME = "딜러";
 
@@ -23,7 +23,7 @@ public class Dealer extends Participant {
 
     @Override
     protected boolean isHittable() {
-        return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT;
+        return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT.getValue();
     }
 
     public ResultType judgePlayerResult(final Participant participant) {
