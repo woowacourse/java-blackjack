@@ -1,16 +1,12 @@
 package blackjackgame.controller;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
-import blackjackgame.domain.Dealer;
-import blackjackgame.domain.Deck;
-import blackjackgame.domain.Guest;
-import blackjackgame.domain.Guests;
-import blackjackgame.domain.Result;
-import blackjackgame.view.AddCardResponse;
+import blackjackgame.domain.*;
+import blackjackgame.view.AddCardRequest;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -22,37 +18,57 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Guests guests = generateGuests();
-        final Dealer dealer = new Dealer();
         final Deck deck = new Deck();
-        initGame(guests, dealer, deck);
+        final Dealer dealer = new Dealer(new Hand(deck.pickOne(), deck.pickOne()));
+        final Guests guests = generateGuests(deck);
+        printFirstHand(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
         askDealerHitCard(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
-        printGameResult(guests, dealer);
+        printBettingResult(guests, dealer);
     }
 
-    private Guests generateGuests() {
+    private Guests generateGuests(final Deck deck) {
+        List<Name> guestNames = askGuestNames();
+        List<BettingMoney> bettingMonies = askGuestsBettingMoney(guestNames);
+        return new Guests(guestNames, bettingMonies, deck);
+    }
+
+    private List<Name> askGuestNames() {
         try {
-            List<String> guestNames = inputView.readGuestsName();
-            return new Guests(guestNames);
+            List<String> guestNames = inputView.readGuestNames();
+            Names names = new Names(guestNames);
+            return names.getNames();
         } catch (IllegalArgumentException e) {
             inputView.printErrorMsg(e.getMessage());
-            return generateGuests();
+            return askGuestNames();
         }
     }
 
-    private void initGame(final Guests guests, final Dealer dealer, final Deck deck) {
-        IntStream.range(0, 2).forEach(
-                count -> {
-                    dealer.addCard(deck.pickOne());
-                    guests.getGuests().forEach(guest -> guest.addCard(deck.pickOne()));
-                });
-        outputView.printFirstDealerCards(dealer.getName(), DataTransformController.transformCards(dealer.getCards()));
+    private List<BettingMoney> askGuestsBettingMoney(List<Name> guestNames) {
+        List<BettingMoney> guestsBettingMoney = new ArrayList<>();
+        for (Name name : guestNames) {
+            askGuestBettingMoney(guestsBettingMoney, name.getName());
+        }
+        return guestsBettingMoney;
+    }
+
+    private void askGuestBettingMoney(List<BettingMoney> guestBettingMoney, String guestName) {
+        try {
+            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guestName));
+            guestBettingMoney.add(bettingMoney);
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMsg(e.getMessage());
+            askGuestBettingMoney(guestBettingMoney, guestName);
+        }
+    }
+
+    private void printFirstHand(final Guests guests, final Dealer dealer) {
+        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()));
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
         }
     }
 
@@ -63,19 +79,18 @@ public class BlackJackController {
     }
 
     private void askGuestHitCardRepeat(final Deck deck, final Guest guest) {
-        AddCardResponse addCardResponse = AddCardResponse.YES;
-        while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
-            addCardResponse = inputView.readWantMoreCard(guest.getName());
-            askGuestHitCard(deck, guest, addCardResponse);
+        AddCardRequest addCardRequest = AddCardRequest.YES;
+        while (guest.canHit() && addCardRequest == AddCardRequest.YES) {
+            addCardRequest = inputView.readWantMoreCard(guest.getName());
+            askGuestHitCard(deck, guest, addCardRequest);
         }
     }
 
-    private void askGuestHitCard(final Deck deck, final Guest guest,
-                                 final AddCardResponse addCardResponse) {
-        if (addCardResponse == AddCardResponse.YES) {
+    private void askGuestHitCard(final Deck deck, final Guest guest, final AddCardRequest addCardRequest) {
+        if (addCardRequest == AddCardRequest.YES) {
             guest.addCard(deck.pickOne());
         }
-        outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
+        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()));
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
@@ -86,18 +101,14 @@ public class BlackJackController {
     }
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
-        outputView.printCards(dealer.getName(), DataTransformController.transformCards(dealer.getCards()));
-        outputView.printScore(dealer.getScore());
+        outputView.printScore(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getHand()), dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
-            outputView.printScore(guest.getScore());
+            outputView.printScore(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getHand()), guest.getScore());
         }
     }
 
-    private void printGameResult(final Guests guests, final Dealer dealer) {
-        Result result = new Result(dealer, guests.getGuests());
-        outputView.printResult(DataTransformController.transformDealerResult(result.getDealerResult()),
-                DataTransformController.transformGuestsResult(result.getGuestsResult()));
+    private void printBettingResult(final Guests guests, final Dealer dealer) {
+        outputView.printBettingResult(Result.getPlayersRevenue(guests.getGuests(), dealer));
     }
 }

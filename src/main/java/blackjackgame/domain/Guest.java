@@ -1,14 +1,15 @@
 package blackjackgame.domain;
 
-import java.util.Objects;
-
 public class Guest extends Player {
     private static final int BLACKJACK_MAX_SCORE = 21;
 
     private final Name name;
+    private final BettingMoney bettingMoney;
 
-    public Guest(final Name name) {
+    public Guest(final Name name, final Hand hand, final BettingMoney bettingMoney) {
+        super(hand);
         this.name = name;
+        this.bettingMoney = bettingMoney;
     }
 
     public boolean canHit() {
@@ -19,20 +20,7 @@ public class Guest extends Player {
         return name.getName();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Guest guest = (Guest)o;
-        return Objects.equals(name, guest.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public int getBettingMoney() {
+        return bettingMoney.money();
     }
 }

@@ -7,10 +7,12 @@ import blackjackgame.dto.CardDto;
 import blackjackgame.dto.DealerResultDto;
 import blackjackgame.dto.GuestResultDto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class DataTransformController {
-    public static List<CardDto> transformCards(List<Card> cards) {
+public class BlackJackGameDataAssembler {
+    public static List<CardDto> assembleCardDto(List<Card> cards) {
         List<CardDto> playerCards = new ArrayList<>();
         for (final Card card : cards) {
             playerCards.add(new CardDto(card.getSymbol(), card.getValue()));
@@ -18,7 +20,7 @@ public class DataTransformController {
         return playerCards;
     }
 
-    public static List<GuestResultDto> transformGuestsResult(Map<Guest, GameOutcome> guestsResult) {
+    public static List<GuestResultDto> assembleGuestsResultDto(Map<Guest, GameOutcome> guestsResult) {
         List<GuestResultDto> guestResults = new ArrayList<>();
         for (final Guest guest : guestsResult.keySet()) {
             guestResults.add(new GuestResultDto(guest.getName(), guestsResult.get(guest).getOutcome()));
@@ -26,7 +28,7 @@ public class DataTransformController {
         return guestResults;
     }
 
-    public static List<DealerResultDto> transformDealerResult(Map<GameOutcome, Integer> dealerResult) {
+    public static List<DealerResultDto> assembleDealerResultDto(Map<GameOutcome, Integer> dealerResult) {
         List<DealerResultDto> dealerResults = new ArrayList<>();
         for (final GameOutcome gameOutcome : dealerResult.keySet()) {
             dealerResults.add(new DealerResultDto(gameOutcome.getOutcome(), dealerResult.get(gameOutcome)));

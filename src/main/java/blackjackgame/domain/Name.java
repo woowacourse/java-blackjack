@@ -38,7 +38,7 @@ public class Name {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Name compareName = (Name)o;
+        Name compareName = (Name) o;
         return Objects.equals(name, compareName.name);
     }
 
