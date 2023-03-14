@@ -1,9 +1,8 @@
-package controller;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Decision;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,7 +32,7 @@ class DecisionTest {
             //given
 
             //when
-            Decision actual =  Decision.from(decision);
+            Decision actual = Decision.from(decision);
 
             //then
             assertThat(actual).isEqualTo(expected);

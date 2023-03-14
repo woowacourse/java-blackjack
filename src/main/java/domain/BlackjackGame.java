@@ -1,6 +1,14 @@
 package domain;
 
+import domain.card.Deck;
+import domain.card.ShuffleStrategy;
+import domain.participant.Dealer;
+import domain.participant.Decision;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,15 +18,9 @@ public class BlackjackGame {
     private final Dealer dealer;
     private Deck deck;
 
-    private BlackjackGame(Players players, Dealer dealer) {
+    public BlackjackGame(Players players) {
         this.players = players;
-        this.dealer = dealer;
-    }
-
-    public static BlackjackGame createWithPlayerNames(List<String> playerNames) {
-        Players players = Players.from(playerNames);
-        Dealer dealer = new Dealer();
-        return new BlackjackGame(players, dealer);
+        this.dealer = new Dealer();
     }
 
     public void handOutInitialCards(ShuffleStrategy shuffleStrategy) {
@@ -35,8 +37,8 @@ public class BlackjackGame {
         return players.hasDrawablePlayer();
     }
 
-    public Player getCurrentDrawablePlayer() {
-        return players.getCurrentDrawablePlayer();
+    public Player findCurrentDrawablePlayer() {
+        return players.findCurrentDrawablePlayer();
     }
 
     public void hitOrStand(Decision decision) {
@@ -55,13 +57,29 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public Map<String, GameOutcome> getPlayersOutcome() {
-        return players.battleWith(dealer);
+    public Map<String, Integer> calculateParticipantsRevenues() {
+        Map<String, Integer> playersRevenues = players.calculateRevenues(dealer);
+        int dealerRevenue = calculateDealerRevenue(playersRevenues);
+
+        Map<String, Integer> revenues = new LinkedHashMap<>();
+        revenues.put(dealer.name(), dealerRevenue);
+        revenues.putAll(playersRevenues);
+        return revenues;
     }
 
-    public List<Participant> getParticipants() {
+    private int calculateDealerRevenue(Map<String, Integer> playersRevenues) {
+        return calculateTotalRevenues(playersRevenues) * -1;
+    }
+
+    private int calculateTotalRevenues(final Map<String, Integer> playersRevenues) {
+        return playersRevenues.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    public List<Participant> participants() {
         List<Participant> participants = new ArrayList<>(List.of(dealer));
-        participants.addAll(players.getPlayers());
+        participants.addAll(players.values());
         return participants;
     }
 }

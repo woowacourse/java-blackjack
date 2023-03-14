@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Participant;
+import domain.participant.Participant;
 import java.util.List;
 
 public class ParticipantDtoWithScore {
@@ -9,7 +9,7 @@ public class ParticipantDtoWithScore {
     private final int score;
 
     public ParticipantDtoWithScore(Participant participant) {
-        this.participantDto = new ParticipantDto(participant);
+        this.participantDto = ParticipantDto.of(participant);
         this.score = participant.score();
     }
 

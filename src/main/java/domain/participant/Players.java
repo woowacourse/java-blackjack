@@ -1,7 +1,10 @@
-package domain;
+package domain.participant;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
+import domain.GameOutcome;
+import domain.card.Card;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +12,7 @@ import java.util.Map;
 public class Players {
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         validateNotEmptyPlayers(players);
         this.players = players;
     }
@@ -20,17 +23,11 @@ public class Players {
         }
     }
 
-    public static Players from(List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .collect(collectingAndThen(toUnmodifiableList(), Players::new));
-    }
-
     public void receiveCard(Deck deck) {
         players.forEach(player -> player.receiveCard(deck.draw()));
     }
 
-    public Player getCurrentDrawablePlayer() {
+    public Player findCurrentDrawablePlayer() {
         return players.stream()
                 .filter(Player::isDrawable)
                 .findFirst()
@@ -43,21 +40,25 @@ public class Players {
     }
 
     public void handOutCardToCurrentPlayer(Card card) {
-        getCurrentDrawablePlayer().receiveCard(card);
+        findCurrentDrawablePlayer().receiveCard(card);
     }
 
     public void standCurrentPlayer() {
-        getCurrentDrawablePlayer().stand();
+        findCurrentDrawablePlayer().stand();
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> values() {
         return new ArrayList<>(players);
     }
 
-    public Map<String, GameOutcome> battleWith(Dealer dealer) {
+    public Map<String, Integer> calculateRevenues(Dealer dealer) {
         int dealerScore = dealer.score();
         return players.stream()
-                .collect(toUnmodifiableMap(Player::name
-                        , player -> GameOutcome.of(player.score(), dealerScore)));
+                .collect(toUnmodifiableMap(Player::name, player -> calculateRevenues(player, dealerScore)));
+    }
+
+    private int calculateRevenues(Player player, int dealerScore) {
+        return GameOutcome.of(player.score(), dealerScore, player.hand().size())
+                .calculateRevenue(player.bettingMoney());
     }
 }

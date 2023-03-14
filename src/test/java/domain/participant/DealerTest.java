@@ -1,7 +1,11 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Suit;
+import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +39,24 @@ class DealerTest {
 
             //then
             assertThat(drawable).isFalse();
+        }
+    }
+
+    @Nested
+    class 카드공개 {
+        @Test
+        void should_카드한장만공개한다_when_initialHand호출시() {
+            //given
+            Dealer dealer = new Dealer();
+            dealer.receiveCard(new Card(Suit.SPADE, Number.ACE));
+            dealer.receiveCard(new Card(Suit.SPADE, Number.EIGHT));
+            dealer.receiveCard(new Card(Suit.SPADE, Number.NINE));
+
+            //when
+            List<Card> actual = dealer.initialHand();
+
+            //then
+            assertThat(actual).hasSize(1);
         }
     }
 

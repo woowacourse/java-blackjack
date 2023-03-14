@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Hand {
         return score + ADDITIONAL_SCORE_OF_ACE;
     }
 
-    public List<Card> getCards() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 }

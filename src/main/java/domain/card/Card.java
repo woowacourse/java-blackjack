@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ public class Card {
     private final Suit suit;
     private final Number number;
 
-    Card(Suit suit, Number number) {
+    public Card(Suit suit, Number number) {
         this.suit = suit;
         this.number = number;
     }
@@ -17,6 +17,10 @@ public class Card {
 
     public int score() {
         return number.score();
+    }
+
+    public Number number() {
+        return number;
     }
 
     public String suit() {
