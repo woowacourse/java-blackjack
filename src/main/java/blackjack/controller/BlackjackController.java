@@ -4,12 +4,15 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.participant.Amount;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -24,17 +27,19 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = initBlackjackGame();
+
         hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
+
         BlackjackGameResult blackjackGameResult = blackjackGame.generatePlayersResult(new BlackJackReferee());
         printResult(blackjackGame, blackjackGameResult);
     }
 
     private BlackjackGame initBlackjackGame() {
         Deck deck = Deck.create(new RandomCardPickerGenerator());
-        List<String> playersName = inputPlayerName();
-        BlackjackGame blackjackGame = BlackjackGame.of(playersName, deck);
-        return blackjackGame;
+        List<ParticipantName> playersName = inputPlayerName();
+        List<Amount> playerAmount = creatPlayerAmount(playersName);
+        return BlackjackGame.of(playersName, playerAmount, deck);
     }
 
     private void hitFirstSetting(final BlackjackGame blackjackGame) {
@@ -55,7 +60,7 @@ public class BlackjackController {
     }
 
     private void hitPlayerCard(final Player player, final BlackjackGame blackjackGame) {
-        while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
+        while (player.decideHit() && inputHitCommand(player).isQuit()) {
             blackjackGame.hitPlayerCard(player);
             outputView.printCurrentCards(player);
         }
@@ -65,24 +70,55 @@ public class BlackjackController {
         for (Participant participant : blackjackGame.getParticipants()) {
             outputView.printTotalCardsAndScore(participant);
         }
-        outputView.printAllWinORLose(blackjackGameResult);
+        printProfits(blackjackGameResult);
     }
 
-    private List<String> inputPlayerName() {
+    private void printProfits(final BlackjackGameResult blackjackGameResult) {
+        outputView.printFinalRevenueStatement();
+        outputView.printDealerProceeds(blackjackGameResult.calculateDealerPrizeByGameResult());
+        outputView.printPlayersProceeds(blackjackGameResult.calculatePlayersPrizeByGameResult());
+    }
+
+    private List<ParticipantName> inputPlayerName() {
         try {
-            return inputView.readPlayerName();
+            return creatPlayersName(inputView.readPlayerName());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
         return inputPlayerName();
     }
 
-    private String inputHitCommand(final Player player) {
+    private Amount inputPlayerAmount(final String name) {
         try {
-            return inputView.readHitCommand(player.getName());
+            return new Amount(inputView.readPlayerAmount(name));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
+        }
+        return inputPlayerAmount(name);
+    }
+
+    private HitCommand inputHitCommand(final Player player) {
+        try {
+            return HitCommand.of(inputView.readHitCommand(player.getName()));
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
         }
         return inputHitCommand(player);
+    }
+
+    private List<ParticipantName> creatPlayersName(final List<String> readPlayerName) {
+        List<ParticipantName> playersName = new ArrayList<>();
+        for (String name : readPlayerName) {
+            playersName.add(new ParticipantName(name));
+        }
+        return playersName;
+    }
+
+    private List<Amount> creatPlayerAmount(final List<ParticipantName> playersName) {
+        List<Amount> playerAmount = new ArrayList<>();
+        for (ParticipantName name : playersName) {
+            playerAmount.add(inputPlayerAmount(name.getName()));
+        }
+        return playerAmount;
     }
 }

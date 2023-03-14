@@ -13,11 +13,11 @@ public enum HitCommand {
         this.command = command;
     }
 
-    public static HitCommand of(String inputCommand) {
+    public static HitCommand of(final String inputCommand) {
         return Arrays.stream(values())
                 .filter(clientCommand -> clientCommand.command.equalsIgnoreCase(inputCommand))
                 .findAny()
-                .get();
+                .orElseThrow(()->new IllegalArgumentException("해당 명령어는 존재하지 않습니다."));
     }
 
     public boolean isQuit() {

@@ -15,11 +15,11 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(final List<String> playersName,final Dealer dealer) {
+    public static Participants from(final List<ParticipantName> playersName, final List<Amount> playersAmount, final Dealer dealer) {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        for (String playerName : playersName) {
-            participants.add(new Player(new ParticipantName(playerName)));
+        for (int index = 0; index < playersName.size(); index++) {
+            participants.add(new Player(playersName.get(index), playersAmount.get(index)));
         }
         return new Participants(participants);
     }
@@ -38,7 +38,7 @@ public class Participants {
                 .get();
     }
 
-    public List<String> getParticipantsName() {
+    public List<String> findParticipantsName() {
         return participants.stream()
             .map(participant -> participant.getParticipantName().getName())
             .collect(Collectors.toUnmodifiableList());

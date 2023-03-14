@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Cards {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     Cards() {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 

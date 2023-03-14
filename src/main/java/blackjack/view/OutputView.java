@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.game.BlackjackGameResult;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -57,26 +57,27 @@ public class OutputView {
         System.out.print("- 결과 : " + participant.calculateCardNumber() + NEW_LINE);
     }
 
-    public void printHitDealerCount(Dealer dealer) {
+    public void printHitDealerCount(final Dealer dealer) {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
     }
 
-    public void printAllWinORLose(final BlackjackGameResult blackjackGameResult) {
-        printDealerWinORLose(blackjackGameResult);
-        for (Player player : blackjackGameResult.getGameResult().keySet()) {
-            System.out.println(player.getName() + " : " +
-                    ViewWinningResult.getWinningResultName(blackjackGameResult.NameByPlayer(player)));
-        }
+    public void printFinalRevenueStatement() {
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerWinORLose(final BlackjackGameResult blackjackGameResult) {
-        System.out.print("딜러: ");
-        System.out.print(blackjackGameResult.getDealerWinCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.WIN));
-        System.out.print(blackjackGameResult.getDealerPushCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.PUSH));
-        System.out.println(blackjackGameResult.getDealerLoseCount() +
-                ViewWinningResult.getWinningResultName(WinningResult.LOSE));
+    public void printDealerProceeds(final BigDecimal dealerProceeds) {
+        System.out.println("딜러: " + dealerProceeds);
+    }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
+    public void printPlayersProceeds(final Map<Player, BigDecimal> playerResult) {
+        for (Player player : playerResult.keySet()) {
+            System.out.println(player.getName()+": "+playerResult.get(player));
+        }
+
     }
 
     private void printFirstDealerCards(final Dealer dealer) {
