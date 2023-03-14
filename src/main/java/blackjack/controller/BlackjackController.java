@@ -28,7 +28,7 @@ public final class BlackjackController {
 
     public void run() {
         final Participants participants = makeParticipants();
-        final Deck deck = Deck.createTrump();
+        final Deck deck = Deck.create();
         final ResultGame resultGame = ResultGame.from(new HashMap<>());
 
         initialBettingMoney(participants, resultGame);
