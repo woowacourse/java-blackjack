@@ -19,7 +19,6 @@ public class OutputView {
     private static final String JACK = "J";
     private static final String QUEEN = "Q";
     private static final String KING = "K";
-    private static final int MULTIPLY_VALUE_FOR_DEALER_PROFIT = -1;
     private static final String ENTER_LINE = System.lineSeparator();
 
     private OutputView() {
@@ -102,25 +101,19 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public static void printBettingResult(Map<Player, Integer> bettingResult) {
+    public static void printBettingResult(Map<String, Integer> playerBettingResult, int dealerBettingResult) {
         System.out.println(ENTER_LINE + "## 최종 수익");
-        printDealerResult(bettingResult);
-        printPlayersResult(bettingResult);
+        printDealerResult(dealerBettingResult);
+        printPlayersResult(playerBettingResult);
     }
 
-    private static void printDealerResult(Map<Player, Integer> bettingResult) {
-        System.out.print("딜러: ");
-
-        int dealerProfit = bettingResult.values().stream()
-                .mapToInt(number -> number)
-                .sum() * MULTIPLY_VALUE_FOR_DEALER_PROFIT;
-
-        System.out.println(dealerProfit);
+    private static void printDealerResult(int dealerBettingResult) {
+        System.out.println("딜러: " + dealerBettingResult);
     }
 
 
-    private static void printPlayersResult(Map<Player, Integer> bettingResult) {
-        bettingResult.forEach((player, betAmount) -> System.out.println(player.getName() + ": " + betAmount));
+    private static void printPlayersResult(Map<String, Integer> bettingResult) {
+        bettingResult.forEach((playerName, betAmount) -> System.out.println(playerName + ": " + betAmount));
     }
 
     public static void printError(Exception e) {

@@ -83,9 +83,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 0 vs 둘리 9 -> 딜러 승
-                Map.entry(player, 10_000)
+                Map.entry("둘리", 10_000)
         );
     }
 
@@ -102,9 +102,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 9 vs 둘리 9 -> 무승부
-                Map.entry(player, 0)
+                Map.entry("둘리", 0)
         );
     }
 
@@ -121,9 +121,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 9 vs 패배자 1
-                Map.entry(player, -10_000)
+                Map.entry("패배자이름", -10_000)
         );
     }
 
@@ -139,9 +139,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 0 vs 둘리 21
-                Map.entry(player, 15_000)
+                Map.entry("둘리", 15_000)
         );
     }
 
@@ -162,9 +162,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 버스트 vs 플레이어 버스트
-                Map.entry(player, 10_000)
+                Map.entry("포비", 10_000)
         );
     }
 
@@ -183,9 +183,9 @@ class ParticipantsTest {
         player.betPlayer(10_000);
 
         // then
-        assertThat(participants.getBettingResult()).contains(
+        assertThat(participants.getPlayerBettingResult()).contains(
                 // 딜러 블랙잭 vs 플레이어 블랙잭
-                Map.entry(player, 0)
+                Map.entry("포비", 0)
         );
     }
 }

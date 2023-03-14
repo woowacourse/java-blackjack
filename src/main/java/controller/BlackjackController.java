@@ -98,6 +98,6 @@ public class BlackjackController {
 
     private void printResult(Participants participants) {
         OutputView.printAllHands(participants.getDealer(), participants.getPlayers());
-        OutputView.printBettingResult(participants.getBettingResult());
+        OutputView.printBettingResult(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
     }
 }

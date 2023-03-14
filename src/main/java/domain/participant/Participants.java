@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Deck;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,6 +12,7 @@ public class Participants {
 
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 7;
+    private static final int MULTIPLY_VALUE_FOR_DEALER_PROFIT = -1;
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
 
@@ -67,12 +69,12 @@ public class Participants {
         return dealer.canHit();
     }
 
-    public Map<Player, Integer> getBettingResult() {
-        Map<Player, Integer> betResult = new LinkedHashMap<>();
+    public Map<String, Integer> getPlayerBettingResult() {
+        Map<String, Integer> betResult = new LinkedHashMap<>();
         for (Player player : getPlayers()) {
             PlayerGameResult playerGameResult = getPlayerGameResult(player);
             int reward = playerGameResult.calculateBenefit(player.getBetAmount());
-            betResult.put(player, reward);
+            betResult.put(player.getName(), reward);
         }
 
         return new LinkedHashMap<>(betResult);
@@ -103,10 +105,24 @@ public class Participants {
         return player.calculateScore() == dealer.calculateScore();
     }
 
+    public int getDealerBettingResult() {
+        return getPlayerBettingResult().values().stream()
+                .mapToInt(money -> money)
+                .sum() * MULTIPLY_VALUE_FOR_DEALER_PROFIT;
+    }
+
     public List<String> getPlayersName() {
         return players.stream()
                 .map(player -> player.getName())
                 .collect(Collectors.toList());
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
+    public Card getDealerCardWithInvisible() {
+        return dealer.getCardWithInvisible();
     }
 
     public Dealer getDealer() {
