@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.game.GameResult;
-import java.math.BigDecimal;
 import java.util.List;
 
 public final class Dealer extends Participant {
