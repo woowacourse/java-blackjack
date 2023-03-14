@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,12 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    private ParticipantCards makeInitialCards(final Deck deck) {
+    private Cards makeInitialCards(final Deck deck) {
         List<Card> initialCards = new ArrayList<>();
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             initialCards.add(deck.draw());
         }
-        return new ParticipantCards(initialCards);
+        return new Cards(initialCards);
     }
 
     public List<Player> getPlayers() {

@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ParticipantCards {
+public class Cards {
     private static final int INITIAL_SIZE = 2;
     private static final int MAX_SCORE_NOT_BUST = 21;
 
     private final List<Card> cards;
 
-    public ParticipantCards(final List<Card> cards) {
+    public Cards(final List<Card> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }

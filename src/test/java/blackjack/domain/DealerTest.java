@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,8 +35,8 @@ class DealerTest {
             final List<Card> dealerAdditionalCards,
             final ResultType expectedResult
     ) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
-        ParticipantCards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
+        Cards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
+        Cards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
 
         Player player = new Player(participantsCards, "베로", 1000);
         Dealer dealer = new Dealer(dealerCards);
@@ -178,8 +178,8 @@ class DealerTest {
             final List<Card> dealerAdditionalCards,
             final ResultType expectedResult
     ) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
-        ParticipantCards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
+        Cards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerInitialCards, playerAdditionalCards);
+        Cards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerInitialCards, dealerAdditionalCards);
 
         Player player = new Player(participantsCards, "베로", 1000);
         Dealer dealer = new Dealer(dealerCards);

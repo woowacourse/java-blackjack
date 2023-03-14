@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     private final BettingMoney bettingMoney;
 
-    protected Player(final ParticipantCards cards, final String name, final int bettingMoney) {
+    protected Player(final Cards cards, final String name, final int bettingMoney) {
         super(cards, name);
         this.bettingMoney = new BettingMoney(bettingMoney);
     }

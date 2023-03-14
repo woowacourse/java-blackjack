@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     private static final int INITIAL_OPEN_CARD_COUNT = 1;
     private static final String DEFAULT_NAME = "딜러";
 
-    protected Dealer(final ParticipantCards cards) {
+    protected Dealer(final Cards cards) {
         super(cards, DEFAULT_NAME);
     }
 
