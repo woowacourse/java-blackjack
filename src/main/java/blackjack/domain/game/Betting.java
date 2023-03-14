@@ -18,11 +18,11 @@ public class Betting {
     }
 
     private void validate(final String value) {
-        validateFormat(value);
+        validateNumber(value);
         validateRange(value);
     }
 
-    private void validateFormat(final String value) {
+    private void validateNumber(final String value) {
         if (isNotNumber(value)) {
             throw new IllegalArgumentException(INVALID_FORMAT_ERROR_MESSAGE);
         }
