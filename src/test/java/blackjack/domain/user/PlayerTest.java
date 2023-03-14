@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.card.cardpack.CardPack;
 import blackjack.domain.user.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

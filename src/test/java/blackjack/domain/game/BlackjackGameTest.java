@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.card.cardpack.CardPack;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.player.Player;
 import blackjack.domain.user.player.Players;

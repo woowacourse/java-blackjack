@@ -1,7 +1,7 @@
 package blackjack.domain.user.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.card.cardpack.CardPack;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.Score;
 

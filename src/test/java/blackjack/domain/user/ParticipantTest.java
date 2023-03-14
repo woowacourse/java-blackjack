@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.cardpack.NoviceShuffleStrategy;
+import blackjack.domain.card.cardpack.CardPack;
+import blackjack.domain.card.cardpack.NoviceShuffleStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

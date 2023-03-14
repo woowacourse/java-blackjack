@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.cardpack.CardPack;
-import blackjack.domain.cardpack.MasterShuffleStrategy;
+import blackjack.domain.card.cardpack.CardPack;
+import blackjack.domain.card.cardpack.MasterShuffleStrategy;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
