@@ -13,13 +13,13 @@ import java.util.stream.IntStream;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.ACE_CONVERT_NUMBER;
 
-public class ParticipantCards {
+public class Hand {
     private static final int INITIAL_SIZE = 2;
     private static final int BLACK_JACK = 21;
 
     private final Cards cards;
 
-    public ParticipantCards(final Deck deck) {
+    public Hand(final Deck deck) {
         this.cards = createDeckCards(deck);
     }
 

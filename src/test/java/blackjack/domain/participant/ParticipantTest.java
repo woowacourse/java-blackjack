@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.*;
-import blackjack.domain.game.ParticipantCards;
-import blackjack.fixture.ParticipantCardsFixture;
+import blackjack.domain.game.Hand;
+import blackjack.fixture.HandFixture;
 import blackjack.fixture.ParticipantFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +20,8 @@ class ParticipantTest {
     @DisplayName("이름이 공백이거나 비어있을 경우 예외가 발생한다.")
     void throwExceptionWhenNameIsBlank(final String nameValue) {
         final Deck deck = new CardDeck();
-        final ParticipantCards participantsCards
-                = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        final Hand participantsCards
+                = HandFixture.create(deck.draw(), deck.draw(), List.of());
         assertThatThrownBy(() -> new Participant(participantsCards, nameValue) {
             @Override
             public boolean isHittable() {
@@ -69,7 +69,7 @@ class ParticipantTest {
     @DisplayName("참가자 이름을 가져온다.")
     void getName(final String nameValue) {
         final Deck deck = new CardDeck();
-        final ParticipantCards cards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        final Hand cards = HandFixture.create(deck.draw(), deck.draw(), List.of());
         final Participant participant = new Participant(cards, nameValue) {
             @Override
             public boolean isHittable() {

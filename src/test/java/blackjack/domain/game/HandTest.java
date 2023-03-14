@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.*;
 import blackjack.fixture.MockDeck;
-import blackjack.fixture.ParticipantCardsFixture;
+import blackjack.fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,24 +16,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("참여자 카드")
-class ParticipantCardsTest {
+class HandTest {
     @Test
     @DisplayName("생성한다.")
     void create() {
         final Deck deck = new CardDeck();
 
         assertThatNoException()
-                .isThrownBy(() -> new ParticipantCards(deck));
-    }
-
-    @Test
-    @DisplayName("생성한다.")
-    void create2() {
-        final Deck deck = new CardDeck();
-
-        assertThatNoException()
-                .isThrownBy(() -> new ParticipantCards(deck));
+                .isThrownBy(() -> new Hand(deck));
     }
 
     @Test
@@ -41,7 +31,7 @@ class ParticipantCardsTest {
     void throwExceptionWhenCardsHasSizeLowerThan1() {
         final Deck deck = MockDeck.create(Collections.emptyList());
 
-        assertThatThrownBy(() -> new ParticipantCards(deck))
+        assertThatThrownBy(() -> new Hand(deck))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +43,7 @@ class ParticipantCardsTest {
                 new Card(CardShape.SPADE, CardNumber.ACE)
         ));
 
-        assertThatThrownBy(() -> new ParticipantCards(deck))
+        assertThatThrownBy(() -> new Hand(deck))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -61,9 +51,9 @@ class ParticipantCardsTest {
     @DisplayName("중복되는 카드를 가지는 경우 예외가 발생한다.")
     void throwExceptionWhenCardsDuplicated2() {
         final Deck deck = new CardDeck();
-        final ParticipantCards participantCards = new ParticipantCards(deck);
+        final Hand hand = new Hand(deck);
 
-        assertThatThrownBy(() -> CardsCache.getAllCards().forEach(participantCards::receive))
+        assertThatThrownBy(() -> CardsCache.getAllCards().forEach(hand::receive))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -72,8 +62,8 @@ class ParticipantCardsTest {
     @DisplayName("가지고 있는 카드의 합을 계산한다.")
     void calculate(final List<Card> cards, final int expectedSum) {
         final Deck deck = MockDeck.create(cards);
-        final ParticipantCards participantCards = new ParticipantCards(deck);
-        final int cardSum = participantCards.getMaxValueNearBlackJack();
+        final Hand hand = new Hand(deck);
+        final int cardSum = hand.getMaxValueNearBlackJack();
 
         assertThat(cardSum).isEqualTo(expectedSum);
     }
@@ -83,8 +73,8 @@ class ParticipantCardsTest {
     @DisplayName("카드를 사이즈만큼 오픈한다.")
     void open2(final int openCount) {
         final Deck deck = new CardDeck();
-        final ParticipantCards participantCards = new ParticipantCards(deck);
-        final List<Card> openCards = participantCards.open(openCount);
+        final Hand hand = new Hand(deck);
+        final List<Card> openCards = hand.open(openCount);
 
         assertThat(openCards).hasSize(openCount);
     }
@@ -94,11 +84,11 @@ class ParticipantCardsTest {
     @DisplayName("모든 카드를 오픈한다.")
     void openAll2(final int drawCount) {
         final Deck deck = new CardDeck();
-        final ParticipantCards participantCards = new ParticipantCards(deck);
+        final Hand hand = new Hand(deck);
         for (int count = 0; count < drawCount; count++) {
-            participantCards.receive(deck.draw());
+            hand.receive(deck.draw());
         }
-        final List<Card> openCards = participantCards.openAll();
+        final List<Card> openCards = hand.openAll();
         final int expectedSize = drawCount + 2;
 
         assertThat(openCards).hasSize(expectedSize);
@@ -108,7 +98,7 @@ class ParticipantCardsTest {
     @MethodSource("isBustDummy")
     @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
     void isBust(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.create(one, two, additionalCards);
+        Hand participantsCards = HandFixture.create(one, two, additionalCards);
         boolean isBust = participantsCards.isBust();
 
         assertThat(isBust).isEqualTo(expected);
@@ -118,7 +108,7 @@ class ParticipantCardsTest {
     @MethodSource("isBlackJackDummy")
     @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
     void isBlackJack(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.create(one, two, additionalCards);
+        Hand participantsCards = HandFixture.create(one, two, additionalCards);
         boolean isBlackJack = participantsCards.isBlackJack();
 
         assertThat(isBlackJack).isEqualTo(expected);
