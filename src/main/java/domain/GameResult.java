@@ -2,18 +2,19 @@ package domain;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACK_JACK_WIN(1.5f);
 
-    private final String expression;
+    private final float rateOfReturn;
 
-    GameResult(String expression) {
-        this.expression = expression;
+    GameResult(float rateOfReturn) {
+        this.rateOfReturn = rateOfReturn;
     }
 
-    public String getExpression() {
-        return expression + " ";
+    public float getRateOfReturn() {
+        return rateOfReturn;
     }
 
 }

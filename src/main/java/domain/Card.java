@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Card {
 
-    private static final Map<Shape, Map<Letter, Card>> cardFactory = new HashMap<>();
+    private static final Map<Shape, Map<Letter, Card>> CACHE = new HashMap<>();
 
     private final Shape shape;
     private final Letter letter;
@@ -20,7 +20,7 @@ public class Card {
     }
 
     public static Card of(Shape shape, Letter letter) {
-        return cardFactory.computeIfAbsent(shape,
+        return CACHE.computeIfAbsent(shape,
                 ignored -> createMapAndPutCardIfAbsent(shape, letter))
                 .computeIfAbsent(letter, ignored -> new Card(shape, letter));
     }

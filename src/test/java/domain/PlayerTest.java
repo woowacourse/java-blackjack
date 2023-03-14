@@ -7,6 +7,7 @@ import type.Letter;
 import type.Shape;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,6 +79,24 @@ public class PlayerTest {
         player.pick(Card.of(Shape.HEART, Letter.FOUR));
 
         assertThat(player.isMoreCardAble()).isTrue();
+    }
+
+    @Test
+    @DisplayName("2장으로 21점을 만들면 블랙잭 이다.")
+    void isBlackJack() {
+        List<Card> blackJackCards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.ACE));
+        Player player = new Player(new Name("aa"), new Cards(blackJackCards));
+
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("3장 이상으로 21점이면 블랙잭이 아니다.")
+    void isNotBlackJack() {
+        List<Card> notBlackJackCards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.ACE), Card.of(Shape.HEART, Letter.JACK));
+        Player player = new Player(new Name("aa"), new Cards(notBlackJackCards));
+
+        assertThat(player.isBlackJack()).isFalse();
     }
 
 }
