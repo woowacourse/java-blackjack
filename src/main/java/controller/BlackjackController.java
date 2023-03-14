@@ -1,6 +1,6 @@
 package controller;
 
-import domain.participant.Participant;
+import domain.participant.Player;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
@@ -17,16 +17,23 @@ public class BlackjackController {
             start(blackjackGame);
 
             OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printParticipantsResult(blackjackGame.getResult());
+            OutputView.printParticipantsResult(blackjackGame.getParticipantsResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
     }
 
     private void prepare(BlackjackService blackjackGame) {
+        betPlayers(blackjackGame);
         OutputView.printStartMessage(blackjackGame.getPlayersName());
         OutputView.printDealerCard(blackjackGame.getDealer());
         OutputView.printPlayersCard(blackjackGame.getPlayers());
+    }
+
+    private void betPlayers(BlackjackService blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            player.bet(InputView.readBettingAmount(player.getName()));
+        }
     }
 
     private void start(BlackjackService blackjackGame) {
@@ -36,9 +43,9 @@ public class BlackjackController {
 
     private void runPlayersTurn(BlackjackService blackjackGame) {
         while (blackjackGame.getNextPlayer().isPresent()) {
-            Participant nextPlayer = blackjackGame.getNextPlayer().get();
+            Player nextPlayer = blackjackGame.getNextPlayer().get();
 
-            blackjackGame.nextTurn(nextPlayer, InputView.readHit(nextPlayer));
+            blackjackGame.playNextTurnPlayer(nextPlayer, InputView.readHit(nextPlayer));
 
             OutputView.printPlayerCard(nextPlayer);
         }

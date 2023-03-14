@@ -10,21 +10,14 @@ import java.util.List;
 public abstract class Participant {
 
     private static final int BLACKJACK = 21;
+    private static final int INITIAL_HAND_SIZE = 2;
 
     private final String name;
     private final Hand hand;
 
-    protected Participant(String name, Hand hand) {
-        this.hand = hand;
+    protected Participant(String name, Deck deck) {
+        this.hand = Hand.from(deck);
         this.name = name;
-    }
-
-    public static Participant dealer(Deck deck) {
-        return Dealer.from(Hand.from(deck));
-    }
-
-    public static Participant player(String name, Deck deck) {
-        return Player.from(name, Hand.from(deck));
     }
 
     public void addCard(Card card) {
@@ -39,9 +32,11 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK;
     }
 
-    public abstract boolean isStand();
+    public boolean isBlackjack() {
+        return getCards().size() == INITIAL_HAND_SIZE && calculateScore() == BLACKJACK;
+    }
 
-    public abstract void stand();
+    public abstract boolean isStand();
 
     public String getName() {
         return name;

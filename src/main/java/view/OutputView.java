@@ -1,28 +1,14 @@
 package view;
 
-import domain.PlayerGameResult;
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import domain.participant.Participant;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    private static final String DIAMOND = "다이아몬드";
-    private static final String CLUB = "클로버";
-    private static final String SPADE = "스페이드";
-    private static final String HEART = "하트";
-    private static final String ACE = "A";
-    private static final String JACK = "J";
-    private static final String QUEEN = "Q";
-    private static final String KING = "K";
-    private static final String WIN = "승";
-    private static final String DRAW = "무";
-    private static final String LOSE = "패";
     private static final int DEALER_VISIBLE_CARD = 1;
 
     private OutputView() {
@@ -33,10 +19,11 @@ public class OutputView {
     }
 
     public static void printDealerCard(Participant dealer) {
-        System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCards().get(DEALER_VISIBLE_CARD)));
+        final Card dealerVisibleCard = dealer.getCards().get(DEALER_VISIBLE_CARD);
+        System.out.println(dealer.getName() + ": " + dealerVisibleCard.getName());
     }
 
-    public static void printPlayersCard(List<Participant> players) {
+    public static void printPlayersCard(List<Player> players) {
         players.stream()
                 .map(OutputView::makePlayerHandView)
                 .forEach(System.out::println);
@@ -49,7 +36,7 @@ public class OutputView {
 
     private static String makeCardsView(List<Card> cards) {
         return cards.stream()
-                .map(OutputView::makeCardView)
+                .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
 
@@ -57,46 +44,11 @@ public class OutputView {
         System.out.println(makePlayerHandView(player));
     }
 
-    private static String makeCardView(Card card) {
-        return makeRankView(card.getRank()) + makeSuitView(card.getSuit());
-    }
-
-    private static String makeSuitView(Suit suit) {
-        if (suit.equals(Suit.DIAMOND)) {
-            return DIAMOND;
-        }
-        if (suit.equals(Suit.HEART)) {
-            return HEART;
-        }
-        if (suit.equals(Suit.SPADE)) {
-            return SPADE;
-        }
-
-        return CLUB;
-    }
-
-    private static String makeRankView(Rank rank) {
-        if (rank.equals(Rank.ACE)) {
-            return ACE;
-        }
-        if (rank.equals(Rank.JACK)) {
-            return JACK;
-        }
-        if (rank.equals(Rank.QUEEN)) {
-            return QUEEN;
-        }
-        if (rank.equals(Rank.KING)) {
-            return KING;
-        }
-
-        return String.valueOf(rank.getScore());
-    }
-
     public static void printDealerHit() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllHands(Participant dealer, List<Participant> players) {
+    public static void printAllHands(Participant dealer, List<Player> players) {
         String dealerCards = makeCardsView(dealer.getCards());
         System.out.println("\n" + dealer.getName() + " 카드: " + dealerCards + " - 결과: " + dealer.calculateScore());
 
@@ -105,54 +57,13 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public static void printParticipantsResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(playersResult);
-        printPlayersResult(playersResult);
-    }
+    public static void printParticipantsResult(Map<String, Integer> result) {
+        System.out.println("\n## 최종 수익");
 
-    private static void printDealerResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.print("딜러: ");
-
-        Map<String, Long> dealerResult = playersResult.values().stream()
-                .collect(Collectors.groupingBy(OutputView::makeDealerWinningView, Collectors.counting()));
-
-        printDealerResultByWinning(dealerResult, WIN);
-        printDealerResultByWinning(dealerResult, DRAW);
-        printDealerResultByWinning(dealerResult, LOSE);
-    }
-
-    private static void printDealerResultByWinning(Map<String, Long> dealerResult, String winning) {
-        if (dealerResult.containsKey(winning)) {
-            System.out.print(dealerResult.get(winning) + winning + " ");
-        }
-    }
-
-    private static void printPlayersResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println();
-        playersResult.entrySet().stream()
-                .map(player -> player.getKey() + ": " + makePlayerWinningView(player.getValue()))
+        System.out.println("딜러: " + result.remove("딜러"));
+        result.entrySet().stream()
+                .map(playerResult -> playerResult.getKey() + ": " + playerResult.getValue())
                 .forEach(System.out::println);
-    }
-
-    private static String makeDealerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.LOSE)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    private static String makePlayerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.WIN)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
     }
 
     public static void printError(Exception e) {

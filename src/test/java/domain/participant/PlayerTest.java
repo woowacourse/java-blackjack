@@ -24,7 +24,7 @@ class PlayerTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> Player.from(name, Hand.from(Deck.create(Collections::shuffle))));
+        assertDoesNotThrow(() -> Player.from(name, Deck.create(Collections::shuffle)));
     }
 
     @ParameterizedTest
@@ -35,7 +35,7 @@ class PlayerTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Player.from(name, Hand.from(Deck.create(Collections::shuffle))))
+        assertThatThrownBy(() -> Player.from(name, Deck.create(Collections::shuffle)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
     }
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Player player = Player.from("럿고", Hand.from(Deck.create(Collections::shuffle)));
+        Player player = Player.from("럿고", Deck.create(Collections::shuffle));
         int beforeCount = player.getCards().size();
 
         //when
@@ -58,7 +58,7 @@ class PlayerTest {
     @Test
     void 카드들의_합을_계산_할_수_있다() {
         //given
-        Player player = Player.from("연어", Hand.from(Deck.create(notShuffle()))); //1, 2가 뽑힌 상태
+        Player player = Player.from("연어", Deck.create(notShuffle()));
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
         cards.forEach(player::addCard);
 
@@ -72,7 +72,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_이하라면_더_받을_수_있다() {
         //given
-        Player player = Player.from("연어", Hand.from(Deck.create(notShuffle())));
+        Player player = Player.from("연어", Deck.create(notShuffle()));
 
         //when
 
@@ -83,7 +83,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_초과라면_더_받을_수_없다() {
         //given
-        Player player = Player.from("연어", Hand.from(Deck.create(Collections::shuffle)));
+        Player player = Player.from("연어", Deck.create(notShuffle()));
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
                 new Card(Rank.TEN, Suit.HEART),
                 new Card(Rank.TEN, Suit.SPADE));
@@ -93,6 +93,58 @@ class PlayerTest {
 
         //then
         assertThat(player.isBust()).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1000, 10000000})
+    void 베팅_금액의_범위는_1000원부터_1000만원까지이다(int bettingAmount) {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+        player.bet(bettingAmount);
+
+        //then
+        assertDoesNotThrow(() -> player.bet(bettingAmount));
+        assertThat(player.getBettingAmount()).isEqualTo(bettingAmount);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {999, 10000001})
+    void 베팅_금액의_범위는_1000원_1000만원이_아니면_예외가_발생한다(int bettingAmount) {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> player.bet(bettingAmount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 베팅 금액은 1000 ~ 10억원 까지만 가능합니다");
+    }
+
+    @Test
+    void 베팅_금액은_1000원_단위이다() {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertDoesNotThrow(() -> player.bet(2000));
+    }
+
+    @Test
+    void 베팅_금액은_1000원_단위가_아니면_예외가_발생한다() {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> player.bet(2500))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 베팅 금액은 1000원 단위만 가능합니다");
     }
 
     private ShuffleStrategy notShuffle() {

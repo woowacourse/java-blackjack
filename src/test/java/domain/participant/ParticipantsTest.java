@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,7 +66,20 @@ class ParticipantsTest {
     }
 
     @Test
-    void 플레이어가_버스트이면_다음_차례는_없다() throws Exception {
+    void 이름을_가져올_수_있다() {
+        //given
+        String name1 = "연어";
+        String name2 = "가비";
+        Participants participants = Participants.of(List.of(name1, name2), Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThat(participants.getPlayersName()).containsExactly(name1, name2);
+    }
+
+    @Test
+    void 플레이어가_버스트이면_다음_차례는_없다() {
         //given
         List<String> players = List.of("연어");
         Participants participants = Participants.of(players, Deck.create(notShuffle()));
@@ -81,7 +93,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 플레이어가_스탠드이면_다음_차례는_없다() throws Exception {
+    void 플레이어가_스탠드이면_다음_차례는_없다() {
         //given
         List<String> players = List.of("연어");
         Participants participants = Participants.of(players, Deck.create(notShuffle()));
@@ -94,7 +106,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 플레이어가_버스트가_아니고_스탠드도_아니면_다음_차례가_있다() throws Exception {
+    void 플레이어가_버스트가_아니고_스탠드도_아니면_다음_차례가_있다() {
         //given
         List<String> players = List.of("연어");
         Participants participants = Participants.of(players, Deck.create(notShuffle()));
@@ -106,7 +118,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 딜러의_턴이_지나면_딜러는_무조건_16_초과이다() throws Exception {
+    void 딜러의_턴이_지나면_딜러는_무조건_16_초과이다() {
         //given
         List<String> players = List.of("연어");
         final Deck deck = Deck.create(notShuffle());
@@ -120,78 +132,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 플레이어가_21이하_딜러가_버스트이면_플레이어_승리() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
-        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.WIN);
-    }
-
-    @Test
-    void 플레이어가_21이하이고_딜러보다_크면_플레이어_승리() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getPlayers().get(0).addCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.WIN);
-    }
-
-    @Test
-    void 플레이어가_21이하이고_딜러와_같으면_무승부() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.DRAW);
-    }
-
-    @Test
-    void 플레이어가_버스트이면_플레이어_패배() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
-        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.CLUB));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.LOSE);
-    }
-
-    @Test
-    void 딜러가_21_이하이고_플레이어보다_크면_플레이어_패배() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getDealer().addCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.LOSE);
-    }
-
-    @Test
-    void 딜러가_버스트이면_스탠드_상태이다() throws Exception {
+    void 딜러가_버스트이면_스탠드_상태이다() {
         //given
         String player = "연어";
         final Deck deck = Deck.create(notShuffle());
@@ -206,7 +147,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 딜러가_17_21_사이면_스탠드_상태이다() throws Exception {
+    void 딜러가_17_21_사이면_스탠드_상태이다() {
         //given
         String player = "연어";
         final Deck deck = Deck.create(notShuffle());
@@ -220,7 +161,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 딜러가_16_이하면_스탠드_상태가_아니다() throws Exception {
+    void 딜러가_16_이하면_스탠드_상태가_아니다() {
         //given
         String player = "연어";
         final Deck deck = Deck.create(notShuffle());
@@ -233,8 +174,113 @@ class ParticipantsTest {
         assertThat(participants.isDealerStand()).isFalse();
     }
 
+    @Test
+    void 딜러_버스트이면_모든_플레이어_승리() {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 1000);
+    }
+
+    @Test
+    void 딜러_버스트X_플레이어_버스트() {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", -1000);
+    }
+
+    @Test
+    void 딜러_버스트X_플레이어와_동점() {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 0);
+    }
+
+    @Test
+    void 플레이어가_딜러보다_크고_블랙잭() {
+        //given
+        final Deck deck = Deck.create(makePlayerBlackjack());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 1500);
+    }
+
+    @Test
+    void 딜러가_버스트이고_플레이어가_블랙잭() {
+        //given
+        final Deck deck = Deck.create(makePlayerBlackjack());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 1500);
+    }
+
+    @Test
+    void 플레이어_버스트X_딜러보다_클_때() {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.NINE, Suit.DIAMOND));
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 1000);
+    }
+
+    @Test
+    void 플레이어_버스트X_딜러보다_작을_때() {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
+
+        //then
+        assertThat(participants.getParticipantsResult()).containsEntry("연어", 0);
+    }
+
     private ShuffleStrategy notShuffle() {
         return cards -> {
+        };
+    }
+
+    private ShuffleStrategy makePlayerBlackjack() {
+        return cards -> {
+            cards.set(1, new Card(Rank.JACK, Suit.DIAMOND));
         };
     }
 }

@@ -14,7 +14,7 @@ class DealerTest {
     @Test
     void 카드를_가질_수_있다() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         int beforeCount = dealer.getCards().size();
 
         //when
@@ -29,7 +29,7 @@ class DealerTest {
     @Test
     void 카드들의_합을_계산_할_수_있다() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
         cards.forEach(dealer::addCard);
 
@@ -43,7 +43,7 @@ class DealerTest {
     @Test
     void 카드의_합이_16_이하면_stand가_아니다() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         dealer.addCard(new Card(Rank.FOUR, Suit.CLUB));
 
         //when
@@ -55,7 +55,7 @@ class DealerTest {
     @Test
     void 카드의_합이_16_초과면_stand() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         dealer.addCard(new Card(Rank.FIVE, Suit.CLUB));
 
         //when
@@ -67,7 +67,7 @@ class DealerTest {
     @Test
     void 카드들의_합이_21_이하라면_bust_가_아니다() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         dealer.addCard(new Card(Rank.KING, Suit.CLUB));
 
         //when
@@ -79,7 +79,7 @@ class DealerTest {
     @Test
     void 카드들의_합이_21_초과라면_bust() {
         //given
-        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        Dealer dealer = Dealer.from(Deck.create(notShuffle()));
         dealer.addCard(new Card(Rank.KING, Suit.CLUB));
         dealer.addCard(new Card(Rank.KING, Suit.SPADE));
         dealer.addCard(new Card(Rank.KING, Suit.HEART));

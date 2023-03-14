@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.Deck;
 
 import java.util.*;
@@ -8,15 +7,15 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
-    private static final int MIN_PLAYER_COUNT = 1;
-    private static final int MAX_PLAYER_COUNT = 7;
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
+    private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_PLAYER_COUNT = 7;
 
-    private final Participant dealer;
-    private final List<Participant> players;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(Participant dealer, List<Participant> players) {
+    private Participants(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -24,11 +23,11 @@ public class Participants {
     public static Participants of(List<String> playersName, Deck deck) {
         validate(playersName);
 
-        List<Participant> players = playersName.stream()
-                .map(name -> Participant.player(name, deck))
+        List<Player> players = playersName.stream()
+                .map(name -> Player.from(name, deck))
                 .collect(Collectors.toList());
 
-        return new Participants(Participant.dealer(deck), players);
+        return new Participants(Dealer.from(deck), players);
     }
 
     private static void validate(List<String> names) {
@@ -53,7 +52,7 @@ public class Participants {
         }
     }
 
-    public Optional<Participant> getNextTurnPlayer() {
+    public Optional<Player> getNextTurnPlayer() {
         return players.stream()
                 .filter(player -> !player.isStand() && !player.isBust())
                 .findFirst();
@@ -65,16 +64,22 @@ public class Participants {
         }
     }
 
-    public Map<String, PlayerGameResult> getResult() {
-        Map<String, PlayerGameResult> result = new LinkedHashMap<>();
+    public Map<String, Integer> getParticipantsResult() {
+        Map<String, Integer> result = new LinkedHashMap<>();
 
         int dealerScore = dealer.calculateScore();
-        for (Participant player : players) {
-            int playerScore = player.calculateScore();
-            result.put(player.getName(), PlayerGameResult.of(playerScore, dealerScore));
+        for (Player player : players) {
+            result.put(player.getName(), player.getResultBettingAmount(dealerScore));
         }
+        result.put(dealer.getName(), convertToDealerPrize(result));
 
         return result;
+    }
+
+    private int convertToDealerPrize(Map<String, Integer> playersResult) {
+        return playersResult.values().stream()
+                .mapToInt(playerResult -> -playerResult)
+                .sum();
     }
 
     public List<String> getPlayersName() {
@@ -87,11 +92,11 @@ public class Participants {
         return dealer.isStand() || dealer.isBust();
     }
 
-    public Participant getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }
