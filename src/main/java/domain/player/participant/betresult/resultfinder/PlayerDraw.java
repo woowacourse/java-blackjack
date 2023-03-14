@@ -9,7 +9,8 @@ public class PlayerDraw implements BetResult {
 
     @Override
     public Boolean canApply(final Participant participant, final Dealer dealer) {
-        return participant.isBlackjack() && dealer.isBlackjack();
+        return (participant.isBlackjack() && dealer.isBlackjack()) ||
+                participant.score().isSame(dealer.score());
     }
 
     @Override

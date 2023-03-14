@@ -166,4 +166,20 @@ class ScoreTest {
         //when & then
         assertEquals(new Score(value).isSumTwentyOne(), isBlackjack);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "21,21,true",
+            "20,20,true",
+            "21,20,false"
+    })
+    @DisplayName("isSame() : 같은 점수일 경우 true를 반환한다.")
+    void test_isSame(final int value1, final int value2, final boolean result) throws Exception {
+        //given
+        final Score score1 = new Score(value1);
+        final Score score2 = new Score(value2);
+
+        //when & then
+        assertEquals(result, score1.isSame(score2));
+    }
 }

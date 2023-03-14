@@ -23,6 +23,7 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.HEART;
 import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.ACE;
+import static domain.card.CardValue.FIVE;
 import static domain.card.CardValue.KING;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.QUEEN;
@@ -65,6 +66,27 @@ class BetResultFinderTest {
         final Dealer dealer = new Dealer();
         dealer.hit(new Card(HEART, ACE));
         dealer.hit(new Card(CLOVER, TEN));
+
+        //when
+        final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);
+
+        //then
+        Assertions.assertThat(betResultState).isInstanceOf(BreakEvenState.class);
+    }
+
+    @Test
+    @DisplayName("[PlayerDraw] findStateOf() : 마지막에 딜러와 참여자의 점수가 같으면 무승부다.")
+    void test_findStateOf_playerDraw_finalMatch() throws Exception {
+        //given
+        final Participant participant = new Participant(new Name("name1"), Money.wons(10000));
+        participant.hit(new Card(DIAMOND, TEN));
+        participant.hit(new Card(SPADE, TEN));
+        participant.hit(new Card(SPADE, ACE));
+
+        final Dealer dealer = new Dealer();
+        dealer.hit(new Card(HEART, TEN));
+        dealer.hit(new Card(CLOVER, TEN));
+        dealer.hit(new Card(CLOVER, ACE));
 
         //when
         final BetResultState betResultState = betResultFinder.findStateOf(participant, dealer);

@@ -54,6 +54,10 @@ public class Score {
         return this.equals(UPPER_LIMIT_SCORE);
     }
 
+    public boolean isSame(final Score other) {
+        return this.equals(other);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
