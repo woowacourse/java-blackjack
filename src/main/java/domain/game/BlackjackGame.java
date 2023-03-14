@@ -1,64 +1,58 @@
 package domain.game;
 
-import domain.strategy.NumberGenerator;
 import domain.user.Dealer;
-import domain.user.People;
+import domain.user.Participants;
 import domain.user.Player;
-import view.dto.PlayerInfoDto;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BlackjackGame {
 
-    private static final int START_HIT_COUNT = 2;
-    private static final String DEALER_NAME = "딜러";
-
+    private final Participants participants;
     private final Deck deck;
-    private final People people;
 
-    public BlackjackGame(List<String> playerNames, NumberGenerator numberGenerator) {
-        this.deck = new Deck(numberGenerator);
-        this.people = new People(playerNames, DEALER_NAME);
+    public BlackjackGame(final Dealer dealer, final List<Player> players, final Deck deck) {
+        this.participants = new Participants(dealer, players);
+        this.deck = deck;
     }
 
-    public void startHit() {
-        for (int i = 0; i < START_HIT_COUNT; i++) {
-            people.letPlayersToHit(deck);
-        }
+    public void hitAll() {
+        participants.hitAll(deck);
     }
 
-    public void letDealerHitUntilThreshold(Runnable outputDealerHitMessage) {
-        if (people.dealerCanHit()) {
-            outputDealerHitMessage.run();
-            people.letDealerHitUntilThreshold(deck);
-        }
-
+    public void hitPlayer(final String name) {
+        participants.hitPlayer(name, deck);
     }
 
-    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerInfoDto> outputPlayer) {
-        people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
+    public boolean hitDealer() {
+        return participants.hitDealer(deck);
     }
 
-    public Map<Player, GameResult> getGameResultForAllPlayer() {
-        return people.makeGameResultForAllPlayer();
+    public void stayPlayer(final String name) {
+        participants.stayPlayer(name);
     }
 
-    public Map<GameResult, Integer> getDealerRecord() {
-        return people.getDealerRecord(people.makeGameResultForAllPlayer());
+    public boolean isRunning(final String name) {
+        return participants.isRunning(name);
     }
 
-    public List<Player> getPlayers() {
-        return people.getPlayers();
+    public int dealerProfit() {
+        return participants.dealerProfit();
+    }
+
+    public int profit(Player player) {
+        return participants.profit(player);
+    }
+
+    public Player findPlayer(final String name) {
+        return participants.findPlayer(name);
     }
 
     public Dealer getDealer() {
-        return people.getDealer();
+        return participants.getDealer();
     }
 
-    public int getDealerSumHand() {
-        return getDealer().sumHand();
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
     }
 }

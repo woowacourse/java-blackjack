@@ -1,67 +1,48 @@
 package view;
 
-import view.dto.PlayerInfoDto;
-
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printGameStarted(PlayerInfoDto dealer, List<PlayerInfoDto> players) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        players.forEach(player -> stringJoiner.add(player.getPlayerName()));
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName(), stringJoiner);
+    public void printGameStarted(final Map<String, List<String>> participants) {
+        var nameJoiner = new StringJoiner(", ");
+        for (String name : participants.keySet()) {
+            nameJoiner.add(name);
+        }
+        System.out.printf("%s에게 2장을 나누었습니다.\n", nameJoiner);
 
-        printNameAndCard(dealer);
-        for (PlayerInfoDto player : players) {
-            printNameAndCard(player);
+        for (var entry : participants.entrySet()) {
+            printNameAndCards(entry.getKey(), entry.getValue());
         }
     }
 
-    public void printNameAndCard(PlayerInfoDto player) {
-        System.out.println(makeNameAndCardMessage(player));
+    public void printNameAndCards(final String name, final List<String> cards) {
+        System.out.println(name + "카드 : " + joinCard(cards));
     }
 
-    public String makeNameAndCardMessage(PlayerInfoDto player) {
-        String cardStr = player.getPlayerName() + "카드: ";
-        StringJoiner stringJoiner = new StringJoiner(", ");
-
-        player.getCards().forEach(stringJoiner::add);
-
-        return cardStr + stringJoiner;
-    }
-
-    public void printDealerHitMessage() {
-        System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public void printDealerRecord(PlayerInfoDto dealer, Map<String, Integer> dealerRecord) {
-        System.out.println("## 최종 승패");
-        System.out.print(dealer.getPlayerName() + " : ");
-
-        for (String gameResult : dealerRecord.keySet()) {
-            if (dealerRecord.get(gameResult) != 0) {
-                System.out.print(dealerRecord.get(gameResult) + gameResult);
-            }
+    private StringJoiner joinCard(final List<String> cards) {
+        var cardJoiner = new StringJoiner(", ");
+        for (String card : cards) {
+            cardJoiner.add(card);
         }
-        System.out.println();
+        return cardJoiner;
     }
 
-    public void printPlayerRecord(Map<String, String> gameResultMap) {
-        for (String player : gameResultMap.keySet()) {
-            System.out.println(player + " : " + gameResultMap.get(player));
+    public void printHitDealer() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+    }
+
+    public void printResult(final String name, final List<String> cardString, int value) {
+        System.out.println(name + "카드 : " + joinCard(cardString) + " - 결과: " + value);
+    }
+
+    public void printProfit(final Map<String, Integer> profitMap) {
+        System.out.println("\n## 최종 수익");
+        for (Map.Entry<String, Integer> profit : profitMap.entrySet()) {
+            System.out.println(profit.getKey() + " : " + profit.getValue());
         }
     }
 
-    public void printGameScore(PlayerInfoDto dealerParameter, List<PlayerInfoDto> playersParameter) {
-        printScore(dealerParameter);
-        for (PlayerInfoDto playerInfoDTO : playersParameter) {
-            printScore(playerInfoDTO);
-        }
-    }
-
-    private void printScore(PlayerInfoDto playerInfoDTO) {
-        System.out.println(makeNameAndCardMessage(playerInfoDTO) + " - 결과 : " + playerInfoDTO.getResult());
-    }
 }

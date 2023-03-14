@@ -1,59 +1,58 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.game.Deck;
-import domain.game.HitCommand;
-import view.dto.PlayerInfoDto;
+import domain.card.Score;
+import domain.state.State;
 
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.List;
 
 public class Player {
 
-    private final PlayerName playerName;
-    private final Hand hand;
+    private final Participant participant;
+    private final int betting;
 
-    public Player(String playerName, Hand hand) {
-        this.playerName = new PlayerName(playerName);
-        this.hand = hand;
+    public Player(final String PlayerName, final int betting) {
+        this.participant = new Participant(PlayerName);
+        this.betting = betting;
     }
 
-    public void draw(Card card) {
-        hand.add(card);
+    public State hit(final Card card) {
+        return participant.hit(card);
     }
 
-    public void hitByCommand(Function<String, String> inputCommand, Consumer<PlayerInfoDto> outputPlayer, Deck deck) {
-        boolean hittable;
-        do {
-            hittable = hitByCondition(outputPlayer, inputCommand, deck);
-        } while (hittable);
+    public State stay() {
+        return participant.stay();
     }
 
-    private boolean hitByCondition(Consumer<PlayerInfoDto> outputPlayer, Function<String, String> inputCommand, Deck deck) {
-        HitCommand hitCommand = HitCommand.findCommand(inputCommand.apply(playerName.getValue()));
-        if (hitCommand == HitCommand.N) {
-            return false;
+    public int calculate() {
+        State state = getState();
+        return (int) state.profit(betting);
+    }
+
+    public int calculateStay(final Dealer dealer) {
+        if (getScore().isMoreThan(dealer.getScore())) {
+            return calculate();
+        }
+        if (getScore().equals(dealer.getScore())) {
+            return 0;
         }
 
-        draw(deck.serve());
-        outputPlayer.accept(PlayerInfoDto.from(this));
-
-        return isBust();
+        return -betting;
     }
 
-    public int sumHand() {
-        return hand.sumCardNumbers();
+    public Score getScore() {
+        return getState().score();
     }
 
-    public boolean isBust() {
-        return hand.isOverBlackjack();
+    public String name() {
+        return participant.name();
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
+    public State getState() {
+        return participant.getState();
     }
 
-    public Hand getHand() {
-        return hand;
+    public List<Card> cards() {
+        return getState().cards();
     }
 }

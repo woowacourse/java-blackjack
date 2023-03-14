@@ -19,19 +19,43 @@ public class InputView {
     }
 
     public List<String> inputParticipantsName() {
-        System.out.println(INPUT_PLAYER_MESSAGE);
-        String line = scanner.nextLine();
-        validator.validateNotBlank(line);
+        try {
+            System.out.println(INPUT_PLAYER_MESSAGE);
+            String line = scanner.nextLine();
+            validator.validateNotBlank(line);
 
-        return Arrays.stream(line.split(","))
-                .map(String::trim)
-                .collect(Collectors.toList());
+            List<String> participantsName = Arrays.stream(line.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toList());
+
+            validator.validateDuplicate(participantsName);
+
+            return participantsName;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputParticipantsName();
+        }
     }
 
-    public String inputCardCommand(String player) {
+    public int inputBetting(final String player) {
+        System.out.println(player + "의 배팅 금액은?");
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("숫자만 입력 가능합니다. 다시 입력하세요");
+            return inputBetting(player);
+        }
+    }
+
+    public Command inputCardCommand(final String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
-        String command = scanner.nextLine();
-        validator.validateNotBlank(command);
-        return command;
+        String input = scanner.nextLine();
+        validator.validateNotBlank(input);
+        try {
+            return Command.from(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println("명령어는 y, n만 입력 가능합니다.");
+            return inputCardCommand(player);
+        }
     }
 }
