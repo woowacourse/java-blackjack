@@ -12,7 +12,7 @@ import blackjack.domain.participant.Players;
 
 public class BlackJackGame {
 
-    private static final int DRAWING_INITIAL_CARD_SIZE = 2;
+    private static final int INITIAL_CARD_SIZE = 2;
 
     private final Dealer dealer;
     private final Players players;
@@ -23,9 +23,9 @@ public class BlackJackGame {
     }
 
     public void handOutCards(final ShufflingMachine shufflingMachine) {
-        handOutCardTo(shufflingMachine, dealer, DRAWING_INITIAL_CARD_SIZE);
+        handOutCardTo(shufflingMachine, dealer, INITIAL_CARD_SIZE);
         players.getPlayers()
-                .forEach(player -> handOutCardTo(shufflingMachine, player, DRAWING_INITIAL_CARD_SIZE));
+                .forEach(player -> handOutCardTo(shufflingMachine, player, INITIAL_CARD_SIZE));
     }
 
     public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant, int cardSize) {

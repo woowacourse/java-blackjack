@@ -35,22 +35,22 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        final BlackJackGame blackJackGame = repeatInput(this::generateNames);
+        final BlackJackGame blackJackGame = repeatInput(this::createBlackJackGame);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
-        final Map<Player, Money> playerProfit = makeMoneys(players);
+        final Map<Player, Money> playerProfit = createBetting(players);
 
         playBlackJackGame(blackJackGame, dealer, players);
 
-        printFinalResult(dealer, players, blackJackGame.makePlayerProfit(playerProfit));
+        printResult(dealer, players, blackJackGame.makePlayerProfit(playerProfit));
     }
 
-    private BlackJackGame generateNames() {
+    private BlackJackGame createBlackJackGame() {
         final String inputNames = inputView.readNames();
         return new BlackJackGame(new Dealer(), Players.createPlayers(inputNames));
     }
 
-    private Map<Player, Money> makeMoneys(final Players players) {
+    private Map<Player, Money> createBetting(final Players players) {
         final Map<Player, Money> playerProfit = new LinkedHashMap<>();
 
         for (final Player player : players.getPlayers()) {
@@ -115,7 +115,7 @@ public class BlackJackGameController {
         }
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
+    private void printResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
         outputView.printCardsWithSum(players.getPlayers(), dealer);
         outputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
     }
