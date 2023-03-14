@@ -14,37 +14,35 @@ public enum Result {
     DRAW(betting -> 0);
 
     private final IntUnaryOperator operator;
+
     Result(IntUnaryOperator operator) {
         this.operator = operator;
     }
 
     public static Result calculatePlayerResult(Player player, Dealer dealer) {
-        int playerScore = player.calculateCurrentScore();
-        int dealerScore = dealer.calculateCurrentScore();
-
-        if (player.isBlackJack()) {
-            return checkDealerBlackJack(dealer);
-        }
-
-        if (player.isBust()) {
+        if (isPlayerLose(player, dealer)) {
             return LOSE;
         }
 
-        if (dealer.isBust() || playerScore > dealerScore) {
-            return WIN;
-        }
-
-        if (dealerScore > playerScore) {
-            return LOSE;
+        if (isPlayerWinOrBlackJack(player, dealer)) {
+            return checkBlackJack(player, dealer);
         }
         return DRAW;
     }
 
-    private static Result checkDealerBlackJack(Dealer dealer) {
-        if (dealer.isBlackJack()) {
-            return DRAW;
+    private static boolean isPlayerLose(Player player, Dealer dealer) {
+        return player.isBust() || dealer.isHigherThan(player) && !dealer.isBust();
+    }
+
+    private static boolean isPlayerWinOrBlackJack(Player player, Dealer dealer) {
+        return dealer.isBust() || player.isHigherThan(dealer) && !player.isBust();
+    }
+
+    private static Result checkBlackJack(Player player, Dealer dealer) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return BLACKJACK;
         }
-        return BLACKJACK;
+        return WIN;
     }
 
     public int calculateProfit(BettingMoney bettingMoney) {

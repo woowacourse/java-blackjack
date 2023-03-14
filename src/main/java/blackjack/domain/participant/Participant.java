@@ -38,6 +38,10 @@ public abstract class Participant {
         return calculateCurrentScore() > BLACK_JACK_SCORE;
     }
 
+    public boolean isHigherThan(Participant other) {
+        return this.calculateCurrentScore() > other.calculateCurrentScore();
+    }
+
     public abstract boolean canReceive();
 
     public Hand getCards() {
