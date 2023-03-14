@@ -43,9 +43,9 @@ public class BlackJackController {
 
     private void printInitialDistribution(GameManager gameManager) {
         outputView.printFirstCardDistribution(gameManager.getDealerName(), gameManager.getPlayerNames());
-        outputView.printCardStatus(gameManager.getDealerName(), getCardStatus(gameManager.showOneCardOfDealerCards()));
+        outputView.printCardStatus(gameManager.getDealerName(), convertCardStatusDto(gameManager.showOneCardOfDealerCards()));
         for (Player player : gameManager.getPlayers()) {
-            outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
+            outputView.printCardStatus(player.getNameValue(), convertCardStatusDto(player.getCards()));
         }
     }
 
@@ -72,7 +72,7 @@ public class BlackJackController {
             gameManager.distributeCardToPlayer(player);
         }
 
-        outputView.printCardStatus(player.getNameValue(), getCardStatus(player.getCards()));
+        outputView.printCardStatus(player.getNameValue(), convertCardStatusDto(player.getCards()));
     }
 
     private void end(GameManager gameManager) {
@@ -83,11 +83,11 @@ public class BlackJackController {
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameValue(),
-                getCardStatus(participant.getCards()),
+                convertCardStatusDto(participant.getCards()),
                 participant.getTotalScoreValue());
     }
 
-    private List<CardStatusDto> getCardStatus(List<Card> cards) {
+    private List<CardStatusDto> convertCardStatusDto(List<Card> cards) {
         return cards.stream()
                 .map(CardStatusDto::new)
                 .collect(Collectors.toList());
