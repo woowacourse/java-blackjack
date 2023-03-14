@@ -13,7 +13,7 @@ import blackjackgame.domain.player.Player;
 
 public class Judge {
 
-    public static Map<Player, Double> playersProfit(Dealer dealer, List<Guest> guests) {
+    public static Map<Player, Double> profit(Dealer dealer, List<Guest> guests) {
         Map<Player, Double> profitResult = new LinkedHashMap<>();
         profitResult.put(dealer, 0d);
 

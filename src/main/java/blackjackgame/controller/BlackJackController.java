@@ -11,11 +11,11 @@ import blackjackgame.domain.player.Guest;
 import blackjackgame.domain.player.Name;
 import blackjackgame.domain.player.Player;
 import blackjackgame.domain.player.Players;
-import blackjackgame.view.AddCardResponse;
+import blackjackgame.view.DrawRequest;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
 
-public class BlackJackController {
+public final class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -30,11 +30,11 @@ public class BlackJackController {
         players.add(Dealer.from(deck.firstPickCards()));
         outputView.printStartingCards(players.startingCards());
 
-        hitGuestsCard(players.guests(), deck);
+        players.guests().forEach(guest -> hitGuestCard(guest, deck));
         hitDealerCard(players.dealer(), deck);
 
         printScore(players);
-        outputView.printProfit(Judge.playersProfit(players.dealer(), players.guests()));
+        outputView.printProfit(Judge.profit(players.dealer(), players.guests()));
     }
 
     private Players initializeGuests(Deck deck) {
@@ -68,22 +68,16 @@ public class BlackJackController {
         return new Players(guests);
     }
 
-    private void hitGuestsCard(final List<Guest> guests, final Deck deck) {
-        for (Guest guest : guests) {
-            AddCardResponse addCardResponse = AddCardResponse.YES;
-            while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
-                addCardResponse = inputView.readWantMoreCard(guest.getName());
-                hitAndPrintCards(deck, guest, addCardResponse);
+    private void hitGuestCard(final Guest guest, final Deck deck) {
+        DrawRequest drawRequest = DrawRequest.YES;
+        while (guest.canHit() && drawRequest == DrawRequest.YES) {
+            drawRequest = inputView.readWantMoreCard(guest.getName());
+            if (drawRequest == DrawRequest.YES) {
+                guest.draw(deck.pickOne());
+                outputView.printCards(guest.getName(), guest.cards());
+            } else {
+                guest.setStay();
             }
-        }
-    }
-
-    private void hitAndPrintCards(Deck deck, Guest guest, AddCardResponse addCardResponse) {
-        if (addCardResponse == AddCardResponse.YES) {
-            guest.draw(deck.pickOne());
-            outputView.printCards(guest.getName(), guest.cards());
-        } else {
-            guest.stay();
         }
     }
 
@@ -94,15 +88,10 @@ public class BlackJackController {
         }
     }
 
-    private void printScore(Players players) {
+    private void printScore(final Players players) {
         for (final Player player : players.getAllPlayers()) {
             outputView.printCards(player.getName(), player.cards());
             outputView.printScore(player.scoreValue());
         }
-    }
-
-    private void judgeAndPrintResult(final Players players) {
-        Judge judge = new Judge(players.dealer(), players.guests());
-        outputView.printProfit(judge.playersProfit());
     }
 }

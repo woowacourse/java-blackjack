@@ -49,13 +49,13 @@ public class InputView {
         }
     }
 
-    public AddCardResponse readWantMoreCard(final String playerName) {
-        Optional<AddCardResponse> addCardResponse;
+    public DrawRequest readWantMoreCard(final String playerName) {
+        Optional<DrawRequest> addCardResponse;
         do {
-            System.out.printf(AddCardResponse.printAddCardResponse(playerName));
-            addCardResponse = AddCardResponse.findAndCreate(scanner.nextLine());
+            System.out.printf(DrawRequest.message(playerName));
+            addCardResponse = DrawRequest.from(scanner.nextLine());
             if (addCardResponse.isEmpty()) {
-                printErrorMsg(AddCardResponse.getErrorPowerMsg());
+                printErrorMsg(DrawRequest.getErrorPowerMsg());
             }
         } while (addCardResponse.isEmpty());
         return addCardResponse.get();
