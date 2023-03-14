@@ -23,7 +23,6 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.HEART;
 import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.ACE;
-import static domain.card.CardValue.FIVE;
 import static domain.card.CardValue.KING;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.QUEEN;

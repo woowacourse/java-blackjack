@@ -2,7 +2,6 @@ package domain.hand;
 
 import domain.Score;
 import domain.card.Card;
-import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,7 +13,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.CardShape.*;
+import static domain.card.CardShape.CLOVER;
+import static domain.card.CardShape.DIAMOND;
+import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.FOUR;
 import static domain.card.CardValue.JACK;
