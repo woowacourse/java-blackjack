@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class BettingAmount {
 
+    public static final BettingAmount ZERO = new BettingAmount(0);
+
     private final int value;
 
     public BettingAmount(int value) {

@@ -6,7 +6,7 @@ public class Player extends Participant {
 
     public Player(String name) {
         super(name);
-        bettingAmount = new BettingAmount(0);
+        bettingAmount = BettingAmount.ZERO;
     }
 
     public void bet(int amount) {
