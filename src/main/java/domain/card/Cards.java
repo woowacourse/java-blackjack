@@ -35,6 +35,13 @@ public class Cards {
 		return cards.size();
 	}
 
+	public int getNumberOf(final int index) {
+		if (index < 0 || index >= cards.size()) {
+			throw new IllegalArgumentException();
+		}
+		return cards.get(index).getNumber();
+	}
+
 	public List<Card> getCards() {
 		return cards;
 	}
