@@ -43,7 +43,7 @@ public class BlackJackManager {
             final Predicate<String> checkPlayerHit,
             final Consumer<ParticipantStatusDTO> printPlayerCards
     ) {
-        while (player.isHittable() && checkPlayerHit.test(player.getName().getValue())) {
+        while (player.isHittable() && checkPlayerHit.test(player.getName())) {
             player.hit(deck.draw());
             printPlayerCards.accept(ParticipantStatusDTO.of(player));
         }

@@ -25,7 +25,7 @@ public class ParticipantBettingResultDTO {
     }
 
     private static BiConsumer<Player, ResultType> calculatePlayersRevenue(final Map<String, Integer> bettingResults) {
-        return (player, resultType) -> bettingResults.put(player.getName().getValue(), resultType.getRevenue(player.getBettingMoney()));
+        return (player, resultType) -> bettingResults.put(player.getName(), resultType.getRevenue(player.getBettingMoney()));
     }
 
     public Map<String, Integer> getBettingResults() {

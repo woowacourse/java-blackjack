@@ -38,7 +38,7 @@ public abstract class Participant {
 
     protected abstract boolean isHittable();
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 }

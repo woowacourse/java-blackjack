@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import blackjack.domain.Name;
 import blackjack.domain.Participant;
 import blackjack.domain.card.Card;
 
@@ -12,8 +11,8 @@ public class ParticipantStatusDTO {
     private final String name;
     private final List<String> cards;
 
-    private ParticipantStatusDTO(final Name name, final List<Card> cards) {
-        this.name = name.getValue();
+    private ParticipantStatusDTO(final String name, final List<Card> cards) {
+        this.name = name;
         this.cards = cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.toUnmodifiableList());
