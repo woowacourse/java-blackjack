@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 public class InputValidator {
+
     private static final String DEALER_NAME = "딜러";
     private static final String YES = "y";
     private static final String NO = "n";
@@ -35,6 +36,14 @@ public class InputValidator {
     public static void validateAnswerYesOrNo(final String input) {
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
+        }
+    }
+
+    public static void validateIsNumeric(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자를 입력해주세요.");
         }
     }
 }

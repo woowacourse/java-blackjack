@@ -1,14 +1,21 @@
 package domain.player;
 
-public class Dealer extends Player {
+import domain.deck.Deck;
+
+public final class Dealer extends Participant {
+
     private static final int STOP_LOWER_BOUND = 17;
-    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(new Hand());
     }
 
-    public boolean isDealerDraw() {
+    public void hitTwice(final Deck deck) {
+        hit(deck.popCard());
+        hit(deck.popCard());
+    }
+
+    public boolean shouldHit() {
         return getScore() < STOP_LOWER_BOUND;
     }
 }

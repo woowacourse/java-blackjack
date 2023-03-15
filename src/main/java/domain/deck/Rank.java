@@ -1,6 +1,7 @@
 package domain.deck;
 
 public enum Rank {
+
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -23,11 +24,11 @@ public enum Rank {
         this.score = score;
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public String getRank() {
         return rank;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

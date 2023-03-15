@@ -2,10 +2,12 @@ package domain.player;
 
 import domain.deck.Card;
 import domain.deck.Rank;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
+
     private static final int UPPER_BOUND = 11;
     private static final int ACE_RANK_DIFFERENCE = 10;
 
@@ -27,10 +29,6 @@ public class Hand {
         return card.getRank().equals(Rank.ACE);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public int score() {
         int sum = 0;
 
@@ -42,5 +40,9 @@ public class Hand {
         }
 
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

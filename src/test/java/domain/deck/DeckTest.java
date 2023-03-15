@@ -1,14 +1,15 @@
 package domain.deck;
 
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.NoSuchElementException;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class DeckTest {
+
     Deck deck = new Deck();
 
     @DisplayName("덱의 최대 카드 반환 가능 수는 52번이다.")

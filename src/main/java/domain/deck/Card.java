@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Card {
+public final class Card {
+
     private static List<Card> cards;
+
     private final Suit suit;
     private final Rank rank;
 
@@ -14,7 +16,7 @@ public class Card {
         this.rank = rank;
     }
 
-    public static Card getCard(final Suit suit, final Rank rank) {
+    public static Card of(final Suit suit, final Rank rank) {
         if (cards == null) {
             cards = new ArrayList<>();
             initializeCardStorage();

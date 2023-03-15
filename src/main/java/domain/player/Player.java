@@ -1,54 +1,50 @@
 package domain.player;
 
-import domain.deck.Card;
+import domain.bet.Bet;
 
-import java.util.List;
+import java.util.Objects;
 
-public class Player {
+public final class Player extends Participant {
+
     private static final int BLACK_JACK_NUMBER = 21;
 
     private final Name name;
-    private final Hand hand;
+    private Bet bet;
 
     public Player(final String name) {
+        super(new Hand());
         this.name = new Name(name);
-        this.hand = new Hand();
     }
 
-    public void drawCard(final Card card) {
-        hand.addCard(card);
+    public boolean isEqualOrLargerThanBlackJackNumber() {
+        return getScore() >= BLACK_JACK_NUMBER;
     }
 
-    public boolean isWin(final int dealerScore) {
-        if (dealerScore > BLACK_JACK_NUMBER && hand.score() <= BLACK_JACK_NUMBER) {
-            return true;
+    public void initBet(final int money) {
+        if (bet != null) {
+            throw new UnsupportedOperationException();
         }
-        return hand.score() <= BLACK_JACK_NUMBER && hand.score() > dealerScore;
-    }
-
-    public boolean isDraw(final int dealerScore) {
-        if (dealerScore > BLACK_JACK_NUMBER && hand.score() > BLACK_JACK_NUMBER) {
-            return true;
-        }
-        return dealerScore == hand.score();
-    }
-
-    public boolean isOver21() {
-        if (getScore() > BLACK_JACK_NUMBER) {
-            return true;
-        }
-        return false;
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
+        bet = new Bet(money);
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public int getScore() {
-        return hand.score();
+    public Bet getBet() {
+        return bet;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return name.getName().equals(player.name.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -1,6 +1,7 @@
 package domain.player;
 
-public class Name {
+public final class Name {
+
     private static final int MIN_LENGTH = 1;
     private static final int MAX_LENGTH = 15;
 

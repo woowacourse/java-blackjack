@@ -5,38 +5,39 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
-    private static final Scanner scanner = new Scanner(System.in);
+public final class InputView {
+
     private static final String SPLIT_DELIMITER = ",";
     private static final String YES = "y";
 
-    private InputView() {
+    private final Scanner scanner;
+
+    public InputView(final Scanner scanner) {
+        this.scanner = scanner;
     }
 
-    public static List<String> readNames() {
+    public List<String> readNames() {
         final String input = scanner.nextLine();
         final List<String> names = splitAsList(input);
-
-        validateName(names);
+        validateNames(names);
         return names;
     }
 
-    private static void validateName(final List<String> names) {
+    private void validateNames(final List<String> names) {
         InputValidator.validatePlayerCount(names);
         InputValidator.validatePlayerNameDuplicated(names);
         InputValidator.validatePlayerNameCannotBeSameAsDealerName(names);
 
     }
 
-    private static List<String> splitAsList(final String input) {
+    private List<String> splitAsList(final String input) {
         return Arrays.stream(input.split(SPLIT_DELIMITER))
                 .map(String::strip)
                 .collect(Collectors.toList());
     }
 
-    public static boolean readAnswer() {
+    public boolean readAnswer() {
         final String input = scanner.nextLine();
-
         validateAnswer(input);
 
         if (input.equals(YES)) {
@@ -45,7 +46,18 @@ public class InputView {
         return false;
     }
 
-    private static void validateAnswer(final String input) {
+    private void validateAnswer(final String input) {
         InputValidator.validateAnswerYesOrNo(input);
+    }
+
+    public int readBetMoney() {
+        final String input = scanner.nextLine();
+        validateBetMoney(input);
+
+        return Integer.parseInt(input);
+    }
+
+    private void validateBetMoney(final String input) {
+        InputValidator.validateIsNumeric(input);
     }
 }

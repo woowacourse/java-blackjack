@@ -1,102 +1,67 @@
 package controller;
 
-import domain.deck.Card;
 import domain.deck.Deck;
-import domain.game.BlackJackGame;
-import domain.game.Outcome;
+import domain.player.Dealer;
+import domain.player.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainController {
-    private static final String DEALER_NAME = "딜러";
 
-    private List<String> names;
-    private BlackJackGame blackJackGame;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public void start() {
-        names = inputNames();
-        blackJackGame = generateBlackJackGame();
+    public MainController(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
 
-        outputCards();
-        drawCardsPlayer();
-        drawCardsDealer();
+    public void run() {
+        List<String> names = inputNames();
+        Players players = makePlayers(names);
+        Dealer dealer = new Dealer();
+        Deck deck = makeDeck();
+        initBetMoney(players);
 
-        outputCardResult();
-        outputGameResult();
+        hitTwice(dealer, players, deck);
+
+        new ProgressController(inputView, outputView).run(dealer, players, deck);
+        new ResultController(outputView).run(dealer, players);
     }
 
     private List<String> inputNames() {
-        OutputView.printInputNames();
-        return InputView.readNames();
+        outputView.printInputNames();
+        return inputView.readNames();
     }
 
-    private BlackJackGame generateBlackJackGame() {
+    private Players makePlayers(final List<String> names) {
+        return new Players(names);
+    }
+
+    private Deck makeDeck() {
         Deck deck = new Deck();
         deck.shuffleDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(deck, names);
-        OutputView.printEmptyLine();
-        OutputView.printDistributeCard(names);
-        return blackJackGame;
+        return deck;
     }
 
-    private void outputCards() {
-        final Card dealerCard = blackJackGame.getCards(DEALER_NAME).get(0);
-        OutputView.printDealerCard(dealerCard);
-        names.forEach(name ->
-                OutputView.printPlayerCard(name, blackJackGame.getCards(name))
-        );
-        OutputView.printEmptyLine();
-    }
-
-    private void drawCardsPlayer() {
-        names.forEach(this::drawWhileYes);
-    }
-
-    private void drawWhileYes(final String playerName) {
-        do {
-            OutputView.printOneMoreCard(playerName);
-        } while (isOneMore(playerName));
-    }
-
-    private boolean isOneMore(final String playerName) {
-        if (!blackJackGame.isOver21(playerName) && InputView.readAnswer()) {
-            blackJackGame.drawCard(playerName);
-            OutputView.printPlayerCard(playerName, blackJackGame.getCards(playerName));
-            return true;
+    private void initBetMoney(final Players players) {
+        for(String name : players.getPlayerNames()) {
+            outputView.printInitBetMoney(name);
+            players.initBet(inputView.readBetMoney(), name);
         }
-        OutputView.printPlayerCard(playerName, blackJackGame.getCards(playerName));
-        return false;
     }
 
-    private void drawCardsDealer() {
-        OutputView.printEmptyLine();
-        while (blackJackGame.isDealerDraw()) {
-            OutputView.printDealerDrawCard();
-            blackJackGame.drawCard(DEALER_NAME);
-        }
-        OutputView.printEmptyLine();
+    private void hitTwice(final Dealer dealer, final Players players, final Deck deck) {
+        outputView.printHitTwice(players);
+        hitTwiceEachParticipant(dealer, players, deck);
+        outputView.printDealerFirstCard(dealer);
+        outputView.printPlayersCard(players);
     }
 
-    private void outputCardResult() {
-        OutputView.printCardResult(
-                DEALER_NAME,
-                blackJackGame.getCards(DEALER_NAME),
-                blackJackGame.getScore(DEALER_NAME)
-        );
-
-        names.forEach(name ->
-                OutputView.printCardResult(name, blackJackGame.getCards(name), blackJackGame.getScore(name))
-        );
-    }
-
-    private void outputGameResult() {
-        final EnumMap<Outcome, Integer> dealerOutcome = blackJackGame.decideDealerOutcome();
-        final Map<String, Outcome> playersOutcome = blackJackGame.decidePlayersOutcome();
-        OutputView.printEmptyLine();
-        OutputView.printGameResult(dealerOutcome, playersOutcome);
+    private void hitTwiceEachParticipant(final Dealer dealer, final Players players, final Deck deck) {
+        dealer.hitTwice(deck);
+        players.hitTwice(deck);
     }
 }

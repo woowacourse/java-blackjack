@@ -1,73 +1,71 @@
 package domain.player;
 
 import domain.deck.Card;
-import domain.deck.Deck;
 import domain.deck.Rank;
 import domain.deck.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Stream;
 
-@TestInstance(Lifecycle.PER_CLASS)
-public class PlayerTest {
-    Deck deck = new Deck();
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @DisplayName("플레이어가 처음 카드를 뽑으면 패의 크기는 1이다.")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class PlayerTest {
+
+    @DisplayName("처음 상태에서 카드를 한 장 뽑으면 카드의 개수는 1이다.")
     @Test
-    void drawTest() {
+    void hitTest() {
+        int expectedCardSize = 1;
 
-        final String testName = "test";
-        Player player = new Player(testName);
+        Player player = new Player("hardy");
+        player.hit(Card.of(Suit.DIAMOND, Rank.QUEEN));
 
-        assertEquals(0, player.getCards().size());
-        player.drawCard(deck.popCard());
-        assertEquals(1, player.getCards().size());
+        assertEquals(expectedCardSize, player.getCards().size());
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 높은 경우 isWin은 True를 반환한다.")
-    @Test
-    void isWinTrueTest() {
+    @DisplayName("가진 카드에 대한 점수 테스트")
+    @ParameterizedTest
+    @MethodSource("getScoreProvider")
+    void getScoreTest(final int expectedScore, final Card firstCard, final Card secondCard) {
         Player player = new Player("hardy");
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
+        player.hit(firstCard);
+        player.hit(secondCard);
 
-        int dealerScore = 19;
-        assertTrue(player.isWin(dealerScore));
+        assertEquals(expectedScore, player.getScore());
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 높지 않을 경우 isWin은 False를 반환한다.")
-    @Test
-    void isWinFalseTest() {
-        Player player = new Player("hardy");
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
-
-        int dealerScore = 21;
-        assertFalse(player.isWin(dealerScore));
+    Stream<Arguments> getScoreProvider() {
+        return Stream.of(
+                Arguments.of(20, Card.of(Suit.DIAMOND, Rank.QUEEN), Card.of(Suit.HEART, Rank.KING)),
+                Arguments.of(21, Card.of(Suit.DIAMOND, Rank.QUEEN), Card.of(Suit.HEART, Rank.ACE)),
+                Arguments.of(12, Card.of(Suit.DIAMOND, Rank.ACE), Card.of(Suit.HEART, Rank.ACE)),
+                Arguments.of(13, Card.of(Suit.DIAMOND, Rank.TWO), Card.of(Suit.HEART, Rank.ACE))
+        );
     }
 
-    @DisplayName("플레이어가 딜러와 점수가 같을 경우 isDraw은 True를 반환한다.")
-    @Test
-    void isDrawTrueTest() {
+    @DisplayName("점수가 블랙잭넘버인 21보다 크거나 같으면 true를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("isEqualOrLargerThanBlackJackNumber")
+    void isEqualOrLargerThanBlackJackNumberTest(final boolean expected, final Card firstCard, final Card secondCard, final Card thirdCard) {
         Player player = new Player("hardy");
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
+        player.hit(firstCard);
+        player.hit(secondCard);
+        player.hit(thirdCard);
 
-        int dealerScore = 20;
-        assertTrue(player.isDraw(dealerScore));
+        assertEquals(expected, player.isEqualOrLargerThanBlackJackNumber());
     }
 
-    @DisplayName("플레이어가 딜러와 점수가 같지 않을 경우 isDraw은 False를 반환한다.")
-    @Test
-    void isDrawFalseTest() {
-        Player player = new Player("hardy");
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
-        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
-
-        int dealerScore = 19;
-        assertFalse(player.isDraw(dealerScore));
+    Stream<Arguments> isEqualOrLargerThanBlackJackNumber() {
+        return Stream.of(
+                Arguments.of(true, Card.of(Suit.DIAMOND, Rank.QUEEN), Card.of(Suit.HEART, Rank.KING), Card.of(Suit.SPADE, Rank.KING)),
+                Arguments.of(true, Card.of(Suit.DIAMOND, Rank.QUEEN), Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.SPADE, Rank.KING)),
+                Arguments.of(false, Card.of(Suit.DIAMOND, Rank.ACE), Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.SPADE, Rank.ACE)),
+                Arguments.of(false, Card.of(Suit.DIAMOND, Rank.NINE), Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.SPADE, Rank.JACK))
+        );
     }
 }
