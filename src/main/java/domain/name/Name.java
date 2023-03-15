@@ -42,6 +42,12 @@ public class Name {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Name other = (Name) obj;
         return name == other.name;
     }
