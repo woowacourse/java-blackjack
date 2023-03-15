@@ -1,19 +1,18 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 
+import static blackjack.common.BlackJackRule.DEALER_MAX_HITTABLE_POINT;
 import static blackjack.domain.ResultType.*;
 
 public class Dealer extends Participant {
-    private static final int DEALER_MAX_HITTABLE_POINT = 16;
     private static final int INITIAL_OPEN_CARD_COUNT = 1;
-    private static final int MAX_POINT_NOT_BUST = 21;
     private static final String DEFAULT_NAME = "딜러";
 
-    protected Dealer(final ParticipantCards cards) {
+    protected Dealer(final Cards cards) {
         super(cards, DEFAULT_NAME);
     }
 
@@ -24,26 +23,37 @@ public class Dealer extends Participant {
 
     @Override
     protected boolean isHittable() {
-        return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT;
+        return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT.getValue();
     }
 
-    public ResultType judgeResult(final Participant participant) {
+    public ResultType judgePlayerResult(final Participant participant) {
         int dealerPoint = getTotalPoint();
         int participantPoint = participant.getTotalPoint();
 
-        if (participantPoint > MAX_POINT_NOT_BUST) {
-            return WIN;
+        return judgeResult(participant, dealerPoint, participantPoint);
+    }
+
+    private ResultType judgeResult(final Participant participant, final int dealerPoint, final int participantPoint) {
+        if(participant.isBlackJack() && !isBlackJack()) {
+            return BLACK_JACK;
         }
-        if (isDealerBust(dealerPoint, participantPoint)) {
+        if(participant.isBust() || isDealerBlackJack(participant)) {
             return LOSE;
         }
-        if (dealerPoint > participantPoint) {
+        if (isDealerBust(dealerPoint, participantPoint)) {
             return WIN;
+        }
+        if (dealerPoint > participantPoint) {
+            return LOSE;
         }
         return PUSH;
     }
 
+    private boolean isDealerBlackJack(final Participant participant) {
+        return isBlackJack() && !participant.isBlackJack();
+    }
+
     private boolean isDealerBust(int dealerPoint, int participantPoint) {
-        return dealerPoint > MAX_POINT_NOT_BUST || dealerPoint < participantPoint;
+        return isBust() || dealerPoint < participantPoint;
     }
 }

@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.BlackJackGameResultDTO;
-import blackjack.dto.ParticipantCardsDTO;
-import blackjack.dto.ParticipantEntireStatusDTO;
-import blackjack.dto.ParticipantStatusDTO;
+import blackjack.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +8,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final int NOT_EXIST_MATCH_RESULT = 0;
     private static final String DEALER_DEFAULT_NAME = "딜러";
 
     private OutputView() {
@@ -19,19 +15,18 @@ public class OutputView {
 
     public static void printParticipantsInitCards(final ParticipantCardsDTO cardsDTO) {
         List<ParticipantStatusDTO> participantCards = cardsDTO.getParticipantCards();
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_DEFAULT_NAME,
-                String.join(", ", cardsDTO.getPlayerNames()))
-                + System.lineSeparator());
+        System.out.printf(System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다." + System.lineSeparator(), DEALER_DEFAULT_NAME,
+                String.join(", ", cardsDTO.getPlayerNames()));
         String participantInitCards = participantCards.stream()
-                .map(participantStatus -> getParticipantCards(participantStatus.getName(), participantStatus.getCards())
-                        + System.lineSeparator())
-                .collect(Collectors.joining());
+                .map(participantStatus -> getParticipantCards(participantStatus.getName(), participantStatus.getCards()))
+                .collect(Collectors.joining(System.lineSeparator()));
 
-        System.out.println(participantInitCards + System.lineSeparator());
+        System.out.printf(participantInitCards + System.lineSeparator() + System.lineSeparator());
     }
 
     public static void printDealerHit(final int hitCount) {
-        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n" + System.lineSeparator(), hitCount);
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다." + System.lineSeparator(), hitCount);
+        System.out.println();
     }
 
     public static void printParticipantsCards(final ParticipantStatusDTO participantStatusDTO) {
@@ -47,38 +42,18 @@ public class OutputView {
         System.out.println(playerCards + playerTotalPoint);
     }
 
-    public static void printBlackJackResults(final BlackJackGameResultDTO gameResultDTO) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.println(makeBlackJackResultFormat(gameResultDTO.getGameResults()));
-    }
-
-    private static String makeBlackJackResultFormat(final Map<String, List<String>> blackJackResults) {
-        Set<String> participants = blackJackResults.keySet();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (final String name : participants) {
-            List<String> gameResults = blackJackResults.get(name);
-            Map<String, Long> results = gameResults.stream()
-                    .collect(Collectors.groupingBy(String::valueOf, Collectors.counting()));
-            stringBuilder.append(getParticipantResult(name, results));
-        }
-
-        return stringBuilder.toString();
-    }
-
     private static String getParticipantCards(final String participantName, final List<String> participantCards) {
         return participantName
                 + " 카드: "
                 + String.join(", ", participantCards);
     }
 
-    private static String getParticipantResult(final String name, final Map<String, Long> results) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name).append(": ");
-        results.entrySet().stream()
-                .filter(entry -> entry.getValue() > NOT_EXIST_MATCH_RESULT)
-                .forEach(entry -> stringBuilder.append(entry.getValue()).append(entry.getKey()).append(" "));
-        stringBuilder.append(System.lineSeparator());
-        return stringBuilder.toString();
+    public static void printBettingResults(ParticipantBettingResultDTO bettingResultDTO) {
+        System.out.println("\n## 최종 수익");
+        Set<Map.Entry<String, Integer>> bettingEntries = bettingResultDTO.getBettingResults().entrySet();
+        String bettingResults = bettingEntries.stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining(System.lineSeparator()));
+        System.out.println(bettingResults);
     }
 }

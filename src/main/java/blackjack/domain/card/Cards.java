@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ParticipantCards {
-    private static final int INITIAL_SIZE = 2;
-    private static final int BLACK_JACK = 21;
+import static blackjack.common.BlackJackRule.INITIAL_CARD_SIZE;
+import static blackjack.common.BlackJackRule.MAX_SCORE_NOT_BUST;
 
+public class Cards {
     private final List<Card> cards;
 
-    public ParticipantCards(final List<Card> cards) {
+    public Cards(final List<Card> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }
@@ -28,34 +28,34 @@ public class ParticipantCards {
         List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toList());
-        return CardNumber.getMaxValueNearBlackJack(cardNumbers, BLACK_JACK);
+        return CardNumber.getMaxValueNearBlackJack(cardNumbers, MAX_SCORE_NOT_BUST.getValue());
     }
 
     public List<Card> open(int size) {
         return IntStream.range(0, size)
                 .mapToObj(cards::get)
-                .collect(Collectors.toList());
-    }
-
-    public List<Card> openAll() {
-        return cards;
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public boolean isBust() {
-        return calculate() > BLACK_JACK;
+        return calculate() > MAX_SCORE_NOT_BUST.getValue();
     }
 
     public boolean isBlackJack() {
-        return calculate() == BLACK_JACK;
+        return cards.size() == INITIAL_CARD_SIZE.getValue() && calculate() == MAX_SCORE_NOT_BUST.getValue();
     }
 
     private void validate(final List<Card> cards) {
-        if (cards.size() != INITIAL_SIZE) {
+        if (cards.size() != INITIAL_CARD_SIZE.getValue()) {
             throw new IllegalArgumentException("첫 카드는 두 장이어야 합니다.");
         }
 
-        if (new HashSet<>(cards).size() != INITIAL_SIZE) {
+        if (new HashSet<>(cards).size() != INITIAL_CARD_SIZE.getValue()) {
             throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

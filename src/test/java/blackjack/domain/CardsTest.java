@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Cards;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("참여자 카드")
-class ParticipantCardsTest {
+class CardsTest {
     @Test
     @DisplayName("생성한다.")
     void create() {
@@ -25,13 +25,13 @@ class ParticipantCardsTest {
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
 
         assertThatNoException()
-                .isThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)));
+                .isThrownBy(() -> new Cards(List.of(cardOne, cardTwo)));
     }
 
     @Test
     @DisplayName("생성시에 카드가 두 장이 아닐 경우 예외가 발생한다.")
     void throwExceptionWhenCardsHasSizeLowerThan1() {
-        assertThatThrownBy(() -> new ParticipantCards(List.of()))
+        assertThatThrownBy(() -> new Cards(List.of()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +41,7 @@ class ParticipantCardsTest {
         Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.THREE);
 
-        assertThatThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)))
+        assertThatThrownBy(() -> new Cards(List.of(cardOne, cardTwo)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -50,9 +50,9 @@ class ParticipantCardsTest {
     void throwExceptionWhenCardsDuplicated() {
         Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.FOUR);
-        ParticipantCards participantCards = new ParticipantCards(List.of(cardOne, cardTwo));
+        Cards cards = new Cards(List.of(cardOne, cardTwo));
 
-        assertThatThrownBy(() -> participantCards.receive(Card.of(Suit.DIAMOND, CardNumber.THREE)))
+        assertThatThrownBy(() -> cards.receive(Card.of(Suit.DIAMOND, CardNumber.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -60,20 +60,10 @@ class ParticipantCardsTest {
     @MethodSource("calculateDummy")
     @DisplayName("가지고 있는 카드의 합을 계산한다.")
     void calculate(final List<Card> cards, final int expectedSum) {
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        Cards participantCards = new Cards(cards);
         int cardSum = participantCards.calculate();
 
         assertThat(cardSum).isEqualTo(expectedSum);
-    }
-
-    @ParameterizedTest
-    @MethodSource("isBustDummy")
-    @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
-    void isBust(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, additionalCards);
-        boolean isBust = participantsCards.isBust();
-
-        assertThat(isBust).isEqualTo(expected);
     }
 
     static Stream<Arguments> calculateDummy() {
@@ -89,25 +79,35 @@ class ParticipantCardsTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("isBustDummy")
+    @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
+    void isBust(final List<Card> initialCards, final List<Card> additionalCards, final boolean expected) {
+        Cards participantsCards = ParticipantCardsFixture.createParticipantsCards(initialCards, additionalCards);
+        boolean isBust = participantsCards.isBust();
+
+        assertThat(isBust).isEqualTo(expected);
+    }
+
     static Stream<Arguments> isBustDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR)),
                         List.of(
                                 Card.of(Suit.DIAMOND, CardNumber.THREE),
                                 Card.of(Suit.HEART, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.THREE),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.THREE)),
                         List.of(
                                 Card.of(Suit.SPADE, CardNumber.ACE),
                                 Card.of(Suit.CLOVER, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        Card.of(Suit.DIAMOND, CardNumber.TWO),
-                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
+                        List.of(Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR)),
                         List.of(
                                 Card.of(Suit.SPADE, CardNumber.ACE),
                                 Card.of(Suit.CLOVER, CardNumber.QUEEN),

@@ -31,12 +31,12 @@ public class ParticipantCardsDTO {
     }
 
     public List<ParticipantStatusDTO> getParticipantCards() {
-        return participantCards;
+        return new ArrayList<>(participantCards);
     }
 
     public List<String> getPlayerNames() {
         return participantCards.subList(1, participantCards.size()).stream()
                 .map(ParticipantStatusDTO::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 }
