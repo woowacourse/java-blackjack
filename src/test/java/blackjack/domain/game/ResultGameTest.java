@@ -18,7 +18,7 @@ import static blackjack.domain.CardConstant.*;
 public class ResultGameTest {
     private Dealer dealer;
     private Participants participants;
-    private Map<Participant, Integer> resultBetting;
+    private Map<Participant, Betting> resultBetting;
     private ResultGame resultGame;
     private Participant pobi;
 
@@ -47,7 +47,7 @@ public class ResultGameTest {
 
         resultGame.calculateResult(participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(-15000);
+        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-15000));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ResultGameTest {
 
         resultGame.calculateResult(participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(-10000);
+        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-10000));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ResultGameTest {
 
         resultGame.calculateResult(participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(0);
+        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(0));
     }
 
     @Test
@@ -92,12 +92,12 @@ public class ResultGameTest {
 
         resultGame.calculateResult(participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(10000);
+        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(10000));
     }
 
     @Test
     @DisplayName("플레이어의 베팅 금액을 제대로 반환하는지 테스트")
     void getPlayerResultTest() {
-        Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(10000);
+        Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(10000));
     }
 }

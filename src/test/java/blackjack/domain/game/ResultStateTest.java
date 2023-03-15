@@ -60,34 +60,58 @@ class ResultStateTest {
     @Test
     @DisplayName("게임 결과가 블랙잭일 때, 베팅 금액의 1.5배를 반환하는지 확인")
     void calculateProfitTestByBlackjack() {
+        // given
         final Betting betting = Betting.from(10000);
+        final Betting expected = Betting.from(15000);
 
-        Assertions.assertThat(ResultState.BLACKJACK.calculateProfit(betting.getValue())).isEqualTo(15000);
+        // when
+        final Betting actual = ResultState.BLACKJACK.calculateProfit(betting.getValue());
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("게임 결과가 승리일 때, 베팅 금액의 1배를 반환하는지 확인")
     void calculateProfitTestByWin() {
+        // given
         final Betting betting = Betting.from(10000);
+        final Betting expected = Betting.from(10000);
 
-        Assertions.assertThat(ResultState.WIN.calculateProfit(betting.getValue())).isEqualTo(10000);
+        // when
+        final Betting actual = ResultState.WIN.calculateProfit(betting.getValue());
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 
 
     @Test
     @DisplayName("게임 결과가 무승부일 때, 베팅 금액의 0배를 반환하는지 확인")
     void calculateProfitTestByTie() {
+        // given
         final Betting betting = Betting.from(10000);
+        final Betting expected = Betting.from(0);
 
-        Assertions.assertThat(ResultState.TIE.calculateProfit(betting.getValue())).isEqualTo(0);
+        // when
+        final Betting actual = ResultState.TIE.calculateProfit(betting.getValue());
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 
 
     @Test
     @DisplayName("게임 결과가 패배일 때, 베팅 금액의 -1배를 반환하는지 확인")
     void calculateProfitTestByLose() {
-        Betting betting = Betting.from(10000);
+        // given
+        final Betting betting = Betting.from(10000);
+        final Betting expected = Betting.from(-10000);
 
-        Assertions.assertThat(ResultState.LOSE.calculateProfit(betting.getValue())).isEqualTo(-10000);
+        // when
+        final Betting actual = ResultState.LOSE.calculateProfit(betting.getValue());
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 }

@@ -8,18 +8,18 @@ import java.util.Map;
 
 public final class ResultGame {
 
-    private final Map<Participant, Integer> resultBetting;
+    private final Map<Participant, Betting> resultBetting;
 
-    private ResultGame(final Map<Participant, Integer> resultBetting) {
+    private ResultGame(final Map<Participant, Betting> resultBetting) {
         this.resultBetting = resultBetting;
     }
 
-    public static ResultGame from(final Map<Participant, Integer> resultBetting) {
+    public static ResultGame from(final Map<Participant, Betting> resultBetting) {
         return new ResultGame(resultBetting);
     }
 
     public void betMoney(final Participant participant, final Betting betting) {
-        resultBetting.put(participant, betting.getValue());
+        resultBetting.put(participant, betting);
     }
 
     public void calculateResult(final Participants participants) {
@@ -30,19 +30,20 @@ public final class ResultGame {
                     ResultDto.from(player),
                     ResultDto.from(dealer));
 
-            final int bettingMoney = resultBetting.get(player);
-            resultBetting.put(player, playerState.calculateProfit(bettingMoney));
+            final Betting money = resultBetting.get(player);
+            resultBetting.put(player, playerState.calculateProfit(money.getValue()));
         }
     }
 
-    public int getDealerResult() {
+    public Betting getDealerResult() {
         final int playerAllMoney = resultBetting.values().stream()
-                .reduce(0, java.lang.Integer::sum);
+                .mapToInt(Betting::getValue)
+                .sum();
 
-        return -playerAllMoney;
+        return Betting.from(-playerAllMoney);
     }
 
-    public int getPlayerResult(final Participant player) {
+    public Betting getPlayerResult(final Participant player) {
         return resultBetting.get(player);
     }
 }

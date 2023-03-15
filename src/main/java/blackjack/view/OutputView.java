@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Betting;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -76,16 +77,16 @@ public class OutputView {
 
     private void printDealerResult(final Participant dealer, final ResultGame resultGame) {
         final String dealerName = dealer.getName();
-        final int dealerProfitResult = resultGame.getDealerResult();
+        final Betting dealerProfit = resultGame.getDealerResult();
 
-        System.out.println(dealerName + COLON + dealerProfitResult);
+        System.out.println(dealerName + COLON + dealerProfit.getValue());
     }
 
     private void printPlayerResult(final Participant player, final ResultGame resultGame) {
         final String playerName = player.getName();
-        final int resultBettingMoney = resultGame.getPlayerResult(player);
+        final Betting money = resultGame.getPlayerResult(player);
 
-        System.out.println(playerName + COLON + resultBettingMoney);
+        System.out.println(playerName + COLON + money.getValue());
     }
 
     public void printErrorMessage(IllegalArgumentException e) {

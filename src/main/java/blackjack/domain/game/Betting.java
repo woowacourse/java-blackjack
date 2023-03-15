@@ -1,5 +1,7 @@
 package blackjack.domain.game;
 
+import java.util.Objects;
+
 public class Betting {
 
     private static final int MAX_BETTING_RANGE = 1_000_000;
@@ -9,14 +11,16 @@ public class Betting {
 
     private final int value;
 
-    private Betting(final String value) {
-        validate(value);
+    private Betting(final String value, final boolean rangeValidateLimit) {
+        validate(value, rangeValidateLimit);
         this.value = Integer.parseInt(value);
     }
 
-    private void validate(final String value) {
+    private void validate(final String value, final boolean rangeValidateLimit) {
         validateNumber(value);
-        validateRange(value);
+        if (rangeValidateLimit) {
+            validateRange(value);
+        }
     }
 
     private void validateNumber(final String value) {
@@ -51,14 +55,27 @@ public class Betting {
     }
 
     public static Betting from(final String value) {
-        return new Betting(value);
+        return new Betting(value, true);
     }
 
     public static Betting from(final int value) {
-        return new Betting(String.valueOf(value));
+        return new Betting(String.valueOf(value), false);
     }
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Betting betting = (Betting) o;
+        return value == betting.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

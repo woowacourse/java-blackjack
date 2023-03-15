@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public enum ResultState implements StateChecker {
 
-    BLACKJACK(betting -> (int) (betting * 1.5)) {
+    BLACKJACK(betting -> Betting.from((int) (betting * 1.5))) {
         @Override
         public boolean isState(ResultDto player, ResultDto dealer) {
             return player.getHandSize() == BLACKJACK_CARD_COUNT
@@ -15,7 +15,7 @@ public enum ResultState implements StateChecker {
                     && !dealer.getScore().isBlackjack();
         }
     },
-    WIN(betting -> betting) {
+    WIN(Betting::from) {
         @Override
         public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
@@ -25,7 +25,7 @@ public enum ResultState implements StateChecker {
                     && (dealerScore.isLessThan(playerScore) || dealerScore.isBust());
         }
     },
-    TIE(betting -> 0) {
+    TIE(betting -> Betting.from(0)) {
         @Override
         public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
@@ -35,7 +35,7 @@ public enum ResultState implements StateChecker {
                     || (playerScore.isBust() && dealerScore.isBust());
         }
     },
-    LOSE(betting -> betting * -1) {
+    LOSE(betting -> Betting.from(betting * -1)) {
         @Override
         public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
@@ -49,9 +49,9 @@ public enum ResultState implements StateChecker {
     private static final int BLACKJACK_CARD_COUNT = 2;
     private static final Score BLACKJACK_SCORE = Score.from(21);
 
-    private final Function<Integer, Integer> moneyFunction;
+    private final Function<Integer, Betting> moneyFunction;
 
-    ResultState(final Function<Integer, Integer> moneyFunction) {
+    ResultState(final Function<Integer, Betting> moneyFunction) {
         this.moneyFunction = moneyFunction;
     }
 
@@ -62,7 +62,7 @@ public enum ResultState implements StateChecker {
                 .orElseThrow(() -> new IllegalArgumentException("승부 결과가 존재하지 않습니다."));
     }
 
-    public int calculateProfit(int betting) {
+    public Betting calculateProfit(int betting) {
         return moneyFunction.apply(betting);
     }
 }
