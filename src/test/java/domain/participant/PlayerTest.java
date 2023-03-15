@@ -1,10 +1,15 @@
 package domain.participant;
 
+import static domain.Fixtures.ACE_CLOVER;
+import static domain.Fixtures.FOUR_HEART;
+import static domain.Fixtures.KING_HEART;
+import static domain.Fixtures.NINE_DIAMOND;
+import static domain.Fixtures.TEN_HEART;
+import static domain.Fixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Shape;
-import domain.card.Value;
+import domain.card.Cards;
+import domain.result.WinningStatus;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +23,11 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         gitJjang = new Player(new Name("깃짱"));
-        List<Card> gitJjangCards = List.of(new Card(Value.KING, Shape.HEART), new Card(Value.THREE, Shape.SPADE));
+        Cards gitJjangCards = new Cards(List.of(KING_HEART, THREE_SPADE));
         gitJjang.receiveInitialCards(gitJjangCards);
 
         kyle = new Player(new Name("카일"));
-        List<Card> kyleCards = List.of(new Card(Value.FOUR, Shape.SPADE), new Card(Value.ACE, Shape.CLOVER));
+        Cards kyleCards = new Cards(List.of(FOUR_HEART, ACE_CLOVER));
         kyle.receiveInitialCards(kyleCards);
     }
 
@@ -36,16 +41,27 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
-        gitJjang.receiveCard(new Card(Value.TEN, Shape.HEART));
+        gitJjang.receiveCard(TEN_HEART);
         assertThat(gitJjang.getScore()).isEqualTo(23);
 
-        kyle.receiveCard(new Card(Value.FOUR, Shape.HEART));
+        kyle.receiveCard(FOUR_HEART);
         assertThat(kyle.getScore()).isEqualTo(19);
 
-        kyle.receiveCard(new Card(Value.ACE, Shape.DIAMOND));
+        kyle.receiveCard(ACE_CLOVER);
         assertThat(kyle.getScore()).isEqualTo(20);
 
-        kyle.receiveCard(new Card(Value.NINE, Shape.DIAMOND));
+        kyle.receiveCard(NINE_DIAMOND);
         assertThat(kyle.getScore()).isEqualTo(19);
+    }
+
+    @Test
+    void compete() {
+        gitJjang.selectStand();
+
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(new Cards(List.of(FOUR_HEART, NINE_DIAMOND)));
+        dealer.receiveCard(KING_HEART);
+
+        assertThat(gitJjang.compete(dealer)).isEqualTo(WinningStatus.WIN);
     }
 }

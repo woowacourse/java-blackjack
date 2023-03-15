@@ -1,7 +1,17 @@
 package domain.result;
 
+import java.math.BigDecimal;
+
 public enum WinningStatus {
-    WIN, LOSE, DRAW;
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
+
+    private final BigDecimal multiplier;
+
+    WinningStatus(final int multiplier) {
+        this.multiplier = BigDecimal.valueOf(multiplier);
+    }
 
     public WinningStatus reverse() {
         if (this == WIN) {
@@ -11,5 +21,9 @@ public enum WinningStatus {
             return WIN;
         }
         return DRAW;
+    }
+
+    public BigDecimal multiplier() {
+        return multiplier;
     }
 }

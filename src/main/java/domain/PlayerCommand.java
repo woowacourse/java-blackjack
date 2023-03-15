@@ -13,6 +13,10 @@ public enum PlayerCommand {
     }
 
     public boolean isHit() {
-        return this.equals(HIT);
+        return this == HIT;
+    }
+
+    public boolean isStand() {
+        return this == STAND;
     }
 }

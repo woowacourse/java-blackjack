@@ -1,5 +1,6 @@
 package domain.card;
 
+import static domain.Fixtures.KING_HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.shuffler.CardsShuffler;
@@ -22,6 +23,6 @@ class CardDeckTest {
     @DisplayName("카드를 뒤에서 1장 받을 수 있다.")
     @Test
     void getOneCardTest() {
-        assertThat(cardDeck.getCard()).isEqualTo(new Card(Value.KING, Shape.HEART));
+        assertThat(cardDeck.getCard()).isEqualTo(KING_HEART);
     }
 }

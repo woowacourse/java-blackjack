@@ -1,6 +1,8 @@
 package view;
 
+import domain.BlackJackGame;
 import domain.card.Card;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -39,10 +41,10 @@ public final class OutputView {
         List<Player> players = participants.getPlayers();
 
         Card dealerCard = dealer.getCards().get(0);
-        String dealerCardDisplay = String.format("%s: %s%s", dealer.getName(),
+        System.out.printf("%s: %s%s" + System.lineSeparator(),
+                dealer.getName(),
                 valueDisplay.findDisplayOf(dealerCard.getValue()),
                 shapeDisplay.findDisplayOf(dealerCard.getShape()));
-        System.out.println(dealerCardDisplay);
 
         for (Player player : players) {
             printSingleState(player);
@@ -126,5 +128,23 @@ public final class OutputView {
             return "무";
         }
         return "패";
+    }
+
+    public void printBets(final BlackJackGame blackJackGame) {
+        System.out.println("## 최종 수익");
+
+        Dealer dealer = blackJackGame.getDealer();
+        Money dealerProfit = blackJackGame.dealerProfit();
+        System.out.printf("%s: %d" + System.lineSeparator(),
+                dealer.getName(),
+                dealerProfit.getAmount());
+
+        Map<Player, Money> finalBets = blackJackGame.playersProfit();
+        for (Player player : blackJackGame.getPlayers()) {
+            Money playerBet = finalBets.get(player);
+            System.out.printf("%s: %d" + System.lineSeparator(),
+                    player.getName(),
+                    playerBet.getAmount());
+        }
     }
 }

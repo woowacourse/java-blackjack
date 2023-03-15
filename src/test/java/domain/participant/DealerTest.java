@@ -1,10 +1,11 @@
 package domain.participant;
 
+import static domain.Fixtures.KING_HEART;
+import static domain.Fixtures.KING_SPADE;
+import static domain.Fixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Shape;
-import domain.card.Value;
+import domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ class DealerTest {
     @Test
     void fillCardsTest() {
         Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.KING, Shape.HEART)));
-        dealer.receiveCard(new Card(Value.TEN, Shape.SPADE));
+        dealer.receiveInitialCards(new Cards(List.of(KING_SPADE, KING_HEART)));
+        dealer.receiveCard(THREE_SPADE);
         assertThat(dealer.getScore()).isEqualTo(23);
     }
 }

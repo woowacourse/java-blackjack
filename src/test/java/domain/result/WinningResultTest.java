@@ -1,11 +1,22 @@
 package domain.result;
 
+import static domain.Fixtures.ACE_CLOVER;
+import static domain.Fixtures.ACE_HEART;
+import static domain.Fixtures.JACK_CLOVER;
+import static domain.Fixtures.JACK_SPADE;
+import static domain.Fixtures.KING_CLOVER;
+import static domain.Fixtures.KING_DIAMOND;
+import static domain.Fixtures.KING_HEART;
+import static domain.Fixtures.KING_SPADE;
+import static domain.Fixtures.QUEEN_CLOVER;
+import static domain.Fixtures.QUEEN_DIAMOND;
+import static domain.Fixtures.QUEEN_HEART;
+import static domain.Fixtures.QUEEN_SPADE;
+import static domain.Fixtures.SEVEN_HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Card;
-import domain.card.Shape;
-import domain.card.Value;
+import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -15,7 +26,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class WinningResultTest {
-
     private static WinningResult winningResult;
     private static Player gitJjang;
     private static Player irene;
@@ -28,23 +38,23 @@ class WinningResultTest {
         Participants participants = new Participants(names);
 
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitialCards(List.of(new Card(Value.JACK, Shape.SPADE), new Card(Value.JACK, Shape.CLOVER)));
+        dealer.receiveInitialCards(new Cards(List.of(JACK_SPADE, JACK_CLOVER)));
 
         gitJjang = participants.getPlayers().get(0);
-        gitJjang.receiveInitialCards(List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.KING, Shape.HEART)));
+        gitJjang.receiveInitialCards(new Cards(List.of(KING_SPADE, KING_HEART)));
 
         irene = participants.getPlayers().get(1);
-        irene.receiveInitialCards(List.of(new Card(Value.KING, Shape.CLOVER), new Card(Value.KING, Shape.DIAMOND)));
+        irene.receiveInitialCards(new Cards(List.of(KING_CLOVER, KING_DIAMOND)));
 
         poo = participants.getPlayers().get(2);
-        poo.receiveInitialCards(List.of(new Card(Value.QUEEN, Shape.SPADE), new Card(Value.QUEEN, Shape.HEART)));
+        poo.receiveInitialCards(new Cards(List.of(QUEEN_SPADE, QUEEN_HEART)));
 
         kyle = participants.getPlayers().get(3);
-        kyle.receiveInitialCards(List.of(new Card(Value.QUEEN, Shape.CLOVER), new Card(Value.QUEEN, Shape.DIAMOND)));
+        kyle.receiveInitialCards(new Cards(List.of(QUEEN_CLOVER, QUEEN_DIAMOND)));
 
-        gitJjang.receiveCard(new Card(Value.ACE, Shape.SPADE)); // K, K, A => 21
-        poo.receiveCard(new Card(Value.ACE, Shape.HEART)); // Q, Q, A => 21
-        kyle.receiveCard(new Card(Value.SEVEN, Shape.HEART)); // Q, Q, 7 => 27
+        gitJjang.receiveCard(ACE_CLOVER); // K, K, A => 21
+        poo.receiveCard(ACE_HEART); // Q, Q, A => 21
+        kyle.receiveCard(SEVEN_HEART); // Q, Q, 7 => 27
 
         winningResult = new WinningResult(participants);
     }

@@ -1,21 +1,26 @@
 package domain;
 
 import domain.card.CardDeck;
+import domain.money.Bets;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.result.WinningResult;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackJackGame {
 
     private final Participants participants;
     private final CardDeck cardDeck;
+    private final Bets bets;
 
     public BlackJackGame(final Participants participants, final CardDeck cardDeck) {
         this.participants = participants;
         this.cardDeck = cardDeck;
+        this.bets = new Bets();
     }
 
     public void distributeInitialCards() {
@@ -28,6 +33,18 @@ public final class BlackJackGame {
 
     public WinningResult makeResult() {
         return new WinningResult(participants);
+    }
+
+    public void addBet(final Player player, final int amount) {
+        this.bets.addBet(player, amount);
+    }
+
+    public Map<Player, Money> playersProfit() {
+        return bets.calculatePlayersProfit(makeResult());
+    }
+
+    public Money dealerProfit() {
+        return bets.calculateDealerProfit(makeResult());
     }
 
     public Participants getParticipants() {
