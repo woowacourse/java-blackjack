@@ -1,13 +1,9 @@
 package domain.user;
 
 import static domain.card.Denomination.ACE;
-import static domain.card.Denomination.JACK;
-import static domain.card.Denomination.QUEEN;
-import static domain.card.Denomination.SEVEN;
 import static domain.card.Denomination.TEN;
 import static domain.card.Denomination.THREE;
 import static domain.card.Denomination.TWO;
-import static domain.card.Suits.DIAMOND;
 import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -15,9 +11,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.money.BettingAmount;
-import domain.user.state.Stay;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -73,45 +69,6 @@ public class UsersTest {
             .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
 
-    @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
-    @Test
-    void hitCardByName() {
-        users.hitCardByName("hongo", Card.of(JACK, HEART));
-        Player player = users.getPlayers().get(0);
-        assertThat(player.getScore()).isEqualTo(10);
-    }
-
-    @DisplayName("이름으로 카드추가시 해당 이름의 플레이어가 없을시 예외처리한다")
-    @Test
-    void hitCardByName_noSuchName_exception() {
-        assertThatThrownBy(() -> users.hitCardByName("error", Card.of(JACK, HEART)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
-    }
-
-    @DisplayName("Running상태인 딜러를 Stay상태로 바꾼다.")
-    @Test
-    void stayDealerIfRunning() {
-        Dealer dealer = users.getDealer();
-        dealer.hit(Card.of(TWO, HEART));
-        dealer.hit(Card.of(THREE, HEART));
-        users.stayDealerIfRunning();
-
-        assertThat(dealer.getState()).isInstanceOf(Stay.class);
-    }
-
-    @DisplayName("Terminated 상태인 딜러는 Stay상태로 바꾸지 않는다.")
-    @Test
-    void notStayDealerIfTerminated() {
-        Dealer dealer = users.getDealer();
-        dealer.hit(Card.of(TEN, HEART));
-        dealer.hit(Card.of(JACK, HEART));
-        dealer.hit(Card.of(TWO, HEART));
-        users.stayDealerIfRunning();
-
-        assertThat(dealer.getState()).isNotInstanceOf(Stay.class);
-    }
-
     @DisplayName("해당 이름의 플레이어가 베팅한다")
     @Test
     void bettingByName() {
@@ -128,26 +85,44 @@ public class UsersTest {
             .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
     }
 
-    @DisplayName("카드를 더 받을 수 있는 플레이어 리스트를 반환한다")
+    @DisplayName("플레이어와 카드 맵을 반환한다")
     @Test
-    void getHittablePlayers() {
-        // 카드 현황
-        // player1 : X          => 0
-        // player2 : 7          => 7
-        // player3 : 10, 10, 1  => 21
-        users.hitCardByName("ash", Card.of(SEVEN, DIAMOND));
-        users.hitCardByName("kiara", Card.of(JACK, DIAMOND));
-        users.hitCardByName("kiara", Card.of(QUEEN, DIAMOND));
-        users.hitCardByName("kiara", Card.of(ACE, DIAMOND));
+    void getPlayerToCard() {
+        List<Player> players = users.getPlayers();
+        players.get(1).hit(Card.of(TEN, HEART));
+        players.get(2).hit(Card.of(TEN, HEART));
+        players.get(2).hit(Card.of(TEN, HEART));
 
-        List<Player> hittablePlayers = users.getHittablePlayers();
-        assertThat(hittablePlayers)
-            .satisfiesExactly(
-                player -> assertNameEquals(player, "hongo"),
-                player -> assertNameEquals(player, "ash"));
+        Map<String, List<Card>> playerToCard = users.getPlayerToCard();
+
+        assertThat(playerToCard.keySet())
+            .containsExactly("hongo", "kiara", "ash");
+        assertThat(playerToCard)
+            .hasEntrySatisfying("hongo", cards -> assertSize(cards, 0))
+            .hasEntrySatisfying("kiara", cards -> assertSize(cards, 1))
+            .hasEntrySatisfying("ash", cards -> assertSize(cards, 2));
     }
 
-    private void assertNameEquals(Player player, String name) {
-        assertThat(player.getName()).isEqualTo(name);
+    private void assertSize(List<Card> cards, int size) {
+        assertThat(cards.size()).isEqualTo(size);
+    }
+
+    @DisplayName("플레이어와 점수 맵을 반환한다")
+    @Test
+    void getPlayerToScore() {
+        List<Player> players = users.getPlayers();
+        players.get(0).hit(Card.of(ACE, HEART));
+        players.get(1).hit(Card.of(TWO, HEART));
+        players.get(1).hit(Card.of(THREE, HEART));
+        players.get(2).hit(Card.of(TEN, HEART));
+
+        Map<String, Integer> playerToScore = users.getPlayerToScore();
+
+        assertThat(playerToScore.keySet())
+            .containsExactly("hongo", "kiara", "ash");
+        assertThat(playerToScore)
+            .hasEntrySatisfying("hongo", score -> assertThat(score).isEqualTo(11))
+            .hasEntrySatisfying("kiara", score -> assertThat(score).isEqualTo(5))
+            .hasEntrySatisfying("ash", score -> assertThat(score).isEqualTo(10));
     }
 }

@@ -33,7 +33,7 @@ public class Controller {
     private BlackJackGame ready() {
         BlackJackGame blackJackGame = createBlackJackGame();
         outputView.printInitMessage(blackJackGame.getPlayerNames());
-        outputView.printDealerCardWithHidden(blackJackGame.getDealerCardWithHidden());
+        outputView.printDealerCardWithHidden(blackJackGame.getDealerFirstCard());
         outputView.printPlayerCards(blackJackGame.getPlayerToCard());
         return blackJackGame;
     }
@@ -68,7 +68,7 @@ public class Controller {
             blackJackGame.giveCardToDealer();
             outputView.printDealerHitMessage();
         }
-        blackJackGame.stayDealerIfRunning();
+        blackJackGame.stayDealer();
     }
 
     private void end(BlackJackGame blackJackGame) {

@@ -3,12 +3,9 @@ package domain.game;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.shuffler.CardShuffler;
-import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,38 +38,36 @@ public class BlackJackGame {
 
     public void hitOrStay(final boolean isHit, final Player player) {
         if (isHit) {
-            giveCard(player.getName());
+            giveCard(player);
             return;
         }
-        player.stayIfRunning();
+        player.stay();
     }
 
-    public void stay(Player player) {
-        player.stayIfRunning();
+    private void giveCard(Player player) {
+        if (!player.isHittable()) {
+            throw new IllegalStateException("해당 플레이어는 더이상 카드를 받을 수 없습니다.");
+        }
+        player.hit(deck.pickCard());
     }
 
-    public void stayDealerIfRunning() {
-        users.stayDealerIfRunning();
-    }
-
-    public void giveCard(String playerName) {
-        users.hitCardByName(playerName, deck.pickCard());
+    public void stayDealer() {
+        users.stayDealer();
     }
 
     public void giveCardToDealer() {
-        Dealer dealer = users.getDealer();
-        if (dealer.isHittable()) {
-            dealer.hit(deck.pickCard());
+        if (!users.isDealerHittable()) {
+            throw new IllegalStateException("딜러는 더이상 카드를 받을 수 없습니다.");
         }
+        users.hitCardToDealer(deck.pickCard());
     }
 
     public GameResult getResult() {
         return GameResult.from(users);
     }
 
-    public Card getDealerCardWithHidden() {
-        Dealer dealer = users.getDealer();
-        return dealer.getFirstCard();
+    public Card getDealerFirstCard() {
+        return users.getDealerFirstCard();
     }
 
     public List<String> getPlayerNames() {
@@ -80,21 +75,11 @@ public class BlackJackGame {
     }
 
     public Map<String, List<Card>> getPlayerToCard() {
-        List<Player> players = users.getPlayers();
-        Map<String, List<Card>> playerToCard = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerToCard.put(player.getName(), player.getCards());
-        }
-        return Collections.unmodifiableMap(playerToCard);
+        return users.getPlayerToCard();
     }
 
     public Map<String, Integer> getPlayerToScore() {
-        List<Player> players = users.getPlayers();
-        Map<String, Integer> playerToScore = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerToScore.put(player.getName(), player.getScore());
-        }
-        return Collections.unmodifiableMap(playerToScore);
+        return users.getPlayerToScore();
     }
 
     public List<Player> getPlayers() {
@@ -102,11 +87,11 @@ public class BlackJackGame {
     }
 
     public List<Card> getDealerCards() {
-        return users.getDealer().getCards();
+        return users.getDealerCards();
     }
 
     public int getDealerScore() {
-        return users.getDealer().getScore();
+        return users.getDealerScore();
     }
 
     public boolean isDealerHittable() {

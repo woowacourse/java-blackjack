@@ -22,11 +22,6 @@ public class Running extends State {
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
     public State stay() {
         return new Stay(cards);
     }

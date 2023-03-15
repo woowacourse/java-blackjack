@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.card.Denomination.*;
+import static domain.card.Suits.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
@@ -23,10 +25,9 @@ public class GameResultTest {
     void setUpUsers() {
         createUsers();
         List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
         betting(players);
-        giveCardToUsers(players, dealer);
-        stayUsers(players, dealer);
+        giveCardToUsers(players);
+        stayUsers(players);
     }
 
     void createUsers() {
@@ -39,28 +40,28 @@ public class GameResultTest {
         }
     }
 
-    void stayUsers(List<Player> players, Dealer dealer) {
+    void stayUsers(List<Player> players) {
         for (int i = 0; i < 3; i++) {
-            players.get(i).stayIfRunning();
+            players.get(i).stay();
         }
-        dealer.stayIfRunning();
+        users.stayDealer();
     }
 
-    void giveCardToUsers(List<Player> players, Dealer dealer) {
-        giveCard(players.get(0), Denomination.SIX);
-        giveCard(players.get(0), Denomination.TEN);
-        giveCard(players.get(1), Denomination.SEVEN);
-        giveCard(players.get(1), Denomination.TEN);
-        giveCard(players.get(2), Denomination.EIGHT);
-        giveCard(players.get(2), Denomination.TEN);
-        giveCard(players.get(3), Denomination.ACE);
-        giveCard(players.get(3), Denomination.JACK);
-        giveCard(dealer, Denomination.SEVEN);
-        giveCard(dealer, Denomination.TEN);
+    void giveCardToUsers(List<Player> players) {
+        giveCard(players.get(0), SIX);
+        giveCard(players.get(0), TEN);
+        giveCard(players.get(1), SEVEN);
+        giveCard(players.get(1), TEN);
+        giveCard(players.get(2), EIGHT);
+        giveCard(players.get(2), TEN);
+        giveCard(players.get(3), ACE);
+        giveCard(players.get(3), JACK);
+        users.hitCardToDealer(Card.of(SEVEN, HEART));
+        users.hitCardToDealer(Card.of(TEN, HEART));
     }
 
     void giveCard(User user, Denomination denomination) {
-        user.hit(Card.of(denomination, Suits.DIAMOND));
+        user.hit(Card.of(denomination, DIAMOND));
     }
 
     @DisplayName("플레이어의 결과를 계산한다")

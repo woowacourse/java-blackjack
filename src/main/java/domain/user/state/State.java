@@ -29,10 +29,6 @@ public abstract class State {
         return true;
     }
 
-    public boolean isRunning() {
-        return false;
-    }
-
     public State stay() {
         throw new UnsupportedOperationException("게임 시작 전입니다.");
     }

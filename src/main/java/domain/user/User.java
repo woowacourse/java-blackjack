@@ -16,13 +16,7 @@ public abstract class User {
         this.state = state.hit(card);
     }
 
-    public void stayIfRunning() {
-        if (state.isRunning()) {
-            stay();
-        }
-    }
-
-    private void stay() {
+    public void stay() {
         this.state = state.stay();
     }
 

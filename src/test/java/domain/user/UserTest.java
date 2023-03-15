@@ -6,6 +6,7 @@ import static domain.card.Denomination.THREE;
 import static domain.card.Denomination.TWO;
 import static domain.card.Suits.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Denomination;
@@ -45,22 +46,31 @@ class UserTest {
 
     @DisplayName("Running상태인 유저를 Stay상태로 바꾼다.")
     @Test
-    void stayIfRunning() {
+    void stay() {
         user.hit(Card.of(TWO, HEART));
         user.hit(Card.of(THREE, HEART));
-        user.stayIfRunning();
+        user.stay();
 
         assertThat(user.getState()).isInstanceOf(Stay.class);
     }
 
-    @DisplayName("Terminated 상태인 유저는 Stay상태로 바꾸지 않는다.")
+    @DisplayName("Terminated 상태인 유저를 stay할시 예외가 발생한다.")
     @Test
-    void notStayIfTerminated() {
+    void stayExceptionIfTerminated() {
         user.hit(Card.of(TEN, HEART));
         user.hit(Card.of(JACK, HEART));
         user.hit(Card.of(TWO, HEART));
-        user.stayIfRunning();
 
-        assertThat(user.getState()).isNotInstanceOf(Stay.class);
+        assertThatThrownBy(() -> user.stay())
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("이미 종료되었습니다.");
+    }
+
+    @DisplayName("Ready 상태인 유저를 stay할시 예외가 발생한다.")
+    @Test
+    void stayExceptionIfReady() {
+        assertThatThrownBy(() -> user.stay())
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessage("게임 시작 전입니다.");
     }
 }

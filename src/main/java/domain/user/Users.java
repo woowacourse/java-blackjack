@@ -1,7 +1,9 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Winning;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,18 +54,12 @@ public class Users {
         }
     }
 
-    public void hitCardByName(final String name, final Card card) {
-        Player player = findPlayerByName(name);
-        player.hit(card);
+    public void hitCardToDealer(final Card card) {
+        dealer.hit(card);
     }
 
-    public void stayByName(final String name) {
-        Player player = findPlayerByName(name);
-        player.stayIfRunning();
-    }
-
-    public void stayDealerIfRunning() {
-        dealer.stayIfRunning();
+    public void stayDealer() {
+        dealer.stay();
     }
 
     public void bettingByName(final String name, final int bettingAmount) {
@@ -84,7 +80,15 @@ public class Users {
     }
 
     public boolean isDealerHittable() {
-        return getDealer().isHittable();
+        return dealer.isHittable();
+    }
+
+    public Map<Player, Winning> matchPlayers() {
+        Map<Player, Winning> matchResults = new LinkedHashMap<>();
+        for (Player player : players.values()) {
+            matchResults.put(player, player.match(dealer));
+        }
+        return Collections.unmodifiableMap(matchResults);
     }
 
     public List<User> getUsers() {
@@ -103,13 +107,31 @@ public class Users {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public List<Card> getDealerCards() {
+        return dealer.getCards();
     }
 
-    public List<Player> getHittablePlayers() {
-        return players.values().stream()
-            .filter(Player::isHittable)
-            .collect(Collectors.toUnmodifiableList());
+    public int getDealerScore() {
+        return dealer.getScore();
+    }
+
+    public Card getDealerFirstCard() {
+        return dealer.getFirstCard();
+    }
+
+    public Map<String, List<Card>> getPlayerToCard() {
+        Map<String, List<Card>> playerToCard = new LinkedHashMap<>();
+        for (Player player : players.values()) {
+            playerToCard.put(player.getName(), player.getCards());
+        }
+        return Collections.unmodifiableMap(playerToCard);
+    }
+
+    public Map<String, Integer> getPlayerToScore() {
+        Map<String, Integer> playerToScore = new LinkedHashMap<>();
+        for (Player player : players.values()) {
+            playerToScore.put(player.getName(), player.getScore());
+        }
+        return Collections.unmodifiableMap(playerToScore);
     }
 }

@@ -1,17 +1,16 @@
 package domain.game;
 
 import domain.money.BettingAmount;
-import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class GameResult {
 
-    public static final int DEALER_PROFIT_RATE = -1;
+    private static final int DEALER_PROFIT_RATE = -1;
 
     private final Map<String, Integer> playerProfits;
     private final int dealerProfit;
@@ -29,19 +28,18 @@ public class GameResult {
     }
 
     private static Map<String, Integer> calculatePlayerProfits(final Users users) {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
+        Map<Player, Winning> matchResults = users.matchPlayers();
         Map<String, Integer> playerProfits = new LinkedHashMap<>();
-        for (Player player : players) {
-            int profit = calculateEachPlayerProfit(player, dealer);
-            playerProfits.put(player.getName(), profit);
+        for (Entry<Player, Winning> matchResult : matchResults.entrySet()) {
+            Player player = matchResult.getKey();
+            Winning winning = matchResult.getValue();
+            playerProfits.put(player.getName(), calculateProfit(player, winning));
         }
         return Collections.unmodifiableMap(playerProfits);
     }
 
-    private static int calculateEachPlayerProfit(final Player player, final Dealer dealer) {
+    private static int calculateProfit(final Player player, final Winning winning) {
         BettingAmount bettingAmount = player.getBettingAmount();
-        Winning winning = player.match(dealer);
         double profitRate = winning.getProfitRate();
         return bettingAmount.multiply(profitRate);
     }
