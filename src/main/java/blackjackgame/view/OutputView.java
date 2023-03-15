@@ -3,24 +3,25 @@ package blackjackgame.view;
 import java.util.List;
 import java.util.Map;
 
-import blackjackgame.domain.GameOutcome;
-import blackjackgame.domain.ResultDto;
+import blackjackgame.domain.card.Card;
+import blackjackgame.domain.player.Player;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
 
-    public void printFirstDealerCards(final String playerName, final List<List<String>> cards) {
-        List<String> card = cards.get(1);
-        System.out.printf("%s%s: %s", System.lineSeparator(), playerName, String.join("", card));
+    public void printStartingCards(Map<String, List<Card>> startingCards) {
+        for (String name : startingCards.keySet()) {
+            printCards(name, startingCards.get(name));
+        }
     }
 
-    public void printCards(final String playerName, final List<List<String>> cards) {
+    public void printCards(final String playerName, final List<Card> cards) {
         StringBuilder stringBuilder = new StringBuilder();
         System.out.printf("%s%s: ", System.lineSeparator(), playerName);
-        for (final List<String> card : cards) {
-            stringBuilder.append(String.join("", card))
-                .append(DELIMITER);
-        }
+
+        cards.forEach(card -> stringBuilder.append(card)
+            .append(DELIMITER));
+
         stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(DELIMITER));
         System.out.print(stringBuilder);
     }
@@ -33,28 +34,16 @@ public class OutputView {
         System.out.print(" - 결과: " + score);
     }
 
-    public void printResult(ResultDto resultDto) {
+    public void printProfit(Map<Player, Double> profitResult) {
         System.out.println();
-        StringBuilder stringBuilder = new StringBuilder("## 최종 승패" + System.lineSeparator() + "딜러: ");
-        appendDealerResult(resultDto.getDealerResult(), stringBuilder);
-        appendGuestsResult(resultDto.getGuestsResult(), stringBuilder);
+        StringBuilder stringBuilder = new StringBuilder("## 최종 수익" + System.lineSeparator());
+        for (Player player : profitResult.keySet()) {
+            stringBuilder.append(player.getName())
+                .append(": ")
+                .append(Math.round(profitResult.get(player)))
+                .append(System.lineSeparator());
+        }
         System.out.println(System.lineSeparator() + stringBuilder);
     }
 
-    private void appendDealerResult(final Map<GameOutcome, Integer> dealerResult, final StringBuilder stringBuilder) {
-        for (final GameOutcome gameOutcome : dealerResult.keySet()) {
-            stringBuilder.append(dealerResult.get(gameOutcome))
-                .append(gameOutcome.getOutcome())
-                .append(" ");
-        }
-    }
-
-    private void appendGuestsResult(final Map<String, GameOutcome> result, final StringBuilder stringBuilder) {
-        for (final String guestName : result.keySet()) {
-            stringBuilder.append(System.lineSeparator());
-            stringBuilder.append(guestName)
-                .append(": ")
-                .append(result.get(guestName).getOutcome());
-        }
-    }
 }

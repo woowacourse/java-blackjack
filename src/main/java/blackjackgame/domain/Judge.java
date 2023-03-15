@@ -1,43 +1,46 @@
 package blackjackgame.domain;
 
-import static blackjackgame.domain.GameOutcome.*;
+import static blackjackgame.domain.GameResult.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import blackjackgame.domain.player.Dealer;
 import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Guests;
+import blackjackgame.domain.player.Player;
 
 public class Judge {
-    private static final int BLACKJACK_MAX_SCORE = 21;
 
-    private final Dealer dealer;
-    private final Guests guests;
+    public static Map<Player, Double> profit(Dealer dealer, List<Guest> guests) {
+        Map<Player, Double> profitResult = new LinkedHashMap<>();
+        profitResult.put(dealer, 0d);
 
-    public Judge(Dealer dealer, Guests guests) {
-        this.dealer = dealer;
-        this.guests = guests;
+        guests.forEach(guest ->
+            profitResult.put(guest, judgeProfit(guest, dealer)));
+
+        Optional<Double> guestsSumProfit = profitResult.values()
+            .stream().reduce(Double::sum);
+
+        profitResult.put(dealer, guestsSumProfit.get() * -1);
+        return profitResult;
     }
 
-    public Map<Guest, GameOutcome> guestsResult() {
-        Map<Guest, GameOutcome> guestsResult = new LinkedHashMap<>();
-        int dealerScore = dealer.getScore();
-        for (final Guest guest : guests.getGuests()) {
-            guestsResult.put(guest, judgeFromScore(dealerScore, guest.getScore()));
+    private static double judgeProfit(Guest guest, Dealer dealer) {
+        if (guest.isBlackJack() && !dealer.isBlackJack()) {
+            return guest.bettingMoney() * BLACKJACK_WIN.profit();
         }
-        return guestsResult;
-    }
 
-    private GameOutcome judgeFromScore(final int dealerScore, final int guestScore) {
-        if (guestScore > BLACKJACK_MAX_SCORE ||
-            (dealerScore <= BLACKJACK_MAX_SCORE && dealerScore > guestScore)) {
-            return LOSE;
+        if (guest.isStay() && dealer.isLessThan(guest.scoreValue())) {
+            return guest.bettingMoney() * WIN.profit();
         }
-        if (dealerScore > BLACKJACK_MAX_SCORE || guestScore > dealerScore) {
-            return WIN;
+
+        if (guest.isBust() || guest.isLessThan(dealer.scoreValue())) {
+            return guest.bettingMoney() * LOSE.profit();
         }
-        return DRAW;
+
+        return guest.bettingMoney() * DRAW.profit();
     }
 
 }

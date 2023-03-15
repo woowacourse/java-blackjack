@@ -24,13 +24,38 @@ public class InputView {
         return isBlank;
     }
 
-    public AddCardResponse readWantMoreCard(final String playerName) {
-        Optional<AddCardResponse> addCardResponse;
+    public int readBettingMoney(String name) {
+        String money;
         do {
-            System.out.printf(AddCardResponse.printAddCardResponse(playerName));
-            addCardResponse = AddCardResponse.findAndCreate(scanner.nextLine());
+            System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
+            money = scanner.nextLine();
+        } while (isNotMoney(money));
+        return Integer.parseInt(money);
+    }
+
+    private boolean isNotMoney(String money) {
+        try {
+            validateAmount(money);
+        } catch (NumberFormatException e) {
+            printErrorMsg("배팅금은 100 보다 큰 숫자로 입력해주세요");
+            return true;
+        }
+        return false;
+    }
+
+    private void validateAmount(String money) {
+        if (Integer.parseInt(money) < 100) {
+            throw new NumberFormatException();
+        }
+    }
+
+    public DrawRequest readWantMoreCard(final String playerName) {
+        Optional<DrawRequest> addCardResponse;
+        do {
+            System.out.printf(DrawRequest.message(playerName));
+            addCardResponse = DrawRequest.from(scanner.nextLine());
             if (addCardResponse.isEmpty()) {
-                printErrorMsg(AddCardResponse.getErrorPowerMsg());
+                printErrorMsg(DrawRequest.getErrorPowerMsg());
             }
         } while (addCardResponse.isEmpty());
         return addCardResponse.get();
@@ -39,4 +64,5 @@ public class InputView {
     public void printErrorMsg(final String message) {
         System.out.println("[ERROR] " + message);
     }
+
 }

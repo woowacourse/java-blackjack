@@ -21,7 +21,7 @@ public class Deck {
         List<Card> cards = new ArrayList<>();
         for (final Symbol symbol : Symbol.values()) {
             for (final CardValue cardValue : CardValue.values()) {
-                cards.add(new Card(symbol, cardValue));
+                cards.add(Card.of(symbol, cardValue));
             }
         }
         Collections.shuffle(cards);

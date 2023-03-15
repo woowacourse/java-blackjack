@@ -1,15 +1,12 @@
 package blackjackgame.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,72 +15,36 @@ import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CardValue;
 import blackjackgame.domain.card.Symbol;
 import blackjackgame.domain.player.Dealer;
-import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Name;
 import blackjackgame.domain.player.Player;
 
 class PlayerTest {
-    Card ace = new Card(Symbol.SPADE, CardValue.ACE);
-    Card five = new Card(Symbol.SPADE, CardValue.FIVE);
-    Card nine = new Card(Symbol.SPADE, CardValue.NINE);
-    Card ten = new Card(Symbol.SPADE, CardValue.JACK);
 
     static Stream<Arguments> cardDummy() {
-        Card ace = new Card(Symbol.SPADE, CardValue.ACE);
-        Card five = new Card(Symbol.SPADE, CardValue.FIVE);
-        Card nine = new Card(Symbol.SPADE, CardValue.NINE);
-        Card ten = new Card(Symbol.SPADE, CardValue.JACK);
+        Card ace = Card.of(Symbol.SPADE, CardValue.ACE);
+        Card five = Card.of(Symbol.SPADE, CardValue.FIVE);
+        Card nine = Card.of(Symbol.SPADE, CardValue.NINE);
+        Card ten = Card.of(Symbol.SPADE, CardValue.JACK);
 
         return Stream.of(
-            Arguments.arguments(new ArrayList<>(List.of(ace, ten)), Collections.emptyList(), 21),
-            Arguments.arguments(new ArrayList<>(List.of(ace, five)), Collections.emptyList(), 16),
-            Arguments.arguments(new ArrayList<>(List.of(five, ace)), List.of(ace), 17),
-            Arguments.arguments(new ArrayList<>(List.of(ten, ten)), List.of(ace), 21),
-            Arguments.arguments(new ArrayList<>(List.of(ten, nine)), List.of(five), 24),
-            Arguments.arguments(new ArrayList<>(List.of(ace, nine)), List.of(ace, five), 16),
-            Arguments.arguments(new ArrayList<>(List.of(five, nine)), List.of(ace, nine), 24)
+            Arguments.arguments(List.of(ace, ten), Collections.emptyList(), 21),
+            Arguments.arguments(List.of(ace, five), Collections.emptyList(), 16),
+            Arguments.arguments(List.of(five, ace), List.of(ace), 17),
+            Arguments.arguments(List.of(ten, ten), List.of(ace), 21),
+            Arguments.arguments(List.of(ten, nine), List.of(five), 24),
+            Arguments.arguments(List.of(ace, nine), List.of(ace, five), 16),
+            Arguments.arguments(List.of(five, nine), List.of(ace, nine), 24)
         );
-    }
-
-    @DisplayName("플레이어(게스트, 딜러) 생성시 2개의 카드를 갖는다.")
-    @Test
-    void Should_ConstructPlayer_WhenWithTwoCard() {
-        assertDoesNotThrow(() -> new Guest(new Name("guestName"), List.of(five, ten)));
-        assertDoesNotThrow(() -> new Dealer(List.of(five, ten)));
-    }
-
-    @DisplayName("플레이어(게스트, 딜러) 생성시 3개의 카드를 받으면 오류가 난다.")
-    @Test
-    void Should_ThrowException_WhenWithThreeCard() {
-        assertThatThrownBy(() -> new Guest(new Name("guestName"), new ArrayList<>(List.of(five, ten, ace))))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("시작시 카드는 두장만 분배되어야 합니다.");
-
-        assertThatThrownBy(() -> new Dealer(new ArrayList<>(List.of(five, ten, ace))))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("시작시 카드는 두장만 분배되어야 합니다.");
-    }
-
-    @DisplayName("참여자가 카드를 추가하면 가지고 있는 카드의 개수가 늘어난다")
-    @Test
-    void Should_SizePlusOne_When_AddCard() {
-        Player player = new Guest(new Name("guestName"), new ArrayList<>(List.of(five, nine)));
-        player.addCard(ace);
-        player.addCard(ace);
-        player.addCard(ten);
-
-        assertThat(player.getSize()).isEqualTo(5);
     }
 
     @DisplayName("플레이어가 카드 중에 에이스가 있을때 총합이 10을 넘지 않으면 총합에 10을 더한다.")
     @ParameterizedTest(name = "플레이어가 가진 카드의 합은 {2}이다.")
     @MethodSource("cardDummy")
     void Should_ReturnScore_When_Request(List<Card> initCards, List<Card> additionCards, int expected) {
-        Player player = new Dealer(initCards);
+        Player player = Dealer.from(initCards);
         for (Card card : additionCards) {
-            player.addCard(card);
+            player.draw(card);
         }
 
-        assertThat(player.getScore()).isEqualTo(expected);
+        assertThat(player.scoreValue()).isEqualTo(expected);
     }
 }
