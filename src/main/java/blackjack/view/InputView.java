@@ -29,7 +29,7 @@ public final class InputView {
 
         return command.getCondition();
     }
-    
+
     public int readBettingMoney(final User user) {
         System.out.println(user.getName() + "의 배팅 금액은?");
 

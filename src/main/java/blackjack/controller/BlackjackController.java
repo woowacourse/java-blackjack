@@ -54,7 +54,7 @@ public class BlackjackController {
     }
 
     private void processGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
+        players.getPlayers().forEach(player -> processPlayerDraw(blackjackGame, player));
         processDealerDraw(dealer, blackjackGame);
     }
 
