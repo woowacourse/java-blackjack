@@ -1,8 +1,8 @@
 package domain.game;
 
+import domain.card.Hand;
 import domain.money.BettingMoneyTable;
 import domain.money.Money;
-import domain.card.Hand;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class Exchanger {
         this.bettingMoneyTable = bettingMoneyTable;
     }
 
-    public Map<String, Money> getWinningMoneyOfPlayers(List<Player> players, Dealer dealer){
+    public Map<String, Money> getWinningMoneyOfPlayers(List<Player> players, Dealer dealer) {
         Map<String, Money> winningMoneyOfPlayers = new HashMap<>();
         for (Player player : players) {
             Money winningMoney = getWinningMoneyOfPlayer(player, dealer);
@@ -31,20 +31,7 @@ public class Exchanger {
         Hand dealerHand = dealer.getHand();
         Result result = referee.judgePlayerResult(playerHand, dealerHand);
         Money bettingMoney = bettingMoneyTable.findByPlayer(player);
-        return bettingMoney.multiply(getExchangeRate(playerHand, result));
-    }
-
-    private double getExchangeRate(Hand playerHand, Result result) {
-        if (playerHand.isBlackjack() && result.equals(Result.WIN)) {
-            return 1.5;
-        }
-        if (result.equals(Result.WIN)) {
-            return 1;
-        }
-        if (result.equals(Result.LOSE)) {
-            return -1;
-        }
-        return 0;
+        return bettingMoney.multiply(result.getExchangeRate());
     }
 
     public Money getWinningMoneyOfDealer(List<Money> winningMoneyOfPlayers) {

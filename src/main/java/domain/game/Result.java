@@ -1,29 +1,26 @@
 package domain.game;
 
-import java.util.Map;
+import java.util.function.Supplier;
 
 public enum Result {
-    WIN("승"),
-    PUSH("무"),
-    LOSE("패");
-
-    private static final Map<Result, Result> opponentPair = Map.of(
-            WIN, LOSE,
-            LOSE, WIN,
-            PUSH, PUSH
-    );
+    BLACKJACK_WIN("승", () -> 1.5),
+    WIN("승", () -> 1.0),
+    PUSH("무", () -> 0.0),
+    LOSE("패", () -> -1.0);
 
     private final String name;
+    private final Supplier<Double> exchangeRate;
 
-    Result(final String name) {
+    Result(final String name, Supplier<Double> exchangeRate) {
         this.name = name;
-    }
-
-    public Result getResultOfOpponent() {
-        return opponentPair.get(this);
+        this.exchangeRate = exchangeRate;
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public double getExchangeRate() {
+        return exchangeRate.get();
     }
 }
