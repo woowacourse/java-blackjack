@@ -57,19 +57,17 @@ public class BlackJackController {
 
     private void askPlayer(Player player) {
         Command command = Command.CONTINUE;
-        int score = 0;
 
-        while (isContinueToAsk(command, score)) {
+        while (isContinueToAsk(command, player)) {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
             hitByCommand(player, command);
             OutputView.printPlayerCards(player);
-            score = blackJackGame.calculateScore(player);
-            checkBurst(score);
+            checkBurst(player);
         }
     }
 
-    private boolean isContinueToAsk(Command command, int score) {
-        return Command.isContinue(command) && blackJackGame.isValidScore(score);
+    private boolean isContinueToAsk(Command command, Player player) {
+        return Command.isContinue(command) && blackJackGame.isValidScore(player);
     }
 
     private Command inputCommand(Player player) {
@@ -82,8 +80,8 @@ public class BlackJackController {
         }
     }
 
-    private void checkBurst(int score) {
-        if (blackJackGame.isBurst(score)) {
+    private void checkBurst(Player player) {
+        if (blackJackGame.isBurst(player)) {
             OutputView.printBurstMessage();
         }
     }

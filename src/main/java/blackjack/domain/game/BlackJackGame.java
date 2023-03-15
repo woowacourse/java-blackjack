@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.strategy.CardShuffle;
 
@@ -34,12 +35,12 @@ public class BlackJackGame {
         return participant.calculateScore();
     }
 
-    public boolean isBurst(int score) {
-        return BURST_SCORE < score;
+    public boolean isBurst(Participant participant) {
+        return BURST_SCORE < calculateScore(participant);
     }
 
-    public boolean isValidScore(int score) {
-        return BURST_SCORE > score;
+    public boolean isValidScore(Participant participant) {
+        return BURST_SCORE > calculateScore(participant);
     }
 
     public boolean isContinueToHit(int dealerScore) {

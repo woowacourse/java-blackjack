@@ -48,12 +48,20 @@ class BlackJackGameTest {
 
     @Test
     void isBurst() {
-        assertThat(blackJackGame.isBurst(22)).isTrue();
+        Player player = new Player("a");
+        player.hit(new StandardCard(Pattern.SPADE, "10"));
+        player.hit(new StandardCard(Pattern.DIAMOND, "10"));
+        player.hit(new StandardCard(Pattern.HEART, "10"));
+
+        assertThat(blackJackGame.isBurst(player)).isTrue();
     }
 
     @Test
     void isValidScore() {
-        assertThat(blackJackGame.isValidScore(20)).isTrue();
+        Player player = new Player("a");
+        player.hit(new StandardCard(Pattern.SPADE, "10"));
+
+        assertThat(blackJackGame.isValidScore(player)).isTrue();
     }
 
     @Test
