@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.money.Money;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Score;
 import domain.card.Suits;
+import domain.money.Money;
 import domain.name.Names;
 import java.util.Collections;
 import java.util.List;

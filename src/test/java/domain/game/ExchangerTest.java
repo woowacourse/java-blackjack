@@ -2,13 +2,13 @@ package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.money.BettingMoney;
-import domain.money.BettingMoneyTable;
-import domain.money.Money;
-import domain.money.BettingMonies;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
+import domain.money.BettingMoney;
+import domain.money.BettingMoneyTable;
+import domain.money.BettingMonies;
+import domain.money.Money;
 import domain.name.Name;
 import domain.user.Dealer;
 import domain.user.Player;
