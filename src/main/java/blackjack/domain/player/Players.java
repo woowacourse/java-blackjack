@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -22,7 +23,8 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
+    public static Players from(final List<String> inputNames) {
+        final List<String> names = new ArrayList<>(inputNames);
         validateDuplicate(names);
         validateNameCount(names);
         return new Players(generate(names));
@@ -57,9 +59,9 @@ public class Players {
         return players;
     }
 
-    public void initialDraw(final Deck deck) {
+    public void drawInitialCards(final Deck deck) {
         for (Player player : players) {
-            player.initialDraw(deck);
+            player.drawInitialCard(deck);
         }
     }
 
@@ -70,13 +72,13 @@ public class Players {
         }
     }
 
-    public Map<Player, Result> play() {
+    public Map<Player, Result> compareHands() {
         final Dealer dealer = getDealer();
         return players.stream()
                 .filter(player -> !player.isDealer())
                 .collect(toMap(
                         Function.identity(),
-                        player -> player.play(dealer.getHand()),
+                        player -> player.compareHandTo(dealer.getHand()),
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));
@@ -87,6 +89,12 @@ public class Players {
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));
+    }
+
+    public List<Player> getGamblers() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Player> getPlayers() {

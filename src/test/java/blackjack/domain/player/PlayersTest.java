@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,11 +13,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static blackjack.domain.card.Rank.*;
-import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.player.Players.from;
-import static blackjack.domain.player.Result.DRAW;
+import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
+import static blackjack.util.CardFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -68,15 +66,15 @@ public class PlayersTest {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(FIVE, DIAMOND),
-                new Card(JACK, CLOVER),
-                new Card(TWO, CLOVER),
-                new Card(EIGHT, SPADE),
-                new Card(KING, HEART)
+                ACE_DIAMOND,
+                FIVE_SPADE,
+                JACK_SPADE,
+                TWO_SPADE,
+                EIGHT_SPADE,
+                KING_SPADE
         ));
 
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
 
         assertThat(players.getPlayers())
                 .extracting(Player::calculateScore)
@@ -95,6 +93,17 @@ public class PlayersTest {
     }
 
     @Test
+    void 겜블러들을_반환한다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+
+        List<Player> result = players.getGamblers();
+
+        assertThat(result).extracting(Player::getName)
+                .containsExactly("후추", "허브");
+    }
+
+    @Test
     void 딜러를_반환한다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
@@ -109,17 +118,18 @@ public class PlayersTest {
         final List<String> names = List.of("후추");
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(FIVE, CLOVER),
-                new Card(TWO, CLOVER),
-                new Card(THREE, SPADE),
-                new Card(THREE, SPADE)
+                ACE_DIAMOND,
+                FIVE_SPADE,
+                TWO_SPADE,
+                THREE_SPADE,
+                FOUR_SPADE,
+                ACE_SPADE
         ));
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
 
         players.drawByDealer(deck);
 
-        assertThat(players.getDealer().calculateScore()).isEqualTo(19);
+        assertThat(players.getDealer().calculateScore()).isEqualTo(20);
     }
 
     @Test
@@ -127,18 +137,18 @@ public class PlayersTest {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
-                new Card(SEVEN, DIAMOND),
-                new Card(KING, CLOVER),
-                new Card(NINE, CLOVER),
-                new Card(NINE, SPADE),
-                new Card(JACK, HEART),
-                new Card(SEVEN, SPADE)
+                SEVEN_SPADE,
+                KING_SPADE,
+                NINE_SPADE,
+                TEN_SPADE,
+                JACK_SPADE,
+                SEVEN_SPADE
         ));
-        players.initialDraw(deck);
+        players.drawInitialCards(deck);
         players.drawByDealer(deck);
 
-        Map<Player, Result> result = players.play();
+        Map<Player, Result> result = players.compareHands();
 
-        assertThat(result.values()).containsExactly(WIN, DRAW);
+        assertThat(result.values()).containsExactly(WIN, PUSH);
     }
 }

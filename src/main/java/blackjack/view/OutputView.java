@@ -1,9 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -21,41 +20,37 @@ public class OutputView {
     private static final String PLAYER_SCORE_MESSAGE_FORMAT = " - 결과: %d";
     private static final String ERROR_MESSAGE = "[ERROR] ";
     private static final String DEALER_DRAW_MESSAGE = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String GAME_RESULT_MESSAGE = NEW_LINE + "##최종 승패";
-    private static final String GAME_RESULT_PLAYER_MESSAGE_FORMAT = "%s: %s";
-    private static final String WIN_MESSAGE = "승";
-    private static final String DRAW_MESSAGE = "무";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String GAME_RESULT_DEALER_MESSAGE_FORMAT =
-            "딜러: %d" + WIN_MESSAGE + " %d" + DRAW_MESSAGE + " %d" + LOSE_MESSAGE;
+    private static final String GAME_PROFIT_TITLE = NEW_LINE + "##최종 수익";
+    private static final String GAME_GAMBLER_PROFIT_MESSAGE_FORMAT = "%s: %s";
+    private static final String GAME_DEALER_PROFIT_MESSAGE_FORMAT = "딜러: %d";
 
     public void printInitialDraw(final List<Player> players) {
-        System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
+        System.out.println(NEW_LINE + generateNamesMessage(players) + INITIAL_DRAW_MESSAGE);
         for (Player player : players) {
-            printPlayerMessage(player, generateFirstCardMessages(player));
+            System.out.println(generatePlayerCardMessage(player, generateInitialCardMessages(player)));
         }
         System.out.print(NEW_LINE);
     }
 
-    private String generateNames(final List<Player> players) {
+    private String generateNamesMessage(final List<Player> players) {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void printPlayerMessage(final Player player, final String message) {
-        System.out.printf((PLAYER_CARD_MESSAGE_FORMAT) + "%n", player.getName(), message);
+    private String generatePlayerCardMessage(final Player player, final String message) {
+        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message);
     }
 
-    private String generateFirstCardMessages(final Player player) {
+    private String generateInitialCardMessages(final Player player) {
         if (player.isDealer()) {
             Dealer dealer = (Dealer) player;
             return dealer.getFirstCardLetter();
         }
-        return generateCardMessages(player);
+        return generateCardMessage(player);
     }
 
-    private String generateCardMessages(final Player player) {
+    private String generateCardMessage(final Player player) {
         return join(DELIMITER, player.getCardLetters());
     }
 
@@ -64,51 +59,40 @@ public class OutputView {
     }
 
     public void printDrawResult(final Player player) {
-        printPlayerMessage(player, generateFirstCardMessages(player));
+        System.out.println(generatePlayerCardMessage(player, generateInitialCardMessages(player)));
     }
 
-    public void printPlayerResult(final Player player) {
-        printPlayerMessage(player, generateCardMessages(player) + generateScoreMessage(player));
+    public void printPlayerCardAndScores(final Player player) {
+        final String cardAndScoreMessages = generateCardMessage(player) + generateScoreMessage(player);
+        System.out.println(generatePlayerCardMessage(player, cardAndScoreMessages));
     }
 
     private String generateScoreMessage(final Player player) {
         return format(PLAYER_SCORE_MESSAGE_FORMAT, player.calculateScore());
     }
 
-    public void printGameResult(final BlackjackGameResult result) {
-        System.out.println(GAME_RESULT_MESSAGE);
-        System.out.println(generateDealerResultMessage(result));
-        final Map<Player, Result> gameResult = result.getResult();
-        for (final Player player : gameResult.keySet()) {
-            System.out.println(generatePlayerResultMessage(gameResult, player));
-        }
+    public void printPlayerProfits(final Map<Player, Money> profitByPlayers) {
+        System.out.println(GAME_PROFIT_TITLE);
+        System.out.println(generateDealerProfit(profitByPlayers));
+        System.out.println(generateGamblerProfits(profitByPlayers));
     }
 
-    private static String generateDealerResultMessage(final BlackjackGameResult result) {
-        return String.format(
-                GAME_RESULT_DEALER_MESSAGE_FORMAT,
-                result.calculateDealerWinCount(),
-                result.calculateDealerDrawCount(),
-                result.calculateDealerLoseCount()
-        );
+    private String generateDealerProfit(final Map<Player, Money> profitByPlayers) {
+        return format(GAME_DEALER_PROFIT_MESSAGE_FORMAT, calculateDealerProfit(profitByPlayers));
     }
 
-    private String generatePlayerResultMessage(final Map<Player, Result> gameResult, final Player player) {
-        return String.format(
-                GAME_RESULT_PLAYER_MESSAGE_FORMAT,
-                player.getName(),
-                generateResultMessage(gameResult.get(player))
-        );
+    private int calculateDealerProfit(final Map<Player, Money> profitByPlayers) {
+        return -profitByPlayers.values()
+                .stream()
+                .mapToInt(Money::getAmount)
+                .sum();
     }
 
-    private String generateResultMessage(final Result result) {
-        if (result == Result.WIN) {
-            return WIN_MESSAGE;
-        }
-        if (result == Result.DRAW) {
-            return DRAW_MESSAGE;
-        }
-        return LOSE_MESSAGE;
+    private String generateGamblerProfits(final Map<Player, Money> profitByPlayers) {
+        return profitByPlayers.keySet()
+                .stream()
+                .map(player -> format(GAME_GAMBLER_PROFIT_MESSAGE_FORMAT, player.getName(), profitByPlayers.get(player).getAmount()))
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     public void printError(final String message) {

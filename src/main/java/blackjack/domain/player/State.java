@@ -5,9 +5,9 @@ import java.util.function.Function;
 
 public enum State {
     BLACKJACK(Cards::isBlackjack),
-    STOP(Cards::isBlackjackScore),
+    STAY(Cards::isBlackjackScore),
     BUST(Cards::isBust),
-    PLAY(cards -> false);
+    HIT(cards -> false);
 
     private final Function<Cards, Boolean> expression;
 
@@ -19,7 +19,7 @@ public enum State {
         return Arrays.stream(values())
                 .filter(state -> state.expression.apply(cards))
                 .findFirst()
-                .orElse(PLAY);
+                .orElse(HIT);
     }
 
     public boolean isBlackjack() {
@@ -27,7 +27,7 @@ public enum State {
     }
 
     public boolean isPlayable() {
-        return this == PLAY;
+        return this == HIT;
     }
 
     public boolean isBust() {

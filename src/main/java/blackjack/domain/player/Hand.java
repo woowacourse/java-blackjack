@@ -4,13 +4,15 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
+import static blackjack.domain.player.Result.*;
+
 public class Hand {
     private final Cards cards;
     private State state;
 
     public Hand() {
         this.cards = new Cards();
-        this.state = State.PLAY;
+        this.state = State.HIT;
     }
 
     public void add(final Card card) {
@@ -18,38 +20,38 @@ public class Hand {
         state = State.calculateState(cards);
     }
 
-    public Result play(final Hand other) {
+    public Result compare(final Hand other) {
         if (state.isBlackjack()) {
-            return playWithBlackjack(other);
+            return compareWithBlackjack(other);
         }
         if (state.isBust()) {
-            return playWithBust(other);
+            return compareWithBust(other);
         }
-        return playWithScore(other);
+        return compareByScore(other);
     }
 
-    private Result playWithBlackjack(final Hand other) {
+    private Result compareWithBlackjack(final Hand other) {
         if (other.state.isBlackjack()) {
-            return Result.DRAW;
+            return PUSH;
         }
-        return Result.WIN;
+        return BLACKJACK;
     }
 
-    private Result playWithBust(final Hand other) {
+    private Result compareWithBust(final Hand other) {
         if (other.state.isBust()) {
-            return Result.DRAW;
+            return PUSH;
         }
-        return Result.LOSE;
+        return LOSE;
     }
 
-    private Result playWithScore(final Hand other) {
+    private Result compareByScore(final Hand other) {
         if (other.state.isBust() || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
-            return Result.WIN;
+            return WIN;
         }
         if (other.state.isNotBust() && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
-            return Result.LOSE;
+            return LOSE;
         }
-        return Result.DRAW;
+        return PUSH;
     }
 
 
@@ -62,7 +64,15 @@ public class Hand {
     }
 
     public void stay() {
-        state = State.STOP;
+        state = State.STAY;
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.isBust();
     }
 
     public List<String> getCardLetters() {

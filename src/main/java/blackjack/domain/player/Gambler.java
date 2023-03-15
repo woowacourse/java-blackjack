@@ -17,7 +17,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    public Result play(final Hand hand) {
-        return this.hand.play(hand);
+    public Result compareHandTo(final Hand hand) {
+        return this.hand.compare(hand);
     }
 }

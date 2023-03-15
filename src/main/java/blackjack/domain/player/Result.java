@@ -1,7 +1,18 @@
 package blackjack.domain.player;
 
 public enum Result {
-    WIN,
-    DRAW,
-    LOSE
+    BLACKJACK(1.5),
+    WIN(1),
+    PUSH(0),
+    LOSE(-1);
+
+    private final double payoutRatio;
+
+    Result(final double payoutRatio) {
+        this.payoutRatio = payoutRatio;
+    }
+
+    public double getPayoutRatio() {
+        return payoutRatio;
+    }
 }

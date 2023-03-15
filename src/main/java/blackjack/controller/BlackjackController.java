@@ -1,15 +1,20 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
+import blackjack.domain.game.BettingProfitOffice;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -23,41 +28,23 @@ public class BlackjackController {
 
     public void run() {
         final BlackjackGame blackjackGame = generateBlackjackGame();
-        initialDraw(blackjackGame);
-        draw(blackjackGame);
-        printPlayerResult(blackjackGame);
-        printGameResult(blackjackGame);
+        drawInitialCards(blackjackGame);
+        drawAdditionalCards(blackjackGame);
+        printPlayerCardAndScores(blackjackGame);
+        printPlayerProfit(blackjackGame);
     }
 
     private BlackjackGame generateBlackjackGame() {
-        final Players players = repeatUntilGetValidInput(inputView::readPlayers);
-        return new BlackjackGame(players, ShuffledDeck.getInstance());
+        final Players players = generateValidPlayers();
+        final BettingProfitOffice bettingProfitOffice = generateBettingProfitOffice(players);
+        return new BlackjackGame(players, bettingProfitOffice);
     }
 
-    private void initialDraw(final BlackjackGame blackjackGame) {
-        blackjackGame.initialDraw();
-        outputView.printInitialDraw(blackjackGame.getPlayers());
-    }
-
-    private void draw(final BlackjackGame blackjackGame) {
-        final List<Player> players = blackjackGame.getPlayers();
-        for (Player player : players) {
-            drawByGambler(blackjackGame, player);
-        }
-        blackjackGame.drawByDealer();
-        outputView.printDealerDraw(blackjackGame.getDealer());
-    }
-
-    private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
-        while (isDrawable(player)) {
-            final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
-            blackjackGame.drawByGambler(player, command);
-            outputView.printDrawResult(player);
-        }
-    }
-
-    private boolean isDrawable(final Player player) {
-        return player.isDrawable() && !player.isDealer();
+    private Players generateValidPlayers() {
+        return repeatUntilGetValidInput(() -> {
+            final List<String> playerNames = inputView.readPlayers();
+            return Players.from(playerNames);
+        });
     }
 
     private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
@@ -69,15 +56,63 @@ public class BlackjackController {
         }
     }
 
-    private void printPlayerResult(final BlackjackGame blackjackGame) {
-        final List<Player> players = blackjackGame.getPlayers();
-        for (final Player player : players) {
-            outputView.printPlayerResult(player);
+    private BettingProfitOffice generateBettingProfitOffice(final Players players) {
+        final List<Player> allGamblers = players.getGamblers();
+        final Map<Player, Money> bettingMoneyByPlayers = allGamblers.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        this::generateBettingMoney,
+                        (bettingMoney, bettingMoney2) -> bettingMoney,
+                        LinkedHashMap::new
+                ));
+        return new BettingProfitOffice(bettingMoneyByPlayers);
+    }
+
+    private Money generateBettingMoney(final Player player) {
+        return repeatUntilGetValidInput(() -> {
+            final int amount = inputView.readBettingMoney(player);
+            return Money.createMoneyForBetting(amount);
+        });
+    }
+
+    private void drawInitialCards(final BlackjackGame blackjackGame) {
+        blackjackGame.drawInitialCards(ShuffledDeck.getInstance());
+        outputView.printInitialDraw(blackjackGame.getPlayers());
+    }
+
+    private void drawAdditionalCards(final BlackjackGame blackjackGame) {
+        final List<Player> players = blackjackGame.getGamblers();
+        for (Player player : players) {
+            drawByGambler(blackjackGame, player);
+        }
+        blackjackGame.drawByDealer(ShuffledDeck.getInstance());
+        outputView.printDealerDraw(blackjackGame.getDealer());
+    }
+
+    private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
+        while (player.isDrawable()) {
+            final BlackjackCommand command = generateValidCommand(player);
+            blackjackGame.drawByGambler(player, ShuffledDeck.getInstance(), command);
+            outputView.printDrawResult(player);
         }
     }
 
-    private void printGameResult(final BlackjackGame blackjackGame) {
-        final BlackjackGameResult result = blackjackGame.play();
-        outputView.printGameResult(result);
+    private BlackjackCommand generateValidCommand(final Player player) {
+        return repeatUntilGetValidInput(() -> {
+            final String input = inputView.readCommand(player);
+            return BlackjackCommand.from(input);
+        });
+    }
+
+    private void printPlayerCardAndScores(final BlackjackGame blackjackGame) {
+        final List<Player> players = blackjackGame.getPlayers();
+        for (final Player player : players) {
+            outputView.printPlayerCardAndScores(player);
+        }
+    }
+
+    private void printPlayerProfit(final BlackjackGame blackjackGame) {
+        final Map<Player, Money> profitByPlayers = blackjackGame.calculateBettingProfit();
+        outputView.printPlayerProfits(profitByPlayers);
     }
 }
