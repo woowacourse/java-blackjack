@@ -23,25 +23,4 @@ public class UserTest {
 
         assertThat(hand.getCards()).containsExactly(card1, card2);
     }
-
-    @Test
-    void test() {
-        User dealer = new Dealer();
-        long start = 0;
-        long end = 0;
-
-        start = System.nanoTime();
-        assertTrue(dealer instanceof Dealer);
-        end = System.nanoTime();
-        System.out.println("instanceof: " + (end - start));
-
-        double endSec = (double) end / 1_000_000_000;
-        System.out.println(endSec + " seconds");
-        start = System.nanoTime();
-        assertTrue(dealer.isDealer());
-        end = System.nanoTime();
-        System.out.println("다형성: " + (end - start));
-        endSec = (double) end / 1_000_000_000;
-        System.out.println(endSec + " seconds");
-    }
 }
