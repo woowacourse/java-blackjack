@@ -14,15 +14,17 @@ public final class ResultGame {
         this.resultBetting = resultBetting;
     }
 
-    public static ResultGame from(final Map<Participant, Betting> resultBetting) {
-        return new ResultGame(resultBetting);
+    public static ResultGame of(final BettingTable table, final Participants participants) {
+        Map<Participant, Betting> bettingTable = table.getTable();
+        calculateResult(bettingTable, participants);
+        return new ResultGame(bettingTable);
     }
 
     public void betMoney(final Participant participant, final Betting betting) {
         resultBetting.put(participant, betting);
     }
 
-    public void calculateResult(final Participants participants) {
+    private static void calculateResult(final Map<Participant, Betting> table, final Participants participants) {
         final Participant dealer = participants.getDealer();
 
         for (final Participant player : participants.getPlayers()) {
@@ -30,8 +32,8 @@ public final class ResultGame {
                     ResultDto.from(player),
                     ResultDto.from(dealer));
 
-            final Betting money = resultBetting.get(player);
-            resultBetting.put(player, playerState.calculateProfit(money.getValue()));
+            final Betting money = table.get(player);
+            table.put(player, playerState.calculateProfit(money.getValue()));
         }
     }
 

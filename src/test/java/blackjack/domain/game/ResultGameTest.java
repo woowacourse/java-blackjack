@@ -19,7 +19,7 @@ public class ResultGameTest {
     private Dealer dealer;
     private Participants participants;
     private Map<Participant, Betting> resultBetting;
-    private ResultGame resultGame;
+    private BettingTable table;
     private Participant pobi;
 
 
@@ -29,10 +29,10 @@ public class ResultGameTest {
         participants = Participants.of(dealer, List.of("pobi"));
         resultBetting = new HashMap<>();
 
-        resultGame = ResultGame.from(resultBetting);
+        table = BettingTable.from(resultBetting);
 
         pobi = participants.getPlayers().get(0);
-        resultGame.betMoney(pobi, Betting.from(10000));
+        table.addBetting(pobi, Betting.from(10000));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_TEN);
 
-        resultGame.calculateResult(participants);
+        ResultGame resultGame = ResultGame.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-15000));
     }
@@ -60,7 +60,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        resultGame.calculateResult(participants);
+        ResultGame resultGame = ResultGame.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-10000));
     }
@@ -75,7 +75,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        resultGame.calculateResult(participants);
+        ResultGame resultGame = ResultGame.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(0));
     }
@@ -90,7 +90,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_EIGHT);
 
-        resultGame.calculateResult(participants);
+        ResultGame resultGame = ResultGame.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(10000));
     }
@@ -98,6 +98,8 @@ public class ResultGameTest {
     @Test
     @DisplayName("플레이어의 베팅 금액을 제대로 반환하는지 테스트")
     void getPlayerResultTest() {
-        Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(10000));
+        ResultGame resultGame = ResultGame.of(table, participants);
+
+        Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(0));
     }
 }

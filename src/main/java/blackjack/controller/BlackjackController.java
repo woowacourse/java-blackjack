@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.Betting;
+import blackjack.domain.game.BettingTable;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
@@ -29,14 +30,13 @@ public final class BlackjackController {
     public void run() {
         final Participants participants = makeParticipants();
         final Deck deck = Deck.create();
-        final ResultGame resultGame = ResultGame.from(new HashMap<>());
-
-        initialBettingMoney(participants, resultGame);
+        final BettingTable table = BettingTable.from(new HashMap<>());
+        initialBettingMoney(participants, table);
 
         startDrawParticipants(participants, deck);
         drawParticipants(participants, deck);
 
-        resultGame.calculateResult(participants);
+        final ResultGame resultGame = ResultGame.of(table, participants);
         outputView.printBettingResult(participants, resultGame);
     }
 
@@ -52,10 +52,10 @@ public final class BlackjackController {
         return Participants.of(dealer, playerNames);
     }
 
-    private void initialBettingMoney(final Participants participants, final ResultGame resultGame) {
+    private void initialBettingMoney(final Participants participants, final BettingTable bettingTable) {
         for (final Participant player : participants.getPlayers()) {
             final Betting betting = Betting.from(inputView.readBettingMoney(player.getName()));
-            resultGame.betMoney(player, betting);
+            bettingTable.addBetting(player, betting);
         }
     }
 
