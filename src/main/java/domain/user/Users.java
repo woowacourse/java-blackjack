@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.name.Names;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,12 +16,11 @@ public class Users {
         this.players = players;
     }
 
-    public static Users from(final List<String> names) {
+    public static Users from(final Names names) {
         Players players = Players.of(names);
         Dealer dealer = new Dealer();
         return new Users(dealer, players);
     }
-
 
     public void hitCardByName(final String name, final Card card) {
         findByName(name).hit(card);
@@ -35,6 +35,10 @@ public class Users {
 
     public boolean isHittableDealer() {
         return dealer.isHittable();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getPlayerNames();
     }
 
     public List<Player> getHittablePlayers() {

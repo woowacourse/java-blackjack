@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.Objects;
+
 public class Score {
     private static final Score BLACK_JACK_SCORE = new Score(21);
     private static final Score ACE_OFFSET_SCORE = new Score(10);
@@ -38,13 +40,28 @@ public class Score {
         return !scoreAddedAceOffSet.isBust();
     }
 
+    public boolean isBlackjackScore() {
+        return this.equals(BLACK_JACK_SCORE);
+    }
+
     public int getValue() {
         return value;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Score other = (Score) obj;
         return this.value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

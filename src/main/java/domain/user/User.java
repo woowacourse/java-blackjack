@@ -8,21 +8,21 @@ public abstract class User {
 
     protected final Hand hand = new Hand();
 
-    public void hit(final Card card) {
+    public final void hit(final Card card) {
         hand.addCard(card);
     }
 
-    public Hand getCards() {
+    public abstract boolean isHittable();
+
+    public abstract boolean isDealer();
+
+    public abstract boolean isPlayer();
+
+    public final Hand getHand() {
         return hand;
     }
 
-    abstract public boolean isHittable();
-
-    abstract public boolean isDealer();
-
-    abstract public boolean isPlayer();
-
-    public Score getScore() {
+    public final Score getScore() {
         return hand.getSumOfScores();
     }
 }

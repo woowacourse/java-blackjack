@@ -4,17 +4,24 @@ import domain.HitCommand;
 import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
-import domain.game.BlackJack;
-import domain.game.Result;
+import domain.game.Blackjack;
+import domain.game.Exchanger;
+import domain.money.BettingMoney;
+import domain.money.BettingMoneyTable;
+import domain.money.BettingMonies;
+import domain.money.Money;
+import domain.name.Names;
 import domain.user.Player;
 import domain.user.Users;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private BlackJack blackJack;
+    private Blackjack blackJack;
+    private Exchanger exchanger;
 
     public void run() {
         try {
@@ -27,13 +34,28 @@ public class BlackJackController {
     }
 
     private void initGame() {
-        List<String> playerNames = InputView.askPlayerNames();
-        Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, new RandomDeckGenerator().generateDeck());
-        printInitMessages(playerNames);
+        Users users = Users.from(initPlayerNames());
+        BettingMoneyTable bettingMoneyTable = initBettingMoneyTable(users.getPlayers());
+        exchanger = new Exchanger(bettingMoneyTable);
+        blackJack = Blackjack.of(users, new RandomDeckGenerator().generateDeck());
+        printInitMessages(users.getPlayerNames());
     }
 
-    private void printInitMessages(final List<String> playerNames){
+    private Names initPlayerNames() {
+        Names playerNames = Names.of(InputView.askPlayerNames());
+        return playerNames;
+    }
+
+    private BettingMoneyTable initBettingMoneyTable(List<Player> players) {
+        List<BettingMoney> bettingMonies = new ArrayList<>();
+        for (Player player : players) {
+            String money = InputView.askBettingMoneyToPlayer(player.getName());
+            bettingMonies.add(BettingMoney.of(money));
+        }
+        return BettingMoneyTable.of(players, BettingMonies.of(bettingMonies));
+    }
+
+    private void printInitMessages(final List<String> playerNames) {
         OutputView.printInitHitMessage(playerNames);
         OutputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
         OutputView.printPlayerCards(blackJack.getPlayerToCardNames());
@@ -51,11 +73,15 @@ public class BlackJackController {
 
     private void playTurnOfPlayer(final Player player) {
         String playerName = player.getName();
-        while (blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit()) {
+        while (isHittablePlayer(player)) {
             blackJack.giveCard(playerName);
-            Hand playerHand = player.getCards();
+            Hand playerHand = player.getHand();
             OutputView.printEachPlayerCards(playerName, new CardNames(playerHand.getCardNames()));
         }
+    }
+
+    private boolean isHittablePlayer(final Player player) {
+        return blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit();
     }
 
     private HitCommand askHitCommandToPlayer(final Player player) {
@@ -73,7 +99,16 @@ public class BlackJackController {
     private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCardNames(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCardNames(), blackJack.getPlayerToScore());
-        Map<String, Result> playerTotalResults = blackJack.calculateTotalPlayerResults();
-        OutputView.printGameResult(blackJack.calculateTotalDealerResult(playerTotalResults), playerTotalResults);
+        Map<String, Money> winningMoneyOfPlayers = calculateWinningMoneyOfPlayers();
+        Money winningMoneyOfDealer = calculateWinningMoneyOfDealer(winningMoneyOfPlayers);
+        OutputView.printWinningMoneyOfPlayers(winningMoneyOfDealer, winningMoneyOfPlayers);
+    }
+
+    public Map<String, Money> calculateWinningMoneyOfPlayers() {
+        return blackJack.calculateWinningMoneyOfPlayers(exchanger);
+    }
+
+    public Money calculateWinningMoneyOfDealer(Map<String, Money> winningMoneyOfPlayers) {
+        return blackJack.calculateWinningMoneyOfDealer(exchanger, winningMoneyOfPlayers);
     }
 }

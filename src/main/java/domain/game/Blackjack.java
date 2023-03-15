@@ -4,26 +4,28 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.deck.Deck;
 import domain.dto.CardNames;
+import domain.money.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJack {
+public class Blackjack {
     private final Users users;
     private final Deck deck;
 
-    private BlackJack(final Users users, final Deck deck) {
+    private Blackjack(final Users users, final Deck deck) {
         this.users = users;
         this.deck = deck;
     }
 
-    public static BlackJack of(final Users users, final Deck deck) {
+    public static Blackjack of(final Users users, final Deck deck) {
         initCards(users, deck);
-        return new BlackJack(users, deck);
+        return new Blackjack(users, deck);
     }
 
     private static void initCards(final Users users, final Deck deck) {
@@ -56,14 +58,14 @@ public class BlackJack {
         List<Player> players = users.getPlayers();
         Map<String, CardNames> playerToCard = new LinkedHashMap<>();
         for (Player player : players) {
-            Hand playerHand = player.getCards();
+            Hand playerHand = player.getHand();
             playerToCard.put(player.getName(), new CardNames(playerHand.getCardNames()));
         }
         return playerToCard;
     }
 
     public CardNames getDealerCardNames() {
-        Hand dealerHand = users.getDealer().getCards();
+        Hand dealerHand = users.getDealer().getHand();
         return new CardNames(dealerHand.getCardNames());
     }
 
@@ -92,13 +94,12 @@ public class BlackJack {
         return users.getDealer().getScore().getValue();
     }
 
-    public Map<String, Result> calculateTotalPlayerResults() {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-        return Referee.judgeTotalPlayerResult(players, dealer);
+    public Map<String, Money> calculateWinningMoneyOfPlayers(Exchanger exchanger) {
+        return exchanger.getWinningMoneyOfPlayers(users.getPlayers(), users.getDealer());
     }
 
-    public Map<Result, Integer> calculateTotalDealerResult(final Map<String, Result> totalPlayerResult) {
-        return Referee.judgeTotalDealerResult(totalPlayerResult);
+    public Money calculateWinningMoneyOfDealer(Exchanger exchanger, Map<String, Money> winningMoneyOfPlayers) {
+        List<Money> playerMonies = new ArrayList<>(winningMoneyOfPlayers.values());
+        return exchanger.getWinningMoneyOfDealer(playerMonies);
     }
 }

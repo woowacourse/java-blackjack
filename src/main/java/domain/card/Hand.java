@@ -21,7 +21,7 @@ public class Hand {
     }
 
     private boolean isContainAce() {
-        return cards.stream().anyMatch(card2 -> card2.getDenomination() == Denomination.ACE);
+        return cards.stream().anyMatch(card -> card.getDenomination() == Denomination.ACE);
     }
 
     public boolean isUnder(final Score other) {
@@ -30,6 +30,10 @@ public class Hand {
 
     public boolean isAddable() {
         return getSumOfScores().isAddable();
+    }
+
+    public boolean isBlackjack() {
+        return getSumOfScores().isBlackjackScore() && cards.size() == 2;
     }
 
     public Card get(final int index) {

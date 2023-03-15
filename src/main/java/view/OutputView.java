@@ -2,7 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.dto.CardNames;
-import domain.game.Result;
+import domain.money.Money;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +15,7 @@ public class OutputView {
     public static void printPlayerCards(final Map<String, CardNames> playerToCard) {
         playerToCard.forEach((playerName, cards) ->
                 System.out.println(getEachPlayerCards(playerName, cards)));
+        System.out.println();
     }
 
     public static void printDealerCardWithScore(final CardNames cards, final int score) {
@@ -27,6 +28,7 @@ public class OutputView {
             int score = playerToScore.get(playerName);
             printCardWithScore(playerName, cards, score);
         });
+        System.out.println();
     }
 
     public static void printEachPlayerCards(final String playerName, final CardNames cards) {
@@ -38,48 +40,19 @@ public class OutputView {
     }
 
     private static String getEachPlayerCards(final String playerName, final CardNames cardNames) {
-        StringBuilder stringBuilder = new StringBuilder(playerName);
-        stringBuilder.append("카드: ");
-        stringBuilder.append(String.join(", ", cardNames.getCardNames()));
-        return stringBuilder.toString();
+        String stringBuilder = playerName + "카드: "
+                + String.join(", ", cardNames.getCardNames());
+        return stringBuilder;
     }
 
     private static String getCardName(final Card card) {
         return card.getCardName();
     }
 
-    public static void printGameResult(final Map<Result, Integer> dealerResult,
-                                       final Map<String, Result> playerResults) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayerResults(playerResults);
-    }
-
-    private static void printDealerResult(final Map<Result, Integer> dealerResult) {
-        StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-        for (Result result : Result.values()) {
-            int count = dealerResult.getOrDefault(result, 0);
-            dealerResultMessage.append(getDealerResultCountMessage(result.getName(), count));
-        }
-        System.out.println(dealerResultMessage);
-    }
-
-    private static String getDealerResultCountMessage(final String gameResultName, final int count) {
-        if (count != 0) {
-            return count + gameResultName + " ";
-        }
-        return "";
-    }
-
-    private static void printPlayerResults(final Map<String, Result> playerResults) {
-        playerResults.forEach((playerName, gameResult) ->
-                System.out.println(playerName + ": " + gameResult.getName()));
-    }
-
     public static void printDealerHitMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 
     public static void printInitHitMessage(final List<String> playerNames) {
@@ -89,5 +62,19 @@ public class OutputView {
 
     public static void printErrorMessage(final String message) {
         System.out.println(message);
+    }
+
+    public static void printWinningMoneyOfPlayers(Money winningMoneyOfDealer,
+                                                  Map<String, Money> winningMoneyOfPlayers) {
+        System.out.println("## 최종 수익");
+        printWinningMoneyOfUser("딜러", winningMoneyOfDealer);
+        for (String playerName : winningMoneyOfPlayers.keySet()) {
+            printWinningMoneyOfUser(playerName, winningMoneyOfPlayers.get(playerName));
+        }
+    }
+
+    private static void printWinningMoneyOfUser(String userName, Money userWinningMoney) {
+        System.out.printf("%s: %d", userName, userWinningMoney.getValue());
+        System.out.println();
     }
 }

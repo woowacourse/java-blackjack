@@ -17,6 +17,13 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static String askBettingMoneyToPlayer(String name) {
+        System.out.println();
+        System.out.printf("%s의 베팅 금액은?", name);
+        System.out.println();
+        return scanner.nextLine();
+    }
+
     public static String askHitCommand(final String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();

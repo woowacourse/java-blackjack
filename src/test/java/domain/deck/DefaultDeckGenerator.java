@@ -3,23 +3,22 @@ package domain.deck;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
-import java.util.Collections;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class DefaultDeckGenerator implements DeckGenerator {
-    private static void addCard(Stack<Card> cards, Suits suits) {
+    private static void addCard(Deque<Card> cards, Suits suits) {
         for (Denomination denomination : Denomination.values()) {
-            cards.push(new Card(denomination, suits));
+            cards.add(new Card(denomination, suits));
         }
     }
 
     @Override
     public Deck generateDeck() {
-        Stack<Card> cards = new Stack<>();
+        Deque<Card> cards = new ArrayDeque<>();
         for (Suits suits : Suits.values()) {
             addCard(cards, suits);
         }
-        Collections.reverse(cards);
         return new Deck(cards);
     }
 }
