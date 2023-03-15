@@ -50,6 +50,6 @@ class MoneyTest {
         Money multipliedMoney = money.calculatePrize(result);
 
         //then
-        assertThat(multipliedMoney).isEqualTo(Money.betting(1500));
+        assertThat(multipliedMoney.getValue()).isEqualTo(Money.betting(1500).getValue());
     }
 }

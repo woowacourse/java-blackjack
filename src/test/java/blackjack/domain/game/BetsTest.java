@@ -31,7 +31,7 @@ class BetsTest {
         bets.updatePrizes(result);
 
         //then
-        assertThat(bets.getBets().get(player)).isEqualTo(money.calculatePrize(gameResult));
+        assertThat(bets.getBets().get(player).getValue()).isEqualTo(money.calculatePrize(gameResult).getValue());
     }
 
     @Test

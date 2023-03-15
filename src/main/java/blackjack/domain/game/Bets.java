@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public final class Bets {
 
-    final Map<User, Money> bets = new LinkedHashMap<>();
+    private final Map<User, Money> bets = new LinkedHashMap<>();
 
     public void betting(final Player player, final Money money) {
         bets.put(player, money);

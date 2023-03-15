@@ -37,10 +37,6 @@ public final class Hand {
             aceCards.remove(0);
         }
 
-        if (sumScore.isMoreThen(max)) {
-            return Score.min();
-        }
-
         return sumScore;
     }
 
@@ -55,6 +51,10 @@ public final class Hand {
         return cards.stream()
                 .filter(card -> CardNumber.ACE.equals(card.getNumber()))
                 .collect(Collectors.toList());
+    }
+
+    public boolean isBust() {
+        return getScore().isMoreThen(new Score(21));
     }
 
     public boolean isBlackjack() {

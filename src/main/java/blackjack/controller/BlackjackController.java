@@ -87,7 +87,7 @@ public class BlackjackController {
     private void endGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         outputView.printCardResult(dealer);
         players.getPlayers().forEach((outputView::printCardResult));
-        printProfitResult(blackjackGame.getUserProfit(dealer.getResult(players)));
+        printProfitResult(blackjackGame.getUserProfit(players, dealer));
     }
 
     private void printProfitResult(final Map<User, Money> profitResult) {

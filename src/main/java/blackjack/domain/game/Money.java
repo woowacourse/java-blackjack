@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public final class Money {
 
@@ -56,22 +55,5 @@ public final class Money {
 
     public int getValue() {
         return money.intValue();
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Money betMoney1 = (Money) o;
-        return Objects.equals(money, betMoney1.money);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(money);
     }
 }
