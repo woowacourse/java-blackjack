@@ -9,10 +9,10 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Blackjack {
     private final Users users;
@@ -99,7 +99,7 @@ public class Blackjack {
     }
 
     public Money calculateWinningMoneyOfDealer(Exchanger exchanger, Map<String, Money> winningMoneyOfPlayers) {
-        List<Money> playerMonies = winningMoneyOfPlayers.values().stream().collect(Collectors.toList());
+        List<Money> playerMonies = new ArrayList<>(winningMoneyOfPlayers.values());
         return exchanger.getWinningMoneyOfDealer(playerMonies);
     }
 }
