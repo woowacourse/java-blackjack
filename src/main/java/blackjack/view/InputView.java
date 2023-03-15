@@ -26,4 +26,18 @@ public class InputView {
         final String input = scanner.nextLine();
         return DrawCommand.from(input);
     }
+
+    public int inputPlayerMoney(final String playerName) {
+        System.out.println(MessageFormat.format("{0}의 배팅 금액은?", playerName));
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (final NumberFormatException e) {
+            System.out.println("숫자만 입력해주세요.");
+            return inputPlayerMoney(playerName);
+        }
+    }
+
+    public void printInputError(final Exception e) {
+        System.out.println(e.getMessage());
+    }
 }

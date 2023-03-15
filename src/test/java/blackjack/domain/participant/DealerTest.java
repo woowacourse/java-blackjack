@@ -6,11 +6,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"NonAsciiCharacters"})
@@ -40,19 +37,5 @@ class DealerTest {
 
         assertThat(dealer.isDrawable())
                 .isFalse();
-    }
-
-    @Nested
-    @DisplayName("딜러를 통해 결과를 계산하면")
-    class CalculateResultTest {
-
-        private final Dealer dealer = new Dealer();
-        private Player player;
-
-        @BeforeEach
-        void setUp() {
-            dealer.drawCard(new Card(Shape.DIAMOND, Symbol.FIVE));
-            player = new Player("pobi");
-        }
     }
 }

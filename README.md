@@ -7,8 +7,10 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ```mermaid
+---
+title: 의존성그래프
+---
 graph TD
-의존성그래프
 BlackJackGame --> Players
 BlackJackGame --> Deck
 BlackJackGame --> Dealer
@@ -34,10 +36,34 @@ Card --> Symbol
 ## UI
 
 1. 입력
+    - [x] 베팅 금액을 입력받는다
+2. 출력
+    - [x] 최종 수익을 출력한다
+
+## 도메인
+
+1. BettingMoney
+    - [x] 사용자에 베팅 금액을 받는다
+        - [예외처리] 0 이상의 숫자인지 확인한다
+    - [x] 베팅 금액에 대한 수익률을 계산한다
+2. CardPocket
+    - Card 와 관련된 도메인에 대한 애그리거트 루트입니다
+    - 도메인 외부로 조회된 결과를 반환할 때 CardResponse 형태로 바꾸어 반환합니다
+3. Participants
+    - 플레이어와 딜러에 대한 애그리거트 루트입니다
+    - 외부에서 발생하는 모든 조회는 Participant 를 통해 조회해야합니다
+4. ResultType
+    - 블랙잭 게임과 관련된 결과를 담당하는 클래스 입니다
+5. BLackjackRule
+    - 블랙잭 게임의 결과를 계산하는 도메인 서비스입니다
+    - Player 와, Dealer 를 받아서 수익률을 계산합니다
+
+## UI
+
+1. 입력
 
 - 참여할 사람을 입력한다
 - List<String>으로 변환 및 반환한다
--
 
 ## 도메인
 

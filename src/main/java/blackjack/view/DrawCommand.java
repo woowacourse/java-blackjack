@@ -13,7 +13,7 @@ public enum DrawCommand {
 
     public static DrawCommand from(final String command) {
         return Arrays.stream(values())
-                .filter(it -> it.command.equals(command))
+                .filter(it -> it.command.equalsIgnoreCase(command))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y, n 만 입력 가능합니다"));
     }

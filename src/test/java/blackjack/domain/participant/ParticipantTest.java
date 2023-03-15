@@ -1,8 +1,12 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.CardResponseFixture.CLOVER_ACE_RESPONSE;
+import static blackjack.domain.card.CardResponseFixture.SPADE_ACE_RESPONSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.NotShuffledDeckFactory;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,14 +14,10 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+@SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class ParticipantTest {
 
-    private final Card[] cards = new Card[]{
-            new Card(Shape.CLOVER, Symbol.ACE),
-            new Card(Shape.CLOVER, Symbol.ACE)
-    };
     private Participant participant;
 
     @BeforeEach
@@ -28,7 +28,9 @@ class ParticipantTest {
                 return true;
             }
         };
-        participant.drawInitialCard(cards[0], cards[1]);
+        final NotShuffledDeckFactory deckFactory = new NotShuffledDeckFactory();
+        final Deck deck = deckFactory.generate();
+        participant.drawInitialCard(deck);
     }
 
     @Test
@@ -50,6 +52,7 @@ class ParticipantTest {
 
     @Test
     void 참가자는_자기가_가지고_있는_카드를_확인할_수_있다() {
-        assertThat(participant.getCards()).containsExactly(cards);
+        assertThat(participant.getCards())
+                .containsExactly(SPADE_ACE_RESPONSE, CLOVER_ACE_RESPONSE);
     }
 }

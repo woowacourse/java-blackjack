@@ -4,11 +4,11 @@ public class Name {
 
     private static final int MAX_NAME_LENGTH = 100;
 
-    private final String name;
+    private final String value;
 
-    Name(final String name) {
-        validateName(name);
-        this.name = name;
+    Name(final String value) {
+        validateName(value);
+        this.value = value;
     }
 
     private void validateName(final String name) {
@@ -28,7 +28,7 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
