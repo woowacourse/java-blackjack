@@ -1,9 +1,17 @@
-package domain;
+package domain.result;
+
+import java.math.BigDecimal;
 
 public enum Result {
-    WIN(),
-    LOSE(),
-    TIE();
+    WIN(new BigDecimal(1)),
+    LOSE(new BigDecimal(-1)),
+    TIE(new BigDecimal(0));
+
+    private final BigDecimal prizeRatio;
+
+    Result(BigDecimal prizeRatio) {
+        this.prizeRatio = prizeRatio;
+    }
 
     public static Result isHigherPlayerHandValue(int playerHandValue, int dealerHandValue) {
         if (playerHandValue > dealerHandValue) {
@@ -20,5 +28,9 @@ public enum Result {
             return LOSE;
         }
         return WIN;
+    }
+
+    public BigDecimal getPrizeRatio() {
+        return prizeRatio;
     }
 }

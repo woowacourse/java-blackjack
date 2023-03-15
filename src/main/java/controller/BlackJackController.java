@@ -1,21 +1,21 @@
 package controller;
 
-import domain.Deck;
-import domain.GameResult;
-import domain.RandomShuffleStrategy;
-import domain.Result;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.DomainException;
+import domain.card.Deck;
+import domain.card.RandomShuffleStrategy;
+import domain.participant.*;
+import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final int INITIAL_CARD_COUNT = 2;
+
     private static final String HIT_RESPONSE = "y";
 
     private final Deck deck;
@@ -24,10 +24,11 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = makeParticipants();
+        Names names = makeNames();
+        Participants participants = makeParticipants(names);
 
         dealInitialCards(deck, participants);
-        OutputView.printPlayersName(participants.getPlayersName());
+        OutputView.printInitDealFinishingMessage(participants);
         showParticipantsInitCardsStatus(participants);
 
         play(deck, participants);
@@ -36,19 +37,31 @@ public class BlackJackController {
         showResults(gameResult);
     }
 
-    private Participants makeParticipants() {
+    private Names makeNames() {
         try {
-            return Participants.from(InputView.requestNames());
-        } catch (IllegalArgumentException e) {
+            List<Name> names = InputView.requestNames().stream()
+                    .map(Name::new)
+                    .collect(Collectors.toList());
+            return new Names(names);
+        } catch (DomainException e) {
             OutputView.printExceptionMessage(e);
-            return makeParticipants();
+            return makeNames();
+        }
+    }
+    private Participants makeParticipants(Names names) {
+        try {
+            List<Player> players = names.getNames().stream()
+                    .map(name -> Player.create(name, InputView.requestBetAmount(name)))
+                    .collect(Collectors.toList());
+            return Participants.from(players);
+        } catch (DomainException e) {
+            OutputView.printExceptionMessage(e);
+            return makeParticipants(names);
         }
     }
 
     private static void dealInitialCards(final Deck deck, final Participants participants) {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participants.deal(deck);
-        }
+        participants.dealInit(deck);
     }
 
     private void showParticipantsInitCardsStatus(final Participants participants) {
@@ -84,7 +97,7 @@ public class BlackJackController {
     private void playerHitOrStay(Participant player, Deck deck) {
         try {
             drawCardByInput(player, deck);
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             OutputView.printExceptionMessage(e);
             playerHitOrStay(player, deck);
         }
@@ -102,8 +115,7 @@ public class BlackJackController {
     }
 
     private void dealerContinueDrawingCards(final Deck deck, final Participants participants) {
-        while (participants.shouldDealerHit()) {
-            participants.findDealer().receiveCard(deck.draw());
+        while (participants.shouldDealerHit(deck)) {
             OutputView.printDealerPickCardMessage();
         }
     }
@@ -116,20 +128,13 @@ public class BlackJackController {
 
     private void showParticipantsScore(final GameResult gameResult) {
         for (Map.Entry<Participant, Boolean> participantScore : gameResult.getParticipantsBustStatus().entrySet()) {
-            OutputView.printParticipantHandValue(
-                    participantScore.getKey().getName(),
-                    participantScore.getKey().getHandValue(),
-                    participantScore.getKey().getCards(),
-                    participantScore.getValue());
+            OutputView.printParticipantHandValue(participantScore.getKey(), participantScore.getValue());
         }
     }
 
     private void showParticipantsWinningStatus(final GameResult gameResult) {
-        Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResult.getDealerStatus(playerResults);
-        OutputView.printDealerResult(dealerResults);
-        for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
-            OutputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
-        }
+        Map<Participant, Integer> participantsPrize = gameResult.calculateParticipantsPrize();
+
+        OutputView.printParticipantsPrize(participantsPrize);
     }
 }

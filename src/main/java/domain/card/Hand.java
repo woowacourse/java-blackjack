@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import view.RankMessage;
 import view.SuitMessage;
@@ -10,7 +10,8 @@ import java.util.List;
 public class Hand {
     private static final int HIGH_ACE_VALUE = 11;
     private static final int LOW_ACE_VALUE = 1;
-    private static final int BUST_BOUNDARY_VALUE = 21;
+    private static final int MAX_SCORE = 21;
+    private static final int BLACKJACK_HAND_COUNT = 2;
     private final List<Card> hand;
 
     public Hand(List<Card> cards) {
@@ -33,6 +34,9 @@ public class Hand {
         return value;
     }
 
+    public boolean isBlackjack() {
+        return hand.size() == BLACKJACK_HAND_COUNT && calculateValue() == MAX_SCORE;
+    }
     private int countAceCard(int aceCount, final Card card) {
         if (isAce(card)) {
             aceCount += 1;
@@ -41,7 +45,7 @@ public class Hand {
     }
 
     private int exchangeAceLowValueWhenBust(int value, int aceCount) {
-        while (value > BUST_BOUNDARY_VALUE && aceCount > 0) {
+        while (value > MAX_SCORE && aceCount > 0) {
             value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
             aceCount -= 1;
         }

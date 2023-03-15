@@ -1,7 +1,6 @@
 package domain.participant;
 
-import domain.Deck;
-import domain.ExceptionCode;
+import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -10,84 +9,53 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
-    private static final int MINIMUM_PLAYER_COUNT = 1;
-    private static final int MAXIMUM_PLAYER_COUNT = 7;
+    private static final int INITIAL_CARD_COUNT = 2;
 
-    private final List<Participant> participants;
+    private final List<Player> players;
+    private final Participant dealer;
 
-
-    private Participants(List<Participant> participants) {
-        this.participants = participants;
+    private Participants(List<Player> participants) {
+        this.players = participants;
+        dealer = new Dealer();
     }
 
-    public static Participants from(List<String> names) {
-        validate(names);
-        List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer());
-        names.forEach(name -> participants.add(Player.create(name)));
-        return new Participants(participants);
+    public static Participants from(List<Player> players) {
+        return new Participants(players);
     }
 
-    public void deal(Deck deck) {
-        for (Participant participant : participants) {
-            participant.receiveCard(deck.draw());
+    public void dealInit(Deck deck) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            dealer.receiveCard(deck.draw());
+            players.forEach(player -> player.receiveCard(deck.draw()));
         }
     }
 
     public Participant findDealer() {
-        return participants.stream()
-                .filter(participant -> participant.getClass().equals(Dealer.class))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(ExceptionCode.NO_DEALER.getExceptionCode())
-                );
+        return dealer;
     }
 
     public List<Participant> findPlayers() {
-        List<Participant> players = new ArrayList<>();
-        for (Participant participant : participants) {
-            addParticipantIfPlayer(players, participant);
-        }
-        return players;
+        return new ArrayList<>(players);
     }
 
-    public boolean shouldDealerHit() {
-        final Dealer dealer = (Dealer) findDealer();
-        return dealer.shouldHit();
+    public boolean shouldDealerHit(Deck deck) {
+        if (dealer.shouldHit()) {
+            dealer.receiveCard(deck.draw());
+            return true;
+        }
+        return false;
     }
 
     public Map<Participant, Integer> makePlayerFinalHandValue() {
         final Map<Participant, Integer> participantsHandValue = new LinkedHashMap<>();
-        for (Participant participant : findPlayers()) {
+        for (Participant participant : players) {
             participantsHandValue.put(participant, participant.getHandValue());
         }
         return participantsHandValue;
     }
 
-    private static void validate(List<String> names) {
-        validateNumberOfNames(names);
-        validateNoDuplication(names);
-    }
-
-    private static void validateNumberOfNames(List<String> names) {
-        if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
-            throw new IllegalArgumentException(ExceptionCode.OUT_OF_RANGE_PLAYER_COUNT.getExceptionCode());
-        }
-    }
-
-    private static void validateNoDuplication(List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException(ExceptionCode.DUPLICATE_PLAYERS_NAME.getExceptionCode());
-        }
-    }
-
-    private void addParticipantIfPlayer(List<Participant> players, Participant participant) {
-        if (participant.getClass().equals(Player.class)) {
-            players.add(participant);
-        }
-    }
-
     public List<String> getPlayersName() {
-        return findPlayers().stream()
+        return players.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
     }

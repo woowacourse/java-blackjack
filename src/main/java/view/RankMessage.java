@@ -1,6 +1,6 @@
 package view;
 
-import domain.Rank;
+import domain.card.Rank;
 
 import java.util.Collections;
 import java.util.Map;
