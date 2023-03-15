@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.dto.ResultParticipantDto;
+import blackjack.dto.ResultDto;
 
 import java.util.Map;
 
@@ -24,13 +24,13 @@ public final class ResultGame {
 
     public void calculateResult(final Participants participants) {
         final Participant dealer = participants.getDealer();
-        final ResultParticipantDto dealerResultDto = ResultParticipantDto.from(dealer);
 
         for (final Participant player : participants.getPlayers()) {
-            final ResultParticipantDto playerResultDto = ResultParticipantDto.from(player);
-            final ResultState playerState = ResultState.getState(playerResultDto, dealerResultDto);
-            final int bettingMoney = resultBetting.get(player);
+            final ResultState playerState = ResultState.getState(
+                    ResultDto.from(player),
+                    ResultDto.from(dealer));
 
+            final int bettingMoney = resultBetting.get(player);
             resultBetting.put(player, playerState.calculateProfit(bettingMoney));
         }
     }

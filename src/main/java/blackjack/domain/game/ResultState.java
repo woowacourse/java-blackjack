@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.dto.ResultParticipantDto;
+import blackjack.dto.ResultDto;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -9,7 +9,7 @@ public enum ResultState implements StateChecker {
 
     BLACKJACK(betting -> (int) (betting * 1.5)) {
         @Override
-        public boolean isState(ResultParticipantDto player, ResultParticipantDto dealer) {
+        public boolean isState(ResultDto player, ResultDto dealer) {
             return player.getHandSize() == BLACKJACK_CARD_COUNT
                     && player.getScore().isBlackjack()
                     && !dealer.getScore().isBlackjack();
@@ -17,7 +17,7 @@ public enum ResultState implements StateChecker {
     },
     WIN(betting -> betting) {
         @Override
-        public boolean isState(ResultParticipantDto player, ResultParticipantDto dealer) {
+        public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -27,7 +27,7 @@ public enum ResultState implements StateChecker {
     },
     TIE(betting -> 0) {
         @Override
-        public boolean isState(ResultParticipantDto player, ResultParticipantDto dealer) {
+        public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -37,7 +37,7 @@ public enum ResultState implements StateChecker {
     },
     LOSE(betting -> betting * -1) {
         @Override
-        public boolean isState(ResultParticipantDto player, ResultParticipantDto dealer) {
+        public boolean isState(ResultDto player, ResultDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -55,11 +55,11 @@ public enum ResultState implements StateChecker {
         this.moneyFunction = moneyFunction;
     }
 
-    public static ResultState getState(final ResultParticipantDto player, final ResultParticipantDto dealer) {
+    public static ResultState getState(final ResultDto player, final ResultDto dealer) {
         return Arrays.stream(ResultState.values())
                 .filter(resultState -> resultState.isState(player, dealer))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("승리 조건이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("승부 결과가 존재하지 않습니다."));
     }
 
     public int calculateProfit(int betting) {
