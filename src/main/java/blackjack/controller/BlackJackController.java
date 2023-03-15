@@ -89,7 +89,7 @@ public class BlackJackController {
     }
 
     private void getDecisionRepeatedly(String name) {
-        while(getDecision(name)) {
+        while (getDecision(name)) {
             blackjackGame.drawMoreCard(name);
             PersonStatusDto personStatusDto = blackjackGame.getPlayerStatus(name);
             OutputView.printPersonStatus(personStatusDto.getName(), personStatusDto.getCards());
@@ -101,10 +101,10 @@ public class BlackJackController {
 
     private boolean getDecision(String name) {
         String decision = InputView.readDrawCardDecision(name);
-        if (decision.equals("y") || decision.equals("n")) {
-            return decision.equals("y");
+        if (!("y".equals(decision)) && !("n".equals(decision))) {
+            throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
         }
-        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+        return decision.equals("y");
     }
 
     private void drawMoreCardForDealer() {
