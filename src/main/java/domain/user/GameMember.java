@@ -23,7 +23,6 @@ public class GameMember implements Iterable<Playable> {
         return new GameMember(new Dealer(), players);
     }
     
-    
     public Dealer getDealer() {
         return this.dealer;
     }

@@ -1,10 +1,8 @@
 package view;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -35,8 +33,7 @@ public class InputView {
     }
     
     private static void validateUniqueness(final List<String> playerNames) {
-        Set<String> playerSet = new HashSet<>(playerNames);
-        if (playerSet.size() != playerNames.size()) {
+        if (playerNames.size() != playerNames.stream().distinct().count()) {
             throw new IllegalArgumentException(DUPLICATED_NAME_ERROR_ESSAGE);
         }
     }

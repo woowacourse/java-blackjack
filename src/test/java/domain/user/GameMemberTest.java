@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class GameMemberTest {
     @DisplayName("참자자들 생성 테스트")
     @Test
     void create() {
-        GameMember gameMember = GameMember.of("echo,split");
+        GameMember gameMember = GameMember.of(List.of("echo", "split"));
         Assertions.assertThat(gameMember.getPlayers())
                 .extracting("name")
                 .containsExactly("echo", "split");
@@ -21,19 +22,12 @@ class GameMemberTest {
                 .isEqualTo("딜러");
     }
     
-    @Test
-    @DisplayName("중복된 이름이 있을 경우 예외 발생")
-    void createException() {
-        Assertions.assertThatThrownBy(() -> GameMember.of("echo,echo"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중복된 플레이어 이름이 있습니다.");
-    }
     
     @DisplayName("참가자의 게임 상태 업데이트 기능 구현")
     @Test
     void updateTest() {
-        GameMember players = GameMember.of("echo,split");
-        Player player = players.getPlayers().get(0);
+        GameMember gameMember = GameMember.of(List.of("echo", "split"));
+        Player player = gameMember.getPlayers().get(0);
         player.addCard(new Card(CardNumber.KING, CardShape.SPADE));
         Assertions.assertThat(player.getStatus()).isEqualTo(MemberStatus.NOT_BUST);
         player.addCard(new Card(CardNumber.ACE, CardShape.HEART));
