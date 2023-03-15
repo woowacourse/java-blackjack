@@ -2,18 +2,24 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Hand;
-import java.util.Objects;
+import domain.money.Bet;
 
 public class Player implements Playable {
     
     private final PlayerName name;
     
+    private Bet bet;
+    
     private Hand hand = new Hand();
     
     public Player(final String name) {
         this.name = new PlayerName(name);
+        this.bet = new Bet(0);
     }
     
+    public void addBet(Bet bet) {
+        this.bet = this.bet.add(bet);
+    }
     
     @Override
     public void addCard(final Card card) {
@@ -61,21 +67,7 @@ public class Player implements Playable {
         return this.getStatus().isBlackJack();
     }
     
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
+    public Bet getBet() {
+        return this.bet;
     }
-    
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-        final Player player = (Player) o;
-        return this.name.equals(player.name);
-    }
-    
 }

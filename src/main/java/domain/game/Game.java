@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.card.Deck;
-import domain.result.StatusResult;
+import domain.result.ProfitResult;
 import domain.user.Dealer;
 import domain.user.GameMember;
 import domain.user.Playable;
@@ -14,11 +14,6 @@ public class Game {
     
     private final Deck deck;
     
-    
-    public Game(final String participantNames, final Deck deck) {
-        this.gameMember = GameMember.of(participantNames);
-        this.deck = deck;
-    }
     
     public Game(final GameMember gameMember, final Deck deck) {
         this.gameMember = gameMember;
@@ -36,14 +31,14 @@ public class Game {
         participant.addCard(this.deck.draw());
     }
     
-    public StatusResult generateGameResult() {
+    public ProfitResult generateProfitResult() {
         Dealer dealer = this.getDealer();
         List<Player> players = this.getPlayers();
-        StatusResult statusResult = new StatusResult();
+        ProfitResult profitResult = new ProfitResult();
         for (Player player : players) {
-            statusResult.accumulate(player, this.comparePlayerWithDealer(player, dealer));
+            profitResult.accumulate(player, player.getBet(), this.comparePlayerWithDealer(player, dealer));
         }
-        return statusResult;
+        return profitResult;
     }
     
     public Dealer getDealer() {
@@ -80,7 +75,6 @@ public class Game {
         }
         return GameStatus.of(false, true, false);
     }
-    
     
     public GameMember getParticipants() {
         return this.gameMember;

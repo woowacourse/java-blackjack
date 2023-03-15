@@ -3,7 +3,6 @@ package controller;
 import domain.card.Deck;
 import domain.game.Game;
 import domain.game.GameAction;
-import domain.game.GameBet;
 import domain.money.Bet;
 import domain.result.ProfitResult;
 import domain.user.GameMember;
@@ -19,28 +18,11 @@ public class GameController {
     
     public void run() {
         Game game = new Game(this.generateGameMemberUntilValid(), this.getShuffledDeck());
-        GameBet gameBet = this.collectBets(game);
         this.startGame(game);
         this.runGame(game);
-        this.endGameWithProfit(game, gameBet);
+        this.endGameWithProfit(game);
     }
     
-    private GameBet collectBets(final Game game) {
-        GameBet gameBet = new GameBet();
-        for (Playable player : game.getPlayers()) {
-            gameBet.accumulate(player, this.generateBetUntilValid(player.getName()));
-        }
-        return gameBet;
-    }
-    
-    private Bet generateBetUntilValid(final String name) {
-        try {
-            return new Bet(InputView.readBet(name));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return this.generateBetUntilValid(name);
-        }
-    }
     
     private GameMember generateGameMemberUntilValid() {
         try {
@@ -58,9 +40,25 @@ public class GameController {
     }
     
     private void startGame(Game game) {
+        this.collectBets(game);
         game.start();
         OutputView.printReadyMessage(game.getParticipants());
         OutputView.printReadyParticipantsNameAndCards(game.getParticipants());
+    }
+    
+    private void collectBets(final Game game) {
+        for (Player player : game.getPlayers()) {
+            player.addBet(this.generateBetUntilValid(player.getName()));
+        }
+    }
+    
+    private Bet generateBetUntilValid(final String name) {
+        try {
+            return new Bet(InputView.readBet(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.generateBetUntilValid(name);
+        }
     }
     
     private void runGame(Game game) {
@@ -104,9 +102,9 @@ public class GameController {
     }
     
     
-    private void endGameWithProfit(Game game, GameBet gameBet) {
+    private void endGameWithProfit(Game game) {
         OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
-        ProfitResult profitResult = ProfitResult.create(gameBet, game.generateGameResult());
+        ProfitResult profitResult = game.generateProfitResult();
         ProfitView.printProfitResult();
         ProfitView.printDealerProfitResult(game.getDealer().getName(), profitResult.getDealerProfit());
         ProfitView.printGameProfit(profitResult.getProfitMap());

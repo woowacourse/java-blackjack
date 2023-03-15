@@ -1,6 +1,5 @@
 package domain.result;
 
-import domain.game.GameBet;
 import domain.game.GameStatus;
 import domain.money.Bet;
 import domain.user.Player;
@@ -14,21 +13,19 @@ class ProfitResultTest {
     @Test
     @DisplayName("플레이어들의 수익 결과 테스트")
     void getProfitMapTest() {
-        StatusResult statusResult = new StatusResult();
-        GameBet gameBet = new GameBet();
         Player echo = new Player("echo");
         Player split = new Player("split");
         Player pobi = new Player("pobi");
         Player crong = new Player("crong");
-        statusResult.accumulate(echo, GameStatus.WIN);
-        statusResult.accumulate(split, GameStatus.DRAW);
-        statusResult.accumulate(pobi, GameStatus.WIN_BLACKJACK);
-        statusResult.accumulate(crong, GameStatus.LOSE);
-        gameBet.accumulate(echo, new Bet(1000));
-        gameBet.accumulate(split, new Bet(1000));
-        gameBet.accumulate(pobi, new Bet(1000));
-        gameBet.accumulate(crong, new Bet(1000));
-        ProfitResult profitResult = ProfitResult.create(gameBet, statusResult);
+        echo.addBet(new Bet(1000));
+        split.addBet(new Bet(1000));
+        pobi.addBet(new Bet(1000));
+        crong.addBet(new Bet(1000));
+        ProfitResult profitResult = new ProfitResult();
+        profitResult.accumulate(echo, echo.getBet(), GameStatus.WIN);
+        profitResult.accumulate(split, split.getBet(), GameStatus.DRAW);
+        profitResult.accumulate(pobi, pobi.getBet(), GameStatus.WIN_BLACKJACK);
+        profitResult.accumulate(crong, crong.getBet(), GameStatus.LOSE);
         Assertions.assertThat(profitResult.getProfitMap().get(echo).getProfit()).isEqualTo(1000);
         Assertions.assertThat(profitResult.getProfitMap().get(split).getProfit()).isEqualTo(0);
         Assertions.assertThat(profitResult.getProfitMap().get(pobi).getProfit()).isEqualTo(1500);

@@ -1,6 +1,5 @@
 package domain.result;
 
-import domain.game.GameBet;
 import domain.game.GameStatus;
 import domain.money.Bet;
 import domain.money.Profit;
@@ -15,15 +14,7 @@ public class ProfitResult {
     
     private final Map<Playable, Profit> profitMap = new HashMap<>();
     
-    public static ProfitResult create(GameBet gameBet, StatusResult statusResult) {
-        ProfitResult profitResult = new ProfitResult();
-        for (Playable player : gameBet.getBetMap().keySet()) {
-            profitResult.accumulate(player, gameBet.getPlayerBet(player), statusResult.getPlayerResult(player));
-        }
-        return profitResult;
-    }
-    
-    private void accumulate(Playable player, Bet bet, GameStatus gameStatus) {
+    public void accumulate(Playable player, Bet bet, GameStatus gameStatus) {
         this.profitMap.put(player, Profit.create(bet, gameStatus));
     }
     

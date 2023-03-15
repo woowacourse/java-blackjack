@@ -29,4 +29,11 @@ class BetTest {
                 .hasMessage("베팅 금액은 100원 단위로 입력해주세요.");
     }
     
+    @Test
+    @DisplayName("베팅 금액을 더한다.")
+    void add() {
+        Bet bet1 = new Bet(1000);
+        Bet bet2 = new Bet(2000);
+        Assertions.assertThat(bet1.add(bet2)).isEqualTo(new Bet(3000));
+    }
 }

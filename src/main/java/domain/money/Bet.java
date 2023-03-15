@@ -27,6 +27,10 @@ public class Bet {
         }
     }
     
+    public Bet add(final Bet bet) {
+        return new Bet(this.bet + bet.bet);
+    }
+    
     public int getBet() {
         return this.bet;
     }
@@ -48,4 +52,5 @@ public class Bet {
         final Bet bet1 = (Bet) o;
         return this.bet == bet1.bet;
     }
+    
 }
