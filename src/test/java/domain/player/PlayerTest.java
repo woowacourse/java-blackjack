@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static domain.card.CardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -22,6 +24,11 @@ class PlayerTest {
         @Override
         public boolean canHit() {
             return false;
+        }
+
+        @Override
+        public List<Card> faceUpFirstDeal() {
+            return null;
         }
     };
 
@@ -39,16 +46,21 @@ class PlayerTest {
             public boolean canHit() {
                 return false;
             }
+
+            @Override
+            public List<Card> faceUpFirstDeal() {
+                return null;
+            }
         });
     }
 
     @Test
     void 카드를_추가할_수_있다() {
         // when
-        final int beforeSize = player.cardArea().cards().size();
+        final int beforeSize = player.hand().cards().size();
         player.hit(new Card(CardShape.SPADE, TEN));
 
         // then
-        assertThat(player.cardArea.cards()).hasSize(beforeSize + 1);
+        assertThat(player.hand.cards()).hasSize(beforeSize + 1);
     }
 }

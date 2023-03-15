@@ -8,7 +8,7 @@ public class Score {
 
     private static final Score UPPER_LIMIT_SCORE = new Score(21);
 
-    private static final Score REMAIN_SCORE_ACE = new Score(10);
+    private static final Score SOFT_HAND_SCORE = new Score(10);
 
     private final int value;
 
@@ -36,11 +36,11 @@ public class Score {
         return value > other.value;
     }
 
-    public Score plusTenIfNotBurst() {
-        final Score plusScore = this.plus(REMAIN_SCORE_ACE);
+    public Score plusSoftHand() {
+        final Score plusScore = this.plus(SOFT_HAND_SCORE);
 
         if (plusScore.isLessEqualThan(UPPER_LIMIT_SCORE)) {
-            return this.plus(REMAIN_SCORE_ACE);
+            return this.plus(SOFT_HAND_SCORE);
         }
 
         return this;
@@ -48,6 +48,14 @@ public class Score {
 
     public Score plus(Score other) {
         return new Score(value + other.value);
+    }
+
+    public boolean isSumTwentyOne() {
+        return this.equals(UPPER_LIMIT_SCORE);
+    }
+
+    public boolean isSame(final Score other) {
+        return this.equals(other);
     }
 
     @Override

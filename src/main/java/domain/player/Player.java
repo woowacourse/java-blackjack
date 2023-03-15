@@ -1,38 +1,54 @@
 package domain.player;
 
 import domain.Score;
-import domain.area.CardArea;
 import domain.card.Card;
+import domain.hand.Hand;
+
+import java.util.List;
 
 public abstract class Player {
 
-    protected final CardArea cardArea;
+    protected final Hand hand;
     private final Name name;
 
     protected Player(final Name name) {
         this.name = name;
-        cardArea = new CardArea();
+        hand = new Hand();
     }
 
     public Name name() {
         return name;
     }
 
-    public CardArea cardArea() {
-        return cardArea;
+    public Hand hand() {
+        return hand;
     }
 
     public boolean isBust() {
-        return cardArea.isBust();
+        return hand.isBust();
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
     }
 
     public void hit(final Card card) {
-        cardArea.addCard(card);
+        hand.addCard(card);
     }
 
     public abstract boolean canHit();
 
     public Score score() {
-        return cardArea.calculate();
+        return hand.calculate();
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
+    public abstract List<Card> faceUpFirstDeal();
 }

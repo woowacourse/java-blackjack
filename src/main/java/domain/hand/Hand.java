@@ -1,4 +1,4 @@
-package domain.area;
+package domain.hand;
 
 import domain.Score;
 import domain.card.Card;
@@ -6,7 +6,7 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardArea {
+public class Hand {
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -21,8 +21,8 @@ public class CardArea {
     public Score calculate() {
         Score score = score();
 
-        if (hasAce()) {
-            score = score.plusTenIfNotBurst();
+        if (isSoftHand()) {
+            return score.plusSoftHand();
         }
 
         return score;
@@ -35,7 +35,7 @@ public class CardArea {
 
     }
 
-    private boolean hasAce() {
+    private boolean isSoftHand() {
         return cards.stream()
                     .anyMatch(card -> card.cardValue().isAce());
     }
@@ -48,7 +48,15 @@ public class CardArea {
         return calculate().isBust();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculate().isSumTwentyOne();
+    }
+
     public Card firstCard() {
         return cards.get(0);
+    }
+
+    public Card secondCard() {
+        return cards.get(1);
     }
 }

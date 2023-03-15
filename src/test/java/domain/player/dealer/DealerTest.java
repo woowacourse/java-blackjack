@@ -2,15 +2,17 @@ package domain.player.dealer;
 
 import domain.card.Card;
 import domain.card.CardShape;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.SIX;
 import static domain.card.CardValue.TEN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,15 +46,17 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("faceUpFirstCard() : 딜러는 첫 번째 카드만을 보여줍니다.")
-    void test_faceUpFirstCard() throws Exception {
-        //given
+    @DisplayName("faceUpFirstDeal() : 딜러는 처음 받은 카드 중 첫 번재 카드만 보여줘야한다.")
+    void test_faceUpFirstDeal() throws Exception {
+        // given
         final Dealer dealer = new Dealer();
-
         dealer.hit(new Card(CardShape.CLOVER, TEN));
         dealer.hit(new Card(CardShape.CLOVER, SEVEN));
 
-        // when & then
-        assertEquals(dealer.faceUpFirstCard(), new Card(CardShape.CLOVER, TEN));
+        // when
+        final List<Card> cards = dealer.faceUpFirstDeal();
+
+        // then
+        Assertions.assertThat(cards).containsExactly(new Card(CardShape.CLOVER, TEN));
     }
 }

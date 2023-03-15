@@ -5,6 +5,8 @@ import domain.card.Card;
 import domain.player.Name;
 import domain.player.Player;
 
+import java.util.List;
+
 public class Dealer extends Player {
 
     private static final int DEALER_LIMIT_SCORE = 16;
@@ -19,7 +21,8 @@ public class Dealer extends Player {
         return score().isLessEqualThan(new Score(DEALER_LIMIT_SCORE));
     }
 
-    public Card faceUpFirstCard() {
-        return cardArea.firstCard();
+    @Override
+    public List<Card> faceUpFirstDeal() {
+        return List.of(hand.firstCard());
     }
 }

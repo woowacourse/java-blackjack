@@ -1,5 +1,6 @@
 package view;
 
+import domain.player.Name;
 import domain.player.participant.Participant;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class InputView {
                      .collect(Collectors.toList());
     }
 
-    public static String readMoreCard(final Participant participant) {
+    public static boolean readMoreCard(final Participant participant) {
         System.out.println(participant.name().value() + "는 한장의 카드를 더 받으시겠습니다?(예는 y, 아니오는 n)");
 
         final String input = scanner.nextLine();
@@ -33,7 +34,7 @@ public class InputView {
             return readMoreCard(participant);
         }
 
-        return input;
+        return input.equals(YES_COMMAND);
     }
 
     private static boolean validateIneligibleCommand(final String input) {
@@ -49,5 +50,11 @@ public class InputView {
 
     private static boolean ineligibleCommand(final String input) {
         return !input.equals(YES_COMMAND) && !input.equals(NO_COMMAND);
+    }
+
+    public static int readBettingMoney(final Name name) {
+        System.out.println(name.value() + "의 배팅 금액은?");
+
+        return Integer.parseInt(scanner.nextLine());
     }
 }
