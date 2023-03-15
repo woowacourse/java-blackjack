@@ -35,7 +35,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 동시에 블랙잭이면 플레이어가 승리한다.")
+    @DisplayName("딜러와 플레이어가 동시에 블랙잭이면 무승부이다.")
     void matchGame_DealerAndPlayerBust() {
         // given
         Dealer dealer = new Dealer();
@@ -51,7 +51,7 @@ class PlayerTest {
 
         // then
         assertThat(gameResult)
-                .isEqualTo(GameResult.WIN);
+                .isEqualTo(GameResult.DRAW);
 
     }
 

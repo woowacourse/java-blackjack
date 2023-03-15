@@ -40,7 +40,7 @@ public class Player extends Person {
             return GameResult.WIN;
         }
         if (dealer.isBlackjack() && this.isBlackjack()) {
-            return GameResult.WIN;
+            return GameResult.DRAW;
         }
         if (isBlackjack()) {
             return GameResult.BLACKJACK;
