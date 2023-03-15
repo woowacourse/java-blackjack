@@ -30,4 +30,14 @@ class ProfitTest {
         Profit calculatedProfit2 = Profit.create(bet, GameStatus.WIN);
         Assertions.assertThat(calculatedProfit.add(calculatedProfit2).getProfit()).isEqualTo(2000);
     }
+    
+    @Test
+    @DisplayName("수익 부호 반전 테스트")
+    void addProfit2() {
+        Bet bet = new Bet(1000);
+        Profit calculatedProfit = Profit.create(bet, GameStatus.WIN);
+        Profit newProfit = calculatedProfit.negate();
+        Assertions.assertThat(newProfit.getProfit()).isEqualTo(-1000);
+    }
+    
 }
