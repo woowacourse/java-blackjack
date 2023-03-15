@@ -35,9 +35,9 @@ public class Cards {
     }
 
 
-    public List<String> getCardsSymbolAndPattern() {
+    public List<String> getCardsValueAndPattern() {
         return cards.stream()
-            .map(Card::getCardSymbolAndPattern)
+            .map(Card::getCardValueAndPattern)
             .collect(Collectors.toList());
     }
 

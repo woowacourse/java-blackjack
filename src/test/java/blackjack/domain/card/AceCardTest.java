@@ -16,11 +16,11 @@ class AceCardTest {
     }
 
     @Test
-    void getCardSymbolAndPattern() {
+    void getCardValueAndPattern() {
         Pattern pattern = Pattern.SPADE;
-        String symbol = "A";
+        String value = "A";
         AceCard aceCard = new AceCard(pattern);
 
-        Assertions.assertThat(aceCard.getCardSymbolAndPattern()).isEqualTo(symbol + pattern.getName());
+        Assertions.assertThat(aceCard.getCardValueAndPattern()).isEqualTo(value + pattern.getName());
     }
 }

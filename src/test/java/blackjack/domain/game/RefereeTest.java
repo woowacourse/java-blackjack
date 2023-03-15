@@ -35,9 +35,9 @@ class RefereeTest {
         return players;
     }
 
-    private void hit(Participant participant, List<String> symbols) {
-        for (String symbol : symbols) {
-            participant.hit(new StandardCard(Pattern.CLUB, symbol));
+    private void hit(Participant participant, List<String> values) {
+        for (String value : values) {
+            participant.hit(new StandardCard(Pattern.CLUB, value));
         }
     }
 

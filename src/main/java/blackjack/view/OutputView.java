@@ -22,7 +22,7 @@ public class OutputView {
         final String dealerName = dealer.getName().getValue();
         
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
-        System.out.println(String.format("%s: %s", dealerName, dealer.getCards().getCardsSymbolAndPattern().get(0)));
+        System.out.println(String.format("%s: %s", dealerName, dealer.getCards().getCardsValueAndPattern().get(0)));
         printPlayersCards(players, playerNames);
         System.out.println();
     }
@@ -42,13 +42,13 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        final String cards = String.join(DELIMITER, player.getCards().getCardsSymbolAndPattern());
+        final String cards = String.join(DELIMITER, player.getCards().getCardsValueAndPattern());
 
         System.out.println(String.format("%s카드 %s", player.getName().getValue(), cards));
     }
 
     public static void printPlayerCards(Player player, int rawScore) {
-        List<String> cards = player.getCards().getCardsSymbolAndPattern();
+        List<String> cards = player.getCards().getCardsValueAndPattern();
 
         System.out.println(formatFinalCardsAndScore(player, cards, convertToBurst(rawScore)));
     }
@@ -61,7 +61,7 @@ public class OutputView {
     public static void printFinalCardsAndScore(Participant dealer, Players players) {
         System.out.println();
         final List<String> playerNames = getPlayerNames(players);
-        final List<String> dealerCards = dealer.getCards().getCardsSymbolAndPattern();
+        final List<String> dealerCards = dealer.getCards().getCardsValueAndPattern();
 
         String dealerScore = convertToBurst(dealer.calculateScore());
         System.out.println(formatFinalCardsAndScore(dealer, dealerCards, dealerScore));

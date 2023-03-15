@@ -5,15 +5,15 @@ import java.util.Objects;
 abstract public class Card {
 
     protected final Pattern pattern;
-    protected final String symbol;
+    protected final String value;
 
-    public Card(Pattern pattern, String symbol) {
-        validateSymbol(symbol);
+    public Card(Pattern pattern, String value) {
+        validateValue(value);
         this.pattern = pattern;
-        this.symbol = symbol;
+        this.value = value;
     }
 
-    protected void validateSymbol(String symbol) {}
+    protected void validateValue(String value) {}
 
     public abstract int getValue();
 
@@ -26,15 +26,15 @@ abstract public class Card {
             return false;
         }
         Card card = (Card) o;
-        return pattern == card.pattern && Objects.equals(symbol, card.symbol);
+        return pattern == card.pattern && Objects.equals(value, card.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pattern, symbol);
+        return Objects.hash(pattern, value);
     }
 
-    public String getCardSymbolAndPattern() {
-        return symbol + pattern.getName();
+    public String getCardValueAndPattern() {
+        return value + pattern.getName();
     }
 }

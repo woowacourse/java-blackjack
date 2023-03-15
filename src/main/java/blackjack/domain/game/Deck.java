@@ -9,7 +9,7 @@ public class Deck {
 
     private static final int STANDARD_LOWER_BOUNDARY = 2;
     private static final int STANDARD_UPPER_BOUNDARY = 10;
-    private static final List<String> COURT_SYMBOLS = List.of("J", "Q", "K");
+    private static final List<String> COURT_VALUES = List.of("J", "Q", "K");
 
     private List<Card> cards = new ArrayList<>();
 
@@ -29,8 +29,8 @@ public class Deck {
     }
 
     private void addCourtCard(Pattern pattern) {
-        for (String courtSymbol : COURT_SYMBOLS) {
-            cards.add(new CourtCard(pattern, courtSymbol));
+        for (String courtValue : COURT_VALUES) {
+            cards.add(new CourtCard(pattern, courtValue));
         }
     }
 
