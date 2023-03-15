@@ -10,7 +10,7 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hand.add(card);
     }
 

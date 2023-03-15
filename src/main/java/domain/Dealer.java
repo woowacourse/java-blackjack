@@ -11,8 +11,8 @@ public class Dealer extends Participant {
         return SHOULD_DRAW_SCORE_UPPER_BOUND_EXCLUSIVE > hand.calculateScore();
     }
 
-    public Map<String, GameOutcome> battleWith(Players players) {
-        return players.computeWinLoss(score());
+    public Map<String, Integer> calculateEarnings(final Players players) {
+        return players.computePlayerEarnings(hand);
     }
 
     @Override

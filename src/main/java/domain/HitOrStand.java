@@ -10,11 +10,11 @@ public enum HitOrStand {
 
     private final String command;
 
-    HitOrStand(String command) {
+    HitOrStand(final String command) {
         this.command = command;
     }
 
-    public static HitOrStand from(String command) {
+    public static HitOrStand from(final String command) {
         return Arrays.stream(HitOrStand.values())
                      .filter(decision -> Objects.equals(decision.command, command))
                      .findAny()

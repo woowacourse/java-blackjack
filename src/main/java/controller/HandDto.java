@@ -9,11 +9,11 @@ public class HandDto {
     private final String name;
     private final List<String> cards;
 
-    public HandDto(Participant participant) {
+    public HandDto(final Participant participant) {
         this.name = participant.name();
         this.cards = participant.getHand()
                                 .stream()
-                                .map(card -> String.join("", String.valueOf(card.score()), card.suit()))
+                                .map(card -> String.join("", card.symbol(), card.suit()))
                                 .collect(Collectors.toUnmodifiableList());
     }
 

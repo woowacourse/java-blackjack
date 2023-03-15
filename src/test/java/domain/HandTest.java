@@ -45,4 +45,34 @@ class HandTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
+
+    @Nested
+    class 점수가특정상태인지확인 {
+        @Test
+        void should_블랙잭이다_when_ace와10점을가질때만() {
+            // given
+            final Hand hand = new Hand();
+
+            // when
+            hand.add(Card.of(Suit.SPADE, Number.KING));
+            hand.add(Card.of(Suit.SPADE, Number.ACE));
+
+            // then
+            assertThat(hand.isBlackjack()).isTrue();
+        }
+
+        @Test
+        void should_버스트이다_when_점수가21점초과일때만() {
+            // given
+            final Hand hand = new Hand();
+
+            // when
+            hand.add(Card.of(Suit.SPADE, Number.JACK));
+            hand.add(Card.of(Suit.SPADE, Number.KING));
+            hand.add(Card.of(Suit.SPADE, Number.TWO));
+
+            // then
+            assertThat(hand.isBust()).isTrue();
+        }
+    }
 }

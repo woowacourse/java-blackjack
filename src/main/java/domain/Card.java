@@ -10,16 +10,16 @@ public class Card {
     private final Suit suit;
     private final Number number;
 
-    private Card(Suit suit, Number number) {
+    private Card(final Suit suit, final Number number) {
         this.suit = suit;
         this.number = number;
     }
 
-    public static Card of(Suit suit, Number number) {
+    public static Card of(final Suit suit, final Number number) {
         return CACHE.computeIfAbsent(toKey(suit, number), ignored -> new Card(suit, number));
     }
 
-    private static Integer toKey(Suit suit, Number number) {
+    private static Integer toKey(final Suit suit, final Number number) {
         return Objects.hash(suit, number);
     }
 
@@ -31,19 +31,23 @@ public class Card {
         return number.score();
     }
 
+    public String symbol() {
+        return number.symbol();
+    }
+
     public String suit() {
         return suit.value();
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        final Card card = (Card) o;
         return suit == card.suit && number == card.number;
     }
 
