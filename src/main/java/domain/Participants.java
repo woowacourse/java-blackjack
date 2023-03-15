@@ -3,11 +3,11 @@ package domain;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.NoSuchElementException;
 
-public class Participants {
+public class Participants implements Iterable<Player> {
 
     private final Dealer dealer;
     private final Players players;
@@ -32,22 +32,6 @@ public class Participants {
         cards.forEach(player::addCard);
     }
 
-    public void drawCardForPlayers(Function<Player, Boolean> playerInput, Consumer<Player> completeAction) {
-        players.getPlayers().forEach(player -> drawCardForPlayer(player, playerInput, completeAction));
-    }
-
-    private void drawCardForPlayer(Player player, Function<Player, Boolean> playerInput,
-                                   Consumer<Player> completeAction) {
-        boolean whetherDrawCard = false;
-        while (player.canAdd() && (whetherDrawCard = playerInput.apply(player))) {
-            player.addCard(dealer.drawCard());
-            completeAction.accept(player);
-        }
-        if (!whetherDrawCard) {
-            completeAction.accept(player);
-        }
-    }
-
     public Dealer getDealer() {
         return this.dealer;
     }
@@ -67,4 +51,36 @@ public class Participants {
     public PlayerRevenues getPlayerRevenues() {
         return this.dealer.getPlayerRevenues();
     }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return new Iterator<>() {
+            private int index = 0;
+            private final Players players = Participants.this.players;
+
+            @Override
+            public boolean hasNext() {
+                while (index < players.getPlayers().size() && stopPlayer(players.getPlayers().get(index))) {
+                    index++;
+                }
+                return index < players.getPlayers().size();
+            }
+
+            private boolean stopPlayer(Player player) {
+                return player.isBust() || player.isBlackjack();
+            }
+
+            @Override
+            public Player next() {
+                if (hasNext()) {
+                    Player player = players.getPlayers().get(index);
+                    index++;
+                    return player;
+                }
+                throw new NoSuchElementException("더 이상 원소가 없습니다.");
+            }
+        };
+    }
+
+
 }
