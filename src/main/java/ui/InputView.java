@@ -15,20 +15,22 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static boolean readWhetherDrawCardOrNot(Player player) {
-        String input = null;
-        do {
+        try {
             System.out.println(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-            input = SCANNER.nextLine();
-        } while (!validateIntentionInput(input));
-        return HIT.equals(input);
+            String input = SCANNER.nextLine();
+            validateIntentionInput(input);
+            return HIT.equals(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readWhetherDrawCardOrNot(player);
+        }
     }
 
-    private static boolean validateIntentionInput(String input) {
+    private static void validateIntentionInput(String input) {
         if (HIT.equals(input) || STAND.equals(input)) {
-            return true;
+            return;
         }
-        System.out.println("y또는 n으로 입력해주세요");
-        return false;
+        throw new IllegalArgumentException("y또는 n으로 입력해주세요");
     }
 
     private static List<Name> readPlayerNames() {
