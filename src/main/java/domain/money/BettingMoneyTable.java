@@ -22,11 +22,7 @@ public class BettingMoneyTable {
     }
 
     public static BettingMoneyTable of(Players players, BettingMonies bettingMonies) {
-        Map<Player, Money> bettingMoneyTable = new HashMap<>();
-        for (int i = 0; i < bettingMonies.size(); i++) {
-            bettingMoneyTable.put(players.get(i), bettingMonies.get(i));
-        }
-        return new BettingMoneyTable(bettingMoneyTable);
+        return of(players.getPlayers(), bettingMonies);
     }
 
     public Money findByPlayer(Player player) {
