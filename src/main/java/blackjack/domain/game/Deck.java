@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Deck {
 
-    private static final int MIN_INCLUSIVE = 2;
-    private static final int MAX_INCLUSIVE = 10;
+    private static final int STANDARD_LOWER_BOUNDARY = 2;
+    private static final int STANDARD_UPPER_BOUNDARY = 10;
     private static final List<String> COURT_SYMBOLS = List.of("J", "Q", "K");
 
     private List<Card> cards = new ArrayList<>();
@@ -35,8 +35,8 @@ public class Deck {
     }
 
     private void addStandardCard(Pattern pattern) {
-        for (int symbol = MIN_INCLUSIVE; symbol <= MAX_INCLUSIVE; symbol++) {
-            cards.add(new StandardCard(pattern, String.valueOf(symbol)));
+        for (int value = STANDARD_LOWER_BOUNDARY; value <= STANDARD_UPPER_BOUNDARY; value++) {
+            cards.add(new StandardCard(pattern, String.valueOf(value)));
         }
     }
 
