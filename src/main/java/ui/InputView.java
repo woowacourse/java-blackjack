@@ -1,54 +1,18 @@
 package ui;
 
+import domain.BettingAmount;
+import domain.Name;
 import domain.user.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import ui.dto.InputPlayerDTO;
 
 public class InputView {
     private static final String HIT = "y";
     private static final String STAND = "n";
     private static final Scanner SCANNER = new Scanner(System.in);
-
-    public static List<InputPlayerDTO> readPlayersInput() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        List<String> names = Arrays.stream(SCANNER.nextLine().split(",")).collect(Collectors.toList());
-        List<InputPlayerDTO> inputPlayerDTOs = new ArrayList<>();
-        for (String name : names) {
-            inputPlayerDTOs.add(new InputPlayerDTO(name, readBettingAmount(name)));
-        }
-        return inputPlayerDTOs;
-    }
-
-    private static Integer readBettingAmount(String name) {
-        String input = null;
-        do {
-            System.out.println("\n" + name + "의 베팅 금액은?");
-            input = SCANNER.nextLine();
-        } while (validateInputBetting(input));
-        return Integer.parseInt(input);
-    }
-
-    private static boolean validateInputBetting(String input) {
-        try {
-            int amount = Integer.parseInt(input);
-            validationMinusAmount(amount);
-            new InputPlayerDTO("name", amount);
-            return false;
-        } catch (Exception e) {
-            System.out.println("베팅 금액은 정수로 입력해야 합니다.");
-            return true;
-        }
-    }
-
-    private static void validationMinusAmount(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("베팅 금액은 정수여야 합니다.");
-        }
-    }
 
     public static boolean readWhetherDrawCardOrNot(Player player) {
         String input = null;
@@ -65,5 +29,36 @@ public class InputView {
         }
         System.out.println("y또는 n으로 입력해주세요");
         return false;
+    }
+
+    private static List<Name> readPlayerNames() {
+        try {
+            System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+            List<String> names = Arrays.stream(SCANNER.nextLine().split(",")).collect(Collectors.toList());
+            return names.stream().map(Name::new).collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readPlayerNames();
+        }
+    }
+
+    public static List<Player> readPlayers() {
+        List<Name> names = readPlayerNames();
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            String nameValue = name.getValue();
+            players.add(new Player(nameValue, readBettingAmount(nameValue)));
+        }
+        return players;
+    }
+
+    private static int readBettingAmount(String name) {
+        try {
+            System.out.println("\n" + name + "의 베팅 금액은?");
+            return new BettingAmount(Integer.parseInt(SCANNER.nextLine())).getBettingAmount();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readBettingAmount(name);
+        }
     }
 }

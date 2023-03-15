@@ -3,22 +3,16 @@ package controller;
 import domain.Participants;
 import domain.user.Player;
 import java.util.List;
-import java.util.stream.Collectors;
 import ui.InputView;
 import ui.OutputView;
-import ui.dto.InputPlayerDTO;
 
 public class BlackjackController {
 
     private final Participants participants;
 
     public BlackjackController() {
-        List<InputPlayerDTO> playerDTOs = InputView.readPlayersInput();
-        this.participants = new Participants(playerDTOs.stream()
-                .map(inputPlayerDTO ->
-                        new Player(inputPlayerDTO.getName(),
-                                inputPlayerDTO.getBettingAmount()))
-                .collect(Collectors.toList()));
+        List<Player> players = InputView.readPlayers();
+        this.participants = new Participants(players);
     }
 
     public void run() {
