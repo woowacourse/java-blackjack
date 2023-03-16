@@ -60,15 +60,15 @@ public class BlackjackController {
 
     private void initParticipantsHand(Deck deck, Participants participants) {
         OutputView.printStartMessage(participants.getPlayers().stream()
-                .map(player -> new ParticipantDto(player))
+                .map(player -> ParticipantDto.from(player))
                 .collect(Collectors.toList()));
 
         participants.initHand(deck);
 
-        OutputView.printDealerCard(new ParticipantDto(participants.getDealer()));
+        OutputView.printDealerCard(ParticipantDto.from(participants.getDealer()));
         OutputView.printPlayersCard(participants.getPlayers().stream()
-                        .map(player -> new ParticipantDto(player))
-                        .collect(Collectors.toList()));
+                .map(player -> ParticipantDto.from(player))
+                .collect(Collectors.toList()));
     }
 
     public void runPlayersTurn(Deck deck, Participants participants) {
@@ -82,7 +82,7 @@ public class BlackjackController {
     private void runPlayerTurn(Deck deck, Player player) {
         while (!player.isBust() && isCommandHit(player)) {
             player.addCard(deck.pollAvailableCard());
-            ParticipantDto playerDto = new ParticipantDto(player);
+            ParticipantDto playerDto = ParticipantDto.from(player);
             OutputView.printPlayerCard(playerDto);
         }
     }
@@ -105,14 +105,15 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-        ParticipantDto dealerDto = new ParticipantDto(participants.getDealer());
+        ParticipantDto dealerDto = ParticipantDto.from(participants.getDealer());
         List<ParticipantDto> playerDtos = participants.getPlayers().stream()
-                .map(player -> new ParticipantDto(player))
+                .map(player -> ParticipantDto.from(player))
                 .collect(Collectors.toList());
 
         OutputView.printAllHands(dealerDto, playerDtos);
 
-        ResultDto resultDto = new ResultDto(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
+        ResultDto resultDto = ResultDto.of(participants.getPlayerBettingResult(),
+                participants.getDealerBettingResult());
         OutputView.printBettingResult(resultDto);
     }
 }

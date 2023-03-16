@@ -22,19 +22,24 @@ public class ParticipantDto {
     private final List<String> cards;
     private final int score;
 
-    public ParticipantDto(Participant participant) {
+    private ParticipantDto(Participant participant, List<String> cards) {
         this.name = participant.getName();
-        this.cards = participant.getCards().stream()
-                .map(card -> makeCardView(card))
-                .collect(Collectors.toList());
+        this.cards = cards;
         this.score = participant.calculateScore();
     }
 
-    private String makeCardView(Card card) {
+    public static ParticipantDto from (Participant participant){
+        List<String> cards = participant.getCards().stream()
+                .map(card -> makeCardView(card))
+                .collect(Collectors.toList());
+        return new ParticipantDto(participant, cards);
+    }
+
+    private static String makeCardView(Card card) {
         return makeDenominationView(card.getDenomination()) + makeSuitView(card.getSuit());
     }
 
-    private String makeSuitView(Suit suit) {
+    private static String makeSuitView(Suit suit) {
         if (Suit.DIAMOND.equals(suit)) {
             return DIAMOND;
         }
@@ -48,7 +53,7 @@ public class ParticipantDto {
         return CLUB;
     }
 
-    private String makeDenominationView(Denomination denomination) {
+    private static String makeDenominationView(Denomination denomination) {
         if (Denomination.ACE.equals(denomination)) {
             return ACE;
         }
