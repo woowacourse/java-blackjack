@@ -10,12 +10,8 @@ public final class OutputView {
     private static final String RESULT_FORMAT = ": ";
     private static final String RESULT_TAG = "## 최종 수익";
     private static final String DELIMITER = ", ";
-    private static final String BLACKJACK = "블랙잭";
-    private static final String BUST = "버스트";
     private static final String PLAYER_IS_BLACKJACK = "%s는 블랙잭입니다! 축하합니다!🎉\n";
     private static final String PLAYER_IS_BUST = "이런, %s는 버스트!😭\n";
-    private static final int BLACKJACK_HAND_VALUE = -1;
-    private static final int BUST_HAND_VALUE = 0;
 
     public static void printDealFinishMessage(List<String> participantNames, int initHandCount) {
         printEmptyLine();
@@ -36,19 +32,8 @@ public final class OutputView {
 
     public static void printParticipantHandValue(String name, List<String> hand, int handValue) {
         String cards = String.join(DELIMITER, hand);
-        String value = decideValue(handValue);
+        String value = Result.getResultOf(handValue);
         System.out.printf((PARTICIPANT_HAND_SUM), name, cards, value);
-    }
-
-    private static String decideValue(int handValue) {
-        String value = String.valueOf(handValue);
-        if (handValue == BLACKJACK_HAND_VALUE) {
-            value = BLACKJACK;
-        }
-        if (handValue == BUST_HAND_VALUE) {
-            value = BUST;
-        }
-        return value;
     }
 
     public static void printPlayerHasBlackJack(String playerName) {
