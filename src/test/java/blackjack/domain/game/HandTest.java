@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -32,7 +33,7 @@ class HandTest {
         final Deck deck = MockDeck.create(Collections.emptyList());
 
         assertThatThrownBy(() -> new Hand(deck))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test

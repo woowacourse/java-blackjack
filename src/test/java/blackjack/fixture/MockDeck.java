@@ -17,6 +17,6 @@ public class MockDeck extends Deck {
 
     @Override
     public Card draw() {
-        return super.cards.pollFirst();
+        return super.cards.pop();
     }
 }

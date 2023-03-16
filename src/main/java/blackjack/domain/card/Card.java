@@ -15,21 +15,8 @@ public class Card {
         return number;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Card)) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return shape == card.shape && number == card.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(shape, number);
+    public boolean isSame(final Card card) {
+        return this.shape == card.shape && this.number == card.number;
     }
 
     @Override

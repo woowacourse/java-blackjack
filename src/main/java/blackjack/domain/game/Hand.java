@@ -8,7 +8,9 @@ import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.ACE_CONVERT_NUMBER;
@@ -87,8 +89,21 @@ public class Hand {
             throw new IllegalArgumentException("첫 카드는 두 장이어야 합니다.");
         }
 
-        if (new HashSet<>(cards).size() != INITIAL_SIZE) {
+        if (checkAnySameCard(cards)) {
             throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
+    }
+
+    private boolean checkAnySameCard(final List<Card> cards) {
+        final int cardsSize = cards.size();
+        return IntStream.range(0, cardsSize)
+                .anyMatch(currentIndex -> isSameNextCard(cards, currentIndex));
+    }
+
+    private boolean isSameNextCard(final List<Card> cards, final int currentIndex) {
+        final Card currentCard = cards.get(currentIndex);
+        final int cardsSize = cards.size();
+        return IntStream.range(currentIndex + 1, cardsSize)
+                .anyMatch(nextIndex -> currentCard.isSame(cards.get(nextIndex)));
     }
 }
