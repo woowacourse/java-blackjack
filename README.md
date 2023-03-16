@@ -65,7 +65,7 @@
 
 ## 2차 입력
 
-- 각 플레리어의 배팅 금액을 입력받는다.
+- 각 플레이어의 배팅 금액을 입력받는다.
 
 ## 2차 출력
 
@@ -95,8 +95,29 @@ flowchart TD
 
     Dealer & Player == extends ==> Participant
 
-    ParticipantCards --- Card --- CardShape & CardNumber
+    ParticipantCards --- Cards --- Card --- CardShape & CardNumber
 
     BlackJackManager --- Deck & BlackJackParticipants
     BettingPlayers ---Player & Money
+```
+
+```mermaid
+
+flowchart TD
+    InputView & OutputView --> BlackJackController --- BlackJackManager
+    
+    Deck --- Card
+    
+    BlackJackParticipants --- Dealer
+    BlackJackParticipants --- Players --- Player
+    BlackJackParticipants -..-> BlackJackResults --- Name & Money
+
+    Participant --- ParticipantInformation --- Money & Name
+    Participant --- ParticipantCards
+
+    Dealer & Player == extends ==> Participant
+
+    ParticipantCards --- Card --- CardShape & CardNumber
+
+    BlackJackManager --- BlackJackParticipants & Deck
 ```
