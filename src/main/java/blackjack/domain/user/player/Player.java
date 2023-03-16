@@ -1,7 +1,9 @@
-package blackjack.domain.user;
+package blackjack.domain.user.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.card.cardpack.CardPack;
+import blackjack.domain.user.Participant;
+import blackjack.domain.user.Score;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Player {
     }
 
     private void validateName(final String name) {
-        final String candidateName = name.trim();
+        final String candidateName = name.strip();
 
         validateBlank(candidateName);
         validateLength(candidateName);

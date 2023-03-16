@@ -1,10 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.GameResult;
+import blackjack.domain.game.Money;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.player.Player;
+import blackjack.domain.user.player.Players;
+import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
@@ -21,19 +22,21 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final BlackjackGame blackjackGame;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView, final BlackjackGame blackjackGame) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackjackGame = blackjackGame;
     }
 
     public void run() {
         Dealer dealer = new Dealer(DEFAULT_DEALER_NAME);
         Players players = getPlayers();
-        BlackjackGame blackjackGame = new BlackjackGame();
 
-        initDraw(players, dealer, blackjackGame);
-        playerDraw(players, dealer, blackjackGame);
+        initBetting(players);
+        initDraw(players, dealer);
+        playerDraw(players, dealer);
         endGame(players, dealer);
     }
 
@@ -46,7 +49,17 @@ public class BlackjackController {
         });
     }
 
-    private void initDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
+    private void initBetting(final Players players) {
+        for (final Player player : players.getPlayers()) {
+            Money money = repeatInput(() -> {
+                int moneyValue = inputView.readBettingMoney(player.getName());
+                return new Money(moneyValue);
+            });
+            blackjackGame.playerBet(player, money);
+        }
+    }
+
+    private void initDraw(final Players players, final Dealer dealer) {
         blackjackGame.initDraw(dealer, players);
 
         DealerDto dealerDto = new DealerDto(dealer);
@@ -57,15 +70,16 @@ public class BlackjackController {
         outputView.printInitCards(dealerDto, playersDto);
     }
 
-    private void playerDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
-        processDealerDraw(dealer, blackjackGame);
+    private void playerDraw(final Players players, final Dealer dealer) {
+        players.getPlayers().forEach((this::processPlayerDraw));
+        processDealerDraw(dealer);
     }
 
-    private void processPlayerDraw(final BlackjackGame blackjackGame, final Player player) {
+    private void processPlayerDraw(final Player player) {
         while (!player.isBust() && isCommandContinue(player)) {
             blackjackGame.playerDraw(player);
-            outputView.printParticipantCards(player.getName(), player.showCards());
+            List<CardDto> cards = player.showCards().stream().map(CardDto::new).collect(Collectors.toList());
+            outputView.printParticipantCards(player.getName(), cards);
         }
     }
 
@@ -73,7 +87,7 @@ public class BlackjackController {
         return repeatInput(() -> inputView.readCommand(player.getName()));
     }
 
-    private void processDealerDraw(final Dealer dealer, final BlackjackGame blackjackGame) {
+    private void processDealerDraw(final Dealer dealer) {
         while (dealer.isHitAble()) {
             blackjackGame.dealerDraw(dealer);
             outputView.printDealerDraw();
@@ -92,8 +106,8 @@ public class BlackjackController {
     }
 
     private void printResult(final Dealer dealer, final Players players) {
-        Map<String, GameResult> playersResult = players.toResults(dealer);
-        Map<GameResult, Integer> dealerResult = dealer.getResult(players);
+        Map<String, Integer> playersResult = blackjackGame.toPlayerProfit(players, dealer);
+        Integer dealerResult = blackjackGame.toDealerProfit(players, dealer);
         outputView.printGameResult(dealerResult, playersResult);
     }
 

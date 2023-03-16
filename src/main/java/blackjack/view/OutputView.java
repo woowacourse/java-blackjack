@@ -1,10 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.user.Score;
+import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
 
@@ -14,9 +10,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String DEALER_DEFAULT_NAME = "딜러";
-    public static final String DELIMITER_COMMA = ", ";
-    public static final String DELIMITER_COLON = ": ";
+    private static final String DEALER_DEFAULT_NAME = "딜러";
+    private static final String DELIMITER_COMMA = ", ";
+    private static final String DELIMITER_COLON = ": ";
+    private static final int BUST_SCORE = -1;
 
     public void printInitCards(final DealerDto dealer, final List<PlayerDto> players) {
         final List<String> playerNames = extractPlayerNames(players);
@@ -30,26 +27,23 @@ public class OutputView {
         });
     }
 
-    public void printParticipantCards(final String name, final List<Card> cards) {
+    public void printParticipantCards(final String name, final List<CardDto> cards) {
         System.out.println(name + "카드: " + toCardsView(cards));
     }
 
-    private String toCardsView(final List<Card> cards) {
+    private String toCardsView(final List<CardDto> cards) {
         return cards.stream()
                 .map(this::toCardView)
                 .collect(Collectors.joining(DELIMITER_COMMA));
     }
 
-    private String toCardView(final Card card) {
-        final CardNumber number = card.getNumber();
-        final CardShape shape = card.getShape();
-
-        return number.getView() + shape.getView();
+    private String toCardView(final CardDto card) {
+        return card.getNumber() + card.getShape();
     }
 
     public void printDealerCards(final DealerDto dealer) {
-        List<Card> cards = dealer.getCards();
-        Card dealerCard = cards.get(0);
+        List<CardDto> cards = dealer.getCards();
+        CardDto dealerCard = cards.get(0);
         System.out.println(dealer.getName() + "카드: " + toCardView(dealerCard));
     }
 
@@ -70,30 +64,18 @@ public class OutputView {
         System.out.println();
     }
 
-    private String toScoreView(final Score score) {
-        if (score.isBust()) {
+    private String toScoreView(final int score) {
+        if (score == BUST_SCORE) {
             return "BUST!";
         }
-        return String.valueOf(score.getValue());
+        return String.valueOf(score);
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerResult, final Map<String, GameResult> playerScore) {
-        System.out.println("## 최종 승패");
+    public void printGameResult(final Integer dealerMoney, final Map<String, Integer> playerMoney) {
+        System.out.println("## 최종 수익");
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (final GameResult score : dealerResult.keySet()) {
-            final Integer count = dealerResult.get(score);
-            stackResult(stringBuilder, score, count);
-        }
+        System.out.println(DEALER_DEFAULT_NAME + DELIMITER_COLON + dealerMoney);
 
-        System.out.println(DEALER_DEFAULT_NAME + DELIMITER_COLON + stringBuilder);
-
-        playerScore.keySet().forEach(userName -> System.out.println(userName + DELIMITER_COLON + playerScore.get(userName).getView()));
-    }
-
-    private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {
-        if (count != 0) {
-            stringBuilder.append(count).append(score.getView()).append(" ");
-        }
+        playerMoney.keySet().forEach(userName -> System.out.println(userName + DELIMITER_COLON + playerMoney.get(userName)));
     }
 }

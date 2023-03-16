@@ -5,14 +5,20 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private final List<Card> cards;
     private final Score score;
 
-    public Cards() {
+    public Hand() {
         this.cards = new ArrayList<>();
         this.score = new Score();
+    }
+
+    Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+        this.score = new Score();
+        score.calculateScore(this);
     }
 
     public void add(Card card) {

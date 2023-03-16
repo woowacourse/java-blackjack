@@ -1,12 +1,10 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.card.cardpack.CardPack;
 import blackjack.domain.game.GameResult;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer {
 
@@ -19,8 +17,9 @@ public class Dealer {
     }
 
     public GameResult declareGameResult(final int playerScore) {
-        Score score = participant.getScore();
+        Score score = this.getScore();
         int dealerScore = score.getValue();
+
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
@@ -34,22 +33,6 @@ public class Dealer {
 
     public void drawCard(final CardPack cardPack) {
         participant.drawCard(cardPack);
-    }
-
-    public Map<GameResult, Integer> getResult(Players players) {
-        Map<GameResult, Integer> result = new EnumMap<>(GameResult.class);
-        for (final GameResult value : GameResult.values()) {
-            result.put(value, 0);
-        }
-
-        players.getPlayers().forEach(player -> {
-            Score playerScore = player.getScore();
-            GameResult gameResult = declareGameResult(playerScore.getValue());
-            GameResult dealerResult = getDealerResult(gameResult);
-            result.put(dealerResult, result.get(dealerResult) + 1);
-        });
-
-        return result;
     }
 
     private GameResult getDealerResult(final GameResult playerResult) {

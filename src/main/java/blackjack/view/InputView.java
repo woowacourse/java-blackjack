@@ -27,8 +27,13 @@ public class InputView {
                         + "아니오는 " + Command.NO.getCommand() + ")");
 
         final String input = scanner.nextLine();
-        Command command = Command.from(input);
 
-        return command.getCondition();
+        return Command.from(input).getCondition();
+    }
+
+    public int readBettingMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        final String input = scanner.nextLine();
+        return Integer.parseInt(input);
     }
 }

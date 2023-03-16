@@ -15,12 +15,9 @@ public class Score {
 
     private int value;
 
-    public Score() {
-    }
-
-    public void calculateScore(Cards cards) {
-        final List<Card> acePack = getAcePack(cards);
-        int sum = calculateAceSum(getSum(cards), acePack);
+    public void calculateScore(Hand hand) {
+        final List<Card> acePack = getAcePack(hand);
+        int sum = calculateAceSum(getSum(hand), acePack);
 
         if (sum > MAX_NUMBER) {
             sum = BUST_NUMBER;
@@ -29,14 +26,14 @@ public class Score {
         this.value = sum;
     }
 
-    private List<Card> getAcePack(Cards cards) {
-        return cards.getCards().stream()
+    private List<Card> getAcePack(Hand hand) {
+        return hand.getCards().stream()
                 .filter(Card::isAce)
                 .collect(toList());
     }
 
-    private int getSum(Cards cards) {
-        return cards.getCards().stream()
+    private int getSum(Hand hand) {
+        return hand.getCards().stream()
                 .map(Card::getNumber)
                 .mapToInt(CardNumber::getScore)
                 .sum();
