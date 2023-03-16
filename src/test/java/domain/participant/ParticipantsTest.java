@@ -45,7 +45,7 @@ class ParticipantsTest {
     @Test
     void 중복된_이름을_입력하면_예외가_발생한다() {
         //given
-        List<String> names = List.of("도비", "   도비");
+        List<String> names = List.of("도비", "도비");
 
         //when
 
