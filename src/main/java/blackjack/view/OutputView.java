@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     private String getParticipantsList(final Participants participants) {
-        return String.join(COMMA, participants.getNames());
+        return String.join(COMMA, participants.getPlayerNames());
     }
 
     private void printDealerNameAndCard(final Participant dealer, final Card card) {

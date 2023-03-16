@@ -15,20 +15,20 @@ public final class Participants {
 
     private final List<Participant> participants = new ArrayList<>();
 
-    private Participants(final Dealer dealer, final List<String> playerNames) {
-        validate(playerNames);
+    private Participants(final Dealer dealer, final List<String> names) {
+        validate(names);
 
         participants.add(dealer);
-        participants.addAll(makePlayers(playerNames));
+        participants.addAll(makePlayers(names));
     }
 
-    public static Participants of(final Dealer dealer, final List<String> playerNames) {
-        return new Participants(dealer, playerNames);
+    public static Participants of(final Dealer dealer, final List<String> names) {
+        return new Participants(dealer, names);
     }
 
-    private void validate(final List<String> playerNames) {
-        validateEmptyNames(playerNames);
-        validateDuplicateName(playerNames);
+    private void validate(final List<String> names) {
+        validateEmptyNames(names);
+        validateDuplicateName(names);
     }
 
     private void validateEmptyNames(final List<String> names) {
@@ -49,9 +49,10 @@ public final class Participants {
         return uniqueNames.size() != names.size();
     }
 
-    private List<Player> makePlayers(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(name -> Player.of(Name.from(name), new ArrayList<>()))
+    private List<Player> makePlayers(final List<String> names) {
+        return names.stream()
+                .map(Name::from)
+                .map(name -> Player.of(name, new ArrayList<>()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -61,7 +62,7 @@ public final class Participants {
         }
     }
 
-    public List<String> getNames() {
+    public List<String> getPlayerNames() {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());

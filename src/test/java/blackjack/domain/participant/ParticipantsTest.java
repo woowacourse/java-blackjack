@@ -102,6 +102,6 @@ public class ParticipantsTest {
         final List<String> playerNames = List.of("pobi", "crong");
         final Participants participants = Participants.of(dealer, playerNames);
 
-        Assertions.assertThat(participants.getNames()).contains("딜러", "pobi", "crong");
+        Assertions.assertThat(participants.getPlayerNames()).contains("딜러", "pobi", "crong");
     }
 }
