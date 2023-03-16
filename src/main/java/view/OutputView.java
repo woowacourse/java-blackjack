@@ -41,10 +41,17 @@ public class OutputView {
     }
 
     public static void printAllHands(ParticipantDto participantDto, List<ParticipantDto> participantDtos) {
+        printDealerHands(participantDto);
+        printPlayerHands(participantDtos);
+    }
+
+    private static void printDealerHands(final ParticipantDto participantDto) {
         List<String> dealerCards = participantDto.getCards();
         System.out.println(ENTER_LINE + participantDto.getName() + " 카드: " + dealerCards.stream().
                 collect(Collectors.joining(", ")) + " - 결과: " + participantDto.getScore());
+    }
 
+    private static void printPlayerHands(List<ParticipantDto> participantDtos) {
         participantDtos.stream()
                 .map(ParticipantDto -> ParticipantDto.getName() + "카드: " +
                         ParticipantDto.getCards().stream()
