@@ -11,7 +11,6 @@ public class Player {
     private final CardPocket cardPocket;
     private Money bettingMoney;
 
-
     public Player(final User user) {
         this.user = user;
         cardPocket = new CardPocket();

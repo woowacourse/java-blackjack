@@ -14,7 +14,14 @@ public class Score {
     private final int value;
 
     public Score(final int value) {
+        validateScore(value);
         this.value = value;
+    }
+
+    private void validateScore(final int value) {
+        if (value < min.value) {
+            throw new IllegalArgumentException("Score의 점수는 양수만 가능합니다");
+        }
     }
 
     public Score plusTenIfNotBusted() {

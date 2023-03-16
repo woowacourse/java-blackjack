@@ -2,6 +2,8 @@ package blackjack.domain.participants;
 
 public class Money {
 
+    // 돈이 음수가 되는 경우
+    // 베팅 머니는 10원단위여야함.
     private final double amount;
 
     public Money(final double amount) {
