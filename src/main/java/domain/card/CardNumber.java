@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 public enum CardNumber {
     ACE(1, "A"),
@@ -23,7 +23,7 @@ public enum CardNumber {
         this.name = name;
     }
     
-    public int getScore() {
+    public int getNumber() {
         return this.score;
     }
     

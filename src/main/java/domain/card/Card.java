@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 import java.util.Objects;
 
@@ -21,8 +21,8 @@ public class Card {
         return this.shape;
     }
     
-    public int getScore() {
-        return this.number.getScore();
+    public Score getScore() {
+        return new Score(this.number.getNumber());
     }
     
     public boolean isAce() {

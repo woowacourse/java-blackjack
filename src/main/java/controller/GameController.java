@@ -1,33 +1,64 @@
 package controller;
 
-import domain.BlackJackGame.BlackJackAction;
-import domain.BlackJackGame.Game;
-import domain.BlackJackGame.GameResult;
-import domain.BlackJackGame.GameResult.Result;
-import domain.Card.Deck;
-import domain.user.Participants;
+import domain.card.Deck;
+import domain.game.Game;
+import domain.game.GameAction;
+import domain.money.Bet;
+import domain.result.ProfitResult;
+import domain.user.GameMember;
 import domain.user.Playable;
 import domain.user.Player;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import view.InputView;
 import view.OutputView;
+import view.ProfitView;
 
 public class GameController {
     
-    public void run(Deck deck) {
-        deck.shuffle();
-        Game game = new Game(this.readPlayerNamesUntilValid(), deck);
+    public void run() {
+        Game game = new Game(this.generateGameMemberUntilValid(), this.getShuffledDeck());
         this.startGame(game);
         this.runGame(game);
-        this.endGame(game);
+        this.endGameWithProfit(game);
+    }
+    
+    
+    private GameMember generateGameMemberUntilValid() {
+        try {
+            return GameMember.of(InputView.readPlayerNames());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.generateGameMemberUntilValid();
+        }
+    }
+    
+    private Deck getShuffledDeck() {
+        Deck deck = new Deck();
+        deck.shuffle();
+        return deck;
     }
     
     private void startGame(Game game) {
+        this.collectBets(game);
         game.start();
         OutputView.printReadyMessage(game.getParticipants());
         OutputView.printReadyParticipantsNameAndCards(game.getParticipants());
+    }
+    
+    private void collectBets(final Game game) {
+        for (Player player : game.getPlayers()) {
+            player.addBet(this.generateBetUntilValid(player.getName()));
+        }
+    }
+    
+    private Bet generateBetUntilValid(final String name) {
+        try {
+            return new Bet(InputView.readBet(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.generateBetUntilValid(name);
+        }
     }
     
     private void runGame(Game game) {
@@ -39,15 +70,15 @@ public class GameController {
     }
     
     private void loopUntilDealStop(Playable participant, Function<Playable, Boolean> function) {
-        boolean isDealContinued;
-        do {
+        boolean isDealContinued = true;
+        while (participant.isAbleToDraw() && isDealContinued) {
             isDealContinued = function.apply(participant);
-        } while (participant.isAbleToDraw() && isDealContinued);
+        }
     }
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {
-        boolean isHit = this.readAnswerMoreCardUntilValid(player.getName());
-        if (BlackJackAction.of(isHit) == BlackJackAction.HIT) {
+        GameAction action = this.generateGameActionUntilValid(player.getName());
+        if (action.isHit()) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
             return true;
@@ -55,12 +86,12 @@ public class GameController {
         return false;
     }
     
-    private boolean readAnswerMoreCardUntilValid(String name) {
+    private GameAction generateGameActionUntilValid(String name) {
         try {
-            return InputView.readAnswerForMoreCard(name);
+            return GameAction.from(InputView.readAnswerForMoreCard(name));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return this.readAnswerMoreCardUntilValid(name);
+            return this.generateGameActionUntilValid(name);
         }
     }
     
@@ -71,21 +102,11 @@ public class GameController {
     }
     
     
-    private void endGame(Game game) {
-        final Participants participants = game.getParticipants();
-        OutputView.printParticipantsNameCardsAndScore(participants);
-        GameResult gameResult = game.generateGameResult();
-        HashMap<Result, Integer> dealerResult = gameResult.generateDealerResult();
-        OutputView.printDealerGameResult(dealerResult);
-        OutputView.printPlayersGameResult(gameResult.getResultMap());
-    }
-    
-    private String readPlayerNamesUntilValid() {
-        try {
-            return InputView.readPlayerNames();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return this.readPlayerNamesUntilValid();
-        }
+    private void endGameWithProfit(Game game) {
+        OutputView.printParticipantsNameCardsAndScore(game.getParticipants());
+        ProfitResult profitResult = game.generateProfitResult();
+        ProfitView.printProfitResult();
+        ProfitView.printDealerProfitResult(game.getDealer().getName(), profitResult.getDealerProfit());
+        ProfitView.printGameProfit(profitResult.getProfitMap());
     }
 }

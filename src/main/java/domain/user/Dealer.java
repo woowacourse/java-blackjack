@@ -1,14 +1,13 @@
 package domain.user;
 
-import domain.Card.Card;
-import domain.Card.CardCollection;
+import domain.card.Card;
+import domain.card.Hand;
 
 public class Dealer implements Playable {
     
-    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
     public static final int DEALER_DRAWABLE_BOUNDARY = 17;
-    private final String name = "딜러";
-    private CardCollection hand = new CardCollection();
+    private final String name = DEALER_NAME;
+    private Hand hand = new Hand();
     
     @Override
     public void addCard(final Card card) {
@@ -16,15 +15,15 @@ public class Dealer implements Playable {
     }
     
     @Override
-    public CardCollection getReadyCards() {
-        if (this.hand.size() != 2) {
+    public Hand getReadyCards() {
+        if (this.hand.size() != INITIAL_HAND_SIZE) {
             throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
-        return new CardCollection().add(this.hand.get(0));
+        return new Hand().add(this.hand.get(0));
     }
     
     @Override
-    public CardCollection getCards() {
+    public Hand getCards() {
         return this.hand;
     }
     
@@ -34,8 +33,8 @@ public class Dealer implements Playable {
     }
     
     @Override
-    public ParticipantStatus getStatus() {
-        return ParticipantStatus.of(this.hand.calculateScore());
+    public MemberStatus getStatus() {
+        return MemberStatus.of(this.hand.calculateScore(), this.hand.size());
     }
     
     @Override
@@ -51,5 +50,10 @@ public class Dealer implements Playable {
     @Override
     public String getName() {
         return this.name;
+    }
+    
+    
+    public boolean isBlackJack() {
+        return this.getStatus().isBlackJack();
     }
 }

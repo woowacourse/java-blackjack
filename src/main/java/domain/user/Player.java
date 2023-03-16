@@ -1,27 +1,24 @@
 package domain.user;
 
-import domain.Card.Card;
-import domain.Card.CardCollection;
-import java.util.Objects;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.money.Bet;
 
 public class Player implements Playable {
     
-    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
-    public static final String EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있습니다.";
-    public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
-    private final String name;
+    private final PlayerName name;
     
-    private CardCollection hand = new CardCollection();
+    private Bet bet;
+    
+    private Hand hand = new Hand();
     
     public Player(final String name) {
-        this.validateName(name);
-        this.name = name;
+        this.name = new PlayerName(name);
+        this.bet = new Bet(0);
     }
     
-    private void validateName(final String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_NAME_ERROR_MESSAGE);
-        }
+    public void addBet(Bet bet) {
+        this.bet = this.bet.add(bet);
     }
     
     @Override
@@ -30,7 +27,7 @@ public class Player implements Playable {
     }
     
     @Override
-    public CardCollection getReadyCards() {
+    public Hand getReadyCards() {
         if (this.hand.size() != 2) {
             throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
@@ -38,18 +35,18 @@ public class Player implements Playable {
     }
     
     @Override
-    public CardCollection getCards() {
+    public Hand getCards() {
         return this.hand;
     }
     
     @Override
     public boolean isAbleToDraw() {
-        return this.hand.calculateScore() < PLAYER_DRAWABLE_BOUNDARY;
+        return this.hand.calculateScore() < DRAWABLE_BOUNDARY;
     }
     
     @Override
-    public ParticipantStatus getStatus() {
-        return ParticipantStatus.of(this.hand.calculateScore());
+    public MemberStatus getStatus() {
+        return MemberStatus.of(this.hand.calculateScore(), this.hand.size());
     }
     
     @Override
@@ -63,23 +60,14 @@ public class Player implements Playable {
     }
     
     public String getName() {
-        return this.name;
+        return this.name.getValue();
     }
     
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name, this.hand);
+    public boolean isBlackJack() {
+        return this.getStatus().isBlackJack();
     }
     
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-        final Player player = (Player) o;
-        return this.name.equals(player.name) && this.hand.equals(player.hand);
+    public Bet getBet() {
+        return this.bet;
     }
 }
