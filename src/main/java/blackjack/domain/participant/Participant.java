@@ -5,7 +5,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
-public final class Participant {
+public abstract class Participant {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 5;
@@ -26,6 +26,10 @@ public final class Participant {
                             + MAX_NAME_LENGTH + "글자 입니다.");
         }
     }
+
+    public abstract List<Card> showInitCards();
+
+    public abstract boolean canDraw();
 
     public void receiveCard(final Card card) {
         hand = hand.add(card);

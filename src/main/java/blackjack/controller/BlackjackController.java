@@ -3,8 +3,8 @@ package blackjack.controller;
 import blackjack.domain.participant.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.BlackjackParticipant;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Profit;
@@ -57,7 +57,7 @@ public final class BlackjackController {
         printParticipantsInitCards(dealer, players);
     }
 
-    private void distributeInitCards(final Deck deck, final BlackjackParticipant participant) {
+    private void distributeInitCards(final Deck deck, final Participant participant) {
         for (int i = 0; i < NUMBER_OF_SETTING_CARDS; i++) {
             Card drawnCard = deck.drawCard();
             participant.receiveCard(drawnCard);
