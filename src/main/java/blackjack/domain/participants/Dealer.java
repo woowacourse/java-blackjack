@@ -9,13 +9,13 @@ public class Dealer {
 
     private static final int FIRST_CARD_INDEX = 1;
     private static final int DEALER_DRAW_POINT = 16;
-    private final CardPocket cardPocket;
+    private final Hand cardPocket;
 
     public Dealer() {
-        cardPocket = new CardPocket();
+        cardPocket = new Hand();
     }
 
-    public void drawCard(final Card card) {
+    public void drawCard(Card card) {
         cardPocket.addCard(card);
     }
 
@@ -25,7 +25,7 @@ public class Dealer {
     }
 
     public boolean isDrawable() {
-        final Score currentScore = currentScore();
+        Score currentScore = currentScore();
         return currentScore.getValue() <= DEALER_DRAW_POINT;
     }
 
