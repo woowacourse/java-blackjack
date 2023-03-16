@@ -105,14 +105,14 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-        ParticipantDto participantDTO = new ParticipantDto(participants.getDealer());
-        List<ParticipantDto> playerDTOs = participants.getPlayers().stream()
+        ParticipantDto dealerDto = new ParticipantDto(participants.getDealer());
+        List<ParticipantDto> playerDtos = participants.getPlayers().stream()
                 .map(player -> new ParticipantDto(player))
                 .collect(Collectors.toList());
 
-        OutputView.printAllHands(participantDTO, playerDTOs);
+        OutputView.printAllHands(dealerDto, playerDtos);
 
-        ResultDto resultDTO = new ResultDto(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
-        OutputView.printBettingResult(resultDTO);
+        ResultDto resultDto = new ResultDto(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
+        OutputView.printBettingResult(resultDto);
     }
 }
