@@ -1,20 +1,22 @@
 package blackjack.domain.game;
 
+import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
-import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.player.CardDecisionStrategy;
 import blackjack.domain.participant.player.CardDisplayStrategy;
 import blackjack.domain.participant.player.Player;
-import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.domain.participant.player.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
-    public static final int FIRST_DRAW_COUNT = 2;
     private Players players;
     private final Dealer dealer;
     private final Deck deck;
@@ -30,11 +32,12 @@ public class BlackjackGame {
     }
 
     public void supplyCardsToDealer() {
-        dealer.hit(deck.drawCards(FIRST_DRAW_COUNT));
+        dealer.hit(deck.drawCard());
+        dealer.hit(deck.drawCard());
     }
 
     public void supplyCardsToPlayers() {
-        players.takeCard(deck, FIRST_DRAW_COUNT);
+        players.hitFirstCards(deck);
     }
 
     public void supplyAdditionalCardToPlayersBy(CardDecisionStrategy cardDecisionStrategy,
@@ -49,24 +52,31 @@ public class BlackjackGame {
         }
     }
 
+    public List<ParticipantPrizeDto> calculatePrize() {
+        Map<Player, Money> playerMoneyMap = players.calculateEachPrize(dealer);
+        Map<Participant, Money> prize = new LinkedHashMap<>();
+        prize.put(dealer, calculateDealerPrize(playerMoneyMap));
+        prize.putAll(playerMoneyMap);
+
+        return prize.entrySet().stream()
+                .map(ParticipantPrizeDto::of)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private Money calculateDealerPrize(Map<Player, Money> playerMoneyMap) {
+        int sumOfPlayerPrize = playerMoneyMap.values().stream()
+                .mapToInt(Money::getValue)
+                .sum();
+        return new Money(sumOfPlayerPrize)
+                .product(-1);
+    }
+
     public ParticipantResultDto getDealerResult() {
         return ParticipantResultDto.from(dealer);
     }
 
     public List<ParticipantResultDto> getPlayerResults() {
         return players.getPlayerResults();
-    }
-
-    public void calculateWinning() {
-        players.calculateWinning(dealer);
-    }
-
-    public DealerWinningDto getDealerWinningResult() {
-        return DealerWinningDto.from(dealer);
-    }
-
-    public List<PlayerWinningDto> getPlayerWinningResults() {
-        return players.getWinningResults();
     }
 
     public DealerFirstCardDto getDealerFirstOpen() {
@@ -76,4 +86,5 @@ public class BlackjackGame {
     public List<ParticipantCardsDto> getPlayersCards() {
         return players.getPlayerCards();
     }
+
 }

@@ -1,11 +1,16 @@
 package blackjack.domain.participant.player;
 
+import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
+import blackjack.domain.participant.PlayerFinalState;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -38,8 +43,11 @@ public class Players {
         players.forEach(player -> player.hitAdditionalCardFrom(deck, cardDecisionStrategy, cardDisplayStrategy));
     }
 
-    public void takeCard(Deck deck, int size) {
-        players.forEach(player -> player.hit(deck.drawCards(size)));
+    public void hitFirstCards(Deck deck) {
+        players.forEach(player -> {
+            player.hit(deck.drawCard());
+            player.hit(deck.drawCard());
+        });
     }
 
     public List<ParticipantResultDto> getPlayerResults() {
@@ -48,21 +56,22 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void calculateWinning(Dealer dealer) {
-        for (Player player : players) {
-            player.combat(dealer);
-        }
-    }
-
-    public List<PlayerWinningDto> getWinningResults() {
-        return players.stream()
-                .map(PlayerWinningDto::from)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
     public List<ParticipantCardsDto> getPlayerCards() {
         return players.stream()
                 .map(ParticipantCardsDto::from)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Map<Player, Money> calculateEachPrize(Dealer dealer) {
+        Map<Player, Money> playerToPrize = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToPrize.put(player, calculatePrize(player, dealer));
+        }
+        return Collections.unmodifiableMap(playerToPrize);
+    }
+
+    private Money calculatePrize(Player player, Dealer dealer) {
+        double earningRate = PlayerFinalState.getEarningRateOf(player, dealer);
+        return player.getBetAmount().product(earningRate);
     }
 }

@@ -1,44 +1,29 @@
 package blackjack.domain.participant.player;
 
-import static blackjack.controller.AddCardOrNot.NO;
 import static blackjack.domain.participant.dealer.Dealer.DEALER_NAME;
+import static blackjack.domain.participant.player.AddCardOrNot.NO;
 
-import blackjack.controller.AddCardOrNot;
+import blackjack.domain.Money;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 
 public class Player extends Participant {
-    private WinningResult winningResult;
 
-    public Player(Name name) {
+    private final BetAmount betAmount;
+
+    public Player(Name name, BetAmount betAmount) {
         super(name, new Hand());
-        if (name.getValue().equals(DEALER_NAME)){
+        if (name.getValue().equals(DEALER_NAME)) {
             throw new IllegalArgumentException("플레이어의 이름은 '딜러'일 수 없습니다.");
         }
-    }
-
-    public void win() {
-        winningResult = WinningResult.WIN;
-    }
-
-    public void lose() {
-        winningResult = WinningResult.LOSE;
-    }
-
-    public void tie() {
-        winningResult = WinningResult.TIE;
-    }
-
-    public WinningResult getResult() {
-        return winningResult;
+        this.betAmount = betAmount;
     }
 
     public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy,
                                       CardDisplayStrategy cardDisplayStrategy) {
-        while (!isBlackJack() && !isBust()) {
+        while (!isBust()) {
             AddCardOrNot addCardOrNot = cardDecisionStrategy.decide(this);
             if (addCardOrNot.equals(NO)) {
                 break;
@@ -46,5 +31,9 @@ public class Player extends Participant {
             hit(deck.drawCard());
             cardDisplayStrategy.display(this);
         }
+    }
+
+    public Money getBetAmount() {
+        return betAmount.getAmount();
     }
 }

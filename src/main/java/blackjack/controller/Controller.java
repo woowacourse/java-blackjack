@@ -1,14 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.ParticipantPrizeDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
-import blackjack.domain.participant.dealer.DealerWinningDto;
+import blackjack.domain.participant.player.AddCardOrNot;
+import blackjack.domain.participant.player.BetAmount;
 import blackjack.domain.participant.player.Player;
-import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -29,13 +30,14 @@ public class Controller {
         showFirstDraw();
         supplyAdditionalCards();
         showFinalCards();
-        showWinningResult();
+        showPrize();
     }
 
     private void setGame() {
         List<String> names = inputView.readPlayerNames();
         for (String name : names) {
-            blackjackGame.addPlayer(new Player(new Name(name)));
+            int betAmount = inputView.readBetAmount(name);
+            blackjackGame.addPlayer(new Player(new Name(name), new BetAmount(betAmount)));
         }
         blackjackGame.supplyCardsToDealer();
         blackjackGame.supplyCardsToPlayers();
@@ -69,10 +71,8 @@ public class Controller {
         outputView.printFinalResults(dealerResult, playerResults);
     }
 
-    private void showWinningResult() {
-        blackjackGame.calculateWinning();
-        DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
-        List<PlayerWinningDto> playerWinningResults = blackjackGame.getPlayerWinningResults();
-        outputView.printWinningResults(dealerWinningResult, playerWinningResults);
+    private void showPrize() {
+        List<ParticipantPrizeDto> participantsPrize = blackjackGame.calculatePrize();
+        outputView.printFinalPrize(participantsPrize);
     }
 }

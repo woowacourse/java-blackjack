@@ -1,8 +1,9 @@
 package blackjack.blackjacGameTest;
 
-import static blackjack.domain.game.WinningResult.LOSE;
-import static blackjack.domain.game.WinningResult.TIE;
-import static blackjack.domain.game.WinningResult.WIN;
+import static blackjack.Fixtures.BET_AMOUNT_10000;
+import static blackjack.Fixtures.BLACKJACK_CARDS;
+import static blackjack.Fixtures.CARDS_OF_BUST;
+import static blackjack.Fixtures.CARDS_SUM_17;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -11,15 +12,14 @@ import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.WinningResult;
+import blackjack.domain.game.ParticipantPrizeDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.dealer.Dealer;
-import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -44,7 +44,7 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어를 만들고 플레이어즈에 추가할 수 있다")
     void addPlayer() {
-        Player polo = new Player(new Name("폴로"));
+        Player polo = new Player(new Name("폴로"), BET_AMOUNT_10000);
         blackjackGame.addPlayer(polo);
 
         assertThat(blackjackGame).extracting("players")
@@ -63,8 +63,8 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어들에게 카드를 두 장씩 줄 수 있다.")
     void supplyCardsToPlayers() {
-        Player player1 = new Player(new Name("폴로"));
-        Player player2 = new Player(new Name("로지"));
+        Player player1 = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        Player player2 = new Player(new Name("로지"), BET_AMOUNT_10000);
         blackjackGame.addPlayer(player1);
         blackjackGame.addPlayer(player2);
 
@@ -77,15 +77,53 @@ class BlackjackGameTest {
 
     }
 
+    @Test
+    @DisplayName("플레이어와 딜러의 최종 수익을 반환할 수 있다.")
+    void calculatePrize() {
+        //given
+        dealer.hit(CARDS_SUM_17);
+        Player blackjack = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        blackjack.hit(BLACKJACK_CARDS);
+        Player bust = new Player(new Name("로지"), BET_AMOUNT_10000);
+        bust.hit(CARDS_OF_BUST);
+        blackjackGame.addPlayer(blackjack);
+        blackjackGame.addPlayer(bust);
+
+        List<ParticipantPrizeDto> prize = blackjackGame.calculatePrize();
+
+        assertThat(prize.stream().map(ParticipantPrizeDto::getParticipantName)).contains("딜러", "폴로", "로지");
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러의 최종 수익을 반환할 수 있다.")
+    void calculateDealerPriceValueExactly() {
+        //given
+        dealer.hit(CARDS_SUM_17);
+        Player blackjack = new Player(new Name("폴로"), BET_AMOUNT_10000);
+        blackjack.hit(BLACKJACK_CARDS);
+        Player bust = new Player(new Name("로지"), BET_AMOUNT_10000);
+        bust.hit(CARDS_OF_BUST);
+        blackjackGame.addPlayer(blackjack);
+        blackjackGame.addPlayer(bust);
+        //when
+        List<ParticipantPrizeDto> participantsPrize = blackjackGame.calculatePrize();
+        ParticipantPrizeDto dealerPrize = participantsPrize.stream()
+                .filter(dto -> dto.getParticipantName() == "딜러").findFirst().orElseThrow();
+        //then
+        assertThat(dealerPrize.getPrizeAmount()).isEqualTo(-5000);
+    }
+
     @DisplayName("딜러에게 추가 카드를 주는 기능")
     @Nested
     class SupplyAdditionalCardToDealer {
         @Test
         @DisplayName("언더 스코어가 아니면 카드를 주지 않는다.")
         void doesNotSupply() {
-            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.SPADE), new Card(CardNumber.KING, Pattern.HEART)));
+            dealer.hit(
+                    Arrays.asList(new Card(CardNumber.KING, Pattern.SPADE), new Card(CardNumber.KING, Pattern.HEART)));
             int beforeSize = dealer.showCards().size();
-            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {
+            });
             int afterSize = dealer.showCards().size();
 
             assertThat(afterSize).isEqualTo(beforeSize);
@@ -94,30 +132,14 @@ class BlackjackGameTest {
         @Test
         @DisplayName("언더 스코어 이면 카드를 받는다.")
         void supply() {
-            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.HEART), new Card(CardNumber.SIX, Pattern.DIAMOND)));
+            dealer.hit(
+                    Arrays.asList(new Card(CardNumber.KING, Pattern.HEART), new Card(CardNumber.SIX, Pattern.DIAMOND)));
             int beforeSize = dealer.showCards().size();
-            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {
+            });
             int afterSize = dealer.showCards().size();
 
             assertThat(afterSize - beforeSize).isEqualTo(1);
         }
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 결과를 반환할 수 있다.")
-    void getDealerWinningResult() {
-        dealer.win();
-        dealer.win();
-        dealer.lose();
-        dealer.tie();
-
-        DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
-        Name name = dealerWinningResult.getName();
-        Map<WinningResult, Integer> dealerResult = dealerWinningResult.getResultToCount();
-
-        assertThat(name.getValue()).isEqualTo("딜러");
-        assertThat(dealerResult.get(WIN)).isEqualTo(2);
-        assertThat(dealerResult.get(LOSE)).isEqualTo(1);
-        assertThat(dealerResult.get(TIE)).isEqualTo(1);
     }
 }

@@ -1,17 +1,13 @@
 package blackjack.player;
 
-import static blackjack.domain.game.WinningResult.LOSE;
-import static blackjack.domain.game.WinningResult.TIE;
-import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.dealer.Dealer;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +41,7 @@ class DealerTest {
         dealer.hit(card2);
         dealer.hit(card3);
 
-        assertThat(dealer.calculateScore()).isEqualTo(15);
+        assertThat(dealer.calculateScore()).isEqualTo(new Score(15));
     }
 
     @Test
@@ -102,21 +98,5 @@ class DealerTest {
         dealer.hit(card3);
 
         Assertions.assertThat(dealer.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러의 승패 결과를 확인할 수 있다.")
-    void getWinningResult() {
-        Dealer dealer = new Dealer();
-        dealer.win();
-        dealer.win();
-        dealer.lose();
-        dealer.tie();
-
-        Map<WinningResult, Integer> dealerResult = dealer.getDealerResult();
-
-        Assertions.assertThat(dealerResult.get(WIN)).isEqualTo(2);
-        Assertions.assertThat(dealerResult.get(LOSE)).isEqualTo(1);
-        Assertions.assertThat(dealerResult.get(TIE)).isEqualTo(1);
     }
 }

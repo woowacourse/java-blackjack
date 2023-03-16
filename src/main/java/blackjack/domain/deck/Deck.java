@@ -1,8 +1,6 @@
 package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class Deck {
@@ -14,13 +12,5 @@ public class Deck {
 
     public Card drawCard() {
         return cards.pop();
-    }
-
-    public List<Card> drawCards(int size) {
-        List<Card> poppedCards = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            poppedCards.add(cards.pop());
-        }
-        return poppedCards;
     }
 }

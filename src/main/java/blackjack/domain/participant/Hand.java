@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,12 +34,12 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         Score score = Score.of(mapCardsToNumbers());
-        if (containsAce() && score.getValue() > 21) {
-            return score.minus(10).getValue();
+        if (containsAce()) {
+            return score.getValueIncludingAce();
         }
-        return score.getValue();
+        return score;
     }
 
     private int[] mapCardsToNumbers() {
