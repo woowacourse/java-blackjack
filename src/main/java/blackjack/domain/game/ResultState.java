@@ -48,21 +48,22 @@ public enum ResultState implements StateChecker {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
     private static final Score BLACKJACK_SCORE = Score.from(21);
+    private static final String NOT_EXIST_STATE_ERROR_MESSAGE = "승부 결과가 존재하지 않습니다.";
 
-    private final Function<Integer, Betting> moneyFunction;
+    private final Function<Integer, Betting> profitFunction;
 
-    ResultState(final Function<Integer, Betting> moneyFunction) {
-        this.moneyFunction = moneyFunction;
+    ResultState(final Function<Integer, Betting> profitFunction) {
+        this.profitFunction = profitFunction;
     }
 
     public static ResultState getState(final ResultDto player, final ResultDto dealer) {
         return Arrays.stream(ResultState.values())
                 .filter(resultState -> resultState.isState(player, dealer))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("승부 결과가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_STATE_ERROR_MESSAGE));
     }
 
     public Betting calculateProfit(int betting) {
-        return moneyFunction.apply(betting);
+        return profitFunction.apply(betting);
     }
 }
