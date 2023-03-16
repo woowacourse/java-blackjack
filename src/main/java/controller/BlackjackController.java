@@ -3,9 +3,8 @@ package controller;
 import domain.card.Deck;
 import domain.participant.Participants;
 import domain.participant.Player;
-import dto.DealerDTO;
-import dto.PlayerDTO;
-import dto.ResultDTO;
+import dto.ParticipantDto;
+import dto.ResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
@@ -61,14 +60,14 @@ public class BlackjackController {
 
     private void initParticipantsHand(Deck deck, Participants participants) {
         OutputView.printStartMessage(participants.getPlayers().stream()
-                .map(player -> new PlayerDTO(player))
+                .map(player -> new ParticipantDto(player))
                 .collect(Collectors.toList()));
 
         participants.initHand(deck);
 
-        OutputView.printDealerCard(new DealerDTO(participants.getDealer()));
+        OutputView.printDealerCard(new ParticipantDto(participants.getDealer()));
         OutputView.printPlayersCard(participants.getPlayers().stream()
-                        .map(player -> new PlayerDTO(player))
+                        .map(player -> new ParticipantDto(player))
                         .collect(Collectors.toList()));
     }
 
@@ -83,8 +82,8 @@ public class BlackjackController {
     private void runPlayerTurn(Deck deck, Player player) {
         while (!player.isBust() && isCommandHit(player)) {
             player.addCard(deck.pollAvailableCard());
-            PlayerDTO playerDTO = new PlayerDTO(player);
-            OutputView.printPlayerCard(playerDTO);
+            ParticipantDto playerDto = new ParticipantDto(player);
+            OutputView.printPlayerCard(playerDto);
         }
     }
 
@@ -106,14 +105,14 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-        DealerDTO dealerDTO = new DealerDTO(participants.getDealer());
-        List<PlayerDTO> playerDTOs = participants.getPlayers().stream()
-                .map(player -> new PlayerDTO(player))
+        ParticipantDto participantDTO = new ParticipantDto(participants.getDealer());
+        List<ParticipantDto> playerDTOs = participants.getPlayers().stream()
+                .map(player -> new ParticipantDto(player))
                 .collect(Collectors.toList());
 
-        OutputView.printAllHands(dealerDTO, playerDTOs);
+        OutputView.printAllHands(participantDTO, playerDTOs);
 
-        ResultDTO resultDTO = new ResultDTO(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
+        ResultDto resultDTO = new ResultDto(participants.getPlayerBettingResult(), participants.getDealerBettingResult());
         OutputView.printBettingResult(resultDTO);
     }
 }

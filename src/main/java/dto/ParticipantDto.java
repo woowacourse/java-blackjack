@@ -3,12 +3,11 @@ package dto;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.participant.Player;
+import domain.participant.Participant;
 import java.util.List;
 import java.util.stream.Collectors;
-import view.OutputView;
 
-public class PlayerDTO {
+public class ParticipantDto {
     private static final String DIAMOND = "다이아몬드";
     private static final String CLUB = "클로버";
     private static final String SPADE = "스페이드";
@@ -17,17 +16,18 @@ public class PlayerDTO {
     private static final String JACK = "J";
     private static final String QUEEN = "Q";
     private static final String KING = "K";
+    private static final int DEALER_VISIBLE_CARD_INDEX = 0;
 
     private final String name;
     private final List<String> cards;
     private final int score;
 
-    public PlayerDTO(Player player) {
-        this.name = player.getName();
-        this.cards = player.getCards().stream()
+    public ParticipantDto(Participant participant) {
+        this.name = participant.getName();
+        this.cards = participant.getCards().stream()
                 .map(card -> makeCardView(card))
-                .collect(Collectors.toUnmodifiableList());
-        this.score = player.calculateScore();
+                .collect(Collectors.toList());
+        this.score = participant.calculateScore();
     }
 
     private String makeCardView(Card card) {
@@ -73,6 +73,10 @@ public class PlayerDTO {
         return cards;
     }
 
+    public String getDealerFirstCard() {
+        return cards.get(DEALER_VISIBLE_CARD_INDEX);
+    }
+    
     public int getScore() {
         return score;
     }
