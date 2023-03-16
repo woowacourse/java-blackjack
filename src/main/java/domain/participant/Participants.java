@@ -4,9 +4,11 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.result.PlayerGameResult;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -47,12 +49,8 @@ public class Participants {
     }
 
     private static void validateDuplication(List<String> names) {
-        long removedDistinctCount = names.stream()
-                .map(String::trim)
-                .distinct()
-                .count();
-
-        if (removedDistinctCount != names.size()) {
+        Set<String> setNames = new HashSet<>(names);
+        if (setNames.size() != names.size()) {
             throw new IllegalArgumentException(ERROR_DUPLICATED_NAME);
         }
     }
