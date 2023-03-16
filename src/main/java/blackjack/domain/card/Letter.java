@@ -18,8 +18,8 @@ public enum Letter {
     QUEEN("Q", 10),
     KING("K", 10);
 
-
     private static final String INVALID_NAME_ERROR_MESSAGE = "해당 이름을 가지는 글자가 존재하지 않습니다.";
+
     private final String name;
     private final int value;
 

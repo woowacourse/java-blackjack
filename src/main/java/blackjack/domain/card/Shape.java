@@ -10,6 +10,7 @@ public enum Shape {
     CLOVER("클로버");
 
     private static final String INVALID_SHAPE_ERROR_MESSAGE = "해당 이름을 가진 모양이 존재하지 않습니다.";
+
     private final String value;
 
     Shape(final String value) {
