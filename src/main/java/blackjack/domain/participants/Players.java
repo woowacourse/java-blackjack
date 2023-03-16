@@ -21,58 +21,53 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    private Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players from(final List<String> playerNames) {
+    public static Players from(List<String> playerNames) {
         validatePlayerNames(playerNames);
-        final List<Player> players = createPlayers(playerNames);
+        List<Player> players = createPlayers(playerNames);
         return new Players(players);
     }
 
-    private static void validatePlayerNames(final List<String> playerNames) {
+    private static void validatePlayerNames(List<String> playerNames) {
         validateNull(playerNames);
         validatePlayerCount(playerNames);
         validateDuplicate(playerNames);
     }
 
-    private static void validateNull(final List<String> playerNames) {
-        if (playerNames == null) {
-            throw new IllegalArgumentException("사용자 이름이 입력되지 않았습니다");
-        }
+    private static void validateNull(List<String> playerNames) {
+        if (playerNames == null) throw new IllegalArgumentException("사용자 이름이 입력되지 않았습니다");
     }
 
-    private static void validatePlayerCount(final List<String> playerNames) {
-        if (MAX_PLAYER_NUMBER < playerNames.size() || playerNames.size() < MIN_PLAYER_NUMBER) {
+    private static void validatePlayerCount(List<String> playerNames) {
+        if (MAX_PLAYER_NUMBER < playerNames.size() || playerNames.size() < MIN_PLAYER_NUMBER)
             throw new IllegalArgumentException(String.format(OVER_RANGE_MESSAGE, playerNames.size()));
-        }
     }
 
-    private static void validateDuplicate(final List<String> playerNames) {
+    private static void validateDuplicate(List<String> playerNames) {
         if (Set.copyOf(playerNames)
-                .size() != playerNames.size()) {
-            throw new IllegalArgumentException("사용자의 이름이 중복됩니다.");
-        }
+                .size() != playerNames.size()) throw new IllegalArgumentException("사용자의 이름이 중복됩니다.");
     }
 
-    private static List<Player> createPlayers(final List<String> playerNames) {
+    private static List<Player> createPlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map((name) -> new Player(new User(name)))
+                .map((name) -> new Player(name))
                 .collect(Collectors.toList());
     }
 
-    public void placeBetsByName(final String playerName, final Money money) {
+    public void placeBetsByName(String playerName, Money money) {
         players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
-                .bet(money);
+                .bet(new BettingMoney(money));
 
     }
 
-    public void distributeInitialCards(final Deck deck) {
-        for (final Player player : players) {
+    public void distributeInitialCards(Deck deck) {
+        for (Player player : players) {
             player.drawCard(deck.popCard());
             player.drawCard(deck.popCard());
         }
@@ -84,7 +79,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public boolean isPlayerDrawable(final String playerName) {
+    public boolean isPlayerDrawable(String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
@@ -92,8 +87,8 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
     }
 
-    public void drawCardOfPlayerByName(final String playerName, final Card card) {
-        final Player targetPlayer = players.stream()
+    public void drawCardOfPlayerByName(String playerName, Card card) {
+        Player targetPlayer = players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
@@ -101,7 +96,7 @@ public class Players {
         targetPlayer.drawCard(card);
     }
 
-    public List<Card> findCardsOfPlayerByName(final String playerName) {
+    public List<Card> findCardsOfPlayerByName(String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
@@ -118,7 +113,7 @@ public class Players {
                         LinkedHashMap::new));
     }
 
-    public Score findScoreOfPlayerByName(final String playerName) {
+    public Score findScoreOfPlayerByName(String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
@@ -126,11 +121,11 @@ public class Players {
                 .currentScore();
     }
 
-    public Map<String, Money> findRevenueOfPlayers(final ProfitReferee profitReferee) {
-        final Map<String, Money> result = new LinkedHashMap<>();
-        for (final Player player : players) {
-            final double profit = profitReferee.profit(player);
-            final Money earnings = player.getBettingMoney()
+    public Map<String, Money> findRevenueOfPlayers(ProfitReferee profitReferee) {
+        Map<String, Money> result = new LinkedHashMap<>();
+        for (Player player : players) {
+            double profit = profitReferee.profit(player);
+            Money earnings = player.getBettingMoney()
                     .multiple(profit);
             result.put(player.getName(), earnings);
         }

@@ -8,58 +8,61 @@ import java.util.List;
 public class Player {
 
     private final User user;
-    private final CardPocket cardPocket;
-    private Money bettingMoney;
+    private final Hand hand;
+    private final Status status;
+    private BettingMoney bettingMoney;
 
-    public Player(final User user) {
-        this.user = user;
-        cardPocket = new CardPocket();
-        bettingMoney = new Money();
+    Player(String userName) {
+        user = new User(userName);
+        hand = new Hand();
+        status = new Status();
+        bettingMoney = new BettingMoney();
     }
 
-    public void bet(final Money money) {
-        bettingMoney = bettingMoney.add(money);
+    void bet(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
-    public void drawCard(final Card card) {
-        cardPocket.addCard(card);
+    void drawCard(Card card) {
+        hand.addCard(card);
     }
 
-    public boolean isDrawable() {
+    boolean isDrawable() {
         return !isBusted() && !isBlackjack();
     }
 
+
+
+
+
+
     public boolean isBlackjack() {
-        return cardPocket.isBlackjack();
+        return hand.isBlackjack();
     }
 
     public boolean isBusted() {
-        return cardPocket.isBusted();
-    }
-
-    public void hit(final Card card) {
-        cardPocket.addCard(card);
+        return hand.isBusted();
     }
 
     public Score currentScore() {
-        return cardPocket.getScore();
+        return hand.getScore();
     }
 
-    public List<Card> getCards() {
-        return cardPocket.getPossessedCards();
+    List<Card> getCards() {
+        return hand.getPossessedCards();
     }
 
-    public boolean hasName(final String playerName) {
+    boolean hasName(String playerName) {
         return user.getName()
                 .equals(playerName);
     }
 
-    public String getName() {
+    String getName() {
         return user.getName();
     }
 
-    public Money getBettingMoney() {
-        return bettingMoney;
+    Money getBettingMoney() {
+        return bettingMoney.getMoney();
     }
 
 }
