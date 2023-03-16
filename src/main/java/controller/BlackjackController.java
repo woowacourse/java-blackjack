@@ -51,7 +51,7 @@ public class BlackjackController {
 
     private void betEachPlayer(Player player) {
         try {
-            player.betPlayer(InputView.readBetMoney(player));
+            player.betPlayer(InputView.readBetMoney(ParticipantDto.from(player)));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             betEachPlayer(player);
@@ -89,7 +89,7 @@ public class BlackjackController {
 
     private boolean isCommandHit(Player player) {
         try {
-            String targetCommand = InputView.readHit(player);
+            String targetCommand = InputView.readHit(ParticipantDto.from(player));
             return HitCommand.HIT == HitCommand.find(targetCommand);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);

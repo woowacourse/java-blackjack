@@ -1,13 +1,12 @@
 package view;
 
 import domain.participant.Participant;
+import dto.ParticipantDto;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-
     private static final String DELIMITER_USERNAME = ",";
-
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -20,8 +19,8 @@ public class InputView {
         return List.of(names.split(DELIMITER_USERNAME));
     }
 
-    public static int readBetMoney(Participant player) {
-        System.out.println(player.getName() + "의 배팅 금액은?");
+    public static int readBetMoney(ParticipantDto playerDto) {
+        System.out.println(playerDto.getName() + "의 배팅 금액은?");
 
         String input = scanner.nextLine();
         try {
@@ -33,8 +32,8 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public static String readHit(Participant player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static String readHit(ParticipantDto playerDto) {
+        System.out.println(playerDto.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 
