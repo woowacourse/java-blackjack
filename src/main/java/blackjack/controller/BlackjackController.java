@@ -8,6 +8,9 @@ import blackjack.domain.game.Order;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
+import blackjack.dto.BettingResultDto;
+import blackjack.dto.DrawParticipantsDto;
+import blackjack.dto.initialParticipantsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -37,12 +40,12 @@ public final class BlackjackController {
         drawParticipants(participants, deck);
 
         final GameResult resultGame = GameResult.of(table, participants);
-        outputView.printBettingResult(participants, resultGame);
+        outputView.printBettingResult(BettingResultDto.of(participants, resultGame));
     }
 
     private void drawParticipants(final Participants participants, final Deck deck) {
         drawCardsForAllParticipants(participants, deck);
-        outputView.printCardsAndScoreForAllParticipants(participants);
+        outputView.printCardsAndScoreForAllParticipants(DrawParticipantsDto.from(participants));
     }
 
     private Participants makeParticipants() {
@@ -61,7 +64,7 @@ public final class BlackjackController {
 
     private void startDrawParticipants(final Participants participants, final Deck deck) {
         participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
-        outputView.printInitialCards(participants);
+        outputView.printInitialCards(initialParticipantsDto.from(participants));
     }
 
     private void drawCardsForAllParticipants(final Participants participants, final Deck deck) {

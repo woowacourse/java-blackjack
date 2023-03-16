@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.betting.Betting;
-import blackjack.domain.card.Card;
-import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
+import blackjack.dto.BettingResultDto;
+import blackjack.dto.DrawParticipantsDto;
+import blackjack.dto.initialParticipantsDto;
 
 import java.util.List;
 
@@ -19,41 +19,39 @@ public class OutputView {
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String ERROR_PREFIX_MESSAGE = "[ERROR] ";
 
-    public void printInitialCards(final Participants participants) {
-        System.out.println(getParticipantsList(participants) + GIVE_TWO_CARD_MESSAGE);
+    public void printInitialCards(final initialParticipantsDto participants) {
+        System.out.println(getParticipantsList(participants.names()) + GIVE_TWO_CARD_MESSAGE);
 
-        final Participant dealer = participants.getDealer();
-        final List<Participant> players = participants.getPlayers();
-
-        printDealerNameAndCard(dealer, dealer.getCard(0));
-        players.forEach(this::printParticipantNameAndCards);
+        printDealerNameAndCard(participants.dealerName(), participants.dealerCardName());
+        participants.players().forEach(this::printParticipantNameAndCards);
     }
 
-    private String getParticipantsList(final Participants participants) {
-        return String.join(COMMA, participants.getPlayerNames());
+    private String getParticipantsList(final List<String> participantNames) {
+        return String.join(COMMA, participantNames);
     }
 
-    private void printDealerNameAndCard(final Participant dealer, final Card card) {
-        System.out.println(NEW_LINE + dealer.getName() + COLON + card.getCardName());
+    private void printDealerNameAndCard(final String dealerName, final String cardName) {
+        System.out.println(NEW_LINE + dealerName + COLON + cardName);
     }
 
     public void printParticipantNameAndCards(final Participant participant) {
-        System.out.println(getNameAndCards(participant));
+        System.out.println(getNameAndCards(participant.getName(), participant.getCardNames()));
     }
 
-    private String getNameAndCards(final Participant participant) {
-        final List<String> cardNames = participant.getCardNames();
-
-        return participant.getName() + COLON + String.join(COMMA, cardNames);
+    private String getNameAndCards(final String name, final List<String> cardNames) {
+        return name + COLON + String.join(COMMA, cardNames);
     }
 
-    public void printCardsAndScoreForAllParticipants(final Participants participants) {
+    public void printCardsAndScoreForAllParticipants(final DrawParticipantsDto participants) {
         System.out.printf(NEW_LINE);
-        participants.getAll().forEach(this::printCardsAndScore);
+        participants.all().forEach(this::printCardsAndScore);
     }
 
     private void printCardsAndScore(final Participant participant) {
-        System.out.println(getNameAndCards(participant) + RESULT_DELIMITER + getScore(participant));
+        final String name = participant.getName();
+        final List<String> cardNames = participant.getCardNames();
+
+        System.out.println(getNameAndCards(name, cardNames) + RESULT_DELIMITER + getScore(participant));
     }
 
     private String getScore(final Participant participant) {
@@ -64,28 +62,19 @@ public class OutputView {
         System.out.println(NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 
-    public void printBettingResult(final Participants participants, final GameResult resultGame) {
-        final Participant dealer = participants.getDealer();
-        final List<Participant> players = participants.getPlayers();
-
+    public void printBettingResult(final BettingResultDto bettingResult) {
         System.out.println(NEW_LINE + FINAL_RESULT_MESSAGE);
-        printDealerResult(dealer, resultGame);
-        for (final Participant player : players) {
-            printPlayerResult(player, resultGame);
+        printDealerResult(bettingResult.dealerName(), bettingResult.dealerProfit());
+        for (final Participant player : bettingResult.players()) {
+            printPlayerResult(player.getName(), bettingResult.getPlayerResult(player));
         }
     }
 
-    private void printDealerResult(final Participant dealer, final GameResult resultGame) {
-        final String dealerName = dealer.getName();
-        final Betting dealerProfit = resultGame.getDealerResult();
-
+    private void printDealerResult(final String dealerName, final Betting dealerProfit) {
         System.out.println(dealerName + COLON + dealerProfit.getValue());
     }
 
-    private void printPlayerResult(final Participant player, final GameResult resultGame) {
-        final String playerName = player.getName();
-        final Betting money = resultGame.getPlayerResult(player);
-
+    private void printPlayerResult(final String playerName, final Betting money) {
         System.out.println(playerName + COLON + money.getValue());
     }
 
