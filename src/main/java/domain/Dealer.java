@@ -22,12 +22,6 @@ public class Dealer {
         return NAME;
     }
 
-    public Map<String, List<Card>> getInfo() {
-        Map<String, List<Card>> info = new LinkedHashMap<>();
-        info.put(getName(), getCards());
-        return info;
-    }
-
     public List<Card> getCards() {
         return player.getCards();
     }
@@ -39,4 +33,9 @@ public class Dealer {
     public int getCardsSum() {
         return player.getCardsSum();
     }
+
+    public boolean isBlackJack() {
+        return player.isBlackJack();
+    }
+
 }

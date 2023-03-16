@@ -38,12 +38,6 @@ public class BlackjackGame {
         player.addCard(cardDeck.poll());
     }
 
-    public void selectByPlayer(Player player, Command command) {
-        if (command.equals(Command.YES)) {
-            player.addCard(cardDeck.poll());
-        }
-    }
-
     public GameResult getGameResult() {
         return new GameResult(dealer, players);
     }

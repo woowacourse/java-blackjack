@@ -5,7 +5,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Controller {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -17,13 +16,30 @@ public class Controller {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.readPlayerNames());
-        BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardGenerator().generate()));
+        BettingTable bettingTable = createBettingTable(players);
+        BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardDeckGenerator().generate()));
+
+        startGame(dealer, players, game);
+
+        outputView.printCardsResult(dealer, players);
+        bettingTable.calculate(game.getGameResult().getPlayerResult());
+        outputView.printWinnerResult(dealer, bettingTable);
+    }
+
+
+    private BettingTable createBettingTable(Players players) {
+        BettingTable bettingTable = new BettingTable();
+        for (Player player : players.getPlayers()) {
+            bettingTable.add(player, new BettingMoney(inputView.readBettingMoney(player.getName())));
+        }
+        return bettingTable;
+    }
+
+    private void startGame(Dealer dealer, Players players, BlackjackGame game) {
         game.shuffleCardDeck();
         distributeInitialCard(dealer, players, game);
         selectAdditionalCard(players, game);
         addWhenUnderStandard(dealer, game);
-        outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getGameResult());
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
@@ -41,9 +57,15 @@ public class Controller {
         Command command;
         do {
             command = Command.from(inputView.readCommand(player.getName()));
-            game.selectByPlayer(player, command);
-            outputView.printPlayerCardsInfo(player);
-        } while (!player.isOverBlackJack() && command.equals(Command.YES));
+            selectByCommand(game, player, command);
+            outputView.printPlayerCardsInformation(player);
+        } while (!player.isOverBlackJack() && command == Command.YES);
+    }
+
+    private void selectByCommand(BlackjackGame game, Player player, Command command) {
+        if (command == Command.YES) {
+            game.distributePlayer(player);
+        }
     }
 
     private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {

@@ -1,53 +1,44 @@
 package domain;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
     private static final int BLACK_JACK = 21;
-    private final Map<String, List<ResultType>> dealerResult;
-    private final Map<String, ResultType> playerResult;
+
+    private final Map<Player, ResultType> playerResult;
 
     public GameResult(Dealer dealer, Players players) {
-        this.dealerResult = new LinkedHashMap<>();
         this.playerResult = new LinkedHashMap<>();
-        calculateResult(dealer, players);
+        calculateResultType(dealer, players);
     }
 
-    private void calculateResult(Dealer dealer, Players players) {
-        List<ResultType> resultTypes = new ArrayList<>();
+    private void calculateResultType(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            ResultType resultType = isPlayerWin(dealer.getCardsSum(), player.getCardsSum());
-            playerResult.put(player.getName(), resultType);
-            resultTypes.add(resultType.reverse());
+            ResultType resultType = calculateResultType(dealer, player);
+            playerResult.put(player, resultType);
         }
-        dealerResult.put(dealer.getName(), resultTypes);
     }
 
-    private ResultType isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK) {
+    private ResultType calculateResultType(Dealer dealer, Player player) {
+        if (isBlackJack(dealer, player)) {
+            return ResultType.BLACKJACK;
+        }
+        if (isLose(dealer.getCardsSum(), player.getCardsSum())) {
             return ResultType.LOSE;
         }
-        if (dealerSum > BLACK_JACK) {
-            return ResultType.WIN;
-        }
-        if (dealerSum > playerSum) {
-            return ResultType.LOSE;
-        }
-        if (dealerSum < playerSum) {
-            return ResultType.WIN;
-        }
-        return ResultType.DRAW;
+        return ResultType.WIN;
     }
 
-    public Map<String, List<ResultType>> getDealerResult() {
-        return dealerResult;
+    private boolean isBlackJack(Dealer dealer, Player player) {
+        return player.isBlackJack() && !dealer.isBlackJack();
     }
 
-    public int getDealerResultTypeCount(ResultType resultType) {
-        return Collections.frequency(dealerResult.values().stream().findFirst().get(), resultType);
+    private boolean isLose(int dealerSum, int playerSum) {
+        return playerSum > BLACK_JACK || (dealerSum < BLACK_JACK && dealerSum >= playerSum);
     }
 
-    public Map<String, ResultType> getPlayerResult() {
+    public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
     }
 
