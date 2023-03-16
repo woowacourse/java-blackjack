@@ -17,10 +17,10 @@ public class Deck {
         TRUMP = Stream.of(Shape.values())
                 .flatMap(shape -> Stream.of(Letter.values())
                         .map(letter -> Card.of(shape, letter)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    protected Deck(final List<Card> cards) {
+    private Deck(final List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();
@@ -28,9 +28,10 @@ public class Deck {
     }
 
     public static Deck create() {
-        Collections.shuffle(TRUMP);
+        List<Card> shuffleTrump = new ArrayList<>(TRUMP);
+        Collections.shuffle(shuffleTrump);
 
-        return new Deck(TRUMP);
+        return new Deck(shuffleTrump);
     }
 
     private void validate(final List<Card> cards) {
@@ -50,18 +51,14 @@ public class Deck {
     }
 
     public Card draw() {
-        if (isEmpty()) {
+        if (cards.empty()) {
             throw new IllegalArgumentException(NOT_EXIST_CARD_IN_DECK_ERROR_MESSAGE);
         }
 
         return cards.pop();
     }
 
-    private boolean isEmpty() {
-        return cards.empty();
-    }
-
-    public int size() {
+    public int getCardCount() {
         return cards.size();
     }
 }

@@ -17,7 +17,7 @@ public class DeckTest {
     void createAllCardTest() {
         final Deck deck = TestDeck.create();
 
-        Assertions.assertThat(deck.size()).isEqualTo(52);
+        Assertions.assertThat(deck.getCardCount()).isEqualTo(52);
     }
 
     @Test
