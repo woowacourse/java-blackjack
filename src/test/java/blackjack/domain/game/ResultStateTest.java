@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.betting.Betting;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ResultDto;
+import blackjack.dto.ResultStateDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ class ResultStateTest {
     @Test
     @DisplayName("블랙잭 상태를 제대로 가져오는지 확인")
     void getStateForBlackjack() {
-        final ResultDto first = ResultDto.from(
+        final ResultStateDto first = ResultStateDto.from(
                 Player.of(Name.from("pobi"), List.of(DIAMOND_ACE, DIAMOND_TEN)));
-        final ResultDto second = ResultDto.from(
+        final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
         Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.BLACKJACK);
@@ -28,9 +28,9 @@ class ResultStateTest {
     @Test
     @DisplayName("승리 상태를 제대로 가져오는지 확인")
     void getStateForWin() {
-        final ResultDto first = ResultDto.from(
+        final ResultStateDto first = ResultStateDto.from(
                 Player.of(Name.from("pobi"), List.of(DIAMOND_TEN, DIAMOND_NINE, DIAMOND_TWO)));
-        final ResultDto second = ResultDto.from(
+        final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
         Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.WIN);
@@ -39,9 +39,9 @@ class ResultStateTest {
     @Test
     @DisplayName("무승부 상태를 제대로 가져오는지 확인")
     void getStateForTie() {
-        final ResultDto first = ResultDto.from(
+        final ResultStateDto first = ResultStateDto.from(
                 Player.of(Name.from("pobi"), List.of(DIAMOND_ACE, DIAMOND_TEN)));
-        final ResultDto second = ResultDto.from(
+        final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(SPACE_ACE, HEART_TEN)));
 
         Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.TIE);
@@ -50,9 +50,9 @@ class ResultStateTest {
     @Test
     @DisplayName("패배 상태를 제대로 가져오는지 확인")
     void getStateForLose() {
-        final ResultDto first = ResultDto.from(
+        final ResultStateDto first = ResultStateDto.from(
                 Player.of(Name.from("pobi"), List.of(DIAMOND_NINE)));
-        final ResultDto second = ResultDto.from(
+        final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN)));
 
         Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.LOSE);

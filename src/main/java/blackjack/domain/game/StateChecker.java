@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
-import blackjack.dto.ResultDto;
+import blackjack.dto.ResultStateDto;
 
 public interface StateChecker {
 
-    boolean isState(ResultDto player, ResultDto dealer);
+    boolean isState(ResultStateDto player, ResultStateDto dealer);
 }

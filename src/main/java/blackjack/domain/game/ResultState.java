@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.betting.Betting;
-import blackjack.dto.ResultDto;
+import blackjack.dto.ResultStateDto;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -10,7 +10,7 @@ public enum ResultState implements StateChecker {
 
     BLACKJACK(betting -> Betting.from((int) (betting * 1.5))) {
         @Override
-        public boolean isState(ResultDto player, ResultDto dealer) {
+        public boolean isState(ResultStateDto player, ResultStateDto dealer) {
             return player.getHandSize() == BLACKJACK_CARD_COUNT
                     && player.getScore().isBlackjack()
                     && !dealer.getScore().isBlackjack();
@@ -18,7 +18,7 @@ public enum ResultState implements StateChecker {
     },
     WIN(Betting::from) {
         @Override
-        public boolean isState(ResultDto player, ResultDto dealer) {
+        public boolean isState(ResultStateDto player, ResultStateDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -28,7 +28,7 @@ public enum ResultState implements StateChecker {
     },
     TIE(betting -> Betting.from(0)) {
         @Override
-        public boolean isState(ResultDto player, ResultDto dealer) {
+        public boolean isState(ResultStateDto player, ResultStateDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -38,7 +38,7 @@ public enum ResultState implements StateChecker {
     },
     LOSE(betting -> Betting.from(betting * -1)) {
         @Override
-        public boolean isState(ResultDto player, ResultDto dealer) {
+        public boolean isState(ResultStateDto player, ResultStateDto dealer) {
             Score playerScore = player.getScore();
             Score dealerScore = dealer.getScore();
 
@@ -57,7 +57,7 @@ public enum ResultState implements StateChecker {
         this.profitFunction = profitFunction;
     }
 
-    public static ResultState getState(final ResultDto player, final ResultDto dealer) {
+    public static ResultState getState(final ResultStateDto player, final ResultStateDto dealer) {
         return Arrays.stream(ResultState.values())
                 .filter(resultState -> resultState.isState(player, dealer))
                 .findFirst()

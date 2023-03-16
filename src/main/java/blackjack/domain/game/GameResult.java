@@ -4,7 +4,7 @@ import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.BettingTable;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.dto.ResultDto;
+import blackjack.dto.ResultStateDto;
 
 import java.util.Map;
 
@@ -27,8 +27,8 @@ public final class GameResult {
 
         for (final Participant player : participants.getPlayers()) {
             final ResultState playerState = ResultState.getState(
-                    ResultDto.from(player),
-                    ResultDto.from(dealer));
+                    ResultStateDto.from(player),
+                    ResultStateDto.from(dealer));
 
             final Betting money = table.get(player);
             table.put(player, playerState.calculateProfit(money.getValue()));

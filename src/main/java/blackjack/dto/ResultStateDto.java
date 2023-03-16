@@ -3,18 +3,18 @@ package blackjack.dto;
 import blackjack.domain.game.Score;
 import blackjack.domain.participant.Participant;
 
-public class ResultDto {
+public class ResultStateDto {
 
     private final Score score;
     private final int handSize;
 
-    private ResultDto(final Participant participant) {
+    private ResultStateDto(final Participant participant) {
         this.score = participant.getScore();
         this.handSize = participant.handSize();
     }
 
-    public static ResultDto from(final Participant participant) {
-        return new ResultDto(participant);
+    public static ResultStateDto from(final Participant participant) {
+        return new ResultStateDto(participant);
     }
 
     public Score getScore() {
