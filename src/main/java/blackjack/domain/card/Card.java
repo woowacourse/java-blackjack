@@ -28,6 +28,10 @@ public class Card {
         return denomination.getValue();
     }
 
+    public String toWord() {
+        return denomination.word() + suit.word();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

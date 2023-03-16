@@ -1,7 +1,10 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.ExceptionMessage.INVALID_PLAYERS_COUNT_FORMAT;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -17,15 +20,15 @@ public class Players {
 
     private void validatePlayersCount(final List<Player> players) {
         if (players.size() < COUNT_MINIMUM || players.size() > COUNT_MAXIMUM) {
-            throw new IllegalArgumentException("플레이어 인원 수는 최소 " + COUNT_MINIMUM + "명 최대 " + COUNT_MAXIMUM + "명입니다.");
+            throw new IllegalArgumentException(
+                    String.format(INVALID_PLAYERS_COUNT_FORMAT, COUNT_MINIMUM, COUNT_MAXIMUM));
         }
     }
 
-    public Player findPlayerBy(final String playerName) {
+    public List<Player> findHitAblePlayers() {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
+                .filter(Player::isHitAble)
+                .collect(Collectors.toList());
     }
 
     public List<Player> players() {

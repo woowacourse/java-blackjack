@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.ExceptionMessage.INVALID_TAKEOUT_CARDS_EMPTY;
+import static blackjack.domain.ParticipantFixtures.BETTING_MONEY_1000;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.HEART;
@@ -24,7 +26,7 @@ class DeckTest {
 
     @BeforeEach
     void setUpPlayer() {
-        player = new Player("test");
+        player = new Player("test", BETTING_MONEY_1000);
     }
 
     @DisplayName("전달받은 참가자에게 주어진 장수 만큼의 카드를 준다.")
@@ -47,7 +49,7 @@ class DeckTest {
                 new Card(HEART, ACE), new Card(HEART, TWO)
         );
         final Deck deck = new MockDeckGenerator(mockCards).generate();
-        final List<Player> players = List.of(player, new Player("test2"));
+        final List<Player> players = List.of(player, new Player("test2", BETTING_MONEY_1000));
 
         deck.handCardsTo(players, 2);
 
@@ -62,6 +64,6 @@ class DeckTest {
 
         assertThatThrownBy(() -> deck.handCardsTo(player, 1))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("더 이상 꺼낼 카드가 없습니다.");
+                .hasMessageContaining(INVALID_TAKEOUT_CARDS_EMPTY);
     }
 }

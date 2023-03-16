@@ -1,35 +1,47 @@
 package blackjack.domain.result;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.BiPredicate;
+import blackjack.domain.participants.BettingMoney;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
+import java.math.BigDecimal;
 
 public enum JudgeResult {
 
-    WIN((self, counter) -> self > counter),
-    PUSH(Objects::equals),
-    LOSE((self, counter) -> self < counter);
+    BLACKJACK_WIN(new BigDecimal("1.5")),
+    WIN(new BigDecimal("1.0")),
+    PUSH(new BigDecimal("0")),
+    LOSE(new BigDecimal("-1.0"));
 
-    private final BiPredicate<Integer, Integer> scoreComparer;
+    private final BigDecimal profitRate;
 
-    JudgeResult(final BiPredicate<Integer, Integer> scoreComparer) {
-        this.scoreComparer = scoreComparer;
+    JudgeResult(final BigDecimal profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public static JudgeResult match(final int selfScore, final int counterScore) {
-        return Arrays.stream(values())
-                .filter(result -> result.scoreComparer.test(selfScore, counterScore))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("판정 결과로 해당하는 값을 찾을 수 없습니다."));
-    }
-
-    public static JudgeResult counter(final JudgeResult judgeResult) {
-        if (judgeResult == WIN) {
-            return LOSE;
+    public static JudgeResult of(final Player targetPlayer, final Dealer dealer) {
+        if (targetPlayer.isBust()) {
+            return JudgeResult.LOSE;
         }
-        if (judgeResult == LOSE) {
+        if (dealer.isBust()) {
+            return JudgeResult.WIN;
+        }
+        if (!dealer.isBlackJack() && targetPlayer.isBlackJack()) {
+            return JudgeResult.BLACKJACK_WIN;
+        }
+        return matchWithoutBlackJackConsider(targetPlayer.computeCardsScore(), dealer.computeCardsScore());
+    }
+
+    private static JudgeResult matchWithoutBlackJackConsider(final int selfScore, final int counterScore) {
+        if (selfScore > counterScore) {
             return WIN;
         }
+        if (selfScore < counterScore) {
+            return LOSE;
+        }
         return PUSH;
+    }
+
+    public BigDecimal profit(final BettingMoney bettingMoney) {
+        return profitRate.multiply(bettingMoney.getAmount());
     }
 }
