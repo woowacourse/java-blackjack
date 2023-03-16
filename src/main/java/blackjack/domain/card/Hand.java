@@ -2,12 +2,12 @@ package blackjack.domain.card;
 
 import blackjack.domain.game.Score;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public final class Hand {
 
-    private static final int ZERO = 0;
     private static final int ACE_NUMBER_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -28,12 +28,12 @@ public final class Hand {
         final int aceCount = aceCardCount();
         final Score score = calculateOriginalScore();
 
-        return calculateDowngradeAceCardScore(aceCount, score);
+        return calculateScoreWithAceHandling(aceCount, score);
     }
 
-    private Score calculateDowngradeAceCardScore(final int aceCount, final Score score) {
-        if (isNeedDowngradeScoreAceCard(aceCount, score)) {
-            return calculateScoreRegardAce(aceCount, score);
+    private Score calculateScoreWithAceHandling(final int aceCount, final Score score) {
+        if (isNeedDowngradeAceScore(aceCount, score)) {
+            return calculateScoreWithDowngradeAce(aceCount, score);
         }
         return score;
     }
@@ -41,25 +41,25 @@ public final class Hand {
     private Score calculateOriginalScore() {
         final int score = cards.stream()
                 .map(Card::getValue)
-                .reduce(ZERO, Integer::sum);
+                .reduce(0, Integer::sum);
 
         return Score.from(score);
     }
 
-    private Score calculateScoreRegardAce(int aceCount, Score totalScore) {
-        while (isNeedDowngradeScoreAceCard(aceCount, totalScore)) {
+    private Score calculateScoreWithDowngradeAce(int aceCount, Score totalScore) {
+        while (isNeedDowngradeAceScore(aceCount, totalScore)) {
             totalScore = totalScore.minus(ACE_NUMBER_DIFFERENCE);
             aceCount--;
         }
         return totalScore;
     }
 
-    private boolean isNeedDowngradeScoreAceCard(final int aceCount, final Score totalScore) {
+    private boolean isNeedDowngradeAceScore(final int aceCount, final Score totalScore) {
         return isExistAceCard(aceCount) && totalScore.isBust();
     }
 
     private boolean isExistAceCard(final int aceCount) {
-        return aceCount > ZERO;
+        return aceCount > 0;
     }
 
     private int aceCardCount() {
@@ -73,7 +73,7 @@ public final class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
