@@ -5,6 +5,9 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.DealerDTO;
+import dto.PlayerDTO;
+import dto.ResultDTO;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,90 +24,53 @@ public class OutputView {
     private static final String KING = "K";
     private static final String ENTER_LINE = System.lineSeparator();
 
-    private OutputView() {
+    public static void printStartMessage(List<PlayerDTO> PlayerDTO) {
+        List<String> playerNames = PlayerDTO.stream()
+                .map(playerDTO -> playerDTO.getName())
+                .collect(Collectors.toList());
+        System.out.println(ENTER_LINE + "딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printStartMessage(List<String> playersName) {
-        System.out.println(ENTER_LINE + "딜러와 " + String.join(", ", playersName) + "에게 2장을 나누었습니다.");
+    public static void printDealerCard(DealerDTO dealerDTO) {
+        System.out.println(dealerDTO.getName() + ": " + dealerDTO.getFirstCards());
     }
 
-    public static void printDealerCard(Dealer dealer) {
-        System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCardWithInvisible()));
-    }
-
-    public static void printPlayersCard(List<Player> players) {
-        players.stream()
-                .map(OutputView::makePlayerHandView)
+    public static void printPlayersCard(List<PlayerDTO> playerDTOs) {
+        playerDTOs.stream()
+                .map(playerDTO -> printPlayerHand(playerDTO))
                 .forEach(System.out::println);
         System.out.println();
     }
 
-    private static String makePlayerHandView(Player player) {
-        return player.getName() + "카드: " + makeCardsView(player.getCards());
+    private static String printPlayerHand(PlayerDTO playerDTO) {
+        List<String> cards = playerDTO.getCards();
+        return playerDTO.getName() + "카드: " + String.join(", ", cards);
     }
 
-    private static String makeCardsView(List<Card> cards) {
-        return cards.stream()
-                .map(OutputView::makeCardView)
-                .collect(Collectors.joining(", "));
-    }
-
-    public static void printPlayerCard(Player player) {
-        System.out.println(makePlayerHandView(player));
-    }
-
-    private static String makeCardView(Card card) {
-        return makeDenominationView(card.getDenomination()) + makeSuitView(card.getSuit());
-    }
-
-    private static String makeSuitView(Suit suit) {
-        if (Suit.DIAMOND.equals(suit)) {
-            return DIAMOND;
-        }
-        if (Suit.HEART.equals(suit)) {
-            return HEART;
-        }
-        if (Suit.SPADE.equals(suit)) {
-            return SPADE;
-        }
-
-        return CLUB;
-    }
-
-    private static String makeDenominationView(Denomination denomination) {
-        if (Denomination.ACE.equals(denomination)) {
-            return ACE;
-        }
-        if (Denomination.JACK.equals(denomination)) {
-            return JACK;
-        }
-        if (Denomination.QUEEN.equals(denomination)) {
-            return QUEEN;
-        }
-        if (Denomination.KING.equals(denomination)) {
-            return KING;
-        }
-
-        return String.valueOf(denomination.getScore());
+    public static void printPlayerCard(PlayerDTO playerDTO) {
+        System.out.println(String.join(", ", playerDTO.getCards()));
     }
 
     public static void printDealerHit() {
         System.out.println(ENTER_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllHands(Dealer dealer, List<Player> players) {
-        String dealerCards = makeCardsView(dealer.getCards());
-        System.out.println(ENTER_LINE + dealer.getName() + " 카드: " + dealerCards + " - 결과: " + dealer.calculateScore());
+    public static void printAllHands(DealerDTO dealerDTO, List<PlayerDTO> playerDTOs) {
+        List<String> dealerCards = dealerDTO.getCards();
+        System.out.println(ENTER_LINE + dealerDTO.getName() + " 카드: " + dealerCards.stream().
+                collect(Collectors.joining(", ")) + " - 결과: " + dealerDTO.getScore());
 
-        players.stream()
-                .map(player -> makePlayerHandView(player) + " - 결과: " + player.calculateScore())
+        playerDTOs.stream()
+                .map(playerDTO -> playerDTO.getName() + "카드: " +
+                        playerDTO.getCards().stream()
+                                .collect(Collectors.joining(", ")) + " - 결과: " + playerDTO.getScore())
                 .forEach(System.out::println);
     }
 
-    public static void printBettingResult(Map<String, Integer> playerBettingResult, int dealerBettingResult) {
+    public static void printBettingResult(ResultDTO resultDTO) {
         System.out.println(ENTER_LINE + "## 최종 수익");
-        printDealerResult(dealerBettingResult);
-        printPlayersResult(playerBettingResult);
+        printDealerResult(resultDTO.getDealerResult());
+        printPlayersResult(resultDTO.getPlayerResult());
     }
 
     private static void printDealerResult(int dealerBettingResult) {
