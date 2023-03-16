@@ -60,7 +60,7 @@ public class Card {
         return denomination.getScore();
     }
 
-    public List<Card> getCards() {
+    public static List<Card> getCards() {
         return new ArrayList<>(cards);
     }
 }
