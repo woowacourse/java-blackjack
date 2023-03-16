@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.betting.Betting;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

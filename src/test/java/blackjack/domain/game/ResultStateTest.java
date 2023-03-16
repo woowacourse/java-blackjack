@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.betting.Betting;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ResultDto;

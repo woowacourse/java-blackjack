@@ -20,7 +20,7 @@ public class Deck {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private Deck(final List<Card> cards) {
+    protected Deck(final List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();

@@ -1,5 +1,7 @@
 package blackjack.domain.game;
 
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.BettingTable;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.dto.ResultDto;

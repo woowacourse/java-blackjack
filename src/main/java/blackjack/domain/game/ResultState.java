@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.betting.Betting;
 import blackjack.dto.ResultDto;
 
 import java.util.Arrays;
