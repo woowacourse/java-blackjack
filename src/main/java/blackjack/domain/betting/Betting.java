@@ -16,6 +16,14 @@ public class Betting {
         this.value = Integer.parseInt(value);
     }
 
+    public static Betting from(final String value) {
+        return new Betting(value, true);
+    }
+
+    public static Betting from(final int value) {
+        return new Betting(String.valueOf(value), false);
+    }
+
     private void validate(final String value, final boolean rangeValidateLimit) {
         validateNumber(value);
         if (rangeValidateLimit) {
@@ -52,14 +60,6 @@ public class Betting {
 
     private static boolean isExceedMoney(int numValue) {
         return MAX_BETTING_RANGE < numValue;
-    }
-
-    public static Betting from(final String value) {
-        return new Betting(value, true);
-    }
-
-    public static Betting from(final int value) {
-        return new Betting(String.valueOf(value), false);
     }
 
     public int getValue() {

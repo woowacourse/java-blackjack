@@ -72,10 +72,6 @@ public final class Hand {
         return cards.size();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,5 +83,9 @@ public final class Hand {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

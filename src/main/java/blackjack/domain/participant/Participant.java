@@ -22,10 +22,6 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public Score getScore() {
-        return hand.calculateScore();
-    }
-
     public abstract boolean canHit();
 
     public abstract boolean isDealer();
@@ -34,18 +30,14 @@ public abstract class Participant {
         return hand.size();
     }
 
-    public Card getCard(final int index) {
-        return hand.getCards().get(index);
+    public Score getScore() {
+        return hand.calculateScore();
     }
 
     public List<String> getCardNames() {
         return hand.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
-    }
-
-    public String getName() {
-        return name.getValue();
     }
 
     @Override
@@ -59,5 +51,13 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public Card getCard(final int index) {
+        return hand.getCards().get(index);
     }
 }

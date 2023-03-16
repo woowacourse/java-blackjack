@@ -53,10 +53,6 @@ public final class Score {
         return value < other.value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,5 +64,9 @@ public final class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

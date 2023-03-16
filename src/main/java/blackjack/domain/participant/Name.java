@@ -56,10 +56,6 @@ public final class Name {
         return NAME_MAX_LENGTH < value.length();
     }
 
-    public String getValue() {
-        return value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,5 +67,9 @@ public final class Name {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public String getValue() {
+        return value;
     }
 }

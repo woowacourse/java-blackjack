@@ -20,14 +20,6 @@ public final class Card {
         return letter.isAce();
     }
 
-    public String getCardName() {
-        return letter.getName() + shape.getValue();
-    }
-
-    public int getValue() {
-        return letter.getValue();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,5 +31,13 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(shape, letter);
+    }
+
+    public String getCardName() {
+        return letter.getName() + shape.getValue();
+    }
+
+    public int getValue() {
+        return letter.getValue();
     }
 }
