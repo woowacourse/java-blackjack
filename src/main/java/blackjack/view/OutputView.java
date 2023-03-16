@@ -47,7 +47,7 @@ public class OutputView {
         return participant.getName() + COLON + String.join(COMMA, cardNames);
     }
 
-    public void printAllCardsAndScore(final Participants participants) {
+    public void printCardsAndScoreForAllParticipants(final Participants participants) {
         System.out.printf(NEW_LINE);
         participants.getAll().forEach(this::printCardsAndScore);
     }
@@ -60,7 +60,7 @@ public class OutputView {
         return String.valueOf(participant.getScore().getValue());
     }
 
-    public void printDealerDrawCard() {
+    public void printDealerDrawAdditionalCard() {
         System.out.println(NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 

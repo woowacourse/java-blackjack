@@ -42,7 +42,7 @@ public final class BlackjackController {
 
     private void drawParticipants(final Participants participants, final Deck deck) {
         drawCardsForAllParticipants(participants, deck);
-        outputView.printAllCardsAndScore(participants);
+        outputView.printCardsAndScoreForAllParticipants(participants);
     }
 
     private Participants makeParticipants() {
@@ -90,7 +90,7 @@ public final class BlackjackController {
 
     private void drawCardsForDealer(final Participant dealer, final Deck deck) {
         while (dealer.canHit()) {
-            outputView.printDealerDrawCard();
+            outputView.printDealerDrawAdditionalCard();
             dealer.drawCard(deck.draw());
         }
     }
