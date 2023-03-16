@@ -50,13 +50,9 @@
 ```mermaid
 graph TD
 
-    BlackjackController --> BlackjackGame
-    
-    BlackjackGame --> Participants
-    BlackjackGame --> Deck
-
-    Deck --> Hand
-    Hand --> Card
+    BlackjackController --> Participants
+    BlackjackController --> Deck
+   
     Card --> Denomination
     Card --> Suit
 
@@ -66,5 +62,10 @@ graph TD
     Dealer --> Participant
     Player --> Participant
     Player --> BetAmount
+    
+    Hand --> Card
+    
+    Participant --> Hand
+    Participant --> Name
     
 ```
