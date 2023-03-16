@@ -41,7 +41,7 @@ public final class BlackjackController {
     }
 
     private void drawParticipants(final Participants participants, final Deck deck) {
-        drawCardsParticipants(participants, deck);
+        drawCardsForAllParticipants(participants, deck);
         outputView.printAllCardsAndScore(participants);
     }
 
@@ -64,18 +64,18 @@ public final class BlackjackController {
         outputView.printInitialCards(participants);
     }
 
-    private void drawCardsParticipants(final Participants participants, final Deck deck) {
-        drawCardsPlayers(participants.getPlayers(), deck);
-        drawCardsDealer(participants.getDealer(), deck);
+    private void drawCardsForAllParticipants(final Participants participants, final Deck deck) {
+        drawCardsForAllPlayers(participants.getPlayers(), deck);
+        drawCardsForDealer(participants.getDealer(), deck);
     }
 
-    private void drawCardsPlayers(final List<Participant> players, final Deck deck) {
+    private void drawCardsForAllPlayers(final List<Participant> players, final Deck deck) {
         for (final Participant player : players) {
-            hitEachPlayer(player, deck);
+            handlePlayerCardDraws(player, deck);
         }
     }
 
-    private void hitEachPlayer(final Participant player, final Deck deck) {
+    private void handlePlayerCardDraws(final Participant player, final Deck deck) {
         while (player.canHit() && isHitOrStay(player)) {
             player.drawCard(deck.draw());
             outputView.printParticipantNameAndCards(player);
@@ -88,7 +88,7 @@ public final class BlackjackController {
         return order.isHit();
     }
 
-    private void drawCardsDealer(final Participant dealer, final Deck deck) {
+    private void drawCardsForDealer(final Participant dealer, final Deck deck) {
         while (dealer.canHit()) {
             outputView.printDealerDrawCard();
             dealer.drawCard(deck.draw());
