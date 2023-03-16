@@ -3,8 +3,8 @@ package blackjack.controller;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.Betting;
 import blackjack.domain.game.BettingTable;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.Order;
-import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -36,7 +36,7 @@ public final class BlackjackController {
         startDrawParticipants(participants, deck);
         drawParticipants(participants, deck);
 
-        final ResultGame resultGame = ResultGame.of(table, participants);
+        final GameResult resultGame = GameResult.of(table, participants);
         outputView.printBettingResult(participants, resultGame);
     }
 

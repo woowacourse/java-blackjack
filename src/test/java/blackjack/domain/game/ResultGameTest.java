@@ -45,7 +45,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_TEN);
 
-        ResultGame resultGame = ResultGame.of(table, participants);
+        GameResult resultGame = GameResult.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-15000));
     }
@@ -60,7 +60,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        ResultGame resultGame = ResultGame.of(table, participants);
+        GameResult resultGame = GameResult.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-10000));
     }
@@ -75,7 +75,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_NINE);
 
-        ResultGame resultGame = ResultGame.of(table, participants);
+        GameResult resultGame = GameResult.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(0));
     }
@@ -90,7 +90,7 @@ public class ResultGameTest {
         pobi.drawCard(DIAMOND_ACE);
         pobi.drawCard(DIAMOND_EIGHT);
 
-        ResultGame resultGame = ResultGame.of(table, participants);
+        GameResult resultGame = GameResult.of(table, participants);
 
         Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(10000));
     }
@@ -98,7 +98,7 @@ public class ResultGameTest {
     @Test
     @DisplayName("플레이어의 베팅 금액을 제대로 반환하는지 테스트")
     void getPlayerResultTest() {
-        ResultGame resultGame = ResultGame.of(table, participants);
+        GameResult resultGame = GameResult.of(table, participants);
 
         Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(0));
     }

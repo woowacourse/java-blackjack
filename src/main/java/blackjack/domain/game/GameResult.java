@@ -6,22 +6,18 @@ import blackjack.dto.ResultDto;
 
 import java.util.Map;
 
-public final class ResultGame {
+public final class GameResult {
 
     private final Map<Participant, Betting> resultBetting;
 
-    private ResultGame(final Map<Participant, Betting> resultBetting) {
+    private GameResult(final Map<Participant, Betting> resultBetting) {
         this.resultBetting = resultBetting;
     }
 
-    public static ResultGame of(final BettingTable table, final Participants participants) {
+    public static GameResult of(final BettingTable table, final Participants participants) {
         Map<Participant, Betting> bettingTable = table.getTable();
         calculateResult(bettingTable, participants);
-        return new ResultGame(bettingTable);
-    }
-
-    public void betMoney(final Participant participant, final Betting betting) {
-        resultBetting.put(participant, betting);
+        return new GameResult(bettingTable);
     }
 
     private static void calculateResult(final Map<Participant, Betting> table, final Participants participants) {

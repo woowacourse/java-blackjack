@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Betting;
-import blackjack.domain.game.ResultGame;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 
@@ -64,7 +64,7 @@ public class OutputView {
         System.out.println(NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 
-    public void printBettingResult(final Participants participants, final ResultGame resultGame) {
+    public void printBettingResult(final Participants participants, final GameResult resultGame) {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
 
@@ -75,14 +75,14 @@ public class OutputView {
         }
     }
 
-    private void printDealerResult(final Participant dealer, final ResultGame resultGame) {
+    private void printDealerResult(final Participant dealer, final GameResult resultGame) {
         final String dealerName = dealer.getName();
         final Betting dealerProfit = resultGame.getDealerResult();
 
         System.out.println(dealerName + COLON + dealerProfit.getValue());
     }
 
-    private void printPlayerResult(final Participant player, final ResultGame resultGame) {
+    private void printPlayerResult(final Participant player, final GameResult resultGame) {
         final String playerName = player.getName();
         final Betting money = resultGame.getPlayerResult(player);
 
