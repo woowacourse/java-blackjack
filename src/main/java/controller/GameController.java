@@ -2,9 +2,10 @@ package controller;
 
 import domain.card.CardRandomShuffler;
 import domain.game.GameManager;
-import domain.participant.Participant;
-import domain.participant.ParticipantInfo;
+import domain.participant.Dealer;
 import domain.participant.ParticipantMoney;
+import domain.participant.Participants;
+import domain.participant.Player;
 import domain.participant.Players;
 import view.InputView;
 import view.OutputView;
@@ -12,6 +13,7 @@ import view.OutputView;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public final class GameController {
 
@@ -24,60 +26,62 @@ public final class GameController {
     }
 
     public void start() {
-        final Map<Participant, ParticipantMoney> initParticipantInfo = getParticipantInfo();
-        final GameManager gameManager = makeGameManager(initParticipantInfo);
-        final ParticipantInfo participantInfo = gameManager.getParticipantInfo();
-        printFirstTurnResult(gameManager, participantInfo);
+        final Players players = makePlayers();
+        final Map<Player, ParticipantMoney> bettingInfo = betMoney(players);
+        final GameManager gameManager = makeGameManager(players);
+        printFirstDealingResult(gameManager);
         gameManager.judgeFirstBettingResult();
-        drawPlayersCard(gameManager, participantInfo);
-        handleDealerCards(gameManager, participantInfo);
-        printCardResult(participantInfo);
-        printFinalGameResult(gameManager, initParticipantInfo);
+        dealingPlayerCards(gameManager);
+        dealingDealerCards(gameManager);
+        printCardResult(gameManager);
+        printFinalGameResult(gameManager, bettingInfo);
     }
 
-    private Map<Participant, ParticipantMoney> getParticipantInfo() {
-        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
-        participantInfo.put(Participant.createDealer(), ParticipantMoney.zero());
-        for (Participant player : makePlayers()) {
-            participantInfo.put(player, getPlayerBettingMoneys(player));
-        }
-        return participantInfo;
-    }
-
-    private List<Participant> makePlayers() {
+    private Players makePlayers() {
         return inputView.getInputWithRetry(() -> {
             final List<String> playerNames = inputView.getPlayerNames();
-            final Players players = Players.create(playerNames);
-            return players.getPlayers();
+            return Players.create(playerNames);
         });
     }
 
-    private ParticipantMoney getPlayerBettingMoneys(final Participant player) {
+    private Map<Player, ParticipantMoney> betMoney(final Players players) {
+        final Map<Player, ParticipantMoney> initPlayerMoney = new LinkedHashMap<>();
+        players.getPlayers().forEach(player -> {
+            final ParticipantMoney participantMoney = getPlayerBettingMoneys(player);
+            player.bet(participantMoney);
+            initPlayerMoney.put(player, participantMoney);
+        });
+        return initPlayerMoney;
+    }
+
+    private ParticipantMoney getPlayerBettingMoneys(final Player player) {
         return inputView.getInputWithRetry(() -> {
             String bettingMoney = inputView.getBettingMoney(player.getName());
             return ParticipantMoney.create(bettingMoney);
         });
     }
 
-    private GameManager makeGameManager(final Map<Participant, ParticipantMoney> participantInfo) {
+    private GameManager makeGameManager(final Players players) {
+        final Participants participants = Participants.create(players);
         final CardRandomShuffler cardRandomShuffler = new CardRandomShuffler();
-        return GameManager.create(cardRandomShuffler, participantInfo);
+        return GameManager.create(cardRandomShuffler, participants);
     }
 
-    private void printFirstTurnResult(final GameManager gameManager, final ParticipantInfo participantInfo) {
-        gameManager.handFirstCards();
-        outputView.printHandMessage(participantInfo.findDealerInfo(), participantInfo.findPlayerInfo());
+    private void printFirstDealingResult(final GameManager gameManager) {
+        gameManager.dealingFirstTurn();
+        final Participants participants = gameManager.getParticipants();
+        outputView.printDealingMessage(participants.getDealer(), participants.getPlayers());
     }
 
-    private void drawPlayersCard(final GameManager gameManager, final ParticipantInfo participantInfo) {
-        participantInfo.findPlayerInfo()
+    private void dealingPlayerCards(final GameManager gameManager) {
+        gameManager.getParticipants()
+                .getPlayers()
                 .forEach(player -> handleDrawCard(gameManager, player));
     }
 
-    private void handleDrawCard(final GameManager gameManager, final Participant player) {
-        DrawCardCommand drawCardCommand = getDrawCardCommand(player);
-        checkDraw(gameManager, player, drawCardCommand);
-        checkBust(player, gameManager);
+    private void handleDrawCard(final GameManager gameManager, final Player player) {
+        final DrawCardCommand drawCardCommand = getDrawCardCommand(player);
+        drawCard(gameManager, player, drawCardCommand);
         outputView.printParticipantCard(player.getName(), player.getHand());
         if (isPlayerEnd(player, drawCardCommand)) {
             return;
@@ -85,75 +89,55 @@ public final class GameController {
         handleDrawCard(gameManager, player);
     }
 
-    private void checkBust(final Participant player, final GameManager gameManager) {
-        if (player.isBust()) {
-            gameManager.losePlayerMoney(player);
-        }
-    }
-
-    private boolean isPlayerEnd(final Participant player, final DrawCardCommand drawCardCommand) {
-        if (cannotDrawCard(player, drawCardCommand)) {
-            printMessageIfPlayerBust(player);
-            printMessageIfPlayerBlackJack(player);
-            return true;
-        }
-        return false;
-    }
-
-    private void printMessageIfPlayerBust(final Participant player) {
-        if (player.isBust()) {
-            outputView.printBustMessage();
-        }
-    }
-
-    private void printMessageIfPlayerBlackJack(final Participant player) {
-        if (player.isBlackJack()) {
-            outputView.printBlackJackMessage();
-        }
-    }
-
-    private DrawCardCommand getDrawCardCommand(final Participant player) {
+    private DrawCardCommand getDrawCardCommand(final Player player) {
         return inputView.getInputWithRetry(() -> {
             final String command = inputView.getDrawCardCommand(player.getName());
             return DrawCardCommand.findCardCommand(command);
         });
     }
 
-    private void checkDraw(final GameManager gameManager, final Participant player,
-                           final DrawCardCommand drawCardCommand) {
-        if (cannotDrawCard(player, drawCardCommand)) {
-            return;
+    private void drawCard(final GameManager gameManager, final Player player,
+                          final DrawCardCommand drawCardCommand) {
+        if (player.canDrawCard() && drawCardCommand.isDrawAgain()) {
+            player.addCard(gameManager.getCard());
         }
-        gameManager.handCard(player);
+        if (player.isBust()) {
+            player.loseMoney();
+        }
     }
 
-    private boolean cannotDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return player.isBust() || player.isBlackJack() || drawCardCommand.isDrawStop();
+    private boolean isPlayerEnd(final Player player, final DrawCardCommand drawCardCommand) {
+        if (player.canDrawCard() && drawCardCommand.isDrawAgain()) {
+            return false;
+        }
+        printEndMessage(player, Player::isBust, outputView::printBustMessage);
+        printEndMessage(player, Player::isBlackJack, outputView::printBlackJackMessage);
+        return true;
     }
 
-    private void handleDealerCards(final GameManager gameManager, final ParticipantInfo participantInfo) {
+    private void printEndMessage(final Player player, final Predicate<Player> isPlayerEnd, final Runnable printMessage) {
+        if (isPlayerEnd.test(player)) {
+            printMessage.run();
+        }
+    }
+
+    private void dealingDealerCards(final GameManager gameManager) {
         OutputView.print(System.lineSeparator().trim());
-        final Participant dealer = participantInfo.findDealerInfo();
-        while (dealer.canGiveCard()) {
-            gameManager.handCard(dealer);
-            outputView.printDealerDrawMessage(dealer.getName());
-        }
+        gameManager.canDealerDrawCard(outputView::printDealerDrawMessage);
     }
 
-    private void printCardResult(final ParticipantInfo participantInfo) {
-        final Participant dealer = participantInfo.findDealerInfo();
-        final List<Participant> players = participantInfo.findPlayerInfo();
-        printParticipantCardResult(dealer);
-        players.forEach(this::printParticipantCardResult);
-    }
-
-    private void printParticipantCardResult(final Participant participant) {
-        outputView.printCardResult(participant.getName(), participant.getHand(), participant.calculateScore());
+    private void printCardResult(final GameManager gameManager) {
+        final Participants participants = gameManager.getParticipants();
+        final Dealer dealer = participants.getDealer();
+        outputView.printCardResult(dealer.getName(), dealer.getHand(), dealer.calculateScore());
+        participants.getPlayers().forEach(player ->
+                outputView.printCardResult(player.getName(), player.getHand(), player.calculateScore()));
     }
 
     private void printFinalGameResult(final GameManager gameManager,
-                                      final Map<Participant, ParticipantMoney> initMoneyInfo) {
-        gameManager.calculateProfit(initMoneyInfo);
-        outputView.printFinalGameResult(gameManager.getPlayerGameResults());
+                                      final Map<Player, ParticipantMoney> bettingInfo) {
+        gameManager.calculateProfit(bettingInfo);
+        final Participants participants = gameManager.getParticipants();
+        outputView.printFinalGameResult(participants.getDealer(), participants.getPlayers());
     }
 }
