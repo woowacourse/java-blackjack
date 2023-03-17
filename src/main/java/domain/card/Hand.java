@@ -22,7 +22,7 @@ public class Hand {
     }
     
     public Score getTotalScore() {
-        Score totalScore = score();
+        Score totalScore = calculateScore();
         if (containsAce()) {
             return totalScore.plusTenIfNotBust();
         }
@@ -30,7 +30,7 @@ public class Hand {
         return totalScore;
     }
     
-    private Score score() {
+    private Score calculateScore() {
         return cards.stream()
                 .map(Card::getScore)
                 .reduce(Score::addScore)
