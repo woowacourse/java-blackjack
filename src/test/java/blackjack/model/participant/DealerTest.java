@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.HandFixtures;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DealerDrawState;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.model.Fixtures.*;
+import static blackjack.model.CardFixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -26,7 +27,7 @@ class DealerTest {
         Card card1 = CLUB_FIVE;
         Card card2 = CLUB_EIGHT;
         List<Card> cards = List.of(card1, card2);
-        Dealer dealer = new Dealer(new PlayerInitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -40,8 +41,8 @@ class DealerTest {
     @DisplayName("딜러는 점수가 16 이하면 카드를 뽑을 수 있다.")
     void dealer_can_draw_under_16() {
         //given
-        List<Card> cards = List.of(CLUB_FIVE, CLUB_THREE, CLUB_EIGHT);
-        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        List<Card> cards = List.of(CLUB_EIGHT);
+        Dealer dealer = new Dealer(new DealerDrawState(HandFixtures.createDealer8Score()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -56,7 +57,7 @@ class DealerTest {
     void dealer_can_not_draw_over_16() {
         //given
         List<Card> cards = List.of(HEART_EIGHT, HEART_FIVE);
-        Dealer dealer = new Dealer(new DealerDrawState(new Hand(new ArrayList<>(List.of(CLUB_EIGHT, CLUB_FIVE)))));
+        Dealer dealer = new Dealer(new DealerDrawState(HandFixtures.createDealer17Score()));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -120,7 +121,7 @@ class DealerTest {
     void calculate_dealer_profit() {
         //given
         List<Integer> playerProfits = List.of(10000, -20000, 50000);
-        Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_EIGHT, HEART_TEN))));
+        Dealer dealer = new Dealer(new StandState(HandFixtures.createDealer19Score()));
 
         // when
         int dealerProfit = dealer.getProfit(playerProfits);

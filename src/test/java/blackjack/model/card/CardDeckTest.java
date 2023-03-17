@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.model.Fixtures.CLUB_EIGHT;
-import static blackjack.model.Fixtures.CLUB_JACK;
+import static blackjack.model.CardFixtures.CLUB_EIGHT;
+import static blackjack.model.CardFixtures.CLUB_JACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardDeckTest {

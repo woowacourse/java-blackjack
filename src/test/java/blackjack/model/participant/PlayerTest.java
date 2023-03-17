@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.HandFixtures;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.model.Fixtures.*;
+import static blackjack.model.CardFixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -117,14 +118,14 @@ class PlayerTest {
         @Nested
         @DisplayName("플레이어가 버스트일 때")
         class player_bust {
-            private final State playerState = new BustState(new Hand(List.of(HEART_JACK, HEART_TEN, HEART_FIVE)));
+            private final State playerState = new BustState(HandFixtures.createPlayerBust());
             private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
             @Test
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_bust() {
                 //given
-                Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_JACK, CLUB_THREE, CLUB_NINE))));
+                Dealer dealer = new Dealer(new BustState(HandFixtures.createDealerBust()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -140,7 +141,7 @@ class PlayerTest {
             @DisplayName("딜러가 스탠드라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_stand() {
                 //given
-                Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_JACK, CLUB_NINE))));
+                Dealer dealer = new Dealer(new StandState(HandFixtures.createDealer19Score()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -156,7 +157,7 @@ class PlayerTest {
             @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_blackjack() {
                 //given
-                Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+                Dealer dealer = new Dealer(new BlackjackState(HandFixtures.createDealerBlackjack()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -172,14 +173,14 @@ class PlayerTest {
         @Nested
         @DisplayName("플레이어가 블랙잭일 때")
         class player_blackjack {
-            private final State playerState = new BlackjackState(new Hand(List.of(HEART_JACK, HEART_ACE)));
+            private final State playerState = new BlackjackState(HandFixtures.createPlayerBlackjack());
             private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
             @Test
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액의 1.5배를 얻는다")
             void player_get_x1_5_when_dealer_bust() {
                 //given
-                Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_NINE, CLUB_FIVE, CLUB_JACK))));
+                Dealer dealer = new Dealer(new BustState(HandFixtures.createDealerBust()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -193,7 +194,7 @@ class PlayerTest {
             @DisplayName("딜러가 스탠드라면 플레이어는 베팅 금액의 1.5배를 얻는다")
             void player_get_x1_5_when_dealer_stand() {
                 //given
-                Dealer dealer = new Dealer(new StandState(new Hand(List.of(CLUB_EIGHT, CLUB_NINE))));
+                Dealer dealer = new Dealer(new StandState(HandFixtures.createDealer19Score()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -207,7 +208,7 @@ class PlayerTest {
             @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 돌려받는다")
             void player_get_nothing_when_dealer_bust() {
                 //given
-                Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+                Dealer dealer = new Dealer(new BlackjackState(HandFixtures.createDealerBlackjack()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -221,14 +222,14 @@ class PlayerTest {
         @Nested
         @DisplayName("플레이어가 스탠드일 때")
         class player_stand {
-            private final State playerState = new StandState(new Hand(List.of(HEART_NINE, HEART_TEN)));
+            private final State playerState = new StandState(HandFixtures.createPlayer19Score());
             private final Player player = new Player(new Name("이리내"), new BetAmount(betAmount), playerState);
 
             @Test
             @DisplayName("딜러가 버스트라면 플레이어는 베팅 금액의 1배를 얻는다")
             void player_get_x1_when_dealer_bust() {
                 //given
-                Dealer dealer = new Dealer(new BustState(new Hand(List.of(CLUB_NINE, CLUB_FIVE, CLUB_JACK))));
+                Dealer dealer = new Dealer(new BustState(HandFixtures.createDealerBust()));
 
                 // when
                 Result result = Result.checkPlayerResult(player, dealer);
@@ -242,7 +243,7 @@ class PlayerTest {
             @DisplayName("딜러가 블랙잭이라면 플레이어는 베팅 금액을 잃는다")
             void player_lost_x1_when_dealer_blackjack() {
                 //given
-                Dealer dealer = new Dealer(new BlackjackState(new Hand(List.of(CLUB_ACE, CLUB_JACK))));
+                Dealer dealer = new Dealer(new BlackjackState(HandFixtures.createDealerBlackjack()));
 
                 // when
 
