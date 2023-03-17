@@ -30,9 +30,9 @@ public class MockCardShufflerHelper {
         return (card) -> List.of(
                 Card.create(CardPattern.SPADE, CardNumber.KING),
                 Card.create(CardPattern.SPADE, CardNumber.QUEEN),
-                Card.create(CardPattern.SPADE, CardNumber.THREE),
+                Card.create(CardPattern.SPADE, CardNumber.KING),
                 Card.create(CardPattern.HEART, CardNumber.JACK),
-                Card.create(CardPattern.HEART, CardNumber.QUEEN),
+                Card.create(CardPattern.HEART, CardNumber.THREE),
                 Card.create(CardPattern.HEART, CardNumber.FOUR));
     }
 
@@ -52,10 +52,10 @@ public class MockCardShufflerHelper {
                 Card.create(CardPattern.SPADE, CardNumber.QUEEN));
     }
 
-    public static CardShuffler createBustShufflerAfterDrawCard() {
+    public static CardShuffler createDealerBustShufflerWithTwoPlayer() {
         return (card) -> List.of(
-                Card.create(CardPattern.SPADE, CardNumber.FOUR),
-                Card.create(CardPattern.HEART, CardNumber.FIVE),
+                Card.create(CardPattern.SPADE, CardNumber.KING),
+                Card.create(CardPattern.HEART, CardNumber.JACK),
                 Card.create(CardPattern.SPADE, CardNumber.EIGHT),
                 Card.create(CardPattern.SPADE, CardNumber.NINE),
                 Card.create(CardPattern.HEART, CardNumber.SIX),
@@ -77,7 +77,8 @@ public class MockCardShufflerHelper {
                 Card.create(CardPattern.HEART, CardNumber.KING),
                 Card.create(CardPattern.SPADE, CardNumber.TEN),
                 Card.create(CardPattern.DIAMOND, CardNumber.QUEEN),
-                Card.create(CardPattern.CLOVER, CardNumber.FIVE),
-                Card.create(CardPattern.CLOVER, CardNumber.JACK));
+                Card.create(CardPattern.CLOVER, CardNumber.SEVEN),
+                Card.create(CardPattern.CLOVER, CardNumber.JACK)
+        );
     }
 }

@@ -1,21 +1,23 @@
 package domain.game;
 
-import domain.participant.Participant;
-import domain.participant.ParticipantInfo;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardPattern;
+import domain.participant.Dealer;
 import domain.participant.ParticipantMoney;
+import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
-import static domain.helper.MockCardShufflerHelper.createBustShuffler;
-import static domain.helper.MockCardShufflerHelper.createBustShufflerAfterDrawCard;
 import static domain.helper.MockCardShufflerHelper.createDealerBlackJackShuffler;
+import static domain.helper.MockCardShufflerHelper.createDealerBustShufflerWithTwoPlayer;
 import static domain.helper.MockCardShufflerHelper.createOneWinAndOneLoseShuffler;
-import static domain.helper.ParticipantTestHelper.makeOneParticipantInfo;
 import static domain.helper.ParticipantTestHelper.makeTwoParticipantInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -26,149 +28,151 @@ class GameManagerTest {
     @DisplayName("create()는 덱과 참가자 정보를 받으면 게임 관리자를 생성한다.")
     void create_givenDeckAndParticipants_thenSuccess() {
         // given
-        final Map<Participant, ParticipantMoney> participantInfo =
-                makeTwoParticipantInfo(Player.create("pobi"), Player.create("crong"), Participant.createDealer());
+        final Players players = Players.create(List.of("pobi", "crong"));
+        final Participants participants = Participants.create(players);
 
         // when, then
-        final GameManager gameManager = assertDoesNotThrow(() -> GameManager.create((card) -> card, participantInfo));
+        final GameManager gameManager = assertDoesNotThrow(() -> GameManager.create((card) -> card, participants));
 
         assertThat(gameManager)
                 .isExactlyInstanceOf(GameManager.class);
     }
 
     @Test
-    @DisplayName("handFirstCards()는 호출하면, 플레이어에게 카드를 건네준다.")
-    void handFirstCards_whenCall_thenSuccess() {
+    @DisplayName("dealingFirstTurn()는 호출하면, 참가자들에게 카드를 건네준다.")
+    void dealingFirstTurn_whenCall_thenSuccess() {
         // given
-        final Player pobi = Player.create("pobi");
-        final Player crong = Player.create("crong");
-        final Participant dealer = Participant.createDealer();
-        final Map<Participant, ParticipantMoney> participantInfo =
-                makeTwoParticipantInfo(pobi, crong, dealer);
-        final GameManager gameManager = GameManager.create((card) -> card, participantInfo);
-        final List<Participant> participants = List.of(pobi, crong, dealer);
+        final Players players = Players.create(List.of("pobi", "crong"));
+        final Participants participants = Participants.create(players);
+        final GameManager gameManager = GameManager.create((card) -> card, participants);
 
         // when
-        gameManager.handFirstCards();
+        gameManager.dealingFirstTurn();
 
         // then
-        for (Participant participant : participants) {
-            assertThat(participant.getHand().size())
+        final Dealer dealer = participants.getDealer();
+        assertThat(dealer.getHand().size())
+                .isSameAs(2);
+
+        for (Player player : participants.getPlayers()) {
+            assertThat(player.getHand().size())
                     .isSameAs(2);
         }
     }
 
     @Test
-    @DisplayName("judgeFirstBettingResult()는 호출하면, 첫 턴의 결과를 판단하여 플레이어의 돈을 딜러에게 혹은 플레이어에게 보너스를 준다.")
+    @DisplayName("judgeFirstBettingResult()는 호출하면, 첫 턴의 결과를 바탕으로 딜러나 플레이어에게 돈을 준다.")
     void judgeFirstBettingResult_whenCall_thenJudgeBettingMoney() {
         // given
-        final Map<Participant, ParticipantMoney> participantInfo =
-                makeTwoParticipantInfo(Player.create("pobi"), Player.create("crong"), Participant.createDealer());
-        final GameManager gameManager = GameManager.create(createDealerBlackJackShuffler(), participantInfo);
-        gameManager.handFirstCards();
-        final ParticipantInfo expected = makePlayerBettingLoseInfo();
+        final Players players = Players.create(List.of("pobi", "crong"));
+        final List<Player> allPlayers = players.getPlayers();
+
+        final List<Integer> playerMoney = List.of(10000, 20000);
+        for (int i = 0; i < allPlayers.size(); i++) {
+            allPlayers.get(i).bet(ParticipantMoney.create(playerMoney.get(i)));
+        }
+
+        final Participants participants = Participants.create(players);
+        final GameManager gameManager = GameManager.create(createDealerBlackJackShuffler(), participants);
+        gameManager.dealingFirstTurn();
 
         // when
         gameManager.judgeFirstBettingResult();
 
         // then
-        ParticipantInfo actual = gameManager.getParticipantInfo();
+        final Dealer dealer = participants.getDealer();
+        assertThat(dealer.getMoney())
+                .isEqualTo(30000);
+        assertThat(players.getPlayers().get(0).getMoney())
+                .isEqualTo(-10000);
+        assertThat(players.getPlayers().get(1).getMoney())
+                .isEqualTo(-20000);
+    }
+
+    @Test
+    @DisplayName("getCard()는 호출하면, 카드 1장을 꺼내준다.")
+    void getCard_whenCall_thenGiveCardToParticipant() {
+        // given
+        final Players players = Players.create(List.of("pobi"));
+        final Participants participants = Participants.create(players);
+        final GameManager gameManager = GameManager.create((card) -> card, participants);
+
+        // when
+        final Card actual = gameManager.getCard();
+
+        // then
         assertThat(actual)
-                .isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("handCard()는 호출하면, 참가자에게 카드 1장을 건네준다.")
-    void handCard_whenCall_thenGiveCardToParticipant() {
-        // given
-        final Player targetPlayer = Player.create("pobi");
-        final GameManager gameManager = GameManager.create(
-                createBustShufflerAfterDrawCard(),
-                makeOneParticipantInfo(targetPlayer, Participant.createDealer()));
-
-        // when
-        gameManager.handCard(targetPlayer);
-
-        // then
-        assertThat(targetPlayer.getHand().size())
-                .isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("losePlayerMoney()는 호출하면, 참가자의 돈을 딜러에게 넘긴다.")
-    void losePlayerMoney_whenCall_thenGivePlayerMoneyToDealer() {
-        // given
-        final Player targetPlayer = Player.create("pobi");
-        final Participant dealer = Participant.createDealer();
-        final GameManager gameManager = GameManager.create(
-                createBustShufflerAfterDrawCard(),
-                makeOneParticipantInfo(targetPlayer, dealer));
-
-        // when
-        gameManager.losePlayerMoney(targetPlayer);
-
-        // then
-        final Map<Participant, ParticipantMoney> allParticipantInfo =
-                gameManager.getParticipantInfo().getParticipantInfo();
-
-        assertThat(allParticipantInfo.get(targetPlayer))
-                .isEqualTo(ParticipantMoney.create(-10000));
-
-        assertThat(allParticipantInfo.get(dealer))
-                .isEqualTo(ParticipantMoney.create(10000));
+                .isEqualTo(Card.create(CardPattern.HEART, CardNumber.ACE));
     }
 
     @Test
     @DisplayName("calculateProfit()는 딜러가 버스트면, 플레이어의 초기 베팅 금액을 돌려준다.")
     void calculateProfit_whenDealerBust_thenGiveBackBettingMoney() {
         // given
-        final Player pobi = Player.create("pobi");
-        final Player crong = Player.create("crong");
-        final Participant dealer = Participant.createDealer();
-        final Map<Participant, ParticipantMoney> initMoneyInfo = makeTwoParticipantInfo(pobi, crong, dealer);
-        final GameManager gameManager = GameManager.create(createBustShuffler(), initMoneyInfo);
+        final Players players = Players.create(List.of("pobi", "crong"));
+        final List<Player> allPlayers = players.getPlayers();
+
+        final List<Integer> playerMoney = List.of(10000, 20000);
+        IntStream.range(0, allPlayers.size())
+                .forEach((index) ->
+                        allPlayers.get(index).bet(ParticipantMoney.create(playerMoney.get(index))));
+
+        final Participants participants = Participants.create(players);
+        final GameManager gameManager = GameManager.create(createDealerBustShufflerWithTwoPlayer(), participants);
+
+        final Dealer dealer = participants.getDealer();
+        final Player player1 = allPlayers.get(0);
+        final Player player2 = allPlayers.get(1);
+
+        gameManager.dealingFirstTurn();
+        dealer.addCard(gameManager.getCard());
+
+        final Map<Player, ParticipantMoney> initMoneyInfo =
+                makeTwoParticipantInfo(player1, player2);
 
         // when
         gameManager.calculateProfit(initMoneyInfo);
 
         // then
-        final Map<Participant, ParticipantMoney> allParticipantInfo = gameManager.getParticipantInfo().getParticipantInfo();
-        assertThat(allParticipantInfo)
-                .isEqualTo(initMoneyInfo);
+        assertThat(dealer.getMoney())
+                .isEqualTo(-30000);
+        assertThat(player1.getMoney())
+                .isEqualTo(10000);
+        assertThat(player2.getMoney())
+                .isEqualTo(20000);
     }
 
     @Test
     @DisplayName("calculateProfit()는 딜러와 플레이어의 승패를 판단하여 최종 수익을 계산한다.")
     void calculateProfit_givenInitMoneyInfo_thenCalculateFinalProfit() {
         // given
-        final Player pobi = Player.create("pobi");
-        final Player crong = Player.create("crong");
-        final Participant dealer = Participant.createDealer();
-        final Map<Participant, ParticipantMoney> initMoneyInfo = makeTwoParticipantInfo(pobi, crong, dealer);
-        final GameManager gameManager = GameManager.create(createOneWinAndOneLoseShuffler(), initMoneyInfo);
-        gameManager.handFirstCards();
+        final Players players = Players.create(List.of("pobi", "crong"));
+        final List<Player> allPlayers = players.getPlayers();
+
+        final List<Integer> playerMoney = List.of(10000, 20000);
+        IntStream.range(0, allPlayers.size())
+                .forEach((index) ->
+                        allPlayers.get(index).bet(ParticipantMoney.create(playerMoney.get(index))));
+
+        final Participants participants = Participants.create(players);
+        final GameManager gameManager = GameManager.create(createOneWinAndOneLoseShuffler(), participants);
+        gameManager.dealingFirstTurn();
+
+        final Dealer dealer = participants.getDealer();
+        final Player player1 = allPlayers.get(0);
+        final Player player2 = allPlayers.get(1);
+        final Map<Player, ParticipantMoney> initMoneyInfo =
+                makeTwoParticipantInfo(player1, player2);
 
         // when
         gameManager.calculateProfit(initMoneyInfo);
 
         // then
-        assertThat(gameManager.getParticipantInfo())
-                .isEqualTo(makeBettingInfo());
-    }
-
-    private ParticipantInfo makePlayerBettingLoseInfo() {
-        final Map<Participant, ParticipantMoney> expected = new LinkedHashMap<>();
-        expected.put(Participant.createDealer(), ParticipantMoney.create(30000));
-        expected.put(Player.create("pobi"), ParticipantMoney.create(-10000));
-        expected.put(Player.create("crong"), ParticipantMoney.create(-20000));
-        return ParticipantInfo.create(expected);
-    }
-
-    private ParticipantInfo makeBettingInfo() {
-        final Map<Participant, ParticipantMoney> expected = new LinkedHashMap<>();
-        expected.put(Participant.createDealer(), ParticipantMoney.create(10000));
-        expected.put(Player.create("pobi"), ParticipantMoney.create(10000));
-        expected.put(Player.create("crong"), ParticipantMoney.create(-20000));
-        return ParticipantInfo.create(expected);
+        assertThat(dealer.getMoney())
+                .isEqualTo(10000);
+        assertThat(player1.getMoney())
+                .isEqualTo(10000);
+        assertThat(player2.getMoney())
+                .isEqualTo(-20000);
     }
 }
