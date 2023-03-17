@@ -63,9 +63,9 @@ public class BlackJackGame {
         return participants.findAllPlayerNames();
     }
 
-    public CardDTO findDealerFirstCard() {
+    public CardDto findDealerFirstCard() {
         Card card = participants.findDealer().getFirst();
-        return new CardDTO(card.getSuit(), card.getDenomination());
+        return new CardDto(card.getSuit(), card.getDenomination());
     }
 
     public boolean canPassCardToPlayer(String playerName) {
@@ -78,38 +78,38 @@ public class BlackJackGame {
         return dealer.canReceive();
     }
 
-    public PlayerNameHandResponse findPlayerNameHand(String playerName) {
+    public PlayerNameHandDto findPlayerNameHand(String playerName) {
         Player player = participants.findPlayerByName(playerName);
         return convertNameHand(player);
     }
 
-    public List<PlayerNameHandResponse> findAllPlayerNameHand() {
+    public List<PlayerNameHandDto> findAllPlayerNameHand() {
         List<String> allPlayerNames = participants.findAllPlayerNames();
         return allPlayerNames.stream()
                 .map(playerName -> convertNameHand(participants.findPlayerByName(playerName)))
                 .collect(Collectors.toList());
     }
 
-    public DealerHandScoreResponse findDealerHandScore() {
+    public DealerHandScoreDto findDealerHandScore() {
         Dealer dealer = participants.findDealer();
-        return new DealerHandScoreResponse(
+        return new DealerHandScoreDto(
                 convertCardDTO(dealer.getHand()),
                 dealer.calculateScore().getValue()
         );
     }
 
-    public List<PlayerNameHandScoreResponse> findAllPlayerNameHandScore() {
+    public List<PlayerNameHandScoreDto> findAllPlayerNameHandScore() {
         List<String> allPlayerNames = participants.findAllPlayerNames();
         return allPlayerNames.stream()
                 .map(playerName -> convertNameHandScore(participants.findPlayerByName(playerName)))
                 .collect(Collectors.toList());
     }
 
-    public DealerPlayerResultResponse findDealerPlayerResult() {
+    public ResultDto findDealerPlayerResult() {
         Map<String, Double> allPlayerResult = calculatePlayerResult();
         double dealerResult = calculateDealerResult(allPlayerResult);
 
-        return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
+        return new ResultDto(dealerResult, allPlayerResult);
     }
 
     private double calculateDealerResult(Map<String, Double> allPlayerResult) {
@@ -120,24 +120,24 @@ public class BlackJackGame {
         return result;
     }
 
-    private PlayerNameHandResponse convertNameHand(Player player) {
-        return new PlayerNameHandResponse(
+    private PlayerNameHandDto convertNameHand(Player player) {
+        return new PlayerNameHandDto(
                 player.getName(),
                 convertCardDTO(player.getHand())
         );
     }
 
-    private PlayerNameHandScoreResponse convertNameHandScore(Player player) {
-        return new PlayerNameHandScoreResponse(
+    private PlayerNameHandScoreDto convertNameHandScore(Player player) {
+        return new PlayerNameHandScoreDto(
                 player.getName(),
                 convertCardDTO(player.getHand()),
                 player.calculateScore().getValue()
         );
     }
 
-    private List<CardDTO> convertCardDTO(Hand hand) {
+    private List<CardDto> convertCardDTO(Hand hand) {
         return hand.getHand().stream()
-                .map(card -> new CardDTO(card.getSuit(), card.getDenomination()))
+                .map(card -> new CardDto(card.getSuit(), card.getDenomination()))
                 .collect(Collectors.toList());
     }
 

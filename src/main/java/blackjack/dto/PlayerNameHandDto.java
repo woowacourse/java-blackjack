@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerNameHandResponse {
+public class PlayerNameHandDto {
 
     private final String name;
-    private final List<CardDTO> hand;
+    private final List<CardDto> hand;
 
-    public PlayerNameHandResponse(String name, List<CardDTO> hand) {
+    public PlayerNameHandDto(String name, List<CardDto> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
     }
@@ -18,7 +18,7 @@ public class PlayerNameHandResponse {
         return name;
     }
 
-    public List<CardDTO> getHand() {
-        return Collections.unmodifiableList(hand);
+    public List<CardDto> getHand() {
+        return hand;
     }
 }

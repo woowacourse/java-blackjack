@@ -2,12 +2,12 @@ package blackjack.dto;
 
 import java.util.Map;
 
-public class DealerPlayerResultResponse {
+public class ResultDto {
 
     private final double dealerResult;
     private final Map<String, Double> playerResult;
 
-    public DealerPlayerResultResponse(double dealerResult, Map<String, Double> playerResult) {
+    public ResultDto(double dealerResult, Map<String, Double> playerResult) {
         this.dealerResult = dealerResult;
         this.playerResult = playerResult;
     }

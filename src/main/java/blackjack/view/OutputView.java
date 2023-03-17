@@ -32,13 +32,13 @@ public class OutputView {
         printMessage(message);
     }
 
-    public void showDealerFirstCard(CardDTO dealerFirstCard) {
+    public void showDealerFirstCard(CardDto dealerFirstCard) {
         System.out.println(DEALER_NAME + DELIMITER + mapCard(dealerFirstCard));
     }
 
-    public void showPlayerNameHand(PlayerNameHandResponse playerNameHand) {
+    public void showPlayerNameHand(PlayerNameHandDto playerNameHand) {
         String name = playerNameHand.getName();
-        List<CardDTO> hand = playerNameHand.getHand();
+        List<CardDto> hand = playerNameHand.getHand();
         printMessage(name + CARD + DELIMITER + convertCard(hand));
     }
 
@@ -47,33 +47,33 @@ public class OutputView {
         printMessage(DEALER_POSSIBLE_MESSAGE);
     }
 
-    public void showTotalScoreDealer(DealerHandScoreResponse dealerHandScore) {
-        List<CardDTO> hand = dealerHandScore.getHand();
+    public void showTotalScoreDealer(DealerHandScoreDto dealerHandScore) {
+        List<CardDto> hand = dealerHandScore.getHand();
         int score = dealerHandScore.getScore();
         printMessage(LINE_SEPARATOR);
         printMessage(DEALER_NAME + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
     }
 
-    public void showTotalScorePlayer(PlayerNameHandScoreResponse playerNameHandScore) {
+    public void showTotalScorePlayer(PlayerNameHandScoreDto playerNameHandScore) {
         String name = playerNameHandScore.getName();
-        List<CardDTO> hand = playerNameHandScore.getHand();
+        List<CardDto> hand = playerNameHandScore.getHand();
         int score = playerNameHandScore.getScore();
         printMessage(name + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
     }
 
-    public void showAllPlayerNameHand(List<PlayerNameHandResponse> allPlayerNameAndHand) {
-        for (PlayerNameHandResponse playerNameAndHand : allPlayerNameAndHand) {
+    public void showAllPlayerNameHand(List<PlayerNameHandDto> allPlayerNameAndHand) {
+        for (PlayerNameHandDto playerNameAndHand : allPlayerNameAndHand) {
             showPlayerNameHand(playerNameAndHand);
         }
     }
 
-    public void showAllPlayerNameHandScore(List<PlayerNameHandScoreResponse> allPlayerNameHandScore) {
-        for (PlayerNameHandScoreResponse playerNameHandScore : allPlayerNameHandScore) {
+    public void showAllPlayerNameHandScore(List<PlayerNameHandScoreDto> allPlayerNameHandScore) {
+        for (PlayerNameHandScoreDto playerNameHandScore : allPlayerNameHandScore) {
             showTotalScorePlayer(playerNameHandScore);
         }
     }
 
-    public void showTotalResult(DealerPlayerResultResponse dealerPlayerResult) {
+    public void showTotalResult(ResultDto dealerPlayerResult) {
         showDealerResult(dealerPlayerResult.getDealerResult());
         showAllPlayerResult(dealerPlayerResult.getPlayerResult());
     }
@@ -95,13 +95,13 @@ public class OutputView {
         printMessage(name + DELIMITER + decimalFormat.format(result));
     }
 
-    private String convertCard(List<CardDTO> inputHand) {
+    private String convertCard(List<CardDto> inputHand) {
         return inputHand.stream()
                 .map(this::mapCard)
                 .collect(Collectors.joining(JOINER));
     }
 
-    private String mapCard(CardDTO card) {
+    private String mapCard(CardDto card) {
         return NumberMapper.map(card.getDenomination()) + SuitMapper.map(card.getSuit());
     }
 
