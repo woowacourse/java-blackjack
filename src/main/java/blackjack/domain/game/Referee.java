@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class Referee {
 
     private static final int BURST_SCORE = 22;
-    private static final double BLACKJACK_BONUS = 1.5;
 
     public List<Result> judgeResult(Participant dealer, Players players) {
         return players.getPlayers().stream()
@@ -65,21 +64,8 @@ public class Referee {
         List<Integer> amounts = players.getAmounts();
 
         for (int index = 0; index < results.size(); index++) {
-            profits.add(calculate(results.get(index), amounts.get(index)));
+            profits.add(results.get(index).calculateProfit(amounts.get(index)));
         }
         return profits;
-    }
-
-    private int calculate(Result result, int amount) {
-        if (result == Result.BLACKJACK) {
-            return (int) (amount * BLACKJACK_BONUS);
-        }
-        if (result == Result.WIN) {
-            return amount;
-        }
-        if (result == Result.DRAW) {
-            return 0;
-        }
-        return -amount;
     }
 }
