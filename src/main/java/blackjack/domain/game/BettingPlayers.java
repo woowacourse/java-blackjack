@@ -29,6 +29,9 @@ public class BettingPlayers {
         if (moneys.isEmpty()) {
             throw new IllegalArgumentException("돈 목록은 비어있을 수 없습니다.");
         }
+        if (players.size() != moneys.size()) {
+            throw new IllegalArgumentException("이름 목록과 돈 목록의 크기는 다를 수 없습니다.");
+        }
     }
 
     private void saveProfitInformation(final Deck deck, final List<String> nameValues, final List<Integer> moneyValues) {

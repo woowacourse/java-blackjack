@@ -12,10 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -36,8 +33,42 @@ class BlackJackManagerTest {
         final CardDeck cardDeck = new CardDeck();
         final List<String> nameValues = List.of("헤나", "시카");
         final List<Integer> moneyValues = List.of(10000, 20000);
+
         assertThatNoException()
                 .isThrownBy(() -> new BlackJackManager(cardDeck, nameValues, moneyValues));
+    }
+
+    @DisplayName("이름 목록이 비어있을 경우 예외가 발생한다.")
+    @Test
+    void throwExceptionWhenNameValuesIsEmpty() {
+        final CardDeck cardDeck = new CardDeck();
+        final List<String> nameValues = Collections.emptyList();
+        final List<Integer> moneyValues = List.of(10000, 20000);
+
+        assertThatThrownBy(() -> new BlackJackManager(cardDeck, nameValues, moneyValues))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("돈 목록이 비어있을 경우 예외가 발생한다.")
+    @Test
+    void throwExceptionWhenMoneyValuesIsEmpty() {
+        final CardDeck cardDeck = new CardDeck();
+        final List<String> nameValues = List.of("헤나", "시카");
+        final List<Integer> moneyValues = Collections.emptyList();
+
+        assertThatThrownBy(() -> new BlackJackManager(cardDeck, nameValues, moneyValues))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("이름 목록과 돈 목록의 크기가 다를 경우 예외가 발생한다.")
+    @Test
+    void throwExceptionWhenMoneyValuesAndNameValuesHasNotSameSize() {
+        final CardDeck cardDeck = new CardDeck();
+        final List<String> nameValues = List.of("헤나", "시카");
+        final List<Integer> moneyValues = List.of(1000);
+
+        assertThatThrownBy(() -> new BlackJackManager(cardDeck, nameValues, moneyValues))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어 히트를 진행한다.")
