@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.strategy.RandomCardShuffle;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
@@ -90,5 +91,14 @@ class BlackJackGameTest {
         assertThat(dealerResult.get(Result.WIN.getResult())).isEqualTo(2);
         assertThat(dealerResult.get(Result.LOSE.getResult())).isEqualTo(1);
         assertThat(dealerResult.get(Result.DRAW.getResult())).isEqualTo(1);
+    }
+
+    @Test
+    void bet() {
+        final Players players = new Players("a,b");
+
+        blackJackGame.bet(players, List.of(10000, 20000));
+
+        Assertions.assertThat(players.getAmounts()).isEqualTo(List.of(10000, 20000));
     }
 }

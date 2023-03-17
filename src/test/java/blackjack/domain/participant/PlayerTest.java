@@ -25,4 +25,13 @@ class PlayerTest {
         Assertions.assertThat(player.getCards().getCardCount()).isEqualTo(1);
         Assertions.assertThat(player.getCards().getCards().contains(card)).isTrue();
     }
+
+    @Test
+    void bet() {
+        Assertions.assertThat(player.getAmount()).isEqualTo(new BettingAmount(0));
+
+        player.bet(50000);
+
+        Assertions.assertThat(player.getAmount()).isEqualTo(new BettingAmount(50000));
+    }
 }
