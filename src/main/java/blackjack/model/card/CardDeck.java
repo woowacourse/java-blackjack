@@ -1,10 +1,6 @@
 package blackjack.model.card;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class CardDeck {
 
@@ -12,12 +8,18 @@ public class CardDeck {
 
     public CardDeck() {
         cardDeck = new Stack<>();
-        List<Card> cards = Arrays.stream(CardSuit.values())
-                .flatMap(suit -> Arrays.stream(CardNumber.values())
-                        .map(number -> Card.of(suit, number)))
-                .collect(Collectors.toList());
+        List<Card> cards = new ArrayList<>();
+        for (CardSuit suit : CardSuit.values()) {
+            createCardsWithSuit(cards, suit);
+        }
         Collections.shuffle(cards);
         cards.forEach(cardDeck::push);
+    }
+
+    private static void createCardsWithSuit(List<Card> cards, CardSuit suit) {
+        for (CardNumber number : CardNumber.values()) {
+            cards.add(Card.of(suit, number));
+        }
     }
 
     public CardDeck(List<Card> cards) {
