@@ -47,20 +47,6 @@ class ParticipantCardTest {
                 .hasSize(1);
     }
 
-    @Test
-    @DisplayName("getFirst()는 호출하면, 참가자의 첫 번째 카드를 조회한다")
-    void getFirst_whenCall_thenReturnFirstCard() {
-        // given
-        participantCard.addCard(card);
-
-        // when
-        final Card actual = participantCard.getFirstCard();
-
-        // then
-        assertThat(actual)
-                .isSameAs(card);
-    }
-
     @MethodSource(value = "domain.helper.ParticipantTestHelper#makeCards")
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
     void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {

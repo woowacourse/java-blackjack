@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static domain.card.CardNumber.ACE;
-
 public class ParticipantCard {
 
-    private static final int FIRST_CARD_INDEX = 0;
     private static final int BLACKJACK_SIZE = 2;
-    private static final Score ACE_HIGH_SCORE = Score.create(11);
+    private static final Score ACE_HIGH_SCORE = Score.create(10);
     private static final Score BLACKJACK_SCORE = Score.create(21);
 
     private final List<Card> cards;
@@ -30,14 +27,14 @@ public class ParticipantCard {
         cards.add(card);
     }
 
-    Card getFirstCard() {
-        return cards.get(FIRST_CARD_INDEX);
-    }
-
     Score calculateScore() {
+        int aceCount = getAceCount();
         Score score = sumCards();
-        if (ACE_HIGH_SCORE.isGreaterThanAndEqual(score) && hasAce()) {
-            score = score.add(ACE_HIGH_SCORE.subtract(ACE.getScore()));
+
+        while (aceCount > 0 &&
+                BLACKJACK_SCORE.isGreaterThanAndEqual(score.add(ACE_HIGH_SCORE))) {
+            score = score.add(ACE_HIGH_SCORE);
+            aceCount--;
         }
         return score;
     }
@@ -56,8 +53,10 @@ public class ParticipantCard {
                 .reduce(Score.create(0), Score::add);
     }
 
-    private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     @Override
