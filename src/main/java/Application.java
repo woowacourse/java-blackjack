@@ -3,7 +3,7 @@ import domain.BettingTable;
 import domain.Judge;
 import domain.card.CardDeck;
 import domain.card.Cards;
-import domain.gamestate.GameState;
+import domain.GameState;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -101,9 +101,9 @@ public class Application {
         List<Gain> gains = new ArrayList<>();
 
         for (Player player : players) {
-            GameState gameState = Judge.gameResult(dealer, player);
+            GameState result = Judge.gameResult(dealer, player);
             gains.add(
-                new Gain(player.getName(), gameState.calculate(bettingTable.getBetAmount(player))));
+                new Gain(player.getName(), result.calculate(bettingTable.getBetAmount(player))));
         }
         return new Gains(gains);
     }

@@ -4,8 +4,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.gamestate.GameState;
-import domain.gamestate.GameStates;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ class JudgeTest {
         player.hit(Card.of(Suit.SPADE, Denomination.THREE));
         GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameStates.LOSE);
+        Assertions.assertThat(result).isEqualTo(GameState.LOSE);
     }
 
     @Test
@@ -51,7 +49,7 @@ class JudgeTest {
         //when
         GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameStates.LOSE);
+        Assertions.assertThat(result).isEqualTo(GameState.LOSE);
     }
 
     @Test
@@ -72,7 +70,7 @@ class JudgeTest {
         //when
         GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameStates.WIN);
+        Assertions.assertThat(result).isEqualTo(GameState.WIN);
     }
 
     @Test
@@ -91,7 +89,7 @@ class JudgeTest {
         //when
         GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameStates.WIN);
+        Assertions.assertThat(result).isEqualTo(GameState.WIN);
     }
 
     @Test
@@ -110,6 +108,6 @@ class JudgeTest {
         //when
         GameState result = Judge.gameResult(dealer, player);
         //then
-        Assertions.assertThat(result).isEqualTo(GameStates.DRAW);
+        Assertions.assertThat(result).isEqualTo(GameState.DRAW);
     }
 }
