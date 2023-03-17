@@ -246,7 +246,6 @@ class PlayerTest {
                 Dealer dealer = new Dealer(new BlackjackState(HandFixtures.createDealerBlackjack()));
 
                 // when
-
                 Result result = Result.checkPlayerResult(player, dealer);
                 int playerProfit = player.getProfit(result);
 

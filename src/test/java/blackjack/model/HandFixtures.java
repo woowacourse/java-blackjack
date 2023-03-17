@@ -44,6 +44,4 @@ public class HandFixtures {
         return new Hand(List.of(CLUB_TEN, CLUB_JACK));
     }
 
-    // todo 어디까지 static이어야 하는가?, 그리고 어디까지 Fixture 여야 하는가?
-
 }

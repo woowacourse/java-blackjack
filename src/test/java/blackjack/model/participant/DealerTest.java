@@ -5,12 +5,10 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DealerDrawState;
 import blackjack.model.state.DealerInitialState;
-import blackjack.model.state.PlayerInitialState;
 import blackjack.model.state.StandState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static blackjack.model.CardFixtures.*;
