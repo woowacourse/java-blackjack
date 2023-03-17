@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Result;
 import blackjack.domain.participant.Score;
 
 import java.util.ArrayList;
@@ -53,4 +54,16 @@ public class Hand {
         return hand.size();
     }
 
+    public Result calculateResult(Hand target) {
+        if (this.isBlackJack() && !target.isBlackJack()) {
+            return Result.BLACKJACK;
+        }
+        if (this.isBust()) {
+            return Result.LOSE;
+        }
+        if (target.isBust()) {
+            return Result.WIN;
+        }
+        return calculateScore().calculateResultByScore(target.calculateScore());
+    }
 }

@@ -21,7 +21,7 @@ public class PlayerMoney {
     public Map<Player, Money> calculateYieldAllPlayer(Hand dealerHand) {
         Map<Player, Money> calculatedPlayerMoney = new LinkedHashMap<>();
         for (Player player : playerMoney.keySet()) {
-            Result result = Result.calculateResult(player.getHand(), dealerHand);
+            Result result = player.getHand().calculateResult(dealerHand);
             Money money = result.calculateYield(playerMoney.get(player));
             calculatedPlayerMoney.put(player, money);
         }

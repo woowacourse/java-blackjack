@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.game.Result;
+
 import java.util.Objects;
 
 public class Score {
@@ -35,6 +37,16 @@ public class Score {
 
     public boolean isLessThan(Score other) {
         return this.value < other.value;
+    }
+
+    public Result calculateResultByScore(Score target) {
+        if (this.isGreaterThan(target)) {
+            return Result.WIN;
+        }
+        if (this.isLessThan(target)) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     private int getBestScoreAce(int aceCount) {
