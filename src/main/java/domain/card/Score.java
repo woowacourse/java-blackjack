@@ -6,9 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class Score {
 
-    private final int score;
-
     private static final Map<Integer, Score> CACHE = new ConcurrentHashMap<>();
+    private final int score;
 
     private Score(final int score) {
         this.score = score;
