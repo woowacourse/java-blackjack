@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.CommandType;
 import blackjack.domain.game.FinalProfit;
 import blackjack.domain.game.Money;
 import blackjack.domain.participant.Dealer;
@@ -17,8 +17,6 @@ import blackjack.view.OutputView;
 
 public class BlackJackGameController {
 
-    private static final String YES_COMMAND = "y";
-    private static final String NO_COMMAND = "n";
     private static final int DEALER_DRAWING_BOUNDARY = 17;
     private static final int PLAYER_BUST_BOUNDARY = 21;
     private static final int DRAWING_CARD_SIZE = 1;
@@ -78,34 +76,16 @@ public class BlackJackGameController {
     }
 
     private void handOutCardTo(final BlackJackGame blackJackGame, final Player player) {
-        boolean command = true;
-        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && command) {
-            final String playerAnswer = repeatInput(() -> checkGameCommand(player));
-            command = isCardHandedOutByCommand(blackJackGame, player, playerAnswer);
-        }
-    }
-
-    private String checkGameCommand(final Player player) {
-        final String gameCommand = inputView.readGameCommandToGetOneMoreCard(player.getName());
-        validateCorrectCommand(gameCommand);
-        return gameCommand;
-    }
-
-    private void validateCorrectCommand(final String gameCommand) {
-        if (!(YES_COMMAND.equals(gameCommand) || NO_COMMAND.equals(gameCommand))) {
-            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
-        }
-    }
-
-    private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
-                                             final String playerAnswer) {
-        if (playerAnswer.equals(YES_COMMAND)) {
+        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY)) {
+            final String inputCommand =
+                    repeatInput(() -> inputView.readGameCommandToGetOneMoreCard(player.getName()));
+            if (!CommandType.canHit(inputCommand)) {
+                outputView.printParticipantCards(player.getName(), player.getCards());
+                return;
+            }
             blackJackGame.handOutCardTo(shufflingMachine, player, DRAWING_CARD_SIZE);
             outputView.printParticipantCards(player.getName(), player.getCards());
-            return true;
         }
-        outputView.printParticipantCards(player.getName(), player.getCards());
-        return false;
     }
 
     private void handOutCardTo(final BlackJackGame blackJackGame, final Dealer dealer) {
@@ -121,19 +101,12 @@ public class BlackJackGameController {
     }
 
     private <T> T repeatInput(final Supplier<T> function) {
-        Optional<T> input;
-        do {
-            input = validateInput(function);
-        } while (input.isEmpty());
-        return input.get();
-    }
-
-    private <T> Optional<T> validateInput(final Supplier<T> function) {
-        try {
-            return Optional.of(function.get());
-        } catch (final IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
+        while (true) {
+            try {
+                return function.get();
+            } catch (final IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
