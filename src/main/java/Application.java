@@ -11,7 +11,7 @@ public class Application {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
     
         initializedBlackjackGame(blackJackGame);
-        settingParticipantsBetAmount(blackJackGame);
+        participantsBet(blackJackGame);
         giveCardToPlayers(blackJackGame);
         printProfitResults(blackJackGame, new Referee());
     }
@@ -25,7 +25,7 @@ public class Application {
         OutputView.printPlayersInformation(blackJackGame.getPlayers());
     }
     
-    private static void settingParticipantsBetAmount(BlackJackGame blackJackGame) {
+    private static void participantsBet(BlackJackGame blackJackGame) {
         blackJackGame.settingBetAmountToParticipantsBy(Application::inputBetAmount);
     }
     
