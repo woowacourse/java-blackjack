@@ -6,10 +6,9 @@ import domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Participant {
+public class Participant {
 
     protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
-
     protected final ParticipantCard hand;
     private final ParticipantName name;
 
@@ -18,39 +17,26 @@ public abstract class Participant {
         this.hand = ParticipantCard.create();
     }
 
-    public static Participant createDealer() {
-        return Dealer.create();
+    static Participant create(final String name) {
+        return new Participant(name);
     }
 
-    public final void addCard(final Card... cards) {
+    void addCard(final Card... cards) {
         for (Card card : cards) {
             hand.addCard(card);
         }
     }
 
-    public final int calculateScore() {
-        Score score = hand.calculateScore();
-        return score.getScore();
-    }
-
-    public final boolean isBust() {
+    boolean isBust() {
         return hand.isBust();
     }
 
-    public final boolean isBlackJack() {
+    boolean isBlackJack() {
         return hand.isBlackJack();
     }
 
-    public abstract Card getFirstCard();
-
-    public abstract boolean canGiveCard();
-
-    public final String getName() {
-        return name.getName();
-    }
-
-    public final List<Card> getHand() {
-        return List.copyOf(hand.getCards());
+    Score calculateScore() {
+        return hand.calculateScore();
     }
 
     @Override
@@ -68,5 +54,13 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    String getName() {
+        return name.getName();
+    }
+
+    List<Card> getHand() {
+        return List.copyOf(hand.getCards());
     }
 }

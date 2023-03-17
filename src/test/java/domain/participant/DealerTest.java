@@ -29,8 +29,7 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
-        final ParticipantCard participantCard = dealer.hand;
-        final List<Card> cards = participantCard.getCards();
+        final List<Card> cards = dealer.getHand();
 
         // then
         assertThat(cards)
@@ -38,7 +37,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("getFirst()는 호출하면, 딜러의 첫 번째 카드를 조회한다")
+    @DisplayName("getFirstCard()는 호출하면, 딜러의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
         dealer.addCard(card);
@@ -51,31 +50,14 @@ class DealerTest {
                 .isEqualTo(card);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeCards")
-    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
-    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeDealerCards")
+    @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(dealer::addCard);
 
-        // when
-        final int score = dealer.calculateScore();
-
-        // then
-        assertThat(score)
-                .isSameAs(expected);
-    }
-
-    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBustCard")
-    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
-    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(dealer::addCard);
-
-        // when
-        final boolean actual = dealer.isBust();
-
-        // then
-        assertThat(actual)
+        // when, then
+        assertThat(dealer.canDrawCard())
                 .isSameAs(expected);
     }
 
@@ -93,14 +75,64 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeDealerCards")
-    @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
-    void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBustCard")
+    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
+    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(dealer::addCard);
 
-        // when, then
-        assertThat(dealer.canGiveCard())
+        // when
+        final boolean actual = dealer.isBust();
+
+        // then
+        assertThat(actual)
                 .isSameAs(expected);
+    }
+
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeCards")
+    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+        // given
+        cards.forEach(dealer::addCard);
+
+        // when
+        final int score = dealer.calculateScore();
+
+        // then
+        assertThat(score)
+                .isSameAs(expected);
+    }
+
+    @Test
+    @DisplayName("earnMoney()는 받은 플레이어 돈만큼 돈을 추가한다.")
+    void earnMoney_givenPlayerMoney_thenAddUpToPlayerMoney() {
+        // when
+        dealer.earnMoney(ParticipantMoney.create(10000));
+
+        // then
+        assertThat(dealer.getMoney())
+                .isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("loseMoney()는 받은 플레이어 돈만큼 돈을 뺀다.")
+    void loseMoney_givenPlayerMoney_thenSubtractUpToPlayerMoney() {
+        // when
+        dealer.loseMoney(ParticipantMoney.create(10000));
+
+        // then
+        assertThat(dealer.getMoney())
+                .isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("resetMoney()는 딜러의 돈을 초기화한다.")
+    void resetMoney_giveInitMoney_thenMakeMoneyZero() {
+        // when
+        dealer.resetMoney(ParticipantMoney.zero());
+
+        // then
+        assertThat(dealer.getMoney())
+                .isEqualTo(0);
     }
 }

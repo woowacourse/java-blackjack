@@ -3,8 +3,8 @@ package domain.helper;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import domain.participant.Participant;
 import domain.participant.ParticipantMoney;
+import domain.participant.Player;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.LinkedHashMap;
@@ -64,19 +64,9 @@ public final class ParticipantTestHelper {
         );
     }
 
-    public static Map<Participant, ParticipantMoney> makeOneParticipantInfo(final Participant player,
-                                                                            final Participant dealer) {
-        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
-        participantInfo.put(dealer, ParticipantMoney.zero());
-        participantInfo.put(player, ParticipantMoney.create(10000));
-        return participantInfo;
-    }
-
-    public static Map<Participant, ParticipantMoney> makeTwoParticipantInfo(final Participant player1,
-                                                                            final Participant player2,
-                                                                            final Participant dealer) {
-        final Map<Participant, ParticipantMoney> participantInfo = new LinkedHashMap<>();
-        participantInfo.put(dealer, ParticipantMoney.zero());
+    public static Map<Player, ParticipantMoney> makeTwoParticipantInfo(final Player player1,
+                                                                       final Player player2) {
+        final Map<Player, ParticipantMoney> participantInfo = new LinkedHashMap<>();
         participantInfo.put(player1, ParticipantMoney.create(10000));
         participantInfo.put(player2, ParticipantMoney.create(20000));
         return participantInfo;

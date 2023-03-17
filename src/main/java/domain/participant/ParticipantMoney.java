@@ -1,5 +1,6 @@
 package domain.participant;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class ParticipantMoney {
@@ -36,8 +37,9 @@ public class ParticipantMoney {
 
     private static void validateRange(final int money) {
         if (money < MIN_MONEY || money > MAX_MONEY) {
-            throw new IllegalArgumentException(String.format("베팅 금액은 %d원 이상, %d원 이하여야 합니다.",
-                    MIN_MONEY, MAX_MONEY));
+            final DecimalFormat decimalFormat = new DecimalFormat("###,###");
+            throw new IllegalArgumentException(String.format("베팅 금액은 %s원 이상, %s원 이하여야 합니다.",
+                    decimalFormat.format(MIN_MONEY), decimalFormat.format(MAX_MONEY)));
         }
     }
 

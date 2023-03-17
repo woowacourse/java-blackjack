@@ -43,7 +43,7 @@ public final class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 }
