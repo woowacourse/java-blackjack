@@ -1,16 +1,12 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.card.Score;
-import domain.game.AddCardCommand;
 import domain.player.state.Ready;
 import domain.player.state.State;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 public abstract class Player {
@@ -26,17 +22,6 @@ public abstract class Player {
     public abstract double calculateProfit(double betAmount);
     
     public abstract boolean isFinished();
-    
-    public abstract void drawOrFinishParticipantBy(
-            Deck deck,
-            Function<Player, AddCardCommand> supplyCommand,
-            Consumer<List<Player>> printParticipantCardStatus
-    );
-    
-    public abstract void drawOrFinishDealerBy(
-            Deck deck,
-            Consumer<List<Player>> printParticipantCardStatus
-    );
     
     public abstract double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount);
     

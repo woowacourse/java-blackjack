@@ -1,13 +1,7 @@
 package domain.player;
 
-import domain.card.Deck;
 import domain.card.Score;
-import domain.game.AddCardCommand;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 public class Dealer extends Player {
@@ -33,34 +27,7 @@ public class Dealer extends Player {
     }
     
     @Override
-    public void drawOrFinishParticipantBy(
-            Deck deck, Function<Player,
-            AddCardCommand> ignore,
-            Consumer<List<Player>> printParticipantCardStatus
-    ) {
-        throw new UnsupportedOperationException("딜러가 사용할 수 없는 기능입니다.");
-    }
-    
-    @Override
-    public void drawOrFinishDealerBy(Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
-        if (isFinished()) {
-            return;
-        }
-    
-        draw(deck.draw());
-        printParticipantCardStatus.accept(Collections.emptyList());
-    
-        if (isDealerNotFinished()) {
-            drawStop();
-        }
-    }
-    
-    @Override
     public double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount) {
         throw new UnsupportedOperationException("딜러는 배팅 금액을 입력받지 않습니다.");
-    }
-    
-    private boolean isDealerNotFinished() {
-        return !isFinished();
     }
 }

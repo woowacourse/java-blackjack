@@ -2,23 +2,19 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.game.BetAmounts;
 import domain.game.AddCardCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
-    private final BetAmounts betAmounts;
+    private final Map<Player, Double> betAmounts;
     
     public Players(String participantNames) {
         this.players = initPlayers(participantNames);
-        this.betAmounts = new BetAmounts();
+        this.betAmounts = new HashMap<>();
     }
     
     private List<Player> initPlayers(String playerNames) {
@@ -48,7 +44,7 @@ public class Players {
     public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
         for (Player participant : getParticipants()) {
             double betAmount = participant.supplyBetAmount(supplyBetAmount);
-            betAmounts.savePlayerBetAmount(participant, betAmount);
+            betAmounts.put(participant, betAmount);
         }
     }
     
@@ -58,16 +54,72 @@ public class Players {
             Consumer<List<Player>> printParticipantCardStatus
     ) {
         for (Player participant : getParticipants()) {
-            participant.drawOrFinishParticipantBy(deck, supplyCommand, printParticipantCardStatus);
+            drawOrFinishParticipantBy(participant, deck, supplyCommand, printParticipantCardStatus);
+        }
+    }
+    
+    private void drawOrFinishParticipantBy(
+            Player player,
+            Deck deck,
+            Function<Player, AddCardCommand> supplyCommand,
+            Consumer<List<Player>> printParticipantCardStatus
+    ) {
+        if (player.isFinished()) {
+            printParticipantCardStatus.accept(List.of(player));
+            return;
+        }
+        
+        decideDrawOrFinish(player, deck, supplyCommand, printParticipantCardStatus);
+    }
+    
+    private void decideDrawOrFinish(
+            Player player,
+            Deck deck,
+            Function<Player, AddCardCommand> supplyCommand,
+            Consumer<List<Player>> printParticipantCardStatus
+    ) {
+        AddCardCommand command = supplyCommand.apply(player);
+        if (command.isAddCardCommand()) {
+            player.draw(deck.draw());
+        }
+        printParticipantCardStatus.accept(List.of(player));
+        
+        if (command.isNotAddCardCommand() || player.isFinished()) {
+            drawStopIfNotAddCardCommand(player, command);
+            return;
+        }
+        decideDrawOrFinish(player, deck, supplyCommand, printParticipantCardStatus);
+    }
+    
+    private void drawStopIfNotAddCardCommand(Player player, AddCardCommand command) {
+        if (command.isNotAddCardCommand()) {
+            player.drawStop();
         }
     }
     
     public void giveCardToDealerBy(Deck deck, Consumer<List<Player>> printGiveDealerCardMessage) {
-        getDealer().drawOrFinishDealerBy(deck, printGiveDealerCardMessage);
+        drawOrFinishDealerBy(getDealer(), deck, printGiveDealerCardMessage);
+    }
+    
+    private void drawOrFinishDealerBy(Player dealer, Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
+        if (dealer.isFinished()) {
+            return;
+        }
+    
+        dealer.draw(deck.draw());
+        printParticipantCardStatus.accept(Collections.emptyList());
+        
+        if (isDealerNotFinished(dealer)) {
+            dealer.drawStop();
+        }
+    }
+    
+    private boolean isDealerNotFinished(Player dealer) {
+        return !dealer.isFinished();
     }
     
     public double findBetAmountByPlayer(Player player) {
-        return betAmounts.findBetAmountByPlayer(player);
+        return betAmounts.get(player);
     }
     
     public Player getDealer() {
