@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.CardPool;
-import blackjack.strategy.CardPicker;
+import blackjack.domain.game.Deck;
 import blackjack.util.StringUtil;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -40,8 +39,20 @@ public class Players {
         return !NAMES_FORMAT.matcher(names).matches();
     }
 
-    public void initHit(CardPool cardPool, CardPicker cardPicker) {
-        players.forEach((player) -> player.initHit(cardPool, cardPicker));
+    public void initHit(Deck deck) {
+        players.forEach((player) -> player.initHit(deck));
+    }
+
+    public void bet(List<Integer> amounts) {
+        for (int index = 0; index < players.size(); index++) {
+            players.get(index).bet(amounts.get(index));
+        }
+    }
+
+    public List<Integer> getAmounts() {
+        return players.stream()
+                .map(player -> player.getAmount().getValue())
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {

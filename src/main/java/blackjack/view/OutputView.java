@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.participant.*;
 import blackjack.domain.game.Result;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,15 +15,15 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitCardDeck(Participant dealer, Players players) {
+    public static void printInitCards(Participant dealer, Players players) {
         System.out.println();
         List<String> playerNames = getPlayerNames(players);
         String processedPlayerNames = String.join(DELIMITER, playerNames);
         final String dealerName = dealer.getName().getValue();
         
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
-        System.out.println(String.format("%s: %s", dealerName, dealer.getCardDeck().getCardsInfo().get(0)));
-        printPlayersCardDeck(players, playerNames);
+        System.out.println(String.format("%s: %s", dealerName, dealer.getCards().getCardsValueAndPattern().get(0)));
+        printPlayersCards(players, playerNames);
         System.out.println();
     }
 
@@ -36,22 +35,22 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static void printPlayersCardDeck(Players players, List<String> playerNames) {
+    private static void printPlayersCards(Players players, List<String> playerNames) {
         for (int index = 0; index < playerNames.size(); index++) {
-            printPlayerCardDeck(players.getPlayers().get(index));
+            printPlayerCards(players.getPlayers().get(index));
         }
     }
 
-    public static void printPlayerCardDeck(Player player) {
-        final String cards = String.join(DELIMITER, player.getCardDeck().getCardsInfo());
+    public static void printPlayerCards(Player player) {
+        final String cards = String.join(DELIMITER, player.getCards().getCardsValueAndPattern());
 
         System.out.println(String.format("%s카드 %s", player.getName().getValue(), cards));
     }
 
-    public static void printPlayerCardDeck(Player player, int rawScore) {
-        List<String> cards = player.getCardDeck().getCardsInfo();
+    public static void printPlayerCards(Player player, int rawScore) {
+        List<String> cards = player.getCards().getCardsValueAndPattern();
 
-        System.out.println(formatFinalCardDeckAndScore(player, cards, convertToBurst(rawScore)));
+        System.out.println(formatFinalCardsAndScore(player, cards, convertToBurst(rawScore)));
     }
 
     public static void printDealerPickMessage(Dealer dealer) {
@@ -59,25 +58,25 @@ public class OutputView {
             String.format("%s는 16 이하라 한장의 카드를 더 받았습니다.", dealer.getName().getValue()));
     }
 
-    public static void printFinalCardDeckAndScore(Participant dealer, Players players) {
+    public static void printFinalCardsAndScore(Participant dealer, Players players) {
         System.out.println();
         final List<String> playerNames = getPlayerNames(players);
-        final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
+        final List<String> dealerCards = dealer.getCards().getCardsValueAndPattern();
 
         String dealerScore = convertToBurst(dealer.calculateScore());
-        System.out.println(formatFinalCardDeckAndScore(dealer, dealerCards, dealerScore));
-        printFinalPlayersCardDeck(players, playerNames);
+        System.out.println(formatFinalCardsAndScore(dealer, dealerCards, dealerScore));
+        printFinalPlayersCards(players, playerNames);
         System.out.println();
     }
 
-    private static void printFinalPlayersCardDeck(Players players, List<String> playerNames) {
+    private static void printFinalPlayersCards(Players players, List<String> playerNames) {
         for (int index = 0; index < playerNames.size(); index++) {
-            printPlayerCardDeck(players.getPlayers().get(index),
+            printPlayerCards(players.getPlayers().get(index),
                     players.getPlayers().get(index).calculateScore());
         }
     }
 
-    private static String formatFinalCardDeckAndScore(Participant player, List<String> cards, String score) {
+    private static String formatFinalCardsAndScore(Participant player, List<String> cards, String score) {
         return String.format("%s카드: %s - 결과: %s", player.getName().getValue(),
                 String.join(DELIMITER, cards), score);
     }
@@ -142,4 +141,19 @@ public class OutputView {
     public static void println() {
         System.out.println();
     }
+
+    public static void printProfit(Dealer dealer, Players players, int dealerProfit, List<Integer> playersProfit) {
+        System.out.println("## 최종 수익");
+        List<String> names = getPlayerNames(players);
+
+        System.out.print(String.format("%s: %d\n", dealer.getName().getValue(), dealerProfit));
+        printPlayersProfit(playersProfit, names);
+    }
+
+    private static void printPlayersProfit(List<Integer> playersProfit, List<String> names) {
+        for (int index = 0; index < names.size(); index++) {
+            System.out.println(String.format("%s: %d", names.get(index), playersProfit.get(index)));
+        }
+    }
+
 }

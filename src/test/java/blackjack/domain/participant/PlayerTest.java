@@ -8,21 +8,30 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
+    private static final Player player = new Player("무민");
+
     @Test
     void createInstance() {
-        Participant p1 = new Player("무민");
-        Assertions.assertThat(p1).isInstanceOf(Player.class);
+        Assertions.assertThat(player).isInstanceOf(Player.class);
     }
 
     @Test
     void testHit() {
-        Participant p1 = new Player("무민");
         Card card = new StandardCard(Pattern.CLUB, "4");
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(0);
+        Assertions.assertThat(player.getCards().getCardCount()).isEqualTo(0);
 
-        p1.hit(card);
+        player.hit(card);
 
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(1);
-        Assertions.assertThat(p1.getCardDeck().getCards().contains(card)).isTrue();
+        Assertions.assertThat(player.getCards().getCardCount()).isEqualTo(1);
+        Assertions.assertThat(player.getCards().getCards().contains(card)).isTrue();
+    }
+
+    @Test
+    void bet() {
+        Assertions.assertThat(player.getAmount()).isEqualTo(new BettingAmount(0));
+
+        player.bet(50000);
+
+        Assertions.assertThat(player.getAmount()).isEqualTo(new BettingAmount(50000));
     }
 }

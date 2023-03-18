@@ -1,9 +1,12 @@
 package blackjack.domain.game;
 
 public enum Result {
-    LOSE("패"),
+    WIN("승"),
     DRAW("무"),
-    WIN("승");
+    LOSE("패"),
+    BLACKJACK("블랙잭");
+
+    private static final double BLACKJACK_BONUS = 1.5;
 
     private final String result;
 
@@ -13,5 +16,19 @@ public enum Result {
 
     public String getResult() {
         return result;
+    }
+
+
+    public int calculateProfit(final int amount) {
+        if (this == BLACKJACK) {
+            return (int) (amount * BLACKJACK_BONUS);
+        }
+        if (this == WIN) {
+            return amount;
+        }
+        if (this == DRAW) {
+            return 0;
+        }
+        return -amount;
     }
 }

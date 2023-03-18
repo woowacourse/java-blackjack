@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardDeck {
+public class Cards {
 
     private static final int MIN_ACE_VALUE = 1;
     private static final int MAX_ACE_VALUE = 11;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
-    public CardDeck() {
+    public Cards() {
         cards = new ArrayList<>();
     }
 
@@ -34,30 +35,30 @@ public class CardDeck {
     }
 
 
-    public List<String> getCardsInfo() {
+    public List<String> getCardsValueAndPattern() {
         return cards.stream()
-            .map(Card::getCardInfo)
+            .map(Card::getCardValueAndPattern)
             .collect(Collectors.toList());
     }
 
-    public int calculateScore(CardDeck deck) {
-        int commonSum = calculateStandardAndCourtCardScore(deck);
-        List<AceCard> aceCards = extractAceCards(deck);
+    public int calculateScore() {
+        int commonSum = calculateStandardAndCourtCardScore();
+        List<AceCard> aceCards = extractAceCards();
         int aceCardCount = aceCards.size();
         int aceSum = calculateAceCardScore(commonSum, aceCardCount);
         return commonSum + aceSum;
     }
 
 
-    private int calculateStandardAndCourtCardScore(CardDeck deck) {
-        return deck.getCards().stream()
+    private int calculateStandardAndCourtCardScore() {
+        return cards.stream()
                 .filter((card) -> card.getValue() != MAX_ACE_VALUE)
                 .mapToInt(Card::getValue)
                 .sum();
     }
 
-    private List<AceCard> extractAceCards(CardDeck deck) {
-        return deck.getCards().stream()
+    private List<AceCard> extractAceCards() {
+        return cards.stream()
                 .filter((card) -> card.getValue() == MAX_ACE_VALUE)
                 .map((card) -> (AceCard) card)
                 .collect(Collectors.toList());
@@ -83,6 +84,10 @@ public class CardDeck {
     private boolean isAfford(int sum, int restAceCount) {
         final int ACE_VALUE_GAP = MAX_ACE_VALUE - MIN_ACE_VALUE;
         return (BLACKJACK_SCORE - sum) - restAceCount * MIN_ACE_VALUE >= ACE_VALUE_GAP;
+    }
+
+    public boolean isBlackjack() {
+        return getCardCount() == BLACKJACK_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

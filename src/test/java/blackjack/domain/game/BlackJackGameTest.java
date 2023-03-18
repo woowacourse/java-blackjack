@@ -5,11 +5,9 @@ import blackjack.domain.card.StandardCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.Result;
-import blackjack.strategy.RandomCardPicker;
+import blackjack.strategy.RandomCardShuffle;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
 
@@ -17,25 +15,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackGameTest {
 
-    private final BlackJackGame blackJackGame = new BlackJackGame();
+    private final BlackJackGame blackJackGame = new BlackJackGame(new RandomCardShuffle());
 
     @Test
     void initHit() {
         Players players = new Players("a,b,c");
         Dealer dealer = new Dealer();
 
-        blackJackGame.initHit(players, dealer, new RandomCardPicker());
-        players.getPlayers().stream().allMatch(player -> player.getCardDeck().getCardCount() == 2);
-        assertThat(dealer.getCardDeck().getCardCount()).isEqualTo(2);
+        blackJackGame.initHit(players, dealer);
+        players.getPlayers().stream().allMatch(player -> player.getCards().getCardCount() == 2);
+        assertThat(dealer.getCards().getCardCount()).isEqualTo(2);
     }
 
     @Test
     void hit() {
         Player player = new Player("a");
 
-        blackJackGame.hit(player, new RandomCardPicker());
+        blackJackGame.hit(player);
 
-        assertThat(player.getCardDeck().getCardCount()).isEqualTo(1);
+        assertThat(player.getCards().getCardCount()).isEqualTo(1);
     }
 
     @Test
@@ -51,12 +49,20 @@ class BlackJackGameTest {
 
     @Test
     void isBurst() {
-        assertThat(blackJackGame.isBurst(22)).isTrue();
+        Player player = new Player("a");
+        player.hit(new StandardCard(Pattern.SPADE, "10"));
+        player.hit(new StandardCard(Pattern.DIAMOND, "10"));
+        player.hit(new StandardCard(Pattern.HEART, "10"));
+
+        assertThat(blackJackGame.isBurst(player)).isTrue();
     }
 
     @Test
     void isValidScore() {
-        assertThat(blackJackGame.isValidScore(20)).isTrue();
+        Player player = new Player("a");
+        player.hit(new StandardCard(Pattern.SPADE, "10"));
+
+        assertThat(blackJackGame.isValidScore(player)).isTrue();
     }
 
     @Test
@@ -85,5 +91,14 @@ class BlackJackGameTest {
         assertThat(dealerResult.get(Result.WIN.getResult())).isEqualTo(2);
         assertThat(dealerResult.get(Result.LOSE.getResult())).isEqualTo(1);
         assertThat(dealerResult.get(Result.DRAW.getResult())).isEqualTo(1);
+    }
+
+    @Test
+    void bet() {
+        final Players players = new Players("a,b");
+
+        blackJackGame.bet(players, List.of(10000, 20000));
+
+        Assertions.assertThat(players.getAmounts()).isEqualTo(List.of(10000, 20000));
     }
 }

@@ -2,8 +2,10 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.strategy.CardPicker;
+import blackjack.strategy.CardShuffle;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,33 +14,33 @@ public class BlackJackGame {
     private static final int BURST_SCORE = 21;
     private static final int DEALER_HIT_NUMBER = 16;
 
-    private final CardPool cardPool;
+    private final Deck deck;
     private final Referee referee;
 
-    public BlackJackGame() {
-        cardPool = new CardPool();
+    public BlackJackGame(CardShuffle cardShuffle) {
+        deck = new Deck(cardShuffle);
         referee = new Referee();
     }
 
-    public void initHit(Players players, Dealer dealer, CardPicker cardPicker) {
-        dealer.initHit(cardPool, cardPicker);
-        players.initHit(cardPool, cardPicker);
+    public void initHit(Players players, Dealer dealer) {
+        dealer.initHit(deck);
+        players.initHit(deck);
     }
 
-    public void hit(Participant participant, CardPicker cardPicker) {
-        participant.hit(cardPool.draw(cardPicker));
+    public void hit(Participant participant) {
+        participant.hit(deck.draw());
     }
 
     public int calculateScore(Participant participant) {
         return participant.calculateScore();
     }
 
-    public boolean isBurst(int score) {
-        return BURST_SCORE < score;
+    public boolean isBurst(Participant participant) {
+        return BURST_SCORE < calculateScore(participant);
     }
 
-    public boolean isValidScore(int score) {
-        return BURST_SCORE > score;
+    public boolean isValidScore(Participant participant) {
+        return BURST_SCORE > calculateScore(participant);
     }
 
     public boolean isContinueToHit(int dealerScore) {
@@ -51,5 +53,17 @@ public class BlackJackGame {
 
     public Map<String, Long> getDealerResult(List<Result> results) {
         return referee.countDealerResult(results);
+    }
+
+    public void bet(Players players, List<Integer> amounts) {
+        players.bet(amounts);
+    }
+
+    public List<Integer> getPlayersProfit(Participant dealer, Players players) {
+        return referee.calculatePlayersProfit(referee.judgeResult(dealer, players), players);
+    }
+
+    public int getDealerProfit(Participant dealer, Players players) {
+        return getPlayersProfit(dealer, players).stream().mapToInt(value -> -value).sum();
     }
 }
