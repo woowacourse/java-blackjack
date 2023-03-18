@@ -92,9 +92,9 @@ public final class Player {
         this.betAmount = new BetAmount(betAmount);
     }
 
-    public int fetchProfit(final int dealerHandValue) {
+    public int fetchProfit(final Dealer dealer) {
         return betAmount.calculateProfit(
             ProfitRatio.fetchProfitRatio(
-                fetchHandValue(), dealerHandValue));
+                fetchHandValue(), dealer.fetchHandValue()));
     }
 }

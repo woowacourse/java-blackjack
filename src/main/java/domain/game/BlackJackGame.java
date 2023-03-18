@@ -88,7 +88,7 @@ public final class BlackJackGame {
     }
 
     public Integer fetchPlayerProfit(Player player) {
-        return player.fetchProfit(dealer.fetchHandValue());
+        return player.fetchProfit(dealer);
     }
 
     public Players getPlayers() {
