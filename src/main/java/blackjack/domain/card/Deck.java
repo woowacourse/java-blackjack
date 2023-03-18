@@ -8,9 +8,8 @@ public class Deck {
     public static final int CARD_TOTAL_SIZE = 52;
     private static final int FIRST_CARD = 0;
     private static final int MIN_CARD_SIZE = 1;
-
-    private static List<Card> cards;
     private static final Deck deck = new Deck();
+    private static List<Card> cards;
 
     private Deck() {
         List<Card> createdCards = CardFactory.of();

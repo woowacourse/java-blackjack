@@ -12,12 +12,12 @@ public class Players {
         this.players = players;
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public static Players from(List<Player> players) {
         return new Players(players);
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public int getTotalBetAmount() {

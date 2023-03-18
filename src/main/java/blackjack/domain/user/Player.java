@@ -22,10 +22,6 @@ public class Player extends User {
         handCards.updateCardScore(card);
     }
 
-    public void setBetAmount(int betAmount) {
-        this.betAmount = new BetAmount(betAmount);
-    }
-
     public void updateScoreIfBlackjack(boolean isDealerBlackjack) {
         if (!isDealerBlackjack && isBlackjack()) {
             betAmount.calculateBlackjack();
@@ -46,5 +42,9 @@ public class Player extends User {
 
     public int getBetAmount() {
         return betAmount.getBetAmount();
+    }
+
+    public void setBetAmount(int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
     }
 }

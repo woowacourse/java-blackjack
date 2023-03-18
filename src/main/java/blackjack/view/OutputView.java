@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.view.dto.RewardDTO;
 import blackjack.domain.user.*;
+import blackjack.view.dto.RewardDTO;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -17,7 +17,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public void updateCardScore(Card card)  {
+    public void updateCardScore(Card card) {
         handCards.updateCardScore(card);
     }
 
