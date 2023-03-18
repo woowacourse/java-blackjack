@@ -6,32 +6,52 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Result {
-    BLACK_JACK_WIN(1.5,
-            (userCard, dealerCard) -> userCard.isBlackJack() &&
-                    !dealerCard.isBlackJack()
-    ),
-    WIN(1,
-            (userCard, dealerCard) -> !userCard.isBlackJack() &&
-                    userCard.getScore().getValue() > dealerCard.getScore().getValue()
-    ),
-    LOSE(-1, (userCard, dealerCard) -> !userCard.isBlackJack() &&
-            userCard.getScore().getValue() < dealerCard.getScore().getValue()),
-    DRAW(0, (userCard, dealerCard) -> !userCard.isBust() &&
-            userCard.getScore().getValue() == dealerCard.getScore().getValue());
+    BLACK_JACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
     private final double prizeMultiplier;
-    private final BiFunction<Cards, Cards, Boolean> resultLogic;
 
-    Result(double prizeMultiplier, BiFunction<Cards, Cards, Boolean> predicate) {
+    Result(double prizeMultiplier) {
         this.prizeMultiplier = prizeMultiplier;
-        this.resultLogic = predicate;
     }
 
     public static Result of(Cards userCard, Cards dealerCard) {
-        return Arrays.stream(values())
-                .filter(result -> result.resultLogic.apply(userCard, dealerCard))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+        if (isBlackJackWin(userCard, dealerCard)) {
+            return BLACK_JACK_WIN;
+        }
+        if (isWin(userCard, dealerCard)) {
+            return WIN;
+        }
+        if (isLose(userCard, dealerCard)) {
+            return LOSE;
+        }
+        if (isDraw(userCard, dealerCard)) {
+            return DRAW;
+        }
+        throw new IllegalArgumentException("해당 Cards로 결과를 만들 수 없습니다.");
+    }
+
+    private static boolean isBlackJackWin(final Cards userCard, final Cards dealerCard) {
+        return userCard.isBlackJack() && !dealerCard.isBlackJack();
+    }
+
+    private static boolean isWin(final Cards userCard, final Cards dealerCard) {
+        final boolean checkBlackJack = !userCard.isBlackJack() && !dealerCard.isBlackJack();
+        final boolean winByValue = userCard.getScore().getValue() > dealerCard.getScore().getValue();
+        return checkBlackJack && winByValue;
+    }
+
+    private static boolean isLose(final Cards userCard, final Cards dealerCard) {
+        final boolean loseByBust = userCard.isBust();
+        final boolean loseByBlackJack = !userCard.isBlackJack() && dealerCard.isBlackJack();
+        final boolean loseByValue = userCard.getScore().getValue() < dealerCard.getScore().getValue();
+        return loseByBust || loseByBlackJack || loseByValue;
+    }
+
+    private static boolean isDraw(final Cards userCard, final Cards dealerCard) {
+        return !userCard.isBust() && userCard.getScore().getValue() == dealerCard.getScore().getValue();
     }
 
     public int getProfit(final int stake) {
