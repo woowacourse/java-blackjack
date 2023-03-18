@@ -1,11 +1,13 @@
 package blackjack.domain.cardpack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.util.NoviceShuffleStrategy;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -33,7 +35,7 @@ class CardPackTest {
             for (final CardShape shape : shapes) {
                 for (int i = 0; i < 13; i++) {
                     Card card = cardPack.pop();
-                    Assertions.assertThat(card.getShape()).isEqualTo(shape);
+                    assertThat(card.getShape()).isEqualTo(shape);
                 }
             }
         }
@@ -41,11 +43,11 @@ class CardPackTest {
 
         @Test
         void _52장까지만_생성된다() {
-            Assertions.assertThatThrownBy(() -> {
-                        for (int i = 0; i < 53; i++) {
-                            cardPack.pop();
-                        }
-                    })
+            assertThatThrownBy(() -> {
+                for (int i = 0; i < 53; i++) {
+                    cardPack.pop();
+                }
+            })
                     .isInstanceOf(IndexOutOfBoundsException.class);
         }
     }
@@ -61,8 +63,8 @@ class CardPackTest {
 
         //then
         Card card = cardPack.pop();
-        Assertions.assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
-        Assertions.assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
+        assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
+        assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
     }
 
     @Test
@@ -74,7 +76,7 @@ class CardPackTest {
         Card card = cardPack.pop();
 
         // then
-        Assertions.assertThat(cardPack.pop()).isNotEqualTo(card);
+        assertThat(cardPack.pop()).isNotEqualTo(card);
     }
 
 }

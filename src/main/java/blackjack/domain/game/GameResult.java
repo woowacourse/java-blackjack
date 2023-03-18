@@ -2,17 +2,18 @@ package blackjack.domain.game;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK(1.5),
+    WIN(1.0),
+    LOSE(-1.0),
+    DRAW(0.0);
 
-    private final String view;
+    private final double ratio;
 
-    GameResult(final String view) {
-        this.view = view;
+    GameResult(final double ratio) {
+        this.ratio = ratio;
     }
 
-    public String getView() {
-        return view;
+    public double getRatio() {
+        return this.ratio;
     }
 }

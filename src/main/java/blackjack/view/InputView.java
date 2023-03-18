@@ -4,7 +4,7 @@ import blackjack.domain.user.User;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -28,5 +28,11 @@ public class InputView {
         Command command = Command.from(input);
 
         return command.getCondition();
+    }
+
+    public int readBettingMoney(final User user) {
+        System.out.println(user.getName() + "의 배팅 금액은?");
+
+        return Integer.parseInt(scanner.nextLine());
     }
 }

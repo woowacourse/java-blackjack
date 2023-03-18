@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Result {
+public final class Result {
 
     private final Map<GameResult, Integer> result;
 

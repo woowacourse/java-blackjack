@@ -28,7 +28,7 @@ class DealerTest {
 
         // then
         assertThat(dealer.getCards())
-                .containsExactly(new Card(CardNumber.KING, CardShape.CLOVER));
+                .containsExactly(Card.of(CardNumber.KING, CardShape.CLOVER));
     }
 
     @Test
@@ -36,7 +36,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         CardPack cardPack = new CardPack(List.of(
-                new Card(CardNumber.ACE, CardShape.SPADE)));
+                Card.of(CardNumber.ACE, CardShape.SPADE)));
 
         // when
         dealer.drawCard(cardPack);
@@ -51,8 +51,8 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         CardPack cardPack = new CardPack(List.of(
-                new Card(CardNumber.QUEEN, CardShape.SPADE),
-                new Card(CardNumber.ACE, CardShape.SPADE)));
+                Card.of(CardNumber.QUEEN, CardShape.SPADE),
+                Card.of(CardNumber.ACE, CardShape.SPADE)));
 
         // when
         dealer.drawCard(cardPack);
@@ -64,16 +64,16 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_자신의_점수를_기반으로_플레이어의_점수를_계산한다() {
+    void 딜러는_자신의_점수를_기반으로_플레이어의_결과를_계산한다() {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("dummy");
         CardPack cardPack1 = new CardPack(List.of(
-                new Card(CardNumber.QUEEN, CardShape.SPADE),
-                new Card(CardNumber.ACE, CardShape.SPADE)));
+                Card.of(CardNumber.QUEEN, CardShape.SPADE),
+                Card.of(CardNumber.ACE, CardShape.SPADE)));
         CardPack cardPack2 = new CardPack(List.of(
-                new Card(CardNumber.ACE, CardShape.CLOVER),
-                new Card(CardNumber.ACE, CardShape.SPADE)));
+                Card.of(CardNumber.ACE, CardShape.CLOVER),
+                Card.of(CardNumber.ACE, CardShape.SPADE)));
 
         // when
         dealer.drawCard(cardPack1);

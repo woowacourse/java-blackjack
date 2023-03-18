@@ -1,10 +1,8 @@
 package blackjack.controller;
 
-
-import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.cardpack.MasterShuffleStrategy;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.Result;
+import blackjack.domain.game.Money;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -29,11 +27,22 @@ public class BlackjackController {
     public void run() {
         Players players = getPlayers();
         Dealer dealer = new Dealer();
-        BlackjackGame blackjackGame = new BlackjackGame(new CardPack(), new MasterShuffleStrategy());
+        BlackjackGame blackjackGame = new BlackjackGame(new MasterShuffleStrategy());
 
+        playersBetting(players, blackjackGame);
         startGame(players, dealer, blackjackGame);
         processGame(players, dealer, blackjackGame);
-        endGame(players, dealer);
+        endGame(players, dealer, blackjackGame);
+    }
+
+    private void playersBetting(final Players players, final BlackjackGame blackjackGame) {
+        players.getPlayers().forEach(player ->
+                blackjackGame.addBetting(player, getPlayerBettingMoney(player))
+        );
+    }
+
+    private Money getPlayerBettingMoney(final Player player) {
+        return repeatInput(() -> Money.betting(inputView.readBettingMoney(player)));
     }
 
     private void startGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
@@ -45,7 +54,7 @@ public class BlackjackController {
     }
 
     private void processGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
+        players.getPlayers().forEach(player -> processPlayerDraw(blackjackGame, player));
         processDealerDraw(dealer, blackjackGame);
     }
 
@@ -74,19 +83,18 @@ public class BlackjackController {
         }
     }
 
-    private void endGame(final Players players, final Dealer dealer) {
+
+    private void endGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         outputView.printCardResult(dealer);
-        players.getPlayers().forEach((player -> outputView.printCardResult(player)));
-        printResult(players, dealer);
+        players.getPlayers().forEach((outputView::printCardResult));
+        printProfitResult(blackjackGame.getUserProfit(players, dealer));
     }
 
-    private void printResult(final Players players, final Dealer dealer) {
-        final Map<User, Result> result = dealer.getResult(players);
-        outputView.introduceGameResult();
-        result.keySet().forEach((user) -> {
-                    outputView.printGameResult(user, result.get(user));
-                }
-        );
+    private void printProfitResult(final Map<User, Money> profitResult) {
+        outputView.introduceProfitResult();
+        profitResult.keySet()
+                .forEach(user -> outputView.printUserProfit(user.getName(), profitResult.get(user).getValue())
+                );
     }
 
     private Players getPlayers() {

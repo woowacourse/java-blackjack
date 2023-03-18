@@ -6,7 +6,8 @@ import blackjack.domain.card.CardShape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPack {
+
+public final class CardPack {
 
     private final List<Card> cards;
 
@@ -27,7 +28,7 @@ public class CardPack {
 
     private void matchingNumberByShape(final CardShape currentShape) {
         for (final CardNumber currentNumber : CardNumber.values()) {
-            cards.add(new Card(currentNumber, currentShape));
+            cards.add(Card.of(currentNumber, currentShape));
         }
     }
 

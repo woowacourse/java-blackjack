@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final Score min = new Score(-1);
-
     private final int score;
 
     public Score(final int score) {
@@ -20,19 +18,7 @@ public final class Score {
         return this.score > compareScore.score;
     }
 
-    public boolean isLessThen(final Score compareScore) {
-        return this.score < compareScore.score;
-    }
-
-    public boolean isBust() {
-        return this.equals(min);
-    }
-
-    public static Score min() {
-        return min;
-    }
-
-    public int score() {
+    public int getScore() {
         return score;
     }
 

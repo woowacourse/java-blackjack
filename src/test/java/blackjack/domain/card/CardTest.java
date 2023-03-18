@@ -13,7 +13,7 @@ class CardTest {
     void 카드는_숫자를_가진다() {
         // given
         final CardNumber number = CardNumber.SIX;
-        Card card = new Card(number, CardShape.DIAMOND);
+        Card card = Card.of(number, CardShape.DIAMOND);
 
         // then
         assertThat(card.getNumber()).isEqualTo(number);
@@ -22,7 +22,7 @@ class CardTest {
     @Test
     void 카드는_모양을_가진다() {
         // given
-        Card card = new Card(CardNumber.SIX, CardShape.DIAMOND);
+        Card card = Card.of(CardNumber.SIX, CardShape.DIAMOND);
 
         // when
         CardShape shape = card.getShape();
