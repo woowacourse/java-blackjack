@@ -83,23 +83,6 @@ class HandTest {
     }
     
     @Test
-    @DisplayName("카드의 개수가 2장 미만인 경우 true 반환")
-    void isNotEnoughInitCardsCount() {
-        hand.addCard(new Card(Shape.HEART, Number.ACE));
-        
-        assertThat(hand.isNotEnoughInitCardsCount()).isTrue();
-    }
-    
-    @Test
-    @DisplayName("카드의 개수가 2장 이상인 경우 false 반환")
-    void isEnoughInitCardsCount() {
-        hand.addCard(new Card(Shape.HEART, Number.ACE));
-        hand.addCard(new Card(Shape.HEART, Number.KING));
-        
-        assertThat(hand.isNotEnoughInitCardsCount()).isFalse();
-    }
-    
-    @Test
     @DisplayName("스코어가 21이면 true 반환")
     void is21() {
         hand.addCard(new Card(Shape.HEART, Number.ACE));

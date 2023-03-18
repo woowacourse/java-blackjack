@@ -45,10 +45,6 @@ public class Hand {
         return getTotalScore().isBust();
     }
     
-    public boolean isNotEnoughInitCardsCount() {
-        return cards.size() < INIT_GIVE_CARD_COUNT;
-    }
-    
     public boolean isBlackJack() {
         return getTotalScore().equals(BLACKJACK);
     }
