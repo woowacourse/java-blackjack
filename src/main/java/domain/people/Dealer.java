@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import domain.Number;
 import domain.card.Card;
 
 public final class Dealer {
     private static final String DEALER_NAME = "딜러";
-    private static final int DEALER_MINIMUM_VALUE = 17;
 
     private final Participant participant;
 
@@ -29,7 +29,7 @@ public final class Dealer {
     }
 
     public boolean shouldHit() {
-        return participant.fetchHandValue() < DEALER_MINIMUM_VALUE;
+        return !participant.isBust() && participant.fetchHandValue() < Number.DEALER_MINIMUM_VALUE.get();
     }
 
     public String getName() {

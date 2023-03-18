@@ -3,6 +3,7 @@ package domain.people;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.Number;
 import domain.card.Card;
 import domain.game.BetAmount;
 import domain.game.ProfitRatio;
@@ -10,9 +11,7 @@ import view.ErrorMessage;
 
 public final class Player {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
-    private static final int BLACKJACK_VALUE = 21;
     private static final String COMMA = ",";
-    private static final int BLACKJACK_HAND_VALUE = -1;
 
     private final Participant participant;
     private BetAmount betAmount;
@@ -65,7 +64,8 @@ public final class Player {
     }
 
     public boolean hasBlackJack(final int initHandCount) {
-        return participant.fetchHandValue() == BLACKJACK_VALUE && participant.fetchHand().size() == initHandCount;
+        return participant.fetchHandValue() == Number.BLACKJACK_HAND_VALUE.get()
+            && participant.fetchHand().size() == initHandCount;
     }
 
     public void receiveCard(final Card card) {
@@ -76,10 +76,10 @@ public final class Player {
         return participant.fetchHand();
     }
 
-    public int fetchHandValue(final int initHandCount) {
+    public int fetchHandValue() {
         int handValue = participant.fetchHandValue();
-        if (hasBlackJack(initHandCount)) {
-            handValue = BLACKJACK_HAND_VALUE;
+        if (hasBlackJack(Number.INIT_HAND_COUNT.get())) {
+            handValue = Number.BLACKJACK_RESULT_VALUE.get();
         }
         return handValue;
     }
@@ -92,9 +92,9 @@ public final class Player {
         this.betAmount = new BetAmount(betAmount);
     }
 
-    public int fetchProfit(final int initHandCount, final int dealerHandValue) {
+    public int fetchProfit(final int dealerHandValue) {
         return betAmount.calculateProfit(
             ProfitRatio.fetchProfitRatio(
-                fetchHandValue(initHandCount), dealerHandValue));
+                fetchHandValue(), dealerHandValue));
     }
 }

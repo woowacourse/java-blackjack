@@ -23,10 +23,10 @@ class BlackJackGameTest {
     void dealTest() {
         blackJackGame.dealCardsToParticipants();
         assertAll(
-            () -> assertThat(blackJackGame.fetchParticipantHand(blackJackGame.fetchDealerName()).size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchParticipantHand("leo").size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchParticipantHand("reo").size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchParticipantHand("reoleo").size()).isEqualTo(2));
+            () -> assertThat(blackJackGame.fetchPlayerHand(blackJackGame.fetchDealer()).size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchPlayerHand("leo").size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchPlayerHand("reo").size()).isEqualTo(2),
+            () -> assertThat(blackJackGame.fetchPlayerHand("reoleo").size()).isEqualTo(2));
     }
 
     @Test
@@ -44,7 +44,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 이름을 반환한다.")
     void fetchDealerNamesTest() {
-        assertThat(blackJackGame.fetchDealerName()).isEqualTo("딜러");
+        assertThat(blackJackGame.fetchDealer()).isEqualTo("딜러");
     }
 
     @Test
@@ -52,16 +52,16 @@ class BlackJackGameTest {
     void fetchParticipantsInitHandsPlayerTest() {
         blackJackGame.dealCardsToParticipants();
         assertAll(
-            () -> assertThat(blackJackGame.fetchParticipantInitHand("leo")).hasSize(2),
-            () -> assertThat(blackJackGame.fetchParticipantInitHand("reo")).hasSize(2),
-            () -> assertThat(blackJackGame.fetchParticipantInitHand("reoleo")).hasSize(2));
+            () -> assertThat(blackJackGame.fetchPlayerInitHand("leo")).hasSize(2),
+            () -> assertThat(blackJackGame.fetchPlayerInitHand("reo")).hasSize(2),
+            () -> assertThat(blackJackGame.fetchPlayerInitHand("reoleo")).hasSize(2));
     }
 
     @Test
     @DisplayName("참가자들의 첫 패를 반환한다. - 딜러의 경우 1장을 반환한다.")
     void fetchParticipantsInitHandsDealerTest() {
         blackJackGame.dealCardsToParticipants();
-        assertThat(blackJackGame.fetchParticipantInitHand("딜러")).hasSize(1);
+        assertThat(blackJackGame.fetchPlayerInitHand("딜러")).hasSize(1);
     }
 
     @Test
@@ -70,8 +70,8 @@ class BlackJackGameTest {
         blackJackGame.dealCardsToParticipants();
         blackJackGame.hitOrStay("y", "reo");
         assertAll(
-            () -> assertThat(blackJackGame.fetchParticipantHand("reo")).hasSize(3),
-            () -> assertThat(blackJackGame.fetchParticipantHand("leo")).hasSize(2));
+            () -> assertThat(blackJackGame.fetchPlayerHand("reo")).hasSize(3),
+            () -> assertThat(blackJackGame.fetchPlayerHand("leo")).hasSize(2));
     }
 
     @Test
@@ -79,7 +79,7 @@ class BlackJackGameTest {
     void dealerHit() {
         blackJackGame.dealCardsToParticipants();
         blackJackGame.dealerHit();
-        assertThat(blackJackGame.fetchParticipantHand("딜러")).hasSize(3);
+        assertThat(blackJackGame.fetchPlayerHand("딜러")).hasSize(3);
     }
 
     @Test

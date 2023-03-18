@@ -1,145 +1,103 @@
 package domain.game;
 
-
-import static java.util.stream.Collectors.*;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import domain.card.Card;
+import domain.Number;
 import domain.card.Deck;
 import domain.card.ShuffleStrategy;
-import domain.people.Participants;
+import domain.people.Dealer;
 import domain.people.Player;
+import domain.people.Players;
 
 public final class BlackJackGame {
-
-    public static final int INIT_HAND_COUNT = 2;
     private static final String HIT_REQUEST = "y";
 
     private final Deck deck;
-    private final Participants participants;
+    private final Dealer dealer;
+    private final Players players;
 
     private BlackJackGame(final List<String> names, final ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
-        this.participants = createParticipants(names);
+        this.dealer = new Dealer();
+        this.players = createParticipants(names);
     }
 
     public static BlackJackGame from(final List<String> names, final ShuffleStrategy shuffleStrategy) {
         return new BlackJackGame(names, shuffleStrategy);
     }
 
-    private Participants createParticipants(final List<String> names) {
-
-        return Participants.from(names);
+    private Players createParticipants(final List<String> names) {
+        return Players.from(names);
     }
 
     public void dealCardsToParticipants() {
-        for (int i = 0; i < INIT_HAND_COUNT; i++) {
+        for (int i = 0; i < Number.INIT_HAND_COUNT.get(); i++) {
             deal();
         }
     }
 
+    public void assignBetAmount(Player player, int betAmount) {
+        player.assignBetAmount(betAmount);
+    }
+
     private void deal() {
-        participants.getDealer().receiveCard(deck.draw());
-        for (Player player : participants.getPlayers()) {
+        dealer.receiveCard(deck.draw());
+        for (Player player : players.getPlayers()) {
             player.receiveCard(deck.draw());
         }
     }
 
-    public List<String> fetchParticipantNames() {
-        List<String> participantNames = new ArrayList<>();
-        participantNames.add(fetchDealerName());
-        participantNames.addAll(fetchPlayerNames());
-        return participantNames;
+    public boolean hasBlackJack(Player player) {
+        return player.hasBlackJack(Number.INIT_HAND_COUNT.get());
     }
 
-    public List<String> fetchPlayerNames() {
-        return participants.getPlayers().stream()
-            .map(Player::fetchPlayerName)
-            .collect(toList());
-    }
-
-    public String fetchDealerName() {
-        return participants.getDealer().getName();
-    }
-
-    public List<String> fetchParticipantInitHand(final String participantName) {
-        List<String> participantHand = fetchParticipantHand(participantName);
-
-        if (participantName.equals(fetchDealerName())) {
-            participantHand = participantHand.subList(0, 1);
-        }
-
-        return new ArrayList<>(participantHand);
-    }
-
-    public List<String> fetchParticipantHand(final String participantName) {
-        if (participantName.equals(fetchDealerName())) {
-            return participants.getDealer().fetchHand().stream().map(Card::toString).collect(toList());
-        }
-
-        List<Card> participantHand = participants.findPlayer(participantName).orElseThrow().fetchHand();
-        return participantHand.stream().
-            map(Card::toString).
-            collect(toList());
-    }
-
-    public void hitOrStay(final String hitRequest, final String playerName) {
+    public void hitOrStay(final String hitRequest, final Player player) {
         if (isHit(hitRequest)) {
-            participants.findPlayer(playerName).
-                orElseThrow().
-                receiveCard(deck.draw());
+            player.receiveCard(deck.draw());
         }
+    }
+
+    public boolean isBust(Player player) {
+        return player.isBust();
     }
 
     private boolean isHit(final String drawingInput) {
         return drawingInput.equals(HIT_REQUEST);
     }
 
-    public boolean shouldDealerHit() {
-        return participants.getDealer().shouldHit();
-    }
-
-    public void dealerHit() {
-        participants.getDealer().receiveCard(deck.draw());
-    }
-
-    public int fetchParticipantScore(String name) {
-        if (name.equals(fetchDealerName())) {
-            return participants.getDealer().fetchHandValue();
-        }
-
-        return participants.findPlayer(name).orElseThrow().fetchHandValue(INIT_HAND_COUNT);
-    }
-
-    public boolean hasBlackJack(String playerName) {
-        Player player = participants.findPlayer(playerName).orElseThrow();
-        return player.hasBlackJack(INIT_HAND_COUNT);
-    }
-
-    public List<String> fetchNoBlackJackPlayerNames() {
-        return participants.getPlayers().stream().
-            filter(player -> !player.hasBlackJack(INIT_HAND_COUNT)).
-            map(Player::fetchPlayerName).
-            collect(toList());
-    }
-
-    public boolean isBust(String playerName) {
-        return participants.findPlayer(playerName).orElseThrow().isBust();
-    }
-
     public boolean isTurnOver(String hitRequest) {
         return !hitRequest.equals(HIT_REQUEST);
     }
 
-    public void assignBetAmount(String name, int betAmount) {
-        participants.findPlayer(name).orElseThrow().assignBetAmount(betAmount);
+    public boolean shouldDealerHit() {
+        return dealer.shouldHit();
     }
 
-    public Integer fetchPlayerProfit(String name) {
-        return participants.findPlayer(name)
-            .orElseThrow()
-            .fetchProfit(INIT_HAND_COUNT, participants.getDealer().fetchHandValue());
+    public void dealerHit() {
+        dealer.receiveCard(deck.draw());
     }
+
+    public List<Player> fetchNoBlackJackPlayers() {
+        return fetchPlayers().stream()
+            .filter(player -> !player.hasBlackJack(Number.INIT_HAND_COUNT.get()))
+            .collect(Collectors.toList());
+    }
+
+    public List<Player> fetchPlayers() {
+        return players.getPlayers();
+    }
+
+    public Integer fetchPlayerProfit(Player player) {
+        return player.fetchProfit(dealer.fetchHandValue());
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
 }

@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import domain.people.Player;
+
 public final class InputView {
 
     private static final String HIT_OR_STAY_REQUEST_MESSAGE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
@@ -47,8 +49,8 @@ public final class InputView {
         }
     }
 
-    public static String requestDrawingCard(String name) {
-        askDrawingCard(name);
+    public static String requestDrawingCard(Player player) {
+        askDrawingCard(player.fetchPlayerName());
         String drawingCardRequest = scanner.nextLine();
         validateDrawingCardRequest(drawingCardRequest);
         return drawingCardRequest;
@@ -57,7 +59,6 @@ public final class InputView {
     private static void askDrawingCard(String name) {
         System.out.printf(HIT_OR_STAY_REQUEST_MESSAGE, name);
     }
-
 
     private static void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {

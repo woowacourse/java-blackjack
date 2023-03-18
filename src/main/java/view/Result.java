@@ -2,6 +2,8 @@ package view;
 
 import java.util.Arrays;
 
+import domain.Number;
+
 public enum Result {
     BUST("버스트", 0), BLACKJACK("블랙잭", -1);
 
@@ -14,6 +16,9 @@ public enum Result {
     }
 
     public static String getResultOf(int handValue) {
+        if (handValue >= Number.LOW_ACE_VALUE.get() && handValue <= Number.BUST_BOUNDARY_VALUE.get()) {
+            return String.valueOf(handValue);
+        }
         return Arrays.stream(Result.values())
             .filter(item -> item.handValue == handValue)
             .map(item -> item.result)

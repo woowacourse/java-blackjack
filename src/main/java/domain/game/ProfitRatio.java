@@ -1,13 +1,12 @@
 package domain.game;
 
+import domain.Number;
+
 public enum ProfitRatio {
     BLACKJACK(1.5),
     WIN(1),
     LOSE(-1),
     TIE(0);
-
-    private static final int BLACKJACK_VALUE = -1;
-    private static final int BUST_VALUE = 0;
 
     private final double ratio;
 
@@ -16,10 +15,10 @@ public enum ProfitRatio {
     }
 
     public static double fetchProfitRatio(final int handValue, final int dealerHandValue) {
-        if (handValue == BLACKJACK_VALUE) {
+        if (handValue == Number.BLACKJACK_RESULT_VALUE.get()) {
             return BLACKJACK.ratio;
         }
-        if (handValue == BUST_VALUE) {
+        if (handValue == Number.BUST_VALUE.get()) {
             return LOSE.ratio;
         }
         if (handValue - dealerHandValue > 0) {

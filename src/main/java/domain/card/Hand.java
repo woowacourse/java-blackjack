@@ -3,11 +3,9 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Hand {
-    private static final int HIGH_ACE_VALUE = 11;
-    private static final int LOW_ACE_VALUE = 1;
-    private static final int BUST_BOUNDARY_VALUE = 21;
+import domain.Number;
 
+public final class Hand {
     private final List<Card> hand;
 
     public Hand(final List<Card> cards) {
@@ -30,8 +28,8 @@ public final class Hand {
         boolean hasAce = hand.stream().anyMatch(Card::isAce);
         int value = sumValue();
 
-        if (hasAce && value + HIGH_ACE_VALUE - LOW_ACE_VALUE <= BUST_BOUNDARY_VALUE) {
-            value += HIGH_ACE_VALUE - LOW_ACE_VALUE;
+        if (hasAce && value + Number.ACE_GAP.get() <= Number.BUST_BOUNDARY_VALUE.get()) {
+            value += Number.ACE_GAP.get();
         }
         return value;
     }
@@ -43,7 +41,7 @@ public final class Hand {
     }
 
     public boolean isBust() {
-        return calculateHandValueWithoutConsideringBust() > BUST_BOUNDARY_VALUE;
+        return calculateHandValueWithoutConsideringBust() > Number.BUST_BOUNDARY_VALUE.get();
     }
 
     public List<Card> getHand() {
