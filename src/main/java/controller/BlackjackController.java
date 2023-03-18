@@ -23,8 +23,7 @@ public class BlackjackController {
         addCardPlayers();
         addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
-        participants.calculateAllResults();
-        OutputView.printResults(participants.getPlayerRevenues());
+        OutputView.printResults(participants.calculateAllResults());
     }
 
     private void addCardToDealerIfPossible() {

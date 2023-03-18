@@ -2,7 +2,6 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchException;
 
 import domain.Card;
 import domain.CardHand;
@@ -98,7 +97,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(-10000);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어만 blackjack인 경우")
@@ -113,7 +113,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(15000);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(15000);
     }
 
     @DisplayName("딜러와 플레이어가 동시에 blackjack 경우")
@@ -130,7 +131,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(0);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(0);
     }
 
     @DisplayName("플레이어가 21미만이고 딜러가 bust인 경우")
@@ -147,7 +149,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(10000);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(10000);
     }
 
     @DisplayName("플레이어와 딜러가 둘다 21미만이고 플레이어 승")
@@ -164,7 +167,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(10000);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(10000);
     }
 
     @DisplayName("플레이어와 딜러가 둘다 21미만이고 무승부")
@@ -181,7 +185,8 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(0);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(0);
     }
 
     @DisplayName("플레이어와 딜러가 둘다 21미만이고 플레이어 패")
@@ -198,6 +203,7 @@ class DealerTest {
         Dealer dealer = new Dealer(dealerCardHand);
         dealer.calculateAllResults(List.of(player));
 
-        assertThat(dealer.getPlayerRevenues().getRepository().get(player)).isEqualTo(-10000);
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(-10000);
     }
 }

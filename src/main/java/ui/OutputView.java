@@ -1,6 +1,6 @@
 package ui;
 
-import domain.PlayerRevenues;
+import domain.BlackjackResult;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -61,12 +61,12 @@ public class OutputView {
         players.forEach(OutputView::printCardsStatusAndScoreOfPlayer);
     }
 
-    public static void printResults(PlayerRevenues playerRevenues) {
+    public static void printResults(BlackjackResult blackjackResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %d", playerRevenues.dealerRevenue());
+        System.out.printf("딜러: %d", blackjackResult.getDealerResult().getBettingResult().getResult());
         System.out.println();
-        playerRevenues.getRepository().forEach((player, result) -> System.out.println(
-                player.getNameValue() + ": " + playerRevenues.findByPlayer(player)));
+        blackjackResult.getPlayerResults().forEach(playerResult -> System.out.println(
+                playerResult.getName().getValue() + ": " + playerResult.getBettingResult().getResult()));
     }
 }

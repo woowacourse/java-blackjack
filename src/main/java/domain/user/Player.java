@@ -21,10 +21,14 @@ public class Player extends AbstractUser {
         this.bettingAmount = new BettingAmount(bettingAmount);
     }
 
-    public String getNameValue() {
+    public String
+    getNameValue() {
         return this.name.getValue();
     }
 
+    public Name getName() {
+        return this.name;
+    }
 
     @Override
     public boolean canAdd() {

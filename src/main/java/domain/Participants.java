@@ -44,12 +44,8 @@ public class Participants implements Iterable<Player> {
         return this.dealer.drawCardDealer();
     }
 
-    public void calculateAllResults() {
-        this.dealer.calculateAllResults(players.getPlayers());
-    }
-
-    public PlayerRevenues getPlayerRevenues() {
-        return this.dealer.getPlayerRevenues();
+    public BlackjackResult calculateAllResults() {
+        return this.dealer.calculateAllResults(players.getPlayers());
     }
 
     @Override

@@ -1,11 +1,13 @@
 package domain.user;
 
+import domain.BettingResult;
+import domain.BlackjackResult;
 import domain.Card;
 import domain.CardHand;
 import domain.CardNumber;
+import domain.DealerResult;
 import domain.Deck;
-import domain.PlayerRevenues;
-import domain.Result;
+import domain.PlayerResult;
 import domain.Symbol;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,19 +19,16 @@ public class Dealer extends AbstractUser {
     private final int INITIAL_CARDS_COUNT = 2;
 
     private final Deck deck;
-    private final PlayerRevenues playerRevenues;
 
     public Dealer() {
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
-        playerRevenues = new PlayerRevenues();
     }
 
     public Dealer(CardHand cardHand) {
         super(cardHand);
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
-        playerRevenues = new PlayerRevenues();
     }
 
     @Override
@@ -63,21 +62,23 @@ public class Dealer extends AbstractUser {
         return false;
     }
 
-    public void calculateAllResults(List<Player> users) {
-        users.forEach(player -> this.playerRevenues.save(player, calculatePlayerRevenue(player)));
+    public BlackjackResult calculateAllResults(List<Player> users) {
+        List<PlayerResult> playerResults = calculatePlayerResults(users);
+        DealerResult dealerResult = getDealerResult(playerResults);
+        return new BlackjackResult(playerResults, dealerResult);
     }
 
-    private Result calculatePlayerResult(Player player) {
-        if (this.isBust() || player.isBust()) {
-            throw new IllegalStateException("딜러 또는 플레이어가 bust 상태는 잘못된 상태입니다.");
-        }
-        if (player.calculateScore() > this.calculateScore()) {
-            return Result.WIN;
-        }
-        if (player.calculateScore() == this.calculateScore()) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
+    private DealerResult getDealerResult(final List<PlayerResult> playerResults) {
+        return new DealerResult(
+                playerResults.stream().map(result -> new BettingResult(-result.getBettingResult().getResult()))
+                        .reduce(new BettingResult(0), (bettingResult, bettingResult2) -> new BettingResult(
+                                bettingResult.getResult() + bettingResult2.getResult())));
+    }
+
+    private List<PlayerResult> calculatePlayerResults(final List<Player> users) {
+        return users.stream()
+                .map(user -> new PlayerResult(user.getName(), new BettingResult(calculatePlayerRevenue(user))))
+                .collect(Collectors.toList());
     }
 
     private Integer calculatePlayerRevenue(Player player) {
@@ -101,18 +102,13 @@ public class Dealer extends AbstractUser {
     }
 
     private Integer calculateMatchDealerAndPlayer(Player player) {
-        Result result = calculatePlayerResult(player);
-        if (result == Result.WIN) {
+        if (player.calculateScore() > this.calculateScore()) {
             return player.getBettingAmount().getBettingAmount();
         }
-        if (result == Result.DRAW) {
+        if (player.calculateScore() == this.calculateScore()) {
             return 0;
         }
         return -player.getBettingAmount().getBettingAmount();
-    }
-
-    public PlayerRevenues getPlayerRevenues() {
-        return this.playerRevenues;
     }
 
     public Card getFirstCard() {
