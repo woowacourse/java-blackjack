@@ -15,23 +15,23 @@ public enum Number {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "10"),
-    J(11, "J"),
-    Q(12, "Q"),
-    K(13, "K");
+    J(10, "J"),
+    Q(10, "Q"),
+    K(10, "K");
 
-    private final int number;
+    private final int score;
     private final String state;
 
-    Number(final int number, final String state) {
-        this.number = number;
+    Number(final int score, final String state) {
+        this.score = score;
         this.state = state;
     }
 
     public int convertNumberToBlackjackScore() {
-        if (number == J.number || number == Q.number || number == K.number) {
+        if (score == J.score || score == Q.score || score == K.score) {
             return 10;
         }
-        return number;
+        return score;
     }
 
     public static Number pickRandomNumber() {
@@ -39,6 +39,10 @@ public enum Number {
         Collections.shuffle(numbers);
 
         return numbers.get(0);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public String getState() {

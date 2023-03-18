@@ -15,7 +15,7 @@ public class HandTest {
         Hand hand = new Hand(List.of(new Card(Number.K, Pattern.HEART), new Card(Number.FIVE, Pattern.DIAMOND)));
 
         // when
-        Score totalScore = hand.calculateScoreForBlackjack();
+        Score totalScore = hand.calculateScore();
 
         // then
         assertThat(totalScore.getValue()).isEqualTo(15);
@@ -32,7 +32,7 @@ public class HandTest {
         );
 
         // when
-        Score totalScore = hand.calculateScoreForBlackjack();
+        Score totalScore = hand.calculateScore();
 
         // then
         assertThat(totalScore.getValue()).isEqualTo(18);
@@ -49,7 +49,7 @@ public class HandTest {
         );
 
         // when
-        Score totalScore = hand.calculateScoreForBlackjack();
+        Score totalScore = hand.calculateScore();
 
         // then
         assertThat(totalScore.getValue()).isEqualTo(16);
@@ -65,7 +65,7 @@ public class HandTest {
         ));
 
         // when
-        Score totalScore = hand.calculateScoreForBlackjack();
+        Score totalScore = hand.calculateScore();
 
         // then
         assertThat(totalScore.getValue()).isEqualTo(21);

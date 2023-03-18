@@ -36,7 +36,7 @@ public abstract class Participant {
     }
 
     public Score calculateTotalScore() {
-        return this.hand.calculateScoreForBlackjack();
+        return this.hand.calculateScore();
     }
 
     public boolean isBust() {

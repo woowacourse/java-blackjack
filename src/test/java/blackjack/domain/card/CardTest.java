@@ -40,7 +40,7 @@ public class CardTest {
         Card card = new Card(Number.Q, Pattern.HEART);
 
         // expect
-        assertThat(card.convertToBlackjackScore()).isEqualTo(10);
+        assertThat(card.convertToScore()).isEqualTo(10);
     }
 
     @Test

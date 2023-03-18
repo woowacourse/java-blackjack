@@ -18,7 +18,7 @@ public final class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    public Score calculateScoreForBlackjack() {
+    public Score calculateScore() {
         if (containsAce()) {
             return calculate().plusIfSoftHand();
         }
@@ -28,7 +28,7 @@ public final class Hand {
 
     private Score calculate() {
         return new Score(hand.stream()
-                .mapToInt(Card::convertToBlackjackScore)
+                .mapToInt(Card::convertToScore)
                 .sum());
     }
 
@@ -38,12 +38,12 @@ public final class Hand {
     }
 
     public boolean isBust() {
-        Score score = calculateScoreForBlackjack();
+        Score score = calculateScore();
         return score.isBust();
     }
 
     public boolean isBlackjack() {
-        Score score = calculateScoreForBlackjack();
+        Score score = calculateScore();
         return score.isBlackjack() && hand.size() == BLACKJACK_SIZE;
     }
 
