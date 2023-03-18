@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Cards;
+
 public class Dealer extends User {
 
 	public Dealer(Cards cards) {

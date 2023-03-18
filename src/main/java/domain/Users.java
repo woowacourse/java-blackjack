@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import domain.card.Cards;
+import domain.card.Deck;
+
 public class Users {
 
 	private static final int PLAYER_MIN_SIZE = 1;

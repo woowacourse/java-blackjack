@@ -1,6 +1,6 @@
 package domain;
 
-import static domain.Denomination.*;
+import static domain.card.Denomination.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -8,6 +8,11 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
+import domain.card.Suits;
 
 public class DealerTest {
 

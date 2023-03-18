@@ -9,6 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Denomination;
+import domain.card.Suits;
+
 public class BlackJackTest {
 
 	private Users users;

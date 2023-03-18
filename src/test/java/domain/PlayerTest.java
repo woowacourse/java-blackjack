@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
+import domain.card.Suits;
+
 public class PlayerTest {
 
     private Player player;

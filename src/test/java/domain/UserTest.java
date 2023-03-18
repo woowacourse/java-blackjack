@@ -6,6 +6,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
+import domain.card.Suits;
+
 public class UserTest {
 
     @DisplayName("카드를 받아 자신의 카드 더미에 추가할 수 있다")

@@ -1,9 +1,11 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import domain.strategy.ShuffleStrategy;
 
 public class Deck {
 	private final Queue<Card> deck;
