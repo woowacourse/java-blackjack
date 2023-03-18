@@ -8,10 +8,12 @@ import static java.util.stream.Collectors.toList;
 
 public class Participants {
     private final List<Person> participants = new ArrayList<>();
+    private final BettingMoney bettingMoney;
 
-    public Participants(Dealer dealer, Players players) {
+    public Participants(Dealer dealer, Players players, BettingMoney bettingMoney) {
         this.participants.add(dealer);
         this.participants.addAll(players.getPlayers());
+        this.bettingMoney = bettingMoney;
     }
 
     public Person findByName(String name) {
@@ -57,5 +59,9 @@ public class Participants {
 
     public List<Card> getCardsByName(String name) {
         return findByName(name).getCards();
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 }

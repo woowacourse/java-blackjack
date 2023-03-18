@@ -13,17 +13,15 @@ import static java.util.stream.Collectors.toList;
 public class BlackjackGame {
 
     private final Deck deck;
-    private final BettingMoney bettingMoney;
     private final Participants participants;
 
     public BlackjackGame(Players players, Shuffler shuffler, BettingMoney bettingMoney) {
-        this.participants = createParticipants(players);
+        this.participants = createParticipants(players, bettingMoney);
         this.deck = new Deck(shuffler);
-        this.bettingMoney = bettingMoney;
     }
 
-    public Participants createParticipants(Players players) {
-        return new Participants(new Dealer(), players);
+    public Participants createParticipants(Players players, BettingMoney bettingMoney) {
+        return new Participants(new Dealer(), players, bettingMoney);
     }
 
     public void drawInitCard() {
@@ -102,7 +100,7 @@ public class BlackjackGame {
     }
 
     public ParticipantsProfitDto getParticipantsProfitDto() {
-        Exchanger exchanger = new Exchanger(bettingMoney);
+        Exchanger exchanger = new Exchanger(participants.getBettingMoney());
         Map<Person, Double> playersProfit = getPlayersProfit(exchanger);
         double dealerProfit = getDealerProfit(exchanger, playersProfit);
 
