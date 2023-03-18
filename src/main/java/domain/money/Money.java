@@ -1,6 +1,5 @@
 package domain.money;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Money {
@@ -16,8 +15,7 @@ public class Money {
     }
 
     public int multiply(double profitRate) {
-        BigDecimal result = BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(profitRate));
-        return result.intValue();
+        return (int) ((double) value * profitRate);
     }
 
     public int getValue() {
