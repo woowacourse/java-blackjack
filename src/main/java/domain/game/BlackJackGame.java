@@ -11,7 +11,6 @@ import domain.people.Player;
 import domain.people.Players;
 
 public final class BlackJackGame {
-    private static final String HIT_REQUEST = "y";
 
     private final Deck deck;
     private final Dealer dealer;
@@ -63,11 +62,11 @@ public final class BlackJackGame {
     }
 
     private boolean isHit(final String drawingInput) {
-        return drawingInput.equals(HIT_REQUEST);
+        return Requests.isHit(drawingInput);
     }
 
-    public boolean isTurnOver(String hitRequest) {
-        return !hitRequest.equals(HIT_REQUEST);
+    public boolean isStay(final String drawingInput) {
+        return Requests.isStay(drawingInput);
     }
 
     public boolean shouldDealerHit() {

@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.people.Player;
+
 class BlackJackGameTest {
 
     private BlackJackGame blackJackGame;
@@ -23,16 +25,19 @@ class BlackJackGameTest {
     void dealTest() {
         blackJackGame.dealCardsToParticipants();
         assertAll(
-            () -> assertThat(blackJackGame.fetchPlayerHand(blackJackGame.fetchDealer()).size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchPlayerHand("leo").size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchPlayerHand("reo").size()).isEqualTo(2),
-            () -> assertThat(blackJackGame.fetchPlayerHand("reoleo").size()).isEqualTo(2));
+            () -> assertThat(blackJackGame.getDealer().fetchHand().size()).isEqualTo(2),
+            () -> {
+                for (Player player : blackJackGame.fetchPlayers()) {
+                    assertThat(player.fetchHand().size()).isEqualTo(2);
+                }
+            });
     }
+
 
     @Test
     @DisplayName("참가자들의 이름을 반환한다.")
     void fetchParticipantNamesTest() {
-        assertThat(blackJackGame.fetchParticipantNames()).containsExactly("딜러", "leo", "reo", "reoleo");
+        assertThat(blackJackGame.fetchPlayers().stream().map(Player::fetchPlayerName)).containsExactly("leo", "reo", "reoleo");
     }
 
     @Test
