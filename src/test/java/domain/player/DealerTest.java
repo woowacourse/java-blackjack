@@ -24,11 +24,11 @@ class DealerTest {
         ranks.forEach(i -> dealer.takeCard(deck.dealCard()));
 
         //when
-        final List<Card> cards = dealer.showCard();
+        final Card card = dealer.showCard();
 
         //then
-        assertThat(cards)
-                .isEqualTo(List.of(Card.of(Suit.CLUBS, Rank.EIGHT)));
+        assertThat(card)
+                .isEqualTo(Card.of(Suit.CLUBS, Rank.EIGHT));
     }
 
     @Nested

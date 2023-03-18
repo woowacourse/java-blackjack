@@ -2,7 +2,6 @@ package controller;
 
 import domain.card.RandomCardGenerator;
 import domain.game.BlackjackGame;
-
 import domain.player.Participant;
 import view.InputView;
 import view.OutputView;
@@ -34,17 +33,15 @@ public final class Runner {
     }
 
     private void startGame(final BlackjackGame blackjackGame) {
-        blackjackGame.drawCards();
-        this.outputView.printDrawCards(blackjackGame.getDealerDTO(), blackjackGame.getParticipantDTOs());
+        blackjackGame.drawCards(this.outputView::printDrawCards);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
-        blackjackGame.playParticipantsTurn(this::isHit, outputView::printPlayerCard);
-        blackjackGame.playDealerTurn(outputView::printHitOrStay);
+        blackjackGame.playTurn(this::isHit, outputView::printPlayerCard, outputView::printHitOrStay);
     }
 
     private void judgeGameResult(final BlackjackGame blackjackGame) {
-        this.outputView.printGameResult(blackjackGame.getDealerResultDTO(), blackjackGame.getFinalResultDTO());
+        blackjackGame.get(this.outputView::printDealerResult, this.outputView::printParticipantResult);
     }
 
     private boolean isHit(final Participant participant) {

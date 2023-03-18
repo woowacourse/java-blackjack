@@ -1,18 +1,19 @@
 package domain.game;
 
-import DTO.*;
+import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.player.Participant;
 import domain.player.Players;
-import domain.player.info.PlayerInfo;
+import domain.player.info.ParticipantInfo;
 import util.HitOrStay;
 import util.Notice;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 public final class BlackjackGame {
 
@@ -26,44 +27,34 @@ public final class BlackjackGame {
 
     public static BlackjackGame from(final List<String> participantNames, final Function<String, Integer> function, final CardGenerator cardGenerator) {
         final List<Participant> participants = participantNames.stream()
-                .map(PlayerInfo.PlayerInfoBuilder::new)
+                .map(ParticipantInfo.ParticipantBuilder::new)
                 .map(playerInfoBuilder -> playerInfoBuilder.setBetAmount(function.apply(playerInfoBuilder.getName())))
-                .map(PlayerInfo.PlayerInfoBuilder::build)
+                .map(ParticipantInfo.ParticipantBuilder::build)
                 .map(Participant::of)
                 .collect(toList());
 
         return new BlackjackGame(Players.of(participants), Deck.from(cardGenerator));
     }
 
-    public void drawCards() {
+    public void drawCards(BiConsumer<Card, List<Participant>> print) {
         players.drawCards(deck);
+        print.accept(players.getDealer().showCard(), players.getParticipants());
     }
 
-    public void playParticipantsTurn(HitOrStay hitOrStay, Notice<Participant> notice) {
-        players.playParticipantsTurn(deck, hitOrStay, notice);
+    public void playTurn(HitOrStay hitOrStay, Notice<Participant> participantNotice, Notice<Boolean> delaerNotice) {
+        players.playParticipantsTurn(deck, hitOrStay, participantNotice, delaerNotice);
     }
 
-    public void playDealerTurn(Notice<Boolean> notice) {
-        players.playDealerTurn(deck, notice);
+    public List<String> getParticipantNames() {
+        return players.getParticipants().stream()
+                .map(Participant::getName)
+                .collect(toList());
     }
 
-    public GameResult judgeResult() {
-        return GameResult.of(players.getDealer(), players.getParticipants());
-    }
+    public void get(Notice<Integer> dealerNotice, BiConsumer<String, Integer> participantNotice) {
+        final ProfitCalculator profitCalculator = ProfitCalculator.of(players.getParticipants(), players.getDealer());
 
-    public List<ParticipantDTO> getParticipantDTOs() {
-        return DTOFactory.createParticipantDTOs(players.getParticipants());
-    }
-
-    public DealerDTO getDealerDTO() {
-        return DTOFactory.createDealerDTO(players.getDealer());
-    }
-
-    public DealerResultDto getDealerResultDTO() {
-        return DTOFactory.createDealerResultDTO(getFinalResultDTO());
-    }
-
-    public List<FinalResultDTO> getFinalResultDTO() {
-        return DTOFactory.createFinalResultDTOs(judgeResult());
+        dealerNotice.print(profitCalculator.getDealerProfit());
+        getParticipantNames().forEach(participantName -> participantNotice.accept(participantName, profitCalculator.getProfit(participantName)));
     }
 }

@@ -21,11 +21,7 @@ public final class Cards {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch(this::isAce);
-    }
-
-    private boolean isAce(Card card) {
-        return card.getRank() == Rank.ACE;
+                .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

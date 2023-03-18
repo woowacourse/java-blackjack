@@ -31,10 +31,6 @@ public final class Dealer {
         return hand.isBust();
     }
 
-    public boolean isBlackjack() {
-        return getCards().size() == 2 && getScore().isMaxScore();
-    }
-
     public boolean canHit() {
         return getScore().isUnderThan(STAY_SCORE);
     }
@@ -47,8 +43,8 @@ public final class Dealer {
         notice.print(canHit());
     }
 
-    public List<Card> showCard() {
-        return List.of(getCards().get(FIRST));
+    public Card showCard() {
+        return getCards().get(FIRST);
     }
 
     public List<Card> getCards() {

@@ -6,6 +6,7 @@ public class BetAmount {
 
     private static final int LOSE = -1;
     private static final int TIE = 0;
+    private static final double BLACK_JACK = 1.5;
     private static final int MIN_AMOUNT = 1000;
     private static final int MIN_UNIT = 100;
 
@@ -32,7 +33,7 @@ public class BetAmount {
 
     public int winBet(final boolean isBlackjack) {
         if (isBlackjack) {
-            return (int) (betAmount * 1.5);
+            return (int) (betAmount * BLACK_JACK);
 
         }
         return betAmount;
