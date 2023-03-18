@@ -61,28 +61,25 @@ public class OutputView {
 			+ String.join(", ", cardNames);
 	}
 
-	public static void printGameResult(final Map<String, String> dealerResult,
-		final Map<String, String> playerResults) {
+	public static void printGameResult(final int dealerProfit, final Map<String, Integer> playerProfits) {
 		System.out.println();
-		System.out.println("## 최종 승패");
-		printDealerResult(dealerResult);
-		printPlayerResults(playerResults);
+		System.out.println("## 최종 수익");
+		printDealerProfit(dealerProfit);
+		printPlayerProfits(playerProfits);
 	}
 
-	private static void printDealerResult(final Map<String, String> dealerResult) {
-		String name = dealerResult.keySet().toArray()[0].toString();
-		String result = dealerResult.values().toArray()[0].toString();
-		System.out.println(name + ": " + result);
+	private static void printDealerProfit(int dealerProfit) {
+		System.out.println("딜러: " + dealerProfit);
 	}
 
-	private static void printPlayerResults(final Map<String, String> playerResults) {
-		for (String player : playerResults.keySet()) {
-			System.out.println(player + ": " + playerResults.get(player));
+	private static void printPlayerProfits(Map<String, Integer> playerProfits) {
+		for (String player : playerProfits.keySet()) {
+			System.out.println(player + ": " + playerProfits.get(player));
 		}
 	}
 
 	public static void printDealerHitMessage() {
 		System.out.println();
-		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 }
