@@ -33,7 +33,7 @@ public final class BlackjackController {
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
-        settingGame(players, dealer, deck);
+        setInitCards(deck, dealer, players);
         turnOfPlayers(players.getPlayers(), deck);
         turnOfDealer(dealer, deck);
         finishGame(dealer, players);
@@ -41,12 +41,14 @@ public final class BlackjackController {
 
     private Players makePlayers() {
         List<String> playersName = inputView.receivePlayersName();
-        return Players.from(playersName);
-    }
+        Map<String, Integer> players = new LinkedHashMap<>();
 
-    private void settingGame(final Players players,final Dealer dealer,final Deck deck) {
-        bettingMoney(players);
-        setInitCards(deck, dealer, players);
+        for (String playerName : playersName) {
+            int receiveBettingMoney = inputView.receiveBettingMoney(playerName);
+            players.put(playerName, receiveBettingMoney);
+        }
+
+        return Players.from(players);
     }
 
     private void setInitCards(final Deck deck, final Dealer dealer, final Players players) {
@@ -70,13 +72,6 @@ public final class BlackjackController {
 
         Map<String, List<String>> participantsInitCards = getParticipantsInitCards(dealer, players.getPlayers());
         outputView.printParticipantsInitCards(participantsInitCards);
-    }
-
-    private void bettingMoney(final Players players) {
-        for (Player player : players.getPlayers()) {
-            int receiveBettingMoney = inputView.receiveBettingMoney(player.getName());
-            player.betting(receiveBettingMoney);
-        }
     }
 
     private void turnOfPlayers(final List<Player> players, final Deck deck) {

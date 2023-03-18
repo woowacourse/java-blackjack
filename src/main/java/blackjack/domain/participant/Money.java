@@ -4,16 +4,10 @@ import java.util.Objects;
 
 public final class Money {
 
-    private static final int MIN_BETTING_MONEY = 0;
-
     private final int money;
 
     public Money(int money) {
         this.money = money;
-    }
-
-    public static Money init() {
-        return new Money(MIN_BETTING_MONEY);
     }
 
     public Money getBlackjackPrize() {

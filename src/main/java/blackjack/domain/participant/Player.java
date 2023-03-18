@@ -11,13 +11,9 @@ public final class Player extends Participant {
 
     private Money bettingMoney;
 
-    public Player(final String name) {
+    public Player(final String name, final Money bettingMoney) {
         super(Hand.generateEmptyCards(), name);
-        this.bettingMoney = Money.init();
-    }
-
-    public void betting(final int bettingMoney) {
-        this.bettingMoney = new Money(bettingMoney);
+        this.bettingMoney = bettingMoney;
     }
 
     public Money getBettingMoney() {

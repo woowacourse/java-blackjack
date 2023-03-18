@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -16,17 +17,18 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players from(final List<String> names) {
-        validateLength(names);
+    public static Players from(final Map<String, Integer> players) {
+        validatePlayersCount(players);
 
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-
-        return new Players(players);
+        return new Players(
+                players.keySet()
+                .stream()
+                .map(player -> new Player(player, new Money(players.get(player))))
+                .collect(Collectors.toList())
+        );
     }
 
-    private static void validateLength(final List<String> names) {
+    private static void validatePlayersCount(final Map<String, Integer> names) {
         if (names.size() < MIN_PLAYER_COUNT || names.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException(
                     "[ERROR] 참가자의 수는 최소 " + MIN_PLAYER_COUNT + "명에서 최대 "

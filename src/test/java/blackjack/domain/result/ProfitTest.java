@@ -2,14 +2,14 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,15 +24,13 @@ class ProfitTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        players = Players.from(List.of("a", "b"));
+        Map<String, Integer> playersMap = new LinkedHashMap<>() {{
+            put("a", 10000);
+            put("b", 20000);
+        }};
+        players = Players.from(playersMap);
         profit = new Profit(dealer, players);
-        bettingMoney();
         settingPlayer2();
-    }
-
-    private void bettingMoney() {
-        players.getPlayers().get(0).betting(10000);
-        players.getPlayers().get(1).betting(20000);
     }
 
     private void settingPlayer2() {

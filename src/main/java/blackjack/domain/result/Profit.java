@@ -31,7 +31,7 @@ public final class Profit {
     private Map<Player, Money> initProfit() {
         Map<Player, Money> profit = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            profit.put(player, Money.init());
+            profit.put(player, new Money(0));
         }
 
         return profit;
