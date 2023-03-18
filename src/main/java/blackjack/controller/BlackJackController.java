@@ -30,11 +30,6 @@ public class BlackJackController {
         return new BlackjackGame(players, new DeckMaker(), bettingMoney);
     }
 
-    private List<String> inputPlayersName() {
-        String[] playersName = InputView.readPlayerNames();
-        return new ArrayList<>(List.of(playersName));
-    }
-
     private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
@@ -44,14 +39,9 @@ public class BlackJackController {
         }
     }
 
-    public void run() {
-        blackjackGame.drawInitCard();
-        printInitStatus(blackjackGame.getParticipantsInit());
-        drawMoreCardForPlayers(blackjackGame.getPlayersName());
-        InputView.closeScanner();
-        drawMoreCardForDealer();
-        printAllStatus();
-        printGameResult(blackjackGame.getParticipantsProfitDto());
+    private List<String> inputPlayersName() {
+        String[] playersName = InputView.readPlayerNames();
+        return new ArrayList<>(List.of(playersName));
     }
 
     private BettingMoney getBettingMoney(List<Player> players) {
@@ -68,6 +58,16 @@ public class BlackJackController {
             return value;
         }
         throw new IllegalArgumentException("[ERROR] 양의 정수만 입력 가능합니다.");
+    }
+
+    public void run() {
+        blackjackGame.drawInitCard();
+        printInitStatus(blackjackGame.getParticipantsInit());
+        drawMoreCardForPlayers(blackjackGame.getPlayersName());
+        InputView.closeScanner();
+        drawMoreCardForDealer();
+        printAllStatus();
+        printGameResult(blackjackGame.getParticipantsProfitDto());
     }
 
     private void printInitStatus(List<PersonStatusDto> personStatusDtos) {

@@ -25,8 +25,4 @@ public class BettingMoney {
     public double getLoseProfit(Player player) {
         return bettingMoney.get(player) * (-1.0);
     }
-
-    public Map<Player, Integer> getBettingMoney() {
-        return bettingMoney;
-    }
 }
