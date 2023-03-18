@@ -16,12 +16,12 @@ public class GameResult {
 
     private void calculatePlayersScore(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            playerGameResults.put(player.getPlayerName(), calculateProfit(player, dealer));
+            playerGameResults.put(player.getUserName(), calculateProfit(player, dealer));
         }
     }
 
     private int calculateProfit(Player player, Dealer dealer) {
-        double ratio = RatioMather.of(player.getPlayerCards(), dealer.getPlayerCards()).getRatio();
+        double ratio = RatioMather.of(player.getHand(), dealer.getHand()).getRatio();
         return player.getBetAmount().calculateProfit(ratio);
     }
 
