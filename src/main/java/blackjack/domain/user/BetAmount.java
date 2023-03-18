@@ -6,6 +6,7 @@ public class BetAmount {
 
     private static final int MINIMUM_AMOUNT = 500;
     private static final int MAXIMUM_AMOUNT = 1_000_000;
+    private static final double BLACKJACK_ALLOCATION = 1.5;
 
     private final int betAmount;
     private double receivingAmount;
@@ -35,7 +36,7 @@ public class BetAmount {
     }
 
     public void calculateBlackjack() {
-        receivingAmount = betAmount * 1.5;
+        receivingAmount = betAmount * BLACKJACK_ALLOCATION;
     }
 
     public int getBetAmount() {
