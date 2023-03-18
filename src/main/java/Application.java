@@ -2,85 +2,49 @@ import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.Player;
 import domain.strategy.RandomBasedShuffleStrategy;
-import view.AddCardCommand;
+import domain.game.AddCardCommand;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class Application {
     public static void main(String[] args) {
-        new Application().startGame();
-    }
-    
-    public void startGame() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
+    
         initializedBlackjackGame(blackJackGame);
-        
+        betParticipants(blackJackGame);
         giveCardToPlayers(blackJackGame);
-        Referee referee = new Referee();
-        referee.decidePlayersBattleResults(blackJackGame);
-        
-        OutputView.printPlayersGameResults(blackJackGame, referee);
+        printProfitResults(blackJackGame, new Referee());
     }
     
-    private String getParticipantNames() {
-        OutputView.printParticipantNamesGuide();
+    private static String getParticipantNames() {
         return InputView.repeat(InputView::inputParticipantNames);
     }
     
-    private void initializedBlackjackGame(BlackJackGame blackJackGame) {
+    private static void initializedBlackjackGame(BlackJackGame blackJackGame) {
         blackJackGame.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJackGame);
+        OutputView.printPlayersInformation(blackJackGame.players());
     }
     
-    private void giveCardToPlayers(BlackJackGame blackJackGame) {
-        giveCardToParticipants(blackJackGame);
-        giveCardToDealer(blackJackGame);
-        OutputView.printPlayersFinalInformation(blackJackGame.getPlayers());
+    private static void betParticipants(BlackJackGame blackJackGame) {
+        blackJackGame.settingBetAmountToParticipantsBy(Application::inputBetAmount);
     }
     
-    private void giveCardToParticipants(BlackJackGame blackJackGame) {
-        List<Player> participants = blackJackGame.getParticipants();
-        for (Player participant : participants) {
-            giveCardToParticipant(blackJackGame, participant);
-        }
+    private static Double inputBetAmount(String playerName) {
+        return InputView.repeat(() -> InputView.inputBetAmount(playerName));
     }
     
-    private void giveCardToParticipant(BlackJackGame blackJackGame, Player participant) {
-        AddCardCommand command = getCommand(participant);
-        if (command.isAddCardCommand()) {
-            blackJackGame.giveCard(participant);
-            OutputView.printParticipantCardCondition(List.of(participant));
-        }
-        
-        if (command.isNotAddCardCommand() || participant.isBurst()) {
-            stopGivingCard(participant, command);
-            return;
-        }
-        giveCardToParticipant(blackJackGame, participant);
+    private static void giveCardToPlayers(BlackJackGame blackJackGame) {
+        blackJackGame.giveCardToParticipantsBy(Application::inputCommand, OutputView::printParticipantCardStatus);
+        blackJackGame.giveCardToDealerBy(ignore -> OutputView.printGiveDealerCardMessage());
+        OutputView.printPlayersFinalInformation(blackJackGame.players());
     }
     
-    private AddCardCommand getCommand(Player participant) {
-        OutputView.printAddCardGuide(participant.getName());
-        return InputView.repeat(InputView::inputAddCardCommand);
+    private static AddCardCommand inputCommand(Player participant) {
+        return InputView.repeat(() -> InputView.inputAddCardCommand(participant.getName()));
     }
     
-    private void stopGivingCard(Player participant, AddCardCommand command) {
-        if (command.isNotAddCardCommand()) {
-            OutputView.printParticipantCardCondition(List.of(participant));
-            return;
-        }
-        
-        if (participant.isBurst()) {
-            OutputView.printBurstMessage(participant.getName());
-        }
-    }
-    
-    private void giveCardToDealer(BlackJackGame blackJackGame) {
-        if (blackJackGame.shouldDealerGetCard()) {
-            blackJackGame.giveDealerCard();
-            OutputView.printGiveDealerCardMessage();
-        }
+    private static void printProfitResults(BlackJackGame blackJackGame, Referee referee) {
+        referee.saveBattleResults(blackJackGame.players(), blackJackGame.betAmounts());
+        OutputView.printPlayersGameResults(blackJackGame.players(), referee);
     }
 }

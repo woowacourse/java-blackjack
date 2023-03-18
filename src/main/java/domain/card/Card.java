@@ -15,7 +15,7 @@ public class Card {
         return number.isAce();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return number.getScore();
     }
     

@@ -1,86 +1,81 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.PlayingCards;
+import domain.card.Score;
+import domain.player.state.Ready;
+import domain.player.state.State;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.ToDoubleFunction;
 
 public abstract class Player {
-    private final PlayingCards playingCards;
+    private State state;
     private final PlayerName name;
-
+    
     protected Player(String name) {
-        this.playingCards = new PlayingCards();
         this.name = new PlayerName(name);
     }
     
-    public void addCard(Card card) {
-        playingCards.addCard(card);
+    public abstract boolean isDealer();
+    
+    public abstract double calculateProfit(double betAmount);
+    
+    public abstract boolean isFinished();
+    
+    public abstract double supplyBetAmount(ToDoubleFunction<String> supplyBetAmount);
+    
+    public void initCards(Card firstCard, Card secondCard) {
+        state = new Ready(firstCard, secondCard)
+                .play();
     }
     
-    public GameResult battleResult(Player otherPlayer) {
-        if (isBurst() || otherPlayer.isBurst()) {
-            return decideGameResultWithBurst(otherPlayer);
-        }
-        
-        int totalScore = getTotalScore();
-        int totalScoreOfOtherPlayer = otherPlayer.getTotalScore();
-        return decideGameResultWithScore(totalScore, totalScoreOfOtherPlayer);
+    public void draw(Card card) {
+        state = state.draw(card);
     }
     
-    private GameResult decideGameResultWithBurst(Player otherPlayer) {
-        if (isBurst() && otherPlayer.isBurst()) {
-            return GameResult.DRAW;
-        }
-        
-        if (isBurst()) {
-            return GameResult.LOSE;
-        }
-        
-        return GameResult.WIN;
+    public boolean isBust() {
+        return state.isBust();
     }
     
-    private GameResult decideGameResultWithScore(int totalScore, int totalScoreOfOtherPlayer) {
-        if (totalScore > totalScoreOfOtherPlayer) {
-            return GameResult.WIN;
-        }
-        
-        if (totalScore < totalScoreOfOtherPlayer) {
-            return GameResult.LOSE;
-        }
-        
-        return GameResult.DRAW;
+    public Score getTotalScore() {
+        return state.score();
     }
     
-    public int getTotalScore() {
-        return playingCards.getTotalScore();
-    }
-    
-    public boolean isBurst() {
-        return playingCards.isBurst(getTotalScore());
+    public void drawStop() {
+        state = state.drawStop();
     }
     
     public List<Card> getCards() {
-        return playingCards.getCards();
+        return state.getCards();
     }
     
     public String getName() {
         return this.name.getName();
     }
     
-    public abstract boolean isDealer();
+    protected State getState() {
+        return state;
+    }
     
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(playingCards, player.playingCards) && Objects.equals(name, player.name);
+        return Objects.equals(state, player.state) && Objects.equals(name, player.name);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(playingCards, name);
+        return Objects.hash(state, name);
+    }
+    
+    @Override
+    public String toString() {
+        return "Player{" +
+                "state=" + state +
+                ", name=" + name +
+                '}';
     }
 }
