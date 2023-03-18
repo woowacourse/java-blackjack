@@ -18,7 +18,7 @@ public class Names {
 
     private List<Name> generateNames(List<String> names) {
         return names.stream()
-                .map(Name::new )
+                .map(Name::new)
                 .collect(Collectors.toList());
     }
 
