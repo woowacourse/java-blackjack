@@ -1,5 +1,7 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -11,6 +13,6 @@ class ProfitCalculatorTest {
         "21,20,1",
         "19,21,-1"})
     void fetchProfitRatio(int playerHandValue, int dealerHandValue, double ratio) {
-        assertThat(ProfitCalculator.fetchProfitRatio(playerHandValue, dealerHandValue)).isEqualTo(ratio);
+        assertThat(ProfitCalculator.getRatio(playerHandValue, dealerHandValue)).isEqualTo(ratio);
     }
 }

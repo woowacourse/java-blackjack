@@ -45,10 +45,4 @@ class PlayersTest {
         assertThat(players.getPlayers().size()).isEqualTo(3);
     }
 
-    @Test
-    @DisplayName("딜러를 반환한다.")
-    void findDealerTest() {
-        assertThat(players.getDealer()).isInstanceOf(Dealer.class);
-    }
-
 }

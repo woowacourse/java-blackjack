@@ -33,50 +33,36 @@ class BlackJackGameTest {
             });
     }
 
-
-    @Test
-    @DisplayName("참가자들의 이름을 반환한다.")
-    void fetchParticipantNamesTest() {
-        assertThat(blackJackGame.fetchPlayers().stream().map(Player::fetchPlayerName)).containsExactly("leo", "reo", "reoleo");
-    }
-
     @Test
     @DisplayName("플레이어들의 이름을 반환한다.")
-    void fetchPlayerNamesTest() {
-        assertThat(blackJackGame.fetchPlayerNames()).containsExactly("leo", "reo", "reoleo");
+    void fetchParticipantNamesTest() {
+        assertThat(blackJackGame.fetchPlayers().stream().map(Player::fetchPlayerName)).containsExactly("leo", "reo",
+            "reoleo");
     }
 
     @Test
     @DisplayName("딜러의 이름을 반환한다.")
     void fetchDealerNamesTest() {
-        assertThat(blackJackGame.fetchDealer()).isEqualTo("딜러");
+        assertThat(blackJackGame.getDealer().getName()).isEqualTo("딜러");
     }
 
     @Test
-    @DisplayName("참가자들의 첫 패를 반환한다. - 플레이어의 경우 2장을 반환한다.")
+    @DisplayName("참가자들에게 2장을 나누어준다.")
     void fetchParticipantsInitHandsPlayerTest() {
         blackJackGame.dealCardsToParticipants();
-        assertAll(
-            () -> assertThat(blackJackGame.fetchPlayerInitHand("leo")).hasSize(2),
-            () -> assertThat(blackJackGame.fetchPlayerInitHand("reo")).hasSize(2),
-            () -> assertThat(blackJackGame.fetchPlayerInitHand("reoleo")).hasSize(2));
-    }
-
-    @Test
-    @DisplayName("참가자들의 첫 패를 반환한다. - 딜러의 경우 1장을 반환한다.")
-    void fetchParticipantsInitHandsDealerTest() {
-        blackJackGame.dealCardsToParticipants();
-        assertThat(blackJackGame.fetchPlayerInitHand("딜러")).hasSize(1);
+        for (Player player : blackJackGame.fetchPlayers()) {
+            assertThat(player.fetchHand()).hasSize(2);
+        }
     }
 
     @Test
     @DisplayName("hit요청이 있을 시 hit을 한다.")
     void hitOrStay() {
         blackJackGame.dealCardsToParticipants();
-        blackJackGame.hitOrStay("y", "reo");
+        blackJackGame.hitOrStay("y", blackJackGame.getPlayers().getPlayers().get(0));
         assertAll(
-            () -> assertThat(blackJackGame.fetchPlayerHand("reo")).hasSize(3),
-            () -> assertThat(blackJackGame.fetchPlayerHand("leo")).hasSize(2));
+            () -> assertThat(blackJackGame.getPlayers().getPlayers().get(0).fetchHand()).hasSize(3),
+            () -> assertThat(blackJackGame.getPlayers().getPlayers().get(1).fetchHand()).hasSize(2));
     }
 
     @Test
@@ -84,7 +70,7 @@ class BlackJackGameTest {
     void dealerHit() {
         blackJackGame.dealCardsToParticipants();
         blackJackGame.dealerHit();
-        assertThat(blackJackGame.fetchPlayerHand("딜러")).hasSize(3);
+        assertThat(blackJackGame.getDealer().fetchHand()).hasSize(3);
     }
 
     @Test
@@ -92,9 +78,36 @@ class BlackJackGameTest {
     void fetchParticipantScores() {
         blackJackGame.dealCardsToParticipants();
         assertAll(
-            () -> assertThat(blackJackGame.fetchParticipantScore("딜러")).isEqualTo(21),
-            () -> assertThat(blackJackGame.fetchParticipantScore("leo")).isEqualTo(19),
-            () -> assertThat(blackJackGame.fetchParticipantScore("reo")).isEqualTo(18),
-            () -> assertThat(blackJackGame.fetchParticipantScore("reoleo")).isEqualTo(17));
+            () -> assertThat(blackJackGame.getDealer().fetchHandValue()).isEqualTo(21),
+            () -> assertThat(blackJackGame.fetchPlayers().get(0).fetchHandValue()).isEqualTo(19),
+            () -> assertThat(blackJackGame.fetchPlayers().get(1).fetchHandValue()).isEqualTo(18),
+            () -> assertThat(blackJackGame.fetchPlayers().get(2).fetchHandValue()).isEqualTo(17));
+    }
+
+    @Test
+    @DisplayName("딜러의 수익을 계산한다.")
+    void calculateDealerProfitTest() {
+        blackJackGame.fetchPlayers().get(0).assignBetAmount(1000);
+        blackJackGame.fetchPlayers().get(1).assignBetAmount(2000);
+        blackJackGame.fetchPlayers().get(2).assignBetAmount(3000);
+        blackJackGame.dealCardsToParticipants();
+        assertThat(blackJackGame.calculateDealerProfit()).isEqualTo(6000);
+    }
+
+    @Test
+    @DisplayName("참가자들의 수익을 계산한다.")
+    void calculatePlayerProfitTest() {
+        blackJackGame.fetchPlayers().get(0).assignBetAmount(1000);
+        blackJackGame.fetchPlayers().get(1).assignBetAmount(2000);
+        blackJackGame.fetchPlayers().get(2).assignBetAmount(3000);
+        blackJackGame.dealCardsToParticipants();
+        assertAll(
+            () -> assertThat(blackJackGame.calculatePlayerProfit().get(blackJackGame.fetchPlayers().get(0))).isEqualTo(
+                -1000),
+            () -> assertThat(blackJackGame.calculatePlayerProfit().get(blackJackGame.fetchPlayers().get(1))).isEqualTo(
+                -2000),
+            () -> assertThat(blackJackGame.calculatePlayerProfit().get(blackJackGame.fetchPlayers().get(2))).isEqualTo(
+                -3000)
+        );
     }
 }
