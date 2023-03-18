@@ -3,7 +3,9 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
+    public static final Score maxDealerHit = new Score(16);
+
     private final List<Card> cards;
 
     public Hand() {
@@ -45,7 +47,7 @@ public class Hand {
     }
 
     public boolean isDealerHit() {
-        return calculateScore().isDealerHit();
+        return calculateScore().isLessThanOrEqual(maxDealerHit);
     }
 
     private Score sum() {
