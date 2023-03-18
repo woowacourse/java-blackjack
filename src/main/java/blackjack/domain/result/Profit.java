@@ -1,8 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Money;
-import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
@@ -10,87 +9,80 @@ import java.util.Map;
 
 public final class Profit {
 
-    private final Dealer dealer;
-    private final Players players;
-
-    public Profit(final Dealer dealer, final Players players) {
-        this.dealer = dealer;
-        this.players = players;
-    }
-
-    public Map<Player, Money> makePlayersProfit() {
-        Map<Player, Money> profit = initProfit();
+    public Map<Player, Money> makePlayersProfit(final Dealer dealer, final Players players) {
+        Map<Player, Money> profit = initProfit(players);
 
         for (Player player : players.getPlayers()) {
-            changePlayersProfit(profit, player);
+            changePlayersProfit(profit, dealer, player);
         }
-
         return profit;
     }
 
-    private Map<Player, Money> initProfit() {
+    private Map<Player, Money> initProfit(final Players players) {
         Map<Player, Money> profit = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            profit.put(player, new Money(0));
+            profit.put(player, Money.init());
         }
-
         return profit;
     }
 
-    private void changePlayersProfit(final Map<Player, Money> profit, final Player player) {
-        if (hasState(profit, player)) {
-            return;
-        }
-        compareScore(profit, dealer.calculateTotalScore(), player);
+    private void changePlayersProfit(final Map<Player, Money> profit, final Dealer dealer, final Player player) {
+        earnMoneyIfDealerBust(profit, dealer, player);
+        earnMoneyIfBlackjack(profit, dealer, player);
+        loseMoneyIfPlayerBust(profit, dealer, player);
+        compareScore(profit, dealer, player);
     }
 
-    private boolean hasState(final Map<Player, Money> profit, final Player player) {
-        if (isPlayerBlackjack(profit, player)) {
-            return true;
-        }
-        return isBust(profit, player);
-    }
-
-    private boolean isPlayerBlackjack(final Map<Player, Money> profit, final Player player) {
-        if (player.isBlackjack() && !dealer.isBlackjack()) {
-            profit.put(player, player.getBettingMoney().getBlackjackPrize());
-            return true;
-        }
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            profit.put(player, player.getBettingMoney().getBettingPrize());
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isBust(final Map<Player, Money> profit, final Player player) {
-        if (player.isBust()) {
-            profit.put(player, player.getBettingMoney().loseBettingPrize());
-            return true;
-        }
+    private void earnMoneyIfDealerBust(final Map<Player, Money> profit, final Dealer dealer, Player player) {
         if (dealer.isBust()) {
-            profit.put(player, player.getBettingMoney().getBettingPrize());
-            return true;
+            profit.put(player, player.earnMoneyFromBet());
         }
-        return false;
     }
 
-    private void compareScore(final Map<Player, Money> profit, final Score dealerScore, final Player player) {
-        if (dealerScore.isLose(player.calculateTotalScore())) {
-            profit.put(player, player.getBettingMoney().getBettingPrize());
+    private void earnMoneyIfBlackjack(final Map<Player, Money> profit, final Dealer dealer, Player player) {
+        if (dealer.isBust()) {
             return;
         }
-        if (dealerScore.isDraw(player.calculateTotalScore())) {
+
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            profit.put(player, player.earnMoneyFromBet());
             return;
         }
-        profit.put(player, player.getBettingMoney().loseBettingPrize());
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            profit.put(player, player.earnMoneyFromBlackjack());
+        }
+    }
+
+    private void loseMoneyIfPlayerBust(final Map<Player, Money> profit, final Dealer dealer, Player player) {
+        if (dealer.isBust() || player.isBlackjack()) {
+            return;
+        }
+        if (player.isBust()) {
+            profit.put(player, player.loseMoneyFromBet());
+        }
+    }
+
+    private void compareScore(final Map<Player, Money> profit, final Dealer dealer, final Player player) {
+        if (dealer.isBust() || player.isBlackjack() || player.isBust()) {
+            return;
+        }
+
+        Result result = player.decideResultAgainst(dealer);
+        if (result == Result.WIN) {
+            profit.put(player, player.earnMoneyFromBet());
+            return;
+        }
+        if (result == Result.DRAW) {
+            return;
+        }
+        profit.put(player, player.loseMoneyFromBet());
     }
 
     public Money getDealerProfit(final Map<Player, Money> playersProfit) {
         int dealerProfit = 0;
 
         for (Money money : playersProfit.values()) {
-            dealerProfit += money.getMoney() * (-1);
+            dealerProfit -= money.getMoney();
         }
 
         return new Money(dealerProfit);

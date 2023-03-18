@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
+import blackjack.domain.result.Result;
 import java.util.List;
 
 public abstract class Participant {
@@ -45,6 +46,19 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return hand.isBlackjack();
+    }
+
+    public Result decideResultAgainst(final Participant participant) {
+        Score score = this.calculateTotalScore();
+        Score otherScore = participant.calculateTotalScore();
+
+        if (score.isWin(otherScore)) {
+            return Result.WIN;
+        }
+        if (score.isLose(otherScore)) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     public List<Card> getHand() {

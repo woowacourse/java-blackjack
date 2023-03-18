@@ -16,8 +16,16 @@ public final class Player extends Participant {
         this.bettingMoney = bettingMoney;
     }
 
-    public Money getBettingMoney() {
-        return bettingMoney;
+    public Money earnMoneyFromBet() {
+        return bettingMoney.getBettingPrize();
+    }
+
+    public Money loseMoneyFromBet() {
+        return bettingMoney.loseBettingPrize();
+    }
+
+    public Money earnMoneyFromBlackjack() {
+        return bettingMoney.getBlackjackPrize();
     }
 
     @Override

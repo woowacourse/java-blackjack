@@ -29,7 +29,7 @@ class ProfitTest {
             put("b", 20000);
         }};
         players = Players.from(playersMap);
-        profit = new Profit(dealer, players);
+        profit = new Profit();
         settingPlayer2();
     }
 
@@ -49,7 +49,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.ACE, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         assertThat(playersProfit.get(players.getPlayers().get(0))).isEqualTo(new Money(10000));
     }
 
@@ -63,7 +63,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         assertThat(playersProfit.get(players.getPlayers().get(0))).isEqualTo(new Money(15000));
     }
 
@@ -78,7 +78,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         assertThat(playersProfit.get(players.getPlayers().get(0))).isEqualTo(new Money(-10000));
     }
 
@@ -93,7 +93,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.SIX, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.EIGHT, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         assertThat(playersProfit.get(players.getPlayers().get(0))).isEqualTo(new Money(10000));
     }
 
@@ -107,7 +107,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.EIGHT, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         assertThat(playersProfit.get(players.getPlayers().get(0))).isEqualTo(new Money(0));
     }
 
@@ -122,7 +122,7 @@ class ProfitTest {
         dealer.receiveCard(new Card(Number.TEN, Pattern.DIAMOND));
         dealer.receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
 
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         Money dealerProfit = profit.getDealerProfit(playersProfit);
         assertThat(dealerProfit).isEqualTo(new Money(-10000));
     }

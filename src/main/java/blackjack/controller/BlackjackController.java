@@ -125,8 +125,8 @@ public final class BlackjackController {
     }
 
     private void showProfit(final Dealer dealer, final Players players) {
-        Profit profit = new Profit(dealer, players);
-        Map<Player, Money> playersProfit = profit.makePlayersProfit();
+        Profit profit = new Profit();
+        Map<Player, Money> playersProfit = profit.makePlayersProfit(dealer, players);
         Money dealerProfit = profit.getDealerProfit(playersProfit);
         Map<String, Integer> participantsProfit = getProfit(playersProfit, dealerProfit, dealer);
 

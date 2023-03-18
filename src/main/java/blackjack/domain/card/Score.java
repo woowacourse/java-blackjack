@@ -33,6 +33,10 @@ public final class Score {
         return value <= other.value;
     }
 
+    public boolean isWin(final Score other) {
+        return value > other.value;
+    }
+
     public boolean isLose(final Score other) {
         return value < other.value;
     }
