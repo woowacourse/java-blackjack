@@ -12,7 +12,9 @@ public enum ErrorMessage {
     NAME_CONTAINS_COMMA("이름에 쉼표(,)가 들어갈 수 없습니다."),
     INVALID_NAME_LENGTH("이름의 길이는 10자 이하여야 합니다."),
     NO_DEALER("딜러가 존재하지 않습니다."),
-    DECK_IS_EMPTY("덱이 비었습니다.");
+    DECK_IS_EMPTY("덱이 비었습니다."),
+    NOT_NATURAL_NUMBER("입력이 자연수가 아닙니다."),
+    NO_RESULT("결과가 존재하지 않습니다.");
 
     private final String message;
 

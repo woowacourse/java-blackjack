@@ -1,22 +1,27 @@
 package domain.people;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import domain.Number;
+import domain.card.Card;
+import domain.game.BetAmount;
+import domain.game.ProfitCalculator;
 import view.ErrorMessage;
 
-public class Player extends Participant {
+public final class Player {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
-    private static final String INVALID_NAME = "딜러";
     private static final String COMMA = ",";
-    private final String name;
 
-    public Player(String name) {
-        super(new ArrayList<>(), name);
+    private final Participant participant;
+    private BetAmount betAmount;
+
+    public Player(final String name) {
         validate(name);
-        this.name = name;
+        participant = new Participant(new ArrayList<>(), name);
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         validateNotNull(name);
         validateNotEmpty(name);
         validateNoDealer(name);
@@ -24,33 +29,72 @@ public class Player extends Participant {
         validateNameLength(name);
     }
 
-    private void validateNotNull(String name) {
+    private void validateNotNull(final String name) {
         if (name == null) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_NULL.getMessage());
         }
     }
 
-    private void validateNotEmpty(String name) {
+    private void validateNotEmpty(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_EMPTY.getMessage());
         }
     }
 
-    private void validateNoDealer(String name) {
-        if (name.equals(INVALID_NAME)) {
+    private void validateNoDealer(final String name) {
+        if (InvalidNames.isInvalidNames(name)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DEALER.getMessage());
         }
     }
 
-    private void validateDoesNotContainComma(String name) {
+    private void validateDoesNotContainComma(final String name) {
         if (name.contains(COMMA)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
         }
     }
 
-    private void validateNameLength(String name) {
+    private void validateNameLength(final String name) {
         if (name.length() > MAX_PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
         }
+    }
+
+    public String fetchPlayerName() {
+        return participant.getName();
+    }
+
+    public boolean hasBlackJack(final int initHandCount) {
+        return participant.fetchHandValue() == Number.BLACKJACK_HAND_VALUE.get()
+            && participant.fetchHand().size() == initHandCount;
+    }
+
+    public void receiveCard(final Card card) {
+        participant.receiveCard(card);
+    }
+
+    public List<Card> fetchHand() {
+        return participant.fetchHand();
+    }
+
+    public int fetchHandValue() {
+        int handValue = participant.fetchHandValue();
+        if (hasBlackJack(Number.INIT_HAND_COUNT.get())) {
+            handValue = Number.BLACKJACK_RESULT_VALUE.get();
+        }
+        return handValue;
+    }
+
+    public boolean isBust() {
+        return participant.isBust();
+    }
+
+    public void assignBetAmount(final int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+
+    public int fetchProfit(final Dealer dealer) {
+        return betAmount.calculateProfit(
+            ProfitCalculator.getRatio(
+                fetchHandValue(), dealer.fetchHandValue()));
     }
 }

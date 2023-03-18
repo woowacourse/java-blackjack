@@ -1,35 +1,44 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
-import domain.game.Result;
+import domain.card.Card;
+import domain.people.Dealer;
+import domain.people.Player;
+import domain.people.Players;
 
-public class OutputView {
+public final class OutputView {
     private static final String PARTICIPANT_CARD_FORMAT = "%s : %s\n";
     private static final String PARTICIPANT_HAND_SUM = "%s 카드: %s - 결과: %s\n";
-    private static final String INIT_FINISHIED_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.\n";
+    private static final String INIT_FINISHED_MESSAGE = "딜러와 %s에게 %d장을 나누었습니다.\n";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
-    private static final String DEALER_TAG = "딜러";
     private static final String RESULT_FORMAT = ": ";
-
-    private static final String RESULT_TAG = "## 최종 승패";
-
+    private static final String RESULT_TAG = "## 최종 수익";
     private static final String DELIMITER = ", ";
+    private static final String PLAYER_IS_BLACKJACK = "%s는 블랙잭입니다! 축하합니다!🎉\n";
+    private static final String PLAYER_IS_BUST = "이런, %s는 버스트!😭\n";
 
-    private static final String BLANK = " ";
-    private static final String BUST_HAND_VALUE = "0";
-    private static final String BUST = "버스트";
-
-    public static void printDealFinishMessage(List<String> participantNames) {
+    public static void printDealFinishMessage(Players players, int initHandCount) {
         printEmptyLine();
-        String participants = String.join(DELIMITER, participantNames);
-        System.out.printf(INIT_FINISHIED_MESSAGE, participants);
+        String participants = players.getPlayers()
+            .stream()
+            .map(Player::fetchPlayerName)
+            .collect(Collectors.joining(DELIMITER));
+        System.out.printf(INIT_FINISHED_MESSAGE, participants, initHandCount);
     }
 
-    public static void printParticipantCard(String name, List<String> participantsHand) {
-        String cards = String.join(DELIMITER, participantsHand);
-        System.out.printf((PARTICIPANT_CARD_FORMAT), name, cards);
+    public static void printDealerHand(Dealer dealer) {
+        String cards = dealer.fetchHand().subList(0, 1).stream()
+            .map(Card::toString)
+            .collect(Collectors.joining(DELIMITER));
+        System.out.printf(PARTICIPANT_CARD_FORMAT, dealer.getName(), cards);
+    }
+
+    public static void printPlayerHand(Player player) {
+        String cards = player.fetchHand().stream()
+            .map(Card::toString)
+            .collect(Collectors.joining(DELIMITER));
+        System.out.printf(PARTICIPANT_CARD_FORMAT, player.fetchPlayerName(), cards);
     }
 
     public static void printDealerPickCardMessage() {
@@ -38,44 +47,45 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printParticipantHandValue(String participantName, List<String> participantCards,
-        String handValue) {
-        String cards = String.join(DELIMITER, participantCards);
-        if (handValue.equals(BUST_HAND_VALUE)) {
-            handValue = BUST;
-        }
-        System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
+    public static void printDealerHandValue(Dealer dealer) {
+        String cards = dealer.fetchHand().stream()
+            .map(Card::toString)
+            .collect(Collectors.joining(DELIMITER));
+        String value = Result.getResultOf(dealer.fetchHandValue());
+        System.out.printf(PARTICIPANT_HAND_SUM, dealer.getName(), cards, value);
     }
 
-    public static void printEmptyLine() {
-        System.out.println();
+    public static void printPlayerHandValue(Player player) {
+        String cards = player.fetchHand().stream().map(Card::toString).collect(Collectors.joining(DELIMITER));
+        String value = Result.getResultOf(player.fetchHandValue());
+        System.out.printf(PARTICIPANT_HAND_SUM, player.fetchPlayerName(), cards, value);
     }
 
-    public static void printDealerResult(Map<Result, Integer> results) {
-        StringBuilder dealerResult = new StringBuilder();
-        dealerResult.append(DEALER_TAG).append(RESULT_FORMAT);
-        countTargetResult(results, Result.WIN, dealerResult);
-        countTargetResult(results, Result.TIE, dealerResult);
-        countTargetResult(results, Result.LOSE, dealerResult);
-
-        System.out.println(dealerResult);
+    public static void printPlayerHasBlackJack(Player player) {
+        System.out.printf(PLAYER_IS_BLACKJACK, player.fetchPlayerName());
     }
 
-    private static void countTargetResult(Map<Result, Integer> results, Result result, StringBuilder dealerResult) {
-        int count = results.getOrDefault(result, 0);
-        if (count > 0) {
-            dealerResult.append(results.get(result)).append(result.getResult()).append(BLANK);
-        }
-    }
-
-    public static void printPlayerResult(String name, Result result) {
-        StringBuilder stringBuilder = new StringBuilder();
-        System.out.println(stringBuilder.append(name).append(RESULT_FORMAT).append(result.getResult()));
+    public static void printPlayerIsBust(Player player) {
+        System.out.printf(PLAYER_IS_BUST, player.fetchPlayerName());
     }
 
     public static void printResultInfo() {
         printEmptyLine();
         System.out.println(RESULT_TAG);
+    }
+
+    public static void printDealerResult(Dealer dealer, int profit) {
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println(stringBuilder.append(dealer.getName()).append(RESULT_FORMAT).append(profit));
+    }
+
+    public static void printPlayerResult(Player player, int profit) {
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println(stringBuilder.append(player.fetchPlayerName()).append(RESULT_FORMAT).append(profit));
+    }
+
+    public static void printEmptyLine() {
+        System.out.println();
     }
 
     public static void printExceptionMessage(IllegalArgumentException e) {

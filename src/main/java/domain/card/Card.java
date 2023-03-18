@@ -2,31 +2,27 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Card {
-    private static final int HIGH_ACE_VALUE = 11;
-    private final String name;
-    private final int value;
+import domain.Number;
 
-    private Card(final String name, final int value) {
-        this.name = name;
-        this.value = value;
+public final class Card {
+    private final Suit suit;
+    private final Rank rank;
+
+    private Card(final Suit suit, final Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
-    public static Card from(Suit suit, Rank rank) {
-        String name = rank.getName() + suit.getShape();
-        int value = rank.getValue();
-        return new Card(name, value);
+    public static Card from(final Suit suit, final Rank rank) {
+        return new Card(suit, rank);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
-        return value;
-    }
     public boolean isAce() {
-        return value == HIGH_ACE_VALUE;
+        return rank.getValue() == Number.LOW_ACE_VALUE.get();
+    }
+
+    public int fetchValue() {
+        return rank.getValue();
     }
 
     @Override
@@ -36,11 +32,16 @@ public class Card {
         if (o == null || getClass() != o.getClass())
             return false;
         Card card = (Card)o;
-        return value == card.value && Objects.equals(name, card.name);
+        return suit == card.suit && rank == card.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value);
+        return Objects.hash(suit, rank);
+    }
+
+    @Override
+    public String toString() {
+        return rank.getName() + suit.getShape();
     }
 }

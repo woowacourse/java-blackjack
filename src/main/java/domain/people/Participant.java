@@ -6,36 +6,29 @@ import java.util.Objects;
 import domain.card.Card;
 import domain.card.Hand;
 
-public class Participant {
-    private static final int BUST_BOUNDARY_VALUE = 21;
-    private static final int BUST_HAND_VALUE = 0;
-
+public final class Participant {
     private final Hand hand;
     private final String name;
 
-    public Participant(List<Card> cards, String name) {
+    public Participant(final List<Card> cards, final String name) {
         this.hand = new Hand(cards);
         this.name = name;
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hand.addCard(card);
     }
 
-    public int getParticipantHandValue() {
-        int participantHandValue = getHandValue();
-        if (participantHandValue > BUST_BOUNDARY_VALUE) {
-            participantHandValue = BUST_HAND_VALUE;
-        }
-        return participantHandValue;
+    public List<Card> fetchHand() {
+        return hand.getHand();
     }
 
-    public int getHandValue() {
-        return hand.calculateValue();
+    public int fetchHandValue() {
+        return hand.calculateHandValue();
     }
 
-    public List<String> getCardNames() {
-        return hand.getCardNames();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public String getName() {
@@ -54,6 +47,6 @@ public class Participant {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(hand, name);
     }
 }

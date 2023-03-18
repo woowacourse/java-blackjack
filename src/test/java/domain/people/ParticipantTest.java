@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.people.Dealer;
-import domain.people.Participant;
 
 class ParticipantTest {
     private Participant participant;
@@ -31,13 +29,13 @@ class ParticipantTest {
     @DisplayName("참가자가 카드를 받는다.")
     void receiveCard() {
         participant.receiveCard(Card.from(Suit.SPADE, Rank.TEN));
-        assertThat(participant.getCardNames().size()).isEqualTo(3);
+        assertThat(participant.fetchHand().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("참가자의 handValue를 계산한다.")
     void getHandValue() {
-        assertThat(participant.getHandValue()).isEqualTo(12);
+        assertThat(participant.fetchHandValue()).isEqualTo(12);
     }
 
     @Test

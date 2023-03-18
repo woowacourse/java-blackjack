@@ -9,7 +9,6 @@ public class SimpleLinkedList<T> implements SimpleList<T> {
         }
     }
 
-
     @Override
     public boolean add(final T value) {
         Node<T> newNode = new Node(value);

@@ -1,68 +1,53 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Hand {
-    private static final int HIGH_ACE_VALUE = 11;
-    private static final int LOW_ACE_VALUE = 1;
-    private static final int BUST_BOUNDARY_VALUE = 21;
+import domain.Number;
 
+public final class Hand {
     private final List<Card> hand;
 
-    public Hand(List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.hand = cards;
-
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         hand.add(card);
     }
 
-    public int calculateValue() {
-        int value = 0;
-        int aceCount = 0;
-
-        aceCount = countAce(aceCount);
-
-        value = sumValue(value);
-
-        value = chooseAceValue(value, aceCount);
-        return value;
-    }
-
-    private int countAce(int aceCount) {
-        for (Card card : hand) {
-            aceCount = addAceCount(aceCount, card);
-        }
-        return aceCount;
-    }
-
-    private int addAceCount(int aceCount, Card card) {
-        if (card.isAce()) {
-            aceCount += 1;
-        }
-        return aceCount;
-    }
-
-    private int chooseAceValue(int value, int aceCount) {
-        while (value > BUST_BOUNDARY_VALUE && aceCount > 0) {
-            value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
-            aceCount -= 1;
+    public int calculateHandValue() {
+        int value = calculateHandValueWithoutConsideringBust();
+        if (isBust()) {
+            value = 0;
         }
         return value;
     }
 
-    private int sumValue(int value) {
-        for (Card card : hand) {
-            value += card.getValue();
+    private int calculateHandValueWithoutConsideringBust() {
+        int value = sumValue();
+
+        if (hasAce() && value + Number.ACE_GAP.get() <= Number.BUST_BOUNDARY_VALUE.get()) {
+            value += Number.ACE_GAP.get();
         }
         return value;
     }
 
-    public List<String> getCardNames() {
+    private boolean hasAce() {
+        return hand.stream().anyMatch(Card::isAce);
+    }
+
+    private int sumValue() {
         return hand.stream()
-            .map(Card::getName)
-            .collect(Collectors.toList());
+            .mapToInt(Card::fetchValue)
+            .sum();
+    }
+
+    public boolean isBust() {
+        return calculateHandValueWithoutConsideringBust() > Number.BUST_BOUNDARY_VALUE.get();
+    }
+
+    public List<Card> getHand() {
+        return new ArrayList<>(hand);
     }
 }

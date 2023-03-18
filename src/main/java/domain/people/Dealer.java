@@ -2,24 +2,52 @@ package domain.people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import domain.card.Deck;
+import domain.Number;
+import domain.card.Card;
 
-public class Dealer extends Participant {
+public final class Dealer {
     private static final String DEALER_NAME = "딜러";
-    private static final int DEALER_MINIMUM_VALUE = 17;
+
+    private final Participant participant;
 
     public Dealer() {
-        super(new ArrayList<>(), DEALER_NAME);
+        participant = new Participant(new ArrayList<>(), DEALER_NAME);
     }
 
-    public void deal(Deck deck, List<Participant> participants) {
-        for (Participant participant : participants) {
-            participant.receiveCard(deck.draw());
-        }
+    public void receiveCard(final Card card) {
+        participant.receiveCard(card);
+    }
+
+    public List<Card> fetchHand() {
+        return participant.fetchHand();
+    }
+
+    public int fetchHandValue() {
+        return participant.fetchHandValue();
     }
 
     public boolean shouldHit() {
-        return getHandValue() < DEALER_MINIMUM_VALUE;
+        return !participant.isBust() && participant.fetchHandValue() < Number.DEALER_MINIMUM_VALUE.get();
+    }
+
+    public String getName() {
+        return DEALER_NAME;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Dealer dealer = (Dealer)o;
+        return Objects.equals(participant, dealer.participant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(participant);
     }
 }

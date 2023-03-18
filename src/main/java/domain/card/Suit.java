@@ -8,7 +8,7 @@ public enum Suit {
 
     private final String shape;
 
-    Suit(String shape) {
+    Suit(final String shape) {
         this.shape = shape;
     }
 
