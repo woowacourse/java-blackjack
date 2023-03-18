@@ -24,7 +24,7 @@ class ReadyTest {
         final State state = new Ready(
                 new Card(Shape.HEART, Number.QUEEN),
                 new Card(Shape.HEART, Number.JACK)
-        ).drawStart();
+        ).play();
         
         assertThat(state).isExactlyInstanceOf(Hit.class);
     }
@@ -35,7 +35,7 @@ class ReadyTest {
         final State state = new Ready(
                 new Card(Shape.HEART, Number.QUEEN),
                 new Card(Shape.HEART, Number.ACE)
-        ).drawStart();
+        ).play();
         
         assertThat(state).isExactlyInstanceOf(BlackJack.class);
     }

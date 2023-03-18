@@ -19,7 +19,7 @@ public abstract class State {
     public abstract double calculateProfit(double betAmount);
     public abstract State drawStop();
     public abstract boolean isFinished();
-    public State drawStart() {
+    public State play() {
         throw new UnsupportedOperationException("드로우 시작 상태로 전이하는 기능은 Ready 상태일때만 사용 가능합니다.");
     }
     

@@ -27,7 +27,7 @@ public abstract class Player {
     
     public void initCards(Card firstCard, Card secondCard) {
         state = new Ready(firstCard, secondCard)
-                .drawStart();
+                .play();
     }
     
     public void draw(Card card) {

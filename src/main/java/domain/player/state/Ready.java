@@ -10,7 +10,7 @@ public class Ready extends State {
     }
     
     @Override
-    public State drawStart() {
+    public State play() {
         if (isBlackJack()) {
             return new BlackJack(hand);
         }
