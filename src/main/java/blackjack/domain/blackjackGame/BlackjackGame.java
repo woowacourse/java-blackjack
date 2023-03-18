@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.blackjackGame;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Shuffler;
+import blackjack.domain.person.*;
 import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 

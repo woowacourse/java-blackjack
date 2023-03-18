@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Person;
+import blackjack.domain.person.Person;
 
 import java.util.HashMap;
 import java.util.Map;
