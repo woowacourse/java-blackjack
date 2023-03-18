@@ -30,7 +30,7 @@ public class InputView {
 
     private static void validateNonNumber(String input) {
         Matcher matcher = CHARACTER_SET_NOT_NUMBER.matcher(input);
-        if (matcher.find()) {
+        if (!matcher.find()) {
             throw new IllegalArgumentException("숫자가 아닌 값은 입력할 수 없습니다.");
         }
     }
