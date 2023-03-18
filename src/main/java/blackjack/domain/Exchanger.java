@@ -1,27 +1,26 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.Map;
 
 public class Exchanger {
 
-    private final Map<Person, Integer> bettingMoney;
+    private final BettingMoney bettingMoney;
 
-    public Exchanger(Map<Person, Integer> bettingMoney) {
+    public Exchanger(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
     public double calculatePlayerProfit(Person player, GameResult gameResult) {
-        if (gameResult.equals(GameResult.BLACKJACK)) {
-            return bettingMoney.get(player) * 1.5;
+        if (gameResult == GameResult.BLACKJACK) {
+            return bettingMoney.getBlackjackProfit((Player) player);
         }
-        if (gameResult.equals(GameResult.WIN)) {
-            return bettingMoney.get(player);
+        if (gameResult == GameResult.WIN) {
+            return bettingMoney.getWinProfit((Player) player);
         }
-        if (gameResult.equals(GameResult.DRAW)) {
-            return 0;
+        if (gameResult == GameResult.DRAW) {
+            return bettingMoney.getDrawProfit((Player) player);
         }
-        return bettingMoney.get(player) * (-1.0);
+        return bettingMoney.getLoseProfit((Player) player);
     }
 
     public double calculateDealerProfit(List<Double> playersProfit) {

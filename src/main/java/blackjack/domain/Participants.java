@@ -1,17 +1,17 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class Participants {
     private final List<Person> participants = new ArrayList<>();
 
-    public Participants(Dealer dealer, List<Player> players) {
+    public Participants(Dealer dealer, Players players) {
         this.participants.add(dealer);
-        this.participants.addAll(players);
+        this.participants.addAll(players.getPlayers());
     }
 
     public Person findByName(String name) {

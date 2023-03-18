@@ -1,13 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.DeckMaker;
-import blackjack.dto.BettingMoneyDto;
+import blackjack.domain.*;
 import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,18 @@ public class BlackJackController {
     private final BlackjackGame blackjackGame;
 
     public BlackJackController() {
-        this.blackjackGame = repeat(() -> new BlackjackGame(InputView.readPlayerNames(), new DeckMaker()));
+        this.blackjackGame = setGame();
+    }
+
+    private BlackjackGame setGame() {
+        Players players = repeat(() -> new Players(inputPlayersName()));
+        BettingMoney bettingMoney = getBettingMoney(players.getPlayers());
+        return new BlackjackGame(players, new DeckMaker(), bettingMoney);
+    }
+
+    private List<String> inputPlayersName() {
+        String[] playersName = InputView.readPlayerNames();
+        return new ArrayList<>(List.of(playersName));
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -35,23 +45,22 @@ public class BlackJackController {
     }
 
     public void run() {
-        BettingMoneyDto bettingMoneyDto = getBettingMoney(blackjackGame.getPlayersName());
         blackjackGame.drawInitCard();
         printInitStatus(blackjackGame.getParticipantsInit());
         drawMoreCardForPlayers(blackjackGame.getPlayersName());
         InputView.closeScanner();
         drawMoreCardForDealer();
         printAllStatus();
-        printGameResult(blackjackGame.getParticipantsProfitDto(bettingMoneyDto));
+        printGameResult(blackjackGame.getParticipantsProfitDto());
     }
 
-    private BettingMoneyDto getBettingMoney(List<String> playersName) {
-        Map<String, Integer> bettingMoney = new HashMap<>();
-        for (String name : playersName) {
-            int money = repeat(() -> validate(InputView.readBettingMoney(name)));
-            bettingMoney.put(name, money);
+    private BettingMoney getBettingMoney(List<Player> players) {
+        Map<Player, Integer> bettingMoney = new HashMap<>();
+        for (Player player : players) {
+            int money = repeat(() -> validate(InputView.readBettingMoney(player.getName())));
+            bettingMoney.put(player, money);
         }
-        return BettingMoneyDto.of(bettingMoney, blackjackGame.getParticipants());
+        return new BettingMoney(bettingMoney);
     }
 
     private int validate(int value) {

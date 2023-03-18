@@ -1,45 +1,29 @@
 package blackjack.domain;
 
-import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.ParticipantsProfitDto;
 import blackjack.dto.PersonStatusDto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
 public class BlackjackGame {
 
     private final Deck deck;
+    private final BettingMoney bettingMoney;
     private final Participants participants;
 
-    public BlackjackGame(String[] names, Shuffler shuffler) {
-        validateNumberOfPlayer(names);
-        this.participants = createParticipants(names);
+    public BlackjackGame(Players players, Shuffler shuffler, BettingMoney bettingMoney) {
+        this.participants = createParticipants(players);
         this.deck = new Deck(shuffler);
+        this.bettingMoney = bettingMoney;
     }
 
-    private void validateNumberOfPlayer(String[] names) {
-        if (names.length < 1) {
-            throw new IllegalArgumentException("[ERROR] 참여할 사람은 한 명 이상이어야 합니다.");
-        }
-    }
-
-    public Participants createParticipants(String[] names) {
-        validateDuplicate(names);
-        List<Player> players = Arrays.stream(names)
-                .map(Player::new)
-                .collect(toList());
+    public Participants createParticipants(Players players) {
         return new Participants(new Dealer(), players);
-    }
-
-    private void validateDuplicate(String[] names) {
-        long uniqueNamesCount = Arrays.stream(names)
-                .distinct()
-                .count();
-        if (uniqueNamesCount != names.length) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
-        }
     }
 
     public void drawInitCard() {
@@ -102,6 +86,7 @@ public class BlackjackGame {
         List<Card> cards = participants.getCardsByName(name);
         return PersonStatusDto.of(name, cards);
     }
+
     public List<PersonStatusDto> getAllPersonStatus() {
         return participants.getParticipants().stream()
                 .map(person -> PersonStatusDto.of(person.getName(), person.getCards()))
@@ -116,8 +101,7 @@ public class BlackjackGame {
         return participants.getPlayerScore(name);
     }
 
-    public ParticipantsProfitDto getParticipantsProfitDto(BettingMoneyDto bettingMoneyDto) {
-        Map<Person, Integer> bettingMoney = bettingMoneyDto.getBettingMoney();
+    public ParticipantsProfitDto getParticipantsProfitDto() {
         Exchanger exchanger = new Exchanger(bettingMoney);
         Map<Person, Double> playersProfit = getPlayersProfit(exchanger);
         double dealerProfit = getDealerProfit(exchanger, playersProfit);
