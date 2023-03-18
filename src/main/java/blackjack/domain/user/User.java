@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.card.Score;
 
 import java.util.List;
 
@@ -38,16 +38,12 @@ public class User implements Player {
     }
 
     @Override
-    public GamePoint getGamePoint() {
-        return cards.getPoint();
+    public Score getGameScore() {
+        return cards.getScore();
     }
 
     public List<Card> openCards() {
         return cards.getCards();
-    }
-
-    public int pointCompare(final GamePoint point) {
-        return cards.getPoint().compareTo(point);
     }
 
     public boolean isNameOf(final Name userName) {

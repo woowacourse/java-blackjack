@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.card.Score;
 
 import java.util.List;
 
@@ -20,12 +20,8 @@ public class Dealer implements Player {
 
     private void validateCardsSize(final int size) {
         if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("딜러는 카드 2장 이상을 갖고 있어야 합니다.");
+            throw new IllegalArgumentException("딜러 카드 두 장을 초기에 가지고 있어야 합니다.");
         }
-    }
-
-    public Card getFirstCard() {
-        return cards.getFirstCard();
     }
 
     public List<Card> openCards() {
@@ -40,15 +36,14 @@ public class Dealer implements Player {
         this.cards = cards.add(card);
     }
 
-
     @Override
     public boolean canReceive() {
-        return cards.haveLowerGamePointThan(16) && !cards.isBust();
+        return cards.getScore().getValue() <= 16 && !cards.isBust();
     }
 
     @Override
-    public GamePoint getGamePoint() {
-        return cards.getPoint();
+    public Score getGameScore() {
+        return cards.getScore();
     }
 
     public Name getName() {
@@ -58,4 +53,5 @@ public class Dealer implements Player {
     public Cards getCards() {
         return cards;
     }
+
 }

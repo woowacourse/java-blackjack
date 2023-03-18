@@ -1,9 +1,11 @@
 package blackjack.domain;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Shape;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,19 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class UserTest {
-    private static final User USER_16 = new User(new Name("유저1"), new Cards(
-            Arrays.asList(new Card(Shape.HEART, CardNumber.SIX), new Card(Shape.HEART, CardNumber.TEN))
-    ));
-    private static final User USER_18 = new User(new Name("유저2"), new Cards(
-            Arrays.asList(new Card(Shape.HEART, CardNumber.EIGHT), new Card(Shape.HEART, CardNumber.TEN))
-    ));
-    private static final User USER_21 = new User(new Name("유저1"), new Cards(
-            Arrays.asList(
-                    new Card(Shape.HEART, CardNumber.ACE),
-                    new Card(Shape.HEART, CardNumber.TEN)
-            )
-    ));
-    private static final GamePoint GAME_POINT_17 = new GamePoint(Arrays.asList(new Card(Shape.HEART, CardNumber.SEVEN), new Card(Shape.HEART, CardNumber.TEN)));
     private User 푸우;
 
     @BeforeEach
@@ -43,38 +32,56 @@ class UserTest {
     @Test
     @DisplayName("User는 카드를 한 장 받을 수 있다.")
     void drawTest() {
+        //given
+        final Cards originCard = 푸우.getCards();
+        final List<Card> originCardData = originCard.getCards();
 
-        assertThat(푸우)
-                .extracting("cards")
-                .extracting("cards", InstanceOfAssertFactories.collection(List.class))
-                .size()
+        assertThat(originCardData.size())
                 .isEqualTo(2);
 
+        //when
         final Card card3 = new Card(Shape.HEART, CardNumber.THREE);
         푸우.draw(card3);
+        final Cards changedCard = 푸우.getCards();
+        final List<Card> changeCardData = changedCard.getCards();
 
-        assertThat(푸우)
-                .extracting("cards")
-                .extracting("cards", InstanceOfAssertFactories.collection(List.class))
-                .size()
+        //then
+        assertThat(changeCardData.size())
                 .isEqualTo(3);
     }
 
     @Test
     @DisplayName("21 이하의 카드를 가진 유저는 카드를 더 받을 수 있다.")
     void canReceiveTest() {
-        assertThat(푸우.canReceive()).isTrue();
+        //given
+        final User user20 = new User(new Name("20가짐"),
+                new Cards(List.of(
+                        new Card(Shape.HEART, CardNumber.TEN),
+                        new Card(Shape.HEART, CardNumber.TEN))
+                )
+        );
+
+        //when
+        final boolean canRecieve = user20.canReceive();
+
+        //then
+        assertThat(canRecieve).isTrue();
     }
 
     @Test
     @DisplayName("21 이상의 카드를 가진 유저는 더 이상 카드를 받을 수 없다.")
     void cantReceiveTest() {
+        //given
         final Card card3 = new Card(Shape.HEART, CardNumber.TEN);
         final Card card4 = new Card(Shape.HEART, CardNumber.TEN);
         푸우.draw(card3);
         푸우.draw(card4);
 
-        assertThat(푸우.canReceive()).isFalse();
+        //when
+        final boolean canReceive = 푸우.canReceive();
+
+        //then
+        assertThat(canReceive).isFalse();
     }
 
     @Test
@@ -91,7 +98,7 @@ class UserTest {
     @DisplayName("유저는 버스트 나면 카드를 받을 수 없다.")
     void cantDrawWhenBustTest() {
         assertThatThrownBy(() -> {
-            for (int i = 0; i < 22; i++) {
+            for (int i = 0; i < 21; i++) {
                 푸우.draw(new Card(Shape.HEART, CardNumber.ACE));
             }
         }).isInstanceOf(IllegalStateException.class)
@@ -104,22 +111,8 @@ class UserTest {
         for (int i = 0; i < 12; i++) {
             푸우.draw(new Card(Shape.HEART, CardNumber.ACE));
         }
-        assertThat(푸우.getGamePoint())
-                .extracting("gamePoint")
+        assertThat(푸우.getGameScore().getValue())
                 .isEqualTo(14);
-    }
-
-    @Test
-    @DisplayName("유저의 게임포인트를 해당 GamePoint와 비교하여 큰 경우 1 같은 경우 0 작을 경우 -1을 반환한다.")
-    void isGreaterThanTest() {
-        assertAll(
-                () -> {
-                    assertThat(USER_18.pointCompare(GAME_POINT_17)).isEqualTo(1);
-                },
-                () -> {
-                    assertThat(USER_16.pointCompare(GAME_POINT_17)).isEqualTo(-1);
-                }
-        );
     }
 
     @Test
@@ -131,19 +124,29 @@ class UserTest {
     @Test
     @DisplayName("유저가 버스트 난 유저 인지 확인한다.")
     void isBustedTest() {
-        final User USER_22 = new User(new Name("유저1"), new Cards(
+        //given
+        final User user22 = new User(new Name("유저1"), new Cards(
                 Arrays.asList(
                         new Card(Shape.HEART, CardNumber.TWO),
                         new Card(Shape.HEART, CardNumber.TEN)
                 )
         ));
-        USER_22.draw(new Card(Shape.HEART, CardNumber.TEN));
+        user22.draw(new Card(Shape.HEART, CardNumber.TEN));
+
+        final User user21 = new User(new Name("유저1"), new Cards(
+                Arrays.asList(
+                        new Card(Shape.HEART, CardNumber.ACE),
+                        new Card(Shape.HEART, CardNumber.TEN)
+                )
+        ));
+
+        //when,then
         assertAll(
                 () -> {
-                    assertThat(USER_21.isBusted()).isFalse();
+                    assertThat(user21.isBusted()).isFalse();
                 },
                 () -> {
-                    assertThat(USER_22.isBusted()).isTrue();
+                    assertThat(user22.isBusted()).isTrue();
                 }
         );
     }

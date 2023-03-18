@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
+import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
@@ -7,7 +8,7 @@ import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,23 +50,23 @@ public class BlackJack {
     public List<User> getUserOf(Result result) {
         final List<User> resultUsers = new ArrayList<>();
         for (User user : users.getUsers()) {
-            if (Result.of(user.getGamePoint(), dealer.getGamePoint()) == result) {
+            if (Result.of(user.getCards(), dealer.getCards()) == result) {
                 resultUsers.add(user);
             }
         }
         return resultUsers;
     }
 
-    public User getUser(Name user) {
-        return users.finUserByName(user);
+    public Map<Result, List<User>> getAllUsersResult() {
+        final LinkedHashMap<Result, List<User>> resultOfUsers = new LinkedHashMap<>();
+        for (Result result : Result.values()) {
+            resultOfUsers.put(result, getUserOf(result));
+        }
+        return resultOfUsers;
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        final Map<Result, Integer> resultMap = new HashMap<>();
-        resultMap.put(Result.WIN, getUserOf(Result.LOSE).size());
-        resultMap.put(Result.LOSE, getUserOf(Result.WIN).size());
-        resultMap.put(Result.DRAW, getUserOf(Result.DRAW).size());
-        return resultMap;
+    public User getUser(Name user) {
+        return users.finUserByName(user);
     }
 
     public Dealer getDealer() {
