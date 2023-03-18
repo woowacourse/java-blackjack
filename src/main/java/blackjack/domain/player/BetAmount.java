@@ -27,7 +27,7 @@ public class BetAmount {
     }
 
     private void validateAmountUnit(int value) {
-        if (value % 10 != 0) {
+        if (value % MIN_UNIT != 0) {
             throw new IllegalArgumentException("배팅 금액의 단위는 " + MIN_UNIT + "원 입니다.");
         }
     }
