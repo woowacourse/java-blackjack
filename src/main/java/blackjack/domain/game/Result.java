@@ -2,9 +2,6 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
 
-import java.util.Arrays;
-import java.util.function.BiFunction;
-
 public enum Result {
     BLACK_JACK_WIN(1.5),
     WIN(1),
