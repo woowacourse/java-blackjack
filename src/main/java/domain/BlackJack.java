@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.GameResult.*;
+import static domain.Judge.*;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -40,44 +41,23 @@ public class BlackJack {
 		return playerResult;
 	}
 
-	public Map<String, String> calculateDealerResult() {
-		Map<String, Integer> result = new LinkedHashMap<>();
-		Map<String, String> playerResults = calculatePlayerResults();
-		calculateResults(result, playerResults);
-		return joinWinning(result);
-	}
-
-	private void calculateResults(Map<String, Integer> result, Map<String, String> playerResults) {
-		for (GameResult value : values()) {
-			result.put(value.getName(), 0);
+	public Map<String, Integer> calculatePlayerProfits() {
+		Map<String, Integer> playerProfit = new LinkedHashMap<>();
+		List<Player> players = users.getPlayers();
+		Dealer dealer = users.getDealer();
+		for (Player player : players) {
+			playerProfit.put(player.getName(), calculateProfit(player, dealer));
 		}
-		for (String winning : playerResults.values()) {
-			String dealerWinning = convert(winning);
-			result.replace(dealerWinning, result.getOrDefault(dealerWinning, 0) + 1);
+		return playerProfit;
+	}
+
+	public int calculateDealerProfit() {
+		int dealerProfit = 0;
+		Map<String, Integer> playerProfits = calculatePlayerProfits();
+		for (Integer playerProfit : playerProfits.values()) {
+			dealerProfit -= playerProfit;
 		}
-	}
-
-	private String convert(String winning) {
-		if (winning.equals(WIN.getName()))
-			return LOSE.getName();
-		if (winning.equals(LOSE.getName()))
-			return WIN.getName();
-		return PUSH.getName();
-	}
-
-	private Map<String, String> joinWinning(Map<String, Integer> result) {
-		Map<String, String> dealerResult = new HashMap<>();
-		StringBuilder sb = new StringBuilder();
-		for (String winning : result.keySet()) {
-			join(result, sb, winning);
-		}
-		dealerResult.put("딜러", sb.toString());
-		return dealerResult;
-	}
-
-	private static void join(Map<String, Integer> result, StringBuilder sb, String winning) {
-		if (result.get(winning) > 0)
-			sb.append(result.get(winning).toString()).append(winning).append(' ');
+		return dealerProfit;
 	}
 
 	public boolean isDealerHittable() {
