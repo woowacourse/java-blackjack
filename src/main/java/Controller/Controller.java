@@ -6,9 +6,9 @@ import static view.OutputView.*;
 import java.util.List;
 
 import domain.BlackJack;
-import domain.Deck;
+import domain.card.Deck;
 import domain.Player;
-import domain.RandomShuffleStrategy;
+import domain.strategy.RandomShuffleStrategy;
 import domain.Users;
 
 public class Controller {
