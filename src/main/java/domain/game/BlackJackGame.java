@@ -95,7 +95,7 @@ public final class BlackJackGame {
     }
 
     public int calculateDealerProfit() {
-        return calculatePlayerProfit().values().stream().mapToInt(profit -> profit).sum();
+        return -calculatePlayerProfit().values().stream().mapToInt(profit -> profit).sum();
     }
 
     public List<Player> fetchPlayers() {
