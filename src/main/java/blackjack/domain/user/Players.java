@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -13,13 +14,13 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
     public static Players from(Names names) {
         List<Player> players = names.getNames().stream()
                 .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
         return new Players(players);
     }
 
