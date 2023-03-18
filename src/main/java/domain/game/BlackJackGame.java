@@ -1,6 +1,8 @@
 package domain.game;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.Number;
@@ -81,6 +83,19 @@ public final class BlackJackGame {
         return fetchPlayers().stream()
             .filter(player -> !player.hasBlackJack(Number.INIT_HAND_COUNT.get()))
             .collect(Collectors.toList());
+    }
+
+    public Map<Player, Integer> calculatePlayerProfit() {
+        Map<Player, Integer> playersAndProfits = new LinkedHashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            playersAndProfits.put(player, fetchPlayerProfit(player));
+        }
+        return playersAndProfits;
+    }
+
+    public int calculateDealerProfit() {
+        return calculatePlayerProfit().values().stream().mapToInt(profit -> profit).sum();
     }
 
     public List<Player> fetchPlayers() {

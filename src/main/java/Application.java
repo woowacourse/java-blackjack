@@ -135,29 +135,12 @@ public class Application {
 
     private static void printResults(BlackJackGame blackJackGame) {
         OutputView.printResultInfo();
-
-        LinkedHashMap<Player, Integer> playersAndProfits = new LinkedHashMap<>();
-
-        printDealerResult(blackJackGame, playersAndProfits);
-        printPlayersResults(playersAndProfits);
+        OutputView.printDealerResult(blackJackGame.getDealer(), blackJackGame.calculateDealerProfit());
+        printPlayersResults(blackJackGame);
     }
 
-    private static void printDealerResult(BlackJackGame blackJackGame,
-        LinkedHashMap<Player, Integer> playersAndProfits) {
-        int dealerProfit = calculateDealerProfit(blackJackGame, playersAndProfits);
-        OutputView.printDealerResult(blackJackGame.getDealer(), dealerProfit);
-    }
-
-    private static int calculateDealerProfit(BlackJackGame blackJackGame,
-        LinkedHashMap<Player, Integer> playersAndProfits) {
-        for (Player player : blackJackGame.fetchPlayers()) {
-            playersAndProfits.put(player, blackJackGame.fetchPlayerProfit(player));
-        }
-        return -playersAndProfits.values().stream().mapToInt(profit -> profit).sum();
-    }
-
-    private static void printPlayersResults(LinkedHashMap<Player, Integer> playersAndProfits) {
-        for (Map.Entry<Player, Integer> playerAndProfit : playersAndProfits.entrySet()) {
+    private static void printPlayersResults(BlackJackGame blackJackGame) {
+        for (Map.Entry<Player, Integer> playerAndProfit : blackJackGame.calculatePlayerProfit().entrySet()) {
             OutputView.printPlayerResult(playerAndProfit.getKey(), playerAndProfit.getValue());
         }
     }
