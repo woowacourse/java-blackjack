@@ -31,14 +31,22 @@ public class PlayerResult implements Result {
 	}
 
 	private static boolean isVictory(final Player player, final Dealer dealer) {
-		return (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore())
-			|| (!player.isBust() && dealer.isBust());
+		return (dealer.isBust())
+			|| (isBothNotBustAndPlayerHasBiggerScore(player, dealer));
+	}
+
+	private static boolean isBothNotBustAndPlayerHasBiggerScore(final Player player, final Dealer dealer) {
+		return !player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore();
 	}
 
 	private static boolean isDraw(final Player player, final Dealer dealer) {
 		return (player.isBust() && dealer.isBust())
-			|| (!player.isBlackJack() && !dealer.isBlackJack() && (player.getScore() == dealer.getScore()))
-			|| (player.isBlackJack() && dealer.isBlackJack());
+			|| (player.isBlackJack() && dealer.isBlackJack())
+			|| (isBothNotBlackJackAndSameScore(player, dealer));
+	}
+
+	private static boolean isBothNotBlackJackAndSameScore(final Player player, final Dealer dealer) {
+		return !player.isBlackJack() && !dealer.isBlackJack() && (player.getScore() == dealer.getScore());
 	}
 
 	@Override

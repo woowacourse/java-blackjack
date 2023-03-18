@@ -51,6 +51,18 @@ class PlayerResultTest {
 			assertThat(result.getProfit())
 				.isEqualTo((int)(score20Player.getBet() * ResultState.WIN.getMultiplier()));
 		}
+
+		@Test
+		@DisplayName("플레이어가 bust고 딜러가 bust라면 건 돈 만큼의 수익을 올려야 한다.")
+		void bothBustAndPlayerGetProfitTest() {
+			Player bustPlayer = TestData.getBustPlayer(100);
+			Dealer bustDealer = TestData.getBustDealer();
+
+			PlayerResult result = PlayerResult.decide(bustPlayer, bustDealer);
+
+			assertThat(result.getProfit())
+				.isEqualTo((int)(bustPlayer.getBet() * ResultState.WIN.getMultiplier()));
+		}
 	}
 
 	@Nested
