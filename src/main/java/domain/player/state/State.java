@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public abstract class State {
     
-    private final Hand hand;
+    protected final Hand hand;
     
     State(Hand hand) {
         this.hand = hand;
@@ -29,10 +29,6 @@ public abstract class State {
     
     public List<Card> getCards() {
         return hand.getCards();
-    }
-    
-    protected Hand getHand() {
-        return hand;
     }
     
     protected boolean isBlackJack() {

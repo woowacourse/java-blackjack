@@ -14,7 +14,7 @@ public abstract class Running extends State {
     
     @Override
     public State drawStop() {
-        return new Stay(getHand());
+        return new Stay(hand);
     }
     
     @Override

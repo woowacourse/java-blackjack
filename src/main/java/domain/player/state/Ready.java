@@ -6,15 +6,15 @@ import domain.card.Hand;
 public class Ready extends State {
     public Ready(Card firstCard, Card secondCard) {
         super(new Hand());
-        getHand().addAllCard(firstCard, secondCard);
+        hand.addAllCard(firstCard, secondCard);
     }
     
     @Override
     public State drawStart() {
         if (isBlackJack()) {
-            return new BlackJack(getHand());
+            return new BlackJack(hand);
         }
-        return new Hit(getHand());
+        return new Hit(hand);
     }
     
     @Override
