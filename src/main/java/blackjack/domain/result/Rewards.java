@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 
 import java.util.LinkedHashMap;
@@ -21,11 +20,11 @@ public class Rewards {
         return rewards;
     }
 
-    public Double removeDealerResult() {
-        Dealer dealer = (Dealer) rewards.keySet().stream()
+    public Double removeAndGetDealerResult() {
+        User dealer = rewards.keySet().stream()
                 .filter(User::isDealer)
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException("찾는 딜러의 결과가 없습니다"));
         return rewards.remove(dealer);
     }
 }

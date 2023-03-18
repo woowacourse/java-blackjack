@@ -16,7 +16,7 @@ public class RewardDTO {
 
     public static RewardDTO of(Rewards rewards) {
         LinkedHashMap<String, Double> rewardsDTO = new LinkedHashMap<>();
-        rewardsDTO.put(Dealer.DEALER_NAME, rewards.removeDealerResult());
+        rewardsDTO.put(Dealer.DEALER_NAME, rewards.removeAndGetDealerResult());
         for (User user : rewards.getRewards().keySet()) {
             rewardsDTO.put(user.getName(), rewards.getRewards().get(user));
         }
