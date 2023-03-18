@@ -62,8 +62,7 @@ public class BlackjackController {
 
     private void giveAdditionalCardsToPlayers(Players players) {
         for (Player player : players.getPlayers()) {
-            String answer = InputView.askAdditionalCard(player.getPlayerName());
-            giveAdditionalCardToPlayer(answer, player);
+            giveAdditionalCardToPlayer(player);
         }
     }
 
@@ -74,13 +73,16 @@ public class BlackjackController {
         }
     }
 
-    private void giveAdditionalCardToPlayer(String answer, Player player) {
-        while (GameCommand.isContinue(answer) && !player.isBust()) {
+    private void giveAdditionalCardToPlayer(Player player) {
+        while (!player.isBust() && isContinue(player.getPlayerName())) {
             blackjackGame.updateCard(player);
             OutputView.printPlayerCurrentCards(player);
-            answer = InputView.askAdditionalCard(player.getPlayerName());
         }
         stopServingCard(player);
+    }
+
+    private boolean isContinue(String playerName) {
+        return GameCommand.isContinue(InputView.askAdditionalCard(playerName));
     }
 
     private void stopServingCard(Player player) {
