@@ -3,6 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.HandCards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.user.Names;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
