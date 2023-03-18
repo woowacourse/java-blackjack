@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class HandCards {
     public static final int BUST = 21;
@@ -17,7 +18,6 @@ public class HandCards {
 
     public HandCards() {
         this.playerCards = new ArrayList<>();
-        this.totalScore = 0;
     }
 
     public void updateCardScore(Card card) {
@@ -26,10 +26,10 @@ public class HandCards {
     }
 
     private int calculateTotalScore() {
-        Integer totalScore = playerCards.stream()
+        int totalScore = playerCards.stream()
                 .map(card -> card.getNumber().getValue())
                 .reduce(Integer::sum)
-                .get();
+                .orElseThrow(() -> new NoSuchElementException("현재 저장된 카드가 없습니다."));
         return updateAceScore(totalScore);
     }
 
