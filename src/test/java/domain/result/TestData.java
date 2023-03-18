@@ -1,10 +1,12 @@
-package domain;
+package domain.result;
 
 import java.util.List;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.player.Dealer;
+import domain.player.Player;
 
 public class TestData {
 

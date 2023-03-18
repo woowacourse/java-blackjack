@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import static org.assertj.core.api.Assertions.*;
 

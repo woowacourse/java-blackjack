@@ -1,7 +1,7 @@
 package domain.result;
 
-import domain.Dealer;
-import domain.Player;
+import domain.player.Dealer;
+import domain.player.Player;
 
 public class PlayerResult implements Result {
 

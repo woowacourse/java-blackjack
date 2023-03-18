@@ -5,7 +5,7 @@ import java.util.List;
 
 import domain.BlackJackGameRunner;
 import domain.CardGenerator;
-import domain.Player;
+import domain.player.Player;
 import view.InputView;
 import view.NameCardScoreDto;
 import view.NameProfitDto;

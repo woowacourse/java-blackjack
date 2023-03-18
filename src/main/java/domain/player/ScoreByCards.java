@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +31,14 @@ public class ScoreByCards {
 
 	public boolean isBlackJack() {
 		if (cards.size() >= INITIAL_CARD_COUNT) {
-			return scoreOfFirst(INITIAL_CARD_COUNT) == BLACKJACK_SCORE;
+			return scoreOfFirstTwo() == BLACKJACK_SCORE;
 		}
 		return false;
 	}
 
-	private int scoreOfFirst(int count) {
+	private int scoreOfFirstTwo() {
 		int score = 0;
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
 			score += cards.getNumberOf(i);
 		}
 		return score;

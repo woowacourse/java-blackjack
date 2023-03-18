@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.Player;
+import domain.player.Player;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;

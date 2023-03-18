@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import domain.Dealer;
-import domain.Player;
+import domain.player.Dealer;
+import domain.player.Player;
 
 public class Results {
 
