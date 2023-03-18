@@ -2,8 +2,11 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.Rewards;
-import blackjack.domain.user.*;
 import blackjack.domain.result.UserResults;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 
 import java.util.LinkedHashMap;
 
@@ -19,7 +22,7 @@ public class BlackjackGame {
 
     public void giveInitialCardsToUsers() {
         deck.shuffleCards();
-        users.giveInitialCardsTo();
+        users.giveInitialCards();
     }
 
     public void updateCard(User user) {

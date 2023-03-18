@@ -17,11 +17,11 @@ public class Users {
         this.players = players;
     }
 
-    public void giveInitialCardsTo() {
+    public void giveInitialCards() {
         for (Player player : players.getPlayers()) {
-            giveInitialCardsTo(player);
+            giveInitialCards(player);
         }
-        giveInitialCardsTo(dealer);
+        giveInitialCards(dealer);
     }
 
     public LinkedHashMap<User, Double> calculateRewards(UserResults userResults) {
@@ -51,7 +51,7 @@ public class Users {
         return players;
     }
 
-    private void giveInitialCardsTo(User user) {
+    private void giveInitialCards(User user) {
         Deck deck = Deck.getInstance();
         for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIAL_CARDS; cardIndex++) {
             user.updateCardScore(deck.drawCard());
