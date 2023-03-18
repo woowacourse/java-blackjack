@@ -4,7 +4,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class Participants {
         validateDuplicatedPlayer(players);
         validatePlayerCount(players);
         this.dealer = dealer;
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     private void validateDuplicatedPlayer(List<Player> players) {
@@ -44,7 +44,7 @@ public class Participants {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 
     public List<Participant> getParticipants() {
@@ -83,12 +83,15 @@ public class Participants {
         return hitCount;
     }
 
-    public Map<Player, Result> getPlayerResult() {
-        Map<Player, Result> playerResult = new HashMap<>();
+    public Map<Participant, Integer> getProfitResult() {
+        Map<Participant, Integer> profitResult = new LinkedHashMap<>();
+        profitResult.put(dealer, 0);
         for (Player player : players) {
-            playerResult.put(player, player.getResult(dealer));
+            Result result = Result.checkPlayerResult(player, dealer);
+            profitResult.put(player, player.getProfit(result));
         }
-        return playerResult;
+        int dealerProfit = dealer.getProfit(profitResult.values());
+        profitResult.replace(dealer, dealerProfit);
+        return profitResult;
     }
-
 }

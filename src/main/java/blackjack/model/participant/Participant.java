@@ -1,8 +1,11 @@
 package blackjack.model.participant;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.State;
+import blackjack.model.state.StateValue;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -22,38 +25,26 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        if(isFinished()){
-            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
-            return FinishedState.BLACKJACK.equals(state);
-        }
-        return false;
+        return currentState.isStateOf(StateValue.BLACKJACK);
     }
 
     public boolean isBust() {
-        if(isFinished()){
-            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
-            return FinishedState.BUST.equals(state);
-        }
-        return false;
+        return currentState.isStateOf(StateValue.BUST);
     }
 
     public boolean isStand() {
-        if(isFinished()){
-            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
-            return FinishedState.STAND.equals(state);
-        }
-        return false;
+        return currentState.isStateOf(StateValue.STAND);
     }
 
     public int getScore() {
         return currentState.getOptimizedScore();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
-    public Hand getHand() {
+    public List<Card> getHand() {
         return currentState.getHand();
     }
 

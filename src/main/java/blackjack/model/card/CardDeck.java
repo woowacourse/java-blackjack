@@ -1,7 +1,6 @@
 package blackjack.model.card;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CardDeck {
 
@@ -10,14 +9,17 @@ public class CardDeck {
     public CardDeck() {
         cardDeck = new Stack<>();
         List<Card> cards = new ArrayList<>();
-
         for (CardSuit suit : CardSuit.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                cards.add(Card.of(suit, number));
-            }
+            createCardsWithSuit(cards, suit);
         }
         Collections.shuffle(cards);
         cards.forEach(cardDeck::push);
+    }
+
+    private static void createCardsWithSuit(List<Card> cards, CardSuit suit) {
+        for (CardNumber number : CardNumber.values()) {
+            cards.add(Card.of(suit, number));
+        }
     }
 
     public CardDeck(List<Card> cards) {

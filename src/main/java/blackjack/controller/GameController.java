@@ -1,16 +1,17 @@
 package blackjack.controller;
 
+import blackjack.dto.FinishedParticipantDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.ResultDto;
+import blackjack.dto.ProfitResultDto;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
-import blackjack.model.result.Result;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -27,65 +28,53 @@ public class GameController {
         CardDeck cardDeck = new CardDeck();
         Participants participants = initializeParticipants();
 
-        participants.distributeTwoCardsToEach(cardDeck);
-        printInitialCardStatus(participants);
-
+        start(cardDeck, participants);
         hitOrStand(cardDeck, participants);
-        printFinalCardStatus(participants);
-
-        printWinningResult(participants.getPlayerResult());
+        finish(participants);
     }
 
     private Participants initializeParticipants() {
-        List<Player> players = inputView.readNames().stream()
-                .map(name -> new Player(new Name(name), new InitialState(new Hand())))
-                .collect(Collectors.toList());
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        List<String> playerNames = inputView.readNames();
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Name name = new Name(playerName);
+            BetAmount betAmount = new BetAmount(inputView.readBetAmount(name.getName()));
+            players.add(new Player(name, betAmount, new PlayerInitialState(new Hand())));
+        }
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
         return new Participants(dealer, players);
+    }
+
+    private void start(CardDeck cardDeck, Participants participants) {
+        participants.distributeTwoCardsToEach(cardDeck);
+        printInitialCardStatus(participants);
     }
 
     private void printInitialCardStatus(Participants participants) {
         List<String> playerNames = participants.getPlayers().stream()
-                .map(player -> player.getName().getName())
+                .map(Participant::getName)
                 .collect(Collectors.toList());
         outputView.printDistributionMessage(playerNames);
 
         Dealer dealer = participants.getDealer();
-        outputView.printNameAndHand(ParticipantDto.of(dealer, dealer.getFirstCard()));
-
-        List<Player> players = participants.getPlayers();
-        players.forEach(player -> outputView.printNameAndHand(ParticipantDto.from(player)));
+        outputView.printSingleCardStatus(ParticipantDto.of(dealer, dealer.getFirstCard()));
+        outputView.printAllCardStatus(ParticipantDto.of(participants.getPlayers()));
     }
 
     private void hitOrStand(CardDeck cardDeck, Participants participants) {
         while (participants.hasNextPlayer()) {
             Player player = participants.getNextPlayer();
-            boolean isHit = inputView.readHitOrStand(player.getName().getName());
+            boolean isHit = inputView.readHitOrStand(player.getName());
             participants.hitOrStandByPlayer(cardDeck, player, isHit);
-            outputView.printNameAndHand(ParticipantDto.from(player));
+            outputView.printSingleCardStatus(ParticipantDto.from(player));
         }
         outputView.printDealerHitMessage(participants.hitOrStandByDealer(cardDeck));
     }
 
-    private void printFinalCardStatus(Participants participants) {
-        for (Participant participant : participants.getParticipants()) {
-            int score = participant.getScore();
-            boolean isBlackjack = participant.isBlackjack();
-            outputView.printScoreResult(ParticipantDto.from(participant), score, isBlackjack);
-        }
+    private void finish(Participants participants) {
+        outputView.printAllFinalCardStatus(FinishedParticipantDto.of(participants.getParticipants()));
+
+        outputView.printProfitResultMessage();
+        outputView.printAllProfitResult(ProfitResultDto.of(participants.getProfitResult()));
     }
-
-    private void printWinningResult(Map<Player, Result> playerResult) {
-        outputView.printWinningResultMessage();
-
-        long dealerWin = playerResult.values().stream().filter(value -> value.equals(Result.LOSE)).count();
-        long dealerTie = playerResult.values().stream().filter(value -> value.equals(Result.TIE)).count();
-        long dealerLose = playerResult.values().stream().filter(value -> value.equals(Result.WIN)).count();
-        outputView.printDealerWinningResult(dealerWin, dealerTie, dealerLose);
-
-        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
-            outputView.printPlayerWinningResult(ResultDto.of(entry.getKey(), entry.getValue()));
-        }
-    }
-
 }

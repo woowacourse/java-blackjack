@@ -2,9 +2,9 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.state.DealerDrawState;
-import blackjack.model.state.DrawState;
 import blackjack.model.state.State;
+
+import java.util.Collection;
 
 public class Dealer extends Participant {
 
@@ -18,14 +18,15 @@ public class Dealer extends Participant {
     @Override
     public void play(CardDeck cardDeck) {
         this.currentState = currentState.draw(cardDeck);
-        if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).transitToDealerDrawState();
-            this.currentState = ((DealerDrawState) currentState).transitStateOrNot();
-        }
     }
 
     public Card getFirstCard() {
-        return currentState.getHand().getCards().get(DEALER_FIRST_CARD);
+        return currentState.getHand().get(DEALER_FIRST_CARD);
     }
 
+    public int getProfit(Collection<Integer> playerProfitResult) {
+        return -1 * playerProfitResult.stream()
+                .mapToInt(value -> value)
+                .sum();
+    }
 }

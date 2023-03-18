@@ -2,15 +2,16 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
-import blackjack.model.state.InitialState;
+import blackjack.model.state.DealerInitialState;
+import blackjack.model.state.PlayerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static blackjack.model.CardFixtures.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -19,17 +20,12 @@ class ParticipantsTest {
 
     @Test
     @DisplayName("다음으로 hit 또는 stand 입력을 받을 플레이어가 남아있는지 확인한다.")
-    void has_nex_player() {
+    void has_next_player() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
-        Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-        Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
-        Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-        Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.JACK);
-        Card card5 = Card.of(CardSuit.SPADE, CardNumber.SEVEN);
-        List<Card> cards = List.of(card5, card3, card4, card1, card2);
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        List<Card> cards = List.of(HEART_SEVEN, HEART_EIGHT, CLUB_JACK, CLUB_ACE, HEART_TEN);
         CardDeck cardDeck = new CardDeck(cards);
         Participants participants = new Participants(dealer, new ArrayList<>(List.of(player1, player2)));
 
@@ -49,14 +45,10 @@ class ParticipantsTest {
     @DisplayName("다음으로 hit 또는 stand 입력을 받을 플레이어를 반환할 때 Blackjack 상태의 플레이어는 건너뛰고 반환한다.")
     void get_next_player() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
-        Card card1 = Card.of(CardSuit.CLUB, CardNumber.ACE);
-        Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
-        Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-        Card card4 = Card.of(CardSuit.DIAMOND, CardNumber.JACK);
-        List<Card> cards = List.of(card3, card4, card1, card2);
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        List<Card> cards = List.of(HEART_EIGHT, HEART_JACK, CLUB_ACE, HEART_TEN);
         CardDeck cardDeck = new CardDeck(cards);
         Participants participants = new Participants(dealer, new ArrayList<>(List.of(player1, player2)));
 
@@ -73,9 +65,9 @@ class ParticipantsTest {
     @DisplayName("증복된 이름을 가진 플레이어가 있을 경우 예외처리한다.")
     void validate_duplicated_name() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("이리내"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
 
         //when
         List<Player> players = new ArrayList<>(List.of(player1, player2));
@@ -89,7 +81,7 @@ class ParticipantsTest {
     @DisplayName("플레이어가 0명일 경우 예외처리한다.")
     void validate_player_count() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
 
         //when
         List<Player> players = new ArrayList<>();
@@ -103,9 +95,9 @@ class ParticipantsTest {
     @DisplayName("딜러와 플레이어는 처음에 카드를 2개씩 받는다.")
     void distribute_two_cards_to_each_participant() {
         //given
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
-        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
-        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
         Participants participants = new Participants(dealer, List.of(player1, player2));
         CardDeck cardDeck = new CardDeck();
 
@@ -113,9 +105,35 @@ class ParticipantsTest {
         participants.distributeTwoCardsToEach(cardDeck);
 
         //then
-        assertAll(() -> assertThat(dealer.getHand().getCards().size()).isEqualTo(2),
-                () -> assertThat(player1.getHand().getCards().size()).isEqualTo(2),
-                () -> assertThat(player2.getHand().getCards().size()).isEqualTo(2));
+        assertAll(() -> assertThat(dealer.getHand().size()).isEqualTo(2),
+                () -> assertThat(player1.getHand().size()).isEqualTo(2),
+                () -> assertThat(player2.getHand().size()).isEqualTo(2));
     }
 
+    @Test
+    @DisplayName("참여자들의 수익을 반환한다.")
+    void get_profit_result() {
+        //given
+        Dealer dealer = new Dealer(new DealerInitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new BetAmount(20000), new PlayerInitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new BetAmount(10000), new PlayerInitialState(new Hand()));
+        Participants participants = new Participants(dealer, List.of(player1, player2));
+        List<Card> cards = List.of(HEART_ACE, HEART_TEN, HEART_EIGHT, HEART_FIVE, CLUB_NINE, CLUB_TEN);
+        CardDeck cardDeck = new CardDeck(cards);
+
+        //when
+        participants.distributeTwoCardsToEach(cardDeck);
+        participants.hitOrStandByPlayer(cardDeck, player1, false);
+        Map<Participant, Integer> profitResult = participants.getProfitResult();
+        /*
+           Dealer: 9 + 10 --> 스탠드
+           player1: 8 + 5 --> 스탠드
+           player2: 11 + 10 --> 블랙잭
+         */
+
+        //then
+        assertAll(() -> assertThat(profitResult.get(dealer)).isEqualTo(5000),
+                () -> assertThat(profitResult.get(player1)).isEqualTo(-20000),
+                () -> assertThat(profitResult.get(player2)).isEqualTo(15000));
+    }
 }

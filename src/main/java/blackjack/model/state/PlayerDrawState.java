@@ -3,10 +3,8 @@ package blackjack.model.state;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class DealerDrawState extends DrawState {
-    private static final int DEALER_HIT_NUMBER = 16;
-
-    public DealerDrawState(Hand hand) {
+public class PlayerDrawState extends DrawState {
+    public PlayerDrawState(Hand hand) {
         super(hand);
     }
 
@@ -20,9 +18,6 @@ public class DealerDrawState extends DrawState {
         if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }
-        if (isScoreHigherThanDealerHitNumber()) {
-            return new StandState(hand);
-        }
         return this;
     }
 
@@ -30,8 +25,8 @@ public class DealerDrawState extends DrawState {
         return hand.getScore() > BLACKJACK_NUMBER;
     }
 
-    private boolean isScoreHigherThanDealerHitNumber() {
-        return hand.getScore() > DEALER_HIT_NUMBER;
+    public State transitToStandState() {
+        return new StandState(hand);
     }
 
 }
