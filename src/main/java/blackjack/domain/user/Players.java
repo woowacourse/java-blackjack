@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -26,6 +27,6 @@ public class Players {
         return players.stream()
                 .map(Player::getBetAmount)
                 .reduce(Integer::sum)
-                .get();
+                .orElseThrow(() -> new NoSuchElementException("현재 플레이어가 없습니다."));
     }
 }
