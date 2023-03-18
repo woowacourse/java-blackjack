@@ -26,7 +26,7 @@ public class Money {
         return new Money(String.valueOf(0));
     }
 
-    public Money calculateIfBlackJack() {
+    public Money multiplyOneAndHalf() {
         return new Money(String.valueOf((int) Math.floor(value * 1.5)));
     }
 

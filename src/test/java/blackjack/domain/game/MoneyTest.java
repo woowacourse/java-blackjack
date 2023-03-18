@@ -60,7 +60,7 @@ class MoneyTest {
     @Test
     void makeMoneyOneAndHalfTimes() {
         // when
-        Money blackJackProfit = money.calculateIfBlackJack();
+        Money blackJackProfit = money.multiplyOneAndHalf();
 
         // then
         assertThat(blackJackProfit.getValue()).isEqualTo((int) Math.floor(money.getValue() * 1.5));

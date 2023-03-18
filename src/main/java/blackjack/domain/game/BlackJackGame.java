@@ -63,7 +63,7 @@ public class BlackJackGame {
             return true;
         }
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            playerResult.put(player, playerResult.get(player).calculateIfBlackJack());
+            playerResult.put(player, playerResult.get(player).multiplyOneAndHalf());
             return true;
         }
         return false;
