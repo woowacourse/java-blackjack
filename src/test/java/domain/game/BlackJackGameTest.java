@@ -19,8 +19,8 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
         blackJackGame.giveTwoCardToPlayers();
     
-        Player dealer = blackJackGame.getDealer();
-        List<Player> participants = blackJackGame.getParticipants();
+        Player dealer = blackJackGame.dealer();
+        List<Player> participants = blackJackGame.participants();
         
         assertAll(
                 () -> assertThat(dealer.getCards())

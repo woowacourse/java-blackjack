@@ -4,33 +4,32 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.game.AddCardCommand;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
-    private final Map<Player, Double> betAmounts;
+    private final Dealer dealer;
+    private final List<Player> participants;
     
     public Players(String participantNames) {
-        this.players = initPlayers(participantNames);
-        this.betAmounts = new HashMap<>();
+        this.dealer = new Dealer();
+        this.participants = initParticipants(participantNames);
     }
     
-    private List<Player> initPlayers(String playerNames) {
-        List<Player> players = new ArrayList<>(List.of(new Dealer()));
-        players.addAll(initParticipants(playerNames));
-        return players;
-    }
-    
-    private List<Participant> initParticipants(String playerNames) {
+    private List<Player> initParticipants(String playerNames) {
         return Arrays.stream(playerNames.split(","))
                 .map(Participant::new)
                 .collect(Collectors.toUnmodifiableList());
     }
     
     public void giveTwoCardToPlayers(Deck deck) {
-        for (Player player : players) {
+        giveTwoCardToPerPlayer(dealer, deck);
+        for (Player player : participants) {
             giveTwoCardToPerPlayer(player, deck);
         }
     }
@@ -41,19 +40,12 @@ public class Players {
         player.initCards(firstCard, secondCard);
     }
     
-    public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
-        for (Player participant : getParticipants()) {
-            double betAmount = participant.supplyBetAmount(supplyBetAmount);
-            betAmounts.put(participant, betAmount);
-        }
-    }
-    
     public void giveCardToParticipantsBy(
             Deck deck,
             Function<Player, AddCardCommand> supplyCommand,
             Consumer<List<Player>> printParticipantCardStatus
     ) {
-        for (Player participant : getParticipants()) {
+        for (Player participant : participants()) {
             drawOrFinishParticipantBy(participant, deck, supplyCommand, printParticipantCardStatus);
         }
     }
@@ -98,14 +90,14 @@ public class Players {
     }
     
     public void giveCardToDealerBy(Deck deck, Consumer<List<Player>> printGiveDealerCardMessage) {
-        drawOrFinishDealerBy(getDealer(), deck, printGiveDealerCardMessage);
+        drawOrFinishDealerBy(deck, printGiveDealerCardMessage);
     }
     
-    private void drawOrFinishDealerBy(Player dealer, Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
+    private void drawOrFinishDealerBy(Deck deck, Consumer<List<Player>> printParticipantCardStatus) {
         if (dealer.isFinished()) {
             return;
         }
-    
+        
         dealer.draw(deck.draw());
         printParticipantCardStatus.accept(Collections.emptyList());
         
@@ -118,24 +110,17 @@ public class Players {
         return !dealer.isFinished();
     }
     
-    public double findBetAmountByPlayer(Player player) {
-        return betAmounts.get(player);
+    public List<Player> players() {
+        List<Player> players = new ArrayList<>(List.of(dealer));
+        players.addAll(participants);
+        return players;
     }
     
-    public Player getDealer() {
-        return players.stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
+    public Player dealer() {
+        return dealer;
     }
     
-    public List<Player> getParticipants() {
-        return players.stream()
-                .filter(Predicate.not(Player::isDealer))
-                .collect(Collectors.toUnmodifiableList());
-    }
-    
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
+    public List<Player> participants() {
+        return Collections.unmodifiableList(this.participants);
     }
 }

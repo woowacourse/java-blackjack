@@ -11,7 +11,7 @@ public class Application {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
     
         initializedBlackjackGame(blackJackGame);
-        participantsBet(blackJackGame);
+        betParticipants(blackJackGame);
         giveCardToPlayers(blackJackGame);
         printProfitResults(blackJackGame, new Referee());
     }
@@ -22,10 +22,10 @@ public class Application {
     
     private static void initializedBlackjackGame(BlackJackGame blackJackGame) {
         blackJackGame.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJackGame.getPlayers());
+        OutputView.printPlayersInformation(blackJackGame.players());
     }
     
-    private static void participantsBet(BlackJackGame blackJackGame) {
+    private static void betParticipants(BlackJackGame blackJackGame) {
         blackJackGame.settingBetAmountToParticipantsBy(Application::inputBetAmount);
     }
     
@@ -36,7 +36,7 @@ public class Application {
     private static void giveCardToPlayers(BlackJackGame blackJackGame) {
         blackJackGame.giveCardToParticipantsBy(Application::inputCommand, OutputView::printParticipantCardStatus);
         blackJackGame.giveCardToDealerBy(ignore -> OutputView.printGiveDealerCardMessage());
-        OutputView.printPlayersFinalInformation(blackJackGame.getPlayers());
+        OutputView.printPlayersFinalInformation(blackJackGame.players());
     }
     
     private static AddCardCommand inputCommand(Player participant) {
@@ -45,6 +45,6 @@ public class Application {
     
     private static void printProfitResults(BlackJackGame blackJackGame, Referee referee) {
         referee.saveBattleResults(blackJackGame);
-        OutputView.printPlayersGameResults(blackJackGame.getPlayers(), referee);
+        OutputView.printPlayersGameResults(blackJackGame.players(), referee);
     }
 }

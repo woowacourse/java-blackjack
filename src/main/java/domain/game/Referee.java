@@ -17,8 +17,8 @@ public class Referee {
     }
     
     public void saveBattleResults(BlackJackGame blackJackGame) {
-        Player dealer = blackJackGame.getDealer();
-        List<Player> participants = blackJackGame.getParticipants();
+        Player dealer = blackJackGame.dealer();
+        List<Player> participants = blackJackGame.participants();
         
         for (Player participant : participants) {
             double participantBetAmount = blackJackGame.findBetAmountByPlayer(participant);

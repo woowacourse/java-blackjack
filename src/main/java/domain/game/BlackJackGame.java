@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Deck;
 import domain.player.Player;
+import domain.player.BlackJackSystem;
 import domain.player.Players;
 import domain.strategy.ShuffleStrategy;
 
@@ -11,46 +12,46 @@ import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 public class BlackJackGame {
-    private final Players players;
+    private final BlackJackSystem blackJackSystem;
     private final Deck deck;
 
     public BlackJackGame(String participantNames, ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
-        this.players = new Players(participantNames);
+        this.blackJackSystem = new BlackJackSystem(participantNames);
     }
     
     public void giveTwoCardToPlayers() {
-        players.giveTwoCardToPlayers(deck);
+        blackJackSystem.giveTwoCardToPlayers(deck);
     }
     
     public void settingBetAmountToParticipantsBy(ToDoubleFunction<String> supplyBetAmount) {
-        players.settingBetAmountToParticipantsBy(supplyBetAmount);
+        blackJackSystem.betParticipants(supplyBetAmount);
     }
     
     public void giveCardToParticipantsBy(
             Function<Player, AddCardCommand> supplyCommand,
             Consumer<List<Player>> printParticipantCardStatus
     ) {
-        players.giveCardToParticipantsBy(deck, supplyCommand, printParticipantCardStatus);
+        blackJackSystem.giveCardToParticipantsBy(deck, supplyCommand, printParticipantCardStatus);
     }
     
     public void giveCardToDealerBy(Consumer<List<Player>> printGiveDealerCardMessage) {
-        players.giveCardToDealerBy(deck, printGiveDealerCardMessage);
+        blackJackSystem.giveCardToDealerBy(deck, printGiveDealerCardMessage);
     }
     
-    public Player getDealer() {
-        return players.getDealer();
+    public Player dealer() {
+        return blackJackSystem.dealer();
     }
     
-    public List<Player> getParticipants() {
-        return players.getParticipants();
+    public List<Player> participants() {
+        return blackJackSystem.participants();
     }
     
-    public Players getPlayers() {
-        return players;
+    public Players players() {
+        return blackJackSystem.players();
     }
     
     public double findBetAmountByPlayer(Player player) {
-        return players.findBetAmountByPlayer(player);
+        return blackJackSystem.findBetAmountByPlayer(player);
     }
 }

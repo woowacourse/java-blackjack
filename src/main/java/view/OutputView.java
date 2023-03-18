@@ -25,7 +25,7 @@ public class OutputView {
     }
     
     private static void printPlayerNames(Players players) {
-        Player dealer = players.getDealer();
+        Player dealer = players.dealer();
         List<String> participantsNames = parseParticipantsNames(players);
         
         System.out.printf(NEW_LINE + "%s와 %s에게 2장을 나누어주었습니다." + NEW_LINE,
@@ -34,14 +34,14 @@ public class OutputView {
     }
     
     private static List<String> parseParticipantsNames(Players players) {
-        return players.getParticipants().stream()
+        return players.participants().stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
     
     private static void printPlayerCardsStatus(Players players) {
-        printDealerCardStatus(players.getDealer());
-        printParticipantCardStatus(players.getParticipants());
+        printDealerCardStatus(players.dealer());
+        printParticipantCardStatus(players.participants());
     }
     
     private static void printDealerCardStatus(Player dealer) {
@@ -80,7 +80,7 @@ public class OutputView {
     
     public static void printPlayersFinalInformation(Players players) {
         println("");
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.players()) {
             printPlayerCardStatus(player, PLAYER_CARD_STATUS_FORMAT, parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore().getScore());
         }
@@ -92,7 +92,7 @@ public class OutputView {
     }
     
     private static String parsePlayersResult(Players players, Referee referee) {
-        return players.getPlayers().stream()
+        return players.players().stream()
                 .map(player -> parsePlayerGameResult(player, referee))
                 .collect(Collectors.joining(NEW_LINE));
     }

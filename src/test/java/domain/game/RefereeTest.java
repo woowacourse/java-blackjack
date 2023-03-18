@@ -3,7 +3,6 @@ package domain.game;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.player.Participant;
 import domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +26,8 @@ class RefereeTest {
     void saveBattleResults() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("아벨,포비", cards -> cards);
-        Player dealer = blackJackGame.getDealer();
-        List<Player> participants = blackJackGame.getParticipants();
+        Player dealer = blackJackGame.dealer();
+        List<Player> participants = blackJackGame.participants();
         Player abel = participants.get(0);
         Player pobi = participants.get(1);
     
