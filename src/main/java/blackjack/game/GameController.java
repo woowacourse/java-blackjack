@@ -6,9 +6,9 @@ import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameController {
     private static final int INIT_FIRST_CARD = 2;
@@ -19,13 +19,7 @@ public class GameController {
         List<Name> names = (InputView.repeat(() -> new Names(InputView.inputPeopleNames()))).getNames();
         Players players = initializePlayers(names);
 
-        inputPlayerBetAmount(players.getPlayers());
-
         giveFirstCardsForUsers(players, dealer, deck);
-
-        for (Player player : players.getPlayers()) {
-            player.checkBlackJack(player.getTotalScore());
-        }
 
         OutputView.printReadyMessage(names);
         printUserFirstCards(players.getPlayers(), dealer);
@@ -37,16 +31,13 @@ public class GameController {
         printScore(players, dealer);
     }
 
-    private void inputPlayerBetAmount(List<Player> players) {
-        for (Player player : players) {
-            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(player.getPlayerName()));
-            player.inputBetAmount(betAmount);
-        }
-    }
-
     private Players initializePlayers(List<Name> names) {
-        return new Players(names.stream().map(Player::new)
-                .collect(Collectors.toUnmodifiableList()));
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(name.getName()));
+            players.add(new Player(new Name(name.getName()), new BetAmount(betAmount)));
+        }
+        return new Players(players);
     }
 
     private void giveFirstCardsForUsers(Players players, Dealer dealer, Deck deck) {
@@ -58,7 +49,7 @@ public class GameController {
 
     private void giveFirstCards(User user, Deck deck) {
         for (int i = 0; i < INIT_FIRST_CARD; i++) {
-            user.updateCardScore(deck.draw());
+            user.addCard(deck.draw());
         }
     }
 
@@ -78,8 +69,8 @@ public class GameController {
 
     private void giveCardOrNotForPlayer(Player player, Deck deck) {
         while (player.isUnderLimit() &&
-                (InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName())))) {
-            player.updateCardScore(deck.draw());
+                (InputView.repeat(() -> InputView.askAdditionalCard(player.getUserName())))) {
+            player.addCard(deck.draw());
             OutputView.printPlayerCurrentCards(player);
         }
     }
@@ -87,7 +78,7 @@ public class GameController {
     private void giveCardOrNotForDealer(Dealer dealer, Deck deck) {
         while (dealer.isUnderLimit()) {
             OutputView.printMessageDealerOneMore();
-            dealer.updateCardScore(deck.draw());
+            dealer.addCard(deck.draw());
         }
     }
 
