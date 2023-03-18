@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum Number {
+public enum Denomination {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -16,18 +16,18 @@ public enum Number {
     KING(10, "K");
 
     private final int score;
-    private final String number;
+    private final String denomination;
 
-    Number(int score, String number) {
+    Denomination(int score, String denomination) {
         this.score = score;
-        this.number = number;
+        this.denomination = denomination;
     }
 
     public int getScore() {
         return score;
     }
 
-    public String getNumber() {
-        return number;
+    public String getDenomination() {
+        return denomination;
     }
 }

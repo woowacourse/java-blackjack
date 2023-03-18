@@ -1,40 +1,40 @@
 package domain.card;
 
 public enum HeartCard implements Card {
-    ACE(Pattern.HEART, Number.ACE),
-    TWO(Pattern.HEART, Number.TWO),
-    THREE(Pattern.HEART, Number.THREE),
-    FOUR(Pattern.HEART, Number.FOUR),
-    FIVE(Pattern.HEART, Number.FIVE),
-    SIX(Pattern.HEART, Number.SIX),
-    SEVEN(Pattern.HEART, Number.SEVEN),
-    EIGHT(Pattern.HEART, Number.EIGHT),
-    NINE(Pattern.HEART, Number.NINE),
-    TEN(Pattern.HEART, Number.TEN),
-    JACK(Pattern.HEART, Number.JACK),
-    QUEEN(Pattern.HEART, Number.QUEEN),
-    KING(Pattern.HEART, Number.KING);
+    ACE(Suit.HEART, Denomination.ACE),
+    TWO(Suit.HEART, Denomination.TWO),
+    THREE(Suit.HEART, Denomination.THREE),
+    FOUR(Suit.HEART, Denomination.FOUR),
+    FIVE(Suit.HEART, Denomination.FIVE),
+    SIX(Suit.HEART, Denomination.SIX),
+    SEVEN(Suit.HEART, Denomination.SEVEN),
+    EIGHT(Suit.HEART, Denomination.EIGHT),
+    NINE(Suit.HEART, Denomination.NINE),
+    TEN(Suit.HEART, Denomination.TEN),
+    JACK(Suit.HEART, Denomination.JACK),
+    QUEEN(Suit.HEART, Denomination.QUEEN),
+    KING(Suit.HEART, Denomination.KING);
 
-    private final Pattern pattern;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    HeartCard(Pattern pattern, Number number) {
-        this.pattern = pattern;
-        this.number = number;
+    HeartCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
-    }
-
-    @Override
-    public boolean isAce() {
-        return this.number == Number.ACE;
+        return denomination.getDenomination() + suit.getSuit();
     }
 
     @Override
     public Score getScore() {
-        return new Score(number.getScore());
+        return new Score(denomination.getScore());
+    }
+
+    @Override
+    public boolean isAce() {
+        return this.denomination == Denomination.ACE;
     }
 }

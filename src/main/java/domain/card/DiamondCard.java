@@ -1,40 +1,40 @@
 package domain.card;
 
 public enum DiamondCard implements Card {
-    ACE(Pattern.DIAMOND, Number.ACE),
-    TWO(Pattern.DIAMOND, Number.TWO),
-    THREE(Pattern.DIAMOND, Number.THREE),
-    FOUR(Pattern.DIAMOND, Number.FOUR),
-    FIVE(Pattern.DIAMOND, Number.FIVE),
-    SIX(Pattern.DIAMOND, Number.SIX),
-    SEVEN(Pattern.DIAMOND, Number.SEVEN),
-    EIGHT(Pattern.DIAMOND, Number.EIGHT),
-    NINE(Pattern.DIAMOND, Number.NINE),
-    TEN(Pattern.DIAMOND, Number.TEN),
-    JACK(Pattern.DIAMOND, Number.JACK),
-    QUEEN(Pattern.DIAMOND, Number.QUEEN),
-    KING(Pattern.DIAMOND, Number.KING);
+    ACE(Suit.DIAMOND, Denomination.ACE),
+    TWO(Suit.DIAMOND, Denomination.TWO),
+    THREE(Suit.DIAMOND, Denomination.THREE),
+    FOUR(Suit.DIAMOND, Denomination.FOUR),
+    FIVE(Suit.DIAMOND, Denomination.FIVE),
+    SIX(Suit.DIAMOND, Denomination.SIX),
+    SEVEN(Suit.DIAMOND, Denomination.SEVEN),
+    EIGHT(Suit.DIAMOND, Denomination.EIGHT),
+    NINE(Suit.DIAMOND, Denomination.NINE),
+    TEN(Suit.DIAMOND, Denomination.TEN),
+    JACK(Suit.DIAMOND, Denomination.JACK),
+    QUEEN(Suit.DIAMOND, Denomination.QUEEN),
+    KING(Suit.DIAMOND, Denomination.KING);
 
-    private final Pattern pattern;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    DiamondCard(Pattern pattern, Number number) {
-        this.pattern = pattern;
-        this.number = number;
+    DiamondCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
-    }
-
-    @Override
-    public boolean isAce() {
-        return this.number == Number.ACE;
+        return denomination.getDenomination() + suit.getSuit();
     }
 
     @Override
     public Score getScore() {
-        return new Score(number.getScore());
+        return new Score(denomination.getScore());
+    }
+
+    @Override
+    public boolean isAce() {
+        return this.denomination == Denomination.ACE;
     }
 }

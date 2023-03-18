@@ -1,9 +1,9 @@
 package domain.card;
 
 public interface Card {
-    Score getScore();
-
     String getSymbol();
+
+    Score getScore();
 
     boolean isAce();
 }
