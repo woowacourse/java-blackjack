@@ -44,7 +44,7 @@ public final class GameController {
 
             final List<String> playersName = inputView.readParticipantNames();
 
-            return Participants.create(playersName, this::readBetAmount);
+            return Participants.create(playersName, this::readBetAmount, outputView::printExceptionMessage);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
             return makeParticipants();

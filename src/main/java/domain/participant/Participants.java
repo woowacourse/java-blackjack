@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,8 @@ public final class Participants {
         this.players = players;
     }
 
-    public static Participants create(final List<String> playersName, final Function<String, Integer> readBetAmount) {
+    public static Participants create(final List<String> playersName, final Function<String, Integer> readBetAmount,
+            final Consumer<String> messageSupplier) {
         final List<String> playersTrimName = processTrimPlayersName(playersName);
 
         validateDuplicateNames(playersTrimName);
@@ -34,25 +36,27 @@ public final class Participants {
         validatePlayerBlankName(playersTrimName);
 
         final Dealer dealer = Dealer.create(DEALER_NAME);
-        final List<Player> players = makePlayers(playersName, readBetAmount);
+        final List<Player> players = makePlayers(playersName, readBetAmount, messageSupplier);
 
         return new Participants(dealer, players);
     }
 
     private static List<Player> makePlayers(final List<String> playersName,
-            final Function<String, Integer> readBetAmount) {
+            final Function<String, Integer> readBetAmount, final Consumer<String> messageSupplier) {
         return playersName.stream()
-                .map(playerName -> makePlayer(playerName, readBetAmount))
+                .map(playerName -> makePlayer(playerName, readBetAmount, messageSupplier))
                 .collect(Collectors.toList());
     }
 
-    private static Player makePlayer(final String playerName, final Function<String, Integer> readBetAmount) {
+    private static Player makePlayer(final String playerName, final Function<String, Integer> readBetAmount,
+            final Consumer<String> messageSupplier) {
         try {
             final Integer apply = readBetAmount.apply(playerName);
+
             return Player.create(playerName, apply);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return makePlayer(playerName, readBetAmount);
+            messageSupplier.accept(e.getMessage());
+            return makePlayer(playerName, readBetAmount, messageSupplier);
         }
     }
 
