@@ -1,6 +1,5 @@
 package domain;
 
-import static domain.GameResult.*;
 import static domain.Judge.*;
 
 import java.util.HashMap;
@@ -28,17 +27,6 @@ public class BlackJack {
 	public void giveCardToDealer() {
 		Dealer dealer = users.getDealer();
 		dealer.hit(deck.pickCard());
-	}
-
-	public Map<String, String> calculatePlayerResults() {
-		Map<String, String> playerResult = new LinkedHashMap<>();
-		List<Player> players = users.getPlayers();
-		Dealer dealer = users.getDealer();
-		int dealerScore = dealer.getScore();
-		for (Player player : players) {
-			playerResult.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore).getName());
-		}
-		return playerResult;
 	}
 
 	public Map<String, Integer> calculatePlayerProfits() {
