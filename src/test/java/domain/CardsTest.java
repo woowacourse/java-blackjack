@@ -1,9 +1,13 @@
-package domain.card;
+package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 
 class CardsTest {
 
@@ -37,5 +41,21 @@ class CardsTest {
 		//then
 		assertThat(result1).isEqualTo(3);
 		assertThat(result2).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("카드들의 숫자 합을 반환해야 한다.")
+	public void sumCardNumbersTest() {
+		//given
+		Cards cards = Cards.of(
+			new Card(Suit.CLOVER, Denomination.ACE),
+			new Card(Suit.DIAMOND, Denomination.ACE),
+			new Card(Suit.SPADE, Denomination.ACE));
+
+		//when
+		int cardNumberSum = cards.sumCardNumbers();
+
+		//then
+		assertThat(cardNumberSum).isEqualTo(33);
 	}
 }

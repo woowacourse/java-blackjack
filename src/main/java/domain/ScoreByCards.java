@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Denomination;
 
 public class ScoreByCards {
@@ -24,28 +23,6 @@ public class ScoreByCards {
 
 	public static ScoreByCards empty() {
 		return new ScoreByCards(Cards.empty(), INITIAL_SCORE);
-	}
-
-	private static int getInitialScore(final Cards cards) {
-		return cards.getCards()
-			.stream()
-			.mapToInt(Card::getNumber)
-			.sum();
-	}
-
-	private static int modifyScoreByAce(int score, final int count) {
-		for (int i = 0; i < count; i++) {
-			score = changeToAceSub(score);
-		}
-		return score;
-	}
-
-	private static int changeToAceSub(int score) {
-		if (score > BLACKJACK_SCORE) {
-			score -= Denomination.ACE.getNumber();
-			score += ACE_SUB_NUMBER;
-		}
-		return score;
 	}
 
 	public void add(final Card card) {
@@ -78,9 +55,24 @@ public class ScoreByCards {
 	}
 
 	private void updateScore() {
-		final int score = getInitialScore(cards);
+		final int score = cards.sumCardNumbers();
 		final int count = cards.count(Denomination.ACE);
 		this.score = modifyScoreByAce(score, count);
+	}
+
+	private int modifyScoreByAce(int score, final int count) {
+		for (int i = 0; i < count; i++) {
+			score = changeToAceSub(score);
+		}
+		return score;
+	}
+
+	private int changeToAceSub(int score) {
+		if (score > BLACKJACK_SCORE) {
+			score -= Denomination.ACE.getNumber();
+			score += ACE_SUB_NUMBER;
+		}
+		return score;
 	}
 
 	public List<Card> getCards() {

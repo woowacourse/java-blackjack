@@ -1,8 +1,11 @@
-package domain.card;
+package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import domain.card.Card;
+import domain.card.Denomination;
 
 public class Cards {
 
@@ -33,6 +36,12 @@ public class Cards {
 
 	public int size() {
 		return cards.size();
+	}
+
+	public int sumCardNumbers() {
+		return cards.stream()
+			.mapToInt(Card::getNumber)
+			.sum();
 	}
 
 	public int getNumberOf(final int index) {
