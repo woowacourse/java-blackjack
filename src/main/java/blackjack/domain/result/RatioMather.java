@@ -40,13 +40,8 @@ public enum RatioMather {
         }
         return false;
     }
-
     private static boolean isPlayerCardScoreHigher(List<Card> playerCards, List<Card> dealerCards) {
         return calculateTotalScore(playerCards) > calculateTotalScore(dealerCards);
-    }
-
-    private static int calculateTotalScore(List<Card> cards) {
-        return TotalScore.calculateTotalScore(cards).getTotalScore();
     }
 
     private static boolean isTie(List<Card> playerCards, List<Card> dealerCards) {
@@ -64,7 +59,6 @@ public enum RatioMather {
         }
         return false;
     }
-
     private static boolean isSameScore(List<Card> playerCards, List<Card> dealerCards) {
         return calculateTotalScore(playerCards) == calculateTotalScore(dealerCards);
     }
@@ -76,6 +70,10 @@ public enum RatioMather {
     private static boolean isBlackjack(List<Card> playerCards, List<Card> dealerCards) {
         return Status.of(playerCards) == Status.BLACKJACK
                 && Status.of(dealerCards) == Status.BLACKJACK;
+    }
+
+    private static int calculateTotalScore(List<Card> cards) {
+        return TotalScore.calculateTotalScore(cards).getTotalScore();
     }
 
     public double getRatio() {
