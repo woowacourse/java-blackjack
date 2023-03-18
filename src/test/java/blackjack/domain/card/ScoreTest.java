@@ -68,8 +68,8 @@ class ScoreTest {
 
         // expect
         Assertions.assertAll(
-                () -> assertThat(current.canDraw(other1)).isTrue(),
-                () -> assertThat(current.canDraw(other2)).isTrue()
+                () -> assertThat(current.isLessOrEquals(other1)).isTrue(),
+                () -> assertThat(current.isLessOrEquals(other2)).isTrue()
         );
     }
 
@@ -81,7 +81,7 @@ class ScoreTest {
         Score other = new Score(10);
 
         // expect
-        assertThat(current.canDraw(other)).isFalse();
+        assertThat(current.isLessOrEquals(other)).isFalse();
     }
 
     @Test

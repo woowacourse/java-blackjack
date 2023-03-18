@@ -22,6 +22,6 @@ public final class Dealer extends Participant {
     @Override
     public boolean canDraw() {
         Score score = calculateTotalScore();
-        return score.canDraw(new Score(DEALER_MIN_RECEIVE_CARD));
+        return score.isLessOrEquals(new Score(DEALER_MIN_RECEIVE_CARD));
     }
 }

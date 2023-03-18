@@ -36,6 +36,6 @@ public final class Player extends Participant {
     @Override
     public boolean canDraw() {
         Score score = calculateTotalScore();
-        return score.canDraw(new Score(PLAYER_MAX_RECEIVE_CARD));
+        return score.isLessOrEquals(new Score(PLAYER_MAX_RECEIVE_CARD));
     }
 }
