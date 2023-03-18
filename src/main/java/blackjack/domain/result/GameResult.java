@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
@@ -16,12 +17,12 @@ public class GameResult {
 
     private void calculatePlayersScore(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            playerGameResults.put(player.getUserName(), calculateProfit(player, dealer));
+            playerGameResults.put(player.getUserName(), calculateProfit(player, dealer.getHand()));
         }
     }
 
-    private int calculateProfit(Player player, Dealer dealer) {
-        double ratio = RatioMather.of(player.getHand(), dealer.getHand()).getRatio();
+    private int calculateProfit(Player player, List<Card> dealerCards) {
+        double ratio = RatioMather.of(player.getHand(), dealerCards).getRatio();
         return player.getBetAmount().calculateProfit(ratio);
     }
 
