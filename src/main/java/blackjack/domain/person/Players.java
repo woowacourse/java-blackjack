@@ -35,7 +35,7 @@ public class Players {
 
     private List<Player> createPlayers(List<String> playersName) {
         return playersName.stream()
-                .map(Player::new)
+                .map(name -> new Player(new Name(name)))
                 .collect(toList());
 
     }

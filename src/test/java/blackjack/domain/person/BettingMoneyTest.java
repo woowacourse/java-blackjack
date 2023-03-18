@@ -13,7 +13,7 @@ class BettingMoneyTest {
     @DisplayName("블랙잭일 때 수익은 배팅금액의 1.5배이다.")
     void calculateBlackjackProfit() {
         // given
-        Player player = new Player("user");
+        Player player = new Player(new Name("user"));
         BettingMoney bettingMoney = new BettingMoney(Map.of(player, 1000));
 
         // when
@@ -28,7 +28,7 @@ class BettingMoneyTest {
     @DisplayName("승리했을 때 수익은 배팅금액이다.")
     void calculateWinProfit() {
         // given
-        Player player = new Player("user");
+        Player player = new Player(new Name("user"));
         BettingMoney bettingMoney = new BettingMoney(Map.of(player, 1000));
 
         // when
@@ -43,7 +43,7 @@ class BettingMoneyTest {
     @DisplayName("무승부일 때 수익은 0이다.")
     void calculateDrawProfit() {
         // given
-        Player player = new Player("user");
+        Player player = new Player(new Name("user"));
         BettingMoney bettingMoney = new BettingMoney(Map.of(player, 1000));
 
         // when
@@ -58,7 +58,7 @@ class BettingMoneyTest {
     @DisplayName("패배했을 때 수익은 배팅금액의 음수이다.")
     void calculateLoseProfit() {
         // given
-        Player player = new Player("user");
+        Player player = new Player(new Name("user"));
         BettingMoney bettingMoney = new BettingMoney(Map.of(player, 1000));
 
         // when

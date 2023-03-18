@@ -1,6 +1,7 @@
 package blackjack.domain.blackjackGame;
 
 import blackjack.domain.person.BettingMoney;
+import blackjack.domain.person.Name;
 import blackjack.domain.person.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class ExchangerTest {
     void calculatePlayerProfit(GameResult gameResult, double expectedProfit) {
         // given
         Map<Player, Integer> bettingMoney = new HashMap<>();
-        Player player = new Player("user");
+        Player player = new Player(new Name("user"));
         bettingMoney.put(player, 1000);
         Exchanger exchanger = new Exchanger(new BettingMoney(bettingMoney));
 

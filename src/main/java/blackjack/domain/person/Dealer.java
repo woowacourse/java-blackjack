@@ -10,7 +10,7 @@ public class Dealer extends Person {
     private static final int DRAW_CARD_BOUNDARY = 16;
 
     public Dealer() {
-        super("딜러");
+        super(new Name("딜러"));
     }
 
     @Override
