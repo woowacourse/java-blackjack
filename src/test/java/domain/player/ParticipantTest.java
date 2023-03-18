@@ -3,7 +3,7 @@ package domain.player;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.TestCardGenerator;
-import domain.player.info.PlayerInfo;
+import domain.player.info.ParticipantInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class ParticipantTest {
 
-    private static final PlayerInfo playerInfo = new PlayerInfo.PlayerInfoBuilder("준팍")
+    private static final ParticipantInfo PARTICIPANT_INFO = new ParticipantInfo.ParticipantBuilder("준팍")
             .setBetAmount(1000)
             .build();
 
@@ -28,7 +28,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 미만이면 true를 리턴한다.")
         void giveUnderBustScore_thenReturnTrue() {
             //given
-            final Participant participant = Participant.of(playerInfo);
+            final Participant participant = Participant.of(PARTICIPANT_INFO);
 
             final List<Rank> ranks = List.of(Rank.TEN, Rank.ACE);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -46,7 +46,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 이상이면 false를 리턴한다.")
         void giveBustScore_thenReturnFalse() {
             //given
-            final Participant participant = Participant.of(playerInfo);
+            final Participant participant = Participant.of(PARTICIPANT_INFO);
 
             final List<Rank> ranks = List.of(Rank.TEN, Rank.JACK, Rank.NINE);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -71,7 +71,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 미만이어도 false를 리턴한다.")
         void giveUnderBustScore_thenReturnTrue() {
             //given
-            final Participant participant = Participant.of(playerInfo);
+            final Participant participant = Participant.of(PARTICIPANT_INFO);
 
             final List<Rank> ranks = List.of(Rank.TEN, Rank.ACE);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -89,7 +89,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 이상이면 false를 리턴한다.")
         void giveBustScore_thenReturnFalse() {
             //given
-            final Participant participant = Participant.of(playerInfo);
+            final Participant participant = Participant.of(PARTICIPANT_INFO);
 
             final List<Rank> ranks = List.of(Rank.TEN, Rank.JACK, Rank.NINE);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));

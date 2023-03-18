@@ -30,6 +30,10 @@ public final class Score {
         return score <= MAX_SCORE;
     }
 
+    public boolean isMaxScore() {
+        return score == MAX_SCORE;
+    }
+
     public boolean canAddBonusScore() {
         return this.score <= MAX_SCORE - BONUS_SCORE;
     }

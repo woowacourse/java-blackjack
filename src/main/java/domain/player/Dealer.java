@@ -1,8 +1,10 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.player.hand.Hand;
 import domain.player.hand.Score;
+import util.Notice;
 
 import java.util.List;
 
@@ -25,12 +27,24 @@ public final class Dealer {
         hand.takeCard(card);
     }
 
-    public boolean canHit() {
-        return score().isUnderThan(STAY_SCORE);
-    }
-
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return getCards().size() == 2 && getScore().isMaxScore();
+    }
+
+    public boolean canHit() {
+        return getScore().isUnderThan(STAY_SCORE);
+    }
+
+    public void playDealerTurn(final Deck deck, final Notice<Boolean> notice) {
+        while (canHit()) {
+            notice.print(canHit());
+            takeCard(deck.dealCard());
+        }
+        notice.print(canHit());
     }
 
     public List<Card> showCard() {
@@ -41,11 +55,8 @@ public final class Dealer {
         return hand.getCards();
     }
 
-    public Score score() {
+    public Score getScore() {
         return hand.getScore();
     }
 
-    public int getScore() {
-        return score().getScore();
-    }
 }

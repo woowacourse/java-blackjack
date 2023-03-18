@@ -1,31 +1,31 @@
 package domain.player.info;
 
-public class PlayerInfo {
+public class ParticipantInfo {
 
     private final Name name;
     private final BetAmount betAmount;
 
-    private PlayerInfo(PlayerInfoBuilder playerInfoBuilder) {
-        this.name = playerInfoBuilder.name;
-        this.betAmount = playerInfoBuilder.betAmount;
+    private ParticipantInfo(ParticipantBuilder participantBuilder) {
+        this.name = participantBuilder.name;
+        this.betAmount = participantBuilder.betAmount;
     }
 
-    public static class PlayerInfoBuilder {
+    public static class ParticipantBuilder {
 
         private final Name name;
         private BetAmount betAmount;
 
-        public PlayerInfoBuilder(final String name) {
+        public ParticipantBuilder(final String name) {
             this.name = Name.of(name);
         }
 
-        public PlayerInfoBuilder setBetAmount(int betAmount) {
+        public ParticipantBuilder setBetAmount(int betAmount) {
             this.betAmount = BetAmount.from(betAmount);
             return this;
         }
 
-        public PlayerInfo build() {
-            return new PlayerInfo(this);
+        public ParticipantInfo build() {
+            return new ParticipantInfo(this);
         }
 
         public String getName() {
@@ -37,8 +37,8 @@ public class PlayerInfo {
         return name.getName();
     }
 
-    public int winBet() {
-        return betAmount.winBet();
+    public int winBet(final boolean isBlackjack) {
+        return betAmount.winBet(isBlackjack);
     }
 
     public int loseBet() {

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.player.info.PlayerInfo;
+import domain.player.info.ParticipantInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +13,14 @@ class ParticipantsTest {
     @Test
     @DisplayName("중복된 이름이 입력되면, 예외가 발생한다")
     void givenDuplicateName_thenFail() {
-        final PlayerInfo playerInfo1 = new PlayerInfo.PlayerInfoBuilder("준팍")
+        final ParticipantInfo participantInfo1 = new ParticipantInfo.ParticipantBuilder("준팍")
                 .setBetAmount(1100)
                 .build();
-        final PlayerInfo playerInfo2 = new PlayerInfo.PlayerInfoBuilder("준팍")
+        final ParticipantInfo participantInfo2 = new ParticipantInfo.ParticipantBuilder("준팍")
                 .setBetAmount(1000)
                 .build();
 
-        final List<Participant> participants = List.of(Participant.of(playerInfo1), Participant.of(playerInfo2));
+        final List<Participant> participants = List.of(Participant.of(participantInfo1), Participant.of(participantInfo2));
 
         assertThatThrownBy(() -> Participants.of(participants))
                 .isInstanceOf(IllegalArgumentException.class)

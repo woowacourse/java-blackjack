@@ -28,16 +28,9 @@ public class Players {
         participants.takeCard(deck);
     }
 
-    public void playParticipantsTurn(final Deck deck, final HitOrStay hitOrStay, final Notice<Participant> notice) {
-        participants.playParticipantsTurn(deck, hitOrStay, notice);
-    }
-
-    public void playDealerTurn(final Deck deck, final Notice<Boolean> notice) {
-        while (dealer.canHit()) {
-            notice.print(dealer.canHit());
-            dealer.takeCard(deck.dealCard());
-        }
-        notice.print(dealer.canHit());
+    public void playParticipantsTurn(final Deck deck, final HitOrStay hitOrStay, final Notice<Participant> participantNotice, final Notice<Boolean> dealerNotice) {
+        participants.playParticipantsTurn(deck, hitOrStay, participantNotice);
+        dealer.playDealerTurn(deck, dealerNotice);
     }
 
     public Dealer getDealer() {

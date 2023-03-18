@@ -30,7 +30,11 @@ public class BetAmount {
         }
     }
 
-    public int winBet() {
+    public int winBet(final boolean isBlackjack) {
+        if (isBlackjack) {
+            return (int) (betAmount * 1.5);
+
+        }
         return betAmount;
     }
 

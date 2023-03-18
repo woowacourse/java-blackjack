@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.player.hand.Hand;
 import domain.player.hand.Score;
-import domain.player.info.PlayerInfo;
+import domain.player.info.ParticipantInfo;
 import util.HitOrStay;
 import util.Notice;
 
@@ -12,17 +12,16 @@ import java.util.List;
 
 public final class Participant {
 
-    private static final int BLACKJACK = 21;
-    private final PlayerInfo playerInfo;
+    private final ParticipantInfo participantInfo;
     private final Hand hand;
 
-    private Participant(final PlayerInfo playerInfo, final Hand hand) {
-        this.playerInfo = playerInfo;
+    private Participant(final ParticipantInfo participantInfo, final Hand hand) {
+        this.participantInfo = participantInfo;
         this.hand = hand;
     }
 
-    public static Participant of(final PlayerInfo playerInfo) {
-        return new Participant(playerInfo, Hand.create());
+    public static Participant of(final ParticipantInfo participantInfo) {
+        return new Participant(participantInfo, Hand.create());
     }
 
     public void takeCard(final Card card) {
@@ -33,12 +32,12 @@ public final class Participant {
         return hand.isBust();
     }
 
-    public boolean isHit(boolean wantHit) {
-        return canHit() && wantHit;
+    public boolean isBlackjack() {
+        return getCards().size() == 2 && getScore().isMaxScore();
     }
 
-    public boolean isBlackjack() {
-        return getCards().size() == 2 && getScore() == BLACKJACK;
+    public boolean isHit(boolean wantHit) {
+        return canHit() && wantHit;
     }
 
 
@@ -49,16 +48,12 @@ public final class Participant {
         }
     }
 
-    private boolean canHit() {
-        return score().isUnderMaxScore();
+    public boolean canHit() {
+        return getScore().isUnderMaxScore();
     }
 
-    public Score score() {
+    public Score getScore() {
         return hand.getScore();
-    }
-
-    public int getScore() {
-        return score().getScore();
     }
 
     public List<Card> getCards() {
@@ -66,21 +61,18 @@ public final class Participant {
     }
 
     public String getName() {
-        return playerInfo.getName();
+        return participantInfo.getName();
     }
 
     public int winBet() {
-        if (isBlackjack()) {
-            return (int) (playerInfo.winBet() * 1.5);
-        }
-        return playerInfo.winBet();
+        return participantInfo.winBet(isBlackjack());
     }
 
     public int loseBet() {
-        return playerInfo.loseBet();
+        return participantInfo.loseBet();
     }
 
     public int returnBet() {
-        return playerInfo.returnBet();
+        return participantInfo.returnBet();
     }
 }
