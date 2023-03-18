@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.participant.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -15,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class BlackjackController {
 
@@ -140,27 +143,19 @@ public final class BlackjackController {
     }
 
     private Map<String, List<String>> getParticipantsInitCards(final Dealer dealer, final List<Player> players) {
-        Map<String, List<String>> participantsInitCards = new LinkedHashMap<>() {{
-            put(dealer.getName(), getCards(dealer.showInitCards()));
-        }};
-
-        for (Player player : players) {
-            participantsInitCards.put(player.getName(), getCards(player.showInitCards()));
-        }
-
-        return participantsInitCards;
+        return Stream.concat(Stream.of(dealer), players.stream())
+                .collect(toMap(Participant::getName,
+                                participant -> getCards(participant.showInitCards()),
+                                (p1, p2) -> p1,
+                                LinkedHashMap::new));
     }
 
     private Map<String, List<String>> getParticipantsFinalCards(final Dealer dealer, final List<Player> players) {
-        Map<String, List<String>> participantsFinalCards = new LinkedHashMap<>() {{
-            put(dealer.getName(), getCards(dealer.getHand()));
-        }};
-
-        for (Player player : players) {
-            participantsFinalCards.put(player.getName(), getCards(player.getHand()));
-        }
-
-        return participantsFinalCards;
+        return Stream.concat(Stream.of(dealer), players.stream())
+                        .collect(toMap(Participant::getName,
+                                participant -> getCards(participant.getHand()),
+                                (p1, p2) -> p1,
+                                LinkedHashMap::new));
     }
 
     private List<String> getCards(final List<Card> cards) {
