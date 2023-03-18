@@ -1,9 +1,10 @@
 package blackjack.domain.result;
 
-import blackjack.domain.Status;
-import blackjack.domain.player.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.TotalScore;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiPredicate;
 
 public enum RatioMather {
@@ -13,39 +14,68 @@ public enum RatioMather {
     LOSE(-1.0, RatioMather::isLose);
 
     private final double ratio;
-    private final BiPredicate<Hand, Hand> judgeResult;
+    private final BiPredicate<List<Card>, List<Card>> judgeResult;
 
-    RatioMather(double ratio, BiPredicate<Hand, Hand> judgeResult) {
+    RatioMather(double ratio, BiPredicate<List<Card>, List<Card>> judgeResult) {
         this.ratio = ratio;
         this.judgeResult = judgeResult;
     }
 
-    private static RatioMather findProfit(Hand hand1, Hand hand2) {
+    public static RatioMather of(List<Card> playerCards, List<Card> dealerCards) {
         return Arrays.stream(RatioMather.values())
-                .filter(ratioMather -> ratioMather.judgeResult.test(hand1, hand2))
+                .filter(ratioMather -> ratioMather.judgeResult.test(playerCards, dealerCards))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("찾을수 없는 값입니다."));
     }
 
-    public static boolean isWin(Hand hand1, Hand hand2) {
-        return (hand1.status() == Status.BLACKJACK && hand2.status() != Status.BLACKJACK)
-                || (hand1.status().isNone() && hand2.status().isBust())
-                || ((hand1.status().isNone() && hand2.status().isNone()) && (hand1.getTotalScore() > hand2.getTotalScore()));
+    private static boolean isWin(List<Card> playerCards, List<Card> dealerCards) {
+        if (Status.of(playerCards) == Status.BLACKJACK && Status.of(dealerCards) != Status.BLACKJACK) {
+            return true;
+        }
+        if (Status.of(playerCards) == Status.NONE && Status.of(dealerCards) == Status.BUST) {
+            return true;
+        }
+        if (Status.of(playerCards) == Status.NONE && Status.of(dealerCards) == Status.NONE) {
+            return isPlayerCardScoreHigher(playerCards, dealerCards);
+        }
+        return false;
     }
 
-    public static boolean isTie(Hand hand1, Hand hand2) {
-        return (hand1.status() == Status.BLACKJACK && hand2.status() == Status.BLACKJACK)
-                || (hand1.status().isBust() && hand2.status().isBust())
-                || ((hand1.status().isNone() && hand2.status().isNone()) && (hand1.getTotalScore() == hand2.getTotalScore()));
+    private static boolean isPlayerCardScoreHigher(List<Card> playerCards, List<Card> dealerCards) {
+        return calculateTotalScore(playerCards) > calculateTotalScore(dealerCards);
     }
 
-    public static boolean isLose(Hand cards1, Hand cards2) {
-        return isWin(cards2, cards1);
+    private static int calculateTotalScore(List<Card> cards) {
+        return TotalScore.calculateTotalScore(cards).getTotalScore();
     }
 
-    private static boolean isBlackjack(Hand cards1, Hand cards2) {
-        return cards1.status().isBlackjack()
-                && !cards2.status().isBlackjack();
+    private static boolean isTie(List<Card> playerCards, List<Card> dealerCards) {
+        if (Status.of(playerCards) == Status.BLACKJACK && Status.of(dealerCards) == Status.BLACKJACK) {
+            return true;
+        }
+        if (Status.of(playerCards) == Status.BUST && Status.of(dealerCards) == Status.BUST) {
+            return true;
+        }
+        if (Status.of(playerCards) == Status.NONE && Status.of(dealerCards) == Status.BUST) {
+            return true;
+        }
+        if (Status.of(playerCards) == Status.NONE && Status.of(dealerCards) == Status.NONE) {
+            return isSameScore(playerCards, dealerCards);
+        }
+        return false;
+    }
+
+    private static boolean isSameScore(List<Card> playerCards, List<Card> dealerCards) {
+        return calculateTotalScore(playerCards) == calculateTotalScore(dealerCards);
+    }
+
+    private static boolean isLose(List<Card> playerCards, List<Card> dealerCards) {
+        return isWin(dealerCards, playerCards);
+    }
+
+    private static boolean isBlackjack(List<Card> playerCards, List<Card> dealerCards) {
+        return Status.of(playerCards) == Status.BLACKJACK
+                && Status.of(dealerCards) == Status.BLACKJACK;
     }
 
     public double getRatio() {

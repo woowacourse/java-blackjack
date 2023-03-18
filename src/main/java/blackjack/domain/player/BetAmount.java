@@ -3,10 +3,11 @@ package blackjack.domain.player;
 public class BetAmount {
     private static final int MIN_AMOUNT = 1000;
     private static final int MIN_UNIT = 10;
+
     private final int betAmount;
 
     public BetAmount(int betAmount) {
-        validation(betAmount);
+        validate(betAmount);
         this.betAmount = betAmount;
     }
 
@@ -14,7 +15,7 @@ public class BetAmount {
         return (int) (this.betAmount * ratio);
     }
 
-    private void validation(int value) {
+    private void validate(int value) {
         validateMinAmount(value);
         validateAmountUnit(value);
     }

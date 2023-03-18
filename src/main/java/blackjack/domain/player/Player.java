@@ -1,34 +1,13 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.ResultMatcher;
-
 public class Player extends User {
 
     private static final int SCORE_LIMIT = 21;
-    private BetAmount betAmount;
-    private ResultMatcher resultMatcher;
+    private final BetAmount betAmount;
 
-    public Player(Name name) {
+    public Player(Name name, BetAmount betAmount) {
         super(name);
-        this.name = name;
-    }
-
-    public String getPlayerName() {
-        return name.getName();
-    }
-
-    public void inputBetAmount(int betAmount) {
-        this.betAmount = new BetAmount(betAmount);
-    }
-
-    public void checkBlackJack(int score) {
-        if (score == 21) {
-            this.resultMatcher = ResultMatcher.BLACKJACK;
-        }
-    }
-
-    public ResultMatcher getResultMatcher() {
-        return resultMatcher;
+        this.betAmount = betAmount;
     }
 
     public BetAmount getBetAmount() {
@@ -37,6 +16,6 @@ public class Player extends User {
 
     @Override
     public boolean isUnderLimit() {
-        return hand.getTotalScore() < SCORE_LIMIT;
+        return TotalScore.calculateTotalScore(hand.getHand()).getTotalScore() < SCORE_LIMIT;
     }
 }
