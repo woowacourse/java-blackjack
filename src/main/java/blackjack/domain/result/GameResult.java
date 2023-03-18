@@ -16,14 +16,12 @@ public class GameResult {
 
     private void calculatePlayersScore(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            if (!ResultMatcher.BLACKJACK.equals(player.getResultMatcher())) {
-                playerGameResults.put(player.getPlayerName(), calculateProfit(player, dealer));
-            }
+            playerGameResults.put(player.getPlayerName(), calculateProfit(player, dealer));
         }
     }
 
     private int calculateProfit(Player player, Dealer dealer) {
-        double ratio = ResultMatcher.calculateResult(player.getTotalScore(), dealer.getTotalScore()).getRatio();
+        double ratio = RatioMather.of(player.getPlayerCards(), dealer.getPlayerCards()).getRatio();
         return player.getBetAmount().calculateProfit(ratio);
     }
 
