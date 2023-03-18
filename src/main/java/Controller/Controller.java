@@ -6,10 +6,10 @@ import static view.OutputView.*;
 import java.util.List;
 
 import domain.BlackJack;
-import domain.card.Deck;
 import domain.Player;
-import domain.strategy.RandomShuffleStrategy;
 import domain.Users;
+import domain.card.Deck;
+import domain.strategy.RandomShuffleStrategy;
 
 public class Controller {
 
@@ -32,7 +32,7 @@ public class Controller {
 	}
 
 	private void bet(List<Player> players) {
-		for(Player player : players){
+		for (Player player : players) {
 			player.setBet(askPlayerBet(player.getName()));
 		}
 	}

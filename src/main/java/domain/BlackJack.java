@@ -20,38 +20,6 @@ public class BlackJack {
 		this.deck = deck;
 	}
 
-	public void giveCard(Player player) {
-		player.hit(deck.pickCard());
-	}
-
-	public void giveCardToDealer() {
-		Dealer dealer = users.getDealer();
-		dealer.hit(deck.pickCard());
-	}
-
-	public Map<String, Integer> calculatePlayerProfits() {
-		Map<String, Integer> playerProfit = new LinkedHashMap<>();
-		List<Player> players = users.getPlayers();
-		Dealer dealer = users.getDealer();
-		for (Player player : players) {
-			playerProfit.put(player.getName(), calculateProfit(player, dealer));
-		}
-		return playerProfit;
-	}
-
-	public int calculateDealerProfit() {
-		int dealerProfit = 0;
-		Map<String, Integer> playerProfits = calculatePlayerProfits();
-		for (Integer playerProfit : playerProfits.values()) {
-			dealerProfit -= playerProfit;
-		}
-		return dealerProfit;
-	}
-
-	public boolean isDealerHittable() {
-		return users.getDealer().isHittable();
-	}
-
 	public String getDealerCardHidden() {
 		Card dealerCard = users.getDealer().getOneDealerCard();
 		return dealerCard.getCardName();
@@ -66,6 +34,27 @@ public class BlackJack {
 		return playerWithCards;
 	}
 
+	public List<Player> getPlayers() {
+		return users.getPlayers();
+	}
+
+	public boolean isDealerHittable() {
+		return users.getDealer().isHittable();
+	}
+
+	public void giveCardToDealer() {
+		Dealer dealer = users.getDealer();
+		dealer.hit(deck.pickCard());
+	}
+
+	public List<String> getDealerCards() {
+		return users.getDealer().getCardNames();
+	}
+
+	public int getDealerScore() {
+		return users.getDealer().getScore();
+	}
+
 	public Map<String, Integer> getPlayerToScore() {
 		Map<String, Integer> playerWithScore = new LinkedHashMap<>();
 		for (Player player : users.getPlayers()) {
@@ -75,15 +64,26 @@ public class BlackJack {
 		return playerWithScore;
 	}
 
-	public List<Player> getPlayers() {
-		return users.getPlayers();
+	public int calculateDealerProfit() {
+		int dealerProfit = 0;
+		Map<String, Integer> playerProfits = calculatePlayerProfits();
+		for (Integer playerProfit : playerProfits.values()) {
+			dealerProfit -= playerProfit;
+		}
+		return dealerProfit;
 	}
 
-	public List<String> getDealerCards() {
-		return users.getDealer().getCardNames();
+	public Map<String, Integer> calculatePlayerProfits() {
+		Map<String, Integer> playerProfit = new LinkedHashMap<>();
+		List<Player> players = users.getPlayers();
+		Dealer dealer = users.getDealer();
+		for (Player player : players) {
+			playerProfit.put(player.getName(), calculateProfit(player, dealer));
+		}
+		return playerProfit;
 	}
 
-	public int getDealerScore() {
-		return users.getDealer().getScore();
+	public void giveCard(Player player) {
+		player.hit(deck.pickCard());
 	}
 }
