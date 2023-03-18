@@ -3,47 +3,54 @@ package domain.participant;
 import domain.card.Card;
 import domain.game.GameResult;
 import java.math.BigDecimal;
-import java.util.List;
 
-public final class Player extends Participant {
+public final class Player {
 
     private static final int STANDARD_GIVEN_SCORE = 21;
 
-    private PlayerBet playerBet;
+    private final Participant participant;
+    private final PlayerBet playerBet;
 
-    public Player(final String name) {
-        super(name);
+    private Player(final Participant participant, final int betAmount) {
+        this.participant = participant;
+        this.playerBet = PlayerBet.create(betAmount);
     }
 
-    public static Player create(final String name) {
-        validatePlayerName(name);
+    public static Player create(final String name, final int betAmount) {
+        final Participant participant = Participant.create(name);
 
-        return new Player(name);
+        return new Player(participant, betAmount);
     }
 
-    private static void validatePlayerName(final String name) {
-        if (DEALER_NAME.equals(name)) {
-            throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
-        }
+    public void addCard(final Card drawCard) {
+        participant.addCard(drawCard);
     }
 
-    public void bet(final int betAmount) {
-        playerBet = PlayerBet.create(betAmount);
+    public int calculateScore() {
+        final ParticipantScore participantScore = participant.calculateScore();
+
+        return participantScore.score();
     }
 
-    public BigDecimal calculateBenefit(final GameResult gameResult) {
+    public BigDecimal calculateProfit(final GameResult gameResult) {
         final double prizeRatio = gameResult.prizeRatio();
 
         return playerBet.calculateBenefit(prizeRatio);
     }
 
-    @Override
-    public boolean canDraw() {
-        return participantCard.canDraw(STANDARD_GIVEN_SCORE);
+    public boolean matchByName(final String name) {
+        return participant.getName().equals(name);
     }
 
-    @Override
-    public List<Card> getStartCard() {
-        return getCard();
+    public boolean canDraw() {
+        return participant.canDraw(STANDARD_GIVEN_SCORE);
+    }
+
+    public ParticipantCard participantCard() {
+        return participant.participantCard();
+    }
+
+    public String getName() {
+        return participant.getName();
     }
 }

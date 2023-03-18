@@ -4,14 +4,12 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.game.GameManager;
-import domain.participant.Participant;
 import domain.participant.Participants;
 import java.math.BigDecimal;
-import view.InputView;
-import view.OutputView;
-
 import java.util.List;
 import java.util.Map;
+import view.InputView;
+import view.OutputView;
 import view.message.DrawCardCommandSelector;
 
 public final class GameController {
@@ -28,7 +26,7 @@ public final class GameController {
         final GameManager gameManager = makeGameManager();
 
         startGame(gameManager);
-        playForPlayers(gameManager);
+        playForPlayer(gameManager);
         playForDealer(gameManager);
         printGameResult(gameManager);
     }
@@ -46,7 +44,7 @@ public final class GameController {
 
             final List<String> playersName = inputView.readParticipantNames();
 
-            return Participants.create(playersName);
+            return Participants.create(playersName, this::readBetAmount);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
             return makeParticipants();
@@ -54,19 +52,21 @@ public final class GameController {
     }
 
     private void startGame(final GameManager gameManager) {
-        bet(gameManager);
-        gameManager.giveStartCards();
+        givenStartCardsForDealer(gameManager);
+        givenStartCardsForPlayer(gameManager);
 
         printTotalParticipantStartCards(gameManager);
     }
 
-    private void bet(final GameManager gameManager) {
-        final int playerSize = gameManager.playerSize();
+    private void givenStartCardsForDealer(final GameManager gameManager) {
+        gameManager.giveStartCardsForDealer();
+    }
 
-        for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
-            final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
-            final int betAmount = readBetAmount(playerName);
-            gameManager.bet(playerOrder, betAmount);
+    private void givenStartCardsForPlayer(final GameManager gameManager) {
+        final List<String> playersName = gameManager.playersName();
+
+        for (String playerName : playersName) {
+            gameManager.giveStartCardsForPlayer(playerName);
         }
     }
 
@@ -82,37 +82,50 @@ public final class GameController {
     }
 
     private void printTotalParticipantStartCards(final GameManager gameManager) {
-        final List<Participant> participants = gameManager.getParticipants();
+        printTotalParticipantsName(gameManager);
+        printStartCard(gameManager);
+    }
+
+    private void printTotalParticipantsName(final GameManager gameManager) {
         final List<String> participantsName = gameManager.getParticipantsName();
 
         outputView.printGiveParticipantStartCardMessage(participantsName);
-        outputView.printTotalParticipantStartCards(participants);
     }
 
-    private void playForPlayers(final GameManager gameManager) {
-        final int playerSize = gameManager.playerSize();
+    private void printStartCard(final GameManager gameManager) {
+        printStartDealerCard(gameManager);
+        printPlayersCard(gameManager);
 
-        for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
-            handleDrawCard(gameManager, playerOrder);
+        outputView.printBlank();
+    }
+
+    private void printStartDealerCard(final GameManager gameManager) {
+        final String dealerName = gameManager.getDealerName();
+        final Card dealerStartCard = gameManager.getDealerStartCard();
+        outputView.printDealerStartCard(dealerName, dealerStartCard);
+    }
+
+    private void playForPlayer(final GameManager gameManager) {
+        final List<String> playersName = gameManager.playersName();
+
+        for (String playerName : playersName) {
+            handleDrawCard(gameManager, playerName);
         }
     }
 
-    private void handleDrawCard(final GameManager gameManager, final int playerOrder) {
-        final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
+    private void handleDrawCard(final GameManager gameManager, final String playerName) {
         DrawCardCommand drawable = DrawCardCommand.CARD_DRAW_AGAIN;
 
-        while (canDrawCard(gameManager, playerOrder, drawable)) {
+        while (canDrawCard(gameManager, playerName, drawable)) {
             drawable = readDrawable(playerName);
 
-            processPlayerDrawCard(gameManager, playerOrder, drawable);
-            printPlayerCards(gameManager, playerOrder, playerName);
+            processPlayerDrawCard(gameManager, playerName, drawable);
+            printPlayerCards(gameManager, playerName);
         }
     }
 
-    private void printPlayerCards(final GameManager gameManager, final int playerOrder, final String playerName) {
-        final List<Card> playerCards = gameManager.findPlayerCardsByOrder(playerOrder);
-
-        outputView.printParticipantCards(playerName, playerCards);
+    private boolean canDrawCard(final GameManager gameManager, final String playerName, final DrawCardCommand command) {
+        return gameManager.canDraw(playerName) & command.isDrawAgain();
     }
 
     private DrawCardCommand readDrawable(final String playerName) {
@@ -128,36 +141,59 @@ public final class GameController {
         }
     }
 
-    private boolean canDrawCard(final GameManager gameManager, final int playerOrder, final DrawCardCommand command) {
-        return gameManager.canPlayerDrawByOrder(playerOrder) & command.isDrawAgain();
-    }
-
-    private void processPlayerDrawCard(final GameManager gameManager, final int playerOrder,
+    private void processPlayerDrawCard(final GameManager gameManager, final String playerName,
             final DrawCardCommand drawCardCommand) {
         if (drawCardCommand.isDrawAgain()) {
-            gameManager.givePlayerCard(playerOrder);
+            gameManager.addCardForPlayer(playerName);
         }
     }
 
+    private void printPlayerCards(final GameManager gameManager, final String targetPlayerName) {
+        final List<Card> playerCards = gameManager.getPlayerCard(targetPlayerName);
+
+        outputView.printParticipantCards(targetPlayerName, playerCards);
+        outputView.printBlank();
+    }
+
     private void playForDealer(final GameManager gameManager) {
-        final String dealerName = gameManager.findDealerName();
-        final int drawCardCount = gameManager.drawCardsForDealer();
+        final String dealerName = gameManager.getDealerName();
+        final int drawCardCount = gameManager.playDealerTurn();
 
         outputView.guideDealerGivenCard(dealerName, drawCardCount);
     }
 
     private void printGameResult(final GameManager gameManager) {
-        final List<Participant> totalParticipants = gameManager.getParticipants();
+        printTotalParticipantCards(gameManager);
 
-        outputView.printCardResult(totalParticipants);
-        printFinalGameResult(gameManager);
+        printProfit(gameManager);
     }
 
-    private void printFinalGameResult(final GameManager gameManager) {
-        final String dealerName = gameManager.findDealerName();
-        final Map<String, BigDecimal> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
+    private void printTotalParticipantCards(final GameManager gameManager) {
+        final String dealerName = gameManager.getDealerName();
+        final List<Card> dealerCard = gameManager.getDealerCard();
+        final int dealerScore = gameManager.getDealerScore();
+
+        outputView.printBlank();
+        outputView.printCardsAndScore(dealerName, dealerCard, dealerScore);
+        printPlayersCard(gameManager);
+    }
+
+    private void printPlayersCard(final GameManager gameManager) {
+        final List<String> playersName = gameManager.playersName();
+
+        for (String playerName : playersName) {
+            final List<Card> playerCard = gameManager.getPlayerCard(playerName);
+            final int playerScore = gameManager.getPlayerScore(playerName);
+
+            outputView.printCardsAndScore(playerName, playerCard, playerScore);
+        }
+    }
+
+    private void printProfit(final GameManager gameManager) {
+        final String dealerName = gameManager.getDealerName();
+        final Map<String, BigDecimal> gameResult = gameManager.getTotalPlayerGameResult();
 
         outputView.guideFinalGameResult();
-        outputView.printFinalGameResult(dealerName, totalPlayerGameResult);
+        outputView.printFinalGameResult(dealerName, gameResult);
     }
 }

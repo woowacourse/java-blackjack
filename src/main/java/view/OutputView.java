@@ -1,19 +1,5 @@
 package view;
 
-import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Shape;
-import domain.participant.Participant;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import view.message.DrawCardCommandSelector;
-import view.message.NumberMessage;
-import view.message.PatternMessage;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import static view.message.MessageFormatter.CARD_MESSAGE;
 import static view.message.MessageFormatter.DEALER_DRAW_MESSAGE;
 import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
@@ -25,6 +11,18 @@ import static view.message.MessageFormatter.PARTICIPANT_GAME_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 import static view.message.MessageFormatter.PLAYER_BETTING_MESSAGE;
 import static view.message.MessageFormatter.START_CARD_MESSAGE;
+
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Shape;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import view.message.DrawCardCommandSelector;
+import view.message.NumberMessage;
+import view.message.PatternMessage;
 
 public final class OutputView {
 
@@ -58,7 +56,6 @@ public final class OutputView {
             print(DEALER_DRAW_MESSAGE.format(name));
             print(LINE_FEED);
         }
-        print(LINE_FEED);
     }
 
     public void guideFinalGameResult() {
@@ -75,12 +72,10 @@ public final class OutputView {
         print(LINE_FEED);
     }
 
-    public void printTotalParticipantStartCards(final List<Participant> totalParticipants) {
-        final String totalParticipantStartCardsMessage =
-            mapToTotalParticipantStartCardsMessage(totalParticipants);
+    public void printDealerStartCard(final String dealerName, final Card card) {
+        final String dealerCardMessage = START_CARD_MESSAGE.format(dealerName, getCardMessage(card));
 
-        print(totalParticipantStartCardsMessage);
-        print(LINE_FEED);
+        print(dealerCardMessage);
         print(LINE_FEED);
     }
 
@@ -89,17 +84,13 @@ public final class OutputView {
         final String playerCardMessage = CARD_MESSAGE.format(playerName, cardsMessage);
 
         print(playerCardMessage);
-        print(LINE_FEED);
     }
 
-    public void printCardResult(final List<Participant> totalParticipants) {
-        final String cardsResultMessage = totalParticipants.stream()
-                .map(participant -> PARTICIPANT_CARD_RESULT
-                        .format(participant.getName(), getCardsMessage(participant.getCard()),
-                                participant.calculateScore()))
-                .collect(Collectors.joining(LINE_FEED));
+    public void printCardsAndScore(final String targetName, final List<Card> cards, final int score) {
+        final String cardsMessage = getCardsMessage(cards);
+        final String cardsAndScoreMessage = PARTICIPANT_CARD_RESULT.format(targetName, cardsMessage, score);
 
-        print(cardsResultMessage);
+        print(cardsAndScoreMessage);
         print(LINE_FEED);
     }
 
@@ -117,18 +108,15 @@ public final class OutputView {
         print(LINE_FEED);
     }
 
+    public void printBlank() {
+        print(LINE_FEED);
+    }
+
     private String mapToParticipantNameMessage(final List<String> participantNames) {
         final String namesMessage = String.join(", ", participantNames)
                 .replace(",", "와");
 
         return DRAW_MESSAGE.format(namesMessage);
-    }
-
-    private String mapToTotalParticipantStartCardsMessage(final List<Participant> players) {
-        return players.stream()
-                .map(player -> START_CARD_MESSAGE.format(player.getName(),
-                        getCardsMessage(player.getStartCard())))
-                .collect(Collectors.joining(LINE_FEED));
     }
 
     private String getCardsMessage(final List<Card> participantCards) {

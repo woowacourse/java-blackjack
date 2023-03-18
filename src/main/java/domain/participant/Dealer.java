@@ -1,28 +1,52 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.game.GameResult;
-import java.util.List;
 
-public final class Dealer extends Participant {
+public final class Dealer {
 
     private static final int STANDARD_GIVEN_SCORE = 17;
+    private static final int START_CARD_INDEX = 0;
 
-    private Dealer(final String name) {
-        super(name);
+    private final Participant participant;
+
+    private Dealer(final Participant participant) {
+        this.participant = participant;
     }
 
-    public static Dealer create() {
-        return new Dealer(DEALER_NAME);
+    public static Dealer create(final String name) {
+        final Participant participant = Participant.create(name);
+
+        return new Dealer(participant);
     }
 
-    public GameResult calculateResult(Participant player) {
-        return calculateGameResult(this.participantCard, player.participantCard);
+    public void addCard(final Card drawCard) {
+        participant.addCard(drawCard);
     }
 
-    @Override
-    public boolean canDraw() {
-        return participantCard.canDraw(STANDARD_GIVEN_SCORE);
+    public int playDealerTurn(final Deck deck) {
+        int drawCardCount = 0;
+
+        while (participant.canDraw(STANDARD_GIVEN_SCORE)) {
+            final Card drawCard = deck.draw();
+
+            participant.addCard(drawCard);
+            drawCardCount++;
+        }
+        return drawCardCount;
+    }
+
+    public GameResult calculateResult(final ParticipantCard playerCard) {
+        final ParticipantCard dealerCard = participant.participantCard();
+
+        return calculateGameResult(dealerCard, playerCard);
+    }
+
+    public int calculateScore() {
+        final ParticipantScore participantScore = participant.calculateScore();
+
+        return participantScore.score();
     }
 
     private GameResult calculateGameResult(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
@@ -44,17 +68,26 @@ public final class Dealer extends Participant {
 
     private boolean checkDealerWin(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
         return playerCard.checkBust()
-                || dealerCard.checkBlackJack() && !playerCard.checkBlackJack()
-                || !dealerCard.checkBust() && dealerCard.checkGreaterScoreThan(playerCard);
+            || dealerCard.checkBlackJack() && !playerCard.checkBlackJack()
+            || !dealerCard.checkBust() && dealerCard.checkGreaterScoreThan(playerCard);
     }
 
     private boolean checkPlayerWin(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
         return dealerCard.checkBust()
-                || playerCard.checkGreaterScoreThan(dealerCard);
+            || playerCard.checkGreaterScoreThan(dealerCard);
     }
 
-    @Override
-    public List<Card> getStartCard() {
-        return List.of(participantCard.getFirstCard());
+    public ParticipantCard participantCard() {
+        return participant.participantCard();
+    }
+
+    public String getName() {
+        return participant.getName();
+    }
+
+    public Card getStartCard() {
+        final ParticipantCard participantCard = participant.participantCard();
+
+        return participantCard.getCards().get(START_CARD_INDEX);
     }
 }

@@ -14,17 +14,14 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static domain.game.GameResult.BLACKJACK_WIN;
-import static domain.participant.ParticipantOffset.DEALER;
-import static domain.participant.ParticipantOffset.PLAYER;
 import static domain.game.GameResult.DRAW;
 import static domain.game.GameResult.LOSE;
 import static domain.game.GameResult.WIN;
 
 import domain.card.Card;
-import org.junit.jupiter.params.provider.Arguments;
-
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.params.provider.Arguments;
 
 public final class ParticipantArguments {
 
@@ -138,14 +135,11 @@ public final class ParticipantArguments {
 
     private static Stream<Arguments> makeDrawCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.of(HEART, FOUR), Card.of(HEART, THREE)),
-                        PLAYER, true),
+                Arguments.of(List.of(Card.of(HEART, FOUR), Card.of(HEART, THREE)), true),
                 Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, JACK),
-                        Card.of(HEART, KING)), PLAYER, false),
-                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)),
-                        DEALER, true),
-                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)),
-                        DEALER, true)
+                        Card.of(HEART, KING)), false),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)), true),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)), true)
         );
     }
 }

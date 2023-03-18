@@ -1,27 +1,25 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.participant.Participants;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class GameManagerTest {
 
     private final Deck deck = Deck.create(new RandomUniqueCardSelector());
-    private final Participants participants = Participants.create(List.of("a", "b"));
+    private final Participants participants = Participants.create(List.of("a", "b"), ignored -> 1000);
 
     @Test
     @DisplayName("create()는 덱과 참가자 정보를 받으면 게임 관리자를 생성한다")
@@ -32,26 +30,36 @@ class GameManagerTest {
                 .isExactlyInstanceOf(GameManager.class);
     }
 
-    @Test
-    @DisplayName("giveStartCards()는 호출하면 모든 참가자들에게 카드를 2장씩 건네준다")
-    void giveCards_whenCall_thenSuccess() {
+    @ParameterizedTest(name = "giveStartCardsForPlayer()는 플레이어의 이름을 전달하면 플레이어에게 카드를 2장씩 건네준다")
+    @ValueSource(strings = {"a", "b"})
+    void giveStartCardsForPlayer_givenPlayerName_thenSuccess(final String playerName) {
         final GameManager gameManager = GameManager.create(deck, participants);
 
-        assertThatCode(gameManager::giveStartCards)
+        assertThatCode(() -> gameManager.giveStartCardsForPlayer(playerName))
                 .doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("givePlayerCard()는 플레이어 순서를 전달하면 해당 플레이어에게 카드를 한 장 건네준다")
-    void givePlayerCard_givenPlayerOrder_thenAddCardToPlayer() {
+    @DisplayName("giveStartCardsForDealer()는 호출하면 딜러에게 카드를 2장 건네준다")
+    void giveStartCardsForDealer_whenCall_thenSuccess() {
+        final GameManager gameManager = GameManager.create(deck, participants);
+
+        assertThatCode(gameManager::giveStartCardsForDealer)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("givePlayerCard()는 플레이어 이름를 전달하면 해당 플레이어에게 카드를 한 장 건네준다")
+    void givePlayerCard_givenPlayerName_thenAddCardToPlayer() {
         // given
         final GameManager gameManager = GameManager.create(deck, participants);
 
         // when
-        gameManager.givePlayerCard(0);
+        gameManager.addCardForPlayer("a");
 
         // then
-        final List<Card> playerCard = gameManager.findPlayerCardsByOrder(0);
+        final List<Card> playerCard = gameManager.getPlayerCard("a");
+
         assertThat(playerCard)
                 .hasSize(1);
     }
@@ -63,23 +71,24 @@ class GameManagerTest {
         final GameManager gameManager = GameManager.create(deck, participants);
 
         // when
-        final int actual = gameManager.drawCardsForDealer();
+        final int actual = gameManager.playDealerTurn();
 
         // then
         assertThat(actual)
-                .isGreaterThanOrEqualTo(2);
+                .isPositive();
     }
 
     @Nested
-    @DisplayName("canPlayerDrawByOrder() 테스트")
+    @DisplayName("canDraw() 테스트")
     class CanPlayerDrawByOrderMethodTest {
 
         private final GameManager gameManager = GameManager.create(deck, participants);
+        private final String playerName = "a";
 
         @Test
         @DisplayName("플레이어의 카드가 Bust 상태가 아니라면 카드를 더 뽑을 수 있음을 알려준다")
         void canDrawByPlayerOrder_whenCallNotBustPlayerOrder_thenReturnTrue() {
-            final boolean actual = gameManager.canPlayerDrawByOrder(0);
+            final boolean actual = gameManager.canDraw(playerName);
 
             assertThat(actual)
                     .isTrue();
@@ -91,84 +100,15 @@ class GameManagerTest {
             // given
             int count = 0;
             while (count++ < 52) {
-                gameManager.givePlayerCard(0);
+                gameManager.addCardForPlayer(playerName);
             }
 
             // when
-            final boolean actual = gameManager.canPlayerDrawByOrder(0);
+            final boolean actual = gameManager.canDraw(playerName);
 
             // then
             assertThat(actual)
                     .isFalse();
-        }
-    }
-
-    @ParameterizedTest(name = "findPlayerNameByOrder()은 플레이어 순서를 건네주면 이름을 반환한다")
-    @CsvSource(value = {"0:a", "1:b"}, delimiter = ':')
-    void findPlayerNameByOrder_givenPlayerOrder_thenReturnName(final int playerOrder, final String expected) {
-        final GameManager gameManager = GameManager.create(deck, participants);
-        final String actual = gameManager.findPlayerNameByOrder(playerOrder);
-
-        assertThat(actual)
-                .isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("findDealerName()은 호출하면 딜러의 이름을 반환한다")
-    void findDealerName_whenCall_thenReturnDealerName() {
-        // given
-        final GameManager gameManager = GameManager.create(deck, participants);
-
-        // when
-        final String dealerName = gameManager.findDealerName();
-
-        // then
-        assertThat(dealerName)
-                .isEqualTo("딜러");
-    }
-
-    @Test
-    @DisplayName("findPlayerCardsByOrder()은 플레이어 순서를 건네주면 해당 플레이어의 카드를 반환한다")
-    void findPlayerCardsByOrder_givenPlayerOrder_thenReturnPlayerCards() {
-        // given
-        final GameManager gameManager = GameManager.create(deck, participants);
-        gameManager.givePlayerCard(0);
-
-        // when
-        final List<Card> playerCards = gameManager.findPlayerCardsByOrder(0);
-
-        // then
-        assertThat(playerCards)
-                .hasSize(1);
-    }
-
-    @Nested
-    @DisplayName("bet() 테스트")
-    class BetMethodTest {
-
-        private final GameManager gameManager = GameManager.create(deck, participants);
-
-        @Test
-        @DisplayName("유효한 배팅 금액을 전달하면 플레이어가 배팅금액을 배팅한다")
-        void create_givenValidMoney_thenInitPlayerBet() {
-            assertThatCode(() -> gameManager.bet(0, 1000))
-                    .doesNotThrowAnyException();
-        }
-
-        @Test
-        @DisplayName("최소 금액을 배팅하지 않으면 예외가 발생한다")
-        void create_givenLessThanMinimumMoney_thenFail() {
-            assertThatThrownBy(() -> gameManager.bet(1, 0))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("최소 천 원 이상 배팅해주세요.");
-        }
-
-        @Test
-        @DisplayName("정해진 금액 단위로 배팅하지 않으면 예외가 발생한다")
-        void create_givenInvalidAmountUnit_thenFail() {
-            assertThatThrownBy(() -> gameManager.bet(1, 1100))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("천 원 단위로 배팅해주세요.");
         }
     }
 }

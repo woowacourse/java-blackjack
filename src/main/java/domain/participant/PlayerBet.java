@@ -17,21 +17,9 @@ public final class PlayerBet {
         validateMinimumBetAmount(betAmount);
         validateBetAmountUnit(betAmount);
 
-        BigDecimal bet = new BigDecimal(betAmount);
+        final BigDecimal bet = new BigDecimal(betAmount);
 
         return new PlayerBet(bet);
-    }
-
-    private static void validateBetAmountUnit(final int betAmount) {
-        if (betAmount % AMOUNT_UNIT != 0) {
-            throw new IllegalArgumentException("천 원 단위로 배팅해주세요.");
-        }
-    }
-
-    private static void validateMinimumBetAmount(final int betAmount) {
-        if (betAmount < MINIMUM_AMOUNT) {
-            throw new IllegalArgumentException("최소 천 원 이상 배팅해주세요.");
-        }
     }
 
     public BigDecimal calculateBenefit(final double prizeRatio) {
@@ -42,5 +30,17 @@ public final class PlayerBet {
             return prize;
         }
         return prize.subtract(bet);
+    }
+
+    private static void validateMinimumBetAmount(final int betAmount) {
+        if (betAmount < MINIMUM_AMOUNT) {
+            throw new IllegalArgumentException("최소 천 원 이상 배팅해주세요.");
+        }
+    }
+
+    private static void validateBetAmountUnit(final int betAmount) {
+        if (betAmount % AMOUNT_UNIT != 0) {
+            throw new IllegalArgumentException("천 원 단위로 배팅해주세요.");
+        }
     }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +15,12 @@ public final class ParticipantCard {
         this.cards = new ArrayList<>();
     }
 
-    private ParticipantCard(final List<Card> cards) {
-        this.cards = cards;
-    }
-
     public static ParticipantCard create() {
         return new ParticipantCard();
     }
 
-    public ParticipantCard addCard(final Card card) {
-        final List<Card> cards = new ArrayList<>(this.cards);
+    public void addCard(final Card card) {
         cards.add(card);
-
-        return new ParticipantCard(cards);
-    }
-
-    Card getFirstCard() {
-        return cards.get(FIRST_CARD_INDEX);
     }
 
     ParticipantScore calculateScore() {
@@ -78,6 +66,10 @@ public final class ParticipantCard {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::checkAce);
+    }
+
+    Card getFirstCard() {
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     List<Card> getCards() {
