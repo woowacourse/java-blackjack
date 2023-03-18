@@ -25,13 +25,16 @@ public final class Hand {
     }
 
     private int calculateHandValueWithoutConsideringBust() {
-        boolean hasAce = hand.stream().anyMatch(Card::isAce);
         int value = sumValue();
 
-        if (hasAce && value + Number.ACE_GAP.get() <= Number.BUST_BOUNDARY_VALUE.get()) {
+        if (hasAce() && value + Number.ACE_GAP.get() <= Number.BUST_BOUNDARY_VALUE.get()) {
             value += Number.ACE_GAP.get();
         }
         return value;
+    }
+
+    private boolean hasAce() {
+        return hand.stream().anyMatch(Card::isAce);
     }
 
     private int sumValue() {
