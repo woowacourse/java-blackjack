@@ -14,10 +14,10 @@ public class BlackJackController {
     private final OutputView outputView;
     private final BlackJackGame blackJackGame;
 
-    public BlackJackController(InputView inputView, OutputView outputView, BlackJackGame blackJackGame) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJackGame = blackJackGame;
+        this.blackJackGame = new BlackJackGame();
     }
 
     public void run() {
@@ -30,6 +30,16 @@ public class BlackJackController {
         passExtraCardToPlayer();
 
         finishGame();
+    }
+
+    private void registerPlayers() {
+        try {
+            List<String> names = inputView.readNames();
+            blackJackGame.registerPlayers(names);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            registerPlayers();
+        }
     }
 
     private void betMoneyAllPlayer() {
@@ -46,16 +56,6 @@ public class BlackJackController {
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
             betMoney(playerName);
-        }
-    }
-
-    private void registerPlayers() {
-        try {
-            List<String> names = inputView.readNames();
-            blackJackGame.registerPlayers(names);
-        } catch (IllegalArgumentException e) {
-            outputView.showError(e.getMessage());
-            registerPlayers();
         }
     }
 
@@ -96,10 +96,10 @@ public class BlackJackController {
     }
 
     private void passExtraCardToDealer() {
-            boolean hasExtraCard = blackJackGame.passExtraCardToDealer();
-            if (hasExtraCard) {
-                outputView.showDealerDrawPossible();
-            }
+        boolean hasExtraCard = blackJackGame.passExtraCardToDealer();
+        if (hasExtraCard) {
+            outputView.showDealerDrawPossible();
+        }
     }
 
     private void finishGame() {
@@ -107,5 +107,4 @@ public class BlackJackController {
         outputView.showAllPlayerNameHandScore(blackJackGame.findAllPlayerNameHandScore());
         outputView.showTotalResult(blackJackGame.findDealerPlayerResult());
     }
-
 }
