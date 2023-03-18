@@ -28,7 +28,7 @@ public class BettingMoney {
         }
     }
 
-    public int getStake() {
+    public int getMoney() {
         return value;
     }
 }

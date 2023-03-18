@@ -21,7 +21,7 @@ public class PrizeCalculator {
 
     public int getProfit(final Name name, final Result result) {
         final BettingMoney bettingMoney = userPrize.get(name);
-        return result.getProfit(bettingMoney.getStake());
+        return result.getProfit(bettingMoney.getMoney());
     }
 
     public void enrollResult(Map<Result, List<User>> resultData) {

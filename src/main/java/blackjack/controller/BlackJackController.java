@@ -28,28 +28,28 @@ public class BlackJackController {
 
     public void run() {
         final List<Name> namesByView = getNamesByView();
-        final PrizeCalculator prizeCalculator = enrollStake(namesByView);
+        final PrizeCalculator prizeCalculator = enrollBettingMoney(namesByView);
         final BlackJack blackJack = makeBlackJackBy(namesByView);
         drawCardBy(blackJack, namesByView);
         finalizeDealerCardStatus(blackJack, prizeCalculator);
         printCompletedGame(blackJack, prizeCalculator);
     }
 
-    private PrizeCalculator enrollStake(final List<Name> names) {
-        final Map<Name, BettingMoney> stakeData = new LinkedHashMap<>();
+    private PrizeCalculator enrollBettingMoney(final List<Name> names) {
+        final Map<Name, BettingMoney> bettingMoneys = new LinkedHashMap<>();
         for (Name name : names) {
-            stakeData.put(name, getStakeOf(name));
+            bettingMoneys.put(name, getBettingMoneyOf(name));
         }
-        return new PrizeCalculator(stakeData);
+        return new PrizeCalculator(bettingMoneys);
     }
 
-    private BettingMoney getStakeOf(final Name name) {
+    private BettingMoney getBettingMoneyOf(final Name name) {
         try {
-            final int stake = inputView.getStakeOf(name.getValue());
-            return new BettingMoney(stake);
+            final int bettingMoney = inputView.getBettingMoneyOf(name.getValue());
+            return new BettingMoney(bettingMoney);
         } catch (IllegalArgumentException e) {
             outputView.printException(e);
-            return getStakeOf(name);
+            return getBettingMoneyOf(name);
         }
     }
 

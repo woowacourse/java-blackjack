@@ -40,14 +40,14 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int getStakeOf(final String value) {
+    public int getBettingMoneyOf(final String value) {
         try {
             System.out.print(System.lineSeparator());
             System.out.println(String.format("%s의 배팅 금액은?", value));
             return Integer.parseInt(readLine());
         } catch (NumberFormatException e) {
             System.out.println("[Error] : 베팅 금액은 양의 숫자만 입력할 수 있습니다.");
-            return getStakeOf(value);
+            return getBettingMoneyOf(value);
         }
     }
 }

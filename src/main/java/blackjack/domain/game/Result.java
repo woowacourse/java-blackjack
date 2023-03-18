@@ -54,7 +54,7 @@ public enum Result {
         return !userCard.isBust() && userCard.getScore().getValue() == dealerCard.getScore().getValue();
     }
 
-    public int getProfit(final int stake) {
-        return (int) (this.prizeMultiplier * stake);
+    public int getProfit(final int bettingMoney) {
+        return (int) (this.prizeMultiplier * bettingMoney);
     }
 }

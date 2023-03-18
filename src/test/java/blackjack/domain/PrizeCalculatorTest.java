@@ -23,10 +23,10 @@ public class PrizeCalculatorTest {
     @DisplayName("승리한 유저를 정산기에 전달한다면 수익금을 베팅금 만큼 반환한다.")
     void winProfitTest() {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
         final Name pooh = new Name("푸우");
-        nameStake.put(pooh, new BettingMoney(1000));
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        nameBettingMoney.put(pooh, new BettingMoney(1000));
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         //when,then
         assertThat(prizeCalculator.getProfit(pooh, Result.WIN)).isEqualTo(1000);
@@ -36,10 +36,10 @@ public class PrizeCalculatorTest {
     @DisplayName("블랙잭 승리한 유저를 정산기에 전달한다면 수익금을 베팅금 1.5배 만큼 반환한다.")
     void blackJackWinProfitTest() {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
         final Name pooh = new Name("푸우");
-        nameStake.put(pooh, new BettingMoney(1000));
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        nameBettingMoney.put(pooh, new BettingMoney(1000));
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         //when
         final int profit = prizeCalculator.getProfit(pooh, Result.BLACK_JACK_WIN);
@@ -52,10 +52,10 @@ public class PrizeCalculatorTest {
     @DisplayName("비긴 유저를 정산기에 전달한다면 수익금은 없는 것이다.")
     void drawProfitTest() {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
         final Name pooh = new Name("푸우");
-        nameStake.put(pooh, new BettingMoney(1000));
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        nameBettingMoney.put(pooh, new BettingMoney(1000));
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         //when,then
         assertThat(prizeCalculator.getProfit(pooh, Result.DRAW)).isEqualTo(0);
@@ -65,10 +65,10 @@ public class PrizeCalculatorTest {
     @DisplayName("패배한 유저를 정산기에 전달한다면 잃은 돈은 베팅금 만큼이다.")
     void loseProfitTest() {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
         final Name pooh = new Name("푸우");
-        nameStake.put(pooh, new BettingMoney(1000));
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        nameBettingMoney.put(pooh, new BettingMoney(1000));
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         //when, then
         assertThat(prizeCalculator.getProfit(pooh, Result.LOSE)).isEqualTo(-1000);
@@ -79,13 +79,13 @@ public class PrizeCalculatorTest {
     @DisplayName("수익 결과 테스트")
     void profitTest(Result result) {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
 
         final Name poohName = new Name("푸우");
         final int bettingValue = 1000;
-        nameStake.put(poohName, new BettingMoney(bettingValue));
+        nameBettingMoney.put(poohName, new BettingMoney(bettingValue));
 
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         final User pooh = new User(poohName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
 
@@ -106,12 +106,12 @@ public class PrizeCalculatorTest {
     @DisplayName("딜러 수익 결과 테스트")
     void dealerProfitTest() {
         //given
-        final HashMap<Name, BettingMoney> nameStake = new HashMap<>();
+        final HashMap<Name, BettingMoney> nameBettingMoney = new HashMap<>();
 
         final Name poohName = new Name("푸우");
-        nameStake.put(poohName, new BettingMoney(1000));
+        nameBettingMoney.put(poohName, new BettingMoney(1000));
 
-        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameStake);
+        final PrizeCalculator prizeCalculator = new PrizeCalculator(nameBettingMoney);
 
         final User pooh = new User(poohName, new Cards(List.of(new Card(Shape.HEART, CardNumber.ACE), new Card(Shape.HEART, CardNumber.ACE))));
 
