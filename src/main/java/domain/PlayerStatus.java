@@ -8,10 +8,10 @@ import domain.card.Card;
 public class PlayerStatus {
 
 	private final ScoreByCards scoreByCards;
-	private final int bet;
+	private final Bet bet;
 
 	public PlayerStatus(int bet) {
-		this.bet = bet;
+		this.bet = new Bet(bet);
 		this.scoreByCards = ScoreByCards.empty();
 	}
 
@@ -40,6 +40,6 @@ public class PlayerStatus {
 	}
 
 	public int getBet() {
-		return bet;
+		return bet.getBet();
 	}
 }
