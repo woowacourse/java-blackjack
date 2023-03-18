@@ -35,7 +35,7 @@ public abstract class Player {
     }
     
     public boolean isBust() {
-        return state.score().isBust();
+        return state.isBust();
     }
     
     public Score getTotalScore() {

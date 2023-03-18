@@ -35,6 +35,10 @@ public abstract class State {
         return hand.isBlackJack();
     }
     
+    public boolean isBust() {
+        return hand.isBust();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

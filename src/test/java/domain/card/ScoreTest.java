@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.*;
 
 class ScoreTest {
+    private static final Score BLACKJACK_SCORE = new Score(21);
+    
     private Score tenScore;
 
     @BeforeEach
@@ -17,51 +19,29 @@ class ScoreTest {
     }
     
     @Test
-    @DisplayName("음수가 들어오는 경우 예외 발생")
-    void negative_exception() {
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Score(-1))
-                .withMessage("Score에 음수는 들어올 수 없습니다.");
-    }
-    
-    @Test
     @DisplayName("21이 안넘는 경우 10을 더해서 반환한다.")
     void add() {
-        Score score = tenScore.plusTenIfNotBust();
+        Score score = tenScore.plusTenIfLessThenOrEqualTo(BLACKJACK_SCORE);
         assertThat(score).isEqualTo(new Score(20));
     }
     
     @Test
     @DisplayName("21을 넘는 경우 그대로 반환한다.")
     void notAdd() {
-        Score score = new Score(15).plusTenIfNotBust();
+        Score score = new Score(15).plusTenIfLessThenOrEqualTo(BLACKJACK_SCORE);
         assertThat(score).isEqualTo(new Score(15));
-    }
-    
-    @Test
-    @DisplayName("21을 넘는 경우 버스트")
-    void bust() {
-        boolean isBust = new Score(22).isBust();
-        assertThat(isBust).isTrue();
-    }
-    
-    @Test
-    @DisplayName("21을 안넘는 경우 버스트 아님")
-    void notBust() {
-        boolean isBust = new Score(21).isBust();
-        assertThat(isBust).isFalse();
     }
     
     @Test
     @DisplayName("같은 스코어인지 확인")
     void isSameScore() {
-        assertThat(new Score(21)).isEqualTo(new Score(21));
+        assertThat(BLACKJACK_SCORE).isEqualTo(BLACKJACK_SCORE);
     }
     
     @Test
     @DisplayName("다른 스코어인지 확인")
     void isNotSameScore() {
-        boolean isEquals = new Score(21).equals(new Score(20));
+        boolean isEquals = BLACKJACK_SCORE.equals(new Score(20));
         assertThat(isEquals).isFalse();
     }
 

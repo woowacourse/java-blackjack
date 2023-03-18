@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int INIT_GIVE_CARD_COUNT = 2;
     private static final Score BLACKJACK = new Score(21);
     
     private final List<Card> cards;
@@ -24,7 +23,7 @@ public class Hand {
     public Score getTotalScore() {
         Score totalScore = calculateScore();
         if (containsAce()) {
-            return totalScore.plusTenIfNotBust();
+            return totalScore.plusTenIfLessThenOrEqualTo(BLACKJACK);
         }
         
         return totalScore;
@@ -42,7 +41,7 @@ public class Hand {
     }
     
     public boolean isBust() {
-        return getTotalScore().isBust();
+        return getTotalScore().isOverThen(BLACKJACK);
     }
     
     public boolean isBlackJack() {
