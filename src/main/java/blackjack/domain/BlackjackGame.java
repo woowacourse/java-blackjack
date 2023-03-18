@@ -1,8 +1,14 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.*;
+import blackjack.domain.result.Rewards;
 import blackjack.domain.result.UserResults;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
+
+import java.util.LinkedHashMap;
 
 public class BlackjackGame {
 
@@ -17,22 +23,36 @@ public class BlackjackGame {
     public void giveInitialCardsToUsers() {
         deck.shuffleCards();
         users.giveInitialCards();
-        users.giveInitialCards();
     }
 
     public void updateCard(User user) {
         user.updateCardScore(deck.drawCard());
     }
 
-    public UserResults getResults() {
-        return UserResults.of(users.getDealer(), users.getPlayers());
+    public Players getPlayers() {
+        return users.getPlayers();
     }
 
     public Dealer getDealer() {
         return users.getDealer();
     }
 
-    public Players getPlayers() {
-        return users.getPlayers();
+    public Rewards getRewards() {
+        UserResults results = getResults();
+        LinkedHashMap<User, Double> rewards = calculatePlayersRewards(results);
+        rewards.put(getDealer(), calculateDealerRewards());
+        return Rewards.of(rewards);
+    }
+
+    private LinkedHashMap<User, Double> calculatePlayersRewards(UserResults results) {
+        return users.calculateRewards(results);
+    }
+
+    private double calculateDealerRewards() {
+        return users.calculateDealerRewards();
+    }
+
+    private UserResults getResults() {
+        return UserResults.of(users);
     }
 }

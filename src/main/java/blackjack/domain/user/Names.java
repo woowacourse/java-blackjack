@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ public class Names {
 
     private List<Name> generateNames(List<String> names) {
         return names.stream()
-                .map(Name::new )
+                .map(Name::new)
                 .collect(Collectors.toList());
     }
 

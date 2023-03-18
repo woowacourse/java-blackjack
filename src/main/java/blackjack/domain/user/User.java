@@ -1,12 +1,10 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
 import java.util.List;
 
 public abstract class User {
-    public static final int BUST = 21;
-
     protected final HandCards handCards;
     protected final Name name;
 
@@ -23,19 +21,19 @@ public abstract class User {
         return handCards.getTotalScore();
     }
 
-    public void updateCardScore(Card card) {
-        handCards.updateCardScore(card);
-    }
+    public abstract void updateCardScore(Card card);
 
-    public boolean isUnderBust() {
-        return handCards.getTotalScore() <= BUST;
+    public boolean isBust() {
+        return handCards.isBust();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public boolean isDealer(Object object) {
-        return object instanceof Dealer;
+    public abstract boolean isDealer();
+
+    public boolean isBlackjack() {
+        return handCards.isBlackjack();
     }
 }

@@ -1,13 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.player.*;
-import blackjack.domain.result.UserResults;
-import blackjack.domain.result.UserResultsDTO;
+import blackjack.domain.result.Rewards;
+import blackjack.domain.user.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.RewardDTO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -15,7 +17,7 @@ public class BlackjackController {
     private BlackjackGame blackjackGame;
 
     public void run() {
-        ready(generatePlayers());
+        ready();
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
         printNewCards(players, dealer);
@@ -23,7 +25,8 @@ public class BlackjackController {
         printFinalResults(dealer, players);
     }
 
-    private void ready(Players players) {
+    private void ready() {
+        Players players = generatePlayers();
         blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitialCardsToUsers();
         OutputView.printReadyMessage(players.getPlayers().stream()
@@ -42,28 +45,29 @@ public class BlackjackController {
         giveAdditionalCardsToDealer(dealer);
     }
 
-    private Players generatePlayers() {
-        Names names = new Names(InputView.inputPeopleNames());
-        return Players.from(names);
-    }
-
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        UserResults results = blackjackGame.getResults();
-        OutputView.printResults(UserResultsDTO.of(results));
+        Rewards rewards = blackjackGame.getRewards();
+        OutputView.printPrize(RewardDTO.of(rewards));
     }
 
-    private void stopServingCard(Player player) {
-        if (!player.isUnderBust()) {
-            OutputView.printScoreUnderLimit();
+    private Players generatePlayers() {
+        Names names = new Names(InputView.inputPeopleNames());
+        List<Player> players = addBetAmountToPlayers(names);
+        return Players.from(players);
+    }
+
+    private List<Player> addBetAmountToPlayers(Names playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : playerNames.getNames()) {
+            players.add(new Player(name, InputView.readBetAmount(name.getName())));
         }
-        OutputView.printPlayerCurrentCards(player);
+        return players;
     }
 
     private void giveAdditionalCardsToPlayers(Players players) {
         for (Player player : players.getPlayers()) {
-            String answer = InputView.askAdditionalCard(player.getPlayerName());
-            giveAdditionalCard(answer, player);
+            giveAdditionalCardToPlayer(player);
         }
     }
 
@@ -74,13 +78,23 @@ public class BlackjackController {
         }
     }
 
-    private void giveAdditionalCard(String answer, Player player) {
-        while (GameCommand.isContinue(answer) && player.isUnderBust()) {
+    private void giveAdditionalCardToPlayer(Player player) {
+        while (!player.isBust() && isContinue(player.getPlayerName())) {
             blackjackGame.updateCard(player);
             OutputView.printPlayerCurrentCards(player);
-            answer = InputView.askAdditionalCard(player.getPlayerName());
         }
         stopServingCard(player);
+    }
+
+    private boolean isContinue(String playerName) {
+        return GameCommand.isContinue(InputView.askAdditionalCard(playerName));
+    }
+
+    private void stopServingCard(Player player) {
+        if (player.isBust()) {
+            OutputView.printScoreUnderLimit();
+        }
+        OutputView.printPlayerCurrentCards(player);
     }
 
     private enum GameCommand {

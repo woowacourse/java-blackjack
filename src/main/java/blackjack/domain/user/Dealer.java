@@ -1,4 +1,6 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
 
 public class Dealer extends User {
 
@@ -7,6 +9,16 @@ public class Dealer extends User {
 
     public Dealer() {
         super(new Name(DEALER_NAME));
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
+    public void updateCardScore(Card card) {
+        handCards.updateCardScore(card);
     }
 
     public boolean hasUnderMinimumScore() {

@@ -1,20 +1,23 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class HandCards {
+    public static final int BUST = 21;
     private static final int ACE_VALUE_GAP = 10;
     private static final int LIMIT_SCORE = 21;
+    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> playerCards;
     private int totalScore;
 
     public HandCards() {
         this.playerCards = new ArrayList<>();
-        this.totalScore = 0;
     }
 
     public void updateCardScore(Card card) {
@@ -23,10 +26,10 @@ public class HandCards {
     }
 
     private int calculateTotalScore() {
-        Integer totalScore = playerCards.stream()
+        int totalScore = playerCards.stream()
                 .map(card -> card.getNumber().getValue())
                 .reduce(Integer::sum)
-                .get();
+                .orElseThrow(() -> new NoSuchElementException("현재 저장된 카드가 없습니다."));
         return updateAceScore(totalScore);
     }
 
@@ -51,5 +54,13 @@ public class HandCards {
 
     public int getTotalScore() {
         return totalScore;
+    }
+
+    public boolean isBust() {
+        return totalScore > LIMIT_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getTotalScore() == BLACKJACK && playerCards.size() == BLACKJACK_CARD_SIZE;
     }
 }

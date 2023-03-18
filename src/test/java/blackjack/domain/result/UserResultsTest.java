@@ -3,10 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Names;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.user.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,13 +18,13 @@ class UserResultsTest {
     void createUserResults() {
         // given
         Dealer dealer = new Dealer();
-        Players players = Players.from(new Names(List.of("a", "b", "c")));
+        Players players = Players.from(List.of(new Player(new Name("a"), 500), new Player(new Name("b"), 500), new Player(new Name("c"), 500)));
         List<Player> singlePlayers = players.getPlayers();
         dealer.updateCardScore(new Card(CardNumber.THREE, CardSymbol.HEART));
         singlePlayers.get(0).updateCardScore(new Card(CardNumber.TWO, CardSymbol.HEART));
         singlePlayers.get(1).updateCardScore(new Card(CardNumber.THREE, CardSymbol.HEART));
         singlePlayers.get(2).updateCardScore(new Card(CardNumber.FOUR, CardSymbol.HEART));
-        UserResults userResults = UserResults.of(dealer, players);
+        UserResults userResults = UserResults.of(new Users(dealer, players));
 
         // when & then
         assertThat(userResults.getResults().get(dealer))

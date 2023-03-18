@@ -1,0 +1,50 @@
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
+
+public class Player extends User {
+
+    private BetAmount betAmount;
+
+    public Player(Name name, int betAmount) {
+        super(name);
+        this.betAmount = new BetAmount(betAmount);
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public void updateCardScore(Card card) {
+        handCards.updateCardScore(card);
+    }
+
+    public void updateScoreIfBlackjack(boolean isDealerBlackjack) {
+        if (!isDealerBlackjack && isBlackjack()) {
+            betAmount.calculateBlackjack();
+        }
+    }
+
+    public void updateReceivingAmount(Result result) {
+        betAmount.updateReceivingAmount(result);
+    }
+
+    public String getPlayerName() {
+        return name.getName();
+    }
+
+    public double getRewards() {
+        return betAmount.getReceivingAmount();
+    }
+
+    public int getBetAmount() {
+        return betAmount.getBetAmount();
+    }
+
+    public void setBetAmount(int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+}
