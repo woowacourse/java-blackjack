@@ -18,7 +18,7 @@ class UserResultsTest {
     void createUserResults() {
         // given
         Dealer dealer = new Dealer();
-        Players players = Players.from(new Names(List.of("a", "b", "c")));
+        Players players = Players.from(List.of(new Player(new Name("a"), 500), new Player(new Name("b"), 500), new Player(new Name("c"), 500)));
         List<Player> singlePlayers = players.getPlayers();
         dealer.updateCardScore(new Card(CardNumber.THREE, CardSymbol.HEART));
         singlePlayers.get(0).updateCardScore(new Card(CardNumber.TWO, CardSymbol.HEART));

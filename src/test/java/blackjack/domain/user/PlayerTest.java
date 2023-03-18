@@ -17,7 +17,7 @@ class PlayerTest {
         String name = "merry";
 
         // when
-        Player player = new Player(new Name(name));
+        Player player = new Player(new Name(name), 500);
         player.handCards.updateCardScore(new Card(CardNumber.ACE, CardSymbol.HEART));
         player.handCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
 
@@ -32,7 +32,7 @@ class PlayerTest {
         String name = "merry";
 
         // given & when
-        Player player = new Player(new Name(name));
+        Player player = new Player(new Name(name), 500);
         player.handCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
         player.handCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
         player.handCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
@@ -47,7 +47,7 @@ class PlayerTest {
         // given
         String name = "merry";
         int betAmount = 10000;
-        Player player = new Player(new Name(name));
+        Player player = new Player(new Name(name), 500);
         player.setBetAmount(betAmount);
 
         // when

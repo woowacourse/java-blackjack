@@ -21,7 +21,7 @@ class UsersTest {
 
     @BeforeEach
     void setUp() {
-        this.players = Players.from(new Names(List.of("merry")));
+        this.players = Players.from(List.of(new Player(new Name("merry"), 500)));
         this.dealer = new Dealer();
         this.users = new Users(dealer, players);
         player = players.getPlayers().get(0);

@@ -1,13 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.view.dto.RewardDTO;
 import blackjack.domain.result.Rewards;
 import blackjack.domain.user.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.RewardDTO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -15,7 +17,7 @@ public class BlackjackController {
     private BlackjackGame blackjackGame;
 
     public void run() {
-        ready(generatePlayers());
+        ready();
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
         printNewCards(players, dealer);
@@ -23,14 +25,14 @@ public class BlackjackController {
         printFinalResults(dealer, players);
     }
 
-    private void ready(Players players) {
+    private void ready() {
+        Players players = generatePlayers();
         blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitialCardsToUsers();
         OutputView.printReadyMessage(players.getPlayers().stream()
                 .map(Player::getPlayerName)
                 .collect(Collectors.toList())
         );
-        setBetAmount(players);
     }
 
     private void printNewCards(Players players, Dealer dealer) {
@@ -49,15 +51,18 @@ public class BlackjackController {
         OutputView.printPrize(RewardDTO.of(rewards));
     }
 
-    private void setBetAmount(Players players) {
-        for (Player player : players.getPlayers()) {
-            player.setBetAmount(InputView.readBetAmount(player.getPlayerName()));
-        }
-    }
-
     private Players generatePlayers() {
         Names names = new Names(InputView.inputPeopleNames());
-        return Players.from(names);
+        List<Player> players = addBetAmountToPlayers(names);
+        return Players.from(players);
+    }
+
+    private List<Player> addBetAmountToPlayers(Names playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : playerNames.getNames()) {
+            players.add(new Player(name, InputView.readBetAmount(name.getName())));
+        }
+        return players;
     }
 
     private void giveAdditionalCardsToPlayers(Players players) {

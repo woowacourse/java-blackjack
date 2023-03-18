@@ -7,8 +7,9 @@ public class Player extends User {
 
     private BetAmount betAmount;
 
-    public Player(Name name) {
+    public Player(Name name, int betAmount) {
         super(name);
+        this.betAmount = new BetAmount(betAmount);
     }
 
     @Override
