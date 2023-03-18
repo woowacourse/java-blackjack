@@ -1,7 +1,6 @@
 package view.message;
 
 import domain.game.GameResult;
-
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
