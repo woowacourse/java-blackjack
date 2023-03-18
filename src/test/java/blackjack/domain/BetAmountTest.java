@@ -57,7 +57,7 @@ public class BetAmountTest {
         BetAmount betAmount = new BetAmount(betAmountMoney);
 
         // when
-        betAmount.setBlackjack();
+        betAmount.calculateBlackjack();
 
         // then
         assertThat(betAmount.getReceivingAmount())

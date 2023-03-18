@@ -34,7 +34,7 @@ public class BetAmount {
         }
     }
 
-    public void setBlackjack() {
+    public void calculateBlackjack() {
         receivingAmount = betAmount * 1.5;
     }
 

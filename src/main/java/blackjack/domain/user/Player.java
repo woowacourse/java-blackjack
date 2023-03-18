@@ -27,7 +27,7 @@ public class Player extends User {
 
     public void checkBlackjack(boolean isDealerBlackjack) {
         if (!isDealerBlackjack && isBlackjack()) {
-            betAmount.setBlackjack();
+            betAmount.calculateBlackjack();
         }
     }
 
