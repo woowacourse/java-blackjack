@@ -9,7 +9,7 @@ public class OutViewHelper {
     }
 
     public static String getUserCards(User user) {
-        return user.getPlayerCards().stream()
+        return user.getHand().stream()
                 .map(card -> card.getCardNumber().getNumber() + card.getSymbol())
                 .collect(Collectors.joining(", "));
     }
