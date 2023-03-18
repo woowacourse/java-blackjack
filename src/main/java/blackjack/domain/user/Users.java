@@ -28,7 +28,7 @@ public class Users {
         LinkedHashMap<User, Double> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             player.updateReceivingAmount(userResults.getResultOf(player));
-            player.checkBlackjack(dealer.isBlackjack());
+            player.updateScoreIfBlackjack(dealer.isBlackjack());
             playerResults.put(player, player.getRewards());
         }
         return playerResults;
@@ -39,7 +39,7 @@ public class Users {
         double playerRewards = players.getPlayers().stream()
                 .map(Player::getRewards)
                 .reduce(Double::sum)
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException("현재 플레이어가 없습니다."));
         return playersTotalBetAmount - playerRewards;
     }
 

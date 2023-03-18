@@ -53,7 +53,7 @@ class PlayerTest {
         // when
         player.handCards.updateCardScore(new Card(CardNumber.ACE, CardSymbol.HEART));
         player.handCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
-        player.checkBlackjack(false);
+        player.updateScoreIfBlackjack(false);
 
         // then
         assertThat(player.getRewards()).isEqualTo(betAmount * 1.5);

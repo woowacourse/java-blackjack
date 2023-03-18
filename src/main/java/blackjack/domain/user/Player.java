@@ -25,7 +25,7 @@ public class Player extends User {
         this.betAmount = new BetAmount(betAmount);
     }
 
-    public void checkBlackjack(boolean isDealerBlackjack) {
+    public void updateScoreIfBlackjack(boolean isDealerBlackjack) {
         if (!isDealerBlackjack && isBlackjack()) {
             betAmount.calculateBlackjack();
         }
