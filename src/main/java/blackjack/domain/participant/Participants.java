@@ -2,9 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -99,5 +102,16 @@ public class Participants {
 
     public Dealer findDealer() {
         return getDealer();
+    }
+
+    public Map<Player, Result> calculateResult() {
+        Dealer dealer = findDealer();
+        List<Player> players = getPlayers();
+        Map<Player, Result> playerResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            Result result = player.calculateResult(dealer);
+            playerResult.put(player, result);
+        }
+        return playerResult;
     }
 }

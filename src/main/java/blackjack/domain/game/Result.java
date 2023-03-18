@@ -1,8 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Hand;
-import blackjack.domain.participant.Score;
-
 public enum Result {
     BLACKJACK(1.5),
     WIN(1),

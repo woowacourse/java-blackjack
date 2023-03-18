@@ -23,6 +23,18 @@ public class MoneyTest {
 
         assertThat(afterMoney).isEqualTo(new Money(15000));
     }
+
+    @Test
+    @DisplayName("금액을 뺸다.")
+    void subtract() {
+        //given
+        Money money = new Money(10000);
+        Money subtractMoney = new Money(5000);
+        //when
+        Money result = money.subtract(subtractMoney);
+        //then
+        assertThat(result.getValue()).isEqualTo(5000);
+    }
 }
 
 

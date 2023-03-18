@@ -11,7 +11,11 @@ public class Money {
     }
 
     public Money multiply(double yield) {
-        return new Money((int) (this.value * yield));
+        return new Money(this.value * yield);
+    }
+
+    public Money subtract(Money money) {
+        return new Money(this.value - money.value);
     }
 
     public double getValue() {
@@ -29,5 +33,12 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "value=" + value +
+                '}';
     }
 }

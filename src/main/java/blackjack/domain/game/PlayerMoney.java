@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Player;
 
 import java.util.LinkedHashMap;
@@ -14,17 +13,33 @@ public class PlayerMoney {
         this.playerMoney = new LinkedHashMap<>();
     }
 
+    public PlayerMoney(Map<Player, Money> playerMoney) {
+        this.playerMoney = playerMoney;
+    }
+
     public void addPlayerMoney(Player player, Money money) {
         playerMoney.put(player, money);
     }
 
-    public Map<Player, Money> calculateYieldAllPlayer(Hand dealerHand) {
+    public PlayerMoney calculateYieldAllPlayer(Map<Player, Result> playerResult) {
         Map<Player, Money> calculatedPlayerMoney = new LinkedHashMap<>();
         for (Player player : playerMoney.keySet()) {
-            Result result = player.getHand().calculateResult(dealerHand);
-            Money money = result.calculateYield(playerMoney.get(player));
-            calculatedPlayerMoney.put(player, money);
+            Money money = playerMoney.get(player);
+            Result result = playerResult.get(player);
+            calculatedPlayerMoney.put(player, result.calculateYield(money));
         }
-        return calculatedPlayerMoney;
+        return new PlayerMoney(calculatedPlayerMoney);
+    }
+
+    public Money calculateDealerYield() {
+        Money money = new Money(0);
+        for (Player player : playerMoney.keySet()) {
+            money = money.subtract(playerMoney.get(player));
+        }
+        return money;
+    }
+
+    public Map<Player, Money> getPlayerMoney() {
+        return playerMoney;
     }
 }

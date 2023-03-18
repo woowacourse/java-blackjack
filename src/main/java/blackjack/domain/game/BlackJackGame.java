@@ -106,18 +106,12 @@ public class BlackJackGame {
     }
 
     public ResultDto findDealerPlayerResult() {
-        Map<String, Double> allPlayerResult = calculatePlayerResult();
-        double dealerResult = calculateDealerResult(allPlayerResult);
+        Map<Player, Result> playerResult = participants.calculateResult();
 
-        return new ResultDto(dealerResult, allPlayerResult);
-    }
+        PlayerMoney ResultPlayerMoney = playerMoney.calculateYieldAllPlayer(playerResult);
+        Money dealerResult = ResultPlayerMoney.calculateDealerYield();
 
-    private double calculateDealerResult(Map<String, Double> allPlayerResult) {
-        double result = 0;
-        for (String name : allPlayerResult.keySet()) {
-            result -= allPlayerResult.get(name);
-        }
-        return result;
+        return new ResultDto(dealerResult.getValue(), convertPlayerMoney(ResultPlayerMoney));
     }
 
     private PlayerNameHandDto convertNameHand(Player player) {
@@ -141,14 +135,11 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private Map<String, Double> calculatePlayerResult() {
+    private Map<String, Double> convertPlayerMoney(PlayerMoney playerMoney) {
         Map<String, Double> allPlayerResult = new LinkedHashMap<>();
-        Dealer dealer = participants.findDealer();
-        Map<Player, Money> playerMoney = this.playerMoney.calculateYieldAllPlayer(dealer.getHand());
-        for (Player player : playerMoney.keySet()) {
-            String playerName = player.getName();
-            Double money = playerMoney.get(player).getValue();
-            allPlayerResult.put(playerName, money);
+        Map<Player, Money> resultPlayerMoney = playerMoney.getPlayerMoney();
+        for (Player player : resultPlayerMoney.keySet()) {
+            allPlayerResult.put(player.getName(), resultPlayerMoney.get(player).getValue());
         }
         return allPlayerResult;
     }
