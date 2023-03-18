@@ -44,7 +44,7 @@ public class Application {
     }
     
     private static void printProfitResults(BlackJackGame blackJackGame, Referee referee) {
-        referee.saveBattleResults(blackJackGame);
+        referee.saveBattleResults(blackJackGame.players(), blackJackGame.betAmounts());
         OutputView.printPlayersGameResults(blackJackGame.players(), referee);
     }
 }

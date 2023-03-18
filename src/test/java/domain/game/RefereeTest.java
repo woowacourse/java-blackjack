@@ -41,7 +41,7 @@ class RefereeTest {
         blackJackGame.settingBetAmountToParticipantsBy(playerName -> 1000);
         
         // when
-        referee.saveBattleResults(blackJackGame);
+        referee.saveBattleResults(blackJackGame.players(), blackJackGame.betAmounts());
         
         // then
         assertAll(

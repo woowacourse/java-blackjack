@@ -53,4 +53,8 @@ public class BlackJackSystem {
     public List<Player> participants() {
         return players.participants();
     }
+    
+    public Map<Player, Double> betAmounts() {
+        return Collections.unmodifiableMap(betAmounts);
+    }
 }

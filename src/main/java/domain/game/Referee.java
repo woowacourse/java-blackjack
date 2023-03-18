@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Score;
 import domain.player.Player;
+import domain.player.Players;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +17,12 @@ public class Referee {
         profitResults = new HashMap<>();
     }
     
-    public void saveBattleResults(BlackJackGame blackJackGame) {
-        Player dealer = blackJackGame.dealer();
-        List<Player> participants = blackJackGame.participants();
+    public void saveBattleResults(Players players, Map<Player, Double> playerDoubleMap) {
+        Player dealer = players.dealer();
+        List<Player> participants = players.participants();
         
         for (Player participant : participants) {
-            double participantBetAmount = blackJackGame.findBetAmountByPlayer(participant);
+            double participantBetAmount = playerDoubleMap.get(participant);
             double participantProfit = decideParticipantProfit(dealer, participant, participantBetAmount);
             profitResults.put(participant, participantProfit);
             profitResults.put(dealer, getOrZero(dealer) - participantProfit);

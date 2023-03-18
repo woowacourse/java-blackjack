@@ -7,6 +7,7 @@ import domain.player.Players;
 import domain.strategy.ShuffleStrategy;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
@@ -53,5 +54,9 @@ public class BlackJackGame {
     
     public double findBetAmountByPlayer(Player player) {
         return blackJackSystem.findBetAmountByPlayer(player);
+    }
+    
+    public Map<Player, Double> betAmounts() {
+        return blackJackSystem.betAmounts();
     }
 }
