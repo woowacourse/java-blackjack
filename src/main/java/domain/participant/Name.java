@@ -3,7 +3,7 @@ package domain.participant;
 public class Name {
 
     public static final String BLANK = " ";
-    String name;
+    private final String name;
 
     private Name(String name) {
         this.name = name;
