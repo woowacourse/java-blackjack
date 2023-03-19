@@ -1,6 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.BettingResults;
+import blackjack.domain.participant.*;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +12,9 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBlackJackResults(BlackJackResults blackJackResults) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(createBlackJackResult(blackJackResults));
+    public static void printBettingResults(final BettingResults bettingResults) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println(createBettingResults(bettingResults));
     }
 
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
@@ -46,16 +48,17 @@ public class OutputView {
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private static String createBlackJackResult(BlackJackResults blackJackResults) {
-        final Map<Name, BlackJackResult> participants = blackJackResults.getParticipants();
-        final StringBuilder stringBuilder = new StringBuilder();
+    private static String createBettingResults(final BettingResults bettingResults) {
+        final StringBuilder resultBuilder = new StringBuilder();
+        final Map<Participant, Money> playerResults = bettingResults.getPlayerBettingResults();
+        playerResults.forEach((participant, money) -> resultBuilder
+                .append(participant.getName().getValue())
+                .append(": ")
+                .append(money.getValue())
+                .append(System.lineSeparator())
+        );
 
-        for (final Name name : participants.keySet()) {
-            final Map<ResultType, Integer> results = participants.get(name).getResults();
-            stringBuilder.append(getParticipantResult(name, results));
-        }
-
-        return stringBuilder.toString();
+        return resultBuilder.toString();
     }
 
     private static String getPlayerNames(final List<Player> players) {
@@ -65,27 +68,11 @@ public class OutputView {
     }
 
     private static String getParticipantCards(final Participant participant, final List<Card> participantCards) {
-        final StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append(participant.getName().getValue())
+        return new StringBuilder().append(participant.getName().getValue())
                 .append(": ")
                 .append(participantCards.stream()
                         .map(Card::toString)
-                        .collect(Collectors.joining(", ")));
-        return messageBuilder.toString();
-    }
-
-    private static String getParticipantResult(final Name name, final Map<ResultType, Integer> results) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name.getValue()).append(": ");
-        results.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() != 0)
-                .forEach(entry -> {
-                    int resultTypeCount = entry.getValue();
-                    String resultType = entry.getKey().getType();
-                    stringBuilder.append(resultTypeCount).append(resultType).append(" ");
-                });
-        stringBuilder.append(System.lineSeparator());
-        return stringBuilder.toString();
+                        .collect(Collectors.joining(", ")))
+                .toString();
     }
 }

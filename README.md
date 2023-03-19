@@ -39,7 +39,7 @@
     - 플레이어가 히트할 시에 카드를 출력한다.
 - 딜러의 히트 여부를 출력한다.
 - 딜러와 플레이어의 카드와 카드 숫자의 합을 출력한다.
-- 최종 승패를 출력한다.
+- ~~최종 승패를 출력한다.~~
 
 ## 요구사항
 
@@ -62,3 +62,62 @@
 - 플레이어는 카드 숫자 합이 유리한 쪽으로 A 값을 결정한다.
 - 딜러 카드는 무작위로 한 장 오픈한다.
 - 플레이어가 모두 스테이하고, 딜러의 차례가 끝나면 게임을 종료한다.
+
+## 2차 입력
+
+- 각 플레이어의 배팅 금액을 입력받는다.
+
+## 2차 출력
+
+- 딜러와 플레이어의 최종 수익을 출력한다.
+
+## 2차 요구사항
+
+- 플레이어는 카드를 추가로 뽑아 21을 초과할 경우 
+  - 배팅 금액을 모두 잃는다,
+- 플레이어의 처음 두 장의 카드 합이 21일 경우
+  - 블랙잭이 된다.
+  - 배팅 금액의 1.5배를 딜러에게 받는다.
+- 딜러와 플레이어 모두 동시에 블랙잭인 경우
+  - 플레이어는 배팅한 금액을 돌려받는다.
+
+```mermaid
+flowchart TD
+    InputView & OutputView --> BlackJackController --- BlackJackManager
+    
+    Deck --- Card
+    
+    BlackJackParticipants --- Dealer
+    BlackJackParticipants --- BettingPlayers
+    
+    Participant ---  Name
+    Participant --- ParticipantCards
+
+    Dealer & Player == extends ==> Participant
+
+    ParticipantCards --- Cards --- Card --- CardShape & CardNumber
+
+    BlackJackManager --- Deck & BlackJackParticipants
+    BettingPlayers ---Player & Money
+```
+
+```mermaid
+
+flowchart TD
+    InputView & OutputView --> BlackJackController --- BlackJackManager
+    
+    Deck --- Card
+    
+    BlackJackParticipants --- Dealer
+    BlackJackParticipants --- Players --- Player
+    BlackJackParticipants -..-> BlackJackResults --- Name & Money
+
+    Participant --- ParticipantInformation --- Money & Name
+    Participant --- ParticipantCards
+
+    Dealer & Player == extends ==> Participant
+
+    ParticipantCards --- Card --- CardShape & CardNumber
+
+    BlackJackManager --- BlackJackParticipants & Deck
+```
