@@ -30,9 +30,10 @@ abstract public class AbstractUser {
     }
 
     private void validateCanAdd() {
-        if (!canAdd()) {
-            throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
+        if (canAdd()) {
+            return;
         }
+        throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
 
     public CardHand getCardHand() {
