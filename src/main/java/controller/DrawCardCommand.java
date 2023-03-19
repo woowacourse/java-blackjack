@@ -29,8 +29,8 @@ public enum DrawCardCommand {
         return String.format("%s 혹은 %s를 입력해 주세요.", CARD_DRAW_AGAIN.command, CARD_DRAW_STOP.command);
     }
 
-    public boolean isDrawStop() {
-        return this == CARD_DRAW_STOP;
+    public boolean isDrawAgain() {
+        return this == CARD_DRAW_AGAIN;
     }
 
     public String getCommand() {

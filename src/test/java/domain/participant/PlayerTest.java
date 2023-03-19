@@ -39,7 +39,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("isDealerName()은 파라미터로 입력된 name이 '딜러'인지 판단한다")
+    @DisplayName("플레이어의 이름이 '딜러'라면, 예외가 발생한다.")
     void create_givenInvalidName_thenFail() {
         assertThatThrownBy(() -> Player.create("딜러"))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -53,28 +53,49 @@ class PlayerTest {
         player.addCard(card);
 
         // then
-        final ParticipantCard participantCard = player.card;
-        final List<Card> cards = participantCard.getCards();
+        final List<Card> cards = player.getHand();
 
         assertThat(cards)
                 .hasSize(1);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
-    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
-    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+    @Test
+    @DisplayName("canDrawCard()는 플레이어가 버스트나 블랙잭이 아니면 true를 반환한다.")
+    void canDrawCard_whenCall_thenReturnCanGiveCard() {
+        // when
+        boolean actual = player.canDrawCard();
+
+        // then
+        assertThat(actual)
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("bet()는 받은 돈만큼 베팅한다.")
+    void bet_givenMoney_thenSuccess() {
+        // when
+        player.bet(ParticipantMoney.create(10000));
+
+        // then
+        assertThat(player.getMoney())
+                .isEqualTo(10000);
+    }
+
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBlackJackCard")
+    @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
+    void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(player::addCard);
 
         // when
-        final int score = player.calculateScore();
+        final boolean actual = player.isBlackJack();
 
         // then
-        assertThat(score)
+        assertThat(actual)
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeBustCard")
     @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
     void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
@@ -88,17 +109,71 @@ class PlayerTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
-    @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
-    void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#makeCards")
+    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
         // given
         cards.forEach(player::addCard);
 
         // when
-        final boolean actual = player.isBlackJack();
+        final int score = player.calculateScore();
 
         // then
-        assertThat(actual)
+        assertThat(score)
                 .isSameAs(expected);
+    }
+
+    @Test
+    @DisplayName("losePlayerMoney()는 플레이어의 돈을 -1배 한다.")
+    void losePlayerMoney_whenCall_thenLoseMoney() {
+        // given
+        player.bet(ParticipantMoney.create(10000));
+
+        // when
+        player.loseMoney();
+
+        // then
+        assertThat(player.getMoney())
+                .isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("earnPlayerMoney()는 플레이어의 돈을 1배한다.")
+    void earnPlayerMoney_whenCall_thenKeepMoney() {
+        // given
+        player.bet(ParticipantMoney.create(10000));
+
+        // when
+        player.earnMoney();
+
+        // then
+        assertThat(player.getMoney())
+                .isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("earnPlayerBonusMoney()는 플레이어에게 보너스를 주고, 그만큼 딜러의 돈에서 제거한다.")
+    void earnPlayerBonusMoney_whenCall_thenBonusMoney() {
+        // given
+        player.bet(ParticipantMoney.create(10000));
+
+        // when
+        player.earnBonusMoney();
+
+        // then
+        assertThat(player.getMoney())
+                .isEqualTo(15000);
+    }
+
+    @Test
+    @DisplayName("resetMoney()는 플레이어의 돈을 초기화한다.")
+    void resetMoney_whenCall_thenMakeInitMoney() {
+        // when
+        player.bet(ParticipantMoney.create(10000));
+        player.resetMoney(ParticipantMoney.create(10000));
+
+        // then
+        assertThat(player.getMoney())
+                .isEqualTo(10000);
     }
 }

@@ -1,6 +1,5 @@
 package domain.participant;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,15 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayersTest {
 
-    private Players players;
-
-    @BeforeEach
-    void init() {
-        List<String> playerNames = List.of("a", "b", "c", "d", "e");
-        players = Players.create(playerNames);
-    }
-
-    @MethodSource(value = "domain.helper.ParticipantArguments#validPlayerNames")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#validPlayerNames")
     @ParameterizedTest(name = "create()는 유효한 수의 플레이어 이름 컬렉션을 받으면, 예외가 발생하지 않는다")
     void create_givenPlayerNames_thenSuccess(final List<String> playerNames) {
         final Players players = assertDoesNotThrow(() -> Players.create(playerNames));
@@ -31,7 +22,7 @@ class PlayersTest {
                 .isInstanceOf(Players.class);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#invalidPlayerNames")
+    @MethodSource(value = "domain.helper.ParticipantTestHelper#invalidPlayerNames")
     @ParameterizedTest(name = "create()는 7명 초과의 플레이어 이름 컬렉션을 받으면, 예외가 발생한다")
     void create_givenPlayerNames_thenFail(final List<String> playerNames) {
         assertThatThrownBy(() -> Players.create(playerNames))

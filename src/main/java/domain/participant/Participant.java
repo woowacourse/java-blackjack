@@ -4,47 +4,63 @@ import domain.card.Card;
 import domain.card.Score;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Participant {
 
     protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
-
+    protected final ParticipantCard hand;
     private final ParticipantName name;
-    protected final ParticipantCard card;
 
     protected Participant(final String name) {
         this.name = ParticipantName.create(name);
-        this.card = ParticipantCard.create();
+        this.hand = ParticipantCard.create();
     }
 
-    public static Dealer createDealer() {
-        return Dealer.create();
+    static Participant create(final String name) {
+        return new Participant(name);
     }
 
-    public final void addCard(final Card... cards) {
+    void addCard(final Card... cards) {
         for (Card card : cards) {
-            this.card.addCard(card);
+            hand.addCard(card);
         }
     }
 
-    public final int calculateScore() {
-        Score score = card.calculateScore();
-        return score.getScore();
+    boolean isBust() {
+        return hand.isBust();
     }
 
-    public final boolean isBust() {
-        return card.isBust();
+    boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
-    public final boolean isBlackJack() {
-        return card.isBlackJack();
+    Score calculateScore() {
+        return hand.calculateScore();
     }
 
-    public final String getName() {
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Participant)) {
+            return false;
+        }
+        Participant targetParticipant = (Participant) target;
+        return Objects.equals(name, targetParticipant.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    String getName() {
         return name.getName();
     }
 
-    public final List<Card> getCard() {
-        return List.copyOf(card.getCards());
+    List<Card> getHand() {
+        return List.copyOf(hand.getCards());
     }
 }
