@@ -4,7 +4,7 @@ public class Betting {
 
     private static final String BETTING_ERROR_GUIDE_MESSAGE = "[ERROR] 배팅 금액은 숫자만 입력 가능합니다.";
 
-    private int betting;
+    private final int betting;
 
     public Betting(String betting) {
         validateBettings(betting);

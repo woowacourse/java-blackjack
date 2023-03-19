@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Bettings {
 
-    private List<Betting> bettings;
+    private final List<Betting> bettings;
 
     public Bettings(List<String> bettingsInput) {
         this.bettings = createBettings(bettingsInput);
