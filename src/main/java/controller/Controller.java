@@ -57,12 +57,12 @@ public class Controller {
     }
 
     private Bettings getBettings(PlayerNames playerNames) {
-        List<String> list = new ArrayList<>();
+        List<String> bettings = new ArrayList<>();
         for (String playerName : playerNames.getStringPlayerNames()) {
-            list.add(getValidBettingsInput(playerName));
+            bettings.add(getValidBettingsInput(playerName));
         }
 
-        return new Bettings(list);
+        return new Bettings(bettings);
     }
 
     private String getValidBettingsInput(String playerName) {
