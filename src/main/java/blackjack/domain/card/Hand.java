@@ -4,7 +4,6 @@ import blackjack.domain.game.Score;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public final class Hand {
 
@@ -70,19 +69,6 @@ public final class Hand {
 
     public int size() {
         return cards.size();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Hand hand = (Hand) o;
-        return Objects.equals(cards, hand.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards);
     }
 
     public List<Card> getCards() {

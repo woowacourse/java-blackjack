@@ -7,19 +7,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.*;
+
 class LetterTest {
 
     @Test
     @DisplayName("현재 카드 글자가 에이스인지 확인한다.")
     void isAceTest() {
-        Assertions.assertThat(Letter.ACE.isAce()).isTrue();
+        assertThat(Letter.ACE.isAce()).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"})
     @DisplayName("글자가 가진 이름과 같은지 확인하는 테스트")
     void getNameTest(final String name) {
-        Assertions.assertThat(Letter.from(name).getName()).isEqualTo(name);
+        assertThat(Letter.from(name).getName()).isEqualTo(name);
     }
 
     @ParameterizedTest
@@ -29,6 +31,6 @@ class LetterTest {
     )
     @DisplayName("글자가 가진 숫자와 같은지 확인하는 테스트")
     void getValueTest(final String name, final int value) {
-        Assertions.assertThat(Letter.from(name).getValue()).isEqualTo(value);
+        assertThat(Letter.from(name).getValue()).isEqualTo(value);
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static blackjack.domain.CardConstant.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class DealerTest {
 
@@ -21,12 +22,12 @@ public class DealerTest {
         dealer.drawCard(DIAMOND_JACK);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
     @DisplayName("딜러의 카드의 합이 16초과 인지 테스트")
-    void cantHitTest() {
+    void cannotHitTest() {
         //given
         final Dealer dealer = Dealer.from(new ArrayList<>());
 
@@ -35,6 +36,6 @@ public class DealerTest {
         dealer.drawCard(DIAMOND_JACK);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 }

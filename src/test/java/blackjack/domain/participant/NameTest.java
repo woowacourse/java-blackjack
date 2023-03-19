@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class NameTest {
@@ -25,7 +25,7 @@ public class NameTest {
     @ValueSource(strings = {"", "po bi", "세종대왕", "123", "!@#$%"})
     @DisplayName("이름에 영문자가 들어오지 않으면 예외를 던지는지 테스트")
     void throwExceptionWhenNameNotEnglish(final String value) {
-        Assertions.assertThatThrownBy(() -> Name.from(value))
+        assertThatThrownBy(() -> Name.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("사람 이름은 영문자만 가능합니다.");
     }
@@ -42,7 +42,7 @@ public class NameTest {
     void throwExceptionWhenNameLengthLessTwo() {
         final String value = "a";
 
-        Assertions.assertThatThrownBy(() -> Name.from(value))
+        assertThatThrownBy(() -> Name.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자 이름은 2글자 이상 5글자 이하만 가능합니다.");
     }
@@ -52,7 +52,7 @@ public class NameTest {
     void throwExceptionWhenNameLengthGreaterFive() {
         final String value = "abcdef";
 
-        Assertions.assertThatThrownBy(() -> Name.from(value))
+        assertThatThrownBy(() -> Name.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자 이름은 2글자 이상 5글자 이하만 가능합니다.");
     }

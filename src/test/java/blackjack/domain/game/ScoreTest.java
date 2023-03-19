@@ -1,8 +1,9 @@
 package blackjack.domain.game;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
 
@@ -17,7 +18,7 @@ class ScoreTest {
         final Score actual = score.minus(6);
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -25,7 +26,7 @@ class ScoreTest {
     void isHitTest() {
         final Score score = Score.from(20);
 
-        Assertions.assertThat(score.canHit()).isTrue();
+        assertThat(score.canHit()).isTrue();
     }
 
     @Test
@@ -33,7 +34,7 @@ class ScoreTest {
     void isHitForDealerTest() {
         final Score score = Score.from(16);
 
-        Assertions.assertThat(score.canHit(16)).isTrue();
+        assertThat(score.canHit(16)).isTrue();
     }
 
     @Test
@@ -41,7 +42,7 @@ class ScoreTest {
     void isBustTest() {
         final Score score = Score.from(22);
 
-        Assertions.assertThat(score.isBust()).isTrue();
+        assertThat(score.isBust()).isTrue();
     }
 
     @Test
@@ -50,7 +51,7 @@ class ScoreTest {
         final Score originalScore = Score.from(22);
         final Score otherScore = Score.from(21);
 
-        Assertions.assertThat(originalScore.isGreaterThan(otherScore)).isTrue();
+        assertThat(originalScore.isGreaterThan(otherScore)).isTrue();
     }
 
     @Test
@@ -59,7 +60,7 @@ class ScoreTest {
         final Score originalScore = Score.from(21);
         final Score otherScore = Score.from(21);
 
-        Assertions.assertThat(originalScore.isEqualTo(otherScore)).isTrue();
+        assertThat(originalScore.isEqualTo(otherScore)).isTrue();
     }
 
     @Test
@@ -72,6 +73,6 @@ class ScoreTest {
         final Score actual = Score.from(value);
 
         // then
-        Assertions.assertThat(actual.getValue()).isEqualTo(value);
+        assertThat(actual.getValue()).isEqualTo(value);
     }
 }

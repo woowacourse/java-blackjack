@@ -4,13 +4,13 @@ import blackjack.domain.betting.Betting;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ResultStateDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static blackjack.domain.CardConstant.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultStateTest {
 
@@ -22,7 +22,7 @@ class ResultStateTest {
         final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
-        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.BLACKJACK);
+        assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.BLACKJACK);
     }
 
     @Test
@@ -33,7 +33,7 @@ class ResultStateTest {
         final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN, HEART_EIGHT)));
 
-        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.WIN);
+        assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.WIN);
     }
 
     @Test
@@ -44,7 +44,7 @@ class ResultStateTest {
         final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(SPACE_ACE, HEART_TEN)));
 
-        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.TIE);
+        assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.TIE);
     }
 
     @Test
@@ -55,7 +55,7 @@ class ResultStateTest {
         final ResultStateDto second = ResultStateDto.from(
                 Player.of(Name.from("crong"), List.of(HEART_TEN)));
 
-        Assertions.assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.LOSE);
+        assertThat(ResultState.getState(first, second)).isEqualTo(ResultState.LOSE);
     }
 
     @Test
@@ -69,7 +69,7 @@ class ResultStateTest {
         final Betting actual = ResultState.BLACKJACK.calculateProfit(betting.getValue());
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -83,7 +83,7 @@ class ResultStateTest {
         final Betting actual = ResultState.WIN.calculateProfit(betting.getValue());
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
 
@@ -98,7 +98,7 @@ class ResultStateTest {
         final Betting actual = ResultState.TIE.calculateProfit(betting.getValue());
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
 
@@ -113,6 +113,6 @@ class ResultStateTest {
         final Betting actual = ResultState.LOSE.calculateProfit(betting.getValue());
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 }

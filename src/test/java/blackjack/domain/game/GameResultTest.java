@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static blackjack.domain.CardConstant.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class GameResultTest {
     private Dealer dealer;
@@ -49,7 +50,7 @@ public class GameResultTest {
 
         GameResult resultGame = GameResult.of(table, participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-15000));
+        assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-15000));
     }
 
     @Test
@@ -64,7 +65,7 @@ public class GameResultTest {
 
         GameResult resultGame = GameResult.of(table, participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-10000));
+        assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(-10000));
     }
 
     @Test
@@ -79,7 +80,7 @@ public class GameResultTest {
 
         GameResult resultGame = GameResult.of(table, participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(0));
+        assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(0));
     }
 
     @Test
@@ -94,7 +95,7 @@ public class GameResultTest {
 
         GameResult resultGame = GameResult.of(table, participants);
 
-        Assertions.assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(10000));
+        assertThat(resultGame.getDealerResult()).isEqualTo(Betting.from(10000));
     }
 
     @Test
@@ -102,6 +103,6 @@ public class GameResultTest {
     void getPlayerResultTest() {
         GameResult resultGame = GameResult.of(table, participants);
 
-        Assertions.assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(0));
+        assertThat(resultGame.getPlayerResult(pobi)).isEqualTo(Betting.from(0));
     }
 }

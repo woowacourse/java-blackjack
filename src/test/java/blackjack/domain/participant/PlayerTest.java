@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static blackjack.domain.CardConstant.*;
+import static org.assertj.core.api.Assertions.*;
 
 class PlayerTest {
 
@@ -27,7 +28,7 @@ class PlayerTest {
         player.drawCard(DIAMOND_TWO);
 
         // then
-        Assertions.assertThat(player.canHit()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
@@ -37,6 +38,6 @@ class PlayerTest {
         player.drawCard(DIAMOND_THREE);
 
         // then
-        Assertions.assertThat(player.canHit()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 }
