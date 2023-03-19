@@ -20,7 +20,17 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        participant = new TestParticipant(Name.from("test"), new ArrayList<>());
+        participant = new Participant(Name.from("test"), new ArrayList<>()) {
+            @Override
+            public boolean canHit() {
+                return false;
+            }
+
+            @Override
+            public boolean isDealer() {
+                return false;
+            }
+        };
     }
 
     @Test
@@ -111,22 +121,5 @@ class ParticipantTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
-    }
-}
-
-class TestParticipant extends Participant {
-
-    public TestParticipant(final Name name, final List<Card> cards) {
-        super(name, cards);
-    }
-
-    @Override
-    public boolean canHit() {
-        return true;
-    }
-
-    @Override
-    public boolean isDealer() {
-        return false;
     }
 }
