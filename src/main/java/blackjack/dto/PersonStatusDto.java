@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
@@ -9,15 +9,18 @@ import static java.util.stream.Collectors.toList;
 public class PersonStatusDto {
 
     private final String name;
-    private final List<Card> cards;
+    private final List<String> cards;
 
-    private PersonStatusDto(String name, List<Card> cards) {
+    private PersonStatusDto(String name, List<String> cards) {
         this.name = name;
         this.cards = cards;
     }
 
     public static PersonStatusDto of(String name, List<Card> cards) {
-        return new PersonStatusDto(name, cards);
+        List<String> collect = cards.stream()
+                .map(card -> card.getRank() + card.getSuit())
+                .collect(toList());
+        return new PersonStatusDto(name, collect);
     }
 
     public String getName() {
@@ -25,8 +28,6 @@ public class PersonStatusDto {
     }
 
     public List<String> getCards() {
-        return cards.stream()
-                .map(card -> card.getRank() + card.getSuit())
-                .collect(toList());
+        return cards;
     }
 }

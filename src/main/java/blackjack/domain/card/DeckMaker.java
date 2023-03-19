@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,7 +12,7 @@ public class DeckMaker implements Shuffler {
     public List<Card> createDeck() {
         List<Card> cards = Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(Suit.values())
-                        .flatMap(suit -> Stream.of(new Card(suit, rank)))
+                        .flatMap(suit -> Stream.of(Card.of(suit, rank)))
                 ).collect(toList());
         Collections.shuffle(cards);
         return cards;

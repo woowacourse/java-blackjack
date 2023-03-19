@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ class CardsTest {
     void getScore_correct() {
         // given
         Cards cards = new Cards();
-        cards.addCard(new Card(Suit.DIAMOND, Rank.TWO));
-        cards.addCard(new Card(Suit.CLOVER, Rank.KING));
+        cards.addCard(Card.of(Suit.DIAMOND, Rank.TWO));
+        cards.addCard(Card.of(Suit.CLOVER, Rank.KING));
 
         // when
         int score = cards.getScore();
@@ -31,10 +31,10 @@ class CardsTest {
     void getScore_haveAce(int input, int expect) {
         // given
         Cards cards = new Cards();
-        cards.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        cards.addCard(Card.of(Suit.DIAMOND, Rank.QUEEN));
 
         for (int i = 0; i < input; i++) {
-            cards.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+            cards.addCard(Card.of(Suit.DIAMOND, Rank.ACE));
         }
 
         // when

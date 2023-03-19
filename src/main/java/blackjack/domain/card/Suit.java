@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public enum Suit {
     SPADE("스페이드"),
@@ -10,6 +13,10 @@ public enum Suit {
 
     Suit(String name) {
         this.name = name;
+    }
+
+    public static Stream<Suit> stream() {
+        return Arrays.stream(values());
     }
 
     public String getName() {

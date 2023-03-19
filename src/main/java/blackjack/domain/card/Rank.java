@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public enum Rank {
     ACE(1, "A"),
@@ -21,6 +24,10 @@ public enum Rank {
     Rank(int value, String name) {
         this.value = value;
         this.name = name;
+    }
+
+    public static Stream<Rank> stream() {
+        return Arrays.stream(values());
     }
 
     public int getValue() {

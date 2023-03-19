@@ -32,14 +32,10 @@ public class OutputView {
     }
 
     public static void printGameEndMessage() {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
     }
 
-    public static void printDealerResult(final String dealerResults) {
-        System.out.println("딜러: " + dealerResults);
-    }
-
-    public static void printPlayerResult(final String playerName, final String playerResult) {
+    public static void printProfitResult(final String playerName, final Double playerResult) {
         System.out.println(playerName + ": " + playerResult);
     }
 

@@ -1,14 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.person;
 
-import static java.util.stream.Collectors.toList;
+import blackjack.domain.card.Card;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Dealer extends Person {
     private static final int DRAW_CARD_BOUNDARY = 16;
 
     public Dealer() {
-        super("딜러");
+        super(new Name("딜러"));
     }
 
     @Override
