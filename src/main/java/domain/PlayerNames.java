@@ -10,7 +10,7 @@ public class PlayerNames {
     private static final String SIZE_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어는 5명까지 참가 가능합니다.";
     private static final String DUPLICATE_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어 이름은 중복일 수 없습니다.";
 
-    private List<PlayerName> playerNames;
+    private final List<PlayerName> playerNames;
 
     public PlayerNames(List<String> playerNamesInput) {
         validatePlayerNames(playerNamesInput);
@@ -45,5 +45,9 @@ public class PlayerNames {
         return this.playerNames.stream()
                 .map(PlayerName::getName)
                 .collect(Collectors.toList());
+    }
+
+    public List<PlayerName> getPlayerNames() {
+        return playerNames;
     }
 }

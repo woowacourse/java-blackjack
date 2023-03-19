@@ -1,12 +1,12 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Referee {
-    public static List<Betting> bettings;
-
-    public static Dealer dealer;
+    public List<Betting> bettings;
+    public Dealer dealer;
 
     public Referee(Dealer dealer, Bettings bettings) {
         this.dealer = dealer;
@@ -37,31 +37,54 @@ public class Referee {
         return dealerScore > playerScore || player.isBustedGambler();
     }
 
-    public void decideBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
+    public Map<Gambler, Integer> calculateBenefits(Players players, Dealer dealer) {
+        Map<Gambler, Integer> benefits = initBenefits(players, dealer);
+        for (Player player : players.getPlayers()) {
+            calculateBenefit(player, players.getPlayers(), benefits);
+        }
+        return benefits;
+    }
+
+    public Map<Gambler, Integer> calculateBenefit(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
+        winDealer(player, players, benefits);
+        winPlayer(player,players,benefits);
+
+       return benefits;
+    }
+
+    private void winDealer(Player player, List<Player> players, Map<Gambler, Integer> benefits){
         int index = players.indexOf(player);
         int winnerCount = 0;
 
-        addPlayerBenefits(player, benefits);
-        addDealerBenefit(player, players, benefits, index, winnerCount);
-    }
-
-    private void addDealerBenefit(Player player, List<Player> players, Map<Gambler, Integer> benefits, int index, int winnerCount) {
         if (isDealerWin(player, dealer)) {
             loseBenefit(player, benefits, bettings.get(index).getBetting());
             winnerCount = getWinnerCount(player, players, winnerCount + 1);
             int money = bettings.get(index).getBetting() / winnerCount;
-            earnBenefits(player, players, benefits, money);
+            earnBenefit(benefits, money, dealer);
         }
     }
 
-    private void addPlayerBenefits(Player player, Map<Gambler, Integer> benefits) {
-        if (isPlayerWin(player, dealer) && !benefits.containsKey(player)) {
+    private void winPlayer(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
+        int index = players.indexOf(player);
+        int winnerCount = 0;
+
+        if (isPlayerWin(player, dealer)) {
+            winnerCount = getWinnerCount(player, players, winnerCount + 1);
+            int money = bettings.get(index).getBetting() / winnerCount;
+            earnPlayersBenefits(player, players, benefits, money);
+        }
+    }
+
+    private Map<Gambler, Integer> initBenefits(Players players, Dealer dealer) {
+        Map<Gambler, Integer> benefits = new LinkedHashMap<>();
+        benefits.put(dealer, 0);
+        for (Player player : players.getPlayers()) {
             benefits.put(player, 0);
         }
+        return benefits;
     }
 
-    private void earnBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits, int money) {
-        earnBenefit(benefits, money, dealer);
+    private void earnPlayersBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits, int money) {
         for (Player searchPlayer : players) {
             playerEarnBenefit(player, benefits, money, searchPlayer);
         }
@@ -88,23 +111,10 @@ public class Referee {
     }
 
     private void loseBenefit(Player player, Map<Gambler, Integer> benefits, int money) {
-        if (!benefits.containsKey(player)) {
-            benefits.put(player, 0 - money);
-            return;
-        }
-
-        if (benefits.containsKey(player)) {
-            benefits.replace(player, benefits.get(player) - money);
-        }
+        benefits.replace(player, benefits.get(player) - money);
     }
 
     private void earnBenefit(Map<Gambler, Integer> benefits, int money, Gambler gambler) {
-        if (!benefits.containsKey(gambler)) {
-            benefits.put(gambler, money);
-        }
-
-        if (benefits.containsKey(gambler)) {
-            benefits.replace(gambler, benefits.get(gambler) + money);
-        }
+        benefits.replace(gambler, benefits.get(gambler) + money);
     }
 }

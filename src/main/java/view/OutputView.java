@@ -1,13 +1,11 @@
 package view;
 
-import domain.Card;
 import domain.Dealer;
 import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -94,7 +92,7 @@ public class OutputView {
 
     public static void printResult(Result result) {
         System.out.println(NEW_LINE + RESULT_GUIDE_MESSAGE);
-        Map<Gambler, Integer> map = result.getResult();
+        Map<Gambler, Integer> map = result.getWinOrLoseResult();
 
         for (Map.Entry<Gambler, Integer> resultEntry : map.entrySet()) {
             printDealerResult(resultEntry, map.size());

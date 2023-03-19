@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static view.InputView.printErrorMessage;
+import static view.InputView.readBetting;
 import static view.InputView.readIsHit;
 import static view.InputView.readPlayerNames;
 import static view.OutputView.printBenefits;
@@ -68,7 +69,7 @@ public class Controller {
 
     private Betting getBetting(String playerName) {
         try {
-            String readBetting = InputView.readBetting(playerName);
+            String readBetting = readBetting(playerName);
             return new Betting(readBetting);
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
@@ -77,9 +78,9 @@ public class Controller {
     }
 
     private List<Player> createPlayers(PlayerNames playerNames) {
-        return playerNames.getStringPlayerNames()
+        return playerNames.getPlayerNames()
                 .stream()
-                .map(it -> new Player(new PlayerName(it), new Cards(new ArrayList<>())))
+                .map(playerName -> new Player(playerName, new Cards(new ArrayList<>())))
                 .collect(Collectors.toList());
     }
 
@@ -109,7 +110,6 @@ public class Controller {
             return getIsHit(player);
         }
     }
-
 
     private boolean isPickAble(Player player) {
         return !player.isBustedGambler();

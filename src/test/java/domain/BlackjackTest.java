@@ -32,7 +32,7 @@ class BlackjackTest {
 
         //when
         int expected = 1;
-        int actual = result.getResult().get(dealer);
+        int actual = result.getWinOrLoseResult().get(dealer);
 
         //then
         assertEquals(expected, actual);

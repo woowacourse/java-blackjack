@@ -41,7 +41,7 @@ class BlackjackTest {
 
         //when
         int expected = 1;
-        int actual = result.getResult().get(dealer);
+        int actual = result.getWinOrLoseResult().get(dealer);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -69,7 +69,7 @@ class BlackjackTest {
 
         //when
         int expected = 1;
-        int actual = result.getResult().get(player);
+        int actual = result.getWinOrLoseResult().get(player);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -96,7 +96,7 @@ class BlackjackTest {
 
         //when
         int expected = 1;
-        int actual = result.getResult().get(player);
+        int actual = result.getWinOrLoseResult().get(player);
 
         //then
         Assertions.assertEquals(expected, actual);

@@ -26,7 +26,7 @@ class ResultTest {
 
         //when
         Result result = new Result(players, dealer, bettings);
-        Map<Gambler, Integer> map = result.getResult();
+        Map<Gambler, Integer> map = result.getWinOrLoseResult();
         int expected = 1;
         int actual = map.get(dealer);
 

@@ -7,9 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static domain.Referee.bettings;
-import static domain.Referee.dealer;
-
 class RefereeTest {
 
     @Test
@@ -17,9 +14,12 @@ class RefereeTest {
         //given
         Cards cards = new Cards(List.of(
                 new Card(Suit.CLOVER, Denomination.TWO),
-                new Card(Suit.CLOVER, Denomination.FIVE)));
+                new Card(Suit.HEART, Denomination.TWO)));
 
         Bettings bettings = new Bettings(List.of(new Betting("10000")));
+        Dealer dealer = new Dealer(new Cards(List.of(
+                new Card(Suit.CLOVER, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.KING))));
         Referee referee = new Referee(dealer, bettings);
 
         //when
@@ -46,13 +46,19 @@ class RefereeTest {
         //when
         Player player = new Player(new PlayerName("judy"), cards);
         List<Player> players = List.of(player);
-        Map<Gambler, Integer> benefits = new LinkedHashMap<>();
-        benefits.put(dealer, 0);
-        referee.decideBenefits(player, players, benefits);
+        Map<Gambler, Integer> benefits = getMap(dealer, referee, player, players);
 
         //then
         Assertions.assertEquals(benefits.get(player), -10000);
         Assertions.assertEquals(benefits.get(dealer), 10000);
+    }
+
+    private Map<Gambler, Integer> getMap(Dealer dealer, Referee referee, Player player, List<Player> players) {
+        Map<Gambler, Integer> benefits = new LinkedHashMap<>();
+        benefits.put(dealer, 0);
+        benefits.put(player,0);
+        referee.calculateBenefit(player, players, benefits);
+        return benefits;
     }
 
     @Test
