@@ -10,7 +10,7 @@ class PlayersTest {
     @Test
     @DisplayName("Player들을 반환한다.")
     void 플레이어들_반환() {
-        Players players = new Players(List.of("name1", "name2"));
+        Players players = new Players(List.of(new Player("name", 10000), new Player("name", 10000)));
         assertThat(players.getPlayers()).hasSize(2);
     }
 }

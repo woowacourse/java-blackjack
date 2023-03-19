@@ -1,8 +1,6 @@
 package controller;
 
 import domain.Participants;
-import domain.user.Dealer;
-import domain.user.Player;
 import ui.InputView;
 import ui.OutputView;
 
@@ -11,34 +9,39 @@ public class BlackjackController {
     private final Participants participants;
 
     public BlackjackController() {
-        this.participants = new Participants(InputView.readPlayersName());
+        this.participants = new Participants(InputView.readPlayers());
     }
 
     public void run() {
         participants.initGame();
         OutputView.printCardsStatus(participants.getDealer(), participants.getPlayers());
-        participants.getPlayers().forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
+        addCardPlayers();
         addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
-        participants.calculateAllResults();
-        OutputView.printResults(participants.getPlayerResults());
+        OutputView.printResults(participants.calculateAllResults());
     }
 
     private void addCardToDealerIfPossible() {
-        if (participants.getDealer().canAdd()) {
+        if (participants.addCardToDealerIfPossible()) {
             OutputView.announceAddCardToDealer();
-            participants.addCardToDealerIfPossible();
         }
     }
 
-    private void giveCardUntilImpossible(Player player, Dealer dealer) {
-        boolean whetherDrawCard = false;
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player))) {
-            player.addCard(dealer.drawCard());
-            OutputView.printCardsStatusOfPlayer(player);
+    private void addCardPlayers() {
+        while (participants.isContinuable()) {
+            addCardPlayer();
+            participants.passPlayer();
         }
-        if (!whetherDrawCard) {
-            OutputView.printCardsStatusOfPlayer(player);
+    }
+
+    private void addCardPlayer() {
+        String currentPlayerName = participants.getCurrentPlayerName();
+
+        while (participants.isCurrentPlayerCanAdd() && InputView.readWhetherDrawCardOrNot(currentPlayerName)) {
+            participants.addCardToCurrentPlayer();
+            OutputView.printCardsStatusOfPlayer(currentPlayerName, participants.getCurrentPlayerCardHand());
         }
+
+        OutputView.printCardsStatusOfPlayer(currentPlayerName, participants.getCurrentPlayerCardHand());
     }
 }

@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.Card;
 import domain.CardHand;
-import java.util.List;
 
 abstract public class AbstractUser {
     protected static final int BLACKJACK_SCORE = 21;
@@ -23,16 +22,22 @@ abstract public class AbstractUser {
         return this.cardHand.calculateScore();
     }
 
-    public void addCard(Card card) {
-        if (canAdd()) {
+    public void addCard(Card... cards) {
+        for (Card card : cards) {
+            validateCanAdd();
             cardHand.add(card);
+        }
+    }
+
+    private void validateCanAdd() {
+        if (canAdd()) {
             return;
         }
         throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
 
-    public List<Card> getCards() {
-        return this.cardHand.getCards();
+    public CardHand getCardHand() {
+        return this.cardHand;
     }
 
     public boolean isBust() {

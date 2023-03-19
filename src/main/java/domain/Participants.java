@@ -10,9 +10,9 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(List<String> nameValues) {
+    public Participants(List<Player> players) {
         this.dealer = new Dealer();
-        this.players = new Players(nameValues);
+        this.players = new Players(players);
     }
 
     public void initGame() {
@@ -30,7 +30,6 @@ public class Participants {
         cards.forEach(player::addCard);
     }
 
-
     public Dealer getDealer() {
         return this.dealer;
     }
@@ -39,15 +38,37 @@ public class Participants {
         return this.players.getPlayers();
     }
 
-    public void addCardToDealerIfPossible() {
-        this.dealer.drawCardDealer();
+    public boolean addCardToDealerIfPossible() {
+        return this.dealer.drawCardDealer();
     }
 
-    public void calculateAllResults() {
-        this.dealer.calculateAllResults(players.getPlayers());
+    public BlackjackResult calculateAllResults() {
+        return this.dealer.calculateAllResults(players.getPlayers());
     }
 
-    public PlayerResults getPlayerResults() {
-        return this.dealer.getPlayerResults();
+    public void passPlayer() {
+        this.players.nextPlayer();
+    }
+
+    public boolean isCurrentPlayerCanAdd() {
+        return this.players.currentPlayerCanAdd();
+    }
+
+    public String getCurrentPlayerName() {
+        Player player = this.players.getCurrnetPlayer();
+        return player.getNameValue();
+    }
+
+    public void addCardToCurrentPlayer() {
+        Player player = this.players.getCurrnetPlayer();
+        player.addCard(dealer.drawCard());
+    }
+
+    public boolean isContinuable() {
+        return this.players.isContinuable();
+    }
+
+    public CardHand getCurrentPlayerCardHand() {
+        return this.players.currentPlayerCardHand();
     }
 }

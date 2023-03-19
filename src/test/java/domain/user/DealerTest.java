@@ -7,6 +7,7 @@ import domain.Card;
 import domain.CardHand;
 import domain.CardNumber;
 import domain.Symbol;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -81,5 +82,128 @@ class DealerTest {
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         Dealer dealer = new Dealer(cardHand);
         assertThat(dealer.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("bust인 경우")
+    @Test
+    void 플레이어가_bust인_경우() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.QUEEN));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(-10000);
+    }
+
+    @DisplayName("플레이어만 blackjack인 경우")
+    @Test
+    void 플레이어만_blackjack인_경우() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.ACE));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(15000);
+    }
+
+    @DisplayName("딜러와 플레이어가 동시에 blackjack 경우")
+    @Test
+    void 딜러와_플레이어가_동시에_blackjack_경우() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.ACE));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 21미만이고 딜러가 bust인 경우")
+    @Test
+    void 플레이어가_21미만이고_딜러가_bust인_경우() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.QUEEN));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.KING));
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(10000);
+    }
+
+    @DisplayName("플레이어와 딜러가 둘다 21미만이고 플레이어 승")
+    @Test
+    void 플레이어와_딜러가_둘다_21미만이고_플레이어승() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.KING));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.FIVE));
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(10000);
+    }
+
+    @DisplayName("플레이어와 딜러가 둘다 21미만이고 무승부")
+    @Test
+    void 플레이어와_딜러가_둘다_21미만이고_무승부() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.KING));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.KING));
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어와 딜러가 둘다 21미만이고 플레이어 패")
+    @Test
+    void 플레이어와_딜러가_둘다_21미만이고_플레이어패() {
+        final int betting = 10000;
+        CardHand playerCardHand = new CardHand();
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.JACK));
+        playerCardHand.add(new Card(Symbol.HEART, CardNumber.FIVE));
+        Player player = new Player("name", betting, playerCardHand);
+        CardHand dealerCardHand = new CardHand();
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
+        dealerCardHand.add(new Card(Symbol.SPADE, CardNumber.KING));
+        Dealer dealer = new Dealer(dealerCardHand);
+        dealer.calculateAllResults(List.of(player));
+
+        assertThat(dealer.calculateAllResults(List.of(player)).getPlayerResults().get(0).getBettingResult()
+                .getResult()).isEqualTo(-10000);
     }
 }
