@@ -15,21 +15,26 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private final Participants participants;
-    private final Deck deck;
+    private Participants participants;
+    private PlayerMoney playerMoney;
+    private Deck deck;
 
-    private BlackJackGame(Participants participants, Deck deck) {
-        this.participants = participants;
-        this.deck = deck;
+    public BlackJackGame() {
     }
 
-    public static BlackJackGame createByPlayerNames(List<String> names) {
-        Participants participants = Participants.create(names);
-        Deck deck = Deck.create(Card.getAllCards());
-        return new BlackJackGame(participants, deck);
+    public void registerPlayers(List<String> names) {
+        participants = Participants.create(names);
+        playerMoney = new PlayerMoney();
+    }
+
+    public void betMoney(String playerName, double inputMoney) {
+        Player player = participants.findPlayerByName(playerName);
+        Money money = new Money(inputMoney);
+        playerMoney.addPlayerMoney(player, money);
     }
 
     public void setUp() {
+        deck = Deck.create(Card.getAllCards());
         deck.shuffle();
 
         participants.drawInitialCard(deck);
@@ -43,21 +48,24 @@ public class BlackJackGame {
         }
     }
 
-    public void passExtraCardToDealer() {
+    public boolean passExtraCardToDealer() {
         Dealer dealer = participants.findDealer();
-        if (dealer.canReceive()) {
+        boolean hasExtraCard = false;
+        while (dealer.canReceive()) {
             Card card = deck.draw();
             dealer.addCard(card);
+            hasExtraCard = true;
         }
+        return hasExtraCard;
     }
 
     public List<String> findAllPlayerNames() {
         return participants.findAllPlayerNames();
     }
 
-    public CardDTO findDealerFirstCard() {
+    public CardDto findDealerFirstCard() {
         Card card = participants.findDealer().getFirst();
-        return new CardDTO(card.getSuit(), card.getDenomination());
+        return new CardDto(card.getSuit(), card.getDenomination());
     }
 
     public boolean canPassCardToPlayer(String playerName) {
@@ -70,79 +78,69 @@ public class BlackJackGame {
         return dealer.canReceive();
     }
 
-    public PlayerNameHandResponse findPlayerNameHand(String playerName) {
+    public PlayerNameHandDto findPlayerNameHand(String playerName) {
         Player player = participants.findPlayerByName(playerName);
         return convertNameHand(player);
     }
 
-    public List<PlayerNameHandResponse> findAllPlayerNameHand() {
+    public List<PlayerNameHandDto> findAllPlayerNameHand() {
         List<String> allPlayerNames = participants.findAllPlayerNames();
         return allPlayerNames.stream()
                 .map(playerName -> convertNameHand(participants.findPlayerByName(playerName)))
                 .collect(Collectors.toList());
     }
 
-    public DealerHandScoreResponse findDealerHandScore() {
+    public DealerHandScoreDto findDealerHandScore() {
         Dealer dealer = participants.findDealer();
-        return new DealerHandScoreResponse(
+        return new DealerHandScoreDto(
                 convertCardDTO(dealer.getHand()),
                 dealer.calculateScore().getValue()
         );
     }
 
-    public List<PlayerNameHandScoreResponse> findAllPlayerNameHandScore() {
+    public List<PlayerNameHandScoreDto> findAllPlayerNameHandScore() {
         List<String> allPlayerNames = participants.findAllPlayerNames();
         return allPlayerNames.stream()
                 .map(playerName -> convertNameHandScore(participants.findPlayerByName(playerName)))
                 .collect(Collectors.toList());
     }
 
-    public DealerPlayerResultResponse findDealerPlayerResult() {
-        Map<String, Result> allPlayerResult = calculatePlayerResult();
-        Map<Result, Integer> dealerResult = calculateDealerResult(allPlayerResult);
+    public ResultDto findDealerPlayerResult() {
+        Map<Player, Result> playerResult = participants.calculateResult();
 
-        return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
+        PlayerMoney ResultPlayerMoney = playerMoney.calculateYieldAllPlayer(playerResult);
+        Money dealerResult = ResultPlayerMoney.calculateDealerYield();
+
+        return new ResultDto(dealerResult.getValue(), convertPlayerMoney(ResultPlayerMoney));
     }
 
-    private PlayerNameHandResponse convertNameHand(Player player) {
-        return new PlayerNameHandResponse(
+    private PlayerNameHandDto convertNameHand(Player player) {
+        return new PlayerNameHandDto(
                 player.getName(),
                 convertCardDTO(player.getHand())
         );
     }
 
-    private PlayerNameHandScoreResponse convertNameHandScore(Player player) {
-        return new PlayerNameHandScoreResponse(
+    private PlayerNameHandScoreDto convertNameHandScore(Player player) {
+        return new PlayerNameHandScoreDto(
                 player.getName(),
                 convertCardDTO(player.getHand()),
                 player.calculateScore().getValue()
         );
     }
 
-    private List<CardDTO> convertCardDTO(Hand hand) {
+    private List<CardDto> convertCardDTO(Hand hand) {
         return hand.getHand().stream()
-                .map(card -> new CardDTO(card.getSuit(), card.getDenomination()))
+                .map(card -> new CardDto(card.getSuit(), card.getDenomination()))
                 .collect(Collectors.toList());
     }
 
-    private Map<String, Result> calculatePlayerResult() {
-        Map<String, Result> allPlayerResult = new LinkedHashMap<>();
-        Dealer dealer = participants.findDealer();
-        for (String playerName : participants.findAllPlayerNames()) {
-            Player player = participants.findPlayerByName(playerName);
-            Result result = Result.calculatePlayerResult(player.calculateScore(), dealer.calculateScore());
-            allPlayerResult.put(playerName, result);
+    private Map<String, Double> convertPlayerMoney(PlayerMoney playerMoney) {
+        Map<String, Double> allPlayerResult = new LinkedHashMap<>();
+        Map<Player, Money> resultPlayerMoney = playerMoney.getPlayerMoney();
+        for (Player player : resultPlayerMoney.keySet()) {
+            allPlayerResult.put(player.getName(), resultPlayerMoney.get(player).getValue());
         }
         return allPlayerResult;
-    }
-
-    private Map<Result, Integer> calculateDealerResult(Map<String, Result> allPlayerResult) {
-        Map<Result, Integer> dealerResults = new LinkedHashMap<>();
-        for (String playerName : allPlayerResult.keySet()) {
-            Result dealerResult = Result.oppositeResult(allPlayerResult.get(playerName));
-            int count = dealerResults.getOrDefault(dealerResult, 0);
-            dealerResults.put(dealerResult, count + 1);
-        }
-        return dealerResults;
     }
 }

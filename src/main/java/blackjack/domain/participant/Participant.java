@@ -5,7 +5,7 @@ import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-    protected static final int BLACK_JACK_SCORE = 21;
+    protected static final Score BLACKJACK_SCORE = new Score(21);
 
     protected final Hand hand;
 
@@ -18,9 +18,7 @@ public abstract class Participant {
     }
 
     public Score calculateScore() {
-        Score score = hand.sum();
-        int aceCount = hand.getAceCount();
-        return score.calculateBestScoreAce(aceCount);
+        return hand.calculateScore();
     }
 
     public abstract boolean canReceive();

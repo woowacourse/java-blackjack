@@ -1,8 +1,12 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.game.Result;
+
 import java.util.Objects;
 
 public class Player extends Participant {
+
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Name name;
 
@@ -13,9 +17,11 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        Score score = calculateScore();
-        Score blackJackScore = new Score(BLACK_JACK_SCORE);
-        return score.isLessThan(blackJackScore);
+        return hand.calculateScore().isLessThan(BLACKJACK_SCORE);
+    }
+
+    public Result calculateResult(Dealer target) {
+        return hand.calculateResult(target.hand);
     }
 
     public String getName() {

@@ -3,12 +3,12 @@ package blackjack.dto;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 
-public class CardDTO {
+public class CardDto {
 
     private final Suit suit;
     private final Denomination denomination;
 
-    public CardDTO(Suit suit, Denomination denomination) {
+    public CardDto(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }

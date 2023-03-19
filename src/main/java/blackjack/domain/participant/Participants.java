@@ -2,18 +2,19 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Participants {
 
     private static final int INIT_CARD_COUNT = 2;
     private static final int MIN_COUNT = 2;
     private static final int MAX_COUNT = 8;
-    private static final int DEALER_INDEX = 0;
 
     private final List<Participant> participants;
 
@@ -60,13 +61,16 @@ public class Participants {
     }
 
     private Dealer getDealer() {
-        return (Dealer) participants.get(DEALER_INDEX);
+        return (Dealer) participants.stream()
+                .filter(participant -> participant instanceof Dealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("딜러가 없습니다."));
     }
 
     private List<Player> getPlayers() {
-        return IntStream
-                .range(1, participants.size())
-                .mapToObj(index -> (Player) participants.get(index))
+        return participants.stream()
+                .filter(participant -> participant instanceof Player)
+                .map(participant -> (Player) participant)
                 .collect(Collectors.toList());
     }
 
@@ -98,5 +102,16 @@ public class Participants {
 
     public Dealer findDealer() {
         return getDealer();
+    }
+
+    public Map<Player, Result> calculateResult() {
+        Dealer dealer = findDealer();
+        List<Player> players = getPlayers();
+        Map<Player, Result> playerResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            Result result = player.calculateResult(dealer);
+            playerResult.put(player, result);
+        }
+        return playerResult;
     }
 }

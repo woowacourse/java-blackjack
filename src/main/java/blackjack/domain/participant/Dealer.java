@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final int CARD_RECEIVE_CRITERIA = 16;
+    private static final Score CARD_RECEIVE_CRITERIA = new Score(16);
     private static final int FIRST_CARD_INDEX = 0;
 
     public Dealer() {
@@ -28,7 +28,6 @@ public class Dealer extends Participant {
 
     private boolean isUnderScore() {
         Score score = calculateScore();
-        Score receiveScore = new Score(CARD_RECEIVE_CRITERIA);
-        return score.isLessThan(receiveScore) || score.equals(receiveScore);
+        return score.isLessThan(CARD_RECEIVE_CRITERIA) || score.equals(CARD_RECEIVE_CRITERIA);
     }
 }

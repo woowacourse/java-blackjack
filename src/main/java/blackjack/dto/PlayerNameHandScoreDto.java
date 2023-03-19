@@ -1,16 +1,15 @@
 package blackjack.dto;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class PlayerNameHandScoreResponse {
+public class PlayerNameHandScoreDto {
 
     private final String name;
-    private final List<CardDTO> hand;
+    private final List<CardDto> hand;
     private final int score;
 
-    public PlayerNameHandScoreResponse(String name, List<CardDTO> hand, int score) {
+    public PlayerNameHandScoreDto(String name, List<CardDto> hand, int score) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
         this.score = score;
@@ -20,8 +19,8 @@ public class PlayerNameHandScoreResponse {
         return name;
     }
 
-    public List<CardDTO> getHand() {
-        return Collections.unmodifiableList(hand);
+    public List<CardDto> getHand() {
+        return hand;
     }
 
     public int getScore() {

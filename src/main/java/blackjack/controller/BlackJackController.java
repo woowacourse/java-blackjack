@@ -12,15 +12,18 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private BlackJackGame blackJackGame;
+    private final BlackJackGame blackJackGame;
 
     public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackJackGame = new BlackJackGame();
     }
 
     public void run() {
-        createBlackJackGame();
+        registerPlayers();
+
+        betMoneyAllPlayer();
 
         passInitialCard();
 
@@ -29,13 +32,30 @@ public class BlackJackController {
         finishGame();
     }
 
-    private void createBlackJackGame() {
+    private void registerPlayers() {
         try {
             List<String> names = inputView.readNames();
-            blackJackGame = BlackJackGame.createByPlayerNames(names);
+            blackJackGame.registerPlayers(names);
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
-            createBlackJackGame();
+            registerPlayers();
+        }
+    }
+
+    private void betMoneyAllPlayer() {
+        List<String> allPlayerNames = blackJackGame.findAllPlayerNames();
+        for (String playerName : allPlayerNames) {
+            betMoney(playerName);
+        }
+    }
+
+    private void betMoney(String playerName) {
+        try {
+            double inputMoney = inputView.readBettingMoney(playerName);
+            blackJackGame.betMoney(playerName, inputMoney);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            betMoney(playerName);
         }
     }
 
@@ -76,11 +96,10 @@ public class BlackJackController {
     }
 
     private void passExtraCardToDealer() {
-        while (blackJackGame.canPassCardToDealer()) {
-            blackJackGame.passExtraCardToDealer();
+        boolean hasExtraCard = blackJackGame.passExtraCardToDealer();
+        if (hasExtraCard) {
             outputView.showDealerDrawPossible();
         }
-        outputView.showDealerDrawImpossible();
     }
 
     private void finishGame() {
@@ -88,5 +107,4 @@ public class BlackJackController {
         outputView.showAllPlayerNameHandScore(blackJackGame.findAllPlayerNameHandScore());
         outputView.showTotalResult(blackJackGame.findDealerPlayerResult());
     }
-
 }
