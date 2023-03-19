@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static blackjack.domain.CardConstant.*;
 
-public class ResultGameTest {
+public class GameResultTest {
     private Dealer dealer;
     private Participants participants;
     private Map<Participant, Betting> resultBetting;
@@ -26,7 +26,7 @@ public class ResultGameTest {
 
 
     @BeforeEach
-    void setting() {
+    void setUp() {
         dealer = Dealer.from(new ArrayList<>());
         participants = Participants.of(dealer, List.of("pobi"));
         resultBetting = new HashMap<>();
