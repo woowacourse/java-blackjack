@@ -14,15 +14,15 @@ public class InputView {
     private static final String STAND = "n";
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static boolean readWhetherDrawCardOrNot(Player player) {
+    public static boolean readWhetherDrawCardOrNot(String playerName) {
         try {
-            System.out.println(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
             String input = SCANNER.nextLine();
             validateIntentionInput(input);
             return HIT.equals(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return readWhetherDrawCardOrNot(player);
+            return readWhetherDrawCardOrNot(playerName);
         }
     }
 

@@ -1,7 +1,7 @@
 package ui;
 
 import domain.BlackjackResult;
-import domain.user.AbstractUser;
+import domain.CardHand;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
@@ -16,37 +16,38 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", nameValues));
         System.out.println();
         printCardsStatusOfDealer(dealer);
-        players.forEach(OutputView::printCardsStatusOfPlayer);
+        players.forEach(player -> OutputView.printCardsStatusOfPlayer(player.getNameValue(), player.getCardHand()));
         System.out.println();
     }
 
-    public static String userHavingCards(AbstractUser user) {
-        List<String> cardTexts = user.getCards().stream().map(cardPrintMapper::transformToPrintCard)
+    private static String transformCardToPrint(CardHand cardHand) {
+        List<String> cardTexts = cardHand.getCards().stream().map(cardPrintMapper::transformToPrintCard)
                 .collect(Collectors.toList());
         return String.join(", ", cardTexts);
     }
 
-    public static String dealerHavingCardFirst(Dealer dealer) {
+    private static String dealerHavingCardFirst(Dealer dealer) {
         return cardPrintMapper.transformToPrintCard(dealer.getFirstCard());
     }
 
-    public static void printCardsStatusOfDealer(Dealer dealer) {
+    private static void printCardsStatusOfDealer(Dealer dealer) {
         System.out.printf("%s카드: %s", "딜러", dealerHavingCardFirst(dealer));
         System.out.println();
     }
 
-    public static void printCardsStatusOfPlayer(Player player) {
-        System.out.printf("%s카드: %s", player.getNameValue(), userHavingCards(player));
+    public static void printCardsStatusOfPlayer(String playerName, CardHand cardHand) {
+        System.out.printf("%s카드: %s", playerName, transformCardToPrint(cardHand));
         System.out.println();
     }
 
     private static void printCardsStatusAndScoreOfDealer(Dealer dealer) {
-        System.out.printf("%s 카드: %s", "딜러", userHavingCards(dealer));
+        System.out.printf("%s 카드: %s", "딜러", transformCardToPrint(dealer.getCardHand()));
         System.out.println(" - 결과: " + dealer.calculateScore());
     }
 
     private static void printCardsStatusAndScoreOfPlayer(Player player) {
-        System.out.printf("%s카드: %s", player.getNameValue(), userHavingCards(player));
+        System.out.printf("%s카드: %s", player.getNameValue(),
+                transformCardToPrint(player.getCardHand()));
         System.out.println(" - 결과: " + player.calculateScore());
     }
 

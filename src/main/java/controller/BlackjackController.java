@@ -1,10 +1,6 @@
 package controller;
 
 import domain.Participants;
-import domain.user.Dealer;
-import domain.user.Player;
-import java.util.Iterator;
-import java.util.List;
 import ui.InputView;
 import ui.OutputView;
 
@@ -13,8 +9,7 @@ public class BlackjackController {
     private final Participants participants;
 
     public BlackjackController() {
-        List<Player> players = InputView.readPlayers();
-        this.participants = new Participants(players);
+        this.participants = new Participants(InputView.readPlayers());
     }
 
     public void run() {
@@ -33,21 +28,20 @@ public class BlackjackController {
     }
 
     private void addCardPlayers() {
-        Iterator<Player> iterator = participants.iterator();
-        Dealer dealer = participants.getDealer();
-        while (iterator.hasNext()) {
-            addCardPlayer(iterator.next(), dealer);
+        while (participants.isContinuable()) {
+            addCardPlayer();
+            participants.passPlayer();
         }
     }
 
-    private void addCardPlayer(Player player, Dealer dealer) {
-        boolean whetherDrawCard = false;
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player))) {
-            player.addCard(dealer.drawCard());
-            OutputView.printCardsStatusOfPlayer(player);
+    private void addCardPlayer() {
+        String currentPlayerName = participants.getCurrentPlayerName();
+
+        while (participants.isCurrentPlayerCanAdd() && InputView.readWhetherDrawCardOrNot(currentPlayerName)) {
+            participants.addCardToCurrentPlayer();
+            OutputView.printCardsStatusOfPlayer(currentPlayerName, participants.getCurrentPlayerCardHand());
         }
-        if (!whetherDrawCard) {
-            OutputView.printCardsStatusOfPlayer(player);
-        }
+
+        OutputView.printCardsStatusOfPlayer(currentPlayerName, participants.getCurrentPlayerCardHand());
     }
 }

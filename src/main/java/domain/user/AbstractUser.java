@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.Card;
 import domain.CardHand;
-import java.util.List;
 
 abstract public class AbstractUser {
     protected static final int BLACKJACK_SCORE = 21;
@@ -36,8 +35,8 @@ abstract public class AbstractUser {
         }
     }
 
-    public List<Card> getCards() {
-        return this.cardHand.getCards();
+    public CardHand getCardHand() {
+        return this.cardHand;
     }
 
     public boolean isBust() {

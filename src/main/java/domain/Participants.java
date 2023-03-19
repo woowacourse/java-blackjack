@@ -3,11 +3,9 @@ package domain;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-public class Participants implements Iterable<Player> {
+public class Participants {
 
     private final Dealer dealer;
     private final Players players;
@@ -48,35 +46,29 @@ public class Participants implements Iterable<Player> {
         return this.dealer.calculateAllResults(players.getPlayers());
     }
 
-    @Override
-    public Iterator<Player> iterator() {
-        return new Iterator<>() {
-            private int index = 0;
-            private final Players players = Participants.this.players;
-
-            @Override
-            public boolean hasNext() {
-                while (index < players.getPlayers().size() && stopPlayer(players.getPlayers().get(index))) {
-                    index++;
-                }
-                return index < players.getPlayers().size();
-            }
-
-            private boolean stopPlayer(Player player) {
-                return player.isBust() || player.isBlackjack();
-            }
-
-            @Override
-            public Player next() {
-                if (hasNext()) {
-                    Player player = players.getPlayers().get(index);
-                    index++;
-                    return player;
-                }
-                throw new NoSuchElementException("더 이상 원소가 없습니다.");
-            }
-        };
+    public void passPlayer() {
+        this.players.nextPlayer();
     }
 
+    public boolean isCurrentPlayerCanAdd() {
+        return this.players.currentPlayerCanAdd();
+    }
 
+    public String getCurrentPlayerName() {
+        Player player = this.players.getCurrnetPlayer();
+        return player.getNameValue();
+    }
+
+    public void addCardToCurrentPlayer() {
+        Player player = this.players.getCurrnetPlayer();
+        player.addCard(dealer.drawCard());
+    }
+
+    public boolean isContinuable() {
+        return this.players.isContinuable();
+    }
+
+    public CardHand getCurrentPlayerCardHand() {
+        return this.players.currentPlayerCardHand();
+    }
 }
