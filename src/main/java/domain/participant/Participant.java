@@ -32,9 +32,9 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK;
     }
 
-    public abstract boolean canHit();
-
-    public abstract Card getCardWithInvisible();
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK;
+    }
 
     public String getName() {
         return name;

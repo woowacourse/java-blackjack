@@ -20,11 +20,8 @@ public class Hand {
 
     public int getScore() {
         int score = calculateScore();
-        if (score >= BLACKJACK || hasNoAce()) {
-            return score;
-        }
 
-        if (changeAnAceTo11(score) <= BLACKJACK) {
+        if (hasAce() && changeAnAceTo11(score) <= BLACKJACK) {
             return changeAnAceTo11(score);
         }
 
@@ -37,8 +34,8 @@ public class Hand {
                 .sum();
     }
 
-    private boolean hasNoAce() {
-        return cards.stream().noneMatch(Card::isAce);
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     private int changeAnAceTo11(int score) {

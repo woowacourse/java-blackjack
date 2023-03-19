@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("Player는 ")
 class PlayerTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이름은 공백을 제거하고 2~10글자이다 name = {0}")
     @ValueSource(strings = {"가비", "열_글자_입니다..", "공백도 포함합니다."})
     void 이름은_공백을_제외하고_2에서_10글자이다(String name) {
         //given
@@ -28,7 +28,7 @@ class PlayerTest {
         assertDoesNotThrow(() -> Player.from(name));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이름은 공백을 제거하고 2~10글자가 아니면 예외가 발생한다 name = {0}")
     @ValueSource(strings = {"", "1", "abcdqwertyuiopdfghjk"})
     void 이름은_공백을_제외하고_2에서_10글자가_아니면_예외가_발생한다(String name) {
         //given
@@ -107,29 +107,5 @@ class PlayerTest {
 
         //then
         assertThat(player.isBust()).isTrue();
-    }
-
-    @Test
-    void 히트_여부_계산할_수_없다() {
-        // given
-        Player player = Player.from("에밀");
-
-        //when
-
-        // then
-        assertThatThrownBy( () -> player.canHit())
-                .isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
-    void 초기에_받은_카드는_모두_보여줘야_한다() {
-        // given
-        Player player = Player.from("가비");
-
-        //when
-
-        // then
-        assertThatThrownBy( () -> player.getCardWithInvisible())
-                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

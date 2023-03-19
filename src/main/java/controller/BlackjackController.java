@@ -1,9 +1,12 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.HitCommand;
-import domain.participant.Participant;
+import domain.card.Deck;
+import domain.participant.Participants;
+import domain.participant.Player;
+import dto.ParticipantDto;
+import dto.ResultDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -11,45 +14,82 @@ public class BlackjackController {
 
     public void run() {
         try {
-            BlackjackGame blackjackGame = BlackjackGame.of(InputView.readPlayersName());
+            Deck deck = Deck.create();
+            Participants participants = Participants.of(getPlayersName());
 
-            initParticipantsHand(blackjackGame);
-            runPlayersTurn(blackjackGame);
-            runDealerTurn(blackjackGame);
+            doGame(deck, participants);
 
-            OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printParticipantsResult(blackjackGame.getResult());
+            printResult(participants);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
     }
 
-    private void initParticipantsHand(BlackjackGame blackjackGame) {
-        OutputView.printStartMessage(blackjackGame.getPlayersName());
-
-        blackjackGame.start();
-
-        OutputView.printDealerCard(blackjackGame.getDealer());
-        OutputView.printPlayersCard(blackjackGame.getPlayers());
-    }
-
-    public void runPlayersTurn(BlackjackGame blackjackGame) {
-        List<Participant> players = blackjackGame.getPlayers();
-        for (Participant player : players) {
-            runPlayerTurn(blackjackGame, player);
-        }
-    }
-
-    private void runPlayerTurn(BlackjackGame blackjackGame, Participant player) {
-        while (!player.isBust() && isCommandHit(player)) {
-            blackjackGame.giveCardToParticipant(player);
-            OutputView.printPlayerCard(player);
-        }
-    }
-
-    private boolean isCommandHit(Participant player) {
+    private List<String> getPlayersName() {
         try {
-            String targetCommand = InputView.readHit(player);
+            return InputView.readPlayersName();
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            return getPlayersName();
+        }
+    }
+
+    private void doGame(Deck deck, Participants participants) {
+        initBetting(participants);
+
+        initParticipantsHand(deck, participants);
+        runPlayersTurn(deck, participants);
+        runDealerTurn(deck, participants);
+    }
+
+    private void initBetting(Participants participants) {
+        List<Player> players = participants.getPlayers();
+        for (Player player : players) {
+            betEachPlayer(player);
+        }
+    }
+
+    private void betEachPlayer(Player player) {
+        try {
+            player.betPlayer(InputView.readBetMoney(ParticipantDto.from(player)));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            betEachPlayer(player);
+        }
+    }
+
+    private void initParticipantsHand(Deck deck, Participants participants) {
+        OutputView.printStartMessage(participants.getPlayers().stream()
+                .map(player -> ParticipantDto.from(player))
+                .collect(Collectors.toList()));
+
+        participants.initHand(deck);
+
+        OutputView.printDealerCard(ParticipantDto.from(participants.getDealer()));
+        OutputView.printPlayersCard(participants.getPlayers().stream()
+                .map(player -> ParticipantDto.from(player))
+                .collect(Collectors.toList()));
+    }
+
+    public void runPlayersTurn(Deck deck, Participants participants) {
+        List<Player> players = participants.getPlayers();
+        for (Player player : players) {
+            runPlayerTurn(deck, player);
+        }
+        InputView.closeScanner();
+    }
+
+    private void runPlayerTurn(Deck deck, Player player) {
+        while (!player.isBust() && isCommandHit(player)) {
+            player.addCard(deck.pollAvailableCard());
+            ParticipantDto playerDto = ParticipantDto.from(player);
+            OutputView.printPlayerCard(playerDto);
+        }
+    }
+
+    private boolean isCommandHit(Player player) {
+        try {
+            String targetCommand = InputView.readHit(ParticipantDto.from(player));
             return HitCommand.HIT == HitCommand.find(targetCommand);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
@@ -57,10 +97,23 @@ public class BlackjackController {
         }
     }
 
-    private void runDealerTurn(BlackjackGame blackjackGame) {
-        if (blackjackGame.canDealerHit()) {
-            blackjackGame.playDealerTurn();
+    private void runDealerTurn(Deck deck, Participants participants) {
+        if (participants.canDealerHit()) {
+            participants.playDealerTurn(deck);
             OutputView.printDealerHit();
         }
+    }
+
+    private void printResult(Participants participants) {
+        ParticipantDto dealerDto = ParticipantDto.from(participants.getDealer());
+        List<ParticipantDto> playerDtos = participants.getPlayers().stream()
+                .map(player -> ParticipantDto.from(player))
+                .collect(Collectors.toList());
+
+        OutputView.printAllHands(dealerDto, playerDtos);
+
+        ResultDto resultDto = ResultDto.of(participants.getPlayerBettingResult(),
+                participants.getDealerBettingResult());
+        OutputView.printBettingResult(resultDto);
     }
 }

@@ -26,10 +26,15 @@ public class Card {
     public Suit getSuit() {
         return suit;
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Card)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
         Card card = (Card) o;
         return denomination == card.denomination && suit == card.suit;
     }
@@ -39,4 +44,3 @@ public class Card {
         return Objects.hash(denomination, suit);
     }
 }
-

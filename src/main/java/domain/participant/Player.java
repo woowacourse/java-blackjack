@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.card.Card;
-
 public class Player extends Participant {
 
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
@@ -10,8 +8,11 @@ public class Player extends Participant {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
 
+    private BetAmount betAmount;
+
     private Player(String name) {
         super(name.trim());
+        this.betAmount = BetAmount.setDefaultBetting();
     }
 
     public static Player from(String name) {
@@ -32,13 +33,11 @@ public class Player extends Participant {
         }
     }
 
-    @Override
-    public boolean canHit() {
-        throw new UnsupportedOperationException();
+    public void betPlayer(int betMoney) {
+        this.betAmount = BetAmount.from(betMoney);
     }
 
-    @Override
-    public Card getCardWithInvisible() {
-        throw new UnsupportedOperationException();
+    public int getBetAmount() {
+        return this.betAmount.getMoney();
     }
 }

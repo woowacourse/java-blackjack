@@ -12,12 +12,10 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    @Override
     public boolean canHit() {
         return calculateScore() <= STAY_LOWER_BOUND;
     }
 
-    @Override
     public Card getCardWithInvisible() {
         return getCards().get(VISIBLE_CARD_INDEX);
     }
