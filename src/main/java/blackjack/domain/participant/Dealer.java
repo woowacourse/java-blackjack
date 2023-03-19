@@ -4,17 +4,25 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_SCORE = 16;
 
-    public Dealer(final List<Card> cards) {
-        super(new Name(DEALER_NAME), cards);
+    private Dealer(final List<Card> cards) {
+        super(Name.from(Name.DEALER_NAME), cards);
+    }
+
+    public static Dealer from(final List<Card> cards) {
+        return new Dealer(cards);
     }
 
     @Override
-    public boolean isHit() {
-        return getScore().isHit(DEALER_HIT_SCORE);
+    public boolean canHit() {
+        return getScore().canHit(DEALER_HIT_SCORE);
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
     }
 }

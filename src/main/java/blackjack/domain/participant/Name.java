@@ -3,20 +3,24 @@ package blackjack.domain.participant;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Name {
+public final class Name {
 
     private static final Pattern NAME_FORMAT = Pattern.compile("[a-zA-Z]+");
     private static final int NAME_MIN_LENGTH = 2;
     private static final int NAME_MAX_LENGTH = 5;
-    private static final String DEALER_NAME = "딜러";
     private static final String NAME_FORMAT_ERROR_MESSAGE = "사람 이름은 영문자만 가능합니다.";
     private static final String NAME_LENGTH_ERROR_MESSAGE = "참가자 이름은 2글자 이상 5글자 이하만 가능합니다.";
+    public static final String DEALER_NAME = "딜러";
 
     private final String value;
 
-    public Name(final String value) {
+    private Name(final String value) {
         validate(value);
         this.value = value;
+    }
+
+    public static Name from(final String value) {
+        return new Name(value);
     }
 
     private void validate(final String value) {
@@ -52,10 +56,6 @@ public class Name {
         return NAME_MAX_LENGTH < value.length();
     }
 
-    public String getValue() {
-        return value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,5 +67,9 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public String getValue() {
+        return value;
     }
 }

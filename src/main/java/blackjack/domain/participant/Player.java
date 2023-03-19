@@ -4,14 +4,23 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
-    public Player(final Name name, final List<Card> cards) {
+    private Player(final Name name, final List<Card> cards) {
         super(name, cards);
     }
 
+    public static Player of(final Name name, final List<Card> cards) {
+        return new Player(name, cards);
+    }
+
     @Override
-    public boolean isHit() {
-        return getScore().isHit();
+    public boolean canHit() {
+        return getScore().canHit();
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 }

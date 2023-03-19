@@ -22,11 +22,11 @@ public enum Order {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_VALUE_MESSAGE));
     }
 
-    public String getValue() {
-        return value;
+    public boolean isHit() {
+        return this.equals(Order.YES);
     }
 
-    public boolean isYES() {
-        return this.equals(Order.YES);
+    public String getValue() {
+        return value;
     }
 }

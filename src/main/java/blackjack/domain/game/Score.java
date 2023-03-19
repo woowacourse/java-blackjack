@@ -2,42 +2,55 @@ package blackjack.domain.game;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
-    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int MAX_HIT_SCORE = 20;
 
     private final int value;
 
-    public Score(final int value) {
+    private Score(final int value) {
         this.value = value;
+    }
+
+    public static Score from(final int value) {
+        return new Score(value);
     }
 
     public Score minus(final int value) {
         return new Score(this.value - value);
     }
 
-    public boolean isHit() {
-        return value <= BLACKJACK;
+    public boolean isBlackjack() {
+        return value == BLACKJACK_SCORE;
     }
 
-    public boolean isHit(final int hitScore) {
-        return value <= hitScore;
+    public boolean canHit() {
+        return value <= MAX_HIT_SCORE;
+    }
+
+    public boolean canHit(final int maxHitScore) {
+        return value <= maxHitScore;
     }
 
     public boolean isBust() {
-        return value > BLACKJACK;
+        return value > BLACKJACK_SCORE;
     }
 
     public boolean isGreaterThan(final Score other) {
         return value > other.value;
     }
 
-    public boolean isEqualsTo(final Score other) {
+    public boolean isEqualTo(final Score other) {
         return value == other.value;
     }
 
-    public int getValue() {
-        return value;
+    public boolean isLessThanOrEqualTo(final Score other) {
+        return value <= other.value;
+    }
+
+    public boolean isLessThan(final Score other) {
+        return value < other.value;
     }
 
     @Override
@@ -51,5 +64,9 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -7,28 +7,31 @@ import java.util.stream.Stream;
 public class Deck {
 
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 카드가 존재합니다.";
-    public static final List<Card> CARDS;
+    private static final String NOT_EXIST_CARD_IN_DECK_ERROR_MESSAGE = "덱에 카드가 존재하지 않아 드로우를 할 수 없습니다.";
+
+    public static final List<Card> TRUMP;
 
     private final Stack<Card> cards;
 
     static {
-        CARDS = Stream.of(Shape.values())
+        TRUMP = Stream.of(Shape.values())
                 .flatMap(shape -> Stream.of(Letter.values())
-                        .map(letter -> new Card(shape, letter)))
-                .collect(Collectors.toList());
+                        .map(letter -> Card.of(shape, letter)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    public Deck(final List<Card> cards) {
+    protected Deck(final List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();
         this.cards.addAll(cards);
     }
 
-    public static Deck createAllCard() {
-        Collections.shuffle(CARDS);
+    public static Deck create() {
+        List<Card> shuffleTrump = new ArrayList<>(TRUMP);
+        Collections.shuffle(shuffleTrump);
 
-        return new Deck(CARDS);
+        return new Deck(shuffleTrump);
     }
 
     private void validate(final List<Card> cards) {
@@ -43,10 +46,19 @@ public class Deck {
 
     private boolean isDuplicateCard(final List<Card> cards) {
         final Set<Card> uniqueCards = new HashSet<>(cards);
+
         return uniqueCards.size() != cards.size();
     }
 
     public Card draw() {
+        if (cards.empty()) {
+            throw new IllegalArgumentException(NOT_EXIST_CARD_IN_DECK_ERROR_MESSAGE);
+        }
+
         return cards.pop();
+    }
+
+    public int getCardCount() {
+        return cards.size();
     }
 }

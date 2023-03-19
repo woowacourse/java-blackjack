@@ -7,24 +7,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants {
+public final class Participants {
 
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
+    private static final String NOT_EXIST_DEALER_ERROR_MESSAGE = "딜러가 존재하지 않습니다.";
 
-    private final List<Participant> participants;
+    private final List<Participant> participants = new ArrayList<>();
 
-    public Participants(final Dealer dealer, final List<String> playerNames, final List<Participant> participants) {
-        validate(playerNames);
+    private Participants(final Dealer dealer, final List<String> names) {
+        validate(names);
 
-        this.participants = participants;
         participants.add(dealer);
-        participants.addAll(makePlayers(playerNames));
+        participants.addAll(makePlayers(names));
     }
 
-    private void validate(final List<String> playerNames) {
-        validateEmptyNames(playerNames);
-        validateDuplicateName(playerNames);
+    public static Participants of(final Dealer dealer, final List<String> names) {
+        return new Participants(dealer, names);
+    }
+
+    private void validate(final List<String> names) {
+        validateEmptyNames(names);
+        validateDuplicateName(names);
     }
 
     private void validateEmptyNames(final List<String> names) {
@@ -41,17 +45,15 @@ public class Participants {
 
     private boolean isDuplicateName(final List<String> names) {
         final HashSet<String> uniqueNames = new HashSet<>(names);
+
         return uniqueNames.size() != names.size();
     }
 
-    private List<Player> makePlayers(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(name -> new Player(new Name(name), new ArrayList<>()))
+    private List<Player> makePlayers(final List<String> names) {
+        return names.stream()
+                .map(Name::from)
+                .map(name -> Player.of(name, new ArrayList<>()))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public List<Participant> getAll() {
-        return participants;
     }
 
     public void draw(final Deck deck, final int count) {
@@ -60,17 +62,28 @@ public class Participants {
         }
     }
 
+    public List<String> getPlayerNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<Participant> getAll() {
+        return participants;
+    }
+
     public Participant getDealer() {
-        return participants.get(0);
+        return participants.stream()
+                .filter(Participant::isDealer)
+                .map(Dealer.class::cast)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER_ERROR_MESSAGE));
     }
 
     public List<Participant> getPlayers() {
-        return participants.subList(1, participants.size());
-    }
-
-    public List<String> getNames() {
         return participants.stream()
-                .map(Participant::getName)
+                .filter(participant -> !participant.isDealer())
+                .map(Player.class::cast)
                 .collect(Collectors.toList());
     }
 }

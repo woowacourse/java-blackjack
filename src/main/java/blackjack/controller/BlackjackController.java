@@ -1,11 +1,16 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.BettingTable;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.Order;
-import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
+import blackjack.dto.BettingResultDto;
+import blackjack.dto.DrawParticipantsDto;
+import blackjack.dto.initialParticipantsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -13,7 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BlackjackController {
+public final class BlackjackController {
+
+    private static final int INITIAL_DRAW_CARD_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -25,69 +32,69 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = makeParticipants();
-        final Deck deck = Deck.createAllCard();
+        final Deck deck = Deck.create();
+        final BettingTable table = BettingTable.from(new HashMap<>());
+        initialBettingMoney(participants, table);
 
-        startGame(participants, deck);
-        hitParticipants(participants, deck);
-        displayAllResult(participants);
+        startDrawParticipants(participants, deck);
+        drawParticipants(participants, deck);
+
+        final GameResult resultGame = GameResult.of(table, participants);
+        outputView.printBettingResult(BettingResultDto.of(participants, resultGame));
+    }
+
+    private void drawParticipants(final Participants participants, final Deck deck) {
+        drawCardsForAllParticipants(participants, deck);
+        outputView.printCardsAndScoreForAllParticipants(DrawParticipantsDto.from(participants));
     }
 
     private Participants makeParticipants() {
-        final Dealer dealer = new Dealer(new ArrayList<>());
+        final Dealer dealer = Dealer.from(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
 
-        return new Participants(dealer, playerNames, new ArrayList<>());
+        return Participants.of(dealer, playerNames);
     }
 
-    private void startGame(final Participants participants, final Deck deck) {
-        participants.draw(deck, 2);
-
-        outputView.printInitialHandOutMessage(participants);
-    }
-
-    private void hitParticipants(final Participants participants, final Deck deck) {
-        hitPlayers(participants, deck);
-        hitDealer(participants, deck);
-        displayParticipantsCardsAndScore(participants);
-    }
-
-    private void hitPlayers(final Participants participants, final Deck deck) {
-        final List<Participant> players = participants.getPlayers();
-
-        for (final Participant player : players) {
-            hitEachPlayer(player, deck);
+    private void initialBettingMoney(final Participants participants, final BettingTable bettingTable) {
+        for (final Participant player : participants.getPlayers()) {
+            final Betting betting = Betting.from(inputView.readBettingMoney(player.getName()));
+            bettingTable.addBetting(player, betting);
         }
     }
 
-    private void hitEachPlayer(final Participant player, final Deck deck) {
-        while (player.isHit() && isMoreHit(player)) {
+    private void startDrawParticipants(final Participants participants, final Deck deck) {
+        participants.draw(deck, INITIAL_DRAW_CARD_COUNT);
+        outputView.printInitialCards(initialParticipantsDto.from(participants));
+    }
+
+    private void drawCardsForAllParticipants(final Participants participants, final Deck deck) {
+        drawCardsForAllPlayers(participants.getPlayers(), deck);
+        drawCardsForDealer(participants.getDealer(), deck);
+    }
+
+    private void drawCardsForAllPlayers(final List<Participant> players, final Deck deck) {
+        for (final Participant player : players) {
+            handlePlayerCardDraws(player, deck);
+        }
+    }
+
+    private void handlePlayerCardDraws(final Participant player, final Deck deck) {
+        while (player.canHit() && isHitOrStay(player)) {
             player.drawCard(deck.draw());
             outputView.printParticipantNameAndCards(player);
         }
     }
 
-    private boolean isMoreHit(final Participant player) {
+    private boolean isHitOrStay(final Participant player) {
         final Order order = Order.from(inputView.readOrderCard(player.getName()));
-        return order.isYES();
+
+        return order.isHit();
     }
 
-    private void hitDealer(final Participants participants, final Deck deck) {
-        final Participant dealer = participants.getDealer();
-
-        while (dealer.isHit()) {
-            outputView.printDealerDrawCard();
+    private void drawCardsForDealer(final Participant dealer, final Deck deck) {
+        while (dealer.canHit()) {
+            outputView.printDealerDrawAdditionalCard();
             dealer.drawCard(deck.draw());
         }
-    }
-
-    private void displayParticipantsCardsAndScore(final Participants participants) {
-        outputView.printAllCardsAndScore(participants);
-    }
-
-    private void displayAllResult(final Participants participants) {
-        final ResultGame resultGame = new ResultGame(new HashMap<>());
-
-        resultGame.calculateResult(participants);
-        outputView.printParticipantsResult(participants, resultGame);
     }
 }
