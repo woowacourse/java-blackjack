@@ -1,31 +1,71 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
+import blackjack.domain.result.Result;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
-    private Cards cards;
+    private static final int MIN_NAME_LENGTH = 1;
+    private static final int MAX_NAME_LENGTH = 5;
 
-    public Participant(final Cards cards) {
-        this.cards = cards;
+    private Hand hand;
+    private final String name;
+
+    public Participant(final Hand hand, final String name) {
+        validateNameLength(name);
+        this.hand = hand;
+        this.name = name;
     }
 
-    public void receiveCard(Card card) {
-        cards = cards.add(card);
+    private void validateNameLength(final String name) {
+        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(
+                    "[ERROR] 이름 길이는 최소 " + MIN_NAME_LENGTH + "글자에서 최대 "
+                            + MAX_NAME_LENGTH + "글자 입니다.");
+        }
+    }
+
+    public abstract List<Card> showInitCards();
+
+    public abstract boolean canDraw();
+
+    public void receiveCard(final Card card) {
+        hand = hand.add(card);
     }
 
     public Score calculateTotalScore() {
-        return this.cards.calculateScoreForBlackjack();
+        return this.hand.calculateScore();
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public Result decideResultAgainst(final Participant participant) {
+        Score score = this.calculateTotalScore();
+        Score otherScore = participant.calculateTotalScore();
+
+        if (score.isWin(otherScore)) {
+            return Result.WIN;
+        }
+        if (score.isLose(otherScore)) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
+    }
+
+    public List<Card> getHand() {
+        return hand.getHand();
+    }
+
+    public String getName() {
+        return name;
     }
 }

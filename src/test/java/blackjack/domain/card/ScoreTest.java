@@ -92,7 +92,7 @@ class ScoreTest {
         Score other = new Score(11);
 
         // expect
-        assertThat(current.isLess(other)).isTrue();
+        assertThat(current.isLose(other)).isTrue();
     }
 
     @Test
@@ -103,7 +103,7 @@ class ScoreTest {
         Score other = new Score(10);
 
         // expect
-        assertThat(current.isLess(other)).isFalse();
+        assertThat(current.isLose(other)).isFalse();
     }
 
     @Test
@@ -114,7 +114,7 @@ class ScoreTest {
         Score other = new Score(11);
 
         // expect
-        assertThat(current.isEquals(other)).isTrue();
+        assertThat(current.isDraw(other)).isTrue();
     }
 
     @Test
@@ -125,6 +125,6 @@ class ScoreTest {
         Score other = new Score(10);
 
         // expect
-        assertThat(current.isLess(other)).isFalse();
+        assertThat(current.isLose(other)).isFalse();
     }
 }

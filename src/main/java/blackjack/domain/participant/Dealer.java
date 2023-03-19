@@ -1,43 +1,27 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import java.util.List;
 
-public class Dealer implements Decidable {
+public final class Dealer extends Participant {
 
     private static final int DEALER_MIN_RECEIVE_CARD = 16;
+    private static final String DEALER_NAME = "딜러";
 
-    private final Participant participant;
-
-    public Dealer(Participant participant) {
-        this.participant = participant ;
-    }
-
-    public void receiveCard(Card card) {
-        participant.receiveCard(card);
-    }
-
-    public Score calculateTotalScore() {
-        return participant.calculateTotalScore();
-    }
-
-    public boolean isBust() {
-        return participant.isBust();
+    public Dealer() {
+        super(Hand.generateEmptyCards(), DEALER_NAME);
     }
 
     @Override
     public List<Card> showInitCards() {
-        return List.of(participant.getCards().get(0));
+        return List.of(getHand().get(0));
     }
 
     @Override
     public boolean canDraw() {
-        Score score = participant.calculateTotalScore();
+        Score score = calculateTotalScore();
         return score.isLessOrEquals(new Score(DEALER_MIN_RECEIVE_CARD));
-    }
-
-    public List<Card> getCards() {
-        return participant.getCards();
     }
 }
