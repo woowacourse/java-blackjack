@@ -12,7 +12,7 @@ class BettingsTest {
     @Test
     void 숫자_입력이_아니면_예외처리() {
         //given,when,then
-        assertThatThrownBy(() -> new Bettings(List.of("r")))
+        assertThatThrownBy(() -> new Bettings(List.of(new Betting("r"))))
                 .isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -20,6 +20,6 @@ class BettingsTest {
     @Test
     void 숫자_입력시_정상적으로_생성() {
         //given,when,then
-        assertDoesNotThrow(() -> new Bettings(List.of("1", "2")));
+        assertDoesNotThrow(() -> new Bettings(List.of(new Betting("10000"))));
     }
 }

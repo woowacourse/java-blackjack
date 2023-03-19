@@ -36,20 +36,14 @@ public class PlayerNames {
     }
 
     private List<PlayerName> createPlayerNames(List<String> playerNamesInput) {
-        List<PlayerName> playerNames = new ArrayList<>();
-        for (String playerName : playerNamesInput) {
-            playerNames.add(new PlayerName(playerName));
-        }
-
-        return playerNames;
+        return playerNamesInput.stream()
+                .map(PlayerName::new)
+                .collect(Collectors.toList());
     }
 
     public List<String> getStringPlayerNames() {
-        List<String> playerNames = new ArrayList<>();
-        for (PlayerName playerName : this.playerNames) {
-            playerNames.add(playerName.getName());
-        }
-
-        return playerNames;
+        return this.playerNames.stream()
+                .map(PlayerName::getName)
+                .collect(Collectors.toList());
     }
 }

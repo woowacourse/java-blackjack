@@ -10,6 +10,7 @@ import domain.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -38,11 +39,10 @@ public class OutputView {
     }
 
     private static List<String> getPlayerNames(Players players) {
-        List<String> playerNames = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerNames.add(player.getName());
-        }
-        return playerNames;
+        return players.getPlayers()
+                .stream()
+                .map(player -> player.getName())
+                .collect(Collectors.toList());
     }
 
     public static void printGamblersCards(Players players, Dealer dealer) {
@@ -67,11 +67,10 @@ public class OutputView {
     }
 
     public static List<String> getPlayerCards(Gambler gambler) {
-        List<String> output = new ArrayList<>();
-        for (Card card : gambler.getCards()) {
-            output.add(card.getName() + card.getSuit());
-        }
-        return output;
+        return gambler.getCards()
+                .stream()
+                .map(card -> card.getName() + card.getSuit())
+                .collect(Collectors.toList());
     }
 
     private static void printPlayersCards(Players players) {
@@ -112,7 +111,9 @@ public class OutputView {
     }
 
     private static boolean isDealer(Map.Entry<Gambler, Integer> gamblerEntry) {
-        return gamblerEntry.getKey().getName().equals("딜러");
+        return gamblerEntry.getKey()
+                .getName()
+                .equals("딜러");
     }
 
     public static void printPlayersResult(Map.Entry<Gambler, Integer> gamblerEntry) {
@@ -136,9 +137,9 @@ public class OutputView {
 
     public static void printScores(Players players, Dealer dealer) {
         printScore(dealer);
-        for (Player player : players.getPlayers()) {
-            printScore(player);
-        }
+        players.getPlayers()
+                .stream()
+                .forEach(player -> printScore(player));
     }
 
     public static void printDealerHitMessage() {
@@ -151,9 +152,10 @@ public class OutputView {
         System.out.print(dealer.getName() + COLON + " ");
         System.out.println(benefits.get(dealer));
 
-        for (Player player : players) {
+        players.stream()
+                .forEach(player -> {
             System.out.print(player.getName() + COLON + " ");
             System.out.println(benefits.get(player));
-        }
+        });
     }
 }

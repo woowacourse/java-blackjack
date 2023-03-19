@@ -12,7 +12,7 @@ class BlackjackTest {
     @Test
     void 딜러가_가진_수가_플레이어보다_높으면_딜러가_이긴다() {
         //given
-        Bettings bettings = new Bettings(List.of("10000", "20000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000"), new Betting("20000")));
         Player player = new Player(new PlayerName("judy"),
                 new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.KING),

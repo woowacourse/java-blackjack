@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static domain.Referee.bettings;
+import static domain.Referee.dealer;
+
 class RefereeTest {
 
     @Test
@@ -15,8 +18,8 @@ class RefereeTest {
         Cards cards = new Cards(List.of(
                 new Card(Suit.CLOVER, Denomination.TWO),
                 new Card(Suit.CLOVER, Denomination.FIVE)));
-        Bettings bettings = new Bettings(List.of("10000"));
-        Dealer dealer = new Dealer(new Cards(List.of(new Card(Suit.CLOVER, Denomination.KING))));
+
+        Bettings bettings = new Bettings(List.of(new Betting("10000")));
         Referee referee = new Referee(dealer, bettings);
 
         //when
@@ -36,7 +39,7 @@ class RefereeTest {
         Cards cards = new Cards(List.of(
                 new Card(Suit.CLOVER, Denomination.TWO),
                 new Card(Suit.CLOVER, Denomination.FIVE)));
-        Bettings bettings = new Bettings(List.of("10000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000")));
         Dealer dealer = new Dealer(new Cards(List.of(new Card(Suit.CLOVER, Denomination.KING))));
         Referee referee = new Referee(dealer, bettings);
 
@@ -59,6 +62,6 @@ class RefereeTest {
                 new Dealer(new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.TWO),
                         new Card(Suit.CLOVER, Denomination.FIVE)))),
-                new Bettings(List.of("10000"))));
+                new Bettings(List.of(new Betting("10000")))));
     }
 }

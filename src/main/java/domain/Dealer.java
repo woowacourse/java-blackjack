@@ -16,7 +16,7 @@ public class Dealer implements Gambler {
 
     @Override
     public void initialPick() {
-        if (cards.getCards().isEmpty()) {
+        if (cards.isEmpty()) {
             pickCard();
         }
     }

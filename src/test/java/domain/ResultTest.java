@@ -12,7 +12,7 @@ class ResultTest {
     @Test
     void 생성자를_통해_calculateWinCount_메서드_테스트() {
         //given
-        Bettings bettings = new Bettings(List.of("10000", "5000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000"),new Betting("5000")));
         Players players = new Players(List.of(
                 new Player(new PlayerName("judy"),
                         new Cards(

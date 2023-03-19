@@ -41,15 +41,22 @@ public class Referee {
         int index = players.indexOf(player);
         int winnerCount = 0;
 
-        if (isPlayerWin(player, dealer) && !benefits.containsKey(player)) {
-            benefits.put(player, 0);
-        }
+        addPlayerBenefits(player, benefits);
+        addDealerBenefit(player, players, benefits, index, winnerCount);
+    }
 
+    private void addDealerBenefit(Player player, List<Player> players, Map<Gambler, Integer> benefits, int index, int winnerCount) {
         if (isDealerWin(player, dealer)) {
             loseBenefit(player, benefits, bettings.get(index).getBetting());
             winnerCount = getWinnerCount(player, players, winnerCount + 1);
             int money = bettings.get(index).getBetting() / winnerCount;
             earnBenefits(player, players, benefits, money);
+        }
+    }
+
+    private void addPlayerBenefits(Player player, Map<Gambler, Integer> benefits) {
+        if (isPlayerWin(player, dealer) && !benefits.containsKey(player)) {
+            benefits.put(player, 0);
         }
     }
 

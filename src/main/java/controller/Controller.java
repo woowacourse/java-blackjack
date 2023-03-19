@@ -14,6 +14,7 @@ import view.InputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static view.InputView.printErrorMessage;
 import static view.InputView.readIsHit;
@@ -57,32 +58,29 @@ public class Controller {
     }
 
     private Bettings getBettings(PlayerNames playerNames) {
-        List<String> bettings = new ArrayList<>();
-        for (String playerName : playerNames.getStringPlayerNames()) {
-            bettings.add(getValidBettingsInput(playerName));
-        }
+        List<Betting> bettings = playerNames.getStringPlayerNames()
+                .stream()
+                .map(this::getBetting)
+                .collect(Collectors.toList());
 
         return new Bettings(bettings);
     }
 
-    private String getValidBettingsInput(String playerName) {
+    private Betting getBetting(String playerName) {
         try {
             String readBetting = InputView.readBetting(playerName);
-            new Betting(readBetting);
-            return readBetting;
+            return new Betting(readBetting);
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            return getValidBettingsInput(playerName);
+            return getBetting(playerName);
         }
     }
 
     private List<Player> createPlayers(PlayerNames playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames.getStringPlayerNames()) {
-            players.add(new Player(new PlayerName(playerName), new Cards(new ArrayList<>())));
-        }
-
-        return players;
+        return playerNames.getStringPlayerNames()
+                .stream()
+                .map(it -> new Player(new PlayerName(it), new Cards(new ArrayList<>())))
+                .collect(Collectors.toList());
     }
 
     private Result playBlackjack(Players players, Dealer dealer, Blackjack blackjack, Bettings bettings) {

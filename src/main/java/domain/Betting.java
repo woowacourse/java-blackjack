@@ -7,11 +7,11 @@ public class Betting {
     private final int betting;
 
     public Betting(String betting) {
-        validateBettings(betting);
+        validateBetting(betting);
         this.betting = Integer.parseInt(betting);
     }
 
-    private void validateBettings(String betting) {
+    private void validateBetting(String betting) {
         try {
             Integer.parseInt(betting);
         } catch (RuntimeException exception) {

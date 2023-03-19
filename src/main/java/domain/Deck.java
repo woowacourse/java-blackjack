@@ -23,8 +23,11 @@ public class Deck {
     }
 
     private static void addCardsInDeck(List<Card> deck) {
-        Arrays.stream(Denomination.values()).forEach(denomination -> {
-            Arrays.stream(Suit.values()).map(suit -> new Card(suit, denomination)).forEach(deck::add);
+        Arrays.stream(Denomination.values())
+                .forEach(denomination -> {
+            Arrays.stream(Suit.values())
+                    .map(suit -> new Card(suit, denomination))
+                    .forEach(deck::add);
         });
     }
 

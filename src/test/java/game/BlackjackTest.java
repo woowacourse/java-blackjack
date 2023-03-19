@@ -1,5 +1,6 @@
 package game;
 
+import domain.Betting;
 import domain.Bettings;
 import domain.Card;
 import domain.Cards;
@@ -20,7 +21,7 @@ class BlackjackTest {
     @Test
     void 딜러가_가진_수가_플레이어보다_높으면_이긴다() {
         //given
-        Bettings bettings = new Bettings(List.of("10000", "20000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000"), new Betting("20000")));
         Player player = new Player(new PlayerName("judy"),
                 new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.KING),
@@ -49,7 +50,7 @@ class BlackjackTest {
     @Test
     void 플레이어가_가진_수가_딜러보다_높으면_이긴다() {
         //given
-        Bettings bettings = new Bettings(List.of("10000", "20000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000"), new Betting("20000")));
         Player player = new Player(new PlayerName("judy"),
                 new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.KING),
@@ -77,7 +78,7 @@ class BlackjackTest {
     @Test
     void 플레이어가_가진_수가_딜러와_같으면_이긴다() {
         //given
-        Bettings bettings = new Bettings(List.of("10000", "20000"));
+        Bettings bettings = new Bettings(List.of(new Betting("10000"), new Betting("20000")));
         Player player = new Player(new PlayerName("judy"),
                 new Cards(List.of(
                         new Card(Suit.CLOVER, Denomination.KING),

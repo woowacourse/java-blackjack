@@ -2,22 +2,14 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Bettings {
 
     private final List<Betting> bettings;
 
-    public Bettings(List<String> bettingsInput) {
-        this.bettings = createBettings(bettingsInput);
-    }
-
-    private List<Betting> createBettings(List<String> bettingsInput) {
-        List<Betting> bettings = new ArrayList<>();
-        for (String input : bettingsInput) {
-            bettings.add(new Betting(input));
-        }
-
-        return bettings;
+    public Bettings(List<Betting> bettings) {
+        this.bettings = bettings;
     }
 
     public List<Betting> getBettings() {
