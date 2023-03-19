@@ -1,18 +1,30 @@
-package blackjack.domain.game;
+package blackjack.domain.betting;
 
-import blackjack.domain.betting.Betting;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BettingTest {
 
     @Test
-    @DisplayName("베팅값을 제대로 가져오는지 확인한다.")
-    void getValueTest() {
-        final int value = 10000;
-        final Betting betting = Betting.from(value);
+    @DisplayName("베팅 금액을 제대로 반환되는지 확인한다")
+    void getBettingTest() {
+        final Betting betting = Betting.from("1000");
 
-        Assertions.assertThat(betting.getValue()).isEqualTo(value);
+        assertEquals(1000, betting.getValue());
+    }
+
+    @Test
+    @DisplayName("베팅 금액이 범위 이하일 때 예외 발생")
+    void throwExceptionWhenLessMoney() {
+        assertThrows(IllegalArgumentException.class, () -> Betting.from("999"));
+    }
+
+    @Test
+    @DisplayName("베팅 금액이 범위 초과할 때 예외 발생")
+    void throwExceptionWhenExceedMoney() {
+        assertThrows(IllegalArgumentException.class, () -> Betting.from("1000001"));
     }
 }
