@@ -6,50 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int ACE_VALUE_GAP = 10;
-    private static final int LIMIT_SCORE = 21;
 
     private final List<Card> playerCards;
-    private TotalScore totalScore;
 
-    public Hand() {
-        this.playerCards = new ArrayList<>();
-        this.totalScore = new TotalScore(0);
+    public Hand(List<Card> cards) {
+        this.playerCards = cards;
     }
 
-    public void addCard(Card card) {
-        this.playerCards.add(card);
+    public Hand add(Card card) {
+        List<Card> newCards = new ArrayList<>(List.copyOf(playerCards));
+        newCards.add(card);
+        return new Hand(List.copyOf(newCards));
     }
 
-    public void updateTotalScore() {
-        int newTotalScore = 0;
-        for (Card card : playerCards) {
-            newTotalScore += card.getCardNumber().getValue();
-        }
-        newTotalScore = updateAceScore(newTotalScore);
-        this.totalScore = new TotalScore(newTotalScore);
-    }
-
-    private int updateAceScore(int totalScore) {
-        int aceSize = calculateCardSize();
-        while (aceSize > 0 && totalScore > LIMIT_SCORE) {
-            totalScore -= ACE_VALUE_GAP;
-            aceSize--;
-        }
-        return totalScore;
-    }
-
-    private int calculateCardSize() {
-        return (int) playerCards.stream()
-                .filter(Card::isAce)
-                .count();
-    }
-
-    public List<Card> getPlayerCards() {
+    public List<Card> getHand() {
         return this.playerCards;
-    }
-
-    public int getTotalScore() {
-        return totalScore.getTotalScore();
     }
 }

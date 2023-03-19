@@ -13,7 +13,7 @@ class DeckTest {
     void test_initialize_cards() {
         // given & when
         List<Card> cards = Deck.initializeCards().getCards();
-        int expectedSize = 48;
+        int expectedSize = 52;
 
         // then
         Assertions.assertThat(cards).hasSize(expectedSize);

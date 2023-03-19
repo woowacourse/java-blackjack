@@ -3,17 +3,19 @@ package blackjack.domain.player;
 public class Player extends User {
 
     private static final int SCORE_LIMIT = 21;
+    private final BetAmount betAmount;
 
-    public Player(Name name) {
+    public Player(Name name, BetAmount betAmount) {
         super(name);
+        this.betAmount = betAmount;
     }
 
-    public String getPlayerName() {
-        return name.getName();
+    public BetAmount getBetAmount() {
+        return betAmount;
     }
 
     @Override
     public boolean isUnderLimit() {
-        return hand.getTotalScore() < SCORE_LIMIT;
+        return TotalScore.calculateTotalScore(hand.getHand()).getTotalScore() < SCORE_LIMIT;
     }
 }

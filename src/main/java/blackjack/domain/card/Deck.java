@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public final class Deck {
 
-    private static final int CARD_TOTAL_SIZE = 48;
+    private static final int CARD_TOTAL_SIZE = 52;
 
     private static Stack<Card> cards;
     private static final Deck DECK = new Deck();

@@ -1,16 +1,14 @@
-package blackjack.game;
+package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultMatcher;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.EnumMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameController {
     private static final int INIT_FIRST_CARD = 2;
@@ -34,8 +32,12 @@ public class GameController {
     }
 
     private Players initializePlayers(List<Name> names) {
-        return new Players(names.stream().map(Player::new)
-                .collect(Collectors.toUnmodifiableList()));
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            int betAmount = InputView.repeat(() -> InputView.inputBetAmount(name.getName()));
+            players.add(new Player(new Name(name.getName()), new BetAmount(betAmount)));
+        }
+        return new Players(players);
     }
 
     private void giveFirstCardsForUsers(Players players, Dealer dealer, Deck deck) {
@@ -47,7 +49,7 @@ public class GameController {
 
     private void giveFirstCards(User user, Deck deck) {
         for (int i = 0; i < INIT_FIRST_CARD; i++) {
-            user.updateCardScore(deck.draw());
+            user.addCard(deck.draw());
         }
     }
 
@@ -67,8 +69,8 @@ public class GameController {
 
     private void giveCardOrNotForPlayer(Player player, Deck deck) {
         while (player.isUnderLimit() &&
-                (InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName())))) {
-            player.updateCardScore(deck.draw());
+                (InputView.repeat(() -> InputView.askAdditionalCard(player.getUserName())))) {
+            player.addCard(deck.draw());
             OutputView.printPlayerCurrentCards(player);
         }
     }
@@ -76,14 +78,13 @@ public class GameController {
     private void giveCardOrNotForDealer(Dealer dealer, Deck deck) {
         while (dealer.isUnderLimit()) {
             OutputView.printMessageDealerOneMore();
-            dealer.updateCardScore(deck.draw());
+            dealer.addCard(deck.draw());
         }
     }
 
     private void printScore(Players players, Dealer dealer) {
         GameResult gameResult = new GameResult(players.getPlayers(), dealer);
-        Map<String, ResultMatcher> playersScore = gameResult.getPlayerGameResults();
-        EnumMap<ResultMatcher, Integer> dealerScore = gameResult.calculateDealerScore(playersScore);
-        OutputView.printScore(playersScore, dealerScore);
+        Map<String, Integer> playersScore = gameResult.getPlayerGameResults();
+        OutputView.printScore(playersScore, gameResult.calculateDealerProfit());
     }
 }

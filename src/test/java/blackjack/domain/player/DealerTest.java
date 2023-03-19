@@ -12,13 +12,28 @@ class DealerTest {
     @Test
     @DisplayName("isNotOverSeventeen()은 점수가 17이 안넘으면 true를 반환한다.")
     void total_score_over_17() {
-        // given & when
-        Hand hand = new Hand();
-        hand.addCard(new Card(CardNumber.ACE, CardSymbol.HEART));
-        hand.addCard(new Card(CardNumber.FIVE, CardSymbol.HEART));
+        // given
         Dealer dealer = new Dealer();
+
+        // when
+        dealer.addCard(new Card(CardNumber.THREE, CardSymbol.HEART));
+        dealer.addCard(new Card(CardNumber.TWO, CardSymbol.HEART));
 
         // then
         Assertions.assertThat(dealer.isUnderLimit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("isNotOverSeventeen()은 점수가 17이 안넘으면 true를 반환한다.")
+    void total_score_over_17111() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        dealer.addCard(new Card(CardNumber.JACK, CardSymbol.HEART));
+        dealer.addCard(new Card(CardNumber.KING, CardSymbol.HEART));
+
+        // then
+        Assertions.assertThat(dealer.isUnderLimit()).isFalse();
     }
 }

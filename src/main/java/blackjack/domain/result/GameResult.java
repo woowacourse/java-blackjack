@@ -1,12 +1,15 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameResult {
-    private final Map<String, ResultMatcher> playerGameResults = new LinkedHashMap<>();
+    private final Map<String, Integer> playerGameResults = new LinkedHashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
         calculatePlayersScore(players, dealer);
@@ -14,27 +17,21 @@ public class GameResult {
 
     private void calculatePlayersScore(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            playerGameResults.put(player.getPlayerName(), matchResult(player, dealer));
+            playerGameResults.put(player.getUserName(), calculateProfit(player, dealer.getHand()));
         }
     }
 
-    private ResultMatcher matchResult(Player player, Dealer dealer) {
-        return ResultMatcher.calculateResult(player.getTotalScore(), dealer.getTotalScore());
+    private int calculateProfit(Player player, List<Card> dealerCards) {
+        double ratio = RatioMather.of(player.getHand(), dealerCards).getRatio();
+        return player.getBetAmount().calculateProfit(ratio);
     }
 
-    public EnumMap<ResultMatcher, Integer> calculateDealerScore(Map<String, ResultMatcher> playerGameResults) {
-        EnumMap<ResultMatcher, Integer> dealerScore = new EnumMap<>(ResultMatcher.class);
-
-        Arrays.stream(ResultMatcher.values())
-                .forEach(resultMatcher -> dealerScore.put(resultMatcher, 0));
-        for (ResultMatcher playerResult : playerGameResults.values()) {
-            ResultMatcher dealerResult = ResultMatcher.ofOppositeResult(playerResult);
-            dealerScore.put(dealerResult, dealerScore.get(dealerResult) + 1);
-        }
-        return dealerScore;
+    public int calculateDealerProfit() {
+        return -playerGameResults.values().stream()
+                .mapToInt(profit -> profit).sum();
     }
 
-    public Map<String, ResultMatcher> getPlayerGameResults() {
+    public Map<String, Integer> getPlayerGameResults() {
         return this.playerGameResults;
     }
 }
