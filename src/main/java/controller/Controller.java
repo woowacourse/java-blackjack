@@ -36,9 +36,14 @@ public class Controller {
         Blackjack blackjack = new Blackjack(createPlayers(playerNames));
         Players players = blackjack.getPlayers();
         Dealer dealer = blackjack.getDealer();
+        printInitialGuideMessages(players, dealer);
         Result result = playBlackjack(players, dealer, blackjack, bettings);
-
         printAllOutputs(players, dealer, result);
+    }
+
+    private void printInitialGuideMessages(Players players, Dealer dealer) {
+        printInitialPickGuideMessage(players);
+        printGamblersCards(players, dealer);
     }
 
     private PlayerNames getPlayerNames() {
@@ -120,8 +125,6 @@ public class Controller {
     }
 
     private void printAllOutputs(Players players, Dealer dealer, Result result) {
-        printInitialPickGuideMessage(players);
-        printGamblersCards(players, dealer);
         printScores(players, dealer);
         printResult(result);
         printBenefits(players.getPlayers(), dealer, result.getBenefits());
