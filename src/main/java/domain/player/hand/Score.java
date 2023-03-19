@@ -1,4 +1,4 @@
-package domain.card;
+package domain.player.hand;
 
 import java.util.Objects;
 
@@ -18,12 +18,20 @@ public final class Score {
         return new Score(score);
     }
 
+    public Score add(final int score) {
+        return new Score(this.score + score);
+    }
+
     public boolean isUnderThan(final int compare) {
         return score < compare;
     }
 
     public boolean isUnderMaxScore() {
         return score <= MAX_SCORE;
+    }
+
+    public boolean isMaxScore() {
+        return score == MAX_SCORE;
     }
 
     public boolean canAddBonusScore() {

@@ -1,31 +1,58 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Deck;
+import domain.player.hand.Hand;
+import domain.player.hand.Score;
+import util.Notice;
 
 import java.util.List;
 
-public final class Dealer extends Player {
+public final class Dealer {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int FIRST = 0;
     private static final int STAY_SCORE = 17;
 
-    private Dealer(final Name name, final Cards cards) {
-        super(name, cards);
+    private final Hand hand;
+
+    private Dealer(final Hand hand) {
+        this.hand = hand;
     }
 
-    public static Dealer create(final int score) {
-        return new Dealer(Name.of(DEALER_NAME), Cards.from(score));
+    public static Dealer create() {
+        return new Dealer(Hand.create());
     }
 
-    @Override
-    public List<Card> showCards() {
-        return List.of(getCards().get(FIRST));
+    public void takeCard(final Card card) {
+        hand.takeCard(card);
     }
 
-    @Override
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public boolean canHit() {
-        return score().isUnderThan(STAY_SCORE);
+        return getScore().isUnderThan(STAY_SCORE);
     }
+
+    public void playDealerTurn(final Deck deck, final Notice<Boolean> notice) {
+        while (canHit()) {
+            notice.print(canHit());
+            takeCard(deck.dealCard());
+        }
+        notice.print(canHit());
+    }
+
+    public Card showCard() {
+        return getCards().get(FIRST);
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+
+    public Score getScore() {
+        return hand.getScore();
+    }
+
 }

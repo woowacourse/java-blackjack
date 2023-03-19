@@ -28,6 +28,10 @@ public final class Card {
         return rank;
     }
 
+    public boolean isAce() {
+        return this.rank == Rank.ACE;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

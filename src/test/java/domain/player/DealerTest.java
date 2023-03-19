@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.*;
 class DealerTest {
 
     @Test
-    @DisplayName("카드가 한장뿐인 리스트를 반환한다.")
-    void showCardsTest() {
+    @DisplayName("카드 한장을 반환한다.")
+    void showCardTest() {
         //given
-        final Dealer dealer = Dealer.create(0);
+        final Dealer dealer = Dealer.create();
 
         final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
@@ -24,12 +24,11 @@ class DealerTest {
         ranks.forEach(i -> dealer.takeCard(deck.dealCard()));
 
         //when
-        final List<Card> cards = dealer.showCards();
+        final Card card = dealer.showCard();
 
         //then
-        assertThat(cards)
-                .hasSize(1)
-                .isEqualTo(List.of(Card.of(Suit.CLUBS, Rank.EIGHT)));
+        assertThat(card)
+                .isEqualTo(Card.of(Suit.CLUBS, Rank.EIGHT));
     }
 
     @Nested
@@ -39,7 +38,12 @@ class DealerTest {
         @DisplayName("카드 점수의 총합이 16 이하면 true를 리턴한다")
         void givenHitNumber_thenReturnTrue() {
             //given
-            final Dealer dealer = Dealer.create(15);
+            final Dealer dealer = Dealer.create();
+
+            final List<Rank> ranks = List.of(Rank.TEN, Rank.SIX);
+            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+            ranks.forEach(i -> dealer.takeCard(deck.dealCard()));
 
             //when
             final boolean dealerHit = dealer.canHit();
@@ -52,7 +56,12 @@ class DealerTest {
         @DisplayName("카드 점수의 총합이 17 이상이면 false를 리턴한다")
         void givenStayNumber_thenReturnFalse() {
             //given
-            final Dealer dealer = Dealer.create(17);
+            final Dealer dealer = Dealer.create();
+
+            final List<Rank> ranks = List.of(Rank.TEN, Rank.SEVEN);
+            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+            ranks.forEach(i -> dealer.takeCard(deck.dealCard()));
 
             //when
             final boolean dealerHit = dealer.canHit();

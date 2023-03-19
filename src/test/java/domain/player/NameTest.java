@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.player.info.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,5 +28,14 @@ class NameTest {
         assertThatThrownBy(() -> Name.of(tenLengthName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("10자 이하의 이름만 입력해 주세요");
+    }
+
+
+    @Test
+    @DisplayName("참가자의 이름이 딜러면 예외가 발생한다")
+    void givenDealerName_theFailed() {
+        assertThatThrownBy(() -> Name.of("딜러"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자의 이름은 딜러가 될 수 없습니다.");
     }
 }

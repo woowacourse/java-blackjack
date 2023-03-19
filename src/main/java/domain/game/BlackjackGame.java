@@ -1,109 +1,60 @@
 package domain.game;
 
+import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.Deck;
-import domain.player.Dealer;
 import domain.player.Participant;
-import domain.player.Player;
+import domain.player.Players;
+import domain.player.info.ParticipantInfo;
 import util.HitOrStay;
 import util.Notice;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
-import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.toList;
 
 public final class BlackjackGame {
 
-    private static final int DEALER_INDEX = 0;
-    private static final int INIT_SCORE = 0;
-
-    private final List<Player> players;
+    private final Players players;
     private final Deck deck;
 
-    public BlackjackGame(final List<Player> players, final Deck deck) {
+    public BlackjackGame(final Players players, final Deck deck) {
         this.players = players;
         this.deck = deck;
     }
 
-    public static BlackjackGame from(final List<String> participantNames, final CardGenerator cardGenerator) {
-        validateDuplicate(participantNames);
+    public static BlackjackGame from(final List<String> participantNames, final Function<String, Integer> function, final CardGenerator cardGenerator) {
+        final List<Participant> participants = participantNames.stream()
+                .map(ParticipantInfo.ParticipantBuilder::new)
+                .map(playerInfoBuilder -> playerInfoBuilder.setBetAmount(function.apply(playerInfoBuilder.getName())))
+                .map(ParticipantInfo.ParticipantBuilder::build)
+                .map(Participant::of)
+                .collect(toList());
 
-        final List<Player> players = new LinkedList<>();
-
-        players.add(Dealer.create(0));
-        players.addAll(createParticipants(participantNames));
-
-
-        return new BlackjackGame(players, Deck.from(cardGenerator));
+        return new BlackjackGame(Players.of(participants), Deck.from(cardGenerator));
     }
 
-    public void drawCards() {
-        this.players.forEach(player -> {
-            player.takeCard(this.deck.dealCard());
-            player.takeCard(this.deck.dealCard());
-        });
+    public void drawCards(BiConsumer<Card, List<Participant>> print) {
+        players.drawCards(deck);
+        print.accept(players.getDealer().showCard(), players.getParticipants());
     }
 
-    public void playParticipantsTurn(HitOrStay hitOrStay, Notice<Participant> notice) {
-        this.getParticipants().forEach(participant -> playParticipantTurn(participant, hitOrStay, notice));
+    public void playTurn(HitOrStay hitOrStay, Notice<Participant> participantNotice, Notice<Boolean> delaerNotice) {
+        players.playParticipantsTurn(deck, hitOrStay, participantNotice, delaerNotice);
     }
 
-    public void playDealerTurn(Notice<Boolean> notice) {
-        final Dealer dealer = getDealer();
-
-        while (dealer.canHit()) {
-            notice.print(dealer.canHit());
-            dealer.takeCard(this.deck.dealCard());
-        }
-        notice.print(dealer.canHit());
-    }
-
-    public Results judgeResult() {
-        return Results.of(getDealer(), getParticipants());
-    }
-
-    private static void validateDuplicate(final List<String> participantNames) {
-        if (isDuplicate(participantNames)) {
-            throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
-        }
-    }
-
-    private static boolean isDuplicate(final List<String> participantNames) {
-        final int uniqueNameCount = new HashSet<>(participantNames).size();
-        return uniqueNameCount < participantNames.size();
-    }
-
-    private static List<Participant> createParticipants(final List<String> participantNames) {
-        return participantNames.stream()
-                .map(name -> Participant.of(name, INIT_SCORE))
+    public List<String> getParticipantNames() {
+        return players.getParticipants().stream()
+                .map(Participant::getName)
                 .collect(toList());
     }
 
-    private void playParticipantTurn(final Participant participant, final HitOrStay hitOrStay, final Notice<Participant> notice) {
-        while (participant.isHit(hitOrStay.isHit(participant))) {
-            participant.takeCard(deck.dealCard());
-            notice.print(participant);
-        }
-    }
+    public void get(Notice<Integer> dealerNotice, BiConsumer<String, Integer> participantNotice) {
+        final ProfitCalculator profitCalculator = ProfitCalculator.of(players.getParticipants(), players.getDealer());
 
-    public List<Participant> getParticipants() {
-        final String dealerName = getDealer().getName();
-
-        return players.stream()
-                .dropWhile(player -> player.getName().equals(dealerName))
-                .map(player -> (Participant) player)
-                .collect(toUnmodifiableList());
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    private Dealer getDealer() {
-        return (Dealer) players.get(DEALER_INDEX);
+        dealerNotice.print(profitCalculator.getDealerProfit());
+        getParticipantNames().forEach(participantName -> participantNotice.accept(participantName, profitCalculator.getProfit(participantName)));
     }
 }

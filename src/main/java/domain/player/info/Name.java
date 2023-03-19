@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.info;
 
 import java.util.Objects;
 
@@ -15,6 +15,7 @@ public final class Name {
     public static Name of(String name) {
         validateBlank(name);
         validateLength(name);
+        validateImpersonate(name);
 
         return new Name(name);
     }
@@ -28,6 +29,13 @@ public final class Name {
     private static void validateLength(final String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("10자 이하의 이름만 입력해 주세요");
+        }
+    }
+
+
+    private static void validateImpersonate(final String name) {
+        if (name.equals("딜러")) {
+            throw new IllegalArgumentException("참가자의 이름은 딜러가 될 수 없습니다.");
         }
     }
 

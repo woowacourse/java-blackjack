@@ -22,6 +22,11 @@ public final class InputView {
         return Command.from(readLine());
     }
 
+    public Integer readBetAmount(final String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        return Integer.parseInt(readLine());
+    }
+
     private String readLine() {
         String inputValue = scanner.nextLine().strip();
         validateNotEmpty(inputValue);
