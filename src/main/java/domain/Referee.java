@@ -27,14 +27,14 @@ public class Referee {
     private boolean isPlayerWin(Player player, Dealer dealer) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler()
-                || (dealer.isBustedGambler() && !player.isBustedGambler()));
+        return dealer.isBustedGambler()
+                || (dealerScore <= playerScore && !player.isBustedGambler());
     }
 
     private boolean isDealerWin(Player player, Dealer dealer) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        return dealerScore > playerScore || player.isBustedGambler();
+        return player.isBustedGambler() || dealerScore > playerScore;
     }
 
     public Map<Gambler, Integer> calculateBenefits(Players players, Dealer dealer) {
@@ -46,33 +46,16 @@ public class Referee {
     }
 
     public Map<Gambler, Integer> calculateBenefit(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
-        winDealer(player, players, benefits);
-        winPlayer(player,players,benefits);
-
-       return benefits;
-    }
-
-    private void winDealer(Player player, List<Player> players, Map<Gambler, Integer> benefits){
         int index = players.indexOf(player);
-        int winnerCount = 0;
 
         if (isDealerWin(player, dealer)) {
             loseBenefit(player, benefits, bettings.get(index).getBetting());
-            winnerCount = getWinnerCount(player, players, winnerCount + 1);
+            int winnerCount = getWinnerCount(players)+1;
             int money = bettings.get(index).getBetting() / winnerCount;
-            earnBenefit(benefits, money, dealer);
+            earnBenefits(benefits, money, players, player);
         }
-    }
 
-    private void winPlayer(Player player, List<Player> players, Map<Gambler, Integer> benefits) {
-        int index = players.indexOf(player);
-        int winnerCount = 0;
-
-        if (isPlayerWin(player, dealer)) {
-            winnerCount = getWinnerCount(player, players, winnerCount + 1);
-            int money = bettings.get(index).getBetting() / winnerCount;
-            earnPlayersBenefits(player, players, benefits, money);
-        }
+        return benefits;
     }
 
     private Map<Gambler, Integer> initBenefits(Players players, Dealer dealer) {
@@ -84,37 +67,41 @@ public class Referee {
         return benefits;
     }
 
-    private void earnPlayersBenefits(Player player, List<Player> players, Map<Gambler, Integer> benefits, int money) {
-        for (Player searchPlayer : players) {
-            playerEarnBenefit(player, benefits, money, searchPlayer);
+    private void EarnPlayerBenefit(Player player, Map<Gambler, Integer> benefits, int money, Player searchPlayer) {
+        if (!player.equals(searchPlayer) && isPlayerWin(searchPlayer, dealer)) {
+            benefits.replace(searchPlayer, benefits.get(searchPlayer) + money);
+
         }
     }
 
-    private void playerEarnBenefit(Player player, Map<Gambler, Integer> benefits, int money, Player searchPlayer) {
-        if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
-            earnBenefit(benefits, money, searchPlayer);
-        }
-    }
+    private int getWinnerCount(List<Player> players) {
+        int winnerCount = 0;
 
-    private int getWinnerCount(Player player, List<Player> players, int winnerCount) {
         for (Player searchPlayer : players) {
-            winnerCount = getWinnerCount(player, winnerCount, searchPlayer);
+            winnerCount += getWinnerPlayersCount(searchPlayer);
         }
+
         return winnerCount;
     }
 
-    private int getWinnerCount(Player player, int winnerCount, Player searchPlayer) {
-        if (searchPlayer != player && isPlayerWin(searchPlayer, dealer)) {
-            return winnerCount + 1;
+    private int getWinnerPlayersCount(Player searchPlayer) {
+        if (isPlayerWin(searchPlayer, dealer)) {
+            return 1;
         }
-        return winnerCount;
+
+        return 0;
     }
 
     private void loseBenefit(Player player, Map<Gambler, Integer> benefits, int money) {
         benefits.replace(player, benefits.get(player) - money);
+
     }
 
-    private void earnBenefit(Map<Gambler, Integer> benefits, int money, Gambler gambler) {
-        benefits.replace(gambler, benefits.get(gambler) + money);
+    private void earnBenefits(Map<Gambler, Integer> benefits, int money, List<Player> players, Player player) {
+        benefits.replace(dealer, benefits.get(dealer) + money);
+
+        for (Player searchPlayer : players) {
+            EarnPlayerBenefit(player, benefits, money, searchPlayer);
+        }
     }
 }

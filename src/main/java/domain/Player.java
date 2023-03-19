@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Player implements Gambler {
     private final PlayerName playerName;
@@ -42,5 +43,20 @@ public class Player implements Gambler {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName) && Objects.equals(cards, player.cards);
+    }
+
+    //todo: hashcode 어디서 쓰이는지 공부하기
+    //todo: 동일성, 동등성
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerName, cards);
     }
 }
