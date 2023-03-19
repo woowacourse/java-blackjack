@@ -21,7 +21,7 @@ public class CardPool {
         cards.add(card);
     }
 
-    public int sumCardNumbers() {
+    public int calculateTotalPoint() {
         int sum = getSumOfCards();
         sum = updateIfExceedLimitAndAceExists(sum);
         return sum;
@@ -37,19 +37,23 @@ public class CardPool {
 
     private int updateIfExceedLimitAndAceExists(final int sum) {
         int updatedSum = sum;
-        if (isSumExceedLimit() && containsAce()) {
+        if (isTotalPointExceedLimit() && containsAce()) {
             updatedSum -= CARD_POINT_LIMIT - CardNumber.ACE.getPoint();
         }
         return updatedSum;
     }
 
-    public boolean isSumExceedLimit() {
+    public boolean isTotalPointExceedLimit() {
         return getSumOfCards() > CARD_POINT_LIMIT;
     }
 
     private boolean containsAce() {
         return cards.stream()
                 .anyMatch(card -> card.hasNumberOf(CardNumber.ACE));
+    }
+
+    public boolean isSumSameAsLimit() {
+        return calculateTotalPoint() == CARD_POINT_LIMIT;
     }
 
     public List<Card> getCards() {

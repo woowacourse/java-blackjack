@@ -5,7 +5,6 @@ import domain.user.GameParticipant;
 import domain.user.Player;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -16,11 +15,10 @@ public class BlackjackGame {
 
     public BlackjackGame(
             final List<String> playerNames,
-            final String dealerName,
             final ShuffleStrategy shuffleStrategy
     ) {
         this.deck = new Deck(shuffleStrategy);
-        this.gameParticipant = new GameParticipant(playerNames, dealerName);
+        this.gameParticipant = new GameParticipant(playerNames);
     }
 
     public void letDealerHitUntilThreshold() {
@@ -37,20 +35,12 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isBurst(final Player player) {
-        return gameParticipant.isBurst(player);
-    }
-
     public void hitFor(final Player player) {
-        gameParticipant.letPlayerToHit(player, deck);
+        player.draw(deck.serve());
     }
 
-    public Map<Player, GameResult> getGameResultForAllPlayer() {
-        return gameParticipant.makeGameResultForAllPlayer();
-    }
-
-    public Map<GameResult, Integer> getDealerRecord() {
-        return gameParticipant.getDealerRecord(getGameResultForAllPlayer());
+    public void updateBetAmount() {
+        gameParticipant.updateBetAmountByGameResult();
     }
 
     public GameParticipant getGameParticipant() {

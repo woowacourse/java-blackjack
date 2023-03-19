@@ -1,8 +1,7 @@
 package domain.game;
 
-import domain.card.Card;
+import domain.CardFixtures;
 import domain.card.CardNumber;
-import domain.card.CardType;
 import domain.user.CardPool;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -22,14 +21,14 @@ class GameResultTest {
     @DisplayName("Player가 Dealer보다 값이 작으면 LOSE이다")
     void makePlayerRecordWhenPlayerLose() {
         CardPool playerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.FIVE))
+                List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
         CardPool dealerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.EIGHT))
+                List.of(CardFixtures.ofNumber(CardNumber.EIGHT))
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.LOSE);
@@ -39,14 +38,14 @@ class GameResultTest {
     @DisplayName("Player가 Dealer와 값이 같으면 DRAW이다")
     void makePlayerrRecordWhenDraw() {
         CardPool playerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.FIVE))
+                List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
         CardPool dealerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.FIVE))
+                List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.DRAW);
@@ -56,17 +55,57 @@ class GameResultTest {
     @DisplayName("Player가 Dealer와 값이 크면 WIN이다")
     void makePlayerRecordWhenPlayerWin() {
         CardPool playerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.SIX))
+                List.of(CardFixtures.ofNumber(CardNumber.SIX))
         );
         CardPool dealerCardPool = new CardPool(
-                List.of(new Card(CardType.CLOVER, CardNumber.FIVE))
+                List.of(CardFixtures.ofNumber(CardNumber.FIVE))
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("Player가 블랙잭이고, 딜러는 아니라면 WIN이다")
+    void makePlayerRecordWhenBlackjackPlayerWin() {
+        CardPool playerCardPool = new CardPool(
+                List.of(CardFixtures.ofNumber(CardNumber.SIX),
+                        CardFixtures.ofNumber(CardNumber.ACE),
+                        CardFixtures.ofNumber(CardNumber.FOUR)
+                )
+        );
+        CardPool dealerCardPool = new CardPool(
+                List.of(CardFixtures.ofNumber(CardNumber.FIVE))
+        );
+
+        Player player = new Player("플레이어", playerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
+
+        assertThat(GameResult.makePlayerRecord(player, dealer))
+                .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("Dealer가 블랙잭이고, Player는 아니라면 LOSE이다")
+    void makePlayerRecordWhenBlackjackPlayerLose() {
+        CardPool playerCardPool = new CardPool(
+                List.of(CardFixtures.ofNumber(CardNumber.SIX))
+        );
+        CardPool dealerCardPool = new CardPool(
+                List.of(CardFixtures.ofNumber(CardNumber.SIX),
+                        CardFixtures.ofNumber(CardNumber.ACE),
+                        CardFixtures.ofNumber(CardNumber.FOUR)
+                )
+        );
+
+        Player player = new Player("플레이어", playerCardPool);
+        Dealer dealer = new Dealer(dealerCardPool);
+
+        assertThat(GameResult.makePlayerRecord(player, dealer))
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test

@@ -17,6 +17,11 @@ public class InputView {
         this.validator = validator;
     }
 
+    public int inputBetAmount(final String player) {
+        System.out.println(player +"의 배팅 금액은?");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public List<String> inputParticipantsName() {
         System.out.println(INPUT_PLAYER_MESSAGE);
         String line = scanner.nextLine();

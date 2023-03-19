@@ -2,6 +2,7 @@ package controller;
 
 import domain.game.BlackjackGame;
 import domain.strategy.RandomShuffleStrategy;
+import domain.user.Dealer;
 import domain.user.GameParticipant;
 import domain.user.Player;
 import view.InputView;
@@ -24,27 +25,38 @@ public class BlackJackController {
         try {
             initializeGame();
             startGame();
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
         }
     }
 
     private void initializeGame() {
         List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomShuffleStrategy());
+        blackjackGame = new BlackjackGame(playersName, new RandomShuffleStrategy());
     }
 
     private void startGame() {
+        List<Player> players = blackjackGame.getGameParticipant().getPlayers();
+        Dealer dealer = blackjackGame.getGameParticipant().getDealer();
+
+        startBet(players);
+        startHit();
+        outputView.printPlayersInfoWhenGameStarted(dealer, players);
+
+        letPlayerChoiceWhetherHit(players);
+        blackjackGame.updateBetAmount();
+        printGameResult(players, dealer);
+    }
+
+    private void startBet(final List<Player> players) {
+        for (Player player : players) {
+            int amount = inputView.inputBetAmount(player.getPlayerName().getName());
+            player.addAmount(amount);
+        }
+    }
+
+    private void startHit() {
         blackjackGame.startHit();
-
-        GameParticipant gameParticipant = blackjackGame.getGameParticipant();
-        outputView.printPlayersInfoWhenGameStarted(gameParticipant.getDealer(), gameParticipant.getPlayers());
-
-        letPlayerChoiceWhetherHit(gameParticipant.getPlayers());
-        outputView.printGameScore(gameParticipant.getDealer(), gameParticipant.getPlayers());
-
-        outputView.printDealerRecord(gameParticipant.getDealer(), blackjackGame.getDealerRecord());
-        outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
     }
 
     private void letPlayerChoiceWhetherHit(List<Player> players) {
@@ -65,7 +77,7 @@ public class BlackJackController {
     }
 
     private boolean needToQuit(Player player) {
-        if (blackjackGame.isBurst(player)) {
+        if (player.isBurst()) {
             return true;
         }
 
@@ -81,4 +93,8 @@ public class BlackJackController {
         }
     }
 
+    private void printGameResult(final List<Player> players, final Dealer dealer) {
+        outputView.printGameScore(dealer, players);
+        outputView.printRevenueForAll(dealer, players);
+    }
 }

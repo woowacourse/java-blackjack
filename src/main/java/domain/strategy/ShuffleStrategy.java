@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ShuffleStrategy {
 
-    void shuffle(final List<Card> cards);
+    List<Card> makeShuffledCards(final List<Card> cards);
 }

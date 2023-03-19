@@ -14,9 +14,9 @@ public class GameParticipant {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public GameParticipant(final List<String> playerNames, final String dealerName) {
+    public GameParticipant(final List<String> playerNames) {
         this.players = makePlayersWithName(playerNames);
-        this.dealer = makeDealerWithName(dealerName);
+        this.dealer = makeDealer();
     }
 
     private List<Player> makePlayersWithName(final List<String> playerNames) {
@@ -25,8 +25,8 @@ public class GameParticipant {
                 .collect(Collectors.toList());
     }
 
-    private Dealer makeDealerWithName(final String dealerName) {
-        return new Dealer(dealerName, new CardPool(Collections.emptyList()));
+    private Dealer makeDealer() {
+        return new Dealer(new CardPool(Collections.emptyList()));
     }
 
     public void letPlayersToHit(final Deck deck) {
@@ -36,17 +36,25 @@ public class GameParticipant {
         dealer.draw(deck.serve());
     }
 
-    public void letPlayerToHit(final Player player, final Deck deck) {
-        player.draw(deck.serve());
-    }
-
     public void letDealerHitUntilThreshold(final Deck deck) {
         while (dealer.needsHit()) {
             dealer.draw(deck.serve());
         }
     }
 
-    public Map<Player, GameResult> makeGameResultForAllPlayer() {
+    public boolean dealerNeedsHit() {
+        return dealer.needsHit();
+    }
+
+    public void updateBetAmountByGameResult() {
+        Map<Player, GameResult> record = makeGameResultForAllPlayer();
+
+        increasePlayerRevenueWhenWin(record);
+        decreasePlayerRevenueWhenLose(record);
+        startSettlement(record);
+    }
+
+    private Map<Player, GameResult> makeGameResultForAllPlayer() {
         Map<Player, GameResult> record = new HashMap<>();
         recordGameResult(record);
 
@@ -57,16 +65,22 @@ public class GameParticipant {
         players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
     }
 
-    public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {
-        return GameResult.makeDealerRecord(record);
+    private static void increasePlayerRevenueWhenWin(final Map<Player, GameResult> record) {
+        record.entrySet().stream()
+                .filter(entry -> entry.getValue().isWin())
+                .map(Map.Entry::getKey)
+                .forEach(Player::increaseRevenue);
     }
 
-    public boolean isBurst(final Player player) {
-        return player.isBurst();
+    private static void decreasePlayerRevenueWhenLose(final Map<Player, GameResult> record) {
+        record.entrySet().stream()
+                .filter(entry -> entry.getValue().isLose())
+                .map(Map.Entry::getKey)
+                .forEach(Player::decreaseRevenue);
     }
 
-    public boolean dealerNeedsHit() {
-        return dealer.needsHit();
+    private void startSettlement(final Map<Player, GameResult> record) {
+        record.keySet().forEach(dealer::payFor);
     }
 
     public List<Player> getPlayers() {
