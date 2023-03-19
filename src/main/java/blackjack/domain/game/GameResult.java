@@ -6,6 +6,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.dto.ResultStateDto;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public final class GameResult {
@@ -17,7 +18,7 @@ public final class GameResult {
     }
 
     public static GameResult of(final BettingTable table, final Participants participants) {
-        Map<Participant, Betting> bettingTable = table.getTable();
+        Map<Participant, Betting> bettingTable = new HashMap<>(table.getTable());
         calculateResult(bettingTable, participants);
         return new GameResult(bettingTable);
     }

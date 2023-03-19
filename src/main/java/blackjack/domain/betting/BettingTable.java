@@ -2,6 +2,7 @@ package blackjack.domain.betting;
 
 import blackjack.domain.participant.Participant;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class BettingTable {
@@ -21,6 +22,6 @@ public class BettingTable {
     }
 
     public Map<Participant, Betting> getTable() {
-        return table;
+        return Collections.unmodifiableMap(table);
     }
 }
