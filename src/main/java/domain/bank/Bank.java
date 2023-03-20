@@ -29,22 +29,12 @@ public class Bank {
         deposit(user, profit);
     }
 
-    public Money withdrawDepositOf(User user) {
-        Money deposit = getDepositOf(user);
-        clearDepositOf(user);
-        return deposit;
-    }
-
     private void deposit(User user, Money money) {
         Money deposit = getDepositOf(user);
         if (deposit.equals(Money.ZERO)) {
             principals.putIfAbsent(user, money);
         }
         deposits.put(user, deposit.add(money));
-    }
-
-    private void clearDepositOf(User user) {
-        deposits.put(user, Money.ZERO);
     }
 
     private Money getDepositOf(User user) {

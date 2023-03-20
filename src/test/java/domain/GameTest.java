@@ -71,7 +71,7 @@ public class GameTest extends AbstractTestFixture {
 
         game.bet(user, Money.of(500));
 
-        assertThat(game.getPrizeOf(user)).isEqualTo(Money.of(500));
+        assertThat(game.getProfitOf(user)).isEqualTo(Money.of(0));
     }
 
     @Test
@@ -84,6 +84,6 @@ public class GameTest extends AbstractTestFixture {
 
         game.evaluate();
 
-        assertThat(game.getPrizeOf(user)).isEqualTo(Money.of(1250));
+        assertThat(game.getProfitOf(user)).isEqualTo(Money.of(750));
     }
 }

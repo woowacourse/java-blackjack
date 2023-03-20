@@ -58,8 +58,8 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
-    public Money getPrizeOf(User user) {
-        return bank.withdrawDepositOf(user);
+    public Money getProfitOf(User user) {
+        return bank.getProfitOf(user);
     }
 
     public List<User> getUsers() {
@@ -71,6 +71,6 @@ public class Game {
     }
 
     public int getDealerProfit() {
-        return bank.getProfit().getProfit();
+        return bank.getProfit().getValue();
     }
 }

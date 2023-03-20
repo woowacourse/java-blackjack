@@ -21,7 +21,7 @@ public class BankTest extends AbstractTestFixture {
         var user = new User("ㅎㅇ");
         bank.bet(user, Money.of(123));
 
-        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(123));
+        assertThat(bank.getProfitOf(user)).isEqualTo(Money.ZERO);
     }
 
     @Test
@@ -34,37 +34,16 @@ public class BankTest extends AbstractTestFixture {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("인출할 수 있다")
-    void test_draw_deposit() {
-        var bank = new Bank();
-        var user = new User("gd");
-        bank.bet(user, Money.of(500));
-
-        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(500));
-    }
-
-    @Test
-    @DisplayName("인출 한 후에는 금액이 0이다")
-    void test_deposit_after_withdraw_is_zero() {
-        var bank = new Bank();
-        var user = new User("gd");
-        bank.bet(user, Money.of(500));
-        bank.withdrawDepositOf(user);
-
-        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(0));
-    }
-
     @DisplayName("결과에 따라 배당을 준다")
-    @ParameterizedTest(name = "{0}이면 500원이 {1}원이 된다")
-    @CsvSource({"WIN_BY_BLACKJACK,1250", "WIN,1000", "LOSE,0", "DRAW,500"})
+    @ParameterizedTest(name = "{0}이면 수익이 {1}원이다")
+    @CsvSource({"WIN_BY_BLACKJACK,750", "WIN,500", "LOSE,-500", "DRAW,0"})
     void test_pay_by_result(Result result, int expectedValue) {
         var bank = new Bank();
         var user = new User("gd");
         bank.bet(user, Money.of(500));
         bank.evaluate(user, result);
 
-        assertThat(bank.withdrawDepositOf(user)).isEqualTo(Money.of(expectedValue));
+        assertThat(bank.getProfitOf(user)).isEqualTo(createMoney(expectedValue));
     }
 
     @DisplayName("뱅크 수익을 알 수 있다")
@@ -88,6 +67,6 @@ public class BankTest extends AbstractTestFixture {
         bank.bet(user, Money.of(1234));
         bank.evaluate(user, Result.WIN_BY_BLACKJACK);
 
-        assertThat(bank.getProfitOf(user)).isEqualTo(Money.of((int)(1234 * 1.5)));
+        assertThat(bank.getProfitOf(user)).isEqualTo(Money.of((int)(1234 * 1.5))); // TODO: 정수로 변경
     }
 }
