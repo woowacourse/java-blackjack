@@ -44,12 +44,11 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
         dealer.startWith(Cards.of(CLUB_KING, CLUB_SIX));
-        assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
 
         assertThat(dealer.getAdditionalCardsAmount())
-                .isGreaterThan(2);
+                .isGreaterThan(0);
     }
 
     @DisplayName("딜러는 카드의 합이 17보다 높으면 카드를 받을 수 없다.")
@@ -58,16 +57,11 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
         dealer.startWith(Cards.of(CLUB_KING, CLUB_SEVEN));
-        assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
 
-        assertParticipantCardSize(dealer, 2);
-    }
-
-    private void assertParticipantCardSize(Participant participant, int expectedSize) {
-        assertThat(participant.getAdditionalCardsAmount())
-                .isEqualTo(expectedSize);
+        assertThat(dealer.getAdditionalCardsAmount())
+                .isEqualTo(0);
     }
 
     @DisplayName("게임에 참여하지 않은 참가자는 플레이 할 수 없다.")
@@ -89,7 +83,7 @@ class BlackjackGameTest {
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HIT);
 
-        assertThat(player.getAdditionalCardsAmount()).isEqualTo(3);
+        assertThat(player.getAdditionalCardsAmount()).isEqualTo(1);
     }
 
     @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
@@ -102,7 +96,7 @@ class BlackjackGameTest {
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HOLD);
 
-        assertThat(player.getAdditionalCardsAmount()).isEqualTo(2);
+        assertThat(player.getAdditionalCardsAmount()).isEqualTo(0);
     }
 
     @Nested

@@ -9,12 +9,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 
 public class TestDataGenerator {
-
-    /**
-     * pobi와 crong, royce가 참가한 BlackjackGame을 반환합니다.
-     *
-     * @return BlackjackGame
-     */
+    
     public static BlackjackGame getShuffledBlackjackGame() {
         Players players = Players.of(
                 Player.of(new ParticipantName("pobi"), BetAmount.from(1000)),

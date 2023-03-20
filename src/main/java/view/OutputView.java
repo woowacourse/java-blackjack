@@ -102,14 +102,14 @@ public class OutputView {
     public void printFinalResult(Participant dealer, TotalProfit totalProfit) {
         breakLine();
         System.out.println(FINAL_RESULT_MESSAGE);
-        printPlayerResultWithProfit(dealer, totalProfit.getDealerProfit().getAmount());
+        prtinParticipantResultWithProfit(dealer, totalProfit.getDealerProfit().getAmount());
 
         totalProfit.getParticipantsProfit().forEach(
-                (key, value) -> printPlayerResultWithProfit(key, value.getAmount())
+                (key, value) -> prtinParticipantResultWithProfit(key, value.getAmount())
         );
     }
 
-    private void printPlayerResultWithProfit(Participant player, double profit) {
+    private void prtinParticipantResultWithProfit(Participant player, double profit) {
         String format = String.format(RESULT_FORMAT,
                 player.getName(), (int) profit);
         System.out.println(format);

@@ -21,8 +21,8 @@ public class InputView {
     }
 
     public String requestMoreCard(String name) {
-        String moreCardMessageFormat = String.format(PLAYER_WANT_MORE_CARD_FORMAT, name);
-        System.out.println(moreCardMessageFormat);
+        String moreCardMessage = String.format(PLAYER_WANT_MORE_CARD_FORMAT, name);
+        System.out.println(moreCardMessage);
 
         return SCANNER.nextLine();
     }
@@ -30,8 +30,8 @@ public class InputView {
 
     public String requestBetAmount(String playerName) {
         System.out.println();
-        String betAmountMessageFormat = String.format(PLAYER_BET_AMOUNT_FORMAT, playerName);
-        System.out.println(betAmountMessageFormat);
+        String betAmountMessage = String.format(PLAYER_BET_AMOUNT_FORMAT, playerName);
+        System.out.println(betAmountMessage);
 
         return SCANNER.nextLine();
     }
