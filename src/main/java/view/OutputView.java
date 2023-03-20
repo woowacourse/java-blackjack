@@ -15,6 +15,8 @@ public class OutputView {
 
     private static final String DELIMITER = ",";
 
+    private OutputView(){}
+
     public static void printStart(Dealer dealer, Players players) {
         printGiveMessage(dealer, players);
         printHideCard(dealer);
@@ -41,8 +43,8 @@ public class OutputView {
     private static String getAllCardsNames(Participant participant) {
         List<Card> cards = participant.getCards();
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        for (int i = 0; i < cards.size(); i++) {
-            stringJoiner.add(PrintConverter.of(cards.get(i)));
+        for (Card card : cards) {
+            stringJoiner.add(PrintConverter.of(card));
         }
         return stringJoiner.toString();
     }
