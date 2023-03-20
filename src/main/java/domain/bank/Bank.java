@@ -11,11 +11,11 @@ public class Bank {
     private static final Money BET_MINIMUM = Money.of(100);
 
     private final Map<User, Money> principals = new HashMap<>();
-    private final Map<User, Money> deposits = new HashMap<>();
+    private final Map<User, Money> profits = new HashMap<>();
 
     public void bet(User user, Money money) {
         validateMinimum(money);
-        deposit(user, money);
+        addPrincipal(user, money);
     }
 
     private void validateMinimum(Money money) {
@@ -25,35 +25,39 @@ public class Bank {
     }
 
     public void evaluate(User user, Result result) {
-        Money profit = getDepositOf(user).multiply(result.getDividend());
-        deposit(user, profit);
+        Money prize = getPrincipalOf(user).multiply(result.getDividend());
+        addProfit(user, prize);
     }
 
-    private void deposit(User user, Money money) {
-        Money deposit = getDepositOf(user);
-        if (deposit.equals(Money.ZERO)) {
-            principals.putIfAbsent(user, money);
+    private void addPrincipal(User user, Money money) {
+        Money principal = getPrincipalOf(user);
+        if (principal.equals(Money.ZERO)) {
+            principals.put(user, money);
         }
-        deposits.put(user, deposit.add(money));
+        principals.put(user, principal.add(money));
     }
 
-    private Money getDepositOf(User user) {
-        return deposits.getOrDefault(user, Money.ZERO);
+    private void addProfit(User user, Money prize) {
+        Money profit = getProfitOf(user);
+        if (profit.equals(Money.ZERO)) {
+            profits.put(user, prize);
+        }
+        profits.put(user, profit.add(prize));
     }
 
     private Money getPrincipalOf(User user) {
         return principals.getOrDefault(user, Money.ZERO);
     }
 
+    public Money getProfitOf(User user) {
+        return profits.getOrDefault(user, Money.ZERO);
+    }
+
     public Money getProfit() {
         Money profit = Money.ZERO;
-        for (User user : deposits.keySet()) {
+        for (User user : principals.keySet()) {
             profit = profit.sub(getProfitOf(user));
         }
         return profit;
-    }
-
-    public Money getProfitOf(User user) {
-        return getDepositOf(user).sub(getPrincipalOf(user));
     }
 }
