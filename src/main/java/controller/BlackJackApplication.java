@@ -69,7 +69,7 @@ public class BlackJackApplication {
         if (!blackJack.shouldDealerGetCard()) {
             return;
         }
-        blackJack.giveCardToDealer();
+        blackJack.giveCard(Name.DEALER_NAME);
         OutputView.printGiveDealerCardMessage();
     }
 
@@ -83,7 +83,7 @@ public class BlackJackApplication {
     private void giveCardToParticipant(BlackJack blackJack, PlayerReadOnly participant) {
         Command command = getCommand(participant.getName());
         if (command.isYes()) {
-            blackJack.giveCard(participant);
+            blackJack.giveCard(participant.getName());
             OutputView.printParticipantCardCondition(List.of(participant));
         }
         if (isStoppingGivingCardCondition(participant, command)) {

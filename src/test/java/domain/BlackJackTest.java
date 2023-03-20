@@ -62,7 +62,7 @@ class BlackJackTest {
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
 
-        blackJack.giveCard(participant);
+        blackJack.giveCard(participant.getName());
 
         assertThat(participant.getCards()).hasSize(1);
     }
@@ -101,7 +101,7 @@ class BlackJackTest {
                 Deck.create()
         );
 
-        blackJack.giveCardToDealer();
+        blackJack.giveCard(Name.DEALER_NAME);
 
         assertThat(cards).hasSize(1);
     }

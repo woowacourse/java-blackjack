@@ -29,8 +29,8 @@ public class BlackJack {
         }
     }
 
-    public void giveCard(PlayerReadOnly participant) {
-        players.giveCardByName(participant.getName(), deck.findAnyOneCard());
+    public void giveCard(String name) {
+        players.giveCardByName(name, deck.findAnyOneCard());
     }
 
     public boolean shouldDealerGetCard() {
