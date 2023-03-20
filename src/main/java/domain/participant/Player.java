@@ -39,13 +39,13 @@ public class Player extends Participant {
 
     public Profit getProfitByResult(Result playerResult) {
         if (playerResult == Result.DRAW) {
-            return betAmount.calculateEarnAmount(0);
+            return betAmount.calculateProfit(0);
         }
 
         if (playerResult == Result.LOSE) {
-            return betAmount.calculateEarnAmount(-1);
+            return betAmount.calculateProfit(-1);
         }
 
-        return betAmount.calculateEarnAmount(gameState.getEarningRate());
+        return betAmount.calculateProfit(gameState.getEarningRate());
     }
 }
