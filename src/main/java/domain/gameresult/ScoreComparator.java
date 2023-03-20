@@ -20,18 +20,18 @@ public class ScoreComparator {
 
     private static Bet calculateBettingResultOnBlackjack(Player dealer, Player gambler) {
         if (dealer.isBlackJack()) {
-            return gambler.draw();
+            return BetCounter.draw();
         } // 딜러도 블랙잭
 
-        return gambler.blackJack(); // 참가자만 블랙잭
+        return BetCounter.blackJack(gambler.getBet()); // 참가자만 블랙잭
     }
 
     private static Bet calculateBettingResultOnBust(Player dealer, Player gambler) {
         if (dealer.isBust()) {
-            return gambler.win();
+            return BetCounter.win(gambler.getBet());
         } // 딜러가 버스트
 
-        return gambler.lose();
+        return BetCounter.lose(gambler.getBet());
         // 참가자가 버스트
     }
 
@@ -40,13 +40,13 @@ public class ScoreComparator {
         int participantScore = gambler.getScore();
 
         if (dealerScore > participantScore) {
-            return gambler.lose();
+            return BetCounter.lose(gambler.getBet());
         }
 
         if (dealerScore < participantScore) {
-            return gambler.win();
+            return BetCounter.win(gambler.getBet());
         }
 
-        return gambler.draw();
+        return BetCounter.draw();
     }
 }

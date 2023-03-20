@@ -45,22 +45,6 @@ public class Player {
         return getName().equals(playerName);
     }
 
-    public Bet win() {
-        return bet;
-    }
-
-    public Bet lose() {
-        return bet.toNegative();
-    }
-
-    public Bet draw() {
-        return Bet.zero();
-    }
-
-    public Bet blackJack() {
-        return bet.multiply(1.5f);
-    }
-
     public int getScore() {
         return hand.getScore();
     }
@@ -71,6 +55,10 @@ public class Player {
 
     public String getName() {
         return this.name.getName();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 
     @Override
