@@ -43,12 +43,12 @@ class BlackjackGameTest {
     void handOutAdditionalCardToDealerSuccessTestWhenUnderMoreCardLimit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.start(Cards.of(CLUB_KING, CLUB_SIX));
+        dealer.startWith(Cards.of(CLUB_KING, CLUB_SIX));
         assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
 
-        assertThat(dealer.getCurrentCardAmount())
+        assertThat(dealer.getAdditionalCardsAmount())
                 .isGreaterThan(2);
     }
 
@@ -57,7 +57,7 @@ class BlackjackGameTest {
     void handOutAdditionalCardToDealerSuccessTestWhenOverMoreCardLimit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.start(Cards.of(CLUB_KING, CLUB_SEVEN));
+        dealer.startWith(Cards.of(CLUB_KING, CLUB_SEVEN));
         assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
@@ -66,7 +66,7 @@ class BlackjackGameTest {
     }
 
     private void assertParticipantCardSize(Participant participant, int expectedSize) {
-        assertThat(participant.getCurrentCardAmount())
+        assertThat(participant.getAdditionalCardsAmount())
                 .isEqualTo(expectedSize);
     }
 
@@ -78,6 +78,31 @@ class BlackjackGameTest {
 
         assertThatThrownBy(() -> blackjackGame.playByAction(otherPlayer, BlackjackAction.HIT))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("Action이 HIT인 경우 카드를 한 장 받는다.")
+    @Test
+    void playByActionHit() {
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
+        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
+        player.startWith(Cards.of(CLUB_KING, CLUB_SEVEN));
+        assertThat(player.isAbleToReceiveCard()).isTrue();
+        blackjackGame.playByAction(player, BlackjackAction.HIT);
+
+        assertThat(player.getAdditionalCardsAmount()).isEqualTo(3);
+    }
+
+    @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
+    @Test
+    void playByActionHold() {
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
+        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
+        player.startWith(Cards.of(CLUB_KING, CLUB_SEVEN));
+
+        assertThat(player.isAbleToReceiveCard()).isTrue();
+        blackjackGame.playByAction(player, BlackjackAction.HOLD);
+
+        assertThat(player.getAdditionalCardsAmount()).isEqualTo(2);
     }
 
     @Nested
@@ -95,7 +120,7 @@ class BlackjackGameTest {
         @DisplayName("액션이 HIT이고 player가 카드를 받을 수 있는 상태에만 진행 할 수 있다.")
         @Test
         void isAbleToContinueTrueTest() {
-            gamePlayer.start(Cards.of(
+            gamePlayer.startWith(Cards.of(
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN))
             );
@@ -108,7 +133,7 @@ class BlackjackGameTest {
         @DisplayName("player가 카드를 받을 수 있는 상태가 아니면 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenPlayerIsNotAbleToReceiveCard() {
-            gamePlayer.start(Cards.of(
+            gamePlayer.startWith(Cards.of(
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN)
             ));
@@ -123,7 +148,7 @@ class BlackjackGameTest {
         @DisplayName("player가 카드를 받을 수 있지만 액션이 HOLD인 경우 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenActionIsHold() {
-            gamePlayer.start(Cards.of(
+            gamePlayer.startWith(Cards.of(
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN))
             );
@@ -132,31 +157,6 @@ class BlackjackGameTest {
             boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HOLD);
             assertThat(ableToContinue).isFalse();
         }
-    }
-
-    @DisplayName("Action이 HIT인 경우 카드를 한 장 받는다.")
-    @Test
-    void playByActionHit() {
-        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
-        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        player.start(Cards.of(CLUB_KING, CLUB_SEVEN));
-        assertThat(player.isAbleToReceiveCard()).isTrue();
-        blackjackGame.playByAction(player, BlackjackAction.HIT);
-
-        assertThat(player.getCurrentCardAmount()).isEqualTo(3);
-    }
-
-    @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
-    @Test
-    void playByActionHold() {
-        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
-        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        player.start(Cards.of(CLUB_KING, CLUB_SEVEN));
-
-        assertThat(player.isAbleToReceiveCard()).isTrue();
-        blackjackGame.playByAction(player, BlackjackAction.HOLD);
-
-        assertThat(player.getCurrentCardAmount()).isEqualTo(2);
     }
 
 }

@@ -8,6 +8,8 @@ import domain.card.Cards;
 import java.util.Objects;
 
 public abstract class Participant {
+    private static final int INITIAL_CARD_AMOUNT = 2;
+
     protected final ParticipantName participantName;
     protected GameState gameState;
 
@@ -15,7 +17,7 @@ public abstract class Participant {
         this.participantName = participantName;
     }
 
-    public void start(Cards cards) {
+    public void startWith(Cards cards) {
         this.gameState = Playing.from(cards);
     }
 
@@ -55,8 +57,8 @@ public abstract class Participant {
         return participantName.getName();
     }
 
-    public int getCurrentCardAmount() {
+    public int getAdditionalCardsAmount() {
         Cards cards = gameState.getCards();
-        return cards.getCards().size();
+        return cards.getCards().size() - INITIAL_CARD_AMOUNT;
     }
 }

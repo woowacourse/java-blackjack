@@ -24,7 +24,7 @@ class PlayerTest {
     @Test
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        player.start(Cards.of(HEART_THREE, HEART_TEN));
+        player.startWith(Cards.of(HEART_THREE, HEART_TEN));
         player.receive(HEART_QUEEN);
 
         assertThat(player.isAbleToReceiveCard()).isFalse();
@@ -34,7 +34,7 @@ class PlayerTest {
     @Test
     void getInitialCardsTest() {
         Participant player = TestDataGenerator.getPlayerWithName("pobi");
-        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+        player.startWith(Cards.of(HEART_QUEEN, HEART_TEN));
 
         Cards initialOpeningCards = player.getInitialOpeningCards();
         assertThat(initialOpeningCards.getCards()).hasSize(2);
@@ -53,7 +53,7 @@ class PlayerTest {
     @Test
     void getProfitByResultWinTest() {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
-        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+        player.startWith(Cards.of(HEART_QUEEN, HEART_TEN));
 
         Profit profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1000);
@@ -63,7 +63,7 @@ class PlayerTest {
     @Test
     void getProfitByResultWinBlackjackTest() {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
-        player.start(Cards.of(HEART_QUEEN, HEART_ACE));
+        player.startWith(Cards.of(HEART_QUEEN, HEART_ACE));
 
         Profit profitByResult = player.getProfitByResult(Result.WIN);
         assertThat(profitByResult.getAmount()).isEqualTo(1500);
@@ -73,7 +73,7 @@ class PlayerTest {
     @Test
     void getProfitByResultLoseTest() {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
-        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+        player.startWith(Cards.of(HEART_QUEEN, HEART_TEN));
 
         Profit profitByResult = player.getProfitByResult(Result.LOSE);
         assertThat(profitByResult.getAmount()).isEqualTo(-1000);
@@ -83,7 +83,7 @@ class PlayerTest {
     @Test
     void getProfitByResultDrawTest() {
         Player player = TestDataGenerator.getPlayerWithNameAndBetAmount("pobi", 1000);
-        player.start(Cards.of(HEART_QUEEN, HEART_TEN));
+        player.startWith(Cards.of(HEART_QUEEN, HEART_TEN));
 
         Profit profitByResult = player.getProfitByResult(Result.DRAW);
         assertThat(profitByResult.getAmount()).isEqualTo(0);

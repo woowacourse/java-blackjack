@@ -38,11 +38,11 @@ class TotalProfitTest {
     void createDealerResultSuccessTest() {
         Players players = Players.of(pobi, crong, royce);
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
-        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+        blackjackGame.getDealer().startWith(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
 
-        pobi.start(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
-        crong.start(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
-        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+        pobi.startWith(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
+        crong.startWith(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
+        royce.startWith(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
@@ -56,10 +56,10 @@ class TotalProfitTest {
     void createDealerResultSuccessContainsDrawTest() {
         Players players = Players.of(crong, royce);
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
-        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+        blackjackGame.getDealer().startWith(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
 
-        crong.start(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
-        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+        crong.startWith(Cards.of(DIAMOND_TEN, SPADE_NINE)); // 19
+        royce.startWith(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
@@ -73,11 +73,11 @@ class TotalProfitTest {
     void getDealerProfitTest() {
         Players players = Players.of(pobi, crong, royce);
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame(players);
-        blackjackGame.getDealer().start(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
+        blackjackGame.getDealer().startWith(Cards.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
 
-        pobi.start(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
-        crong.start(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
-        royce.start(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+        pobi.startWith(Cards.of(DIAMOND_TEN, DIAMOND_ACE)); // 21
+        crong.startWith(Cards.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
+        royce.startWith(Cards.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
