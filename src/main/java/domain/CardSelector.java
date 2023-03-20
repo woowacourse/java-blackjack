@@ -28,17 +28,17 @@ public class CardSelector {
         int totalSizeOfPlayersAndDealer = namesSize + 1;
         return IntStream.range(0, totalSizeOfPlayersAndDealer)
             .mapToObj(i -> IntStream.range(0, 2)
-                .mapToObj(j -> CardBox.get(generator.generateIndex()))
+                .mapToObj(j -> Deck.get(generator.generateIndex()))
                 .collect(Collectors.toList()))
             .map(Cards::new)
             .collect(Collectors.toList());
     }
 
     public static void playerDrawIfSelectToAddCard(final Player player,
-        final int cardBoxIndex) {
+        final CardNumberGenerator cardNumberGenerator) {
         boolean didntSelected = true;
         while (didntSelected) {
-            didntSelected = !player.selectToPickOtherCard(cardBoxIndex);
+            didntSelected = !player.selectToPickOtherCard(cardNumberGenerator.generateIndex());
         }
     }
 
