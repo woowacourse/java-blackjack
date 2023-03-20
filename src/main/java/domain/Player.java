@@ -26,6 +26,18 @@ public class Player extends Participant{
         return betting.calculateFinalProfit();
     }
 
+    public boolean isSelectToAddCard(boolean command) {
+        return command && checkPlayerCanReceiveCard();
+    }
+
+    public boolean checkPlayerCanReceiveCard() {
+        return PlayerState.LESS_THAN_MAXIMUM.equals(askPlayerState());
+    }
+
+    public boolean isPlayerCanAddCard() {
+        return PlayerState.MORE_THAN_MAXIMUM.equals(askPlayerState()) || PlayerState.EQUAL_WITH_MAXIMUM.equals(askPlayerState());
+    }
+
     public String getName() {
         return name.getName();
     }
