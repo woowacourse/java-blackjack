@@ -37,9 +37,9 @@ public class ParticipantsTest extends AbstractTestFixture {
 
         participants.dealFrom(new Deck());
 
-        assertThat(user.getCards()).hasSize(1);
-        assertThat(user2.getCards()).hasSize(1);
-        assertThat(dealer.getCards()).hasSize(1);
+        assertThat(user.getHand().getCards()).hasSize(1);
+        assertThat(user2.getHand().getCards()).hasSize(1);
+        assertThat(dealer.getHand().getCards()).hasSize(1);
     }
 
     static Stream<Arguments> test_find_if_player_is_participant() {

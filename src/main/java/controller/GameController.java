@@ -58,7 +58,7 @@ public class GameController {
         game.dealTwice();
 
         outputView.printDealStatus(createDtosOf(game.getUsers()));
-        outputView.printFirstCardOfDealer(createDtosOf(game.getDealer().getCards()));
+        outputView.printFirstCardOfDealer(createDtosOf(game.getDealer().getHand().getCards()));
         outputView.printUsersStatus(createDtosOf(game.getUsers()));
     }
 
@@ -93,7 +93,7 @@ public class GameController {
     private void selectHitOrStand(Game game, User user) {
         while (user.canHit() && inputView.askForHit(user.getName())) {
             game.dealTo(user);
-            outputView.printPlayerCards(user.getName(), createDtosOf(user.getCards()));
+            outputView.printPlayerCards(user.getName(), createDtosOf(user.getHand().getCards()));
         }
     }
 
@@ -128,7 +128,10 @@ public class GameController {
     }
 
     private PlayerDto createDtoOf(Player player) {
-        return new PlayerDto(player.getName(), createDtosOf(player.getCards()), player.getScore().getScore());
+        return new PlayerDto(
+                player.getName(),
+                createDtosOf(player.getHand().getCards()),
+                player.getHand().score().getScore());
     }
 
     private CardDto createDtoOf(Card card) {
