@@ -17,7 +17,7 @@ public class PlayersTest {
     @DisplayName("Players 객체의 필드 크기는 Player 수와 동일하다")
     void sizeOfPlayersIsSameWithNumberOfPlayer() {
         List<String> names = List.of("roy", "hoy", "poy");
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         List<Integer> moneys = List.of(1000, 100, 50);
         int expectedNumberOfPlayer = 3;
 
@@ -30,7 +30,7 @@ public class PlayersTest {
     @DisplayName("플레이어 이름 배열이 입력될 경우 Players 객체가 정상적으로 생성된다.")
     void generatePlayers() {
         List<String> names = List.of("roy", "hoy", "poy");
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         List<Integer> moneys = List.of(1000, 100, 50);
 
         assertDoesNotThrow(() -> Players.of(names, cardDeck, moneys));
@@ -40,7 +40,7 @@ public class PlayersTest {
     @DisplayName("최대 플레이어 수가 4명을 초과할 경우 예외가 발생한다.")
     void exceptionMoreThanMaximumPlayers() {
         List<String> names = List.of("roy", "hoy", "poy", "joy", "koy");
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         List<Integer> moneys = List.of(1000, 100, 50, 10, 5);
 
         assertThatThrownBy(() -> Players.of(names, cardDeck, moneys))
@@ -53,7 +53,7 @@ public class PlayersTest {
     void exceptionWhenPlayerNamesAreDuplicated() {
 
         List<String> names = List.of("roy", "roy", "poy");
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         List<Integer> moneys = List.of(1000, 100, 50);
 
         assertThatThrownBy(() -> Players.of(names, cardDeck, moneys))

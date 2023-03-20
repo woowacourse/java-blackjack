@@ -27,8 +27,8 @@ class JudgeTest {
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(new Card(CardType.SPADE, CardValue.TEN), new Card(CardType.HEART, CardValue.TEN))));
         Dealer dealer = new Dealer(Name.generateDealerName(), dealerCards);
-        dealer.pickCard(CardDeck.generateCardDeck());
-        dealer.pickCard(CardDeck.generateCardDeck());
+        dealer.pickCard(new CardDeck());
+        dealer.pickCard(new CardDeck());
         PlayerScore playerScore = Judge.judgeScore(player, dealer);
 
         assertThat(playerScore.getProfit()).isEqualTo(1000);
@@ -41,8 +41,8 @@ class JudgeTest {
         Cards playerCards = new Cards(new ArrayList<>(List.of(new Card(CardType.SPADE, CardValue.QUEEN), new Card(CardType.HEART, CardValue.KING))));
         Money money = new Money(1000);
         Player player = new Player(name, playerCards, money);
-        player.pickCard(CardDeck.generateCardDeck());
-        player.pickCard(CardDeck.generateCardDeck());
+        player.pickCard(new CardDeck());
+        player.pickCard(new CardDeck());
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(new Card(CardType.SPADE, CardValue.TEN), new Card(CardType.HEART, CardValue.TEN))));
         Dealer dealer = new Dealer(Name.generateDealerName(), dealerCards);

@@ -19,7 +19,7 @@ import java.util.List;
 public class CardGame {
 
     public void run() {
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(Name.generateDealerName(), generateInitCards(cardDeck));
         Players players = makePlayers(cardDeck);
         play(cardDeck, dealer, players);

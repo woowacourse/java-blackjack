@@ -1,17 +1,17 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import domain.card.*;
 import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PlayerTest {
 
@@ -76,7 +76,7 @@ public class PlayerTest {
         Cards cards = new Cards(new ArrayList<>(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.TEN))));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         int expectedCardSize = 3;
 
         player.pickCard(cardDeck);

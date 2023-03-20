@@ -19,7 +19,7 @@ public class Players {
         this.players = players;
     }
 
-    public static  Players of(List<String> names, CardDeck cardDeck, List<Integer> moneys) {
+    public static Players of(List<String> names, CardDeck cardDeck, List<Integer> moneys) {
         List<Player> players = new ArrayList<>();
         for (int playerIndex = 0; playerIndex < names.size(); playerIndex++) {
             Name name = Name.generatePlayerName(names.get(playerIndex));

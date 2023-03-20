@@ -51,7 +51,7 @@ public class DealerTest {
         Name name = Name.generateDealerName();
         Cards cards = new Cards(new ArrayList<>(List.of(new Card(CardType.SPADE, CardValue.SEVEN), new Card(CardType.HEART, CardValue.EIGHT))));
         Dealer dealer = new Dealer(name, cards);
-        CardDeck cardDeck = CardDeck.generateCardDeck();
+        CardDeck cardDeck = new CardDeck();
         int expectedCardSize = 3;
 
         dealer.pickCard(cardDeck);

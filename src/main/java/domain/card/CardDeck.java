@@ -3,25 +3,19 @@ package domain.card;
 import java.util.*;
 
 public class CardDeck {
+    private static final int FIRST_CARD_INDEX_IN_DECK = 0;
+    private static final List<Card> CARDDECK;
 
-    private final Deque<Card> cardDeck;
-
-    private CardDeck(Deque<Card> cardDeck) {
-        this.cardDeck = cardDeck;
+    static {
+        CARDDECK = makeCards();
     }
 
-    public static CardDeck generateCardDeck() {
+    private static List<Card> makeCards() {
         List<Card> cards = new ArrayList<>();
-        makeCards(cards);
-        shuffleCards(cards);
-        Deque<Card> cardDeck = new ArrayDeque<>(cards);
-        return new CardDeck(cardDeck);
-    }
-
-    private static void makeCards(List<Card> cards) {
         for (CardType cardType : CardType.values()) {
             addCards(cards, cardType);
         }
+        return cards;
     }
 
     private static void addCards(List<Card> cards, CardType cardType) {
@@ -30,15 +24,13 @@ public class CardDeck {
         }
     }
 
-    private static void shuffleCards(List<Card> cards) {
-        Collections.shuffle(cards);
-    }
 
     public Card pickCard() {
-        return cardDeck.pop();
+        Collections.shuffle(CARDDECK);
+        return CARDDECK.get(FIRST_CARD_INDEX_IN_DECK);
     }
 
-    public Deque<Card> getCardDeck() {
-        return cardDeck;
+    public List<Card> getCardDeck() {
+        return CARDDECK;
     }
 }
