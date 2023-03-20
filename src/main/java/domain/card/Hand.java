@@ -64,8 +64,8 @@ public class Hand {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Card getCardIndexOf(int index) {
-        return cards.get(index);
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     public boolean isBlackJack() {

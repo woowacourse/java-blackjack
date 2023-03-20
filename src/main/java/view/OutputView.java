@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private static void printDealerCardCondition(PlayerReadOnly dealer) {
-        Card card = dealer.getCardIndexOf(0);
+        Card card = dealer.getFirstCard();
         printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
     }
 

@@ -20,14 +20,14 @@ public class Name {
         return new Name(name);
     }
 
-    public static Name dealerName() {
-        return new Name(DEALER_NAME);
-    }
-
     public static List<Name> of(List<String> names) {
         return names.stream()
                 .map(Name::of)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public static Name dealerName() {
+        return new Name(DEALER_NAME);
     }
 
     private static void validateName(String name) {

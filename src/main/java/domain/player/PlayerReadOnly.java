@@ -15,6 +15,10 @@ public class PlayerReadOnly {
         return new PlayerReadOnly(player);
     }
 
+    public boolean isBust() {
+        return player.isBust();
+    }
+
     public int getTotalScore() {
         return player.getScore();
     }
@@ -27,12 +31,8 @@ public class PlayerReadOnly {
         return player.getName();
     }
 
-    public boolean isBust() {
-        return player.isBust();
-    }
-
-    public Card getCardIndexOf(int index) {
-        return player.getCardIndexOf(index);
+    public Card getFirstCard() {
+        return player.getFirstCard();
     }
 
     @Override

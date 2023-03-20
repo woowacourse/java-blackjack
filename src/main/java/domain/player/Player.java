@@ -29,10 +29,6 @@ public class Player {
         hand.draw(card);
     }
 
-    public int getScore() {
-        return hand.getScore();
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }
@@ -41,20 +37,12 @@ public class Player {
         return hand.isBlackJack();
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    public Card getCardIndexOf(int index) {
-        return hand.getCardIndexOf(index);
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 
     public boolean isNameEqualTo(String playerName) {
         return getName().equals(playerName);
-    }
-
-    public String getName() {
-        return this.name.getName();
     }
 
     public Bet win() {
@@ -71,6 +59,18 @@ public class Player {
 
     public Bet blackJack() {
         return bet.multiply(1.5f);
+    }
+
+    public int getScore() {
+        return hand.getScore();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+
+    public String getName() {
+        return this.name.getName();
     }
 
     @Override
