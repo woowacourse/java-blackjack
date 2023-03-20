@@ -4,7 +4,7 @@ import domain.card.Cards;
 
 public class Dealer extends Participant {
 
-    public static final int STANDARD_TO_GET_ONE_MORE_CARD = 16;
+    private static final int STANDARD_TO_GET_ONE_MORE_CARD = 16;
 
     public Dealer(Name name, Cards cards) {
         super(name, cards, new Money(0));
