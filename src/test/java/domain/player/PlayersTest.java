@@ -18,7 +18,7 @@ class PlayersTest {
     @DisplayName("딜러에게 특정한 카드를 줄 수 있다.")
     void whenGivingCardToDealer() {
         Dealer dealer = new Dealer(Hand.withEmptyHolder());
-        Players players = new Players(dealer, Collections.emptyList());
+        Players players = Players.from(dealer, Collections.emptyList());
 
         Card card = SPADE_FOUR;
         players.giveCardByName(dealer.getName(), card);
@@ -33,7 +33,7 @@ class PlayersTest {
                 new Hand(List.of(
                         HEART_TEN, DIAMOND_SEVEN
                 )));
-        Players players = new Players(dealer, Collections.emptyList());
+        Players players = Players.from(dealer, Collections.emptyList());
 
         assertThat(players.shouldDealerGetCard()).isFalse();
     }
@@ -45,7 +45,7 @@ class PlayersTest {
                 new Hand(List.of(
                         HEART_TEN, DIAMOND_FIVE
                 )));
-        Players players = new Players(dealer, Collections.emptyList());
+        Players players = Players.from(dealer, Collections.emptyList());
 
         assertThat(players.shouldDealerGetCard()).isTrue();
     }
@@ -54,7 +54,7 @@ class PlayersTest {
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
     void givenName_thenReturnsPlayer() {
         Gambler gambler = new Gambler(Hand.withEmptyHolder(), Name.of("테스트"), Bet.from(3000));
-        Players players = new Players(new Dealer(Hand.withEmptyHolder()), List.of(gambler));
+        Players players = Players.from(new Dealer(Hand.withEmptyHolder()), List.of(gambler));
 
         Player findPlayer = players.findByName("테스트");
         assertThat(findPlayer).isEqualTo(gambler);
@@ -64,7 +64,7 @@ class PlayersTest {
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 없으면 예외가 발생한다.")
     void givenInvalidName_thenThrowsException() {
         Gambler gambler = new Gambler(Hand.withEmptyHolder(), Name.of("테스트"), Bet.from(3000));
-        Players players = new Players(new Dealer(Hand.withEmptyHolder()), List.of(gambler));
+        Players players = Players.from(new Dealer(Hand.withEmptyHolder()), List.of(gambler));
 
         assertThatThrownBy(() -> players.findByName("없는회원"))
                 .isInstanceOf(IllegalArgumentException.class);

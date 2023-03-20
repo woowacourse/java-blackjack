@@ -25,7 +25,7 @@ class BlackJackTest {
     @DisplayName("게임 시작 시 플레이어들에게 카드를 2장씩 나눠준다.")
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
+                Players.from(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
                 Deck.create(maxIndex -> 0)
         );
         blackJack.initializeCardsOfPlayers();
@@ -43,7 +43,7 @@ class BlackJackTest {
         Dealer dealer = makeDealer();
         List<Gambler> gamblers = Gambler.from(GIVEN_NAMES_BETS);
         BlackJack blackJack = new BlackJack(
-                new Players(dealer, gamblers),
+                Players.from(dealer, gamblers),
                 Deck.create(maxIndex -> 0)
         );
         blackJack.giveCardToAllPlayers();
@@ -56,7 +56,7 @@ class BlackJackTest {
     @DisplayName("특정 플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
+                Players.from(makeDealer(), Gambler.from(GIVEN_NAMES_BETS)),
                 Deck.create(maxIndex -> 0)
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
@@ -71,7 +71,7 @@ class BlackJackTest {
     @DisplayName("딜러의 총 점수가 16 이하인 지 확인한다.")
     void givenDealerTotalScore_thenChecksOrLessSixTeen() {
         BlackJack blackJack = new BlackJack(
-                new Players(
+                Players.from(
                         makeDealer(SPADE_KING, HEART_SIX), Gambler.from(GIVEN_NAMES_BETS)
                 ), null
         );
@@ -82,7 +82,7 @@ class BlackJackTest {
     @DisplayName("딜러의 총 점수가 17 이상인 지 확인한다.")
     void givenDealerTotalScore_thenChecksOrMoreSevenTeen() {
         BlackJack blackJack = new BlackJack(
-                new Players(
+                Players.from(
                         makeDealer(SPADE_KING, HEART_SEVEN), Gambler.from(GIVEN_NAMES_BETS)
                 ), null
         );
@@ -94,7 +94,7 @@ class BlackJackTest {
     void thenGiveDealerCard() {
         Dealer dealer = makeDealer();
         BlackJack blackJack = new BlackJack(
-                new Players(dealer, Gambler.from(GIVEN_NAMES_BETS)),
+                Players.from(dealer, Gambler.from(GIVEN_NAMES_BETS)),
                 Deck.create(maxIndex -> 0)
         );
         blackJack.giveCardToDealer();

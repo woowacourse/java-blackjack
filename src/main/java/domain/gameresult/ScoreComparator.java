@@ -1,13 +1,12 @@
 package domain.gameresult;
 
 import domain.player.Bet;
-import domain.player.Dealer;
-import domain.player.Gambler;
+import domain.player.Player;
 
 public class ScoreComparator {
     private ScoreComparator() {}
 
-    public static Bet compare(Dealer dealer, Gambler gambler) {
+    public static Bet compare(Player dealer, Player gambler) {
         if (dealer.isBust() || gambler.isBust()) {
             return calculateBettingResultOnBust(dealer, gambler);
         }
@@ -19,7 +18,7 @@ public class ScoreComparator {
         return calculateBettingResultOnScore(dealer, gambler);
     }
 
-    private static Bet calculateBettingResultOnBlackjack(Dealer dealer, Gambler gambler) {
+    private static Bet calculateBettingResultOnBlackjack(Player dealer, Player gambler) {
         if (dealer.isBlackJack()) {
             return gambler.draw();
         } // 딜러도 블랙잭
@@ -27,7 +26,7 @@ public class ScoreComparator {
         return gambler.blackJack(); // 참가자만 블랙잭
     }
 
-    private static Bet calculateBettingResultOnBust(Dealer dealer, Gambler gambler) {
+    private static Bet calculateBettingResultOnBust(Player dealer, Player gambler) {
         if (dealer.isBust()) {
             return gambler.win();
         } // 딜러가 버스트
@@ -36,7 +35,7 @@ public class ScoreComparator {
         // 참가자가 버스트
     }
 
-    private static Bet calculateBettingResultOnScore(Dealer dealer, Gambler gambler) {
+    private static Bet calculateBettingResultOnScore(Player dealer, Player gambler) {
         int dealerScore = dealer.getScore();
         int participantScore = gambler.getScore();
 

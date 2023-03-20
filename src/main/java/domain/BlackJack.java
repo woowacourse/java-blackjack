@@ -2,10 +2,7 @@ package domain;
 
 import domain.card.Deck;
 import domain.gameresult.GameResult;
-import domain.player.Dealer;
-import domain.player.PlayerReadOnly;
-import domain.player.Players;
-import domain.player.PlayersReadOnly;
+import domain.player.*;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class BlackJack {
     }
 
     public void giveCardToDealer() {
-        Dealer dealer = players.getDealer();
+        Player dealer = players.getDealer();
         giveCard(PlayerReadOnly.from(dealer));
     }
 

@@ -1,17 +1,23 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.gameresult.ScoreComparator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final Dealer dealer;
-    private final List<Gambler> gamblers;
+    private final List<Player> players;
 
-    public Players(Dealer dealer, List<Gambler> gamblers) {
-        this.dealer = dealer;
-        this.gamblers = gamblers;
+    private Players(List<Player> players) {
+        this.players = players;
+    }
+
+    public static Players from(Dealer dealer, List<Gambler> gamblers) {
+        List<Player> players = new ArrayList<>();
+        players.add(0, dealer);
+        players.addAll(gamblers);
+        return new Players(players);
     }
 
     public void giveCardByName(String name, Card card) {
@@ -20,12 +26,12 @@ public class Players {
     }
 
     public boolean shouldDealerGetCard() {
-        return dealer.getScore() <= Dealer.DEALER_MIN_SCORE;
+        return getDealer().getScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
     public Map<Player, Bet> compareAll() {
         Map<Player, Bet> result = new LinkedHashMap<>();
-        gamblers.forEach(participant -> result.put(participant, dealer.compareWith(participant)));
+        getParticipants().forEach(participant -> result.put(participant, ScoreComparator.compare(getDealer(), participant)));
         return result;
     }
 
@@ -37,18 +43,17 @@ public class Players {
     }
 
     private List<Player> getAllPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(gamblers);
+        return new ArrayList<>(players);
+    }
+
+    public Player getDealer() {
+        return players.get(0);
+    }
+
+    protected List<Player> getParticipants() {
+        List<Player> players = new LinkedList<>(this.players);
+        players.remove(getDealer());
         return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    protected List<Gambler> getParticipants() {
-        return gamblers;
     }
 
     public List<String> getAllPlayerNames() {

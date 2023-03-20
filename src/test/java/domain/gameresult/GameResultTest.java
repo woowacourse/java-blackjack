@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,10 +27,9 @@ class GameResultTest {
     @Test
     @DisplayName("플레이어 이름과 베팅 정보를 이용한 작업을 주입하여 사용할 수 있다.")
     void doLogicWithNameAndBet() {
-        Map<Player, Bet> result = Map.of(
-                new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
-                new Gambler(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000)
-        );
+        Map<Player, Bet> result = new LinkedHashMap<>();
+        result.put(new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000));
+        result.put(new Gambler(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000));
         GameResult gameResult = GameResult.from(result);
 
         List<String> names = new ArrayList<>();

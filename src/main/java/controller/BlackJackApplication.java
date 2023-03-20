@@ -31,7 +31,7 @@ public class BlackJackApplication {
 
     private BlackJack startBlackJack() {
         BlackJack blackJack = new BlackJack(
-                new Players(new Dealer(Hand.withEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
+                Players.from(new Dealer(Hand.withEmptyHolder()), Gambler.from(getGamblerNameAndBets())),
                 Deck.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);
