@@ -4,18 +4,17 @@ import domain.participant.Player;
 
 public class Profit {
 
-    private final Double profit;
+    private final double profit;
 
-    private Profit(Double profit) {
+    private Profit(double profit) {
         this.profit = profit;
     }
 
     public static Profit winnerProfit(Player player) {
         if (player.isBlackjack()) {
-            Double blackJackProfit = player.getMoney() * 1.5;
-            return new Profit(blackJackProfit);
+            return new Profit(player.getMoney() * 1.5);
         }
-        return new Profit((double) player.getMoney());
+        return new Profit(player.getMoney());
     }
 
     public static Profit looserProfit(Player player) {
@@ -23,7 +22,7 @@ public class Profit {
     }
 
     public static Profit tieProfit() {
-        return new Profit((double) 0);
+        return new Profit(0);
     }
 
     public static Profit dealerProfit(double dealerProfit) {
