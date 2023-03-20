@@ -10,10 +10,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TotalProfit {
-    private final Map<Participant, Profit> profitBook;
+    private final Map<Participant, Profit> participantsProfit;
 
-    private TotalProfit(Map<Participant, Profit> profitBook) {
-        this.profitBook = profitBook;
+    private TotalProfit(Map<Participant, Profit> participantsProfit) {
+        this.participantsProfit = participantsProfit;
     }
 
     public static TotalProfit from(BlackjackGame blackjackGame) {
@@ -22,7 +22,8 @@ public class TotalProfit {
         Players players = blackjackGame.getPlayers();
 
         for (Player player : players.getPlayers()) {
-            Result playerResult = dealer.competeWithPlayer(player).convertToOpposite();
+            Result dealerResult = dealer.competeWithPlayer(player);
+            Result playerResult = dealerResult.convertToOpposite();
             Profit profit = player.getProfitByResult(playerResult);
             betResultBook.put(player, profit);
         }
@@ -30,12 +31,12 @@ public class TotalProfit {
         return new TotalProfit(betResultBook);
     }
 
-    public Map<Participant, Profit> getProfitBook() {
-        return Collections.unmodifiableMap(profitBook);
+    public Map<Participant, Profit> getParticipantsProfit() {
+        return Collections.unmodifiableMap(participantsProfit);
     }
 
     public Profit getDealerProfit() {
-        double dealerProfit = profitBook.values().stream()
+        double dealerProfit = participantsProfit.values().stream()
                 .mapToDouble(Profit::getAmount)
                 .sum();
 

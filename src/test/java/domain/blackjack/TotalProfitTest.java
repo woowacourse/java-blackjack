@@ -46,7 +46,7 @@ class TotalProfitTest {
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
-        assertThat(totalProfit.getProfitBook().values())
+        assertThat(totalProfit.getParticipantsProfit().values())
                 .extracting("amount")
                 .containsExactly(1500d, 1000d, -1000d);
     }
@@ -63,7 +63,7 @@ class TotalProfitTest {
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
-        assertThat(totalProfit.getProfitBook().values())
+        assertThat(totalProfit.getParticipantsProfit().values())
                 .extracting("amount")
                 .containsExactly(0d, -1000d);
     }
@@ -81,7 +81,7 @@ class TotalProfitTest {
 
         TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
-        assertThat(totalProfit.getProfitBook().values())
+        assertThat(totalProfit.getParticipantsProfit().values())
                 .extracting("amount")
                 .containsExactly(1500d, 1000d, -1000d);
 

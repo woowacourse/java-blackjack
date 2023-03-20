@@ -104,7 +104,7 @@ public class OutputView {
         System.out.println(FINAL_RESULT_MESSAGE);
         printPlayerResultWithProfit(dealer, totalProfit.getDealerProfit().getAmount());
 
-        totalProfit.getProfitBook().forEach(
+        totalProfit.getParticipantsProfit().forEach(
                 (key, value) -> printPlayerResultWithProfit(key, value.getAmount())
         );
     }
