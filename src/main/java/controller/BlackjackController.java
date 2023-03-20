@@ -37,8 +37,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame createBlackjackGame() {
-        PlayerNames playerNames = retryOnInvalidUserInput(this::requestPlayerNames);
-        Players players = createPlayers(playerNames);
+        Players players = retryOnInvalidUserInput(this::requestPlayers);
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
@@ -47,8 +46,9 @@ public class BlackjackController {
         return PlayerNames.from(playerNamesUserInput);
     }
 
-    private Players createPlayers(PlayerNames playerNames) {
+    private Players requestPlayers() {
         List<Player> players = new ArrayList<>();
+        PlayerNames playerNames = retryOnInvalidUserInput(this::requestPlayerNames);
         for (ParticipantName playerName : playerNames.getNames()) {
             String name = playerName.getName();
             BetAmount betAmount = retryOnInvalidUserInput(() -> requestBetAmount(name));
