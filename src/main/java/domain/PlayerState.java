@@ -1,8 +1,8 @@
 package domain;
 
 public enum PlayerState {
-    LESS,
+    LESS_THAN_MAXIMUM,
 
-    FLAT,
-    MORE
+    EQUAL_WITH_MAXIMUM,
+    MORE_THAN_MAXIMUM
 }
