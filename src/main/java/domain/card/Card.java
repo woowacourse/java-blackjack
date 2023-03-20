@@ -1,34 +1,67 @@
 package domain.card;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Card {
+public final class Card {
 
-    private final CardPattern pattern;
-    private final CardNumber number;
+    private static final Map<Shape, Map<Denomination, Card>> CARD_PACK;
 
-    private Card(final CardPattern pattern, final CardNumber number) {
+    static {
+        final List<Shape> shapes = Shape.findAllCardPattern();
+        final List<Denomination> denominations = Denomination.findTotalCardNumber();
+
+        CARD_PACK = makeCacheCards(shapes, denominations);
+    }
+
+    private final Shape pattern;
+    private final Denomination number;
+
+    private Card(final Shape pattern, final Denomination number) {
         this.pattern = pattern;
         this.number = number;
     }
 
-    public static Card create(final CardPattern pattern, final CardNumber number) {
-        return new Card(pattern, number);
+    private static Map<Shape, Map<Denomination, Card>> makeCacheCards(final List<Shape> shapes,
+            final List<Denomination> denominations) {
+        return shapes.stream()
+                .collect(Collectors.toMap(Function.identity(),
+                        pattern -> makeCacheCardNumbers(pattern, denominations)));
+    }
+
+    private static Map<Denomination, Card> makeCacheCardNumbers(final Shape shape,
+            final List<Denomination> denominations) {
+        return denominations.stream()
+                .collect(Collectors.toMap(Function.identity(),
+                        number -> new Card(shape, number)));
+    }
+
+    public static Card of(final Shape shape, final Denomination denomination) {
+        try {
+            final Map<Denomination, Card> cardNumbers = CARD_PACK.get(shape);
+
+            return cardNumbers.get(denomination);
+        } catch (NullPointerException e) {
+            throw new IllegalStateException("존재하지 않는 카드입니다", e);
+        }
     }
 
     public int findCardNumber() {
-        return number.findNumber();
+        return number.score();
     }
 
     public boolean checkAce() {
         return number.checkAce();
     }
 
-    public CardPattern getCardPattern() {
+    public Shape getCardPattern() {
         return pattern;
     }
 
-    public CardNumber getCardNumber() {
+    public Denomination getCardNumber() {
         return number;
     }
 

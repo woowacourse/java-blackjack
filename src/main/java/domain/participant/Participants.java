@@ -1,55 +1,72 @@
 package domain.participant;
 
 import domain.card.Card;
-
+import domain.card.Deck;
+import domain.game.GameResult;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Participants {
+public final class Participants {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
-    private static final int DEALER_ORDER = 0;
-    private static final int PARTICIPANT_START_ORDER = 1;
 
-    private final List<Participant> participants;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(final List<String> playerNames) {
-        final List<String> trimPlayerNames = processTrimPlayerNames(playerNames);
-
-        validateDuplicateNames(trimPlayerNames);
-        validatePlayerCount(trimPlayerNames);
-
-        this.participants = makeParticipants(trimPlayerNames);
+    private Participants(final Dealer dealer, final List<Player> players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    public static Participants create(final List<String> playerNames) {
-        return new Participants(playerNames);
+    public static Participants create(final List<String> playersName, final Function<String, Integer> readBetAmount,
+            final Consumer<String> messageSupplier) {
+        final List<String> playersTrimName = processTrimPlayersName(playersName);
+
+        validateDuplicateNames(playersTrimName);
+        validatePlayerCount(playersTrimName);
+        validatePlayerBlankName(playersTrimName);
+
+        final Dealer dealer = Dealer.create(DEALER_NAME);
+        final List<Player> players = makePlayers(playersName, readBetAmount, messageSupplier);
+
+        return new Participants(dealer, players);
     }
 
-    public void addCard(final int participantOrder, final Card card) {
-        final Participant participant = participants.get(participantOrder);
-
-        participant.addCard(card);
+    private static List<Player> makePlayers(final List<String> playersName,
+            final Function<String, Integer> readBetAmount, final Consumer<String> messageSupplier) {
+        return playersName.stream()
+                .map(playerName -> makePlayer(playerName, readBetAmount, messageSupplier))
+                .collect(Collectors.toList());
     }
 
-    public Participant findDealer() {
-        return participants.get(DEALER_ORDER);
+    private static Player makePlayer(final String playerName, final Function<String, Integer> readBetAmount,
+            final Consumer<String> messageSupplier) {
+        try {
+            final Integer apply = readBetAmount.apply(playerName);
+
+            return Player.create(playerName, apply);
+        } catch (IllegalArgumentException e) {
+            messageSupplier.accept(e.getMessage());
+            return makePlayer(playerName, readBetAmount, messageSupplier);
+        }
     }
 
-    public List<Participant> findPlayers() {
-        return participants.subList(PARTICIPANT_START_ORDER, participants.size());
-    }
-
-    private List<String> processTrimPlayerNames(final List<String> playerNames) {
-        return playerNames.stream().map(String::trim)
+    private static List<String> processTrimPlayersName(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private void validateDuplicateNames(final List<String> playerNames) {
+    private static void validateDuplicateNames(final List<String> playerNames) {
         final Set<String> uniqueNames = new HashSet<>(playerNames);
 
         if (playerNames.size() != uniqueNames.size()) {
@@ -57,7 +74,7 @@ public class Participants {
         }
     }
 
-    private void validatePlayerCount(final List<String> playerNames) {
+    private static void validatePlayerCount(final List<String> playerNames) {
         final int playerCount = playerNames.size();
 
         if (playerCount < MIN_COUNT || playerCount > MAX_COUNT) {
@@ -65,32 +82,103 @@ public class Participants {
         }
     }
 
-    private List<Player> makePlayers(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::create)
-                .collect(Collectors.toUnmodifiableList());
+    private static void validatePlayerBlankName(final List<String> playerNames) {
+        for (String playerName : playerNames) {
+            if (playerName.isBlank()) {
+                throw new IllegalArgumentException("플레이어의 이름은 공백일 수 없습니다.");
+            }
+            if (DEALER_NAME.equals(playerName)) {
+                throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
+            }
+        }
     }
 
-    private List<Participant> makeParticipants(final List<String> playerNames) {
-        final List<Participant> participants = new ArrayList<>();
-        final List<Player> players = makePlayers(playerNames);
+    public boolean canDraw(final String targetPlayerName) {
+        final Player targetPlayer = findPlayerByName(targetPlayerName);
 
-        participants.add(Dealer.create());
-        participants.addAll(players);
-        return participants;
+        return targetPlayer.canDraw();
     }
 
-    public int size() {
-        return participants.size();
+    public void addCardForPlayer(final String targetPlayerName, final Card drawCard) {
+        final Player targetPlayer = findPlayerByName(targetPlayerName);
+
+        targetPlayer.addCard(drawCard);
     }
 
-    public List<Participant> getParticipants() {
-        return List.copyOf(participants);
+    public void addCardForDealer(final Card drawCard) {
+        dealer.addCard(drawCard);
     }
 
-    public List<String> getParticipantNames() {
-        return participants.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toUnmodifiableList());
+    public int playDealerTurn(final Deck deck) {
+        return dealer.playDealerTurn(deck);
+    }
+
+    public Map<String, BigDecimal> calculateProfit() {
+        final Map<Player, GameResult> gameResult = calculateGameResult();
+
+        return gameResult.keySet().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> player.calculateProfit(gameResult.getOrDefault(player, GameResult.DRAW))
+                ));
+    }
+
+    private Map<Player, GameResult> calculateGameResult() {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> dealer.calculateResult(player.participantCard())
+                ));
+    }
+
+    private Player findPlayerByName(final String targetPlayerName) {
+        return players.stream().filter(player -> player.matchByName(targetPlayerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 플레이어입니다."));
+    }
+
+    public List<String> playersName() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getParticipantsName() {
+        final List<String> participantsName = new ArrayList<>();
+
+        participantsName.add(dealer.getName());
+        participantsName.addAll(playersName());
+        return participantsName;
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
+    public Card getDealerStartCard() {
+        return dealer.getStartCard();
+    }
+
+    public List<Card> getPlayerCard(final String targetPlayerName) {
+        final Player targetPlayer = findPlayerByName(targetPlayerName);
+        final ParticipantCard playerCard = targetPlayer.participantCard();
+
+        return playerCard.getCards();
+    }
+
+    public List<Card> getDealerCard() {
+        final ParticipantCard dealerCard = dealer.participantCard();
+
+        return dealerCard.getCards();
+    }
+
+    public int getDealerScore() {
+        return dealer.calculateScore();
+    }
+
+    public int getPlayerScore(final String targetPlayerName) {
+        final Player targetPlayer = findPlayerByName(targetPlayerName);
+
+        return targetPlayer.calculateScore();
     }
 }

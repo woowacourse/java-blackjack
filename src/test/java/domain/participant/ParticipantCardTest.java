@@ -1,18 +1,17 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardPattern;
+import domain.card.Denomination;
+import domain.card.Shape;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantCardTest {
 
@@ -36,7 +35,7 @@ class ParticipantCardTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_whenSuccess() {
         // when
-        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Card card = Card.of(Shape.HEART, Denomination.ACE);
         participantCard.addCard(card);
 
         // then
@@ -49,7 +48,7 @@ class ParticipantCardTest {
     @DisplayName("getFirst()는 호출하면 참가자의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
-        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Card card = Card.of(Shape.HEART, Denomination.ACE);
         participantCard.addCard(card);
 
         // when
@@ -62,23 +61,25 @@ class ParticipantCardTest {
 
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
-    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expectedScore) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard.addCard(card));
 
         // when
-        final int score = participantCard.calculateScore();
+        final ParticipantScore actual = participantCard.calculateScore();
 
         // then
-        assertThat(score)
-                .isSameAs(expected);
+        final ParticipantScore expected = ParticipantScore.scoreOf(expectedScore);
+
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "checkBust()는 호출하면 버스트인지 여부를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
     void checkBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard.addCard(card));
 
         // when
         final boolean actual = participantCard.checkBust();
@@ -92,7 +93,7 @@ class ParticipantCardTest {
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
     void checkBlackJack_whenCall_thenReturnIsBlackJack(final List<Card> cards, final boolean expected) {
         // given
-        cards.forEach(participantCard::addCard);
+        cards.forEach(card -> participantCard.addCard(card));
 
         // when
         final boolean actual = participantCard.checkBlackJack();

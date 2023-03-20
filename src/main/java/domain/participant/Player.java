@@ -1,32 +1,56 @@
 package domain.participant;
 
 import domain.card.Card;
-import java.util.List;
+import domain.game.GameResult;
+import java.math.BigDecimal;
 
-public class Player extends Participant {
+public final class Player {
 
-    private Player(final String name) {
-        super(name);
+    private static final int STANDARD_GIVEN_SCORE = 21;
+
+    private final Participant participant;
+    private final PlayerBet playerBet;
+
+    private Player(final Participant participant, final int betAmount) {
+        this.participant = participant;
+        this.playerBet = PlayerBet.create(betAmount);
     }
 
-    public static Player create(final String name) {
-        validatePlayerName(name);
-        return new Player(name);
+    public static Player create(final String name, final int betAmount) {
+        final Participant participant = Participant.create(name);
+
+        return new Player(participant, betAmount);
     }
 
-    private static void validatePlayerName(final String name) {
-        if (DEALER_NAME.equals(name)) {
-            throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
-        }
+    public void addCard(final Card drawCard) {
+        participant.addCard(drawCard);
     }
 
-    @Override
+    public int calculateScore() {
+        final ParticipantScore participantScore = participant.calculateScore();
+
+        return participantScore.score();
+    }
+
+    public BigDecimal calculateProfit(final GameResult gameResult) {
+        final double prizeRatio = gameResult.prizeRatio();
+
+        return playerBet.calculateBenefit(prizeRatio);
+    }
+
+    public boolean matchByName(final String name) {
+        return participant.getName().equals(name);
+    }
+
     public boolean canDraw() {
-        return !participantCard.checkBust();
+        return participant.canDraw(STANDARD_GIVEN_SCORE);
     }
 
-    @Override
-    public List<Card> getStartCard() {
-        return getCard();
+    public ParticipantCard participantCard() {
+        return participant.participantCard();
+    }
+
+    public String getName() {
+        return participant.getName();
     }
 }

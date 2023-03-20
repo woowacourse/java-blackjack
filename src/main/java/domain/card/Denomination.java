@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Arrays;
 import java.util.List;
 
-public enum CardNumber {
+public enum Denomination {
 
     ACE(1),
     TWO(2),
@@ -19,18 +19,18 @@ public enum CardNumber {
     QUEEN(10),
     JACK(10);
 
-    private final int number;
+    private final int score;
 
-    CardNumber(final int number) {
-        this.number = number;
+    Denomination(final int score) {
+        this.score = score;
     }
 
-    static List<CardNumber> findTotalCardNumber() {
+    static List<Denomination> findTotalCardNumber() {
         return Arrays.asList(values());
     }
 
-    public int findNumber() {
-        return number;
+    public int score() {
+        return score;
     }
 
     boolean checkAce() {

@@ -2,38 +2,50 @@ package domain.participant;
 
 import domain.card.Card;
 
-import java.util.List;
+public final class Participant {
 
-public abstract class Participant {
+    static final String DEALER_NAME = "딜러";
 
-    protected static final String DEALER_NAME = "딜러";
+    private final ParticipantName participantName;
+    private final ParticipantCard participantCard;
 
-    private final ParticipantName name;
-    protected final ParticipantCard participantCard;
-
-    protected Participant(final String name) {
-        this.name = ParticipantName.create(name);
-
-        participantCard = ParticipantCard.create();
+    private Participant(final ParticipantName participantName, final ParticipantCard participantCard) {
+        this.participantName = participantName;
+        this.participantCard = participantCard;
     }
 
-    public void addCard(final Card card) {
-        participantCard.addCard(card);
+    public static Participant create(final String name) {
+        final ParticipantName participantName = ParticipantName.create(name);
+        final ParticipantCard participantCard = ParticipantCard.create();
+
+        return new Participant(participantName, participantCard);
     }
 
-    public int calculateScore() {
+    void addCard(final Card drawCard) {
+        participantCard.addCard(drawCard);
+    }
+
+    ParticipantScore calculateScore() {
         return participantCard.calculateScore();
     }
 
-    public abstract boolean canDraw();
+    public boolean canDraw(final int score) {
+        return participantCard.canDraw(score);
+    }
 
-    public abstract List<Card> getStartCard();
+    boolean checkBust() {
+        return participantCard.checkBust();
+    }
 
-    public List<Card> getCard() {
-        return List.copyOf(participantCard.getCards());
+    boolean checkBlackJack() {
+        return participantCard.checkBust();
+    }
+
+    ParticipantCard participantCard() {
+        return participantCard;
     }
 
     public String getName() {
-        return name.getName();
+        return participantName.getName();
     }
 }

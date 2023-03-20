@@ -2,7 +2,6 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.CardSelector;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

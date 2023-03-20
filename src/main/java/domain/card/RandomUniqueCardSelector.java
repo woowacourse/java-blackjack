@@ -1,10 +1,9 @@
 package domain.card;
 
-import domain.CardSelector;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RandomUniqueCardSelector implements CardSelector {
+public final class RandomUniqueCardSelector implements CardSelector {
 
     private final Set<Integer> beforeOrder;
 
@@ -14,12 +13,16 @@ public class RandomUniqueCardSelector implements CardSelector {
 
     @Override
     public int selectCardOrder(final int cardSize) {
-        int cardOrder = (int) (Math.random() * cardSize);
+        int cardOrder = calculateRandomCardOrder(cardSize);
 
         while (!beforeOrder.add(cardOrder)) {
-            cardOrder = (int) (Math.random() * cardSize);
+            cardOrder = calculateRandomCardOrder(cardSize);
         }
 
         return cardOrder;
+    }
+
+    private int calculateRandomCardOrder(final int cardSize) {
+        return (int) (Math.random() * cardSize);
     }
 }

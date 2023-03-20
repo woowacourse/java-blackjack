@@ -1,18 +1,13 @@
 package domain.participant;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.card.CardNumber.ACE;
+public final class ParticipantCard {
 
-public class ParticipantCard {
-
-    private static final int FIRST_CARD_INDEX = 0;
-    private static final int ACE_HIGH_POINTS = 11;
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_SIZE = 2;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards;
 
@@ -24,39 +19,57 @@ public class ParticipantCard {
         return new ParticipantCard();
     }
 
-    void addCard(final Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
-    Card getFirstCard() {
-        return cards.get(FIRST_CARD_INDEX);
+    ParticipantScore calculateScore() {
+        final ParticipantScore participantScore = sumCards();
+
+        if (hasAce()) {
+            return participantScore.processIncludeAce();
+        }
+        return participantScore;
     }
 
-    int calculateScore() {
-        int score = sumCards();
+    boolean canDraw(final int score) {
+        final ParticipantScore standardScore = ParticipantScore.scoreOf(score);
+        final ParticipantScore participantScore = calculateScore();
 
-        if (score <= ACE_HIGH_POINTS && hasAce()) {
-            score += (ACE_HIGH_POINTS - ACE.findNumber());
-        }
-        return score;
+        return standardScore.checkGreaterThan(participantScore);
     }
 
     boolean checkBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        final ParticipantScore participantScore = calculateScore();
+
+        return participantScore.checkBust();
     }
 
     boolean checkBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
+        final ParticipantScore participantScore = calculateScore();
+
+        return cards.size() == BLACKJACK_SIZE && participantScore.checkBlackJack();
     }
 
-    private int sumCards() {
+    boolean checkGreaterScoreThan(final ParticipantCard target) {
+        final ParticipantScore participantScore = this.calculateScore();
+        final ParticipantScore targetScore = target.calculateScore();
+
+        return participantScore.checkGreaterThan(targetScore);
+    }
+
+    private ParticipantScore sumCards() {
         return cards.stream()
-                .mapToInt(Card::findCardNumber)
-                .sum();
+                .map(card -> ParticipantScore.scoreOf(card.findCardNumber()))
+                .reduce(ParticipantScore.defaultOf(), ParticipantScore::add);
     }
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::checkAce);
+    }
+
+    Card getFirstCard() {
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     List<Card> getCards() {
