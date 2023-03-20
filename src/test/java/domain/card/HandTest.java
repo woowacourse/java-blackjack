@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,6 +36,14 @@ class HandTest {
         Hand hand = new Hand(List.of(CloverCard.FOUR, CloverCard.FIVE));
 
         assertThat(hand.calculateScore()).isEqualTo(new Score(9));
+    }
+
+    @Test
+    @DisplayName("가진 카드가 없을 때 0점을 계산할 수 있다.")
+    void sumZeroScoreTest() {
+        Hand hand = new Hand(Collections.emptyList());
+
+        assertThat(hand.calculateScore()).isEqualTo(new Score(0));
     }
 
     @ParameterizedTest
