@@ -13,26 +13,30 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final String input) {
+    public static Players createPlayers(final String input) {
         final List<Player> players = Arrays.stream(input.split(","))
                 .map(Player::new)
                 .collect(Collectors.toList());
         validate(players);
+        return new Players(players);
+    }
+
+    private Players(final List<Player> players) {
         this.players = players;
     }
 
-    private void validate(final List<Player> players) {
+    private static void validate(final List<Player> players) {
         validateNumberOfPlayers(players);
         validateDuplicatedNames(players);
     }
 
-    private void validateNumberOfPlayers(final List<Player> names) {
+    private static void validateNumberOfPlayers(final List<Player> names) {
         if (names.size() < NUMBER_OF_MINIMUM_PLAYER || names.size() > NUMBER_OF_MAXIMUM_PLAYER) {
             throw new IllegalArgumentException("플레이어의 수는 1명 이상 7명 이하만 가능합나다.");
         }
     }
 
-    private void validateDuplicatedNames(final List<Player> names) {
+    private static void validateDuplicatedNames(final List<Player> names) {
         final Set<String> namesWithoutDuplicate = names.stream()
                 .map(Player::getName)
                 .collect(Collectors.toSet());

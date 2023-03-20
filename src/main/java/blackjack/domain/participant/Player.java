@@ -9,6 +9,6 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return this.name.getValue();
+        return name.getValue();
     }
 }

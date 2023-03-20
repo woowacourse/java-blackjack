@@ -34,8 +34,4 @@ public class GameResult {
         }
         return ResultType.PUSH;
     }
-
-    public Map<Player, ResultType> getPlayerResult() {
-        return Collections.unmodifiableMap(playerResult);
-    }
 }

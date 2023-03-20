@@ -4,17 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.game.ResultType;
-import org.assertj.core.api.SoftAssertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,7 +22,7 @@ class BlackJackGameTest {
     @Test
     void checkCardSizeOfParticipantsAfterInitialHandOut() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), Players.createPlayers("pobi,crong"));
         ShufflingMachine shufflingMachine = new ShufflingMachine();
 
         // when
@@ -47,23 +44,23 @@ class BlackJackGameTest {
     @Test
     void handOutCardTo() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), Players.createPlayers("pobi,crong"));
         ShufflingMachine shufflingMachine = new ShufflingMachine();
         Dealer dealer = blackJackGame.getDealer();
 
         // when
-        blackJackGame.handOutCardTo(shufflingMachine, dealer);
+        blackJackGame.handOutCardTo(shufflingMachine, dealer, 1);
         int dealerCardSize = dealer.getCards().size();
 
         // then
         assertThat(dealerCardSize).isEqualTo(1);
     }
 
-    @DisplayName("BlackJackGame의 makePlayerResult는 각 Player의 승패를 계산한다.")
+    @DisplayName("BlackJackGame의 makePlayerProfit은 각 Player의 수익을 계산한다.")
     @Test
     void findResultForEachParticipant() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), Players.createPlayers("pobi,crong"));
 
         Card kingCloverOfDealer = new Card(Rank.KING, Suit.CLOVER);
         Card jackSpadeOfDealer = new Card(Rank.JACK, Suit.SPADE);
@@ -80,17 +77,27 @@ class BlackJackGameTest {
         for (Player player : players.getPlayers()) {
             player.receiveCard(threeSpadeOfPlayer);
             player.receiveCard(fourSpadeOfPlayer);
+        }
 
-            threeSpadeOfPlayer = new Card(Rank.FIVE, Suit.SPADE);
-            fourSpadeOfPlayer = new Card(Rank.SIX, Suit.SPADE);
+        String pobiMoney = "10000";
+        String crongMoney = "20000";
+
+        Map<Player, Money> playerProfit = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            if (player.getName().equals("pobi")) {
+                playerProfit.put(player, new Money(pobiMoney));
+            }
+            if (player.getName().equals("crong")) {
+                playerProfit.put(player, new Money(crongMoney));
+            }
         }
 
         // when
-        Map<Player, ResultType> playerResult = blackJackGame.makePlayerResult();
+        FinalProfit finalProfit = blackJackGame.makePlayerProfit(playerProfit);
 
         // then
-        for (Player player : playerResult.keySet()) {
-            assertThat(playerResult.get(player)).isEqualTo(ResultType.LOSE);
-        }
+        Map<Player, Money> playerMoney = finalProfit.getPlayerMoney();
+        int sum = playerMoney.values().stream().mapToInt(Money::getValue).sum();
+        assertThat(sum).isEqualTo(-30000);
     }
 }

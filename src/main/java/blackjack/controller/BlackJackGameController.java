@@ -1,12 +1,14 @@
 package blackjack.controller;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Supplier;
 
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.card.ShufflingMachine;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.ResultType;
+import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.CommandType;
+import blackjack.domain.game.FinalProfit;
+import blackjack.domain.game.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -15,116 +17,96 @@ import blackjack.view.OutputView;
 
 public class BlackJackGameController {
 
-    private static final String YES_COMMAND = "y";
-    private static final String NO_COMMAND = "n";
-    private static final int DEALER_DRAWING_BOUNDARY = 16;
+    private static final int DEALER_DRAWING_BOUNDARY = 17;
     private static final int PLAYER_BUST_BOUNDARY = 21;
+    private static final int DRAWING_CARD_SIZE = 1;
 
+    private final InputView inputView;
+    private final OutputView outputView;
     private final ShufflingMachine shufflingMachine;
 
-    public BlackJackGameController(final ShufflingMachine shufflingMachine) {
+    public BlackJackGameController(final InputView inputView, final OutputView outputView,
+                                   final ShufflingMachine shufflingMachine) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.shufflingMachine = shufflingMachine;
     }
 
     public void run() {
-        final BlackJackGame blackJackGame = generateBlackJackGame();
+        final BlackJackGame blackJackGame = repeatInput(this::createBlackJackGame);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
+        final Map<Player, Money> playerProfit = createBetting(players);
 
-        final Map<Player, ResultType> playerResult = playBlackJackGame(blackJackGame, dealer, players);
-        final GameResult gameResult = new GameResult(playerResult);
+        playBlackJackGame(blackJackGame, dealer, players);
 
-        printFinalResult(dealer, players, gameResult);
+        printResult(dealer, players, blackJackGame.makePlayerProfit(playerProfit));
     }
 
-    private BlackJackGame generateBlackJackGame() {
-        Optional<BlackJackGame> blackJackGame;
-        do {
-            blackJackGame = checkNames();
-        } while (blackJackGame.isEmpty());
-        return blackJackGame.get();
+    private BlackJackGame createBlackJackGame() {
+        final String inputNames = inputView.readNames();
+        return new BlackJackGame(new Dealer(), Players.createPlayers(inputNames));
     }
 
-    private Optional<BlackJackGame> checkNames() {
-        try {
-            final String inputNames = InputView.readNames();
-            return Optional.of(new BlackJackGame(new Dealer(), inputNames));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
+    private Map<Player, Money> createBetting(final Players players) {
+        final Map<Player, Money> playerProfit = new LinkedHashMap<>();
+
+        for (final Player player : players.getPlayers()) {
+            final Money bettingAmount = repeatInput(() -> makeBettingAmount(player));
+            playerProfit.put(player, bettingAmount);
         }
+
+        return playerProfit;
     }
 
-    private Map<Player, ResultType> playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer,
+    private Money makeBettingAmount(final Player player) {
+        final String inputMoney = inputView.readPlayersBettingAmount(player.getName());
+        return new Money(inputMoney);
+    }
+
+    private void playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer,
                                                       final Players players) {
         blackJackGame.handOutCards(shufflingMachine);
 
-        OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
-        handOutCardToPlayers(blackJackGame, players);
-        handOutCardToDealer(blackJackGame, dealer);
-
-        return blackJackGame.makePlayerResult();
-    }
-
-    private void printFinalResult(final Dealer dealer, final Players players, final GameResult gameResult) {
-        OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(gameResult.getPlayerResult(), gameResult.findDealerResult());
-    }
-
-    private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
+        outputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
         for (final Player player : players.getPlayers()) {
-            handOutCardToEachPlayer(blackJackGame, player);
+            handOutCardTo(blackJackGame, player);
+        }
+        handOutCardTo(blackJackGame, dealer);
+    }
+
+    private void handOutCardTo(final BlackJackGame blackJackGame, final Player player) {
+        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY)) {
+            final String inputCommand =
+                    repeatInput(() -> inputView.readGameCommandToGetOneMoreCard(player.getName()));
+            if (!CommandType.canHit(inputCommand)) {
+                outputView.printParticipantCards(player.getName(), player.getCards());
+                return;
+            }
+            blackJackGame.handOutCardTo(shufflingMachine, player, DRAWING_CARD_SIZE);
+            outputView.printParticipantCards(player.getName(), player.getCards());
         }
     }
 
-    private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final Player player) {
-        boolean command = true;
-        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && command) {
-            final String playerAnswer = inputGameCommandToGetOneMoreCard(player);
-            command = isCardHandedOutByCommand(blackJackGame, player, playerAnswer);
-        }
-    }
-
-    private String inputGameCommandToGetOneMoreCard(final Player player) {
-        Optional<String> gameCommand;
-        do {
-            gameCommand = checkGameCommand(player);
-        } while (gameCommand.isEmpty());
-        return gameCommand.get();
-    }
-
-    private Optional<String> checkGameCommand(final Player player) {
-        try {
-            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
-            validateCorrectCommand(gameCommand);
-            return Optional.of(gameCommand);
-        } catch (final IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
-        }
-    }
-
-    private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
-                                             final String playerAnswer) {
-        if (playerAnswer.equals(YES_COMMAND)) {
-            blackJackGame.handOutCardTo(shufflingMachine, player);
-            OutputView.printParticipantCards(player.getName(), player.getCards());
-            return true;
-        }
-        OutputView.printParticipantCards(player.getName(), player.getCards());
-        return false;
-    }
-
-    private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
+    private void handOutCardTo(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
-            blackJackGame.handOutCardTo(shufflingMachine, dealer);
-            OutputView.printDealerReceiveOneMoreCard();
+            blackJackGame.handOutCardTo(shufflingMachine, dealer, DRAWING_CARD_SIZE);
+            outputView.printDealerReceiveOneMoreCard();
         }
     }
 
-    private void validateCorrectCommand(final String gameCommand) {
-        if (!(YES_COMMAND.equals(gameCommand) || NO_COMMAND.equals(gameCommand))) {
-            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
+    private void printResult(final Dealer dealer, final Players players, final FinalProfit finalProfit) {
+        outputView.printCardsWithSum(players.getPlayers(), dealer);
+        outputView.printFinalResult(finalProfit.getPlayerMoney(), finalProfit.calculateDealerProfit());
+    }
+
+    private <T> T repeatInput(final Supplier<T> function) {
+        while (true) {
+            try {
+                return function.get();
+            } catch (final IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

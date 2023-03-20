@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.card.Card;
@@ -13,49 +12,42 @@ import blackjack.domain.participant.Players;
 
 public class BlackJackGame {
 
-    private static final int NUMBER_OF_INITIAL_CARD = 2;
+    private static final int INITIAL_CARD_SIZE = 2;
 
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Dealer dealer, final String inputNames) {
+    public BlackJackGame(final Dealer dealer, final Players players) {
         this.dealer = dealer;
-        this.players = new Players(inputNames);
-    }
-
-    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        final Card card = Deck.from(shufflingMachine.draw());
-        participant.receiveCard(card);
+        this.players = players;
     }
 
     public void handOutCards(final ShufflingMachine shufflingMachine) {
-        handOutInitCardsTo(shufflingMachine, dealer);
+        handOutCardTo(shufflingMachine, dealer, INITIAL_CARD_SIZE);
         players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
+                .forEach(player -> handOutCardTo(shufflingMachine, player, INITIAL_CARD_SIZE));
     }
 
-    private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        int count = 0;
-        while (count != NUMBER_OF_INITIAL_CARD) {
-            handOutCardTo(shufflingMachine, participant);
-            count++;
+    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant, int cardSize) {
+        while (cardSize-- > 0) {
+            final Card card = Deck.from(shufflingMachine.draw());
+            participant.receiveCard(card);
         }
     }
 
-    public Map<Player, ResultType> makePlayerResult() {
-        final Map<Player, ResultType> playerResult = new LinkedHashMap<>();
+    public FinalProfit makePlayerProfit(final Map<Player, Money> playerProfit) {
         final int sumOfDealer = dealer.calculateSumOfRank();
 
         for (final Player player : players.getPlayers()) {
             final int sumOfPlayer = player.calculateSumOfRank();
-            judgeResult(player, sumOfDealer, sumOfPlayer, playerResult);
+            judgeResult(player, sumOfDealer, sumOfPlayer, playerProfit);
         }
 
-        return playerResult;
+        return new FinalProfit(playerProfit);
     }
 
     private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer,
-                             final Map<Player, ResultType> playerResult) {
+                             final Map<Player, Money> playerResult) {
         if (isBlackJackPlayer(player, playerResult)) {
             return;
         }
@@ -65,37 +57,36 @@ public class BlackJackGame {
         judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer, playerResult);
     }
 
-    private boolean isBlackJackPlayer(final Player player, final Map<Player, ResultType> playerResult) {
+    private boolean isBlackJackPlayer(final Player player, final Map<Player, Money> playerResult) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
-            playerResult.put(player, ResultType.PUSH);
+            playerResult.put(player, playerResult.get(player).makeZero());
             return true;
         }
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            playerResult.put(player, ResultType.WIN);
+            playerResult.put(player, playerResult.get(player).multiplyOneAndHalf());
             return true;
         }
         return false;
     }
 
-    private boolean isBustPlayer(final Player player, final Map<Player, ResultType> playerResult) {
+    private boolean isBustPlayer(final Player player, final Map<Player, Money> playerResult) {
         if (player.isBust()) {
-            playerResult.put(player, ResultType.LOSE);
+            playerResult.put(player, playerResult.get(player).changeSign());
             return true;
         }
         return false;
     }
 
     private void judgeResultWhenPlayerIsNotBust(final int sumOfDealer, final Player player, final int sumOfPlayer,
-                                                final Map<Player, ResultType> playerResult) {
+                                                final Map<Player, Money> playerResult) {
         if (dealer.isBust() || sumOfPlayer > sumOfDealer) {
-            playerResult.put(player, ResultType.WIN);
             return;
         }
         if (dealer.isBlackJack() || sumOfPlayer < sumOfDealer) {
-            playerResult.put(player, ResultType.LOSE);
+            playerResult.put(player, playerResult.get(player).changeSign());
             return;
         }
-        playerResult.put(player, ResultType.PUSH);
+        playerResult.put(player, playerResult.get(player).makeZero());
     }
 
     public Dealer getDealer() {

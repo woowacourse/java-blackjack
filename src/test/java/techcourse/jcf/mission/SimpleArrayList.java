@@ -1,75 +1,98 @@
 package techcourse.jcf.mission;
 
-import java.util.Arrays;
+public class SimpleArrayList<E> implements SimpleList<E> {
 
-public class SimpleArrayList implements SimpleList {
-
-    private static final String[] SIMPLE_ARRAY = {};
     private static final int INITIAL_CAPACITY = 10;
 
+    private Object[] array;
     private int size;
     private int capacity;
-    private String[] array;
 
     public SimpleArrayList() {
-        this.array = new String[INITIAL_CAPACITY];
+        this.array = new Object[INITIAL_CAPACITY];
+        this.size = 0;
         this.capacity = INITIAL_CAPACITY;
-        this.size = 0;
     }
 
-    public SimpleArrayList(final int capacity) {
-        this.array = new String[INITIAL_CAPACITY];
-        this.capacity = capacity;
-        this.size = 0;
+    public SimpleArrayList(final E... values) {
+        this.array = values;
+        this.size = values.length;
+        this.capacity = Math.max(values.length, INITIAL_CAPACITY);
     }
 
-    // complete
+
+    public SimpleArrayList(final int initialCapacity) {
+        this.array = new Object[initialCapacity];
+        this.size = 0;
+        this.capacity = initialCapacity;
+    }
+
     @Override
-    public boolean add(final String value) {
+    public boolean add(final E value) {
         checkMaxSize();
         array[size] = value;
         size++;
         return true;
     }
 
+    private void checkMaxSize() {
+        if (size == capacity) {
+            grow();
+        }
+    }
+
+    private void grow() {
+        this.capacity += (capacity >> 1);
+        Object[] newArray = new Object[capacity];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
+    }
+
     @Override
-    public void add(final int index, final String value) {
-        checkValidIndex(index);
+    public void add(final int index, final E value) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: " + index + "Size: " + size);
+        }
         checkMaxSize();
 
-        String[] tempArray = Arrays.copyOfRange(array, index, size);
+        System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = value;
-        for (int i = 0; i < tempArray.length; i++) {
-            array[index + 1 + i] = tempArray[i];
-        }
         size++;
     }
 
-    // complete
+    private void checkValidIndex(final int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + "Size: " + size);
+        }
+    }
+
     @Override
-    public String set(final int index, final String value) {
+    public E set(final int index, final E value) {
         checkValidIndex(index);
-        String oldValue = array[index];
+
+        Object oldValue = array[index];
         array[index] = value;
-        return oldValue;
+
+        return (E) oldValue;
     }
 
-    // complete
     @Override
-    public String get(final int index) {
+    public E get(final int index) {
         checkValidIndex(index);
-        return array[index];
+        return (E) array[index];
     }
 
-    // complete
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final E value) {
         return indexOf(value) >= 0;
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final E value) {
         for (int i = 0; i < size; i++) {
+            if (value == null && array[i] == null) {
+                return i;
+            }
             if (array[i].equals(value)) {
                 return i;
             }
@@ -77,57 +100,44 @@ public class SimpleArrayList implements SimpleList {
         return -1;
     }
 
-    // complete
     @Override
     public int size() {
         return size;
     }
 
-    // complete
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
     @Override
-    public boolean remove(final String value) {
-        for (int i = 0; i < size; i++) {
-            if (array[i].equals(value)) {
-                System.arraycopy(array, i + 1, array, i, size - i - 1);
-                return true;
-            }
+    public boolean remove(final E value) {
+        if (indexOf(value) == -1) {
+            return false;
         }
-        return false;
+        remove(indexOf(value));
+        return true;
     }
 
     @Override
-    public String remove(final int index) {
+    public E remove(final int index) {
         checkValidIndex(index);
 
-        return null;
+        Object oldValue = array[index];
+        if (size - 1 > index) {
+            System.arraycopy(array, index + 1, array, index, size - index);
+        }
+        array[size - 1] = null;
+
+        size--;
+        return (E) oldValue;
     }
 
-    // complete
     @Override
     public void clear() {
-        this.capacity = INITIAL_CAPACITY;
-        this.array = new String[INITIAL_CAPACITY];
-        this.size = 0;
-    }
-
-    private void checkMaxSize() {
-        if (size == capacity - 1) {
-            grow();
+        for (int i = 0; i < size; i++) {
+            array[i] = null;
         }
-    }
-
-    private void grow() {
-        capacity *= 2;
-    }
-
-    private void checkValidIndex(final int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + "Size: " + size);
-        }
+        size = 0;
     }
 }
