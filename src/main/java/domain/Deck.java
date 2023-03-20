@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardBox {
+public class Deck {
 
     private static final int MINIMUM_CARDBOX_INDEX = 0;
     private static final int MAXIMIM_CARDBOX_INDEX = 51;
@@ -11,7 +11,7 @@ public class CardBox {
     private static final int[] CARD_VALUE = {11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
     private static final String[] CARD_SHAPE = {"스페이드", "하트", "클로버", "다이아몬드"};
 
-    static List<Card> cardBox = new ArrayList<>();
+    private static List<Card> cardBox = new ArrayList<>();
 
     static {
         for (String cardShape : CARD_SHAPE) {
@@ -19,7 +19,7 @@ public class CardBox {
         }
     }
 
-    static void initCards(String cardShape) {
+    private static void initCards(final String cardShape) {
         for (int i = 0; i < CARD_NUMBER.length; i++) {
             cardBox.add(new Card(CARD_NUMBER[i] + cardShape, CARD_VALUE[i]));
 
