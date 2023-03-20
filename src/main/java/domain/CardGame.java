@@ -26,7 +26,7 @@ public class CardGame {
         end(dealer, players);
     }
 
-    private static Cards generateInitCards(CardDeck cardDeck) {
+    private Cards generateInitCards(CardDeck cardDeck) {
         List<Card> cards = new ArrayList<>();
         cards.add(cardDeck.pickCard());
         cards.add(cardDeck.pickCard());
