@@ -12,15 +12,15 @@ public class Player extends Participant {
 
     private Player(ParticipantName participantName, BetAmount betAmount) {
         super(participantName);
+        validateAllowedName(participantName);
         this.betAmount = betAmount;
     }
 
     public static Player of(ParticipantName participantName, BetAmount betAmount) {
-        validateAllowedName(participantName);
         return new Player(participantName, betAmount);
     }
 
-    private static void validateAllowedName(ParticipantName participantName) {
+    private void validateAllowedName(ParticipantName participantName) {
         ParticipantName dealerName = ParticipantName.getDealerName();
         if (participantName.equals(dealerName)) {
             throw new IllegalArgumentException(FORBIDDEN_NAME_MESSAGE);
