@@ -8,9 +8,6 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int INITIAL_CARDS_SIZE = 2;
-    public static final int STANDARD_SUM_OF_BLACKJACK = 21;
-
     protected final Name name;
     protected final Cards cards;
     protected final Money money;
@@ -23,13 +20,13 @@ public abstract class Participant {
     }
 
     private void validateCardsSize(Cards cards) {
-        if (cards.getSize() != INITIAL_CARDS_SIZE) {
+        if (cards.getSize() != cards.NUMBER_OF_INITIAL_CARDS) {
             throw new IllegalArgumentException("초기 카드는 2장이어야 합니다.");
         }
     }
 
     public boolean isBlackjack() {
-        return cards.calculateInitialSum() == STANDARD_SUM_OF_BLACKJACK;
+        return cards.calculateInitialSum() == Cards.BLACKJACK_NUMBER;
     }
 
     public void pickCard(CardDeck cardDeck) {
@@ -42,7 +39,7 @@ public abstract class Participant {
     }
 
     public boolean isBurst() {
-        return cards.calculateSum() > STANDARD_SUM_OF_BLACKJACK;
+        return cards.calculateSum() > Cards.BLACKJACK_NUMBER;
     }
 
     public abstract boolean canReceiveOneMoreCard();
