@@ -1,21 +1,20 @@
 package domain.card;
 
-import domain.strategy.IndexGenerator;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
     private final List<Card> cards;
-    private final IndexGenerator indexGenerator;
 
-    private Deck(List<Card> cards, IndexGenerator indexGenerator) {
+    private Deck(List<Card> cards) {
         this.cards = cards;
-        this.indexGenerator = indexGenerator;
     }
 
-    public static Deck create(IndexGenerator indexGenerator) {
-        return new Deck(initializeCards(), indexGenerator);
+    public static Deck create() {
+        List<Card> cards = initializeCards();
+        Collections.shuffle(cards);
+        return new Deck(cards);
     }
 
     private static List<Card> initializeCards() {
@@ -34,7 +33,6 @@ public class Deck {
     }
 
     public Card findAnyOneCard() {
-        int index = this.indexGenerator.generate(cards.size());
-        return cards.remove(index);
+        return cards.remove(0);
     }
 }

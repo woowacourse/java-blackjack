@@ -26,7 +26,7 @@ class BlackJackTest {
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
                 Players.from(makeDealer(), Player.from(GIVEN_NAMES_BETS)),
-                Deck.create(maxIndex -> 0)
+                Deck.create()
         );
         blackJack.initializeCardsOfPlayers();
         List<PlayerReadOnly> players = blackJack.getPlayers().getAllPlayers();
@@ -44,7 +44,7 @@ class BlackJackTest {
         List<Player> gamblers = Player.from(GIVEN_NAMES_BETS);
         BlackJack blackJack = new BlackJack(
                 Players.from(dealer, gamblers),
-                Deck.create(maxIndex -> 0)
+                Deck.create()
         );
 
         blackJack.giveCardToAllPlayers();
@@ -58,7 +58,7 @@ class BlackJackTest {
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
                 Players.from(makeDealer(), Player.from(GIVEN_NAMES_BETS)),
-                Deck.create(maxIndex -> 0)
+                Deck.create()
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
 
@@ -98,7 +98,7 @@ class BlackJackTest {
         Player dealer = makeDealerWithCards(cards);
         BlackJack blackJack = new BlackJack(
                 Players.from(dealer, Player.from(GIVEN_NAMES_BETS)),
-                Deck.create(maxIndex -> 0)
+                Deck.create()
         );
 
         blackJack.giveCardToDealer();

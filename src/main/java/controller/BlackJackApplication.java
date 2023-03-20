@@ -5,7 +5,6 @@ import domain.card.Deck;
 import domain.card.Hand;
 import domain.gameresult.GameResult;
 import domain.player.*;
-import domain.strategy.RandomBasedIndexGenerator;
 import view.Command;
 import view.InputView;
 import view.OutputView;
@@ -35,7 +34,7 @@ public class BlackJackApplication {
                         new Player(Hand.withEmptyHolder(), Name.dealerName(), Bet.from(10000)),
                         Player.from(getGamblerNameAndBets())
                 ),
-                Deck.create(new RandomBasedIndexGenerator())
+                Deck.create()
         );
         initializeBlackjackGame(blackJack);
         return blackJack;
