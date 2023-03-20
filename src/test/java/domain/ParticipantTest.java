@@ -19,7 +19,7 @@ class ParticipantTest {
     @Test
     @DisplayName("초기 카드는 2장이어야 한다.")
     void validateCardsSize() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(
                 new Card(CardType.CLOVER, CardValue.FIVE),
                 new Card(CardType.CLOVER, CardValue.SIX),

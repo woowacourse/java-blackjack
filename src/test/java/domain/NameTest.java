@@ -16,7 +16,7 @@ public class NameTest {
     void generateName() {
         String name = "roy";
 
-        assertDoesNotThrow(() -> Name.generatePlayerName(name));
+        assertDoesNotThrow(() -> new Name(name));
     }
 
     @ParameterizedTest
@@ -24,7 +24,7 @@ public class NameTest {
     @DisplayName("플레이어 이름에 공백이 포함될 경우 예외가 발생한다.")
     void exceptionWhenNameContainsBlank(String name) {
 
-        assertThatThrownBy(() -> Name.generatePlayerName(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름에 공백은 포함할 수 없습니다.");
     }
@@ -34,7 +34,7 @@ public class NameTest {
     void exceptionWithMoreThan5NameLetters() {
         String name = "royroyroy";
 
-        assertThatThrownBy(() -> Name.generatePlayerName(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 1자 이상, 6자 이하만 가능합니다.");
     }
@@ -44,7 +44,7 @@ public class NameTest {
     void exceptionWithLessThan1NameLetters() {
         String name = "";
 
-        assertThatThrownBy(() -> Name.generatePlayerName(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 1자 이상, 6자 이하만 가능합니다.");
     }
@@ -54,7 +54,7 @@ public class NameTest {
     @DisplayName("플레이어의 이름이 '딜러'일 경우 예외가 발생한다.")
     void exceptionWhenPlayerNameIsDealer(String name) {
 
-        assertThatThrownBy(() -> Name.generatePlayerName(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름으로 '딜러(Dealer)'는 사용할 수 없습니다.");
     }

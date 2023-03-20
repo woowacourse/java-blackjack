@@ -21,7 +21,7 @@ public class ProfitTest {
     @Test
     @DisplayName("수익을 입력하면 Profit 객체가 정상적으로 생성된다")
     void generateProfit() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.KING)));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);
@@ -32,7 +32,7 @@ public class ProfitTest {
     @Test
     @DisplayName("플레이가 게임에서 이기면 베팅한 금액만큼 수익을 얻는다")
     void makeProfitOfBettingMoney() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.TWO)));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);
@@ -46,7 +46,7 @@ public class ProfitTest {
     @Test
     @DisplayName("플레이가 블랙잭일 경우 게임에서 이기면 베팅한 금액의 1.5배를 수익으로 얻는다")
     void makeProfitOfBlackJackMoney() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.KING)));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);
@@ -60,7 +60,7 @@ public class ProfitTest {
     @Test
     @DisplayName("플레이어가 게임에서 패배할 경우 베팅한 금액만큼 손실을 입는다.")
     void makeLossOfBettingMoney() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.TWO)));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);

@@ -22,7 +22,7 @@ public class Players {
     public static Players of(List<String> names, CardDeck cardDeck, List<Integer> moneys) {
         List<Player> players = new ArrayList<>();
         for (int playerIndex = 0; playerIndex < names.size(); playerIndex++) {
-            Name name = Name.generatePlayerName(names.get(playerIndex));
+            Name name = new Name(names.get(playerIndex));
             Cards cards = makeInitialCards(cardDeck);
             Money money = new Money(moneys.get(playerIndex));
             players.add(new Player(name, cards, money));

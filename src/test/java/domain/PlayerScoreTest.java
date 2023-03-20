@@ -21,7 +21,7 @@ class PlayerScoreTest {
     @Test
     @DisplayName("플레이어 이름과 수익을 입력하면 playerScore 객체가 정상적으로 생성된다")
     void generatePlayerScore() {
-        Name name = Name.generatePlayerName("roy");
+        Name name = new Name("roy");
         Cards cards = new Cards(List.of(new Card(CardType.SPADE, CardValue.ACE), new Card(CardType.HEART, CardValue.KING)));
         Money money = new Money(1000);
         Player player = new Player(name, cards, money);
