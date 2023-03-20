@@ -20,7 +20,7 @@ class ParticipantTest {
 
         Player player = new Player(cards, name, betting);
 
-        assertThat(player.askPlayerState()).isEqualTo(PlayerState.MORE);
+        assertThat(player.askPlayerState()).isEqualTo(PlayerState.MORE_THAN_MAXIMUM);
     }
 
     @Test
@@ -34,7 +34,7 @@ class ParticipantTest {
 
         Player player = new Player(cards, name, betting);
 
-        assertThat(player.askPlayerState()).isEqualTo(PlayerState.FLAT);
+        assertThat(player.askPlayerState()).isEqualTo(PlayerState.EQUAL_WITH_MAXIMUM);
     }
 
     @Test
@@ -48,7 +48,7 @@ class ParticipantTest {
 
         Player player = new Player(cards, name, betting);
 
-        assertThat(player.askPlayerState()).isEqualTo(PlayerState.LESS);
+        assertThat(player.askPlayerState()).isEqualTo(PlayerState.LESS_THAN_MAXIMUM);
     }
 
     @Test

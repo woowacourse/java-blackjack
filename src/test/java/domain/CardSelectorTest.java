@@ -46,9 +46,8 @@ class CardSelectorTest {
         Betting betting = new Betting(10000, 0);
 
         Player player = new Player(cards, name, betting);
-        int cardBoxIndex = 20;
         //when
-        CardSelector.playerDrawIfSelectToAddCard(player, cardBoxIndex);
+        CardSelector.playerDrawIfSelectToAddCard(player, new RandomCardNumberGenerator());
         //then
         assertThat(player.getCards().getCards().size()).isEqualTo(3);
 
