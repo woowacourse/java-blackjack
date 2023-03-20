@@ -67,6 +67,6 @@ public class BankTest extends AbstractTestFixture {
         bank.bet(user, Money.of(1234));
         bank.evaluate(user, Result.WIN_BY_BLACKJACK);
 
-        assertThat(bank.getProfitOf(user)).isEqualTo(Money.of((int)(1234 * 1.5))); // TODO: 정수로 변경
+        assertThat(bank.getProfitOf(user)).isEqualTo(Money.of(1851));
     }
 }
