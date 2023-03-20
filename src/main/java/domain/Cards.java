@@ -25,12 +25,21 @@ public class Cards {
     }
 
     private int calculateSum() {
-        int sum = 0;
-        Card card = cards.get(0);
+        Card firstCard = cards.get(0);
+        Card secondCard = cards.get(1);
+        int sum = firstCard.sum(secondCard);
+        if (cards.size() == INITIAL_CARD_SIZE) {
+            return sum;
+        }
+        sum = sumAllCardsNum(sum);
+        return sum;
+    }
 
-        for (int i = 1; i < cards.size(); i ++) {
-            sum = card.sum(cards.get(i));
-            card = new Card("TEMP",sum);
+    private int sumAllCardsNum(int sum) {
+        for (int i = 2; i < cards.size(); i++) {
+            Card thisCard = cards.get(i);
+            Card previousCard = cards.get(i - 1);
+            sum = previousCard.subtract(sum) + thisCard.sum(previousCard);
         }
         return sum;
     }
@@ -44,7 +53,7 @@ public class Cards {
 
     private boolean containsA() {
         return cards.stream()
-                .anyMatch(Card::isA);
+            .anyMatch(Card::isA);
     }
 
     public boolean addCard(final Card otherCard) {
@@ -67,10 +76,10 @@ public class Cards {
         }
     }
 
-    public static Cards pickInitialCards(CardNumberGenerator cardNumberGenerator){
+    public static Cards pickInitialCards(CardNumberGenerator cardNumberGenerator) {
         List<Card> pickedCards = new ArrayList<>();
-        for (int i =0 ;i<INITIAL_CARD_SIZE;i++){
-            pickedCards.add(CardBox.get(cardNumberGenerator.generateIndex()));
+        for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
+            pickedCards.add(Deck.get(cardNumberGenerator.generateIndex()));
         }
         return new Cards(pickedCards);
     }
@@ -79,14 +88,14 @@ public class Cards {
         return sumOfCards() == MAXINUM_SUM_OF_CARD;
     }
 
-    public int sizeOfCards(){
+    public int sizeOfCards() {
         return cards.size();
     }
 
     public List<String> copyCards() {
         return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
+            .map(Card::getName)
+            .collect(Collectors.toList());
     }
 
     public List<Card> getCards() {
