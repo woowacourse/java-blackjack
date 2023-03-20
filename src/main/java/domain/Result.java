@@ -3,34 +3,45 @@ package domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static domain.Referee.decideWinner;
-
 public class Result {
 
-    private final Map<Gambler, Integer> result;
-    private final Players players;
-    private final Dealer dealer;
+    private final Referee referee;
+    private final Map<Gambler, Integer> winOrLoseResult;
+    private final Map<Gambler, Integer> benefits;
 
-    public Result(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
-        result = createResult();
+    public Result(Players players, Dealer dealer, Bettings bettings) {
+        referee = new Referee(dealer, bettings);
+        winOrLoseResult = createResult(players, dealer);
+        benefits = createBenefits(players, dealer);
     }
 
-    private Map<Gambler, Integer> createResult() {
+    private Map<Gambler, Integer> createResult(Players players, Dealer dealer) {
+        Map<Gambler, Integer> result = initResults(players, dealer);
+        for (Player player : players.getPlayers()) {
+            referee.decideWinner(player, result);
+        }
+
+        return result;
+    }
+
+    private Map<Gambler, Integer> initResults(Players players, Dealer dealer) {
         Map<Gambler, Integer> result = new LinkedHashMap<>();
-        return calculateWinCount(result);
-    }
-
-    private Map<Gambler, Integer> calculateWinCount(Map<Gambler, Integer> result) {
         result.put(dealer, 0);
         for (Player player : players.getPlayers()) {
-            decideWinner(player, dealer, result);
+            result.put(player, 0);
         }
         return result;
     }
 
-    public Map<Gambler, Integer> getResult() {
-        return result;
+    private Map<Gambler, Integer> createBenefits(Players players, Dealer dealer) {
+        return referee.calculateBenefits(players, dealer);
+    }
+
+    public Map<Gambler, Integer> getWinOrLoseResult() {
+        return winOrLoseResult;
+    }
+
+    public Map<Gambler, Integer> getBenefits() {
+        return benefits;
     }
 }

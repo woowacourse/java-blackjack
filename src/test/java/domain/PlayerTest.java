@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,11 @@ class PlayerTest {
 
         //then
         assertThat(nowSize).isEqualTo(prevSize + 1);
+    }
+
+    @Test
+    void 생성_테스트() {
+        //given, when, then
+        Assertions.assertDoesNotThrow(() -> new Player(new PlayerName("pobi"), new Cards(new ArrayList<>())));
     }
 }

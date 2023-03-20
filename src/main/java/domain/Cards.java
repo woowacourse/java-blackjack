@@ -15,11 +15,10 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int sum = 0;
+        int sum = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
 
-        for (Card card : cards) {
-            sum += card.getScore();
-        }
         if (notBustedWhenHasAce(sum + BIGGER_A_SCORE)) {
             sum += BIGGER_A_SCORE;
         }
@@ -47,5 +46,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }

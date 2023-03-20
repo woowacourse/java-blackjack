@@ -1,15 +1,14 @@
 package view;
 
-import domain.Card;
 import domain.Dealer;
 import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -26,6 +25,7 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final int PLAYER_WIN = 1;
+    private static final String BENEFIT_GUIDE_MESSAGE = "## 최종 수익";
 
     private OutputView() {
     }
@@ -37,11 +37,10 @@ public class OutputView {
     }
 
     private static List<String> getPlayerNames(Players players) {
-        List<String> playerNames = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerNames.add(player.getName());
-        }
-        return playerNames;
+        return players.getPlayers()
+                .stream()
+                .map(player -> player.getName())
+                .collect(Collectors.toList());
     }
 
     public static void printGamblersCards(Players players, Dealer dealer) {
@@ -66,11 +65,10 @@ public class OutputView {
     }
 
     public static List<String> getPlayerCards(Gambler gambler) {
-        List<String> output = new ArrayList<>();
-        for (Card card : gambler.getCards()) {
-            output.add(card.getName() + card.getSuit());
-        }
-        return output;
+        return gambler.getCards()
+                .stream()
+                .map(card -> card.getName() + card.getSuit())
+                .collect(Collectors.toList());
     }
 
     private static void printPlayersCards(Players players) {
@@ -94,7 +92,7 @@ public class OutputView {
 
     public static void printResult(Result result) {
         System.out.println(NEW_LINE + RESULT_GUIDE_MESSAGE);
-        Map<Gambler, Integer> map = result.getResult();
+        Map<Gambler, Integer> map = result.getWinOrLoseResult();
 
         for (Map.Entry<Gambler, Integer> resultEntry : map.entrySet()) {
             printDealerResult(resultEntry, map.size());
@@ -111,7 +109,9 @@ public class OutputView {
     }
 
     private static boolean isDealer(Map.Entry<Gambler, Integer> gamblerEntry) {
-        return gamblerEntry.getKey().getName().equals("딜러");
+        return gamblerEntry.getKey()
+                .getName()
+                .equals("딜러");
     }
 
     public static void printPlayersResult(Map.Entry<Gambler, Integer> gamblerEntry) {
@@ -135,13 +135,25 @@ public class OutputView {
 
     public static void printScores(Players players, Dealer dealer) {
         printScore(dealer);
-        for (Player player : players.getPlayers()) {
-            printScore(player);
-        }
+        players.getPlayers()
+                .stream()
+                .forEach(player -> printScore(player));
     }
 
     public static void printDealerHitMessage() {
         System.out.println(DEALER_HIT);
     }
 
+    public static void printBenefits(List<Player> players, Dealer dealer, Map<Gambler, Integer> benefits) {
+        System.out.println("\n" + BENEFIT_GUIDE_MESSAGE);
+
+        System.out.print(dealer.getName() + COLON + " ");
+        System.out.println(benefits.get(dealer));
+
+        players.stream()
+                .forEach(player -> {
+            System.out.print(player.getName() + COLON + " ");
+            System.out.println(benefits.get(player));
+        });
+    }
 }

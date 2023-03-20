@@ -1,5 +1,6 @@
 package game;
 
+import domain.Bettings;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
@@ -15,8 +16,8 @@ public class Blackjack {
     private final Players players;
     private final Dealer dealer;
 
-    public Blackjack(List<String> playerNames) {
-        this.players = new Players(playerNames);
+    public Blackjack(List<Player> playerInput) {
+        this.players = new Players(playerInput);
         this.dealer = new Dealer(new Cards(new ArrayList<>()));
     }
 
@@ -30,8 +31,8 @@ public class Blackjack {
         dealer.pickCard();
     }
 
-    public Result createResult(Players players, Dealer dealer) {
-        return new Result(players, dealer);
+    public Result createResult(Players players, Dealer dealer, Bettings bettings) {
+        return new Result(players, dealer, bettings);
     }
 
     public Players getPlayers() {

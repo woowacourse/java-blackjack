@@ -16,7 +16,7 @@ public class Dealer implements Gambler {
 
     @Override
     public void initialPick() {
-        if (cards.getCards().isEmpty()) {
+        if (cards.isEmpty()) {
             pickCard();
         }
     }
@@ -47,16 +47,12 @@ public class Dealer implements Gambler {
         return cards.getCards();
     }
 
-    public int getCardsSize() {
-        return cards.getCards().size();
-    }
-
     @Override
     public int getScore() {
         return cards.calculateScore();
     }
 
-    public int getPickBoundary() {
-        return PICK_BOUNDARY;
+    public int getCardsSize() {
+        return cards.getCards().size();
     }
 }
