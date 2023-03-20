@@ -15,6 +15,7 @@ import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardGame {
 
@@ -40,11 +41,9 @@ public class CardGame {
     }
 
     private List<Integer> getPlayersMoney(List<String> names) {
-        List<Integer> playersMoney = new ArrayList<>();
-        for (String name : names) {
-            playersMoney.add(InputView.readMoney(name));
-        }
-        return playersMoney;
+        return names.stream()
+                .map(InputView::readMoney)
+                .collect(Collectors.toList());
     }
 
     private void play(CardDeck cardDeck, Dealer dealer, Players players) {
