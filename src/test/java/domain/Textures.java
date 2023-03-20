@@ -2,7 +2,13 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Denomination;
+import domain.card.Hand;
 import domain.card.Suit;
+import domain.player.Bet;
+import domain.player.Name;
+import domain.player.Player;
+
+import java.util.List;
 
 public class Textures {
     private Textures() {
@@ -31,4 +37,24 @@ public class Textures {
 
     public static final Card CLOVER_ACE = new Card(Suit.CLOVER, Denomination.ACE);
     public static final Card CLOVER_THREE = new Card(Suit.CLOVER, Denomination.THREE);
+
+    public static Player makeBet(Bet bet) {
+        return new Player(Hand.withEmptyHolder(), Name.dealerName(), bet);
+    }
+
+    public static Player makeDealerWithCards(List<Card> cards) {
+        return new Player(new Hand(cards), Name.dealerName(), Bet.from(3000));
+    }
+
+    public static Player makeDealer() {
+        return new Player(Hand.withEmptyHolder(), Name.dealerName(), Bet.from(3000));
+    }
+
+    public static Player makePlayerWithCards(List<Card> cards) {
+        return new Player(
+                new Hand(cards),
+                Name.of("참가자"),
+                Bet.from(3000)
+        );
+    }
 }

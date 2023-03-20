@@ -3,10 +3,12 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Hand;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public abstract class Player {
+public class Player {
     private final Hand hand;
     private final Name name;
     private final Bet bet;
@@ -15,6 +17,12 @@ public abstract class Player {
         this.hand = hand;
         this.name = name;
         this.bet = bet;
+    }
+
+    public static List<Player> from(Map<Name, Bet> nameAndBet) {
+        List<Player> players = new ArrayList<>();
+        nameAndBet.forEach((name, bet) -> players.add(new Player(Hand.withEmptyHolder(), name, bet)));
+        return players;
     }
 
     public void draw(Card card) {

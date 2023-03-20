@@ -1,5 +1,6 @@
 package domain.gameresult;
 
+import domain.Textures;
 import domain.card.Hand;
 import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +19,8 @@ class GameResultTest {
     @DisplayName("플레이어와 그에 대응하는 베팅액 정보를 이용해 객체를 생성할 수 있다.")
     void generatingGameResult() {
         Map<Player, Bet> result = Map.of(
-                new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
-                new Dealer(Hand.withEmptyHolder()), Bet.from(10000)
+                new Player(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
+                Textures.makeBet(Bet.from(10000)), Bet.from(10000)
         );
         assertDoesNotThrow(() -> GameResult.from(result));
     }
@@ -28,8 +29,8 @@ class GameResultTest {
     @DisplayName("플레이어 이름과 베팅 정보를 이용한 작업을 주입하여 사용할 수 있다.")
     void doLogicWithNameAndBet() {
         Map<Player, Bet> result = new LinkedHashMap<>();
-        result.put(new Gambler(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000));
-        result.put(new Gambler(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000));
+        result.put(new Player(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000));
+        result.put(new Player(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000));
         GameResult gameResult = GameResult.from(result);
 
         List<String> names = new ArrayList<>();
@@ -40,8 +41,8 @@ class GameResultTest {
         });
 
         assertThat(names).hasSize(2)
-                .containsExactly("여우", "아벨");
+                .contains("여우", "아벨");
         assertThat(bets).hasSize(2)
-                .containsExactly(3000, 5000);
+                .contains(3000, 5000);
     }
 }

@@ -7,13 +7,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
+    public static final int DEALER_MIN_SCORE = 16;
+
     private final List<Player> players;
 
     private Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players from(Dealer dealer, List<Gambler> gamblers) {
+    public static Players from(Player dealer, List<Player> gamblers) {
         List<Player> players = new ArrayList<>();
         players.add(0, dealer);
         players.addAll(gamblers);
@@ -26,7 +28,7 @@ public class Players {
     }
 
     public boolean shouldDealerGetCard() {
-        return getDealer().getScore() <= Dealer.DEALER_MIN_SCORE;
+        return getDealer().getScore() <= DEALER_MIN_SCORE;
     }
 
     public Map<Player, Bet> compareAll() {
