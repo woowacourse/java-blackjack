@@ -34,7 +34,7 @@ public class OutputView {
 
     private static void printPlayerCardConditions(PlayersReadOnly players) {
         printDealerCardCondition(players.getDealer());
-        printParticipantCardCondition(players.getParticipants());
+        printParticipantCardCondition(players.getGamblers());
     }
 
     private static void printDealerCardCondition(PlayerReadOnly dealer) {
@@ -42,9 +42,9 @@ public class OutputView {
         printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
     }
 
-    public static void printParticipantCardCondition(List<PlayerReadOnly> participants) {
-        for (PlayerReadOnly participant : participants) {
-            printPlayerCardCondition(participant, PARTICIPANT_CARD_CONDITION_FORMAT, parseCardsInformation(participant.getCards()));
+    public static void printParticipantCardCondition(List<PlayerReadOnly> gamblers) {
+        for (PlayerReadOnly gambler : gamblers) {
+            printPlayerCardCondition(gambler, PARTICIPANT_CARD_CONDITION_FORMAT, parseCardsInformation(gambler.getCards()));
         }
     }
 

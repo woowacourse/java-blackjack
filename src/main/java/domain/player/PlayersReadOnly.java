@@ -23,8 +23,8 @@ public class PlayersReadOnly {
         return PlayerReadOnly.from(players.getDealer());
     }
 
-    public List<PlayerReadOnly> getParticipants() {
-        return players.getParticipants()
+    public List<PlayerReadOnly> getGamblers() {
+        return players.getGamblers()
                 .stream().map(PlayerReadOnly::from)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -32,7 +32,7 @@ public class PlayersReadOnly {
     public List<PlayerReadOnly> getAllPlayers() {
         List<PlayerReadOnly> players = new ArrayList<>();
         players.add(getDealer());
-        players.addAll(getParticipants());
+        players.addAll(getGamblers());
         return players;
     }
 }

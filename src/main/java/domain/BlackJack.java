@@ -37,18 +37,13 @@ public class BlackJack {
         return players.shouldDealerGetCard();
     }
 
-    public void giveCardToDealer() {
-        Player dealer = players.getDealer();
-        giveCard(PlayerReadOnly.from(dealer));
-    }
-
     public PlayersReadOnly getPlayers() {
         return PlayersReadOnly.from(players);
     }
 
-    public List<PlayerReadOnly> getParticipants() {
+    public List<PlayerReadOnly> getGamblers() {
         return PlayersReadOnly.from(players)
-                .getParticipants();
+                .getGamblers();
     }
 
     public GameResult compareScore() {

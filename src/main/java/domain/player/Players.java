@@ -33,7 +33,7 @@ public class Players {
 
     public Map<Player, Bet> compareAll() {
         Map<Player, Bet> result = new LinkedHashMap<>();
-        getParticipants().forEach(participant -> result.put(participant, ScoreComparator.compare(getDealer(), participant)));
+        getGamblers().forEach(gambler -> result.put(gambler, ScoreComparator.compare(getDealer(), gambler)));
         return result;
     }
 
@@ -52,7 +52,7 @@ public class Players {
         return players.get(0);
     }
 
-    protected List<Player> getParticipants() {
+    protected List<Player> getGamblers() {
         List<Player> players = new LinkedList<>(this.players);
         players.remove(getDealer());
         return players;

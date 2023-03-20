@@ -74,42 +74,42 @@ public class BlackJackApplication {
     }
 
     private void giveCardToParticipants(BlackJack blackJack) {
-        List<PlayerReadOnly> participants = blackJack.getParticipants();
-        for (PlayerReadOnly participant : participants) {
-            giveCardToParticipant(blackJack, participant);
+        List<PlayerReadOnly> gamblers = blackJack.getGamblers();
+        for (PlayerReadOnly gambler : gamblers) {
+            giveCardToParticipant(blackJack, gambler);
         }
     }
 
-    private void giveCardToParticipant(BlackJack blackJack, PlayerReadOnly participant) {
-        Command command = getCommand(participant.getName());
+    private void giveCardToParticipant(BlackJack blackJack, PlayerReadOnly gambler) {
+        Command command = getCommand(gambler.getName());
         if (command.isYes()) {
-            blackJack.giveCard(participant.getName());
-            OutputView.printParticipantCardCondition(List.of(participant));
+            blackJack.giveCard(gambler.getName());
+            OutputView.printParticipantCardCondition(List.of(gambler));
         }
-        if (isStoppingGivingCardCondition(participant, command)) {
-            stopGivingCard(participant, command);
+        if (isStoppingGivingCardCondition(gambler, command)) {
+            stopGivingCard(gambler, command);
             return;
         }
-        giveCardToParticipant(blackJack, participant);
+        giveCardToParticipant(blackJack, gambler);
     }
 
-    private static boolean isStoppingGivingCardCondition(PlayerReadOnly participant, Command command) {
-        return command.isNo() || participant.isBust();
+    private static boolean isStoppingGivingCardCondition(PlayerReadOnly gambler, Command command) {
+        return command.isNo() || gambler.isBust();
     }
 
-    private Command getCommand(String participantName) {
-        OutputView.printAddCardGuide(participantName);
+    private Command getCommand(String gamblerName) {
+        OutputView.printAddCardGuide(gamblerName);
         return InputView.repeat(InputView::inputAddCardCommand);
     }
 
-    private void stopGivingCard(PlayerReadOnly participant, Command command) {
+    private void stopGivingCard(PlayerReadOnly gambler, Command command) {
         if (command.isNo()) {
-            OutputView.printParticipantCardCondition(List.of(participant));
+            OutputView.printParticipantCardCondition(List.of(gambler));
             return;
         }
 
-        if (participant.isBust()) {
-            OutputView.printBurstMessage(participant.getName());
+        if (gambler.isBust()) {
+            OutputView.printBurstMessage(gambler.getName());
         }
     }
 }

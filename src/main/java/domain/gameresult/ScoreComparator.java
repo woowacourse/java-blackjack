@@ -37,13 +37,13 @@ public class ScoreComparator {
 
     private static Bet calculateBettingResultOnScore(Player dealer, Player gambler) {
         int dealerScore = dealer.getScore();
-        int participantScore = gambler.getScore();
+        int gamblerScore = gambler.getScore();
 
-        if (dealerScore > participantScore) {
+        if (dealerScore > gamblerScore) {
             return BetCounter.lose(gambler.getBet());
         }
 
-        if (dealerScore < participantScore) {
+        if (dealerScore < gamblerScore) {
             return BetCounter.win(gambler.getBet());
         }
 

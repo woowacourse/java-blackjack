@@ -50,7 +50,7 @@ class BlackJackTest {
         blackJack.giveCardToAllPlayers();
 
         assertThat(dealer.getCards()).hasSize(1);
-        gamblers.forEach(participant -> assertThat(participant.getCards()).hasSize(1));
+        gamblers.forEach(gambler -> assertThat(gambler.getCards()).hasSize(1));
     }
 
     @Test
@@ -60,11 +60,11 @@ class BlackJackTest {
                 Players.from(makeDealer(), Player.from(GIVEN_NAMES_BETS)),
                 Deck.create()
         );
-        PlayerReadOnly participant = blackJack.getParticipants().get(0);
+        PlayerReadOnly gambler = blackJack.getGamblers().get(0);
 
-        blackJack.giveCard(participant.getName());
+        blackJack.giveCard(gambler.getName());
 
-        assertThat(participant.getCards()).hasSize(1);
+        assertThat(gambler.getCards()).hasSize(1);
     }
 
     @Test
