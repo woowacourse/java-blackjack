@@ -78,4 +78,16 @@ public class BankTest extends AbstractTestFixture {
 
         assertThat(bank.getProfit()).isEqualTo(createMoney(expectedValue));
     }
+
+    @Test
+    @DisplayName("원금 대비 수익을 알 수 있다.")
+    void test_calculateProfit() {
+        var bank = new Bank();
+        var user = new User("ㅎㅇ");
+
+        bank.bet(user, Money.of(1234));
+        bank.evaluate(user, Result.WIN_BY_BLACKJACK);
+
+        assertThat(bank.getProfitOf(user)).isEqualTo(Money.of((int)(1234 * 1.5)));
+    }
 }

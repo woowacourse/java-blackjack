@@ -4,15 +4,9 @@ public class Money {
 
     public static Money ZERO = Money.of(0);
 
-    private final int principal;
     private final int value;
 
     private Money(int value) {
-        this(value, value);
-    }
-
-    private Money(int principal, int value) {
-        this.principal = principal;
         this.value = value;
     }
 
@@ -28,23 +22,23 @@ public class Money {
     }
 
     public Money add(Money other) {
-        return new Money(principal, value + other.value);
+        return new Money(value + other.value);
     }
 
     public Money sub(Money other) {
-        return new Money(principal, value - other.value);
+        return new Money(value - other.value);
     }
 
     public Money multiply(double multiplier) {
-        return new Money(principal, (int)(value * multiplier));
+        return new Money((int)(value * multiplier));
     }
 
     public boolean isLessThan(Money other) {
         return this.value < other.value;
     }
 
-    public int getProfit() {
-        return value - principal;
+    public int getValue() {
+        return value;
     }
 
     @Override

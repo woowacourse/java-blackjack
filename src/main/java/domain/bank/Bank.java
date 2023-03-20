@@ -10,8 +10,8 @@ public class Bank {
 
     private static final Money BET_MINIMUM = Money.of(100);
 
+    private final Map<User, Money> principals = new HashMap<>();
     private final Map<User, Money> deposits = new HashMap<>();
-    private Money bankProfit = Money.ZERO;
 
     public void bet(User user, Money money) {
         validateMinimum(money);
@@ -26,7 +26,6 @@ public class Bank {
 
     public void evaluate(User user, Result result) {
         Money profit = getDepositOf(user).multiply(result.getDividend());
-        spend(profit);
         deposit(user, profit);
     }
 
@@ -36,15 +35,10 @@ public class Bank {
         return deposit;
     }
 
-    private void spend(Money money) {
-        bankProfit = bankProfit.sub(money);
-    }
-
     private void deposit(User user, Money money) {
         Money deposit = getDepositOf(user);
         if (deposit.equals(Money.ZERO)) {
-            deposits.put(user, money);
-            return;
+            principals.putIfAbsent(user, money);
         }
         deposits.put(user, deposit.add(money));
     }
@@ -57,7 +51,19 @@ public class Bank {
         return deposits.getOrDefault(user, Money.ZERO);
     }
 
+    private Money getPrincipalOf(User user) {
+        return principals.getOrDefault(user, Money.ZERO);
+    }
+
     public Money getProfit() {
-        return bankProfit;
+        Money profit = Money.ZERO;
+        for (User user : deposits.keySet()) {
+            profit = profit.sub(getProfitOf(user));
+        }
+        return profit;
+    }
+
+    public Money getProfitOf(User user) {
+        return getDepositOf(user).sub(getPrincipalOf(user));
     }
 }
