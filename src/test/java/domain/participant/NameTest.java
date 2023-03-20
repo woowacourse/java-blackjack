@@ -1,6 +1,5 @@
-package domain;
+package domain.participant;
 
-import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class NameTest {
+class NameTest {
 
     @Test
     @DisplayName("플레이어 이름 문자열을 입력하면 Name 객체가 정상적으로 생성된다")

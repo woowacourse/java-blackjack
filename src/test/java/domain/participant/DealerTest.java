@@ -1,8 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.*;
-import domain.participant.Dealer;
-import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
     @DisplayName("초기 카드 두장을 파라미터로 입력하여 딜러 객체가 정상적으로 생성된다")

@@ -1,9 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.*;
-import domain.participant.Money;
-import domain.participant.Name;
-import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     @DisplayName("이름, 카드, 배팅액을 입력하면 플레이어 객체가 정상적으로 생성된다")

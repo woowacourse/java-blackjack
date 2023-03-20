@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import domain.card.Card;
 import domain.card.CardType;
@@ -7,9 +7,6 @@ import domain.card.Cards;
 import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
-import domain.result.DealerScore;
-import domain.result.PlayerScore;
-import domain.result.Profit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

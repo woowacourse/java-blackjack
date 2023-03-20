@@ -1,6 +1,5 @@
-package domain;
+package domain.participant;
 
-import domain.participant.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class MoneyTest {
+class MoneyTest {
 
     @Test
     @DisplayName("양의 정수를 파라미터로 주입하면 money 객체가 정상적으로 생성된다")

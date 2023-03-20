@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import domain.card.Card;
 import domain.card.CardType;
@@ -7,7 +7,6 @@ import domain.card.Cards;
 import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
-import domain.result.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class ProfitTest {
+class ProfitTest {
 
     @Test
     @DisplayName("수익을 입력하면 Profit 객체가 정상적으로 생성된다")

@@ -1,12 +1,9 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardType;
 import domain.card.CardValue;
 import domain.card.Cards;
-import domain.participant.Money;
-import domain.participant.Name;
-import domain.participant.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

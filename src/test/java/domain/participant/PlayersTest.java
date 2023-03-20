@@ -1,7 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.CardDeck;
-import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class PlayersTest {
+class PlayersTest {
 
     @Test
     @DisplayName("Players 객체의 필드 크기는 Player 수와 동일하다")
