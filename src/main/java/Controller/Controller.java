@@ -6,10 +6,10 @@ import static view.OutputView.*;
 import java.util.List;
 
 import domain.BlackJack;
-import domain.Deck;
 import domain.Player;
-import domain.RandomShuffleStrategy;
 import domain.Users;
+import domain.card.Deck;
+import domain.strategy.RandomShuffleStrategy;
 
 public class Controller {
 
@@ -23,6 +23,7 @@ public class Controller {
 		List<String> playerNames = askPlayerNames();
 		Deck deck = new Deck(new RandomShuffleStrategy());
 		Users players = Users.from(playerNames, deck);
+		bet(players.getPlayers());
 		BlackJack blackJack = new BlackJack(players, deck);
 		printInitMessage(players);
 		printDealerCardHidden(blackJack.getDealerCardHidden());
@@ -30,7 +31,14 @@ public class Controller {
 		return blackJack;
 	}
 
+	private void bet(List<Player> players) {
+		for (Player player : players) {
+			player.setBet(askPlayerBet(player.getName()));
+		}
+	}
+
 	private void play(final BlackJack blackJack) {
+		blank();
 		for (Player player : blackJack.getPlayers()) {
 			askPlayerHit(player, blackJack);
 		}
@@ -54,6 +62,6 @@ public class Controller {
 	private void end(final BlackJack blackJack) {
 		printDealerCards(blackJack.getDealerCards(), blackJack.getDealerScore());
 		printPlayerCards(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
-		printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
+		printGameResult(blackJack.calculateDealerProfit(), blackJack.calculatePlayerProfits());
 	}
 }

@@ -24,6 +24,17 @@ public class InputView {
 			.collect(Collectors.toList());
 	}
 
+	public static double askPlayerBet(String name){
+		System.out.println();
+		System.out.println(name + "의 배팅 금액은?");
+		String input = scanner.nextLine();
+		return Double.parseDouble(input);
+	}
+
+	public static void blank(){
+		System.out.println();
+	}
+
 	public static boolean askIfHit(final Player player) {
 		System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 		String input = scanner.nextLine().strip();

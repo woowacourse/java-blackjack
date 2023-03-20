@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-import static domain.Denomination.*;
+import static domain.card.Denomination.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;

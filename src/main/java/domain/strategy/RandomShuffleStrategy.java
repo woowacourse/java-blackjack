@@ -1,7 +1,9 @@
-package domain;
+package domain.strategy;
 
 import java.util.Collections;
 import java.util.List;
+
+import domain.card.Card;
 
 public class RandomShuffleStrategy implements ShuffleStrategy {
 

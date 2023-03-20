@@ -2,6 +2,9 @@ package domain;
 
 import java.util.List;
 
+import domain.card.Card;
+import domain.card.Cards;
+
 public class User {
 
 	private static final int NAME_MAX_LENGTH = 5;
