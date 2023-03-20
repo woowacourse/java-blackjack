@@ -10,7 +10,7 @@ public class Judge {
             return GameState.LOSE;
         }
         if (dealer.isBurst() || player.isHighScoreThan(dealer)) {
-            return isBlackJackWin(player);
+            return checkBlackJackState(player);
         }
         return GameState.DRAW;
     }
@@ -19,7 +19,7 @@ public class Judge {
         return dealer.isHighScoreThan(player) && !dealer.isBurst();
     }
 
-    private static GameState isBlackJackWin(Player player) {
+    private static GameState checkBlackJackState(Player player) {
         if (player.isBlackJack()) {
             return GameState.BLACKJACK;
         }
