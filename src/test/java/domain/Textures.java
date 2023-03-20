@@ -38,7 +38,7 @@ public class Textures {
     public static final Card CLOVER_ACE = new Card(Suit.CLOVER, Denomination.ACE);
     public static final Card CLOVER_THREE = new Card(Suit.CLOVER, Denomination.THREE);
 
-    public static Player makeBet(Bet bet) {
+    public static Player makeDealerWithBet(Bet bet) {
         return new Player(Hand.withEmptyHolder(), Name.dealerName(), bet);
     }
 
@@ -47,7 +47,7 @@ public class Textures {
     }
 
     public static Player makeDealer() {
-        return new Player(Hand.withEmptyHolder(), Name.dealerName(), Bet.from(3000));
+        return makeDealerWithBet(Bet.from(3000));
     }
 
     public static Player makePlayerWithCards(List<Card> cards) {

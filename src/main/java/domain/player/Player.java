@@ -57,10 +57,6 @@ public class Player {
         return this.name.getName();
     }
 
-    public Bet getBet() {
-        return bet;
-    }
-
     public Bet win() {
         return bet;
     }

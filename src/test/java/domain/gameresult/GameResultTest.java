@@ -20,7 +20,7 @@ class GameResultTest {
     void generatingGameResult() {
         Map<Player, Bet> result = Map.of(
                 new Player(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
-                Textures.makeBet(Bet.from(10000)), Bet.from(10000)
+                Textures.makeDealerWithBet(Bet.from(10000)), Bet.from(10000)
         );
         assertDoesNotThrow(() -> GameResult.from(result));
     }
