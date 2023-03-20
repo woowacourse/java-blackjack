@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Score;
+import domain.dto.UserDto;
 
 import java.util.List;
 
@@ -24,12 +25,24 @@ public abstract class User {
         return userData.hasResult();
     }
 
-    public boolean isBust() {
+    public final boolean isName(Name playerName) {
+        return getName().equals(playerName);
+    }
+
+    public final boolean isBust() {
         return userData.isBust();
     }
 
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return userData.isBlackjack();
+    }
+
+    public final void doStay() {
+        userData.doStay();
+    }
+
+    public final UserDto getUserDto() {
+        return new UserDto(getName(), getScore(), getCards());
     }
 
     public final List<Card> getCards() {
@@ -42,10 +55,6 @@ public abstract class User {
 
     public final Name getName() {
         return userData.getName();
-    }
-
-    public final void doStay() {
-        userData.doStay();
     }
 
     public abstract int getPrize();

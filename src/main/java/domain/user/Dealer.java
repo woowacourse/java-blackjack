@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.dto.UserDto;
 import domain.state.DealerReady;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public class Dealer extends User {
 
     public List<Card> getOnlyFirstCard() {
         return getCards().subList(0, 1);
+    }
+
+    public UserDto getDealerSetUpDto() {
+        return new UserDto(getName(), getScore(), getOnlyFirstCard());
     }
 }

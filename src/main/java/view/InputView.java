@@ -12,7 +12,6 @@ public class InputView {
 
     public List<String> readPlayersName() {
         List<String> playersName = Arrays.asList(scanner.nextLine().split(","));
-
         return playersName.stream()
                 .map(String::strip)
                 .collect(Collectors.toList());
@@ -22,7 +21,7 @@ public class InputView {
         return DrawCommand.of(scanner.nextLine());
     }
 
-    public int readPlayerBatting() {
+    public int readPlayerBetting() {
         return Integer.parseInt(scanner.nextLine());
     }
 }

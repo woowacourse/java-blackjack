@@ -1,35 +1,36 @@
 package domain.game;
 
-import domain.card.Card;
+import domain.card.DeckGenerator;
 import domain.card.GameDeck;
-import domain.card.Score;
+import domain.dto.UserDto;
 import domain.user.Dealer;
 import domain.user.Name;
-import domain.user.Player;
-import domain.user.User;
+import domain.user.Players;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
-    public static final Name dealerName = new Name("딜러");
-
-    private final List<Player> players;
+    private final Players players;
     private final Dealer dealer;
     private final GameDeck gameDeck;
 
-    public BlackjackGame(List<Player> players, Dealer dealer, GameDeck gameDeck) {
-        this.players = new ArrayList<>(players);
-        this.dealer = dealer;
-        this.gameDeck = gameDeck;
+    public BlackjackGame(Players players, DeckGenerator deckGenerator) {
+        this.players = players;
+        this.dealer = new Dealer();
+        this.gameDeck = new GameDeck(deckGenerator);
+
+        setUp();
     }
 
-    public void drawOneMoreCardForPlayer(Player player) {
-        player.receiveCard(gameDeck.drawCard());
+    private void setUp() {
+        dealer.receiveCards(gameDeck.drawForFirstTurn());
+        players.setUpGame(gameDeck);
+    }
+
+    public void drawOneMoreCardForPlayer(Name playerName) {
+        players.drawOneMoreCard(playerName, gameDeck.drawCard());
     }
 
     public void drawCardUntilDealerFinished() {
@@ -40,58 +41,16 @@ public class BlackjackGame {
         }
     }
 
-    public HashMap<Name, List<Card>> makeSetUpResult() {
-        HashMap<Name, List<Card>> setUpResult = new LinkedHashMap<>();
-        setUpResult.put(dealer.getName(), dealer.getOnlyFirstCard());
-        players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
-        return setUpResult;
-    }
-
-    public void doStay(Player player) {
-        player.doStay();
+    public void doStay(Name playerName) {
+        players.doStay(playerName);
     }
 
     public boolean hasReadyPlayer() {
-        return players.stream()
-                .anyMatch(player -> !player.hasResult());
+        return players.hasReadyPlayer();
     }
 
-    public Player getReadyPlayer() {
-        return players.stream()
-                .filter(player -> !player.hasResult())
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 게임이 미완료된 플레이어가 없습니다."));
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Card> getCards(Name name) {
-        if (dealerName.equals(name))
-            return dealer.getCards();
-
-        return findPlayerByName(name).getCards();
-    }
-
-    public Score getScore(Name name) {
-        if (dealerName.equals(name))
-            return dealer.getScore();
-
-        return findPlayerByName(name).getScore();
-    }
-
-    public List<Name> getAllUserNames() {
-        List<Name> allUserNames = new ArrayList<>(List.of(dealer.getName()));
-        allUserNames.addAll(players.stream().map(User::getName).collect(Collectors.toList()));
-        return allUserNames;
-    }
-
-    private Player findPlayerByName(Name name) {
-        return players.stream()
-                .filter(player -> player.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 User 이름입니다."));
+    public boolean hasPlayerResult(Name playerName) {
+        return players.hasPlayerResult(playerName);
     }
 
     public Map<Name, Integer> calculatePlayerResult() {
@@ -100,7 +59,36 @@ public class BlackjackGame {
         return gameResult.getPlayerPrizes();
     }
 
-    public int dealerDrawCount() {
+    // Todo: calculatePlayerResult 리팩토링 후 없애도 될지도?
+    private List<Name> getAllUserNames() {
+        List<Name> allUserNames = new ArrayList<>(List.of(dealer.getName()));
+        allUserNames.addAll(players.getAllNames());
+
+        return allUserNames;
+    }
+
+    public int getDealerDrawCount() {
         return dealer.drawCount();
+    }
+
+    public UserDto getDealerSetUpDto() {
+        return dealer.getDealerSetUpDto();
+    }
+
+    public UserDto getDealerDto() {
+        return dealer.getUserDto();
+    }
+
+    // todo : 준비된 플레이어를 넘겨주는 것보다 이름을 넘겨받아서 외부에서 순회하도록 할까?
+    public UserDto getReadyPlayerDto() {
+        return players.getReadyPlayerDto();
+    }
+
+    public UserDto getPlayerDtoByName(Name playerName) {
+        return players.getPlayerDtoByName(playerName);
+    }
+
+    public List<UserDto> getAllPlayerDtos() {
+        return players.getAllPlayerDtos();
     }
 }

@@ -3,6 +3,7 @@ package domain.game;
 import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.Player;
+import domain.user.Players;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,17 +16,13 @@ public class GameResult {
         playerNames.forEach(name -> playerPrizes.put(name, 0));
     }
 
-    public void saveResults(Dealer dealer, List<Player> players) {
+    public void saveResults(Dealer dealer, Players players) {
         judgeWinner(dealer, players);
     }
 
-    public Map<Name, Integer> getPlayerPrizes() {
-        return new LinkedHashMap<>(playerPrizes);
-    }
-
-    private void judgeWinner(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            compareDealerStatusWithPlayer(dealer, player);
+    private void judgeWinner(Dealer dealer, Players players) {
+        for (Name playerName : players.getAllNames()) {
+            compareDealerStatusWithPlayer(dealer, players.findPlayerByName(playerName));
         }
     }
 
@@ -55,5 +52,9 @@ public class GameResult {
             return;
         }
         playerPrizes.put(player.getName(), player.getPrize());
+    }
+
+    public Map<Name, Integer> getPlayerPrizes() {
+        return new LinkedHashMap<>(playerPrizes);
     }
 }
