@@ -1,15 +1,13 @@
 package controller;
 
-import domain.Cards;
-import domain.PlayerState;
 import domain.generator.CardNumberGenerator;
 import domain.CardSelector;
 import domain.Dealer;
 import domain.Name;
 import domain.Player;
-import domain.Result;
 import domain.ResultCalculator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
@@ -26,36 +24,32 @@ public class BlackJackController {
 
     public void run(final CardNumberGenerator generator) {
         List<Name> names = inputNames(inputView.getPlayer());
-        Dealer dealer = new Dealer(Cards.pickInitialCards(generator));
+        Dealer dealer = Dealer.createInitialDealer(generator);
         List<Integer> bettingMoneys = inputView.inputBettingMoneys(names);
         List<Player> players = CardSelector.giveCardsToPlayers(names, generator, bettingMoneys);
         printInitialCardResult(dealer, players);
-        printAllGameResult(generator, dealer, players);
+        startEachTurn(generator, dealer, players);
+        printFinalCardResult(dealer, players);
+        ResultCalculator.calculateBettingResultAfterGame(dealer, players);
+        printWinningResult(players, ResultCalculator.sumDealerProfit(players));
     }
 
     private void printInitialCardResult(final Dealer dealer, final List<Player> players) {
-        List<String> copiedNames = copyEachPlayersName(players);
+        List<String> names = copyEachPlayersName(players);
         List<List<String>> copiedCards = copyCards(players);
         copiedCards.add(0, dealer.copyCards());
-        printPlayerNamesAndCardsPerPlayer(copiedNames, copiedCards);
+        printPlayerNamesAndCardsPerPlayer(names, copiedCards);
     }
 
-    private void printPlayerNamesAndCardsPerPlayer(final List<String> copiedNames,
+    private void printPlayerNamesAndCardsPerPlayer(final List<String> names,
         final List<List<String>> boxedCards) {
-        outputView.printPlayerNames(copiedNames);
-        outputView.printCardsPerPlayer(copiedNames, boxedCards);
+        outputView.printPlayerNames(names);
+        outputView.printCardsPerPlayer(names, boxedCards);
     }
 
-    private void printAllGameResult(CardNumberGenerator generator, Dealer dealer, List<Player> players) {
+    private void startEachTurn(CardNumberGenerator generator, Dealer dealer, List<Player> players) {
         eachPlayersTurn(players, generator);
         dealerTurn(dealer, generator);
-
-        printFinalCardResult(dealer, players);
-        List<Result> winningResult = ResultCalculator.getWinningResult(dealer, players);
-        for (int i =0 ; i<players.size();i++){
-            players.get(i).calculateFinalBettingResult(winningResult.get(i));
-        }
-        printWinningResult(players);
     }
 
     private void eachPlayersTurn(final List<Player> players,
@@ -68,30 +62,36 @@ public class BlackJackController {
 
     private void playerSelectToAddCard(final Player player,
         final CardNumberGenerator generator) {
-        addCardByPlayer(player, generator);
-        if (player.askPlayerState().equals(PlayerState.MORE) || player.askPlayerState().equals(PlayerState.FLAT)) {
-            outputView.noticePlayerCannotReceiveCard(player);
+        selectToAddCard(player, generator);
+        printIfPlayerCannotReceiveCard(player);
+        printCurrentPlayerInfo(player);
+    }
+
+    private void printIfPlayerCannotReceiveCard(Player player) {
+        outputView.noticePlayerCannotReceiveCard(player.getName(), player.sumOfParticipantCards(),
+            player.isPlayerCanAddCard());
+    }
+
+
+    private void selectToAddCard(Player player, CardNumberGenerator generator) {
+        while (player.isSelectToAddCard(inputView.addOrStop(player.getName()))) {
+            CardSelector.playerDrawIfSelectToAddCard(player, generator);
+            printCurrentPlayerInfo(player);
         }
+    }
+    private void printCurrentPlayerInfo(Player player) {
         outputView.printCurrentPlayerResult(player.getName(), player.copyCards());
-    }
-
-    private void addCardByPlayer(Player player, CardNumberGenerator generator) {
-        while (inputView.addOrStop(player.getName()) && checkPlayerCanReceiveCard(player)) {
-            int cardBoxIndex = generator.generateIndex();
-            CardSelector.playerDrawIfSelectToAddCard(player, cardBoxIndex);
-            outputView.printCurrentPlayerResult(player.getName(), player.copyCards());
-        }
-    }
-
-    private boolean checkPlayerCanReceiveCard(Player player) {
-        return player.askPlayerState().equals(PlayerState.LESS);
     }
 
     private void dealerTurn(Dealer dealer, final CardNumberGenerator generator) {
         while (dealer.isSumUnderStandard()) {
-            outputView.noticeDealerUnderStandard();
+            noticeIfDealerSumUnderStandard();
             CardSelector.dealerPickCard(dealer, generator.generateIndex());
         }
+    }
+
+    private void noticeIfDealerSumUnderStandard() {
+        outputView.noticeDealerUnderStandard();
     }
 
     private void printFinalCardResult(final Dealer dealer, final List<Player> players) {
@@ -102,8 +102,15 @@ public class BlackJackController {
         );
     }
 
-    private void printWinningResult(final List<Player> players) {
-        outputView.printEachPlayersProfit(players);
+    private void printWinningResult(final List<Player> players, int dealerProfit) {
+        outputView.printDealerProfit(dealerProfit);
+        outputView.printEachPlayersProfit(copyResult(players));
+    }
+
+    private static Map<String, Integer> copyResult(List<Player> players) {
+        return players.stream().collect(
+            Collectors.toMap(Player::getName, Player::calculateFinalProfit)
+        );
     }
 
     private List<String> copyEachPlayersName(final List<Player> players) {
