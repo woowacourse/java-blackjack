@@ -2,10 +2,11 @@ package domain.result;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.result.PlayerScore;
-import domain.result.Profit;
 
 public class Judge {
+
+    private Judge() {
+    }
 
     public static PlayerScore judgeScore(Player player, Dealer dealer) {
         if (dealer.isBurst()) {
