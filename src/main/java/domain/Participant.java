@@ -13,17 +13,17 @@ public abstract class Participant {
         return pickOtherCard(cardBoxIndex);
     }
     private boolean pickOtherCard(final int cardBoxIndex) {
-        return this.cards.addCard(CardBox.get(cardBoxIndex));
+        return this.cards.addCard(Deck.get(cardBoxIndex));
     }
 
     public PlayerState askPlayerState() {
         if (sumOfParticipantCards() > MAXIMUM_SUM_OF_CARD) {
-            return PlayerState.MORE;
+            return PlayerState.MORE_THAN_MAXIMUM;
         }
         if (sumOfParticipantCards() == MAXIMUM_SUM_OF_CARD) {
-            return PlayerState.FLAT;
+            return PlayerState.EQUAL_WITH_MAXIMUM;
         }
-        return PlayerState.LESS;
+        return PlayerState.LESS_THAN_MAXIMUM;
     }
 
     public Participant(Cards cards) {
@@ -36,36 +36,6 @@ public abstract class Participant {
 
     public boolean isBlackJack() {
         return sumOfParticipantCards() == MAXIMUM_SUM_OF_CARD && cards.sizeOfCards() == INITIAL_CARD_SIZE;
-    }
-
-    public static Result checkWinningResult(final Participant standardPlayer,final Participant opponentPlayer) {
-        int sumOfDealerCards = standardPlayer.sumOfParticipantCards();
-        int sumOfPlayerCards = opponentPlayer.sumOfParticipantCards();
-        return dealerCompareToPlayer(sumOfDealerCards, sumOfPlayerCards);
-    }
-
-    private static Result dealerCompareToPlayer(final int sumOfStandardPlayerCards, final int sumOfOpponentPlayerCards) {
-        if (sumOfStandardPlayerCards > MAXIMUM_SUM_OF_CARD && sumOfOpponentPlayerCards > MAXIMUM_SUM_OF_CARD) {
-            return Result.DRAW;
-        }
-        if (sumOfStandardPlayerCards > MAXIMUM_SUM_OF_CARD) {
-            return Result.LOSE;
-        }
-        if (sumOfOpponentPlayerCards > MAXIMUM_SUM_OF_CARD) {
-            return Result.WIN;
-        }
-        return compareNumber(sumOfStandardPlayerCards, sumOfOpponentPlayerCards);
-    }
-
-    private static Result compareNumber(int sumOfDealerCards, int sumOfPlayerCards) {
-        int resultNum = Integer.compare(sumOfDealerCards, sumOfPlayerCards);
-        if (resultNum == 1) {
-            return Result.WIN;
-        }
-        if (resultNum == 0) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
     }
 
     public List<String> copyCards() {
