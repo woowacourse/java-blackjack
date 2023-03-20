@@ -6,6 +6,8 @@ public class BetAmount {
 
     private static final int MIN_AMOUNT = 1000;
     private static final int MAX_AMOUNT = 1000000;
+    protected static final String VALID_AMOUNT_MSG = String.format("베팅 금액은 %d원에서 %d원 사이여야합니다.",
+        MIN_AMOUNT, MAX_AMOUNT);
     private static final BetAmount ZERO = new BetAmount(0);
 
     private final double betAmount;
@@ -21,7 +23,7 @@ public class BetAmount {
 
     private static void validateBetAmount(double betAmount) {
         if (betAmount < MIN_AMOUNT|| betAmount > MAX_AMOUNT) {
-            throw new IllegalArgumentException(String.format("베팅 금액은 %d원에서 %d원 사이여야합니다.",MIN_AMOUNT, MAX_AMOUNT));
+            throw new IllegalArgumentException(VALID_AMOUNT_MSG);
         }
     }
 

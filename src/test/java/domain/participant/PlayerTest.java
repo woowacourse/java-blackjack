@@ -20,7 +20,7 @@ public class PlayerTest {
         String name = "abcdef";
         Assertions.assertThatThrownBy(() -> new Player(name))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이름은 5자 이하여야 합니다.");
+            .hasMessage(Player.OVER_MAX_NAME_MSG);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class PlayerTest {
 
         Assertions.assertThatThrownBy(() -> hoy.hit(Card.of(Suit.SPADE, Denomination.A)))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("카드를 먼저 받으세요.");
+            .hasMessage(Player.NO_CARDS_MSG);
     }
 
     @Test
@@ -67,6 +67,6 @@ public class PlayerTest {
     void validateSameDealerName() {
         Assertions.assertThatThrownBy(() -> new Player(Dealer.NAME))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("딜러와 같은 이름");
+            .hasMessageContaining(Player.CANNOT_SAME_DEALER_MSG);
     }
 }

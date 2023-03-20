@@ -29,6 +29,6 @@ class ParticipantTest {
 
         assertThatThrownBy(() -> participant.initCards(cards))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("초기 카드는 2장이어야 합니다.");
+            .hasMessage(Participant.INITIAL_CARD_SIZE_MSG);
     }
 }

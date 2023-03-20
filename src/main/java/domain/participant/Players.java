@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 public class Players implements Iterable<Player> {
 
     private static final int MAX_PLAYER_NUMBER = 5;
+    protected static final String MAX_PLAYER_NUMBER_MSG = "플레이어 최대 인원수는 5명입니다.";
+
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -24,7 +26,7 @@ public class Players implements Iterable<Player> {
 
     private static void validatePlayerNumber(List<String> playerNames) {
         if (playerNames.size() > MAX_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("플레이어 최대 인원수는 5명입니다.");
+            throw new IllegalArgumentException(MAX_PLAYER_NUMBER_MSG);
         }
     }
 

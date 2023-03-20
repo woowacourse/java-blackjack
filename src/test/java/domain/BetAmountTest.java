@@ -16,7 +16,7 @@ class BetAmountTest {
         if (doThrow) {
             assertThatThrownBy(() -> BetAmount.of(betAmount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 1000원에서 1000000원 사이여야합니다.");
+                .hasMessage(BetAmount.VALID_AMOUNT_MSG);
             return;
         }
 

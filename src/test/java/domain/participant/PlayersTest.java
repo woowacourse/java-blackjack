@@ -13,6 +13,6 @@ class PlayersTest {
         Assertions.assertThatThrownBy(
                 () -> Players.of(List.of("one", "two", "three", "four", "five", "six")))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("플레이어 최대 인원수는 5명입니다.");
+            .hasMessage(Players.MAX_PLAYER_NUMBER_MSG);
     }
 }
