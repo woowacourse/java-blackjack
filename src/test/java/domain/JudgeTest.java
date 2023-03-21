@@ -29,7 +29,7 @@ class JudgeTest {
         player.initCards(cards);
         //when
         player.hit(Card.of(Suit.SPADE, Denomination.THREE));
-        GameState result = Judge.gameResult(dealer, player);
+        GameState result = Judge.gameResult(dealer.getCards(), player.getCards());
         //then
         Assertions.assertThat(result).isEqualTo(GameState.LOSE);
     }
@@ -47,7 +47,7 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameState result = Judge.gameResult(dealer, player);
+        GameState result = Judge.gameResult(dealer.getCards(), player.getCards());
         //then
         Assertions.assertThat(result).isEqualTo(GameState.LOSE);
     }
@@ -68,7 +68,7 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameState result = Judge.gameResult(dealer, player);
+        GameState result = Judge.gameResult(dealer.getCards(), player.getCards());
         //then
         Assertions.assertThat(result).isEqualTo(GameState.WIN);
     }
@@ -87,7 +87,7 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameState result = Judge.gameResult(dealer, player);
+        GameState result = Judge.gameResult(dealer.getCards(), player.getCards());
         //then
         Assertions.assertThat(result).isEqualTo(GameState.WIN);
     }
@@ -106,7 +106,7 @@ class JudgeTest {
         Player player = new Player("pobi");
         player.initCards(cards);
         //when
-        GameState result = Judge.gameResult(dealer, player);
+        GameState result = Judge.gameResult(dealer.getCards(), player.getCards());
         //then
         Assertions.assertThat(result).isEqualTo(GameState.DRAW);
     }
