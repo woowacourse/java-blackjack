@@ -1,28 +1,35 @@
 package view;
 
-import domain.Result;
+import java.util.Arrays;
+import java.util.List;
 
 public enum ResultCategory {
 
-    WIN("승"), LOSE("패"), DRAW("무");
+    WIN("승", List.of("WIN", "WIN_BY_BLACKJACK")),
+    LOSE("패", List.of("DRAW")),
+    DRAW("무", List.of("LOSE"));
 
     private final String display;
+    private final List<String> resultNames;
 
-    ResultCategory(String display) {
+    ResultCategory(String display, List<String> resultNames) {
         this.display = display;
+        this.resultNames = resultNames;
     }
 
     public String getDisplay() {
         return display;
     }
 
-    public static ResultCategory of(Result result) {
-        if (result == Result.WIN || result == Result.WIN_BY_BLACKJACK) {
-            return ResultCategory.WIN;
-        }
-        if (result == Result.DRAW) {
-            return ResultCategory.DRAW;
-        }
-        return ResultCategory.LOSE;
+    private boolean has(String resultName) {
+        return resultNames.stream()
+                .anyMatch(it -> it.equals(resultName));
+    }
+
+    public static ResultCategory of(String resultName) {
+        return Arrays.stream(values())
+                .filter(it -> it.has(resultName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("게임 결과가 잘못되었습니다"));
     }
 }

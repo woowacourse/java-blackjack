@@ -76,9 +76,14 @@ public class GameController {
     }
 
     private void showResultsOf(Game game) {
-        outputView.printDealerResults(game.getDealerResults());
+        List<String> dealerResults = game.getDealerResults()
+                .stream()
+                .map(Enum::name)
+                .collect(Collectors.toList());
+        outputView.printDealerResults(dealerResults);
         for (var user : game.getUsers()) {
-            outputView.printResult(user.getName(), game.getResultOf(user));
+            String userResult = game.getResultOf(user).name();
+            outputView.printResult(user.getName(), userResult);
         }
     }
 

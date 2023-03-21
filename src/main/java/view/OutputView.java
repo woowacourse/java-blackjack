@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Result;
 import dto.CardDto;
 import dto.PlayerDto;
 
@@ -55,16 +54,16 @@ public class OutputView {
         System.out.println(name + "카드: " + joinDisplaysOf(cards) + " - 결과: " + score);
     }
 
-    public void printResult(String name, Result result) {
+    public void printResult(String name, String result) {
         System.out.println(name + ": " + ResultCategory.of(result).getDisplay());
     }
 
-    public void printDealerResults(List<Result> results) {
+    public void printDealerResults(List<String> results) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        String renderedResults = Arrays.stream(ResultCategory.values())
-                .map(resultCategory -> getDisplay(resultCategory, results))
-                .collect(Collectors.joining(" "));
-        System.out.println("딜러: " + renderedResults);
+        List<ResultCategory> resultCategories = results.stream()
+                .map(ResultCategory::of)
+                .collect(Collectors.toList());
+        System.out.println("딜러: " + getDisplay(resultCategories));
     }
 
     public void printProfit(String name, int profit) {
@@ -75,9 +74,8 @@ public class OutputView {
         System.out.println("[ERROR] " + message);
     }
 
-    private long countResults(ResultCategory resultCategory, List<Result> results) {
-        return results.stream()
-                .map(ResultCategory::of)
+    private long countResults(ResultCategory resultCategory, List<ResultCategory> resultCategories) {
+        return resultCategories.stream()
                 .filter(result -> result.equals(resultCategory))
                 .count();
     }
@@ -94,8 +92,10 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private String getDisplay(ResultCategory resultCategory, List<Result> results) {
-        return countResults(resultCategory, results) + resultCategory.getDisplay();
+    private String getDisplay(List<ResultCategory> resultCategories) {
+        return Arrays.stream(ResultCategory.values())
+                .map(resultCategory -> countResults(resultCategory, resultCategories) + resultCategory.getDisplay())
+                .collect(Collectors.joining(" "));
     }
 
     private String getDisplay(CardDto card) {
