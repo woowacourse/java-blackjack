@@ -12,20 +12,16 @@ public class Score {
         this.score = score;
     }
 
-    public Score add(Score other) {
+    Score add(Score other) {
         return new Score(score + other.score);
     }
 
-    public boolean canAddBonus() {
-        return this.add(BONUS).isNotBust();
+    boolean canAddBonus() {
+        return !this.add(BONUS).isBust();
     }
 
-    public boolean isBust() {
+    boolean isBust() {
         return this.isGreaterThan(BLACKJACK);
-    }
-
-    private boolean isNotBust() {
-        return !isBust();
     }
 
     public boolean isGreaterThan(Score other) {
