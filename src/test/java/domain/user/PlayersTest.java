@@ -15,9 +15,8 @@ public class PlayersTest {
     @DisplayName("한 명일 수 있다.")
     void createSingleNameTest() {
         List<String> singleName = List.of("pobi");
-        List<Integer> bets = List.of(1000);
 
-        Players players = new Players(singleName, bets);
+        Players players = new Players(singleName);
         UserDto userDto = players.getPlayerDtoByName(new Name("pobi"));
 
         assertThat(userDto.getName()).isEqualTo("pobi");
@@ -27,9 +26,8 @@ public class PlayersTest {
     @DisplayName("중복될 시 예외처리 된다.")
     void validateDuplicatedNamesTest() {
         List<String> playerNames = List.of("pobi", "neo", "pobi");
-        List<Integer> bets = List.of(1000, 2000, 3000);
 
-        assertThatThrownBy(() -> new Players(playerNames, bets))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
     }
@@ -38,9 +36,8 @@ public class PlayersTest {
     @DisplayName("5개가 초과될 시 예외처리 된다.")
     void validateNamesSizeTest() {
         List<String> playerNames = List.of("pobi", "neo", "hiiro", "mako", "ako", "split");
-        List<Integer> bets = List.of(1000, 2000, 3000, 4000, 5000);
 
-        assertThatThrownBy(() -> new Players(playerNames, bets))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레이어는 최대 5명입니다.");
     }

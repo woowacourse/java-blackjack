@@ -19,7 +19,7 @@ public abstract class State {
 
     public abstract boolean isFinished();
 
-    public abstract int calculatePrize(int base);
+    public abstract double getProfitRatio();
 
     public final boolean isBust() {
         return hand.isBust();

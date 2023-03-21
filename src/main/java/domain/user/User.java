@@ -3,63 +3,75 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Score;
 import domain.dto.UserDto;
+import domain.state.Ready;
+import domain.state.State;
 
 import java.util.List;
 
 public abstract class User {
-    private final UserData userData;
+    private final Name name;
+    private State state;
 
-    User(UserData userData) {
-        this.userData = userData;
+    public User(Name name, Ready ready) {
+        this.name = name;
+        this.state = ready;
     }
 
     public final void receiveCards(List<Card> cards) {
         cards.forEach(this::receiveCard);
     }
 
-    public final void receiveCard(Card card) {
-        userData.receiveCard(card);
-    }
-
-    public final boolean hasResult() {
-        return userData.hasResult();
-    }
-
     public final boolean isName(Name playerName) {
         return getName().equals(playerName);
     }
 
-    public final boolean isBust() {
-        return userData.isBust();
+    public final boolean hasLessScore(User other) {
+        return getScore().isLessThan(other.getScore());
     }
 
-    public final boolean isBlackjack() {
-        return userData.isBlackjack();
-    }
-
-    public final void doStay() {
-        userData.doStay();
+    public final boolean hasSameScore(User other) {
+        return getScore().equals(other.getScore());
     }
 
     public final UserDto getUserDto() {
         return new UserDto(getName(), getScore(), getCards());
     }
 
-    public final List<Card> getCards() {
-        return userData.getCards();
+    public void receiveCard(Card card) {
+        state = state.draw(card);
     }
 
-    public final Score getScore() {
-        return userData.getScore();
+    public void doStay() {
+        state = state.stay();
     }
 
-    public final Name getName() {
-        return userData.getName();
+    public boolean hasResult() {
+        return state.isFinished();
     }
 
-    public abstract int getPrize();
-
-    protected UserData getUserData() {
-        return userData;
+    public boolean isBust() {
+        return state.isBust();
     }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public List<Card> getCards() {
+        return state.getCards();
+    }
+
+    public Score getScore() {
+        return state.getScore();
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    protected State getState() {
+        return state;
+    }
+
+    public abstract double getProfitRatio();
 }

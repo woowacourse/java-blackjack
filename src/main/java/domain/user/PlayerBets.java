@@ -1,6 +1,4 @@
-package domain;
-
-import domain.user.Name;
+package domain.user;
 
 import java.util.LinkedHashMap;
 import java.util.List;

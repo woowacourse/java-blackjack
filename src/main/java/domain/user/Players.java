@@ -8,19 +8,17 @@ import domain.dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Players {
     private static final int MAX_PLAYER_SIZE = 5;
 
     private final List<Player> players = new ArrayList<>();
 
-    public Players(List<String> names, List<Integer> bets) {
+    public Players(List<String> names) {
         validateDuplicatedName(names);
         validateNamesSize(names);
 
-        IntStream.range(0, names.size())
-                .forEach(index -> createPlayer(names.get(index), bets.get(index)));
+        names.forEach(name -> players.add(new Player(name)));
     }
 
     private void validateDuplicatedName(List<String> names) {
@@ -33,10 +31,6 @@ public class Players {
         if (names.size() > MAX_PLAYER_SIZE) {
             throw new IllegalArgumentException("[ERROR] 플레이어는 최대 5명입니다.");
         }
-    }
-
-    private void createPlayer(String name, int bet) {
-        players.add(new Player(new Name(name), bet));
     }
 
     public void setUpGame(GameDeck gameDeck) {
@@ -66,6 +60,10 @@ public class Players {
 
     public Score getScore(Name name) {
         return findPlayerByName(name).getScore();
+    }
+
+    public double getProfitRatio(Name name) {
+        return findPlayerByName(name).getProfitRatio();
     }
 
     public List<Name> getAllNames() {

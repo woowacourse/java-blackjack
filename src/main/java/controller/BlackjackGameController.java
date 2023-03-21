@@ -1,16 +1,17 @@
 package controller;
 
+import domain.user.PlayerBets;
 import domain.card.ShuffleDeckGenerator;
 import domain.command.DrawCommand;
 import domain.dto.UserDto;
 import domain.game.BlackjackGame;
+import domain.game.GameResult;
 import domain.user.Name;
 import domain.user.Players;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGameController {
@@ -24,18 +25,18 @@ public class BlackjackGameController {
 
     public void run() {
         BlackjackGame blackjackGame = setUpBlackjackGame();
-        playGame(blackjackGame);
+        PlayerBets playerBets = setUpPlayerBets(blackjackGame);
+
+        playGame(blackjackGame, playerBets);
+    }
+
+    private PlayerBets setUpPlayerBets(BlackjackGame blackjackGame) {
+        List<UserDto> allPlayerDtos = blackjackGame.getAllPlayerDtos();
+        return new PlayerBets(blackjackGame.getAllPlayerNames(), readPlayerBets(allPlayerDtos));
     }
 
     private BlackjackGame setUpBlackjackGame() {
-        return new BlackjackGame(createPlayers(), new ShuffleDeckGenerator());
-    }
-
-    private Players createPlayers() {
-        List<String> playerNames = readPlayerNames();
-        List<Integer> bets = readPlayerBets(playerNames);
-
-        return new Players(playerNames, bets);
+        return new BlackjackGame(new Players(readPlayerNames()), new ShuffleDeckGenerator());
     }
 
     private List<String> readPlayerNames() {
@@ -43,23 +44,23 @@ public class BlackjackGameController {
         return inputView.readPlayersName();
     }
 
-    private List<Integer> readPlayerBets(List<String> playerNames) {
-        return playerNames.stream()
+    private List<Integer> readPlayerBets(List<UserDto> allPlayerDtos) {
+        return allPlayerDtos.stream()
                 .map(this::readPlayerBet)
                 .collect(Collectors.toList());
     }
 
-    private int readPlayerBet(String name) {
-        outputView.printInputPlayerBettingMessage(name);
+    private int readPlayerBet(UserDto playerDto) {
+        outputView.printInputPlayerBettingMessage(playerDto);
         return inputView.readPlayerBetting();
     }
 
-    private void playGame(BlackjackGame blackjackGame) {
+    private void playGame(BlackjackGame blackjackGame, PlayerBets playerBets) {
         showSetUpResult(blackjackGame.getDealerSetUpDto(), blackjackGame.getAllPlayerDtos());
         progressPlayersTurn(blackjackGame);
         progressDealerTurn(blackjackGame);
         showUserCardResults(blackjackGame);
-        showFinalProfit(blackjackGame);
+        showFinalProfit(blackjackGame, playerBets);
     }
 
     private void showSetUpResult(UserDto dealerSetUpData, List<UserDto> playerGameData) {
@@ -119,14 +120,10 @@ public class BlackjackGameController {
         outputView.printAllUserCardsWithScore(allPlayerDtos);
     }
 
-    private void showFinalProfit(BlackjackGame blackjackGame) {
-        Map<Name, Integer> playerPrizes = blackjackGame.calculatePlayerResult();
+    private void showFinalProfit(BlackjackGame blackjackGame, PlayerBets playerBets) {
+        GameResult gameResult = blackjackGame.calculateGameResult(playerBets);
 
         outputView.printFinalResultHeaderMessage();
-
-        outputView.printDealerPrizeResult(playerPrizes.values().stream()
-                .mapToInt(num -> num)
-                .sum() * -1);
-        outputView.printPlayerPrizeResult(playerPrizes);
+        outputView.printPlayerPrizeResult(gameResult.getPrizeResultDtosForAllUsers());
     }
 }

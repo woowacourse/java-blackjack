@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Dealer extends User {
     public Dealer() {
-        super(new UserData(new Name("딜러"), new DealerReady()));
+        super(new Name("딜러"), new DealerReady());
     }
 
     @Override
-    public final int getPrize() {
+    public final double getProfitRatio() {
         throw new UnsupportedOperationException("[ERROR] 딜러의 최종 수익은 자동으로 계산됩니다.");
     }
 

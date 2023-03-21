@@ -13,7 +13,7 @@ public abstract class Ready extends State {
     }
 
     @Override
-    public int calculatePrize(int base) {
+    public double getProfitRatio() {
         throw new IllegalStateException("[ERROR] 아직 게임이 끝나지 않아 결과를 확인할 수 없습니다.");
     }
 

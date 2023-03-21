@@ -1,11 +1,9 @@
 package view;
 
+import domain.dto.PrizeResultDto;
 import domain.dto.UserDto;
-import domain.user.Name;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -60,24 +58,17 @@ public class OutputView {
         System.out.println(name + "카드 : " + cards);
     }
 
-    public void printInputPlayerBettingMessage(String name) {
-        System.out.printf("\n%s의 배팅 금액은?\n", name);
+    public void printInputPlayerBettingMessage(UserDto userDto) {
+        System.out.printf("\n%s의 배팅 금액은?\n", userDto.getName());
     }
 
     public void printFinalResultHeaderMessage() {
         System.out.println("\n## 최종 수익");
     }
 
-    public void printDealerPrizeResult(int dealerPrize) {
-        System.out.printf("딜러: %d\n", dealerPrize);
-    }
-
-    public void printPlayerPrizeResult(Map<Name, Integer> playerFinalPrizes) {
-        for (Entry<Name, Integer> prizeByPlayer : playerFinalPrizes.entrySet()) {
-            String name = prizeByPlayer.getKey().getName();
-            int playerPrize = prizeByPlayer.getValue();
-            System.out.printf("%s: %d\n", name, playerPrize);
-        }
+    public void printPlayerPrizeResult(List<PrizeResultDto> prizeResultDtos) {
+        prizeResultDtos.forEach(prizeResultDto ->
+                System.out.printf("%s: %d\n", prizeResultDto.getName(), prizeResultDto.getPrize()));
     }
 
     public void printAllUserCardsWithScore(List<UserDto> allPlayerDtos) {
