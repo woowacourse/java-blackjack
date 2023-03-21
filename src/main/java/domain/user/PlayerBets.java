@@ -1,5 +1,7 @@
 package domain.user;
 
+import exception.IllegalBetValueException;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class PlayerBets {
 
     private void validateBets(List<Integer> bets) {
         if (countNotDividedByThousand(bets) > 0) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 베팅 금액은 1000원 단위로 이뤄져야 합니다.");
+            throw new IllegalBetValueException();
         }
     }
 

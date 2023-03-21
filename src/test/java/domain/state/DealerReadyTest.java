@@ -3,6 +3,7 @@ package domain.state;
 import static org.assertj.core.api.Assertions.*;
 
 import domain.card.CloverCard;
+import exception.IllegalToStayInReadyException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ class DealerReadyTest {
         State state = new DealerReady().draw(CloverCard.FOUR);
 
         assertThatThrownBy(state::stay)
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalToStayInReadyException.class)
                 .hasMessageContaining("[ERROR] 게임 준비 단계에는 상태를 조작할 수 없습니다.");
     }
 

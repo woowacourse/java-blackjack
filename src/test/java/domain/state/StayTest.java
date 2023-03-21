@@ -3,6 +3,8 @@ package domain.state;
 import static org.assertj.core.api.Assertions.*;
 
 import domain.card.CloverCard;
+import exception.IllegalToDrawInFinishedException;
+import exception.IllegalToStayInFinishedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ class StayTest {
                 .stay();
 
         assertThatThrownBy(() -> stay.draw(CloverCard.SIX))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalToDrawInFinishedException.class)
                 .hasMessageContaining("[ERROR] 게임이 종료되어 카드를 뽑을 수 없습니다.");
     }
 
@@ -30,7 +32,7 @@ class StayTest {
                 .stay();
 
         assertThatThrownBy(stay::stay)
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalToStayInFinishedException.class)
                 .hasMessageContaining("[ERROR] 게임이 종료되어 상태를 조작할 수 없습니다.");
     }
 

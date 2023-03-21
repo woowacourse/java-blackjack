@@ -4,6 +4,10 @@ import domain.card.Card;
 import domain.card.GameDeck;
 import domain.card.Score;
 import domain.dto.UserDto;
+import exception.DuplicatedPlayerNameException;
+import exception.InputPlayerNameSizeException;
+import exception.NoPlayerHasThatNameException;
+import exception.ThereIsNoPlayerUnfinishedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +27,13 @@ public class Players {
 
     private void validateDuplicatedName(List<String> names) {
         if (names.size() != names.stream().distinct().count()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
+            throw new DuplicatedPlayerNameException();
         }
     }
 
     private void validateNamesSize(List<String> names) {
         if (names.size() > MAX_PLAYER_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최대 5명입니다.");
+            throw new InputPlayerNameSizeException(MAX_PLAYER_SIZE);
         }
     }
 
@@ -76,7 +80,7 @@ public class Players {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 User 이름입니다."));
+                .orElseThrow(NoPlayerHasThatNameException::new);
     }
 
     public UserDto getReadyPlayerDto() {
@@ -84,7 +88,7 @@ public class Players {
                 .filter(player -> !player.hasResult())
                 .map(Player::getUserDto)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 게임이 미완료된 플레이어가 없습니다."));
+                .orElseThrow(ThereIsNoPlayerUnfinishedException::new);
     }
 
     public UserDto getPlayerDtoByName(Name name) {
@@ -92,7 +96,7 @@ public class Players {
                 .filter(player -> player.isName(name))
                 .map(Player::getUserDto)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어 이름이 검색되었습니다."));
+                .orElseThrow(NoPlayerHasThatNameException::new);
     }
 
     public List<UserDto> getAllPlayerDtos() {

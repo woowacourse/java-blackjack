@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.dto.UserDto;
+import exception.DuplicatedPlayerNameException;
+import exception.InputPlayerNameSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +30,7 @@ public class PlayersTest {
         List<String> playerNames = List.of("pobi", "neo", "pobi");
 
         assertThatThrownBy(() -> new Players(playerNames))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicatedPlayerNameException.class)
                 .hasMessageContaining("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
     }
 
@@ -38,7 +40,7 @@ public class PlayersTest {
         List<String> playerNames = List.of("pobi", "neo", "hiiro", "mako", "ako", "split");
 
         assertThatThrownBy(() -> new Players(playerNames))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InputPlayerNameSizeException.class)
                 .hasMessageContaining("[ERROR] 플레이어는 최대 5명입니다.");
     }
 }

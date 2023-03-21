@@ -1,5 +1,7 @@
 package domain.card;
 
+import exception.DeckHasNotRemainingCardException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class GameDeck {
 
     public Card drawCard() {
         if (isEmpty()) {
-            throw new IllegalStateException("[ERROR] 뽑을 카드가 더 이상 존재하지 않습니다.");
+            throw new DeckHasNotRemainingCardException();
         }
         return cards.remove(0);
     }

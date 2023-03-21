@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import exception.DeckHasNotRemainingCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +23,7 @@ class GameDeckTest {
         IntStream.range(0,52).forEach(index -> gameDeck.drawCard());
 
         //then
-        assertThrows(IllegalStateException.class, gameDeck::drawCard);
+        assertThrows(DeckHasNotRemainingCardException.class, gameDeck::drawCard);
     }
 
     @Test

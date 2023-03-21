@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.dto.UserDto;
 import domain.state.DealerReady;
+import exception.DealerHasNoProfitRatioException;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Dealer extends User {
 
     @Override
     public final double getProfitRatio() {
-        throw new UnsupportedOperationException("[ERROR] 딜러의 최종 수익은 자동으로 계산됩니다.");
+        throw new DealerHasNoProfitRatioException();
     }
 
     public int drawCount() {

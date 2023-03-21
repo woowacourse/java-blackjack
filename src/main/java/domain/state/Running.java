@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.card.Hand;
+import exception.IllegalToGetProfitRatioInNotFinishedException;
 
 public abstract class Running extends State {
     Running(Hand hand) {
@@ -14,7 +15,7 @@ public abstract class Running extends State {
 
     @Override
     public double getProfitRatio() {
-        throw new IllegalStateException("[ERROR] 아직 게임이 끝나지 않아 결과를 확인할 수 없습니다.");
+        throw new IllegalToGetProfitRatioInNotFinishedException();
     }
 
     @Override

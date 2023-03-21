@@ -2,6 +2,8 @@ package domain.state;
 
 import domain.card.Card;
 import domain.card.Hand;
+import exception.IllegalToDrawInFinishedException;
+import exception.IllegalToStayInFinishedException;
 
 public abstract class Finished extends State {
     Finished(Hand hand) {
@@ -10,12 +12,12 @@ public abstract class Finished extends State {
 
     @Override
     public final State draw(Card card) {
-        throw new IllegalStateException("[ERROR] 게임이 종료되어 카드를 뽑을 수 없습니다.");
+        throw new IllegalToDrawInFinishedException();
     }
 
     @Override
     public final State stay() {
-        throw new IllegalStateException("[ERROR] 게임이 종료되어 상태를 조작할 수 없습니다.");
+        throw new IllegalToStayInFinishedException();
     }
 
     @Override
