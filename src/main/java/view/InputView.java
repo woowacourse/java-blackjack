@@ -8,10 +8,11 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+    public static final String DELIMITER = ",";
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayersName() {
-        List<String> playersName = Arrays.asList(scanner.nextLine().split(","));
+        List<String> playersName = Arrays.asList(scanner.nextLine().split(DELIMITER));
         return playersName.stream()
                 .map(String::strip)
                 .collect(Collectors.toList());
