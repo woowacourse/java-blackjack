@@ -1,16 +1,13 @@
 import domain.BetAmount;
 import domain.BettingTable;
-import domain.Judge;
-import domain.card.CardDeck;
-import domain.card.Cards;
+import domain.BlackJackGame;
 import domain.GameState;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.card.Cards;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import view.Gain;
 import view.Gains;
 import view.InputView;
@@ -27,83 +24,79 @@ public class Application {
         }
     }
 
-    private static Cards getInitCards(CardDeck cardDeck) {
-        return new Cards(new ArrayList<>(List.of(cardDeck.pick(), cardDeck.pick())));
-    }
-
     private void run() {
-        Players players = initPlayers();
-        BettingTable bettingTable = initBettingTable(players);
-        CardDeck cardDeck = initDeck();
-        initCards(players, cardDeck);
-        Dealer dealer = new Dealer(getInitCards(cardDeck));
+        List<String> playerNames = InputView.readNames();
 
-        play(cardDeck, dealer, players);
-        end(dealer, players, bettingTable);
+        BlackJackGame blackJackGame = new BlackJackGame(playerNames);
+        BettingTable bettingTable = initBettingTable(playerNames);
+
+        playGame(blackJackGame, playerNames);
+        revealResult(blackJackGame, playerNames, bettingTable);
     }
 
-    private CardDeck initDeck() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.shuffle();
-        return cardDeck;
-    }
-
-    private Players initPlayers() {
-        List<String> names = InputView.readNames();
-        return Players.of(names);
-    }
-
-    private BettingTable initBettingTable(Players players) {
-        Map<Player, BetAmount> result = new HashMap<>();
-        for (Player player : players) {
-            int betAmount = InputView.readBetAmount(player.getName());
-            result.put(player, BetAmount.of(betAmount));
+    private BettingTable initBettingTable(List<String> playerNames) {
+        Map<String, BetAmount> result = new HashMap<>();
+        for (String playerName : playerNames) {
+            int betAmount = InputView.readBetAmount(playerName);
+            result.put(playerName, BetAmount.of(betAmount));
         }
         return new BettingTable(result);
     }
 
-    private void initCards(Players players, CardDeck cardDeck) {
-        players.forEach(player -> player.initCards(getInitCards(cardDeck)));
-    }
+    private void playGame(BlackJackGame blackJackGame, List<String> playerNames) {
+        List<Cards> playerCards = getNamesToCards(blackJackGame, playerNames);
 
-    private void play(CardDeck cardDeck, Dealer dealer, Players players) {
-        OutputView.printStart(dealer, players);
-        for (Player player : players) {
-            draw(cardDeck, player);
+        OutputView.printStart(blackJackGame.findDealerFirstCard(), playerNames, playerCards);
+
+        for (String playerName : playerNames) {
+            draw(blackJackGame, playerName);
         }
 
-        if (dealer.canAddCard()) {
-            dealer.hit(cardDeck.pick());
+        if (blackJackGame.canAddCardToDealer()) {
+            blackJackGame.drawDealer();
             OutputView.printHit();
         }
     }
 
-    private void draw(CardDeck cardDeck, Player player) {
+    private List<Cards> getNamesToCards(BlackJackGame blackJackGame, List<String> playerNames) {
+        return playerNames.stream()
+            .map(blackJackGame::findCards)
+            .collect(Collectors.toList());
+    }
+
+    private void draw(BlackJackGame blackJackGame, String playerName) {
         boolean canContinue = false;
-        while (player.canAddCard() && (canContinue = InputView.readYesOrNo(player.getName()))) {
-            player.hit(cardDeck.pick());
-            OutputView.printCard(player);
+        while (blackJackGame.canAddCard(playerName) && (canContinue = InputView.readYesOrNo(
+            playerName))) {
+            blackJackGame.drawPlayer(playerName);
+            Cards playerCards = blackJackGame.findCards(playerName);
+            OutputView.printCard(playerName, playerCards);
         }
         if (canContinue) {
             return;
         }
-        OutputView.printCard(player);
+        OutputView.printCard(playerName, blackJackGame.findCards(playerName));
     }
 
-    private void end(Dealer dealer, Players players, BettingTable bettingTable) {
-        OutputView.printResults(dealer, players);
-        Gains playerGaines = judgePlayerGaines(dealer, players, bettingTable);
+    private void revealResult(BlackJackGame blackJackGame, List<String> playerNames,
+        BettingTable bettingTable) {
+
+        List<Cards> playerCards = getNamesToCards(blackJackGame, playerNames);
+        OutputView.printResults(blackJackGame.findDealerCards(), playerNames, playerCards);
+
+        Gains playerGaines = judgePlayerGaines(blackJackGame, playerNames, bettingTable);
         Gain dealerGain = playerGaines.getDealerGain();
         OutputView.printGains(dealerGain, playerGaines);
     }
 
-    private Gains judgePlayerGaines(Dealer dealer, Players players, BettingTable bettingTable) {
+    private Gains judgePlayerGaines(BlackJackGame blackJackGame, List<String> playerNames,
+        BettingTable bettingTable) {
         List<Gain> gains = new ArrayList<>();
 
-        for (Player player : players) {
-            GameState result = Judge.gameResult(dealer, player);
+        for (String playerName : playerNames) {
+            GameState result = blackJackGame.judgeGameResult(playerName);
             gains.add(
-                new Gain(player.getName(), result.calculate(bettingTable.getBetAmount(player))));
+                new Gain(playerName, result.calculate(bettingTable.getBetAmount(playerName))));
         }
         return new Gains(gains);
     }
