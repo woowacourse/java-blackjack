@@ -7,7 +7,7 @@ import exception.DealerHasNoProfitRatioException;
 
 import java.util.List;
 
-public class Dealer extends User {
+public final class Dealer extends User {
     public Dealer() {
         super(new Name("딜러"), new DealerReady());
     }

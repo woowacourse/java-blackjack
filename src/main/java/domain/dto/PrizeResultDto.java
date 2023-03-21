@@ -2,7 +2,7 @@ package domain.dto;
 
 import domain.user.Name;
 
-public class PrizeResultDto {
+public final class PrizeResultDto {
     private final String name;
     private final int prize;
 

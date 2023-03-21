@@ -10,7 +10,7 @@ import domain.user.Players;
 
 import java.util.List;
 
-public class BlackjackGame {
+public final class BlackjackGame {
     private final Players players;
     private final Dealer dealer;
     private final GameDeck gameDeck;

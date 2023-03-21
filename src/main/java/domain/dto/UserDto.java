@@ -7,7 +7,7 @@ import domain.user.Name;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDto {
+public final class UserDto {
     private final String name;
     private final int score;
     private final List<String> cards;

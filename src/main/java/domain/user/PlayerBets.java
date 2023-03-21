@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class PlayerBets {
-
     private final Map<Name, Integer> playerBets = new LinkedHashMap<>();
 
     public PlayerBets(List<Name> playerNames, List<Integer> bets) {

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ShuffleDeckGenerator implements DeckGenerator{
+public final class ShuffleDeckGenerator implements DeckGenerator{
     @Override
     public List<Card> generate() {
         List<Card> originDeck = addAllCards();

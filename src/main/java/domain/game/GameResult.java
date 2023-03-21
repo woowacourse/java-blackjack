@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResult {
+public final class GameResult {
     public static final int DEALER_INITIAL_PRIZE = 0;
     private final Map<Name, Integer> userPrizes = new LinkedHashMap<>();
 

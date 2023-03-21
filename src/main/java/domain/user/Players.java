@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public final class Players {
     private static final int MAX_PLAYER_SIZE = 5;
 
     private final List<Player> players = new ArrayList<>();

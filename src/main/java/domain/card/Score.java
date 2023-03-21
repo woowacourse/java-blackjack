@@ -2,7 +2,7 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
     private static final int MAX_SCORE = 21;
     private static final int DIFFERENCE_BETWEEN_ACE_ONE_AND_ELEVEN = 10;
 

@@ -5,7 +5,7 @@ import exception.DeckHasNotRemainingCardException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameDeck {
+public final class GameDeck {
     private final List<Card> cards;
 
     public GameDeck(DeckGenerator deckGenerator) {

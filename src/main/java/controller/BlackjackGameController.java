@@ -14,7 +14,7 @@ import view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackGameController {
+public final class BlackjackGameController {
     private final InputView inputView;
     private final OutputView outputView;
 
