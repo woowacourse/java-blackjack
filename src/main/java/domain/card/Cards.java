@@ -48,6 +48,18 @@ public class Cards implements Iterable<Card>{
         return getScore() > BLACKJACK_NUMBER;
     }
 
+    public boolean isHigherThan(Cards other) {
+        if (other == null || ! (other.getClass().equals(Cards.class))) {
+            throw new IllegalArgumentException("잘못된 카드입니다.");
+        }
+
+        return this.isNotBurst() && this.getScore() > other.getScore();
+    }
+
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
     public int getSize() {
         return cards.size();
     }
