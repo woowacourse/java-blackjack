@@ -1,40 +1,64 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.CardHolder;
+import domain.card.Hand;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public abstract class Player {
-    private final CardHolder cardHolder;
+public class Player {
+    private final Hand hand;
     private final Name name;
+    private final Bet bet;
 
-    public Player(CardHolder cardHolder, Name name) {
-        this.cardHolder = cardHolder;
+    public Player(Hand hand, Name name, Bet bet) {
+        this.hand = hand;
         this.name = name;
+        this.bet = bet;
     }
 
-    public void addCard(Card card) {
-        cardHolder.addCard(card);
+    public static List<Player> from(Map<Name, Bet> nameAndBet) {
+        List<Player> players = new ArrayList<>();
+        nameAndBet.forEach((name, bet) -> players.add(new Player(Hand.withEmptyHolder(), name, bet)));
+        return players;
     }
 
-    public int getTotalScore() {
-        return cardHolder.getTotalScore();
+    public void draw(Card card) {
+        hand.draw(card);
     }
 
     public boolean isBust() {
-        return cardHolder.isBust();
+        return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public Card getFirstCard() {
+        return hand.getFirstCard();
+    }
+
+    public boolean isNameEqualTo(String playerName) {
+        return getName().equals(playerName);
+    }
+
+    public int getScore() {
+        return hand.getScore();
     }
 
     public List<Card> getCards() {
-        return cardHolder.getCards();
+        return hand.getCards();
     }
-
-    public abstract boolean isNameEqualTo(String playerName);
 
     public String getName() {
         return this.name.getName();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 
     @Override
@@ -42,15 +66,20 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return name.equals(player.name);
+        return hand.equals(player.hand) && name.equals(player.name) && bet.equals(player.bet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(hand, name, bet);
     }
 
-    public Card getCardIndexOf(int index) {
-        return cardHolder.getCardIndexOf(index);
+    @Override
+    public String toString() {
+        return "Player{" +
+                "hand=" + hand +
+                ", name=" + name +
+                ", bet=" + bet +
+                '}';
     }
 }

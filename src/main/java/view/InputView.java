@@ -1,5 +1,6 @@
 package view;
 
+import domain.player.Bet;
 import domain.player.Name;
 
 import java.io.BufferedReader;
@@ -33,6 +34,19 @@ public class InputView {
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputAddCardCommand();
+        }
+    }
+
+    public static Bet inputBet() {
+        try {
+            String input = BUFFERED_READER.readLine();
+            return Bet.from(Integer.parseInt(input));
+        } catch (IOException ioException) {
+            OutputView.println(ioException.getMessage());
+            return inputBet();
+        } catch (NumberFormatException formatException) {
+            OutputView.println("정수를 입력해주세요.");
+            return inputBet();
         }
     }
 

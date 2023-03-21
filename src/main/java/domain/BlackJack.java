@@ -1,21 +1,20 @@
 package domain;
 
-import domain.card.DeckOfCards;
-import domain.gameresult.GameResultReadOnly;
-import domain.player.PlayerReadOnly;
-import domain.player.Players;
-import domain.player.PlayersReadOnly;
+import domain.card.Deck;
+import domain.gameresult.GameResult;
+import domain.player.*;
 
 import java.util.List;
 
 public class BlackJack {
     public static final int INITIALIZING_CARD_COUNT = 2;
-    private final Players players;
-    private final DeckOfCards deckOfCards;
 
-    public BlackJack(Players players, DeckOfCards deckOfCards) {
+    private final Players players;
+    private final Deck deck;
+
+    public BlackJack(Players players, Deck deck) {
         this.players = players;
-        this.deckOfCards = deckOfCards;
+        this.deck = deck;
     }
 
     public void initializeCardsOfPlayers() {
@@ -26,32 +25,28 @@ public class BlackJack {
 
     public void giveCardToAllPlayers() {
         for (String name : players.getAllPlayerNames()) {
-            players.giveCardByName(name, deckOfCards.findAnyOneCard());
+            players.giveCardByName(name, deck.findAnyOneCard());
         }
     }
 
-    public void giveCard(PlayerReadOnly participant) {
-        players.giveCardByName(participant.getName(), deckOfCards.findAnyOneCard());
+    public void giveCard(String name) {
+        players.giveCardByName(name, deck.findAnyOneCard());
     }
 
     public boolean shouldDealerGetCard() {
         return players.shouldDealerGetCard();
     }
 
-    public void giveCardToDealer() {
-        players.giveCardToDealer(deckOfCards.findAnyOneCard());
-    }
-
     public PlayersReadOnly getPlayers() {
         return PlayersReadOnly.from(players);
     }
 
-    public List<PlayerReadOnly> getParticipants() {
+    public List<PlayerReadOnly> getGamblers() {
         return PlayersReadOnly.from(players)
-                .getParticipants();
+                .getGamblers();
     }
 
-    public GameResultReadOnly battle() {
-        return GameResultReadOnly.from(players.battleAll());
+    public GameResult compareScore() {
+        return GameResult.from(players.compareAll());
     }
 }

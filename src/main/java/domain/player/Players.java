@@ -1,38 +1,40 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.gameresult.GameResult;
+import domain.gameresult.ScoreComparator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final Dealer dealer;
-    private final List<Participant> participants;
+    public static final int DEALER_MIN_SCORE = 16;
 
-    public Players(Dealer dealer, List<Participant> participants) {
-        this.dealer = dealer;
-        this.participants = participants;
+    private final List<Player> players;
+
+    private Players(List<Player> players) {
+        this.players = players;
     }
 
-    public void giveCardToDealer(Card card) {
-        dealer.addCard(card);
+    public static Players from(Player dealer, List<Player> gamblers) {
+        List<Player> players = new ArrayList<>();
+        players.add(0, dealer);
+        players.addAll(gamblers);
+        return new Players(players);
     }
 
     public void giveCardByName(String name, Card card) {
         Player player = findByName(name);
-        player.addCard(card);
+        player.draw(card);
     }
 
     public boolean shouldDealerGetCard() {
-        return dealer.getTotalScore() <= Dealer.DEALER_MIN_SCORE;
+        return getDealer().getScore() <= DEALER_MIN_SCORE;
     }
 
-    public GameResult battleAll() {
-        GameResult gameResult = new GameResult();
-        participants.forEach(participant -> dealer.battle(participant, gameResult));
-        return gameResult;
+    public Map<Player, Bet> compareAll() {
+        Map<Player, Bet> result = new LinkedHashMap<>();
+        getGamblers().forEach(gambler -> result.put(gambler, ScoreComparator.compare(getDealer(), gambler)));
+        return result;
     }
 
     public Player findByName(String name) {
@@ -43,18 +45,17 @@ public class Players {
     }
 
     private List<Player> getAllPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
+        return new ArrayList<>(players);
+    }
+
+    public Player getDealer() {
+        return players.get(0);
+    }
+
+    protected List<Player> getGamblers() {
+        List<Player> players = new LinkedList<>(this.players);
+        players.remove(getDealer());
         return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    protected List<Participant> getParticipants() {
-        return participants;
     }
 
     public List<String> getAllPlayerNames() {

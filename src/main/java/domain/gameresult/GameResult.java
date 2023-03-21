@@ -1,57 +1,24 @@
 package domain.gameresult;
 
-import domain.player.Participant;
+import domain.player.Bet;
 import domain.player.Player;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class GameResult {
-    private final Map<Result, Integer> resultOfDealer = new HashMap<>();
-    private final Map<Player, Result> resultOfParticipants = new HashMap<>();
+    private final Map<Player, Bet> resultOfPlayers;
 
-    public GameResult() {
-        for (Result result : Result.values()) {
-            resultOfDealer.put(result, 0);
-        }
+    private GameResult(Map<Player, Bet> resultOfPlayers) {
+        this.resultOfPlayers = resultOfPlayers;
     }
 
-    public void addDrawCount(Player participant) {
-        addResultCountOfDealer(Result.DRAW);
-        resultOfParticipants.put(participant, Result.DRAW);
+    public static GameResult from(Map<Player, Bet> result) {
+        return new GameResult(result);
     }
 
-    public void addParticipantWinningCase(Player participant) {
-        addResultCountOfDealer(Result.LOSE);
-        resultOfParticipants.put(participant, Result.WIN);
-    }
-
-    private void addResultCountOfDealer(Result result) {
-        resultOfDealer.put(result, resultOfDealer.get(result) + 1);
-    }
-
-    public void addParticipantLosingCase(Player participant) {
-        addResultCountOfDealer(Result.WIN);
-        resultOfParticipants.put(participant, Result.LOSE);
-    }
-
-    public int getWinningCountOfDealer() {
-        return this.resultOfDealer.get(Result.WIN);
-    }
-
-    public int getLosingCountOfDealer() {
-        return this.resultOfDealer.get(Result.LOSE);
-    }
-
-    public int getDrawingCountOfDealer() {
-        return this.resultOfDealer.get(Result.DRAW);
-    }
-
-    public Result getResultByParticipant(Participant participant) {
-        return this.resultOfParticipants.get(participant);
-    }
-
-    protected Map<Player, Result> getAllParticipantResults() {
-        return resultOfParticipants;
+    public void doLogicWithNameAndBetValue(BiConsumer<String, Integer> logic) {
+        Map.copyOf(resultOfPlayers).forEach((player, bet) ->
+                logic.accept(player.getName(), bet.getValue()));
     }
 }

@@ -15,8 +15,12 @@ public class PlayerReadOnly {
         return new PlayerReadOnly(player);
     }
 
+    public boolean isBust() {
+        return player.isBust();
+    }
+
     public int getTotalScore() {
-        return player.getTotalScore();
+        return player.getScore();
     }
 
     public List<Card> getCards() {
@@ -27,11 +31,14 @@ public class PlayerReadOnly {
         return player.getName();
     }
 
-    public boolean isBust() {
-        return player.isBust();
+    public Card getFirstCard() {
+        return player.getFirstCard();
     }
 
-    public Card getCardIndexOf(int index) {
-        return player.getCardIndexOf(index);
+    @Override
+    public String toString() {
+        return "PlayerReadOnly{" +
+                "player=" + player +
+                '}';
     }
 }

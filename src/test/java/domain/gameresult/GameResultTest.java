@@ -1,60 +1,48 @@
 package domain.gameresult;
 
-import domain.card.CardHolder;
-import domain.player.Name;
-import domain.player.Participant;
+import domain.Textures;
+import domain.card.Hand;
+import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameResultTest {
     @Test
-    @DisplayName("주어진 플레이어의 무승부 카운트를 올리면 딜러와 참가자 양 쪽에 무승부 카운트가 1 올라간다.")
-    void givenParticipant_thenCountDraw() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
-        GameResult gameResult = new GameResult();
-
-        gameResult.addDrawCount(participant);
-
-        Result participantResult = gameResult.getResultByParticipant(participant);
-        int drawingCountOfDealer = gameResult.getDrawingCountOfDealer();
-        assertAll(
-                () -> assertThat(participantResult).isEqualTo(Result.DRAW),
-                () -> assertThat(drawingCountOfDealer).isEqualTo(1)
+    @DisplayName("플레이어와 그에 대응하는 베팅액 정보를 이용해 객체를 생성할 수 있다.")
+    void generatingGameResult() {
+        Map<Player, Bet> result = Map.of(
+                new Player(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000),
+                Textures.makeDealerWithBet(Bet.from(10000)), Bet.from(10000)
         );
+        assertDoesNotThrow(() -> GameResult.from(result));
     }
 
     @Test
-    @DisplayName("주어진 플레이어의 승리 카운트를 올리면 딜러는 패배 카운트가 올라간다.")
-    void givenWinningParticipant_thenCountWinning() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
-        GameResult gameResult = new GameResult();
+    @DisplayName("플레이어 이름과 베팅 정보를 이용한 작업을 주입하여 사용할 수 있다.")
+    void doLogicWithNameAndBet() {
+        Map<Player, Bet> result = new LinkedHashMap<>();
+        result.put(new Player(Hand.withEmptyHolder(), Name.of("여우"), Bet.from(3000)), Bet.from(3000));
+        result.put(new Player(Hand.withEmptyHolder(), Name.of("아벨"), Bet.from(5000)), Bet.from(5000));
+        GameResult gameResult = GameResult.from(result);
 
-        gameResult.addParticipantWinningCase(participant);
+        List<String> names = new ArrayList<>();
+        List<Integer> bets = new ArrayList<>();
+        gameResult.doLogicWithNameAndBetValue((name, bet) -> {
+            names.add(name);
+            bets.add(bet);
+        });
 
-        Result participantResult = gameResult.getResultByParticipant(participant);
-        int losingCountOfDealer = gameResult.getLosingCountOfDealer();
-        assertAll(
-                () -> assertThat(participantResult).isEqualTo(Result.WIN),
-                () -> assertThat(losingCountOfDealer).isEqualTo(1)
-        );
-    }
-
-    @Test
-    @DisplayName("주어진 플레이어의 패배 카운트를 올리면 딜러는 승리 카운트가 올라간다.")
-    void givenLosingParticipant_thenCountLosing() {
-        Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
-        GameResult gameResult = new GameResult();
-
-        gameResult.addParticipantLosingCase(participant);
-
-        Result participantResult = gameResult.getResultByParticipant(participant);
-        int winningCountOfDealer = gameResult.getWinningCountOfDealer();
-        assertAll(
-                () -> assertThat(participantResult).isEqualTo(Result.LOSE),
-                () -> assertThat(winningCountOfDealer).isEqualTo(1)
-        );
+        assertThat(names).hasSize(2)
+                .contains("여우", "아벨");
+        assertThat(bets).hasSize(2)
+                .contains(3000, 5000);
     }
 }
