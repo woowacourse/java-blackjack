@@ -6,9 +6,11 @@ import domain.card.Cards;
 public abstract class Participant {
 
     private static final int INITIAL_CARDS_SIZE = 2;
+    protected static final String INITIAL_CARD_SIZE_MSG = "초기 카드는 2장이어야 합니다.";
+    protected static final String NO_CARDS_MSG = "카드를 먼저 받으세요.";
 
-    final String name;
-    Cards cards;
+    protected final String name;
+    protected Cards cards;
 
     public Participant(String name) {
         this.name = name;
@@ -27,12 +29,19 @@ public abstract class Participant {
 
     private void validateCardsSize(Cards cards) {
         if (cards.getSize() != INITIAL_CARDS_SIZE) {
-            throw new IllegalArgumentException("초기 카드는 2장이어야 합니다.");
+            throw new IllegalArgumentException(INITIAL_CARD_SIZE_MSG);
         }
     }
 
     public void hit(Card card) {
+        validateExistenceCards();
         cards.add(card);
+    }
+
+    protected void validateExistenceCards() {
+        if (cards == null) {
+            throw new IllegalArgumentException(NO_CARDS_MSG);
+        }
     }
 
     public String getName() {
@@ -42,6 +51,7 @@ public abstract class Participant {
     public abstract boolean canAddCard();
 
     public Cards getCards() {
+        validateExistenceCards();
         return cards;
     }
 }

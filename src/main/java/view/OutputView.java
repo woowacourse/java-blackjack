@@ -1,11 +1,9 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Players;
+import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -13,72 +11,66 @@ public class OutputView {
 
     private static final String DELIMITER = ",";
 
-    public static void printStart(Dealer dealer, Players players) {
-        printGiveMessage(dealer, players);
-        printHideCard(dealer);
-        players.forEach(OutputView::printCard);
+    public static void printStart(Card firstDealerCard, List<String> playerNames,
+        List<Cards> playerCards) {
+        printGiveMessage(playerNames);
+        printHideCard(firstDealerCard);
+        for (int i = 0; i < playerNames.size(); i++) {
+            printCard(playerNames.get(i), playerCards.get(i));
+        }
         System.out.println();
     }
 
-    private static void printGiveMessage(Dealer dealer, Players players) {
-        String playersNames = players.stream()
-            .map(Participant::getName)
-            .collect(Collectors.joining(","));
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), playersNames);
+    private static void printGiveMessage(List<String> playerNames) {
+        String result = String.join(",", playerNames);
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", Dealer.NAME, result);
     }
 
-    private static void printHideCard(Dealer dealer) {
-        Card dealerCard = dealer.getCards().get(0);
-        System.out.printf("%s: %s%n", dealer.getName(), Converter.of(dealerCard));
+    private static void printHideCard(Card firstDealerCard) {
+        System.out.printf("%s: %s%n", Dealer.NAME, CardConverter.of(firstDealerCard));
     }
 
-    public static void printCard(Participant participant) {
-        System.out.printf("%s카드: %s%n", participant.getName(), getAllCardsNames(participant));
+    public static void printCard(String participantName, Cards cards) {
+        System.out.printf("%s카드: %s%n", participantName, getAllCardsNames(cards));
     }
 
-    private static String getAllCardsNames(Participant participant) {
-        Cards cards = participant.getCards();
+    private static String getAllCardsNames(Cards cards) {
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        for (int i = 0; i < cards.getSize(); i++) {
-            stringJoiner.add(Converter.of(cards.get(i)));
+        for (Card card : cards) {
+            stringJoiner.add(CardConverter.of(card));
         }
         return stringJoiner.toString();
     }
 
     public static void printHit() {
-        System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
+        System.out.printf("%n%s는 16이하라 한장의 카드를 더 받았습니다.%n", Dealer.NAME);
     }
 
-    public static void printResults(Dealer dealer, Players players) {
+    public static void printResults(Cards dealerCards, List<String> playerNames,
+        List<Cards> playerCards) {
         System.out.println();
-        printResult(dealer);
-        players.forEach(OutputView::printResult);
-    }
-
-    private static void printResult(Participant participant) {
-        System.out.printf("%s카드: %s - 결과: %d%n", participant.getName(),
-            getAllCardsNames(participant), participant.getCards().getScore());
-    }
-
-    public static void printWinOrLose(DealerResult dealerResult, PlayerResults results) {
-        printDealerWinOrLose(dealerResult);
-        printPlayersWinOrLose(results);
-    }
-
-    private static void printDealerWinOrLose(DealerResult dealerResult) {
-        System.out.printf("딜러: %d%s %d%s %d%s%n",
-            dealerResult.getWin(), Converter.of(GameResult.WIN),
-            dealerResult.getLose(), Converter.of(GameResult.LOSE),
-            dealerResult.getDraw(), Converter.of(GameResult.DRAW));
-    }
-
-    private static void printPlayersWinOrLose(PlayerResults results) {
-        for (PlayerResult result : results) {
-            System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
+        printResult(Dealer.NAME, dealerCards);
+        for (int i = 0; i < playerNames.size(); i++) {
+            printResult(playerNames.get(i), playerCards.get(i));
         }
+    }
+
+    private static void printResult(String participantName, Cards participantCards) {
+        System.out.printf("%s카드: %s - 결과: %d%n", participantName,
+            getAllCardsNames(participantCards), participantCards.getScore());
     }
 
     public static void printError(Exception e) {
         System.out.printf("[ERROR] %s%n", e.getMessage());
+    }
+
+    public static void printGains(Gain dealerGain, Gains playerGaines) {
+        System.out.println("\n## 최종 수익");
+        printGain(dealerGain);
+        playerGaines.forEach(OutputView::printGain);
+    }
+
+    private static void printGain(Gain gain) {
+        System.out.printf("%s: %.0f%n", gain.getName(), gain.getBetAmount());
     }
 }

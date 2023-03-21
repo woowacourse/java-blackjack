@@ -47,6 +47,15 @@ public class InputView {
         }
     }
 
+    public static int readBetAmount(String personName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", personName);
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+
     public static boolean readYesOrNo(String personName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", personName, YES, NO);
         String input = scanner.nextLine();

@@ -1,27 +1,23 @@
 package domain;
 
 import domain.card.Cards;
-import domain.participant.Dealer;
-import domain.participant.Player;
 
 public class Judge {
 
-    public static GameResult of(Dealer dealer, Player player) {
-        int dealerScore = dealer.getCards().getScore();
-        int playerScore = player.getCards().getScore();
-        return getResult(dealerScore, playerScore);
+    public static GameState gameResult(Cards dealerCards, Cards playerCards) {
+        if (playerCards.isBurst() || dealerCards.isHigherThan(playerCards)) {
+            return GameState.LOSE;
+        }
+        if (dealerCards.isBurst() || playerCards.isHigherThan(dealerCards)) {
+            return checkBlackJackState(playerCards);
+        }
+        return GameState.DRAW;
     }
 
-    private static GameResult getResult(int dealerScore, int playerScore) {
-        if (playerScore > Cards.BLACKJACK_NUMBER) {
-            return GameResult.LOSE;
+    private static GameState checkBlackJackState(Cards cards) {
+        if (cards.isBlackJack()) {
+            return GameState.BLACKJACK;
         }
-        if (dealerScore > Cards.BLACKJACK_NUMBER || playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        if (dealerScore > playerScore) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
+        return GameState.WIN;
     }
 }
