@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import domain.Dealer;
-import domain.Player;
+import domain.player.Dealer;
+import domain.player.Player;
 
 public class Results {
 
@@ -23,11 +23,11 @@ public class Results {
 		return new Results(playerResult);
 	}
 
-	public DealerResult getDealerResult() {
+	public Result getDealerResult() {
 		return DealerResult.from(playerResults);
 	}
 
-	public List<PlayerResult> getPlayerResults() {
+	public List<Result> getPlayerResults() {
 		return Collections.unmodifiableList(playerResults);
 	}
 }

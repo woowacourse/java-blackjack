@@ -1,44 +1,46 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import domain.Dealer;
-import domain.Player;
-import domain.TestData;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.player.Dealer;
+import domain.player.Player;
+
 public class ResultsTest {
 
-    private final Dealer dealer = TestData.getScore20Dealer();
-    private final Player player1 = TestData.getScore19Player();
-    private final Player player2 = TestData.getScore21Player();
-    private final Results results = Results.of(dealer, List.of(player1, player2));
+	@Test
+	@DisplayName("플레이어가 각각 -100, 200의 수익을 가져야 한다.")
+	void getResultsTest1() {
+		Dealer dealer = TestData.getScore20Dealer();
+		Player player1 = TestData.getScore19Player(100);
+		Player player2 = TestData.getScore21Player(200);
+		Results results = Results.of(dealer, List.of(player1, player2));
 
-    @Test
-    @DisplayName("1승 0무 1패의 결과가 포함된 DealerResult를 반환해야 한다.")
-    void getDealerResultTest() {
-        DealerResult dealerResult = results.getDealerResult();
-        Map<ResultState, Integer> stateCount = dealerResult.getResult();
+		Result dealerResult = results.getDealerResult();
+		assertThat(dealerResult.getProfit()).isEqualTo(-100);
 
-        assertThat(stateCount.get(ResultState.WIN)).isEqualTo(1);
-        assertThat(stateCount.get(ResultState.DRAW)).isEqualTo(0);
-        assertThat(stateCount.get(ResultState.LOSS)).isEqualTo(1);
-    }
-    @Test
-    @DisplayName("승과 패를 각각 가지는 PlayerResult 들을 반환해야 한다.")
-    void getPlayerResultsTest() {
-        List<PlayerResult> playerResults = results.getPlayerResults();
-        PlayerResult result1 = playerResults.get(0);
-        PlayerResult result2 = playerResults.get(1);
+		List<Result> playerResults = results.getPlayerResults();
+		assertThat(playerResults.get(0).getProfit()).isEqualTo(-100);
+		assertThat(playerResults.get(1).getProfit()).isEqualTo(200);
+	}
 
-        assertThat(result1.getName()).isEqualTo("playerScore19");
-        assertThat(result1.getResultState()).isEqualTo(ResultState.LOSS);
-        assertThat(result2.getName()).isEqualTo("playerScore21");
-        assertThat(result2.getResultState()).isEqualTo(ResultState.WIN);
-    }
+	@Test
+	@DisplayName("플레이어가 각각 -100, 300의 수익을 가져야 한다.")
+	void getResultsTest2() {
+		Dealer dealer = TestData.getScore20Dealer();
+		Player player1 = TestData.getScore19Player(100);
+		Player player2 = TestData.getBlackJackPlayer(200);
+		Results results = Results.of(dealer, List.of(player1, player2));
+
+		Result dealerResult = results.getDealerResult();
+		assertThat(dealerResult.getProfit()).isEqualTo(-200);
+
+		List<Result> playerResults = results.getPlayerResults();
+		assertThat(playerResults.get(0).getProfit()).isEqualTo(-100);
+		assertThat(playerResults.get(1).getProfit()).isEqualTo(300);
+	}
 }
