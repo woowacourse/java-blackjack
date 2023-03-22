@@ -7,8 +7,8 @@ import domain.card.Cards;
 public class Blackjack extends GameState {
     private static final double BLACKJACK_EARN_RATE = 1.5;
 
-    Blackjack(Cards cards) {
-        super(cards);
+    public Blackjack(Cards cards, HandState handState) {
+        super(cards, handState);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Blackjack extends GameState {
 
     @Override
     public Result competeToOtherState(GameState otherState) {
-        if (otherState instanceof Blackjack) {
+        if (handState.isEqualState(otherState.handState)) {
             return Result.DRAW;
         }
 

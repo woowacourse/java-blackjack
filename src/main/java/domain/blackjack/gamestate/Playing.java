@@ -6,17 +6,17 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Playing extends GameState {
-    private Playing(Cards cards) {
-        super(cards);
+    public Playing(Cards cards, HandState handState) {
+        super(cards, handState);
     }
 
     public static GameState from(Cards cards) {
         validateSize(cards);
         if (BlackjackScore.from(cards).isEqualTo(BlackjackScore.getMaxScore())) {
-            return new Blackjack(cards);
+            return new Blackjack(cards, HandState.BLACKJACK);
         }
 
-        return new Playing(cards);
+        return new Playing(cards, HandState.STAY);
     }
 
     private static void validateSize(Cards cards) {
@@ -30,10 +30,10 @@ public class Playing extends GameState {
         cards.add(card);
 
         if (BlackjackScore.from(cards).isGreaterThan(BlackjackScore.getMaxScore())) {
-            return new Bust(cards);
+            return new Bust(cards, HandState.BUST);
         }
 
-        return new Playing(cards);
+        return new Playing(cards, HandState.STAY);
     }
 
     @Override
@@ -43,15 +43,12 @@ public class Playing extends GameState {
 
     @Override
     public Result competeToOtherState(GameState otherState) {
-        if (otherState instanceof Blackjack) {
-            return Result.LOSE;
+        if (handState.isEqualState(otherState.handState)) {
+            return Result.DRAW;
         }
 
-        if (otherState instanceof Bust) {
-            return Result.WIN;
-        }
-
-        return Result.DRAW;
+        Result resultOfOtherState = otherState.competeToOtherState(this);
+        return resultOfOtherState.convertToOpposite();
     }
 
     @Override

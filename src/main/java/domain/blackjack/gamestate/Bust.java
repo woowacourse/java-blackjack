@@ -5,8 +5,8 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Bust extends GameState {
-    Bust(Cards cards) {
-        super(cards);
+    public Bust(Cards cards, HandState handState) {
+        super(cards, handState);
     }
 
     @Override
@@ -20,8 +20,8 @@ public class Bust extends GameState {
     }
 
     @Override
-    public Result competeToOtherState(GameState gameState) {
-        if (gameState instanceof Bust) {
+    public Result competeToOtherState(GameState otherState) {
+        if (handState.isEqualState(otherState.handState)) {
             return Result.DRAW;
         }
 
