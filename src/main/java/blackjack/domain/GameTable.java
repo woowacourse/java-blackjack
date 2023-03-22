@@ -17,8 +17,8 @@ public class GameTable {
         this.deposit = new Deposit();
     }
 
-    public void betting(final Name playerName, final BettingMoney money) {
-        deposit.betting(playerName, money);
+    public void bet(final Name playerName, final BettingMoney money) {
+        deposit.bet(playerName, money);
     }
 
     public Card supplyCard() {

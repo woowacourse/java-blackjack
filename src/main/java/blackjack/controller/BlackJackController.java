@@ -40,17 +40,17 @@ public class BlackJackController {
 
     private void betPlayers(final BlackJackGame blackJackGame) {
         for (final Name playerName : blackJackGame.getPlayerNames()) {
-            repeatUntilBetValidateMoney(blackJackGame, playerName);
+            betPlayerMoney(blackJackGame, playerName);
         }
     }
 
-    private void repeatUntilBetValidateMoney(final BlackJackGame blackJackGame, final Name playerName) {
+    private void betPlayerMoney(final BlackJackGame blackJackGame, final Name playerName) {
         try {
-            final int betMoney = inputView.readPlayerBetMoney(playerName.getValue());
-            blackJackGame.betPlayer(playerName, betMoney);
+            final int bettingMoney = inputView.readBettingMoney(playerName.getValue());
+            blackJackGame.betPlayer(playerName, bettingMoney);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
-            repeatUntilBetValidateMoney(blackJackGame, playerName);
+            betPlayerMoney(blackJackGame, playerName);
         }
     }
 

@@ -20,7 +20,7 @@ public class InputView {
         return Arrays.stream(inputName.split(DELIMIT_REGEX, -1)).collect(Collectors.toUnmodifiableList());
     }
 
-    public int readPlayerBetMoney(final String playerName) {
+    public int readBettingMoney(final String playerName) {
         System.out.println(String.format(BET_MONEY_REQUEST_MESSAGE_FORMAT, playerName));
         final String moneyInput = SCANNER.nextLine();
         try {

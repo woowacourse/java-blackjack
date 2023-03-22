@@ -1,6 +1,6 @@
 package blackjack.domain.money;
 
-public class BettingMoney extends Money {
+final public class BettingMoney extends Money {
 
     private static final String BETTING_MONEY_NEGATIVE_EXCEPTION_MESSAGE = "배팅 금액은 음수일 수 없습니다.";
 

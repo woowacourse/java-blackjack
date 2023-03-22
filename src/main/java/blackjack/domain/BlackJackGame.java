@@ -44,8 +44,8 @@ public class BlackJackGame {
         return users.getUserNameAndFirstOpenCardGroups();
     }
 
-    public void betPlayer(final Name playerName, final int betMoney) {
-        gameTable.betting(playerName, new BettingMoney(betMoney));
+    public void betPlayer(final Name playerName, final int bettingMoney) {
+        gameTable.bet(playerName, new BettingMoney(bettingMoney));
     }
 
     public List<Name> getPlayerNames() {

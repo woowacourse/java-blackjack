@@ -8,7 +8,7 @@ public class Deposit {
 
     private final Map<Name, BettingMoney> deposit = new HashMap<>();
 
-    public void betting(final Name playerName, final BettingMoney money) {
+    public void bet(final Name playerName, final BettingMoney money) {
         deposit.put(playerName, money);
     }
 
