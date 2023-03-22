@@ -22,7 +22,11 @@ public abstract class Participant {
     }
 
     public void receive(Card card) {
-        this.gameState = gameState.receive(card);
+        if (gameState.isAbleToReceiveCard()) {
+            this.gameState = gameState.receive(card);
+        }
+
+        throw new IllegalStateException();
     }
 
     public void receive(Cards cards) {
