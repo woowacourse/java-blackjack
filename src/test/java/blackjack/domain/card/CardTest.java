@@ -11,7 +11,7 @@ class CardTest {
 
     private final Shape shape = Shape.CLOVER;
     private final Denomination symbol = Denomination.ACE;
-    private final Card card = new Card(shape, symbol);
+    private final Card card = Card.from(shape, symbol);
 
     @Test
     void 카드의_Symbol을_반환한다() {
