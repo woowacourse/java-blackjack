@@ -1,55 +1,55 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
+import blackjack.domain.participants.status.Status;
+import blackjack.domain.participants.status.running.Hit;
 
 import java.util.List;
 
 public class Player {
 
     private final User user;
-    private final Hand hand;
-    private final Status status;
+    private Status status;
     private BettingMoney bettingMoney;
 
     Player(String userName) {
         user = new User(userName);
-        hand = new Hand();
-        status = new Status();
-        bettingMoney = new BettingMoney();
+        status = new Hit();
     }
 
     void bet(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
-    void drawCard(Card card) {
-        hand.addCard(card);
+    void drawInitialCards(Card card1, Card card2) {
+        drawCard(card1);
+        drawCard(card2);
     }
 
-    boolean isDrawable() {
-        return !isBusted() && !isBlackjack();
+    public void drawCard(Card card) {
+        status = status.addCard(card);
     }
 
-
-
-
-
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
+    public boolean isDrawable() {
+        return !status.isFinished();
     }
 
-    public boolean isBusted() {
-        return hand.isBusted();
+    public void stay() {
+        status = status.stay();
+    }
+
+    public ResultType findResult(Dealer dealer) {
+        return status.findResultType(dealer.getStatus());
     }
 
     public Score currentScore() {
-        return hand.getScore();
+        return status.score();
     }
 
-    List<Card> getCards() {
-        return hand.getPossessedCards();
+    public List<Card> getCards() {
+        return status.getCards();
     }
 
     boolean hasName(String playerName) {
