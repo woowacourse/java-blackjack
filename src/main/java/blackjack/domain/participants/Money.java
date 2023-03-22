@@ -4,27 +4,25 @@ import java.util.Objects;
 
 public class Money {
 
-    // 돈이 음수가 되는 경우
-    // 베팅 머니는 10원단위여야함.
     private final double value;
 
-    public Money(double value) {
+    public Money(final double value) {
         this.value = value;
     }
 
-    public Money add(Money add) {
+    public Money add(final Money add) {
         return new Money(value + add.value);
     }
 
-    public Money multiple(double profit) {
+    public Money multiple(final double profit) {
         return new Money(value * profit);
     }
 
-    public boolean isDividedBy(Money divide) {
+    public boolean isDividedBy(final Money divide) {
         return (int) (value % divide.value) == 0;
     }
 
-    public boolean isBiggerThan(Money other) {
+    public boolean isBiggerThan(final Money other) {
         return value > other.value;
     }
 
@@ -33,14 +31,14 @@ public class Money {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Money money = (Money) o;
+        final Money money = (Money) o;
         return Double.compare(money.value, value) == 0;
     }
 

@@ -51,7 +51,7 @@ public class Hand {
     private Score calculateMinimumScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(new Score(0), Score::sum);
+                .reduce(Score.minScore(), Score::sum);
     }
 
     public boolean isBust() {

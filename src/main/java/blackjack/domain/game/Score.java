@@ -26,6 +26,10 @@ public class Score {
         return newScore;
     }
 
+    public static Score minScore() {
+        return min;
+    }
+
     public Score plusTenIfNotBusted() {
         if (sum(aceAdditionalValue).isBiggerThan(max)) {
             return this;
