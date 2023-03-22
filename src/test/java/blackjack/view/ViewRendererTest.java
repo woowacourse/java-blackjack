@@ -12,6 +12,7 @@ import blackjack.domain.result.CardResult;
 import blackjack.domain.user.DealerName;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.PlayerName;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -49,11 +50,11 @@ class ViewRendererTest {
     @Test
     @DisplayName("플레이어와 딜러의 수익금을 렌더링하는 기능 테스트")
     void renderUserNameAndProfitsTest() {
-        final Map<Name, Money> playerNameAndProfit = Map.of(new PlayerName("제이미"), new Money(100_000));
-        final Money dealerProfit = new Money(-100_000);
+        final Map<Name, Money> playerNameAndProfit = new LinkedHashMap<>();
+        playerNameAndProfit.put(new DealerName(), new Money(-100_000));
+        playerNameAndProfit.put(new PlayerName("제이미"), new Money(100_000));
 
-        final Map<String, Integer> renderUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(playerNameAndProfit,
-                dealerProfit);
+        final Map<String, Integer> renderUserNameAndProfit = ViewRenderer.renderUserNameAndProfits(playerNameAndProfit);
 
         assertThat(renderUserNameAndProfit)
                 .containsExactly(

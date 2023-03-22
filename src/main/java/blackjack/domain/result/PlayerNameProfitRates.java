@@ -19,6 +19,6 @@ public class PlayerNameProfitRates {
         final Map<PlayerName, Money> playerNameProfits = new LinkedHashMap<>();
         deposit.forEach((key, value) -> playerNameProfits
                 .put(key, value.multiply(nameProfitRateMapper.get(key))));
-        return UserNameProfits.from(playerNameProfits);
+        return UserNameProfits.withDealerProfit(playerNameProfits);
     }
 }
