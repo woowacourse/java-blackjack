@@ -16,7 +16,7 @@ public final class UserNameProfits {
         this.userNameProfitMapper = Collections.unmodifiableMap(playerNameProfitMapper);
     }
 
-    public static UserNameProfits withDealerProfit(final Map<PlayerName, Money> playerNameProfitMapper) {
+    public static UserNameProfits addDealerProfit(final Map<PlayerName, Money> playerNameProfitMapper) {
         final Map<Name, Money> userNameProfit = new LinkedHashMap<>();
         final Money dealerProfit = playerNameProfitMapper.values()
                 .stream()

@@ -15,12 +15,12 @@ class UserNameProfitsTest {
 
     @Test
     @DisplayName("플레이어의 이름과 수익금을 넣어주면, 딜러의 수익금까지 계산해 반환한다.")
-    void withDealerProfitTest() {
+    void addPlayerProfitsTest() {
         final PlayerName testPlayerName = new PlayerName("홍실");
         final Money profit = new Money(1_000);
         final Map<PlayerName, Money> playerNameProfits = Map.of(testPlayerName, profit);
 
-        final UserNameProfits userNameProfits = UserNameProfits.withDealerProfit(playerNameProfits);
+        final UserNameProfits userNameProfits = UserNameProfits.addDealerProfit(playerNameProfits);
         final Map<Name, Money> userNameProfitMapper = userNameProfits.getUserNameProfitMapper();
 
         assertThat(userNameProfitMapper)
