@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 
 class UsersTest {
 
-    private static final Name TEST_PLAYER_NAME1 = new Name("필립");
-    private static final Name TEST_PLAYER_NAME2 = new Name("홍실");
-    private static final Name TEST_PLAYER_NAME3 = new Name("제이미");
-    private static final Name DEALER_NAME = new Name(Dealer.DEALER_NAME);
+    private static final Name TEST_PLAYER_NAME1 = new PlayerName("필립");
+    private static final Name TEST_PLAYER_NAME2 = new PlayerName("홍실");
+    private static final Name TEST_PLAYER_NAME3 = new PlayerName("제이미");
+    private static final Name DEALER_NAME = new DealerName();
 
     final static List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),

@@ -28,7 +28,7 @@ class DealerTest {
         final User dealer = new Dealer(initialGroup);
 
         assertSoftly(softly -> {
-            softly.assertThat(dealer.getName().getValue()).isEqualTo(Dealer.DEALER_NAME);
+            softly.assertThat(dealer.getName().getValue()).isEqualTo(DealerName.DEALER_NAME);
             softly.assertThat(dealer.getCardGroups().getCards()).containsExactly(cardKing, cardEight);
         });
     }

@@ -9,8 +9,8 @@ public abstract class User {
     private final Name name;
     private final CardGroup cardGroup;
 
-    protected User(String name, CardGroup cardGroup) {
-        this.name = new Name(name);
+    protected User(final Name name, CardGroup cardGroup) {
+        this.name = name;
         this.cardGroup = cardGroup;
     }
 

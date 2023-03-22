@@ -14,7 +14,9 @@ import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.user.DealerName;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +27,9 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
 
-    private static final Name TEST_PLAYER_NAME1 = new Name("필립");
-    private static final Name TEST_PLAYER_NAME2 = new Name("홍실");
-    private static final Name DEALER_NAME = new Name("딜러");
+    private static final Name TEST_PLAYER_NAME1 = new PlayerName("필립");
+    private static final Name TEST_PLAYER_NAME2 = new PlayerName("홍실");
+    private static final Name DEALER_NAME = new DealerName();
 
     private final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),

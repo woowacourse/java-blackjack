@@ -9,8 +9,9 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.user.Dealer;
+import blackjack.domain.user.DealerName;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +37,7 @@ class ViewRendererTest {
                 new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.DIAMOND, CardNumber.NINE)
         );
-        final Map<Name, CardResult> userNameAndCardResults = Map.of(new Name("딜러"),
+        final Map<Name, CardResult> userNameAndCardResults = Map.of(new DealerName(),
                 new CardResult(cardGroup, cardGroup.getScore()));
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer.renderUserNameAndCardResults(
                 userNameAndCardResults);
@@ -48,7 +49,7 @@ class ViewRendererTest {
     @Test
     @DisplayName("플레이어와 딜러의 수익금을 렌더링하는 기능 테스트")
     void renderUserNameAndProfitsTest() {
-        final Map<Name, Money> playerNameAndProfit = Map.of(new Name("제이미"), new Money(100_000));
+        final Map<Name, Money> playerNameAndProfit = Map.of(new PlayerName("제이미"), new Money(100_000));
         final Money dealerProfit = new Money(-100_000);
 
         final Map<String, Integer> renderUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(playerNameAndProfit,
@@ -56,7 +57,7 @@ class ViewRendererTest {
 
         assertThat(renderUserNameAndProfit)
                 .containsExactly(
-                        entry(Dealer.DEALER_NAME, -100_000),
+                        entry(DealerName.DEALER_NAME, -100_000),
                         entry("제이미", 100_000));
     }
 }

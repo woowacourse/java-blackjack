@@ -7,7 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.user.Dealer;
+import blackjack.domain.user.DealerName;
 import blackjack.domain.user.Name;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -77,7 +77,7 @@ public class ViewRenderer {
     public static Map<String, Integer> renderUserNameAndProfit(final Map<Name, Money> playerNameAndProfit,
                                                                final Money dealerProfit) {
         final Map<String, Integer> renderedUserNameAndProfit = new LinkedHashMap<>();
-        renderedUserNameAndProfit.put(Dealer.DEALER_NAME, dealerProfit.getValue());
+        renderedUserNameAndProfit.put(DealerName.DEALER_NAME, dealerProfit.getValue());
         playerNameAndProfit.forEach((name, money) -> renderedUserNameAndProfit.put(name.getValue(), money.getValue()));
         return renderedUserNameAndProfit;
     }

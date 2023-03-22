@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
-    private static final Name TEST_PLAYER_NAME_1 = new Name("필립");
-    private static final Name TEST_PLAYER_NAME_2 = new Name("홍실");
+    private static final PlayerName TEST_PLAYER_NAME_1 = new PlayerName("필립");
+    private static final PlayerName TEST_PLAYER_NAME_2 = new PlayerName("홍실");
 
     final Queue<CardGroup> cardGroups = new LinkedList<>();
 
