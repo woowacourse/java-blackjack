@@ -79,7 +79,7 @@ public class Players {
     public Map<Name, Double> getPlayerNameAndProfitRates(final Dealer dealer) {
         final Map<Name, Double> playerNameAndProfitRates = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndProfitRates.put(player.getName(),
-                player.calculateProfitRate(dealer)));
+                dealer.calculateProfitRate(player)));
         return Collections.unmodifiableMap(playerNameAndProfitRates);
     }
 
