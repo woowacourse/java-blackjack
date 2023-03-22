@@ -29,7 +29,8 @@ public class Playing extends GameState {
     public GameState receive(Card card) {
         cards.add(card);
 
-        if (BlackjackScore.from(cards).isGreaterThan(BlackjackScore.getMaxScore())) {
+        BlackjackScore blackjackScore = BlackjackScore.from(cards);
+        if (blackjackScore.isGreaterThan(BlackjackScore.getMaxScore())) {
             return new Bust(cards, HandState.BUST);
         }
 

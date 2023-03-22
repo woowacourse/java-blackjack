@@ -27,6 +27,10 @@ public class Cards {
                 .count();
     }
 
+    public int size() {
+        return this.cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

@@ -6,7 +6,7 @@ import domain.card.Cards;
 
 public abstract class GameState {
     static final int DEFAULT_EARN_RATE = 1;
-
+    private static final int INITIAL_CARD_AMOUNT = 2;
     protected final Cards cards;
     protected final HandState handState;
 
@@ -22,6 +22,11 @@ public abstract class GameState {
     public abstract Result competeToOtherState(GameState otherState);
 
     public abstract double getEarningRate();
+
+
+    public int getAdditionalCardsAmount() {
+        return cards.size() - INITIAL_CARD_AMOUNT;
+    }
 
     public Cards getCards() {
         return cards;

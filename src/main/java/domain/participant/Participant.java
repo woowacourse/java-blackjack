@@ -8,7 +8,6 @@ import domain.card.Cards;
 import java.util.Objects;
 
 public abstract class Participant {
-    private static final int INITIAL_CARD_AMOUNT = 2;
 
     protected final ParticipantName participantName;
     protected GameState gameState;
@@ -24,6 +23,7 @@ public abstract class Participant {
     public void receive(Card card) {
         if (gameState.isAbleToReceiveCard()) {
             this.gameState = gameState.receive(card);
+            return;
         }
 
         throw new IllegalStateException();
@@ -53,16 +53,15 @@ public abstract class Participant {
         return Objects.hash(participantName, getCards());
     }
 
+    public int getAdditionalCardsAmount() {
+        return gameState.getAdditionalCardsAmount();
+    }
+
     public Cards getCards() {
         return gameState.getCards();
     }
 
     public String getName() {
         return participantName.getName();
-    }
-
-    public int getAdditionalCardsAmount() {
-        Cards cards = gameState.getCards();
-        return cards.getCards().size() - INITIAL_CARD_AMOUNT;
     }
 }
