@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;

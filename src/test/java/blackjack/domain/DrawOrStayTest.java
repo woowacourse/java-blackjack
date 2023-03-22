@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
