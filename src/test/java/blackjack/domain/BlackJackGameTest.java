@@ -90,18 +90,6 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("딜러가 카드를 추가로 뽑아야 하는지를 반환하는 기능 테스트")
-    void shouldDealerDrawTest() {
-        final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.QUEEN));
-        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(),
-                new TestNonShuffledDeckGenerator(cards));
-
-        assertThat(blackJackGame.shouldDealerDraw()).isTrue();
-    }
-
-    @Test
     @DisplayName("플레이어 이름 리스트를 반환하는 기능 테스트")
     void getPlayersTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),

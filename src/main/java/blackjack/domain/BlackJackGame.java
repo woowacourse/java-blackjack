@@ -66,10 +66,6 @@ public class BlackJackGame {
         return dealerDrawCount;
     }
 
-    public boolean shouldDealerDraw() {
-        return users.isDealerUnderDrawLimit();
-    }
-
     public void playPlayer(final Name userName, final DrawOrStay drawOrStay) {
         if (drawOrStay.isDraw()) {
             users.drawCard(userName, gameTable.supplyCard());
