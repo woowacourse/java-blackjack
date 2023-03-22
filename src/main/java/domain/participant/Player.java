@@ -8,7 +8,7 @@ import domain.money.Profit;
 public class Player extends Participant {
     private static final String FORBIDDEN_NAME_MESSAGE = "\"딜러\"라는 이름은 사용하실 수 없습니다.";
 
-    protected final BetAmount betAmount;
+    private final BetAmount betAmount;
 
     private Player(ParticipantName participantName, BetAmount betAmount) {
         super(participantName);
