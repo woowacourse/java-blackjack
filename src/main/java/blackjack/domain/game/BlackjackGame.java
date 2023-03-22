@@ -38,10 +38,6 @@ public class BlackjackGame {
         return dealer.getInitialCard();
     }
 
-    public Map<String, List<Card>> findPlayerNameToCards() {
-        return players.findPlayerNameToCards();
-    }
-
     public List<String> findPlayerNames() {
         return players.findPlayerNames();
     }

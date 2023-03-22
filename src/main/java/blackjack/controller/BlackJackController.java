@@ -53,8 +53,11 @@ public class BlackJackController {
     }
 
     private void printInitialCard(final BlackjackGame blackjackGame) {
-        outputView.printInitialCards(blackjackGame.findDealerInitialCard(),
-                blackjackGame.findPlayerNameToCards());
+        outputView.printInitialCardsGuideMessage(blackjackGame.findPlayerNames());
+        outputView.printInitialCardsOfDealer(blackjackGame.findDealerInitialCard());
+        for(final String playerName : blackjackGame.findPlayerNames()) {
+            outputView.printInitialCardsOfPlayers(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
+        }
     }
 
     private void playGame(final BlackjackGame blackjackGame) {

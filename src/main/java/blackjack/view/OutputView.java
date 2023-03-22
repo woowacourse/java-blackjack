@@ -19,25 +19,18 @@ public class OutputView {
 
     private static final String FINAL_RESULT = System.lineSeparator() + "## 최종 수익";
 
-    public void printInitialCards(final Card dealerCard, final Map<String, List<Card>> playerNameToCards) {
-        printInitialDistributionMessage(playerNameToCards);
-        printInitialDealerCard(dealerCard);
-        printInitialPlayerCard(playerNameToCards);
-        System.out.println();
-    }
 
-    private void printInitialDistributionMessage(final Map<String, List<Card>> playerNameToCards) {
-        final String playerNames = String.join(DELIMITER_BETWEEN_CARDS, playerNameToCards.keySet());
+    public void printInitialCardsGuideMessage(final List<String> playerNameList) {
+        final String playerNames = String.join(DELIMITER_BETWEEN_CARDS, playerNameList);
         System.out.printf((OUTPUT_DISTRIBUTE_MESSAGE) + System.lineSeparator(), DEALER, playerNames);
     }
 
-    private void printInitialDealerCard(final Card card) {
-        System.out.println(DEALER + DELIMITER + convertCard(card));
+    public void printInitialCardsOfDealer(final Card dealerInitialCard) {
+        System.out.println(DEALER + DELIMITER + convertCard(dealerInitialCard));
     }
 
-    private void printInitialPlayerCard(final Map<String, List<Card>> playerNameToCards) {
-        playerNameToCards.forEach((playerName, playerCards) ->
-                System.out.println(playerName + CARD + DELIMITER + convertCards(playerCards)));
+    public void printInitialCardsOfPlayers(final String playerName, final List<Card> playerCards) {
+        System.out.println(playerName + CARD + DELIMITER + convertCards(playerCards)+ System.lineSeparator());
     }
 
     private String convertCards(final List<Card> cards) {
