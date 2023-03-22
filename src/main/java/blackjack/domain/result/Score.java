@@ -38,6 +38,10 @@ public class Score {
             return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
                     value -> new Score(value, ScoreStatus.BUST));
         }
+        if (totalValue == BLACKJACK_VALUE) {
+            return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
+                    value -> new Score(value, ScoreStatus.HARD21));
+        }
         return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
                 value -> new Score(value, ScoreStatus.DRAWABLE));
     }

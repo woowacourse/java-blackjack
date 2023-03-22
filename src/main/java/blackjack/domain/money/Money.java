@@ -10,10 +10,6 @@ public class Money {
         this.value = value;
     }
 
-    public final int getValue() {
-        return value;
-    }
-
     public final Money multiply(final Double rate) {
         return new Money((int) (rate * value));
     }
@@ -24,6 +20,10 @@ public class Money {
 
     public final Money sum(final Money money) {
         return new Money(this.value + money.value);
+    }
+
+    public final int getValue() {
+        return value;
     }
 
     @Override
