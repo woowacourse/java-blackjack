@@ -12,13 +12,15 @@ public class Dealer extends User {
     private static final int FIRST_OPEN_CARD_COUNT = 1;
     private static final int DRAW_LIMIT_SCORE = 16;
 
+    private static final DealerName dealerName = new DealerName();
+
     public Dealer(final CardGroup initialGroup) {
-        super(new DealerName(), initialGroup);
+        super(initialGroup);
     }
 
     @Override
     public CardGroup getFirstOpenCardGroup() {
-        return getCardGroups().getSubCardGroup(FIRST_OPEN_CARD_COUNT);
+        return cardGroup.getSubCardGroup(FIRST_OPEN_CARD_COUNT);
     }
 
     public boolean isUnderDrawLimit() {
@@ -58,5 +60,10 @@ public class Dealer extends User {
             return TIE_PROFIT_RATE;
         }
         return LOSE_PROFIT_RATE;
+    }
+
+    @Override
+    public Name getName() {
+        return dealerName;
     }
 }

@@ -6,11 +6,9 @@ import blackjack.domain.result.Score;
 
 public abstract class User {
 
-    private final Name name;
-    private final CardGroup cardGroup;
+    protected final CardGroup cardGroup;
 
-    protected User(final Name name, CardGroup cardGroup) {
-        this.name = name;
+    protected User(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
     }
 
@@ -22,9 +20,7 @@ public abstract class User {
         cardGroup.add(card);
     }
 
-    final public Name getName() {
-        return name;
-    }
+    public abstract Name getName();
 
     final public CardGroup getCardGroups() {
         return cardGroup;
