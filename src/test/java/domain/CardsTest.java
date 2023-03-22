@@ -47,13 +47,13 @@ public class CardsTest {
     }
 
     @Test
-    void 블랙잭인지_확인할_수_있다() {
+    void 카드총합이_기준_최대수_인지_확인할_수_있다() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card("A하트", 11));
         cards.add(new Card("10하트", 10));
         Cards actual = new Cards(cards);
 
-        assertThat(actual.isBlackJack()).isTrue();
+        assertThat(actual.isMaximumNumber()).isTrue();
     }
 
     @Test

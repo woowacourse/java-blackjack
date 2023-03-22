@@ -16,8 +16,16 @@ public class Card {
         return this.value + otherCard.value;
     }
 
+    public int subtract(final int number){
+        return number - this.value;
+    }
+
     public boolean isA() {
         return name.charAt(0) == 'A';
+    }
+
+    public Card copyCard(){
+        return new Card(this.name,this.value);
     }
 
     @Override

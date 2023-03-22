@@ -1,27 +1,41 @@
 package domain;
 
-import java.util.List;
+public class Player extends Participant{
 
-public class Player {
-
+    private static final int MAXIMUM_SUM_OF_CARD = 21;
     private final Name name;
-    private final Cards cards;
+    private Betting betting;
 
-    public Player(final Name name, final Cards cards) {
+    public Player(Cards cards, Name name, Betting betting) {
+        super(cards);
         this.name = name;
-        this.cards = cards;
+        this.betting = betting;
     }
 
-    public boolean selectToPickOtherCard(final CardBox cardBox, final int cardBoxIndex) {
-        return pickOtherCard(cardBox, cardBoxIndex);
+    public void giveBonusIfInitialCardsAreBlackJack() {
+        if (isBlackJack()) {
+            this.betting = betting.giveBonus();
+        }
     }
 
-    protected boolean pickOtherCard(final CardBox cardBox, final int cardBoxIndex) {
-        return cards.addCard(cardBox.get(cardBoxIndex));
+    public void calculateFinalBettingResult(Result result){
+        this.betting = betting.calculateProfitByResult(result);
     }
 
-    public int sumOfPlayerCards() {
-        return cards.sumOfCards();
+    public int calculateFinalProfit(){
+        return betting.calculateFinalProfit();
+    }
+
+    public boolean isSelectToAddCard(boolean command) {
+        return command && checkPlayerCanReceiveCard();
+    }
+
+    public boolean checkPlayerCanReceiveCard() {
+        return PlayerState.LESS_THAN_MAXIMUM.equals(askPlayerState());
+    }
+
+    public boolean isPlayerCanAddCard() {
+        return PlayerState.MORE_THAN_MAXIMUM.equals(askPlayerState()) || PlayerState.EQUAL_WITH_MAXIMUM.equals(askPlayerState());
     }
 
     public String getName() {
@@ -32,7 +46,4 @@ public class Player {
         return cards;
     }
 
-    public List<String> copyCards() {
-        return cards.copyCards();
-    }
 }

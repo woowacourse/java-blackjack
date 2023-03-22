@@ -1,5 +1,7 @@
 package view;
 
+import domain.Name;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -29,5 +31,14 @@ public class InputView {
         if (!input.equals("y") && !input.equals("n")) {
             throw new IllegalArgumentException("y 혹은 n 만 입력가능합니다. 입력한 문자 : " +input);
         }
+    }
+
+    public List<Integer> inputBettingMoneys(List<Name> names){
+        List<Integer> bettingMoneys = new ArrayList<>();
+        for (Name name : names) {
+            System.out.println(name.getName() + "의 베팅 금액은?");
+            bettingMoneys.add(Integer.parseInt(scanner.nextLine()));
+        }
+        return bettingMoneys;
     }
 }
