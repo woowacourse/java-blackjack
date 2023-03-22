@@ -74,13 +74,15 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(final BlackjackGame blackJackGame, final PlayerName playerName) {
-        DrawOrStay drawOrStay = DrawOrStay.DRAW;
-        while (drawOrStay.isDraw() && blackJackGame.isContinuous(playerName)) {
-            drawOrStay = repeatUntilReadValidateDrawInput(playerName);
-            blackJackGame.playPlayer(playerName, drawOrStay);
+        boolean isPlay;
+        do {
+            DrawOrStay drawOrStay = repeatUntilReadValidateDrawInput(playerName);
+            isPlay = blackJackGame.playPlayer(playerName, drawOrStay);
             final CardGroup playerCardGroup = blackJackGame.getCardGroupBy(playerName);
-            outputView.printUserNameAndCardGroup(playerName.getValue(), ViewRenderer.renderCardGroup(playerCardGroup));
+            outputView.printUserNameAndCardGroup(playerName.getValue(),
+                    ViewRenderer.renderCardGroup(playerCardGroup));
         }
+        while (isPlay && blackJackGame.isContinuous(playerName));
     }
 
     private DrawOrStay repeatUntilReadValidateDrawInput(final Name playerName) {

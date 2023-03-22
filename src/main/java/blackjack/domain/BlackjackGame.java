@@ -64,10 +64,11 @@ public class BlackjackGame {
         return dealerDrawCount;
     }
 
-    public void playPlayer(final PlayerName playerName, final DrawOrStay drawOrStay) {
+    public boolean playPlayer(final PlayerName playerName, final DrawOrStay drawOrStay) {
         if (drawOrStay.isDraw()) {
             users.drawCard(playerName, gameTable.supplyCard());
         }
+        return drawOrStay.isDraw();
     }
 
     public UserNameProfits getUserNameAndProfits() {
