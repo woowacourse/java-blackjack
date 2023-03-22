@@ -24,8 +24,8 @@ public class Money {
         return (int) (value % divide.value) == 0;
     }
 
-    boolean isPositiveMoney() {
-        return value > 0;
+    public boolean isBiggerThan(Money other) {
+        return value > other.value;
     }
 
     public double getValue() {

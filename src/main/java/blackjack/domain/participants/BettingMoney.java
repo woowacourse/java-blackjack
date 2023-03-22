@@ -1,35 +1,38 @@
 package blackjack.domain.participants;
 
-class BettingMoney {
+public class BettingMoney {
 
-    private static final int emptyValue = 0;
-    private static final int unitValue = 1000;
-    private static final String ERROR_NOT_UNIT_BETTING_MONEY = String.format("베팅 금액은 %d원 단위여야 합니다.", unitValue);
-    private static final Money emptyMoney = new Money(emptyValue);
-    private static final Money unitMoney = new Money(unitValue);
+    private static final int MIN_VALUE = 0;
+    private static final int UNIT_VALUE = 1000;
+    private static final String ERROR_NOT_UNIT_BETTING_MONEY = String.format("베팅 금액은 %d원 단위여야 합니다.", UNIT_VALUE);
+    private static final Money minimumBettingMoney = new Money(MIN_VALUE);
+    private static final Money unitBettingMoney = new Money(UNIT_VALUE);
     private final Money money;
 
-    BettingMoney(Money money) {
+    private BettingMoney(Money money) {
         validateBettingMoney(money);
         this.money = money;
     }
 
-    BettingMoney() {
-        this(emptyMoney);
+    public BettingMoney(int money) {
+        this(new Money(money));
+    }
+
+    private static void validateUnitBettingMoney(Money inputMoney) {
+        if (!inputMoney.isDividedBy(unitBettingMoney)) {
+            throw new IllegalArgumentException(ERROR_NOT_UNIT_BETTING_MONEY);
+        }
     }
 
     private void validateBettingMoney(Money inputMoney) {
         validateUnitBettingMoney(inputMoney);
-        validatePositiveBettingMoney(inputMoney);
+        validateMinimumBettingMoney(inputMoney);
     }
 
-    private static void validateUnitBettingMoney(Money inputMoney) {
-        if(!inputMoney.divide(unitMoney).equals(new Money(0)))
+    private void validateMinimumBettingMoney(Money inputMoney) {
+        if (!inputMoney.isBiggerThan(minimumBettingMoney)) {
             throw new IllegalArgumentException(ERROR_NOT_UNIT_BETTING_MONEY);
-    }
-
-    private void validatePositiveBettingMoney(Money inputMoney) {
-        if(!inputMoney.isPositiveMoney()) throw new IllegalArgumentException(ERROR_NOT_UNIT_BETTING_MONEY);
+        }
     }
 
     Money getMoney() {
