@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private String convertCard(final Card card) {
-        final String convertedSymbol = OutputViewSymbol.from(card.getSymbol())
+        final String convertedSymbol = OutputViewSymbol.from(card.getDenomination())
                 .getPrintSymbol();
         final String convertedShape = OutputViewShape.from(card.getShape())
                 .getPrintShape();
@@ -76,12 +76,12 @@ public class OutputView {
 
     public void printProfitOfGameParticipants(final Money revenueOfDealer, final Map<String, Money> revenueOfPlayers) {
         System.out.println(FINAL_RESULT);
-        System.out.println(DEALER + DELIMITER + (int) revenueOfDealer.getAmount());
-        revenueOfPlayers.forEach((name, money) -> System.out.println(name + DELIMITER + (int) money.getAmount()));
+        System.out.println(DEALER + DELIMITER + (int) revenueOfDealer.getValue());
+        revenueOfPlayers.forEach((name, money) -> System.out.println(name + DELIMITER + (int) money.getValue()));
     }
 
-    public void printError(final Exception exception) {
-        System.out.println(exception.getMessage());
+    public void printError(final String exception) {
+        System.out.println(exception);
     }
 
 }
