@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Score {
@@ -9,26 +9,30 @@ public class Score {
     private static final Score min = new Score(0);
     private static final Score max = new Score(21);
     private static final Score aceAdditionalValue = new Score(10);
-    private static final List<Score> cache = new ArrayList<>();
+    private static final Map<Integer, Score> cache = new HashMap<>();
 
     private final int value;
 
-    public Score(final int value) {
-        validateScore(value);
+    public Score(int value) {
         this.value = value;
     }
 
-    private void validateScore(final int value) {
-        if (value < min.value) {
-            throw new IllegalArgumentException("Score의 점수는 양수만 가능합니다");
+    public static Score of(int value) {
+        if (cache.containsKey(value)) {
+            return cache.get(value);
         }
+        return new Score(value);
     }
 
     public Score plusTenIfNotBusted() {
-        if (value + aceAdditionalValue.value > max.value) {
+        if (sum(aceAdditionalValue).isBiggerThan(max)) {
             return this;
         }
-        return new Score(value + aceAdditionalValue.value);
+        return sum(aceAdditionalValue);
+    }
+
+    public Score sum(Score other) {
+        return new Score(value + other.value);
     }
 
     public boolean isMax() {
@@ -39,19 +43,19 @@ public class Score {
         return value > max.value;
     }
 
-    public boolean isBiggerThan(final Score other) {
+    public boolean isBiggerThan(Score other) {
         return value > other.value;
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Score score = (Score) o;
+        Score score = (Score) o;
         return value == score.value;
     }
 
