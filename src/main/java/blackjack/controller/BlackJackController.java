@@ -4,7 +4,6 @@ import blackjack.domain.DeckFactory;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Money;
-import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -65,22 +64,25 @@ public class BlackJackController {
 
     private void drawPlayersCards(final BlackjackGame blackjackGame) {
         for (final String playerName : blackjackGame.findPlayerNames()) {
-            drawPlayerCard(playerName, blackjackGame);
+            drawPlayerCardByName(playerName, blackjackGame);
         }
     }
 
     private DrawCommand inputDrawCommand(final String playerName) {
         return repeatUntilNoException(
-                () -> inputView.inputCommand(playerName), outputView::printError);
+                () -> DrawCommand.from(inputView.inputCommand(playerName)), outputView::printError);
     }
 
-    private void drawPlayerCard(final String playerName, final BlackjackGame blackjackGame) {
-        DrawCommand drawCommand = DrawCommand.DRAW;
-
-        while (blackjackGame.isPlayerDrawable(playerName) && drawCommand == DrawCommand.DRAW) {
-            drawCommand = inputDrawCommand(playerName);
-            blackjackGame.drawCardOfPlayerByName(playerName, drawCommand);
-            outputView.printCurrentCardsOfPlayer(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
+    private void drawPlayerCardByName(final String playerName, final BlackjackGame blackjackGame) {
+        while (blackjackGame.isPlayerDrawable(playerName)) {
+            final DrawCommand drawCommand = inputDrawCommand(playerName);
+            if(drawCommand == DrawCommand.DRAW) {
+                blackjackGame.drawCardOfPlayerByName(playerName);
+                outputView.printCurrentCardsOfPlayer(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
+            }
+            if(drawCommand == DrawCommand.STAY) {
+                blackjackGame.stayCardOfPlayerByName(playerName);
+            }
         }
     }
 

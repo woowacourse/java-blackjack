@@ -5,7 +5,6 @@ import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Players;
-import blackjack.view.DrawCommand;
 
 import java.util.List;
 import java.util.Map;
@@ -51,13 +50,12 @@ public class BlackjackGame {
         return players.isPlayerDrawable(playerName);
     }
 
-    public void drawCardOfPlayerByName(final String playerName, final DrawCommand drawCommand) {
-        if (drawCommand == DrawCommand.DRAW) {
-            players.drawCardOfPlayerByName(playerName, deck.popCard());
-        }
-        if (drawCommand == DrawCommand.STAY) {
-            players.stayCardOfPlayerByName(playerName);
-        }
+    public void drawCardOfPlayerByName(final String playerName) {
+        players.drawCardOfPlayerByName(playerName, deck.popCard());
+    }
+
+    public void stayCardOfPlayerByName(final String playerName) {
+        players.stayCardOfPlayerByName(playerName);
     }
 
     public List<Card> findCardsOfPlayerByName(final String playerName) {
