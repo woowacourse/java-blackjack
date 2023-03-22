@@ -11,7 +11,7 @@ public class ShuffledDeckFactory implements DeckFactory {
 
     @Override
     public Deck generate() {
-        List<Card> cards = Card.getCards();
+        final List<Card> cards = Card.getCards();
         Collections.shuffle(cards);
 
         return new Deck(new ArrayDeque<>(cards));
