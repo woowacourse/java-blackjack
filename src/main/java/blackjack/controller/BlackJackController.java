@@ -1,9 +1,8 @@
 package blackjack.controller;
 
-import static blackjack.controller.Repeater.repeatUntilNoException;
-
 import blackjack.domain.DeckFactory;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Money;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
@@ -12,18 +11,20 @@ import blackjack.view.OutputView;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static blackjack.controller.Repeater.repeatUntilNoException;
+
 public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(final InputView inputView, final OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
-    public void generate(final DeckFactory deckFactory) {
-        final BlackjackGame blackjackGame = createBlackJackGame(deckFactory);
+    public void generate(DeckFactory deckFactory) {
+        BlackjackGame blackjackGame = createBlackJackGame(deckFactory);
 
         startGame(blackjackGame);
         printInitialCard(blackjackGame);
@@ -31,50 +32,51 @@ public class BlackJackController {
         printResult(blackjackGame);
     }
 
-    private BlackjackGame createBlackJackGame(final DeckFactory deckFactory) {
+    private BlackjackGame createBlackJackGame(DeckFactory deckFactory) {
         return repeatUntilNoException(
                 () -> BlackjackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
     }
 
-    private void startGame(final BlackjackGame blackjackGame) {
+    private void startGame(BlackjackGame blackjackGame) {
         makePlayersPlaceWagers(blackjackGame);
         blackjackGame.distributeInitialCards();
     }
 
-    private void makePlayersPlaceWagers(final BlackjackGame blackjackGame) {
-        for (final String playerName : blackjackGame.findPlayerNames()) {
+    private void makePlayersPlaceWagers(BlackjackGame blackjackGame) {
+        for (String playerName : blackjackGame.findPlayerNames()) {
             blackjackGame.placePlayerBets(playerName, inputBettingMoney(playerName));
         }
     }
 
-    private Money inputBettingMoney(final String playerName) {
+    private BettingMoney inputBettingMoney(String playerName) {
         return repeatUntilNoException(
-                () -> new Money(inputView.inputBettingMoney(playerName)), outputView::printError);
+                () -> new BettingMoney(inputView.inputBettingMoney(playerName)), outputView::printError);
     }
 
-    private void printInitialCard(final BlackjackGame blackjackGame) {
+    private void printInitialCard(BlackjackGame blackjackGame) {
         outputView.printInitialCards(blackjackGame.findDealerInitialCard(),
                 blackjackGame.findPlayerNameToCards());
     }
 
-    private void playGame(final BlackjackGame blackjackGame) {
+    private void playGame(BlackjackGame blackjackGame) {
         drawPlayersCards(blackjackGame);
         drawDealerCards(blackjackGame);
     }
 
-    private void drawPlayersCards(final BlackjackGame blackjackGame) {
-        for (final String playerName : blackjackGame.findPlayerNames()) {
+    private void drawPlayersCards(BlackjackGame blackjackGame) {
+        for (String playerName : blackjackGame.findPlayerNames()) {
             drawPlayerCard(playerName, blackjackGame);
         }
     }
 
-    private DrawCommand inputDrawCommand(final String playerName) {
+    private DrawCommand inputDrawCommand(String playerName) {
         return repeatUntilNoException(
                 () -> inputView.inputCommand(playerName), outputView::printError);
     }
 
-    private void drawPlayerCard(final String playerName, final BlackjackGame blackjackGame) {
+    private void drawPlayerCard(String playerName, BlackjackGame blackjackGame) {
         DrawCommand drawCommand = DrawCommand.DRAW;
+
         while (blackjackGame.isPlayerDrawable(playerName) && drawCommand == DrawCommand.DRAW) {
             drawCommand = inputDrawCommand(playerName);
             blackjackGame.drawCardOfPlayerByName(playerName, drawCommand);
@@ -82,21 +84,21 @@ public class BlackJackController {
         }
     }
 
-    private void drawDealerCards(final BlackjackGame blackjackGame) {
+    private void drawDealerCards(BlackjackGame blackjackGame) {
         IntStream.range(0, blackjackGame.findDealerDrawCount())
                 .forEach(ignored -> outputView.printDealerCardDrawMessage(blackjackGame.findDealerDrawPoint()));
     }
 
-    private void printResult(final BlackjackGame blackjackGame) {
+    private void printResult(BlackjackGame blackjackGame) {
         printFinalStatusOfParticipants(blackjackGame);
         getPrintProfitOfGameParticipants(blackjackGame);
     }
 
-    private void printFinalStatusOfParticipants(final BlackjackGame blackjackGame) {
+    private void printFinalStatusOfParticipants(BlackjackGame blackjackGame) {
         outputView.printFinalStatusOfDealer(blackjackGame.findDealerCard(), blackjackGame.findDealerScore()
                 .getValue());
 
-        for (final String playerName : blackjackGame.findPlayerNames()) {
+        for (String playerName : blackjackGame.findPlayerNames()) {
             outputView.printFinalStatusOfPlayer(playerName,
                     blackjackGame.findCardsOfPlayerByName(playerName),
                     blackjackGame.findScoreOfPlayerByName(playerName)
@@ -104,9 +106,9 @@ public class BlackJackController {
         }
     }
 
-    private void getPrintProfitOfGameParticipants(final BlackjackGame blackjackGame) {
-        final Map<String, Money> revenueOfPlayers = blackjackGame.findRevenueOfPlayers();
-        final Money revenueOfDealer = blackjackGame.findRevenueOfDealer();
+    private void getPrintProfitOfGameParticipants(BlackjackGame blackjackGame) {
+        Map<String, Money> revenueOfPlayers = blackjackGame.findRevenueOfPlayers();
+        Money revenueOfDealer = blackjackGame.findRevenueOfDealer();
         outputView.printProfitOfGameParticipants(revenueOfDealer, revenueOfPlayers);
     }
 
