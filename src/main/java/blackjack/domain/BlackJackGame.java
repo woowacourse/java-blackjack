@@ -25,7 +25,8 @@ public class BlackJackGame {
     public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
         final Deck deck = new Deck(deckGenerator);
         this.gameTable = new GameTable(deck);
-        this.users = new Users(playerNames, generateFirstCardGroup(playerNames.size(), deck));
+        final Queue<CardGroup> cardGroups = generateFirstCardGroup(playerNames.size(), deck);
+        this.users = new Users(playerNames, cardGroups);
     }
 
     private Queue<CardGroup> generateFirstCardGroup(final int firstCardGroupsCount, final Deck deck) {
