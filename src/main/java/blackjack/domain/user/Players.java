@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.PlayerNameProfitRates;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,15 +40,14 @@ public class Players {
         }
     }
 
-    public Map<Name, CardGroup> getFirstOpenCardGroup() {
-        final Map<Name, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
+    public Map<PlayerName, CardGroup> getFirstOpenCardGroup() {
+        final Map<PlayerName, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
         players.forEach(player ->
                 firstOpenCardGroup.put(player.getName(), player.getFirstOpenCardGroup()));
         return Collections.unmodifiableMap(firstOpenCardGroup);
     }
 
-
-    public CardGroup getCardGroupBy(final Name name) {
+    public CardGroup getCardGroupBy(final PlayerName name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
@@ -55,13 +55,13 @@ public class Players {
                 .getCardGroups();
     }
 
-    public List<Name> getPlayerNames() {
+    public List<PlayerName> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void drawCard(final Name name, final Card card) {
+    public void drawCard(final PlayerName name, final Card card) {
         players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
@@ -69,18 +69,18 @@ public class Players {
                 .drawCard(card);
     }
 
-    public Map<Name, CardResult> getPlayerNameAndCardResults() {
-        final Map<Name, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
+    public Map<PlayerName, CardResult> getPlayerNameAndCardResults() {
+        final Map<PlayerName, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndCardResults.put(player.getName(),
                 new CardResult(player.getCardGroups(), player.getScore())));
         return Collections.unmodifiableMap(playerNameAndCardResults);
     }
 
-    public Map<Name, Double> getPlayerNameAndProfitRates(final Dealer dealer) {
-        final Map<Name, Double> playerNameAndProfitRates = new LinkedHashMap<>();
+    public PlayerNameProfitRates getPlayerNameAndProfitRates(final Dealer dealer) {
+        final Map<PlayerName, Double> playerNameAndProfitRates = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndProfitRates.put(player.getName(),
                 dealer.calculateProfitRate(player)));
-        return Collections.unmodifiableMap(playerNameAndProfitRates);
+        return new PlayerNameProfitRates(playerNameAndProfitRates);
     }
 
     public boolean isDrawable(final Name playerName) {

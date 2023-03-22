@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.PlayerNameProfitRates;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,20 +23,20 @@ public class Users {
     public Map<Name, CardGroup> getUserNameAndFirstOpenCardGroups() {
         final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = new LinkedHashMap<>();
         userNameAndFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
-        final Map<Name, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
+        final Map<PlayerName, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
         userNameAndFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
         return Collections.unmodifiableMap(userNameAndFirstOpenCardGroups);
     }
 
-    public CardGroup getCardGroupBy(final Name name) {
-        return players.getCardGroupBy(name);
+    public CardGroup getCardGroupBy(final PlayerName playername) {
+        return players.getCardGroupBy(playername);
     }
 
     public boolean isDealerUnderDrawLimit() {
         return dealer.isUnderDrawLimit();
     }
 
-    public List<Name> getPlayerNames() {
+    public List<PlayerName> getPlayerNames() {
         return players.getPlayerNames();
     }
 
@@ -43,19 +44,19 @@ public class Users {
         dealer.drawCard(card);
     }
 
-    public void drawCard(final Name userName, final Card card) {
-        players.drawCard(userName, card);
+    public void drawCard(final PlayerName name, final Card card) {
+        players.drawCard(name, card);
     }
 
     public Map<Name, CardResult> getUserNameAndCardResults() {
         final Map<Name, CardResult> userNameAndResults = new LinkedHashMap<>();
         userNameAndResults.put(dealer.getName(), new CardResult(dealer.getCardGroups(), dealer.getScore()));
-        final Map<Name, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
+        final Map<PlayerName, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
         userNameAndResults.putAll(playerNameAndResults);
         return Collections.unmodifiableMap(userNameAndResults);
     }
 
-    public Map<Name, Double> getPlayerNameAndProfitRates() {
+    public PlayerNameProfitRates getPlayerNameAndProfitRates() {
         return players.getPlayerNameAndProfitRates(dealer);
     }
 

@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import static java.util.Map.entry;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -8,10 +10,12 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.PlayerNameProfitRates;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +47,7 @@ public class PlayersTest {
         final Players players = new Players(List.of(TEST_PLAYER_NAME_1.getValue(), TEST_PLAYER_NAME_2.getValue()),
                 cardGroups);
 
-        final Map<Name, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
+        final Map<PlayerName, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
 
         assertSoftly(softly -> {
             softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_1).getCards().getCards())
@@ -74,11 +78,11 @@ public class PlayersTest {
                 new Card(CardShape.SPADE, CardNumber.TEN),
                 new Card(CardShape.DIAMOND, CardNumber.TEN)));
 
-        final Map<Name, Double> playerNameAndProfitRates = players.getPlayerNameAndProfitRates(dealer);
+        final PlayerNameProfitRates playerNameAndProfitRates = players.getPlayerNameAndProfitRates(dealer);
 
-        assertSoftly(softly -> {
-            softly.assertThat(playerNameAndProfitRates.get(TEST_PLAYER_NAME_1)).isEqualTo(1.5);
-            softly.assertThat(playerNameAndProfitRates.get(TEST_PLAYER_NAME_2)).isEqualTo(-1);
-        });
+        assertThat(playerNameAndProfitRates)
+                .extracting("nameProfitRateMapper",
+                        InstanceOfAssertFactories.map(PlayerName.class, Double.class))
+                .containsExactly(entry(TEST_PLAYER_NAME_1, 1.5), entry(TEST_PLAYER_NAME_2, -1.0));
     }
 }

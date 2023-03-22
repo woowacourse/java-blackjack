@@ -4,8 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Deposit;
-import blackjack.domain.money.Money;
-import blackjack.domain.user.Name;
+import blackjack.domain.result.PlayerNameProfitRates;
+import blackjack.domain.result.UserNameProfits;
+import blackjack.domain.user.PlayerName;
 
 public class GameTable {
 
@@ -17,7 +18,7 @@ public class GameTable {
         this.deposit = new Deposit();
     }
 
-    public void bet(final Name playerName, final BettingMoney money) {
+    public void bet(final PlayerName playerName, final BettingMoney money) {
         deposit.bet(playerName, money);
     }
 
@@ -25,7 +26,7 @@ public class GameTable {
         return deck.draw();
     }
 
-    public Money getProfit(final Name playerName, final Double profitRate) {
-        return deposit.getProfit(playerName, profitRate);
+    public UserNameProfits calculateProfits(final PlayerNameProfitRates playerNameAndProfitRates) {
+        return deposit.calculateProfits(playerNameAndProfitRates);
     }
 }

@@ -5,16 +5,15 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.money.BettingMoney;
-import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.PlayerNameProfitRates;
+import blackjack.domain.result.UserNameProfits;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import blackjack.domain.user.Users;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 public class BlackjackGame {
@@ -37,23 +36,23 @@ public class BlackjackGame {
         return firstCardGroup;
     }
 
-    public CardGroup getCardGroupBy(final Name userName) {
-        return users.getCardGroupBy(userName);
+    public CardGroup getCardGroupBy(final PlayerName playerName) {
+        return users.getCardGroupBy(playerName);
     }
 
     public Map<Name, CardGroup> getUserNameAndFirstOpenCardGroups() {
         return users.getUserNameAndFirstOpenCardGroups();
     }
 
-    public void betPlayer(final Name playerName, final int bettingMoney) {
+    public void betPlayer(final PlayerName playerName, final int bettingMoney) {
         gameTable.bet(playerName, new BettingMoney(bettingMoney));
     }
 
-    public List<Name> getPlayerNames() {
+    public List<PlayerName> getPlayerNames() {
         return users.getPlayerNames();
     }
 
-    public boolean isContinuous(final Name playerName) {
+    public boolean isContinuous(final PlayerName playerName) {
         return users.isDrawable(playerName);
     }
 
@@ -66,29 +65,15 @@ public class BlackjackGame {
         return dealerDrawCount;
     }
 
-    public void playPlayer(final Name userName, final DrawOrStay drawOrStay) {
+    public void playPlayer(final PlayerName playerName, final DrawOrStay drawOrStay) {
         if (drawOrStay.isDraw()) {
-            users.drawCard(userName, gameTable.supplyCard());
+            users.drawCard(playerName, gameTable.supplyCard());
         }
     }
 
-    public Map<Name, Money> getPlayerNameAndProfits() {
-        final Map<Name, Money> playerNameAndProfits = new LinkedHashMap<>();
-        final Map<Name, Double> playerNameAndProfitRates = users.getPlayerNameAndProfitRates();
-
-        for (final Entry<Name, Double> nameAndProfit : playerNameAndProfitRates.entrySet()) {
-            playerNameAndProfits.put(nameAndProfit.getKey(),
-                    gameTable.getProfit(nameAndProfit.getKey(), nameAndProfit.getValue()));
-        }
-
-        return Collections.unmodifiableMap(playerNameAndProfits);
-    }
-
-    public Money getDealerProfit() {
-        return getPlayerNameAndProfits().values()
-                .stream()
-                .reduce(new Money(0), Money::sum)
-                .opposite();
+    public UserNameProfits getUserNameAndProfits() {
+        final PlayerNameProfitRates playerNameAndProfitRates = users.getPlayerNameAndProfitRates();
+        return gameTable.calculateProfits(playerNameAndProfitRates);
     }
 
     public Map<Name, CardResult> getUserNameAndCardResults() {

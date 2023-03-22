@@ -3,9 +3,10 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.RandomDeckGenerator;
-import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.UserNameProfits;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
@@ -39,12 +40,12 @@ public class BlackjackController {
     }
 
     private void betPlayers(final BlackjackGame blackJackGame) {
-        for (final Name playerName : blackJackGame.getPlayerNames()) {
+        for (final PlayerName playerName : blackJackGame.getPlayerNames()) {
             betPlayerMoney(blackJackGame, playerName);
         }
     }
 
-    private void betPlayerMoney(final BlackjackGame blackJackGame, final Name playerName) {
+    private void betPlayerMoney(final BlackjackGame blackJackGame, final PlayerName playerName) {
         try {
             final int bettingMoney = inputView.readBettingMoney(playerName.getValue());
             blackJackGame.betPlayer(playerName, bettingMoney);
@@ -68,13 +69,13 @@ public class BlackjackController {
     }
 
     private void playPlayersTurn(final BlackjackGame blackJackGame) {
-        final List<Name> playerNames = blackJackGame.getPlayerNames();
-        for (final Name playerName : playerNames) {
+        final List<PlayerName> playerNames = blackJackGame.getPlayerNames();
+        for (final PlayerName playerName : playerNames) {
             playPlayerTurn(blackJackGame, playerName);
         }
     }
 
-    private void playPlayerTurn(final BlackjackGame blackJackGame, final Name playerName) {
+    private void playPlayerTurn(final BlackjackGame blackJackGame, final PlayerName playerName) {
         DrawOrStay drawOrStay = DrawOrStay.DRAW;
         while (drawOrStay.isDraw() && blackJackGame.isContinuous(playerName)) {
             drawOrStay = repeatUntilReadValidateDrawInput(playerName);
@@ -101,18 +102,17 @@ public class BlackjackController {
         }
     }
 
-    private void printUserNameAndProfits(final BlackjackGame blackJackGame) {
-        final Map<Name, Money> playerNameAndProfits = blackJackGame.getPlayerNameAndProfits();
-        final Money dealerProfit = blackJackGame.getDealerProfit();
-        final Map<String, Integer> renderedUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(
-                playerNameAndProfits, dealerProfit);
-        outputView.printUsersProfits(renderedUserNameAndProfit);
-    }
-
     private void printUserNameAndCardResults(BlackjackGame blackJackGame) {
         final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
                 .renderUserNameAndCardResults(userNameAndCardResults);
         outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
+    }
+
+    private void printUserNameAndProfits(final BlackjackGame blackJackGame) {
+        final UserNameProfits userNameAndProfits = blackJackGame.getUserNameAndProfits();
+        final Map<String, Integer> renderedUserNameAndProfit = ViewRenderer.renderUserNameAndProfits(
+                userNameAndProfits.getUserNameProfitMapper());
+        outputView.printUsersProfits(renderedUserNameAndProfit);
     }
 }

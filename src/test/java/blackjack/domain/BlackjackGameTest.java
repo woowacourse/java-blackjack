@@ -14,6 +14,7 @@ import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
+import blackjack.domain.result.UserNameProfits;
 import blackjack.domain.user.DealerName;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.PlayerName;
@@ -27,9 +28,9 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
 
-    private static final Name TEST_PLAYER_NAME1 = new PlayerName("필립");
-    private static final Name TEST_PLAYER_NAME2 = new PlayerName("홍실");
-    private static final Name DEALER_NAME = new DealerName();
+    private static final PlayerName TEST_PLAYER_NAME1 = new PlayerName("필립");
+    private static final PlayerName TEST_PLAYER_NAME2 = new PlayerName("홍실");
+    private static final DealerName DEALER_NAME = new DealerName();
 
     private final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
@@ -97,9 +98,9 @@ class BlackjackGameTest {
         final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new RandomDeckGenerator());
 
-        final List<Name> players = blackJackGame.getPlayerNames();
+        final List<PlayerName> playerNames = blackJackGame.getPlayerNames();
 
-        assertThat(players).containsExactly(TEST_PLAYER_NAME1);
+        assertThat(playerNames).containsExactly(TEST_PLAYER_NAME1);
     }
 
     @Test
@@ -172,27 +173,14 @@ class BlackjackGameTest {
         blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);
         blackJackGame.betPlayer(TEST_PLAYER_NAME2, 2_000);
 
-        final Map<Name, Money> playerNameAndProfits = blackJackGame.getPlayerNameAndProfits();
-        final Money player1Profit = playerNameAndProfits.get(TEST_PLAYER_NAME1);
-        final Money player2Profit = playerNameAndProfits.get(TEST_PLAYER_NAME2);
+        final UserNameProfits userNameAndProfits = blackJackGame.getUserNameAndProfits();
+        final Map<Name, Money> userNameProfitMapper = userNameAndProfits.getUserNameProfitMapper();
+        final Money player1Profit = userNameProfitMapper.get(TEST_PLAYER_NAME1);
+        final Money player2Profit = userNameProfitMapper.get(TEST_PLAYER_NAME2);
 
         assertSoftly(softly -> {
             softly.assertThat(player1Profit.getValue()).isEqualTo(-1_000);
             softly.assertThat(player2Profit.getValue()).isEqualTo(-2_000);
         });
-    }
-
-    @Test
-    @DisplayName("딜러의 수익금을 반환하는 기능 추가")
-    void getDealerProfit() {
-        final BlackjackGame blackJackGame = new BlackjackGame(
-                List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
-                new TestNonShuffledDeckGenerator(testCards));
-        blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);
-        blackJackGame.betPlayer(TEST_PLAYER_NAME2, 2_000);
-
-        final Money dealerProfit = blackJackGame.getDealerProfit();
-
-        assertThat(dealerProfit.getValue()).isEqualTo(3_000);
     }
 }
