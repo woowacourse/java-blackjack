@@ -12,7 +12,6 @@ import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -57,11 +56,9 @@ public class BlackjackController {
 
     private void printFirstOpenCardGroups(final BlackjackGame blackJackGame) {
         final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
-        final List<Name> userNames = userNameAndFirstOpenCardGroups.keySet()
-                .stream()
-                .collect(Collectors.toUnmodifiableList());
-        outputView.printFirstCardGroupInfoMessage(ViewRenderer.renderNames(userNames));
-        for (final Name userName : userNames) {
+        final List<PlayerName> playerNames = blackJackGame.getPlayerNames();
+        outputView.printFirstCardGroupInfoMessage(ViewRenderer.renderNames(playerNames));
+        for (final Name userName : userNameAndFirstOpenCardGroups.keySet()) {
             final List<String> renderedUserNameAndCardGroup = ViewRenderer.renderCardGroup(
                     userNameAndFirstOpenCardGroups.get(userName));
             outputView.printUserNameAndCardGroup(userName.getValue(), renderedUserNameAndCardGroup);

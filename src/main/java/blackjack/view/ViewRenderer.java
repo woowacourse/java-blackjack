@@ -8,6 +8,7 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -67,7 +68,7 @@ public class ViewRenderer {
                 , cardResult.getScore().getValue());
     }
 
-    public static List<String> renderNames(final List<Name> userNames) {
+    public static List<String> renderNames(final List<PlayerName> userNames) {
         return userNames.stream()
                 .map(Name::getValue)
                 .collect(toUnmodifiableList());
