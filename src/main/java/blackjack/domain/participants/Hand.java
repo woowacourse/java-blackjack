@@ -5,30 +5,41 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.game.Score;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Hand {
-    private final List<Card> possessedCards;
 
-    Hand() {
-        possessedCards = new ArrayList<>();
+    private final List<Card> cards;
+
+    private Hand(List<Card> cards) {
+        this.cards = cards;
     }
 
-    void addCard(Card card) {
-        possessedCards.add(card);
+    public Hand() {
+        this(Collections.emptyList());
     }
 
-    Score getScore() {
+    public Hand addCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+
+        return new Hand(newCards);
+    }
+
+    public Score getScore() {
         int countOfAce = countAce();
         Score scoreOfCards = calculateMinimumScore();
 
-        for (int i = 0; i < countOfAce; i++) scoreOfCards = scoreOfCards.plusTenIfNotBusted();
+        for (int i = 0; i < countOfAce; i++) {
+            scoreOfCards = scoreOfCards.plusTenIfNotBusted();
+        }
         return scoreOfCards;
     }
 
     private int countAce() {
-        return (int) possessedCards.stream()
+        return (int) cards.stream()
                 .filter(this::isAce)
                 .count();
     }
@@ -38,35 +49,38 @@ public class Hand {
     }
 
     private Score calculateMinimumScore() {
-        return new Score(possessedCards.stream()
-                .mapToInt(Card::getScore)
-                .sum());
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(new Score(0), Score::sum);
     }
 
-
-    boolean isBusted() {
+    public boolean isBust() {
         return getScore().isOverThanMax();
     }
 
     public boolean isBlackjack() {
-        return getScore().isMax() && possessedCards.size() == 2;
+        return getScore().isMax() && cards.size() == 2;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Hand that = (Hand) o;
-        return Objects.equals(possessedCards, that.possessedCards);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Hand hand = (Hand) o;
+        return Objects.equals(cards, hand.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(possessedCards);
+        return Objects.hash(cards);
     }
 
-    List<Card> getPossessedCards() {
-        return List.copyOf(possessedCards);
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 
 }
