@@ -12,11 +12,6 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards getDefault() {
-        List<Card> emptyCards = new ArrayList<>();
-        return new Cards(emptyCards);
-    }
-
     public static Cards of(Card... cards) {
         List<Card> newCards = new ArrayList<>(Arrays.asList(cards));
         return new Cards(newCards);
