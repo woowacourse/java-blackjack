@@ -13,15 +13,15 @@ public class Score {
 
     private final int value;
 
-    public Score(int value) {
+    public Score(final int value) {
         this.value = value;
     }
 
-    public static Score of(int value) {
+    public static Score of(final int value) {
         if (cache.containsKey(value)) {
             return cache.get(value);
         }
-        Score newScore = new Score(value);
+        final Score newScore = new Score(value);
         cache.put(value, newScore);
         return newScore;
     }
@@ -33,31 +33,31 @@ public class Score {
         return sum(aceAdditionalValue);
     }
 
-    public Score sum(Score other) {
+    public Score sum(final Score other) {
         return new Score(value + other.value);
     }
 
     public boolean isMax() {
-        return this == max;
+        return equals(max);
     }
 
     public boolean isOverThanMax() {
         return value > max.value;
     }
 
-    public boolean isBiggerThan(Score other) {
+    public boolean isBiggerThan(final Score other) {
         return value > other.value;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Score score = (Score) o;
+        final Score score = (Score) o;
         return value == score.value;
     }
 

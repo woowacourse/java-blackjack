@@ -13,7 +13,7 @@ public class Hand {
 
     private final List<Card> cards;
 
-    private Hand(List<Card> cards) {
+    private Hand(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -21,15 +21,15 @@ public class Hand {
         this(Collections.emptyList());
     }
 
-    public Hand addCard(Card card) {
-        List<Card> newCards = new ArrayList<>(cards);
+    public Hand addCard(final Card card) {
+        final List<Card> newCards = new ArrayList<>(cards);
         newCards.add(card);
 
         return new Hand(newCards);
     }
 
     public Score getScore() {
-        int countOfAce = countAce();
+        final int countOfAce = countAce();
         Score scoreOfCards = calculateMinimumScore();
 
         for (int i = 0; i < countOfAce; i++) {
@@ -44,7 +44,7 @@ public class Hand {
                 .count();
     }
 
-    private boolean isAce(Card card) {
+    private boolean isAce(final Card card) {
         return card.getDenomination() == Denomination.ACE;
     }
 
@@ -63,14 +63,14 @@ public class Hand {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Hand hand = (Hand) o;
+        final Hand hand = (Hand) o;
         return Objects.equals(cards, hand.cards);
     }
 
