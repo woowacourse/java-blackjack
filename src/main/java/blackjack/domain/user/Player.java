@@ -39,7 +39,7 @@ public class Player extends User {
     public Double calculateProfitRate(final Dealer dealer) {
         final Score playerScore = getScore();
         final Score dealerScore = dealer.getScore();
-        if (playerScore.isBlackJack()) {
+        if (playerScore.isBlackjack()) {
             return calculateProfitRateWhenPlayerIsBlackJack(dealerScore);
         }
         if (playerScore.isBust()) {
@@ -52,7 +52,7 @@ public class Player extends User {
     }
 
     private Double calculateProfitRateWhenPlayerIsBlackJack(final Score dealerScore) {
-        if (dealerScore.isBlackJack()) {
+        if (dealerScore.isBlackjack()) {
             return TIE_PROFIT_RATE;
         }
         return BLACKJACK_PROFIT_RATE;

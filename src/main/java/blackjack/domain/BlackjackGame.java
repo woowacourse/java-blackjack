@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     private final Users users;
     private final GameTable gameTable;
 
-    public BlackJackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
+    public BlackjackGame(final List<String> playerNames, final DeckGenerator deckGenerator) {
         final Deck deck = new Deck(deckGenerator);
         this.gameTable = new GameTable(deck);
         final Queue<CardGroup> cardGroups = generateFirstCardGroup(playerNames.size(), deck);

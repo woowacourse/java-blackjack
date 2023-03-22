@@ -23,7 +23,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackGameTest {
+class BlackjackGameTest {
 
     private static final Name TEST_PLAYER_NAME1 = new Name("필립");
     private static final Name TEST_PLAYER_NAME2 = new Name("홍실");
@@ -43,7 +43,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("게임 초기화 테스트")
     void initGame() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()
                 , TEST_PLAYER_NAME2.getValue())
                 , new TestNonShuffledDeckGenerator(testCards));
 
@@ -54,7 +54,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("유저들의 첫 패를 반환하는 기능 테스트")
     void getUsersInitialStatus() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()
                 , TEST_PLAYER_NAME2.getValue())
                 , new TestNonShuffledDeckGenerator(testCards));
 
@@ -76,7 +76,7 @@ class BlackJackGameTest {
         final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
                 new Card(CardShape.SPADE, CardNumber.TWO),
                 new Card(CardShape.SPADE, CardNumber.QUEEN));
-        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(),
+        final BlackjackGame blackJackGame = new BlackjackGame(Collections.emptyList(),
                 new TestNonShuffledDeckGenerator(cards));
 
         blackJackGame.drawDealerUntilUnderLimit();
@@ -92,7 +92,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 이름 리스트를 반환하는 기능 테스트")
     void getPlayersTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new RandomDeckGenerator());
 
         final List<Name> players = blackJackGame.getPlayerNames();
@@ -103,7 +103,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 턴 진행 테스트")
     void playPlayerTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
 
         blackJackGame.playPlayer(TEST_PLAYER_NAME1, DrawOrStay.DRAW);
@@ -115,7 +115,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("점수를 포함한 상태를 반환하는 기능 테스트")
     void getCardResult() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
 
         final CardResult philip = blackJackGame.getUserNameAndCardResults().get(TEST_PLAYER_NAME1);
@@ -130,7 +130,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
 
         final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
@@ -150,7 +150,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어가 돈을 배팅하는 기능 추가")
     void betPlayerTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1.getValue()),
+        final BlackjackGame blackJackGame = new BlackjackGame(List.of(TEST_PLAYER_NAME1.getValue()),
                 new RandomDeckGenerator());
 
         blackJackGame.betPlayer(TEST_PLAYER_NAME1, 10000);
@@ -164,7 +164,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어의 이름과 수익금들을 반환하는 기능 추가")
     void getPlayerNameAndProfitRates() {
-        final BlackJackGame blackJackGame = new BlackJackGame(
+        final BlackjackGame blackJackGame = new BlackjackGame(
                 List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
         blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);
@@ -183,7 +183,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 수익금을 반환하는 기능 추가")
     void getDealerProfit() {
-        final BlackJackGame blackJackGame = new BlackJackGame(
+        final BlackjackGame blackJackGame = new BlackjackGame(
                 List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
         blackJackGame.betPlayer(TEST_PLAYER_NAME1, 1_000);

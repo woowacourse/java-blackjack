@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.money.Money;
@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackController {
+public class BlackjackController {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        final BlackJackGame blackJackGame = initBlackJackGame();
+        final BlackjackGame blackJackGame = initBlackJackGame();
         betPlayers(blackJackGame);
         printFirstOpenCardGroups(blackJackGame);
         playPlayersTurn(blackJackGame);
@@ -28,23 +28,23 @@ public class BlackJackController {
         printUserNameAndProfits(blackJackGame);
     }
 
-    private BlackJackGame initBlackJackGame() {
+    private BlackjackGame initBlackJackGame() {
         try {
             final List<String> playerNames = inputView.readPlayerNames();
-            return new BlackJackGame(playerNames, new RandomDeckGenerator());
+            return new BlackjackGame(playerNames, new RandomDeckGenerator());
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
             return initBlackJackGame();
         }
     }
 
-    private void betPlayers(final BlackJackGame blackJackGame) {
+    private void betPlayers(final BlackjackGame blackJackGame) {
         for (final Name playerName : blackJackGame.getPlayerNames()) {
             betPlayerMoney(blackJackGame, playerName);
         }
     }
 
-    private void betPlayerMoney(final BlackJackGame blackJackGame, final Name playerName) {
+    private void betPlayerMoney(final BlackjackGame blackJackGame, final Name playerName) {
         try {
             final int bettingMoney = inputView.readBettingMoney(playerName.getValue());
             blackJackGame.betPlayer(playerName, bettingMoney);
@@ -54,7 +54,7 @@ public class BlackJackController {
         }
     }
 
-    private void printFirstOpenCardGroups(final BlackJackGame blackJackGame) {
+    private void printFirstOpenCardGroups(final BlackjackGame blackJackGame) {
         final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
         final List<Name> userNames = userNameAndFirstOpenCardGroups.keySet()
                 .stream()
@@ -67,14 +67,14 @@ public class BlackJackController {
         }
     }
 
-    private void playPlayersTurn(final BlackJackGame blackJackGame) {
+    private void playPlayersTurn(final BlackjackGame blackJackGame) {
         final List<Name> playerNames = blackJackGame.getPlayerNames();
         for (final Name playerName : playerNames) {
             playPlayerTurn(blackJackGame, playerName);
         }
     }
 
-    private void playPlayerTurn(final BlackJackGame blackJackGame, final Name playerName) {
+    private void playPlayerTurn(final BlackjackGame blackJackGame, final Name playerName) {
         DrawOrStay drawOrStay = DrawOrStay.DRAW;
         while (drawOrStay.isDraw() && blackJackGame.isContinuous(playerName)) {
             drawOrStay = repeatUntilReadValidateDrawInput(playerName);
@@ -93,7 +93,7 @@ public class BlackJackController {
         }
     }
 
-    private void playDealerTurn(BlackJackGame blackJackGame) {
+    private void playDealerTurn(BlackjackGame blackJackGame) {
         int dealerDrawCount = blackJackGame.drawDealerUntilUnderLimit();
 
         while (dealerDrawCount-- > 0) {
@@ -101,7 +101,7 @@ public class BlackJackController {
         }
     }
 
-    private void printUserNameAndProfits(final BlackJackGame blackJackGame) {
+    private void printUserNameAndProfits(final BlackjackGame blackJackGame) {
         final Map<Name, Money> playerNameAndProfits = blackJackGame.getPlayerNameAndProfits();
         final Money dealerProfit = blackJackGame.getDealerProfit();
         final Map<String, Integer> renderedUserNameAndProfit = ViewRenderer.renderUserNameAndProfit(
@@ -109,7 +109,7 @@ public class BlackJackController {
         outputView.printUsersProfits(renderedUserNameAndProfit);
     }
 
-    private void printUserNameAndCardResults(BlackJackGame blackJackGame) {
+    private void printUserNameAndCardResults(BlackjackGame blackJackGame) {
         final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
                 .renderUserNameAndCardResults(userNameAndCardResults);

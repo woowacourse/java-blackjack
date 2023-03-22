@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Score {
 
-    private static final int BLACK_JACK_VALUE = 21;
+    private static final int BLACKJACK_VALUE = 21;
     private static final int ACE_OFFSET = -10;
-    private static final Score BLACKJACK = new Score(BLACK_JACK_VALUE, ScoreStatus.BLACKJACK);
+    private static final Score BLACKJACK = new Score(BLACKJACK_VALUE, ScoreStatus.BLACKJACK);
     private static final Map<Integer, Score> NON_BLACKJACK_SCORE_CACHE_MAP = new HashMap<>();
 
     private final ScoreStatus status;
@@ -23,10 +23,10 @@ public class Score {
     }
 
     public static Score calculateScore(int totalValue, int aceCount, int cardGroupSize) {
-        if (totalValue == BLACK_JACK_VALUE && cardGroupSize == 2) {
+        if (totalValue == BLACKJACK_VALUE && cardGroupSize == 2) {
             return BLACKJACK;
         }
-        while (totalValue > BLACK_JACK_VALUE && aceCount > 0) {
+        while (totalValue > BLACKJACK_VALUE && aceCount > 0) {
             totalValue += ACE_OFFSET;
             aceCount--;
         }
@@ -34,7 +34,7 @@ public class Score {
     }
 
     private static Score generateScore(final int totalValue) {
-        if (totalValue > BLACK_JACK_VALUE) {
+        if (totalValue > BLACKJACK_VALUE) {
             return NON_BLACKJACK_SCORE_CACHE_MAP.computeIfAbsent(totalValue,
                     value -> new Score(value, ScoreStatus.BUST));
         }
@@ -62,7 +62,7 @@ public class Score {
         return value == score.value;
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return status == ScoreStatus.BLACKJACK;
     }
 }
