@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Players;
@@ -25,13 +26,12 @@ public class BlackjackGame {
         return new BlackjackGame(Players.from(playerNames), deck);
     }
 
-    public void placePlayerBets(final String playerName, final Money money) {
-        players.placeBetsByName(playerName, money);
+    public void placePlayerBets(final String playerName, final BettingMoney bettingMoney) {
+        players.placeBetsByName(playerName, bettingMoney);
     }
 
     public void distributeInitialCards() {
-        dealer.drawCard(deck.popCard());
-        dealer.drawCard(deck.popCard());
+        dealer.drawInitialCards(deck.popCard(), deck.popCard());
         players.distributeInitialCards(deck);
     }
 
@@ -54,6 +54,9 @@ public class BlackjackGame {
     public void drawCardOfPlayerByName(final String playerName, final DrawCommand drawCommand) {
         if (drawCommand == DrawCommand.DRAW) {
             players.drawCardOfPlayerByName(playerName, deck.popCard());
+        }
+        if (drawCommand == DrawCommand.STAY) {
+            players.stayCardOfPlayerByName(playerName);
         }
     }
 
@@ -79,7 +82,7 @@ public class BlackjackGame {
     }
 
     public Score findDealerScore() {
-        return dealer.currentScore();
+        return dealer.score();
     }
 
     public Score findScoreOfPlayerByName(final String playerName) {
@@ -87,14 +90,15 @@ public class BlackjackGame {
     }
 
     public Map<String, Money> findRevenueOfPlayers() {
-        return players.findRevenueOfPlayers(new ProfitReferee(dealer));
+        return players.findRevenueOfPlayers(dealer);
     }
 
     public Money findRevenueOfDealer() {
         final Map<String, Money> revenueOfPlayers = findRevenueOfPlayers();
         final Money sumOfPlayerRevenue = revenueOfPlayers.values()
                 .stream()
-                .reduce(new Money(), Money::add);
+                .reduce(new Money(0), Money::add);
+
         return sumOfPlayerRevenue.multiple(-1);
     }
 
