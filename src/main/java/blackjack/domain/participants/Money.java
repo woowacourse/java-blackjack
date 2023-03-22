@@ -11,10 +11,6 @@ public class Money {
     public Money(double value) {
         this.value = value;
     }
-//
-//    public Money() {
-//        this();
-//    }
 
     public Money add(Money add) {
         return new Money(value + add.value);
@@ -24,8 +20,8 @@ public class Money {
         return new Money(value * profit);
     }
 
-    Money divide(Money minBettingMoney) {
-        return new Money(value / minBettingMoney.value);
+    public boolean isDividedBy(Money divide) {
+        return (int) (value % divide.value) == 0;
     }
 
     boolean isPositiveMoney() {
@@ -38,8 +34,12 @@ public class Money {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Money money = (Money) o;
         return Double.compare(money.value, value) == 0;
     }
@@ -48,4 +48,5 @@ public class Money {
     public int hashCode() {
         return Objects.hash(value);
     }
+
 }
