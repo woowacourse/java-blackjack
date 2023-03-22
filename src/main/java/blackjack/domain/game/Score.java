@@ -21,7 +21,9 @@ public class Score {
         if (cache.containsKey(value)) {
             return cache.get(value);
         }
-        return new Score(value);
+        Score newScore = new Score(value);
+        cache.put(value, newScore);
+        return newScore;
     }
 
     public Score plusTenIfNotBusted() {
