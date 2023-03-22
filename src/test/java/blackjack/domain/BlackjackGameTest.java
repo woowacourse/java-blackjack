@@ -3,6 +3,8 @@ package blackjack.domain;
 import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
@@ -181,5 +183,26 @@ class BlackjackGameTest {
             softly.assertThat(player1Profit.getValue()).isEqualTo(-1_000);
             softly.assertThat(player2Profit.getValue()).isEqualTo(-2_000);
         });
+    }
+
+    @Test
+    @DisplayName("player가 카드를 더뽑을 수 있는지 반환하는 기능 추가")
+    void isContinuousTrueTest() {
+        final BlackjackGame blackjackGame = new BlackjackGame(
+                List.of(TEST_PLAYER_NAME1.getValue()), new TestNonShuffledDeckGenerator(testCards)
+        );
+
+        assertTrue(blackjackGame.isContinuous(TEST_PLAYER_NAME1));
+    }
+
+    @Test
+    @DisplayName("player가 카드를 더뽑을 수 있는지 반환하는 기능 테스트")
+    void isContinuousFalseTest() {
+        final BlackjackGame blackjackGame = new BlackjackGame(
+                List.of(TEST_PLAYER_NAME1.getValue()), new TestNonShuffledDeckGenerator(testCards)
+        );
+        blackjackGame.playPlayer(TEST_PLAYER_NAME1, DrawOrStay.DRAW);
+
+        assertFalse(blackjackGame.isContinuous(TEST_PLAYER_NAME1));
     }
 }
