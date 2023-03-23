@@ -1,7 +1,5 @@
 package blackjackgame.domain.user;
 
-import blackjackgame.view.ErrorMessage;
-
 public class Name {
     private final String name;
 
@@ -11,8 +9,8 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (name == null || name.isBlank() || name.equals("딜러")) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_NAME_FORMAT.getMessage());
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("플레이어 이름 형식에 맞지 않는 이름이 존재합니다.");
         }
     }
 

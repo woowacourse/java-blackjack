@@ -1,12 +1,9 @@
 package blackjackgame.domain.user;
 
-import blackjackgame.domain.card.Card;
 import blackjackgame.domain.Denomination;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Score {
-    private static final int BLACKJACK = 21;
+    private static final int BUST_SCORE = 22;
     private static final int DEALER_REQUIRED_MIN_SCORE = 17;
     private static final int INITIAL_ACE_COUNT = 0;
     private static final int ACE_ONE = 1;
@@ -17,37 +14,18 @@ public class Score {
         this.score = 0;
     }
 
-    public void setScore(List<Card> cards) {
-        List<Integer> numbers = convertCardsToNumbers(cards);
-        int aceCount = countOfAce(numbers);
-        int totalScore = sum(numbers);
+    public void setScore(Hands hands) {
+        int aceCount = hands.countOfAce();
+        int totalScore = hands.sum();
 
-        if (totalScore > BLACKJACK) {
+        if (totalScore >= BUST_SCORE) {
             totalScore = calculateAceAsOne(aceCount, totalScore);
         }
         score = totalScore;
     }
 
-    private List<Integer> convertCardsToNumbers(List<Card> cards) {
-        return cards.stream()
-                .map(Card::getScore)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private int countOfAce(List<Integer> numbers) {
-        return (int) numbers.stream()
-                .filter(number -> number == Denomination.ACE.getScore())
-                .count();
-    }
-
-    private int sum(List<Integer> numbers) {
-        return numbers.stream()
-                .mapToInt(number -> number)
-                .sum();
-    }
-
     private int calculateAceAsOne(int aceCount, int score) {
-        while (aceCount > INITIAL_ACE_COUNT && score > BLACKJACK) {
+        while (aceCount > INITIAL_ACE_COUNT && score >= BUST_SCORE) {
             score -= Denomination.ACE.getScore();
             score += ACE_ONE;
             aceCount--;
@@ -56,14 +34,14 @@ public class Score {
     }
 
     public PlayerStatus calculatePlayerStatus() {
-        if (score > BLACKJACK) {
+        if (score >= BUST_SCORE) {
             return PlayerStatus.BUST;
         }
-        return PlayerStatus.NORMAL;
+        return PlayerStatus.HITTABLE;
     }
 
     public DealerStatus calculateDealerStatus() {
-        if (score > BLACKJACK) {
+        if (score >= BUST_SCORE) {
             return DealerStatus.BUST;
         }
         if (score < DEALER_REQUIRED_MIN_SCORE) {
@@ -73,7 +51,7 @@ public class Score {
     }
 
     public boolean isLessThanBustScore() {
-        return score < BLACKJACK;
+        return score < BUST_SCORE;
     }
 
     public int getScore() {

@@ -1,37 +1,40 @@
 package blackjackgame.domain.user;
 
 import blackjackgame.domain.card.Card;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
-    private final List<Card> cards;
-    protected final Score score;
+    protected final Hands hands;
+    private final Name name;
 
-    public User() {
-        cards = new ArrayList<>();
-        score = new Score();
+    public User(Name name) {
+        this.hands = new Hands();
+        this.name = name;
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
-        score.setScore(cards);
+        hands.add(card);
     }
 
-    public void receiveCards(List<Card> receivedCards) {
-        cards.addAll(receivedCards);
-        score.setScore(cards);
+    public void receiveCards(List<Card> cards) {
+        hands.add(cards);
+    }
+
+    public boolean isLessThanBustScore() {
+        return hands.isLessThanBustScore();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return hands.getCards();
+    }
+
+    public String getName() {
+        return name.getName();
     }
 
     public int getScore() {
-        return score.getScore();
+        return hands.getScore();
     }
 
     public abstract UserStatus getStatus();
-
-    public abstract String getName();
 }

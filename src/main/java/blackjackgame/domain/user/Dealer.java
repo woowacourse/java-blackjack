@@ -4,20 +4,25 @@ import blackjackgame.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends User {
-    private static final String DEALER_NAME = "딜러";
+    private static final Name DEALER_NAME = new Name("딜러");
 
     private DealerStatus status = DealerStatus.UNDER_MIN_SCORE;
+
+    public Dealer() {
+        super(DEALER_NAME);
+    }
+
 
     @Override
     public void receiveCard(Card card) {
         super.receiveCard(card);
-        status = score.calculateDealerStatus();
+        status = hands.calculateDealerStatus();
     }
 
     @Override
-    public void receiveCards(List<Card> receivedCards) {
-        super.receiveCards(receivedCards);
-        status = score.calculateDealerStatus();
+    public void receiveCards(List<Card> cards) {
+        super.receiveCards(cards);
+        status = hands.calculateDealerStatus();
     }
 
     public Card getFirstCard() {
@@ -35,6 +40,6 @@ public class Dealer extends User {
 
     @Override
     public String getName() {
-        return DEALER_NAME;
+        return DEALER_NAME.getName();
     }
 }

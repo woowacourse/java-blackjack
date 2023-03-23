@@ -1,6 +1,6 @@
 package blackjackgame.view;
 
-import blackjackgame.domain.DrawCommand;
+import blackjackgame.domain.UserAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,13 +19,34 @@ public class InputView {
         return getNamesWithSpaceRemoved(playerNames);
     }
 
+    public int readPlayerBetAmount() {
+        String inputAmount = scanner.nextLine();
+        int amount = parseInt(inputAmount);
+        validateBetAmount(amount);
+        return amount;
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException numberFormatException) {
+            throw new IllegalArgumentException("베팅 금액은 숫자만 입력 가능합니다.", numberFormatException);
+        }
+    }
+
+    private void validateBetAmount(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 1원 이상입니다.");
+        }
+    }
+
     private List<String> getNamesWithSpaceRemoved(List<String> playerNames) {
         return playerNames.stream()
                 .map(String::strip)
                 .collect(Collectors.toList());
     }
 
-    public DrawCommand readDrawCommand() {
-        return DrawCommand.of(scanner.nextLine());
+    public UserAction readDrawCommand() {
+        return UserAction.of(scanner.nextLine());
     }
 }

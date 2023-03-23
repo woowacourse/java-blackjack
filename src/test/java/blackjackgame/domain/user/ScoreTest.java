@@ -1,7 +1,12 @@
 package blackjackgame.domain.user;
 
+import static blackjackgame.domain.Fixtures.ACE_ACE_ACE_ACE_CARDS;
+import static blackjackgame.domain.Fixtures.ACE_KING_CARDS;
+import static blackjackgame.domain.Fixtures.ACE_THREE_FOUR_CARDS;
+import static blackjackgame.domain.Fixtures.EIGHT_NINE_CARDS;
+import static blackjackgame.domain.Fixtures.JACK_KING_ACE_CARDS;
+
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.card.CloverCard;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -17,32 +22,30 @@ class ScoreTest {
     @Test
     void calculateScoreTest() {
         Score score = new Score();
-        List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR,
-                CloverCard.CLOVER_FIVE);
+        Hands hands = new Hands();
+        hands.add(EIGHT_NINE_CARDS);
 
-        score.setScore(cards);
+        score.setScore(hands);
 
-        Assertions.assertThat(score.getScore()).isEqualTo(14);
+        Assertions.assertThat(score.getScore()).isEqualTo(17);
     }
 
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase_greaterThan21")
     void calculateScoreWithAceTest_greaterThan21(List<Card> cards, int expected) {
+        Hands hands = new Hands();
+        hands.add(cards);
         Score score = new Score();
-        score.setScore(cards);
+        score.setScore(hands);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> calculateScoreWithAceCase_greaterThan21() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN,
-                        CloverCard.CLOVER_EIGHT), 16),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE,
-                        CloverCard.CLOVER_EIGHT), 20),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
-                        CloverCard.CLOVER_NINE), 21)
+                Arguments.of(ACE_ACE_ACE_ACE_CARDS, 14),
+                Arguments.of(JACK_KING_ACE_CARDS, 21)
         );
     }
 
@@ -50,17 +53,18 @@ class ScoreTest {
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase_lessThan22")
     void calculateScoreWithAceTest_lessThan22(List<Card> cards, int expected) {
+        Hands hands = new Hands();
+        hands.add(cards);
         Score score = new Score();
-        score.setScore(cards);
+        score.setScore(hands);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> calculateScoreWithAceCase_lessThan22() {
         return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN), 18),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN), 21),
-                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_THREE), 14)
+                Arguments.of(ACE_KING_CARDS, 21),
+                Arguments.of(ACE_THREE_FOUR_CARDS, 18)
         );
     }
 }
