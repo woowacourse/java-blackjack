@@ -30,10 +30,10 @@ public class BlackJackGame {
     private void initGame(final int drawCount) {
         deck.shuffle();
         participants.drawCard(deck, drawCount);
-        checkingDealerBlackJack();
+        checkDealerBlackJack();
     }
 
-    private void checkingDealerBlackJack() {
+    private void checkDealerBlackJack() {
         if (dealer().isBlackJack()) {
             players().forEach(Player::changeDrawable);
         }
