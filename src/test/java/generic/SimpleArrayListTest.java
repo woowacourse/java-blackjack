@@ -1,8 +1,8 @@
 package generic;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +69,7 @@ class SimpleArrayListTest {
         final Integer[] array = {1};
         final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(arrayList.contains(1)).isTrue(),
                 () -> assertThat(arrayList.contains(0)).isFalse()
         );
@@ -80,7 +80,7 @@ class SimpleArrayListTest {
         final Integer[] array = {0, 1};
         final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(arrayList.indexOf(1)).isEqualTo(1),
                 () -> assertThat(arrayList.indexOf(2)).isEqualTo(-1)
         );
@@ -109,7 +109,7 @@ class SimpleArrayListTest {
 
         final boolean isRemove = arrayList.remove(Integer.valueOf(0));
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(isRemove).isTrue(),
                 () -> assertThat(arrayList)
                         .extracting("size")
@@ -124,7 +124,7 @@ class SimpleArrayListTest {
 
         final Integer removedValue = arrayList.remove(0);
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(removedValue).isEqualTo(0),
                 () -> assertThat(arrayList)
                         .extracting("size")
@@ -140,7 +140,7 @@ class SimpleArrayListTest {
 
         arrayList.clear();
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(arrayList)
                         .extracting("size")
                         .isEqualTo(0),
@@ -156,5 +156,20 @@ class SimpleArrayListTest {
 
         assertThat(integerSimpleList.get(0))
                 .isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Number로 제한된 값을 합해서 반환한다.")
+    void sumMethod() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<>(1, 2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+
+        assertAll(
+                () -> assertThat(doubleTotal).isEqualTo(1.2),
+                () -> assertThat(intTotal).isEqualTo(3)
+        );
     }
 }

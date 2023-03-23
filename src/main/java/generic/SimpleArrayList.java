@@ -15,7 +15,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         values = (T[]) DEFAULT_ARRAYLIST;
     }
 
-    public SimpleArrayList(final T[] values) {
+    @SafeVarargs
+    public SimpleArrayList(final T... values) {
         this.currentCapacity = values.length;
         this.size = values.length;
         this.values = values.clone();

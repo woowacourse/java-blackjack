@@ -23,4 +23,12 @@ public interface SimpleList<T> {
     T remove(int index);
 
     void clear();
+
+    static Double sum(final SimpleList<? extends Number> list) {
+        double sum = list.get(0).doubleValue();
+        for (int index = 1; index < list.size(); index++) {
+            sum += list.get(index).doubleValue();
+        }
+        return sum;
+    }
 }
