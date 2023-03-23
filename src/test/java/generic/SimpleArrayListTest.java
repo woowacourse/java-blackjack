@@ -88,10 +88,17 @@ class SimpleArrayListTest {
 
     @Test
     void size() {
+        final Integer[] array = {0, 1};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        assertThat(arrayList.size()).isEqualTo(2);
     }
 
     @Test
     void isEmpty() {
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>();
+
+        assertThat(arrayList.isEmpty()).isTrue();
     }
 
     @Test
