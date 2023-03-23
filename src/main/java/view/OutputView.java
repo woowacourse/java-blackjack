@@ -1,7 +1,7 @@
 package view;
 
-import domain.Card;
-import domain.GameResult;
+import domain.card.Card;
+import domain.game.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,7 @@ public class OutputView {
     }
 
     public void printDealerCardWithScore(final List<Card> cards, final int score) {
+        System.out.println();
         printCardWithScore("딜러 ", cards, score);
     }
 
@@ -53,33 +54,23 @@ public class OutputView {
         return cardName.get(0) + cardName.get(1);
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerResult,
-        final Map<String, GameResult> playerResults) {
+    public void printGameResult(final GameResult gameResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayerResults(playerResults);
+        System.out.println("## 최종 수익");
+        printDealerProfit(gameResult.getDealerProfit());
+        printPlayerProfits(gameResult.getPlayerProfits());
     }
 
-    private void printDealerResult(final Map<GameResult, Integer> dealerResult) {
-        StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-        for (GameResult gameResult : dealerResult.keySet()) {
-            int count = dealerResult.getOrDefault(gameResult, 0);
-            dealerResultMessage.append(getDealerEachResult(gameResult.getName(), count));
-        }
-        System.out.println(dealerResultMessage);
+    private void printDealerProfit(final int dealerProfit) {
+        printEachProfit("딜러", dealerProfit);
     }
 
-    private String getDealerEachResult(final String gameResultName, final int count) {
-        if (count != 0) {
-            return count + gameResultName + " ";
-        }
-        return "";
+    private void printPlayerProfits(final Map<String, Integer> playerProfits) {
+        playerProfits.forEach(this::printEachProfit);
     }
 
-    private void printPlayerResults(final Map<String, GameResult> playerResults) {
-        playerResults.forEach((playerName, gameResult) ->
-            System.out.println(playerName + ": " + gameResult.getName()));
+    private void printEachProfit(final String name, final int profit) {
+        System.out.println(name + ": " + profit);
     }
 
     public void printDealerHitMessage() {

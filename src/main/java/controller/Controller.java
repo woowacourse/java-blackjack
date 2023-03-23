@@ -1,10 +1,12 @@
 package controller;
 
-import domain.BlackJack;
-import domain.Users;
-import domain.shuffler.RandomCardShuffler;
+import domain.card.shuffler.RandomCardShuffler;
+import domain.game.BlackJackGame;
 import domain.user.Player;
+import domain.user.Users;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -20,50 +22,58 @@ public class Controller {
 
     public void run() {
         try {
-            BlackJack blackJack = ready();
-            play(blackJack);
-            end(blackJack);
+            BlackJackGame blackJackGame = ready();
+            play(blackJackGame);
+            end(blackJackGame);
         } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private BlackJack ready() {
+    private BlackJackGame ready() {
+        BlackJackGame blackJackGame = createBlackJackGame();
+        outputView.printInitMessage(blackJackGame.getPlayerNames());
+        outputView.printDealerCardWithHidden(blackJackGame.getDealerFirstCard());
+        outputView.printPlayerCards(blackJackGame.getPlayerToCard());
+        return blackJackGame;
+    }
+
+    private BlackJackGame createBlackJackGame() {
         List<String> playerNames = inputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        BlackJack blackJack = BlackJack.of(users, new RandomCardShuffler());
-        outputView.printInitMessage(playerNames);
-        outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
-        outputView.printPlayerCards(blackJack.getPlayerToCard());
-        return blackJack;
-    }
-
-    private void play(BlackJack blackJack) {
-        List<Player> hittablePlayers = blackJack.getHittablePlayers();
-        for (Player player : hittablePlayers) {
-            askPlayerHitCommand(player, blackJack);
+        Map<String, Integer> playersBettingAmount = inputView.askPlayersBettingAmount(playerNames);
+        for (Entry<String, Integer> nameToBettingAmount : playersBettingAmount.entrySet()) {
+            users.bettingByName(nameToBettingAmount.getKey(), nameToBettingAmount.getValue());
         }
-        giveCardToDealer(blackJack);
+        return BlackJackGame.of(users, new RandomCardShuffler());
     }
 
-    private void askPlayerHitCommand(final Player player, final BlackJack blackJack) {
+    private void play(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            askPlayerHitCommand(player, blackJackGame);
+        }
+        giveCardToDealer(blackJackGame);
+    }
+
+    private void askPlayerHitCommand(final Player player, final BlackJackGame blackJackGame) {
         String playerName = player.getName();
-        while (player.isHittable() && inputView.askHitCommand(playerName)) {
-            blackJack.giveCard(playerName);
+        while (player.isHittable()) {
+            blackJackGame.hitOrStay(inputView.askHitCommand(playerName), player);
             outputView.printEachPlayerCards(playerName, player.getCards());
         }
     }
 
-    private void giveCardToDealer(BlackJack blackJack) {
-        while (blackJack.isDealerHittable()) {
-            blackJack.giveCardToDealer();
+    private void giveCardToDealer(BlackJackGame blackJackGame) {
+        while (blackJackGame.isDealerHittable()) {
+            blackJackGame.giveCardToDealer();
             outputView.printDealerHitMessage();
         }
+        blackJackGame.stayDealer();
     }
 
-    private void end(BlackJack blackJack) {
-        outputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
-        outputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
-        outputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
+    private void end(BlackJackGame blackJackGame) {
+        outputView.printDealerCardWithScore(blackJackGame.getDealerCards(), blackJackGame.getDealerScore());
+        outputView.printPlayerCardWithScore(blackJackGame.getPlayerToCard(), blackJackGame.getPlayerToScore());
+        outputView.printGameResult(blackJackGame.getResult());
     }
 }
