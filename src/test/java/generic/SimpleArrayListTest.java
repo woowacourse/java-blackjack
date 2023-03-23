@@ -10,17 +10,17 @@ class SimpleArrayListTest {
 
     @Test
     @DisplayName("List에 Integer 값을 add한다.")
-    void addStringTest() {
+    void addIntegerTest() {
         final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>();
 
         arrayList.add(10);
 
-        assertThat(arrayList.getValues())
-                .contains(10);
+        assertThat(arrayList.get(0))
+                .isEqualTo(10);
     }
 
     @Test
-    void addStringOverDefaultCapacity() {
+    void addIntegerOverDefaultCapacity() {
         Integer[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
 

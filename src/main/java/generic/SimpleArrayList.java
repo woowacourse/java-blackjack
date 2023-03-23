@@ -74,12 +74,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
