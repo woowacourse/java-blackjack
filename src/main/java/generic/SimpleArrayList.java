@@ -108,6 +108,10 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         size = 0;
     }
 
+    public static <E> SimpleList<E> fromArrayToList(E[] array) {
+        return new SimpleArrayList<>(array);
+    }
+
     private void extendCapacity() {
         this.values = Arrays.copyOf(this.values, currentCapacity * 2);
     }

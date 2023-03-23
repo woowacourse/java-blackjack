@@ -147,4 +147,14 @@ class SimpleArrayListTest {
                 () -> assertThat(arrayList.contains(0)).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("배열을 받아 SimpleList로 반환한다.")
+    void fromArrayList() {
+        final Integer[] arrays = {1, 2, 3, 4};
+        final SimpleList<Integer> integerSimpleList = SimpleArrayList.<Integer>fromArrayToList(arrays);
+
+        assertThat(integerSimpleList.get(0))
+                .isEqualTo(1);
+    }
 }
