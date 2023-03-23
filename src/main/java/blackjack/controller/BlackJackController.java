@@ -68,7 +68,7 @@ public class BlackJackController {
         for (final Player player : players) {
             final String playerName = player.getName();
             final int bettingAmount = inputView.readBettingAmount(playerName);
-            bettingManager.registerBetting(new Name(playerName), new Betting(bettingAmount));
+            bettingManager.registerBetting(playerName, bettingAmount);
         }
         return bettingManager;
     }

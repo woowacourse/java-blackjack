@@ -12,8 +12,8 @@ public class BettingManager {
         this.bettingInfo = new HashMap<>();
     }
 
-    public void registerBetting(final Name name, final Betting betting) {
-        bettingInfo.put(name, betting);
+    public void registerBetting(final String name, final int bettingAmount) {
+        bettingInfo.put(new Name(name), new Betting(bettingAmount));
     }
 
     public Betting findBettingByName(final String name) {
