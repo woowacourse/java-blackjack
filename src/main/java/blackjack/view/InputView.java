@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
@@ -18,13 +20,13 @@ public class InputView {
     }
 
     public int readBettingAmount(final String name) {
-        System.out.println(name + "의 배팅 금액은?");
+        System.out.println(LINE_SEPARATOR + name + "의 배팅 금액은?");
 
         return Integer.parseInt(scanner.nextLine());
     }
 
     public boolean readDrawState(final String name) {
-        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(LINE_SEPARATOR + name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         final String input = scanner.nextLine();
 
