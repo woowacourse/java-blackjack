@@ -18,11 +18,9 @@ public class RandomDeckGenerator implements DeckGenerator {
     }
 
     private static List<Card> generateCardsFrom(final CardShape shape) {
-        final List<Card> cards = new ArrayList<>();
-        for (CardNumber value : CardNumber.values()) {
-            cards.add(new Card(shape, value));
-        }
-        return cards;
+        return Arrays.stream(CardNumber.values())
+                .map(cardNumber -> new Card(shape, cardNumber))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

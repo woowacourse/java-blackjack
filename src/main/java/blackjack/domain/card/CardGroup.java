@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.result.Score;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,14 +14,9 @@ public class CardGroup {
         this.cards = cards;
     }
 
-    public CardGroup(final Card firstCard, final Card secondCard) {
-        cards = new ArrayList<>();
-        cards.add(firstCard);
-        cards.add(secondCard);
-    }
-
-    public CardGroup(final Deck deck) {
-        this(deck.draw(), deck.draw());
+    public CardGroup(final Card... cards) {
+        this.cards = new ArrayList<>();
+        Collections.addAll(this.cards, cards);
     }
 
     public void add(final Card newCard) {
@@ -28,7 +24,7 @@ public class CardGroup {
     }
 
     public Score getScore() {
-        return Score.calculateScore(getTotalValue(), getAceCount());
+        return Score.calculateScore(getTotalValue(), getAceCount(), cards.size());
     }
 
     private int getTotalValue() {
@@ -42,14 +38,6 @@ public class CardGroup {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    public boolean isBustScore() {
-        return getScore().isBust();
-    }
-
-    public boolean isBlackJackScore() {
-        return getScore().isBlackJackScore();
     }
 
     public CardGroup getSubCardGroup(int size) {

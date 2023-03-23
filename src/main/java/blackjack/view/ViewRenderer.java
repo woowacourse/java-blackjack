@@ -5,9 +5,10 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.money.Money;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.PlayerName;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -23,13 +24,9 @@ public class ViewRenderer {
             CardShape.HEART, "하트"
     );
     private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER = new EnumMap<>(CardNumber.class);
-    private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = new LinkedHashMap<>();
     private static final String CARD_RESULT_FORMAT = "%s - 결과: %d";
 
     static {
-        WINNING_STATUS_MAPPER.put(WinningStatus.WIN, "승 ");
-        WINNING_STATUS_MAPPER.put(WinningStatus.TIE, "무 ");
-        WINNING_STATUS_MAPPER.put(WinningStatus.LOSE, "패");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.ACE, "A");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.TWO, "2");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.THREE, "3");
@@ -55,25 +52,6 @@ public class ViewRenderer {
                 .collect(toUnmodifiableList());
     }
 
-    public static Map<String, Long> renderDealerWinningResult(
-            final Map<WinningStatus, Long> dealerWinningResult) {
-        final Map<String, Long> renderedDealerWinningResult = new LinkedHashMap<>();
-        WINNING_STATUS_MAPPER.keySet()
-                .stream()
-                .filter(dealerWinningResult::containsKey)
-                .forEach(winningStatus -> renderedDealerWinningResult.put(WINNING_STATUS_MAPPER.get(winningStatus),
-                        dealerWinningResult.get(winningStatus)));
-        return Collections.unmodifiableMap(renderedDealerWinningResult);
-    }
-
-    public static Map<String, String> renderPlayersWinningResults(
-            final Map<Name, WinningStatus> playersWinningResults) {
-        final Map<String, String> renderedWinningResult = new LinkedHashMap<>();
-        playersWinningResults.forEach((name, winningStatus) ->
-                renderedWinningResult.put(name.getValue(), WINNING_STATUS_MAPPER.get(winningStatus)));
-        return Collections.unmodifiableMap(renderedWinningResult);
-    }
-
     public static Map<String, String> renderUserNameAndCardResults(
             final Map<Name, CardResult> userNameAndCardResults) {
         final Map<String, String> renderedUserNameAndCardResults = new LinkedHashMap<>();
@@ -90,9 +68,16 @@ public class ViewRenderer {
                 , cardResult.getScore().getValue());
     }
 
-    public static List<String> renderNames(final List<Name> userNames) {
+    public static List<String> renderNames(final List<PlayerName> userNames) {
         return userNames.stream()
                 .map(Name::getValue)
                 .collect(toUnmodifiableList());
+    }
+
+    public static Map<String, Integer> renderUserNameAndProfits(final Map<Name, Money> playerNameAndProfit) {
+        final Map<String, Integer> renderedUserNameAndProfit = new LinkedHashMap<>();
+        playerNameAndProfit.forEach((name, money) ->
+                renderedUserNameAndProfit.put(name.getValue(), money.getValue()));
+        return renderedUserNameAndProfit;
     }
 }

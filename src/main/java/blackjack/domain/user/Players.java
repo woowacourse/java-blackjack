@@ -1,13 +1,14 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
-import blackjack.domain.result.WinningStatus;
+import blackjack.domain.result.PlayerNameProfitRates;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -19,11 +20,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames, final Deck deck) {
+    public Players(final List<String> playerNames, final Queue<CardGroup> firstCardGroups) {
         validateNumberOfPlayerOverLimit(playerNames);
         validatePlayerHasDuplicate(playerNames);
         this.players = playerNames.stream()
-                .map(name -> new Player(name, new CardGroup(deck)))
+                .map(name -> new Player(name, firstCardGroups.poll()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -39,15 +40,14 @@ public class Players {
         }
     }
 
-    public Map<Name, CardGroup> getFirstOpenCardGroup() {
-        final Map<Name, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
+    public Map<PlayerName, CardGroup> getFirstOpenCardGroup() {
+        final Map<PlayerName, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
         players.forEach(player ->
                 firstOpenCardGroup.put(player.getName(), player.getFirstOpenCardGroup()));
         return Collections.unmodifiableMap(firstOpenCardGroup);
     }
 
-
-    public CardGroup getCardGroupBy(final Name name) {
+    public CardGroup getCardGroupBy(final PlayerName name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
@@ -55,47 +55,39 @@ public class Players {
                 .getCardGroups();
     }
 
-    public List<Name> getPlayerNames() {
+    public List<PlayerName> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Map<Name, WinningStatus> getWinningResult(final Dealer dealer) {
-        final Map<Name, WinningStatus> playerWinningResult = new LinkedHashMap<>();
-        players.forEach(
-                player -> playerWinningResult.put(player.getName(), player.calculateWinningStatus(dealer)));
-        return Collections.unmodifiableMap(playerWinningResult);
-    }
-
-    public boolean isPlayerBust(final Name name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .map(Player::isBust)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
-    }
-
-    public void drawCard(final Name name, final Deck deck) {
+    public void drawCard(final PlayerName name, final Card card) {
         players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
-                .drawCard(deck);
+                .drawCard(card);
     }
 
-    public boolean isBlackJackScore(final Name name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .map(Player::isBlackJackScore)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
-    }
-
-    public Map<Name, CardResult> getPlayerNameAndCardResults() {
-        final Map<Name, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
+    public Map<PlayerName, CardResult> getPlayerNameAndCardResults() {
+        final Map<PlayerName, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndCardResults.put(player.getName(),
                 new CardResult(player.getCardGroups(), player.getScore())));
         return Collections.unmodifiableMap(playerNameAndCardResults);
+    }
+
+    public PlayerNameProfitRates getPlayerNameAndProfitRates(final Dealer dealer) {
+        final Map<PlayerName, Double> playerNameAndProfitRates = new LinkedHashMap<>();
+        players.forEach(player -> playerNameAndProfitRates.put(player.getName(),
+                dealer.calculateProfitRate(player)));
+        return new PlayerNameProfitRates(playerNameAndProfitRates);
+    }
+
+    public boolean isDrawable(final Name playerName) {
+        return players.stream()
+                .filter(player -> player.isSameName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
+                .isDrawable();
     }
 }
