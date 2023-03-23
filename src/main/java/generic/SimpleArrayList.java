@@ -64,7 +64,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public int indexOf(final T value) {
-        return 0;
+        for (int index = 0; index < size; index++) {
+            if (values[index].equals(value)) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     @Override

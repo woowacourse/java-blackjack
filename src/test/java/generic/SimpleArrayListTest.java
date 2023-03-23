@@ -77,6 +77,13 @@ class SimpleArrayListTest {
 
     @Test
     void indexOf() {
+        final Integer[] array = {0, 1};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        Assertions.assertAll(
+                () -> assertThat(arrayList.indexOf(1)).isEqualTo(1),
+                () -> assertThat(arrayList.indexOf(2)).isEqualTo(-1)
+        );
     }
 
     @Test
