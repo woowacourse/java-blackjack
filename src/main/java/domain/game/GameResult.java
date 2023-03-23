@@ -1,70 +1,77 @@
 package domain.game;
 
+import domain.user.PlayerBets;
+import domain.dto.PrizeResultDto;
 import domain.user.Dealer;
-import domain.user.DealerStatus;
+import domain.user.Name;
 import domain.user.Player;
-import domain.user.PlayerStatus;
+import domain.user.Players;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResult {
-    private final Map<String, Boolean> playerResults = new LinkedHashMap<>();
-    private final Map<Boolean, Integer> dealerResult = new HashMap<>();
+public final class GameResult {
+    public static final int DEALER_INITIAL_PRIZE = 0;
+    private final Map<Name, Integer> userPrizes = new LinkedHashMap<>();
 
-    public GameResult(List<String> playerNames) {
-        playerNames.forEach(name -> playerResults.put(name, false));
-        dealerResult.put(true, 0);
-        dealerResult.put(false, 0);
+    public GameResult(Name dealerName, List<Name> playerNames, PlayerBets bets) {
+        userPrizes.put(dealerName, DEALER_INITIAL_PRIZE);
+        playerNames.forEach(name -> userPrizes.put(name, bets.getBetByName(name)));
     }
 
-    public void saveResults(Dealer dealer, List<Player> players) {
+    public void saveResults(Dealer dealer, Players players) {
         judgeWinner(dealer, players);
+        userPrizes.put(dealer.getName(), calculateDealerPrizes());
     }
 
-    public void judgeWinner(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            compareDealerStatusWithPlayer(dealer, player);
+    private void judgeWinner(Dealer dealer, Players players) {
+        for (Name playerName : players.getAllNames()) {
+            compareDealerStatusWithPlayer(dealer, players.findPlayerByName(playerName));
         }
-    }
-
-    public Map<String, Boolean> getPlayerResults() {
-        return new LinkedHashMap<>(playerResults);
-    }
-
-    public Map<Boolean, Integer> getDealerResult() {
-        return new HashMap<>(dealerResult);
     }
 
     private void compareDealerStatusWithPlayer(Dealer dealer, Player player) {
-        if (player.isUserStatus(PlayerStatus.BUST)) {
-            dealerWin(player);
+        if (dealer.isBust()) {
+            userPrizes.put(player.getName(), calculatePrize(player));
             return;
         }
-        if (player.isUserStatus(PlayerStatus.NORMAL) && dealer.isUserStatus(DealerStatus.BUST)) {
-            playerWin(player);
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             return;
         }
         compareScore(dealer, player);
     }
 
     private void compareScore(Dealer dealer, Player player) {
-        if (dealer.getScore() >= player.getScore()) {
-            dealerWin(player);
+        if (player.hasLessScore(dealer)) {
+            userPrizes.put(player.getName(), userPrizes.get(player.getName()) * -1);
             return;
         }
-        playerWin(player);
+        if (player.hasSameScore(dealer)) {
+            userPrizes.put(player.getName(), 0);
+            return;
+        }
+        userPrizes.put(player.getName(), calculatePrize(player));
     }
 
-    private void playerWin(Player player) {
-        dealerResult.put(false, dealerResult.get(false)+1);
-        playerResults.put(player.getName(), true);
+    public int calculateDealerPrizes() {
+        return userPrizes.values().stream()
+                .mapToInt(num -> num)
+                .sum() * -1;
     }
 
-    private void dealerWin(Player player) {
-        dealerResult.put(true, dealerResult.get(true)+1);
-        playerResults.put(player.getName(), false);
+    private int calculatePrize(Player player) {
+        return (int) Math.ceil(userPrizes.get(player.getName()) * player.getProfitRatio());
+    }
+
+    public List<PrizeResultDto> getPrizeResultDtosForAllUsers() {
+        List<PrizeResultDto> prizeResultDtos = new ArrayList<>();
+
+        for(Map.Entry<Name, Integer> prizeResult : userPrizes.entrySet()) {
+            prizeResultDtos.add(new PrizeResultDto(prizeResult.getKey(), prizeResult.getValue()));
+        }
+
+        return prizeResultDtos;
     }
 }

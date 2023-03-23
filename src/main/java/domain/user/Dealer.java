@@ -1,37 +1,31 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.dto.UserDto;
+import domain.state.DealerReady;
+import exception.DealerHasNoProfitRatioException;
 
 import java.util.List;
 
-public class Dealer extends User {
-    private DealerStatus status;
-
-    public Dealer(List<Card> firstTurnCards) {
-        super(firstTurnCards);
-        checkBustByScore();
+public final class Dealer extends User {
+    public Dealer() {
+        super(new Name("딜러"), new DealerReady());
     }
 
     @Override
-    protected void checkBustByScore() {
-        if (score.getScore() > BLACKJACK) {
-            status = DealerStatus.BUST;
-            return;
-        }
-        if (score.getScore() <= 16) {
-            status = DealerStatus.UNDER_SEVENTEEN;
-            return;
-        }
-        status = DealerStatus.NORMAL;
+    public final double getProfitRatio() {
+        throw new DealerHasNoProfitRatioException();
     }
 
-    @Override
-    public boolean isUserStatus(UserStatus status) {
-        return this.status.equals(status);
+    public int drawCount() {
+        return getCards().size() - 2;
     }
 
-    @Override
-    public String getName() {
-        return "딜러";
+    public List<Card> getOnlyFirstCard() {
+        return getCards().subList(0, 1);
+    }
+
+    public UserDto getDealerSetUpDto() {
+        return new UserDto(getName(), getScore(), getOnlyFirstCard());
     }
 }

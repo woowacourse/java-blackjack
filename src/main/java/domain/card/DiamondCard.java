@@ -1,38 +1,40 @@
 package domain.card;
 
-import domain.Number;
-import domain.Pattern;
-
 public enum DiamondCard implements Card {
-    DIAMOND_ACE(Pattern.DIAMOND, Number.ACE),
-    DIAMOND_TWO(Pattern.DIAMOND, Number.TWO),
-    DIAMOND_THREE(Pattern.DIAMOND, Number.THREE),
-    DIAMOND_FOUR(Pattern.DIAMOND, Number.FOUR),
-    DIAMOND_FIVE(Pattern.DIAMOND, Number.FIVE),
-    DIAMOND_SIX(Pattern.DIAMOND, Number.SIX),
-    DIAMOND_SEVEN(Pattern.DIAMOND, Number.SEVEN),
-    DIAMOND_EIGHT(Pattern.DIAMOND, Number.EIGHT),
-    DIAMOND_NINE(Pattern.DIAMOND, Number.NINE),
-    DIAMOND_TEN(Pattern.DIAMOND, Number.TEN),
-    DIAMOND_JACK(Pattern.DIAMOND, Number.JACK),
-    DIAMOND_QUEEN(Pattern.DIAMOND, Number.QUEEN),
-    DIAMOND_KING(Pattern.DIAMOND, Number.KING);
+    ACE(Suit.DIAMOND, Denomination.ACE),
+    TWO(Suit.DIAMOND, Denomination.TWO),
+    THREE(Suit.DIAMOND, Denomination.THREE),
+    FOUR(Suit.DIAMOND, Denomination.FOUR),
+    FIVE(Suit.DIAMOND, Denomination.FIVE),
+    SIX(Suit.DIAMOND, Denomination.SIX),
+    SEVEN(Suit.DIAMOND, Denomination.SEVEN),
+    EIGHT(Suit.DIAMOND, Denomination.EIGHT),
+    NINE(Suit.DIAMOND, Denomination.NINE),
+    TEN(Suit.DIAMOND, Denomination.TEN),
+    JACK(Suit.DIAMOND, Denomination.JACK),
+    QUEEN(Suit.DIAMOND, Denomination.QUEEN),
+    KING(Suit.DIAMOND, Denomination.KING);
 
-    private final Pattern pattern;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    DiamondCard(Pattern pattern, Number number) {
-        this.pattern = pattern;
-        this.number = number;
+    DiamondCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
+        return denomination.getDenomination() + suit.getSuit();
     }
 
     @Override
-    public int getScore() {
-        return number.getScore();
+    public Score getScore() {
+        return new Score(denomination.getScore());
+    }
+
+    @Override
+    public boolean isAce() {
+        return this.denomination == Denomination.ACE;
     }
 }

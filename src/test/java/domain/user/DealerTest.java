@@ -10,32 +10,38 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("딜러는 ")
 class DealerTest {
-    @ParameterizedTest(name = "{2} 상태 값을 확인할 수 있다.")
-    @MethodSource("isDealerStatusTestCase")
-    @DisplayName("자신의 상태값을 확인할 수 있다.")
-    void isPlayerStatusTest(List<Card> firstTurnCards, Card drawCard, DealerStatus dealerStatus) {
+    @Test
+    @DisplayName("처음에 2장의 카드를 받는다.")
+    void generatePlayerTest() {
         //given
-        Dealer dealer = new Dealer(firstTurnCards);
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
 
         //when
-        dealer.receiveCard(drawCard);
+        List<Card> cards = dealer.getCards();
 
         //then
-        assertThat(dealer.isUserStatus(dealerStatus)).isTrue();
-
+        assertThat(cards.size()).isEqualTo(2);
     }
 
-    static Stream<Arguments> isDealerStatusTestCase() {
-        return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING), CloverCard.CLOVER_QUEEN, Named.of("버스트", DealerStatus.BUST)),
-                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_EIGHT), CloverCard.CLOVER_SEVEN, Named.of("노멀", DealerStatus.NORMAL)),
-                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE), CloverCard.CLOVER_FOUR, Named.of("17미만", DealerStatus.UNDER_SEVENTEEN))
-        );
+    @Test
+    @DisplayName("카드 한 장을 받아 패에 넣는다.")
+    void receiveCardTest() {
+        //given
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
+
+        //when
+        dealer.receiveCard(CloverCard.FOUR);
+
+        //then
+        assertThat(dealer.getCards().size()).isEqualTo(3);
     }
 }

@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import exception.DeckHasNotRemainingCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +23,7 @@ class GameDeckTest {
         IntStream.range(0,52).forEach(index -> gameDeck.drawCard());
 
         //then
-        assertThrows(IllegalStateException.class, gameDeck::drawCard);
+        assertThrows(DeckHasNotRemainingCardException.class, gameDeck::drawCard);
     }
 
     @Test
@@ -38,8 +40,8 @@ class GameDeckTest {
     @DisplayName("카드는 덱에서 순서대로 뽑아간다.")
     void drawCard() {
         //given
-        List<Card> cards = new ArrayList<>(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_THREE,
-                CloverCard.CLOVER_FIVE));
+        List<Card> cards = new ArrayList<>(List.of(CloverCard.ACE, CloverCard.THREE,
+                CloverCard.FIVE));
         GameDeck gameDeck = new GameDeck(new TestDeckGenerator(cards));
         List<Card> drawCards = new ArrayList<>();
 
@@ -47,8 +49,8 @@ class GameDeckTest {
         IntStream.range(0, cards.size()).forEach(trial -> drawCards.add(gameDeck.drawCard()));
 
         //then
-        assertThat(drawCards).isEqualTo(List.of(CloverCard.CLOVER_ACE,
-                CloverCard.CLOVER_THREE, CloverCard.CLOVER_FIVE));
+        assertThat(drawCards).isEqualTo(List.of(CloverCard.ACE,
+                CloverCard.THREE, CloverCard.FIVE));
     }
 
     static class TestDeckGenerator implements DeckGenerator {

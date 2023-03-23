@@ -1,38 +1,77 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Score;
+import domain.dto.UserDto;
+import domain.state.Ready;
+import domain.state.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
-    protected static final int BLACKJACK = 21;
+    private final Name name;
+    private State state;
 
-    private final List<Card> cards;
-    protected final Score score;
+    public User(Name name, Ready ready) {
+        this.name = name;
+        this.state = ready;
+    }
 
-    public User(List<Card> firstTurnCards) {
-        cards = new ArrayList<>(firstTurnCards);
-        score = new Score(firstTurnCards);
+    public final void receiveCards(List<Card> cards) {
+        cards.forEach(this::receiveCard);
+    }
+
+    public final boolean isName(Name playerName) {
+        return getName().equals(playerName);
+    }
+
+    public final boolean hasLessScore(User other) {
+        return getScore().isLessThan(other.getScore());
+    }
+
+    public final boolean hasSameScore(User other) {
+        return getScore().equals(other.getScore());
+    }
+
+    public final UserDto getUserDto() {
+        return new UserDto(getName(), getScore(), getCards());
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
-        score.calculate(cards);
-        checkBustByScore();
+        state = state.draw(card);
+    }
+
+    public void doStay() {
+        state = state.stay();
+    }
+
+    public boolean hasResult() {
+        return state.isFinished();
+    }
+
+    public boolean isBust() {
+        return state.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return state.getCards();
     }
 
-    public int getScore() {
-        return score.getScore();
+    public Score getScore() {
+        return state.getScore();
     }
 
-    public abstract boolean isUserStatus(UserStatus status);
+    public Name getName() {
+        return name;
+    }
 
-    protected abstract void checkBustByScore();
+    protected State getState() {
+        return state;
+    }
 
-    public abstract String getName();
+    public abstract double getProfitRatio();
 }

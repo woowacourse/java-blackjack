@@ -1,4 +1,6 @@
-package domain;
+package domain.command;
+
+import exception.IllegalDrawCommandException;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -22,7 +24,7 @@ public enum DrawCommand {
         if(inputDrawCommandMap.containsKey(inputCommand)) {
             return inputDrawCommandMap.get(inputCommand);
         }
-        throw new IllegalArgumentException("[ERROR] 카드 드로우 커맨드는 y,n 둘 중 하나입니다.");
+        throw new IllegalDrawCommandException();
     }
 
     private String getCommand() {

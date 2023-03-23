@@ -1,38 +1,40 @@
 package domain.card;
 
-import domain.Number;
-import domain.Pattern;
-
 public enum CloverCard implements Card {
-    CLOVER_ACE(Pattern.CLOVER, Number.ACE),
-    CLOVER_TWO(Pattern.CLOVER, Number.TWO),
-    CLOVER_THREE(Pattern.CLOVER, Number.THREE),
-    CLOVER_FOUR(Pattern.CLOVER, Number.FOUR),
-    CLOVER_FIVE(Pattern.CLOVER, Number.FIVE),
-    CLOVER_SIX(Pattern.CLOVER, Number.SIX),
-    CLOVER_SEVEN(Pattern.CLOVER, Number.SEVEN),
-    CLOVER_EIGHT(Pattern.CLOVER, Number.EIGHT),
-    CLOVER_NINE(Pattern.CLOVER, Number.NINE),
-    CLOVER_TEN(Pattern.CLOVER, Number.TEN),
-    CLOVER_JACK(Pattern.CLOVER, Number.JACK),
-    CLOVER_QUEEN(Pattern.CLOVER, Number.QUEEN),
-    CLOVER_KING(Pattern.CLOVER, Number.KING);
+    ACE(Suit.CLOVER, Denomination.ACE),
+    TWO(Suit.CLOVER, Denomination.TWO),
+    THREE(Suit.CLOVER, Denomination.THREE),
+    FOUR(Suit.CLOVER, Denomination.FOUR),
+    FIVE(Suit.CLOVER, Denomination.FIVE),
+    SIX(Suit.CLOVER, Denomination.SIX),
+    SEVEN(Suit.CLOVER, Denomination.SEVEN),
+    EIGHT(Suit.CLOVER, Denomination.EIGHT),
+    NINE(Suit.CLOVER, Denomination.NINE),
+    TEN(Suit.CLOVER, Denomination.TEN),
+    JACK(Suit.CLOVER, Denomination.JACK),
+    QUEEN(Suit.CLOVER, Denomination.QUEEN),
+    KING(Suit.CLOVER, Denomination.KING);
 
-    private final Pattern pattern;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    CloverCard(Pattern pattern, Number number) {
-        this.pattern = pattern;
-        this.number = number;
+    CloverCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
+        return denomination.getDenomination() + suit.getSuit();
     }
 
     @Override
-    public int getScore() {
-        return number.getScore();
+    public Score getScore() {
+        return new Score(denomination.getScore());
+    }
+
+    @Override
+    public boolean isAce() {
+        return this.denomination == Denomination.ACE;
     }
 }

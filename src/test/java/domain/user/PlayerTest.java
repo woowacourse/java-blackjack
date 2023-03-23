@@ -4,16 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CloverCard;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Named;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("플레이어는 ")
 class PlayerTest {
@@ -21,8 +15,8 @@ class PlayerTest {
     @DisplayName("처음에 2장의 카드를 받는다.")
     void generatePlayerTest() {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
-        Player player = new Player(new Name("플레이어"), firstTurnCards);
+        Player player = new Player("player");
+        player.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
 
         //when
         List<Card> cards = player.getCards();
@@ -35,36 +29,13 @@ class PlayerTest {
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
     void receiveCardTest() {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
-        Player player = new Player(new Name("플레이어"), firstTurnCards);
-        List<Card> cards = player.getCards();
+        Player player = new Player("player");
+        player.receiveCards(List.of(CloverCard.ACE, CloverCard.FIVE));
 
         //when
-        player.receiveCard(CloverCard.CLOVER_FOUR);
+        player.receiveCard(CloverCard.FOUR);
 
         //then
-        assertThat(cards.size()).isEqualTo(3);
-    }
-
-    @ParameterizedTest(name = "{2} 상태값을 확인할 수 있다.")
-    @MethodSource("isPlayerStatusTestCase")
-    @DisplayName("자신의 상태값을 확인할 수 있다.")
-    void isPlayerStatusTest(List<Card> firstTurnCards, Card drawCard, PlayerStatus playerStatus) {
-        //given
-        Player player = new Player(new Name("플레이어"), firstTurnCards);
-
-        //when
-        player.receiveCard(drawCard);
-
-        //then
-        assertThat(player.isUserStatus(playerStatus)).isTrue();
-
-    }
-
-    static Stream<Arguments> isPlayerStatusTestCase() {
-        return Stream.of(
-                Arguments.of(List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING), CloverCard.CLOVER_QUEEN, Named.of("버스트", PlayerStatus.BUST)),
-                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE), CloverCard.CLOVER_FOUR, Named.of("노멀", PlayerStatus.NORMAL))
-        );
+        assertThat(player.getCards().size()).isEqualTo(3);
     }
 }
