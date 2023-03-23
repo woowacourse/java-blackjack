@@ -2,6 +2,7 @@ package generic;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +66,13 @@ class SimpleArrayListTest {
 
     @Test
     void contains() {
+        final Integer[] array = {1};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        Assertions.assertAll(
+                () -> assertThat(arrayList.contains(1)).isTrue(),
+                () -> assertThat(arrayList.contains(0)).isFalse()
+        );
     }
 
     @Test

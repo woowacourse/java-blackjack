@@ -54,6 +54,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public boolean contains(final T value) {
+        for (T storedValue : values) {
+            if (storedValue.equals(value)) {
+                return true;
+            }
+        }
         return false;
     }
 
