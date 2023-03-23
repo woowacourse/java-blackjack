@@ -1,13 +1,16 @@
 package controller;
 
-import domain.BlackjackAction;
-import domain.BlackjackGame;
-import domain.DealerResult;
-import domain.DeckFactory;
-import domain.Participant;
-import domain.Player;
-import domain.PlayerNames;
-import domain.Players;
+import domain.blackjack.BlackjackAction;
+import domain.blackjack.BlackjackGame;
+import domain.blackjack.TotalProfit;
+import domain.card.DeckFactory;
+import domain.money.BetAmount;
+import domain.participant.Participant;
+import domain.participant.ParticipantName;
+import domain.participant.Player;
+import domain.participant.PlayerNames;
+import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
@@ -38,10 +41,26 @@ public class BlackjackController {
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
-    private Players requestPlayers() {
+    private PlayerNames requestPlayerNames() {
         List<String> playerNamesUserInput = inputView.requestPlayerNames();
-        PlayerNames playerNames = PlayerNames.from(playerNamesUserInput);
-        return Players.from(playerNames);
+        return PlayerNames.from(playerNamesUserInput);
+    }
+
+    private Players requestPlayers() {
+        List<Player> players = new ArrayList<>();
+        PlayerNames playerNames = retryOnInvalidUserInput(this::requestPlayerNames);
+        for (ParticipantName playerName : playerNames.getNames()) {
+            String name = playerName.getName();
+            BetAmount betAmount = retryOnInvalidUserInput(() -> requestBetAmount(name));
+            players.add(Player.of(playerName, betAmount));
+        }
+
+        return new Players(players);
+    }
+
+    private BetAmount requestBetAmount(String name) {
+        String betAmountUserInput = inputView.requestBetAmount(name);
+        return BetAmount.from(betAmountUserInput);
     }
 
     private void playPlayersTurn(BlackjackGame blackjackGame) {
@@ -83,10 +102,10 @@ public class BlackjackController {
     }
 
     private void printResults(BlackjackGame blackjackGame) {
-        DealerResult dealerResult = DealerResult.from(blackjackGame);
+        TotalProfit totalProfit = TotalProfit.from(blackjackGame);
 
         outputView.printCardsWithScore(blackjackGame);
-        outputView.printFinalResult(blackjackGame.getDealer(), dealerResult);
+        outputView.printFinalResult(blackjackGame.getDealer(), totalProfit);
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {

@@ -1,26 +1,24 @@
 package view;
 
-import domain.BlackjackGame;
-import domain.BlackjackScore;
-import domain.Card;
-import domain.Cards;
-import domain.DealerResult;
-import domain.Participant;
-import domain.Players;
-import domain.Result;
+import domain.blackjack.BlackjackGame;
+import domain.blackjack.BlackjackScore;
+import domain.blackjack.TotalProfit;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.participant.Participant;
+import domain.participant.Players;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int NO_MORE_CARD_COUNT = 0;
-    private static final int SKIP_COUNT = 0;
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String CARD_DISTRIBUTION_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String CARDS_FORMAT = "%s카드: %s";
     private static final String CARDS_WITH_SCORE_FORMAT = CARDS_FORMAT + " - 결과: %d";
     private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
-    private static final String RESULT_FORMAT = "%s: %s";
+    private static final String RESULT_FORMAT = "%s: %d";
     private static final String DEALER_MORE_CARDS_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String ERROR_FORMAT = "[Error] %s";
 
@@ -101,37 +99,19 @@ public class OutputView {
                 participant.getName(), getCardsFormat(participant.getCards()), participantScore.getValue());
     }
 
-    public void printFinalResult(Participant dealer, DealerResult dealerResult) {
+    public void printFinalResult(Participant dealer, TotalProfit totalProfit) {
         breakLine();
         System.out.println(FINAL_RESULT_MESSAGE);
-        printDealerFinalResult(dealer, dealerResult);
+        prtinParticipantResultWithProfit(dealer, totalProfit.getDealerProfit().getAmount());
 
-        dealerResult.getResultsAgainstParticipants().forEach(
-                (key, value) -> printPlayerResult(key, value.convertToOpposite())
+        totalProfit.getParticipantsProfit().forEach(
+                (key, value) -> prtinParticipantResultWithProfit(key, value.getAmount())
         );
     }
 
-    private void printDealerFinalResult(Participant dealer, DealerResult dealerResult) {
-        StringBuilder dealerResultsFormat = new StringBuilder();
-        for (Result result : Result.values()) {
-            dealerResultsFormat.append(getResultFormat(result, dealerResult.getResultCount(result)));
-        }
-
-        String format = String.format(RESULT_FORMAT, dealer.getName(), dealerResultsFormat);
-        System.out.println(format);
-    }
-
-    private String getResultFormat(Result result, int resultCount) {
-        if (resultCount == SKIP_COUNT) {
-            return "";
-        }
-
-        return resultCount + result.getValue();
-    }
-
-    private void printPlayerResult(Participant player, Result result) {
+    private void prtinParticipantResultWithProfit(Participant player, double profit) {
         String format = String.format(RESULT_FORMAT,
-                player.getName(), result.getValue());
+                player.getName(), (int) profit);
         System.out.println(format);
     }
 
