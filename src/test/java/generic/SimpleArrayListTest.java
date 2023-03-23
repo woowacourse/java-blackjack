@@ -102,14 +102,49 @@ class SimpleArrayListTest {
     }
 
     @Test
-    void remove() {
+    @DisplayName("값을 넣어 있다면 삭제 후 true를 반환하고, 없다면 false를 반환한다.")
+    void removeValueAndReturnBoolean() {
+        final Integer[] array = {0};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        final boolean isRemove = arrayList.remove(Integer.valueOf(0));
+
+        Assertions.assertAll(
+                () -> assertThat(isRemove).isTrue(),
+                () -> assertThat(arrayList)
+                        .extracting("size")
+                        .isEqualTo(0)
+        );
     }
 
     @Test
-    void testRemove() {
+    void removeValueAndReturn() {
+        final Integer[] array = {0, 1};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        final Integer removedValue = arrayList.remove(0);
+
+        Assertions.assertAll(
+                () -> assertThat(removedValue).isEqualTo(0),
+                () -> assertThat(arrayList)
+                        .extracting("size")
+                        .isEqualTo(1)
+        );
     }
 
     @Test
+    @DisplayName("clear는 list안에 있는 값을 초기화 시킨다.")
     void clear() {
+        final Integer[] array = {0, 2, 3, 4};
+        final SimpleArrayList<Integer> arrayList = new SimpleArrayList<>(array);
+
+        arrayList.clear();
+
+        Assertions.assertAll(
+                () -> assertThat(arrayList)
+                        .extracting("size")
+                        .isEqualTo(0),
+                () -> assertThat(arrayList.contains(0)).isFalse()
+        );
     }
 }

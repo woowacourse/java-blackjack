@@ -84,17 +84,28 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public boolean remove(final T value) {
+        for (int index = 0; index < size; index++) {
+            if (values[index].equals(value)) {
+                remove(index);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public T remove(final int index) {
-        return null;
+        final T removedValue = values[index];
+        size -= 1;
+        System.arraycopy(values, index + 1, values, index, size - index);
+        values[size] = null;
+        return removedValue;
     }
 
     @Override
     public void clear() {
-
+        values = (T[]) new Object[0];
+        size = 0;
     }
 
     private void extendCapacity() {
