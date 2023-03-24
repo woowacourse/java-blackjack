@@ -44,28 +44,6 @@ class HandTest {
         assertThat(hand.getAllCards()).containsAll(List.of(card, card2, card3));
     }
 
-    @DisplayName("들고 있는 카드에 ACE가 있는지 확인한다.")
-    @Nested
-    class hasACE {
-        @DisplayName("ACE가 있으면 true을 리턴한다.")
-        @Test
-        void Should_True_When_hasACE() {
-            Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-            hand.add(card);
-
-            assertThat(hand.hasACE()).isTrue();
-        }
-
-        @DisplayName("ACE가 없으면 false를 리턴한다.")
-        @Test
-        void Should_False_When_hasACE() {
-            Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
-            hand.add(card);
-
-            assertThat(hand.hasACE()).isFalse();
-        }
-    }
-
     @DisplayName("손에 있는 모든 카드의 점수를 계산한다.")
     @Nested
     class totalScoreTest {
@@ -77,7 +55,7 @@ class HandTest {
             hand.add(card);
             hand.add(card2);
 
-            assertThat(hand.getTotalScore()).isEqualTo(21);
+            assertThat(hand.calculateScore()).isEqualTo(21);
         }
 
         @DisplayName("NINE, TWO, ACE 가지고 있을 때 점수의 합은 22점이다.")
@@ -90,7 +68,20 @@ class HandTest {
             hand.add(card2);
             hand.add(card3);
 
-            assertThat(hand.getTotalScore()).isEqualTo(22);
+            assertThat(hand.calculateScore()).isEqualTo(12);
+        }
+
+        @DisplayName("ACE, ACE, NINE 카드를 가지고 있을 때 점수의 합은 21점이다.")
+        @Test
+        void Should_TotalScore_When_HaveCard3() {
+            Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+            Card card2 = new Card(CardNumber.ACE, CardSymbol.SPADES);
+            Card card3 = new Card(CardNumber.NINE, CardSymbol.CLUBS);
+            hand.add(card);
+            hand.add(card2);
+            hand.add(card3);
+
+            assertThat(hand.calculateScore()).isEqualTo(21);
         }
     }
 }

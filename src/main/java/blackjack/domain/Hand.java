@@ -13,34 +13,34 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    void add(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
-    boolean hasACE() {
-        return cards.stream()
-                .anyMatch(Card::isACE);
-    }
-
-    int calculateScore() {
+    public int calculateScore() {
         int totalScore = getTotalScore();
-        if (totalScore > BURST_SCORE && hasACE()) {
-            return totalScore - ACE_BONUS_SCORE;
+        if ((totalScore <= BURST_SCORE - ACE_BONUS_SCORE) && hasACE()) {
+            return totalScore + ACE_BONUS_SCORE;
         }
         return totalScore;
     }
 
-    int getTotalScore() {
+    private int getTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    List<Card> getAllCards() {
+    private boolean hasACE() {
+        return cards.stream()
+                .anyMatch(Card::isACE);
+    }
+
+    public List<Card> getAllCards() {
         return cards;
     }
 
-    Card getFirstCard() {
+    public Card getFirstCard() {
         return cards.get(0);
     }
 }

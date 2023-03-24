@@ -11,6 +11,6 @@ class CardNumberTest {
     void Should_GetScore_When_InputNumber() {
         CardNumber ace = CardNumber.ACE;
 
-        assertThat(ace.getScore()).isEqualTo(11);
+        assertThat(ace.getScore()).isEqualTo(1);
     }
 }
