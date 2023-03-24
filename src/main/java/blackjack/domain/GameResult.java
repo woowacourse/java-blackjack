@@ -10,8 +10,8 @@ public class GameResult {
     private int dealerResult;
 
     public GameResult(Dealer dealer, Players players) {
-        this.dealerResult = 0;
-        this.playersResult = new LinkedHashMap<>();
+        dealerResult = 0;
+        playersResult = new LinkedHashMap<>();
         calculateProfit(dealer.getScore(), players);
     }
 
@@ -66,26 +66,25 @@ public class GameResult {
     }
 
     private void playerWin(Player player) {
-        Integer playerBettingAmount = ResultType.WIN.calculateProfit(player.getBettingAmountToInt());
+        int playerBettingAmount = player.getBettingAmountToInt();
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
 
     private void playerLose(Player player) {
-        Integer playerBettingAmount = ResultType.LOSE.calculateProfit(player.getBettingAmountToInt());
+        int playerBettingAmount = -player.getBettingAmountToInt();
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
-
-    private void playerBlackJack(Player player) {
-        Integer playerBettingAmount = ResultType.BLACKJACK.calculateProfit(player.getBettingAmountToInt());
-        playersResult.put(player.getName(), playerBettingAmount);
-        dealerResult -= playerBettingAmount;
-    }
-
 
     private void draw(Player player) {
-        Integer playerBettingAmount = ResultType.DRAW.calculateProfit(player.getBettingAmountToInt());
+        int playerBettingAmount = 0;
+        playersResult.put(player.getName(), playerBettingAmount);
+    }
+
+
+    private void playerBlackJack(Player player) {
+        int playerBettingAmount = (int) (player.getBettingAmountToInt() * 1.5);
         playersResult.put(player.getName(), playerBettingAmount);
         dealerResult -= playerBettingAmount;
     }
