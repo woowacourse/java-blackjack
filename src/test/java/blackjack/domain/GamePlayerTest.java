@@ -12,8 +12,19 @@ class GamePlayerTest {
 
     @BeforeEach
     void init() {
-        gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("name1", "name2", "name3")));
+        Name name1 = new Name("name");
+        Name name2 = new Name("name2");
+        Name name3 = new Name("name3");
+
+        BettingAmount bettingAmount = new BettingAmount(1000);
+
+        Player player1 = new Player(name1, bettingAmount);
+        Player player2 = new Player(name2, bettingAmount);
+        Player player3 = new Player(name3, bettingAmount);
+
+        gamePlayer = new GamePlayer(new Dealer(), new Players(List.of(player1, player2, player3)));
     }
+
 
     @DisplayName("GamePlayer는 Players를 가진다.")
     @Test

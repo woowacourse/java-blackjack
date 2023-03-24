@@ -6,11 +6,13 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Game;
 import blackjack.domain.GamePlayer;
 import blackjack.domain.GameResult;
+import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.TryCommand;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +36,30 @@ public class BlackJackGameController {
     }
 
     private Players makePlayers() {
+        List<Name> names = makeNames();
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            BettingAmount bettingAmount = readBettingAmount(name.getName());
+            players.add(new Player(name, bettingAmount));
+        }
+        return new Players(players);
+    }
+
+    private List<Name> makeNames() {
         try {
-            return Players.from(inputView.readPlayersName());
+            List<String> playerNames = inputView.readPlayersName();
+            List<Name> names = new ArrayList<>();
+            for (String playerName : playerNames) {
+                names.add(new Name(playerName));
+            }
+            return names;
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] " + e.getMessage());
-            return makePlayers();
+            return makeNames();
         }
     }
 
     private void gameStart(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            BettingAmount bettingAmount = readBettingAmount(player.getName());
-            player.setBettingAmount(bettingAmount);
-        }
         Map<String, List<String>> playersToPrintFormat = playersToPrintFormat(players);
         String dealerFirstCardToPrintFormat = dealerFirstCardToPrintFormat(dealer);
         outputView.printGameStartMessage(playersToPrintFormat, dealerFirstCardToPrintFormat);

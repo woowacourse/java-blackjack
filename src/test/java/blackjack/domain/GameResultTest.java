@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
-    private static final String PLAYER_NAME = "tori";
     private static final Card JACK_HEARTS = new Card(CardNumber.JACK, CardSymbol.HEARTS);
     private static final Card JACK_CLUBS = new Card(CardNumber.JACK, CardSymbol.CLUBS);
     private static final Card JACK_SPADES = new Card(CardNumber.JACK, CardSymbol.SPADES);
@@ -18,7 +17,6 @@ class GameResultTest {
     private static final Card TWO_HEARTS = new Card(CardNumber.TWO, CardSymbol.HEARTS);
     private static final Card ACE_HEARTS = new Card(CardNumber.ACE, CardSymbol.HEARTS);
     private static final Card ACE_SPADES = new Card(CardNumber.ACE, CardSymbol.SPADES);
-    private static final int BETTING_AMOUNT = 10000;
 
     private Dealer dealer;
     private Players players;
@@ -27,9 +25,8 @@ class GameResultTest {
     @BeforeEach
     void setup() {
         dealer = new Dealer();
-        players = Players.from(List.of("tori"));
+        players = new Players(List.of(new Player(new Name("tori"), new BettingAmount(10000))));
         player = players.getPlayers().get(0);
-        player.setBettingAmount(new BettingAmount(BETTING_AMOUNT));
     }
 
     @DisplayName("플레이어와 딜러의 점수를 통해 승패를 결정한다.")
@@ -47,7 +44,7 @@ class GameResultTest {
                 dealer.addCard(ACE_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
                 assertThat(playerResult).isEqualTo(0);
             }
@@ -61,9 +58,9 @@ class GameResultTest {
                 dealer.addCard(JACK_SPADES);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo((int) (BETTING_AMOUNT * 1.5));
+                assertThat(playerResult).isEqualTo((int) (10000 * 1.5));
             }
         }
 
@@ -80,7 +77,7 @@ class GameResultTest {
                 dealer.addCard(ACE_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
                 assertThat(playerResult).isEqualTo(0);
             }
@@ -95,9 +92,9 @@ class GameResultTest {
                 dealer.addCard(JACK_SPADES);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(10000);
             }
         }
 
@@ -113,9 +110,9 @@ class GameResultTest {
                 dealer.addCard(ACE_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(-10000);
             }
 
             @DisplayName("딜러가 버스트이면 플레이어는 배팅한 금액만큼 돌려받는다.")
@@ -128,9 +125,9 @@ class GameResultTest {
                 dealer.addCard(TWO_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(10000);
             }
 
             @DisplayName("딜러가 블랙잭보다 작을 때")
@@ -146,9 +143,9 @@ class GameResultTest {
 
                     GameResult gameResult = new GameResult(dealer,
                             players);
-                    int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                    int playerResult = gameResult.getPlayersResult().get("tori");
 
-                    assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
+                    assertThat(playerResult).isEqualTo(10000);
                 }
 
                 @DisplayName("플레이어의 합이 딜러보다 작으면 플레이어는 배팅한 금액만큼 잃는다.")
@@ -161,9 +158,9 @@ class GameResultTest {
 
                     GameResult gameResult = new GameResult(dealer,
                             players);
-                    int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                    int playerResult = gameResult.getPlayersResult().get("tori");
 
-                    assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
+                    assertThat(playerResult).isEqualTo(-10000);
                 }
             }
         }
@@ -181,9 +178,9 @@ class GameResultTest {
                 dealer.addCard(ACE_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(-10000);
             }
 
             @DisplayName("딜러가 버스트이면 플레이어는 배팅한 금액만큼 잃는다.")
@@ -197,9 +194,9 @@ class GameResultTest {
                 dealer.addCard(NINE_HEARTS);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(-10000);
             }
 
             @DisplayName("딜러가 블랙잭보다 작으면 플레이어는 배팅한 금액만큼 잃는다.")
@@ -212,9 +209,9 @@ class GameResultTest {
                 dealer.addCard(JACK_SPADES);
 
                 GameResult gameResult = new GameResult(dealer, players);
-                int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
+                int playerResult = gameResult.getPlayersResult().get("tori");
 
-                assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
+                assertThat(playerResult).isEqualTo(-10000);
             }
         }
     }

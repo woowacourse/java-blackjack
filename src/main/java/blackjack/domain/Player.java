@@ -2,19 +2,14 @@ package blackjack.domain;
 
 public class Player extends Person {
     private static final int PLAYER_STOP_HIT_BOUND = 21;
-    private static final int ZERO = 0;
 
     private final Name name;
-    private BettingAmount bettingAmount;
+    private final BettingAmount bettingAmount;
 
-    private Player(Name name) {
+    public Player(Name name, BettingAmount bettingAmount) {
         super();
         this.name = name;
-        this.bettingAmount = new BettingAmount(ZERO);
-    }
-
-    public static Player from(String name) {
-        return new Player(new Name(name));
+        this.bettingAmount = bettingAmount;
     }
 
     @Override
@@ -29,9 +24,5 @@ public class Player extends Person {
 
     public int getBettingAmountToInt() {
         return bettingAmount.getBettingAmount();
-    }
-
-    public void setBettingAmount(BettingAmount bettingAmount) {
-        this.bettingAmount = bettingAmount;
     }
 }

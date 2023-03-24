@@ -13,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        tori = Player.from("tori");
+        tori = new Player(new Name("tori"), new BettingAmount(10000));
     }
 
     @DisplayName("이름을 입력받아 Player를 생성한다.")
@@ -22,18 +22,10 @@ class PlayerTest {
         assertThat(tori.getName()).isEqualTo("tori");
     }
 
-    @DisplayName("처음 Player가 생성되면 배팅 금액은 0이다.")
+    @DisplayName("배팅 금액을 확인할 수 있다.")
     @Test
-    void Should_BattingAmountIsZero_When_NewPlayer() {
-        assertThat(tori.getBettingAmountToInt()).isEqualTo(0);
-    }
-
-    @DisplayName("배팅 금액을 갱신할 수 있다.")
-    @Test
-    void Should_PlayerTest_When_PlayerTest() {
-        tori.setBettingAmount(new BettingAmount(1000));
-
-        assertThat(tori.getBettingAmountToInt()).isEqualTo(1000);
+    void Should_BattingAmount_When_NewPlayer() {
+        assertThat(tori.getBettingAmountToInt()).isEqualTo(10000);
     }
 
     @DisplayName("플레이어에게 카드를 추가할 수 있다.")
