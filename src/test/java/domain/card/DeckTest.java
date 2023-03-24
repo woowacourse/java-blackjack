@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,7 +26,7 @@ class DeckTest {
         var deck = new Deck();
         var cards = deck.getCards();
         var distinctFaces = cards.stream()
-                .map(Card::face)
+                .map(Card::getFace)
                 .collect(Collectors.toSet());
 
         assertThat(distinctFaces).hasSize(4);
@@ -38,7 +38,7 @@ class DeckTest {
         var deck = new Deck();
         var cards = deck.getCards();
         var cardsByFace = cards.stream()
-                .filter(card -> card.face().equals(face))
+                .filter(card -> card.getFace().equals(face))
                 .collect(Collectors.toSet());
 
         assertThat(cardsByFace).hasSize(13);

@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,6 +10,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import domain.AbstractTestFixture;
+import domain.Result;
+import domain.card.Deck;
 
 class UserTest extends AbstractTestFixture {
 
@@ -38,7 +42,7 @@ class UserTest extends AbstractTestFixture {
 
         user.drawFrom(deck);
 
-        assertThat(user.hand().cards()).hasSize(1);
+        assertThat(user.getHand().getCards()).hasSize(1);
     }
 
     static Stream<Arguments> test_win_lose_draw() {
@@ -54,7 +58,7 @@ class UserTest extends AbstractTestFixture {
                 Arguments.of(
                         new User("땡칠", createCards("A", "J")),
                         new User("조이", createCards("A", "A")),
-                        Result.WIN)
+                        Result.WIN_BY_BLACKJACK)
         );
     }
 
@@ -62,6 +66,15 @@ class UserTest extends AbstractTestFixture {
     @MethodSource
     void test_win_lose_draw(Player player, Player other, Result result) {
         assertThat(player.competeWith(other)).isEqualTo(result);
+    }
+
+    @DisplayName("블랙잭 승리인지 알 수 있다")
+    @Test
+    void test_win_by_blackjack() {
+        var user = new User("땡칠", createCards("K", "A"));
+        var other = new Dealer(createCards("K", "K"));
+
+        assertThat(user.competeWith(other)).isEqualTo(Result.WIN_BY_BLACKJACK);
     }
 
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
@@ -89,7 +102,7 @@ class UserTest extends AbstractTestFixture {
         var user = new User("조이", createCards("A", "J"));
         var dealer = new Dealer(createCards("K", "9", "10"));
 
-        assertThat(user.competeWith(dealer)).isEqualTo(Result.WIN);
+        assertThat(user.competeWith(dealer)).isEqualTo(Result.WIN_BY_BLACKJACK);
         assertThat(dealer.competeWith(user)).isEqualTo(Result.LOSE);
     }
 }

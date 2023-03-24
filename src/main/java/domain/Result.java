@@ -2,24 +2,15 @@ package domain;
 
 public enum Result {
 
-    DRAW {
-        @Override
-        public Result reverse() {
-            return DRAW;
-        }
-    },
-    WIN {
-        @Override
-        public Result reverse() {
-            return LOSE;
-        }
-    },
-    LOSE {
-        @Override
-        public Result reverse() {
-            return WIN;
-        }
-    };
+    DRAW(0), WIN(1), WIN_BY_BLACKJACK(1.5), LOSE(-1);
 
-    public abstract Result reverse();
+    private final double dividend;
+
+    Result(double dividend) {
+        this.dividend = dividend;
+    }
+
+    public double getDividend() {
+        return dividend;
+    }
 }

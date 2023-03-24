@@ -1,16 +1,23 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
 
-    private final Random random = new Random();
+    private static final int OFFSET_BETWEEN_SIZE_AND_INDEX = 1;
+
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = buildDeck();
+        this.cards = shuffle(buildDeck());
+    }
+
+    private List<Card> shuffle(List<Card> cards) {
+        List<Card> cardsToShuffle = new ArrayList<>(cards);
+        Collections.shuffle(cardsToShuffle);
+        return cardsToShuffle;
     }
 
     private List<Card> buildDeck() {
@@ -24,24 +31,21 @@ public class Deck {
     private List<Card> buildCardsOf(Face face) {
         List<Card> cards = new ArrayList<>();
         for (Letter letter : Letter.values()) {
-            cards.add(new Card(face, letter));
+            cards.add(Card.of(face, letter));
         }
         return cards;
     }
 
     public Card draw() {
         validateNotEmpty();
-        return cards.remove(pickRandomIndex());
+        int cardIndexOnTop = cards.size() - OFFSET_BETWEEN_SIZE_AND_INDEX;
+        return cards.remove(cardIndexOnTop);
     }
 
     private void validateNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 모두 소진됐습니다.");
         }
-    }
-
-    private int pickRandomIndex() {
-        return random.nextInt(cards.size());
     }
 
     public List<Card> getCards() {

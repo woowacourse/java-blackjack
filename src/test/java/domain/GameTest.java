@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.bank.Money;
+import domain.participant.Dealer;
+import domain.participant.User;
+
 public class GameTest extends AbstractTestFixture {
 
     @Test
@@ -19,9 +23,9 @@ public class GameTest extends AbstractTestFixture {
         game.dealTwice();
 
         for (var user : game.getUsers()) {
-            assertThat(user.hand().cards()).hasSize(2);
+            assertThat(user.getHand().getCards()).hasSize(2);
         }
-        assertThat(dealer.hand().cards()).hasSize(2);
+        assertThat(dealer.getHand().getCards()).hasSize(2);
     }
 
     @Test
@@ -56,5 +60,30 @@ public class GameTest extends AbstractTestFixture {
         var game = createGameFrom(dealer, user, user2);
 
         assertThat(game.getDealerResults()).containsOnly(Result.DRAW, Result.WIN);
+    }
+
+    @Test
+    @DisplayName("배팅할 수 있다")
+    void test_bet() {
+        var user = new User("조이", createCards("J", "K"));
+        var dealer = new Dealer(createCards("K", "9"));
+        var game = createGameFrom(dealer, user);
+
+        game.bet(user, Money.of(500));
+
+        assertThat(game.getProfitOf(user)).isEqualTo(Money.of(0));
+    }
+
+    @Test
+    @DisplayName("정산할 수 있다")
+    void test_evaluate() {
+        var user = new User("조이", createCards("A", "K"));
+        var dealer = new Dealer(createCards("K", "9"));
+        var game = createGameFrom(dealer, user);
+        game.bet(user, Money.of(500));
+
+        game.evaluate();
+
+        assertThat(game.getProfitOf(user)).isEqualTo(Money.of(750));
     }
 }

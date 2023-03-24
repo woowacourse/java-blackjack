@@ -3,13 +3,10 @@ package view;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import domain.Card;
-import domain.Hand;
-import domain.Result;
-import dto.PlayerDto;
+import controller.dto.CardDto;
+import controller.dto.PlayerDto;
 
 public class OutputView {
 
@@ -20,19 +17,19 @@ public class OutputView {
     public void printUsersStatus(List<PlayerDto> players) {
         for (PlayerDto player : players) {
             String name = player.getName();
-            printPlayerHand(name, player.getHand());
+            printPlayerCards(name, player.getCards());
         }
     }
 
-    public void printPlayerHand(String playerName, Hand hand) {
-        System.out.println(playerName + "카드: " + joinDisplaysOf(hand.cards()));
+    public void printPlayerCards(String name, List<CardDto> cards) {
+        System.out.println(name + "카드: " + joinDisplaysOf(cards));
     }
 
-    public void printFirstCardOfDealer(Hand hand) {
-        Iterator<Card> cardIterator = hand.cards().iterator();
+    public void printFirstCardOfDealer(List<CardDto> cards) {
+        Iterator<CardDto> cardIterator = cards.iterator();
         if (cardIterator.hasNext()) {
-            Card firstCard = cardIterator.next();
-            System.out.println("딜러: " + Display.of(firstCard));
+            CardDto firstCard = cardIterator.next();
+            System.out.println("딜러: " + getDisplay(firstCard));
             return;
         }
         System.out.println("딜러의 카드가 없습니다");
@@ -49,39 +46,47 @@ public class OutputView {
 
     public void printCardsAndScores(List<PlayerDto> players) {
         for (PlayerDto player : players) {
-            printCardsAndScore(player.getName(), player.getHand());
+            printCardsAndScore(player.getName(), player.getCards(), player.getScore());
         }
     }
 
-    private void printCardsAndScore(String name, Hand hand) {
-        System.out.println(name + "카드: " + joinDisplaysOf(hand.cards()) + " - 결과: " + hand.score());
+    private void printCardsAndScore(String name, List<CardDto> cards, int score) {
+        System.out.println(name + "카드: " + joinDisplaysOf(cards) + " - 결과: " + score);
     }
 
-    public void printResult(String userName, Result result) {
-        System.out.println(userName + ": " + Display.of(result));
+    public void printResult(String name, String result) {
+        System.out.println(name + ": " + ResultCategory.of(result).getResult());
     }
 
-    public void printDealerResults(List<Result> results) {
+    public void printDealerResults(List<String> results) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        String renderedResults = Arrays.stream(Result.values())
-                .map(targetResult -> getDisplay(targetResult, results))
-                .collect(Collectors.joining(" "));
-        System.out.println("딜러: " + renderedResults);
+        List<ResultCategory> resultCategories = results.stream()
+                .map(ResultCategory::of)
+                .collect(Collectors.toList());
+        System.out.println("딜러: " + getDisplay(resultCategories));
+    }
+
+    public void printProfitStart() {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+    }
+
+    public void printProfit(String name, int profit) {
+        System.out.println(name + ": " + profit);
     }
 
     public static void printError(String message) {
         System.out.println("[ERROR] " + message);
     }
 
-    private long countResults(Result targetResult, List<Result> results) {
-        return results.stream()
-                .filter(result -> result.equals(targetResult))
+    private long countResults(ResultCategory resultCategory, List<ResultCategory> resultCategories) {
+        return resultCategories.stream()
+                .filter(result -> result.equals(resultCategory))
                 .count();
     }
 
-    private String joinDisplaysOf(Set<Card> cards) {
+    private String joinDisplaysOf(List<CardDto> cards) {
         return cards.stream()
-                .map(Display::of)
+                .map(this::getDisplay)
                 .collect(Collectors.joining(", "));
     }
 
@@ -91,7 +96,13 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private String getDisplay(Result targetResult, List<Result> results) {
-        return countResults(targetResult, results) + Display.of(targetResult);
+    private String getDisplay(List<ResultCategory> resultCategories) {
+        return Arrays.stream(ResultCategory.values())
+                .map(resultCategory -> countResults(resultCategory, resultCategories) + resultCategory.getResult())
+                .collect(Collectors.joining(" "));
+    }
+
+    private String getDisplay(CardDto card) {
+        return card.getLetter() + card.getName();
     }
 }

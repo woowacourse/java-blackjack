@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import domain.AbstractTestFixture;
+import domain.card.Deck;
 
 public class ParticipantsTest extends AbstractTestFixture {
     @Test
@@ -34,9 +37,9 @@ public class ParticipantsTest extends AbstractTestFixture {
 
         participants.dealFrom(new Deck());
 
-        assertThat(user.hand().cards()).hasSize(1);
-        assertThat(user2.hand().cards()).hasSize(1);
-        assertThat(dealer.hand().cards()).hasSize(1);
+        assertThat(user.getHand().getCards()).hasSize(1);
+        assertThat(user2.getHand().getCards()).hasSize(1);
+        assertThat(dealer.getHand().getCards()).hasSize(1);
     }
 
     static Stream<Arguments> test_find_if_player_is_participant() {
