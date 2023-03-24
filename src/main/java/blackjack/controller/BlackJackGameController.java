@@ -8,9 +8,9 @@ import blackjack.domain.GamePlayer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.TryCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.TryCommand;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +84,7 @@ public class BlackJackGameController {
     private void playerHitOrStand(Game game, Player player) {
         while (player.isHitPossible()) {
             String tryCommand = inputView.readTryCommand(player.getName());
-            if (!TryCommand.isHit(tryCommand)) {
+            if (!TryCommand.findCommand(tryCommand)) {
                 outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
                 break;
             }
