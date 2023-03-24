@@ -12,6 +12,10 @@ public interface Status {
 
     Status stay();
 
+    boolean isBlackjack();
+
+    boolean isBust();
+
     boolean isFinished();
 
     Score score();

@@ -8,16 +8,9 @@ public class Card {
 
     private static final Map<String, Card> cards = new LinkedHashMap<>();
 
-    /**
-     * todo: 질문1.
-     * static 생성자를 이용할 때, 현재 방식처럼 이미 존재하는 ArrayList에 값을 넣어주는 것이 맞나요?
-     * 아니면, static 생성자 내부에서 List타입을 생성해 필드에 List자체를 넣어주는 것이 맞나요?
-     *
-     * 완태님의 의견이 궁금합니다!
-     */
     static {
-        for (Shape shape : Shape.values()) {
-            for (Denomination denomination : Denomination.values()) {
+        for (final Shape shape : Shape.values()) {
+            for (final Denomination denomination : Denomination.values()) {
                 cards.put(toKey(shape, denomination), new Card(shape, denomination));
             }
         }
@@ -26,17 +19,17 @@ public class Card {
     private final Shape shape;
     private final Denomination denomination;
 
-    private Card(Shape shape, Denomination denomination) {
+    private Card(final Shape shape, final Denomination denomination) {
         this.shape = shape;
         this.denomination = denomination;
 
     }
 
-    private static String toKey(Shape shape, Denomination denomination) {
+    private static String toKey(final Shape shape, final Denomination denomination) {
         return shape.name() + denomination.name();
     }
 
-    public static Card from(Shape shape, Denomination denomination) {
+    public static Card from(final Shape shape, final Denomination denomination) {
         return cards.computeIfAbsent(toKey(shape, denomination), ignored -> new Card(shape, denomination));
     }
 
@@ -45,14 +38,14 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        final Card card = (Card) o;
         return shape == card.shape && denomination == card.denomination;
     }
 

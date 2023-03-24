@@ -7,23 +7,23 @@ import blackjack.domain.participants.status.Status;
 
 public class Stay extends Stopped {
 
-    public Stay(Hand cards) {
+    public Stay(final Hand cards) {
         super(cards);
     }
 
     @Override
-    public ResultType findResultType(Status opponent) {
-        Score scoreOfOpponent = opponent.score();
-        if (scoreOfOpponent.isOverThanMax()) {
+    public ResultType findResultType(final Status opponent) {
+        if (opponent.isBust()) {
             return ResultType.WIN;
         }
-        if (scoreOfOpponent.isMax()) {
+        if (opponent.isBlackjack()) {
             return ResultType.LOSE;
         }
-        return findResultTypeWhenOpponentStay(scoreOfOpponent);
+        return findResultTypeWhenOpponentStay(opponent);
     }
 
-    public ResultType findResultTypeWhenOpponentStay(Score scoreOfOpponent) {
+    public ResultType findResultTypeWhenOpponentStay(final Status opponent) {
+        final Score scoreOfOpponent = opponent.score();
         if (score().isBiggerThan(scoreOfOpponent)) {
             return ResultType.WIN;
         }
@@ -32,6 +32,5 @@ public class Stay extends Stopped {
         }
         return ResultType.TIE;
     }
-
 
 }
