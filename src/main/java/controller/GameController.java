@@ -2,19 +2,18 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+import controller.mapper.CardDtoMapper;
+import controller.mapper.PlayerDtoMapper;
+import controller.mapper.ResultMapper;
 import domain.Game;
+import domain.Result;
 import domain.bank.Money;
-import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.User;
-import dto.CardDto;
-import dto.PlayerDto;
 import view.IllegalArgumentExceptionHandler;
 import view.InputView;
 import view.OutputView;
@@ -32,6 +31,7 @@ public class GameController {
     public void run() {
         Participants participants = Participants.of(inputView.readNames());
         Game game = new Game(participants, new Deck());
+
         placeBet(game);
         start(game);
         play(game);
@@ -57,9 +57,9 @@ public class GameController {
     private void start(Game game) {
         game.dealTwice();
 
-        outputView.printDealStatus(createDtosOf(game.getUsers()));
-        outputView.printFirstCardOfDealer(createDtosOf(game.getDealer().getHand().getCards()));
-        outputView.printUsersStatus(createDtosOf(game.getUsers()));
+        outputView.printDealStatus(PlayerDtoMapper.map(game.getUsers()));
+        outputView.printFirstCardOfDealer(CardDtoMapper.mapFirstOf(game.getDealer().getHand().getCards()));
+        outputView.printUsersStatus(PlayerDtoMapper.map(game.getUsers()));
     }
 
     private void play(Game game) {
@@ -72,23 +72,20 @@ public class GameController {
 
     private void showCardsAndScores(Game game) {
         List<Player> players = joinPlayers(game.getDealer(), game.getUsers());
-        outputView.printCardsAndScores(createDtosOf(players));
+        outputView.printCardsAndScores(PlayerDtoMapper.map(players));
     }
 
     private void showResultsOf(Game game) {
-        List<String> dealerResults = game.getDealerResults()
-                .stream()
-                .map(Enum::name)
-                .collect(Collectors.toList());
-        outputView.printDealerResults(dealerResults);
+        List<Result> dealerResults = game.getDealerResults();
+        outputView.printDealerResults(ResultMapper.map(dealerResults));
         for (var user : game.getUsers()) {
-            String userResult = game.getResultOf(user).name();
-            outputView.printResult(user.getName(), userResult);
+            Result result = game.getResultOf(user);
+            outputView.printResult(user.getName(), ResultMapper.map(result));
         }
     }
 
     private void showProfitsOf(Game game) {
-        System.out.println(System.lineSeparator() + "## 최종 수익");
+        outputView.printProfitStart();
         outputView.printProfit(game.getDealer().getName(), game.getDealerProfit());
         for (User user : game.getUsers()) {
             outputView.printProfit(user.getName(), game.getProfitOf(user).getValue());
@@ -98,7 +95,7 @@ public class GameController {
     private void selectHitOrStand(Game game, User user) {
         while (user.canHit() && inputView.askForHit(user.getName())) {
             game.dealTo(user);
-            outputView.printPlayerCards(user.getName(), createDtosOf(user.getHand().getCards()));
+            outputView.printPlayerCards(user.getName(), CardDtoMapper.map(user.getHand().getCards()));
         }
     }
 
@@ -116,30 +113,5 @@ public class GameController {
         players.add(dealer);
         players.addAll(users);
         return players;
-    }
-
-    private List<PlayerDto> createDtosOf(List<? extends Player> players) {
-        return players
-                .stream()
-                .map(this::createDtoOf)
-                .collect(Collectors.toList());
-    }
-
-    private List<CardDto> createDtosOf(Set<Card> cards) {
-        return cards
-                .stream()
-                .map(this::createDtoOf)
-                .collect(Collectors.toList());
-    }
-
-    private PlayerDto createDtoOf(Player player) {
-        return new PlayerDto(
-                player.getName(),
-                createDtosOf(player.getHand().getCards()),
-                player.getHand().score().getScore());
-    }
-
-    private CardDto createDtoOf(Card card) {
-        return new CardDto(card.getLetter().getLetter(), card.getFace().getName());
     }
 }

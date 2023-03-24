@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dto.CardDto;
-import dto.PlayerDto;
+import controller.dto.CardDto;
+import controller.dto.PlayerDto;
 
 public class OutputView {
 
@@ -55,7 +55,7 @@ public class OutputView {
     }
 
     public void printResult(String name, String result) {
-        System.out.println(name + ": " + ResultCategory.of(result).getDisplay());
+        System.out.println(name + ": " + ResultCategory.of(result).getResult());
     }
 
     public void printDealerResults(List<String> results) {
@@ -64,6 +64,10 @@ public class OutputView {
                 .map(ResultCategory::of)
                 .collect(Collectors.toList());
         System.out.println("딜러: " + getDisplay(resultCategories));
+    }
+
+    public void printProfitStart() {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
     }
 
     public void printProfit(String name, int profit) {
@@ -94,7 +98,7 @@ public class OutputView {
 
     private String getDisplay(List<ResultCategory> resultCategories) {
         return Arrays.stream(ResultCategory.values())
-                .map(resultCategory -> countResults(resultCategory, resultCategories) + resultCategory.getDisplay())
+                .map(resultCategory -> countResults(resultCategory, resultCategories) + resultCategory.getResult())
                 .collect(Collectors.joining(" "));
     }
 
