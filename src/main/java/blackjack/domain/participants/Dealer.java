@@ -17,12 +17,11 @@ public class Dealer {
         status = new Hit();
     }
 
-    public void drawInitialCards(Card card1, Card card2) {
-        drawCard(card1);
-        drawCard(card2);
+    public void drawInitialCards(final Card card1, final Card card2) {
+        status = status.initCards(card1, card2);
     }
 
-    public void drawCard(Card card) {
+    public void drawCard(final Card card) {
         status = status.addCard(card);
     }
 
@@ -32,7 +31,7 @@ public class Dealer {
     }
 
     public boolean isDrawable() {
-        Score currentScore = score();
+        final Score currentScore = score();
         return currentScore.getValue() <= DEALER_DRAW_POINT;
     }
 

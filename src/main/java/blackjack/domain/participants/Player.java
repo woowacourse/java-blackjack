@@ -14,21 +14,20 @@ public class Player {
     private Status status;
     private BettingMoney bettingMoney;
 
-    Player(String userName) {
+    Player(final String userName) {
         user = new User(userName);
         status = new Hit();
     }
 
-    void bet(BettingMoney bettingMoney) {
+    void bet(final BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
-    void drawInitialCards(Card card1, Card card2) {
-        drawCard(card1);
-        drawCard(card2);
+    void drawInitialCards(final Card card1, final Card card2) {
+        status = status.initCards(card1, card2);
     }
 
-    public void drawCard(Card card) {
+    public void drawCard(final Card card) {
         status = status.addCard(card);
     }
 
@@ -40,7 +39,7 @@ public class Player {
         status = status.stay();
     }
 
-    public ResultType findResult(Dealer dealer) {
+    public ResultType findResult(final Dealer dealer) {
         return status.findResultType(dealer.getStatus());
     }
 
@@ -52,7 +51,7 @@ public class Player {
         return status.getCards();
     }
 
-    boolean hasName(String playerName) {
+    boolean hasName(final String playerName) {
         return user.getName()
                 .equals(playerName);
     }

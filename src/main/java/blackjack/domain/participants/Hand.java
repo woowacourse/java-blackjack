@@ -4,10 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.game.Score;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -19,6 +17,10 @@ public class Hand {
 
     public Hand() {
         this(Collections.emptyList());
+    }
+
+    public Hand(final Card... cards) {
+        this(Arrays.stream(cards).collect(Collectors.toList()));
     }
 
     public Hand addCard(final Card card) {

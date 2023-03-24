@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface Status {
 
+    Status initCards(Card card1, Card card2);
+
     Status addCard(Card card);
 
     Status stay();
