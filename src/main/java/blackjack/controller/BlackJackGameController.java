@@ -88,7 +88,7 @@ public class BlackJackGameController {
                 outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
                 break;
             }
-            game.Hit(player);
+            game.hit(player);
             outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
         }
     }
@@ -96,7 +96,7 @@ public class BlackJackGameController {
     private void dealerHitOrStand(Game game, Dealer dealer) {
         while (dealer.isHitPossible()) {
             outputView.printDealerHit();
-            game.Hit(dealer);
+            game.hit(dealer);
         }
     }
 

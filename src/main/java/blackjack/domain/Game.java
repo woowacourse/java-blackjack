@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 public class Game {
+    private static final int INITIAL_CARD_SIZE = 2;
+
     private final Deck deck;
     private final GamePlayer gamePlayer;
 
@@ -17,19 +19,19 @@ public class Game {
     private void initializeGame() {
         Players players = getPlayers();
         Dealer dealer = getDealer();
-        for (int i = 0; i < 2; i++) {
-            Hit(dealer);
+        for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
+            hit(dealer);
             initializePlayer(players);
         }
     }
 
     private void initializePlayer(Players players) {
         for (Player player : players.getPlayers()) {
-            Hit(player);
+            hit(player);
         }
     }
 
-    public void Hit(Person person) {
+    public void hit(Person person) {
         person.addCard(deck.draw());
     }
 
