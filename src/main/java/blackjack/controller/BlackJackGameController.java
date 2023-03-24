@@ -82,21 +82,15 @@ public class BlackJackGameController {
     }
 
     private void playerHitOrStand(Game game, Player player) {
-        boolean repeat = true;
-        while (player.isHitPossible() && repeat) {
+        while (player.isHitPossible()) {
             String tryCommand = inputView.readTryCommand(player.getName());
-            repeat = isHitTryCommand(player, tryCommand);
+            if (!TryCommand.isHit(tryCommand)) {
+                outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
+                break;
+            }
             game.Hit(player);
             outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
         }
-    }
-
-    private boolean isHitTryCommand(Player player, String tryCommand) {
-        if (!TryCommand.isHit(tryCommand)) {
-            outputView.printCards(player.getName(), cardsToPrintFormat(player.getAllCards()));
-            return false;
-        }
-        return true;
     }
 
     private void dealerHitOrStand(Game game, Dealer dealer) {
