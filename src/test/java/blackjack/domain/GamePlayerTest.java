@@ -24,8 +24,7 @@ class GamePlayerTest {
 
         gamePlayer = new GamePlayer(new Dealer(), new Players(List.of(player1, player2, player3)));
     }
-
-
+    
     @DisplayName("GamePlayer는 Players를 가진다.")
     @Test
     void Should_HasPlayers_When_NewGamePlayer() {
