@@ -14,6 +14,7 @@ class DeckTest {
     @Test
     void Should_Create_When_NewDeck() {
         deck = Deck.of(new ShuffleCardsGenerator().generator());
+
         assertThat(deck.getSize()).isEqualTo(52);
     }
 
@@ -21,6 +22,7 @@ class DeckTest {
     @Test
     void Should_Draw_When_HIT() {
         deck = Deck.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEARTS)));
+
         assertThat(deck.draw().getCardNumberToString()).isEqualTo("A");
     }
 
@@ -28,6 +30,7 @@ class DeckTest {
     @Test
     void Should_ReturnTrue_When_Empty() {
         deck = Deck.of(List.of());
+
         assertThat(deck.isEmpty()).isTrue();
     }
 
@@ -35,6 +38,7 @@ class DeckTest {
     @Test
     void Should_ReturnFalse_When_NotEmpty() {
         deck = Deck.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEARTS)));
+
         assertThat(deck.isEmpty()).isFalse();
     }
 
