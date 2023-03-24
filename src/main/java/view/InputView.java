@@ -10,8 +10,9 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String YES = "y";
     private static final String NO = "n";
-
     private static final Scanner scanner = new Scanner(System.in);
+
+    private InputView(){}
 
     public static List<String> readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -20,6 +21,14 @@ public class InputView {
         validateBlank(input);
         return Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    public static Integer readMoney(String playerName) {
+        System.out.printf("%n%s의 베팅 금액은?%n", playerName);
+        String input = scanner.next();
+        validateNull(input);
+        validateBlank(input);
+        return Integer.parseInt(input);
     }
 
     private static void validateNull(String input) {
