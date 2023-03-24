@@ -13,7 +13,7 @@ public enum ResultType {
         this.expression = expression;
     }
 
-    public Integer calculateProfit(int bettingAMount) {
-        return expression.apply(bettingAMount);
+    public Integer calculateProfit(int bettingAmount) {
+        return expression.apply(bettingAmount);
     }
 }
