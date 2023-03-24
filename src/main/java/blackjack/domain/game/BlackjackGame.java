@@ -67,10 +67,6 @@ public class BlackjackGame {
         return drawCount;
     }
 
-    public int findDealerDrawPoint() {
-        return dealer.getDrawPoint();
-    }
-
     public List<Card> findDealerCard() {
         return dealer.getCards();
     }

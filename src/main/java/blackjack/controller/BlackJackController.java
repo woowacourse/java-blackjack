@@ -91,7 +91,7 @@ public class BlackJackController {
 
     private void drawDealerCards(final BlackjackGame blackjackGame) {
         IntStream.range(0, blackjackGame.findDealerDrawCount())
-                .forEach(ignored -> outputView.printDealerCardDrawMessage(blackjackGame.findDealerDrawPoint()));
+                .forEach(ignored -> outputView.printDealerCardDrawMessage());
     }
 
     private void printResult(final BlackjackGame blackjackGame) {

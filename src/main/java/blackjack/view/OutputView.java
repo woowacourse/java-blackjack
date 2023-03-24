@@ -15,7 +15,7 @@ public class OutputView {
     private static final String CARD = "카드";
     private static final String RESULT = " - 결과: ";
     private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다.";
-    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + DEALER + "는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + DEALER + "는 16이하라 한장의 카드를 더 받았습니다.";
 
     private static final String FINAL_RESULT = System.lineSeparator() + "## 최종 수익";
 
@@ -53,8 +53,8 @@ public class OutputView {
         System.out.println(playerName + DELIMITER + cards);
     }
 
-    public void printDealerCardDrawMessage(final int dealerDrawPoint) {
-        System.out.printf(OUTPUT_DEALER_STATUS_MESSAGE + System.lineSeparator(), dealerDrawPoint);
+    public void printDealerCardDrawMessage() {
+        System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
     }
 
     public void printFinalStatusOfDealer(final List<Card> dealerCards, final int dealerScore) {

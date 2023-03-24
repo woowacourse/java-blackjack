@@ -39,10 +39,6 @@ public class Dealer {
         return status.score();
     }
 
-    public int getDrawPoint() {
-        return DEALER_DRAW_POINT;
-    }
-
     public List<Card> getCards() {
         return status.getCards();
     }
