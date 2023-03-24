@@ -16,8 +16,4 @@ public class GamePlayer {
     public Players getPlayers() {
         return players;
     }
-
-    public int getCount() {
-        return players.getCount() + 1;
-    }
 }

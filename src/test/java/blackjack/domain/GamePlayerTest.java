@@ -15,9 +15,15 @@ class GamePlayerTest {
         gamePlayer = new GamePlayer(new Dealer(), Players.from(List.of("name1", "name2", "name3")));
     }
 
-    @DisplayName("GamePlayer의 수는 players의 수보다 하나 많다.")
+    @DisplayName("GamePlayer는 Players를 가진다.")
     @Test
-    void Should_Create_When_NewGamePlayer() {
-        assertThat(gamePlayer.getCount()).isEqualTo(4);
+    void Should_HasPlayers_When_NewGamePlayer() {
+        assertThat(gamePlayer.getPlayers()).isInstanceOf(Players.class);
+    }
+
+    @DisplayName("GamePlayer는 Dealer를 가진다.")
+    @Test
+    void Should_HasDealer_When_NewGamePlayer() {
+        assertThat(gamePlayer.getDealer()).isInstanceOf(Dealer.class);
     }
 }
