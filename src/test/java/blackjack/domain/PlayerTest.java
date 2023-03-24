@@ -32,6 +32,7 @@ class PlayerTest {
     @Test
     void Should_PlayerTest_When_PlayerTest() {
         tori.setBettingAmount(new BettingAmount(1000));
+
         assertThat(tori.getBettingAmountToInt()).isEqualTo(1000);
     }
 
@@ -59,7 +60,7 @@ class PlayerTest {
 
     @DisplayName("플레이어가 가지고 있는 카드의 점수를 계산한다.")
     @Nested
-    class calculateTest {
+    class CalculateTest {
         @DisplayName("ACE가 없으면 카드의 숫자로 합을 계산한다.")
         @Test
         void Should_Success_When_CalculateScore() {

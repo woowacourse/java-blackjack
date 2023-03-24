@@ -46,7 +46,7 @@ class HandTest {
 
     @DisplayName("손에 있는 모든 카드의 점수를 계산한다.")
     @Nested
-    class totalScoreTest {
+    class TotalScoreTest {
         @DisplayName("Jack, ACE 카드를 가지고 있을 때 점수의 합은 21점이다.")
         @Test
         void Should_TotalScore_When_HaveCard1() {

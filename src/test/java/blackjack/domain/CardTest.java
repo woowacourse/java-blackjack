@@ -15,7 +15,7 @@ class CardTest {
 
     @DisplayName("ACE 카드인지 확인한다.")
     @Nested
-    class ace {
+    class Ace {
         @DisplayName("ACE 카드 이면 True을 리턴한다.")
         @Test
         void Should_True_When_isACE() {

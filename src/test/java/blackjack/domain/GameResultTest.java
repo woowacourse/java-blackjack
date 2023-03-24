@@ -34,10 +34,10 @@ class GameResultTest {
 
     @DisplayName("플레이어와 딜러의 점수를 통해 승패를 결정한다.")
     @Nested
-    class calculate {
+    class Calculate {
         @DisplayName("플레이어가 블랙잭일 때 가진 카드가 2개이면")
         @Nested
-        class playerIsBlackJackCardsSizeIsTwo {
+        class PlayerIsBlackJackCardsSizeIsTwo {
             @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다.")
             @Test
             void Should_Draw_When_DealerBlackJack() {
@@ -69,7 +69,7 @@ class GameResultTest {
 
         @DisplayName("플레이어가 블랙잭일 때 가진 카드가 2개가 아니면")
         @Nested
-        class playerIsBlackJack {
+        class PlayerIsBlackJack {
             @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액을 돌려받는다.")
             @Test
             void Should_Draw_When_DealerBlackJack() {
@@ -103,7 +103,7 @@ class GameResultTest {
 
         @DisplayName("플레이어가 블랙잭보다 작을 때")
         @Nested
-        class playerLessThanBlackJack {
+        class PlayerLessThanBlackJack {
             @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerBlackJack() {
@@ -135,7 +135,7 @@ class GameResultTest {
 
             @DisplayName("딜러가 블랙잭보다 작을 때")
             @Nested
-            class dealerLessThanBlackJack {
+            class DealerLessThanBlackJack {
                 @DisplayName("플레이어의 합이 딜러보다 높으면 플레이어는 배팅한 금액만큼 돌려받는다.")
                 @Test
                 void Should_WIN_When_PlayerMoreThanDealer() {
@@ -144,7 +144,8 @@ class GameResultTest {
                     dealer.addCard(JACK_DIAMONDS);
                     dealer.addCard(NINE_HEARTS);
 
-                    GameResult gameResult = new GameResult(dealer, players);
+                    GameResult gameResult = new GameResult(dealer,
+                            players);
                     int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
 
                     assertThat(playerResult).isEqualTo(BETTING_AMOUNT);
@@ -158,7 +159,8 @@ class GameResultTest {
                     dealer.addCard(JACK_DIAMONDS);
                     dealer.addCard(JACK_SPADES);
 
-                    GameResult gameResult = new GameResult(dealer, players);
+                    GameResult gameResult = new GameResult(dealer,
+                            players);
                     int playerResult = gameResult.getPlayersResult().get(PLAYER_NAME);
 
                     assertThat(playerResult).isEqualTo(-BETTING_AMOUNT);
@@ -168,7 +170,7 @@ class GameResultTest {
 
         @DisplayName("플레이어가 버스트일 때")
         @Nested
-        class playerBurst {
+        class PlayerBurst {
             @DisplayName("딜러가 블랙잭이면 플레이어는 배팅한 금액만큼 잃는다.")
             @Test
             void Should_LOSE_When_DealerBlackJack() {

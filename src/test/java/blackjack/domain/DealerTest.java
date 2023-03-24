@@ -55,7 +55,7 @@ class DealerTest {
 
     @DisplayName("딜러가 가지고 있는 카드의 점수를 계산한다.")
     @Nested
-    class calculateTest {
+    class CalculateTest {
         @DisplayName("ACE가 없을 때")
         @Test
         void Should_Success_When_CalculateScore() {
