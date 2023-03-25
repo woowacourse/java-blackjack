@@ -16,13 +16,13 @@ class DealerTest {
         dealer = new Dealer();
     }
 
-    @DisplayName("생성 테스트")
+    @DisplayName("생성되었을 때 가지고 있는 카드가 없다.")
     @Test
     void Should_Create_When_NewDealer() {
         assertThat(dealer.getAllCards().size()).isEqualTo(0);
     }
 
-    @DisplayName("카드 추가 테스트")
+    @DisplayName("딜러에게 카드를 추가할 수 있다.")
     @Test
     void Should_Success_When_AddCard() {
         Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
@@ -31,7 +31,7 @@ class DealerTest {
         assertThat(dealer.getAllCards()).contains(card);
     }
 
-    @DisplayName("카드 Get 테스트")
+    @DisplayName("딜러가 가지고 있는 모든 카드를 확인할 수 있다.")
     @Test
     void Should_Success_When_GetAllCards() {
         Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
@@ -44,7 +44,7 @@ class DealerTest {
         assertThat(dealer.getAllCards()).containsAll(List.of(card, card2, card3));
     }
 
-    @DisplayName("첫번째 카드만 Get 테스트")
+    @DisplayName("딜러가 가지고 있는 첫번째 카드만 확인할 수 있다.")
     @Test
     void Should_FirstCard_When_GetFirstCards() {
         Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
@@ -53,9 +53,9 @@ class DealerTest {
         assertThat(dealer.getAllCards()).size().isEqualTo(1);
     }
 
-    @DisplayName("카드 점수 계산")
+    @DisplayName("딜러가 가지고 있는 카드의 점수를 계산한다.")
     @Nested
-    class calculateTest {
+    class CalculateTest {
         @DisplayName("ACE가 없을 때")
         @Test
         void Should_Success_When_CalculateScore() {
@@ -64,13 +64,13 @@ class DealerTest {
             dealer.addCard(card);
             dealer.addCard(card2);
 
-            assertThat(dealer.calculateScore()).isEqualTo(20);
+            assertThat(dealer.getScore()).isEqualTo(20);
         }
 
         @DisplayName("ACE를 가지고 있을 때")
         @Nested
         class HavaACE {
-            @DisplayName("ACE의 점수를 11점으로 계산하는 경우 테스트")
+            @DisplayName("카드의 점수의 합이 21점을 넘지 않으면, ACE의 점수를 11점으로 계산한다.")
             @Test
             void Should_ACEScoreIs11_When_Burst() {
                 Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
@@ -78,10 +78,10 @@ class DealerTest {
                 dealer.addCard(card);
                 dealer.addCard(card2);
 
-                assertThat(dealer.calculateScore()).isEqualTo(21);
+                assertThat(dealer.getScore()).isEqualTo(21);
             }
 
-            @DisplayName("ACE의 점수를 1점으로 계산하는 경우 테스트")
+            @DisplayName("카드 점수의 합이 21점을 넘는다면, ACE의 점수를 1점으로 계산한다.")
             @Test
             void Should_AIs1_When_Burst() {
                 Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
@@ -91,15 +91,15 @@ class DealerTest {
                 dealer.addCard(card2);
                 dealer.addCard(card3);
 
-                assertThat(dealer.calculateScore()).isEqualTo(12);
+                assertThat(dealer.getScore()).isEqualTo(12);
             }
         }
     }
 
-    @DisplayName("Hit 테스트")
+    @DisplayName("카드의 합이 17을 넘지 않을 경우 Hit을 할 수 있다.")
     @Nested
     class Hit {
-        @DisplayName("카드의 합이 17 이상일 경우 Hit 불가능")
+        @DisplayName("카드의 합이 17일 경우 Hit을 할 수 없다.")
         @Test
         void Should_isHitFalse_When_MoreThan17() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
@@ -110,7 +110,7 @@ class DealerTest {
             assertThat(dealer.isHitPossible()).isFalse();
         }
 
-        @DisplayName("딜러는 카드의 합이 17을 초과하지 않는다면 Hit 가능")
+        @DisplayName("카드의 합이 16일 경우 Hit을 할 수 있다.")
         @Test
         void Should_isHitTrue_When_LessThan17() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);

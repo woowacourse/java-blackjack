@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final int ZERO = 0;
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String DELIMITER = ", ";
 
@@ -40,7 +39,10 @@ public class OutputView {
     }
 
     public void printDealerResult(List<String> dealerCards, int calculateScore) {
-        System.out.println("딜러 카드: " + String.join(DELIMITER, dealerCards) + " - 결과: " + calculateScore);
+        System.out.println(System.lineSeparator()
+                + "딜러 카드: " + String.join(DELIMITER, dealerCards)
+                + " - 결과: "
+                + calculateScore);
     }
 
     public void printPlayerResult(Map<String, List<String>> players, List<Integer> calculateScore) {
@@ -55,25 +57,19 @@ public class OutputView {
         }
     }
 
-    public void printFinalVictoryOrDefeat(Map<String, Integer> dealerResult, Map<String, String> playerResult) {
+    public void printFinalProfit(int dealerResult, Map<String, Integer> playerResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
-        printFinalVictoryOrDefeatDealer(dealerResult);
-        printFinalVictoryOrDefeatPlayers(playerResult);
+        printFinalProfitDealer(dealerResult);
+        printFinalProfitPlayers(playerResult);
     }
 
-    private void printFinalVictoryOrDefeatDealer(Map<String, Integer> dealerResult) {
-        StringBuilder dealerResultMsg = new StringBuilder("딜러: ");
-        for (String victoryOrDefeat : dealerResult.keySet()) {
-            if (dealerResult.get(victoryOrDefeat) != ZERO) {
-                dealerResultMsg.append(dealerResult.get(victoryOrDefeat)).append(victoryOrDefeat).append(" ");
-            }
-        }
-        System.out.println(dealerResultMsg);
+    private void printFinalProfitDealer(int dealerResult) {
+        System.out.println("딜러: " + dealerResult);
     }
 
-    private void printFinalVictoryOrDefeatPlayers(Map<String, String> playerResult) {
+    private void printFinalProfitPlayers(Map<String, Integer> playerResult) {
         for (String playerName : playerResult.keySet()) {
             System.out.println(playerName
                     + ": "

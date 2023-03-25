@@ -1,9 +1,8 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
+    private static final int INITIAL_CARD_SIZE = 2;
+
     private final Deck deck;
     private final GamePlayer gamePlayer;
 
@@ -18,56 +17,29 @@ public class Game {
     }
 
     private void initializeGame() {
-        List<Card> cards = new ArrayList<>();
-        int playersCount = getPlayersCount();
-        for (int i = 0; i < playersCount + 1; i++) {
-            cards.add(deck.draw());
-            cards.add(deck.draw());
+        Players players = getPlayers();
+        Dealer dealer = getDealer();
+        for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
+            hit(dealer);
+            initializePlayer(players);
         }
-        gamePlayer.initializeGamePlayer(cards);
     }
 
-    public int getDealerScore() {
-        return gamePlayer.getDealer().calculateScore();
+    private void initializePlayer(Players players) {
+        for (Player player : players.getPlayers()) {
+            hit(player);
+        }
     }
 
-    public List<Integer> getPlayersScore() {
-        return gamePlayer.getPlayers().getPlayersScore();
+    public void hit(Person person) {
+        person.addCard(deck.draw());
     }
 
-    public void dealerHit() {
-        gamePlayer.dealerHit(deck.draw());
+    public Dealer getDealer() {
+        return gamePlayer.getDealer();
     }
 
-    public void playerHit(int i) {
-        gamePlayer.playerHit(i, deck.draw());
-    }
-
-    public boolean isDealerHitPossible() {
-        return gamePlayer.getDealer().isHitPossible();
-    }
-
-    public boolean isPlayerHitPossibleByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).isHitPossible();
-    }
-
-    public String getPlayerNameByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).getName();
-    }
-
-    public List<Card> getPlayerCardsByIndex(int i) {
-        return gamePlayer.getPlayers().getPlayer(i).getAllCards();
-    }
-
-    public Card getDealerFirstCard() {
-        return gamePlayer.getDealer().getFirstCard();
-    }
-
-    public List<Card> getDealerAllCards() {
-        return gamePlayer.getDealer().getAllCards();
-    }
-
-    public int getPlayersCount() {
-        return gamePlayer.getPlayers().count();
+    public Players getPlayers() {
+        return gamePlayer.getPlayers();
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class NameTest {
-    @DisplayName("생성 테스트")
+    @DisplayName("Name을 생성한다.")
     @Test
     void Should_Create_When_NewName() {
         Name name = new Name("name");

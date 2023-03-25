@@ -2,21 +2,13 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         validatePlayersCount(players);
         this.players = players;
-    }
-
-    public static Players from(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::from)
-                .collect(Collectors.toList());
-        return new Players(players);
     }
 
     private void validatePlayersCount(List<Player> players) {
@@ -28,20 +20,12 @@ public class Players {
     public List<Integer> getPlayersScore() {
         List<Integer> playersScore = new ArrayList<>();
         for (Player player : players) {
-            playersScore.add(player.calculateScore());
+            playersScore.add(player.getScore());
         }
         return playersScore;
     }
 
-    public void addCardToPlayer(int i, Card card) {
-        players.get(i).addCard(card);
-    }
-
-    public Player getPlayer(int i) {
-        return players.get(i);
-    }
-
-    public int count() {
-        return players.size();
+    public List<Player> getPlayers() {
+        return players;
     }
 }

@@ -4,23 +4,25 @@ public class Player extends Person {
     private static final int PLAYER_STOP_HIT_BOUND = 21;
 
     private final Name name;
+    private final BettingAmount bettingAmount;
 
-    private Player(Name name) {
+    public Player(Name name, BettingAmount bettingAmount) {
         super();
         this.name = name;
-    }
-
-    public static Player from(String name) {
-        return new Player(new Name(name));
+        this.bettingAmount = bettingAmount;
     }
 
     @Override
     public boolean isHitPossible() {
-        int totalScore = calculateScore();
-        return totalScore < PLAYER_STOP_HIT_BOUND;
+        int score = getScore();
+        return score < PLAYER_STOP_HIT_BOUND;
     }
 
     public String getName() {
         return name.getName();
+    }
+
+    public int getBettingAmountToInt() {
+        return bettingAmount.getBettingAmount();
     }
 }

@@ -5,11 +5,11 @@ public class Dealer extends Person {
 
     @Override
     public boolean isHitPossible() {
-        int totalScore = calculateScore();
-        return totalScore < DEALER_STOP_HIT_BOUND;
+        int score = getScore();
+        return score < DEALER_STOP_HIT_BOUND;
     }
 
     public Card getFirstCard() {
-        return hand.getAllCards().get(0);
+        return hand.getFirstCard();
     }
 }

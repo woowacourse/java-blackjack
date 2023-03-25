@@ -18,4 +18,21 @@ public class InputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
+
+    public int readBettingAmount(String name) {
+        try {
+            System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
+            String input = scanner.nextLine();
+            validateIsBlank(input);
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자로 입력되어야 합니다.");
+        }
+    }
+
+    private static void validateIsBlank(String input) {
+        if (input.isBlank()) {
+            throw new IllegalArgumentException("공백은 입력될 수 없습니다.");
+        }
+    }
 }
