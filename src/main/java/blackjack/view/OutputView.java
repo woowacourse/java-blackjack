@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String RESULT_FORMAT = "{0}: {1}";
+
     public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players, final int count) {
         System.out.println();
         System.out.println(format("{0}와 {1}에게 {2}장을 나누었습니다.",
@@ -75,23 +77,22 @@ public class OutputView {
 
     public void printResult(final DealerResultResponse dealer, final List<PlayerResultResponse> players) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(dealer);
         players.forEach(this::printPlayerResult);
     }
 
     private void printDealerResult(final DealerResultResponse dealer) {
-        String dealerName = dealer.getName();
-        Map<Result, Integer> resultMap = dealer.getResultMap();
+        final String dealerName = dealer.getName();
+        final int dealerProfit = dealer.getProfit();
 
-        Integer dealerWin = resultMap.get(WIN);
-        Integer dealerDraw = resultMap.get(DRAW);
-        Integer dealerLose = resultMap.get(LOSE);
-
-        System.out.println(format("{0}: {1}승 {2}무 {3}패", dealerName, dealerWin, dealerDraw, dealerLose));
+        System.out.println(format(RESULT_FORMAT, dealerName, dealerProfit));
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {
-        System.out.println(format("{0}: {1}", player.getName(), player.getResult().getName()));
+        final String playerName = player.getName();
+        final int playerProfit = player.getProfit();
+
+        System.out.println(format(RESULT_FORMAT, playerName, playerProfit));
     }
 }

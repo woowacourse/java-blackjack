@@ -33,6 +33,10 @@ public abstract class Participant {
         return cards;
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public abstract boolean isDrawable();
 
     public abstract String getName();

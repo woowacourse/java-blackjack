@@ -9,6 +9,7 @@ public class Cards {
 
     private static final int MAXIMUM_SCORE = 21;
     private static final int ACE_BONUS = 10;
+    private static final int INIT_DRAW_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -22,6 +23,10 @@ public class Cards {
 
     public void addCard(final Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return calculateTotalScore() == MAXIMUM_SCORE && cards.size() == INIT_DRAW_COUNT;
     }
 
     public int calculateTotalScore() {

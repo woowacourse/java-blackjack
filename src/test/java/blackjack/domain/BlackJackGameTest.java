@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.betting.BettingManager;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class BlackJackGameTest {
 
+    private BettingManager bettingManager;
     private Participants participants;
     private Deck deck;
 
@@ -30,12 +32,15 @@ public class BlackJackGameTest {
                 new Player("kokodak"),
                 new Player("dani")
         ));
+        bettingManager = new BettingManager();
+        bettingManager.registerBetting("kokodak", 10_000);
+        bettingManager.registerBetting("dani", 50_000);
         deck = DeckFactory.createWithCount(1);
     }
 
     @Test
     void 카드를_더_받고_싶다면_카드를_추가로_받는다() {
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, 0);
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, 0);
         final Dealer dealer = blackJackGame.dealer();
 
         blackJackGame.drawOrNot(true, dealer);
@@ -46,7 +51,7 @@ public class BlackJackGameTest {
 
     @Test
     void 카드를_더_받고_싶지_않다면_자신의_상태를_바꾼다() {
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, 0);
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, 0);
         final Dealer dealer = blackJackGame.dealer();
 
         blackJackGame.drawOrNot(false, dealer);
@@ -58,8 +63,8 @@ public class BlackJackGameTest {
     void 카드를_더_받을_수_있는_플레이어를_찾는다() {
         final Player kokodak = new Player("kokodak");
         final Player dani = new Player("dani");
-        participants = new Participants(List.of(kokodak, dani));
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, 0);
+        participants = new Participants(List.of(new Dealer(), kokodak, dani));
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, 0);
 
         blackJackGame.drawOrNot(false, kokodak);
         final Player drawablePlayer = blackJackGame.findDrawablePlayer();
@@ -71,8 +76,8 @@ public class BlackJackGameTest {
     void 카드를_더_받을_수_있는_플레이어가_없다면_예외를_던진다() {
         final Player kokodak = new Player("kokodak");
         final Player dani = new Player("dani");
-        participants = new Participants(List.of(kokodak, dani));
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, 0);
+        participants = new Participants(List.of(new Dealer(), kokodak, dani));
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, 0);
 
         blackJackGame.drawOrNot(false, kokodak);
         blackJackGame.drawOrNot(false, dani);
@@ -84,7 +89,7 @@ public class BlackJackGameTest {
 
     @Test
     void 카드를_더_받을_수_있는_플레이어가_있는지_확인한다() {
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, 0);
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, 0);
 
         assertThat(blackJackGame.existDrawablePlayer()).isTrue();
     }

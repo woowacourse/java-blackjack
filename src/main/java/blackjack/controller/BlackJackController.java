@@ -1,9 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.BettingManager;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -15,6 +18,7 @@ import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -31,9 +35,10 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = gatherParticipants();
+        final BettingManager bettingManager = getBettingManager(participants);
         final Deck deck = DeckFactory.createWithCount(1);
 
-        final BlackJackGame blackJackGame = startBlackJackGame(participants, deck);
+        final BlackJackGame blackJackGame = startBlackJackGame(participants, deck, bettingManager);
 
         drawCardForPlayers(blackJackGame);
         drawCardForDealer(blackJackGame);
@@ -57,8 +62,20 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private BlackJackGame startBlackJackGame(final Participants participants, final Deck deck) {
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, INIT_DRAW_COUNT);
+    private BettingManager getBettingManager(final Participants participants) {
+        final BettingManager bettingManager = new BettingManager();
+        final List<Player> players = participants.getPlayers();
+        for (final Player player : players) {
+            final String playerName = player.getName();
+            final int bettingAmount = inputView.readBettingAmount(playerName);
+            bettingManager.registerBetting(playerName, bettingAmount);
+        }
+        return bettingManager;
+    }
+
+    private BlackJackGame startBlackJackGame(final Participants participants, final Deck deck,
+                                             final BettingManager bettingManager) {
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, bettingManager, INIT_DRAW_COUNT);
         final ParticipantResponse dealerResponse = ParticipantResponse.from(blackJackGame.dealer());
         final List<ParticipantResponse> playerResponses = getPlayerResponses(blackJackGame.players());
         outputView.printDealCards(dealerResponse, playerResponses, INIT_DRAW_COUNT);
@@ -113,15 +130,15 @@ public class BlackJackController {
 
     private DealerResultResponse getDealerResultResponse(final BlackJackGame blackJackGame) {
         final Dealer dealer = blackJackGame.dealer();
-        final List<Player> players = blackJackGame.players();
-        return DealerResultResponse.of(dealer, dealer.getDealerResult(players));
+        final int dealerProfit = blackJackGame.getDealerProfit();
+        return DealerResultResponse.of(dealer, dealerProfit);
     }
 
     private List<PlayerResultResponse> getPlayerResultResponses(final BlackJackGame blackJackGame) {
-        final Dealer dealer = blackJackGame.dealer();
         final List<Player> players = blackJackGame.players();
+        final Map<Player, Integer> playerProfits = blackJackGame.getPlayerProfits();
         return players.stream()
-                .map(player -> PlayerResultResponse.of(player, player.getPlayerResult(dealer)))
+                .map(player -> PlayerResultResponse.of(player, playerProfits.get(player)))
                 .collect(Collectors.toList());
     }
 }

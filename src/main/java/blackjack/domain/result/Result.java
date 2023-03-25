@@ -2,14 +2,15 @@ package blackjack.domain.result;
 
 public enum Result {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
-    private final String name;
+    private final double profitRate;
 
-    Result(final String name) {
-        this.name = name;
+    Result(final double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public Result reverseResult() {
@@ -22,7 +23,7 @@ public enum Result {
         return DRAW;
     }
 
-    public String getName() {
-        return name;
+    public int calculateProfit(final int bettingAmount) {
+        return (int) Math.floor(bettingAmount * this.profitRate);
     }
 }

@@ -104,7 +104,7 @@ class PlayerTest {
         final Player player = new Player("kokodak", cards);
         final Dealer dealer = new Dealer(cards);
 
-        Result result = player.getPlayerResult(dealer);
+        Result result = dealer.compareScoreTo(player).reverseResult();
 
         assertThat(result).isEqualTo(Result.LOSE);
     }
@@ -124,7 +124,7 @@ class PlayerTest {
         final Player player = new Player("kokodak", playerCards);
         final Dealer dealer = new Dealer(dealerCards);
 
-        Result result = player.getPlayerResult(dealer);
+        Result result = dealer.compareScoreTo(player).reverseResult();
 
         assertThat(result).isEqualTo(Result.WIN);
     }
@@ -143,7 +143,7 @@ class PlayerTest {
         final Player player = new Player("kokodak", playerCards);
         final Dealer dealer = new Dealer(dealerCards);
 
-        Result result = player.getPlayerResult(dealer);
+        Result result = dealer.compareScoreTo(player).reverseResult();
 
         assertThat(result).isEqualTo(Result.LOSE);
     }
@@ -162,7 +162,7 @@ class PlayerTest {
         final Player player = new Player("kokodak", playerCards);
         final Dealer dealer = new Dealer(dealerCards);
 
-        Result result = player.getPlayerResult(dealer);
+        Result result = dealer.compareScoreTo(player).reverseResult();
 
         assertThat(result).isEqualTo(Result.WIN);
     }
@@ -180,7 +180,7 @@ class PlayerTest {
         final Player player = new Player("kokodak", playerCards);
         final Dealer dealer = new Dealer(dealerCards);
 
-        Result result = player.getPlayerResult(dealer);
+        Result result = dealer.compareScoreTo(player).reverseResult();
 
         assertThat(result).isEqualTo(Result.DRAW);
     }
