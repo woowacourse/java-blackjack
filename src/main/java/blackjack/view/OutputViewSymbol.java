@@ -1,34 +1,34 @@
 package blackjack.view;
 
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Denomination;
 
 import java.util.Arrays;
 
 public enum OutputViewSymbol {
 
-    ACE("A", Symbol.ACE),
-    TWO("2", Symbol.TWO),
-    THREE("3", Symbol.THREE),
-    FOUR("4", Symbol.FOUR),
-    FIVE("5", Symbol.FIVE),
-    SIX("6", Symbol.SIX),
-    SEVEN("7", Symbol.SEVEN),
-    EIGHT("8", Symbol.EIGHT),
-    NINE("9", Symbol.NINE),
-    TEN("10", Symbol.TEN),
-    JACK("J", Symbol.JACK),
-    QUEEN("Q", Symbol.QUEEN),
-    KING("K", Symbol.KING);
+    ACE("A", Denomination.ACE),
+    TWO("2", Denomination.TWO),
+    THREE("3", Denomination.THREE),
+    FOUR("4", Denomination.FOUR),
+    FIVE("5", Denomination.FIVE),
+    SIX("6", Denomination.SIX),
+    SEVEN("7", Denomination.SEVEN),
+    EIGHT("8", Denomination.EIGHT),
+    NINE("9", Denomination.NINE),
+    TEN("10", Denomination.TEN),
+    JACK("J", Denomination.JACK),
+    QUEEN("Q", Denomination.QUEEN),
+    KING("K", Denomination.KING);
 
     private final String printSymbol;
-    private final Symbol symbol;
+    private final Denomination symbol;
 
-    OutputViewSymbol(final String printSymbol, final Symbol symbol) {
+    OutputViewSymbol(String printSymbol, Denomination symbol) {
         this.printSymbol = printSymbol;
         this.symbol = symbol;
     }
 
-    public static OutputViewSymbol from(final Symbol symbol) {
+    public static OutputViewSymbol from(Denomination symbol) {
         return Arrays.stream(values())
                 .filter(it -> it.symbol == symbol)
                 .findFirst()

@@ -1,19 +1,18 @@
 package blackjack.domain.game;
 
 public enum ResultType {
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    TIE(0);
 
-    WIN,
-    TIE,
-    LOSE;
+    private final double profitRateOfPlayer;
 
-    public ResultType getOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == TIE) {
-            return TIE;
-        }
-        return WIN;
+    ResultType(double profitRate) {
+        profitRateOfPlayer = profitRate;
     }
 
+    public double getProfitRateOfPlayer() {
+        return profitRateOfPlayer;
+    }
 }

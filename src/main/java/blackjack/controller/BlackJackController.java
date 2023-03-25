@@ -1,15 +1,16 @@
 package blackjack.controller;
 
-import static blackjack.controller.Repeater.repeatUntilNoException;
-
 import blackjack.domain.DeckFactory;
-import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.ResultOfGame;
-import blackjack.view.DrawCommand;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participants.BettingMoney;
+import blackjack.domain.participants.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Map;
 import java.util.stream.IntStream;
+
+import static blackjack.controller.Repeater.repeatUntilNoException;
 
 public class BlackJackController {
 
@@ -21,72 +22,99 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    private static void initInitialCards(final BlackJackGame blackJackGame) {
-        blackJackGame.distributeInitialCards();
-    }
-
     public void generate(final DeckFactory deckFactory) {
-        final BlackJackGame blackJackGame = createBlackJackGame(deckFactory);
+        final BlackjackGame blackjackGame = createBlackJackGame(deckFactory);
 
-        initInitialCards(blackJackGame);
-        printInitialCard(blackJackGame);
-        play(blackJackGame);
-        printResult(blackJackGame);
+        startGame(blackjackGame);
+        printInitialCard(blackjackGame);
+        playGame(blackjackGame);
+        printResult(blackjackGame);
     }
 
-    private BlackJackGame createBlackJackGame(final DeckFactory deckFactory) {
+    private BlackjackGame createBlackJackGame(final DeckFactory deckFactory) {
         return repeatUntilNoException(
-                () -> BlackJackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
+                () -> BlackjackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
     }
 
-    private void printInitialCard(final BlackJackGame blackJackGame) {
-        outputView.printInitialCards(blackJackGame.findDealerInitialCard(),
-                blackJackGame.findPlayerNameAndCards());
+    private void startGame(final BlackjackGame blackjackGame) {
+        makePlayersPlaceWagers(blackjackGame);
+        blackjackGame.distributeInitialCards();
     }
 
-    private void play(final BlackJackGame blackJackGame) {
-        drawPlayersCards(blackJackGame);
-        drawDealerCards(blackJackGame);
+    private void makePlayersPlaceWagers(final BlackjackGame blackjackGame) {
+        for (final String playerName : blackjackGame.findPlayerNames()) {
+            blackjackGame.placePlayerBets(playerName, inputBettingMoney(playerName));
+        }
     }
 
-    private void drawPlayersCards(final BlackJackGame blackJackGame) {
-        for (final String playerName : blackJackGame.findPlayerNames()) {
-            drawPlayerCard(playerName, blackJackGame);
+    private BettingMoney inputBettingMoney(final String playerName) {
+        return repeatUntilNoException(
+                () -> new BettingMoney(inputView.inputBettingMoney(playerName)), outputView::printError);
+    }
+
+    private void printInitialCard(final BlackjackGame blackjackGame) {
+        outputView.printInitialCardsGuideMessage(blackjackGame.findPlayerNames());
+        outputView.printInitialCardsOfDealer(blackjackGame.findDealerInitialCard());
+        for(final String playerName : blackjackGame.findPlayerNames()) {
+            outputView.printInitialCardsOfPlayers(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
+        }
+    }
+
+    private void playGame(final BlackjackGame blackjackGame) {
+        drawPlayersCards(blackjackGame);
+        drawDealerCards(blackjackGame);
+    }
+
+    private void drawPlayersCards(final BlackjackGame blackjackGame) {
+        for (final String playerName : blackjackGame.findPlayerNames()) {
+            drawPlayerCardByName(playerName, blackjackGame);
         }
     }
 
     private DrawCommand inputDrawCommand(final String playerName) {
         return repeatUntilNoException(
-                () -> inputView.inputCommand(playerName), outputView::printError);
+                () -> DrawCommand.from(inputView.inputCommand(playerName)), outputView::printError);
     }
 
-    private void drawPlayerCard(final String playerName, final BlackJackGame blackJackGame) {
-        DrawCommand playerInput = DrawCommand.DRAW;
-        while (blackJackGame.isPlayerDrawable(playerName) && playerInput == DrawCommand.DRAW) {
-            playerInput = inputDrawCommand(playerName);
-            blackJackGame.drawCardOfPlayerByName(playerName, playerInput);
-            outputView.printCurrentCardsOfPlayer(playerName, blackJackGame.findCardsOfPlayerByName(playerName));
+    private void drawPlayerCardByName(final String playerName, final BlackjackGame blackjackGame) {
+        while (blackjackGame.isPlayerDrawable(playerName)) {
+            final DrawCommand drawCommand = inputDrawCommand(playerName);
+            if(drawCommand == DrawCommand.DRAW) {
+                blackjackGame.drawCardOfPlayerByName(playerName);
+                outputView.printCurrentCardsOfPlayer(playerName, blackjackGame.findCardsOfPlayerByName(playerName));
+            }
+            if(drawCommand == DrawCommand.STAY) {
+                blackjackGame.stayCardOfPlayerByName(playerName);
+            }
         }
     }
 
-    private void drawDealerCards(final BlackJackGame blackJackGame) {
-        IntStream.range(0, blackJackGame.findDealerDrawCount())
-                .forEach(ignored -> outputView.printDealerCardDrawMessage(blackJackGame.findDealerDrawPoint()));
+    private void drawDealerCards(final BlackjackGame blackjackGame) {
+        IntStream.range(0, blackjackGame.findDealerDrawCount())
+                .forEach(ignored -> outputView.printDealerCardDrawMessage());
     }
 
-    private void printResult(final BlackJackGame blackJackGame) {
-        printFinalStatusOfParticipants(blackJackGame);
-        printResultOfGame(blackJackGame);
+    private void printResult(final BlackjackGame blackjackGame) {
+        printFinalStatusOfParticipants(blackjackGame);
+        getPrintProfitOfGameParticipants(blackjackGame);
     }
 
-    private void printFinalStatusOfParticipants(final BlackJackGame blackJackGame) {
-        outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore());
-        outputView.printFinalStatusOfPlayers(blackJackGame.findPlayerStatusByName());
+    private void printFinalStatusOfParticipants(final BlackjackGame blackjackGame) {
+        outputView.printFinalStatusOfDealer(blackjackGame.findDealerCard(), blackjackGame.findDealerScore()
+                .getValue());
+
+        for (final String playerName : blackjackGame.findPlayerNames()) {
+            outputView.printFinalStatusOfPlayer(playerName,
+                    blackjackGame.findCardsOfPlayerByName(playerName),
+                    blackjackGame.findScoreOfPlayerByName(playerName)
+                            .getValue());
+        }
     }
 
-    private void printResultOfGame(final BlackJackGame blackJackGame) {
-        final ResultOfGame result = blackJackGame.findResultOfGame();
-        outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
+    private void getPrintProfitOfGameParticipants(final BlackjackGame blackjackGame) {
+        final Map<String, Money> revenueOfPlayers = blackjackGame.findRevenueOfPlayers();
+        final Money revenueOfDealer = blackjackGame.findRevenueOfDealer();
+        outputView.printProfitOfGameParticipants(revenueOfDealer, revenueOfPlayers);
     }
 
 }

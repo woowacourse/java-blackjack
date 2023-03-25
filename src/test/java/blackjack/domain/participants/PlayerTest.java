@@ -1,10 +1,8 @@
 package blackjack.domain.participants;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
-import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -12,16 +10,17 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
 
     private static final List<Card> overDrawPointCards = List.of(
-            new Card(Shape.CLOVER, Symbol.ACE),
-            new Card(Shape.HEART, Symbol.KING));
+            Card.from(Shape.CLOVER, Denomination.ACE),
+            Card.from(Shape.HEART, Denomination.KING));
     private static final List<Card> underDrawPointCards = List.of(
-            new Card(Shape.CLOVER, Symbol.TWO),
-            new Card(Shape.HEART, Symbol.EIGHT));
+            Card.from(Shape.CLOVER, Denomination.TWO),
+            Card.from(Shape.HEART, Denomination.EIGHT));
 
     private Player player;
 

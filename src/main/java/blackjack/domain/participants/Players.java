@@ -2,8 +2,8 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
-import blackjack.domain.game.GameReferee;
 import blackjack.domain.game.ResultType;
+import blackjack.domain.game.Score;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,10 +62,18 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public void placeBetsByName(final String playerName, final BettingMoney bettingMoney) {
+        players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
+                .bet(bettingMoney);
+
+    }
+
     public void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
-            player.drawCard(deck.popCard());
-            player.drawCard(deck.popCard());
+            player.drawInitialCards(deck.popCard(), deck.popCard());
         }
     }
 
@@ -75,53 +83,49 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public boolean isPlayerDrawable(final String playerName) {
+    private Player findPlayerByName(final String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
-                .map(Player::isDrawable)
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
     }
 
+    public boolean isPlayerDrawable(final String playerName) {
+        return findPlayerByName(playerName)
+                .isDrawable();
+    }
+
     public void drawCardOfPlayerByName(final String playerName, final Card card) {
-        final Player targetPlayer = players.stream()
-                .filter(player -> player.hasName(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
+        final Player targetPlayer = findPlayerByName(playerName);
 
         targetPlayer.drawCard(card);
     }
 
+    public void stayCardOfPlayerByName(final String playerName) {
+        findPlayerByName(playerName).stay();
+    }
+
     public List<Card> findCardsOfPlayerByName(final String playerName) {
+        return findPlayerByName(playerName).getCards();
+    }
+
+    public Score findScoreOfPlayerByName(final String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
-                .map(Player::getCards)
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER))
+                .currentScore();
     }
 
-    public Map<String, ResultType> calculateResult(final GameReferee gameReferee) {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName,
-                        gameReferee::findResultOfPlayer,
-                        (x, y) -> y,
-                        LinkedHashMap::new));
+    public Map<String, Money> findRevenueOfPlayers(final Dealer dealer) {
+        final Map<String, Money> result = new LinkedHashMap<>();
+        for (final Player player : players) {
+            final ResultType resultOfPlayer = player.findResult(dealer);
+            final double profit = resultOfPlayer.getProfitRateOfPlayer();
+            final Money earnings = player.getBettingMoney()
+                    .multiple(profit);
+            result.put(player.getName(), earnings);
+        }
+        return result;
     }
-
-    public Map<String, List<Card>> findPlayerNameToCards() {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName,
-                        Participant::getCards,
-                        (x, y) -> y,
-                        LinkedHashMap::new));
-    }
-
-    public Map<Map<String, List<Card>>, Integer> findPlayerStatusByName() {
-        return players.stream()
-                .collect(Collectors.toMap(player -> Map.of(player.getName(), player.getCards()),
-                        Player::currentScore,
-                        (x, y) -> y,
-                        LinkedHashMap::new));
-    }
-
 }

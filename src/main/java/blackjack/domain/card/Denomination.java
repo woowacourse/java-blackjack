@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Symbol {
+public enum Denomination {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -17,7 +17,7 @@ public enum Symbol {
 
     private final int score;
 
-    Symbol(final int score) {
+    Denomination(int score) {
         this.score = score;
     }
 
