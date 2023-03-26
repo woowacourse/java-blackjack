@@ -4,20 +4,21 @@ public class BetAmount {
 
     private static final int MIN_BET_AMOUNT = 1_000;
     private static final int MAX_BET_AMOUNT = 100_000;
+    private static final int BET_AMOUNT_UNIT = 100;
 
-    private int value;
+    private final int value;
 
-    public BetAmount() {
-        this.value = 0;
+    public BetAmount(int value) {
+        this.value = value;
     }
 
-    public void initialize(int value) {
+    public static BetAmount fromPlayer(int value) {
         validateAmount(value);
-        this.value = value;
+        return new BetAmount(value);
     }
 
-    public void initializeDealer(int value) {
-        this.value = value;
+    private static BetAmount from(int value) {
+        return new BetAmount(value);
     }
 
     private static void validateAmount(int value) {
@@ -27,10 +28,21 @@ public class BetAmount {
         if (value > MAX_BET_AMOUNT) {
             throw new IllegalArgumentException("베팅 금액은 10만원까지만 가능합니다.");
         }
+        if (isBetAmountUnit(value)) {
+            throw new IllegalArgumentException("베팅 금액은 100원 단위만 가능합니다.");
+        }
     }
 
-    public void multiple(double times) {
-        this.value *= times;
+    private static boolean isBetAmountUnit(int value) {
+        return value % BET_AMOUNT_UNIT == 0;
+    }
+
+    public BetAmount multiple(double times) {
+        return from((int) (value * times));
+    }
+
+    public BetAmount add(BetAmount otherBetAmount) {
+        return from(this.value + otherBetAmount.value);
     }
 
     public int getValue() {
