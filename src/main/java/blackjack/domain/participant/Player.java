@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.ScoreState;
 
 public class Player extends Participant {
+
     private static final String INVALID_NAME = "딜러";
 
     private Player(Name name) {
@@ -20,17 +21,8 @@ public class Player extends Participant {
         }
     }
 
-    @Override
-    public void initBetAmount(int value) {
-        betAmount.initialize(value);
-    }
-
     public boolean canHit() {
         ScoreState state = this.getState();
         return state.isHit() || state.isStay();
-    }
-
-    public void multipleBetAmount(double times) {
-        betAmount.multiple(times);
     }
 }
