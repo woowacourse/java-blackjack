@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.participant.Participant;
 
 public class ParticipantGameResultDto {
@@ -12,8 +13,8 @@ public class ParticipantGameResultDto {
         this.amount = amount;
     }
 
-    public static ParticipantGameResultDto of(Participant participant) {
-        return new ParticipantGameResultDto(participant.getName(), participant.getBetAmount());
+    public static ParticipantGameResultDto of(Participant participant, BetAmount betAmount) {
+        return new ParticipantGameResultDto(participant.getName(), betAmount.getValue());
     }
 
     public String getName() {

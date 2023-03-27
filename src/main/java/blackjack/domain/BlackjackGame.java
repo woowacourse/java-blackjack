@@ -13,14 +13,17 @@ public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final Participants participants;
+    private final GameResult gameResult;
 
-    public BlackjackGame(Participants participants, CardDeck cardDeck) {
+    public BlackjackGame(Participants participants, CardDeck cardDeck, GameResult gameResult) {
         this.participants = participants;
         this.cardDeck = cardDeck;
+        this.gameResult = gameResult;
     }
 
-    public BlackjackGame(Participants participants) {
-        this(participants, new CardDeck());
+    public static BlackjackGame of(Participants participants, List<BetAmount> betAmounts) {
+        GameResult gameResult = GameResult.of(participants.getPlayers(), betAmounts);
+        return new BlackjackGame(participants, new CardDeck(), gameResult);
     }
 
     public void dealOutCard() {
@@ -40,19 +43,16 @@ public class BlackjackGame {
     public void calculateBetAmount() {
         for (Player player : participants.getPlayers()) {
             ResultState resultState = ResultState.of(player, participants.getDealer());
-            player.multipleBetAmount(resultState.getYield());
+            gameResult.calculateResultEachPlayer(player, resultState.getYield());
         }
-        calculateDealerAmount();
     }
 
-    private void calculateDealerAmount() {
-        int playerTotalAmount = participants.getPlayers()
-                                            .stream()
-                                            .mapToInt(Player::getBetAmount)
-                                            .sum();
-        participants.getDealer()
-                    .initBetAmount(playerTotalAmount);
+    public BetAmount resultEachPlayer(Player player) {
+        return gameResult.eachPlayer(player);
+    }
 
+    public BetAmount dealerResult() {
+        return gameResult.dealer();
     }
 
     public void giveCard(Participant participant) {

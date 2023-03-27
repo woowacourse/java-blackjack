@@ -1,14 +1,17 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class BetAmount {
 
     private static final int MIN_BET_AMOUNT = 1_000;
     private static final int MAX_BET_AMOUNT = 100_000;
     private static final int BET_AMOUNT_UNIT = 100;
+    private static final int CONVERT_SIGN = -1;
 
     private final int value;
 
-    public BetAmount(int value) {
+    private BetAmount(int value) {
         this.value = value;
     }
 
@@ -17,7 +20,7 @@ public class BetAmount {
         return new BetAmount(value);
     }
 
-    private static BetAmount from(int value) {
+    public static BetAmount from(int value) {
         return new BetAmount(value);
     }
 
@@ -28,13 +31,13 @@ public class BetAmount {
         if (value > MAX_BET_AMOUNT) {
             throw new IllegalArgumentException("베팅 금액은 10만원까지만 가능합니다.");
         }
-        if (isBetAmountUnit(value)) {
+        if (isNotBetAmountUnit(value)) {
             throw new IllegalArgumentException("베팅 금액은 100원 단위만 가능합니다.");
         }
     }
 
-    private static boolean isBetAmountUnit(int value) {
-        return value % BET_AMOUNT_UNIT == 0;
+    private static boolean isNotBetAmountUnit(int value) {
+        return value % BET_AMOUNT_UNIT != 0;
     }
 
     public BetAmount multiple(double number) {
@@ -45,7 +48,24 @@ public class BetAmount {
         return from(this.value + otherBetAmount.value);
     }
 
+    public BetAmount convertSign() {
+        return from(this.value * CONVERT_SIGN);
+    }
+
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BetAmount betAmount = (BetAmount) o;
+        return value == betAmount.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

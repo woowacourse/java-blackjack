@@ -41,6 +41,7 @@ public abstract class Participant {
         return name.getValue();
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
