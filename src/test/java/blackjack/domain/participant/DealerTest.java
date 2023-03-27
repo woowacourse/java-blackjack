@@ -1,5 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSuit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +26,6 @@ class DealerTest {
 
         dealer.addCard(card);
 
-        assertThat(dealer.getCards()).contains(card);
+        assertThat(dealer.getCards()).containsExactly(card);
     }
 }

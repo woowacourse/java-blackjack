@@ -1,6 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.ScoreState;
 
 public class Player extends Participant {
+
     private static final String INVALID_NAME = "딜러";
 
     private Player(Name name) {
@@ -18,7 +21,8 @@ public class Player extends Participant {
         }
     }
 
-    public boolean isBust() {
-        return this.getState() == ScoreState.BUST;
+    public boolean canHit() {
+        ScoreState state = this.getState();
+        return state.isHit() || state.isStay();
     }
 }

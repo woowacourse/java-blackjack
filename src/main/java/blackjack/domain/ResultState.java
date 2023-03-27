@@ -1,33 +1,62 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum ResultState {
-    WIN("승"),
-    LOSE("패");
+    WIN_BLACKJACK(1.5),
+    WIN(1),
+    LOSE(-1),
+    PUSH(0);
 
-    private final String value;
+    private final double yield;
 
-    ResultState(String value) {
-        this.value = value;
+    ResultState(double yield) {
+        this.yield = yield;
     }
 
-    public static ResultState of(Participant player, Participant dealer) {
-        if (player.getState() == ScoreState.BUST) {
-            return ResultState.LOSE;
+    public static ResultState of(Player player, Dealer dealer) {
+        ScoreState dealerState = dealer.getState();
+        if (dealerState.isBlackjack()) {
+            return getResultDealerBlackjack(player);
         }
-        if (dealer.getState() == ScoreState.BUST) {
-            return ResultState.WIN;
+        if (dealerState.isBust()) {
+            return getResultDealerBust(player);
         }
-        if (player.getScore() >= dealer.getScore()) {
-            return ResultState.WIN;
+        return getResultDealerOther(player, dealer);
+    }
+
+    private static ResultState getResultDealerBlackjack(Player player) {
+        ScoreState playerState = player.getState();
+        if (playerState.isBlackjack()) {
+            return ResultState.PUSH;
         }
         return ResultState.LOSE;
     }
 
-    public boolean isWin() {
-        return this == WIN;
+    private static ResultState getResultDealerBust(Player player) {
+        ScoreState playerState = player.getState();
+        if (playerState.isBust()) {
+            return ResultState.LOSE;
+        }
+        return ResultState.WIN;
     }
 
-    public String getValue() {
-        return value;
+    private static ResultState getResultDealerOther(Player player, Dealer dealer) {
+        ScoreState playerState = player.getState();
+        if (playerState.isBlackjack()) {
+            return WIN_BLACKJACK;
+        }
+        if (player.canHit() && player.getScore() > dealer.getScore()) {
+            return ResultState.WIN;
+        }
+        if (player.getScore() == dealer.getScore()) {
+            return ResultState.PUSH;
+        }
+        return ResultState.LOSE;
+    }
+
+    public double getYield() {
+        return yield;
     }
 }

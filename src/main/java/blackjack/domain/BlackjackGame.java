@@ -1,21 +1,29 @@
 package blackjack.domain;
 
-import java.util.LinkedHashMap;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final Participants participants;
+    private final GameResult gameResult;
 
-    public BlackjackGame(Participants participants, CardDeck cardDeck) {
+    public BlackjackGame(Participants participants, CardDeck cardDeck, GameResult gameResult) {
         this.participants = participants;
         this.cardDeck = cardDeck;
+        this.gameResult = gameResult;
     }
 
-    public BlackjackGame(Participants participants) {
-        this(participants, new CardDeck());
+    public static BlackjackGame of(Participants participants, List<BetAmount> betAmounts) {
+        GameResult gameResult = GameResult.of(participants.getPlayers(), betAmounts);
+        return new BlackjackGame(participants, new CardDeck(), gameResult);
     }
 
     public void dealOutCard() {
@@ -32,12 +40,19 @@ public class BlackjackGame {
         dealer.addCards(cards);
     }
 
-    public GameResult getResult() {
-        Map<Player, ResultState> result = new LinkedHashMap<>();
+    public void calculateBetAmount() {
         for (Player player : participants.getPlayers()) {
-            result.put(player, ResultState.of(player, participants.getDealer()));
+            ResultState resultState = ResultState.of(player, participants.getDealer());
+            gameResult.calculateResultEachPlayer(player, resultState.getYield());
         }
-        return new GameResult(result);
+    }
+
+    public BetAmount resultEachPlayer(Player player) {
+        return gameResult.eachPlayer(player);
+    }
+
+    public BetAmount dealerResult() {
+        return gameResult.dealer();
     }
 
     public void giveCard(Participant participant) {

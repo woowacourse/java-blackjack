@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Objects;
 
@@ -10,10 +10,6 @@ public class Card {
     public Card(CardSuit cardSuit, CardNumber cardNumber) {
         this.cardSuit = cardSuit;
         this.cardNumber = cardNumber;
-    }
-
-    public String getCardName() {
-        return this.cardNumber.getValue() + this.cardSuit.getValue();
     }
 
     public boolean isAce() {

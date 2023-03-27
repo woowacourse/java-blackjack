@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,5 +35,13 @@ class GameCommandTest {
         assertThatThrownBy(() -> from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("y 또는 n을 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("입력값이 y라면 play인지 확인시 true를 반환한다")
+    void isPlayTest() {
+        GameCommand gameCommand = from("y");
+
+        Assertions.assertTrue(gameCommand.isPlay());
     }
 }

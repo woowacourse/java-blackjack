@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ public class CardDeck {
         shuffleCards();
     }
 
-    CardDeck(List<Card> cards) {
+    public CardDeck(List<Card> cards) {
         this.cards = cards;
     }
 

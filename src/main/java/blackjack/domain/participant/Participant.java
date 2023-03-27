@@ -1,32 +1,32 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.ScoreState;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayerCards;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
-    private final PlayerCards playerCards;
     private final Name name;
+    private final PlayerCards playerCards;
 
     Participant(Name name) {
         this.name = name;
         this.playerCards = new PlayerCards();
     }
 
-    void addCard(Card card) {
+    public void addCard(Card card) {
         playerCards.add(card);
     }
 
-    void addCards(List<Card> cards) {
+    public void addCards(List<Card> cards) {
         playerCards.addAll(cards);
     }
 
-    ScoreState getState() {
-        return ScoreState.of(playerCards.getScore());
-    }
-
-    public List<String> getCardNames() {
-        return playerCards.getCardNames();
+    public ScoreState getState() {
+        return ScoreState.of(playerCards.getScore(), playerCards.size());
     }
 
     public int getScore() {
@@ -40,6 +40,7 @@ public abstract class Participant {
     public String getName() {
         return name.getValue();
     }
+
 
     @Override
     public boolean equals(Object o) {

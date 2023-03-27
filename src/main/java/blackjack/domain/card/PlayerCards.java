@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import blackjack.domain.ScoreState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerCards {
     private static final int ACE_HANDLE_SCORE = 10;
@@ -19,12 +20,6 @@ public class PlayerCards {
 
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
-    }
-
-    public List<String> getCardNames() {
-        return cards.stream()
-                    .map(Card::getCardName)
-                    .collect(Collectors.toList());
     }
 
     public int getScore() {
@@ -45,8 +40,8 @@ public class PlayerCards {
     }
 
     private int getFinalScore(int score) {
-        if (ScoreState.of(score + ACE_HANDLE_SCORE)
-                      .isBust()) {
+        ScoreState scoreState = ScoreState.of(score + ACE_HANDLE_SCORE, cards.size());
+        if (scoreState.isBust()) {
             return score;
         }
 
@@ -60,5 +55,9 @@ public class PlayerCards {
 
     public List<Card> toList() {
         return List.copyOf(cards);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }
