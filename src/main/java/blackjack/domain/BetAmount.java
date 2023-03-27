@@ -37,8 +37,8 @@ public class BetAmount {
         return value % BET_AMOUNT_UNIT == 0;
     }
 
-    public BetAmount multiple(double times) {
-        return from((int) (value * times));
+    public BetAmount multiple(double number) {
+        return from((int) (value * number));
     }
 
     public BetAmount add(BetAmount otherBetAmount) {
