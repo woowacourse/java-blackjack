@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String DEALER = "딜러";
-
     private final List<Player> players;
 
     private Players(final List<Player> players) {
@@ -16,7 +14,7 @@ public class Players {
 
     public static Players createDefault() {
         List<Player> players = new ArrayList<>();
-        players.add(Player.from(Name.from(DEALER)));
+        players.add(Player.from(Name.createDealer()));
         return new Players(players);
     }
 
@@ -31,7 +29,7 @@ public class Players {
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
                 .map(Player::getName)
-                .filter(name -> !name.getName().equals(DEALER))
+                .filter(Name::isNotDealer)
                 .collect(Collectors.toList());
 
         return Name.chainingNames(names);
@@ -42,9 +40,5 @@ public class Players {
             List<Card> initCards = deck.getCards(count);
             player.selectCardsFromDeck(initCards);
         });
-    }
-
-    public String getDealer() {
-        return DEALER;
     }
 }

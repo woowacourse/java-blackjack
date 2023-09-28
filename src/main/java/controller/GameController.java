@@ -1,6 +1,7 @@
 package controller;
 
 import model.Deck;
+import model.Name;
 import model.Players;
 import view.GameView;
 
@@ -21,7 +22,7 @@ public class GameController {
     }
 
     public void play() {
-        view.giveInitCardAlert(players.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
+        view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
     }
 

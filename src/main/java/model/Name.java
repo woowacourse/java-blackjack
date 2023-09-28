@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class Name {
 
+    private static final String DEALER = "딜러";
     private static final String NAME_SPLITTER = ",";
 
     private final String name;
@@ -20,6 +21,10 @@ public class Name {
 
     public static Name from(final String name) {
         return new Name(name);
+    }
+
+    public static Name createDealer() {
+        return new Name(DEALER);
     }
 
     public static List<Name> convertStringListToNamesWithScore(final int score, final List<String> names) {
@@ -50,6 +55,14 @@ public class Name {
 
         String chainingName = stringBuilder.toString();
         return chainingName.substring(0, chainingName.length() - 1);
+    }
+
+    public boolean isNotDealer() {
+        return !name.equals(DEALER);
+    }
+
+    public static String getDealer() {
+        return DEALER;
     }
 
     public String getName() {
