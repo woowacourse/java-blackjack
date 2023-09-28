@@ -28,7 +28,7 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public String getPlayerNameList() {
+    public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
                 .map(Player::getName)
                 .filter(name -> !name.getName().equals(DEALER))
