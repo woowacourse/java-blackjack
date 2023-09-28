@@ -29,7 +29,7 @@ public class Player {
         return name;
     }
 
-    public Cards getCards() {
-        return cards;
+    public int getScore() {
+        return cards.calculateScore();
     }
 }

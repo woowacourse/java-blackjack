@@ -58,4 +58,10 @@ public class Cards {
         }
         return null;
     }
+
+    public int calculateScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
 }

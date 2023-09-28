@@ -5,6 +5,7 @@ import model.deck.Deck;
 import model.name.Name;
 import model.player.Player;
 import model.player.dto.PlayerRequest;
+import model.player.dto.PlayerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,16 @@ public class Players {
         players.addAll(addPlayers);
     }
 
+    private static Player joinDealer() {
+        PlayerRequest dealerRequest = PlayerRequest.from(Name.getDealer());
+        return Player.from(dealerRequest);
+    }
+
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
-                .map(Player::getName)
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getScore()))
+                .map(PlayerResponse::getName)
+                .map(Name::from)
                 .filter(Name::isNotDealer)
                 .collect(Collectors.toList());
 
@@ -52,8 +60,4 @@ public class Players {
         });
     }
 
-    private static Player joinDealer() {
-        PlayerRequest dealerRequest = PlayerRequest.from(Name.getDealer());
-        return Player.from(dealerRequest);
-    }
 }

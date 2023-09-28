@@ -16,4 +16,12 @@ public class Card {
     public static Card from(final CardRequest request) {
         return new Card(Name.from(request.getName()), request.getScore());
     }
+
+    public Name getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }
