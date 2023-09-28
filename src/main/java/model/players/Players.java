@@ -116,4 +116,26 @@ public class Players {
                 .map(Name::getName)
                 .collect(Collectors.toList());
     }
+
+    public List<String> result() {
+        List<String> result = new ArrayList<>();
+        result.add(dealerResult());
+        result.addAll(playerResult());
+
+        return result;
+    }
+
+    private String dealerResult() {
+        Player dealer = findByName(Name.getDealer());
+        PlayerResponse response = PlayerResponse.createDefault(dealer.getName(), dealer.getCards());
+        return response.getDealerCardsResult();
+    }
+
+    private List<String> playerResult() {
+        return players.stream()
+                .filter(player -> player.getName().isNotDealer())
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
+                .map(PlayerResponse::getPlayerCardsResult)
+                .collect(Collectors.toList());
+    }
 }

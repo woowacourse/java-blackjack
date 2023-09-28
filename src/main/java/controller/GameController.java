@@ -35,10 +35,14 @@ public class GameController {
         System.out.println();
 
         for (String name : players.getPlayerNameValuesExceptDealer()) {
-            while (view.isWantMoreCard(name) && players.isNotExceed(name, GOAL_VALUE)) {
+            while (players.isNotExceed(name, GOAL_VALUE) && view.isWantMoreCard(name)) {
                 players.giveOneCard(deck, name);
                 view.print(players.printShowStatus(name));
             }
+        }
+
+        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE)) {
+            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE);
         }
 
         if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE)) {
@@ -46,9 +50,7 @@ public class GameController {
             players.giveOneCard(deck, Name.getDealer());
         }
 
-        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE)) {
-            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE);
-        }
+        view.eachPrint(players.result());
     }
 
     private Players joinPlayers(String nameInput) {
