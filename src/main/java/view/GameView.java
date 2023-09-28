@@ -19,7 +19,7 @@ public class GameView {
         return inputReader.readLine();
     }
 
-    public void giveInitCardInfo(String dealer, String names, int cards) {
+    public void giveInitCardAlert(String dealer, String names, int cards) {
         System.out.println(dealer + "와 " + names + "에게 " + cards + "장을 나누었습니다.");
     }
 }
