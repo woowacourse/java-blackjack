@@ -25,6 +25,12 @@ public class Name {
                 .collect(Collectors.toList());
     }
 
+    public static List<Name> convertStringListToNamesWithSpecial(final String special, final List<String> names) {
+        return names.stream()
+                .map(name -> Name.from(special + name))
+                .collect(Collectors.toList());
+    }
+
     public String getName() {
         return name;
     }
