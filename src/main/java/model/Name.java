@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Name {
 
     private final String name;
@@ -14,6 +17,12 @@ public class Name {
 
     public static Name withScore(final int score, final String name) {
         return new Name(score + name);
+    }
+
+    public static List<Name> convertStringListToNames(final List<String> names) {
+        return names.stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     public String getName() {
