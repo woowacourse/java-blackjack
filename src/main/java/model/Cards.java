@@ -22,4 +22,12 @@ public class Cards {
                 .map(cardName -> Card.createDefault(cardName, score))
                 .collect(Collectors.toList());
     }
+
+    public static List<Card> createSpecialCards(final String special, final List<String> names, int score) {
+        List<Name> cardNames = Name.convertStringListToNamesWithSpecial(special, names);
+
+        return cardNames.stream()
+                .map(cardName -> Card.createDefault(cardName, score))
+                .collect(Collectors.toList());
+    }
 }
