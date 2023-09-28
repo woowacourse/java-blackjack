@@ -28,7 +28,7 @@ public class Cards {
         List<Name> cardNames = Name.convertStringListToNamesWithScore(score, names);
 
         return cardNames.stream()
-                .map(cardName -> CardRequest.createDefault(cardName, score))
+                .map(cardName -> CardRequest.createDefault(cardName.getName(), score))
                 .map(Card::from)
                 .collect(Collectors.toList());
     }
@@ -37,7 +37,7 @@ public class Cards {
         List<Name> cardNames = Name.convertStringListToNamesWithSpecial(special, names);
 
         return cardNames.stream()
-                .map(cardName -> CardRequest.createDefault(cardName, score))
+                .map(cardName -> CardRequest.createDefault(cardName.getName(), score))
                 .map(Card::from)
                 .collect(Collectors.toList());
     }
