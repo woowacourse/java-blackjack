@@ -30,6 +30,7 @@ public class Players {
         List<String> splitNames = Name.createSplitNameValues(input);
 
         List<Player> addPlayers = splitNames.stream()
+                .map(String::trim)
                 .map(PlayerRequest::from)
                 .map(request -> Player.of(request.getName(), request.getCards()))
                 .collect(Collectors.toList());
@@ -44,8 +45,9 @@ public class Players {
 
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
-                .map(player -> PlayerResponse.createDefault(player.getName(), player.getScore()))
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
                 .map(PlayerResponse::getName)
+                .map(String::trim)
                 .map(Name::from)
                 .filter(Name::isNotDealer)
                 .collect(Collectors.toList());
@@ -60,4 +62,18 @@ public class Players {
         });
     }
 
+    public List<String> showInitialStatusExceptDealer() {
+        return players.stream()
+                .filter(player -> player.getName().isNotDealer())
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
+                .map(PlayerResponse::getCards)
+                .collect(Collectors.toList());
+    }
+
+    public String showInitialDealerStatus() {
+        Player dealer = players.get(0);
+        PlayerResponse response = PlayerResponse.createDefault(dealer.getName(), dealer.getCards());
+
+        return Name.getDealer() + response.getCardsWithSecret();
+    }
 }

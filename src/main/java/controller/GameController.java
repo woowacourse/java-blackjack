@@ -24,6 +24,10 @@ public class GameController {
     public void play() {
         view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
+        view.print(players.showInitialDealerStatus());
+        for (String status : players.showInitialStatusExceptDealer()) {
+            view.print(status);
+        }
     }
 
     private Players joinPlayers(String nameInput) {

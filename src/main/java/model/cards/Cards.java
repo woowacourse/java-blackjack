@@ -59,6 +59,10 @@ public class Cards {
         return null;
     }
 
+    public List<Card> getCardList() {
+        return cards;
+    }
+
     public int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)

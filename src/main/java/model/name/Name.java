@@ -8,6 +8,7 @@ public class Name {
 
     private static final String DEALER = "딜러";
     private static final String NAME_SPLITTER = ",";
+    private static final String BLANK = " ";
 
     private final String name;
 
@@ -47,10 +48,11 @@ public class Name {
         StringBuilder stringBuilder = new StringBuilder();
         names.forEach(name -> stringBuilder
                 .append(name.getName())
-                .append(Name.NAME_SPLITTER));
+                .append(Name.NAME_SPLITTER)
+                .append(Name.BLANK));
 
         String chainingName = stringBuilder.toString();
-        return chainingName.substring(0, chainingName.length() - 1);
+        return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + Name.BLANK.length()));
     }
 
     public boolean isNotDealer() {
