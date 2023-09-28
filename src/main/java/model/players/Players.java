@@ -70,10 +70,41 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public String printShowStatus(final String name) {
+        Player player = findByName(name);
+        PlayerResponse response = PlayerResponse.createDefault(player.getName(), player.getCards());
+        return response.getCards();
+    }
+
     public String showInitialDealerStatus() {
         Player dealer = players.get(0);
         PlayerResponse response = PlayerResponse.createDefault(dealer.getName(), dealer.getCards());
 
         return Name.getDealer() + response.getCardsWithSecret();
+    }
+
+    public void giveOneCard(final Deck deck, final String name) {
+        Player targetPlayer = findByName(name);
+        targetPlayer.selectCardsFromDeck(deck.getCards(1));
+    }
+
+    public boolean isNotExceed(final String name, int goal) {
+        Player targetPlayer = findByName(name);
+        return targetPlayer.getScore() < goal;
+    }
+
+    private Player findByName(final String name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(Name.from(name)))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<String> getPlayerNameValuesExceptDealer() {
+        return players.stream()
+                .map(Player::getName)
+                .filter(Name::isNotDealer)
+                .map(Name::getName)
+                .collect(Collectors.toList());
     }
 }

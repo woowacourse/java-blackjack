@@ -5,6 +5,9 @@ import java.io.IOException;
 
 public class GameView {
 
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     private final BufferedReader inputReader;
 
     public GameView(BufferedReader inputReader) {
@@ -26,5 +29,29 @@ public class GameView {
 
     public void print(String input) {
         System.out.println(input);
+    }
+
+    public boolean isWantMoreCard(String name) throws IOException {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
+
+        String answer = getMoreCardInput();
+        while (isAnswerNotValid(answer)) {
+            System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
+            answer = getMoreCardInput();
+        }
+
+        return convertAnswerToBoolean(answer);
+    }
+
+    private boolean convertAnswerToBoolean(String answer) {
+        return answer.equals(YES);
+    }
+
+    private String getMoreCardInput() throws IOException {
+        return inputReader.readLine();
+    }
+
+    private boolean isAnswerNotValid(String answer) {
+        return !YES.equals(answer) && !NO.equals(answer);
     }
 }

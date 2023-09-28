@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class GameController {
 
+    private static final int GOAL_VALUE = 21;
     private static final int INIT_GIVE_CARDS = 2;
 
     private final Deck deck;
@@ -21,12 +22,22 @@ public class GameController {
         this.players = joinPlayers(view.getPlayerNameInput());
     }
 
-    public void play() {
+    public void play() throws IOException {
         view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
+
         view.print(players.showInitialDealerStatus());
         for (String status : players.showInitialStatusExceptDealer()) {
             view.print(status);
+        }
+
+        System.out.println();
+
+        for (String name : players.getPlayerNameValuesExceptDealer()) {
+            while (view.isWantMoreCard(name) && players.isNotExceed(name, GOAL_VALUE)) {
+                players.giveOneCard(deck, name);
+                view.print(players.printShowStatus(name));
+            }
         }
     }
 
