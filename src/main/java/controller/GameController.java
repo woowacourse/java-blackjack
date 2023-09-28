@@ -21,7 +21,7 @@ public class GameController {
     }
 
     public void play() {
-        view.giveInitCardAlert(players.getDealer(), players.getPlayerNameList(), INIT_GIVE_CARDS);
+        view.giveInitCardAlert(players.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
     }
 
