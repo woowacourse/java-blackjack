@@ -31,7 +31,7 @@ public class Players {
 
         List<Player> addPlayers = splitNames.stream()
                 .map(PlayerRequest::from)
-                .map(Player::from)
+                .map(request -> Player.of(request.getName(), request.getCards()))
                 .collect(Collectors.toList());
 
         players.addAll(addPlayers);
@@ -39,7 +39,7 @@ public class Players {
 
     private static Player joinDealer() {
         PlayerRequest dealerRequest = PlayerRequest.from(Name.getDealer());
-        return Player.from(dealerRequest);
+        return Player.of(dealerRequest.getName(), dealerRequest.getCards());
     }
 
     public String getPlayerNamesExceptDealer() {
