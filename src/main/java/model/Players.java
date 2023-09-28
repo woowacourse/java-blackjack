@@ -38,8 +38,10 @@ public class Players {
     }
 
     public void giveInitialCards(Deck deck, int count) {
-        List<Card> initCards = deck.getCards(count);
-        players.forEach(player -> player.selectCardsFromDeck(initCards));
+        players.forEach(player -> {
+            List<Card> initCards = deck.getCards(count);
+            player.selectCardsFromDeck(initCards);
+        });
     }
 
     public String getDealer() {
