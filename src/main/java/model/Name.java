@@ -11,4 +11,8 @@ public class Name {
     public static Name from(final String name) {
         return new Name(name);
     }
+
+    public String getName() {
+        return name;
+    }
 }
