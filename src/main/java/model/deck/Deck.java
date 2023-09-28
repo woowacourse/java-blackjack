@@ -1,4 +1,8 @@
-package model;
+package model.deck;
+
+import model.card.Card;
+import model.cards.Cards;
+import model.dice.Dice;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package controller;
 
-import model.Deck;
-import model.Name;
-import model.Players;
+import model.deck.Deck;
+import model.name.Name;
+import model.players.Players;
 import view.GameView;
 
 import java.io.IOException;

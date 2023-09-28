@@ -1,5 +1,5 @@
 import controller.GameController;
-import model.Deck;
+import model.deck.Deck;
 import view.GameView;
 
 import java.io.BufferedReader;

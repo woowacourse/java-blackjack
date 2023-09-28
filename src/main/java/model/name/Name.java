@@ -1,4 +1,4 @@
-package model;
+package model.name;
 
 import java.util.Arrays;
 import java.util.List;

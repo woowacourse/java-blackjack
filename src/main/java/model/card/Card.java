@@ -1,4 +1,6 @@
-package model;
+package model.card;
+
+import model.name.Name;
 
 public class Card {
 

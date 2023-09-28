@@ -1,4 +1,9 @@
-package model;
+package model.players;
+
+import model.card.Card;
+import model.deck.Deck;
+import model.name.Name;
+import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,7 @@
-package model;
+package model.cards;
+
+import model.card.Card;
+import model.name.Name;
 
 import java.util.ArrayList;
 import java.util.List;
