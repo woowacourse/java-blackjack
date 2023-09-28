@@ -13,4 +13,12 @@ public class Player {
     public static Player from(final Name name) {
         return new Player(name, Cards.createPlayerCards());
     }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
 }
