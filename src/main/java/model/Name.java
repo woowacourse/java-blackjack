@@ -11,17 +11,17 @@ public class Name {
         this.name = name;
     }
 
+    private static Name withScore(final int score, final String name) {
+        return new Name(score + name);
+    }
+
     public static Name from(final String name) {
         return new Name(name);
     }
 
-    public static Name withScore(final int score, final String name) {
-        return new Name(score + name);
-    }
-
-    public static List<Name> convertStringListToNames(final List<String> names) {
+    public static List<Name> convertStringListToNamesWithScore(final int score, final List<String> names) {
         return names.stream()
-                .map(Name::new)
+                .map(name -> Name.withScore(score, name))
                 .collect(Collectors.toList());
     }
 
