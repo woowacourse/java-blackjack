@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,10 @@ public class Cards {
 
     public static Cards from(final List<Card> cards) {
         return new Cards(cards);
+    }
+
+    public static Cards createPlayerCards() {
+        return new Cards(new ArrayList<>());
     }
 
     public static List<Card> createNormalCardsWithScore(int score, final List<String> names) {
