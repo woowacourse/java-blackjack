@@ -11,6 +11,10 @@ public class Cards {
         this.cards = cards;
     }
 
+    public static Cards from(final List<Card> cards) {
+        return new Cards(cards);
+    }
+
     public static List<Card> createNormalCardsWithScore(int score, final List<String> names) {
         List<Name> cardNames = Name.convertStringListToNamesWithScore(score, names);
 
