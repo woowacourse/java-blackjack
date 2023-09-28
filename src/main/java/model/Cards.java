@@ -11,10 +11,11 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards withScore(final int score, final List<Name> names) {
-        List<Card> cards = names.stream()
-                .map(name -> Card.createDefault(name, score))
+    public static List<Card> createNormalCardsWithScore(int score, final List<String> names) {
+        List<Name> cardNames = Name.convertStringListToNamesWithScore(score, names);
+
+        return cardNames.stream()
+                .map(cardName -> Card.createDefault(cardName, score))
                 .collect(Collectors.toList());
-        return new Cards(cards);
     }
 }
