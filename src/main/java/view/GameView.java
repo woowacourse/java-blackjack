@@ -43,6 +43,16 @@ public class GameView {
         return convertAnswerToBoolean(answer);
     }
 
+    public void giveDealerCardAlert(final String dealer, final int score) {
+        System.out.println();
+        System.out.println(dealer + "는 " + score + "이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void dealerEnoughAlert(final String dealer, final int score) {
+        System.out.println();
+        System.out.println(dealer + "의 점수는 " + score + "점 이상으로 충분하기에 더 받지 않습니다.");
+    }
+
     private boolean convertAnswerToBoolean(String answer) {
         return answer.equals(YES);
     }

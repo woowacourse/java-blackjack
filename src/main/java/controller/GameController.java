@@ -10,6 +10,7 @@ import java.io.IOException;
 public class GameController {
 
     private static final int GOAL_VALUE = 21;
+    private static final int DEALER_MORE_SCORE = 16;
     private static final int INIT_GIVE_CARDS = 2;
 
     private final Deck deck;
@@ -38,6 +39,15 @@ public class GameController {
                 players.giveOneCard(deck, name);
                 view.print(players.printShowStatus(name));
             }
+        }
+
+        if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE)) {
+            view.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE);
+            players.giveOneCard(deck, Name.getDealer());
+        }
+
+        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE)) {
+            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE);
         }
     }
 

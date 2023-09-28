@@ -62,6 +62,15 @@ public class Players {
         });
     }
 
+    public boolean dealerScoreUnder(final String dealer, final int score) {
+        Player targetDealer = findByName(dealer);
+        return targetDealer.getScore() <= score;
+    }
+
+    public boolean dealerScoreEnough(final String dealer, final int score) {
+        return !dealerScoreUnder(dealer, score);
+    }
+
     public List<String> showInitialStatusExceptDealer() {
         return players.stream()
                 .filter(player -> player.getName().isNotDealer())
