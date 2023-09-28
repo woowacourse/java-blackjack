@@ -17,4 +17,8 @@ public class Card {
     public String getType() {
         return type.getName();
     }
+
+    public int getScore() {
+        return score;
+    }
 }
