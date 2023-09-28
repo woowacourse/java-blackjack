@@ -3,6 +3,7 @@ package model.player;
 import model.card.Card;
 import model.cards.Cards;
 import model.name.Name;
+import model.player.dto.PlayerRequest;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Player {
         this.cards = cards;
     }
 
-    public static Player from(final Name name) {
-        return new Player(name, Cards.createPlayerCards());
+    public static Player from(final PlayerRequest request) {
+        return new Player(request.getName(), request.getCards());
     }
 
     public void selectCardsFromDeck(List<Card> card) {

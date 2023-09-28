@@ -39,13 +39,8 @@ public class Name {
                 .collect(Collectors.toList());
     }
 
-    public static List<Name> createSplitNames(String input) {
-        List<String> splitNames = Arrays.asList(input.split(NAME_SPLITTER));
-
-        return splitNames.stream()
-                .map(String::trim)
-                .map(Name::from)
-                .collect(Collectors.toList());
+    public static List<String> createSplitNameValues(String input) {
+        return Arrays.asList(input.split(NAME_SPLITTER));
     }
 
     public static String chainingNames(List<Name> names) {

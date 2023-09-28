@@ -4,6 +4,7 @@ import model.card.Card;
 import model.deck.Deck;
 import model.name.Name;
 import model.player.Player;
+import model.player.dto.PlayerRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +20,20 @@ public class Players {
 
     public static Players createDefault() {
         List<Player> players = new ArrayList<>();
-        players.add(Player.from(Name.createDealer()));
+        players.add(joinDealer());
+
         return new Players(players);
     }
 
-    public void joinPlayer(String input) {
-        List<Name> splitNames = Name.createSplitNames(input);
+    public void joinPlayers(String input) {
+        List<String> splitNames = Name.createSplitNameValues(input);
 
-        players.addAll(splitNames.stream()
+        List<Player> addPlayers = splitNames.stream()
+                .map(PlayerRequest::from)
                 .map(Player::from)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        players.addAll(addPlayers);
     }
 
     public String getPlayerNamesExceptDealer() {
@@ -45,5 +50,10 @@ public class Players {
             List<Card> initCards = deck.getCards(count);
             player.selectCardsFromDeck(initCards);
         });
+    }
+
+    private static Player joinDealer() {
+        PlayerRequest dealerRequest = PlayerRequest.from(Name.getDealer());
+        return Player.from(dealerRequest);
     }
 }

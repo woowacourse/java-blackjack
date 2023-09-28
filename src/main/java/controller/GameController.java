@@ -28,7 +28,7 @@ public class GameController {
 
     private Players joinPlayers(String nameInput) {
         Players players = Players.createDefault();
-        players.joinPlayer(nameInput);
+        players.joinPlayers(nameInput);
 
         return players;
     }
