@@ -35,4 +35,17 @@ public class Cards {
                 .map(cardName -> Card.createDefault(cardName, score))
                 .collect(Collectors.toList());
     }
+
+    public int getCardSize() {
+        return cards.size();
+    }
+
+    public Card getCard(int index) {
+        if (index < cards.size()) {
+            Card card = cards.get(index);
+            cards.remove(index);
+            return card;
+        }
+        return null;
+    }
 }

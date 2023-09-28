@@ -37,4 +37,9 @@ public class Deck {
     public static List<Card> createSpecialCards(String special, int score) {
         return Cards.createSpecialCards(special, CARD_TYPES, score);
     }
+
+    public Card getOneCard() {
+        int randomValue = Dice.getRandomIndex(cards.getCardSize());
+        return cards.getCard(randomValue);
+    }
 }
