@@ -13,4 +13,8 @@ public class Card {
     public static Card createDefault(final Name type, final int score) {
         return new Card(type, score);
     }
+
+    public String getType() {
+        return type.getName();
+    }
 }
