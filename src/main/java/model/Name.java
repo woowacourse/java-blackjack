@@ -1,9 +1,12 @@
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Name {
+
+    private static final String NAME_SPLITTER = ",";
 
     private final String name;
 
@@ -28,6 +31,14 @@ public class Name {
     public static List<Name> convertStringListToNamesWithSpecial(final String special, final List<String> names) {
         return names.stream()
                 .map(name -> Name.from(special + name))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Name> createSplitNames(String input) {
+        List<String> splitNames = Arrays.asList(input.split(NAME_SPLITTER));
+
+        return splitNames.stream()
+                .map(Name::from)
                 .collect(Collectors.toList());
     }
 
