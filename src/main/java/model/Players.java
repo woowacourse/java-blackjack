@@ -37,6 +37,11 @@ public class Players {
         return Name.chainingNames(names);
     }
 
+    public void giveInitialCards(Deck deck, int count) {
+        List<Card> initCards = deck.getCards(count);
+        players.forEach(player -> player.selectCardsFromDeck(initCards));
+    }
+
     public String getDealer() {
         return DEALER;
     }

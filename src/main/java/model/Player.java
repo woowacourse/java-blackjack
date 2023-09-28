@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Player {
 
     private final Name name;
@@ -12,6 +14,10 @@ public class Player {
 
     public static Player from(final Name name) {
         return new Player(name, Cards.createPlayerCards());
+    }
+
+    public void selectCardsFromDeck(List<Card> card) {
+        cards.addCards(card);
     }
 
     public Name getName() {

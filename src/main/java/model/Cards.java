@@ -36,6 +36,10 @@ public class Cards {
                 .collect(Collectors.toList());
     }
 
+    public void addCards(List<Card> newCards) {
+        cards.addAll(newCards);
+    }
+
     public int getCardSize() {
         return cards.size();
     }
