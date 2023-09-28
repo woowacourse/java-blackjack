@@ -38,8 +38,12 @@ public class Deck {
         return Cards.createSpecialCards(special, CARD_TYPES, score);
     }
 
-    public Card getOneCard() {
-        int randomValue = Dice.getRandomIndex(cards.getCardSize());
-        return cards.getCard(randomValue);
+    public List<Card> getCards(int count) {
+        List<Card> dropCards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            int randomValue = Dice.getRandomIndex(cards.getCardSize());
+            dropCards.add(cards.getCard(randomValue));
+        }
+        return dropCards;
     }
 }
