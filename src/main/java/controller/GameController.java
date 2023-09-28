@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class GameController {
 
-    private static final int INIT_CARD = 2;
+    private static final int INIT_GIVE_CARDS = 2;
 
     private final Deck deck;
     private final GameView view;
@@ -21,8 +21,8 @@ public class GameController {
     }
 
     public void play() {
-        view.giveInitCardAlert(players.getDealer(), players.getPlayerNameList(), INIT_CARD);
-        players.giveInitialCards(deck, INIT_CARD);
+        view.giveInitCardAlert(players.getDealer(), players.getPlayerNameList(), INIT_GIVE_CARDS);
+        players.giveInitialCards(deck, INIT_GIVE_CARDS);
     }
 
     private Players joinPlayers(String nameInput) {
