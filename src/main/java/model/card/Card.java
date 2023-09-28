@@ -1,26 +1,19 @@
 package model.card;
 
+import model.card.dto.CardRequest;
 import model.name.Name;
 
 public class Card {
 
-    private final Name type;
+    private final Name name;
     private final int score;
 
-    private Card(final Name type, final int score) {
-        this.type = type;
+    private Card(final Name name, final int score) {
+        this.name = name;
         this.score = score;
     }
 
-    public static Card createDefault(final Name type, final int score) {
-        return new Card(type, score);
-    }
-
-    public String getType() {
-        return type.getName();
-    }
-
-    public int getScore() {
-        return score;
+    public static Card from(final CardRequest request) {
+        return new Card(request.getName(), request.getScore());
     }
 }

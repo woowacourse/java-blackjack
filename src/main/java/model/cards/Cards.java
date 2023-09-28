@@ -1,6 +1,7 @@
 package model.cards;
 
 import model.card.Card;
+import model.card.dto.CardRequest;
 import model.name.Name;
 
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class Cards {
         List<Name> cardNames = Name.convertStringListToNamesWithScore(score, names);
 
         return cardNames.stream()
-                .map(cardName -> Card.createDefault(cardName, score))
+                .map(cardName -> CardRequest.createDefault(cardName, score))
+                .map(Card::from)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +37,8 @@ public class Cards {
         List<Name> cardNames = Name.convertStringListToNamesWithSpecial(special, names);
 
         return cardNames.stream()
-                .map(cardName -> Card.createDefault(cardName, score))
+                .map(cardName -> CardRequest.createDefault(cardName, score))
+                .map(Card::from)
                 .collect(Collectors.toList());
     }
 
