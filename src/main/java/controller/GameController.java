@@ -7,7 +7,9 @@ import view.GameView;
 import java.io.IOException;
 
 public class GameController {
-    
+
+    private static final int INIT_CARD = 2;
+
     private final Deck deck;
     private final GameView view;
     private final Players players;
@@ -19,7 +21,7 @@ public class GameController {
     }
 
     public void play() {
-        
+        view.giveInitCardInfo(players.getDealer(), players.getPlayerNameList(), INIT_CARD);
     }
 
     private Players joinPlayers(String nameInput) {

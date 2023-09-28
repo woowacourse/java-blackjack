@@ -42,6 +42,16 @@ public class Name {
                 .collect(Collectors.toList());
     }
 
+    public static String chainingNames(List<Name> names) {
+        StringBuilder stringBuilder = new StringBuilder();
+        names.forEach(name -> stringBuilder
+                .append(name.getName())
+                .append(Name.NAME_SPLITTER));
+
+        String chainingName = stringBuilder.toString();
+        return chainingName.substring(0, chainingName.length() - 1);
+    }
+
     public String getName() {
         return name;
     }

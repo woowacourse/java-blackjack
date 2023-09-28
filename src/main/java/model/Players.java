@@ -27,4 +27,17 @@ public class Players {
                 .map(Player::from)
                 .collect(Collectors.toList()));
     }
+
+    public String getPlayerNameList() {
+        List<Name> names = players.stream()
+                .map(Player::getName)
+                .filter(name -> !name.getName().equals(DEALER))
+                .collect(Collectors.toList());
+
+        return Name.chainingNames(names);
+    }
+
+    public String getDealer() {
+        return DEALER;
+    }
 }
