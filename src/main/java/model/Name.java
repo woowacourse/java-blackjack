@@ -43,6 +43,7 @@ public class Name {
         List<String> splitNames = Arrays.asList(input.split(NAME_SPLITTER));
 
         return splitNames.stream()
+                .map(String::trim)
                 .map(Name::from)
                 .collect(Collectors.toList());
     }
