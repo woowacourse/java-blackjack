@@ -26,30 +26,10 @@ public class GameView {
 
     public void printPlayerDefaultStatus(final String name, final String cardNames) {
         if (name.equals(Name.getDealer())) {
-            System.out.println(dealerDefaultAnswer(name, cardNames));
+            StatusView.dealerDefaultAnswer(name, cardNames);
             return;
         }
-        System.out.println(playerDefaultAnswer(name, cardNames));
-    }
-
-    private String playerDefaultAnswer(final String name, final String cardNames) {
-        return name + "카드" + addDividerBeforeCardNames(cardNames);
-    }
-
-    private String dealerDefaultAnswer(final String name, final String cardNames) {
-        return name + addDividerBeforeCardNames(cardNames);
-    }
-
-    public void printPlayerResultStatus(final String name, final String cardNames, final int score) {
-        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
-    }
-    
-    private static String addDividerBeforeCardNames(final String cardNames) {
-        return ": " + cardNames;   
-    }
-
-    private static String addResultDividerBeforeScore(final int score) {
-        return " - 결과: " + score;
+       StatusView.playerDefaultAnswer(name, cardNames);
     }
 
     public boolean askWantMoreCard(String name) throws IOException {
