@@ -22,7 +22,7 @@ public class GameController {
     public GameController(final Deck deck, final GameView view) throws IOException {
         this.deck = deck;
         this.view = view;
-        this.players = joinPlayers(view.getPlayerNameInput());
+        this.players = joinPlayers(view.getInput());
     }
 
     public void play() throws IOException {
@@ -35,10 +35,10 @@ public class GameController {
 
         System.out.println();
 
-        for (String name : players.getPlayerNameValuesExceptDealer()) {
-            while (players.isNotExceed(name, GOAL_VALUE) && view.isWantMoreCard(name)) {
-                players.giveOneCard(deck, name);
-                view.print(players.printShowStatus(name));
+        for (String player : players.getPlayerNameValuesExceptDealer()) {
+            while (players.isNotExceed(player, GOAL_VALUE) && view.askWantMoreCard(player)) {
+                players.giveOneCard(deck, player);
+                view.print(players.showStatus(player));
             }
         }
 

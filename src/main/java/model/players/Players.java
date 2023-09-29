@@ -75,7 +75,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public String printShowStatus(final String name) {
+    public String showStatus(final String name) {
         Player player = findByName(name);
         PlayerResponse response = PlayerResponse.of(player.getName(), player.getCards());
         return response.getCardsName();
@@ -86,7 +86,7 @@ public class Players {
         targetPlayer.addCards(deck.getCardsFromDeckAsMuchAs(1));
     }
 
-    public boolean isNotExceed(final String name, int goal) {
+    public boolean isNotExceed(final String name, final int goal) {
         Player targetPlayer = findByName(name);
         return targetPlayer.getScore() < goal;
     }

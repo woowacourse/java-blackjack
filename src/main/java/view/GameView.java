@@ -21,7 +21,7 @@ public class GameView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
     }
 
-    public String getPlayerNameInput() throws IOException {
+    public String getInput() throws IOException {
         return inputReader.readLine();
     }
 
@@ -68,16 +68,20 @@ public class GameView {
         }
     }
 
-    public boolean isWantMoreCard(String name) throws IOException {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
+    public boolean askWantMoreCard(String name) throws IOException {
+        askWantMoreCardAlert(name);
 
-        String answer = getMoreCardInput();
+        String answer = getInput();
         while (isAnswerNotValid(answer)) {
-            System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
-            answer = getMoreCardInput();
+            askWantMoreCardAlert(name);
+            answer = getInput();
         }
 
         return convertAnswerToBoolean(answer);
+    }
+
+    private void askWantMoreCardAlert(final String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
     }
 
     public void giveDealerCardAlert(final String dealer, final int score) {
@@ -94,10 +98,6 @@ public class GameView {
 
     private boolean convertAnswerToBoolean(String answer) {
         return answer.equals(YES);
-    }
-
-    private String getMoreCardInput() throws IOException {
-        return inputReader.readLine();
     }
 
     private boolean isAnswerNotValid(String answer) {
