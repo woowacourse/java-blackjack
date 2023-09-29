@@ -54,9 +54,6 @@ public class GameController {
     }
 
     private Players joinPlayers(String nameInput) {
-        Players players = Players.createDefault();
-        players.joinPlayers(nameInput);
-
-        return players;
+        return Players.from(nameInput);
     }
 }

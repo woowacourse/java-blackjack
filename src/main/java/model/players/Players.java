@@ -19,23 +19,23 @@ public class Players {
         this.players = players;
     }
 
-    public static Players createDefault() {
+    public static Players from(final String input) {
         List<Player> players = new ArrayList<>();
+
         players.add(joinDealer());
+        players.addAll(joinPlayers(input));
 
         return new Players(players);
     }
 
-    public void joinPlayers(String input) {
+    private static List<Player> joinPlayers(String input) {
         List<String> splitNames = Name.createSplitNameValues(input);
 
-        List<Player> addPlayers = splitNames.stream()
+        return splitNames.stream()
                 .map(String::trim)
                 .map(PlayerRequest::from)
                 .map(request -> Player.of(request.getName(), request.getCards()))
                 .collect(Collectors.toList());
-
-        players.addAll(addPlayers);
     }
 
     private static Player joinDealer() {
