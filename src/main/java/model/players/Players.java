@@ -32,7 +32,6 @@ public class Players {
         List<String> splitNames = Name.createSplitNameValues(input);
 
         return splitNames.stream()
-                .map(String::trim)
                 .map(PlayerRequest::from)
                 .map(request -> Player.of(request.getName(), request.getCards()))
                 .collect(Collectors.toList());

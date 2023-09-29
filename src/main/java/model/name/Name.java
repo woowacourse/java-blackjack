@@ -42,7 +42,9 @@ public class Name {
     }
 
     public static List<String> createSplitNameValues(String input) {
-        return Arrays.asList(input.split(NAME_SPLITTER));
+        return Arrays.stream(input.split(NAME_SPLITTER))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public static String chainingNames(List<Name> names) {
