@@ -10,10 +10,12 @@ public class Player {
 
     private final Name name;
     private final Cards cards;
+    private int grade;
 
     private Player(final Name name, final Cards cards) {
         this.name = name;
         this.cards = cards;
+        this.grade = Integer.MIN_VALUE;
     }
 
     public static Player of(final Name name, final Cards cards) {
@@ -22,6 +24,10 @@ public class Player {
 
     public void addCards(List<Card> card) {
         cards.addCards(card);
+    }
+
+    public void writeGrade(int grade) {
+        this.grade = grade;
     }
 
     public Name getName() {
@@ -34,5 +40,13 @@ public class Player {
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public int getDistance(int goal) {
+        return Math.abs(grade - goal);
+    }
+
+    public int getGrade() {
+        return grade;
     }
 }

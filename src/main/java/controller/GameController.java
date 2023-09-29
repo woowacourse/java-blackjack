@@ -7,6 +7,7 @@ import model.players.Players;
 import view.GameView;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GameController {
 
@@ -60,6 +61,27 @@ public class GameController {
         }
 
         view.alertFinalGrade();
+
+        List<PlayerResponse> playerResponsesWithGrade = players.calculateEachGradeWithGoal(GOAL_VALUE);
+        PlayerResponse dealerResponse = playerResponsesWithGrade.get(0);
+        for (PlayerResponse response : playerResponsesWithGrade) {
+            if (response.equals(dealerResponse)) {
+                view.printDealerScoreBoard(response.getNameValue(),
+                        players.getDealerWin(dealerResponse.getGrade()),
+                        players.getDealerSame(dealerResponse.getGrade()),
+                        players.getDealerLose(dealerResponse.getGrade()));
+                continue;
+            }
+            if (response.isUpThanDealer(dealerResponse)) {
+                view.printWin(response.getNameValue());
+                continue;
+            }
+            if (response.isSameWithDealer(dealerResponse)) {
+                view.printSame(response.getNameValue());
+                continue;
+            }
+            view.printLose(response.getNameValue());
+        }
     }
 
     private Players joinPlayers(final String nameInput) {

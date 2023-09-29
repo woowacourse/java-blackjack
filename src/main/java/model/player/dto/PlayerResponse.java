@@ -5,20 +5,27 @@ import model.cards.Cards;
 import model.name.Name;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PlayerResponse {
 
     private final String name;
     private final Cards cards;
+    private int grade;
 
-    private PlayerResponse(final String name, final Cards cards) {
+    private PlayerResponse(final String name, final Cards cards, final int grade) {
         this.name = name;
         this.cards = cards;
+        this.grade = grade;
     }
 
-    public static PlayerResponse of(final Name name, final Cards cards) {
-        return new PlayerResponse(name.getName(), cards);
+    public static PlayerResponse createDefault(final Name name, final Cards cards) {
+        return new PlayerResponse(name.getName(), cards, Integer.MAX_VALUE);
+    }
+
+    public static PlayerResponse withGrade(final Name name, final Cards cards, final int grade) {
+        return new PlayerResponse(name.getName(), cards, grade);
     }
 
     public String getNameValue() {
@@ -44,11 +51,36 @@ public class PlayerResponse {
                 .collect(Collectors.toList());
     }
 
+    public boolean isUpThanDealer(PlayerResponse dealer) {
+        return grade < dealer.getGrade();
+    }
+
+    public boolean isSameWithDealer(PlayerResponse dealer) {
+        return grade == dealer.getGrade();
+    }
+
     public boolean isDealerResponse() {
         return name.equals(Name.getDealer());
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerResponse response = (PlayerResponse) o;
+        return Objects.equals(name, response.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public int getGrade() {
+        return grade;
     }
 }

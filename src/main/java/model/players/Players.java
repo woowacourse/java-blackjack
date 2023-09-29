@@ -8,7 +8,9 @@ import model.player.dto.PlayerRequest;
 import model.player.dto.PlayerResponse;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -44,7 +46,7 @@ public class Players {
 
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
-                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
                 .map(PlayerResponse::getNameValue)
                 .map(Name::from)
                 .filter(Name::isNotDealer)
@@ -71,7 +73,7 @@ public class Players {
 
     public List<PlayerResponse> playersResponse() {
         return players.stream()
-                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
+                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
                 .collect(Collectors.toList());
     }
 
@@ -102,6 +104,79 @@ public class Players {
 
     public PlayerResponse getPlayerResponseByName(final String name) {
         Player player = findByName(name);
-        return PlayerResponse.of(player.getName(), player.getCards());
+        return PlayerResponse.createDefault(player.getName(), player.getCards());
+    }
+
+    private List<Player> getPlayersOrderByDistance(int goal) {
+        return players.stream()
+                .sorted(Comparator.comparing(response -> response.getDistance(goal)))
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerResponse> calculateEachGradeWithGoal(int goal) {
+        List<Player> orderedPlayers = getPlayersOrderByDistance(goal);
+
+        return eachPlayerWriteGrade(orderedPlayers, goal);
+    }
+
+    private List<PlayerResponse> eachPlayerWriteGrade(final List<Player> orderedPlayers,
+                                             final int goal) {
+        orderedPlayers.forEach(player -> {
+            int grade = Math.abs(player.getScore() - goal);
+            player.writeGrade(grade);
+        });
+
+        return players.stream()
+                .map(player -> PlayerResponse.withGrade(player.getName(), player.getCards(), player.getGrade()))
+                .collect(Collectors.toList());
+    }
+
+    public int getDealerWin(int grade) {
+        AtomicInteger win = new AtomicInteger();
+
+        List<PlayerResponse> playerResponses = getPlayerResponsesExceptDealer();
+
+        playerResponses.forEach(response -> {
+            if (response.getGrade() > grade) {
+                win.getAndIncrement();
+            }
+        });
+
+        return win.get();
+    }
+
+    private List<PlayerResponse> getPlayerResponsesExceptDealer() {
+        return players.stream()
+                .filter(player -> player.getName().isNotDealer())
+                .map(player -> PlayerResponse.withGrade(player.getName(), player.getCards(), player.getGrade()))
+                .collect(Collectors.toList());
+    }
+
+    public int getDealerSame(int grade) {
+        AtomicInteger same = new AtomicInteger();
+
+        List<PlayerResponse> playerResponses = getPlayerResponsesExceptDealer();
+
+        playerResponses.forEach(response -> {
+            if (response.getGrade() == grade) {
+                same.getAndIncrement();
+            }
+        });
+
+        return same.get();
+    }
+
+    public int getDealerLose(int grade) {
+        AtomicInteger lose = new AtomicInteger();
+
+        List<PlayerResponse> playerResponses = getPlayerResponsesExceptDealer();
+
+        playerResponses.forEach(response -> {
+            if (response.getGrade() < grade) {
+                lose.getAndIncrement();
+            }
+        });
+
+        return lose.get();
     }
 }

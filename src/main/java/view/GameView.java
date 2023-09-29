@@ -7,6 +7,9 @@ import java.io.IOException;
 
 public class GameView {
 
+    private static final String WIN = "승 ";
+    private static final String SAME = "무 ";
+    private static final String LOSE = "패 ";
     private static final String YES = "y";
     private static final String NO = "n";
 
@@ -88,6 +91,22 @@ public class GameView {
     public void alertFinalGrade() {
         System.out.println();
         System.out.println("## 최종 승패");
+    }
+
+    public void printWin(final String name) {
+        System.out.println(name + ": " + WIN);
+    }
+
+    public void printSame(final String name) {
+        System.out.println(name + ": " + SAME);
+    }
+
+    public void printLose(final String name) {
+        System.out.println(name + ": " + LOSE);
+    }
+
+    public void printDealerScoreBoard(final String name, final int win, final int same, final int lose) {
+        System.out.println(name + ": " + win + WIN + same + SAME + lose + LOSE);
     }
 
     private boolean convertAnswerToBoolean(String answer) {
