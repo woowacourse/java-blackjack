@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static util.Keyword.DEALER;
+
 public class Players {
 
     private final List<Player> players;
@@ -40,7 +42,7 @@ public class Players {
     }
 
     private static Player joinDealer() {
-        PlayerRequest dealerRequest = PlayerRequest.from(Name.getDealer());
+        PlayerRequest dealerRequest = PlayerRequest.from(DEALER.getValue());
         return Player.of(dealerRequest.getName(), dealerRequest.getCards());
     }
 

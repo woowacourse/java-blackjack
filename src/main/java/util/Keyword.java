@@ -2,6 +2,9 @@ package util;
 
 public enum Keyword {
 
+    DEALER("딜러"),
+    NAME_SPLITTER(","),
+    BLANK(" "),
     YES("y"),
     NO("n"),
     WIN("승"),
@@ -16,5 +19,9 @@ public enum Keyword {
 
     public String getValue() {
         return value;
+    }
+
+    public int length() {
+        return value.length();
     }
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import model.deck.Deck;
-import model.name.Name;
 import model.player.dto.PlayerResponse;
 import model.players.Players;
 import view.AlertView;
@@ -13,6 +12,7 @@ import view.StatusView;
 import java.io.IOException;
 import java.util.List;
 
+import static util.Keyword.DEALER;
 import static util.Rule.DEALER_MORE_SCORE;
 import static util.Rule.GOAL_SCORE;
 import static util.Rule.INIT_GIVE_CARDS;
@@ -42,7 +42,7 @@ public class GameController {
     }
 
     private void giveInitialCards() {
-        AlertView.alertGiveInitCard(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
+        AlertView.alertGiveInitCard(DEALER.getValue(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
     }
 
@@ -68,13 +68,13 @@ public class GameController {
     }
 
     private void alertDealerCard() {
-        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            AlertView.alertDealerEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue());
+        if (players.dealerScoreEnough(DEALER.getValue(), DEALER_MORE_SCORE.getValue())) {
+            AlertView.alertDealerEnough(DEALER.getValue(), DEALER_MORE_SCORE.getValue());
         }
 
-        if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            AlertView.alertGiveDealerCard(Name.getDealer(), DEALER_MORE_SCORE.getValue());
-            players.giveOneCard(deck, Name.getDealer());
+        if (players.dealerScoreUnder(DEALER.getValue(), DEALER_MORE_SCORE.getValue())) {
+            AlertView.alertGiveDealerCard(DEALER.getValue(), DEALER_MORE_SCORE.getValue());
+            players.giveOneCard(deck, DEALER.getValue());
         }
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static util.Keyword.DEALER;
+
 public class PlayerResponse {
 
     private final String name;
@@ -60,7 +62,7 @@ public class PlayerResponse {
     }
 
     public boolean isDealerResponse() {
-        return name.equals(Name.getDealer());
+        return name.equals(DEALER.getValue());
     }
 
     @Override

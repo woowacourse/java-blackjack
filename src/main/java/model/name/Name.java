@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Name {
+import static util.Keyword.BLANK;
+import static util.Keyword.DEALER;
+import static util.Keyword.NAME_SPLITTER;
 
-    private static final String DEALER = "딜러";
-    private static final String NAME_SPLITTER = ",";
-    private static final String BLANK = " ";
+public class Name {
 
     private final String name;
 
@@ -38,7 +38,7 @@ public class Name {
     }
 
     public static List<String> createSplitNameValues(String input) {
-        return Arrays.stream(input.split(NAME_SPLITTER))
+        return Arrays.stream(input.split(NAME_SPLITTER.getValue()))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
@@ -47,19 +47,19 @@ public class Name {
         StringBuilder stringBuilder = new StringBuilder();
         names.forEach(name -> stringBuilder
                 .append(name.getName())
-                .append(Name.NAME_SPLITTER)
-                .append(Name.BLANK));
+                .append(NAME_SPLITTER.getValue())
+                .append(BLANK.getValue()));
 
         String chainingName = stringBuilder.toString();
         return eraseLastMark(chainingName);
     }
 
     private static String eraseLastMark(final String chainingName) {
-        return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + Name.BLANK.length()));
+        return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + BLANK.length()));
     }
 
     public boolean isNotDealer() {
-        return !name.equals(DEALER);
+        return !name.equals(DEALER.getValue());
     }
 
     @Override
@@ -73,10 +73,6 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public static String getDealer() {
-        return DEALER;
     }
 
     public String getName() {
