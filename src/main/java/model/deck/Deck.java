@@ -6,6 +6,8 @@ import model.dice.Dice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -42,12 +44,14 @@ public class Deck {
         return Cards.createSpecialCards(special, CARD_TYPES, score);
     }
 
-    public List<Card> getCards(int count) {
-        List<Card> dropCards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            int randomValue = Dice.getRandomIndex(cards.getCardSize());
-            dropCards.add(cards.getCard(randomValue));
-        }
-        return dropCards;
+    public List<Card> getCardsFromDeckAsMuchAs(int count) {
+        return IntStream.range(0, count)
+                .mapToObj(x -> getRandomCardFromDeck())
+                .collect(Collectors.toList());
+    }
+
+    private Card getRandomCardFromDeck() {
+        int index = Dice.getRandomIndex(cards.getCardSize());
+        return cards.useCard(index);
     }
 }

@@ -20,7 +20,7 @@ public class Player {
         return new Player(name, cards);
     }
 
-    public void selectCardsFromDeck(List<Card> card) {
+    public void addCards(List<Card> card) {
         cards.addCards(card);
     }
 

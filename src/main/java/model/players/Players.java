@@ -55,8 +55,8 @@ public class Players {
 
     public void giveInitialCards(Deck deck, int count) {
         players.forEach(player -> {
-            List<Card> initCards = deck.getCards(count);
-            player.selectCardsFromDeck(initCards);
+            List<Card> initCards = deck.getCardsFromDeckAsMuchAs(count);
+            player.addCards(initCards);
         });
     }
 
@@ -92,7 +92,7 @@ public class Players {
 
     public void giveOneCard(final Deck deck, final String name) {
         Player targetPlayer = findByName(name);
-        targetPlayer.selectCardsFromDeck(deck.getCards(1));
+        targetPlayer.addCards(deck.getCardsFromDeckAsMuchAs(1));
     }
 
     public boolean isNotExceed(final String name, int goal) {

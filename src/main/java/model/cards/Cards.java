@@ -50,7 +50,7 @@ public class Cards {
         return cards.size();
     }
 
-    public Card getCard(int index) {
+    public Card useCard(int index) {
         if (index < cards.size()) {
             Card card = cards.get(index);
             cards.remove(index);
