@@ -7,6 +7,7 @@ import model.players.Players;
 import view.AlertView;
 import view.AskView;
 import view.GameView;
+import view.ScoreBoardView;
 import view.StatusView;
 
 import java.io.IOException;
@@ -70,21 +71,21 @@ public class GameController {
         PlayerResponse dealerResponse = playerResponsesWithGrade.get(0);
         for (PlayerResponse response : playerResponsesWithGrade) {
             if (response.equals(dealerResponse)) {
-                view.printDealerScoreBoard(response.getNameValue(),
+                ScoreBoardView.printDealerScoreBoard(response.getNameValue(),
                         players.getDealerWin(dealerResponse.getGrade()),
                         players.getDealerSame(dealerResponse.getGrade()),
                         players.getDealerLose(dealerResponse.getGrade()));
                 continue;
             }
             if (response.isUpThanDealer(dealerResponse)) {
-                view.printWin(response.getNameValue());
+                ScoreBoardView.printWin(response.getNameValue());
                 continue;
             }
             if (response.isSameWithDealer(dealerResponse)) {
-                view.printSame(response.getNameValue());
+                ScoreBoardView.printSame(response.getNameValue());
                 continue;
             }
-            view.printLose(response.getNameValue());
+            ScoreBoardView.printLose(response.getNameValue());
         }
     }
 

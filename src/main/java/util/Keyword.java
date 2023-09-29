@@ -3,7 +3,10 @@ package util;
 public enum Keyword {
 
     YES("y"),
-    NO("n");
+    NO("n"),
+    WIN("승"),
+    SAME("무"),
+    LOSE("패");
 
     private final String value;
 
