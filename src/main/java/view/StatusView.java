@@ -6,11 +6,11 @@ public class StatusView {
         System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
     }
 
-    public static void playerDefaultAnswer(final String name, final String cardNames) {
+    public static void printPlayerDefaultStatus(final String name, final String cardNames) {
         System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames));
     }
 
-    public static void dealerDefaultAnswer(final String name, final String cardNames) {
+    public static void printDealerDefaultStatus(final String name, final String cardNames) {
         System.out.println(name + addDividerBeforeCardNames(cardNames));
     }
 

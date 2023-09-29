@@ -26,10 +26,10 @@ public class GameView {
 
     public void printPlayerDefaultStatus(final String name, final String cardNames) {
         if (name.equals(Name.getDealer())) {
-            StatusView.dealerDefaultAnswer(name, cardNames);
+            StatusView.printDealerDefaultStatus(name, cardNames);
             return;
         }
-       StatusView.playerDefaultAnswer(name, cardNames);
+       StatusView.printPlayerDefaultStatus(name, cardNames);
     }
 
     public boolean askWantMoreCard(String name) throws IOException {
