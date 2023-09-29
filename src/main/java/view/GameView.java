@@ -85,6 +85,11 @@ public class GameView {
         System.out.println();
     }
 
+    public void alertFinalGrade() {
+        System.out.println();
+        System.out.println("## 최종 승패");
+    }
+
     private boolean convertAnswerToBoolean(String answer) {
         return answer.equals(YES);
     }

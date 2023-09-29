@@ -58,6 +58,8 @@ public class GameController {
         for (PlayerResponse response : players.playersResponse()) {
             view.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
         }
+
+        view.alertFinalGrade();
     }
 
     private Players joinPlayers(final String nameInput) {
