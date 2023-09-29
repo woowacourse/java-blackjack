@@ -59,7 +59,7 @@ public class GameView {
     }
 
     private static String addResultDividerBeforeScore(final int score) {
-        return "- 결과: " + score;
+        return " - 결과: " + score;
     }
 
     public void eachPrint(List<String> input) {
