@@ -6,22 +6,22 @@ public class StatusView {
 
     public static void printPersonDefaultStatus(final String name, final String cardNames) {
         if (name.equals(Name.getDealer())) {
-            printDealerDefaultStatus(name, cardNames);
+            System.out.println(dealerDefaultStatus(name, cardNames));
             return;
         }
-        printPlayerDefaultStatus(name, cardNames);
+        System.out.println(playerDefaultStatus(name, cardNames));
     }
 
     public static void printPlayerResultStatus(final String name, final String cardNames, final int score) {
-        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
+        System.out.println(playerDefaultStatus(name, cardNames) + addResultDividerBeforeScore(score));
     }
 
-    private static void printPlayerDefaultStatus(final String name, final String cardNames) {
-        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames));
+    private static String playerDefaultStatus(final String name, final String cardNames) {
+        return name + "카드" + addDividerBeforeCardNames(cardNames);
     }
 
-    private static void printDealerDefaultStatus(final String name, final String cardNames) {
-        System.out.println(name + addDividerBeforeCardNames(cardNames));
+    private static String dealerDefaultStatus(final String name, final String cardNames) {
+        return name + addDividerBeforeCardNames(cardNames);
     }
 
     private static String addDividerBeforeCardNames(final String cardNames) {
