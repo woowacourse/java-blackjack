@@ -26,11 +26,10 @@ public class GameController {
     public GameController(final Deck deck, final GameView view) throws IOException {
         this.deck = deck;
         this.view = view;
-        this.players = joinPlayers(view.getInput());
+        this.players = joinPlayers();
     }
 
     public void play() throws IOException {
-        AskView.askPlayerNames();
         AlertView.alertGiveInitCard(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
 
@@ -89,7 +88,9 @@ public class GameController {
         }
     }
 
-    private Players joinPlayers(final String nameInput) {
+    private Players joinPlayers() throws IOException {
+        AskView.askPlayerNames();
+        String nameInput = view.getInput();
         return Players.from(nameInput);
     }
 }
