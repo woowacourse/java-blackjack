@@ -25,10 +25,6 @@ public class Name {
         return new Name(name);
     }
 
-    public static Name createDealer() {
-        return new Name(DEALER);
-    }
-
     public static List<Name> convertStringListToNamesWithScore(final int score, final List<String> names) {
         return names.stream()
                 .map(name -> Name.withScore(score, name))

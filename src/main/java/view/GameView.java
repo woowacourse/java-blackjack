@@ -4,7 +4,6 @@ import model.name.Name;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
 
 public class GameView {
 
@@ -28,10 +27,6 @@ public class GameView {
     public void giveInitCardAlert(String dealer, String names, int cards) {
         System.out.println(dealer + "와 " + names + "에게 " + cards + "장을 나누었습니다.");
         System.out.println();
-    }
-
-    public void print(String input) {
-        System.out.print(input);
     }
 
     public void printPlayerDefaultStatus(final String name, final String cardNames) {
@@ -60,12 +55,6 @@ public class GameView {
 
     private static String addResultDividerBeforeScore(final int score) {
         return " - 결과: " + score;
-    }
-
-    public void eachPrint(List<String> input) {
-        for (String line : input) {
-            System.out.println(line);
-        }
     }
 
     public boolean askWantMoreCard(String name) throws IOException {
