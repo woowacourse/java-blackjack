@@ -53,7 +53,7 @@ public class GameController {
         view.eachPrint(players.result());
     }
 
-    private Players joinPlayers(String nameInput) {
+    private Players joinPlayers(final String nameInput) {
         return Players.from(nameInput);
     }
 }
