@@ -55,6 +55,10 @@ public class Name {
                 .append(Name.BLANK));
 
         String chainingName = stringBuilder.toString();
+        return eraseLastMark(chainingName);
+    }
+
+    private static String eraseLastMark(final String chainingName) {
         return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + Name.BLANK.length()));
     }
 
