@@ -1,7 +1,5 @@
 package view;
 
-import model.name.Name;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -22,14 +20,6 @@ public class GameView {
 
     public String getInput() throws IOException {
         return inputReader.readLine();
-    }
-
-    public void printPlayerDefaultStatus(final String name, final String cardNames) {
-        if (name.equals(Name.getDealer())) {
-            StatusView.printDealerDefaultStatus(name, cardNames);
-            return;
-        }
-       StatusView.printPlayerDefaultStatus(name, cardNames);
     }
 
     public boolean askWantMoreCard(String name) throws IOException {

@@ -35,10 +35,10 @@ public class GameController {
 
         for (PlayerResponse response : players.playersResponse()) {
             if (response.isDealerResponse()) {
-                view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsNameWithSecret());
+                StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsNameWithSecret());
                 continue;
             }
-            view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
+            StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsName());
         }
 
         System.out.println();
@@ -47,7 +47,7 @@ public class GameController {
             while (players.isNotExceed(player, GOAL_SCORE.getValue()) && view.askWantMoreCard(player)) {
                 players.giveOneCard(deck, player);
                 PlayerResponse response = players.getPlayerResponseByName(player);
-                view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
+                StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsName());
             }
         }
 
