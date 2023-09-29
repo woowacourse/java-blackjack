@@ -4,16 +4,16 @@ import model.name.Name;
 
 public class StatusView {
 
-    public static void printPlayerResultStatus(final String name, final String cardNames, final int score) {
-        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
-    }
-
     public static void printPersonDefaultStatus(final String name, final String cardNames) {
         if (name.equals(Name.getDealer())) {
             printDealerDefaultStatus(name, cardNames);
             return;
         }
         printPlayerDefaultStatus(name, cardNames);
+    }
+
+    public static void printPlayerResultStatus(final String name, final String cardNames, final int score) {
+        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
     }
 
     private static void printPlayerDefaultStatus(final String name, final String cardNames) {
@@ -31,5 +31,4 @@ public class StatusView {
     private static String addResultDividerBeforeScore(final int score) {
         return " - 결과: " + score;
     }
-
 }
