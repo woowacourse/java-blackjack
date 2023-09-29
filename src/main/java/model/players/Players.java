@@ -46,7 +46,6 @@ public class Players {
         List<Name> names = players.stream()
                 .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
                 .map(PlayerResponse::getName)
-                .map(String::trim)
                 .map(Name::from)
                 .filter(Name::isNotDealer)
                 .collect(Collectors.toList());
