@@ -2,7 +2,7 @@ package view;
 
 public class StatusView {
 
-    public void printPlayerResultStatus(final String name, final String cardNames, final int score) {
+    public static void printPlayerResultStatus(final String name, final String cardNames, final int score) {
         System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
     }
 

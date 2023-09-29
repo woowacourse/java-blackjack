@@ -7,6 +7,7 @@ import model.players.Players;
 import view.AlertView;
 import view.AskView;
 import view.GameView;
+import view.StatusView;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +61,7 @@ public class GameController {
         }
 
         for (PlayerResponse response : players.playersResponse()) {
-            view.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
+            StatusView.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
         }
 
         AlertView.alertFinalGrade();
