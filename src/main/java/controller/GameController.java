@@ -29,6 +29,10 @@ public class GameController {
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
 
         for (PlayerResponse response : players.playersResponse()) {
+            if (response.isDealerResponse()) {
+                view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsNameWithSecret());
+                continue;
+            }
             view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
         }
 

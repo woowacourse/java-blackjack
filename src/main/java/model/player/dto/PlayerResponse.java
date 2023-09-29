@@ -26,22 +26,26 @@ public class PlayerResponse {
     }
 
     public String getCardsName() {
-        List<Name> cardNames = cards.getCardList()
-                .stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
-
-        if (name.equals(Name.getDealer())) {
-            cardNames = getCardsNameWithSecret(cardNames);
-        }
-
+        List<Name> cardNames = getPlayerCardNames();
         return Name.chainingNames(cardNames);
     }
 
-    private List<Name> getCardsNameWithSecret(List<Name> cardNames) {
-        return cardNames.stream()
+    public String getCardsNameWithSecret() {
+        List<Name> cardNames = getPlayerCardNames().stream()
                 .limit(cards.getCardSize() - 1)
                 .collect(Collectors.toList());
+        return Name.chainingNames(cardNames);
+    }
+
+    private List<Name> getPlayerCardNames() {
+        return cards.getCardList()
+                .stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDealerResponse() {
+        return name.equals(Name.getDealer());
     }
 
     public int getScore() {
