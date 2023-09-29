@@ -29,11 +29,8 @@ public class GameController {
         view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
 
-        PlayerResponse dealer = players.showInitialDealerStatus();
-        view.printPlayerStatus(dealer.getNameValue(), dealer.getCardsNameWithSecret());
-        
-        for (PlayerResponse response : players.showInitialStatusExceptDealer()) {
-            view.printPlayerStatus(response.getNameValue() + CARD_MARK, response.getCardsName());
+        for (PlayerResponse response : players.showInitialStatus()) {
+            view.printPlayerInitStatus(response.getNameValue(), response.getCardsName());
         }
 
         System.out.println();

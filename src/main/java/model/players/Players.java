@@ -69,9 +69,8 @@ public class Players {
         return !dealerScoreUnder(dealer, score);
     }
 
-    public List<PlayerResponse> showInitialStatusExceptDealer() {
+    public List<PlayerResponse> showInitialStatus() {
         return players.stream()
-                .filter(player -> player.getName().isNotDealer())
                 .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
                 .collect(Collectors.toList());
     }
@@ -80,11 +79,6 @@ public class Players {
         Player player = findByName(name);
         PlayerResponse response = PlayerResponse.of(player.getName(), player.getCards());
         return response.getCardsName();
-    }
-
-    public PlayerResponse showInitialDealerStatus() {
-        Player dealer = players.get(0);
-        return PlayerResponse.of(dealer.getName(), dealer.getCards());
     }
 
     public void giveOneCard(final Deck deck, final String name) {

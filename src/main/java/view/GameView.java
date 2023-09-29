@@ -1,5 +1,7 @@
 package view;
 
+import model.name.Name;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
@@ -29,11 +31,35 @@ public class GameView {
     }
 
     public void print(String input) {
-        System.out.println(input);
+        System.out.print(input);
     }
 
-    public void printPlayerStatus(final String name, final String cardNames) {
-        System.out.println(name + ": " + cardNames);
+    public void printPlayerInitStatus(final String name, final String cardNames) {
+        if (name.equals(Name.getDealer())) {
+            System.out.println(dealerInitAnswer(name, cardNames));
+            return;
+        }
+        System.out.println(playerInitAnswer(name, cardNames));
+    }
+
+    private String playerInitAnswer(final String name, final String cardNames) {
+        return name + "카드" + addDividerBeforeCardNames(cardNames);
+    }
+
+    private String dealerInitAnswer(final String name, final String cardNames) {
+        return name + addDividerBeforeCardNames(cardNames);
+    }
+
+    private String resultAnswer(final String name, final String cardNames, final int score) {
+        return name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score);
+    }
+    
+    private static String addDividerBeforeCardNames(final String cardNames) {
+        return ": " + cardNames;   
+    }
+
+    private static String addResultDividerBeforeScore(final int score) {
+        return "- 결과: " + score;
     }
 
     public void eachPrint(List<String> input) {
