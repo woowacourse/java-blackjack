@@ -68,14 +68,17 @@ public class GameController {
     }
 
     private void alertDealerCard() {
+
         if (players.dealerScoreEnough(DEALER.getValue(), DEALER_MORE_SCORE.getValue())) {
             AlertView.alertDealerEnough(DEALER.getValue(), DEALER_MORE_SCORE.getValue());
+            return;
         }
+        giveOneCardToDealer();
+    }
 
-        if (players.dealerScoreUnder(DEALER.getValue(), DEALER_MORE_SCORE.getValue())) {
-            AlertView.alertGiveDealerCard(DEALER.getValue(), DEALER_MORE_SCORE.getValue());
-            players.giveOneCard(deck, DEALER.getValue());
-        }
+    private void giveOneCardToDealer() {
+        AlertView.alertGiveDealerCard(DEALER.getValue(), DEALER_MORE_SCORE.getValue());
+        players.giveOneCard(deck, DEALER.getValue());
     }
 
     private void alertEachPlayerScore() {
