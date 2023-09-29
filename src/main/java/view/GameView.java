@@ -10,7 +10,7 @@ public class GameView {
 
     private final BufferedReader inputReader;
 
-    public GameView(BufferedReader inputReader) {
+    public GameView(final BufferedReader inputReader) {
         this.inputReader = inputReader;
     }
 
@@ -18,7 +18,7 @@ public class GameView {
         return inputReader.readLine();
     }
 
-    public boolean askWantMoreCard(String name) throws IOException {
+    public boolean askWantMoreCard(final String name) throws IOException {
         AskView.askWantMoreCard(name);
 
         String answer = getInput();
@@ -30,11 +30,11 @@ public class GameView {
         return convertAnswerToBoolean(answer);
     }
 
-    private boolean convertAnswerToBoolean(String answer) {
+    private boolean convertAnswerToBoolean(final String answer) {
         return answer.equals(YES.getValue());
     }
 
-    private boolean isAnswerNotValid(String answer) {
+    private boolean isAnswerNotValid(final String answer) {
         return !answer.equals(YES.getValue()) && !answer.equals(NO.getValue());
     }
 }
