@@ -21,7 +21,7 @@ public class PlayerResponse {
         this.cards = cards;
     }
 
-    public static PlayerResponse createDefault(final Name name, final Cards cards) {
+    public static PlayerResponse of(final Name name, final Cards cards) {
         return new PlayerResponse(name.getName(), cards);
     }
 

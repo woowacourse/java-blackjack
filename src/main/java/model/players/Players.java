@@ -44,7 +44,7 @@ public class Players {
 
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
-                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
+                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
                 .map(PlayerResponse::getName)
                 .map(Name::from)
                 .filter(Name::isNotDealer)
@@ -72,20 +72,20 @@ public class Players {
     public List<String> showInitialStatusExceptDealer() {
         return players.stream()
                 .filter(player -> player.getName().isNotDealer())
-                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
+                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
                 .map(PlayerResponse::getCards)
                 .collect(Collectors.toList());
     }
 
     public String printShowStatus(final String name) {
         Player player = findByName(name);
-        PlayerResponse response = PlayerResponse.createDefault(player.getName(), player.getCards());
+        PlayerResponse response = PlayerResponse.of(player.getName(), player.getCards());
         return response.getCards();
     }
 
     public String showInitialDealerStatus() {
         Player dealer = players.get(0);
-        PlayerResponse response = PlayerResponse.createDefault(dealer.getName(), dealer.getCards());
+        PlayerResponse response = PlayerResponse.of(dealer.getName(), dealer.getCards());
 
         return Name.getDealer() + response.getCardsWithSecret();
     }
@@ -125,14 +125,14 @@ public class Players {
 
     private String dealerResult() {
         Player dealer = findByName(Name.getDealer());
-        PlayerResponse response = PlayerResponse.createDefault(dealer.getName(), dealer.getCards());
+        PlayerResponse response = PlayerResponse.of(dealer.getName(), dealer.getCards());
         return response.getDealerCardsResult();
     }
 
     private List<String> playerResult() {
         return players.stream()
                 .filter(player -> player.getName().isNotDealer())
-                .map(player -> PlayerResponse.createDefault(player.getName(), player.getCards()))
+                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
                 .map(PlayerResponse::getPlayerCardsResult)
                 .collect(Collectors.toList());
     }
