@@ -30,7 +30,7 @@ public class GameController {
 
     public void play() throws IOException {
         AskView.askPlayerNames();
-        AlertView.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
+        AlertView.alertGiveInitCard(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
 
         for (PlayerResponse response : players.playersResponse()) {
@@ -52,11 +52,11 @@ public class GameController {
         }
 
         if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            AlertView.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
+            AlertView.alertDealerEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue());
         }
 
         if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            AlertView.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
+            AlertView.alertGiveDealerCard(Name.getDealer(), DEALER_MORE_SCORE.getValue());
             players.giveOneCard(deck, Name.getDealer());
         }
 
