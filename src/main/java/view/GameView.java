@@ -32,8 +32,8 @@ public class GameView {
         System.out.println(input);
     }
 
-    public void printInitPlayerStatus(final String name, final String cardNames) {
-        System.out.println(name + "카드: " + cardNames);
+    public void printPlayerStatus(final String name, final String cardNames) {
+        System.out.println(name + ": " + cardNames);
     }
 
     public void eachPrint(List<String> input) {

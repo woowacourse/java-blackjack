@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class GameController {
 
+    private static final String CARD_MARK = "카드";
     private static final int GOAL_VALUE = 21;
     private static final int DEALER_MORE_SCORE = 16;
     private static final int INIT_GIVE_CARDS = 2;
@@ -29,10 +30,10 @@ public class GameController {
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
 
         PlayerResponse dealer = players.showInitialDealerStatus();
-        view.printInitPlayerStatus(dealer.getNameValue(), dealer.getCardsNameWithSecret());
+        view.printPlayerStatus(dealer.getNameValue(), dealer.getCardsNameWithSecret());
         
         for (PlayerResponse response : players.showInitialStatusExceptDealer()) {
-            view.printInitPlayerStatus(response.getNameValue(), response.getCardsName());
+            view.printPlayerStatus(response.getNameValue() + CARD_MARK, response.getCardsName());
         }
 
         System.out.println();
