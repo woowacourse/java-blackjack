@@ -49,17 +49,17 @@ public class PlayerResponse {
                 .map(Card::getName)
                 .collect(Collectors.toList());
 
+        if (name.equals(Name.getDealer())) {
+            cardNames = getCardsNameWithSecret(cardNames);
+        }
+
         return Name.chainingNames(cardNames);
     }
 
-    public String getCardsNameWithSecret() {
-        List<Name> cardNames = cards.getCardList()
-                .stream()
+    private List<Name> getCardsNameWithSecret(List<Name> cardNames) {
+        return cardNames.stream()
                 .limit(cards.getCardSize() - 1)
-                .map(Card::getName)
                 .collect(Collectors.toList());
-
-        return Name.chainingNames(cardNames);
     }
 
     public int getScore() {
