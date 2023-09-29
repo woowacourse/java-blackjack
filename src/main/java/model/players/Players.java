@@ -82,11 +82,9 @@ public class Players {
         return response.getCardsName();
     }
 
-    public String showInitialDealerStatus() {
+    public PlayerResponse showInitialDealerStatus() {
         Player dealer = players.get(0);
-        PlayerResponse response = PlayerResponse.of(dealer.getName(), dealer.getCards());
-
-        return Name.getDealer() + response.getCardsWithSecret();
+        return PlayerResponse.of(dealer.getName(), dealer.getCards());
     }
 
     public void giveOneCard(final Deck deck, final String name) {

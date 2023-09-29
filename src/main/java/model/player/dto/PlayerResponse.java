@@ -25,17 +25,6 @@ public class PlayerResponse {
         return new PlayerResponse(name.getName(), cards);
     }
 
-
-    public String getCardsWithSecret() {
-        List<Name> cardNames = cards.getCardList()
-                .stream()
-                .limit(cards.getCardSize() - 1)
-                .map(Card::getName)
-                .collect(Collectors.toList());
-
-        return ALERT_MARK + Name.chainingNames(cardNames);
-    }
-
     public String getPlayerCardsResult() {
         return getCardsName() + ALERT_RESULT + ALERT_MARK + getScore();
     }
@@ -57,6 +46,16 @@ public class PlayerResponse {
     public String getCardsName() {
         List<Name> cardNames = cards.getCardList()
                 .stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+
+        return Name.chainingNames(cardNames);
+    }
+
+    public String getCardsNameWithSecret() {
+        List<Name> cardNames = cards.getCardList()
+                .stream()
+                .limit(cards.getCardSize() - 1)
                 .map(Card::getName)
                 .collect(Collectors.toList());
 
