@@ -9,11 +9,11 @@ import view.GameView;
 import java.io.IOException;
 import java.util.List;
 
-public class GameController {
+import static util.Rule.DEALER_MORE_SCORE;
+import static util.Rule.GOAL_SCORE;
+import static util.Rule.INIT_GIVE_CARDS;
 
-    private static final int GOAL_VALUE = 21;
-    private static final int DEALER_MORE_SCORE = 16;
-    private static final int INIT_GIVE_CARDS = 2;
+public class GameController {
 
     private final Deck deck;
     private final GameView view;
@@ -26,8 +26,8 @@ public class GameController {
     }
 
     public void play() throws IOException {
-        view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS);
-        players.giveInitialCards(deck, INIT_GIVE_CARDS);
+        view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
+        players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
 
         for (PlayerResponse response : players.playersResponse()) {
             if (response.isDealerResponse()) {
@@ -40,19 +40,19 @@ public class GameController {
         System.out.println();
 
         for (String player : players.getPlayerNameValuesExceptDealer()) {
-            while (players.isNotExceed(player, GOAL_VALUE) && view.askWantMoreCard(player)) {
+            while (players.isNotExceed(player, GOAL_SCORE.getValue()) && view.askWantMoreCard(player)) {
                 players.giveOneCard(deck, player);
                 PlayerResponse response = players.getPlayerResponseByName(player);
                 view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
             }
         }
 
-        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE)) {
-            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE);
+        if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
+            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
         }
 
-        if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE)) {
-            view.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE);
+        if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
+            view.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
             players.giveOneCard(deck, Name.getDealer());
         }
 
@@ -62,7 +62,7 @@ public class GameController {
 
         view.alertFinalGrade();
 
-        List<PlayerResponse> playerResponsesWithGrade = players.calculateEachGradeWithGoal(GOAL_VALUE);
+        List<PlayerResponse> playerResponsesWithGrade = players.calculateEachGradeWithGoal(GOAL_SCORE.getValue());
         PlayerResponse dealerResponse = playerResponsesWithGrade.get(0);
         for (PlayerResponse response : playerResponsesWithGrade) {
             if (response.equals(dealerResponse)) {
