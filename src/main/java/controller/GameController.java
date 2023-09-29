@@ -4,6 +4,7 @@ import model.deck.Deck;
 import model.name.Name;
 import model.player.dto.PlayerResponse;
 import model.players.Players;
+import view.AlertView;
 import view.AskView;
 import view.GameView;
 
@@ -28,7 +29,7 @@ public class GameController {
 
     public void play() throws IOException {
         AskView.askPlayerNames();
-        view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
+        AlertView.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
 
         for (PlayerResponse response : players.playersResponse()) {
@@ -50,11 +51,11 @@ public class GameController {
         }
 
         if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            view.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
+            AlertView.dealerEnoughAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
         }
 
         if (players.dealerScoreUnder(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
-            view.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
+            AlertView.giveDealerCardAlert(Name.getDealer(), DEALER_MORE_SCORE.getValue());
             players.giveOneCard(deck, Name.getDealer());
         }
 
@@ -62,7 +63,7 @@ public class GameController {
             view.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
         }
 
-        view.alertFinalGrade();
+        AlertView.alertFinalGrade();
 
         List<PlayerResponse> playerResponsesWithGrade = players.calculateEachGradeWithGoal(GOAL_SCORE.getValue());
         PlayerResponse dealerResponse = playerResponsesWithGrade.get(0);
