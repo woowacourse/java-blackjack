@@ -30,9 +30,23 @@ public class GameController {
     }
 
     public void play() throws IOException {
+        giveInitialCards();
+        printPlayersInitStatus();
+
+        moreCardsGive();
+
+        alertDealerCard();
+
+        alertEachPlayerScore();
+        alertResult();
+    }
+
+    private void giveInitialCards() {
         AlertView.alertGiveInitCard(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
+    }
 
+    private void printPlayersInitStatus() {
         for (PlayerResponse response : players.playersResponse()) {
             if (response.isDealerResponse()) {
                 StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsNameWithSecret());
@@ -40,9 +54,10 @@ public class GameController {
             }
             StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsName());
         }
-
         System.out.println();
+    }
 
+    private void moreCardsGive() throws IOException {
         for (String player : players.getPlayerNameValuesExceptDealer()) {
             while (players.isNotExceed(player, GOAL_SCORE.getValue()) && view.askWantMoreCard(player)) {
                 players.giveOneCard(deck, player);
@@ -50,7 +65,9 @@ public class GameController {
                 StatusView.printPersonDefaultStatus(response.getNameValue(), response.getCardsName());
             }
         }
+    }
 
+    private void alertDealerCard() {
         if (players.dealerScoreEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue())) {
             AlertView.alertDealerEnough(Name.getDealer(), DEALER_MORE_SCORE.getValue());
         }
@@ -59,11 +76,15 @@ public class GameController {
             AlertView.alertGiveDealerCard(Name.getDealer(), DEALER_MORE_SCORE.getValue());
             players.giveOneCard(deck, Name.getDealer());
         }
+    }
 
+    private void alertEachPlayerScore() {
         for (PlayerResponse response : players.playersResponse()) {
             StatusView.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
         }
+    }
 
+    private void alertResult() {
         AlertView.alertFinalGrade();
 
         List<PlayerResponse> playerResponsesWithGrade = players.calculateEachGradeWithGoal(GOAL_SCORE.getValue());
