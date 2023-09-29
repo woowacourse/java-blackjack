@@ -25,18 +25,6 @@ public class PlayerResponse {
         return new PlayerResponse(name.getName(), cards);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCards() {
-        List<Name> cardNames = cards.getCardList()
-                .stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
-
-        return name + ALERT_CARD + ALERT_MARK + Name.chainingNames(cardNames);
-    }
 
     public String getCardsWithSecret() {
         List<Name> cardNames = cards.getCardList()
@@ -49,7 +37,7 @@ public class PlayerResponse {
     }
 
     public String getPlayerCardsResult() {
-        return getCards() + ALERT_RESULT + ALERT_MARK + getScore();
+        return getCardsName() + ALERT_RESULT + ALERT_MARK + getScore();
     }
 
     public String getDealerCardsResult() {
@@ -60,6 +48,19 @@ public class PlayerResponse {
 
         return Name.getDealer() + " " + ALERT_CARD + ALERT_MARK + Name.chainingNames(cardNames) +
                 ALERT_RESULT + ALERT_MARK + getScore();
+    }
+
+    public String getNameValue() {
+        return name;
+    }
+
+    public String getCardsName() {
+        List<Name> cardNames = cards.getCardList()
+                .stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+
+        return Name.chainingNames(cardNames);
     }
 
     public int getScore() {

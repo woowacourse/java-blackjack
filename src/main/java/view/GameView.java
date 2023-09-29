@@ -32,6 +32,10 @@ public class GameView {
         System.out.println(input);
     }
 
+    public void printInitPlayerStatus(final String name, final String cardNames) {
+        System.out.println(name + "카드: " + cardNames);
+    }
+
     public void eachPrint(List<String> input) {
         for (String line : input) {
             System.out.println(line);

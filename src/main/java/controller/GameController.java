@@ -2,6 +2,7 @@ package controller;
 
 import model.deck.Deck;
 import model.name.Name;
+import model.player.dto.PlayerResponse;
 import model.players.Players;
 import view.GameView;
 
@@ -28,8 +29,8 @@ public class GameController {
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
 
         view.print(players.showInitialDealerStatus());
-        for (String status : players.showInitialStatusExceptDealer()) {
-            view.print(status);
+        for (PlayerResponse response : players.showInitialStatusExceptDealer()) {
+            view.printInitPlayerStatus(response.getNameValue(), response.getCardsName());
         }
 
         System.out.println();

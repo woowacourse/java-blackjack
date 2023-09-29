@@ -45,7 +45,7 @@ public class Players {
     public String getPlayerNamesExceptDealer() {
         List<Name> names = players.stream()
                 .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
-                .map(PlayerResponse::getName)
+                .map(PlayerResponse::getNameValue)
                 .map(Name::from)
                 .filter(Name::isNotDealer)
                 .collect(Collectors.toList());
@@ -69,18 +69,17 @@ public class Players {
         return !dealerScoreUnder(dealer, score);
     }
 
-    public List<String> showInitialStatusExceptDealer() {
+    public List<PlayerResponse> showInitialStatusExceptDealer() {
         return players.stream()
                 .filter(player -> player.getName().isNotDealer())
                 .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
-                .map(PlayerResponse::getCards)
                 .collect(Collectors.toList());
     }
 
     public String printShowStatus(final String name) {
         Player player = findByName(name);
         PlayerResponse response = PlayerResponse.of(player.getName(), player.getCards());
-        return response.getCards();
+        return response.getCardsName();
     }
 
     public String showInitialDealerStatus() {
