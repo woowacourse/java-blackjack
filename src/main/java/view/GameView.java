@@ -58,19 +58,15 @@ public class GameView {
     }
 
     public boolean askWantMoreCard(String name) throws IOException {
-        askWantMoreCardAlert(name);
+        AskView.askWantMoreCard(name);
 
         String answer = getInput();
         while (isAnswerNotValid(answer)) {
-            askWantMoreCardAlert(name);
+            AskView.askWantMoreCard(name);
             answer = getInput();
         }
 
         return convertAnswerToBoolean(answer);
-    }
-
-    private void askWantMoreCardAlert(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES.getValue() + ", 아니오는 " + NO.getValue() + ")");
     }
 
     public void giveDealerCardAlert(final String dealer, final int score) {
