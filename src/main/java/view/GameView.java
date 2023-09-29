@@ -34,24 +34,24 @@ public class GameView {
         System.out.print(input);
     }
 
-    public void printPlayerInitStatus(final String name, final String cardNames) {
+    public void printPlayerDefaultStatus(final String name, final String cardNames) {
         if (name.equals(Name.getDealer())) {
-            System.out.println(dealerInitAnswer(name, cardNames));
+            System.out.println(dealerDefaultAnswer(name, cardNames));
             return;
         }
-        System.out.println(playerInitAnswer(name, cardNames));
+        System.out.println(playerDefaultAnswer(name, cardNames));
     }
 
-    private String playerInitAnswer(final String name, final String cardNames) {
+    private String playerDefaultAnswer(final String name, final String cardNames) {
         return name + "카드" + addDividerBeforeCardNames(cardNames);
     }
 
-    private String dealerInitAnswer(final String name, final String cardNames) {
+    private String dealerDefaultAnswer(final String name, final String cardNames) {
         return name + addDividerBeforeCardNames(cardNames);
     }
 
-    private String resultAnswer(final String name, final String cardNames, final int score) {
-        return name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score);
+    public void printPlayerResultStatus(final String name, final String cardNames, final int score) {
+        System.out.println(name + "카드" + addDividerBeforeCardNames(cardNames) + addResultDividerBeforeScore(score));
     }
     
     private static String addDividerBeforeCardNames(final String cardNames) {
@@ -92,7 +92,7 @@ public class GameView {
 
     public void dealerEnoughAlert(final String dealer, final int score) {
         System.out.println();
-        System.out.println(dealer + "의 점수는 " + score + "점 이상으로 충분하기에 더 받지 않습니다.");
+        System.out.println(dealer + "의 점수는 " + score + "점 초과로 충분하기에 더 받지 않습니다.");
         System.out.println();
     }
 

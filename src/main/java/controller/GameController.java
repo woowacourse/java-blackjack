@@ -30,7 +30,7 @@ public class GameController {
         players.giveInitialCards(deck, INIT_GIVE_CARDS);
 
         for (PlayerResponse response : players.showInitialStatus()) {
-            view.printPlayerInitStatus(response.getNameValue(), response.getCardsName());
+            view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
         }
 
         System.out.println();
@@ -38,7 +38,8 @@ public class GameController {
         for (String player : players.getPlayerNameValuesExceptDealer()) {
             while (players.isNotExceed(player, GOAL_VALUE) && view.askWantMoreCard(player)) {
                 players.giveOneCard(deck, player);
-                view.print(players.showStatus(player));
+                PlayerResponse response = players.getPlayerResponseByName(player);
+                view.printPlayerDefaultStatus(response.getNameValue(), response.getCardsName());
             }
         }
 
@@ -51,7 +52,9 @@ public class GameController {
             players.giveOneCard(deck, Name.getDealer());
         }
 
-        view.eachPrint(players.result());
+        for (PlayerResponse response : players.result()) {
+            view.printPlayerResultStatus(response.getNameValue(), response.getCardsName(), response.getScore());
+        }
     }
 
     private Players joinPlayers(final String nameInput) {

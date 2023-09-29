@@ -106,25 +106,28 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<String> result() {
-        List<String> result = new ArrayList<>();
+    public List<PlayerResponse> result() {
+        List<PlayerResponse> result = new ArrayList<>();
         result.add(dealerResult());
         result.addAll(playerResult());
 
         return result;
     }
 
-    private String dealerResult() {
-        Player dealer = findByName(Name.getDealer());
-        PlayerResponse response = PlayerResponse.of(dealer.getName(), dealer.getCards());
-        return response.getDealerCardsResult();
+    public PlayerResponse getPlayerResponseByName(final String name) {
+        Player player = findByName(name);
+        return PlayerResponse.of(player.getName(), player.getCards());
     }
 
-    private List<String> playerResult() {
+    private PlayerResponse dealerResult() {
+        Player dealer = findByName(Name.getDealer());
+        return PlayerResponse.of(dealer.getName(), dealer.getCards());
+    }
+
+    private List<PlayerResponse> playerResult() {
         return players.stream()
                 .filter(player -> player.getName().isNotDealer())
                 .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
-                .map(PlayerResponse::getPlayerCardsResult)
                 .collect(Collectors.toList());
     }
 }
