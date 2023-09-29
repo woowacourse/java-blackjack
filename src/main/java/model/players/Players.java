@@ -69,16 +69,10 @@ public class Players {
         return !dealerScoreUnder(dealer, score);
     }
 
-    public List<PlayerResponse> showInitialStatus() {
+    public List<PlayerResponse> playersResponse() {
         return players.stream()
                 .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
                 .collect(Collectors.toList());
-    }
-
-    public String showStatus(final String name) {
-        Player player = findByName(name);
-        PlayerResponse response = PlayerResponse.of(player.getName(), player.getCards());
-        return response.getCardsName();
     }
 
     public void giveOneCard(final Deck deck, final String name) {
@@ -106,28 +100,8 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<PlayerResponse> result() {
-        List<PlayerResponse> result = new ArrayList<>();
-        result.add(dealerResult());
-        result.addAll(playerResult());
-
-        return result;
-    }
-
     public PlayerResponse getPlayerResponseByName(final String name) {
         Player player = findByName(name);
         return PlayerResponse.of(player.getName(), player.getCards());
-    }
-
-    private PlayerResponse dealerResult() {
-        Player dealer = findByName(Name.getDealer());
-        return PlayerResponse.of(dealer.getName(), dealer.getCards());
-    }
-
-    private List<PlayerResponse> playerResult() {
-        return players.stream()
-                .filter(player -> player.getName().isNotDealer())
-                .map(player -> PlayerResponse.of(player.getName(), player.getCards()))
-                .collect(Collectors.toList());
     }
 }
