@@ -17,8 +17,6 @@ public class CardApplication {
     }
 
     private static GameView createGameView() {
-        GameView view = new GameView(new BufferedReader(new InputStreamReader(System.in)));
-        view.askPlayerNames();
-        return view;
+        return new GameView(new BufferedReader(new InputStreamReader(System.in)));
     }
 }

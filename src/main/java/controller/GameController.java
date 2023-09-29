@@ -4,6 +4,7 @@ import model.deck.Deck;
 import model.name.Name;
 import model.player.dto.PlayerResponse;
 import model.players.Players;
+import view.AskView;
 import view.GameView;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class GameController {
     }
 
     public void play() throws IOException {
+        AskView.askPlayerNames();
         view.giveInitCardAlert(Name.getDealer(), players.getPlayerNamesExceptDealer(), INIT_GIVE_CARDS.getValue());
         players.giveInitialCards(deck, INIT_GIVE_CARDS.getValue());
 

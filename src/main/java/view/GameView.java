@@ -5,22 +5,19 @@ import model.name.Name;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import static util.Keyword.NO;
+import static util.Keyword.YES;
+
 public class GameView {
 
     private static final String WIN = "승 ";
     private static final String SAME = "무 ";
     private static final String LOSE = "패 ";
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private final BufferedReader inputReader;
 
     public GameView(BufferedReader inputReader) {
         this.inputReader = inputReader;
-    }
-
-    public void askPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
     }
 
     public String getInput() throws IOException {
@@ -73,7 +70,7 @@ public class GameView {
     }
 
     private void askWantMoreCardAlert(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + YES.getValue() + ", 아니오는 " + NO.getValue() + ")");
     }
 
     public void giveDealerCardAlert(final String dealer, final int score) {
@@ -110,10 +107,10 @@ public class GameView {
     }
 
     private boolean convertAnswerToBoolean(String answer) {
-        return answer.equals(YES);
+        return answer.equals(YES.getValue());
     }
 
     private boolean isAnswerNotValid(String answer) {
-        return !YES.equals(answer) && !NO.equals(answer);
+        return !answer.equals(YES.getValue()) && !answer.equals(NO.getValue());
     }
 }
