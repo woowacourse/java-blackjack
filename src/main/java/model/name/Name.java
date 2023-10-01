@@ -41,6 +41,7 @@ public class Name {
     public static List<String> createSplitNameValues(String input) {
         return Arrays.stream(input.split(NAME_SPLITTER.getValue()))
                 .map(String::trim)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
