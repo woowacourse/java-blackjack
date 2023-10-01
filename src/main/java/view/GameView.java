@@ -30,11 +30,11 @@ public class GameView {
         return convertAnswerToBoolean(answer);
     }
 
-    private boolean convertAnswerToBoolean(final String answer) {
-        return answer.equals(YES.getValue());
-    }
-
     private boolean isAnswerNotValid(final String answer) {
         return !answer.equals(YES.getValue()) && !answer.equals(NO.getValue());
+    }
+
+    private boolean convertAnswerToBoolean(final String answer) {
+        return answer.equals(YES.getValue());
     }
 }

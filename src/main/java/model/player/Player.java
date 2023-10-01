@@ -38,20 +38,20 @@ public class Player {
         }
     }
 
-    public Name getName() {
-        return name;
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
     public int getScore() {
         return cards.calculateScore();
     }
 
     public int getDistance(int goal) {
         return Math.abs(grade - goal);
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 
     public int getGrade() {

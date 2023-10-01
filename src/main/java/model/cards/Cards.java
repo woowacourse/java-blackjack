@@ -54,6 +54,13 @@ public class Cards {
         }
     }
 
+    private void firstCardDownScore() {
+        this.getCardList()
+                .stream()
+                .limit(1)
+                .forEach(Card::downScore);
+    }
+
     public void changeScoreIfHaveAce() {
         cards.stream()
                 .filter(card -> Name.isAce(card.getName()))
@@ -61,12 +68,6 @@ public class Cards {
                 .ifPresent(Card::downScore);
     }
 
-    private void firstCardDownScore() {
-        this.getCardList()
-                .stream()
-                .limit(1)
-                .forEach(Card::downScore);
-    }
 
     public int getCardSize() {
         return cards.size();

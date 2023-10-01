@@ -93,6 +93,11 @@ public class Players {
         return targetPlayer.getScore() < goal;
     }
 
+    public PlayerResponse getPlayerResponseByName(final String name) {
+        Player player = findByName(name);
+        return PlayerResponse.createDefault(player.getName(), player.getCards());
+    }
+
     private Player findByName(final String name) {
         return players.stream()
                 .filter(player -> player.getName().equals(Name.from(name)))
@@ -108,21 +113,16 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public PlayerResponse getPlayerResponseByName(final String name) {
-        Player player = findByName(name);
-        return PlayerResponse.createDefault(player.getName(), player.getCards());
+    public List<PlayerResponse> calculateEachGradeWithGoal(int goal) {
+        List<Player> orderedPlayers = getPlayersOrderByDistance(goal);
+
+        return eachPlayerWriteGrade(orderedPlayers, goal);
     }
 
     private List<Player> getPlayersOrderByDistance(int goal) {
         return players.stream()
                 .sorted(Comparator.comparing(response -> response.getDistance(goal)))
                 .collect(Collectors.toList());
-    }
-
-    public List<PlayerResponse> calculateEachGradeWithGoal(int goal) {
-        List<Player> orderedPlayers = getPlayersOrderByDistance(goal);
-
-        return eachPlayerWriteGrade(orderedPlayers, goal);
     }
 
     private List<PlayerResponse> eachPlayerWriteGrade(final List<Player> orderedPlayers, final int goal) {
@@ -148,13 +148,6 @@ public class Players {
         });
 
         return win.get();
-    }
-
-    private List<PlayerResponse> getPlayerResponsesExceptDealer() {
-        return players.stream()
-                .filter(player -> player.getName().isNotDealer())
-                .map(player -> PlayerResponse.withGrade(player.getName(), player.getCards(), player.getGrade()))
-                .collect(Collectors.toList());
     }
 
     public int getDealerSame(int grade) {
@@ -183,5 +176,12 @@ public class Players {
         });
 
         return lose.get();
+    }
+
+    private List<PlayerResponse> getPlayerResponsesExceptDealer() {
+        return players.stream()
+                .filter(player -> player.getName().isNotDealer())
+                .map(player -> PlayerResponse.withGrade(player.getName(), player.getCards(), player.getGrade()))
+                .collect(Collectors.toList());
     }
 }

@@ -18,10 +18,6 @@ public class Name {
         this.name = name;
     }
 
-    private static Name withScore(final int score, final String name) {
-        return new Name(score + name);
-    }
-
     public static Name from(final String name) {
         return new Name(name);
     }
@@ -30,6 +26,10 @@ public class Name {
         return names.stream()
                 .map(name -> Name.withScore(score, name))
                 .collect(Collectors.toList());
+    }
+
+    private static Name withScore(final int score, final String name) {
+        return new Name(score + name);
     }
 
     public static List<Name> convertStringListToNamesWithSpecial(final String special, final List<String> names) {

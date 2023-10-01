@@ -30,10 +30,6 @@ public class PlayerResponse {
         return new PlayerResponse(name.getName(), cards, grade);
     }
 
-    public String getNameValue() {
-        return name;
-    }
-
     public String getCardsName() {
         List<Name> cardNames = getPlayerCardNames();
         return Name.chainingNames(cardNames);
@@ -80,6 +76,10 @@ public class PlayerResponse {
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public String getNameValue() {
+        return name;
     }
 
     public int getGrade() {
