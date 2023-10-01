@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static util.Keyword.ACE;
 import static util.Keyword.BLANK;
 import static util.Keyword.DEALER;
 import static util.Keyword.NAME_SPLITTER;
@@ -52,6 +53,11 @@ public class Name {
 
         String chainingName = stringBuilder.toString();
         return eraseLastMark(chainingName);
+    }
+
+    public static boolean isAce(Name value) {
+        String valueName = value.getName();
+        return valueName.startsWith(ACE.getValue());
     }
 
     private static String eraseLastMark(final String chainingName) {

@@ -9,7 +9,8 @@ public enum Keyword {
     NO("n"),
     WIN("승"),
     SAME("무"),
-    LOSE("패");
+    LOSE("패"),
+    ACE("A");
 
     private final String value;
 

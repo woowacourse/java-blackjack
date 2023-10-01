@@ -6,6 +6,8 @@ import model.name.Name;
 
 import java.util.List;
 
+import static util.Rule.GOAL_SCORE;
+
 public class Player {
 
     private final Name name;
@@ -28,6 +30,12 @@ public class Player {
 
     public void writeGrade(int grade) {
         this.grade = grade;
+    }
+
+    public void downScoreIfScoreExceedAndHaveAce() {
+        if (getScore() > GOAL_SCORE.getValue()) {
+            cards.changeScoreIfHaveAce();
+        }
     }
 
     public Name getName() {

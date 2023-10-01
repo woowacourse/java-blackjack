@@ -54,6 +54,13 @@ public class Cards {
         }
     }
 
+    public void changeScoreIfHaveAce() {
+        cards.stream()
+                .filter(card -> Name.isAce(card.getName()))
+                .findFirst()
+                .ifPresent(Card::downScore);
+    }
+
     private void firstCardDownScore() {
         this.getCardList()
                 .stream()

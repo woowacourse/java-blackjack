@@ -85,6 +85,7 @@ public class Players {
     public void giveOneCard(final Deck deck, final String name) {
         Player targetPlayer = findByName(name);
         targetPlayer.addCards(deck.getCardsFromDeckAsMuchAs(1));
+        targetPlayer.downScoreIfScoreExceedAndHaveAce();
     }
 
     public boolean isNotExceed(final String name, final int goal) {
