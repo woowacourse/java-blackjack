@@ -50,12 +50,14 @@ public class Cards {
 
     public void downInitialScoreIfExceedLimit() {
         if (this.calculateScore() > GOAL_SCORE.getValue()) {
-            eachCardDownScore();
+            firstCardDownScore();
         }
     }
 
-    private void eachCardDownScore() {
+    private void firstCardDownScore() {
         this.getCardList()
+                .stream()
+                .limit(1)
                 .forEach(Card::downScore);
     }
 
