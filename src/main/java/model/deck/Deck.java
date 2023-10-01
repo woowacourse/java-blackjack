@@ -12,7 +12,8 @@ import java.util.stream.IntStream;
 public class Deck {
 
     private static final List<String> CARD_TYPES = List.of("스페이드", "다이아몬드", "클로버", "하트");
-    private static final List<String> SPECIAL_TYPES = List.of("A", "J", "Q", "K");
+    private static final List<String> SPECIAL_TYPES = List.of("J", "Q", "K");
+    private static final String ACE = "A";
     private static final int MIN_SCORE = 2;
     private static final int MAX_SCORE = 10;
     private static final int SPECIAL_SCORE = 11;
@@ -30,8 +31,9 @@ public class Deck {
             cards.addAll(createNormalCards(score));
         }
         for (String special : SPECIAL_TYPES) {
-            cards.addAll(createSpecialCards(special, SPECIAL_SCORE));
+            cards.addAll(createSpecialCards(special, MAX_SCORE));
         }
+        cards.addAll(createSpecialCards(ACE, SPECIAL_SCORE));
 
         return Cards.from(cards);
     }
