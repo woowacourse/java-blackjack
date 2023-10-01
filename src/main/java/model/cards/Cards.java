@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static util.Rule.GOAL_SCORE;
+
 public class Cards {
 
     private final List<Card> cards;
@@ -44,6 +46,17 @@ public class Cards {
 
     public void addCards(List<Card> newCards) {
         cards.addAll(newCards);
+    }
+
+    public void downInitialScoreIfExceedLimit() {
+        if (this.calculateScore() > GOAL_SCORE.getValue()) {
+            eachCardDownScore();
+        }
+    }
+
+    private void eachCardDownScore() {
+        this.getCardList()
+                .forEach(Card::downScore);
     }
 
     public int getCardSize() {

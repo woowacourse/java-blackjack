@@ -3,10 +3,12 @@ package model.card;
 import model.card.dto.CardRequest;
 import model.name.Name;
 
+import static util.Rule.MIN_SCORE;
+
 public class Card {
 
     private final Name name;
-    private final int score;
+    private int score;
 
     private Card(final Name name, final int score) {
         this.name = name;
@@ -23,5 +25,9 @@ public class Card {
 
     public int getScore() {
         return score;
+    }
+
+    public void downScore() {
+        this.score = MIN_SCORE.getValue();
     }
 }

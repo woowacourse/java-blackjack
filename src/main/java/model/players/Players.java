@@ -1,6 +1,7 @@
 package model.players;
 
 import model.card.Card;
+import model.cards.Cards;
 import model.deck.Deck;
 import model.name.Name;
 import model.player.Player;
@@ -60,7 +61,9 @@ public class Players {
     public void giveInitialCards(Deck deck, int count) {
         players.forEach(player -> {
             List<Card> initCards = deck.getCardsFromDeckAsMuchAs(count);
-            player.addCards(initCards);
+            Cards cards = Cards.from(initCards);
+            cards.downInitialScoreIfExceedLimit();
+            player.addCards(cards.getCardList());
         });
     }
 
@@ -121,8 +124,7 @@ public class Players {
         return eachPlayerWriteGrade(orderedPlayers, goal);
     }
 
-    private List<PlayerResponse> eachPlayerWriteGrade(final List<Player> orderedPlayers,
-                                             final int goal) {
+    private List<PlayerResponse> eachPlayerWriteGrade(final List<Player> orderedPlayers, final int goal) {
         orderedPlayers.forEach(player -> {
             int grade = Math.abs(player.getScore() - goal);
             player.writeGrade(grade);
