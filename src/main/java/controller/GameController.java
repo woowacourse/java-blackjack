@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.List;
 
 import static util.Keyword.DEALER;
+import static util.Keyword.LOSE;
+import static util.Keyword.SAME;
+import static util.Keyword.WIN;
 import static util.Rule.DEALER_MORE_SCORE;
 import static util.Rule.GOAL_SCORE;
 import static util.Rule.INIT_GIVE_CARDS;
@@ -101,14 +104,14 @@ public class GameController {
                 continue;
             }
             if (response.isUpThanDealer(dealerResponse)) {
-                ScoreBoardView.printWin(response.getNameValue());
+                ScoreBoardView.printGrade(response.getNameValue(), WIN.getValue());
                 continue;
             }
             if (response.isSameWithDealer(dealerResponse)) {
-                ScoreBoardView.printSame(response.getNameValue());
+                ScoreBoardView.printGrade(response.getNameValue(), SAME.getValue());
                 continue;
             }
-            ScoreBoardView.printLose(response.getNameValue());
+            ScoreBoardView.printGrade(response.getNameValue(), LOSE.getValue());
         }
     }
 
