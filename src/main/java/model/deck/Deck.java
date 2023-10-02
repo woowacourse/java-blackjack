@@ -19,10 +19,29 @@ public class Deck {
     private static final int MAX_SCORE = 10;
     private static final int SPECIAL_SCORE = 11;
 
+    private static Deck instance;
+
     private final Cards cards;
 
-    public Deck() {
+    private Deck() {
         this.cards = createCards();
+    }
+
+    public static Deck getInstance() {
+        if (isNotCreated()) {
+            createNewInstance();
+        }
+        return instance;
+    }
+
+    private static boolean isNotCreated() {
+        return instance == null;
+    }
+
+    private static void createNewInstance() {
+        synchronized (Deck.class) {
+            instance = new Deck();
+        }
     }
 
     private Cards createCards() {

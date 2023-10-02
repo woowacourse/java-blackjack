@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class CardApplication {
 
     public static void main(String[] args) throws IOException {
-        Deck cardDeck = new Deck();
+        Deck cardDeck = Deck.getInstance();
         GameView view = createGameView();
 
         GameController controller = new GameController(cardDeck, view);
