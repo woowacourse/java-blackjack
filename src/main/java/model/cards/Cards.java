@@ -1,12 +1,10 @@
 package model.cards;
 
 import model.card.Card;
-import model.card.dto.CardRequest;
 import model.name.Name;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static util.Rule.GOAL_SCORE;
 
@@ -24,24 +22,6 @@ public class Cards {
 
     public static Cards createPlayerCards() {
         return new Cards(new ArrayList<>());
-    }
-
-    public static List<Card> createNormalCardsWithScore(int score, final List<String> names) {
-        List<Name> cardNames = Name.convertStringListToNamesWithScore(score, names);
-
-        return cardNames.stream()
-                .map(cardName -> CardRequest.createDefault(cardName.getName(), score))
-                .map(Card::from)
-                .collect(Collectors.toList());
-    }
-
-    public static List<Card> createSpecialCards(final String special, final List<String> names, int score) {
-        List<Name> cardNames = Name.convertStringListToNamesWithSpecial(special, names);
-
-        return cardNames.stream()
-                .map(cardName -> CardRequest.createDefault(cardName.getName(), score))
-                .map(Card::from)
-                .collect(Collectors.toList());
     }
 
     public void addCards(List<Card> newCards) {
@@ -68,11 +48,6 @@ public class Cards {
                 .ifPresent(Card::downScore);
     }
 
-
-    public int getCardSize() {
-        return cards.size();
-    }
-
     public Card useCard(int index) {
         if (index < cards.size()) {
             Card card = cards.get(index);
@@ -82,13 +57,17 @@ public class Cards {
         return null;
     }
 
-    public List<Card> getCardList() {
-        return cards;
-    }
-
     public int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public List<Card> getCardList() {
+        return cards;
+    }
+
+    public int getCardSize() {
+        return cards.size();
     }
 }
