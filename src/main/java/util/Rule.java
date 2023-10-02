@@ -5,7 +5,10 @@ public enum Rule {
     GOAL_SCORE(21),
     MIN_SCORE(1),
     INIT_GIVE_CARDS(2),
-    DEALER_MORE_SCORE(16);
+    DEALER_MORE_SCORE(16),
+    DEFAILT_MIN_SCORE(2),
+    MAX_SCORE(10),
+    SPECIAL_SCORE(11);
 
     private final int value;
 

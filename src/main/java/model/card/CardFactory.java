@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static util.Keyword.ACE;
+import static util.Rule.DEFAILT_MIN_SCORE;
+import static util.Rule.MAX_SCORE;
+import static util.Rule.SPECIAL_SCORE;
 
 public class CardFactory {
 
     private static final List<String> CARD_TYPES = List.of("스페이드", "다이아몬드", "클로버", "하트");
     private static final List<String> SPECIAL_TYPES = List.of("J", "Q", "K");
-    private static final int MIN_SCORE = 2;
-    private static final int MAX_SCORE = 10;
-    private static final int SPECIAL_SCORE = 11;
 
     private CardFactory() {
 
@@ -25,13 +25,13 @@ public class CardFactory {
     public static Cards createCards() {
         List<Card> cards = new ArrayList<>();
 
-        for (int score = MIN_SCORE; score <= MAX_SCORE; score++) {
+        for (int score = DEFAILT_MIN_SCORE.getValue(); score <= SPECIAL_SCORE.getValue(); score++) {
             cards.addAll(createNormalCards(score));
         }
         for (String special : SPECIAL_TYPES) {
-            cards.addAll(createSpecialCards(special, MAX_SCORE));
+            cards.addAll(createSpecialCards(special, MAX_SCORE.getValue()));
         }
-        cards.addAll(createSpecialCards(ACE.getValue(), SPECIAL_SCORE));
+        cards.addAll(createSpecialCards(ACE.getValue(), SPECIAL_SCORE.getValue()));
 
         return Cards.from(cards);
     }
