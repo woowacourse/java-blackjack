@@ -56,13 +56,13 @@ public class Name {
         return eraseLastMark(chainingName);
     }
 
+    private static String eraseLastMark(final String chainingName) {
+        return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + BLANK.length()));
+    }
+
     public static boolean isAce(Name value) {
         String valueName = value.getName();
         return valueName.startsWith(ACE.getValue());
-    }
-
-    private static String eraseLastMark(final String chainingName) {
-        return chainingName.substring(0, chainingName.length() - (NAME_SPLITTER.length() + BLANK.length()));
     }
 
     public boolean isNotDealer() {
