@@ -19,15 +19,15 @@ public class Card {
         return new Card(Name.from(request.getName()), request.getScore());
     }
 
+    public void downScore() {
+        this.score = MIN_SCORE.getValue();
+    }
+
     public Name getName() {
         return name;
     }
 
     public int getScore() {
         return score;
-    }
-
-    public void downScore() {
-        this.score = MIN_SCORE.getValue();
     }
 }
