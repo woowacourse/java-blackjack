@@ -1,11 +1,6 @@
 package model.dice;
 
-import java.util.Random;
+public interface Dice {
 
-public class Dice {
-
-    public static int getRandomIndex(int size) {
-        Random random = new Random();
-        return random.nextInt(size);
-    }
+    int getRandomIndex();
 }
