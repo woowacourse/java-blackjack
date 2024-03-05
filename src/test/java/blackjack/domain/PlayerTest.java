@@ -86,4 +86,5 @@ class PlayerTest {
         // then
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.ALIVE);
     }
+
 }

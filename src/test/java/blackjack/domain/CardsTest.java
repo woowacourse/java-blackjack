@@ -38,4 +38,21 @@ class CardsTest {
         // then
         assertThat(aceCount).isEqualTo(2);
     }
+
+    @Test
+    void add() {
+        // given
+        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
+        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Cards cards = new Cards(List.of(card1, card2));
+
+        Card card3 = new Card(CardNumber.ACE, CardShape.CLOVER);
+
+        // when
+        cards.add(card3);
+
+        // then
+        assertThat(cards).extracting("values")
+                .isEqualTo(List.of(card1, card2, card3));
+    }
 }

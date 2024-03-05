@@ -20,6 +20,10 @@ public class Player {
         return sum;
     }
 
+    public void addCard(final Card card) {
+        cards.add(card);
+    }
+
     public BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
     }
