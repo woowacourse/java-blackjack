@@ -10,9 +10,6 @@ public class Participant extends Player implements NoticeStatus {
 
     @Override
     public boolean notice() {
-        if(sumCardNumbers() <= MAXIMUM_SUM) {
-            return true;
-        }
-        return false;
+        return sumCardNumbers() <= MAXIMUM_SUM;
     }
 }
