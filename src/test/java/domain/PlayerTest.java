@@ -1,6 +1,7 @@
 package domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -55,4 +56,40 @@ class PlayerTest {
         assertThat(player.getHand().getCards()).contains(newCard);
     }
 
+    @DisplayName("Burst인지 확인한다.")
+    @Nested
+    class isBurst {
+
+        @Test
+        @DisplayName("Burst가 아니면 false를 반환한다.")
+        void isBurst_false() {
+            Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+            Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
+            Card card3 = new Card(Letter.SEVEN, Mark.HEART);
+            List<Card> cards = new ArrayList<>(List.of(card1, card2, card3));
+            Hand hand = new Hand(cards);
+            Name name = new Name("wiib");
+            Player player = new Player(name, hand);
+
+            boolean isBurst = player.isBurst();
+
+            assertThat(isBurst).isFalse();
+        }
+
+        @Test
+        @DisplayName("Burst이면 true를 반환한다.")
+        void isBurst_true() {
+            Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+            Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
+            Card card3 = new Card(Letter.EIGHT, Mark.HEART);
+            List<Card> cards = new ArrayList<>(List.of(card1, card2, card3));
+            Hand hand = new Hand(cards);
+            Name name = new Name("wiib");
+            Player player = new Player(name, hand);
+
+            boolean isBurst = player.isBurst();
+
+            assertThat(isBurst).isTrue();
+        }
+    }
 }
