@@ -1,18 +1,19 @@
 package domain;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private final Cards cards;
+    private final Cards deck;
 
     public Dealer(final Cards cards) {
-        this.cards = cards;
+        super();
+        deck = cards;
     }
 
     public Card drawCard() {
-        return cards.draw();
+        return deck.draw();
     }
 
     public void shuffle(){
-        cards.shuffle();
+        deck.shuffle();
     }
 }

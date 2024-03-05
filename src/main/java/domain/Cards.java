@@ -8,9 +8,17 @@ public class Cards {
 
     private final Stack<Card> cards;
 
+    public Cards() {
+        this.cards = new Stack<>();
+    }
+
     public Cards(final Collection<Card> cards) {
         this.cards = new Stack<>();
         this.cards.addAll(cards);
+    }
+
+    public void add(final Card card) {
+        cards.add(card);
     }
 
     public Card draw() {
