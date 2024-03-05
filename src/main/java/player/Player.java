@@ -7,9 +7,11 @@ public class Player {
 
     private static final int MAX_DRAWABLE_SCORE = 16;
 
+    private final Name name;
     protected final Hand hand;
 
-    public Player() {
+    Player(String name) {
+        this.name = new Name(name);
         this.hand = new Hand();
     }
 
