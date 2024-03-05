@@ -9,6 +9,11 @@ public class Dealer extends Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
     public boolean notice() {
         return sumCardNumbers() <= NUMBER_THRESHOLD;
     }

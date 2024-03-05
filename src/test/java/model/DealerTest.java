@@ -28,4 +28,11 @@ class DealerTest {
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         assertFalse(dealer.notice());
     }
+
+    @DisplayName("딜러면 참을 반환한다.")
+    @Test
+    void isDealer() {
+        Dealer dealer = new Dealer();
+        assertTrue(dealer.isDealer());
+    }
 }

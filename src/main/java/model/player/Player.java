@@ -52,4 +52,6 @@ public abstract class Player implements NoticeStatus {
         }
         return result;
     }
+
+    public abstract boolean isDealer();
 }

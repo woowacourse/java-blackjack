@@ -19,6 +19,11 @@ class PlayerTest {
     void makePlayer() {
         this.player = new Player("켬미") {
             @Override
+            public boolean isDealer() {
+                return false;
+            }
+
+            @Override
             public boolean notice() {
                 return false;
             }
