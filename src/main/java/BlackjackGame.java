@@ -24,6 +24,7 @@ public class BlackjackGame {
             while (player.isNotOver(21) && inputView.readCommand(player.getName().getName())) {
                 participants.addCard(player);
                 outputView.printCurrentCard(player);
+                outputView.printNewLine();
             }
 
         });
@@ -33,6 +34,6 @@ public class BlackjackGame {
             outputView.printDealerOneMoreCard();
         }
 
-
+        outputView.printResult(dealer, players);
     }
 }

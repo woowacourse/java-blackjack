@@ -13,7 +13,10 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getName().getName(),playerNameToString);
         printDealerCard(dealer);
-        playerList.forEach(this::printCurrentCard);
+        playerList.forEach(player -> {
+            printCurrentCard(player);
+            System.out.println();
+        });
     }
 
     private void printDealerCard(Player dealer) {
@@ -22,11 +25,24 @@ public class OutputView {
         System.out.printf("%s: %s\n", dealer.getName().getName(), firstCardToString);
     }
     public void printCurrentCard(Player player) {
-        System.out.printf("%s카드 : %s\n", player.getName().getName(), deckToString(player));
+        System.out.printf("%s카드 : %s", player.getName().getName(), deckToString(player));
     }
 
     public void printDealerOneMoreCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printResult(Player dealer, List<Player> playerList) {
+        printCurrentCard(dealer);
+        printScore(dealer);
+        playerList.forEach(player -> {
+            printCurrentCard(player);
+            printScore(player);
+        });
+    }
+
+    private void printScore(Player player) {
+        System.out.printf(" - 결과: %d\n", player.getDeck().calculateTotalScore());
     }
 
     private static String deckToString(Player player) {
@@ -38,4 +54,7 @@ public class OutputView {
     }
 
 
+    public void printNewLine() {
+        System.out.println();
+    }
 }
