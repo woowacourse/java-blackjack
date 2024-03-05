@@ -1,3 +1,5 @@
+import domain.card.Card;
+
 import java.util.List;
 import java.util.Stack;
 
@@ -11,5 +13,9 @@ public class TotalDeck {
 
     public Card getNewCard() {
         return totalDeck.pop();
+    }
+
+    public int size() {
+        return totalDeck.size();
     }
 }

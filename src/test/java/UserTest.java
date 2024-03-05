@@ -1,3 +1,5 @@
+import domain.user.Name;
+import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +10,8 @@ public class UserTest {
     @DisplayName("이름을 가진다.")
     void hasName() {
         Name name = new Name("poby");
-        User user = new User(name);
+        Player player = new Player(name);
 
-        assertThat(user.getName()).isEqualTo(name);
+        assertThat(player.getName()).isEqualTo(name);
     }
 }

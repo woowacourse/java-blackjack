@@ -1,3 +1,7 @@
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Shape;
+import domain.user.UserDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

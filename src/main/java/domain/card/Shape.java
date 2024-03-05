@@ -1,3 +1,5 @@
+package domain.card;
+
 import java.util.List;
 
 public enum Shape {
