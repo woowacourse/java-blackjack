@@ -23,6 +23,12 @@ public class Player {
         cards.add(card);
     }
 
+    public int calculateScore() {
+        return cards.stream()
+                .mapToInt(Deck::getScore)
+                .sum();
+    }
+
     public String getName() {
         return name;
     }

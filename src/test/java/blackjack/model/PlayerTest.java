@@ -34,4 +34,13 @@ class PlayerTest {
         player.receiveCard(Deck.CLOVER_ACE);
         assertThat(player.getCards()).isEqualTo(List.of(Deck.CLOVER_ACE));
     }
+
+    @Test
+    @DisplayName("자신이 가진 카드의 합을 계산할 수 있다.")
+    void calculateScore() {
+        Player player = new Player("몰리");
+        player.receiveCard(Deck.CLOVER_FIVE);
+        player.receiveCard(Deck.CLOVER_FOUR);
+        assertThat(player.calculateScore()).isEqualTo(9);
+    }
 }
