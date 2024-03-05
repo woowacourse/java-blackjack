@@ -46,4 +46,8 @@ public class Deck {
 
         return totalScore;
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

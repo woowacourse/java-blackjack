@@ -17,5 +17,11 @@ public class Player {
         deck.addCard(card);
     }
 
+    public Name getName() {
+        return name;
+    }
 
+    public Deck getDeck() {
+        return deck;
+    }
 }

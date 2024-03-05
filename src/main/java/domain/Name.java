@@ -14,4 +14,8 @@ public class Name {
             throw new IllegalArgumentException("이름은 한 글자 이상이어야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
