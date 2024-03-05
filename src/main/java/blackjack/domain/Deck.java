@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Deck {
@@ -11,7 +12,7 @@ public class Deck {
     }
 
     public static Deck from(List<Card> cards) {
-        return new Deck(cards);
+        return new Deck(new LinkedList<>(cards));
     }
 
     public Card draw() {
