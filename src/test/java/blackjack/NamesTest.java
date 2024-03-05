@@ -27,4 +27,14 @@ public class NamesTest {
             Names.from(values);
         });
     }
+
+    @Test
+    @DisplayName("최대 7명까지만 입력 가능하다.")
+    public void Names_Instance_limit_size() {
+        List<String> values = List.of("초롱","도비","조이썬","제우스","폰드","호티","배키","켬미");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Names.from(values);
+        });
+    }
 }
