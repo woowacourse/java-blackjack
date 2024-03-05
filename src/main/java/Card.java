@@ -9,6 +9,10 @@ public class Card {
         this.rank = rank;
     }
 
+    public int getScore() {
+        return rank.getScore();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

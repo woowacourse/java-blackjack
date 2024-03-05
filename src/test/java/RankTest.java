@@ -8,6 +8,4 @@ public class RankTest {
     void getScore() {
         Assertions.assertThat(Rank.TWO.getScore()).isEqualTo(2);
     }
-
-
 }
