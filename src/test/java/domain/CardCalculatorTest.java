@@ -1,23 +1,43 @@
 package domain;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class CardCalculatorTest {
+class CardCalculatorTest {
     @DisplayName("카드의 합을 구한다.")
-    @Test
-    void sum() {
+    @ParameterizedTest
+    @MethodSource("sumParameterProvider")
+    void sum(List<Card> cards, int expected) {
         // given
         CardCalculator cardCalculator = new CardCalculator();
-        Card card1 = new Card(CardNumber.TWO, CardShape.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, CardShape.SPADE);
-        Card card3 = new Card(CardNumber.ACE, CardShape.CLOVER);
 
         // when
-        int result = cardCalculator.sum(card1, card2, card3);
+        int result = cardCalculator.sum(cards);
 
         // then
-        Assertions.assertThat(result).isEqualTo(21);
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+
+    static Stream<Arguments> sumParameterProvider() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(new Card(CardNumber.TWO, CardShape.HEART),
+                                new Card(CardNumber.EIGHT, CardShape.SPADE),
+                                new Card(CardNumber.JACK, CardShape.CLOVER)),
+                        20
+                ),
+                Arguments.of(
+                        List.of(new Card(CardNumber.THREE, CardShape.DIAMOND),
+                                new Card(CardNumber.NINE, CardShape.CLOVER),
+                                new Card(CardNumber.NINE, CardShape.CLOVER)),
+                        21
+                )
+        );
     }
 }

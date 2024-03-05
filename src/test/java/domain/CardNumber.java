@@ -3,7 +3,7 @@ package domain;
 //TODO Number말고 더 좋은 클래스명짓기
 public enum CardNumber {
 
-    ACE("A", 1),
+    ACE("A", 1), // TODO: 1 혹은 11
     ONE("1", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -24,5 +24,9 @@ public enum CardNumber {
     CardNumber(final String name, final int value) {
         this.name = name;
         this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

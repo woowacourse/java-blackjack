@@ -1,7 +1,11 @@
 package domain;
 
+import java.util.List;
+
 public class CardCalculator {
-    public int sum(final Card card1, final Card card2, final Card card3) {
-        return 21;
+    public int sum(final List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getCardNumber)
+                .sum();
     }
 }

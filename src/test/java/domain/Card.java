@@ -11,6 +11,10 @@ public class Card {
         this.cardShape = cardShape;
     }
 
+    public int getCardNumber() {
+        return cardNumber.getValue();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
