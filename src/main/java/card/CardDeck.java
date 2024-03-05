@@ -34,4 +34,7 @@ public class CardDeck {
         }
     }
 
+    public int getTotalCardSize() {
+        return deck.size();
+    }
 }
