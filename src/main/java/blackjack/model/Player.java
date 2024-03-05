@@ -24,19 +24,22 @@ public class Player {
     }
 
     public int calculateScore() {
-        int sum = cards.stream()
+        int result = cards.stream()
                 .mapToInt(Deck::getScore)
                 .sum();
-
-        int aceCount = (int) cards.stream()
-                .filter(Deck::isAce)
-                .count();
+        int aceCount = countAce();
 
         if (aceCount >= 2) {
-            sum -= aceCount * 10;
+            result -= aceCount * 10;
         }
 
-        return sum;
+        return result;
+    }
+
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Deck::isAce)
+                .count();
     }
 
     public String getName() {
