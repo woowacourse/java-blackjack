@@ -6,7 +6,7 @@ public class Dealer extends Player {
     }
 
     public boolean canReceive() {
-        if (this.calculateScore() <= 16) {
+        if (cards.calculateScore() <= 16) {
             return true;
         }
         return false;

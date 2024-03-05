@@ -50,7 +50,7 @@
   ![image](https://github.com/jminkkk/java-blackjack/assets/102847513/5e4a056f-136d-429d-b9b5-6819c2684726)
 
 - [x] Ace의 기본값은 11이다.
-    - [ ] 기본값으로 결과를 계산했을 때 21을 초과한 경우 Ace 값은 1로 변경된다.
+    - [x] 기본값으로 결과를 계산했을 때 21을 초과한 경우 Ace 값은 1로 변경된다.
     - [x] Ace를 여러 개 가진 경우 동일한 값인 1로 변경된다.
 - [x] King, Queen, Jack은 각각 10으로 계산한다.
 
