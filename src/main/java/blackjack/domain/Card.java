@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public class Card {
+
     private final Value value;
 
     public Card(Value value, Shape shape) {
