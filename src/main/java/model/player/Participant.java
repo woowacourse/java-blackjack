@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 public class Participant extends Player implements NoticeStatus {
 

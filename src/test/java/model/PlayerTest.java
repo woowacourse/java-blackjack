@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
+import model.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

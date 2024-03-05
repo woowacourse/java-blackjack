@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 public class Dealer extends Player implements NoticeStatus {
 
