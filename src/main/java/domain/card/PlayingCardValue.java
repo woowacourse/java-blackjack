@@ -8,4 +8,8 @@ public enum PlayingCardValue {
     PlayingCardValue(final int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

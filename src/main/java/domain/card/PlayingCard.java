@@ -9,5 +9,7 @@ public class PlayingCard {
         this.playingCardValue = playingCardValue;
     }
 
-
+    public int addValue(int inputValue) {
+        return inputValue + playingCardValue.getValue();
+    }
 }
