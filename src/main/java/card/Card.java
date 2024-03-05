@@ -12,7 +12,7 @@ public class Card {
         this.number = number;
     }
 
-    int getScore() {
+    public int getScore() {
         return number.getScore();
     }
 
