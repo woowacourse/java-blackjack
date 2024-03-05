@@ -32,4 +32,8 @@ public class Cards {
         cards.add(card);
         return List.copyOf(cards);
     }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }
