@@ -15,4 +15,12 @@ public class Hand {
                 .mapToInt(Card::getCardNumber)
                 .sum();
     }
+
+    public void append(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }
