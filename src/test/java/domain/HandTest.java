@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +36,24 @@ class HandTest {
         hand.add(addCard);
 
         assertThat(hand.getCards()).contains(addCard);
+    }
+
+    @DisplayName("손 패에 Ace카드가 포함되어있는지 반환한다.")
+    @Test
+    void containAce() {
+        List<Card> hasAceCards = List.of(new Card(Letter.A, Mark.SPADE), new Card(Letter.J, Mark.SPADE));
+        List<Card> dontHasAceCards = List.of(new Card(Letter.TEN, Mark.SPADE), new Card(Letter.J, Mark.SPADE));
+
+        Hand hasAceHand = new Hand(hasAceCards);
+        Hand dontHasAceHand = new Hand(dontHasAceCards);
+
+        boolean actual1 = hasAceHand.containAceCard();
+        boolean actual2 = dontHasAceHand.containAceCard();
+
+        Assertions.assertAll(
+                () -> assertThat(actual1).isTrue(),
+                () -> assertThat(actual2).isFalse()
+        );
+
     }
 }

@@ -13,4 +13,8 @@ public class Card {
     public int getValue() {
         return letter.getValue();
     }
+
+    public boolean isAceCard() {
+        return this.letter.isAce();
+    }
 }
