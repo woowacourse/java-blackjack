@@ -5,11 +5,9 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int MAX_SCORE = 21;
-    private static final int MIN_SCORE = 16;
     private static final int INIT_CARD_SIZE = 2;
 
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
     public Cards(List<Card> cards) {
         validate(cards);
@@ -22,26 +20,18 @@ public class Cards {
         }
     }
 
-    public boolean isOverMaxScore() {
-        int sum = cards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
-        return sum > MAX_SCORE;
-    }
-
     public List<Card> add(Card card) {
         cards.add(card);
         return List.copyOf(cards);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
-    public boolean isBelowMinScore() {
-        int sum = cards.stream()
+    public int sum() {
+        return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
-        return sum <= MIN_SCORE;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
