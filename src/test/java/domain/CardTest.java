@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,5 +41,20 @@ class CardTest {
         int expected = input.getValue();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("현재 카드가 Ace인지 판단한다.")
+    @Test
+    void isAceCard() {
+        Card card1 = new Card(Letter.A, Mark.DIAMOND);
+        Card card2 = new Card(Letter.J, Mark.SPADE);
+
+        boolean actual1 = card1.isAceCard();
+        boolean actual2 = card2.isAceCard();
+
+        Assertions.assertAll(
+                () -> assertThat(actual1).isTrue(),
+                () -> assertThat(actual2).isFalse()
+        );
     }
 }

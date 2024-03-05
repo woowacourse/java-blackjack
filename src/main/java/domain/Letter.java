@@ -21,6 +21,10 @@ public enum Letter {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return this == A;
+    }
+
     public int getValue() {
         return value;
     }

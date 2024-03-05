@@ -23,4 +23,9 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
+
+    public boolean containAceCard() {
+        return this.cards.stream()
+                .anyMatch(Card::isAceCard);
+    }
 }
