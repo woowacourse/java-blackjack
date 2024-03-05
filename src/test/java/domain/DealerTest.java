@@ -17,12 +17,8 @@ class DealerTest {
 
         //when
         dealer.startDeal();
-        List<Player> names = players.getNames();
 
         //then
-        boolean allMatch = names.stream()
-                .allMatch(player -> player.getPacketSize() == 2);
-
-        Assertions.assertThat(allMatch).isTrue();
+        Assertions.assertThat(players.getNames()).allMatch(player -> player.getPacketSize() == 2);
     }
 }

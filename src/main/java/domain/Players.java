@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -20,6 +21,10 @@ public class Players {
                 .toList();
         validate(players);
         return new Players(players); //TODO 이름바꾸기
+    }
+
+    public void forEach(Consumer<? super Player> action) {
+        names.forEach(action);
     }
 
     private static void validate(final List<Player> players) {

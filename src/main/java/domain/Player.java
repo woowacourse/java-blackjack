@@ -12,6 +12,10 @@ public class Player {
         this.packet = packet;
     }
 
+    public void add(final Card card) {
+        packet.add(card);
+    }
+
     private void validate(final String name) {
         validateNull(name);
         validateBlank(name);
@@ -29,6 +33,10 @@ public class Player {
         }
     }
 
+    public int getPacketSize() {
+        return packet.size();
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {
@@ -43,9 +51,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public int getPacketSize() {
-        return 2;
     }
 }

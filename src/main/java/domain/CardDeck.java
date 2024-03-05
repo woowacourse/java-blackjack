@@ -34,6 +34,10 @@ public class CardDeck {
         return cards;
     }
 
+    public Card pop() {
+        return cards.pop();
+    }
+
     public int size() {
         return cards.size();
     }
