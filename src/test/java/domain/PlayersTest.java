@@ -16,7 +16,7 @@ class PlayersTest {
     @DisplayName("참여자 이름 중복시 예외가 발생한다.")
     void duplicatePlayerName() {
         //given
-        List<String> names = List.of("redy", "redy");
+        final List<String> names = List.of("redy", "redy");
 
         //when & then
         Assertions.assertThatThrownBy(() -> Players.from(names))

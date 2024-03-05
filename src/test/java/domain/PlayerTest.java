@@ -11,7 +11,7 @@ public class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Player("pobi"))
+        Assertions.assertThatCode(() -> new Player("pobi", Packet.createEmptyPacket()))
                 .doesNotThrowAnyException();
     }
 
@@ -20,7 +20,7 @@ public class PlayerTest {
     @ValueSource(strings = {"", " ", "  "})
     @NullSource
     void nullOrBlankInputThrowException(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name))
+        Assertions.assertThatThrownBy(() -> new Player(name, Packet.createEmptyPacket()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,9 +1,11 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Players {
+
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;
 
@@ -15,10 +17,10 @@ public class Players {
 
     public static Players from(final List<String> names) {
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, Packet.createEmptyPacket()))
                 .toList();
         validate(players);
-        return new Players(players);
+        return new Players(players); //TODO 이름바꾸기
     }
 
     private static void validate(final List<Player> players) {

@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class Player {
     private final String name;
+    private final Packet packet;
 
-    public Player(final String name) {
+    public Player(final String name, final Packet packet) {
         validate(name);
         this.name = name;
+        this.packet = packet;
     }
 
     private void validate(final String name) {
