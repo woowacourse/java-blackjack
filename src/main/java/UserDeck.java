@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserDeck {
-    List<Card> list=new ArrayList<>();
+    private final List<Card> userDeck =new ArrayList<>();
 
     public void pushCard(Card card){
-        list.add(card);
+        userDeck.add(card);
+    }
+
+    public List<Card> getUserDeck(){
+        return Collections.unmodifiableList(userDeck);
     }
 }
