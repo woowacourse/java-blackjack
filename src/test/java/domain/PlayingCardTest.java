@@ -1,6 +1,5 @@
-import domain.card.PlayingCard;
-import domain.card.PlayingCardShape;
-import domain.card.PlayingCardValue;
+package domain;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,9 +8,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.PlayingCardShape.HEART;
-import static domain.card.PlayingCardValue.DEFAULT_ACE;
-import static domain.card.PlayingCardValue.FIVE;
+import static domain.PlayingCardShape.HEART;
+import static domain.PlayingCardValue.DEFAULT_ACE;
+import static domain.PlayingCardValue.FIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayingCardTest {

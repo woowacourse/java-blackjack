@@ -1,4 +1,4 @@
-package domain.card;
+package domain;
 
 public enum PlayingCardShape {
     HEART, DIAMOND, CLOVER, SPADE;
