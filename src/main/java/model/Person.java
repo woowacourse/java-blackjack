@@ -1,12 +1,9 @@
 package model;
 
-import static model.card.CardNumber.ACE;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import model.card.Card;
-import model.card.CardNumber;
 
 public class Person {
 
@@ -25,16 +22,16 @@ public class Person {
     }
 
     public int sumCardNumbers() {
-        List<Integer> addNumbers = new ArrayList<>();
         int sum = 0;
         for(Card card : cards) {
-            if (card.subtractMaxMinNumber() == 0) {
-                sum += card.minimumNumber();
-                continue;
-            }
             sum += card.minimumNumber();
-            addNumbers.add(card.subtractMaxMinNumber());
         }
+
+        List<Integer> addNumbers = cards.stream()
+                .map(Card::subtractMaxMinNumber)
+                .filter(subtractNumber -> subtractNumber != 0)
+                .toList();
+
         return sumAce(sum, addNumbers);
     }
 
