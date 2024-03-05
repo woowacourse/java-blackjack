@@ -16,4 +16,8 @@ public class HoldingCards {
 
         return SummationCardPoint.of(cardPoints);
     }
+
+    public void add(Card card) {
+        holdingCards.add(card);
+    }
 }
