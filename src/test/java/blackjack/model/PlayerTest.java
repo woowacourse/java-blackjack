@@ -43,4 +43,14 @@ class PlayerTest {
         player.receiveCard(Deck.CLOVER_FOUR);
         assertThat(player.calculateScore()).isEqualTo(9);
     }
+
+    @Test
+    @DisplayName("Ace를 여러 개 가진 경우 동일한 값인 1로 변경된다.")
+    void calculateScoreWithAce() {
+        Player player = new Player("몰리");
+        player.receiveCard(Deck.SPADE_ACE);
+        player.receiveCard(Deck.DIA_ACE);
+
+        assertThat(player.calculateScore()).isEqualTo(2);
+    }
 }

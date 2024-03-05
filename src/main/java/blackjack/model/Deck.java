@@ -68,6 +68,12 @@ public enum Deck {
         this.score = score;
     }
 
+
+    public boolean isAce() {
+        List<Deck> aces = List.of(CLOVER_ACE, DIA_ACE, SPADE_ACE, HEART_ACE);
+        return aces.contains(this);
+    }
+
     public static List<Deck> getAll() {
         return Arrays.asList(Deck.values());
     }
