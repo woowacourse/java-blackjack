@@ -1,9 +1,11 @@
 package domain.user;
 
+import domain.Result;
 import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Users {
@@ -20,8 +22,8 @@ public class Users {
         return users.stream();
     }
 
-    public List<Card> showCurrentUserDeck() {
-        return currentUser.showUserDeck();
+    public UserDeck showCurrentUserDeck() {
+        return currentUser.getUserDeck();
     }
 
     public void addCardOfCurrentUser(Card card) {
@@ -34,5 +36,35 @@ public class Users {
 
     public boolean isCurrentUserPlayer() {
         return currentUser instanceof Player;
+    }
+
+    public void addDealerCard(Card card) {
+        getDealer().addCard(card);
+    }
+
+    public int getDealerCardSum() {
+        User dealer = getDealer();
+        return dealer.sumUserDeck();
+    }
+
+    public Result generatePlayerResult(Player player) {
+        if (player.sumUserDeck() < getDealerCardSum()) {
+            return Result.LOSE;
+        }
+        if (player.sumUserDeck() > 21) {
+            return Result.LOSE;
+        }
+        return Result.WIN;
+    }
+
+    public List<Player> getPlayers() {
+        List<User> users = this.users.subList(0, this.users.size() - 1);
+        return users.stream()
+                .map(user -> (Player) user)
+                .collect(Collectors.toList());
+    }
+
+    private User getDealer() {
+        return users.get(users.size() - 1);
     }
 }

@@ -9,18 +9,18 @@ import java.util.List;
 import static domain.card.Number.ACE;
 
 public class UserDeck {
-    private final List<Card> userDeck = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void pushCard(Card card) {
-        userDeck.add(card);
+        cards.add(card);
     }
 
-    public List<Card> getUserDeck() {
-        return Collections.unmodifiableList(userDeck);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public int sumCard() {
-        int sum = userDeck.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
         return addSumByAce(sum);
@@ -34,7 +34,7 @@ public class UserDeck {
     }
 
     public boolean hasAce() {
-        return userDeck.stream()
+        return cards.stream()
                 .anyMatch(card -> card.number() == ACE);
     }
 }

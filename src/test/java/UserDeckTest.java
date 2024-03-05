@@ -16,7 +16,7 @@ public class UserDeckTest {
 
         userDeck.pushCard(card);
 
-        assertThat(userDeck.getUserDeck()).contains(card);
+        assertThat(userDeck.getCards()).contains(card);
     }
 
     @Test

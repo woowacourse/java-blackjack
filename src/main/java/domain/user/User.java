@@ -2,8 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 
-import java.util.List;
-
 public class User {
     private final UserDeck userDeck;
 
@@ -15,7 +13,11 @@ public class User {
         userDeck.pushCard(card);
     }
 
-    public List<Card> showUserDeck() {
-        return userDeck.getUserDeck();
+    public UserDeck getUserDeck() {
+        return userDeck;
+    }
+
+    public int sumUserDeck() {
+        return userDeck.sumCard();
     }
 }

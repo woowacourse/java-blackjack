@@ -1,3 +1,4 @@
+import domain.TotalDeckGenerator;
 import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
