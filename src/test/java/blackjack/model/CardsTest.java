@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -8,11 +9,20 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
     @Test
+    @DisplayName("전달된 카드 리스트에 카드가 2개 미만인 경우 예외를 던진다.")
+    void createCardsLowerSize() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Cards(List.of(Deck.CLOVER_ACE)))
+                .withMessage("카드는 두 장 이상이어야 합니다.");
+    }
+
+    // TODO: 이름 바꾸기
+    @Test
     @DisplayName("카드를 추가할 수 있다.")
     void createPlayerWithCards() {
-        Cards cards = new Cards();
+        Cards cards = new Cards(List.of(Deck.CLOVER_FIVE, Deck.CLOVER_FOUR));
         Cards addedCard = cards.addCard(Deck.CLOVER_ACE);
-        assertThat(addedCard.getCards()).isEqualTo(List.of(Deck.CLOVER_ACE));
+        assertThat(addedCard.getCards()).isEqualTo(List.of(Deck.CLOVER_FIVE, Deck.CLOVER_FOUR, Deck.CLOVER_ACE));
     }
 
     @Test

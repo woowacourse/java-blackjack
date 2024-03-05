@@ -6,12 +6,15 @@ import java.util.List;
 public class Cards {
     private final List<Deck> cards;
 
-    public Cards() {
-        this.cards = new ArrayList<>();
+    public Cards(final List<Deck> cards) {
+        validateSize(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(final List<Deck> cards) {
-        this.cards = new ArrayList<>(cards);
+    private void validateSize(final List<Deck> cards) {
+        if (cards.size() < 2) {
+            throw new IllegalArgumentException("카드는 두 장 이상이어야 합니다.");
+        }
     }
 
     public Cards addCard(final Deck card) {
