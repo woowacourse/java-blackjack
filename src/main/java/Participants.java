@@ -1,12 +1,16 @@
 import java.util.List;
 import java.util.Set;
 
-public class Names {
-
-    List<Name> value;
-
-    public Names(List<String> names) {
+public class Participants {
+    private List<Participant> value;
+    public Participants(List<String> names) {
         validate(names);
+        value = names.stream().map(name -> new Participant(new Name(name)))
+                .toList();
+    }
+
+    public List<Participant> getValue() {
+        return value;
     }
 
     private static void validate(List<String> names) {

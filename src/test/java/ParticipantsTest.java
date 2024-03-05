@@ -1,13 +1,11 @@
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class NamesTest {
-
+public class ParticipantsTest {
     @Test
     @DisplayName("최대 8명 입력받는다.")
     void validateMaxSize() {
@@ -15,7 +13,7 @@ class NamesTest {
         List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
         //when
         //then
-        assertThatThrownBy(() -> new Names(names)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Participants(names)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -25,7 +23,7 @@ class NamesTest {
         List<String> names = List.of("one");
         //when
         //then
-        assertThatThrownBy(() -> new Names(names)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Participants(names)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -35,8 +33,6 @@ class NamesTest {
         List<String> names = List.of("pobi", "pobi");
         //when
         //then
-        assertThatThrownBy(() -> new Names(names)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Participants(names)).isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }

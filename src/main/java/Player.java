@@ -39,4 +39,8 @@ public class Player {
         return cards.stream()
                 .anyMatch(card -> 1 == card.getScore());
     }
+
+    public int getCardCount() {
+        return cards.size();
+    }
 }
