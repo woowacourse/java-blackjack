@@ -12,12 +12,12 @@ class CardCalculatorTest {
     @DisplayName("카드의 합을 구한다.")
     @ParameterizedTest
     @MethodSource("sumParameterProvider")
-    void sum(List<Card> cards, int expected) {
+    void sum(final List<Card> cards, final int expected) {
         // given
-        CardCalculator cardCalculator = new CardCalculator();
+        final CardCalculator cardCalculator = new CardCalculator();
 
         // when
-        int result = cardCalculator.sum(cards);
+        final int result = cardCalculator.sum(cards);
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);
