@@ -24,8 +24,9 @@ public class Hand {
         return cards;
     }
 
-    public boolean containAceCard() {
-        return this.cards.stream()
-                .anyMatch(Card::isAceCard);
+    public int countAceCard() {
+        return (int) this.cards.stream()
+                .filter(card -> card.isAceCard())
+                .count();
     }
 }
