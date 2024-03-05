@@ -26,4 +26,13 @@ class CardNumberTest {
         assertThatThrownBy(() -> CardNumber.generate(givenOrder))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("카드 숫자가 Ace인지 판별한다")
+    @ParameterizedTest
+    @CsvSource(value = {"ACE,true", "TWO,false", "THREE,false"})
+    void isAce(CardNumber given, boolean expected) {
+        boolean result = given.isAce();
+
+        assertThat(result).isEqualTo(expected);
+    }
 }

@@ -11,6 +11,10 @@ public class Card {
         this.cardShape = cardShape;
     }
 
+    public boolean isAce() {
+        return cardNumber.isAce();
+    }
+
     public CardNumber getCardNumber() {
         return cardNumber;
     }
