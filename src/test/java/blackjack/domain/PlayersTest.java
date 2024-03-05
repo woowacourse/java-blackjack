@@ -36,4 +36,15 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
+
+    @Test
+    @DisplayName("플레이어 이름이 중복될 경우 예외가 발생한다.")
+    void validateDuplicate() {
+        // given
+        String names = "pobi,pobi";
+        // when & then
+        assertThatCode(() -> Players.from(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
+    }
 }
