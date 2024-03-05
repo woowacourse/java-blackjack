@@ -1,5 +1,6 @@
 package model.card;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -9,6 +10,14 @@ public class Card {
     public Card(CardShape cardShape, CardNumber cardNumber) {
         this.cardShape = cardShape;
         this.cardNumber = cardNumber;
+    }
+
+    public int minimumNumber() {
+        return cardNumber.minimumNumber();
+    }
+
+    public int subtractMaxMinNumber() {
+        return cardNumber.maximumNumber() - cardNumber.maximumNumber();
     }
 
     @Override

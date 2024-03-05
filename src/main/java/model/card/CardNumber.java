@@ -19,7 +19,19 @@ public enum CardNumber {
 
     private final List<Integer> numbers;
 
+    public int minimumNumber() {
+        return numbers.get(0);
+    }
+
+    public int maximumNumber() {
+        return numbers.get(numbers.size() - 1);
+    }
+
     CardNumber(List<Integer> numbers) {
         this.numbers = numbers;
+    }
+
+    public List<Integer> getNumbers() {
+        return numbers.stream().sorted().toList();
     }
 }
