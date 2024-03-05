@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,11 +8,10 @@ public class Player {
     private final List<Card> cards;
     private final Score score;
 
-    public Player(String name, List<Card> cards) {
+    public Player(String name) {
         this.playerName = new PlayerName(name);
-        this.cards = cards;
+        this.cards = new ArrayList<>();
         this.score = new Score(0);
-        cards.forEach(score::addScore);
     }
 
     public void hit(Card card) {
