@@ -40,5 +40,4 @@ class PlayerTest {
 
         assertThat(score).isEqualTo(9);
     }
-
 }

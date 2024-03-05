@@ -18,4 +18,8 @@ public class Player {
     public List<Card> getCards() {
         return playerCards.getCards();
     }
+
+    public int getScore() {
+        return playerCards.calculateScore();
+    }
 }
