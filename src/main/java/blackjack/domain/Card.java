@@ -66,4 +66,8 @@ public enum Card {
         this.symbol = symbol;
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
 }

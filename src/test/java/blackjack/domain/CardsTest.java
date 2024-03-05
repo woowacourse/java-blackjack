@@ -17,4 +17,17 @@ public class CardsTest {
         // then
         assertThat(cards.getValues().size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("뽑은 카드들의 합을 구한다.")
+    void cardsSumTest() {
+        // given
+        int expectedScore = 9 + 5;
+
+        // when
+        Cards cards = new Cards(List.of(Card.SPADE_NINE, Card.CLUB_FIVE));
+
+        // then
+        assertThat(cards.totalScore()).isEqualTo(expectedScore);
+    }
 }

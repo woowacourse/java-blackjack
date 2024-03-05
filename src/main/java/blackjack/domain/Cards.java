@@ -13,4 +13,10 @@ public class Cards {
     public List<Card> getValues() {
         return List.copyOf(values);
     }
+
+    public int totalScore() {
+        return values.stream()
+                .mapToInt(Card::getScore)
+                .reduce(0, Integer::sum);
+    }
 }
