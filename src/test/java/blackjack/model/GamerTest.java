@@ -59,4 +59,67 @@ class GamerTest {
         //then
         assertThat(sum).isEqualTo(17);
     }
+
+    @DisplayName("게이머의 카드 목록에 카드합이 특정 숫자보다 적은지 알려준다.")
+    @Test
+    void isLowerThenThreshold() {
+        //given
+        int threshold = 10;
+        Card card = new Card(CardPattern.CLOVER, CardNumber.NINE);
+        Gamer gamer = new Gamer();
+
+        gamer.addCard(card);
+
+        //when, then
+        assertThat(gamer.isPossibleToAddCard(threshold)).isTrue();
+    }
+
+    @DisplayName("게임 승패에 사용할 최종 숫자 합을 알려준다.")
+    @Test
+    void calculateFinalScore() {
+        //given
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.NINE);
+        Gamer gamer = new Gamer();
+
+        gamer.addCard(card1);
+        gamer.addCard(card2);
+
+        //when, then
+        assertThat(gamer.calculateFinalScore()).isEqualTo(17);
+    }
+
+    @DisplayName("Ace를 가지고 있는 경우 최종 숫자합 계산 시, Ace를 1로 계산하는 경우")
+    @Test
+    void calculateFinalScore_ace_1() {
+        //given
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.TWO);
+        Card card3 = new Card(CardPattern.CLOVER, CardNumber.NINE);
+        Gamer gamer = new Gamer();
+
+        gamer.addCard(card1);
+        gamer.addCard(card2);
+        gamer.addCard(card3);
+
+        //when, then
+        assertThat(gamer.calculateFinalScore()).isEqualTo(12);
+    }
+
+    @DisplayName("Ace를 가지고 있는 경우 최종 숫자합 계산 시, Ace를 11로 계산하는 경우")
+    @Test
+    void calculateFinalScore_ace_11() {
+        //given
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.TWO);
+        Card card3 = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
+        Gamer gamer = new Gamer();
+
+        gamer.addCard(card1);
+        gamer.addCard(card2);
+        gamer.addCard(card3);
+
+        //when, then
+        assertThat(gamer.calculateFinalScore()).isEqualTo(21);
+    }
 }
