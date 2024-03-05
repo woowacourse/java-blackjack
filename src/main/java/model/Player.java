@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 
-public class Person {
+public class Player  {
+    protected final static int MAXIMUM_SUM = 21;
 
-    private List<Card> cards;
+    protected List<Card> cards;
 
-    public Person() {
+    public Player() {
         this.cards = new ArrayList<>();
     }
 
@@ -23,12 +24,12 @@ public class Person {
 
     public int sumCardNumbers() {
         int sum = 0;
-        for (Card card : cards) {
+        for(Card card : cards) {
             sum += card.minimumNumber();
         }
         List<Integer> differenceNumbers = filterNonZeroDifferences();
         return differenceNumbers.stream()
-                .reduce(sum, Person::sumIfUnderMaximum);
+                .reduce(sum, Player::sumIfUnderMaximum);
     }
 
     private List<Integer> filterNonZeroDifferences() {
@@ -38,11 +39,11 @@ public class Person {
                 .toList();
 
     }
-
     private static int sumIfUnderMaximum(Integer result, Integer number) {
         if (result + number <= 21) {
             return result + number;
         }
         return result;
     }
+
 }
