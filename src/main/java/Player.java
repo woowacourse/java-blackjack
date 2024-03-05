@@ -5,12 +5,10 @@ public class Player {
 
     private static final int ADDITIONAL_SCORE = 10;
     private static final int BLACK_JACK_COUNT = 21;
-    private String name;
     private List<Card> cards;
 
-    public Player(String name) {
-        this.name = name;
-        cards = new ArrayList<>();
+    public Player( ) {
+        this.cards = new ArrayList<>();
     }
 
     public void receiveCard(Card card) {
@@ -35,10 +33,6 @@ public class Player {
             totalScore = totalScore + ADDITIONAL_SCORE;
         }
         return totalScore;
-    }
-
-    public boolean canHit() {
-        return calculateScore() <= BLACK_JACK_COUNT;
     }
 
     public boolean hasAce() {
