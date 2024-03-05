@@ -14,9 +14,13 @@ public class UserDeck {
     }
 
     public int sumCard() {
-        return userDeck.stream()
+        int sum = userDeck.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
+        if (userDeck.stream().anyMatch(card -> card.number() == Number.ACE)) {
+            return sum - 10;
+        }
+        return sum;
     }
 
     public boolean hasAce() {

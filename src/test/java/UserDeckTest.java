@@ -32,7 +32,19 @@ public class UserDeckTest {
         UserDeck userDeck = new UserDeck();
 
         userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
-        
+
         assertThat(userDeck.hasAce()).isTrue();
+    }
+
+    @Test
+    @DisplayName("ACE 카드는 합이 22 이상일 때 숫자가 1로 사용된다.")
+    void sumCardContainingAceTest() {
+        UserDeck userDeck = new UserDeck();
+
+        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.pushCard(new Card(Shape.CLOVER, Number.TWO));
+        userDeck.pushCard(new Card(Shape.CLOVER, Number.KING));
+
+        assertThat(userDeck.sumCard()).isEqualTo(13);
     }
 }
