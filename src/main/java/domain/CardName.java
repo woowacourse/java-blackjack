@@ -1,6 +1,6 @@
 package domain;
 
-public enum CardValue {
+public enum CardName {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -16,7 +16,7 @@ public enum CardValue {
     KING(13);
     private final int cardNumber;
 
-    CardValue(int cardNumber) {
+    CardName(int cardNumber) {
         this.cardNumber = cardNumber;
     }
 

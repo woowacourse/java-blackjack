@@ -1,7 +1,7 @@
 package domain;
 
+import static domain.CardName.ACE;
 import static domain.CardType.HEART;
-import static domain.CardValue.ACE;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

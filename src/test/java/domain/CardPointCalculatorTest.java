@@ -15,13 +15,13 @@ class CardPointCalculatorTest {
     static Stream<Arguments> calculateParameter() {
         List<Arguments> arguments = new ArrayList<>();
         for (CardType cardType : CardType.values()) {
-            for (CardValue cardValue : CardValue.values()) {
-                Card card = new Card(cardValue, cardType);
+            for (CardName cardName : CardName.values()) {
+                Card card = new Card(cardName, cardType);
                 CardPoint cardPoint;
-                if (cardValue.getCardNumber() > 10) {
+                if (cardName.getCardNumber() > 10) {
                     cardPoint = new CardPoint(10);
                 } else {
-                    cardPoint = new CardPoint(cardValue.getCardNumber());
+                    cardPoint = new CardPoint(cardName.getCardNumber());
                 }
                 arguments.add(Arguments.of(card, cardPoint));
             }
