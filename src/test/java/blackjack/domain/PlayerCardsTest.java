@@ -1,20 +1,24 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static blackjack.domain.card.Shape.*;
+import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerCardsTest {
     @Test
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
-        Card card = new Card(Shape.DIAMOND, Value.ACE);
+        Card card = new Card(DIAMOND, ACE);
         PlayerCards playerCards = new PlayerCards(new ArrayList<>());
 
         playerCards.append(card);
@@ -26,9 +30,9 @@ class PlayerCardsTest {
     @DisplayName("숫자 카드는 해당 숫자만큼의 점수로 계산된다.")
     void calculateScoreTest() {
         List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.TWO),
-                new Card(Shape.DIAMOND, Value.THREE),
-                new Card(Shape.DIAMOND, Value.FOUR)
+                new Card(DIAMOND, TWO),
+                new Card(DIAMOND, THREE),
+                new Card(DIAMOND, FOUR)
         );
         PlayerCards playerCards = new PlayerCards(cards);
 
@@ -38,14 +42,13 @@ class PlayerCardsTest {
         assertThat(score).isEqualTo(9);
     }
 
-    // TODO: ParameterizedTest 활용
     @Test
     @DisplayName("J, Q, K 카드는 모두 10으로 계산된다.")
     void calculateScoreWithAlphabetTest() {
         List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.JACK),
-                new Card(Shape.DIAMOND, Value.QUEEN),
-                new Card(Shape.DIAMOND, Value.KING)
+                new Card(DIAMOND, JACK),
+                new Card(DIAMOND, QUEEN),
+                new Card(DIAMOND, KING)
         );
         PlayerCards playerCards = new PlayerCards(cards);
 
@@ -54,62 +57,23 @@ class PlayerCardsTest {
         assertThat(score).isEqualTo(30);
     }
 
-    @Test
-    @DisplayName("ACE가 11점으로 계산되는 경우")
-    void calculateScoreWithAceAsEleven() {
-        List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.JACK),
-                new Card(Shape.DIAMOND, Value.ACE)
-        );
+    @ParameterizedTest
+    @MethodSource("cardsAndScore")
+    @DisplayName("ACE 는 1점 혹은 11점으로 계산된다.")
+    void calculateScoreWithAce(List<Card> cards, int expected) {
         PlayerCards playerCards = new PlayerCards(cards);
-
         int score = playerCards.calculateScore();
 
-        assertThat(score).isEqualTo(21);
+        assertThat(score).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("ACE가 1점으로 계산되는 경우")
-    void calculateScoreWithAceAsOne() {
-        List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.NINE),
-                new Card(Shape.DIAMOND, Value.ACE),
-                new Card(Shape.SPADE, Value.ACE)
+    static Stream<Arguments> cardsAndScore() {
+        return Stream.of(
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)), 21),
+                Arguments.arguments(List.of(new Card(DIAMOND, NINE), new Card(DIAMOND, ACE), new Card(SPADE, ACE)), 21),
+                Arguments.arguments(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)), 21),
+                Arguments.arguments(List.of(new Card(DIAMOND, ACE), new Card(CLOVER, ACE), new Card(SPADE, ACE)), 13)
         );
-        PlayerCards playerCards = new PlayerCards(cards);
-
-        int score = playerCards.calculateScore();
-
-        assertThat(score).isEqualTo(21);
     }
 
-    @Test
-    @DisplayName("ACE가 1점으로 계산되는 경우")
-    void calculateScoreWithAceAsOne2() {
-        List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.KING),
-                new Card(Shape.DIAMOND, Value.QUEEN),
-                new Card(Shape.DIAMOND, Value.ACE)
-        );
-        PlayerCards playerCards = new PlayerCards(cards);
-
-        int score = playerCards.calculateScore();
-
-        assertThat(score).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("ACE가 1점으로 계산되는 경우")
-    void calculateScoreWithAceAsOne3() {
-        List<Card> cards = List.of(
-                new Card(Shape.DIAMOND, Value.ACE),
-                new Card(Shape.CLOVER, Value.ACE),
-                new Card(Shape.SPADE, Value.ACE)
-        );
-        PlayerCards playerCards = new PlayerCards(cards);
-
-        int score = playerCards.calculateScore();
-
-        assertThat(score).isEqualTo(13);
-    }
 }
