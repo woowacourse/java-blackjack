@@ -27,9 +27,23 @@ public class Deck {
         if (cards.isEmpty()) {
             return 0;
         }
-        return cards.stream()
+
+        int totalScore = cards.stream()
                 .map(Card::getRank)
                 .mapToInt(Rank::getScore)
                 .sum();
+
+        int countAce = (int) cards.stream()
+                .filter(card -> card.isSameRank(Rank.ACE))
+                .count();
+
+        for(int i = 0; i < countAce; i++) { // TODO indent 줄이기
+            if (totalScore + 10 > 21) {
+                break;
+            }
+            totalScore += 10;
+        }
+
+        return totalScore;
     }
 }

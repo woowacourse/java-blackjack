@@ -11,6 +11,11 @@ public class Card {
         this.rank = rank;
     }
 
+    public boolean isSameRank(Rank rank) {
+        //TODO Rank 책임 생각해보기
+        return this.rank == rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
