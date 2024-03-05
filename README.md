@@ -49,3 +49,7 @@
 - [ ] 카드를 추가 지급 받을지 물어본다.
     - [ ] 응답은 y/n로만 받을 수 있다.
 
+# Git commit 메세지
+
+접두어로 `docs`, `test`, `feat`, `fix`, `refactor`, `chore` 사용
+example feat: 사용자 입력 후 도메인 사용
