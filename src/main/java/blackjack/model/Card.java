@@ -16,6 +16,10 @@ public class Card {
         return cardNumber.getNumber();
     }
 
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,5 +31,9 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardPattern, cardNumber);
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 }
