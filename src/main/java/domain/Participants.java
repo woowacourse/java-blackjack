@@ -30,4 +30,9 @@ public class Participants {
     public Deck getDeck() {
         return deck;
     }
+
+    public void addCard(Player player) {
+        player.receiveCard(deck.pickRandomCard()); // TODO refactor
+
+    }
 }

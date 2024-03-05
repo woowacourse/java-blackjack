@@ -19,5 +19,13 @@ public class BlackjackGame {
         Participants participants = new Participants(dealer, players);
         participants.initialSetting();
         outputView.printSetting(dealer, players);
+
+        players.forEach((player) -> {
+            while (player.isNotOver() && inputView.readCommand(player.getName().getName())) {
+                participants.addCard(player);
+                outputView.printCurrentCard(player);
+            }
+
+        });
     }
 }

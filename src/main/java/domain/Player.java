@@ -24,4 +24,8 @@ public class Player {
     public Deck getDeck() {
         return deck;
     }
+
+    public boolean isNotOver() {
+        return deck.calculateTotalScore() < 21;
+    }
 }

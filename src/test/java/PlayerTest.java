@@ -24,5 +24,26 @@ public class PlayerTest {
                 .isThrownBy(() -> player.receiveCard(new Card(Shape.HEART, Rank.ACE)));
     }
 
+    @Test
+    @DisplayName("플레이어 카드가 21이 넘지 않는다.")
+    void isNotOverTrueTest() {
+        Player player = new Player(new Name("이름"));
 
+        player.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        player.receiveCard(new Card(Shape.HEART, Rank.NINE));
+
+        Assertions.assertThat(player.isNotOver()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어 카드가 21이 넘는다.")
+    void isNotOverFalseTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.receiveCard(new Card(Shape.HEART, Rank.NINE));
+        player.receiveCard(new Card(Shape.SPADE, Rank.NINE));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.FOUR));
+
+        Assertions.assertThat(player.isNotOver()).isFalse();
+    }
 }
