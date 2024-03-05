@@ -13,7 +13,7 @@ public class CardTest {
     void createCard() {
         //given
         int number = 4;
-        String symbol = "clover";
+        Symbol symbol = Symbol.CLOVER;
 
         //when
         Card card = new Card(number, symbol);
