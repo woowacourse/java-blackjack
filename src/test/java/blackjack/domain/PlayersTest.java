@@ -15,7 +15,7 @@ public class PlayersTest {
     @DisplayName("플레이어는 여러명일 수 있다.")
     void playersCreateTest() {
         // given
-        String names = "pobi,lemone,seyang";
+        List<String> names = List.of("pobi", "lemone", "seyang");
         List<String> expectedNames = List.of("pobi", "lemone", "seyang");
 
         // when
@@ -28,11 +28,11 @@ public class PlayersTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "    "})
+    @ValueSource(strings = {"", "    ", "   ,   "})
     @DisplayName("플레이어가 없을 경우 예외가 발생한다.")
     void validateNoPlayer(String names) {
         // given & when & then
-        assertThatCode(() -> Players.from(names))
+        assertThatCode(() -> Players.from(List.of(names)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
@@ -41,7 +41,7 @@ public class PlayersTest {
     @DisplayName("플레이어 이름이 중복될 경우 예외가 발생한다.")
     void validateDuplicate() {
         // given
-        String names = "pobi,pobi";
+        List<String> names = List.of("pobi", "pobi");
         // when & then
         assertThatCode(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)

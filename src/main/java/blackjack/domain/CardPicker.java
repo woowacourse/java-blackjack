@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -10,8 +11,8 @@ public class CardPicker {
 
     private final List<Card> cards;
 
-    public CardPicker(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public CardPicker() {
+        this.cards = new ArrayList<>(Arrays.stream(Card.values()).toList());
         random = new Random();
     }
 
