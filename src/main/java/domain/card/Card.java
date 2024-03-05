@@ -13,4 +13,12 @@ public class Card {
     public int score() {
         return rank.getScore();
     }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
 }
