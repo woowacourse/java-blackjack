@@ -48,15 +48,32 @@ class PlayerTest {
         Player player = new Player(new PlayerName("kirby"), cards);
 
         // when
-        boolean isBlackjack = player.isBlackjack();
+        BlackjackStatus blackjackStatus = player.getStatus();
 
         // then
-        assertThat(isBlackjack).isTrue();
+        assertThat(blackjackStatus).isEqualTo(BlackjackStatus.BLACKJACK);
     }
 
     @Test
-    @DisplayName("카드의 합이 21이 아니면 블랙잭이 아니다.")
+    @DisplayName("카드의 합이 21 초과면 죽는다.")
     void isNotBlackjack() {
+        // given
+        Card card1 = new Card(CardNumber.TEN, CardShape.CLOVER);
+        Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
+        Card card3 = new Card(CardNumber.NINE, CardShape.CLOVER);
+        Cards cards = new Cards(List.of(card1, card2, card3));
+        Player player = new Player(new PlayerName("kirby"), cards);
+
+        // when
+        BlackjackStatus blackjackStatus = player.getStatus();
+
+        // then
+        assertThat(blackjackStatus).isEqualTo(BlackjackStatus.DEAD);
+    }
+
+    @Test
+    @DisplayName("참여자의 카드의 합이 21 미만이면 블랙잭은 아니지만 살았다.")
+    void isAlive() {
         // given
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.NINE, CardShape.CLOVER);
@@ -64,9 +81,9 @@ class PlayerTest {
         Player player = new Player(new PlayerName("kirby"), cards);
 
         // when
-        boolean isBlackjack = player.isBlackjack();
+        BlackjackStatus blackjackStatus = player.getStatus();
 
         // then
-        assertThat(isBlackjack).isFalse();
+        assertThat(blackjackStatus).isEqualTo(BlackjackStatus.ALIVE);
     }
 }

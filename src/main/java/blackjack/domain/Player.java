@@ -1,8 +1,6 @@
 package blackjack.domain;
 
 public class Player {
-    public static final int BLACKJACK_NUMBER = 21;
-
     private final PlayerName name;
     private final Cards cards;
 
@@ -15,14 +13,14 @@ public class Player {
         int sum = cards.sum();
         int aceCount = cards.countAce();
 
-        while (sum > BLACKJACK_NUMBER && aceCount > 0) {
+        while (sum > BlackjackStatus.BLACKJACK_NUMBER && aceCount > 0) {
             sum = sum - 10;
             aceCount--;
         }
         return sum;
     }
 
-    public boolean isBlackjack() {
-       return calculate() == BLACKJACK_NUMBER;
+    public BlackjackStatus getStatus() {
+        return BlackjackStatus.from(calculate());
     }
 }
