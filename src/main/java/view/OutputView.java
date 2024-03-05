@@ -25,6 +25,10 @@ public class OutputView {
         System.out.printf("%s카드 : %s\n", player.getName().getName(), deckToString(player));
     }
 
+    public void printDealerOneMoreCard() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     private static String deckToString(Player player) {
         Deck deck = player.getDeck();
         return deck.getCards()

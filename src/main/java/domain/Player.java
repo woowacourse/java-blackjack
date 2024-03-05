@@ -25,7 +25,7 @@ public class Player {
         return deck;
     }
 
-    public boolean isNotOver() {
-        return deck.calculateTotalScore() < 21;
+    public boolean isNotOver(int boundaryScore) {
+        return deck.calculateTotalScore() < boundaryScore;
     }
 }

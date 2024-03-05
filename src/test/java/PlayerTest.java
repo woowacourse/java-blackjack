@@ -32,7 +32,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.ACE));
         player.receiveCard(new Card(Shape.HEART, Rank.NINE));
 
-        Assertions.assertThat(player.isNotOver()).isTrue();
+        Assertions.assertThat(player.isNotOver(21)).isTrue();
     }
 
     @Test
@@ -44,6 +44,6 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.SPADE, Rank.NINE));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.FOUR));
 
-        Assertions.assertThat(player.isNotOver()).isFalse();
+        Assertions.assertThat(player.isNotOver(21)).isFalse();
     }
 }
