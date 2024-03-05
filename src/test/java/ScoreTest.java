@@ -35,7 +35,7 @@ public class ScoreTest {
     void lowerThanThresholdTest() {
         Score score = new Score(0);
         score.addScore(new Card(CardNumber.THREE, CardShape.CLOVER));
-        Assertions.assertThat(score.isLowerThanThreshold())
+        Assertions.assertThat(score.isLowerThanBustThreshold())
                 .isTrue();
     }
 }

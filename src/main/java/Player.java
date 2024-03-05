@@ -20,7 +20,7 @@ public class Player {
     }
 
     public boolean hasScoreUnderThreshold() {
-        return score.isLowerThanThreshold();
+        return score.isLowerThanBustThreshold();
     }
 
     public List<Card> getCards() {
