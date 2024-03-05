@@ -23,6 +23,10 @@ public class Player {
         return score.isLowerThanBustThreshold();
     }
 
+    public String getPlayerName() {
+        return playerName.getValue();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

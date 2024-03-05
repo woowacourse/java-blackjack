@@ -15,4 +15,8 @@ public class PlayerName {
             throw new IllegalArgumentException("[ERROR] 이름의 길이는 1 ~ 20 글자 사이로 입력해주세요.");
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }
