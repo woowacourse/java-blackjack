@@ -56,13 +56,13 @@ class PlayerTest {
         assertThat(player.getHand().getCards()).contains(newCard);
     }
 
-    @DisplayName("Burst인지 확인한다.")
+    @DisplayName("Bust인지 확인한다.")
     @Nested
-    class isBurst {
+    class isBust {
 
         @Test
-        @DisplayName("Burst가 아니면 false를 반환한다.")
-        void isBurst_false() {
+        @DisplayName("Bust가 아니면 false를 반환한다.")
+        void isBust_false() {
             Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
             Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
             Card card3 = new Card(Letter.SEVEN, Mark.HEART);
@@ -71,14 +71,14 @@ class PlayerTest {
             Name name = new Name("wiib");
             Player player = new Player(name, hand);
 
-            boolean isBurst = player.isBurst();
+            boolean isBurst = player.isBust();
 
             assertThat(isBurst).isFalse();
         }
 
         @Test
-        @DisplayName("Burst이면 true를 반환한다.")
-        void isBurst_true() {
+        @DisplayName("Bust이면 true를 반환한다.")
+        void isBust_true() {
             Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
             Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
             Card card3 = new Card(Letter.EIGHT, Mark.HEART);
@@ -87,7 +87,7 @@ class PlayerTest {
             Name name = new Name("wiib");
             Player player = new Player(name, hand);
 
-            boolean isBurst = player.isBurst();
+            boolean isBurst = player.isBust();
 
             assertThat(isBurst).isTrue();
         }
