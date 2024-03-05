@@ -6,10 +6,10 @@ public class Player {
     protected final String name;
     protected Cards cards;
 
-    public Player(final String name) {
+    public Player(final String name, final Cards cards) {
         validateNullAndEmptyName(name);
         this.name = name;
-        this.cards = new Cards();
+        this.cards = cards;
     }
 
     private void validateNullAndEmptyName(final String name) {
