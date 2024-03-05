@@ -13,7 +13,7 @@ public class Participant {
 
     public List<Card> draw() {
         if (cards.canDraw()) {
-            cards.add(new Card(new Random().nextInt(10) + 1));
+            cards.add(new Card(new Random().nextInt(10) + 1, Shape.CLUB));
             return cards.getCards();
         }
         return cards.getCards();

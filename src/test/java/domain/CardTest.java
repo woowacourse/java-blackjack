@@ -13,7 +13,7 @@ public class CardTest {
     @Test
     @DisplayName("유효한 카드 숫자라면 정상적으로 생성된다.")
     void card_Number_Valid() {
-        Card card = new Card(1);
+        Card card = new Card(1, Shape.CLUB);
         assertThat(card).extracting("cardNumber").isEqualTo(1);
     }
 
@@ -21,7 +21,15 @@ public class CardTest {
     @DisplayName("유효한 카드 숫자가 아니라면 예외가 발생한다.")
     @ValueSource(ints = {-1, 0, 12, 13})
     void card_Number_Invalid(int number) {
-        assertThatThrownBy(() -> new Card(number))
+        assertThatThrownBy(() -> new Card(number, Shape.CLUB))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("유효한 모양이라면 정상적으로 생성된다.")
+    void shape() {
+        Card card = new Card(1, Shape.DIAMONDS);
+
+        assertThat(card).extracting("shape").isEqualTo(Shape.DIAMONDS);
     }
 }

@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Arrays;
 
-enum CardNumber {
+public enum CardNumber {
 
     ONE(1),
     TWO(2),
