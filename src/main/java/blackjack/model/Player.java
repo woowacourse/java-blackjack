@@ -1,7 +1,7 @@
 package blackjack.model;
 
 public class Player {
-    private final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
+    private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
 
     private final String name;
 
