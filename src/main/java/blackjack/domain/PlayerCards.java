@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
+    private static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     public PlayerCards(List<Card> cards) {
@@ -28,13 +29,17 @@ public class PlayerCards {
 
         // TODO: 인덴트 줄이기, 로직 개선
         for (int i = 0; i < aceCount; i++) {
-            if (score <= 21) {
+            if (score <= BUST_THRESHOLD) {
                 break;
             }
             score -= 10;
         }
 
         return score;
+    }
+
+    public boolean isBusted() {
+        return calculateScore() > BUST_THRESHOLD;
     }
 
     private int getAceCount() {

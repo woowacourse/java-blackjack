@@ -22,4 +22,8 @@ public class Player {
     public int getScore() {
         return playerCards.calculateScore();
     }
+
+    public boolean isBusted() {
+        return playerCards.isBusted();
+    }
 }
