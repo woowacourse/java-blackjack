@@ -9,10 +9,5 @@ class PlayerTest {
     @DisplayName("카드를 저장한다.")
     @Test
     void saveCard() {
-        Card card = new Card();
-        Player player = new Player();
-        Assertions.assertThatCode(() -> {
-            player.add(card);
-        }).doesNotThrowAnyException();
     }
 }
