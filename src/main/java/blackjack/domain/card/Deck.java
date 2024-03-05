@@ -1,18 +1,13 @@
 package blackjack.domain.card;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-    private final ArrayDeque<Card> deck;
+    private final Deque<Card> deck;
 
-    public Deck(final ArrayDeque<Card> cards) {
+    public Deck(final Deque<Card> cards) {
         this.deck = cards;
     }
 
