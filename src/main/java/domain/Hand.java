@@ -20,7 +20,7 @@ public class Hand {
         cards.add(card);
     }
 
-    List<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 }
