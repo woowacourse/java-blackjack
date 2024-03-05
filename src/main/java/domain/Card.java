@@ -1,24 +1,16 @@
 package domain;
 
-import java.util.List;
-
 public class Card {
 
-    private final String letter;
-    private final String mark;
+    private final Letter letter;
+    private final Mark mark;
 
-    public Card(String letter, String mark) {
+    public Card(Letter letter, Mark mark) {
         this.letter = letter;
         this.mark = mark;
     }
 
     public int getValue() {
-        if ("A".equals(letter)) {
-            return 1;
-        }
-        if (List.of("K", "Q", "J").contains(letter)) {
-            return 10;
-        }
-        return Integer.parseInt(letter);
+        return letter.getValue();
     }
 }
