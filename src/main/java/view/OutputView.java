@@ -4,6 +4,7 @@ import domain.Card;
 import domain.Deck;
 import domain.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -58,8 +59,20 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printVictory(Player dealer, List<Player> players) {
+    public void printVictory(Map<Player, Boolean> victoryResult) {
         System.out.println("## 최종 승패");
         System.out.println();
+        int dealerWinCount = (int) victoryResult.values().stream()
+                .filter(i -> i)
+                .count();
+        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, victoryResult.size() - dealerWinCount);
+        victoryResult.keySet().forEach(player -> {
+            if (victoryResult.get(player)) {
+                System.out.println(player.getName().getName() + ": 승");
+                return;
+            }
+            System.out.println(player.getName().getName() + ": 패");
+        });
+        
     }
 }

@@ -35,7 +35,6 @@ public class BlackjackGame {
         }
 
         outputView.printResult(dealer, players);
-
-        outputView.printVictory(dealer, players);
+        outputView.printVictory(participants.calculateVictory());
     }
 }
