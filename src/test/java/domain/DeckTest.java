@@ -16,4 +16,17 @@ public class DeckTest {
         // Then
         assertThat(deck).isNotNull();
     }
+
+    @DisplayName("카드를 한 장 건네준다.")
+    @Test
+    void drawTest() {
+        // Given
+        Deck deck = Deck.init();
+
+        // When
+        PlayingCard card = deck.draw();
+
+        // Then
+        assertThat(card).isNotNull();
+    }
 }
