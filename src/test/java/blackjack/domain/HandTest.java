@@ -44,4 +44,33 @@ public class HandTest {
         assertThat(hand.calculateScore())
                 .isEqualTo(9);
     }
+
+    @DisplayName("에이스가 포함된 패의 점수를 반환한다.")
+    @Test
+    void calculateScoreWithAce() {
+        //given
+        Card cardAceClover = new Card(Rank.ACE, Suit.CLOVER);
+        Card cardAceDiamond = new Card(Rank.ACE, Suit.DIAMOND);
+        Card cardAceSpade = new Card(Rank.ACE, Suit.SPADE);
+        Card cardFourSpade = new Card(Rank.FOUR, Suit.SPADE);
+        Card cardKingSpade = new Card(Rank.KING, Suit.SPADE);
+
+        //when
+        Hand hand1 = new Hand();
+        hand1.add(cardAceClover, cardAceDiamond);
+
+        Hand hand2 = new Hand();
+        hand2.add(cardAceClover, cardAceDiamond, cardAceSpade, cardFourSpade);
+
+        Hand hand3 = new Hand();
+        hand3.add(cardKingSpade, cardFourSpade, cardAceClover, cardAceDiamond, cardAceSpade);
+
+        //then
+        assertThat(hand1.calculateScore())
+                .isEqualTo(12);
+        assertThat(hand2.calculateScore())
+                .isEqualTo(17);
+        assertThat(hand3.calculateScore())
+                .isEqualTo(17);
+    }
 }

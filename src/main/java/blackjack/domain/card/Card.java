@@ -19,7 +19,7 @@ public class Card {
         return rank;
     }
 
-    public Suit getSymbol() {
+    public Suit getSuit() {
         return suit;
     }
 

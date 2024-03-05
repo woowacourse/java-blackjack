@@ -22,7 +22,7 @@ public class CardTest {
         //then
         assertThat(card.getRank())
                 .isEqualTo(rank);
-        assertThat(card.getSymbol())
+        assertThat(card.getSuit())
                 .isEqualTo(suit);
     }
 }
