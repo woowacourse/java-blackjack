@@ -6,9 +6,9 @@
 
 ### 카드
 
-- [ ] 숫자가 기본
+- [x] 숫자가 기본
 - [ ] Ace는 1 또는 11
-- [ ] King, Queen, Jack은 각각 10
+- [x] King, Queen, Jack은 각각 10
 
 ### 게임
 
