@@ -16,4 +16,9 @@ public class Dealer extends Player {
     private boolean hasDrawableScore() {
         return calculateScore() <= MAX_DRAWABLE_SCORE;
     }
+
+    public boolean determineResult(int score) {
+        // TODO: 무승부 처리
+        return calculateScore() > score;
+    }
 }
