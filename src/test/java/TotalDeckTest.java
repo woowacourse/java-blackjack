@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Stack;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TotalDeckTest {
@@ -9,11 +12,11 @@ public class TotalDeckTest {
     @DisplayName("전체 덱에서 카드를 가져온다.")
     void getNewCardTest() {
         //given
-        TotalDeck totalDeck = new TotalDeck();
+        Card card = new Card();
+        TotalDeck totalDeck = new TotalDeck(List.of(card));
         //when
-        Card expectedCard = totalDeck.list.get(0);
         Card actualCard = totalDeck.getNewCard();
         //then
-        assertThat(actualCard).isEqualTo(expectedCard);
+        assertThat(actualCard).isEqualTo(card);
     }
 }

@@ -1,10 +1,17 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class TotalDeck {
-    Card card = new Card();
-    List<Card> list = List.of(card);
+    private final Stack<Card> totalDeck;
+
+    public TotalDeck(List<Card> cards){
+        totalDeck = new Stack<>();
+        totalDeck.addAll(cards);
+    }
+
     public Card getNewCard() {
-        return list.get(0);
+        return totalDeck.pop();
     }
 }
