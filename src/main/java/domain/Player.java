@@ -44,4 +44,8 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public int getPacketSize() {
+        return 2;
+    }
 }

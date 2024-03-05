@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
@@ -32,5 +33,9 @@ public class CardDeck {
 
     public int size() {
         return cards.size();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 }

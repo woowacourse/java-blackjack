@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,4 +39,7 @@ public class Players {
         }
     }
 
+    public List<Player> getNames() {
+        return names;
+    }
 }
