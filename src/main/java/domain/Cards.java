@@ -3,13 +3,13 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public abstract class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
 
     protected final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    Cards(List<Card> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }
@@ -19,6 +19,8 @@ public class Cards {
             throw new IllegalArgumentException("처음 지급받는 카드는 두 장이어야 합니다.");
         }
     }
+
+    public abstract boolean canDraw();
 
     public List<Card> add(Card card) {
         cards.add(card);
