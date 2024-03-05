@@ -16,10 +16,9 @@ class CardsTest {
                 .withMessage("카드는 두 장 이상이어야 합니다.");
     }
 
-    // TODO: 이름 바꾸기
     @Test
     @DisplayName("카드를 추가할 수 있다.")
-    void createPlayerWithCards() {
+    void addCard() {
         Cards cards = new Cards(List.of(Deck.CLOVER_FIVE, Deck.CLOVER_FOUR));
         Cards addedCard = cards.addCard(Deck.CLOVER_ACE);
         assertThat(addedCard.getCards()).isEqualTo(List.of(Deck.CLOVER_FIVE, Deck.CLOVER_FOUR, Deck.CLOVER_ACE));
