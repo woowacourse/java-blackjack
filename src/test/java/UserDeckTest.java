@@ -47,4 +47,18 @@ public class UserDeckTest {
 
         assertThat(userDeck.sumCard()).isEqualTo(13);
     }
+
+    @Test
+    @DisplayName("ACE카드가 여러개일 때 최적의 값을 만든다.")
+    void reduceSumByAce() {
+        //given
+        UserDeck userDeck = new UserDeck();
+        //when
+        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.pushCard(new Card(Shape.SPADE, Number.ACE));
+        userDeck.pushCard(new Card(Shape.HEART, Number.SEVEN));
+        //then
+        int sum = userDeck.sumCard();
+        assertThat(sum).isEqualTo(19);
+    }
 }

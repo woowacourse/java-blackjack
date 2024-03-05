@@ -17,8 +17,15 @@ public class UserDeck {
         int sum = userDeck.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
-        if (userDeck.stream().anyMatch(card -> card.number() == Number.ACE)) {
-            return sum - 10;
+
+        return reduceSumByAce(sum);
+    }
+
+    private int reduceSumByAce(int sum) {
+        int aceCount = aceCount();
+        while (sum > 22 && aceCount > 0) {
+            sum -= 10;
+            aceCount--;
         }
         return sum;
     }
@@ -26,5 +33,11 @@ public class UserDeck {
     public boolean hasAce() {
         return userDeck.stream()
                 .anyMatch(card -> card.number() == Number.ACE);
+    }
+
+    private int aceCount() {
+        return (int) userDeck.stream()
+                .filter(card -> card.number() == Number.ACE)
+                .count();
     }
 }
