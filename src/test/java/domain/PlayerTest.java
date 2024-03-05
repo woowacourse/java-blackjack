@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PlayerTest {
@@ -18,5 +19,23 @@ class PlayerTest {
 
         assertThatCode(() -> new Player(name, hand))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("손 패 값의 합을 반환한다.")
+    @Test
+    void getTotalScore() {
+        Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+        Card card2 = new Card(Letter.K, Mark.SPADE);
+        List<Card> cards = List.of(card1, card2);
+
+        Hand hand = new Hand(cards);
+        Name name = new Name("산초!!");
+        Player player = new Player(name, hand);
+        int actual = player.getTotalScore();
+        int expected = card1.getValue() + card2.getValue();
+
+        assertThat(actual)
+                .isEqualTo(expected);
+
     }
 }

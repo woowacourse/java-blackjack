@@ -9,4 +9,8 @@ public class Player {
         this.name = name;
         this.hand = hand;
     }
+
+    public int getTotalScore() {
+        return hand.calculateSum();
+    }
 }
