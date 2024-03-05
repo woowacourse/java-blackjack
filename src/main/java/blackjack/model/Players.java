@@ -1,7 +1,7 @@
 package blackjack.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -14,10 +14,12 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
+    public static Players from(final List<String> names, final List<Cards> cards) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            players.add(new Player(names.get(i), cards.get(i)));
+        }
+        return new Players(players);
     }
 
     private void validatePlayerSize(final List<Player> players) {
