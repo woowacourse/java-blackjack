@@ -13,15 +13,15 @@ public enum Letter {
     J(10),
     Q(10),
     K(10),
-    A(1);
+    A(11);
 
     private final int value;
 
-    Letter(int value){
+    Letter(int value) {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 }

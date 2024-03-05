@@ -20,7 +20,7 @@ class CardTest {
                         Map.entry(new Card(Letter.TWO, Mark.CLOVER), 2),
                         Map.entry(new Card(Letter.TEN, Mark.CLOVER), 10),
                         Map.entry(new Card(Letter.K, Mark.CLOVER), 10),
-                        Map.entry(new Card(Letter.A, Mark.CLOVER), 1)
+                        Map.entry(new Card(Letter.A, Mark.CLOVER), 11)
                 )
         );
     }
