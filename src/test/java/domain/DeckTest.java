@@ -13,9 +13,9 @@ public class DeckTest {
     void poll() {
         Deck deck = new Deck();
         Set<Card> cards = new HashSet<>();
-        for (int i = 0; i < 58; i++) {
+        for (int i = 0; i < 52; i++) {
             cards.add(deck.poll());
         }
-        Assertions.assertThat(cards).size().isEqualTo(58);
+        Assertions.assertThat(cards).size().isEqualTo(52);
     }
 }
