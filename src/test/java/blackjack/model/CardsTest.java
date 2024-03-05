@@ -25,6 +25,13 @@ class CardsTest {
     }
 
     @Test
+    @DisplayName("제일 첫 번째 카드 하나를 꺼낸다.")
+    void getFirstCard() {
+        Cards cards = new Cards(List.of(Deck.CLOVER_FOUR, Deck.DIA_ACE));
+        assertThat(cards.getFirstCard()).isEqualTo(Deck.CLOVER_FOUR);
+    }
+
+    @Test
     @DisplayName("카드의 합을 계산할 수 있다.")
     void calculateScore() {
         Cards cards = new Cards(List.of(Deck.CLOVER_FIVE, Deck.CLOVER_FOUR));

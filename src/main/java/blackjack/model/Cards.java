@@ -52,4 +52,8 @@ public class Cards {
     public List<Deck> getCards() {
         return List.copyOf(cards);
     }
+
+    public Deck getFirstCard() {
+        return cards.get(0);
+    }
 }
