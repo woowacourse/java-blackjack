@@ -29,13 +29,13 @@ class PlayerTest {
         Card card3 = new Card(cardNumber3, CardShape.CLOVER);
         Card card4 = new Card(cardNumber4, CardShape.SPADE);
         Cards cards = new Cards(List.of(card1, card2, card3, card4));
-        Player player = new Player(new PlayerName("kirby"), cards);
+        Player player = new Player(new Name("kirby"), cards);
 
         // when
-        int sum = player.calculate();
+        Score sum = player.calculate();
 
         // then
-        assertThat(sum).isEqualTo(expected);
+        assertThat(sum).isEqualTo(new Score(expected));
     }
 
     @Test
@@ -45,7 +45,7 @@ class PlayerTest {
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.TEN, CardShape.CLOVER);
         Cards cards = new Cards(List.of(card1, card2));
-        Player player = new Player(new PlayerName("kirby"), cards);
+        Player player = new Player(new Name("kirby"), cards);
 
         // when
         BlackjackStatus blackjackStatus = player.getStatus();
@@ -62,7 +62,7 @@ class PlayerTest {
         Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card3 = new Card(CardNumber.NINE, CardShape.CLOVER);
         Cards cards = new Cards(List.of(card1, card2, card3));
-        Player player = new Player(new PlayerName("kirby"), cards);
+        Player player = new Player(new Name("kirby"), cards);
 
         // when
         BlackjackStatus blackjackStatus = player.getStatus();
@@ -78,7 +78,7 @@ class PlayerTest {
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.NINE, CardShape.CLOVER);
         Cards cards = new Cards(List.of(card1, card2));
-        Player player = new Player(new PlayerName("kirby"), cards);
+        Player player = new Player(new Name("kirby"), cards);
 
         // when
         BlackjackStatus blackjackStatus = player.getStatus();

@@ -14,7 +14,7 @@ class BlackjackStatusTest {
     @CsvSource(value = {"20, ALIVE", "21, BLACKJACK", "22, DEAD"})
     void from(int sum, BlackjackStatus expected) {
         // given & when
-        BlackjackStatus blackjackStatus = BlackjackStatus.from(sum);
+        BlackjackStatus blackjackStatus = BlackjackStatus.from(new Score(sum));
 
         // then
         assertThat(blackjackStatus).isEqualTo(expected);
@@ -24,7 +24,7 @@ class BlackjackStatusTest {
     @DisplayName("숫자가 1이하이면 예외를 발생한다.")
     void from() {
         assertThatIllegalStateException()
-                .isThrownBy(() -> BlackjackStatus.from(1))
+                .isThrownBy(() -> BlackjackStatus.from(new Score(1)))
                 .withMessage("현재 갖고있는 카드의 합이 정상적이지 않습니다.");
     }
 }

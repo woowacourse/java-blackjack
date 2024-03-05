@@ -1,19 +1,18 @@
 package blackjack.domain;
 
 public enum BlackjackStatus {
-    DEAD, ALIVE, BLACKJACK;
+    DEAD,
+    ALIVE,
+    BLACKJACK;
 
     public static final int BLACKJACK_NUMBER = 21;
-    public static final int CARD_SUM_MIN = 2;
+    private static final Score BLACKJACK_SCORE = new Score(BLACKJACK_NUMBER);
 
-    public static BlackjackStatus from(final int number) {
-        if (number <= CARD_SUM_MIN) {
-            throw new IllegalStateException("현재 갖고있는 카드의 합이 정상적이지 않습니다.");
-        }
-        if (number > BLACKJACK_NUMBER) {
+    public static BlackjackStatus from(final Score score) {
+        if (score.isBiggerThan(BLACKJACK_SCORE)) {
             return DEAD;
         }
-        if (number == BLACKJACK_NUMBER) {
+        if (score.equals(BLACKJACK_SCORE)) {
             return BLACKJACK;
         }
         return ALIVE;

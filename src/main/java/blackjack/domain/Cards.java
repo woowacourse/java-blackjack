@@ -13,6 +13,10 @@ public class Cards {
         this.values = new ArrayList<>(cards);
     }
 
+    public Cards(final Card... cards) {
+        this(List.of(cards));
+    }
+
     private void validateDuplicate(final List<Card> cards) {
         if (Set.copyOf(cards).size() != cards.size()) {
             throw new IllegalStateException("중복된 카드는 존재할 수 없습니다.");

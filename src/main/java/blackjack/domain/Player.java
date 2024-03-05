@@ -1,15 +1,15 @@
 package blackjack.domain;
 
 public class Player {
-    private final PlayerName name;
+    private final Name name;
     private final Cards cards;
 
-    public Player(final PlayerName name, final Cards cards) {
+    public Player(final Name name, final Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public int calculate() {
+    public Score calculate() {
         int sum = cards.sum();
         int aceCount = cards.countAce();
 
@@ -17,7 +17,7 @@ public class Player {
             sum = sum - 10;
             aceCount--;
         }
-        return sum;
+        return new Score(sum);
     }
 
     public void addCard(final Card card) {
@@ -26,5 +26,9 @@ public class Player {
 
     public BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
+    }
+
+    public Name getName() {
+        return name;
     }
 }
