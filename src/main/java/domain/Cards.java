@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Cards() {
+        cards = new ArrayList<>();
         create();
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = cards;
     }
 
     private void create() {
@@ -26,5 +31,9 @@ public class Cards {
 
     public int getTotalSize() {
         return cards.size();
+    }
+
+    public Card pick() {
+        return cards.remove(0);
     }
 }
