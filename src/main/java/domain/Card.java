@@ -3,14 +3,17 @@ package domain;
 import java.util.Objects;
 
 public class Card {
-    private final Denomination number;
+    private final Denomination denomination;
     private final Symbol symbol;
 
     public Card(final Denomination number, final Symbol symbol) {
-        this.number = number;
+        this.denomination = number;
         this.symbol = symbol;
     }
 
+    public int getValue(int score){
+        return denomination.apply(score);
+    }
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -20,11 +23,11 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return number == card.number && Objects.equals(symbol, card.symbol);
+        return denomination == card.denomination && Objects.equals(symbol, card.symbol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, symbol);
+        return Objects.hash(denomination, symbol);
     }
 }
