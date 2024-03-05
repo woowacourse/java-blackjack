@@ -10,7 +10,7 @@ public class TotalDeckTest {
     @Test
     @DisplayName("전체 덱에서 카드를 가져온다.")
     void getNewCardTest() {
-        Card card = new Card(Shape.CLOVER,Number.ACE);
+        Card card = new Card(Shape.CLOVER, Number.ACE);
         TotalDeck totalDeck = new TotalDeck(List.of(card));
 
         Card actualCard = totalDeck.getNewCard();

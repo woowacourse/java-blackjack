@@ -21,11 +21,11 @@ public enum Number {
         this.number = number;
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return this.number;
     }
 
-    public static List<Number> giveNumbers(){
+    public static List<Number> giveNumbers() {
         return List.of(values());
     }
 }

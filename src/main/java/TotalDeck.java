@@ -1,10 +1,10 @@
-import java.util.Stack;
 import java.util.List;
+import java.util.Stack;
 
 public class TotalDeck {
     private final Stack<Card> totalDeck;
 
-    public TotalDeck(List<Card> cards){
+    public TotalDeck(List<Card> cards) {
         totalDeck = new Stack<>();
         totalDeck.addAll(cards);
     }

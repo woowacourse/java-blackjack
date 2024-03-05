@@ -6,7 +6,7 @@ public enum Shape {
     HEART,
     CLOVER;
 
-    public static List<Shape> giveShapes(){
+    public static List<Shape> giveShapes() {
         return List.of(values());
     }
 }
