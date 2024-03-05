@@ -12,16 +12,16 @@ public class CardTest {
     @Test
     void createCard() {
         //given
-        int number = 4;
-        Symbol symbol = Symbol.CLOVER;
+        Rank rank = Rank.FOUR;
+        Suit suit = Suit.CLOVER;
 
         //when
-        Card card = new Card(number, symbol);
+        Card card = new Card(rank, suit);
 
         //then
-        assertThat(card.getNumber())
-                .isEqualTo(number);
+        assertThat(card.getRank())
+                .isEqualTo(rank);
         assertThat(card.getSymbol())
-                .isEqualTo(symbol);
+                .isEqualTo(suit);
     }
 }

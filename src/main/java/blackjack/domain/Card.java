@@ -2,19 +2,19 @@ package blackjack.domain;
 
 public class Card {
 
-    private final int number;
-    private final Symbol symbol;
+    private final Rank rank;
+    private final Suit suit;
 
-    public Card(final int number, final Symbol symbol) {
-        this.number = number;
-        this.symbol = symbol;
+    public Card(final Rank rank, final Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
-    public int getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public Suit getSymbol() {
+        return suit;
     }
 }
