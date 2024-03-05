@@ -19,4 +19,18 @@ public class DeckTest {
         // then
         assertThat(deck.getCards()).hasSize(expectedSize);
     }
+
+    @DisplayName("카드를 뽑는다.")
+    @Test
+    void drawTest() {
+        // given
+        int expectedSize = 51;
+        Deck deck = new Deck();
+
+        // when
+        deck.draw();
+
+        // then
+        assertThat(deck.getCards()).hasSize(expectedSize);
+    }
 }
