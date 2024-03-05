@@ -8,11 +8,14 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 
     public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 덱이 비어있습니다.");
+        }
         return cards.poll();
     }
 }
