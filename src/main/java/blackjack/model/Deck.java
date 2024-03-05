@@ -1,5 +1,8 @@
 package blackjack.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Deck {
     SPADE_ACE("스페이드", 11),
     SPADE_TWO("스페이드", 2),
@@ -28,7 +31,6 @@ public enum Deck {
     DIA_KING("다이아", 10),
     DIA_QUEEN("다이아", 10),
     DIA_JACK("다이아", 10),
-
 
     CLOVER_ACE("클로버", 11),
     CLOVER_TWO("클로버", 2),
@@ -64,5 +66,9 @@ public enum Deck {
     Deck(final String type, final int score) {
         this.type = type;
         this.score = score;
+    }
+
+    public static List<Deck> getAll() {
+        return Arrays.asList(Deck.values());
     }
 }
