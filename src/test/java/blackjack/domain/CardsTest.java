@@ -30,4 +30,18 @@ public class CardsTest {
         // then
         assertThat(cards.totalScore()).isEqualTo(expectedScore);
     }
+
+    @Test
+    @DisplayName("카드 점수의 합 중 21과 가장 가까운 수를 반환한다.")
+    void maxScoreTest() {
+        // given
+
+
+        // when
+        Cards cards = new Cards(List.of(Card.SPADE_NINE, Card.CLUB_QUEEN, Card.CLUB_ACE, Card.HEART_ACE));
+
+        // then
+        assertThat(cards.totalScore()).isEqualTo(21);
+    }
+
 }

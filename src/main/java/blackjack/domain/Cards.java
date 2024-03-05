@@ -21,8 +21,20 @@ public class Cards {
         Set<Integer> scoreCases = new HashSet<>();
         calculateScoreCases(scoreCases, values.stream().map(Card::getScores).toList(), 0, 0);
 
+        int maxScore = 0;
+        for (int scoreCase : scoreCases) {
+            if (scoreCase > MAX_SCORE) {
+                continue;
+            }
 
-        return 0;
+            if (scoreCase > maxScore) {
+                maxScore = scoreCase;
+            }
+        }
+        if (maxScore == 0) {
+            return scoreCases.stream().toList().get(0);
+        }
+        return maxScore;
     }
 
     private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> scores, int sum, int index) {
