@@ -37,6 +37,10 @@ public class Cards {
         return maxScore;
     }
 
+    public int getCardsCount() {
+        return values.size();
+    }
+
     private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> scores, int sum, int index) {
         if (index == scores.size()) {
             scoreCases.add(sum);
