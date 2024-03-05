@@ -26,4 +26,12 @@ public class CardsTest {
 
         assertThat(cards.isOverMaxScore()).isTrue();
     }
+
+    @Test
+    @DisplayName("딜러의 카드 숫자의 합이 최소 점수 조건 이하라면 참이다.")
+    void sum_IsBelowMin_True() {
+        Cards cards = new Cards(new ArrayList<>(List.of(new Card(6), new Card(8))));
+
+        assertThat(cards.isBelowMinScore()).isTrue();
+    }
 }

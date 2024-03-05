@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
 
     private static final int MAX_SCORE = 21;
+    private static final int MIN_SCORE = 16;
     private static final int INIT_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -35,5 +36,12 @@ public class Cards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isBelowMinScore() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardNumber)
+                .sum();
+        return sum <= MIN_SCORE;
     }
 }
