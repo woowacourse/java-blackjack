@@ -23,4 +23,16 @@ enum CardRank {
         this.rank = rank;
         this.score = score;
     }
+
+    public boolean isAce() {
+        return CardRank.ACE == this;
+    }
+
+    public boolean isNotAce() {
+        return CardRank.ACE != this;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }

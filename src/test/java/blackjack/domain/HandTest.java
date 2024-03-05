@@ -26,6 +26,43 @@ class HandTest {
         hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
 
         List<Card> cards = hand.getCards();
-        assertThat(cards.size()).isEqualTo(1);
+        assertThat(cards).hasSize(1);
+    }
+
+    @DisplayName("패는 총 점수를 계산할 수 있다.")
+    @Test
+    void calculateScore() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.FOUR, CardShape.CLOVER));
+
+        int score = hand.calculateScore();
+
+        assertThat(score).isEqualTo(12);
+    }
+
+    @DisplayName("에이스가 포함됐을 때 점수가 21 초과면 에이스를 1로 취급한다.")
+    @Test
+    void calculateScoreWithMinAce() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+
+        int score = hand.calculateScore();
+
+        assertThat(score).isEqualTo(21);
+    }
+
+    @DisplayName("에이스가 포함됐을 때 점수가 21 이하면 에이스를 11로 취급한다.")
+    @Test
+    void calculateScoreWithMaxAce() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+
+        int score = hand.calculateScore();
+
+        assertThat(score).isEqualTo(21);
     }
 }
