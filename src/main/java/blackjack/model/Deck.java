@@ -71,4 +71,8 @@ public enum Deck {
     public static List<Deck> getAll() {
         return Arrays.asList(Deck.values());
     }
+
+    public int getScore() {
+        return score;
+    }
 }

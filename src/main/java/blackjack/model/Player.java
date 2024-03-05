@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final String name;
-    private final List<Deck> cards;
+    protected final String name;
+    protected final List<Deck> cards;
 
     public Player(final String name) {
         validateNullAndEmptyName(name);
