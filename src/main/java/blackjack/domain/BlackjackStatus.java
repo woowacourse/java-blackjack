@@ -4,9 +4,10 @@ public enum BlackjackStatus {
     DEAD, ALIVE, BLACKJACK;
 
     public static final int BLACKJACK_NUMBER = 21;
+    public static final int CARD_SUM_MIN = 2;
 
     public static BlackjackStatus from(final int number) {
-        if (number < 2) {
+        if (number <= CARD_SUM_MIN) {
             throw new IllegalStateException("현재 갖고있는 카드의 합이 정상적이지 않습니다.");
         }
         if (number > BLACKJACK_NUMBER) {
