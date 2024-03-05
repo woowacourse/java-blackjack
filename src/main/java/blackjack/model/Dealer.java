@@ -1,8 +1,8 @@
 package blackjack.model;
 
 public class Dealer extends Player {
-    public Dealer() {
-        super("딜러");
+    public Dealer(final Cards cards) {
+        super("딜러", cards);
     }
 
     public boolean canReceive() {
