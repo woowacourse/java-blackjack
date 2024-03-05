@@ -31,4 +31,8 @@ enum CardNumber {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public int getNumber() {
+        return number;
+    }
 }

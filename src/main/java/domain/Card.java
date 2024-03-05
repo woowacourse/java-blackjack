@@ -7,4 +7,8 @@ public class Card {
     public Card(int number) {
         this.cardNumber = CardNumber.find(number);
     }
+
+    public int getCardNumber() {
+        return cardNumber.getNumber();
+    }
 }

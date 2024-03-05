@@ -14,7 +14,7 @@ public class CardTest {
     @DisplayName("유효한 카드 숫자라면 정상적으로 생성된다.")
     void card_Number_Valid() {
         Card card = new Card(1);
-        assertThat(card).extracting("cardNumber").isEqualTo(CardNumber.ONE);
+        assertThat(card).extracting("cardNumber").isEqualTo(1);
     }
 
     @ParameterizedTest

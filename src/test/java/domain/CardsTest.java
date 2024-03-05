@@ -3,8 +3,10 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardsTest {
@@ -14,5 +16,14 @@ public class CardsTest {
     void player_OverSize_ExceptionThrown() {
         assertThatThrownBy(() -> new Cards(List.of(new Card(1), new Card(2), new Card(3))))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("카드 숫자 합이 최대 점수 조건을 초과한다면 참이다.")
+    void sum_IsOverMax_True() {
+        Cards cards = new Cards(new ArrayList<>(List.of(new Card(6), new Card(11))));
+        cards.add(new Card(7));
+
+        assertThat(cards.isOverMaxScore()).isTrue();
     }
 }
