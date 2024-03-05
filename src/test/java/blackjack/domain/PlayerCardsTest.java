@@ -5,7 +5,6 @@ import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +18,7 @@ class PlayerCardsTest {
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
         Card card = new Card(DIAMOND, ACE);
-        PlayerCards playerCards = new PlayerCards(new ArrayList<>());
+        PlayerCards playerCards = PlayerCards.createEmptyCards();
 
         playerCards.append(card);
         List<Card> cards = playerCards.getCards();
@@ -75,5 +74,4 @@ class PlayerCardsTest {
                 Arguments.arguments(List.of(new Card(DIAMOND, ACE), new Card(CLOVER, ACE), new Card(SPADE, ACE)), 13)
         );
     }
-
 }

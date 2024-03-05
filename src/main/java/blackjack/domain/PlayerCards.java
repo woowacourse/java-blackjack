@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
@@ -8,6 +9,10 @@ public class PlayerCards {
 
     public PlayerCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static PlayerCards createEmptyCards() {
+        return new PlayerCards(new ArrayList<>());
     }
 
     public void append(Card card) {
