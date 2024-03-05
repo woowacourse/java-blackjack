@@ -20,6 +20,6 @@ public class Score {
     }
 
     public boolean isLowerThanThreshold() {
-        return value < THRESHOLD;
+        return value <= THRESHOLD;
     }
 }
