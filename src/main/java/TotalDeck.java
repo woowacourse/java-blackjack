@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
+import java.util.List;
 
 public class TotalDeck {
     private final Stack<Card> totalDeck;
