@@ -8,7 +8,7 @@ class ParticipantTest {
     @DisplayName("사용자의 점수를 계산한다.")
     @Test
     void calculateScore() {
-        Participant participant = new Participant("user");
+        Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         int score = participant.calculateScore();
 
@@ -18,7 +18,7 @@ class ParticipantTest {
     @DisplayName("사용자의 점수가 21이하인지 확인한다.")
     @Test
     void canHit() {
-        Participant participant = new Participant("user");
+        Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.DIA, Rank.KING));
         participant.receiveCard(new Card(Shape.HEART, Rank.TWO));
@@ -32,7 +32,7 @@ class ParticipantTest {
     @Test
     @DisplayName("사용자의 카드중 ACE 포함여부를 반환한다. ")
     void hasAce() {
-        Participant participant = new Participant("user");
+        Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
         //when
@@ -45,7 +45,7 @@ class ParticipantTest {
     @Test
     @DisplayName("ace는 1 또는 11 중 하나로 결정")
     void calculateAceIsEleven() {
-        Participant participant = new Participant("user");
+        Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
@@ -57,7 +57,7 @@ class ParticipantTest {
     @Test
     @DisplayName("ace는 1 또는 11 중 하나로 결정")
     void calculateAceIsOne() {
-        Participant participant = new Participant("user");
+        Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.HEART, Rank.NINE));
         participant.receiveCard(new Card(Shape.HEART, Rank.ACE));

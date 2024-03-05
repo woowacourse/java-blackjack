@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Participant extends Player{
+public class Participant extends Player {
     private static final int BLACK_JACK_COUNT = 21;
-    private String name;
-    public Participant(String name) {
+    private Name name;
+
+    public Participant(Name name) {
         this.name = name;
     }
 
