@@ -27,6 +27,6 @@ public enum CardNumber {
         return Arrays.stream(values())
                 .filter(cardNumber -> cardNumber.order == number)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("카드숫자를 고르는 숫자가 올바르지 않습니다."));
     }
 }

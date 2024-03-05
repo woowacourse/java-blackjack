@@ -1,11 +1,13 @@
 package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class CardNumberTest {
     @DisplayName("순서로 카드 숫자를 결정한다.")
@@ -15,5 +17,13 @@ class CardNumberTest {
         CardNumber cardNumber = CardNumber.generate(givenOrder);
 
         assertThat(cardNumber).isEqualTo(expected);
+    }
+
+    @DisplayName("유효하지 않은 숫자를 입력하면 예외가 발생한다")
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0, 14, 15})
+    void validate(int givenOrder) {
+        assertThatThrownBy(() -> CardNumber.generate(givenOrder))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
