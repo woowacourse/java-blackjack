@@ -25,4 +25,20 @@ class PlayerTest {
         assertThat(playerCards).hasSize(1);
     }
 
+    @Test
+    @DisplayName("자신의 점수를 계산할 수 있다.")
+    void calculateScoreTest() {
+        List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
+        Deck deck = Deck.from(cards);
+
+        Player player = new Player();
+        for (int i = 0; i < cards.size(); i++) {
+            player.draw(deck);
+        }
+
+        int score = player.getScore();
+
+        assertThat(score).isEqualTo(9);
+    }
+
 }
