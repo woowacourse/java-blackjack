@@ -11,7 +11,7 @@ public class Cards {
     }
 
     public Cards(final List<Deck> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public Cards addCard(final Deck card) {
