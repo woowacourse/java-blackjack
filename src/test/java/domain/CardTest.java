@@ -13,13 +13,11 @@ public class CardTest {
     @Test
     void createCardTest() {
         // given
-        int heartIndex = 0;
-        int queenIndex = 10;
-        PickedSymbolFinder symbolFinder = new PickedSymbolFinder(heartIndex);
-        PickedNumberFinder numberFinder = new PickedNumberFinder(queenIndex);
+        Symbol expectedSymbol = Symbol.HEART;
+        Number expectedNumber = Number.QUEEN;
 
         // when
-        Card card = Card.createByStrategy(symbolFinder, numberFinder);
+        Card card = new Card(expectedSymbol, expectedNumber);
         Symbol symbol = card.getSymbol();
         Number number = card.getNumber();
 
