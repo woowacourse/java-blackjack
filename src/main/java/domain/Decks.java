@@ -16,4 +16,8 @@ public class Decks {
     public List<Deck> getDecks() {
         return decks;
     }
+
+    public Card draw(int index) {
+        return decks.get(index).draw();
+    }
 }
