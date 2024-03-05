@@ -12,8 +12,18 @@ public class Players {
     private Cards cards;
 
     public Players(List<Player> players, Cards cards) {
+        validateOneDealer(players);
         this.players = players;
         this.cards = cards;
+    }
+
+    private void validateOneDealer(List<Player> players) {
+        int count = (int) players.stream()
+                .filter(Player::isDealer)
+                .count();
+        if (count != 1) {
+            throw new IllegalArgumentException("딜러는 한 명만 있어야 합니다.");
+        }
     }
 
     public void offerCardToPlayers(int cardCount) {
