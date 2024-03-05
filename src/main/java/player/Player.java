@@ -1,26 +1,17 @@
 package player;
 
-import card.Card;
 import card.Deck;
-
-import java.util.ArrayList;
-import java.util.List;
+import card.Hand;
 
 public class Player {
 
-    private final List<Card> cards;
+    protected final Hand hand;
 
     public Player() {
-        this.cards = new ArrayList<>();
+        this.hand = new Hand();
     }
 
     public void drawCard(Deck deck) {
-        cards.add(deck.draw());
-    }
-
-    public int calculateScore() {
-        return cards.stream()
-                .map(Card::getScore)
-                .reduce(0, Integer::sum);
+        hand.addCard(deck.draw());
     }
 }

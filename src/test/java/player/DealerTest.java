@@ -28,8 +28,19 @@ class DealerTest {
         Deck deck = new Deck(cards);
         // when
         dealer.drawCard(deck);
+        boolean isDrawable1 = dealer.hasDrawableScore();
+
+        dealer.drawCard(deck);
+        boolean isDrawable2 = dealer.hasDrawableScore();
+
+        dealer.drawCard(deck);
+        boolean isDrawable3 = dealer.hasDrawableScore();
         // then
-        assertThat(dealer.calculateScore()).isEqualTo(19);
+        assertAll(
+                () -> assertThat(isDrawable1).isTrue(),
+                () -> assertThat(isDrawable2).isTrue(),
+                () -> assertThat(isDrawable3).isFalse()
+        );
     }
 
     @Test
@@ -37,8 +48,12 @@ class DealerTest {
     void determineWinnerTest() {
         // given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Symbol.SPADE, Number.TEN), new Card(Symbol.HEART, Number.KING));
+        List<Card> cards = List.of(
+                new Card(Symbol.SPADE, Number.TEN),
+                new Card(Symbol.HEART, Number.KING)
+        );
         Deck deck = new Deck(cards);
+        dealer.drawCard(deck);
         dealer.drawCard(deck);
         // when, then
         assertAll(
