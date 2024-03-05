@@ -18,4 +18,9 @@ public class UserDeck {
                 .mapToInt(Card::getNumberValue)
                 .sum();
     }
+
+    public boolean hasAce() {
+        return userDeck.stream()
+                .anyMatch(card -> card.number() == Number.ACE);
+    }
 }

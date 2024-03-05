@@ -10,11 +10,12 @@ public class TotalDeckTest {
     @Test
     @DisplayName("전체 덱에서 카드를 가져온다.")
     void getNewCardTest() {
-        Card card = new Card(Shape.CLOVER, Number.ACE);
-        TotalDeck totalDeck = new TotalDeck(List.of(card));
+        Card card1 = new Card(Shape.CLOVER, Number.ACE);
+        Card card2 = new Card(Shape.CLOVER, Number.TEN);
+        TotalDeck totalDeck = new TotalDeck(List.of(card1, card2));
 
         Card actualCard = totalDeck.getNewCard();
 
-        assertThat(actualCard).isEqualTo(card);
+        assertThat(actualCard).isEqualTo(card2);
     }
 }

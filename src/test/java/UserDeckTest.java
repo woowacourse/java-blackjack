@@ -25,4 +25,14 @@ public class UserDeckTest {
 
         assertThat(userDeck.sumCard()).isEqualTo(11);
     }
+
+    @Test
+    @DisplayName("ACE 카드 유무 판별")
+    void hasAceTest() {
+        UserDeck userDeck = new UserDeck();
+
+        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
+        
+        assertThat(userDeck.hasAce()).isTrue();
+    }
 }
