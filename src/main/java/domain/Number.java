@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum Number {
     ACE,
     TWO,
@@ -12,5 +14,13 @@ public enum Number {
     NINE,
     JACK,
     QUEEN,
-    KING
+    KING;
+
+
+    public static Number findBy(final int index) {
+        return Arrays.stream(Number.values())
+                .filter(number -> number.ordinal() == index)
+                .findFirst()
+                .orElseThrow();
+    }
 }
