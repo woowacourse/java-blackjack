@@ -25,4 +25,9 @@ public class Deck {
     public Card draw() {
         return cards.pop();
     }
+
+
+    public boolean exist() {
+        return !cards.empty();
+    }
 }
