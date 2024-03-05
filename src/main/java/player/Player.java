@@ -5,6 +5,8 @@ import card.Hand;
 
 public class Player {
 
+    private static final int MAX_DRAWABLE_SCORE = 16;
+
     protected final Hand hand;
 
     public Player() {
@@ -13,5 +15,9 @@ public class Player {
 
     public void drawCard(Deck deck) {
         hand.addCard(deck.draw());
+    }
+
+    public boolean hasDrawableScore() {
+        return hand.calculateScore() <= MAX_DRAWABLE_SCORE;
     }
 }
