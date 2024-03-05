@@ -1,19 +1,17 @@
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Dealer {
 
-    private final List<Card> cards;
+    private final Cards cards;
     private final Score score;
 
-    public Dealer(List<Card> cards) {
-        this.cards = cards;
+    public Dealer() {
+        this.cards = new Cards(new ArrayList<>());
         this.score = new Score(0);
-        cards.forEach(score::addScore);
     }
 
     public void hit(Card card) {
-        cards.add(card);
+        cards.addCard(card);
         score.addScore(card);
     }
 
@@ -21,11 +19,11 @@ public class Dealer {
         return score.isLowerThanBustThreshold();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public boolean canHit() {
         return score.isLowerThanDealerThreshold();
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }
