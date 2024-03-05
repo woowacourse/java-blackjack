@@ -14,6 +14,8 @@ public class UserDeck {
     }
 
     public int sumCard() {
-        return 11;
+        return userDeck.stream()
+                .mapToInt(Card::getNumberValue)
+                .sum();
     }
 }
