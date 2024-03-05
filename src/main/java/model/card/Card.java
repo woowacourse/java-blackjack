@@ -16,7 +16,7 @@ public class Card {
     }
 
     public int subtractMaxMinNumber() {
-        return number.maximumNumber() - number.maximumNumber();
+        return number.maximumNumber() - number.minimumNumber();
     }
 
     public CardShape getShape() {
