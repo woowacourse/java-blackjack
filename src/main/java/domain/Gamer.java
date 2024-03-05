@@ -1,23 +1,21 @@
 package domain;
 
-import java.util.ArrayList;
-
-public class Player {
+public class Gamer {
     private final String name;
     private final HoldingCards holdingCards;
 
-    public Player(String name) {
+    public Gamer(String name, HoldingCards holdingCards) {
         this.name = name;
-        this.holdingCards = new HoldingCards(new ArrayList<>());
+        this.holdingCards = holdingCards;
     }
 
-    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
-        validateCanDraw();
+    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, SummationCardPoint thresholdPoint) {
+        validateCanDraw(thresholdPoint);
         holdingCards.add(deck.draw(cardDrawStrategy));
     }
 
-    private void validateCanDraw() {
-        if (getSummationCardPoint().isBiggerThan(new SummationCardPoint(21))) {
+    private void validateCanDraw(SummationCardPoint thresholdPoint) {
+        if (getSummationCardPoint().isBiggerThan(thresholdPoint)) {
             throw new IllegalStateException("카드를 더이상 뽑을 수 없습니다.");
         }
     }

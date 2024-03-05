@@ -1,12 +1,17 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HoldingCards {
     private final List<Card> holdingCards;
 
-    public HoldingCards(List<Card> holdingCards) {
+    private HoldingCards(List<Card> holdingCards) {
         this.holdingCards = holdingCards;
+    }
+
+    public static HoldingCards of(Card... cards) {
+        return new HoldingCards(new ArrayList<>(List.of(cards)));
     }
 
     public SummationCardPoint calculateTotalPoint() {
