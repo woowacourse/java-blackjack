@@ -12,6 +12,7 @@ public enum Number {
     SEVEN,
     EIGHT,
     NINE,
+    TEN,
     JACK,
     QUEEN,
     KING;
