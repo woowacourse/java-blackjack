@@ -10,24 +10,13 @@ public class Cards {
         this.values = cards;
     }
 
-    public int calculate() {
-        int sum = sum();
-        int aceCount = countAce();
-
-        while (sum > 21 && aceCount > 0) {
-            sum = sum - 10;
-            aceCount--;
-        }
-        return sum;
-    }
-
-    private int countAce() {
+    public int countAce() {
         return (int) values.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
-    private int sum() {
+    public int sum() {
         return values.stream()
                 .mapToInt(Card::getRealNumber)
                 .sum();
