@@ -3,6 +3,7 @@ package blackjack.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,5 +25,13 @@ class PlayerTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Player(name))
                 .withMessage("이름에는 공백을 사용할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("참여할 사람은 카드를 받는다.")
+    void createPlayerWithCards() {
+        Player player = new Player("몰리");
+        player.receiveCard(Deck.CLOVER_ACE);
+        assertThat(player.getCards()).isEqualTo(List.of(Deck.CLOVER_ACE));
     }
 }
