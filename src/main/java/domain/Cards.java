@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
 public class Cards {
@@ -14,5 +15,9 @@ public class Cards {
 
     public Card draw() {
         return cards.pop();
+    }
+
+    public void shuffle(){
+        Collections.shuffle(cards);
     }
 }

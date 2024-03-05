@@ -11,4 +11,8 @@ public class Dealer {
     public Card drawCard() {
         return cards.draw();
     }
+
+    public void shuffle(){
+        cards.shuffle();
+    }
 }
