@@ -57,4 +57,9 @@ public class OutputView {
     public void printNewLine() {
         System.out.println();
     }
+
+    public void printVictory(Player dealer, List<Player> players) {
+        System.out.println("## 최종 승패");
+        System.out.println();
+    }
 }
