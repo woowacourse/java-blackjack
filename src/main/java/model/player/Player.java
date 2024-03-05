@@ -20,6 +20,10 @@ public abstract class Player implements NoticeStatus {
         return Collections.unmodifiableList(cards);
     }
 
+    public void addCards(List<Card> card) {
+        cards.addAll(card);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

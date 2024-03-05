@@ -3,6 +3,7 @@ package model.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Cards {//TODO 싱글톤
 
@@ -19,6 +20,10 @@ public class Cards {//TODO 싱글톤
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }
+    }
+
+    public List<Card> selectRandomCards(int size) {
+        return Stream.generate(this::selectRandomCard).limit(size).toList();
     }
 
     public Card selectRandomCard() {

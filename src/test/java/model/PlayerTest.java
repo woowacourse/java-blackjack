@@ -2,6 +2,7 @@ package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
@@ -32,10 +33,18 @@ class PlayerTest {
 
     @DisplayName("카드를 추가할 수 있다.")
     @Test
-    void initCardSizeZe2ro() {
+    void addCard() {
         Card card = new Card(CardShape.CLOVER, CardNumber.EIGHT);
         player.addCard(card);
         assertThat(player.getCards()).hasSize(1);
+    }
+
+    @DisplayName("카드 여러 개를 추가할 수 있다.")
+    @Test
+    void addCards() {
+        List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.FIVE));
+        player.addCards(cards);
+        assertThat(player.getCards()).hasSize(2);
     }
 
     @DisplayName("카드의 합을 계산한다.")
