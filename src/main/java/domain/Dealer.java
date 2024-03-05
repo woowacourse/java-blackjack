@@ -15,8 +15,6 @@ public class Dealer {
     }
 
     public void startDeal() {
-        cardDeck.shuffle();
-
         for (int i = 0; i < INIT_CARD_NUMBER; i++) {
             players.forEach(player -> player.add(cardDeck.pop()));
             packet.add(cardDeck.pop());

@@ -1,29 +1,33 @@
 package domain;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.List;
 
 public class CardDeck {
     private static final int DECK_SIZE = 6;
 
-    private Stack<Card> cards;
+    private final Deque<Card> cards;
 
-    public CardDeck(final Stack<Card> cards) {
+    public CardDeck(final Deque<Card> cards) {
         this.cards = cards;
     }
 
     public static CardDeck generate() {
-        Stack<Card> result = new Stack<>();
+        final List<Card> result = new ArrayList<>();
 
         for (int i = 0; i < DECK_SIZE; i++) {
             result.addAll(generateOneCardDeck());
         }
 
-        return new CardDeck(result);
+        Collections.shuffle(result);
+        return new CardDeck(new ArrayDeque<>(result));
     }
 
-    private static Stack<Card> generateOneCardDeck() { //TODO 인덴트 줄이기
-        Stack<Card> cards = new Stack<>();
+    private static List<Card> generateOneCardDeck() { //TODO 인덴트 줄이기
+        final List<Card> cards = new ArrayList<>();
 
         for (CardShape cardShape : CardShape.values()) {
             for (CardNumber cardNumber : CardNumber.values()) {
@@ -40,9 +44,5 @@ public class CardDeck {
 
     public int size() {
         return cards.size();
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 }
