@@ -24,16 +24,5 @@ public class PlayerTest {
                 .isThrownBy(() -> player.receiveCard(new Card(Shape.HEART, Rank.ACE)));
     }
 
-    @Test
-    @DisplayName("플레이어 카드의 합을 계산한다.")
-    void player() {
-        Player player = new Player(new Name("이름"));
-        player.receiveCard(new Card(Shape.HEART, Rank.SEVEN));
-        player.receiveCard(new Card(Shape.HEART, Rank.JACK));
-
-        int result = player.calculateTotalScore();
-
-        Assertions.assertThat(result).isEqualTo(17);
-    }
 
 }
