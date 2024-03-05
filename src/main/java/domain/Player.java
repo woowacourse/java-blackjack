@@ -21,4 +21,12 @@ public class Player {
     public int getTotalSize() {
         return cards.size();
     }
+
+    public String getName() {
+        return "pobi";
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
