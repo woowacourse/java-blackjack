@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class CardsGeneratorTest {
+public class CardPackGeneratorTest {
 
     @DisplayName("서로 다른 52장의 카드팩을 생성한다.")
     @Test

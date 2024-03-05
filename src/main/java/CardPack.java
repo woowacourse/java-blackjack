@@ -1,12 +1,12 @@
 import java.util.List;
 
-public class Cards {
+public class CardPack {
 
     private static final int FIRST_CARD = 0;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public CardPack(List<Card> cards) {
         this.cards = cards;
     }
 
