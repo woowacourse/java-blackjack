@@ -11,4 +11,8 @@ public class Participant {
     public void receive(final Card card) {
         hold.add(card);
     }
+
+    public int sumCards() {
+        return hold.sum();
+    }
 }

@@ -25,7 +25,13 @@ public class Cards {
         return cards.pop();
     }
 
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public int sum() {
+        return cards.stream()
+                .mapToInt(Card::value)
+                .sum();
     }
 }
