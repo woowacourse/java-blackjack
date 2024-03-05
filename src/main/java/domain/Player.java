@@ -16,7 +16,7 @@ public class Player {
         this.hand.add(card);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getTotalScore() > BLACK_JACK;
     }
 
