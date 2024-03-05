@@ -24,16 +24,24 @@ public class Player {
     }
 
     public int calculateScore() {
-        int result = cards.stream()
-                .mapToInt(Deck::getScore)
-                .sum();
+        int result = calculateBaseScore();
         int aceCount = countAce();
+
+        if (aceCount == 1 && result > 21) {
+            result -= aceCount * 10;
+        }
 
         if (aceCount >= 2) {
             result -= aceCount * 10;
         }
 
         return result;
+    }
+
+    private int calculateBaseScore() {
+        return cards.stream()
+                .mapToInt(Deck::getScore)
+                .sum();
     }
 
     private int countAce() {

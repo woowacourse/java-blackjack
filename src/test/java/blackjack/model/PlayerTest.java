@@ -46,11 +46,22 @@ class PlayerTest {
 
     @Test
     @DisplayName("Ace를 여러 개 가진 경우 동일한 값인 1로 변경된다.")
-    void calculateScoreWithAce() {
+    void calculateScoreWithAces() {
         Player player = new Player("몰리");
         player.receiveCard(Deck.SPADE_ACE);
         player.receiveCard(Deck.DIA_ACE);
 
         assertThat(player.calculateScore()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Ace의 기본값으로 결과를 계산했을 때 21을 초과한 경우 Ace 값은 1로 변경된다.")
+    void calculateScoreWithAce() {
+        Player player = new Player("몰리");
+        player.receiveCard(Deck.CLOVER_JACK);
+        player.receiveCard(Deck.CLOVER_TWO);
+        player.receiveCard(Deck.SPADE_ACE);
+
+        assertThat(player.calculateScore()).isEqualTo(13);
     }
 }
