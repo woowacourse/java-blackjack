@@ -16,15 +16,15 @@ public class Player {
         this.hand.add(card);
     }
 
+    public boolean isBurst() {
+        return getTotalScore() > BLACK_JACK;
+    }
+
     public int getTotalScore() {
         return hand.calculateSum();
     }
 
-    Hand getHand() {
+    public Hand getHand() {
         return hand;
-    }
-
-    public boolean isBurst() {
-        return getTotalScore() > BLACK_JACK;
     }
 }
