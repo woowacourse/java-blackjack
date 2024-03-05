@@ -11,4 +11,8 @@ public class Dealer extends Player {
         }
         return false;
     }
+
+    public Deck openCard() {
+        return cards.getFirstCard();
+    }
 }

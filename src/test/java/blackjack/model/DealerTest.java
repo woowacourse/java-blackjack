@@ -16,4 +16,13 @@ class DealerTest {
 
         assertThat(dealer.canReceive()).isTrue();
     }
+
+    @Test
+    @DisplayName("딜러는 2장의 카드를 받고 한 장의 카드만 공개한다.")
+    void openCard() {
+        Cards cards = new Cards(List.of(Deck.CLOVER_FOUR, Deck.CLOVER_EIGHT));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(dealer.openCard()).isEqualTo(Deck.CLOVER_FOUR);
+    }
 }
