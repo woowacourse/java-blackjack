@@ -15,7 +15,7 @@ public class Cards {
         int aceCount = countAce();
 
         while (sum > 21 && aceCount > 0) {
-            sum = sum -10;
+            sum = sum - 10;
             aceCount--;
         }
         return sum;
@@ -28,9 +28,8 @@ public class Cards {
     }
 
     private int sum() {
-        // TODO: getter 대체하기
         return values.stream()
-                .mapToInt(card -> card.getNumber().getNumber())
+                .mapToInt(Card::getRealNumber)
                 .sum();
     }
 }

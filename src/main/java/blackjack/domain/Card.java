@@ -9,11 +9,11 @@ public class Card {
         this.shape = shape;
     }
 
-    public CardNumber getNumber() {
-        return number;
-    }
-
     public boolean isAce() {
         return number.equals(CardNumber.ACE);
+    }
+
+    public int getRealNumber() {
+        return number.getNumber();
     }
 }
