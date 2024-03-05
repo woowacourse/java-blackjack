@@ -10,6 +10,7 @@ public class CardTest {
     @DisplayName("숫자와 모양을 가진 카드를 생성한다")
     @Test
     void shouldCardHaveNumberAndShape() {
-        assertThatCode(() -> new Card("A", "하트")).doesNotThrowAnyException();
+        assertThatCode(() -> new Card(CardNumber.A, "하트"))
+            .doesNotThrowAnyException();
     }
 }
