@@ -16,7 +16,14 @@ public class CardDeck {
         cards.add(card);
     }
 
-    public List<Card> getCards(){
+    public int calculateHand() {
+        return cards.stream()
+                .map(Card::getNumberValue)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
+
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }

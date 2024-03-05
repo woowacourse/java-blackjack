@@ -22,4 +22,34 @@ class CardDeckTest {
 
         assertEquals(expectedCard, actualCard);
     }
+
+    @Test
+    @DisplayName("CardDeck이 가지고 있는 카드들의 숫자 합인 Hand를 반환한다.")
+    void calculateHand_ShouldReturnCorrectValue_WhenDeckContainsSpecificCards(){
+
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addCard(new Card(Number.THREE, Emblem.CLUB));
+        cardDeck.addCard(new Card(Number.FIVE, Emblem.DIAMOND));
+        cardDeck.addCard(new Card(Number.SEVEN, Emblem.HEART));
+
+        int expectedSum = 15;
+
+        int actualSum = cardDeck.calculateHand();
+        assertEquals(expectedSum, actualSum);
+    }
+
+    @Test
+    @DisplayName("CardDeck이 비어있을 때, Hand를 구하면 0을 반환한다.")
+    void calculateHand_ShouldReturnCorrectValue_WhenDeckIsEmpty(){
+
+        CardDeck cardDeck = new CardDeck();
+
+        int expectedSum = 0;
+
+        int actualSum = cardDeck.calculateHand();
+
+        assertEquals(expectedSum, actualSum);
+    }
+
+
 }
