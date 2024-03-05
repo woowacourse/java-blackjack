@@ -12,7 +12,7 @@ public class PlayerTest {
         Card newCard = new Card(CardNumber.FIVE, CardShape.CLOVER);
         player.hit(newCard);
 
-        assertThat(player.getCards()).contains(newCard);
+        assertThat(player.getCards().getCards()).contains(newCard);
     }
 
     @DisplayName("점수가 21 이하인지 알려준다.")
