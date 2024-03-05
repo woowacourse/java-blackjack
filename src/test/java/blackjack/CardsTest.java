@@ -1,5 +1,6 @@
 package blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
@@ -13,5 +14,25 @@ public class CardsTest {
         List<Card> cards = List.of(Card.EIGHT, Card.FOUR);
 
         assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 1)")
+    public void Cards_Sum_of_cards_case1() {
+        List<Card> cards = List.of(Card.TWO, Card.FIVE);
+        var sut = new Cards(cards);
+
+        var sum = sut.sum();
+        assertThat(sum).isEqualTo(7);
+    }
+
+    @Test
+    @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 2)")
+    public void Cards_Sum_of_cards_case2() {
+        List<Card> cards2 = List.of(Card.FIVE, Card.EIGHT);
+        var sut2 = new Cards(cards2);
+
+        var sum2 = sut2.sum();
+        assertThat(sum2).isEqualTo(13);
     }
 }

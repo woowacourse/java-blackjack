@@ -9,4 +9,10 @@ public class Cards {
     public Cards(List<Card> cards) {
         this.cards = cards;
     }
+
+    public int sum() {
+        return cards.stream()
+                    .mapToInt(Card::getValue)
+                    .sum();
+    }
 }
