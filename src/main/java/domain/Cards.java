@@ -3,6 +3,7 @@ package domain;
 import domain.constants.CardValue;
 import domain.constants.Shape;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -11,6 +12,7 @@ public class Cards {
     public Cards() {
         cards = new ArrayList<>();
         create();
+        Collections.shuffle(cards);
     }
 
     public Cards(List<Card> cards) {
@@ -29,11 +31,11 @@ public class Cards {
         }
     }
 
-    public int getTotalSize() {
-        return cards.size();
-    }
-
     public Card pick() {
         return cards.remove(0);
+    }
+
+    public int getTotalSize() {
+        return cards.size();
     }
 }

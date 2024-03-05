@@ -13,4 +13,12 @@ public class Player {
     public void add(final Card card) {
         cards.add(card);
     }
+
+    public void saveCard(final Card card) {
+        cards.add(card);
+    }
+
+    public int getTotalSize() {
+        return cards.size();
+    }
 }
