@@ -9,4 +9,12 @@ public class Player {
         this.name = name;
         this.cards = cards;
     }
+
+    public int determineMaxSum() {
+        int sum = cards.sum();
+        if (cards.containAce() && sum <= 11) {
+            return sum + 10;
+        }
+        return sum;
+    }
 }
