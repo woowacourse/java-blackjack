@@ -10,7 +10,14 @@ public class Dealer {
     }
 
     public void draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
+        validateCanDraw();
         holdingCards.add(deck.draw(cardDrawStrategy));
+    }
+
+    private void validateCanDraw() {
+        if (getSummationCardPoint().isBiggerThan(new SummationCardPoint(16))) {
+            throw new IllegalStateException("카드를 더이상 뽑을 수 없습니다.");
+        }
     }
 
     public SummationCardPoint getSummationCardPoint() {
