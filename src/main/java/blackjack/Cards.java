@@ -15,4 +15,9 @@ public class Cards {
                     .mapToInt(Card::getValue)
                     .sum();
     }
+
+    public boolean containAce() {
+        return cards.stream()
+                    .anyMatch(Card::isAce);
+    }
 }

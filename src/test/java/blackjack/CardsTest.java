@@ -2,6 +2,8 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -34,5 +36,27 @@ public class CardsTest {
 
         var sum2 = sut2.sum();
         assertThat(sum2).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("카드 목록에 에이스가 포함되어 있으면 참을 반환한다.")
+    public void Cards_True_if_contain_ACE_card() {
+        List<Card> cards = List.of(Card.ACE, Card.FIVE);
+        var sut = new Cards(cards);
+
+        var result = sut.containAce();
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("카드 목록에 에이스가 포함되어 없으면 거짓을 반환한다.")
+    public void Cards_False_if_not_contain_ACE_card() {
+        List<Card> cards = List.of(Card.TWO, Card.FIVE);
+        var sut = new Cards(cards);
+
+        var result = sut.containAce();
+
+        assertFalse(result);
     }
 }
