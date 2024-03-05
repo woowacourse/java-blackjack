@@ -20,7 +20,7 @@ public class Players {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
-    private static void validatePlayerSize(final List<Player> players) {
+    private void validatePlayerSize(final List<Player> players) {
         if (players.size() < MINIMUM_PLAYER_SIZE || players.size() > MAXIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
         }
