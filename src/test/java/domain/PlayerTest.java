@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +37,22 @@ class PlayerTest {
 
         assertThat(actual)
                 .isEqualTo(expected);
-
     }
+
+    @DisplayName("참가자가 카드를 손 패로 가져온다.")
+    @Test
+    void hit() {
+        Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+        Card card2 = new Card(Letter.K, Mark.SPADE);
+        List<Card> cards = new ArrayList<>(List.of(card1, card2));
+        Hand hand = new Hand(cards);
+        Name name = new Name("wiib");
+        Card newCard = new Card(Letter.J, Mark.DIAMOND);
+
+        Player player = new Player(name, hand);
+        player.hit(newCard);
+
+        assertThat(player.getHand().getCards()).contains(newCard);
+    }
+
 }

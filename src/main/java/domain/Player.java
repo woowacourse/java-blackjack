@@ -10,7 +10,15 @@ public class Player {
         this.hand = hand;
     }
 
+    public void hit(Card card) {
+        this.hand.add(card);
+    }
+
     public int getTotalScore() {
         return hand.calculateSum();
+    }
+
+    Hand getHand() {
+        return hand;
     }
 }
