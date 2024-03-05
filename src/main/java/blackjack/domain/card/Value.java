@@ -20,4 +20,8 @@ public enum Value {
     Value(int score) {
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
