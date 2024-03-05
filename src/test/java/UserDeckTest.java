@@ -14,5 +14,4 @@ public class UserDeckTest {
 
         assertThat(userDeck.getUserDeck()).contains(card);
     }
-
 }
