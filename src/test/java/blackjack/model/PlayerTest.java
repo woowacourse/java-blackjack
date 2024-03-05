@@ -36,6 +36,6 @@ class PlayerTest {
         Player player = new Player("몰리", cards);
         player.receiveCard(Deck.CLOVER_ACE);
 
-        assertThat(player.getCards()).isEqualTo(List.of(Deck.CLOVER_ACE, Deck.CLOVER_THREE, Deck.CLOVER_ACE));
+        assertThat(player.openCards()).isEqualTo(List.of(Deck.CLOVER_ACE, Deck.CLOVER_THREE, Deck.CLOVER_ACE));
     }
 }

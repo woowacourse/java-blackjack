@@ -30,7 +30,7 @@ public class Player {
         return name;
     }
 
-    public List<Deck> getCards() {
+    public List<Deck> openCards() {
         return cards.getCards();
     }
 }
