@@ -23,24 +23,26 @@ public class Person {
 
     public int sumCardNumbers() {
         int sum = 0;
-        for(Card card : cards) {
+        for (Card card : cards) {
             sum += card.minimumNumber();
         }
+        List<Integer> differenceNumbers = filterNonZeroDifferences();
+        return differenceNumbers.stream()
+                .reduce(sum, Person::sumIfUnderMaximum);
+    }
 
-        List<Integer> addNumbers = cards.stream()
+    private List<Integer> filterNonZeroDifferences() {
+        return cards.stream()
                 .map(Card::subtractMaxMinNumber)
                 .filter(subtractNumber -> subtractNumber != 0)
                 .toList();
 
-        return sumAce(sum, addNumbers);
     }
 
-    private int sumAce(int sum, List<Integer> addNumbers) {
-        for (int number : addNumbers) {
-            if (sum + number <= 21) {
-                sum += number;
-            }
+    private static int sumIfUnderMaximum(Integer result, Integer number) {
+        if (result + number <= 21) {
+            return result + number;
         }
-        return sum;
+        return result;
     }
 }
