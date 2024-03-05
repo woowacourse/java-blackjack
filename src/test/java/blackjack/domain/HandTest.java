@@ -27,4 +27,21 @@ public class HandTest {
         assertThat(hand.getCards())
                 .contains(cardFourDiamond, cardFiveDiamond);
     }
+
+    @DisplayName("패에 있는 카드들의 점수를 반환한다.")
+    @Test
+    void calculateScore() {
+        //given
+        Card cardFourDiamond = new Card(Rank.FOUR, Suit.DIAMOND);
+        Card cardFiveDiamond = new Card(Rank.FIVE, Suit.DIAMOND);
+
+        //when
+        Hand hand = new Hand();
+        hand.add(cardFourDiamond);
+        hand.add(cardFiveDiamond);
+
+        //then
+        assertThat(hand.calculateScore())
+                .isEqualTo(9);
+    }
 }

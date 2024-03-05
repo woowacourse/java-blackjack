@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -20,6 +21,10 @@ public class Card {
 
     public Suit getSymbol() {
         return suit;
+    }
+
+    public List<Integer> getScore() {
+        return rank.getScore();
     }
 
     @Override

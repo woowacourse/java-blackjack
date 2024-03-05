@@ -16,6 +16,16 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public int calculateScore() {
+        int score = 0;
+
+        for (Card card : cards) {
+            score += card.getScore().get(0);
+        }
+
+        return score;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
