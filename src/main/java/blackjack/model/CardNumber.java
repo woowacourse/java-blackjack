@@ -28,4 +28,8 @@ public enum CardNumber {
     public static List<CardNumber> getCardNumber() {
         return Arrays.asList(values());
     }
+
+    public int getNumber() {
+        return number;
+    }
 }
