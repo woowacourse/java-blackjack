@@ -5,16 +5,16 @@ import java.util.Random;
 import java.util.Set;
 
 public class Deck {
+    private static final Random random = new Random();
     private final Set<Card> cards = new HashSet<>();
 
     public Card poll() {
         while (true) {
-            Random random = new Random();
-            int number = random.nextInt(1, 59);
-            int symbolNumber = random.nextInt(4);
+            final Denomination denomination = Denomination.getDenomination(random.nextInt(0, 13));
+            final Symbol symbol = Symbol.getSymbol(random.nextInt(4));
 
-            Card card = new Card(number, Symbol.getSymbol(symbolNumber));
-            boolean hasNoCard = cards.add(card);
+            final Card card = new Card(denomination, symbol);
+            final boolean hasNoCard = cards.add(card);
 
             if (hasNoCard) {
                 return card;

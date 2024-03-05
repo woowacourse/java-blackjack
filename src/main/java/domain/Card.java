@@ -3,10 +3,10 @@ package domain;
 import java.util.Objects;
 
 public class Card {
-    int number;
-    Symbol symbol;
+    private final Denomination number;
+    private final Symbol symbol;
 
-    public Card(final int number, final Symbol symbol) {
+    public Card(final Denomination number, final Symbol symbol) {
         this.number = number;
         this.symbol = symbol;
     }
