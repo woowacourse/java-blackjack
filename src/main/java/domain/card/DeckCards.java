@@ -6,9 +6,15 @@ import strategy.CardGenerator;
 
 public class DeckCards {
 
+    private static final int INITIAL_CARD_AMOUNT = 52;
+
     private final List<Card> cards;
 
     private DeckCards(List<Card> cards) {
+        if (cards.size() != INITIAL_CARD_AMOUNT) {
+            throw new IllegalStateException(
+                String.format("[ERROR] 덱에는 %d장의 카드가 있어야 합니다.", INITIAL_CARD_AMOUNT));
+        }
         this.cards = cards;
     }
 
