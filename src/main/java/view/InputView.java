@@ -23,6 +23,14 @@ public class InputView {
         return players;
     }
 
+    public String readAnswer(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
+        System.out.println();
+        String rawAnswer = scanner.nextLine().trim();
+        validateBlank(rawAnswer);
+        return rawAnswer;
+    }
+
     private void validateBlank(final String rawNames) {
         if (rawNames == null || rawNames.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다.");

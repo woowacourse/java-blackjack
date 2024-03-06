@@ -23,5 +23,6 @@ public class BlackJackController {
         final Dealer dealer = new Dealer(players, cardDeck);
         dealer.startDeal();
         outputView.printStartDeal(DealerHandsDto.from(dealer), PlayerHandsDto.from(players));
+        dealer.play(inputView);
     }
 }

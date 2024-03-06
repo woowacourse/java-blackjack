@@ -11,7 +11,7 @@ public class Players {
 
     private final List<Player> names;
 
-    private Players(final List<Player> names) {
+    public Players(final List<Player> names) {
         this.names = names;
     }
 

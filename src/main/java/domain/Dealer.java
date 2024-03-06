@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import view.InputView;
 
 public class Dealer {
 
@@ -28,5 +29,19 @@ public class Dealer {
                 .stream()
                 .map(Card::toString)
                 .toList();
+    }
+
+    public void play(final InputView inputView) {
+        List<Player> names = players.getNames();
+        for (Player player : names) {
+            hitOrStay(inputView.readAnswer(player.getName()), player);
+        }
+    }
+
+    public void hitOrStay(final String value, final Player player) {
+        Answer answer = Answer.from(value);
+        if (Answer.HIT == answer) {
+            player.add(cardDeck.pop());
+        }
     }
 }

@@ -17,6 +17,8 @@ public class Player {
         hands.add(card);
     }
 
+    //TODO 메서드 명 변경
+
     private void validate(final String name) {
         validateNull(name);
         validateBlank(name);
