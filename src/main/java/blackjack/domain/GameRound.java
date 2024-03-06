@@ -10,7 +10,13 @@ public class GameRound {
         this.dealer = dealer;
     }
 
-    public void play() {
-        CardPicker cardPicker = new CardPicker();
+    public void deal(CardPicker cardPicker) {
+        cardPicker.pick(2)
+                .forEach(player::addCard);
+    }
+
+    public void hit(CardPicker cardPicker) {
+        cardPicker.pick(1)
+                .forEach(player::addCard);
     }
 }
