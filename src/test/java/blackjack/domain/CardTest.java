@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static blackjack.domain.Kind.DIAMOND;
 import static blackjack.domain.Kind.SPADE;
 import static blackjack.domain.Value.ACE;
-import static blackjack.domain.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
