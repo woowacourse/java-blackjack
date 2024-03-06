@@ -44,6 +44,7 @@ class PlayersTest {
 
     @ParameterizedTest
     @MethodSource("InvalidNames")
+    @DisplayName("플레이어의 이름이 1개 이상 10개 이하가 아니면 예외를 던진다.")
     void createPlayersByOutBound(List<String> names) {
         List<Cards> cards = List.of(
                 new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
