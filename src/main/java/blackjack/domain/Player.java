@@ -13,10 +13,22 @@ class Player {
     }
 
     public void draw(Card card) {
+        validateIsPlayable();
+
         hand.add(card);
+    }
+
+    private void validateIsPlayable() {
+        if (!isPlayable()) {
+            throw new IllegalStateException("카드를 더이상 받을 수 없습니다.");
+        }
     }
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public boolean isPlayable() {
+        return !(hand.isBust() || hand.isBlackJack());
     }
 }
