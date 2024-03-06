@@ -25,4 +25,8 @@ public abstract class Participant {
     public List<Card> getHandCards() {
         return hand.getCards();
     }
+
+    public String getName() {
+        return name;
+    }
 }

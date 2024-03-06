@@ -24,10 +24,10 @@ public class PlayerTest {
         Deck deck = new Deck(shuffleStrategy);
 
         //when
-        Player canAddCardPlayer = new Player("choco");
+        Player canAddCardPlayer = new Player("choco", deck);
         canAddCardPlayer.draw(deck);
 
-        Player cantAddCardPlayer = new Player("clover");
+        Player cantAddCardPlayer = new Player("clover", deck);
         IntStream.range(0, 6)
                 .forEach(i -> cantAddCardPlayer.draw(deck));
 
@@ -41,7 +41,7 @@ public class PlayerTest {
     void draw() {
         //given
         Deck deck = new Deck(shuffleStrategy);
-        Player player = new Player("choco");
+        Player player = new Player("choco", deck);
         Card card = new Card(Rank.ACE, Suit.SPADE);
 
         //when
