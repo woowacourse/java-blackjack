@@ -4,7 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -15,18 +15,18 @@ public class BlackjackGame {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Players players = createPlayers();
+        Participants participants = createParticipants();
     }
 
-    private Players createPlayers() {
+    private Participants createParticipants() {
         Deck deck = RandomDeck.getInstance();
         HandGenerator handGenerator = new HandGenerator(deck);
-        return retryOnException(() -> createPlayersWithName(handGenerator));
+        return retryOnException(() -> createParticipantsWithNames(handGenerator));
     }
 
-    private Players createPlayersWithName(HandGenerator handGenerator) {
+    private Participants createParticipantsWithNames(HandGenerator handGenerator) {
         List<Name> playersName = readPlayersName();
-        return new Players(playersName, handGenerator);
+        return new Participants(playersName, handGenerator);
     }
 
     private List<Name> readPlayersName() {
