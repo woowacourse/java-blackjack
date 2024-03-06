@@ -16,7 +16,7 @@ public class HandTest {
     void addCardTest() {
         // given
         Hand hand = new Hand();
-        Card expectedCard = new Card(Symbol.HEART, Rank.ACE);
+        Card expectedCard = new Card(Symbol.HEART, Rank.BIG_ACE);
 
         // when
         hand.add(expectedCard);
@@ -33,16 +33,16 @@ public class HandTest {
     @Test
     void sumScoreTest() {
         // given
-        int expectedScore = 21;
-
         Hand hand = new Hand();
-        Card card1 = new Card(Symbol.HEART, Rank.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Rank.NINE);
-        Card card3 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card1 = new Card(Symbol.SPADE, Rank.BIG_ACE);
+        Card card2 = new Card(Symbol.HEART, Rank.TWO);
+        Card card3 = new Card(Symbol.CLOVER, Rank.NINE);
 
         hand.add(card1);
         hand.add(card2);
         hand.add(card3);
+
+        int expectedScore = 12;
 
         // when
         int result = hand.sum();
@@ -71,6 +71,4 @@ public class HandTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
-
-
 }

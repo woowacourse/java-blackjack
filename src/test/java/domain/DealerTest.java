@@ -30,4 +30,27 @@ public class DealerTest {
         // then
         assertThat(dealer.getHand()).hasSize(expectedSize);
     }
+
+    @DisplayName("카드의 총 합계를 구한다.")
+    @Test
+    void calculateScoreTest() {
+        // given
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Symbol.DIAMOND, Rank.THREE);
+        Card card2 = new Card(Symbol.HEART, Rank.THREE);
+        Card card3 = new Card(Symbol.CLOVER, Rank.TEN);
+        Card card4 = new Card(Symbol.SPADE, Rank.FOUR);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4);
+        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+        dealer.hit(decks);
+
+        int expectedScore = 17;
+
+        // when
+        int result = dealer.calculateTotalScore();
+
+        // then
+        assertThat(result).isEqualTo(expectedScore);
+    }
 }

@@ -11,9 +11,9 @@ public class Deck {
 
     public Deck() {
         List<Card> deck = Stream.of(Symbol.values())
-                .flatMap(symbol -> Stream.of(Rank.values())
-                        .map(number -> new Card(symbol, number)))
-                .toList();
+                .flatMap(symbol -> Rank.getRanks().stream()
+                        .map(rank -> new Card(symbol, rank)))
+                .collect(Collectors.toList());
         this.cards = deck;
     }
 
