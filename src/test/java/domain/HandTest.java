@@ -11,7 +11,41 @@ public class HandTest {
         Hand hand = new Hand();
         hand.add(new Card(CardType.DIAMOND, CardNumber.TWO));
         hand.add(new Card(CardType.DIAMOND, CardNumber.FIVE));
-        Assertions.assertThat(hand.getTotalScore())
+        Assertions.assertThat(hand.getResultScore())
                 .isEqualTo(7);
+    }
+
+    @Test
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst가 아니면 총합을 반환한다")
+    void notChangeAceScore() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardType.DIAMOND, CardNumber.DEFAULT_ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.THREE));
+        Assertions.assertThat(hand.getResultScore())
+                .isEqualTo(14);
+    }
+
+    @Test
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst이면 22보다 작은 가능한 수 중 가장 큰 수를 반환한다")
+    void changeAceScore() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardType.DIAMOND, CardNumber.DEFAULT_ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.DEFAULT_ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.SIX));
+        Assertions.assertThat(hand.getResultScore())
+                .isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst인데, 22보다 작은 가능한 수를 만들 수 없다면 가장 작은 수를 반환한다")
+    void changeAceScoreBurstCase() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardType.DIAMOND, CardNumber.DEFAULT_ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.DEFAULT_ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        Assertions.assertThat(hand.getResultScore())
+                .isEqualTo(22);
     }
 }
