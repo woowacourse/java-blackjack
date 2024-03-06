@@ -41,4 +41,12 @@ public class Gamer {
     public boolean isDead() {
         return holdingCards.calculateTotalPoint().isBiggerThan(new SummationCardPoint(21));
     }
+
+    int countOfAceInHoldingCards() {
+        return holdingCards.countOfAce();
+    }
+
+    boolean hasAceInHoldingCards() {
+        return holdingCards.hasAce();
+    }
 }

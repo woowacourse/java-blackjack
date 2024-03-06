@@ -18,12 +18,36 @@ public class GameResultCalculator {
         if (otherGamer.isDead()) {
             return GameResult.WIN;
         }
-        if (baseGamer.getSummationCardPoint().isBiggerThan(otherGamer.getSummationCardPoint())) {
+
+        // ???
+
+        SummationCardPoint baseGamerSummationCardPoint = fix(baseGamer);
+        SummationCardPoint otherGamerSummationCardPoint = fix(otherGamer);
+
+        if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;
         }
-        if (baseGamer.getSummationCardPoint().equals(otherGamer.getSummationCardPoint())) {
+        if (baseGamerSummationCardPoint.equals(otherGamerSummationCardPoint)) {
             return GameResult.TIE;
         }
         return GameResult.LOSE;
+    }
+
+    private static SummationCardPoint fix(Gamer gamer) {
+        int rawPoint = gamer.getSummationCardPoint().summationCardPoint();
+
+        if (gamer.hasAceInHoldingCards()) {
+            rawPoint = fixPoint(rawPoint);
+            return new SummationCardPoint(rawPoint);
+        }
+        return gamer.getSummationCardPoint();
+    }
+
+    private static int fixPoint(int rawPoint) {
+        int fixPoint = rawPoint + 10;
+        if (fixPoint <= 21) {
+            rawPoint = fixPoint;
+        }
+        return rawPoint;
     }
 }

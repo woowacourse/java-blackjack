@@ -29,4 +29,15 @@ public class HoldingCards {
     List<Card> getHoldingCards() {
         return holdingCards;
     }
+
+    int countOfAce() {
+        return (int) holdingCards.stream()
+                .filter(card -> card.name() == CardName.ACE)
+                .count();
+    }
+
+    boolean hasAce() {
+        return holdingCards.stream()
+                .anyMatch(card -> card.name() == CardName.ACE);
+    }
 }
