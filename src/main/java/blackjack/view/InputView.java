@@ -8,6 +8,10 @@ public class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
 
+    private InputView() {
+        throw new AssertionError("인스턴스를 생성할 수 없습니다.");
+    }
+
     public static List<String> readPlayerNames(Supplier<String> reader) {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String names = reader.get();
