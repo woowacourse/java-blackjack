@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -30,5 +31,16 @@ public class Player {
             score = score + card.getMinScore() - card.getMaxScore();
         }
         return score;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public void add(Card card) {
+        if (!isDrawable()) {
+            throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
+        }
+        cards.add(card);
     }
 }

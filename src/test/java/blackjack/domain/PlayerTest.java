@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Card.Shape;
 import blackjack.domain.Card.Value;
@@ -40,7 +41,7 @@ public class PlayerTest {
                 new Card(Value.JACK, Shape.HEART),
                 new Card(Value.EIGHT, Shape.HEART),
                 new Card(Value.THREE, Shape.HEART)
-                );
+        );
         Player player = new Player(CardsScore21);
 
         assertThat(player.isDrawable()).isTrue();
@@ -58,5 +59,39 @@ public class PlayerTest {
         Player player = new Player(CardsScore22);
 
         assertThat(player.isDrawable()).isFalse();
+    }
+
+    @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑을 수 있다")
+    @Test
+    void addTest_whenScoreIsUnder21() {
+        Player player = new Player(List.of(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.NINE, Shape.HEART),
+                new Card(Value.TWO, Shape.HEART)
+        ));
+
+        player.add(new Card(Value.ACE, Shape.HEART));
+
+        assertThat(player.getCards()).containsExactly(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.NINE, Shape.HEART),
+                new Card(Value.TWO, Shape.HEART),
+                new Card(Value.ACE, Shape.HEART)
+        );
+    }
+
+    @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
+    @Test
+    void addTest_whenScoreIsOver21_throwException() {
+        Player player = new Player(List.of(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.NINE, Shape.HEART),
+                new Card(Value.THREE, Shape.HEART)
+        ));
+        Card card = new Card(Value.ACE, Shape.HEART);
+
+        assertThatThrownBy(() -> player.add(card))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("더 이상 카드를 추가할 수 없습니다.");
     }
 }
