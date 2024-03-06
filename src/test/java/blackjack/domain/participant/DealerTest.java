@@ -8,20 +8,28 @@ import blackjack.domain.Suit;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("딜러")
 public class DealerTest {
 
+    private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+
+    private Deck deck;
+    private Dealer dealer;
+
+    @BeforeEach
+    void setUp() {
+        deck = new Deck(shuffleStrategy);
+        dealer = new Dealer("딜러");
+    }
+
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
     @Test
     void draw() {
         //given
-        ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
-
-        Deck deck = new Deck(shuffleStrategy);
-        Dealer dealer = new Dealer("딜러");
         Card card = new Card(Rank.ACE, Suit.SPADE);
 
         //when
@@ -29,5 +37,17 @@ public class DealerTest {
 
         //then
         assertThat(dealer.getHandCards()).contains(card);
+    }
+
+    @DisplayName("딜러의 첫번째 카드를 공개한다.")
+    @Test
+    void showFirstCard() {
+        //given
+        Card card = new Card(Rank.ACE, Suit.SPADE);
+
+        dealer.draw(deck);
+
+        //when & then
+        assertThat(dealer.showFirstCard()).isEqualTo(card);
     }
 }

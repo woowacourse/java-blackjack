@@ -48,6 +48,10 @@ public class Hand {
                 .count();
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public List<Card> getCards() {
         return cards;
     }
