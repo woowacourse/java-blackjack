@@ -3,6 +3,8 @@ import domain.Deck;
 import domain.Player;
 import domain.Players;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -34,7 +36,13 @@ public class Application {
         OutputView.printPlayerStatus(dealer1);
 
         // 결과 출력
-        List<Player> allPlayers = blackjack.getAllPlayers().getPlayers();
-        OutputView.printResults(allPlayers);
+        List<Player> players1 = blackjack.getPlayers().getPlayers();
+        Player dealer2 = blackjack.getDealer();
+        players1.add(dealer2);
+        OutputView.printResults(players1);
+
+        // 승패 출력 맨~
+        Map<Player, Entry<Integer, Integer>> playerIntegerMap = blackjack.finishGame();
+        OutputView.printGameResults(playerIntegerMap);
     }
 }
