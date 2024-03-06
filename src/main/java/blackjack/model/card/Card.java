@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardProperties cardPattern;
+    private final CardProperties cardProperties;
     private int score;
 
-    public Card(CardProperties cardPattern) {
-        this.cardPattern = cardPattern;
-        this.score = cardPattern.getCardNumber().getNumber();
+    public Card(CardProperties cardProperties) {
+        this.cardProperties = cardProperties;
+        this.score = cardProperties.getCardNumber().getNumber();
     }
 
     public boolean isElevenAce() {
-        return score == 11 && cardPattern.getCardNumber() == CardNumber.ACE;
+        return score == 11 && cardProperties.getCardNumber() == CardNumber.ACE;
     }
 
     public void switchAceValue() {
@@ -23,16 +23,20 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return cardPattern == card.cardPattern && score == card.score;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Card card = (Card) object;
+        return score == card.score && Objects.equals(cardProperties, card.cardProperties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardPattern, score);
+        return Objects.hash(cardProperties, score);
     }
 
     public int getScore() {
