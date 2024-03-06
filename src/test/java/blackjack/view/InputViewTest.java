@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class InputViewTest {
 
@@ -20,6 +22,15 @@ class InputViewTest {
     void readHitOrNotByInvalidInput() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> InputView.readHitOrNot("리브", () -> "yes"))
+                .withMessage("y 혹은 n만 입력할 수 있습니다.");
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("추가 선택 입력 시 blank가 들어온 경우")
+    void readHitOrNotByInvalid(String input) {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> InputView.readHitOrNot("리브", () -> input))
                 .withMessage("y 혹은 n만 입력할 수 있습니다.");
     }
 }

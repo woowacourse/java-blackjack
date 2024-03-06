@@ -23,11 +23,11 @@ public class InputView {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = reader.get();
         validateHitOrNotCommand(input);
-        return input.equals(YES);
+        return YES.equals(input);
     }
 
     private static void validateHitOrNotCommand(final String input) {
-        if (!input.equals(YES) && !input.equals(NO)) {
+        if (!YES.equals(input) && !NO.equals(input)) {
             throw new IllegalArgumentException("y 혹은 n만 입력할 수 있습니다.");
         }
     }
