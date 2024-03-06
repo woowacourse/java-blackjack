@@ -1,12 +1,14 @@
 package domain;
 
 public class Dealer {
+    private static final Name DEFAULT_NAME = new Name("딜러");
+
     private final Name name;
     private final Cards cards;
     private final CardDeck cardDeck;
 
-    public Dealer(String name, CardDeck cardDeck) {
-        this.name = new Name("딜러");
+    public Dealer(CardDeck cardDeck) {
+        this.name = DEFAULT_NAME;
         this.cards = new Cards();
         this.cardDeck = new CardDeck();
     }

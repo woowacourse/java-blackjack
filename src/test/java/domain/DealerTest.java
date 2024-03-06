@@ -8,7 +8,7 @@ class DealerTest {
     @Test
     void 카드_덱에서_카드를_뽑는다() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer("딜러", cardDeck);
+        Dealer dealer = new Dealer(cardDeck);
 
         Card card = dealer.pickCard();
 
@@ -18,7 +18,7 @@ class DealerTest {
     @Test
     void 카드의_합을_계산한다() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer("딜러", cardDeck);
+        Dealer dealer = new Dealer(cardDeck);
 
         dealer.add(new Card(Denomination.KING, Emblem.DIAMOND));
         dealer.add(new Card(Denomination.SIX, Emblem.SPADE));
