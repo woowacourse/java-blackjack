@@ -17,7 +17,7 @@ class CardTest {
     private static Stream<Arguments> generateAllCards() {
         return Arrays.stream(Emblem.values())
                 .flatMap(emblem -> Arrays.stream(Number.values())
-                        .map(number -> new Card(number, emblem)))
+                        .map(number -> Card.from(number, emblem)))
                 .map(Arguments::of);
     }
 
@@ -46,7 +46,7 @@ class CardTest {
     @DisplayName("카드는 자신의 숫자값을 반환한다.")
     void getNumberValue_ReturnCardNumberIntValue_IsEqualToExpectNumber() {
         // Given
-        Card card = new Card(Number.FOUR, Emblem.CLUB);
+        Card card = Card.from(Number.FOUR, Emblem.CLUB);
 
         // When
         int value = card.getNumberValue();
