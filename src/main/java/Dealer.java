@@ -2,28 +2,25 @@ import java.util.ArrayList;
 
 public class Dealer {
 
-    private final Cards cards;
-    private final Score score;
+    private final DealerCards cards;
 
     public Dealer() {
-        this.cards = new Cards(new ArrayList<>());
-        this.score = new Score(0);
+        this.cards = new DealerCards(new ArrayList<>());
     }
 
     public void hit(Card card) {
         cards.addCard(card);
-        score.addScore(card);
     }
 
     public boolean isNotBust() {
-        return score.isLowerThanBustThreshold();
+        return cards.hasScoreUnderBustThreshold();
     }
 
     public boolean canHit() {
-        return score.isLowerThanDealerThreshold();
+        return cards.hasScoreUnderHitThreshold();
     }
 
-    public Cards getCards() {
+    public DealerCards getCards() {
         return cards;
     }
 }
