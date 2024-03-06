@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-class Dealer {
+public class Dealer {
 
     private static final int STAND_BOUND = 17;
 

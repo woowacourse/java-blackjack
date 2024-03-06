@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-class Player {
+public class Player {
 
     private final Name name;
     private final Hand hand;
@@ -30,5 +30,9 @@ class Player {
 
     public boolean isPlayable() {
         return !(hand.isBust() || hand.isBlackJack());
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 }
