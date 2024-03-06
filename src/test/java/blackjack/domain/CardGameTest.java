@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static blackjack.domain.CardNumber.ACE;
+import static blackjack.domain.CardNumber.KING;
+import static blackjack.domain.CardNumber.QUEEN;
+import static blackjack.domain.CardShape.HEART;
 import static blackjack.domain.CardShape.SPADE;
 import static blackjack.fixture.PlayerFixture.dealer;
-import static blackjack.fixture.PlayerFixture.playerA;
-import static blackjack.fixture.PlayerFixture.playerAWithEmptyHand;
-import static blackjack.fixture.PlayerFixture.playerB;
-import static blackjack.fixture.PlayerFixture.playerBWithEmptyHand;
+import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 public class CardGameTest {
     @Test
     void 카드_한_장을_플레이어에게_지급한다() {
-        Player mangcho = playerAWithEmptyHand();
+        Player mangcho = player();
         Card card = new Card(ACE, SPADE);
 
         CardGame cardGame = new CardGame();
@@ -28,8 +28,8 @@ public class CardGameTest {
 
     @Test
     void 모든_플레이어에게_카드_2장을_지급한다() {
-        Player mangcho = playerAWithEmptyHand();
-        Player ddang = playerBWithEmptyHand();
+        Player mangcho = player();
+        Player ddang = player();
 
         CardGame cardGame = new CardGame();
         cardGame.giveTwoCardsEachPlayer(List.of(mangcho, ddang));
@@ -43,9 +43,20 @@ public class CardGameTest {
     @Test
     void 딜러와_여러_플레이어의_숫자가_21_이하인_경우_숫자가_큰_사람이_이긴다() {
         CardGameJudge cardGameJudge = new CardGameJudge();
-        Player mangcho = playerA();
-        Player ddang = playerB();
-        Dealer dealer = dealer();
+
+        Player mangcho = player(
+                new Card(ACE, HEART),
+                new Card(KING, HEART),
+                new Card(KING, SPADE));
+
+        Player ddang = player(
+                new Card(QUEEN, HEART),
+                new Card(KING, HEART));
+
+        Dealer dealer = dealer(
+                new Card(ACE, HEART),
+                new Card(ACE, SPADE),
+                new Card(KING, SPADE));
 
         var result = cardGameJudge.judge(dealer, List.of(mangcho, ddang))
                 .getTotalResult();
