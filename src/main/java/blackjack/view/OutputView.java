@@ -19,4 +19,8 @@ public class OutputView {
 
         System.out.printf("%s : %s%n", name, cardFormat);
     }
+
+    public static void printDealCard(String name, Card card) {
+        System.out.printf("%s : %s%n", name, card);
+    }
 }

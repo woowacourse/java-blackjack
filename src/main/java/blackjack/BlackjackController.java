@@ -18,6 +18,8 @@ public class BlackjackController {
         CardPicker cardPicker = new CardPicker();
         OutputView.printDealAnnounce(players.getNames());
         requestDeal(players, dealer, cardPicker);
+
+        OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
         for (Player player : players.getValues()) {
             OutputView.printDealCards(player.getName(), player.getCards());
         }
@@ -26,6 +28,7 @@ public class BlackjackController {
     private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
         players.getValues()
                 .forEach(player -> player.deal(cardPicker));
+        dealer.deal(cardPicker);
     }
 
 
