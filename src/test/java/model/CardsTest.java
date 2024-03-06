@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+class CardsTest {
 
     @DisplayName("카드 숫자 합 계산한다")
     @Test
