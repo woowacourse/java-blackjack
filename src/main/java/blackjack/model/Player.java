@@ -36,7 +36,7 @@ public class Player {
         return cards.getCards();
     }
 
-    public boolean canHit() {
+    public boolean isNotBust() {
         return !cards.isBust(BUST_THRESHOLD);
     }
 

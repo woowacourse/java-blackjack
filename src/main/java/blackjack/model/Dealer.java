@@ -7,7 +7,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean canHit() {
+    public boolean isNotBust() {
         return cards.calculateScore() <= HITTABLE_THRESHOLD;
     }
 

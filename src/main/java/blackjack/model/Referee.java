@@ -38,6 +38,10 @@ public class Referee {
             return Result.WIN;
         }
 
+        if (!dealer.isNotBust() && player.isNotBust()) {
+            return Result.WIN;
+        }
+
         return Result.LOSE;
     }
 }

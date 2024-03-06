@@ -59,7 +59,7 @@ class PlayerTest {
         Cards cards = new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
         Player player = new Player("몰리", cards);
 
-        assertThat(player.canHit()).isTrue();
+        assertThat(player.isNotBust()).isTrue();
     }
 
     @Test

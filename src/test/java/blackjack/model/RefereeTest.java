@@ -67,4 +67,21 @@ class RefereeTest {
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
         }
     }
+
+    @Nested
+    @DisplayName("딜러가 21 초과했을 경우")
+    class DealerOver21 {
+
+        @Test
+        @DisplayName("플레이어 결과가 21이하인 경우 플레이어가 승리한다.")
+        void playerWinWhenOnlyPlayerNotBust() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.SIX)))));
+            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.TEN))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+        }
+    }
 }

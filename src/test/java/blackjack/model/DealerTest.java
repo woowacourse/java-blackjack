@@ -17,7 +17,7 @@ class DealerTest {
         Cards cards = new Cards(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
         Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.canHit()).isTrue();
+        assertThat(dealer.isNotBust()).isTrue();
     }
 
     @Test
