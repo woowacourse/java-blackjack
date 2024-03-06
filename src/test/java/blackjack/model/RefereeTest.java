@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import static blackjack.model.Result.DRAW;
+import static blackjack.model.Result.LOSE;
 import static blackjack.model.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -132,12 +133,32 @@ class RefereeTest {
         void bothBust() {
             Players players = Players.from(
                     List.of("몰리"),
-                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN), new Card(Shape.SPADE, Score.NINE)))));
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN),
+                            new Card(Shape.SPADE, Score.NINE)))));
             Dealer dealer = new Dealer(
-                    new Cards(List.of(new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.NINE))));
+                    new Cards(List.of(new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN),
+                            new Card(Shape.DIA, Score.NINE))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
         }
+    }
+
+    @Test
+    @DisplayName("딜러의 결과를 반환한다.")
+    void getDealerResult() {
+        List<Cards> cards = List.of(
+                new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN), new Card(Shape.DIA, Score.FOUR))),
+                new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE))),
+                new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))
+        );
+
+        Players players = Players.from(List.of("몰리", "리브", "포비"), cards);
+        Dealer dealer = new Dealer(
+                new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+
+        Referee referee = new Referee(dealer, players);
+        Map<Result, Integer> actual = referee.judgeDealerResult();
+        assertThat(actual).containsAllEntriesOf(Map.of(WIN, 1, LOSE, 1, DRAW, 1));
     }
 }

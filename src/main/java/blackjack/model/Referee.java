@@ -1,6 +1,8 @@
 package blackjack.model;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Referee {
@@ -37,6 +39,9 @@ public class Referee {
     private Result judgePlayerResultWhenDealerNotBust(final Player player) {
         int playerCardCount = player.announceCardCount();
         int dealerCardCount = dealer.announceCardCount();
+        if (player.isBust()) {
+            return Result.LOSE;
+        }
         if (player.notifyScore() > dealer.notifyScore()) {
             return Result.WIN;
         }
@@ -47,5 +52,23 @@ public class Referee {
             return Result.DRAW;
         }
         return Result.LOSE;
+    }
+
+    public Map<Result, Integer> judgeDealerResult() {
+        EnumMap<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+        for (Result playerResult : judgePlayerWinner().values()) {
+            dealerResult.merge(findOpposite(playerResult), 1, Integer::sum);
+        }
+        return dealerResult;
+    }
+
+    private Result findOpposite(final Result originResult) {
+        if (originResult == Result.WIN) {
+            return Result.LOSE;
+        }
+        if (originResult == Result.LOSE) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
     }
 }
