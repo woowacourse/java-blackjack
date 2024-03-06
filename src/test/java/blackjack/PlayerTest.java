@@ -16,7 +16,8 @@ public class PlayerTest {
         Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
 
-        assertThatCode(() -> new GamePlayer(name, cards)).doesNotThrowAnyException();
+        assertThatCode(() -> new GamePlayer(name, cards))
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -42,7 +43,8 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
     public void GamePlayer_Determine_ace_is_1_if_exceed_21() {
-        var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
+        var sut = PlayerFixture.게임_플레이어_생성(
+                List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
 
         var result = sut.calculateScore();
 
