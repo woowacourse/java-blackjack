@@ -2,30 +2,27 @@ import java.util.ArrayList;
 
 public class Player {
 
-    private final PlayerName playerName;
-    private final Cards cards;
-    private final Score score;
+    private final PlayerName name;
+    private final PlayerCards cards;
 
     public Player(String name) {
-        this.playerName = new PlayerName(name);
-        this.cards = new Cards(new ArrayList<>());
-        this.score = new Score(0);
+        this.name = new PlayerName(name);
+        this.cards = new PlayerCards(new ArrayList<>());
     }
 
     public void hit(Card card) {
         cards.addCard(card);
-        score.addScore(card);
     }
 
     public boolean hasScoreUnderThreshold() {
-        return score.isLowerThanBustThreshold();
+        return cards.isNotBust();
     }
 
     public String getPlayerName() {
-        return playerName.getValue();
+        return name.getValue();
     }
 
-    public Cards getCards() {
+    public PlayerCards getCards() {
         return cards;
     }
 }

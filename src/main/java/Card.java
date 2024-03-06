@@ -12,7 +12,16 @@ public class Card {
         return cardNumber.equals(CardNumber.A);
     }
 
+    public boolean isNotAce() {
+        return !cardNumber.equals(CardNumber.A);
+    }
+
     public int score() {
         return cardNumber.getScore();
+    }
+
+    public String getName() {
+        return cardNumber.name() + cardShape.name();
+
     }
 }
