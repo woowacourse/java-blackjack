@@ -2,6 +2,8 @@ package blackjack;
 
 
 public class Player {
+    private static final Integer RECEIVE_SIZE = 21;
+
     private final Name name;
     private final Cards cards;
 
@@ -16,5 +18,9 @@ public class Player {
             return sum + 10;
         }
         return sum;
+    }
+
+    public boolean isReceivable() {
+        return cards.sum() < RECEIVE_SIZE;
     }
 }

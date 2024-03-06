@@ -2,6 +2,8 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +41,7 @@ public class PlayerTest {
 
         assertThat(result).isEqualTo(19);
     }
+
     @Test
     @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
     public void Player_Determine_ace_is_1_if_exceed_21() {
@@ -49,10 +52,28 @@ public class PlayerTest {
         assertThat(result).isEqualTo(16);
     }
 
+    @Test
+    @DisplayName("플레이어는 숫자의 합이 21이 넘지 않을 때까지 추가 카드를 받을 수 있다.")
+    public void Player_Can_receive_additional_card() {
+        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.ACE));
+
+        var result = sut.isReceivable();
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("플레이어는 숫자의 합이 21이 넘어 가면 추가 카드를 받을 수 없다.")
+    public void Player_Can_not_receive_additional_card() {
+        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.JACK, Card.KING));
+
+        var result = sut.isReceivable();
+
+        assertFalse(result);
+    }
+
     private Player 플레이어_생성(List<Card> cards) {
         Name name = new Name("초롱");
         return new Player(name, new Cards(cards));
     }
-
-
 }
