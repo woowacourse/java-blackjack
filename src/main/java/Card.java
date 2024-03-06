@@ -13,6 +13,14 @@ public class Card {
         return rank.getScore();
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,8 +1,9 @@
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Participants {
-    private List<Participant> value;
+    private final List<Participant> value;
     public Participants(List<String> names) {
         validate(names);
         value = names.stream().map(name -> new Participant(new Name(name)))
@@ -11,6 +12,12 @@ public class Participants {
 
     public List<Participant> getValue() {
         return value;
+    }
+
+    public List<Name> getNames() {
+        return value.stream()
+                .map(Participant::getName)
+                .toList();
     }
 
     private static void validate(List<String> names) {

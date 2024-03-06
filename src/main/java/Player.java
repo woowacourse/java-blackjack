@@ -6,9 +6,11 @@ public class Player {
     private static final int ADDITIONAL_SCORE = 10;
     private static final int BLACK_JACK_COUNT = 21;
     private List<Card> cards;
+    private Name name;
 
-    public Player( ) {
+    public Player(Name name) {
         this.cards = new ArrayList<>();
+        this.name = name;
     }
 
     public void receiveCard(Card card) {
@@ -42,5 +44,13 @@ public class Player {
 
     public int getCardCount() {
         return cards.size();
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
