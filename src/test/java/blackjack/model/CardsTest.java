@@ -60,4 +60,11 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(SPADE, ACE), new Card(CLOVER, EIGHT), new Card(CLOVER, TWO)));
         assertThat(cards.calculateScore()).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("카드들의 합이 임계 값을 넘으면 bust이다.")
+    void isBust() {
+        Cards cards = new Cards(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
+        assertThat(cards.isBust(21)).isTrue();
+    }
 }

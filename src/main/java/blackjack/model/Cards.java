@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Cards {
     private static final int ADDITIONAL_ACE_SCORE = 10;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -51,6 +52,10 @@ public class Cards {
 
     private boolean isSoft(final int aceCount, final int baseScore) {
         return aceCount == 1 && baseScore <= 10;
+    }
+
+    public boolean isBust(final int threshold) {
+        return calculateScore() > threshold;
     }
 
     public List<Card> getCards() {
