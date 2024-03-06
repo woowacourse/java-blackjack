@@ -24,13 +24,17 @@ public class BlackjackService {
     public void initialDistribute() {
         List<Deck> initialCards = new ArrayList<>();
         for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
-            Deck tempDeck = new Deck();
-            for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-                tempDeck.addCard(this.deck.pickRandomCard());
-                initialCards.add(tempDeck);
-            }
-            initialCards.add(tempDeck);
+            initialCards.add(makeInitialDeck());
         }
+        participants.receiveInitialCards(initialCards);
+    }
+
+    private Deck makeInitialDeck() {
+        Deck tempDeck = new Deck();
+        for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
+            tempDeck.addCard(this.deck.pickRandomCard());
+        }
+        return tempDeck;
     }
 
     public Deck getDeck() {

@@ -13,7 +13,6 @@ public class Deck {
     public Deck() {
         this.cards = new LinkedList<>();
     }
-
     public void addCard(Card card) {
         cards.add(card);
     }

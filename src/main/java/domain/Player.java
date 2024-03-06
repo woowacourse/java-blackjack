@@ -13,6 +13,13 @@ public class Player {
         this.deck = new Deck();
     }
 
+    public void receiveDeck(Deck tempDeck) {
+        int tempDeckSize = tempDeck.size();
+        for (int i = 0; i < tempDeckSize; i++) {
+            deck.addCard(tempDeck.pickRandomCard());
+        }
+    }
+
     public void receiveCard(Card card) {
         deck.addCard(card);
     }
