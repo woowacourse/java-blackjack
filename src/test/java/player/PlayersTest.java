@@ -13,11 +13,11 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 2명보다 적을 경우 Error를 throw 한다.")
     @Test
     void isNotOverPossiblePlayerRange() {
-        List<Player> players = List.of(
-                new Player(new Name("pola"))
+        List<Name> names = List.of(
+                new Name("pola")
         );
 
-        Assertions.assertThatThrownBy(() -> new Players(players))
+        Assertions.assertThatThrownBy(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
@@ -25,19 +25,19 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 8명보다 많을 경우 Error를 throw 한다.")
     @Test
     void isOverPossiblePlayerRange() {
-        List<Player> players = List.of(
-                new Player(new Name("pola")),
-                new Player(new Name("ato")),
-                new Player(new Name("kaki")),
-                new Player(new Name("hogi")),
-                new Player(new Name("jazz")),
-                new Player(new Name("pobi")),
-                new Player(new Name("lisa")),
-                new Player(new Name("takan")),
-                new Player(new Name("siso"))
+        List<Name> names = List.of(
+                new Name("pola"),
+                new Name("ato"),
+                new Name("kaki"),
+                new Name("hogi"),
+                new Name("jazz"),
+                new Name("pobi"),
+                new Name("lisa"),
+                new Name("takan"),
+                new Name("siso")
         );
 
-        Assertions.assertThatThrownBy(() -> new Players(players))
+        Assertions.assertThatThrownBy(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
