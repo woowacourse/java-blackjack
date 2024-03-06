@@ -22,7 +22,7 @@ public class Dealer {
     }
 
     public void deal(final Player player, final Answer answer) {
-        if (Answer.HIT == answer) {
+        if (Answer.HIT.equals(answer)) {
             player.add(cardDeck.pop());
         }
     }
