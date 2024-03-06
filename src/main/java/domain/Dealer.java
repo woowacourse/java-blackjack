@@ -22,6 +22,14 @@ public class Dealer {
 		cardHand.addAll(cards);
 	}
 
+	public Card dealCard() {
+		return deck.remove(0);
+	}
+
+	public boolean deckContains(Card card) {
+		return deck.contains(card);
+	}
+
 	public int deckSize() {
 		return deck.size();
 	}

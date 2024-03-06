@@ -17,5 +17,6 @@ public class BlackjackApplication {
 
 		blackjackController.dealInitCards(dealer, players);
 
+		blackjackController.receiveAdditionalCard(dealer, players);
 	}
 }

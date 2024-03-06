@@ -43,4 +43,30 @@ public class PlayerTest {
 		// then
 		assertThat(player.getCardHand()).hasSize(2);
 	}
+
+	@DisplayName("카드 1장을 받는다.")
+	@Test
+	void receiveCardTest() {
+		// given
+		Player player = new Player("a", new ArrayList<>());
+
+		// when
+		player.receiveCard(new Card(Suit.HEART, Rank.A));
+
+		// then
+		assertThat(player.getCardHand()).hasSize(1);
+	}
+
+	@DisplayName("가지고 있는 패의 총 합이 21을 초과하면 true를 반환한다.")
+	@Test
+	void cardValueSumTest() {
+		// given
+		Player player = new Player("eden", new ArrayList<>());
+		player.receiveCard(new Card(Suit.HEART, Rank.K));
+		player.receiveCard(new Card(Suit.HEART, Rank.J));
+		player.receiveCard(new Card(Suit.HEART, Rank.Q));
+
+		// when & then
+		assertThat(player.isBurst()).isTrue();
+	}
 }

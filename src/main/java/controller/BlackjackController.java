@@ -44,4 +44,13 @@ public class BlackjackController {
 
 		outputView.printInitCardStatus(dealer, players);
 	}
+
+	public void receiveAdditionalCard(Dealer dealer, Players players) {
+		for (Player player : players.getPlayers()) {
+			while (!player.isBurst() && inputView.readHitOrStand(player).equals("y")) {
+				player.receiveCard(dealer.dealCard());
+				outputView.printCardStatus(player);
+			}
+		}
+	}
 }

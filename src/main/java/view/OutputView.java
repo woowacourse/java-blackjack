@@ -25,12 +25,9 @@ public class OutputView {
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
 
 		for (Player playerInfo : playerInfos) {
-			StringJoiner cardInfoJoiner = new StringJoiner(", ");
-			for (Card card : playerInfo.getCardHand()) {
-				cardInfoJoiner.add(createCardInfoText(card));
-			}
-			System.out.println(String.format("%s카드: %s", playerInfo.getName(), cardInfoJoiner));
+			printCardStatus(playerInfo);
 		}
+		System.out.println();
 	}
 
 	private String createPlayerNamesText(List<Player> playerInfos) {
@@ -44,5 +41,13 @@ public class OutputView {
 
 	private String createCardInfoText(Card card) {
 		return String.format("%s%s", card.getRankName(), card.getSuitName());
+	}
+
+	public void printCardStatus(Player player) {
+		StringJoiner cardInfoJoiner = new StringJoiner(", ");
+		for (Card card : player.getCardHand()) {
+			cardInfoJoiner.add(createCardInfoText(card));
+		}
+		System.out.println(String.format("%s카드: %s", player.getName(), cardInfoJoiner));
 	}
 }
