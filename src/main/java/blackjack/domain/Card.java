@@ -12,13 +12,14 @@ public class Card {
     }
 
     public static Card create(int cardOrder) {
-        Kind kind = Kind.findKind((cardOrder-1) / MAX_CARD_VALUE);
-        Value value = Value.findValue(cardOrder % MAX_CARD_VALUE);
+        Kind kind = Kind.findKind(cardOrder / MAX_CARD_VALUE);
+        int cardNumber = cardOrder % MAX_CARD_VALUE + 1;
+        Value value = Value.findValue(cardNumber);
 
         return new Card(kind, value);
     }
 
-    public int getScore(){
+    public int getScore() {
         return value.getScore();
     }
 
