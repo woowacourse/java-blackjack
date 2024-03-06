@@ -18,6 +18,13 @@ public class Cards {
         return cards.get(0);
     }
 
+    public int sum() {
+        return cards.stream()
+                .map(Card::number)
+                .mapToInt(Number::getValue)
+                .sum();
+    }
+
     public List<Card> getCards() {
         return cards;
     }

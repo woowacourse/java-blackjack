@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class Player implements Gamer {
 
+    private static final int MAX_VALUE = 21;
+
     private final Name name;
     private final Cards cards;
 
@@ -23,6 +25,10 @@ public class Player implements Gamer {
     @Override
     public void draw(final Card card) {
         cards.add(card);
+    }
+
+    public boolean canDraw() {
+        return cards.sum() < MAX_VALUE;
     }
 
     public Name getName() {

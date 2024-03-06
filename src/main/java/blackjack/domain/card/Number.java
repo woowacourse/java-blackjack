@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 public enum Number {
 
-    ACE(1),
+    ACE(11),
     TWO(2),
     THREE(3),
     FOUR(4),
