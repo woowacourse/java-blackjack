@@ -14,6 +14,6 @@ public class PlayerTest {
         // given & when & then
         assertThatCode(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어 이름은 공백일 수 없습니다.");
+                .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
 }

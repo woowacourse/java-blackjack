@@ -1,12 +1,16 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player {
-    private static final String NAME_EMPTY_ERROR = "플레이어 이름은 공백일 수 없습니다.";
+    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
     private final String name;
+    private final Cards cards;
 
     public Player(String name) {
         validateEmpty(name);
         this.name = name;
+        this.cards = new Cards();
     }
 
     private void validateEmpty(String name) {
@@ -17,5 +21,13 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void addCard(Card card) {
+        cards.addCard(card);
+    }
+
+    public List<Card> getCards() {
+        return cards.getValues();
     }
 }

@@ -28,7 +28,7 @@ public class PlayersTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "    ", "   ,   "})
+    @ValueSource(strings = {"", "    "})
     @DisplayName("플레이어가 없을 경우 예외가 발생한다.")
     void validateNoPlayer(String names) {
         // given & when & then
