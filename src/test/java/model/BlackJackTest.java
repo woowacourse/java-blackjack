@@ -35,7 +35,7 @@ class BlackJackTest {
 
     @DisplayName("카드의 합이 21을 초과하면 패한다.")
     @Test
-    void findResult() {
+    void findLoseResult() {
         Participant participant = new Participant("배키");
         participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         participant.addCard(new Card(CardShape.DIAMOND, CardNumber.NINE));
@@ -49,6 +49,24 @@ class BlackJackTest {
 
         Map<Player, GameResult> result = blackJack.findResult();
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.WIN));
+    }
+
+    @DisplayName("참가자 카드의 합이 딜러와 동일하면 무승부다.")
+    @Test
+    void findDrawResult() {
+        Participant participant = new Participant("배키");
+        participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        participant.addCard(new Card(CardShape.DIAMOND, CardNumber.NINE));
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+
+        Players players = new Players(List.of(participant, dealer), new Cards());
+        BlackJack blackJack = new BlackJack(players);
+
+        Map<Player, GameResult> result = blackJack.findResult();
+        Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
     }
 
 }

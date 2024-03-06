@@ -29,13 +29,32 @@ public class BlackJack {
             Integer sum = sumPlayers.get(player);
             int participantDifference = 21 - sum;
             int dealerDifference = Math.abs(21 - dealerResultSum);
-            if (sum <= 21 && participantDifference < dealerDifference) {
+
+            if(sum > 21) {
+                if(dealerResultSum > 21) {
+                    result.put(player, GameResult.DRAW);
+                    continue;
+                }
+                result.put(player, GameResult.LOSE);
+                continue;
+            }
+            if(dealerResultSum > 21) {
                 result.put(player, GameResult.WIN);
                 continue;
             }
-            result.put(player, GameResult.LOSE);
+            result.put(player, findGameResult(participantDifference, dealerDifference));
         }
 
         return result;
+    }
+
+    private GameResult findGameResult(int participantDifference, int dealerDifference) {
+        if(participantDifference > dealerDifference) {
+            return GameResult.LOSE;
+        }
+        if(participantDifference < dealerDifference) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
     }
 }
