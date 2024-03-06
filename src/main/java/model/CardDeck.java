@@ -39,7 +39,6 @@ public class CardDeck {
                 .orElse(0);
     }
 
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
