@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Player extends BlackJackGamer {
 
-	public Player() {
-		super(new ArrayList<>());
+	public Player(Name name) {
+		super(name, new ArrayList<>());
 	}
 
 	@Override

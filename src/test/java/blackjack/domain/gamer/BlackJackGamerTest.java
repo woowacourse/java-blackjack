@@ -16,7 +16,7 @@ class BlackJackGamerTest {
 
 	@BeforeEach
 	void setUP() {
-		player = new Player();
+		player = new Player(new Name("hogi"));
 	}
 
 	@Test

@@ -6,9 +6,11 @@ import blackjack.domain.card.Card;
 
 public abstract class BlackJackGamer {
 
+	private final Name name;
 	private final List<Card> cards;
 
-	public BlackJackGamer(List<Card> cards) {
+	public BlackJackGamer(Name name, List<Card> cards) {
+		this.name = name;
 		this.cards = cards;
 	}
 
