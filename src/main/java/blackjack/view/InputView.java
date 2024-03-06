@@ -23,13 +23,13 @@ public class InputView {
         return Arrays.stream(names.split(",")).toList();
     }
 
-    public static String readMoreCard(String name) throws IOException {
+    public static String readMoreCard(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
             return bufferedReader.readLine();
         } catch (IOException e) {
-            throw new IOException();
+            throw new IllegalArgumentException(IO_ERROR);
         }
     }
 }

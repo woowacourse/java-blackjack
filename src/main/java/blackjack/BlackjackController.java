@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.domain.CardPicker;
+import blackjack.domain.Dealer;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 
@@ -9,7 +11,25 @@ import java.util.function.Supplier;
 public class BlackjackController {
 
     public void run() {
-        Players players = requestUntilValid(() -> Players.from(InputView.readPlayersName()));
+        Players players = requestPlayers();
+        Dealer dealer = new Dealer();
+        CardPicker cardPicker = new CardPicker();
+        requestDeal(players, dealer, cardPicker);
+        requestHitOrStand();
+    }
+
+    private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
+        players.getValues()
+                .forEach(player -> player.deal(cardPicker));
+    }
+
+
+    private void requestHitOrStand() {
+
+    }
+
+    private Players requestPlayers() {
+        return requestUntilValid(() -> Players.from(InputView.readPlayersName()));
     }
 
 
