@@ -26,4 +26,17 @@ public class PlayerTest {
         // when & then
         assertThat(player.canHit()).isTrue();
     }
+
+    @Test
+    @DisplayName("각 참여자들이 카드의 합을 맞추기 위해 카드를 더 받을 수 있다")
+    void hitTest() {
+        // given
+        Player player = new Player("dora", new SequentialNumberGenerator(List.of(0, 9, 0, 9)));
+
+        // when
+        player.hit();
+
+        // then
+        assertThat(player.getHand().getCards()).hasSize(3);
+    }
 }
