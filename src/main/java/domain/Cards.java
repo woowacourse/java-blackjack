@@ -34,4 +34,13 @@ public class Cards {
                 .mapToInt(Card::value)
                 .sum();
     }
+
+    public boolean hasAce() {
+        for (Card card : cards) {
+            if (card.cardNumber() == CardNumber.ACE) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
