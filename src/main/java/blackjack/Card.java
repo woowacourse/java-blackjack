@@ -10,4 +10,7 @@ public class Card {
     }
 
 
+    public boolean isAce() {
+        return cardValue.isAce();
+    }
 }
