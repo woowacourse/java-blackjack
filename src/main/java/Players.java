@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -7,9 +9,17 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         validate(players);
         this.players = players;
+    }
+
+    public static Players from(List<String> playerNames) {
+        List<Player> rawPlayers = new ArrayList<>();
+        for (String playerName : playerNames) {
+            rawPlayers.add(new Player(playerName));
+        }
+        return new Players(rawPlayers);
     }
 
     private void validate(List<Player> players) {
@@ -33,5 +43,7 @@ public class Players {
         }
     }
 
-
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }
