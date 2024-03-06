@@ -23,4 +23,18 @@ public class Gamer {
     public SummationCardPoint getSummationCardPoint() {
         return holdingCards.calculateTotalPoint();
     }
+
+    public GameResult getGameResult(Gamer other) {
+        if (this.getSummationCardPoint().isBiggerThan(other.getSummationCardPoint())) {
+            return GameResult.WIN;
+        }
+        if (this.getSummationCardPoint().equals(other.getSummationCardPoint())) {
+            return GameResult.TIE;
+        }
+        return GameResult.LOSE;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

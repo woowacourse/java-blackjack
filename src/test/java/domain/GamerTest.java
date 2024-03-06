@@ -1,10 +1,46 @@
 package domain;
 
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class GamerTest {
+
+    public static Stream<Arguments> getGameResultParameters() {
+        return Stream.of(
+                Arguments.of(
+                        new Gamer("게이머1", HoldingCards.of(
+                                new Card(CardName.SEVEN, CardType.HEART)
+                        )),
+                        new Gamer("게이머2", HoldingCards.of(
+                                new Card(CardName.SIX, CardType.HEART)
+                        )),
+                        GameResult.WIN
+                ),
+                Arguments.of(
+                        new Gamer("게이머1", HoldingCards.of(
+                                new Card(CardName.SIX, CardType.HEART)
+                        )),
+                        new Gamer("게이머2", HoldingCards.of(
+                                new Card(CardName.SEVEN, CardType.HEART)
+                        )),
+                        GameResult.LOSE
+                ),
+                Arguments.of(
+                        new Gamer("게이머1", HoldingCards.of(
+                                new Card(CardName.SEVEN, CardType.HEART)
+                        )),
+                        new Gamer("게이머2", HoldingCards.of(
+                                new Card(CardName.SEVEN, CardType.DIAMOND)
+                        )),
+                        GameResult.TIE
+                )
+        );
+    }
 
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
@@ -51,5 +87,13 @@ class GamerTest {
         Assertions.assertThatThrownBy(() -> Gamer.draw(deck, cards -> cards.get(0), new SummationCardPoint(16)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("getGameResultParameters")
+    @DisplayName("승부가 잘 결정되는지 검증")
+    void getGameResult(Gamer gamer1, Gamer gamer2, GameResult expected) {
+        Assertions.assertThat(gamer1.getGameResult(gamer2))
+                .isEqualTo(expected);
     }
 }
