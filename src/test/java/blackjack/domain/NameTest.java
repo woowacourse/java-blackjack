@@ -17,9 +17,9 @@ class NameTest {
                 .isInstanceOf(InvalidNameLengthException.class);
     }
 
-    @DisplayName("이름에 알파벳이 아닌 문자가 포함된 경우 예외가 발생한다.")
+    @DisplayName("이름에 영문, 한글이 아닌 문자가 포함된 경우 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"감자s", "마son", "pobi!", "po bi"})
+    @ValueSource(strings = {"감자s~", "마so-", "pobi!", "po bi"})
     void nonAlphabeticNameTest(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(NonAlphabeticNameException.class);

@@ -5,7 +5,7 @@ import blackjack.exception.NonAlphabeticNameException;
 
 public class Name {
     private static final int MAX_NAME_LENGTH = 5;
-    private static final String NAME_FORMAT = "^[a-zA-Z]*$";
+    private static final String NAME_FORMAT = "^[a-zA-Z가-힣]*$";
 
     private final String value;
 
