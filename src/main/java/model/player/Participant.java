@@ -12,7 +12,7 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean notice() {
+    public boolean receiveCard() {
         return sumCardNumbers() <= MAXIMUM_SUM;
     }
 }

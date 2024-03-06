@@ -21,31 +21,25 @@ public class BlackJack {
 
     public Map<Player, GameResult> findResult() {
         Map<Player, Integer> sumPlayers = players.sumCardNumbersWithoutDealer();
-        Player dealer = players.getDealer();
-        int dealerResultSum = dealer.sumCardNumbers();
 
         return sumPlayers.entrySet().stream()
                 .collect(toMap(
                         Entry::getKey,
-                        sumPlayer -> findGameResult(dealerResultSum, sumPlayer.getValue())
+                        sumPlayer -> findGameResult(sumPlayer.getKey(), players.getDealer())
                 ));
     }
 
-    private GameResult findGameResult(int dealerResultSum, int participantSum) {
-        int dealerDifference = Math.abs(21 - dealerResultSum);
-        int participantDifference = 21 - participantSum;
-
-        if (participantSum > 21 && dealerResultSum > 21) {
+    private GameResult findGameResult(Player participant, Player dealer) {
+        if (participant.isOverMaximumSum() && dealer.isOverMaximumSum()) {
             return GameResult.DRAW;
         }
-        if (participantSum > 21) {
+        if (participant.isOverMaximumSum()) {
             return GameResult.LOSE;
         }
-        if(dealerResultSum > 21) {
+        if(dealer.isOverMaximumSum()) {
             return GameResult.WIN;
         }
-
-        return findResultByMinimumDifference(participantDifference, dealerDifference);
+        return findResultByMinimumDifference(participant.findPlayerDifference(), dealer.findPlayerDifference());
     }
 
     private GameResult findResultByMinimumDifference(int participantDifference, int dealerDifference) {

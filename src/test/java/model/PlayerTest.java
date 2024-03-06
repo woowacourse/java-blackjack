@@ -24,7 +24,7 @@ class PlayerTest {
             }
 
             @Override
-            public boolean notice() {
+            public boolean receiveCard() {
                 return false;
             }
         };

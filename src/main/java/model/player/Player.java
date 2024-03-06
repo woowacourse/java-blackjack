@@ -53,5 +53,13 @@ public abstract class Player implements NoticeStatus {
         return result;
     }
 
+    public boolean isOverMaximumSum() {
+        return sumCardNumbers() > MAXIMUM_SUM;
+    }
+
+    public int findPlayerDifference() {
+        return Math.abs(MAXIMUM_SUM - sumCardNumbers());
+    }
+
     public abstract boolean isDealer();
 }
