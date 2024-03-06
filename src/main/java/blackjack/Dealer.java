@@ -16,6 +16,10 @@ public class Dealer {
         return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
     }
 
+    public boolean isReceivable() {
+        return cards.sum() <= RECEIVE_SIZE;
+    }
+
     public String getName() {
         return name.asString();
     }

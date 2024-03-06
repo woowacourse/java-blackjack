@@ -30,6 +30,25 @@ public class DealerTest {
         ).doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("딜러는 숫자의 합이 16이하면 카드를 받아야 한다.")
+    public void Dealer_Can_receive_additional_card() {
+        Name name = new Name("딜러");
+        Cards cards = 카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        var sut = new Dealer(name, cards);
+
+        assertTrue(sut.isReceivable());
+    }
+
+    @Test
+    @DisplayName("딜러는 숫자의 합이 16이하면 카드를 받아야 한다.")
+    public void Dealer_Can_not_receive_additional_card() {
+        Name name = new Name("딜러");
+        Cards cards = 카드_목록_생성(List.of(CardValue.JACK, CardValue.FOUR));
+        var sut = new Dealer(name, cards);
+
+        assertTrue(sut.isReceivable());
+    }
 
     private Cards 카드_목록_생성(List<CardValue> cardValues) {
         return new Cards(cardValues.stream()
