@@ -25,7 +25,7 @@ class KindTest {
 
     @DisplayName("존재하지 않는 Kind를 조회할 수 없다")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 5})
+    @ValueSource(ints = {-1, 4})
     void should_ThrowIllegalStateException_When_NonExistKindNumber(int nonExistKindNumber) {
         assertThatThrownBy(() -> findKind(nonExistKindNumber))
                 .isInstanceOf(IllegalStateException.class);
