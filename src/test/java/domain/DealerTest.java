@@ -35,4 +35,20 @@ public class DealerTest {
         // Then
         assertThat(isDrawable).isTrue();
     }
+
+    @DisplayName("딜러는 덱으로부터 카드를 한 장 뽑는다.")
+    @Test
+    void drawTest() {
+        // Given
+        Deck deck = Deck.init();
+        Hand initHand = Hand.init();
+        int initCardNumberSum = initHand.getCardsNumberSum();
+        Dealer dealer = new Dealer(initHand);
+
+        // When
+        dealer.draw(deck);
+
+        // Then
+        assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
+    }
 }

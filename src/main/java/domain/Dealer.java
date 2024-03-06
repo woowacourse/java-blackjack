@@ -20,6 +20,6 @@ public class Dealer implements Participant {
 
     @Override
     public void draw(final Deck deck) {
-
+        hand.addCard(deck.drawn());
     }
 }
