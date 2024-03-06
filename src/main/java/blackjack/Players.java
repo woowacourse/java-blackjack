@@ -17,7 +17,22 @@ public class Players {
                             .count();
 
         if (count != DEALER_SIZE) {
-            throw new IllegalStateException("딜러가 1명이 아닙니다.");
+            throw new IllegalStateException(String.format("딜러가 %d명이 아닙니다.", DEALER_SIZE));
         }
+    }
+
+    public Dealer getDealer() {
+        return players.stream()
+                      .filter(player -> player instanceof Dealer)
+                      .findAny()
+                      .map(Dealer.class::cast)
+                      .get();
+    }
+
+    public List<GamePlayer> getGamePlayers() {
+        return players.stream()
+                      .filter(player -> player instanceof GamePlayer)
+                      .map(GamePlayer.class::cast)
+                      .toList();
     }
 }
