@@ -14,34 +14,38 @@ public class Referee {
 
     public Map<String, Result> judgePlayerWinner() {
         Map<String, Result> result = new LinkedHashMap<>();
-        for (Player player: players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             result.put(player.getName(), calculateResult(player));
         }
         return result;
     }
 
     private Result calculateResult(final Player player) {
-        int playerScore = player.notifyScore();
-        int dealerScore = dealer.notifyScore();
+        if (dealer.isBust()) {
+            return judgePlayerResultWhenDealerBust(player);
+        }
+        return judgePlayerResultWhenDealerNotBust(player);
+    }
+
+    private Result judgePlayerResultWhenDealerBust(final Player player) {
+        if (!player.isBust()) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
+    }
+
+    private Result judgePlayerResultWhenDealerNotBust(final Player player) {
         int playerCardCount = player.announceCardCount();
         int dealerCardCount = dealer.announceCardCount();
-
-        if (playerScore > dealerScore) {
+        if (player.notifyScore() > dealer.notifyScore()) {
             return Result.WIN;
         }
-
-        if (playerScore == dealerScore && playerCardCount < dealerCardCount) {
+        if (playerCardCount < dealerCardCount) {
             return Result.WIN;
         }
-
-        if (player.announceBlackJack() && !dealer.announceBlackJack()) {
-            return Result.WIN;
+        if (playerCardCount == dealerCardCount) {
+            return Result.DRAW;
         }
-
-        if (!dealer.isNotBust() && player.isNotBust()) {
-            return Result.WIN;
-        }
-
         return Result.LOSE;
     }
 }

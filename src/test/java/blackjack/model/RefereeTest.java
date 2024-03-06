@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import static blackjack.model.Result.DRAW;
 import static blackjack.model.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,5 +84,21 @@ class RefereeTest {
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
         }
+    }
+
+    @Nested
+    @DisplayName("딜러와 플레이어가 무승부인 경우")
+    class draw {
+
+        @Test
+        @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
+        void bothBlackJack() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
+            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.HEART, Score.ACE), new Card(Shape.DIA, Score.TEN))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));}
     }
 }
