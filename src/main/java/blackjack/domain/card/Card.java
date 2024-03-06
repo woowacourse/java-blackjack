@@ -16,6 +16,10 @@ public class Card {
 		return cardNumber.getValue();
 	}
 
+	public boolean isAce() {
+		return cardNumber == CardNumber.ACE;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
