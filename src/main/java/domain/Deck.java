@@ -27,7 +27,7 @@ public class Deck {
                 .toList();
     }
 
-    public PlayingCard draw() {
+    public PlayingCard drawn() {
         Collections.shuffle(playingCards);
 
         PlayingCard card = playingCards.get(0);

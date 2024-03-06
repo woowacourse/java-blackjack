@@ -18,6 +18,6 @@ public class Player {
     }
 
     public void draw(final Deck deck) {
-        hand.addCard(deck.draw());
+        hand.addCard(deck.drawn());
     }
 }

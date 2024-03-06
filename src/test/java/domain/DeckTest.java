@@ -19,12 +19,12 @@ public class DeckTest {
 
     @DisplayName("카드를 한 장 건네준다.")
     @Test
-    void drawTest() {
+    void drawnTest() {
         // Given
         Deck deck = Deck.init();
 
         // When
-        PlayingCard card = deck.draw();
+        PlayingCard card = deck.drawn();
 
         // Then
         assertThat(card).isNotNull();
