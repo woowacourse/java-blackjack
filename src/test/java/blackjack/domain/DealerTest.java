@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -27,5 +28,33 @@ class DealerTest {
         dealer.draw(card);
 
         assertThat(dealer.getCards()).isEqualTo(List.of(card));
+    }
+
+    @DisplayName("딜러는 17점 이상이 되면, 더 이상 카드를 받을 수 없다.")
+    @Test
+    void drawWhenIsNotPlayable() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        Card card3 = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        dealer.draw(card1);
+        dealer.draw(card2);
+
+        assertThatThrownBy(() -> dealer.draw(card3))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("딜러가 카드를 더 받을 수 있는지 확인할 수 있다.")
+    @Test
+    void isPlayable() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        dealer.draw(card1);
+        dealer.draw(card2);
+
+        boolean result = dealer.isPlayable();
+
+        assertThat(result).isFalse();
     }
 }
