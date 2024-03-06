@@ -12,10 +12,11 @@ public class Players {
     }
 
     public static Players from(String[] names) {
-        return new Players(Arrays.stream(names).map(Player::new).toList());
+        return new Players(Arrays.stream(names).map(Player::new).collect(Collectors.toList()));
     }
 
     public List<Player> getPlayers() {
+        String s = "qwrqwr";
         return players;
     }
 }
