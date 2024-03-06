@@ -13,7 +13,7 @@ public class Player {
         return new Player(new PlayerName(playerName), Hand.init());
     }
 
-    public boolean isBurst() {
+    public boolean isDrawable() {
         return hand.isBurst();
     }
 

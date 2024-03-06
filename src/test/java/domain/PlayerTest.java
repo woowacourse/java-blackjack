@@ -33,7 +33,7 @@ public class PlayerTest {
         Player player = new Player(new PlayerName("kelly"), hand);
 
         // When
-        Boolean isBurst = player.isBurst();
+        Boolean isBurst = player.isDrawable();
 
         // Then
         assertThat(isBurst).isTrue();
