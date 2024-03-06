@@ -2,74 +2,86 @@ package blackjack.domain;
 
 import java.util.List;
 
+import static blackjack.domain.CardScore.*;
 import static blackjack.domain.CardSymbol.*;
 
 public enum Card {
 
-    SPADE_TWO(SPADE, List.of(2)),
-    SPADE_THREE(SPADE, List.of(3)),
-    SPADE_FOUR(SPADE, List.of(4)),
-    SPADE_FIVE(SPADE, List.of(5)),
-    SPADE_SIX(SPADE, List.of(6)),
-    SPADE_SEVEN(SPADE, List.of(7)),
-    SPADE_EIGHT(SPADE, List.of(8)),
-    SPADE_NINE(SPADE, List.of(9)),
-    SPADE_JACK(SPADE, List.of(10)),
-    SPADE_QUEEN(SPADE, List.of(10)),
-    SPADE_KING(SPADE, List.of(10)),
-    SPADE_ACE(SPADE, List.of(1, 11)),
+    SPADE_TWO(SPADE, TWO),
+    SPADE_THREE(SPADE, THREE),
+    SPADE_FOUR(SPADE, FOUR),
+    SPADE_FIVE(SPADE, FIVE),
+    SPADE_SIX(SPADE, SIX),
+    SPADE_SEVEN(SPADE, SEVEN),
+    SPADE_EIGHT(SPADE, EIGHT),
+    SPADE_NINE(SPADE, NINE),
+    SPADE_JACK(SPADE, J),
+    SPADE_QUEEN(SPADE, Q),
+    SPADE_KING(SPADE, K),
+    SPADE_ACE(SPADE, A),
 
+    DIAMOND_TWO(DIAMOND, TWO),
+    DIAMOND_THREE(DIAMOND, THREE),
+    DIAMOND_FOUR(DIAMOND, FOUR),
+    DIAMOND_FIVE(DIAMOND, FIVE),
+    DIAMOND_SIX(DIAMOND, SIX),
+    DIAMOND_SEVEN(DIAMOND, SEVEN),
+    DIAMOND_EIGHT(DIAMOND, EIGHT),
+    DIAMOND_NINE(DIAMOND, NINE),
+    DIAMOND_JACK(DIAMOND, J),
+    DIAMOND_QUEEN(DIAMOND, Q),
+    DIAMOND_KING(DIAMOND, K),
+    DIAMOND_ACE(DIAMOND, A),
 
-    DIAMOND_TWO(DIAMOND, List.of(2)),
-    DIAMOND_THREE(DIAMOND, List.of(3)),
-    DIAMOND_FOUR(DIAMOND, List.of(4)),
-    DIAMOND_FIVE(DIAMOND, List.of(5)),
-    DIAMOND_SIX(DIAMOND, List.of(6)),
-    DIAMOND_SEVEN(DIAMOND, List.of(7)),
-    DIAMOND_EIGHT(DIAMOND, List.of(8)),
-    DIAMOND_NINE(DIAMOND, List.of(9)),
-    DIAMOND_JACK(DIAMOND, List.of(10)),
-    DIAMOND_QUEEN(DIAMOND, List.of(10)),
-    DIAMOND_KING(DIAMOND, List.of(10)),
-    DIAMOND_ACE(DIAMOND, List.of(1, 11)),
+    HEART_TWO(HEART, TWO),
+    HEART_THREE(HEART, THREE),
+    HEART_FOUR(HEART, FOUR),
+    HEART_FIVE(HEART, FIVE),
+    HEART_SIX(HEART, SIX),
+    HEART_SEVEN(HEART, SEVEN),
+    HEART_EIGHT(HEART, EIGHT),
+    HEART_NINE(HEART, NINE),
+    HEART_JACK(HEART, J),
+    HEART_QUEEN(HEART, Q),
+    HEART_KING(HEART, K),
+    HEART_ACE(HEART, A),
 
+    CLUB_TWO(CLUB, TWO),
+    CLUB_THREE(CLUB, THREE),
+    CLUB_FOUR(CLUB, FOUR),
+    CLUB_FIVE(CLUB, FIVE),
+    CLUB_SIX(CLUB, SIX),
+    CLUB_SEVEN(CLUB, SEVEN),
+    CLUB_EIGHT(CLUB, EIGHT),
+    CLUB_NINE(CLUB, NINE),
+    CLUB_JACK(CLUB, J),
+    CLUB_QUEEN(CLUB, Q),
+    CLUB_KING(CLUB, K),
+    CLUB_ACE(CLUB, A);
 
-    HEART_TWO(HEART, List.of(2)),
-    HEART_THREE(HEART, List.of(3)),
-    HEART_FOUR(HEART, List.of(4)),
-    HEART_FIVE(HEART, List.of(5)),
-    HEART_SIX(HEART, List.of(6)),
-    HEART_SEVEN(HEART, List.of(7)),
-    HEART_EIGHT(HEART, List.of(8)),
-    HEART_NINE(HEART, List.of(9)),
-    HEART_JACK(HEART, List.of(10)),
-    HEART_QUEEN(HEART, List.of(10)),
-    HEART_KING(HEART, List.of(10)),
-    HEART_ACE(HEART, List.of(1, 11)),
-
-
-    CLUB_TWO(CLUB, List.of(2)),
-    CLUB_THREE(CLUB, List.of(3)),
-    CLUB_FOUR(CLUB, List.of(4)),
-    CLUB_FIVE(CLUB, List.of(5)),
-    CLUB_SIX(CLUB, List.of(6)),
-    CLUB_SEVEN(CLUB, List.of(7)),
-    CLUB_EIGHT(CLUB, List.of(8)),
-    CLUB_NINE(CLUB, List.of(9)),
-    CLUB_JACK(CLUB, List.of(10)),
-    CLUB_QUEEN(CLUB, List.of(10)),
-    CLUB_KING(CLUB, List.of(10)),
-    CLUB_ACE(CLUB, List.of(1, 11));
+    private static final List<Integer> ACE_SCORES = List.of(1, 11);
+    private static final List<CardScore> SEPCIALS = List.of(J, Q, K, A);
 
     private final CardSymbol symbol;
-    private final List<Integer> scores;
+    private final CardScore score;
 
-    Card(CardSymbol symbol, List<Integer> scores) {
+    Card(CardSymbol symbol, CardScore score) {
         this.symbol = symbol;
-        this.scores = scores;
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        if (SEPCIALS.contains(score)) {
+            return score.name() + symbol.get();
+        }
+        return score.get() + symbol.get();
     }
 
     public List<Integer> getScores() {
-        return scores;
+        if (score == A) {
+            return ACE_SCORES;
+        }
+        return List.of(score.get());
     }
 }
