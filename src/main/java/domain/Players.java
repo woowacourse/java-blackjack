@@ -17,7 +17,7 @@ public class Players {
 
     public static Players from(final List<String> names) {
         List<Player> players = names.stream()
-                .map(name -> new Player(name, Packet.createEmptyPacket()))
+                .map(name -> new Player(name, Hands.createEmptyPacket()))
                 .toList();
         validate(players);
         return new Players(players); //TODO 이름바꾸기

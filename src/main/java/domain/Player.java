@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Player {
     private final String name;
-    private final Packet packet;
+    private final Hands hands;
 
-    public Player(final String name, final Packet packet) {
+    public Player(final String name, final Hands hands) {
         validate(name);
         this.name = name;
-        this.packet = packet;
+        this.hands = hands;
     }
 
     public void add(final Card card) {
-        packet.add(card);
+        hands.add(card);
     }
 
     private void validate(final String name) {
@@ -34,7 +34,7 @@ public class Player {
     }
 
     public int getPacketSize() {
-        return packet.size();
+        return hands.size();
     }
 
     @Override

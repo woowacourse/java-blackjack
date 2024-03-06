@@ -6,18 +6,18 @@ public class Dealer {
 
     private final Players players;
     private final CardDeck cardDeck;
-    private final Packet packet;
+    private final Hands hands;
 
     public Dealer(final Players players, final CardDeck cardDeck) {
         this.players = players;
         this.cardDeck = cardDeck;
-        this.packet = Packet.createEmptyPacket();
+        this.hands = Hands.createEmptyPacket();
     }
 
     public void startDeal() {
         for (int i = 0; i < INIT_CARD_NUMBER; i++) {
             players.forEach(player -> player.add(cardDeck.pop()));
-            packet.add(cardDeck.pop());
+            hands.add(cardDeck.pop());
         }
     }
 }

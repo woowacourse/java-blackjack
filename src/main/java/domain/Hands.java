@@ -3,18 +3,18 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Packet { //TODO: 더 좋은 이름이 있다면 날 설득해줘
+public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
 
     private static final int BLACK_JACK = 21;
 
     private final List<Card> cards;
 
-    public Packet(final List<Card> cards) { //TODO validation
+    public Hands(final List<Card> cards) { //TODO validation
         this.cards = cards;
     }
 
-    public static Packet createEmptyPacket() {
-        return new Packet(new ArrayList<>());
+    public static Hands createEmptyPacket() {
+        return new Hands(new ArrayList<>());
     }
 
     public int sum() {

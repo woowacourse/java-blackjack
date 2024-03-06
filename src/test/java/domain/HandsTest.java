@@ -10,12 +10,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-class PacketTest {
+class HandsTest {
 
     @Test
     @DisplayName("카드를 가지고 있는 객체를 생성한다.")
     void createPacket() {
-        Assertions.assertThatCode(Packet::createEmptyPacket)
+        Assertions.assertThatCode(Hands::createEmptyPacket)
                 .doesNotThrowAnyException();
     }
 
@@ -23,21 +23,21 @@ class PacketTest {
     @DisplayName("카드를 추가한다.")
     void addCard() {
         //given
-        final Packet packet = Packet.createEmptyPacket();
+        final Hands hands = Hands.createEmptyPacket();
 
         //when
-        packet.add(new Card(CardNumber.EIGHT, CardShape.CLOVER));
+        hands.add(new Card(CardNumber.EIGHT, CardShape.CLOVER));
 
         //then
-        Assertions.assertThat(packet.size()).isEqualTo(1);
+        Assertions.assertThat(hands.size()).isEqualTo(1);
     }
 
     @DisplayName("카드의 합을 구한다.")
     @ParameterizedTest
     @MethodSource("sumParameterProvider")
-    void sum(final Packet packet, final int expected) {
+    void sum(final Hands hands, final int expected) {
         // given & when
-        final int result = packet.sum();
+        final int result = hands.sum();
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);
@@ -48,9 +48,9 @@ class PacketTest {
     @DisplayName("에이스를 11로 계산한다.")
     @ParameterizedTest
     @MethodSource("sumAce11ParameterProvider")
-    void sumAce11(final Packet packet, final int expected) {
+    void sumAce11(final Hands hands, final int expected) {
         // given & when
-        final int result = packet.sum();
+        final int result = hands.sum();
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);
@@ -59,9 +59,9 @@ class PacketTest {
     @DisplayName("에이스를 1로 계산한다.")
     @ParameterizedTest
     @MethodSource("sumAce1ParameterProvider")
-    void sumAce1(final Packet packet, final int expected) {
+    void sumAce1(final Hands hands, final int expected) {
         // given & when
-        final int result = packet.sum();
+        final int result = hands.sum();
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);
@@ -69,11 +69,11 @@ class PacketTest {
 
     static Stream<Arguments> sumParameterProvider() {
         return Stream.of(
-                Arguments.of(new Packet(List.of(new Card(CardNumber.TWO, CardShape.HEART),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.TWO, CardShape.HEART),
                                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                                 new Card(CardNumber.JACK, CardShape.CLOVER))),
                         20),
-                Arguments.of(new Packet(List.of(new Card(CardNumber.THREE, CardShape.DIAMOND),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.THREE, CardShape.DIAMOND),
                                 new Card(CardNumber.NINE, CardShape.CLOVER),
                                 new Card(CardNumber.NINE, CardShape.CLOVER))),
                         21)
@@ -82,11 +82,11 @@ class PacketTest {
 
     static Stream<Arguments> sumAce11ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Packet(List.of(new Card(CardNumber.ACE, CardShape.HEART),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.HEART),
                                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                                 new Card(CardNumber.TWO, CardShape.CLOVER))),
                         21),
-                Arguments.of(new Packet(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
                                 new Card(CardNumber.TWO, CardShape.CLOVER),
                                 new Card(CardNumber.FOUR, CardShape.CLOVER),
                                 new Card(CardNumber.TWO, CardShape.CLOVER))),
@@ -96,11 +96,11 @@ class PacketTest {
 
     static Stream<Arguments> sumAce1ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Packet(List.of(new Card(CardNumber.ACE, CardShape.HEART),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.HEART),
                                 new Card(CardNumber.NINE, CardShape.SPADE),
                                 new Card(CardNumber.NINE, CardShape.CLOVER))),
                         19),
-                Arguments.of(new Packet(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
+                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
                                 new Card(CardNumber.EIGHT, CardShape.CLOVER),
                                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                                 new Card(CardNumber.SIX, CardShape.CLOVER))),
