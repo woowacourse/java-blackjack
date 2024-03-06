@@ -34,6 +34,14 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어 생성시 카드 2장을 지급받지 않으면 예외를 던진다.")
+    void createCardsLowerSize() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Player("몰리", new Cards(List.of(new Card(CLOVER, ACE)))))
+                .withMessage("카드는 두 장 이상이어야 합니다.");
+    }
+
+    @Test
     @DisplayName("참여할 사람은 카드를 받는다.")
     void createPlayerWithCards() {
         Cards cards = new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE)));
