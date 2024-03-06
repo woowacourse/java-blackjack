@@ -17,9 +17,12 @@ public class Hand {
     }
 
     public int getCardsNumberSum() {
-        return playingCards.stream()
-                .mapToInt(card -> card.addValue(0))
-                .sum();
+        int result = 0;
+        for (PlayingCard playingCard : playingCards) {
+            result = playingCard.addValue(result);
+        }
+
+        return result;
     }
 
     public boolean isBurst() {
