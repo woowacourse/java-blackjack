@@ -12,7 +12,7 @@ class BlackJackGameTest {
 
     @DisplayName("게임을 시작하면 딜러와 플레이어에게 카드를 나누어준다.")
     @Test
-    void play() {
+    void ready() {
         BlackJackGame game = new BlackJackGame();
         Cards cards = new Cards(
                 List.of(
@@ -26,11 +26,11 @@ class BlackJackGameTest {
         Player player = new Player(new Name("hotea"));
         Players players = new Players(List.of(player));
 
-        game.play(dealer, players);
+        game.ready(dealer, players);
 
         assertAll(
-                () -> assertThat(dealer.sumCards()).isEqualTo(15),
-                () -> assertThat(player.sumCards()).isEqualTo(5)
+                () -> assertThat(dealer.cardSum()).isEqualTo(15),
+                () -> assertThat(player.cardSum()).isEqualTo(5)
         );
     }
 }
