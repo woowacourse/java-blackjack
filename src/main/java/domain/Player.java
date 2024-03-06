@@ -2,12 +2,18 @@ package domain;
 
 public class Player {
     private final PlayerName playerName;
+    private final Hand hand;
 
-    private Player(final PlayerName playerName) {
+    Player(final PlayerName playerName, Hand hand) {
         this.playerName = playerName;
+        this.hand = hand;
     }
 
     public static Player of(String playerName) {
-        return new Player(new PlayerName(playerName));
+        return new Player(new PlayerName(playerName), Hand.init());
+    }
+
+    public boolean isBurst() {
+        return hand.isBurst();
     }
 }

@@ -3,6 +3,10 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static domain.PlayingCardShape.*;
+import static domain.PlayingCardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
@@ -18,5 +22,20 @@ public class PlayerTest {
 
         // Then
         assertThat(player).isNotNull();
+    }
+
+    @DisplayName("플레이어가 버스트면 True를 반환한다.")
+    @Test
+    void isDrawableTest() {
+        // Given
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
+        Hand hand = new Hand(playingCards);
+        Player player = new Player(new PlayerName("kelly"), hand);
+
+        // When
+        Boolean isBurst = player.isBurst();
+
+        // Then
+        assertThat(isBurst).isTrue();
     }
 }
