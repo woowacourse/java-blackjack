@@ -1,6 +1,7 @@
 package blackjack.fixture;
 
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
 
@@ -11,7 +12,7 @@ import static blackjack.domain.CardShape.HEART;
 import static blackjack.domain.CardShape.SPADE;
 
 public class PlayerFixture {
-    public static Player mangcho() {
+    public static Player playerA() {
         Hand hand = new Hand();
         hand.add(new Card(ACE, HEART));
         hand.add(new Card(KING, HEART));
@@ -20,7 +21,11 @@ public class PlayerFixture {
         return new Player(hand);
     }
 
-    public static Player ddang() {
+    public static Player playerAWithEmptyHand() {
+        return new Player(new Hand());
+    }
+
+    public static Player playerB() {
         Hand hand = new Hand();
         hand.add(new Card(QUEEN, HEART));
         hand.add(new Card(KING, HEART));
@@ -28,12 +33,16 @@ public class PlayerFixture {
         return new Player(hand);
     }
 
-    public static Player dealer() {
+    public static Player playerBWithEmptyHand() {
+        return new Player(new Hand());
+    }
+
+    public static Dealer dealer() {
         Hand hand = new Hand();
         hand.add(new Card(ACE, HEART));
         hand.add(new Card(ACE, HEART));
         hand.add(new Card(KING, SPADE));
 
-        return new Player(hand);
+        return new Dealer(hand);
     }
 }
