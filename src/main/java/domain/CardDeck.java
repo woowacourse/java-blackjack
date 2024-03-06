@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class CardDeck {
+
     private final Stack<Card> deck;
 
     public CardDeck() {
