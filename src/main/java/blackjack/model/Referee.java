@@ -15,15 +15,25 @@ public class Referee {
     public Map<String, Result> judgePlayerWinner() {
         Map<String, Result> result = new LinkedHashMap<>();
         for (Player player: players.getPlayers()) {
-            result.put(player.getName(), calculateResult(player.notifyScore()));
+            result.put(player.getName(), calculateResult(player));
         }
         return result;
     }
 
-    private Result calculateResult(final int playerScore) {
-        if (playerScore > dealer.notifyScore()) {
+    private Result calculateResult(final Player player) {
+        int playerScore = player.notifyScore();
+        int dealerScore = dealer.notifyScore();
+        int playerCardCount = player.announceCardCount();
+        int dealerCardCount = dealer.announceCardCount();
+
+        if (playerScore > dealerScore) {
             return Result.WIN;
         }
+
+        if (playerScore == dealerScore && playerCardCount < dealerCardCount) {
+            return Result.WIN;
+        }
+
         return Result.LOSE;
     }
 }
