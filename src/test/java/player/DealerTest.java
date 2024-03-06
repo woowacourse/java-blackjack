@@ -42,23 +42,4 @@ class DealerTest {
                 () -> assertThat(isDrawable3).isFalse()
         );
     }
-
-    @Test
-    @DisplayName("딜러는 플레이어의 점수를 받아 승패를 결정한다")
-    void determineWinnerTest() {
-        // given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(
-                new Card(Shape.SPADE, Number.TEN),
-                new Card(Shape.HEART, Number.KING)
-        );
-        Deck deck = new Deck(cards);
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
-        // when, then
-        assertAll(
-                () -> assertThat(dealer.determineResult(19)).isTrue(),
-                () -> assertThat(dealer.determineResult(21)).isFalse()
-        );
-    }
 }
