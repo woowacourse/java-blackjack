@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Gamer {
+    private static final int BLACKJACK = 21;
     protected final Cards cards;
     private final String name;
 
@@ -19,6 +20,14 @@ public abstract class Gamer {
     public void hit(CardPicker cardPicker) {
         cardPicker.pick(1)
                 .forEach(cards::addCard);
+    }
+
+    public boolean isBurst() {
+        return cards.totalScore() > BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        return cards.totalScore() == BLACKJACK;
     }
 
     public String getName() {
