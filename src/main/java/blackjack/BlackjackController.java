@@ -25,6 +25,11 @@ public class BlackjackController {
             requestHitOrStand(player, cardPicker);
         }
 
+        while (dealer.isHitUnderBound()) {
+            dealer.hit(cardPicker);
+            OutputView.printDealerHitAnnounce();
+        }
+
         
     }
 
