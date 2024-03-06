@@ -17,8 +17,4 @@ public class FinalResult {
         }
         return dealerResult;
     }
-
-    public Map<Name, WinStatus> getPlayersWinstatus() {
-        return playersWinstatus;
-    }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class FinalResultTest {
     @Test
     @DisplayName("딜러의 승패를 통계낸다.")
-    void name() {
+    void summarizeDealerResult() {
         FinalResult finalResult = new FinalResult(Map.of(
                 new Name("kirby"), WinStatus.LOSE,
                 new Name("baekho"), WinStatus.WIN));

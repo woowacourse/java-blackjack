@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class PlayersTest {
     @Test
     @DisplayName("카드 숫자 합으로 승패를 결정한다.")
-    void name() {
+    void determineWinStatus() {
         // TODO: 리팩토링 시급
         Cards cards1 = new Cards(new Card(CardNumber.TEN, CardShape.HEART),
                 new Card(CardNumber.QUEEN, CardShape.HEART));
@@ -29,10 +29,10 @@ class PlayersTest {
         Player player3 = new Player(pobi, cards4);
 
         Players players = new Players(List.of(player1, player2, player3));
-        FinalResult finalResult = players.determineWinStatus(dealer);
+        Map<Name, WinStatus> finalResult = players.determineWinStatus(dealer);
 
         // TODO: 순서대로 검증도 되게
-        assertThat(finalResult.getPlayersWinstatus()).containsExactlyInAnyOrderEntriesOf(Map.of(
+        assertThat(finalResult).containsExactlyInAnyOrderEntriesOf(Map.of(
                 kirby, WinStatus.WIN,
                 baekho, WinStatus.LOSE,
                 pobi, WinStatus.DRAW));

@@ -11,7 +11,7 @@ public class Players {
         this.values = players;
     }
 
-    public FinalResult determineWinStatus(final Dealer dealer) {
+    public Map<Name, WinStatus> determineWinStatus(final Dealer dealer) {
         final Score dealerScore = dealer.calculate();
 
         Map<Name, WinStatus> playersWinStatus = new LinkedHashMap<>();
@@ -19,6 +19,6 @@ public class Players {
         for (Player player : values) {
             playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
         }
-        return new FinalResult(playersWinStatus);
+        return playersWinStatus;
     }
 }
