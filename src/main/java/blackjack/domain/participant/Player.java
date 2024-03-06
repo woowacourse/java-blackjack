@@ -22,6 +22,10 @@ public class Player extends Participant {
         return BLACKJACK_SCORE;
     }
 
+    public boolean isWin(Dealer dealer) {
+        return !dealer.isWin(this);
+    }
+
     public Name getName() {
         return name;
     }
