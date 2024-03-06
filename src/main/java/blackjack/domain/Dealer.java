@@ -40,10 +40,16 @@ public class Dealer {
     }
 
     public Card getFirstCard() {
+        // TODO: 메시지 보내기
         List<Card> cards = getCards();
         if (cards.isEmpty()) {
             throw new IllegalStateException("아무 카드도 뽑지 않았습니다.");
         }
         return cards.get(0);
+    }
+
+    public int getCardsCount() {
+        // TODO: 메시지 보내기
+        return player.getCards().size();
     }
 }
