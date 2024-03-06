@@ -17,4 +17,21 @@ public class BlackJack {
             participants.getValue().get(i).receiveCard(deck.draw());
         }
     }
+
+    public boolean isWinner(Participant participant) {
+        int participantScore = participant.calculateScore();
+        int dealerScore = dealer.calculateScore();
+
+        if (participantScore == dealerScore) {
+            return isWinnerByCardCount(participant);
+        }
+        return participantScore > dealerScore;
+    }
+
+    private boolean isWinnerByCardCount(Participant participant) {
+        int participantCardCount = participant.getCardCount();
+        int dealerCardCount = dealer.getCardCount();
+
+        return participantCardCount < dealerCardCount;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ParticipantsTest {
+class ParticipantsTest {
     @Test
     @DisplayName("최대 8명 입력받는다.")
     void validateMaxSize() {
