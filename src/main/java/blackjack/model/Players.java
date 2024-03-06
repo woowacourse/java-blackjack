@@ -10,10 +10,10 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames) {
+    public Players(final List<String> playerNames, final NumberGenerator numberGenerator) {
         validate(playerNames);
         this.players = playerNames.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, numberGenerator))
                 .toList();
     }
 

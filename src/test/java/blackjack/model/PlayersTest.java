@@ -15,7 +15,7 @@ public class PlayersTest {
     @DisplayName("참여자 수는 1명 이상이 아니면 예외가 발생한다")
     void validatePlayersCountTest() {
         // when & then
-        assertThatThrownBy(() -> new Players(List.of()))
+        assertThatThrownBy(() -> new Players(List.of(), () -> 0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -24,7 +24,7 @@ public class PlayersTest {
     @DisplayName("참여자 이름은 중복되면 예외가 발생한다")
     void validateDuplicatedNamesTest(List<String> names) {
         // when & then
-        assertThatThrownBy(() -> new Players(names))
+        assertThatThrownBy(() -> new Players(names, () -> 0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
