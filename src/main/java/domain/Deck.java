@@ -22,6 +22,7 @@ public class Deck {
 
     private static List<PlayingCard> generateCardByShape(PlayingCardShape playingCardShape) {
         return Arrays.stream(PlayingCardValue.values())
+                .filter(playingCardValue -> playingCardValue != PlayingCardValue.SMALL_ACE)
                 .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))
                 .toList();
     }
