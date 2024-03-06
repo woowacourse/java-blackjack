@@ -92,4 +92,41 @@ class PlayerTest {
             assertThat(isBurst).isTrue();
         }
     }
+
+    @DisplayName("더 이상 뽑을 수 있는지를 반환한다.")
+    @Nested
+    class isHittable {
+
+        @Test
+        @DisplayName("더 이상 뽑을 수 없으면 false를 반환한다.")
+        void isHittable_false() {
+            Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+            Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
+            Card card3 = new Card(Letter.SEVEN, Mark.HEART);
+            List<Card> cards = new ArrayList<>(List.of(card1, card2, card3));
+            Hand hand = new Hand(cards);
+            Name name = new Name("wiib");
+            Player player = new Player(name, hand);
+
+            boolean isHittable = player.isHittable();
+
+            assertThat(isHittable).isFalse();
+        }
+
+        @Test
+        @DisplayName("Hit할 수 있으면 true를 반환한다.")
+        void isHittable_true() {
+            Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
+            Card card2 = new Card(Letter.SEVEN, Mark.SPADE);
+            Card card3 = new Card(Letter.SIX, Mark.HEART);
+            List<Card> cards = new ArrayList<>(List.of(card1, card2, card3));
+            Hand hand = new Hand(cards);
+            Name name = new Name("wiib");
+            Player player = new Player(name, hand);
+
+            boolean isHittable = player.isHittable();
+
+            assertThat(isHittable).isTrue();
+        }
+    }
 }
