@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.PlayingCardShape.CLOVER;
-import static domain.PlayingCardShape.DIAMOND;
-import static domain.PlayingCardValue.FOUR;
-import static domain.PlayingCardValue.SEVEN;
+import static domain.PlayingCardShape.*;
+import static domain.PlayingCardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
@@ -35,5 +33,19 @@ public class HandTest {
 
         // Then
         assertThat(result).isEqualTo(11);
+    }
+
+    @DisplayName("손패에 있는 카드의 합이 21을 넘으면 true반환한다.")
+    @Test
+    void isBurstTest() {
+        // Given
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
+        Hand hand = new Hand(playingCards);
+
+        // When
+        boolean isBurst = hand.isBurst();
+
+        // Then
+        assertThat(isBurst).isTrue();
     }
 }

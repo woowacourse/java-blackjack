@@ -3,6 +3,8 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.constant.GameOption.BLACKJACK_CONDITION;
+
 public class Hand {
     private List<PlayingCard> playingCards;
 
@@ -18,5 +20,9 @@ public class Hand {
         return playingCards.stream()
                 .mapToInt(card -> card.addValue(0))
                 .sum();
+    }
+
+    public boolean isBurst() {
+        return getCardsNumberSum() > BLACKJACK_CONDITION;
     }
 }
