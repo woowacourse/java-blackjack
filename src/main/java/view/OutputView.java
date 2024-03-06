@@ -21,4 +21,8 @@ public class OutputView {
 
         System.out.println(builder);
     }
+
+    public void printCardStatus(final CardStatus status) {
+        System.out.print(status.getCardStatus());
+    }
 }

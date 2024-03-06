@@ -7,9 +7,6 @@ public record CardStatus(
         String name,
         List<Card> cards
 ) {
-    public Card getCardOf(final int index) {
-        return cards.get(index);
-    }
 
     public String getCardStatus() {
         StringBuilder builder = new StringBuilder();
@@ -38,5 +35,9 @@ public record CardStatus(
 
     private String getCardMessage(final Card card) {
         return card.getName() + card.getShape();
+    }
+
+    private Card getCardOf(final int index) {
+        return cards.get(index);
     }
 }

@@ -28,4 +28,28 @@ public class Game {
         player.add(cards.pick());
         return player.getCards();
     }
+
+    public CardStatus pickOneCard(final String name) {
+        Player foundPlayer = players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        foundPlayer.saveCard(cards.pick());
+        return new CardStatus(foundPlayer.getName(), foundPlayer.getCards());
+    }
+
+
+    public List<String> getPlayers() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public CardStatus getCurrentCardStatus(final String name) {
+        Player foundPlayer = players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        return new CardStatus(foundPlayer.getName(), foundPlayer.getCards());
+    }
 }
