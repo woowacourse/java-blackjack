@@ -13,6 +13,10 @@ public class Player {
         this.cards = new ArrayList<>(cards);
     }
 
+    public boolean isDrawable() {
+        return calculateScore() <= BLACKJACK_SCORE;
+    }
+
     public int calculateScore() {
         int score = cards.stream()
                 .mapToInt(Card::getMaxScore)
