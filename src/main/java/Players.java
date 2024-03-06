@@ -9,27 +9,21 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
-        validate(players);
-        this.players = players;
-    }
-
-    public static Players from(List<String> playerNames) {
-        List<Player> rawPlayers = new ArrayList<>();
+    public Players(List<String> playerNames) {
+        validate(playerNames);
+        players = new ArrayList<>();
         for (String playerName : playerNames) {
-            rawPlayers.add(new Player(playerName));
+            players.add(new Player(playerName));
         }
-        return new Players(rawPlayers);
     }
 
-    private void validate(List<Player> players) {
+    private void validate(List<String> players) {
         validateSize(players.size());
         validateDuplicatedNames(players);
     }
 
-    private void validateDuplicatedNames(List<Player> players) {
+    private void validateDuplicatedNames(List<String> players) {
         long nonDuplicatedCount = players.stream()
-                .map(Player::getPlayerName)
                 .distinct()
                 .count();
         if (nonDuplicatedCount != players.size()) {
