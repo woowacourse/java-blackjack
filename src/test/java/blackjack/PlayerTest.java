@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
     public void GamePlayer_Determine_max_number_sum_of_cards() {
-        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        var sut = PlayerFixture.플레이어_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
 
         var result = sut.calculateScore();
 
@@ -31,7 +32,7 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자 합이 21이 넘지 않으면 플레이어는 에이스를 11로 결정한다.")
     public void GamePlayer_Determine_ace_is_11_if_not_exceed_21() {
-        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE));
+        var sut = PlayerFixture.플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE));
 
         var result = sut.calculateScore();
 
@@ -41,21 +42,12 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
     public void GamePlayer_Determine_ace_is_1_if_exceed_21() {
-        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
+        var sut = PlayerFixture.플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
 
         var result = sut.calculateScore();
 
         assertThat(result).isEqualTo(16);
     }
 
-    private Cards 카드_목록_생성(List<CardValue> cardValues) {
-        return new Cards(cardValues.stream()
-                                   .map(cardValue -> new Card(cardValue, CardSymbol.DIAMOND))
-                                   .toList());
-    }
 
-    private GamePlayer 플레이어_생성(List<CardValue> cardValues) {
-        Name name = new Name("초롱");
-        return new GamePlayer(name, 카드_목록_생성(cardValues));
-    }
 }

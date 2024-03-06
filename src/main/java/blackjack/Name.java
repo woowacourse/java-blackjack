@@ -1,6 +1,6 @@
 package blackjack;
 
-class Name {
+public class Name {
     private String value;
 
     public Name(String value) {
