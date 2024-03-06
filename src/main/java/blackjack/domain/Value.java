@@ -20,4 +20,8 @@ public enum Value {
         }
         return values()[cardNumber];
     }
+
+    public int getScore(){
+        return score;
+    }
 }
