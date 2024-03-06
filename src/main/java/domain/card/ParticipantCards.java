@@ -33,7 +33,7 @@ public class ParticipantCards {
             .map(index -> (score + index * ACE_SPECIAL_SCORE))
             .filter(number -> number <= BLACKJACK_SCORE)
             .max()
-            .orElseThrow(() -> new IllegalStateException(""));
+            .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
     }
 
     private int initialScore() {
