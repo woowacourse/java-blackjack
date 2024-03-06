@@ -42,6 +42,8 @@ public class Players {
                 loses += 1;
                 playerResult.addResult(player, true);
             }
+
+            playerResult.addResult(player, true);
         }
         return GameResult.from(wins, loses, playerResult);
     }
