@@ -54,8 +54,18 @@ class Hand {
         return MAX_ACE_SCORE;
     }
 
+    public boolean isBust() {
+        return isBust(calculateScore());
+    }
+
     private boolean isBust(int score) {
         return score > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        int score = calculateScore();
+
+        return score == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

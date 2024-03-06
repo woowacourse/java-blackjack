@@ -65,4 +65,29 @@ class HandTest {
 
         assertThat(score).isEqualTo(21);
     }
+
+    @DisplayName("버스트 상태인지 알 수 있다.")
+    @Test
+    void isBust() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.JACK, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
+
+        boolean result = hand.isBust();
+
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("블랙잭 상태인지 알 수 있다.")
+    @Test
+    void isBlackJack() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+
+        boolean result = hand.isBlackJack();
+
+        assertThat(result).isTrue();
+    }
 }
