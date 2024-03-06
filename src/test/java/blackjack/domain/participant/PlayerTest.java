@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.Card;
 import blackjack.domain.Card.Shape;
 import blackjack.domain.Card.Value;
+import blackjack.domain.Deck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -62,6 +63,29 @@ class PlayerTest {
         Player player = new Player(CardsScore22, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isFalse();
+    }
+
+    @DisplayName("게임을 시작할 때는 카드를 두 장 뽑는다.")
+    @Test
+    void drawStartCardsTest() {
+        Player player = Player.from("name");
+        Deck deck = Deck.createOrderedDeck();
+
+        player.drawStartCards(deck);
+
+        assertThat(player.getCards()).hasSize(2);
+    }
+
+    @DisplayName("이미 카드를 가지고 있는 경우, 시작 카드를 뽑을 수 없다.")
+    @Test
+    void drawStartCardsTest_whenAlreadyStarted_throwException() {
+        Player player = Player.from("name");
+        Deck deck = Deck.createOrderedDeck();
+        player.drawStartCards(deck);
+
+        assertThatThrownBy(() -> player.drawStartCards(deck))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("이미 시작 카드를 뽑았습니다.");
     }
 
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑을 수 있다")
