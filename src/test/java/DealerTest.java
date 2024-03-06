@@ -1,9 +1,10 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class DealerTest {
+
     @DisplayName("카드를 한 장 받는다.")
     @Test
     void hitOneCard() {
@@ -14,7 +15,7 @@ public class DealerTest {
         assertThat(dealer.getCards().getCards()).contains(newCard);
     }
 
-    @DisplayName("점수가 16 이하인지 알려준다.")
+    @DisplayName("카드를 더 받을 수 있는지(Hit) 알려준다.")
     @Test
     void checkCanDealerHit() {
         Dealer dealer = new Dealer();
@@ -23,7 +24,7 @@ public class DealerTest {
         assertThat(dealer.canHit()).isTrue();
     }
 
-    @DisplayName("점수가 21 이하인지 알려준다.")
+    @DisplayName("패배(Bust)하지 않는 상황인지 알려준다.")
     @Test
     void checkUnderBustThreshold() {
         Dealer dealer = new Dealer();
@@ -32,7 +33,7 @@ public class DealerTest {
         assertThat(dealer.isNotBust()).isTrue();
     }
 
-    @DisplayName("점수가 21 초과인지 알려준다.")
+    @DisplayName("패배(Bust)한 상황인지 알려준다.")
     @Test
     void checkOverBustThreshold() {
         Dealer dealer = new Dealer();
