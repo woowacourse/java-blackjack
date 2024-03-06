@@ -15,7 +15,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new SequentialNumberGenerator(List.of(0, 0, 0, 0)));
 
         // when
-        dealer.doAction();
+        dealer.doAction(new SequentialNumberGenerator(List.of(0, 8, 0, 2)));
 
         // then
         int cardsTotal = dealer.getHand().calculateCardsTotal();
