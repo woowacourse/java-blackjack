@@ -18,4 +18,8 @@ public class Dealer extends Participant {
     public boolean isNecessaryMoreCard() {
         return calculateScore() < DEALER_MIN_SCORE_POLICY;
     }
+
+    public void shuffle() {
+        cardDeck.shuffle();
+    }
 }

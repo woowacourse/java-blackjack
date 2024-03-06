@@ -42,4 +42,13 @@ public class Players {
                 .map(Player::new)
                 .toList();
     }
+
+    public void giveCardToPlayer(int playerIndex, Card card) {
+        Player player = players.get(playerIndex);
+        player.add(card);
+    }
+
+    public int count() {
+        return this.players.size();
+    }
 }
