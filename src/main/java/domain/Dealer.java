@@ -3,8 +3,10 @@ package domain;
 
 public class Dealer extends Gamer {
     private static final int HIT_CONDITION = 17;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
+        this.name = new Name(DEALER_NAME);
     }
 
     @Override

@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 abstract class Gamer {
+    Name name;
     Hand hand;
 
     public Gamer() {
@@ -13,7 +14,9 @@ abstract class Gamer {
 
     public int calculateTotalScore() {
         return hand.sum();
-    };
+    }
+
+    ;
 
     public boolean isBust() {
         return hand.isOverBlackJack();
