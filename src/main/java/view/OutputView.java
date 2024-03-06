@@ -25,4 +25,10 @@ public class OutputView {
     public void printCardStatus(final CardStatus status) {
         System.out.print(status.getCardStatus());
     }
+
+    public void printDealerPickMessage(final int count) {
+        for (int index = 0; index < count; index++) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
 }

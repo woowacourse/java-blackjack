@@ -2,6 +2,7 @@ package controller;
 
 import controller.dto.CardStatus;
 import domain.Game;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -18,12 +19,18 @@ public class GameController {
     public void run() {
         Game game = start();
         startRound(game);
+        giveCardToDealer(game);
     }
 
     private Game start() {
         List<String> names = inputView.enterPlayerNames();
+        List<String> savingNames = new ArrayList<>();
+        for (String name : names) {
+            savingNames.add(name);
+        }
+        savingNames.add("딜러");
 
-        Game game = new Game(names);
+        Game game = new Game(savingNames);
         outputView.printAfterStartGame(game.start());
         return game;
     }
@@ -40,5 +47,10 @@ public class GameController {
             }
             outputView.printCardStatus(status);
         }
+    }
+
+    private void giveCardToDealer(final Game game) {
+        int count = game.giveCardsToDealer();
+        outputView.printDealerPickMessage(count);
     }
 }
