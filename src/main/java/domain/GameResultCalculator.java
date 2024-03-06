@@ -9,6 +9,15 @@ public class GameResultCalculator {
      * @return baseGamer의 otherGamer 에 대한 승부 결과
      */
     public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
+        if (baseGamer.isDead() && otherGamer.isDead()) {
+            return GameResult.TIE;
+        }
+        if (baseGamer.isDead()) {
+            return GameResult.LOSE;
+        }
+        if (otherGamer.isDead()) {
+            return GameResult.WIN;
+        }
         if (baseGamer.getSummationCardPoint().isBiggerThan(otherGamer.getSummationCardPoint())) {
             return GameResult.WIN;
         }

@@ -1,5 +1,9 @@
 package domain;
 
+import static domain.GameResult.LOSE;
+import static domain.GameResult.TIE;
+import static domain.GameResult.WIN;
+
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,38 +12,24 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultCalculatorTest {
+    private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(new Card(CardName.SIX, CardType.HEART));
+    private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(new Card(CardName.SEVEN, CardType.HEART));
+    private static final HoldingCards DEAD_CARDS = HoldingCards.of(
+            new Card(CardName.JACK, CardType.HEART),
+            new Card(CardName.QUEEN, CardType.HEART),
+            new Card(CardName.TWO, CardType.HEART)
+    );
+
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(
-                Arguments.of(
-                        new Gamer("게이머1", HoldingCards.of(
-                                new Card(CardName.SEVEN, CardType.HEART)
-                        )),
-                        new Gamer("게이머2", HoldingCards.of(
-                                new Card(CardName.SIX, CardType.HEART)
-                        )),
-                        GameResult.WIN
-                ),
-                Arguments.of(
-                        new Gamer("게이머1", HoldingCards.of(
-                                new Card(CardName.SIX, CardType.HEART)
-                        )),
-                        new Gamer("게이머2", HoldingCards.of(
-                                new Card(CardName.SEVEN, CardType.HEART)
-                        )),
-                        GameResult.LOSE
-                ),
-                Arguments.of(
-                        new Gamer("게이머1", HoldingCards.of(
-                                new Card(CardName.SEVEN, CardType.HEART)
-                        )),
-                        new Gamer("게이머2", HoldingCards.of(
-                                new Card(CardName.SEVEN, CardType.DIAMOND)
-                        )),
-                        GameResult.TIE
-                )
+                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SIX_HEART), WIN),
+                Arguments.of(new Gamer("게이머1", ONLY_SIX_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), TIE),
+                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", DEAD_CARDS), WIN),
+                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", DEAD_CARDS), TIE)
         );
     }
-
 
     @ParameterizedTest
     @MethodSource("getGameResultParameters")

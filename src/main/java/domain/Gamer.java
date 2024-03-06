@@ -37,4 +37,8 @@ public class Gamer {
     public int getRawSummationCardPoint() {
         return holdingCards.calculateTotalPoint().summationCardPoint();
     }
+
+    public boolean isDead() {
+        return holdingCards.calculateTotalPoint().isBiggerThan(new SummationCardPoint(21));
+    }
 }
