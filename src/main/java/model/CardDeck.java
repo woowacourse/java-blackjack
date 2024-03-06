@@ -18,7 +18,7 @@ public class CardDeck {
 
     public int calculateHand() {
         return cards.stream()
-                .map(Card::getNumberValue)
+                .map(Card::getCardActualValue)
                 .reduce(Integer::sum)
                 .orElse(0);
     }

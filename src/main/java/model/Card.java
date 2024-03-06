@@ -20,7 +20,7 @@ public class Card {
         return new Card(number, emblem);
     }
 
-    public int getNumberValue() {
+    public int getCardActualValue() {
         return number.getValue();
     }
 
