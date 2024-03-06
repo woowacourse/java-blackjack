@@ -55,7 +55,7 @@ public class BlackjackService {
     }
 
     public void addCardToPlayer(int playerIndex) {
-        participants.receiveCard(allCardDeck.pickRandomCard(), playerIndex);
+        participants.receivePlayerCard(allCardDeck.pickRandomCard(), playerIndex);
     }
 
     public void addCardToDealer() {

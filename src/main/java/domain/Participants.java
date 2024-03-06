@@ -19,7 +19,7 @@ public class Participants {
         this.players = players;
     }
 
-    public void receiveCard(Card card, int playerIndex) {
+    public void receivePlayerCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }
 
