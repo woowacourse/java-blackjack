@@ -25,4 +25,8 @@ public class HoldingCards {
     public void add(Card card) {
         holdingCards.add(card);
     }
+
+    List<Card> getHoldingCards() {
+        return holdingCards;
+    }
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Gamer {
     private final String name;
     private final HoldingCards holdingCards;
@@ -22,5 +24,17 @@ public class Gamer {
 
     public SummationCardPoint getSummationCardPoint() {
         return holdingCards.calculateTotalPoint();
+    }
+
+    public String getRawName() {
+        return name;
+    }
+
+    public List<Card> getRawHoldingCards() {
+        return holdingCards.getHoldingCards();
+    }
+
+    public int getRawSummationCardPoint() {
+        return holdingCards.calculateTotalPoint().summationCardPoint();
     }
 }
