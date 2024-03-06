@@ -17,6 +17,10 @@ public class Player {
         playerCards.append(card);
     }
 
+    public boolean isBusted() {
+        return playerCards.isBusted();
+    }
+
     public List<Card> getCards() {
         return playerCards.getCards();
     }
@@ -25,7 +29,7 @@ public class Player {
         return playerCards.calculateScore();
     }
 
-    public boolean isBusted() {
-        return playerCards.isBusted();
+    public String getName() {
+        return name;
     }
 }

@@ -5,6 +5,7 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Deck {
             Arrays.stream(Value.values())
                     .forEach(value -> cards.add(new Card(shape, value)));
         }
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 

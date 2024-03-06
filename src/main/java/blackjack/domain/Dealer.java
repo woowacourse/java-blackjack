@@ -23,6 +23,10 @@ public class Dealer {
         }
     }
 
+    public boolean isBusted() {
+        return player.isBusted();
+    }
+
     public List<Card> getCards() {
         return player.getCards();
     }
@@ -31,7 +35,15 @@ public class Dealer {
         return player.getScore();
     }
 
-    public boolean isBusted() {
-        return player.isBusted();
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Card getFirstCard() {
+        List<Card> cards = getCards();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("아무 카드도 뽑지 않았습니다.");
+        }
+        return cards.get(0);
     }
 }

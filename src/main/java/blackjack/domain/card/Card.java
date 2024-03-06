@@ -8,4 +8,12 @@ public record Card(Shape shape, Value value) {
     public boolean isAce() {
         return value == Value.ACE;
     }
+
+    public String getShapeDescription() {
+        return shape.getDescription();
+    }
+
+    public String getValueDescription() {
+        return value.getDescription();
+    }
 }
