@@ -5,19 +5,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class NumberTest {
+class RankTest {
 
     @DisplayName("인덱스로 카드 번호를 찾아 반환한다.")
     @Test
     void findNumberByIndex() {
         // given
         int kingIndex = 11;
-        Number expected = Number.KING;
+        Rank expected = Rank.KING;
 
         // when
-        Number number = Number.findBy(kingIndex);
+        Rank rank = Rank.findBy(kingIndex);
 
         // then
-        assertThat(number).isEqualTo(expected);
+        assertThat(rank).isEqualTo(expected);
     }
 }

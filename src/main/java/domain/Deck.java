@@ -11,7 +11,7 @@ public class Deck {
 
     public Deck() {
         Stack<Card> deck = Stream.of(Symbol.values())
-                .flatMap(symbol -> Stream.of(Number.values())
+                .flatMap(symbol -> Stream.of(Rank.values())
                         .map(number -> new Card(symbol, number)))
                 .collect(Collectors.toCollection(Stack::new));
         Collections.shuffle(deck);

@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Arrays;
 
-public enum Number {
+public enum Rank {
     ACE,
     TWO,
     THREE,
@@ -18,8 +18,8 @@ public enum Number {
     KING;
 
 
-    public static Number findBy(final int index) {
-        return Arrays.stream(Number.values())
+    public static Rank findBy(final int index) {
+        return Arrays.stream(Rank.values())
                 .filter(number -> number.ordinal() == index)
                 .findFirst()
                 .orElseThrow();

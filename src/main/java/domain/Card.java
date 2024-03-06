@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Card {
     private final Symbol symbol;
-    private final Number number;
+    private final Rank rank;
 
-    public Card(final Symbol symbol, final Number number) {
+    public Card(final Symbol symbol, final Rank rank) {
         this.symbol = symbol;
-        this.number = number;
+        this.rank = rank;
     }
 
     public Symbol getSymbol() {
         return symbol;
     }
 
-    public Number getNumber() {
-        return number;
+    public Rank getNumber() {
+        return rank;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && number == card.number;
+        return symbol == card.symbol && rank == card.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(symbol, rank);
     }
 }

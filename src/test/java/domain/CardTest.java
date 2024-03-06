@@ -12,15 +12,15 @@ public class CardTest {
     void createCardTest() {
         // given
         Symbol expectedSymbol = Symbol.HEART;
-        Number expectedNumber = Number.QUEEN;
+        Rank expectedRank = Rank.QUEEN;
 
         // when
-        Card card = new Card(expectedSymbol, expectedNumber);
+        Card card = new Card(expectedSymbol, expectedRank);
         Symbol symbol = card.getSymbol();
-        Number number = card.getNumber();
+        Rank rank = card.getNumber();
 
         // then
         assertThat(symbol).isEqualTo(Symbol.HEART);
-        assertThat(number).isEqualTo(Number.QUEEN);
+        assertThat(rank).isEqualTo(Rank.QUEEN);
     }
 }
