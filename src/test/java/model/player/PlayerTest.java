@@ -6,7 +6,6 @@ import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
-import model.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,8 @@ class PlayerTest {
     @DisplayName("카드 여러 개를 추가할 수 있다.")
     @Test
     void addCards() {
-        List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.FIVE));
+        List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
+                new Card(CardShape.CLOVER, CardNumber.FIVE));
         player.addCards(cards);
         assertThat(player.getCards()).hasSize(2);
     }

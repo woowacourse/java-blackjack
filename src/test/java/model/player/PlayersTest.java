@@ -1,7 +1,5 @@
 package model.player;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 import model.card.Cards;
 import org.assertj.core.api.Assertions;
@@ -15,9 +13,9 @@ class PlayersTest {
     void validateDealerOverOne() {
         Assertions.assertThatThrownBy(() ->
                         new Players(List.of(new Dealer(),
-                        new Dealer(),
-                        new Participant("켬미")),
-                        new Cards()))
+                                new Dealer(),
+                                new Participant("켬미")),
+                                new Cards()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

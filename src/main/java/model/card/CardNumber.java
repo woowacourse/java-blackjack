@@ -3,7 +3,7 @@ package model.card;
 import java.util.List;
 
 public enum CardNumber {
-    ACE(List.of(1,11)),
+    ACE(List.of(1, 11)),
     TWO(List.of(2)),
     THREE(List.of(3)),
     FOUR(List.of(4)),
@@ -31,7 +31,4 @@ public enum CardNumber {
         this.numbers = numbers;
     }
 
-    public List<Integer> getNumbers() {
-        return numbers.stream().sorted().toList();
-    }
 }

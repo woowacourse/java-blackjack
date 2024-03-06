@@ -43,7 +43,6 @@ public abstract class Player implements NoticeStatus {
                 .map(Card::subtractMaxMinNumber)
                 .filter(subtractNumber -> subtractNumber != 0)
                 .toList();
-
     }
 
     private static int sumIfUnderMaximum(Integer result, Integer number) {

@@ -40,17 +40,17 @@ public class BlackJack {
         if (participant.isOverMaximumSum()) {
             return GameResult.LOSE;
         }
-        if(dealer.isOverMaximumSum()) {
+        if (dealer.isOverMaximumSum()) {
             return GameResult.WIN;
         }
         return findResultByMinimumDifference(participant.findPlayerDifference(), dealer.findPlayerDifference());
     }
 
     private GameResult findResultByMinimumDifference(int participantDifference, int dealerDifference) {
-        if(participantDifference > dealerDifference) {
+        if (participantDifference > dealerDifference) {
             return GameResult.LOSE;
         }
-        if(participantDifference < dealerDifference) {
+        if (participantDifference < dealerDifference) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;

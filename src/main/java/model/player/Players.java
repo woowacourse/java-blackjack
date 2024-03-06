@@ -33,6 +33,7 @@ public class Players {
     }
 
     public void offerCardToPlayer(String name, int cardCount) {
+        //TODO : 인덴트 줄이기
         for (Player player : players) {
             if (player.isSameName(name)) {
                 player.addCards(cards.selectRandomCards(cardCount));
@@ -43,6 +44,7 @@ public class Players {
 
     public Map<Player, Integer> sumCardNumbersWithoutDealer() {
         Map<Player, Integer> sumPlayers = new LinkedHashMap<>();
+        //TODO : 인덴트 줄이기
         for (Player player : players) {
             if (!player.isDealer()) {
                 sumPlayers.put(player, player.sumCardNumbers());
