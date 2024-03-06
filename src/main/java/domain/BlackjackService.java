@@ -43,7 +43,7 @@ public class BlackjackService {
         for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
             initialCards.add(makeInitialDeck());
         }
-        participants.receiveInitialCards(initialCards);
+        participants.receiveInitialDecks(initialCards);
     }
 
     private Deck makeInitialDeck() {

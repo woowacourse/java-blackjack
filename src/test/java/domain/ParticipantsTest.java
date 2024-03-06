@@ -1,7 +1,5 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -48,7 +46,7 @@ class ParticipantsTest {
         deck3.addCard(new Card(Shape.DIAMOND, Rank.TWO));
 
 
-        participants.receiveInitialCards(
+        participants.receiveInitialDecks(
                 new ArrayList<>(List.of(deck1, deck2, deck3))
         );
 

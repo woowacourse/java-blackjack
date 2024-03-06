@@ -17,14 +17,6 @@ public class Participants {
         this.dealer = dealer;
         this.players = players;
     }
-
-    public int count() {
-        return players.size() + DEALER_COUNT;
-    }
-
-    public int countPlayers() {
-        return players.size();
-    }
     public void receiveCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }
@@ -33,7 +25,7 @@ public class Participants {
         dealer.receiveCard(card);
     }
 
-    public void receiveInitialCards(List<Deck> decks) {
+    public void receiveInitialDecks(List<Deck> decks) {
         Deck dealerDeck = decks.remove(decks.size() - 1);
         dealer.receiveDeck(dealerDeck);
 
@@ -43,15 +35,13 @@ public class Participants {
         }
     }
 
-
-
     public Map<Player, Boolean> calculateResult() {
         Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, calculateResult(player)));
+        players.forEach(player -> result.put(player, calculateVictory(player)));
         return result;
     }
 
-    private boolean calculateResult(Player player) {
+    private boolean calculateVictory(Player player) {
         if (player.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
             return false;
         }
@@ -67,6 +57,14 @@ public class Participants {
 
     public boolean isDealerNotOver() {
         return dealer.isNotOver(DEALER_BOUNDARY_SCORE);
+    }
+
+    public int count() {
+        return players.size() + DEALER_COUNT;
+    }
+
+    public int countPlayers() {
+        return players.size();
     }
 
     public Name getPlayerName(int playerIndex) {
