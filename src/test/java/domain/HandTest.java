@@ -1,6 +1,5 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +61,6 @@ public class HandTest {
         hand.addCard(card);
 
         // Then
-        Assertions.assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
-
+        assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
     }
 }
