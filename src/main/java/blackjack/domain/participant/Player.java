@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
+import java.util.List;
 
 public class Player implements Participant {
 
@@ -15,12 +17,18 @@ public class Player implements Participant {
         this.hand = new Hand();
     }
 
-    public void addCard(final Card... cards) {
-        hand.add(cards);
+    public List<Card> getHandCards() {
+        return this.hand.getCards();
     }
 
     @Override
     public boolean canReceiveCard() {
         return hand.calculateScore() < BLACKJACK_BOUND;
+    }
+
+    @Override
+    public void draw(final Deck deck) {
+        Card card = deck.drawn();
+        hand.add(card);
     }
 }

@@ -14,6 +14,10 @@ public class Deck {
         shuffleStrategy.shuffle(cards);
     }
 
+    public Card drawn() {
+        return cards.remove(0);
+    }
+
     public List<Card> getCards() {
         return cards;
     }
