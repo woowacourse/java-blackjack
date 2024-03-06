@@ -20,7 +20,6 @@ public class Player {
         return getTotalScore() > BLACK_JACK;
     }
 
-
     public boolean isHittable() {
         return getTotalScore() < BLACK_JACK;
     }
@@ -32,4 +31,9 @@ public class Player {
     public Hand getHand() {
         return hand;
     }
+
+    public Name getName() {
+        return name;
+    }
+
 }
