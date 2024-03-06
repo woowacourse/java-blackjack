@@ -26,4 +26,8 @@ public class Players {
     public List<String> getNames() {
         return values.stream().map(Player::getName).toList();
     }
+
+    public List<Player> getValues() {
+        return values;
+    }
 }

@@ -19,6 +19,16 @@ public class Player {
         }
     }
 
+    public void deal(CardPicker cardPicker) {
+        cardPicker.pick(2)
+                .forEach(cards::addCard);
+    }
+
+    public void hit(CardPicker cardPicker) {
+        cardPicker.pick(1)
+                .forEach(cards::addCard);
+    }
+
     public String getName() {
         return name;
     }
