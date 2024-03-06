@@ -21,7 +21,7 @@ class BlackJackTest {
 
     @DisplayName("참가자에게 카드를 준다.")
     @Test
-    void offerCardToPlayer() {
+    void offerCardToPlayers() {
         Players players = new Players(List.of(new Participant("배키"), new Dealer()), new Cards());
         BlackJack blackJack = new BlackJack(players);
         blackJack.offerCardToPlayers(2);
@@ -30,6 +30,21 @@ class BlackJackTest {
         assertAll(
                 () -> assertThat(result.get(0).getCards()).hasSize(2),
                 () -> assertThat(result.get(1).getCards()).hasSize(2)
+        );
+    }
+
+
+    @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
+    @Test
+    void offerCardToPlayer() {
+        Players players = new Players(List.of(new Participant("배키"), new Dealer()), new Cards());
+        BlackJack blackJack = new BlackJack(players);
+        blackJack.offerCardToPlayer("배키", 1);
+        List<Player> result = players.getPlayers();
+
+        assertAll(
+                () -> assertThat(result.get(0).getCards()).hasSize(1),
+                () -> assertThat(result.get(1).getCards()).hasSize(0)
         );
     }
 
@@ -68,5 +83,4 @@ class BlackJackTest {
         Map<Player, GameResult> result = blackJack.findResult();
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
     }
-
 }

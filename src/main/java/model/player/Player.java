@@ -61,5 +61,9 @@ public abstract class Player implements NoticeStatus {
         return Math.abs(MAXIMUM_SUM - sumCardNumbers());
     }
 
+    public boolean isSameName(String name) {
+        return this.name.equals(name);
+    }
+
     public abstract boolean isDealer();
 }

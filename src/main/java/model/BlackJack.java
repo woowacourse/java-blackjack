@@ -19,6 +19,10 @@ public class BlackJack {
         players.offerCardToPlayers(cardCount);
     }
 
+    public void offerCardToPlayer(String name, int cardCount) {
+        players.offerCardToPlayer(name, cardCount);
+    }
+
     public Map<Player, GameResult> findResult() {
         Map<Player, Integer> sumPlayers = players.sumCardNumbersWithoutDealer();
 

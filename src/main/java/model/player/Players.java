@@ -32,6 +32,15 @@ public class Players {
         }
     }
 
+    public void offerCardToPlayer(String name, int cardCount) {
+        for (Player player : players) {
+            if (player.isSameName(name)) {
+                player.addCards(cards.selectRandomCards(cardCount));
+                return;
+            }
+        }
+    }
+
     public Map<Player, Integer> sumCardNumbersWithoutDealer() {
         Map<Player, Integer> sumPlayers = new LinkedHashMap<>();
         for (Player player : players) {
