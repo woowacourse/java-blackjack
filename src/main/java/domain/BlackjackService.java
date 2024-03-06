@@ -66,7 +66,6 @@ public class BlackjackService {
         participants.receiveDealerCard(allCardDeck.pickRandomCard());
     }
 
-
     public Map<Player, Boolean> calculateVictory() {
         return participants.calculateResult();
     }

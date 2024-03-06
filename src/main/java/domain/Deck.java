@@ -13,6 +13,7 @@ public class Deck {
     public Deck() {
         this.cards = new LinkedList<>();
     }
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -43,7 +44,7 @@ public class Deck {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.isSameRank(Rank.ACE));
+                .anyMatch(Card::isAce);
     }
 
     public int size() {

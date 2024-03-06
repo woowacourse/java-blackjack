@@ -1,11 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.Name;
-import domain.BlackjackService;
-import domain.Player;
-import domain.Rank;
-import domain.Shape;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -13,6 +13,10 @@ public enum Rank {
         this.rankName = rankName;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getScore() {
         return score;
     }

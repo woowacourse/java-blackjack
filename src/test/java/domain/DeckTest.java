@@ -1,9 +1,5 @@
-import domain.Card;
-import domain.Deck;
-import domain.Name;
-import domain.Player;
-import domain.Rank;
-import domain.Shape;
+package domain;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

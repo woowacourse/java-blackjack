@@ -9,6 +9,7 @@ public class Participants {
     public static final int MAX_BOUNDARY_SCORE = 21;
     private static final int DEALER_COUNT = 1;
     private static final int DEALER_BOUNDARY_SCORE = 17;
+
     private final Player dealer;
     private final List<Player> players;
 
@@ -17,6 +18,7 @@ public class Participants {
         this.dealer = dealer;
         this.players = players;
     }
+
     public void receiveCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }
