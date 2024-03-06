@@ -24,5 +24,3 @@ public class HandTest {
         assertThat(hand.calculate()).isEqualTo(13);
     }
 }
-
-

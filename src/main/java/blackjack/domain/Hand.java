@@ -11,21 +11,32 @@ public class Hand {
     }
 
     public int calculate() {
-        int sum = hand.stream()
-                .mapToInt(card -> card.getNumber().getValue())
-                .sum();
+        int aceCounts = getAceCounts();
 
-        long aceCounts = hand.stream()
-                .filter(Card::isAce)
-                .count();
+        return calculateCardNumber(aceCounts);
+    }
 
-        for (int i = 0; i < aceCounts; i++) {
-            if (sum + 10 > 21) {
-                break;
-            }
-
+    private int calculateCardNumber(int aceCounts) {
+        int sum = calculateWithDefaultAceNumber();
+        for (int i = 0; i < aceCounts && isBurst(sum); i++) {
             sum += 10;
         }
         return sum;
+    }
+
+    private int getAceCounts() {
+        return (int) hand.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateWithDefaultAceNumber() {
+        return hand.stream()
+                .mapToInt(card -> card.getNumber().getValue())
+                .sum();
+    }
+
+    private boolean isBurst(int sum) {
+        return sum + 10 > 21;
     }
 }
