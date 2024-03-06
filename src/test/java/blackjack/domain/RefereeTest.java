@@ -72,4 +72,30 @@ public class RefereeTest {
         // then
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
+
+    @Test
+    @DisplayName("딜러의 합과 플레이어의 합이 같으면 무승부이다.")
+    void playerDrawWhenSameBlackjackTest() {
+        // given
+        CardPicker playerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+            }
+        };
+        CardPicker dealerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+            }
+        };
+
+        // when
+        player.deal(playerCardPicker);
+        dealer.deal(dealerCardPicker);
+        GameResult gameResult = referee.judgeGameResult(player);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.DRAW);
+    }
 }

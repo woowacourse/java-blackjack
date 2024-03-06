@@ -16,6 +16,9 @@ public class Referee {
         if (player.getScore() > dealer.getScore()) {
             return GameResult.WIN;
         }
+        if (dealer.getScore() == player.getScore()) {
+            return GameResult.DRAW;
+        }
         return GameResult.LOSE;
     }
 }
