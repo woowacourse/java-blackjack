@@ -29,4 +29,15 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("중복되는 이름 가진 참가자가 있으면 예외가 발생한다.")
+    @Test
+    void validate() {
+        Assertions.assertThatThrownBy(() ->
+                        new Players(List.of(
+                                new Dealer(),
+                                new Participant("켬미"),
+                                new Participant("켬미")),
+                                new Cards()))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

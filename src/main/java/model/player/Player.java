@@ -3,6 +3,7 @@ package model.player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 
 public abstract class Player implements NoticeStatus {
@@ -22,6 +23,8 @@ public abstract class Player implements NoticeStatus {
             throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
         }
     }
+
+    public abstract boolean isDealer();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
@@ -71,5 +74,20 @@ public abstract class Player implements NoticeStatus {
         return this.name.equals(name);
     }
 
-    public abstract boolean isDealer();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

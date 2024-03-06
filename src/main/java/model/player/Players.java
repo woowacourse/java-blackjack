@@ -1,9 +1,9 @@
 package model.player;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import model.card.Cards;
 
@@ -14,6 +14,7 @@ public class Players {
 
     public Players(List<Player> players, Cards cards) {
         validateOneDealer(players);
+        validateNotDuplicatedPlayer(players);
         this.players = players;
         this.cards = cards;
     }
@@ -24,6 +25,13 @@ public class Players {
                 .count();
         if (count != 1) {
             throw new IllegalArgumentException("딜러는 한 명만 있어야 합니다.");
+        }
+    }
+
+    private void validateNotDuplicatedPlayer(List<Player> players) {
+        Set<Player> distinctPlayers = new HashSet<>(players);
+        if (distinctPlayers.size() != players.size()) {
+            throw new IllegalArgumentException("참가자들의 이름은 중복되면 안됩니다.");
         }
     }
 
@@ -42,7 +50,7 @@ public class Players {
     }
 
     public Map<Player, Integer> sumCardNumbersWithoutDealer() { //TODO Player(리스트)만 넘겨줘도 되는 거 아닌가?
-            return players.stream().filter(player -> !player.isDealer())
+        return players.stream().filter(player -> !player.isDealer())
                 .collect(Collectors.toMap(
                         player -> player,
                         Player::sumCardNumbers
