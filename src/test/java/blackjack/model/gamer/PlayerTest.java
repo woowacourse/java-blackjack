@@ -2,10 +2,10 @@ package blackjack.model.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Card;
-import blackjack.model.CardNumber;
-import blackjack.model.CardPattern;
-import blackjack.model.CardProperties;
+import blackjack.model.card.Card;
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.CardPattern;
+import blackjack.model.card.CardProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

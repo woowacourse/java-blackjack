@@ -1,6 +1,6 @@
 package blackjack.model.gamer;
 
-import blackjack.model.Card;
+import blackjack.model.card.Card;
 import blackjack.model.Deck;
 import blackjack.model.GameRule;
 import java.util.List;
