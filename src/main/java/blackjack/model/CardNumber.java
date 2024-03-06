@@ -5,7 +5,6 @@ import java.util.List;
 
 public enum CardNumber {
 
-    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -17,7 +16,8 @@ public enum CardNumber {
     TEN(10),
     KING(10),
     QUEEN(10),
-    JACK(10);
+    JACK(10),
+    ACE(11);
 
     private final int number;
 
