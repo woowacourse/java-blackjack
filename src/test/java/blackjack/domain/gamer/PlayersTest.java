@@ -3,10 +3,21 @@ package blackjack.domain.gamer;
 import static java.util.List.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+
+	@Test
+	@DisplayName("유효한 입력에 대해서는 예외가 발생되지 않는다.")
+	void validPlayerNamesTest() {
+		assertThatCode(() -> new Players(List.of("a", "b")))
+			.doesNotThrowAnyException();
+		assertThatCode(() -> new Players(List.of("a", "b", "c", "d", "e", "f", "g", "h")))
+			.doesNotThrowAnyException();
+	}
 
 	@Test
 	@DisplayName("플레이어의 이름은 중복을 허용하지 않는다.")
