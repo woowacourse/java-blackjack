@@ -23,4 +23,8 @@ public class Participant {
     private boolean hasAceAsEleven(final int total) {
         return hand.hasAce() && total + 10 <= 21;
     }
+
+    public Cards cards() {
+        return hand;
+    }
 }

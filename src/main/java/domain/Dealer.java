@@ -16,4 +16,8 @@ public class Dealer extends Participant {
     public void shuffle(){
         deck.shuffle();
     }
+
+    public void deal(final Participant participant) {
+        participant.receive(drawCard());
+    }
 }
