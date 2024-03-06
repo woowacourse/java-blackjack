@@ -12,4 +12,12 @@ public class Card {
     public String getSignature() {
         return number.getSymbol() + shape.getValue();
     }
+
+    public int getScore() {
+        return number.getScore();
+    }
+
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
 }
