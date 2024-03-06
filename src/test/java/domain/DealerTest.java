@@ -1,11 +1,10 @@
 package domain;
 
 import java.util.List;
-import java.util.Scanner;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import view.InputView;
 
 class DealerTest {
 
@@ -15,10 +14,10 @@ class DealerTest {
         //given
         final Players players = Players.from(List.of("레디", "제제"));
         final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(players, cardDeck);
+        final Dealer dealer = new Dealer(cardDeck);
 
         //when
-        dealer.startDeal();
+        dealer.startDeal(players);
 
         //then
         Assertions.assertThat(players.getNames()).allMatch(player -> player.getPacketSize() == 2);
@@ -34,12 +33,12 @@ class DealerTest {
         final Players players = new Players(List.of(redddy, zeze));
 
         final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(players, cardDeck);
-        dealer.startDeal();
+        final Dealer dealer = new Dealer(cardDeck);
+        dealer.startDeal(players);
 
         //when
-        dealer.hitOrStay("y", redddy);
-        dealer.hitOrStay("n", zeze);
+        dealer.deal(redddy, Answer.HIT);
+        dealer.deal(zeze, Answer.STAY);
 
         //then
         Assertions.assertThat(redddy.getPacketSize()).isEqualTo(3);
