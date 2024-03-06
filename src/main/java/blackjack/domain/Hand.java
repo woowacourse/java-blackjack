@@ -4,10 +4,18 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int INITIAL_COUNTS = 2;
     private final List<Card> hand;
 
     public Hand(List<Card> cards) {
+        validateCardCounts(cards);
         this.hand = cards;
+    }
+
+    private void validateCardCounts(List<Card> cards) {
+        if (cards.size() != INITIAL_COUNTS) {
+            throw new IllegalArgumentException(String.format("초기 핸드는 %d장만 가질 수 있습니다.", INITIAL_COUNTS));
+        }
     }
 
     public int calculate() {
@@ -38,5 +46,9 @@ public class Hand {
 
     private boolean isBurst(int sum) {
         return sum + 10 > 21;
+    }
+
+    public void put(Card card) {
+        hand.add(card);
     }
 }
