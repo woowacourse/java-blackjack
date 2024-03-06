@@ -20,7 +20,7 @@ public class CardTest {
         Rank rank = card.getNumber();
 
         // then
-        assertThat(symbol).isEqualTo(Symbol.HEART);
-        assertThat(rank).isEqualTo(Rank.QUEEN);
+        assertThat(symbol).isEqualTo(expectedSymbol);
+        assertThat(rank).isEqualTo(expectedRank);
     }
 }
