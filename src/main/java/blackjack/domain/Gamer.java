@@ -37,4 +37,8 @@ public abstract class Gamer {
     public List<Card> getCards() {
         return cards.getValues();
     }
+
+    public int getScore() {
+        return cards.totalScore();
+    }
 }

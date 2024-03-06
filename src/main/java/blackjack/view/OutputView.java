@@ -14,11 +14,13 @@ public class OutputView {
     }
 
     public static void printDealCards(String name, List<Card> cards) {
-        String cardFormat = cards.stream()
+        System.out.printf("%s카드 : %s%n", name, formatCards(cards));
+    }
+
+    private static String formatCards(List<Card> cards) {
+        return cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(", "));
-
-        System.out.printf("%s카드 : %s%n", name, cardFormat);
     }
 
     public static void printDealCard(String name, Card card) {
@@ -31,5 +33,9 @@ public class OutputView {
 
     public static void printDealerHitAnnounce() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printGamerCards(String name, List<Card> cards, int totalScore) {
+        System.out.printf("%s 카드: %s - 결과: %d%n", name, formatCards(cards), totalScore);
     }
 }

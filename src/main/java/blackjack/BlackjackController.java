@@ -30,7 +30,12 @@ public class BlackjackController {
             OutputView.printDealerHitAnnounce();
         }
 
-        
+        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
+        for (Player player : players.getValues()) {
+            OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore());
+        }
+
+
     }
 
     private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
