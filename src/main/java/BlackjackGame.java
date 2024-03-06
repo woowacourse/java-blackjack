@@ -57,7 +57,7 @@ public class BlackjackGame {
     }
 
     private void handleResult(BlackjackService blackjackService) {
-        outputView.printResult(blackjackService.getDealer(), blackjackService.getPlayers());
-        outputView.printVictory(blackjackService.calculateVictory());
+        outputView.printScoreResult(blackjackService.getDealer(), blackjackService.getPlayers());
+        outputView.printResult(blackjackService.calculateVictory());
     }
 }
