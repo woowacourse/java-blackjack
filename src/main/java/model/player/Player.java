@@ -47,7 +47,7 @@ public abstract class Player implements NoticeStatus {
     }
 
     private static int sumIfUnderMaximum(Integer result, Integer number) {
-        if (result + number <= 21) {
+        if (result + number <= MAXIMUM_SUM) {
             return result + number;
         }
         return result;
