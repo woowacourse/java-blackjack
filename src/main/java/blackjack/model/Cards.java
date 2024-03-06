@@ -58,15 +58,20 @@ public class Cards {
         return calculateScore() > threshold;
     }
 
+
+    public int countSize() {
+        return cards.size();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore() == 21;
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
     public Card getFirstCard() {
         return cards.get(0);
-    }
-
-    public int countSize() {
-        return cards.size();
     }
 }

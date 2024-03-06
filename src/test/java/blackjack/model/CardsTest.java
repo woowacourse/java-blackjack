@@ -74,4 +74,11 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
         assertThat(cards.countSize()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("2장의 카드로 21인 경우 블랙잭이다.")
+    void isBlackJack() {
+        Cards cards = new Cards(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)));
+        assertThat(cards.isBlackJack()).isTrue();
+    }
 }
