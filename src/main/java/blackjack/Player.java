@@ -1,18 +1,15 @@
 package blackjack;
 
-
 public class Player {
-    private static final Integer RECEIVE_SIZE = 21;
-
-    private final Name name;
-    private final Cards cards;
+    protected final Name name;
+    protected final Cards cards;
 
     public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public int determineMaxSum() {
+    public int calculateScore() {
         int sum = cards.sum();
         if (cards.containAce() && sum <= 11) {
             return sum + 10;
@@ -20,7 +17,7 @@ public class Player {
         return sum;
     }
 
-    public boolean isReceivable() {
-        return cards.sum() < RECEIVE_SIZE;
+    public String getName() {
+        return name.asString();
     }
 }
