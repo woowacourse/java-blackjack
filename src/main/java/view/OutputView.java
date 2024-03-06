@@ -1,26 +1,33 @@
 package view;
 
 import dto.DealerHandsDto;
-import dto.PlayerHandsDto;
+import dto.PlayerDto;
+import dto.PlayersDto;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 public class OutputView {
 
     private final String FORM = "%s카드: %s";
 
-    public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayerHandsDto playerHandsDto) {
+    public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayersDto playersDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
-        final Set<String> playerNames = playerHandsDto.getPlayerHands().keySet();
+
+        final List<String> playerNames = playersDto.getNames();
         System.out.println("딜러와 " + format(playerNames) + " 에게 2장을 나누었습니다.");
+
         System.out.println("딜러: " + dealerCard);
-        Map<String, List<String>> playerHands = playerHandsDto.getPlayerHands();
-        for (Entry<String, List<String>> stringListEntry : playerHands.entrySet()) {
-            System.out.printf(FORM, stringListEntry.getKey(), format(stringListEntry.getValue()));
+
+        for (PlayerDto playerDto : playersDto.getPlayers()) {
+            System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
             System.out.println();
         }
+        System.out.println();
+    }
+
+    public void printHands(final PlayerDto playerDto) {
+        System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
+        System.out.println();
     }
 
     private String format(final Set<String> playerNames) {

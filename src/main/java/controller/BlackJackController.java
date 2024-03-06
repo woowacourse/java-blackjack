@@ -5,7 +5,8 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Player;
 import dto.DealerHandsDto;
-import dto.PlayerHandsDto;
+import dto.PlayerDto;
+import dto.PlayersDto;
 import domain.Players;
 import view.InputView;
 import view.OutputView;
@@ -25,10 +26,15 @@ public class BlackJackController {
         final Dealer dealer = new Dealer(cardDeck);
 
         dealer.startDeal(players);
-        outputView.printStartDeal(DealerHandsDto.from(dealer), PlayerHandsDto.from(players));
+        outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
 
         for (Player player : players.getNames()) {
-            dealer.deal(player, Answer.from(inputView.readAnswer(player.getName())));
+            Answer answer = Answer.from(inputView.readAnswer(player.getName()));
+            dealer.deal(player, answer);
+
+            if (Answer.HIT.equals(answer)) {
+                outputView.printHands(PlayerDto.from(player));
+            }
         }
     }
 }

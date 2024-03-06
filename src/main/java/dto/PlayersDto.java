@@ -1,0 +1,35 @@
+package dto;
+
+import domain.Player;
+import domain.Players;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayersDto {
+
+    private final List<PlayerDto> players;
+
+    private PlayersDto(final List<PlayerDto> players) {
+        this.players = players;
+    }
+
+    public static PlayersDto from(final Players players) {
+        List<PlayerDto> result = new ArrayList<>();
+        for (Player player : players.getNames()) {
+            result.add(PlayerDto.from(player));
+        }
+
+        return new PlayersDto(result);
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(PlayerDto::getName)
+                .toList();
+    }
+
+    public List<PlayerDto> getPlayers() {
+        return players;
+    }
+}
