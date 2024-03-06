@@ -1,7 +1,9 @@
 package model;
 
-import java.util.LinkedHashMap;
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Map;
+import java.util.Map.Entry;
 import model.player.Player;
 import model.player.Players;
 
@@ -18,37 +20,35 @@ public class BlackJack {
     }
 
     public Map<Player, GameResult> findResult() {
-        Map<Player, GameResult> result = new LinkedHashMap<>();
-
         Map<Player, Integer> sumPlayers = players.sumCardNumbersWithoutDealer();
-
         Player dealer = players.getDealer();
         int dealerResultSum = dealer.sumCardNumbers();
 
-        for (Player player : sumPlayers.keySet()) {
-            Integer sum = sumPlayers.get(player);
-            int participantDifference = 21 - sum;
-            int dealerDifference = Math.abs(21 - dealerResultSum);
-
-            if(sum > 21) {
-                if(dealerResultSum > 21) {
-                    result.put(player, GameResult.DRAW);
-                    continue;
-                }
-                result.put(player, GameResult.LOSE);
-                continue;
-            }
-            if(dealerResultSum > 21) {
-                result.put(player, GameResult.WIN);
-                continue;
-            }
-            result.put(player, findGameResult(participantDifference, dealerDifference));
-        }
-
-        return result;
+        return sumPlayers.entrySet().stream()
+                .collect(toMap(
+                        Entry::getKey,
+                        sumPlayer -> findGameResult(dealerResultSum, sumPlayer.getValue())
+                ));
     }
 
-    private GameResult findGameResult(int participantDifference, int dealerDifference) {
+    private GameResult findGameResult(int dealerResultSum, int participantSum) {
+        int dealerDifference = Math.abs(21 - dealerResultSum);
+        int participantDifference = 21 - participantSum;
+
+        if (participantSum > 21 && dealerResultSum > 21) {
+            return GameResult.DRAW;
+        }
+        if (participantSum > 21) {
+            return GameResult.LOSE;
+        }
+        if(dealerResultSum > 21) {
+            return GameResult.WIN;
+        }
+
+        return findResultByMinimumDifference(participantDifference, dealerDifference);
+    }
+
+    private GameResult findResultByMinimumDifference(int participantDifference, int dealerDifference) {
         if(participantDifference > dealerDifference) {
             return GameResult.LOSE;
         }
