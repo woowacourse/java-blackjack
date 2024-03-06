@@ -42,13 +42,13 @@ public class Participants {
     }
 
     private boolean calculateVictory(Player player) {
-        if (player.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
+        if (player.calculateScore() > MAX_BOUNDARY_SCORE) {
             return false;
         }
-        if (dealer.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
+        if (dealer.calculateScore() > MAX_BOUNDARY_SCORE) {
             return true;
         }
-        return dealer.getDeck().calculateTotalScore() < player.getDeck().calculateTotalScore();
+        return dealer.calculateScore() < player.calculateScore();
     }
 
     public boolean isPlayerNotOver(int playerIndex) {
@@ -60,7 +60,7 @@ public class Participants {
     }
 
     public int count() {
-        return players.size() + DEALER_COUNT;
+        return countPlayers() + DEALER_COUNT;
     }
 
     public int countPlayers() {
@@ -71,11 +71,9 @@ public class Participants {
         return players.get(playerIndex).getName();
     }
 
-
     public Player getPlayer(int playerIndex) {
         return players.get(playerIndex);
     }
-
 
     public Player getDealer() {
         return dealer;

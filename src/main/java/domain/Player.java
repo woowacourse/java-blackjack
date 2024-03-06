@@ -24,15 +24,19 @@ public class Player {
         deck.addCard(card);
     }
 
+    public int calculateScore() {
+        return deck.calculateTotalScore();
+    }
+
+    public boolean isNotOver(int boundaryScore) {
+        return deck.calculateTotalScore() < boundaryScore;
+    }
+
     public Name getName() {
         return name;
     }
 
     public Deck getDeck() {
         return deck;
-    }
-
-    public boolean isNotOver(int boundaryScore) {
-        return deck.calculateTotalScore() < boundaryScore;
     }
 }

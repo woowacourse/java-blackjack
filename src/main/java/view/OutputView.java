@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private void printScore(Player player) {
-        System.out.printf(" - 결과: %d\n", player.getDeck().calculateTotalScore());
+        System.out.printf(" - 결과: %d\n", player.calculateScore());
     }
 
     public void printDealerOneMoreCard() {
