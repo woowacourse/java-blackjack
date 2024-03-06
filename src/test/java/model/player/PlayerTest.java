@@ -6,6 +6,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,38 @@ class PlayerTest {
                 return false;
             }
         };
+    }
+
+    @DisplayName("딜러의 이름이 공백이면 예외가 발생한다.")
+    @Test
+    void validateBlankName() {
+        Assertions.assertThatThrownBy(() -> new Player("") {
+            @Override
+            public boolean isDealer() {
+                return false;
+            }
+
+            @Override
+            public boolean receiveCard() {
+                return false;
+            }
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("딜러의 이름이 null이면 예외가 발생한다.")
+    @Test
+    void validateNullName() {
+        Assertions.assertThatThrownBy(() -> new Player(null) {
+            @Override
+            public boolean isDealer() {
+                return false;
+            }
+
+            @Override
+            public boolean receiveCard() {
+                return false;
+            }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("초기 사람이 가지고 있는 카드 수는 0이다.")

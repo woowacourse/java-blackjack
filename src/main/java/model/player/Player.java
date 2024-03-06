@@ -12,8 +12,15 @@ public abstract class Player implements NoticeStatus {
     protected List<Card> cards;
 
     public Player(String name) {
+        validateName(name);
         this.name = name;
         this.cards = new ArrayList<>();
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
+        }
     }
 
     public List<Card> getCards() {
