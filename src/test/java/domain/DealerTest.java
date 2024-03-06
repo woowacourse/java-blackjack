@@ -12,7 +12,6 @@ public class DealerTest {
     @Test
     void drawTest() {
         // given
-        Dealer dealer = new Dealer();
         Card card1 = new Card(Symbol.DIAMOND, Rank.THREE);
         Card card2 = new Card(Symbol.HEART, Rank.THREE);
         Card card3 = new Card(Symbol.CLOVER, Rank.TEN);
@@ -21,6 +20,8 @@ public class DealerTest {
 
         SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5);
         Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Dealer dealer = new Dealer(decks);
 
         int expectedSize = 4;
 
@@ -35,7 +36,6 @@ public class DealerTest {
     @Test
     void calculateScoreTest() {
         // given
-        Dealer dealer = new Dealer();
         Card card1 = new Card(Symbol.DIAMOND, Rank.THREE);
         Card card2 = new Card(Symbol.HEART, Rank.THREE);
         Card card3 = new Card(Symbol.CLOVER, Rank.TEN);
@@ -43,6 +43,8 @@ public class DealerTest {
 
         SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4);
         Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Dealer dealer = new Dealer(decks);
         dealer.hit(decks);
 
         int expectedScore = 17;
@@ -58,14 +60,14 @@ public class DealerTest {
     @Test
     void isBustTest() {
         // given
-        Dealer dealer = new Dealer();
-
         Card card1 = new Card(Symbol.HEART, Rank.NINE);
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
         SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3);
         Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Dealer dealer = new Dealer(decks);
         dealer.hit(decks);
         dealer.hit(decks);
         dealer.hit(decks);

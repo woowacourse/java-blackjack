@@ -2,7 +2,8 @@ package domain;
 
 public class Player extends Gamer {
 
-    public Player(final Name name) {
+    public Player(final Name name,Decks decks) {
+        super(decks);
         this.name = name;
     }
 

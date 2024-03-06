@@ -6,8 +6,11 @@ abstract class Gamer {
     Name name;
     Hand hand;
 
-    public Gamer() {
+    public Gamer(Decks decks) {
         this.hand = new Hand();
+        for (int i = 0; i < 2; i++) {
+            hand.add(decks.draw());
+        }
     }
 
     abstract void hit(final Decks decks);
@@ -15,8 +18,6 @@ abstract class Gamer {
     public int calculateTotalScore() {
         return hand.sum();
     }
-
-    ;
 
     public boolean isBust() {
         return hand.isOverBlackJack();

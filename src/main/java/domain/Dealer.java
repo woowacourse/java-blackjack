@@ -5,7 +5,8 @@ public class Dealer extends Gamer {
     private static final int HIT_CONDITION = 17;
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer() {
+    public Dealer(Decks decks) {
+        super(decks);
         this.name = new Name(DEALER_NAME);
     }
 
