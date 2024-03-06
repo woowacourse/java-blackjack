@@ -4,7 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.player.Players;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

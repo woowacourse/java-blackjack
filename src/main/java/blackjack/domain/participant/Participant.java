@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.participant;
 
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
