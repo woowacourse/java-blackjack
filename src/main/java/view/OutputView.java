@@ -1,5 +1,6 @@
 package view;
 
+import domain.Dealer;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
@@ -27,6 +28,10 @@ public class OutputView {
     public void printHands(final PlayerDto playerDto) {
         System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
         System.out.println();
+    }
+
+    public void printDealer(final Dealer dealer) {
+
     }
 
     private String format(final List<String> playerNames) {

@@ -27,10 +27,20 @@ public class Dealer {
         }
     }
 
+    public void deal() {
+        while (hands.sum() <= 16) {
+            hands.add(cardDeck.pop());
+        }
+    }
+
     public List<String> getCards() {
         return hands.getCards()
                 .stream()
                 .map(Card::toString)
                 .toList();
+    }
+
+    public int getTotalCardSum() {
+        return hands.sum();
     }
 }
