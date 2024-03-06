@@ -4,9 +4,9 @@ public class Player {
     private final Name name;
     private final Hands hands;
 
-    public Player(Name name, Hands hands) {
+    public Player(Name name) {
         this.name = name;
-        this.hands = hands;
+        this.hands = new Hands();
     }
 
     void addCard(Card card) {
