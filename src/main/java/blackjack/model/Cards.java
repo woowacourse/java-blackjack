@@ -65,4 +65,8 @@ public class Cards {
     public Card getFirstCard() {
         return cards.get(0);
     }
+
+    public int countSize() {
+        return cards.size();
+    }
 }

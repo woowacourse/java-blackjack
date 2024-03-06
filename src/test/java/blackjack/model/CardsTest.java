@@ -67,4 +67,11 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
         assertThat(cards.isBust(21)).isTrue();
     }
+
+    @Test
+    @DisplayName("카드의 개수를 반환한다.")
+    void countCardsSize() {
+        Cards cards = new Cards(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
+        assertThat(cards.countSize()).isEqualTo(3);
+    }
 }
