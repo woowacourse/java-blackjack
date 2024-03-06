@@ -26,4 +26,26 @@ public class HandTest {
                 () -> assertThat(result.get(0)).isEqualTo(expectedCard)
         );
     }
+
+    @DisplayName("가지고 있는 카드의 총 합계 점수를 구한다.")
+    @Test
+    void sumScoreTest() {
+        // given
+        int expectedScore = 21;
+
+        Hand hand = new Hand();
+        Card card1 = new Card(Symbol.HEART, Rank.TWO);
+        Card card2 = new Card(Symbol.CLOVER, Rank.NINE);
+        Card card3 = new Card(Symbol.SPADE, Rank.QUEEN);
+
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+
+        // when
+        int result = hand.sum();
+
+        // then
+        assertThat(result).isEqualTo(expectedScore);
+    }
 }

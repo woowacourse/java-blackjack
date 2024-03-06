@@ -11,6 +11,10 @@ public class Card {
         this.rank = rank;
     }
 
+    public int getScore() {
+        return rank.getScore();
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }

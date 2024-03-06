@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum Symbol {
     HEART,
     CLOVER,
-    SPACE,
+    SPADE,
     DIAMOND;
 
     public static Symbol findBy(int index) {
