@@ -13,6 +13,10 @@ public class Dealer {
         }
     }
 
+    public void addCards(CardGenerator cardGenerator) {
+        cards.addCard(cardGenerator.drawCards());
+    }
+
     public Cards getCards() {
         return cards;
     }

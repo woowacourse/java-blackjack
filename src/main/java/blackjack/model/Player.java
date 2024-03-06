@@ -13,6 +13,10 @@ public class Player {
         cards.addCard(cardGenerator.drawCard());
     }
 
+    public void addCards(CardGenerator cardGenerator) {
+        cards.addCard(cardGenerator.drawCards());
+    }
+
     public Cards getCards() {
         return cards;
     }
