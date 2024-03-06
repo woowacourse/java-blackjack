@@ -1,5 +1,6 @@
 package domain;
 
+import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -16,7 +17,7 @@ class CardsTest {
 
     @Test
     void 카드를_받을_수_있다() {
-        cards.addCard(new Card(Denomination.KING, Emblem.HEART));
+        cards.addCard(카드());
 
         assertThat(cards).extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(1);
@@ -24,8 +25,8 @@ class CardsTest {
 
     @Test
     void 카드의_합을_계산한다() {
-        cards.addCard(new Card(Denomination.KING, Emblem.HEART));
-        cards.addCard(new Card(Denomination.SIX, Emblem.DIAMOND));
+        cards.addCard(카드(Denomination.TEN));
+        cards.addCard(카드(Denomination.SIX));
 
         int result = cards.sumAll();
 
@@ -34,8 +35,8 @@ class CardsTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_1() {
-        cards.addCard(new Card(Denomination.ACE, Emblem.HEART));
-        cards.addCard(new Card(Denomination.SIX, Emblem.DIAMOND));
+        cards.addCard(카드(Denomination.ACE));
+        cards.addCard(카드(Denomination.SIX));
 
         int result = cards.sumAll();
 
@@ -44,8 +45,8 @@ class CardsTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_2() {
-        cards.addCard(new Card(Denomination.ACE, Emblem.HEART));
-        cards.addCard(new Card(Denomination.ACE, Emblem.DIAMOND));
+        cards.addCard(카드(Denomination.ACE));
+        cards.addCard(카드(Denomination.ACE));
 
         int result = cards.sumAll();
 
@@ -54,9 +55,9 @@ class CardsTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_3() {
-        cards.addCard(new Card(Denomination.ACE, Emblem.HEART));
-        cards.addCard(new Card(Denomination.KING, Emblem.DIAMOND));
-        cards.addCard(new Card(Denomination.JACK, Emblem.SPADE));
+        cards.addCard(카드(Denomination.ACE));
+        cards.addCard(카드(Denomination.KING));
+        cards.addCard(카드(Denomination.JACK));
 
         int result = cards.sumAll();
 

@@ -1,5 +1,6 @@
 package domain;
 
+import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ class DealerTest {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
 
-        dealer.add(new Card(Denomination.KING, Emblem.DIAMOND));
-        dealer.add(new Card(Denomination.SIX, Emblem.SPADE));
+        dealer.add(카드(Denomination.KING));
+        dealer.add(카드(Denomination.SIX));
 
         int result = dealer.calculateScore();
 
@@ -33,8 +34,8 @@ class DealerTest {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
 
-        dealer.add(new Card(Denomination.TEN, Emblem.DIAMOND));
-        dealer.add(new Card(Denomination.SIX, Emblem.SPADE));
+        dealer.add(카드(Denomination.TEN));
+        dealer.add(카드(Denomination.SIX));
 
         boolean result = dealer.isNecessaryMoreCard();
         assertThat(result).isTrue();
@@ -45,8 +46,8 @@ class DealerTest {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
 
-        dealer.add(new Card(Denomination.TEN, Emblem.DIAMOND));
-        dealer.add(new Card(Denomination.SEVEN, Emblem.SPADE));
+        dealer.add(카드(Denomination.NINE));
+        dealer.add(카드(Denomination.EIGHT));
 
         boolean result = dealer.isNecessaryMoreCard();
         assertThat(result).isFalse();

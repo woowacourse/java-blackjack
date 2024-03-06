@@ -1,5 +1,6 @@
 package domain;
 
+import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -10,7 +11,7 @@ class PlayerTest {
     void 전달받은_카드를_패에_추가한다() {
         Player player = new Player("pobi");
 
-        player.add(new Card(Denomination.FIVE, Emblem.DIAMOND));
+        player.add(카드());
 
         assertThat(player).extracting("cards")
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))
