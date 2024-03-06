@@ -8,7 +8,8 @@ public class Dealer extends Player {
         super(new Name("딜러"), hand);
     }
 
-    public boolean canHit() {
+    @Override
+    public boolean isHittable() {
         return this.getTotalScore() <= MAX_SCORE_TO_HIT;
     }
 }
