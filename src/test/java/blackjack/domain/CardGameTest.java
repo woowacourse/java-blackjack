@@ -11,7 +11,7 @@ public class CardGameTest {
     @Test
     void 카드_한_장을_플레이어에게_지급한다() {
         Player player = new Player();
-        Card card = new Card();
+        Card card = new Card(CardNumber.ACE, CardShape.SPADE);
 
         CardGame cardGame = new CardGame();
         cardGame.giveCard(player, card);
