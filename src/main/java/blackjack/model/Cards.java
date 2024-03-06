@@ -8,11 +8,7 @@ public class Cards {
     private static final int EXTRA_SCORE = 10;
     private static final int WINNING_SCORE = 21;
 
-    private final List<Card> cards;
-
-    public Cards(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public int calculateScore() {
         int score = calculate();
@@ -24,6 +20,10 @@ public class Cards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void addCard(List<Card> cardsToAdd) {
+        cards.addAll(cardsToAdd);
     }
 
     public boolean isGreaterThanWinningScore() {

@@ -19,7 +19,8 @@ class CardsTest {
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards(cards);
+        Cards given = new Cards();
+        given.addCard(cards);
 
         int score = given.calculateScore();
 
@@ -34,8 +35,8 @@ class CardsTest {
                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards(cards);
-
+        Cards given = new Cards();
+        given.addCard(cards);
         int score = given.calculateScore();
 
         assertThat(score).isEqualTo(12);
@@ -49,7 +50,9 @@ class CardsTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards given = new Cards(cards);
+
+        Cards given = new Cards();
+        given.addCard(cards);
 
         boolean result = given.isGreaterThanWinningScore();
 
@@ -63,7 +66,8 @@ class CardsTest {
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards(cards);
+        Cards given = new Cards();
+        given.addCard(cards);
         Card card = new Card(CardNumber.ACE, CardShape.SPADE);
 
         given.addCard(card);

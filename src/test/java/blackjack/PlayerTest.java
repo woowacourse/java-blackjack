@@ -20,7 +20,8 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards(given);
+        Cards cards = new Cards();
+        cards.addCard(given);
         Player player = new Player("daon", cards);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
 

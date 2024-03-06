@@ -20,7 +20,8 @@ class DealerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards(given);
+        Cards cards = new Cards();
+        cards.addCard(given);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
         Dealer dealer = new Dealer(cards);
 
@@ -36,7 +37,8 @@ class DealerTest {
                 new Card(CardNumber.SEVEN, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards(given);
+        Cards cards = new Cards();
+        cards.addCard(given);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
         Dealer dealer = new Dealer(cards);
 
