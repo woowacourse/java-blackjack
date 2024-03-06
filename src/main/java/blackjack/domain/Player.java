@@ -22,4 +22,9 @@ public class Player {
     public boolean isDead() {
         return hand.getSum() > 21;
     }
+
+    // TODO : 꼭 필요한 메서드일까?
+    public int getScore() {
+        return hand.getSum();
+    }
 }
