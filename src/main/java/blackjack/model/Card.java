@@ -5,12 +5,11 @@ import java.util.Random;
 public class Card {
     private final Suit suit;
     private final Denomination denomination;
-    private final Random random;
+    private final Random random = new Random();
 
     public Card() {
         this.suit = generateSuit();
         this.denomination = generateDenomination();
-        this.random = new Random();
     }
 
     protected Suit generateSuit() {
