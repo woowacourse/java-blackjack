@@ -1,3 +1,7 @@
+package view;
+
+import domain.Name;
+
 import java.util.List;
 import java.util.Scanner;
 

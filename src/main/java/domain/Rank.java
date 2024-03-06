@@ -1,3 +1,5 @@
+package domain;
+
 public enum Rank {
     ACE(1, "1"),
     TWO(2 , "2"),
