@@ -1,7 +1,11 @@
 package controller;
 
 import controller.dto.CardStatus;
+import controller.dto.CardsStatus;
+import domain.Dealer;
 import domain.Game;
+import domain.Participant;
+import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -18,21 +22,40 @@ public class GameController {
 
     public void run() {
         Game game = start();
-        startRound(game);
-        giveCardToDealer(game);
+        if (game.isNotDealerBlackJack()) {
+            startRound(game);
+            giveCardToDealer(game);
+        }
+        List<Integer> scores = new ArrayList<>();
+        scores.add(game.getParticipant().dealer().calculateScore());
+        for (Player player : game.getParticipant().players()) {
+            scores.add(player.calculateScore());
+        }
+        outputView.printResult(getCurrentCardsStatus(game), scores);
     }
 
     private Game start() {
         List<String> names = inputView.enterPlayerNames();
-        List<String> savingNames = new ArrayList<>();
-        for (String name : names) {
-            savingNames.add(name);
-        }
-        savingNames.add("딜러");
+        Dealer dealer = new Dealer("딜러");
 
-        Game game = new Game(savingNames);
-        outputView.printAfterStartGame(game.start());
+        Game game = new Game(dealer, names);
+        outputView.printAfterStartGame(game.initiateGameCondition());
         return game;
+    }
+
+    private CardsStatus getCurrentCardsStatus(final Game game) {
+        List<CardStatus> cardStatuses = new ArrayList<>();
+
+        Participant participant = game.getParticipant();
+        Dealer dealer = participant.dealer();
+        List<Player> players = participant.players();
+
+        cardStatuses.add(new CardStatus(dealer.getName(), dealer.getCards()));
+        for (Player player : players) {
+            cardStatuses.add(new CardStatus(player.getName(), player.getCards()));
+        }
+
+        return new CardsStatus(cardStatuses);
     }
 
     private void startRound(final Game game) {

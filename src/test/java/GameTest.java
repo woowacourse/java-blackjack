@@ -1,16 +1,18 @@
+import static org.assertj.core.api.Assertions.assertThat;
+
 import controller.dto.CardStatus;
 import controller.dto.CardsStatus;
 import domain.Card;
 import domain.Cards;
 import domain.Dealer;
 import domain.Game;
+import domain.Participant;
 import domain.Player;
 import domain.constants.CardValue;
 import domain.constants.Shape;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,13 +21,14 @@ class GameTest {
     @Test
     void startBlackJack() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
-        Game game = new Game(playerNames);
+        Dealer dealer = new Dealer("딜러");
+        Game game = new Game(dealer, playerNames);
 
-        CardsStatus cardsStatus = game.start();
+        CardsStatus cardsStatus = game.initiateGameCondition();
         List<CardStatus> statuses = cardsStatus.status();
 
         for (CardStatus status : statuses) {
-            Assertions.assertThat(status.cards().size()).isEqualTo(2);
+            assertThat(status.cards()).hasSize(2);
         }
     }
 
@@ -34,21 +37,22 @@ class GameTest {
     void giveCardsUntilDealerScoreOverThreshold() {
         // given
         Dealer dealer = new Dealer("딜러");
-        dealer.add(new Card(CardValue.FIVE, Shape.DIAMOND));
-        dealer.add(new Card(CardValue.FIVE, Shape.CLOVER));
-        List<Player> players = List.of(dealer);
+        dealer.saveCard(new Card(CardValue.FIVE, Shape.DIAMOND));
+        dealer.saveCard(new Card(CardValue.FIVE, Shape.CLOVER));
+        List<Player> players = List.of(new Player("pobi"));
+        Participant participant = new Participant(dealer, players);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardValue.THREE, Shape.DIAMOND));
         cards.add(new Card(CardValue.THREE, Shape.CLOVER));
         cards.add(new Card(CardValue.TWO, Shape.HEART));
 
-        Game game = new Game(players, new Cards(cards));
+        Game game = new Game(participant, new Cards(cards));
 
         // when
         int count = game.giveCardsToDealer();
 
         // then
-        Assertions.assertThat(count).isEqualTo(3);
+        assertThat(count).isEqualTo(3);
     }
 }

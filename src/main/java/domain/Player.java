@@ -19,20 +19,19 @@ public class Player {
         }
     }
 
-    public void add(final Card card) {
-        cards.add(card);
-    }
-
     public void saveCard(final Card card) {
         cards.add(card);
     }
 
-
     public int calculateScore() {
         return cards.stream()
-                .map(card -> card.getScore())
+                .map(Card::getScore)
                 .mapToInt(score -> score)
                 .sum();
+    }
+
+    public boolean isBlackJack(final int blackJackScore) {
+        return this.calculateScore() == blackJackScore;
     }
 
     public int getTotalSize() {

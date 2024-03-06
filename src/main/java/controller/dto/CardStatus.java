@@ -2,13 +2,14 @@ package controller.dto;
 
 import domain.Card;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record CardStatus(
         String name,
         List<Card> cards
 ) {
 
-    public String getCardStatus() {
+    public String getCardInitStatus() {
         StringBuilder builder = new StringBuilder();
         if (name.equals("딜러")) {
             return buildDealerStatus(builder);
@@ -16,28 +17,44 @@ public record CardStatus(
         return buildGamerStatus(builder);
     }
 
+    public String getCardFinalStatus() {
+        StringBuilder builder = new StringBuilder();
+        if (name.equals("딜러")) {
+            return buildDealerFinalStatus(builder);
+        }
+        return buildGamerStatus(builder);
+    }
+
+    private String buildDealerFinalStatus(final StringBuilder builder) {
+        builder.append("딜러 카드: ");
+        builder.append(buildCardStatusMessage());
+        return builder.toString();
+    }
+
     private String buildDealerStatus(final StringBuilder builder) {
         builder.append("딜러: ");
-        builder.append(getCardMessage(getCardOf(0)));
-        builder.append(name());
+        builder.append(getCardMessage(getFirstCard()));
         return builder.toString();
     }
 
     private String buildGamerStatus(final StringBuilder builder) {
         builder.append(name);
         builder.append("카드: ");
-        builder.append(getCardMessage(getCardOf(0)));
-        builder.append(", ");
-        builder.append(getCardMessage(getCardOf(1)));
-        builder.append("\n");
+        builder.append(buildCardStatusMessage());
         return builder.toString();
+    }
+
+    private String buildCardStatusMessage() {
+        return cards.stream()
+                .map(this::getCardMessage)
+                .collect(Collectors.joining(", "));
     }
 
     private String getCardMessage(final Card card) {
         return card.getName() + card.getShape();
     }
 
-    private Card getCardOf(final int index) {
-        return cards.get(index);
+    private Card getFirstCard() {
+        return cards.get(0);
     }
 }
