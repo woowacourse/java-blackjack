@@ -1,5 +1,10 @@
 package blackjack.model;
 
+import static blackjack.model.Score.ACE;
+import static blackjack.model.Score.EIGHT;
+import static blackjack.model.Score.FIVE;
+import static blackjack.model.Score.FOUR;
+import static blackjack.model.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -18,8 +23,8 @@ class PlayersTest {
     void createPlayers() {
         List<String> names = List.of("리브", "몰리");
         List<Cards> cards = List.of(
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR))
+                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThatCode(() -> Players.from(names, cards));
     }
@@ -28,17 +33,17 @@ class PlayersTest {
     @MethodSource("InvalidNames")
     void createPlayersByOutBound(List<String> names) {
         List<Cards> cards = List.of(
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR)),
-                new Cards(List.of(Deck.CLOVER_ACE, Deck.CLOVER_FOUR))
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
 
         assertThatIllegalArgumentException()

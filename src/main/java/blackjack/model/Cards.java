@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private final List<Deck> cards;
+    private final List<Card> cards;
 
-    public Cards(final List<Deck> cards) {
+    public Cards(final List<Card> cards) {
         validateSize(cards);
         this.cards = new ArrayList<>(cards);
     }
 
-    private void validateSize(final List<Deck> cards) {
+    private void validateSize(final List<Card> cards) {
         if (cards.size() < 2) {
             throw new IllegalArgumentException("카드는 두 장 이상이어야 합니다.");
         }
     }
 
-    public Cards addCard(final Deck card) {
+    public Cards addCard(final Card card) {
         cards.add(card);
         return new Cards(cards);
     }
@@ -39,21 +39,21 @@ public class Cards {
 
     private int calculateBaseScore() {
         return cards.stream()
-                .mapToInt(Deck::getScore)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(Deck::isAce)
+                .filter(Card::isAce)
                 .count();
     }
 
-    public List<Deck> getCards() {
+    public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public Deck getFirstCard() {
+    public Card getFirstCard() {
         return cards.get(0);
     }
 }

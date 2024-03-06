@@ -18,7 +18,7 @@ public class Player {
         }
     }
 
-    public void receiveCard(final Deck card) {
+    public void receiveCard(final Card card) {
         this.cards = cards.addCard(card);
     }
 
@@ -30,7 +30,7 @@ public class Player {
         return name;
     }
 
-    public List<Deck> openCards() {
+    public List<Card> openCards() {
         return cards.getCards();
     }
 }

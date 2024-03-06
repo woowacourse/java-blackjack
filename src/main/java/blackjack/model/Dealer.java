@@ -12,7 +12,7 @@ public class Dealer extends Player {
         return false;
     }
 
-    public Deck openCard() {
+    public Card openCard() {
         return cards.getFirstCard();
     }
 }
