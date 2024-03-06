@@ -10,6 +10,9 @@ public class Referee {
 
 
     public GameResult judgeGameResult(Player player) {
+        if (player.isBurst()) {
+            return GameResult.LOSE;
+        }
         if (player.getScore() > dealer.getScore()) {
             return GameResult.WIN;
         }
