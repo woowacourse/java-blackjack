@@ -13,4 +13,12 @@ public class Participants {
         this.players = new Players(playersName, handGenerator);
         this.dealer = new Dealer(handGenerator);
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
 }
