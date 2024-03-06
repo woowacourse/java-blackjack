@@ -36,6 +36,8 @@ public class BlackjackGame {
 
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, deck));
+
+        printAddDealerCard(dealer, deck);
     }
 
     private String makeCardOutput(final Card card) {
@@ -71,6 +73,13 @@ public class BlackjackGame {
 
         if (choice.equals("n")) {
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+        }
+    }
+
+    private void printAddDealerCard(final Dealer dealer, final Deck deck) {
+        if (dealer.canReceiveCard()) {
+            dealer.draw(deck);
+            outputView.printAddDealerCard(dealer.getName());
         }
     }
 }
