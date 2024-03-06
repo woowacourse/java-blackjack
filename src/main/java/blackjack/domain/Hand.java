@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int SCORE_GOAL = 21;
+
+    public static final int BLACKJACK_BOUND = 21;
     private static final int MAX_ACE_SCORE = 11;
 
     private final List<Card> cards;
@@ -22,7 +23,7 @@ public class Hand {
         long aceCount = countAce();
         int scoreWithoutAce = calculateScoreWithoutAce();
 
-        int residualScore = SCORE_GOAL - scoreWithoutAce;
+        int residualScore = BLACKJACK_BOUND - scoreWithoutAce;
 
         int quotient = residualScore / MAX_ACE_SCORE;
         long minAceCount = Math.min(quotient, aceCount);
