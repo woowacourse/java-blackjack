@@ -15,7 +15,8 @@ public class PlayerTest {
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
     public void Player_Instance_create_with_name_and_cards() {
         Name name = new Name("초롱");
-        Cards cards = new Cards(List.of(CardValue.EIGHT, CardValue.FOUR));
+        Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
+                new Card(CardValue.ACE, CardSymbol.DIAMOND)));
 
         assertThatCode(() -> new Player(name, cards)).doesNotThrowAnyException();
     }
@@ -23,9 +24,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
     public void Player_Determine_max_number_sum_of_cards() {
-        Name name = new Name("초롱");
-        Cards cards = new Cards(List.of(CardValue.EIGHT, CardValue.FOUR));
-        var sut = new Player(name, cards);
+        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
 
         var result = sut.determineMaxSum();
 
@@ -72,8 +71,14 @@ public class PlayerTest {
         assertFalse(result);
     }
 
+    private Cards 카드_목록_생성(List<CardValue> cardValues) {
+        return new Cards(cardValues.stream()
+                                   .map(cardValue -> new Card(cardValue, CardSymbol.DIAMOND))
+                                   .toList());
+    }
+
     private Player 플레이어_생성(List<CardValue> cardValues) {
         Name name = new Name("초롱");
-        return new Player(name, new Cards(cardValues));
+        return new Player(name, 카드_목록_생성(cardValues));
     }
 }
