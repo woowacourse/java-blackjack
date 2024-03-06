@@ -8,6 +8,7 @@ public class Deck {
 
     private static final Random RANDOM  = new Random();
     private static final int ACE_BONUS_SCORE = 10;
+
     private final List<Card> cards;
 
     public Deck() {
@@ -24,12 +25,6 @@ public class Deck {
         return cards.remove(cardIndex);
     }
 
-    private void validateDeck() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드가 없습니다.");
-        }
-    }
-
     public int calculateTotalScore() {
         validateDeck();
         int totalScore = cards.stream()
@@ -40,6 +35,12 @@ public class Deck {
             totalScore += ACE_BONUS_SCORE;
         }
         return totalScore;
+    }
+
+    private void validateDeck() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 없습니다.");
+        }
     }
 
     private boolean hasAce() {
