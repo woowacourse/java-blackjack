@@ -18,7 +18,9 @@ public class BlackJackController {
             while ("y".equals(InputView.inputDraw(participant.getName()))) {
                 participant.receiveCard(deck.draw());
                 OutputView.printCard(participant);
-                //TODO : 버스트면 자동으로 아웃
+                if (!participant.canHit()) {
+                    break;
+                }
             }
         }
         while (dealer.shouldHit()) {
