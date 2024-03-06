@@ -10,4 +10,8 @@ public enum CardShape {
     CardShape(String shape) {
         this.shape = shape;
     }
+
+    public String getShape() {
+        return shape;
+    }
 }

@@ -20,8 +20,11 @@ public class Card {
         return cardNumber.getScore();
     }
 
-    public String getName() {
-        return cardNumber.name() + cardShape.name();
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
 
+    public CardShape getCardShape() {
+        return cardShape;
     }
 }

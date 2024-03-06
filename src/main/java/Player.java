@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Player {
 
@@ -22,7 +24,7 @@ public class Player {
         return name.getValue();
     }
 
-    public PlayerCards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getCards());
     }
 }
