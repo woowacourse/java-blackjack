@@ -44,7 +44,7 @@ public class PlayerCards {
         return CardNumber.A.getScore();
     }
 
-    public boolean isNotBust() {
+    public boolean hasScoreUnderBustThreshold() {
         return calculateScore() <= BUST_THRESHOLD;
     }
 

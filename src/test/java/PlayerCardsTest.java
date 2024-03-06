@@ -26,7 +26,7 @@ public class PlayerCardsTest {
         playerCards.addCard(new Card(CardNumber.THREE, CardShape.SPADE));
         playerCards.addCard(new Card(CardNumber.FOUR, CardShape.SPADE));
 
-        assertThat(playerCards.isNotBust()).isTrue();
+        assertThat(playerCards.hasScoreUnderBustThreshold()).isTrue();
     }
 
     @DisplayName("A를 제외한 나머지 카드의 합이 10 이하인 경우 A는 11로 계산한다.")

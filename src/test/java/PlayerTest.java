@@ -21,7 +21,7 @@ public class PlayerTest {
         Player player = new Player("name");
         player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
         player.hit(new Card(CardNumber.THREE, CardShape.HEART));
-        assertThat(player.hasScoreUnderThreshold()).isTrue();
+        assertThat(player.isNotBust()).isTrue();
     }
 
     @DisplayName("점수가 21 초과인지 알려준다.")
@@ -32,6 +32,6 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.K, CardShape.CLOVER));
         player.hit(new Card(CardNumber.K, CardShape.SPADE));
 
-        assertThat(player.hasScoreUnderThreshold()).isFalse();
+        assertThat(player.isNotBust()).isFalse();
     }
 }

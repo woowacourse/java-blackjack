@@ -14,8 +14,8 @@ public class Player {
         cards.addCard(card);
     }
 
-    public boolean hasScoreUnderThreshold() {
-        return cards.isNotBust();
+    public boolean isNotBust() {
+        return cards.hasScoreUnderBustThreshold();
     }
 
     public String getPlayerName() {
