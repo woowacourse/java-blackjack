@@ -20,13 +20,25 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public int countAceCard() {
         return (int) this.cards.stream()
-                .filter(card -> card.isAceCard())
+                .filter(Card::isAceCard)
                 .count();
+    }
+
+    public int calculateScore() {
+        int aceCount = countAceCard();
+        int sum = calculateSum();
+
+        while (sum > 21 && aceCount > 0) {
+            aceCount--;
+            sum -= 10;
+        }
+
+        return sum;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
