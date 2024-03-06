@@ -1,11 +1,12 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("참가자 소유 카드 테스트")
 class HandTest {
@@ -32,6 +33,6 @@ class HandTest {
         Hand hand = new Hand(cards);
         hand.append(card1);
 
-        assertThat(hand.getCards()).hasSize(1);
+        assertThat(hand.getCards()).containsExactly(card1);
     }
 }
