@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Letter {
     TWO(2),
     THREE(3),
@@ -19,6 +22,11 @@ public enum Letter {
 
     Letter(int value) {
         this.value = value;
+    }
+
+    public static List<Letter> getValues() {
+        return Arrays.stream(Letter.values())
+                .toList();
     }
 
     public boolean isAce() {
