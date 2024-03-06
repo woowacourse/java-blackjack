@@ -17,7 +17,7 @@ public class CardTest {
         // when
         Card card = new Card(expectedSymbol, expectedRank);
         Symbol symbol = card.getSymbol();
-        Rank rank = card.getNumber();
+        Rank rank = card.getRank();
 
         // then
         assertThat(symbol).isEqualTo(expectedSymbol);

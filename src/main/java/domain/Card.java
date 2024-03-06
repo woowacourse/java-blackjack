@@ -15,7 +15,7 @@ public class Card {
         return symbol;
     }
 
-    public Rank getNumber() {
+    public Rank getRank() {
         return rank;
     }
 
