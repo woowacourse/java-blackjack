@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Symbol {
     HEART,
-    SPACE,
+    SPADE,
     CLOVER,
     DIAMOND;
 

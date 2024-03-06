@@ -1,35 +1,40 @@
-import domain.blackjack.Blackjack;
+import domain.Blackjack;
+import domain.Deck;
+import domain.Player;
+import domain.Players;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
 
 public class Application {
-    public static void main(final String[] args) {
-        final List<String> names = InputView.inputPlayers();
-        final Blackjack blackjack = Blackjack.fromPlayerNamesWithInitialization(names);
-        OutputView.printInitialStatus(blackjack.toParticipantsResponse());
+    public static void main(String[] args) {
 
-        playGame(blackjack, names);
+        String[] names = InputView.inputPlayers();
 
-        OutputView.printAfterStatus(blackjack.toParticipantsResponse());
-        OutputView.printWinOrLose(blackjack.toGameResult());
-    }
+        Players players = Players.from(names);
+        Player dealer = new Player("딜러");
+        Deck deck = new Deck();
+        Blackjack blackjack = new Blackjack(players, dealer, deck);
 
-    private static void playGame(final Blackjack blackjack, final List<String> names) {
-        names.forEach(name -> tryHit(blackjack, name));
+        blackjack.initializePlayers();
+        blackjack.initializeDealer();
+        OutputView.printPlayersStatus(blackjack.getPlayers().getPlayers());
 
-        while (blackjack.canDealerHit()) {
-            blackjack.dealerHit();
-            OutputView.printDealerHitMessage();
+        // 참가자 게임진행
+        for (var player : blackjack.getPlayers().getPlayers()) {
+            while (player.alive() && InputView.tryPoll(player.getName())) {
+                blackjack.dealCardsToPlayer(player);
+            }
+            OutputView.printPlayerStatus(player);
         }
-    }
 
-    private static void tryHit(final Blackjack blackjack, final String name) {
-        while (blackjack.canPlayerHit(name) && InputView.tryHit(name)) {
-            blackjack.playerHit(name);
-            OutputView.printStatus(name, blackjack.toPlayerResponse(name).cardResponse());
-            System.out.println();
-        }
-    }
+        Player dealer1 = blackjack.getDealer();
+        blackjack.dealCardsToPlayer(dealer1);
 
+        OutputView.printPlayerStatus(dealer1);
+
+        // 결과 출력
+        List<Player> allPlayers = blackjack.getAllPlayers().getPlayers();
+        OutputView.printResults(allPlayers);
+    }
 }

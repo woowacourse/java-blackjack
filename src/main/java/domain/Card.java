@@ -12,8 +12,16 @@ public class Card {
     }
 
     public int getValue(int score){
-        return denomination.apply(score);
+        return denomination.getValue(score);
     }
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
