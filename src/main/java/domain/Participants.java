@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Participants {
 
@@ -29,5 +31,26 @@ public class Participants {
             Deck currentDeck = decks.get(index);
             players.get(index).receiveDeck(currentDeck);
         }
+    }
+
+    public Map<Player, Boolean> calculateVictory() {
+        Map<Player, Boolean> result = new LinkedHashMap<>();
+        players.forEach(player -> {
+            if (player.getDeck().calculateTotalScore() > 21) {
+                result.put(player, false);
+                return;
+            }
+            if (dealer.getDeck().calculateTotalScore() > 21) {
+                result.put(player, true);
+                return;
+            }
+            if (dealer.getDeck().calculateTotalScore() >= player.getDeck().calculateTotalScore()) {
+                result.put(player, false);
+                return;
+            }
+            result.put(player, true);
+        });
+
+        return result;
     }
 }

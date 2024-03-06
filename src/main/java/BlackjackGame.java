@@ -17,7 +17,7 @@ public class BlackjackGame {
                 .toList();
         Player dealer = new Player(new Name("딜러"));
         BlackjackService blackjackService = new BlackjackService(dealer, players);
-        //blackjackService.initialSetting();
+        blackjackService.initialDistribute();
         outputView.printSetting(dealer, players);
 
         players.forEach((player) -> {
@@ -35,6 +35,6 @@ public class BlackjackGame {
         }
 
         outputView.printResult(dealer, players);
-        //outputView.printVictory(blackjackService.calculateVictory());
+        outputView.printVictory(blackjackService.calculateVictory());
     }
 }

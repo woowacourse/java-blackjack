@@ -46,29 +46,8 @@ public class BlackjackService {
 
     }
 
-    /*
+
     public Map<Player, Boolean> calculateVictory() {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        participants.forEach(player -> {
-            if (player.getDeck().calculateTotalScore() > 21) {
-                result.put(player, false);
-                return;
-            }
-            if (dealer.getDeck().calculateTotalScore() > 21) {
-                result.put(player, true);
-                return;
-            }
-            if (dealer.getDeck().calculateTotalScore() >= player.getDeck().calculateTotalScore()) {
-                result.put(player, false);
-                return;
-            }
-            result.put(player, true);
-        });
-
-        return result;
+        return participants.calculateVictory();
     }
-
-     */
-
-
 }
