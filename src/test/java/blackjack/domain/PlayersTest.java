@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,6 @@ class PlayersTest {
     @DisplayName("카드 숫자 합으로 승패를 결정한다.")
     void determineWinStatus() {
         // TODO: 리팩토링 시급
-        Cards cards1 = new Cards(new Card(CardNumber.TEN, CardShape.HEART),
-                new Card(CardNumber.QUEEN, CardShape.HEART));
         Cards cards2 = new Cards(new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.ACE, CardShape.CLOVER));
         Cards cards3 = new Cards(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
@@ -36,5 +35,19 @@ class PlayersTest {
                 kirby, WinStatus.WIN,
                 baekho, WinStatus.LOSE,
                 pobi, WinStatus.DRAW));
+    }
+
+    @Test
+    void validateDuplicate() {
+        // given
+        Name name = new Name("kirby");
+        Cards cards = new Cards(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
+        Player player = new Player(name, cards);
+        List<Player> players = List.of(player, player);
+
+        // when & then
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
     }
 }
