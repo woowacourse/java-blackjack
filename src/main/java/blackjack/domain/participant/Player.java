@@ -1,21 +1,22 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Dealer {
+public class Player {
 
-    private static final int DRAWABLE_MAX_SCORE = 16;
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
-    public Dealer(List<Card> cards) {
+    public Player(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
     public boolean isDrawable() {
-        return calculateScore() <= DRAWABLE_MAX_SCORE;
+        return calculateScore() <= BLACKJACK_SCORE;
     }
 
     public int calculateScore() {
@@ -33,8 +34,8 @@ public class Dealer {
         return score;
     }
 
-    List<Card> getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public void add(Card card) {

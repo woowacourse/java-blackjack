@@ -37,8 +37,8 @@ public class Card {
         return Objects.hash(value, shape);
     }
 
-    // TODO 외부 class로 분리 할 것인지 논의
-    enum Value {
+    // TODO 외부 class로 분리 할 것인지 논의, 접근 제어자 논의
+    public enum Value {
         ACE(1),
         TWO(2),
         THREE(3),
@@ -71,7 +71,7 @@ public class Card {
         }
     }
 
-    enum Shape {
-        SPADE, DIAMOND, HEART, CLOVER;
+    public enum Shape {
+        SPADE, DIAMOND, HEART, CLOVER
     }
 }
