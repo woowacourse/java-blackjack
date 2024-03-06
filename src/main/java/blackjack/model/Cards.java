@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int BUST_THRESHOLD = 21;
     private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
@@ -54,10 +55,9 @@ public class Cards {
         return aceCount == 1 && baseScore <= 10;
     }
 
-    public boolean isBust(final int threshold) {
-        return calculateScore() > threshold;
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
     }
-
 
     public int countSize() {
         return cards.size();

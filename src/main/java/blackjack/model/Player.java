@@ -3,7 +3,7 @@ package blackjack.model;
 import java.util.List;
 
 public class Player {
-    private static final int BUST_THRESHOLD = 21;
+    private static final int HITTABLE_THRESHOLD = 21;
 
     protected final String name;
     protected Cards cards;
@@ -36,8 +36,12 @@ public class Player {
         return cards.getCards();
     }
 
-    public boolean isNotBust() {
-        return !cards.isBust(BUST_THRESHOLD);
+    public boolean canHit() {
+        return cards.calculateScore() < HITTABLE_THRESHOLD;
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public int announceCardCount() {

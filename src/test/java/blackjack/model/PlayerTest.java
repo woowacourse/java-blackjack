@@ -5,6 +5,7 @@ import static blackjack.model.Score.TEN;
 import static blackjack.model.Score.THREE;
 import static blackjack.model.Score.TWO;
 import static blackjack.model.Shape.CLOVER;
+import static blackjack.model.Shape.DIA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -56,10 +57,10 @@ class PlayerTest {
     @Test
     @DisplayName("자신이 카드를 추가로 더 받을 수 있는지 확인한다.")
     void checkNotBust() {
-        Cards cards = new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
+        Cards cards = new Cards(List.of(new Card(DIA, TEN), new Card(CLOVER, TEN)));
         Player player = new Player("몰리", cards);
 
-        assertThat(player.isNotBust()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
