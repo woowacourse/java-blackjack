@@ -39,7 +39,7 @@ public class CardGameTest {
     }
 
     @Test
-    void 딜러와_모든_플레이어의_숫자가_21_이하인_경우_숫자가_큰_사람이_이긴다() {
+    void 딜러와_여러_플레이어의_숫자가_21_이하인_경우_숫자가_큰_사람이_이긴다() {
         CardGameJudge cardGameJudge = new CardGameJudge();
 
         Hand mangchoHand = new Hand();
@@ -48,15 +48,21 @@ public class CardGameTest {
         mangchoHand.add(new Card(KING, SPADE));
         Player mangcho = new Player(mangchoHand);
 
+        Hand ddangHand = new Hand();
+        ddangHand.add(new Card(ACE, HEART));
+        ddangHand.add(new Card(KING, HEART));
+        ddangHand.add(new Card(KING, SPADE));
+        Player ddang = new Player(ddangHand);
+
         Hand dealerHand = new Hand();
         dealerHand.add(new Card(ACE, HEART));
         dealerHand.add(new Card(ACE, HEART));
         dealerHand.add(new Card(KING, SPADE));
         Player dealer = new Player(dealerHand);
 
-        var result = cardGameJudge.judge(dealer, mangcho).getTotalResult();
+        var result = cardGameJudge.judge(dealer, List.of(mangcho, ddang)).getTotalResult();
 
         assertThat(result.get(mangcho)).isEqualTo(WinningStatus.WIN);
+        assertThat(result.get(ddang)).isEqualTo(WinningStatus.WIN);
     }
-
 }
