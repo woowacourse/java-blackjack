@@ -1,11 +1,13 @@
 package card;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardDeck {
 
+    private static final int DECK_TOP_POSITION = 0;
     private List<Card> deck;
 
     public CardDeck() {
@@ -23,9 +25,12 @@ public class CardDeck {
                 .map(number -> new Card(number, pattern));
     }
 
-    public Card pickCard(int randomIndex) {
-        validateCardIndex(randomIndex);
-        return deck.remove(randomIndex);
+    public void shuffleCard() {
+        Collections.shuffle(deck);
+    }
+
+    public Card pickCard() {
+        return deck.remove(DECK_TOP_POSITION);
     }
 
     private void validateCardIndex(int randomIndex) {
