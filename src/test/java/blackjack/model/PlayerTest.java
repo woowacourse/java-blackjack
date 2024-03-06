@@ -70,4 +70,13 @@ class PlayerTest {
 
         assertThat(player.announceCardCount()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("자신이 블랙잭임을 알려준다.")
+    void announceBlackJack() {
+        Cards cards = new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
+        Player player = new Player("몰리", cards);
+
+        assertThat(player.announceBlackJack()).isTrue();
+    }
 }

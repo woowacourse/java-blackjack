@@ -43,4 +43,8 @@ public class Player {
     public int announceCardCount() {
         return cards.countSize();
     }
+
+    public boolean announceBlackJack() {
+        return cards.isBlackJack();
+    }
 }
