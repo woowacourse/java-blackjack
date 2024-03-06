@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -33,8 +34,20 @@ public class Player {
         }
     }
 
+    //TODO: 메서드 handsSize 수정
     public int getPacketSize() {
         return hands.size();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getCards() {
+        return hands.getCards()
+                .stream()
+                .map(Card::toString)
+                .toList();
     }
 
     @Override

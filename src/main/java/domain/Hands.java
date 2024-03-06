@@ -41,4 +41,8 @@ public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
     public int size() {
         return cards.size();
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
