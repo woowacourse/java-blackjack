@@ -10,7 +10,7 @@ import model.card.Cards;
 public class Players {
 
     private final List<Player> players;
-    private Cards cards;
+    private final Cards cards;
 
     public Players(List<Player> players, Cards cards) {
         validateOneDealer(players);
