@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CardsGenerator {
 
-    public List<Card> generateRandomCards() {
+    public static List<Card> generateRandomCards() {
         List<Card> cards = new ArrayList<>();
         for (CardShape cardShape : CardShape.values()) {
             for (CardNumber cardNumber : CardNumber.values()) {
