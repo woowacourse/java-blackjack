@@ -18,6 +18,17 @@ public class Deck {
         return new Deck(tmpCards);
     }
 
+    public static Deck fullDeck() {
+        List<Card> cards = new ArrayList<>();
+        for (CardType cardType : CardType.values()) {
+            for (CardName cardName : CardName.values()) {
+                Card card = new Card(cardName, cardType);
+                cards.add(card);
+            }
+        }
+        return new Deck(cards);
+    }
+
     private void validateDuplicateCard(List<Card> cards) {
         Set<Card> cardSet = new HashSet<>(cards);
         if (cardSet.size() != cards.size()) {
