@@ -2,7 +2,9 @@ package blackjack.model;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,9 +16,15 @@ public class Deck {
     }
 
     private static void makeDeck() {
-        deck.addAll(Arrays.stream(Shape.values())
+        List<Card> originDeck = Arrays.stream(Shape.values())
                 .flatMap(Deck::matchScore)
-                .collect(Collectors.toCollection(ArrayDeque::new)));
+                .collect(Collectors.toList());
+        deck.addAll(shuffleDeck(originDeck));
+    }
+
+    private static Deque<Card> shuffleDeck(final List<Card> originDeck) {
+        Collections.shuffle(originDeck);
+        return new ArrayDeque<>(originDeck);
     }
 
     private static Stream<Card> matchScore(Shape shape) {
