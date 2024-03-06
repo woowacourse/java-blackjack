@@ -10,6 +10,8 @@ public class InputView {
     private static final String DELIMITER = ",";
 
     public List<String> readPlayerNames() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+
         final String input = SCANNER.nextLine();
         validateDelimiter(input);
 

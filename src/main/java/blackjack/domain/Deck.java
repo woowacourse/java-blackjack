@@ -1,16 +1,17 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = new ArrayList<>(createCards());
+        this.cards = new LinkedList<>(createCards());
     }
 
     private static Set<Card> createCards() {
@@ -31,10 +32,15 @@ public class Deck {
     }
 
     public Card pick() {
-        // TODO: 자료구조 고민
         Card card = cards.get(0);
         cards.remove(card);
 
         return card;
+    }
+
+    public List<Card> pick(final int count) {
+        return Stream.generate(this::pick)
+                .limit(count)
+                .toList();
     }
 }

@@ -13,19 +13,22 @@ class PlayersTest {
     @DisplayName("카드 숫자 합으로 승패를 결정한다.")
     void determineWinStatus() {
         // TODO: 리팩토링 시급
-        Cards cards2 = new Cards(new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.ACE, CardShape.CLOVER));
-        Cards cards3 = new Cards(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
-        Cards cards4 = new Cards(new Card(CardNumber.TEN, CardShape.DIA), new Card(CardNumber.KING, CardShape.DIA));
-
         Name kirby = new Name("kirby");
         Name baekho = new Name("baekho");
         Name pobi = new Name("pobi");
 
         Score dealerScore = new Score(20);
-        Player player1 = new Player(kirby, cards2);
-        Player player2 = new Player(baekho, cards3);
-        Player player3 = new Player(pobi, cards4);
+        Player player1 = Player.from("kirby");
+        List<Card> cards1 = List.of(new Card(CardNumber.TEN, CardShape.CLOVER), new Card(CardNumber.ACE, CardShape.CLOVER));
+        cards1.forEach(player1::addCard);
+
+        Player player2 = Player.from("baekho");
+        List<Card> card2 = List.of(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
+        card2.forEach(player2::addCard);
+
+        Player player3 = Player.from("pobi");
+        List<Card> card3 = List.of(new Card(CardNumber.TEN, CardShape.DIA), new Card(CardNumber.KING, CardShape.DIA));
+        card3.forEach(player3::addCard);
 
         Players players = new Players(List.of(player1, player2, player3));
         Map<Name, WinStatus> finalResult = players.determineWinStatus(dealerScore);
@@ -42,7 +45,7 @@ class PlayersTest {
         // given
         Name name = new Name("kirby");
         Cards cards = new Cards(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
-        Player player = new Player(name, cards);
+        Player player = Player.from("kirby");
         List<Player> players = List.of(player, player);
 
         // when & then

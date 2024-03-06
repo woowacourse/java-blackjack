@@ -12,7 +12,8 @@ class DealerTest {
     void needMoreCard() {
         Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card2 = new Card(CardNumber.SEVEN, CardShape.HEART);
-        Dealer dealer = new Dealer(new Cards(List.of(card1, card2)));
+        Dealer dealer = new Dealer();
+        dealer.addCard(List.of(card1, card2));
 
         boolean needMoreCard = dealer.needMoreCard();
 
@@ -24,7 +25,9 @@ class DealerTest {
     void needNoMoreCard() {
         Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card2 = new Card(CardNumber.EIGHT, CardShape.HEART);
-        Dealer dealer = new Dealer(new Cards(List.of(card1, card2)));
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(List.of(card1, card2));
 
         boolean needMoreCard = dealer.needMoreCard();
 

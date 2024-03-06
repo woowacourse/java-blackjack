@@ -13,6 +13,14 @@ public class Players {
         this.values = players;
     }
 
+    public static Players from(final List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::from)
+                .toList();
+
+        return new Players(players);
+    }
+
     private void validateDuplicate(final List<Player> players) {
         if (Set.copyOf(players).size() != players.size()) {
             throw new IllegalArgumentException("중복된 이름의 참여자는 참여할 수 없습니다.");
@@ -26,5 +34,17 @@ public class Players {
             playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
         }
         return playersWinStatus;
+    }
+
+    public void divideCard(final List<Card> cards) {
+        for (int i = 0; i < cards.size(); i++) {
+            // TODO: 과연 이해가 되는가?
+            Player player = values.get(i / 2);
+            player.addCard(cards.get(i));
+        }
+    }
+
+    public int count() {
+        return values.size();
     }
 }
