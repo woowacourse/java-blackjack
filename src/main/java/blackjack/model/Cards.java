@@ -1,9 +1,12 @@
 package blackjack.model;
 
+import static blackjack.model.Score.ACE;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int ADDITIONAL_ACE_SCORE = 10;
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -23,22 +26,19 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int result = calculateBaseScore();
+        int totalScoreWithoutAce = calculateBaseScore();
         int aceCount = countAce();
 
-        if (aceCount == 1 && result > 21) {
-            result -= aceCount * 10;
+        if (isSoft(aceCount, totalScoreWithoutAce)) {
+            totalScoreWithoutAce += aceCount * ADDITIONAL_ACE_SCORE;
         }
 
-        if (aceCount >= 2) {
-            result -= aceCount * 10;
-        }
-
-        return result;
+        return totalScoreWithoutAce + aceCount * ACE.getValue();
     }
 
     private int calculateBaseScore() {
         return cards.stream()
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
     }
@@ -47,6 +47,10 @@ public class Cards {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    private boolean isSoft(final int aceCount, final int baseScore) {
+        return aceCount == 1 && baseScore <= 10;
     }
 
     public List<Card> getCards() {

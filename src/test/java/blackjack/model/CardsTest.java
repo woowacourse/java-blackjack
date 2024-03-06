@@ -41,16 +41,23 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("Ace를 여러 개 가진 경우 동일한 값인 1로 변경된다.")
+    @DisplayName("Ace를 여러 개 가진 경우 ACE는 1점으로 계산한다.")
     void calculateScoreWithAces() {
         Cards cards = new Cards(List.of(new Card(SPADE, ACE), new Card(CLOVER, ACE)));
         assertThat(cards.calculateScore()).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("Ace의 기본값으로 결과를 계산했을 때 21을 초과한 경우 Ace 값은 1로 변경된다.")
+    @DisplayName("Ace를 제외한 나머지 카드의 합계가 10을 초과하면 ACE는 1점으로 계산한다.")
     void calculateScoreWithAce() {
         Cards cards = new Cards(List.of(new Card(SPADE, ACE), new Card(CLOVER, NINE), new Card(CLOVER, TEN)));
         assertThat(cards.calculateScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("Ace를 제외한 나머지 카드의 합계가 10 이하인 경우 ACE는 11점으로 계산한다.")
+    void calculateScoreWithAce2() {
+        Cards cards = new Cards(List.of(new Card(SPADE, ACE), new Card(CLOVER, EIGHT), new Card(CLOVER, TWO)));
+        assertThat(cards.calculateScore()).isEqualTo(21);
     }
 }
