@@ -7,20 +7,20 @@ public class Card {
     private final Denomination denomination;
     private final Random random = new Random();
 
-    public Card() {
-        this.suit = generateSuit();
-        this.denomination = generateDenomination();
+    public Card(final NumberGenerator numberGenerator) {
+        this.suit = generateSuit(numberGenerator);
+        this.denomination = generateDenomination(numberGenerator);
     }
 
-    protected Suit generateSuit() {
+    private Suit generateSuit(final NumberGenerator numberGenerator) {
         int bound = Suit.getSize();
-        int randomIndex = random.nextInt(bound);
+        int randomIndex = numberGenerator.pick(bound);
         return Suit.findByIndex(randomIndex);
     }
 
-    protected Denomination generateDenomination() {
+    private Denomination generateDenomination(final NumberGenerator numberGenerator) {
         int bound = Denomination.getSize();
-        int randomIndex = random.nextInt(bound);
+        int randomIndex = numberGenerator.pick(bound);
         return Denomination.findByIndex(randomIndex);
     }
 
