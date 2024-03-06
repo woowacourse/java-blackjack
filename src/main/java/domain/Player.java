@@ -11,8 +11,8 @@ public class Player {
         this.hand = new Hand();
     }
 
-    public void hit(Card card) {
-        hand.add(card);
+    public void hit(Decks decks) {
+        hand.add(decks.draw(0));
     }
 
     public Name getName() {

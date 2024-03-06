@@ -14,9 +14,10 @@ public class PlayerTest {
         Name name = new Name("lini");
         Player player = new Player(name);
         Card card = new Card(Symbol.SPADE, Rank.QUEEN);
+        Decks decks = new Decks();
 
         // when
-        player.hit(card);
+        player.hit(decks);
 
         // then
         assertThat(player.getHand()).hasSize(1);
