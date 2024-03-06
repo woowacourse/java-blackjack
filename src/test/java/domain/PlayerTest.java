@@ -13,7 +13,6 @@ public class PlayerTest {
         // given
         Name name = new Name("lini");
         Player player = new Player(name);
-        Card card = new Card(Symbol.SPADE, Rank.QUEEN);
         Decks decks = new Decks();
 
         // when
@@ -21,5 +20,22 @@ public class PlayerTest {
 
         // then
         assertThat(player.getHand()).hasSize(1);
+    }
+
+    @DisplayName("플레이어가 가진 카드의 점수를 알 수 있다.")
+    @Test
+    void calculateTotalScoreTest() {
+        // given
+        Name name = new Name("lini");
+        Player player = new Player(name);
+        Decks decks = new Decks();
+
+        // when
+        int beforeScore = player.calculateTotalScore();
+        player.hit(decks);
+        int afterScore = player.calculateTotalScore();
+
+        // then
+        assertThat(beforeScore).isLessThan(afterScore);
     }
 }

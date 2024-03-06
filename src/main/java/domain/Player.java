@@ -15,6 +15,10 @@ public class Player {
         hand.add(decks.draw());
     }
 
+    public int calculateTotalScore() {
+        return hand.sum();
+    }
+
     public Name getName() {
         return name;
     }
