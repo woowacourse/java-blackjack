@@ -20,8 +20,13 @@ public class Player {
         return getTotalScore() > BLACK_JACK;
     }
 
+
+    public boolean isHittable() {
+        return getTotalScore() < BLACK_JACK;
+    }
+
     public int getTotalScore() {
-        return hand.calculateSum();
+        return hand.calculateScore();
     }
 
     public Hand getHand() {
