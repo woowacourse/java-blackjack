@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.Result;
+import domain.TotalDeck;
 import domain.card.Card;
 
 import java.util.ArrayList;
@@ -64,7 +65,22 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    private User getDealer() {
-        return users.get(users.size() - 1);
+    public Dealer getDealer() {
+        return (Dealer) users.get(users.size() - 1);
+    }
+
+    public void setStartCards(TotalDeck totalDeck) {
+        for (User user : users) {
+            user.addCard(totalDeck.getNewCard());
+            user.addCard(totalDeck.getNewCard());
+        }
+    }
+
+    public Card getDealerVisibleCard() {
+        return getDealer().getVisibleCard();
+    }
+
+    public Player getCurrentPlayer() {
+        return (Player) currentUser;
     }
 }
