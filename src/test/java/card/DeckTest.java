@@ -15,12 +15,12 @@ class DeckTest {
     void createDeckTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Symbol.HEART, Number.ACE),
-                new Card(Symbol.CLOVER, Number.EIGHT),
-                new Card(Symbol.DIAMOND, Number.JACK)
+                new Card(Shape.HEART, Number.ACE),
+                new Card(Shape.CLOVER, Number.EIGHT),
+                new Card(Shape.DIAMOND, Number.JACK)
         );
         Deck deck = new Deck(cards);
-        Card expected = new Card(Symbol.HEART, Number.ACE);
+        Card expected = new Card(Shape.HEART, Number.ACE);
         // when, then
         assertThat(deck.draw()).isEqualTo(expected);
     }

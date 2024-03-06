@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Symbol symbol;
+    private final Shape shape;
     private final Number number;
 
-    public Card(Symbol symbol, Number number) {
-        this.symbol = symbol;
+    public Card(Shape shape, Number number) {
+        this.shape = shape;
         this.number = number;
     }
 
@@ -29,11 +29,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && number == card.number;
+        return shape == card.shape && number == card.number;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(shape, number);
     }
 }

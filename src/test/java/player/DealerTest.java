@@ -3,7 +3,7 @@ package player;
 import card.Card;
 import card.Deck;
 import card.Number;
-import card.Symbol;
+import card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +20,10 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(
-                new Card(Symbol.HEART, Number.JACK),
-                new Card(Symbol.DIAMOND, Number.SIX),
-                new Card(Symbol.CLOVER, Number.THREE),
-                new Card(Symbol.CLOVER, Number.FIVE)
+                new Card(Shape.HEART, Number.JACK),
+                new Card(Shape.DIAMOND, Number.SIX),
+                new Card(Shape.CLOVER, Number.THREE),
+                new Card(Shape.CLOVER, Number.FIVE)
         );
         Deck deck = new Deck(cards);
         // when
@@ -49,8 +49,8 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(
-                new Card(Symbol.SPADE, Number.TEN),
-                new Card(Symbol.HEART, Number.KING)
+                new Card(Shape.SPADE, Number.TEN),
+                new Card(Shape.HEART, Number.KING)
         );
         Deck deck = new Deck(cards);
         dealer.drawCard(deck);

@@ -1,6 +1,6 @@
 package card;
 
-public enum Symbol {
+public enum Shape {
 
     HEART,
     SPADE,
