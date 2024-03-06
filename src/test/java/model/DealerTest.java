@@ -3,6 +3,8 @@ package model;
 import static model.CardNumber.JACK;
 import static model.CardNumber.ONE;
 import static model.CardNumber.SEVEN;
+import static model.CardNumber.TWO;
+import static model.CardShape.DIAMOND;
 import static model.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,5 +28,25 @@ class DealerTest {
         Cards cards = new Cards(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleAddCard()).isFalse();
+    }
+
+    @DisplayName("카드를 추가로 받을 수 있으면 카드 1장 획득")
+    @Test
+    void shouldAddCardWhenAllowed() {
+        Cards cards = new Cards(List.of(new Card(ONE, HEART), new Card(JACK, HEART)));
+        Dealer dealer = new Dealer(cards);
+        Card card = new Card(TWO, DIAMOND);
+        Dealer updatedDealer = dealer.addCard(card);
+        assertThat(updatedDealer.cardSize()).isEqualTo(3);
+    }
+
+    @DisplayName("카드를 추가로 받을 수 없으면 카드 획득 불가")
+    @Test
+    void shouldNotAddCardWhenNotAllowed() {
+        Cards cards = new Cards(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
+        Dealer dealer = new Dealer(cards);
+        Card card = new Card(TWO, DIAMOND);
+        Dealer updatedDealer = dealer.addCard(card);
+        assertThat(updatedDealer.cardSize()).isEqualTo(2);
     }
 }

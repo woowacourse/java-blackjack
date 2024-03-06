@@ -14,4 +14,16 @@ public class Dealer {
         int totalNumbers = cards.calculateTotalNumbers();
         return totalNumbers < ADD_CARD_CONDITION;
     }
+
+    public Dealer addCard(Card card) {
+        if (isPossibleAddCard()) {
+            Cards addedCards = cards.add(card);
+            return new Dealer(addedCards);
+        }
+        return this;
+    }
+
+    public int cardSize() {
+        return cards.size();
+    }
 }
