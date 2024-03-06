@@ -66,7 +66,7 @@ public class HandTest {
         hand.add(card3);
 
         // when
-        boolean result = hand.isBurst();
+        boolean result = hand.isOverBlackJack();
 
         // then
         assertThat(result).isEqualTo(expected);

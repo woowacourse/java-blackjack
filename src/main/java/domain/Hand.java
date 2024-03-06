@@ -16,7 +16,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public boolean isBurst() {
+    public boolean isOverBlackJack() {
         return sum() > BLACK_JACK;
     }
 

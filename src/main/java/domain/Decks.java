@@ -13,11 +13,11 @@ public class Decks {
                 .toList();
     }
 
-    public List<Deck> getDecks() {
-        return decks;
-    }
-
     public Card draw(int index) {
         return decks.get(index).draw();
+    }
+
+    public List<Deck> getDecks() {
+        return decks;
     }
 }
