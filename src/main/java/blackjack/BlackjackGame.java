@@ -38,6 +38,7 @@ public class BlackjackGame {
                 .forEach(player -> readMoreCardChoice(player, deck));
 
         printAddDealerCard(dealer, deck);
+        printResultCardsStatus(dealer, players);
     }
 
     private String makeCardOutput(final Card card) {
@@ -82,4 +83,17 @@ public class BlackjackGame {
             outputView.printAddDealerCard(dealer.getName());
         }
     }
+
+    private void printResultCardsStatus(final Dealer dealer, final Players players) {
+        outputView.printCardResultStatus(dealer.getName(), makeCardOutput(dealer.getHandCards()), dealer.getScore());
+
+        for (Player player : players.getPlayers()) {
+            outputView.printCardResultStatus(
+                    player.getName(),
+                    makeCardOutput(player.getHandCards()),
+                    player.getScore()
+            );
+        }
+    }
+
 }

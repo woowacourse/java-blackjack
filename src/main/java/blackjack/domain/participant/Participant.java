@@ -27,6 +27,10 @@ public abstract class Participant {
         return hand.calculateScore() > BLACKJACK_BOUND;
     }
 
+    public long getScore() {
+        return hand.calculateScore();
+    }
+
     public List<Card> getHandCards() {
         return hand.getCards();
     }

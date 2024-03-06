@@ -7,6 +7,7 @@ public class OutputView {
     private static final String CARD_STATUS = "%s: %s";
     private static final int DEALER_BOUND = 16;
     private static final String DEALER_ADDED_CARD = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d" + System.lineSeparator();
 
     private static final OutputView instance = new OutputView();
 
@@ -37,6 +38,13 @@ public class OutputView {
     }
 
     public void printAddDealerCard(final String name) {
-        System.out.printf(System.lineSeparator() + DEALER_ADDED_CARD + System.lineSeparator(), name, DEALER_BOUND);
+        System.out.printf(
+                System.lineSeparator() + DEALER_ADDED_CARD + System.lineSeparator() + System.lineSeparator(),
+                name, DEALER_BOUND
+        );
+    }
+
+    public void printCardResultStatus(final String name, final List<String> card, final long score) {
+        System.out.printf(RESULT_CARDS_STATUS, name, makeCommaString(card), score);
     }
 }
