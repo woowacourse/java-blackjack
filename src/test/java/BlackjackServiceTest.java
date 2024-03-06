@@ -7,7 +7,6 @@ import domain.Player;
 import domain.Rank;
 import domain.Shape;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ public class BlackjackServiceTest {
         Player dealer = new Player(new Name("딜러"));
         BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        int result = blackjackService.getDeck().getCards().size();
+        int result = blackjackService.getAllCardDeck().getCards().size();
 
         assertThat(result).isEqualTo(52);
     }

@@ -8,16 +8,22 @@ import java.util.Map;
 public class BlackjackService {
     public static final int INITIAL_CARD_COUNT = 2;
     private final Participants participants;
-    private final Deck deck;
+    private final Deck allCardDeck;
 
     public BlackjackService(Player dealer, List<Player> players) {
         this.participants = new Participants(dealer, players);
-        this.deck = new Deck();
+        this.allCardDeck = new Deck();
+        addAllCard();
+    }
+
+    private void addAllCard() {
         Arrays.stream(Rank.values())
-                .forEach((rank) -> {
-                    Arrays.stream(Shape.values())
-                            .forEach((shape) -> deck.addCard(new Card(shape, rank)));
-                });
+                .forEach(this::addAllShape);
+    }
+
+    private void addAllShape(Rank rank) {
+        Arrays.stream(Shape.values())
+                .forEach((shape) -> allCardDeck.addCard(new Card(shape, rank)));
     }
 
     public int countPlayers() {
@@ -26,6 +32,10 @@ public class BlackjackService {
 
     public boolean isPlayerNotOver(int playerIndex) {
         return participants.isPlayerNotOver(playerIndex);
+    }
+
+    public boolean IsDealerNotOver() {
+        return participants.isDealerNotOver();
     }
 
     public void initialDistribute() {
@@ -39,25 +49,21 @@ public class BlackjackService {
     private Deck makeInitialDeck() {
         Deck tempDeck = new Deck();
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            tempDeck.addCard(this.deck.pickRandomCard());
+            tempDeck.addCard(this.allCardDeck.pickRandomCard());
         }
         return tempDeck;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Deck getAllCardDeck() {
+        return allCardDeck;
     }
 
     public void addCardToPlayer(int playerIndex) {
-        participants.receiveCard(deck.pickRandomCard(), playerIndex);
+        participants.receiveCard(allCardDeck.pickRandomCard(), playerIndex);
     }
 
     public void addCardToDealer() {
-        participants.receiveDealerCard(deck.pickRandomCard());
-    }
-
-    public Name getPlayerName(int playerIndex) {
-        return participants.getPlayerName(playerIndex);
+        participants.receiveDealerCard(allCardDeck.pickRandomCard());
     }
 
 
@@ -65,20 +71,19 @@ public class BlackjackService {
         return participants.calculateVictory();
     }
 
-    public Player getPlayer(int playerIndex) {
-        return participants.getPlayer(playerIndex);
-    }
-
-    public boolean IsDealerNotOver() {
-        return participants.isDealerNotOver();
-    }
-
-
-    public Player getDealer() {
-        return participants.getDealer();
+    public Name getPlayerName(int playerIndex) {
+        return participants.getPlayerName(playerIndex);
     }
 
     public List<Player> getPlayers() {
         return participants.getPlayers();
+    }
+
+    public Player getPlayer(int playerIndex) {
+        return participants.getPlayer(playerIndex);
+    }
+
+    public Player getDealer() {
+        return participants.getDealer();
     }
 }
