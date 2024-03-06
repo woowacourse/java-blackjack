@@ -24,11 +24,11 @@ public class PlayerTest {
         assertThat(player).isNotNull();
     }
 
-    @DisplayName("플레이어가 버스트면 True를 반환한다.")
+    @DisplayName("플레이어가 버스트가 아니면 True를 반환한다.")
     @Test
     void isDrawableTest() {
         // Given
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING));
         Hand hand = new Hand(playingCards);
         Player player = new Player(new PlayerName("kelly"), hand);
 

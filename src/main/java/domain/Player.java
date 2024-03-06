@@ -15,7 +15,7 @@ public class Player implements Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.isBurst();
+        return !hand.isBurst();
     }
 
     @Override
