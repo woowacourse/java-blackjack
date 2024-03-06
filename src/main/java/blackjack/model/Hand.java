@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int BLACK_JACK_CONDITION = 21;
     private final List<Card> cards;
 
     public Hand(final NumberGenerator numberGenerator) {
@@ -19,6 +20,10 @@ public class Hand {
                 .map(Card::getDenomination)
                 .mapToInt(Denomination::getScore)
                 .sum();
+    }
+
+    public boolean isBlackJack() {
+        return calculateCardsTotal() == BLACK_JACK_CONDITION;
     }
 
     public List<Card> getCards() {

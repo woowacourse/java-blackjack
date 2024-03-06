@@ -41,7 +41,7 @@ public class HandTest {
     @DisplayName("BlackJack인지 확인한다")
     void checkBlackJackTest() {
         // given
-        Hand hand = new Hand(new SequentialNumberGenerator(List.of(10, 11)));
+        Hand hand = new Hand(new SequentialNumberGenerator(List.of(0, 11, 0, 12)));
 
         // when & then
         assertThat(hand.isBlackJack()).isTrue();
