@@ -34,11 +34,21 @@ public class BlackJackController {
     }
 
     private void deal(final Player player, final Dealer dealer) {
+        boolean changed = false;
         Answer answer = Answer.HIT;
+
         while (Answer.HIT.equals(answer)) {
             answer = Answer.from(inputView.readAnswer(player.getName()));
             dealer.deal(player, answer);
-            outputView.printHands(PlayerDto.from(player));
+
+            if (handsChanged(changed, answer)) {
+                outputView.printHands(PlayerDto.from(player));
+            }
+            changed = true;
         }
+    }
+
+    private boolean handsChanged(final boolean changed, final Answer answer) {
+        return (Answer.STAY.equals(answer) && !changed) || Answer.HIT.equals(answer);
     }
 }
