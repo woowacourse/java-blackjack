@@ -1,29 +1,18 @@
 package domain;
 
-public class Dealer {
-    private static final Name DEFAULT_NAME = new Name("딜러");
+public class Dealer extends Participant {
+    private static final String DEFAULT_NAME = "딜러";
     private static final int DEALER_MIN_SCORE_POLICY = 17;
 
-    private final Name name;
-    private final Cards cards;
     private final CardDeck cardDeck;
 
     public Dealer(CardDeck cardDeck) {
-        this.name = DEFAULT_NAME;
-        this.cards = new Cards();
+        super(DEFAULT_NAME);
         this.cardDeck = new CardDeck();
     }
 
     public Card pickCard() {
         return cardDeck.draw();
-    }
-
-    public void add(Card card) {
-        cards.addCard(card);
-    }
-
-    public int calculateScore() {
-        return cards.sumAll();
     }
 
     public boolean isNecessaryMoreCard() {
