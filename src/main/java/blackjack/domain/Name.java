@@ -15,6 +15,10 @@ public class Name {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
             throw new InvalidNameLengthException();

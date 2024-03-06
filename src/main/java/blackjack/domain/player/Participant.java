@@ -12,4 +12,8 @@ public abstract class Participant {
         this.name = name;
         this.hand = handGenerator.generate();
     }
+
+    public String getName() {
+        return name.getValue();
+    }
 }
