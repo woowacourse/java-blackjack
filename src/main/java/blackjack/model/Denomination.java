@@ -28,4 +28,8 @@ public enum Denomination {
     public static Denomination findByIndex(final int index) {
         return values()[index];
     }
+
+    public int getScore() {
+        return score;
+    }
 }
