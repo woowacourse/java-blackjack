@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+class DealerTest {
 
     @DisplayName("딜러는 참가자를 상속한다.")
     @Test
@@ -28,7 +28,7 @@ public class DealerTest {
         Hand hand = new Hand(List.of(card1, card2));
         Dealer dealer = new Dealer(hand);
 
-        boolean canHit = dealer.canHit();
+        boolean canHit = dealer.isHittable();
 
         assertThat(canHit).isTrue();
     }
@@ -41,7 +41,7 @@ public class DealerTest {
         Hand hand = new Hand(List.of(card1, card2));
         Dealer dealer = new Dealer(hand);
 
-        boolean canHit = dealer.canHit();
+        boolean canHit = dealer.isHittable();
 
         assertThat(canHit).isFalse();
     }
