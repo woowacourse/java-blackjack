@@ -28,4 +28,8 @@ public class CardDeck {
     public void shuffle() {
         Collections.shuffle(cards);
     }
+
+    public Card draw() {
+        return cards.pop();
+    }
 }
