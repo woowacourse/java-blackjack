@@ -18,15 +18,19 @@ public class BlackjackGame {
         Player dealer = new Player(new Name("딜러"));
         BlackjackService blackjackService = new BlackjackService(dealer, players);
 
-        startSetting(blackjackService, dealer, players);
+        play(blackjackService);
+    }
+
+    private void play(BlackjackService blackjackService) {
+        startSetting(blackjackService);
         proceedPlayerTurn(blackjackService);
         proceedDealerTurn(blackjackService);
         handleResult(blackjackService);
     }
 
-    private void startSetting(BlackjackService blackjackService, Player dealer, List<Player> players) {
+    private void startSetting(BlackjackService blackjackService) {
         blackjackService.initialDistribute();
-        outputView.printSetting(dealer, players);
+        outputView.printSetting(blackjackService.getDealer(), blackjackService.getPlayers());
     }
 
     private void proceedPlayerTurn(BlackjackService blackjackService) {
