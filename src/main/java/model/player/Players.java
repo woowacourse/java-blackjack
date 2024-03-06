@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import model.card.Cards;
 
 public class Players {
@@ -33,25 +34,19 @@ public class Players {
     }
 
     public void offerCardToPlayer(String name, int cardCount) {
-        //TODO : 인덴트 줄이기
-        for (Player player : players) {
-            if (player.isSameName(name)) {
-                player.addCards(cards.selectRandomCards(cardCount));
-                return;
-            }
-        }
+        Player foundPlayer = players.stream()
+                .filter(player -> player.isSameName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
+        foundPlayer.addCards(cards.selectRandomCards(cardCount));
     }
 
-    public Map<Player, Integer> sumCardNumbersWithoutDealer() {
-        Map<Player, Integer> sumPlayers = new LinkedHashMap<>();
-        //TODO : 인덴트 줄이기
-        for (Player player : players) {
-            if (!player.isDealer()) {
-                sumPlayers.put(player, player.sumCardNumbers());
-            }
-        }
-
-        return Collections.unmodifiableMap(sumPlayers);
+    public Map<Player, Integer> sumCardNumbersWithoutDealer() { //TODO Player(리스트)만 넘겨줘도 되는 거 아닌가?
+            return players.stream().filter(player -> !player.isDealer())
+                .collect(Collectors.toMap(
+                        player -> player,
+                        Player::sumCardNumbers
+                ));
     }
 
     public Player getDealer() {
