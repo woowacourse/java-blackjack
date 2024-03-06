@@ -69,10 +69,8 @@ public class GameTest {
         Users users = new Users(List.of());
 
         Game game = new Game(totalDeck, users);
-        game.addDealerCardInCondition();
-
-        List<Card> cards = game.showCurrentUserDeck().getCards();
-        assertThat(cards.size()).isEqualTo(3);
+        boolean actual = game.addDealerCardCondition();
+        assertThat(actual).isTrue();
     }
 
     @Test

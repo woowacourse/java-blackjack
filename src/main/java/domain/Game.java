@@ -15,12 +15,7 @@ public class Game {
     public Game(TotalDeck totalDeck, Users users) {
         this.totalDeck = totalDeck;
         this.users = users;
-        users.stream()
-                .forEach(user -> {
-                    user.addCard(totalDeck.getNewCard());
-                    user.addCard(totalDeck.getNewCard());
-                });
-        //TODO
+        users.setStartCards(totalDeck);
     }
 
     public void doOrDie(String command) {
@@ -40,9 +35,12 @@ public class Game {
         return users.isCurrentUserPlayer();
     }
 
-    public void addDealerCardInCondition() {
-        if (users.getDealerCardSum() <= 16)
-            users.addDealerCard(totalDeck.getNewCard());
+    public void addDealerCard() {
+        users.addDealerCard(totalDeck.getNewCard());
+    }
+
+    public boolean addDealerCardCondition() {
+        return users.getDealerCardSum() <= 16;
     }
 
     public Map<Player, Result> generatePlayerResults() {
@@ -66,4 +64,7 @@ public class Game {
         return dealerResult;
     }
 
+    public Player getCurrentPlayer() {
+        return users.getCurrentPlayer();
+    }
 }
