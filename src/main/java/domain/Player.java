@@ -24,6 +24,10 @@ public class Player {
 		return cardHand.isBurst();
 	}
 
+	public int getScore() {
+		return cardHand.calculateScore();
+	}
+
 	public String getName() {
 		return name.getValue();
 	}

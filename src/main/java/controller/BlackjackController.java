@@ -56,4 +56,8 @@ public class BlackjackController {
 			outputView.printDealerHitMessage();
 		}
 	}
+
+	public void printTotalCardStatus(Dealer dealer, Players players) {
+		outputView.printTotalCardStatus(dealer, players);
+	}
 }

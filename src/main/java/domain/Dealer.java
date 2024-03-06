@@ -34,6 +34,10 @@ public class Dealer {
 		return deck.size();
 	}
 
+	public int getScore() {
+		return cardHand.calculateScore();
+	}
+
 	public List<Card> getCardHand() {
 		return cardHand.getCards();
 	}
