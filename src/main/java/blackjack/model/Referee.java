@@ -34,6 +34,10 @@ public class Referee {
             return Result.WIN;
         }
 
+        if (player.announceBlackJack() && !dealer.announceBlackJack()) {
+            return Result.WIN;
+        }
+
         return Result.LOSE;
     }
 }

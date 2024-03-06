@@ -38,4 +38,21 @@ class RefereeTest {
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
         }
     }
+
+    @Nested
+    @DisplayName("딜러가 21인 경우")
+    class DealerIs21 {
+
+        @Test
+        @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 승리한다.")
+        void playerWinWhenOnlyPlayerBlackJack() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
+            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.FOUR))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+        }
+    }
 }
