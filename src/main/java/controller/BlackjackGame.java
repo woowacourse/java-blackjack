@@ -42,7 +42,7 @@ public class BlackjackGame {
     }
 
     private void proceedDealerTurn(BlackjackService blackjackService) {
-        while (blackjackService.IsDealerNotOver()) {
+        while (blackjackService.isDealerNotOver()) {
             blackjackService.addCardToDealer();
             outputView.printDealerOneMoreCard();
         }

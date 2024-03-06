@@ -34,7 +34,7 @@ public class BlackjackService {
         return participants.isPlayerNotOver(playerIndex);
     }
 
-    public boolean IsDealerNotOver() {
+    public boolean isDealerNotOver() {
         return participants.isDealerNotOver();
     }
 
@@ -54,10 +54,6 @@ public class BlackjackService {
         return tempDeck;
     }
 
-    public Deck getAllCardDeck() {
-        return allCardDeck;
-    }
-
     public void addCardToPlayer(int playerIndex) {
         participants.receiveCard(allCardDeck.pickRandomCard(), playerIndex);
     }
@@ -68,6 +64,10 @@ public class BlackjackService {
 
     public Map<Player, Boolean> calculateVictory() {
         return participants.calculateResult();
+    }
+
+    public Deck getAllCardDeck() {
+        return allCardDeck;
     }
 
     public Name getPlayerName(int playerIndex) {
