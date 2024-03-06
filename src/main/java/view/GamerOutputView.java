@@ -9,18 +9,10 @@ import java.util.stream.Collectors;
 
 public class GamerOutputView {
 
-    // jason카드: 7클로버, K스페이드 - 결과: 17
     public static void print(GamerDTO gamerDTO) {
-        String name = gamerDTO.getName();
-        List<Card> cards = gamerDTO.getHoldingCards();
-        int summationCardPoint = gamerDTO.getSummationCardPoint();
-
-        String nameOutput = name + "카드";
-        String cardsOutput = cards.stream()
-                .map(card -> mapToString(card.cardType()) + mapToString(card.name()))
-                .collect(Collectors.joining(", "));
-        String summationCardPointOutput = "결과: %d".formatted(summationCardPoint);
-        System.out.printf("%s: %s - %s\n", nameOutput, cardsOutput, summationCardPointOutput);
+        String outputWithoutSummationCardPoint = generateOutputWithoutSummationCardPoint(gamerDTO);
+        String summationCardPointOutput = "결과: %d".formatted(gamerDTO.getSummationCardPoint());
+        System.out.printf("%s - %s\n", outputWithoutSummationCardPoint, summationCardPointOutput);
     }
 
     private static String mapToString(CardType cardType) {
@@ -53,5 +45,20 @@ public class GamerOutputView {
             return "K";
         }
         return String.valueOf(cardName.getCardNumber());
+    }
+
+    public static void printWithoutSummationCardPoint(GamerDTO gamerDTO) {
+        String outputWithoutSummationCardPoint = generateOutputWithoutSummationCardPoint(gamerDTO);
+        System.out.println(outputWithoutSummationCardPoint);
+    }
+
+    private static String generateOutputWithoutSummationCardPoint(GamerDTO gamerDTO) {
+        String name = gamerDTO.getName();
+        List<Card> cards = gamerDTO.getHoldingCards();
+        String nameOutput = name + "카드";
+        String cardsOutput = cards.stream()
+                .map(card -> mapToString(card.cardType()) + mapToString(card.name()))
+                .collect(Collectors.joining(", "));
+        return "%s: %s".formatted(nameOutput, cardsOutput);
     }
 }
