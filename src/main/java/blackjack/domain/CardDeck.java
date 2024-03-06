@@ -12,6 +12,9 @@ public class CardDeck {
     }
 
     public Card popCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다");
+        }
         return cards.remove(0);
     }
 
