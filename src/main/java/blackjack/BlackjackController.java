@@ -17,13 +17,10 @@ public class BlackjackController {
         requestDeal(players, dealer, cardPicker);
 
         OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
-        for (Player player : players.getValues()) {
-            OutputView.printDealCards(player.getName(), player.getCards());
-        }
+        players.forEach(player ->
+                OutputView.printDealCards(player.getName(), player.getCards()));
 
-        for (Player player : players.getValues()) {
-            requestHitOrStand(player, cardPicker);
-        }
+        players.forEach(player -> requestHitOrStand(player, cardPicker));
 
         while (dealer.isHitUnderBound()) {
             dealer.hit(cardPicker);
@@ -31,16 +28,12 @@ public class BlackjackController {
         }
 
         OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
-        for (Player player : players.getValues()) {
-            OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore());
-        }
-
-
+        players.forEach(player ->
+                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
     }
 
     private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
-        players.getValues()
-                .forEach(player -> player.deal(cardPicker));
+        players.forEach(player -> player.deal(cardPicker));
         dealer.deal(cardPicker);
     }
 

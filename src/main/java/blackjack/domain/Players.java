@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
@@ -27,7 +28,7 @@ public class Players {
         return values.stream().map(Player::getName).toList();
     }
 
-    public List<Player> getValues() {
-        return values;
+    public void forEach(Consumer<? super Player> action) {
+        values.forEach(action);
     }
 }
