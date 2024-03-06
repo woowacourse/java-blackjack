@@ -1,6 +1,6 @@
 package domain;
 
-public class Player {
+public class Player implements Participant {
     private final PlayerName playerName;
     private final Hand hand;
 
@@ -13,10 +13,12 @@ public class Player {
         return new Player(new PlayerName(playerName), Hand.init());
     }
 
+    @Override
     public boolean isDrawable() {
         return hand.isBurst();
     }
 
+    @Override
     public void draw(final Deck deck) {
         hand.addCard(deck.drawn());
     }
