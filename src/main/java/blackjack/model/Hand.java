@@ -14,6 +14,13 @@ public class Hand {
         return List.of(new Card(numberGenerator), new Card(numberGenerator));
     }
 
+    public int calculateCardsTotal() {
+        return cards.stream()
+                .map(Card::getDenomination)
+                .mapToInt(Denomination::getScore)
+                .sum();
+    }
+
     public List<Card> getCards() {
         return cards;
     }
