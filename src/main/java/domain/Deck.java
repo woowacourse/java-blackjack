@@ -18,8 +18,15 @@ public class Deck {
     }
 
     public Card pickRandomCard() {
+        validateDeck();
         int cardIndex = RANDOM.nextInt(cards.size());
         return cards.remove(cardIndex);
+    }
+
+    private void validateDeck() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 없습니다.");
+        }
     }
 
     public int calculateTotalScore() {

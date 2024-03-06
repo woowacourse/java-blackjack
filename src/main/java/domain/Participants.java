@@ -34,9 +34,6 @@ public class Participants {
     }
 
     public void receiveInitialCards(List<Deck> decks) {
-        if (decks.isEmpty()) {
-            throw new IllegalArgumentException("카드가 없습니다.");
-        }
         Deck dealerDeck = decks.remove(decks.size() - 1);
         dealer.receiveDeck(dealerDeck);
 
@@ -46,25 +43,22 @@ public class Participants {
         }
     }
 
-    public Map<Player, Boolean> calculateVictory() {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> {
-            if (player.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
-                result.put(player, false);
-                return;
-            }
-            if (dealer.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
-                result.put(player, true);
-                return;
-            }
-            if (dealer.getDeck().calculateTotalScore() >= player.getDeck().calculateTotalScore()) {
-                result.put(player, false);
-                return;
-            }
-            result.put(player, true);
-        });
 
+
+    public Map<Player, Boolean> calculateResult() {
+        Map<Player, Boolean> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, calculateResult(player)));
         return result;
+    }
+
+    private boolean calculateResult(Player player) {
+        if (player.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
+            return false;
+        }
+        if (dealer.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
+            return true;
+        }
+        return dealer.getDeck().calculateTotalScore() < player.getDeck().calculateTotalScore();
     }
 
     public boolean isPlayerNotOver(int playerIndex) {

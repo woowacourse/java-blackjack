@@ -68,7 +68,7 @@ public class BlackjackService {
 
 
     public Map<Player, Boolean> calculateVictory() {
-        return participants.calculateVictory();
+        return participants.calculateResult();
     }
 
     public Name getPlayerName(int playerIndex) {
