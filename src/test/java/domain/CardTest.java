@@ -14,8 +14,15 @@ public class CardTest {
     }
 
     @Test
+    @DisplayName("카드의 모양을 반환한다.")
+    void getCardType() {
+        Assertions.assertThat(new Card(CardType.SPADE, CardNumber.TWO).getCardType())
+                .isEqualTo(CardType.SPADE);
+    }
+
+    @Test
     @DisplayName("카드의 점수를 반환한다.")
-    void getScore() {
+    void getCardNumber() {
         Assertions.assertThat(new Card(CardType.SPADE, CardNumber.TWO).getCardNumber())
                 .isEqualTo(CardNumber.TWO);
     }

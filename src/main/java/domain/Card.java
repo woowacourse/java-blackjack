@@ -17,6 +17,10 @@ public class Card {
         }
     }
 
+    public CardType getCardType() {
+        return cardType;
+    }
+
     public CardNumber getCardNumber() {
         return cardNubmer;
     }
