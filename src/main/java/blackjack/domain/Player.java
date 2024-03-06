@@ -4,9 +4,11 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player {
-    PlayerCards playerCards;
+    private final String name; // TODO: 감싸기
+    private final PlayerCards playerCards;
 
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         this.playerCards = PlayerCards.createEmptyCards();
     }
 

@@ -25,7 +25,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = Deck.from(cards);
 
-        Player player = new Player();
+        Player player = new Player("pedro");
         player.draw(deck);
 
         List<Card> playerCards = player.getCards();
@@ -38,7 +38,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = Deck.from(cards);
 
-        Player player = new Player();
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
@@ -54,7 +54,7 @@ class PlayerTest {
     void checkBustTest(List<Card> cards, boolean expected) {
         Deck deck = Deck.from(cards);
 
-        Player player = new Player();
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }

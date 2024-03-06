@@ -4,12 +4,13 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer {
+    private static final String DEALER_NAME = "딜러";
     private static final int MINIMUM_SCORE = 17;
 
     private final Player player;
 
     public Dealer() {
-        this.player = new Player();
+        this.player = new Player(DEALER_NAME);
     }
 
     public void draw(Deck deck) {
