@@ -126,5 +126,18 @@ class RefereeTest {
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
         }
+
+        @Test
+        @DisplayName("플레이어와 딜러 모두 21 초과인 경우")
+        void bothBust() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN), new Card(Shape.SPADE, Score.NINE)))));
+            Dealer dealer = new Dealer(
+                    new Cards(List.of(new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.NINE))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+        }
     }
 }
