@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("생성 테스트")
+    @DisplayName("딜러의 이름은 '딜러'이다.")
     @Test
     void create() {
         Dealer dealer = new Dealer();
