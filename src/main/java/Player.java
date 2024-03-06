@@ -53,4 +53,8 @@ public class Player {
     public List<Card> getCards() {
         return cards;
     }
+
+    public boolean canHit() {
+        return calculateScore() <= BLACK_JACK_COUNT;
+    }
 }

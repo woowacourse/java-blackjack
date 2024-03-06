@@ -26,6 +26,12 @@ public class BlackJack {
     public boolean isWinner(Participant participant) {
         int participantScore = participant.calculateScore();
         int dealerScore = dealer.calculateScore();
+        if (!participant.canHit()) {
+            return false;
+        }
+        if (!dealer.canHit()) {
+            return true;
+        }
 
         if (participantScore == dealerScore) {
             return isWinnerByCardCount(participant);
