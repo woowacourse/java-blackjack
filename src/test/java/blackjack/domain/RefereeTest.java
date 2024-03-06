@@ -98,4 +98,56 @@ public class RefereeTest {
         // then
         assertThat(gameResult).isEqualTo(GameResult.DRAW);
     }
+
+    @Test
+    @DisplayName("플레이어의 첫 두개의 카드의 합이 21이면 승리한다.")
+    void playerDealCardsBlackjackTest() {
+        // given
+        CardPicker playerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_ACE, Card.CLUB_JACK);
+            }
+        };
+        CardPicker dealerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+            }
+        };
+
+        // when
+        player.deal(playerCardPicker);
+        dealer.deal(dealerCardPicker);
+        GameResult gameResult = referee.judgeGameResult(player);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 딜러보다 낮을 경우 패배한다.")
+    void playerLoseTest() {
+        // given
+        CardPicker playerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_TWO, Card.CLUB_JACK);
+            }
+        };
+        CardPicker dealerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+            }
+        };
+
+        // when
+        player.deal(playerCardPicker);
+        dealer.deal(dealerCardPicker);
+        GameResult gameResult = referee.judgeGameResult(player);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+    }
 }

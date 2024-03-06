@@ -13,7 +13,8 @@ public class Referee {
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
-        if (player.getScore() > dealer.getScore()) {
+        if (player.getScore() > dealer.getScore() ||
+                player.getScore() == 21) {
             return GameResult.WIN;
         }
         if (dealer.getScore() == player.getScore()) {
