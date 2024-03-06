@@ -30,10 +30,6 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public Players addCards(List<Card> cardsElement) {
         int index = 0;
         List<Player> updatedPlayers = new ArrayList<>();
@@ -43,5 +39,18 @@ public class Players {
             index += 2;
         }
         return new Players(updatedPlayers);
+    }
+
+    public Players hit(Player player, Card card) {
+        List<Player> updatedPlayers = new ArrayList<>(players);
+        Player updatedPlayer = player.addCard(card);
+        int index = updatedPlayers.indexOf(player);
+        updatedPlayers.remove(player);
+        updatedPlayers.add(index, updatedPlayer);
+        return new Players(updatedPlayers);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

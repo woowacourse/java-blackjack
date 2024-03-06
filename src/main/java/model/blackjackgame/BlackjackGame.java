@@ -4,6 +4,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.Cards;
 import model.dealer.Dealer;
+import model.player.Player;
 import model.player.Players;
 
 public class BlackjackGame {
@@ -20,6 +21,12 @@ public class BlackjackGame {
         List<Card> cardsElement = cards.getCards();
         dealer = dealer.addCards(cardsElement.subList(0, 2));
         players = players.addCards(cardsElement.subList(2, cardsElement.size()));
+    }
+
+    public void hitOrStay(Player player, Answer answer, Card card) {
+        if (answer.isHit()) {
+            players = players.hit(player, card);
+        }
     }
 
     public Dealer getDealer() {
