@@ -10,13 +10,6 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    public Deck() {
-        this.cards = new LinkedList<>(Arrays.stream(Shape.values())
-                .map(Deck::makeCards)
-                .flatMap(List::stream)
-                .toList());
-    }
-
     Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }

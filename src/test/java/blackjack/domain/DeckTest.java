@@ -11,7 +11,7 @@ class DeckTest {
     @DisplayName("카드 한 장을 뽑을 수 있다")
     @Test
     void drawTest() {
-        Deck deck = new Deck();
+        Deck deck = Deck.createOrderedDeck();
 
         assertThat(deck.draw()).isNotNull();
     }
@@ -20,7 +20,7 @@ class DeckTest {
     @DisplayName("카드는 최대 52장만 뽑을 수 있다.")
     @Test
     void drawTest_whenDraw53Times_throwException() {
-        Deck deck = new Deck();
+        Deck deck = Deck.createOrderedDeck();
         drawRepeat(deck, 52);
 
         assertThatThrownBy(() -> deck.draw())
