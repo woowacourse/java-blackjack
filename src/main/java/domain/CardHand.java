@@ -43,4 +43,9 @@ public class CardHand {
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}
+
+	public boolean isScoreLessOrEqual(int value) {
+		int score = calculateScore();
+		return value >= score;
+	}
 }

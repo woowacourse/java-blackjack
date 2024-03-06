@@ -52,5 +52,8 @@ public class BlackjackController {
 				outputView.printCardStatus(player);
 			}
 		}
+		while (dealer.tryHit()) {
+			outputView.printDealerHitMessage();
+		}
 	}
 }

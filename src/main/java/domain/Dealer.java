@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Dealer {
 	private final List<Card> deck;
-	private final List<Card> cardHand;
+	private final CardHand cardHand;
 
 	// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
 	public Dealer(List<Card> deck, List<Card> cardHand) {
 		Collections.shuffle(deck);
 		this.deck = deck;
-		this.cardHand = cardHand;
+		this.cardHand = new CardHand(cardHand);
 	}
 
 	public List<Card> dealInit() {
@@ -19,7 +19,7 @@ public class Dealer {
 	}
 
 	public void receiveInitCards(List<Card> cards) {
-		cardHand.addAll(cards);
+		cardHand.add(cards);
 	}
 
 	public Card dealCard() {
@@ -35,6 +35,18 @@ public class Dealer {
 	}
 
 	public List<Card> getCardHand() {
-		return cardHand;
+		return cardHand.getCards();
+	}
+
+	private boolean hasHitScore() {
+		return cardHand.isScoreLessOrEqual(16);
+	}
+
+	public boolean tryHit() {
+		if (hasHitScore()) {
+			cardHand.add(dealCard());
+			return true;
+		}
+		return false;
 	}
 }
