@@ -9,6 +9,7 @@ import java.util.List;
 public class InputView {
 
     private static final String PLAYER_NAME_INPUT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String MORE_CARD_CHOICE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String NAME_SEPARATOR = ",";
     private static final String IOEXCEPTION_ERROR = "입력 과정 도중 에러가 발생했습니다.";
 
@@ -25,7 +26,7 @@ public class InputView {
     public List<String> readPlayersName() {
         System.out.println(PLAYER_NAME_INPUT);
         try {
-            final List<String> names = Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
+            List<String> names = Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
                     .map(String::trim)
                     .toList();
             return names;
@@ -34,4 +35,12 @@ public class InputView {
         }
     }
 
+    public String readMoreCardChoice(final String name) {
+        System.out.printf(System.lineSeparator() + MORE_CARD_CHOICE + System.lineSeparator(), name);
+        try {
+            return bufferedReader.readLine();
+        } catch (IOException exception) {
+            throw new IllegalArgumentException(IOEXCEPTION_ERROR);
+        }
+    }
 }

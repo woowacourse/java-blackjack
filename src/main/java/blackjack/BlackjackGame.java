@@ -33,6 +33,9 @@ public class BlackjackGame {
 
         outputView.printCardDistribute(dealer.getName(), names);
         printHandCardsStatus(dealer, players);
+
+        players.getPlayers()
+                .forEach(player -> readMoreCardChoice(player, deck));
     }
 
     private String makeCardOutput(final Card card) {
@@ -49,6 +52,24 @@ public class BlackjackGame {
         outputView.printHandCards(dealer.getName(), makeCardOutput(dealer.showFirstCard()));
 
         for (Player player : players.getPlayers()) {
+            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+        }
+    }
+
+    private void readMoreCardChoice(final Player player, final Deck deck) {
+        String choice = inputView.readMoreCardChoice(player.getName());
+
+        if (choice.equals("n")) {
+            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            return;
+        }
+
+        do {
+            player.draw(deck);
+            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+        } while ((player.canReceiveCard()) && (choice = inputView.readMoreCardChoice(player.getName())).equals("y"));
+
+        if (choice.equals("n")) {
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
         }
     }
