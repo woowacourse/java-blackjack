@@ -21,16 +21,21 @@ public class BlackjackGame {
         outputView.printSetting(dealer, players);
 
         players.forEach((player) -> {
-            while (player.isNotOver(21) && inputView.readCommand(player.getName().getName())) {
-                blackjackService.addCard(player);
-                outputView.printCurrentCard(player);
-                outputView.printNewLine();
-            }
 
         });
 
-        while (dealer.isNotOver(17)) {
-            blackjackService.addCard(dealer);
+        for (int playerIndex = 0; playerIndex < blackjackService.countPlayers(); playerIndex++) {
+            while (blackjackService.isPlayerNotOver(playerIndex) &&
+                    inputView.readCommand(blackjackService.getPlayerName(playerIndex).getName())) {
+                blackjackService.addCardToPlayer(playerIndex);
+                Player player = blackjackService.getPlayer(playerIndex);
+                outputView.printCurrentCard(player);
+                outputView.printNewLine();
+            }
+        }
+
+        while (blackjackService.IsDealerNotOver()) {
+            blackjackService.addCardToDealer();
             outputView.printDealerOneMoreCard();
         }
 

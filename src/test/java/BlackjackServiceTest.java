@@ -34,7 +34,7 @@ public class BlackjackServiceTest {
         Player dealer = new Player(new Name("딜러"));
         BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        //blackjackService.initialSetting();
+        blackjackService.initialDistribute();
 
         assertThat(dealer.getDeck().getCards().size()).isEqualTo(2);
     }

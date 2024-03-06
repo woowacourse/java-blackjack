@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,14 @@ public class BlackjackService {
                     Arrays.stream(Shape.values())
                             .forEach((shape) -> deck.addCard(new Card(shape, rank)));
                 });
+    }
+
+    public int countPlayers() {
+        return participants.countPlayers();
+    }
+
+    public boolean isPlayerNotOver(int playerIndex) {
+        return participants.isPlayerNotOver(playerIndex);
     }
 
     public void initialDistribute() {
@@ -41,13 +48,30 @@ public class BlackjackService {
         return deck;
     }
 
-    public void addCard(Player player) {
-        player.receiveCard(deck.pickRandomCard()); // TODO refactor
+    public void addCardToPlayer(int playerIndex) {
+        participants.receiveCard(deck.pickRandomCard(), playerIndex);
+    }
 
+    public void addCardToDealer() {
+        participants.receiveDealerCard(deck.pickRandomCard());
+    }
+
+    public Name getPlayerName(int playerIndex) {
+        return participants.getPlayerName(playerIndex);
     }
 
 
     public Map<Player, Boolean> calculateVictory() {
         return participants.calculateVictory();
     }
+
+    public Player getPlayer(int playerIndex) {
+        return participants.getPlayer(playerIndex);
+    }
+
+    public boolean IsDealerNotOver() {
+        return participants.isDealerNotOver();
+    }
+
+
 }

@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class Participants {
 
-    public static final int DEALER_COUNT = 1;
+    private static final int DEALER_COUNT = 1;
+    private static final int MAX_BOUNDARY_SCORE = 21;
+    private static final int DEALER_BOUNDARY_SCORE = 17;
     private final Player dealer;
     private final List<Player> players;
 
@@ -18,6 +20,17 @@ public class Participants {
 
     public int count() {
         return players.size() + DEALER_COUNT;
+    }
+
+    public int countPlayers() {
+        return players.size();
+    }
+    public void receiveCard(Card card, int playerIndex) {
+        players.get(playerIndex).receiveCard(card);
+    }
+
+    public void receiveDealerCard(Card card) {
+        dealer.receiveCard(card);
     }
 
     public void receiveInitialCards(List<Deck> decks) {
@@ -36,11 +49,11 @@ public class Participants {
     public Map<Player, Boolean> calculateVictory() {
         Map<Player, Boolean> result = new LinkedHashMap<>();
         players.forEach(player -> {
-            if (player.getDeck().calculateTotalScore() > 21) {
+            if (player.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
                 result.put(player, false);
                 return;
             }
-            if (dealer.getDeck().calculateTotalScore() > 21) {
+            if (dealer.getDeck().calculateTotalScore() > MAX_BOUNDARY_SCORE) {
                 result.put(player, true);
                 return;
             }
@@ -53,4 +66,23 @@ public class Participants {
 
         return result;
     }
+
+    public boolean isPlayerNotOver(int playerIndex) {
+        return players.get(playerIndex).isNotOver(MAX_BOUNDARY_SCORE);
+    }
+
+    public boolean isDealerNotOver() {
+        return dealer.isNotOver(DEALER_BOUNDARY_SCORE);
+    }
+
+    public Name getPlayerName(int playerIndex) {
+        return players.get(playerIndex).getName();
+    }
+
+
+    public Player getPlayer(int playerIndex) {
+        return players.get(playerIndex);
+    }
+
+
 }
