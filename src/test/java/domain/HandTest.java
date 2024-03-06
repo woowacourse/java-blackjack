@@ -1,5 +1,6 @@
 package domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +48,21 @@ public class HandTest {
 
         // Then
         assertThat(isBurst).isTrue();
+    }
+
+    @DisplayName("손패에 새로운 카드를 추가한다.")
+    @Test
+    void addCardTest() {
+        // Given
+        Hand hand = Hand.init();
+        int initCardNumberSum = hand.getCardsNumberSum();
+        PlayingCard card = new PlayingCard(DIAMOND, NINE);
+
+        // When
+        hand.addCard(card);
+
+        // Then
+        Assertions.assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
+
     }
 }

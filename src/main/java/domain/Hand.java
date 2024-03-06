@@ -25,4 +25,8 @@ public class Hand {
     public boolean isBurst() {
         return getCardsNumberSum() > BLACKJACK_CONDITION;
     }
+
+    public void addCard(final PlayingCard card) {
+        playingCards.add(card);
+    }
 }
