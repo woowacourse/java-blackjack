@@ -41,6 +41,21 @@ class CardsTest {
         assertThat(score).isEqualTo(12);
     }
 
+    @DisplayName("점수 총합이 21점을 초과하는지 여부를 반환한다.")
+    @Test
+    void isGreaterThanWinningScore() {
+        List<Card> cards = List.of(
+                new Card(CardNumber.TWO, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards given = new Cards(cards);
+
+        boolean result = given.isGreaterThanWinningScore();
+
+        assertThat(result).isTrue();
+    }
+
     @DisplayName("카드를 지급받는다")
     @Test
     void addCard() {

@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
     private static final int BOUNDARY_SCORE = 11;
     private static final int EXTRA_SCORE = 10;
+    private static final int WINNING_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -23,6 +24,10 @@ public class Cards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isGreaterThanWinningScore() {
+        return calculateScore() > WINNING_SCORE;
     }
 
     private boolean hasAce() {
