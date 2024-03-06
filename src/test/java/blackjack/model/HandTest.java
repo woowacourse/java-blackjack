@@ -1,14 +1,15 @@
 package blackjack.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
     @Test
@@ -61,5 +62,18 @@ public class HandTest {
             }
             throw new NoSuchElementException("이미 모든 numbers가 반환되었습니다.");
         }
+    }
+
+    @Test
+    @DisplayName("카드를 뽑는다")
+    void addCardTest() {
+        // when
+        Hand hand = new Hand(() -> 0);
+
+        // when
+        hand.addCard();
+
+        // then
+        assertThat(hand.getCards()).hasSize(3);
     }
 }
