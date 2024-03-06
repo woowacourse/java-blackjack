@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.exception.DelimiterFormatException;
-
 import blackjack.exception.InvalidHitCommandException;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +14,12 @@ public class InputView {
     private static final String HIT = "y";
 
     private final Scanner scanner = new Scanner(System.in);
+
+    private static void validateHitCommand(String input) {
+        if (!input.matches(WHETHER_HIT_FORMAT)) {
+            throw new InvalidHitCommandException();
+        }
+    }
 
     public List<String> readPlayersName() {
         System.out.println(PLAYERS_NAME_REQUEST);
@@ -32,12 +37,6 @@ public class InputView {
             return true;
         }
         return false;
-    }
-
-    private static void validateHitCommand(String input) {
-        if (!input.matches(WHETHER_HIT_FORMAT)) {
-            throw new InvalidHitCommandException();
-        }
     }
 
     private void validateDelimiter(String input) {

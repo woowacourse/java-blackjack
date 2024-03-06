@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.exception.InvalidPlayerCountException;
-
 import java.util.List;
 
 public class Players {
