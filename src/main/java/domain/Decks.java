@@ -1,23 +1,29 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Decks {
     private static final int DECK_COUNT = 6;
-    private final List<Deck> decks;
+    private final Stack<Card> cards;
 
     public Decks() {
-        this.decks = Stream.generate(Deck::new)
+        Stack<Card> decks = Stream.generate(Deck::new)
                 .limit(DECK_COUNT)
-                .toList();
+                .flatMap(deck -> deck.getCards().stream())
+                .collect(Collectors.toCollection(Stack::new));
+        Collections.shuffle(decks);
+        this.cards = decks;
     }
 
-    public Card draw(int index) {
-        return decks.get(index).draw();
+    public Card draw() {
+        return cards.pop();
     }
 
-    public List<Deck> getDecks() {
-        return decks;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

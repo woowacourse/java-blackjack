@@ -12,7 +12,7 @@ public class Player {
     }
 
     public void hit(Decks decks) {
-        hand.add(decks.draw(0));
+        hand.add(decks.draw());
     }
 
     public Name getName() {

@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ public class DecksTest {
         Decks decks = new Decks();
 
         // then
-        assertThat(decks.getDecks()).hasSize(expectedSize);
+        assertThat(decks.getCards()).hasSize(expectedSize);
     }
 
     @DisplayName("모든 덱을 돌아가면서 카드를 뽑는다.")
@@ -26,13 +25,11 @@ public class DecksTest {
     void drawTest() {
         // given
         Decks decks = new Decks();
-        int index = 3;
 
         // when
-        decks.draw(index);
-        List<Deck> result = decks.getDecks();
+        decks.draw();
 
         // then
-        assertThat(result.get(index).getCards()).hasSize(51);
+        assertThat(decks.getCards()).hasSize(51);
     }
 }
