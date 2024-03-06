@@ -9,7 +9,6 @@ public class Player {
     protected final String name;
     protected Cards cards;
 
-
     public Player(final String name, final Cards cards) {
         validateNullAndEmptyName(name);
         this.name = name;
