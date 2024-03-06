@@ -1,29 +1,27 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class CardDeck {
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
     public CardDeck() {
         this.cards = initializeCards();
     }
 
-    private List<Card> initializeCards() {
-        List<Card> cards = new ArrayList<>();
+    private Stack<Card> initializeCards() {
+        Stack<Card> cards = new Stack<>();
 
         for (Denomination denomination : Denomination.values()) {
             addCards(cards, denomination);
         }
-
         return cards;
     }
 
-    private void addCards(List<Card> cards, Denomination denomination) {
+    private void addCards(Stack<Card> cards, Denomination denomination) {
         for (Emblem emblem : Emblem.values()) {
-            cards.add(new Card(denomination, emblem));
+            cards.push(new Card(denomination, emblem));
         }
     }
 
