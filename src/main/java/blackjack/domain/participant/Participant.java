@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int BLACKJACK_BOUND = 21;
 
     protected final String name;
     protected final Hand hand;
@@ -20,6 +21,10 @@ public abstract class Participant {
     public void draw(Deck deck) {
         Card card = deck.drawn();
         hand.add(card);
+    }
+
+    public boolean isBurst() {
+        return hand.calculateScore() > BLACKJACK_BOUND;
     }
 
     public List<Card> getHandCards() {

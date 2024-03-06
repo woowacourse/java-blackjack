@@ -29,18 +29,24 @@ public class Players {
         PlayerResult playerResult = new PlayerResult();
 
         for (Player player : players) {
+            if (player.isBurst()) {
+                playerResult.addResult(player, false);
+                continue;
+            }
             if (dealerScore <= 21) {
                 if (dealerScore >= player.hand.calculateScore()) {
                     wins += 1;
                     playerResult.addResult(player, false);
                     continue;
                 }
-
                 loses += 1;
                 playerResult.addResult(player, true);
             }
         }
-
         return GameResult.from(wins, loses, playerResult);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
