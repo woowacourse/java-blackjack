@@ -3,8 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +11,14 @@ public class PlayerTest {
     @DisplayName("이름과 핸드를 가진 플레이어를 생성한다")
     @Test
     public void createSuccess() {
-        assertThatCode(() -> new Player("마크", new Hand(List.of(CardFixture.diamond3(), CardFixture.heartJack()))))
+        assertThatCode(() -> new Player("마크", new Hand()))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("플레이어는 자신이 가진 핸드를 계산한다")
     @Test
     public void calculate() {
-        Player player = new Player("마크", new Hand(List.of(CardFixture.diamond3(), CardFixture.heartJack())));
+        Player player = new Player("마크", new Hand());
 
         int score = player.calculate();
 
@@ -31,7 +29,7 @@ public class PlayerTest {
     @Test
     public void putCard() {
         Player player = new Player("마크",
-                new Hand(new ArrayList<Card>(List.of(CardFixture.diamond3(), CardFixture.heartJack()))));
+                new Hand());
         Card card = CardFixture.heartJack();
         int score = player.calculate();
 
