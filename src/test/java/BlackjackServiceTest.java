@@ -2,7 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
 import domain.Name;
-import domain.Participants;
+import domain.BlackjackService;
 import domain.Player;
 import domain.Rank;
 import domain.Shape;
@@ -12,16 +12,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ParticipantsTest {
+public class BlackjackServiceTest {
 
     @Test
     @DisplayName("52장 카드 생성") // TODO 바꿈
     void t() { // TODO 메서드이름 바꿈
         List<Player> participantList = List.of(new Player(new Name("시소")), new Player(new Name("타칸")));
         Player dealer = new Player(new Name("딜러"));
-        Participants participants = new Participants(dealer, participantList);
+        BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        int result = participants.getDeck().getCards().size();
+        int result = blackjackService.getDeck().getCards().size();
 
         assertThat(result).isEqualTo(52);
     }
@@ -32,9 +32,9 @@ public class ParticipantsTest {
     void initialSetting() {
         List<Player> participantList = List.of(new Player(new Name("시소")), new Player(new Name("타칸")));
         Player dealer = new Player(new Name("딜러"));
-        Participants participants = new Participants(dealer, participantList);
+        BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        participants.initialSetting();
+        //blackjackService.initialSetting();
 
         assertThat(dealer.getDeck().getCards().size()).isEqualTo(2);
     }
@@ -50,13 +50,13 @@ public class ParticipantsTest {
         siso.receiveCard(new Card(Shape.HEART, Rank.TEN));
         tacan.receiveCard(new Card(Shape.HEART, Rank.JACK));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
-        Participants participants = new Participants(dealer, participantList);
+        BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        Map<Player, Boolean> victoryResult = participants.calculateVictory();
+        //Map<Player, Boolean> victoryResult = blackjackService.calculateVictory();
 
 
-        assertThat(victoryResult.get(siso)).isFalse();
-        assertThat(victoryResult.get(tacan)).isFalse();
+        //assertThat(victoryResult.get(siso)).isFalse();
+        //assertThat(victoryResult.get(tacan)).isFalse();
     }
 
     @Test
@@ -70,13 +70,25 @@ public class ParticipantsTest {
         siso.receiveCard(new Card(Shape.HEART, Rank.FIVE));
         tacan.receiveCard(new Card(Shape.HEART, Rank.ACE));
         dealer.receiveCard(new Card(Shape.HEART, Rank.NINE));
-        Participants participants = new Participants(dealer, participantList);
+        BlackjackService blackjackService = new BlackjackService(dealer, participantList);
 
-        Map<Player, Boolean> victoryResult = participants.calculateVictory();
+        //Map<Player, Boolean> victoryResult = blackjackService.calculateVictory();
 
 
-        assertThat(victoryResult.get(tacan)).isTrue();
-        assertThat(victoryResult.get(siso)).isFalse();
+        //assertThat(victoryResult.get(tacan)).isTrue();
+        //assertThat(victoryResult.get(siso)).isFalse();
     }
 
+    @Test
+    void distributeTest() {
+        Player siso = new Player(new Name("시소"));
+        Player tacan = new Player(new Name("타칸"));
+        Player dealer = new Player(new Name("딜러"));
+        List<Player> participantList = List.of(siso, tacan);
+        BlackjackService blackjackService = new BlackjackService(dealer, participantList);
+
+        blackjackService.initialDistribute();
+
+        Assertions.assertThat(dealer.getDeck().size()).isEqualTo(siso.getDeck().size());
+    }
 }

@@ -1,5 +1,5 @@
 import domain.Name;
-import domain.Participants;
+import domain.BlackjackService;
 import domain.Player;
 import java.util.List;
 import view.InputView;
@@ -16,13 +16,13 @@ public class BlackjackGame {
                 .map(name -> new Player(new Name(name)))
                 .toList();
         Player dealer = new Player(new Name("딜러"));
-        Participants participants = new Participants(dealer, players);
-        participants.initialSetting();
+        BlackjackService blackjackService = new BlackjackService(dealer, players);
+        //blackjackService.initialSetting();
         outputView.printSetting(dealer, players);
 
         players.forEach((player) -> {
             while (player.isNotOver(21) && inputView.readCommand(player.getName().getName())) {
-                participants.addCard(player);
+                blackjackService.addCard(player);
                 outputView.printCurrentCard(player);
                 outputView.printNewLine();
             }
@@ -30,11 +30,11 @@ public class BlackjackGame {
         });
 
         while (dealer.isNotOver(17)) {
-            participants.addCard(dealer);
+            blackjackService.addCard(dealer);
             outputView.printDealerOneMoreCard();
         }
 
         outputView.printResult(dealer, players);
-        outputView.printVictory(participants.calculateVictory());
+        //outputView.printVictory(blackjackService.calculateVictory());
     }
 }
