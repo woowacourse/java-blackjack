@@ -2,7 +2,8 @@ package controller;
 
 import domain.CardDeck;
 import domain.Dealer;
-import domain.PlayerHandsDto;
+import dto.DealerHandsDto;
+import dto.PlayerHandsDto;
 import domain.Players;
 import view.InputView;
 import view.OutputView;
@@ -21,6 +22,6 @@ public class BlackJackController {
         final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = new Dealer(players, cardDeck);
         dealer.startDeal();
-        outputView.printStartDeal(PlayerHandsDto.from(players));
+        outputView.printStartDeal(DealerHandsDto.from(dealer), PlayerHandsDto.from(players));
     }
 }

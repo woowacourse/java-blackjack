@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer {
 
     private static final int INIT_CARD_NUMBER = 2; //TODO 이름 생각해보기
@@ -19,5 +21,12 @@ public class Dealer {
             players.forEach(player -> player.add(cardDeck.pop()));
             hands.add(cardDeck.pop());
         }
+    }
+
+    public List<String> getCards() {
+        return hands.getCards()
+                .stream()
+                .map(Card::toString)
+                .toList();
     }
 }

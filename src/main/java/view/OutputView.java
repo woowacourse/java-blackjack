@@ -1,6 +1,7 @@
 package view;
 
-import domain.PlayerHandsDto;
+import dto.DealerHandsDto;
+import dto.PlayerHandsDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,10 +11,11 @@ public class OutputView {
 
     private final String FORM = "%s카드: %s";
 
-    public void printStartDeal(final PlayerHandsDto playerHandsDto) {
+    public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayerHandsDto playerHandsDto) {
+        final String dealerCard = dealerHandsDto.getDisplayedCard();
         final Set<String> playerNames = playerHandsDto.getPlayerHands().keySet();
         System.out.println("딜러와 " + format(playerNames) + " 에게 2장을 나누었습니다.");
-        System.out.println("딜러: "); // TODO: 딜러 카드
+        System.out.println("딜러: " + dealerCard);
         Map<String, List<String>> playerHands = playerHandsDto.getPlayerHands();
         for (Entry<String, List<String>> stringListEntry : playerHands.entrySet()) {
             System.out.printf(FORM, stringListEntry.getKey(), format(stringListEntry.getValue()));
