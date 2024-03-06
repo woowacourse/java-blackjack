@@ -2,7 +2,6 @@ package controller;
 
 import controller.dto.CardStatus;
 import domain.Game;
-import domain.Player;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -22,16 +21,15 @@ public class GameController {
     }
 
     private Game start() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+        List<String> names = inputView.enterPlayerNames();
 
-        Game game = new Game(player1, player2);
+        Game game = new Game(names);
         outputView.printAfterStartGame(game.start());
         return game;
     }
 
     private void startRound(final Game game) {
-        List<String> names = game.getPlayers();
+        List<String> names = game.getPlayerNames();
         for (String name : names) {
             String command = inputView.decideToGetMoreCard(name);
             CardStatus status = game.getCurrentCardStatus(name);

@@ -3,15 +3,16 @@ package domain;
 import controller.dto.CardStatus;
 import controller.dto.CardsStatus;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Game {
     private final List<Player> players;
     private final Cards cards;
 
-    public Game(final Player... players) {
-        this.players = Arrays.asList(players);
+    public Game(final List<String> playerNames) {
+        this.players = playerNames.stream()
+                .map(Player::new)
+                .toList();
         cards = new Cards();
     }
 
@@ -39,7 +40,7 @@ public class Game {
     }
 
 
-    public List<String> getPlayers() {
+    public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();

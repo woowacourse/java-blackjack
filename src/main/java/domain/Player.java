@@ -4,10 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private final String name;
     private final List<Card> cards;
 
-    public Player() {
+    public Player(final String name) {
+        validateName(name);
+        this.name = name;
         cards = new ArrayList<>();
+    }
+
+    private void validateName(final String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void add(final Card card) {
@@ -23,7 +32,7 @@ public class Player {
     }
 
     public String getName() {
-        return "pobi";
+        return name;
     }
 
     public List<Card> getCards() {

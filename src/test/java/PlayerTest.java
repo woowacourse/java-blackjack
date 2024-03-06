@@ -11,7 +11,7 @@ class PlayerTest {
     @DisplayName("카드를 저장한다.")
     @Test
     void saveCard() {
-        Player player = new Player();
+        Player player = new Player("pobi");
         player.saveCard(new Card(CardValue.ACE, Shape.CLOVER));
         int totalSize = player.getTotalSize();
         Assertions.assertThat(totalSize).isEqualTo(1);
