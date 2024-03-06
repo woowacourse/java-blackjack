@@ -54,5 +54,17 @@ class RefereeTest {
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
         }
+
+        @Test
+        @DisplayName("플레이어의 카드 수가 딜러의 카드 수보다 적은 경우 플레이어가 승리한다.")
+        void playerWinWhenHasLittleCardsThanDealer() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.CLOVER, Score.NINE), new Card(Shape.SPADE, Score.TWO)))));
+            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.FIVE), new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.DIA, Score.FOUR))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+        }
     }
 }
