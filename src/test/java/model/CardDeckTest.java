@@ -27,7 +27,7 @@ class CardDeckTest {
 
     @Test
     @DisplayName("CardDeck이 가지고 있는 카드들의 숫자 합인 Hand를 반환한다.")
-    void calculateHand_ShouldReturnCorrectValue_WhenDeckContainsSpecificCards(){
+    void calculateHand_ShouldReturnCorrectValue_WhenDeckContainsSpecificCards() {
 
         CardDeck cardDeck = new CardDeck();
         cardDeck.addCard(Card.from(Number.THREE, Emblem.CLUB));
@@ -42,7 +42,7 @@ class CardDeckTest {
 
     @Test
     @DisplayName("CardDeck이 비어있을 때, Hand를 구하면 0을 반환한다.")
-    void calculateHand_ShouldReturnCorrectValue_WhenDeckIsEmpty(){
+    void calculateHand_ShouldReturnCorrectValue_WhenDeckIsEmpty() {
 
         CardDeck cardDeck = new CardDeck();
 
