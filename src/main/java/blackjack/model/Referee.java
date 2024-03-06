@@ -2,7 +2,6 @@ package blackjack.model;
 
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Referee {
@@ -14,7 +13,7 @@ public class Referee {
         this.players = players;
     }
 
-    public Map<String, Result> judgePlayerWinner() {
+    public Map<String, Result> judgePlayerResult() {
         Map<String, Result> result = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player.getName(), calculateResult(player));
@@ -56,7 +55,7 @@ public class Referee {
 
     public Map<Result, Integer> judgeDealerResult() {
         EnumMap<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        for (Result playerResult : judgePlayerWinner().values()) {
+        for (Result playerResult : judgePlayerResult().values()) {
             dealerResult.merge(findOpposite(playerResult), 1, Integer::sum);
         }
         return dealerResult;
