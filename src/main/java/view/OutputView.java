@@ -4,7 +4,6 @@ import dto.DealerHandsDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
 import java.util.List;
-import java.util.Set;
 
 public class OutputView {
 
@@ -28,10 +27,6 @@ public class OutputView {
     public void printHands(final PlayerDto playerDto) {
         System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
         System.out.println();
-    }
-
-    private String format(final Set<String> playerNames) {
-        return String.join(", ", playerNames);
     }
 
     private String format(final List<String> playerNames) {
