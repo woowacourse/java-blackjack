@@ -53,4 +53,27 @@ public class DealerTest {
         // then
         assertThat(result).isEqualTo(expectedScore);
     }
+
+    @DisplayName("딜러가 버스트인지 확인한다.")
+    @Test
+    void isBustTest() {
+        // given
+        Dealer dealer = new Dealer();
+
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3);
+        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+        dealer.hit(decks);
+        dealer.hit(decks);
+        dealer.hit(decks);
+
+        // when
+        boolean bust = dealer.isBust();
+
+        // then
+        assertThat(bust).isTrue();
+    }
 }
