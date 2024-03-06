@@ -1,14 +1,23 @@
 package view;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import domain.Card;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import domain.Players;
 
 public class OutputView {
+	private static final Map<GameResult, String> gameResultTexts = new HashMap<>();
+
+	static {
+		gameResultTexts.put(GameResult.WIN, "승");
+		gameResultTexts.put(GameResult.LOSE, "패");
+	}
 
 	public void printInitCardStatus(Dealer dealer, Players players) {
 		System.out.println();
@@ -62,6 +71,18 @@ public class OutputView {
 		for (Player player : players.getPlayers()) {
 			System.out.println(String.format("%s카드: %s - 결과: %d",
 				player.getName(), createCardsInfoText(player.getCardHand()), player.getScore()));
+		}
+	}
+
+	public void printGameResult(Map<GameResult, Long> dealerResult, Map<Player, GameResult> playerResults) {
+		System.out.println(System.lineSeparator() + "## 최종 승패");
+		System.out.println(
+			String.format("딜러: %d승 %d패", dealerResult.get(GameResult.WIN), dealerResult.get(GameResult.LOSE)));
+
+		for (Map.Entry<Player, GameResult> playerToResult : playerResults.entrySet()) {
+			String playerName = playerToResult.getKey().getName();
+			String result = gameResultTexts.get(playerToResult.getValue());
+			System.out.println(String.format("%s: %s", playerName, result));
 		}
 	}
 }

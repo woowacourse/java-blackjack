@@ -38,6 +38,10 @@ public class Dealer {
 		return cardHand.calculateScore();
 	}
 
+	public boolean isBurst() {
+		return cardHand.isBurst();
+	}
+
 	public List<Card> getCardHand() {
 		return cardHand.getCards();
 	}

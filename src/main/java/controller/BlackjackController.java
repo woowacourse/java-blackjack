@@ -1,10 +1,15 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import domain.Card;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import domain.Players;
 import domain.Rank;
@@ -59,5 +64,29 @@ public class BlackjackController {
 
 	public void printTotalCardStatus(Dealer dealer, Players players) {
 		outputView.printTotalCardStatus(dealer, players);
+	}
+
+	public void printGameResult(Dealer dealer, Players players) {
+		Map<Player, GameResult> playerResults = new HashMap<>();
+
+		for (Player player : players.getPlayers()) {
+			playerResults.put(player, compareScore(dealer, player));
+		}
+
+		Map<GameResult, Long> dealerResult = getDealerResult(playerResults);
+		outputView.printGameResult(dealerResult, playerResults);
+	}
+
+	private GameResult compareScore(Dealer dealer, Player player) {
+		if (player.isBurst() || player.getScore() <= dealer.getScore()) {
+			return GameResult.LOSE;
+		}
+		return GameResult.WIN;
+	}
+
+	private Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
+		return playerResults.values().stream()
+			.map(GameResult::reverse)
+			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 	}
 }

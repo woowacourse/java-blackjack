@@ -20,5 +20,7 @@ public class BlackjackApplication {
 		blackjackController.receiveAdditionalCard(dealer, players);
 
 		blackjackController.printTotalCardStatus(dealer, players);
+
+		blackjackController.printGameResult(dealer, players);
 	}
 }
