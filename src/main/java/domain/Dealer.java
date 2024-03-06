@@ -2,6 +2,7 @@ package domain;
 
 public class Dealer {
     private static final Name DEFAULT_NAME = new Name("딜러");
+    private static final int DEALER_MIN_SCORE_POLICY = 17;
 
     private final Name name;
     private final Cards cards;
@@ -23,5 +24,9 @@ public class Dealer {
 
     public int calculateScore() {
         return cards.sumAll();
+    }
+
+    public boolean isNecessaryMoreCard() {
+        return calculateScore() < DEALER_MIN_SCORE_POLICY;
     }
 }
