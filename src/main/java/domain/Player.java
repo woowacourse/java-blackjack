@@ -16,4 +16,8 @@ public class Player {
     public boolean isBurst() {
         return hand.isBurst();
     }
+
+    public void draw(final Deck deck) {
+        hand.addCard(deck.draw());
+    }
 }

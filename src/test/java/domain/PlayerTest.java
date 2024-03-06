@@ -38,4 +38,20 @@ public class PlayerTest {
         // Then
         assertThat(isBurst).isTrue();
     }
+
+    @DisplayName("플레이어는 덱으로부터 카드를 한 장 뽑는다.")
+    @Test
+    void drawTest() {
+        // Given
+        Deck deck = Deck.init();
+        Hand initHand = Hand.init();
+        int initCardNumberSum = initHand.getCardsNumberSum();
+        Player player = new Player(new PlayerName("kelly"), initHand);
+
+        // When
+        player.draw(deck);
+
+        // Then
+        assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
+    }
 }
