@@ -1,4 +1,4 @@
-package model;
+package model.dealer;
 
 import static model.card.CardNumber.JACK;
 import static model.card.CardNumber.ONE;
@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,23 +32,15 @@ class DealerTest {
         assertThat(dealer.isPossibleAddCard()).isFalse();
     }
 
-    @DisplayName("카드를 추가로 받을 수 있으면 카드 1장 획득")
+    @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void shouldAddCardWhenAllowed() {
         Cards cards = new Cards(List.of(new Card(ONE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);
         Dealer updatedDealer = dealer.addCard(card);
-        assertThat(updatedDealer.cardSize()).isEqualTo(3);
-    }
 
-    @DisplayName("카드를 추가로 받을 수 없으면 카드 획득 불가")
-    @Test
-    void shouldNotAddCardWhenNotAllowed() {
-        Cards cards = new Cards(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
-        Dealer dealer = new Dealer(cards);
-        Card card = new Card(TWO, DIAMOND);
-        Dealer updatedDealer = dealer.addCard(card);
-        assertThat(updatedDealer.cardSize()).isEqualTo(2);
+        int expectedSize = cards.size() + 1;
+        assertThat(updatedDealer.cardsSize()).isEqualTo(expectedSize);
     }
 }

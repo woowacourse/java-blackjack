@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;

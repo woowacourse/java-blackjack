@@ -1,5 +1,6 @@
 package model.dealer;
 
+import java.util.List;
 import model.card.Card;
 import model.card.Cards;
 
@@ -8,6 +9,10 @@ public class Dealer {
     private static final int ADD_CARD_CONDITION = 17;
 
     private final Cards cards;
+
+    public Dealer() {
+        this(new Cards(List.of()));
+    }
 
     public Dealer(Cards cards) {
         this.cards = cards;
@@ -19,14 +24,11 @@ public class Dealer {
     }
 
     public Dealer addCard(Card card) {
-        if (isPossibleAddCard()) {
-            Cards addedCards = cards.add(card);
-            return new Dealer(addedCards);
-        }
-        return this;
+        Cards addedCards = cards.add(card);
+        return new Dealer(addedCards);
     }
 
-    public int cardSize() {
+    public int cardsSize() {
         return cards.size();
     }
 }

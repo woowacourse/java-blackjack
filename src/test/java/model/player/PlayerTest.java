@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 import static model.card.CardNumber.JACK;
 import static model.card.CardNumber.ONE;
@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +41,7 @@ class PlayerTest {
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
         Player updatedPlayer = player.addCard(card);
-        assertThat(updatedPlayer.cardSize()).isEqualTo(3);
+        assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
     }
 
     @DisplayName("카드를 추가로 받을 수 없으면 카드 획득 불가")
@@ -54,6 +53,6 @@ class PlayerTest {
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
         Player updatedPlayer = player.addCard(card);
-        assertThat(updatedPlayer.cardSize()).isEqualTo(3);
+        assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
     }
 }

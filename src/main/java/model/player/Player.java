@@ -33,7 +33,7 @@ public class Player {
         return this;
     }
 
-    public int cardSize() {
+    public int cardsSize() {
         return cards.size();
     }
 }
