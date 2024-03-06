@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ import java.util.Random;
 public class Deck {
 
     private static final Random RANDOM  = new Random();
+    private static final int ACE_BONUS_SCORE = 10;
     private final List<Card> cards;
 
     public Deck() {
@@ -30,27 +30,20 @@ public class Deck {
     }
 
     public int calculateTotalScore() {
-        if (cards.isEmpty()) {
-            return 0;
-        }
-
+        validateDeck();
         int totalScore = cards.stream()
                 .map(Card::getRank)
                 .mapToInt(Rank::getScore)
                 .sum();
-
-        int countAce = (int) cards.stream()
-                .filter(card -> card.isSameRank(Rank.ACE))
-                .count();
-
-        for(int i = 0; i < countAce; i++) { // TODO indent 줄이기
-            if (totalScore + 10 > 21) {
-                break;
-            }
-            totalScore += 10;
+        if (hasAce() && totalScore + ACE_BONUS_SCORE <= Participants.MAX_BOUNDARY_SCORE) {
+            totalScore += ACE_BONUS_SCORE;
         }
-
         return totalScore;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.isSameRank(Rank.ACE));
     }
 
     public int size() {
@@ -60,5 +53,4 @@ public class Deck {
     public List<Card> getCards() {
         return cards;
     }
-
 }
