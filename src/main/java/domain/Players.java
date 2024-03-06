@@ -17,6 +17,7 @@ public class Players {
 
     public static Players from(final List<String> names) {
         List<Player> players = names.stream()
+                .map(String::trim)
                 .map(name -> new Player(name, Hands.createEmptyPacket()))
                 .toList();
         validate(players);
