@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int BLACK_JACK = 21;
     private final List<Card> cards;
 
     public Hand() {
@@ -14,13 +15,16 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public boolean isBurst() {
+        return sum() > BLACK_JACK;
     }
 
     public int sum() {
         return cards.stream().mapToInt(Card::getScore).sum();
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
 
 }

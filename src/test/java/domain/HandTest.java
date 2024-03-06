@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class HandTest {
 
@@ -48,4 +50,27 @@ public class HandTest {
         // then
         assertThat(result).isEqualTo(expectedScore);
     }
+
+    @DisplayName("버스트인지 확인한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"THREE,true", "TWO,false"})
+    void isBurstTest(Rank rank, boolean expected) {
+        // given
+        Hand hand = new Hand();
+        Card card1 = new Card(Symbol.HEART, rank);
+        Card card2 = new Card(Symbol.CLOVER, Rank.NINE);
+        Card card3 = new Card(Symbol.SPADE, Rank.QUEEN);
+
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+
+        // when
+        boolean result = hand.isBurst();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+
 }
