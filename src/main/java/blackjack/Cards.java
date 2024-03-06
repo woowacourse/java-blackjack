@@ -4,20 +4,20 @@ package blackjack;
 import java.util.List;
 
 public class Cards {
-    List<Card> cards;
+    List<CardValue> cardValues;
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public Cards(List<CardValue> cardValues) {
+        this.cardValues = cardValues;
     }
 
     public int sum() {
-        return cards.stream()
-                    .mapToInt(Card::getValue)
-                    .sum();
+        return cardValues.stream()
+                         .mapToInt(CardValue::getValue)
+                         .sum();
     }
 
     public boolean containAce() {
-        return cards.stream()
-                    .anyMatch(Card::isAce);
+        return cardValues.stream()
+                         .anyMatch(CardValue::isAce);
     }
 }

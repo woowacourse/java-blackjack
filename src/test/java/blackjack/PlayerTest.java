@@ -15,7 +15,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
     public void Player_Instance_create_with_name_and_cards() {
         Name name = new Name("초롱");
-        Cards cards = new Cards(List.of(Card.EIGHT, Card.FOUR));
+        Cards cards = new Cards(List.of(CardValue.EIGHT, CardValue.FOUR));
 
         assertThatCode(() -> new Player(name, cards)).doesNotThrowAnyException();
     }
@@ -24,7 +24,7 @@ public class PlayerTest {
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
     public void Player_Determine_max_number_sum_of_cards() {
         Name name = new Name("초롱");
-        Cards cards = new Cards(List.of(Card.EIGHT, Card.FOUR));
+        Cards cards = new Cards(List.of(CardValue.EIGHT, CardValue.FOUR));
         var sut = new Player(name, cards);
 
         var result = sut.determineMaxSum();
@@ -35,7 +35,7 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자 합이 21이 넘지 않으면 플레이어는 에이스를 11로 결정한다.")
     public void Player_Determine_ace_is_11_if_not_exceed_21() {
-        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.ACE));
+        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE));
 
         var result = sut.determineMaxSum();
 
@@ -45,7 +45,7 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
     public void Player_Determine_ace_is_1_if_exceed_21() {
-        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.ACE, Card.SEVEN));
+        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
 
         var result = sut.determineMaxSum();
 
@@ -55,7 +55,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어는 숫자의 합이 21이 넘지 않을 때까지 추가 카드를 받을 수 있다.")
     public void Player_Can_receive_additional_card() {
-        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.ACE));
+        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.ACE));
 
         var result = sut.isReceivable();
 
@@ -65,15 +65,15 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어는 숫자의 합이 21이 넘어 가면 추가 카드를 받을 수 없다.")
     public void Player_Can_not_receive_additional_card() {
-        var sut = 플레이어_생성(List.of(Card.EIGHT, Card.JACK, Card.KING));
+        var sut = 플레이어_생성(List.of(CardValue.EIGHT, CardValue.JACK, CardValue.KING));
 
         var result = sut.isReceivable();
 
         assertFalse(result);
     }
 
-    private Player 플레이어_생성(List<Card> cards) {
+    private Player 플레이어_생성(List<CardValue> cardValues) {
         Name name = new Name("초롱");
-        return new Player(name, new Cards(cards));
+        return new Player(name, new Cards(cardValues));
     }
 }

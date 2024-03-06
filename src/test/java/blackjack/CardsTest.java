@@ -13,16 +13,16 @@ public class CardsTest {
     @Test
     @DisplayName("카드 목록을 포함한 일급 컬렉션을 생성 한다.")
     public void Cards_Instance_create_with_CardList() {
-        List<Card> cards = List.of(Card.EIGHT, Card.FOUR);
+        List<CardValue> cardValues = List.of(CardValue.EIGHT, CardValue.FOUR);
 
-        assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
+        assertThatCode(() -> new Cards(cardValues)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 1)")
     public void Cards_Sum_of_cards_case1() {
-        List<Card> cards = List.of(Card.TWO, Card.FIVE);
-        var sut = new Cards(cards);
+        List<CardValue> cardValues = List.of(CardValue.TWO, CardValue.FIVE);
+        var sut = new Cards(cardValues);
 
         var sum = sut.sum();
         assertThat(sum).isEqualTo(7);
@@ -31,7 +31,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 2)")
     public void Cards_Sum_of_cards_case2() {
-        List<Card> cards2 = List.of(Card.FIVE, Card.EIGHT);
+        List<CardValue> cards2 = List.of(CardValue.FIVE, CardValue.EIGHT);
         var sut2 = new Cards(cards2);
 
         var sum2 = sut2.sum();
@@ -41,8 +41,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드 목록에 에이스가 포함되어 있으면 참을 반환한다.")
     public void Cards_True_if_contain_ACE_card() {
-        List<Card> cards = List.of(Card.ACE, Card.FIVE);
-        var sut = new Cards(cards);
+        List<CardValue> cardValues = List.of(CardValue.ACE, CardValue.FIVE);
+        var sut = new Cards(cardValues);
 
         var result = sut.containAce();
 
@@ -52,8 +52,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드 목록에 에이스가 포함되어 없으면 거짓을 반환한다.")
     public void Cards_False_if_not_contain_ACE_card() {
-        List<Card> cards = List.of(Card.TWO, Card.FIVE);
-        var sut = new Cards(cards);
+        List<CardValue> cardValues = List.of(CardValue.TWO, CardValue.FIVE);
+        var sut = new Cards(cardValues);
 
         var result = sut.containAce();
 

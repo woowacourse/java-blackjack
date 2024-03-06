@@ -1,6 +1,6 @@
 package blackjack;
 
-public enum Card {
+public enum CardValue {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -17,7 +17,7 @@ public enum Card {
 
     private int value;
 
-    private Card(int value) {
+    private CardValue(int value) {
         this.value = value;
     }
 
