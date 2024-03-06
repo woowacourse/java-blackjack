@@ -1,17 +1,25 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Player {
-    private final List<Card> cards = new ArrayList<>();
+    private final Hand hand;
 
-    public void addCard(final Card card) {
-        cards.add(card);
+    public Player(final Hand hand) {
+        this.hand = hand;
+    }
+
+    public void addCards(final Card... cards) {
+        for (Card card : cards) {
+            hand.add(card);
+        }
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return hand.getAllCards();
+    }
+
+    public boolean isDead() {
+        return hand.getSum() > 21;
     }
 }

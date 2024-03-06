@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CardGameTest {
     @Test
     void 카드_한_장을_플레이어에게_지급한다() {
-        Player player = new Player();
+        Player player = new Player(new Hand());
         Card card = new Card(CardNumber.ACE, CardShape.SPADE);
 
         CardGame cardGame = new CardGame();
@@ -21,8 +21,8 @@ public class CardGameTest {
 
     @Test
     void 모든_플레이어에게_카드_2장을_지급한다() {
-        Player mangcho = new Player();
-        Player ddang = new Player();
+        Player mangcho = new Player(new Hand());
+        Player ddang = new Player(new Hand());
         List<Player> players = List.of(mangcho, ddang);
 
         CardGame cardGame = new CardGame();

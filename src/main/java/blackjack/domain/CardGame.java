@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CardGame {
     public void giveCard(final Player player, final Card card) {
-        player.addCard(card);
+        player.addCards(card);
     }
 
     // TODO: 이름 수정

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -14,5 +15,9 @@ public class Hand {
 
     public void add(final Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getAllCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
