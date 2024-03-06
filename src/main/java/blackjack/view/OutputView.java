@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String ERROR_PREFIX = "[ERROR] ";
 
     public static void printDealAnnounce(List<String> names) {
         String nameFormat = String.join(", ", names);
@@ -17,10 +18,14 @@ public class OutputView {
                 .map(Card::toString)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s : %s%n", name, cardFormat);
+        System.out.printf("%s카드 : %s%n", name, cardFormat);
     }
 
     public static void printDealCard(String name, Card card) {
         System.out.printf("%s : %s%n", name, card);
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(ERROR_PREFIX + message);
     }
 }

@@ -1,9 +1,6 @@
 package blackjack;
 
-import blackjack.domain.CardPicker;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,6 +20,12 @@ public class BlackjackController {
         for (Player player : players.getValues()) {
             OutputView.printDealCards(player.getName(), player.getCards());
         }
+
+        for (Player player : players.getValues()) {
+            requestHitOrStand(player, cardPicker);
+        }
+
+        
     }
 
     private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
@@ -32,8 +35,26 @@ public class BlackjackController {
     }
 
 
-    private void requestHitOrStand() {
-
+    private void requestHitOrStand(Player player, CardPicker cardPicker) {
+        if (player.isBlackjack()) {
+            return;
+        }
+        while (true) {
+            PlayerCommand playerCommand = requestUntilValid(() ->
+                    PlayerCommand.from(InputView.readMoreCard(player.getName())));
+            if (playerCommand.equals(PlayerCommand.HIT)) {
+                player.hit(cardPicker);
+                OutputView.printDealCards(player.getName(), player.getCards());
+                if (player.isBurst() || player.isBlackjack()) {
+                    break;
+                }
+                continue;
+            }
+            if (player.getCards().size() == 2) {
+                OutputView.printDealCards(player.getName(), player.getCards());
+            }
+            break;
+        }
     }
 
     private Players requestPlayers() {
@@ -53,7 +74,7 @@ public class BlackjackController {
         try {
             return Optional.of(supplier.get());
         } catch (IllegalArgumentException e) {
-            // TODO: OutputView 생성 후 예외 메세지 출력
+            OutputView.printErrorMessage(e.getMessage());
             return Optional.empty();
         }
     }
