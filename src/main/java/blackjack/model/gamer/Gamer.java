@@ -1,4 +1,9 @@
-package blackjack.model;
+package blackjack.model.gamer;
+
+import blackjack.model.Card;
+import blackjack.model.Deck;
+import blackjack.model.GameRule;
+import java.util.List;
 
 public abstract class Gamer {
 
@@ -11,30 +16,11 @@ public abstract class Gamer {
 
     public abstract boolean canHit();
 
-    public int getCardScore() {
+    public int calculateTotalScore() {
         return deck.calculateTotalScore();
     }
 
-//    //TODO : 메서드 분리
-//    public int calculateFinalScore() {
-//        int sum = 0;
-//
-//        if (cards.stream()
-//                .anyMatch(Card::isAce)) {
-//            sum = cards.stream()
-//                    .mapToInt(Card::extractCardNumber)
-//                    .sum();
-//
-//            if (sum + 10 > 21) {
-//                return sum;
-//            }
-//
-//            return sum + 10;
-//        }
-//
-//        sum = cards.stream()
-//                .mapToInt(Card::extractCardNumber)
-//                .sum();
-//
-//        return sum;
+    public List<Card> getDeck() {
+        return deck.getCards();
+    }
 }
