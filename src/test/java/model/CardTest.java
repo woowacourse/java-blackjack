@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.EnumSource.Mode;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
@@ -19,6 +21,22 @@ class CardTest {
                 .flatMap(emblem -> Arrays.stream(Number.values())
                         .map(number -> Card.from(number, emblem)))
                 .map(Arguments::of);
+    }
+
+    @Test
+    @DisplayName("Card 생성시 에이스 일 경우 하위 타입인 AceCard로 객체를 생성한다.")
+    void from_ShouldGenerateAceCard_WhenNumberIsAce() {
+        Card expected = Card.from(Number.ACE, Emblem.SPADE);
+
+        assertThat(expected).isExactlyInstanceOf(AceCard.class);
+    }
+
+    @ParameterizedTest
+    @EnumSource(mode= Mode.EXCLUDE, names = {"ACE"})
+    @DisplayName("Card 생성시 에이스가 아닐 경우 그대로 Card로 객체를 생성한다.")
+    void from_ShouldGenerateCard_WhenNumberIsNotAce(Number number) {
+        Card expected = Card.from(number, Emblem.SPADE);
+        assertThat(expected).isExactlyInstanceOf(Card.class);
     }
 
     @ParameterizedTest
