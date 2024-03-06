@@ -32,14 +32,4 @@ public class CardDeck {
     public Card pickCard() {
         return deck.remove(DECK_TOP_POSITION);
     }
-
-    private void validateCardIndex(int randomIndex) {
-        if (randomIndex < 0 || randomIndex >= deck.size()) {
-            throw new IllegalArgumentException(randomIndex + "는 뽑을 수 있는 카드가 아닙니다.");
-        }
-    }
-
-    public int getTotalCardSize() {
-        return deck.size();
-    }
 }
