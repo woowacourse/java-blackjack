@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static blackjack.domain.CardNumber.ACE;
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardShape.HEART;
 import static blackjack.domain.CardShape.SPADE;
+import static blackjack.fixture.PlayerFixture.ddang;
+import static blackjack.fixture.PlayerFixture.dealer;
+import static blackjack.fixture.PlayerFixture.mangcho;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -41,24 +42,9 @@ public class CardGameTest {
     @Test
     void 딜러와_여러_플레이어의_숫자가_21_이하인_경우_숫자가_큰_사람이_이긴다() {
         CardGameJudge cardGameJudge = new CardGameJudge();
-
-        Hand mangchoHand = new Hand();
-        mangchoHand.add(new Card(ACE, HEART));
-        mangchoHand.add(new Card(KING, HEART));
-        mangchoHand.add(new Card(KING, SPADE));
-        Player mangcho = new Player(mangchoHand);
-
-        Hand ddangHand = new Hand();
-        ddangHand.add(new Card(ACE, HEART));
-        ddangHand.add(new Card(KING, HEART));
-        ddangHand.add(new Card(KING, SPADE));
-        Player ddang = new Player(ddangHand);
-
-        Hand dealerHand = new Hand();
-        dealerHand.add(new Card(ACE, HEART));
-        dealerHand.add(new Card(ACE, HEART));
-        dealerHand.add(new Card(KING, SPADE));
-        Player dealer = new Player(dealerHand);
+        Player mangcho = mangcho();
+        Player ddang = ddang();
+        Player dealer = dealer();
 
         var result = cardGameJudge.judge(dealer, List.of(mangcho, ddang)).getTotalResult();
 
