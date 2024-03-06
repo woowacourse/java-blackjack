@@ -23,6 +23,10 @@ public class CardDeck {
                 .orElse(0);
     }
 
+    public boolean isBust(){
+        return calculateHand() > 21;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
