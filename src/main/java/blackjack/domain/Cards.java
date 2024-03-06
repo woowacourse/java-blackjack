@@ -9,8 +9,12 @@ public class Cards {
     private static final int MAX_SCORE = 21;
     private final List<Card> values;
 
-    public Cards(List<Card> values) {
-        this.values = new ArrayList<>(values);
+    public Cards() {
+        this.values = new ArrayList<>();
+    }
+
+    public void addCard(Card card) {
+        values.add(card);
     }
 
     public List<Card> getValues() {
@@ -35,10 +39,6 @@ public class Cards {
             return scoreCases.stream().toList().get(0);
         }
         return maxScore;
-    }
-
-    public int getCardsCount() {
-        return values.size();
     }
 
     private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> scores, int sum, int index) {
