@@ -71,7 +71,7 @@ public class HandTest {
         Hand hand = new Hand(() -> 0);
 
         // when
-        hand.addCard();
+        hand.addCard(() -> 0);
 
         // then
         assertThat(hand.getCards()).hasSize(3);

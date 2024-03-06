@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+
     private final List<Card> cards;
 
     public Hand(final NumberGenerator numberGenerator) {
@@ -24,6 +25,10 @@ public class Hand {
 
     public boolean isBlackJack() {
         return calculateCardsTotal() == BLACK_JACK_CONDITION;
+    }
+
+    public void addCard(final NumberGenerator numberGenerator) {
+        cards.add(new Card(numberGenerator));
     }
 
     public List<Card> getCards() {
