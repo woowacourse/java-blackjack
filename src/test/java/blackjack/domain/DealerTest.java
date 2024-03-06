@@ -13,19 +13,33 @@ import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
-    @ParameterizedTest
-    @MethodSource("cardsAndScore")
-    @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
-    void drawCardsUntilScoreBelow17(List<Card> cards, int expected) {
-        Deck deck = Deck.from(cards);
+    @Test
+    @DisplayName("딜러가 카드 한 장을 뽑는다.")
+    void drawCardTest() {
+        Deck deck = Deck.from(List.of(
+                new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR)
+        ));
         Dealer dealer = new Dealer();
 
         dealer.draw(deck);
+        int score = dealer.getScore();
+        assertThat(score).isEqualTo(10);
+    }
+
+    @ParameterizedTest
+    @MethodSource("cardsAndScore")
+    @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
+    void drawCardsUntilScoreBelow17Test(List<Card> cards, int expected) {
+        Deck deck = Deck.from(cards);
+        Dealer dealer = new Dealer();
+
+        dealer.drawUntilExceedMinimum(deck);
         int score = dealer.getScore();
         assertThat(score).isEqualTo(expected);
     }
