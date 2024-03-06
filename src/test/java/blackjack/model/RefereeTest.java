@@ -21,7 +21,8 @@ class RefereeTest {
             Players players = Players.from(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN))));
+            Dealer dealer = new Dealer(
+                    new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
@@ -33,7 +34,9 @@ class RefereeTest {
             Players players = Players.from(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.THREE))));
+            Dealer dealer = new Dealer(new Cards(
+                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN),
+                            new Card(Shape.DIA, Score.THREE))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
@@ -50,7 +53,9 @@ class RefereeTest {
             Players players = Players.from(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.FOUR))));
+            Dealer dealer = new Dealer(new Cards(
+                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN),
+                            new Card(Shape.DIA, Score.FOUR))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
@@ -61,8 +66,11 @@ class RefereeTest {
         void playerWinWhenHasLittleCardsThanDealer() {
             Players players = Players.from(
                     List.of("몰리"),
-                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.CLOVER, Score.NINE), new Card(Shape.SPADE, Score.TWO)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.FIVE), new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.DIA, Score.FOUR))));
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.CLOVER, Score.NINE),
+                            new Card(Shape.SPADE, Score.TWO)))));
+            Dealer dealer = new Dealer(new Cards(
+                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.FIVE),
+                            new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.DIA, Score.FOUR))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
@@ -78,8 +86,11 @@ class RefereeTest {
         void playerWinWhenOnlyPlayerNotBust() {
             Players players = Players.from(
                     List.of("몰리"),
-                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.SIX)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.TEN))));
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR),
+                            new Card(Shape.DIA, Score.SIX)))));
+            Dealer dealer = new Dealer(new Cards(
+                    List.of(new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.TEN),
+                            new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(dealer, players);
             assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", WIN));
@@ -96,9 +107,24 @@ class RefereeTest {
             Players players = Players.from(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
-            Dealer dealer = new Dealer(new Cards(List.of(new Card(Shape.HEART, Score.ACE), new Card(Shape.DIA, Score.TEN))));
+            Dealer dealer = new Dealer(
+                    new Cards(List.of(new Card(Shape.HEART, Score.ACE), new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(dealer, players);
-            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));}
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+        }
+
+        @Test
+        @DisplayName("플레이어와 딜러의 결과, 카드 수가 모두 동일한 경우")
+        void sameScoreAndCount() {
+            Players players = Players.from(
+                    List.of("몰리"),
+                    List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.SPADE, Score.FIVE)))));
+            Dealer dealer = new Dealer(
+                    new Cards(List.of(new Card(Shape.HEART, Score.FIVE), new Card(Shape.DIA, Score.FIVE))));
+
+            Referee referee = new Referee(dealer, players);
+            assertThat(referee.judgePlayerWinner()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+        }
     }
 }
