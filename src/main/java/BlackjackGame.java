@@ -1,5 +1,5 @@
-import domain.Name;
 import domain.BlackjackService;
+import domain.Name;
 import domain.Player;
 import java.util.List;
 import view.InputView;
@@ -17,28 +17,42 @@ public class BlackjackGame {
                 .toList();
         Player dealer = new Player(new Name("딜러"));
         BlackjackService blackjackService = new BlackjackService(dealer, players);
+
+        startSetting(blackjackService, dealer, players);
+        proceedPlayerTurn(blackjackService);
+        proceedDealerTurn(blackjackService);
+        handleResult(dealer, players, blackjackService);
+    }
+
+    private void startSetting(BlackjackService blackjackService, Player dealer, List<Player> players) {
         blackjackService.initialDistribute();
         outputView.printSetting(dealer, players);
+    }
 
-        players.forEach((player) -> {
-
-        });
-
+    private void proceedPlayerTurn(BlackjackService blackjackService) {
         for (int playerIndex = 0; playerIndex < blackjackService.countPlayers(); playerIndex++) {
-            while (blackjackService.isPlayerNotOver(playerIndex) &&
-                    inputView.readCommand(blackjackService.getPlayerName(playerIndex).getName())) {
-                blackjackService.addCardToPlayer(playerIndex);
-                Player player = blackjackService.getPlayer(playerIndex);
-                outputView.printCurrentCard(player);
-                outputView.printNewLine();
-            }
+            proceedOnePlayerTurn(blackjackService, playerIndex);
         }
+    }
 
+    private void proceedDealerTurn(BlackjackService blackjackService) {
         while (blackjackService.IsDealerNotOver()) {
             blackjackService.addCardToDealer();
             outputView.printDealerOneMoreCard();
         }
+    }
 
+    private void proceedOnePlayerTurn(BlackjackService blackjackService, int playerIndex) {
+        while (blackjackService.isPlayerNotOver(playerIndex) &&
+                inputView.readCommand(blackjackService.getPlayerName(playerIndex).getName())) {
+            blackjackService.addCardToPlayer(playerIndex);
+            Player player = blackjackService.getPlayer(playerIndex);
+            outputView.printCurrentCard(player);
+            outputView.printNewLine();
+        }
+    }
+
+    private void handleResult(Player dealer, List<Player> players, BlackjackService blackjackService) {
         outputView.printResult(dealer, players);
         outputView.printVictory(blackjackService.calculateVictory());
     }
