@@ -11,6 +11,7 @@ public class Players {
     private final List<Player> players;
 
     private Players(final List<Player> players) {
+        validateNotDuplicateName(players);
         validatePlayerSize(players);
         this.players = players;
     }
@@ -21,6 +22,15 @@ public class Players {
             players.add(new Player(names.get(i), cards.get(i)));
         }
         return new Players(players);
+    }
+
+    private void validateNotDuplicateName(final List<Player> players) {
+        long uniqueNameSize = players.stream()
+                .distinct()
+                .count();
+        if (players.size() != uniqueNameSize) {
+            throw new IllegalArgumentException("중복되는 이름을 입력할 수 없습니다.");
+        }
     }
 
     private void validatePlayerSize(final List<Player> players) {

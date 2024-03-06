@@ -29,6 +29,19 @@ class PlayersTest {
         assertThatCode(() -> Players.from(names, cards));
     }
 
+    @Test
+    @DisplayName("플레이어의 이름이 중복되는 경우 예외를 던진다.")
+    void createPlayersByDuplicatedName() {
+        List<String> names = List.of("몰리", "몰리");
+        List<Cards> cards = List.of(
+                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        );
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Players.from(names, cards))
+                .withMessage("중복되는 이름을 입력할 수 없습니다.");
+    }
+
     @ParameterizedTest
     @MethodSource("InvalidNames")
     void createPlayersByOutBound(List<String> names) {
