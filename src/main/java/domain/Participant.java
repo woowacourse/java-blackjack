@@ -16,4 +16,8 @@ public class Participant {
     public int calculateScore() {
         return cards.sumAll();
     }
+
+    public String getName() {
+        return this.name.getValue();
+    }
 }

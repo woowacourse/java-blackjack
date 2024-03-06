@@ -20,4 +20,8 @@ public class Name {
             );
         }
     }
+
+    public String getValue() {
+        return this.name;
+    }
 }
