@@ -14,17 +14,17 @@ class DenominationTest {
     @CsvSource(value = {"20,1", "10,11"})
     @DisplayName("주어진 점수에 따라 최적의 Ace 값을 반환한다")
     void aceDetermine(final int score, final int expected) {
-        Assertions.assertThat(Denomination.ACE.apply(score)).isEqualTo(expected);
+        Assertions.assertThat(Denomination.ACE.getValue(score)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("끗수에맞는 값을 반환한다")
     void denomination() {
         assertAll(
-                () -> Assertions.assertThat(Denomination.FIVE.apply(0)).isEqualTo(5),
-                () -> Assertions.assertThat(Denomination.JACK.apply(0)).isEqualTo(10),
-                () -> Assertions.assertThat(Denomination.QUEEN.apply(0)).isEqualTo(10),
-                () -> Assertions.assertThat(Denomination.KING.apply(0)).isEqualTo(10)
+                () -> Assertions.assertThat(Denomination.FIVE.getValue(0)).isEqualTo(5),
+                () -> Assertions.assertThat(Denomination.JACK.getValue(0)).isEqualTo(10),
+                () -> Assertions.assertThat(Denomination.QUEEN.getValue(0)).isEqualTo(10),
+                () -> Assertions.assertThat(Denomination.KING.getValue(0)).isEqualTo(10)
         );
     }
 
