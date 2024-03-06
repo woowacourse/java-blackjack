@@ -21,12 +21,4 @@ public class Card {
     public Symbol getSymbol() {
         return symbol;
     }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "rank=" + rank +
-                ", symbol=" + symbol +
-                '}';
-    }
 }
