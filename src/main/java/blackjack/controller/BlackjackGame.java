@@ -16,6 +16,7 @@ public class BlackjackGame {
 
     public void run() {
         Participants participants = createParticipants();
+        outputView.printInitialCards(participants);
     }
 
     private Participants createParticipants() {
