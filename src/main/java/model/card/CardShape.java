@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum CardShape {
     SPADE("스페이드"),

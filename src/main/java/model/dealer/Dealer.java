@@ -1,4 +1,7 @@
-package model;
+package model.dealer;
+
+import model.card.Card;
+import model.card.Cards;
 
 public class Dealer {
 

@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum CardNumber {
     ONE("A", 1),
