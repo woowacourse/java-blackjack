@@ -1,9 +1,8 @@
 package domain.card;
 
-import strategy.CardGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
+import strategy.CardGenerator;
 
 public class DeckCards {
 
