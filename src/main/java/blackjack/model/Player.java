@@ -23,4 +23,12 @@ public class Player {
         int cardsTotal = hand.calculateCardsTotal();
         return cardsTotal <= 21;
     }
+
+    public void hit(final NumberGenerator numberGenerator) {
+        hand.addCard(numberGenerator);
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
 }

@@ -1,12 +1,11 @@
 package blackjack.model;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
     @Test
@@ -34,7 +33,7 @@ public class PlayerTest {
         Player player = new Player("dora", new SequentialNumberGenerator(List.of(0, 9, 0, 9)));
 
         // when
-        player.hit();
+        player.hit(() -> 1);
 
         // then
         assertThat(player.getHand().getCards()).hasSize(3);
