@@ -28,6 +28,11 @@ public class Dealer {
         return new Dealer(addedCards);
     }
 
+    public Dealer addCards(List<Card> cardsElement) {
+        Cards addedCards = cards.addAll(cardsElement);
+        return new Dealer(addedCards);
+    }
+
     public int cardsSize() {
         return cards.size();
     }

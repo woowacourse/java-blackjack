@@ -26,11 +26,13 @@ public class Player {
     }
 
     public Player addCard(Card card) {
-        if (isPossibleAddCard()) {
-            Cards addedCards = cards.add(card);
-            return new Player(name, addedCards);
-        }
-        return this;
+        Cards addedCards = cards.add(card);
+        return new Player(name, addedCards);
+    }
+
+    public Player addCards(List<Card> cardsElement) {
+        Cards addedCards = cards.addAll(cardsElement);
+        return new Player(name, addedCards);
     }
 
     public int cardsSize() {
