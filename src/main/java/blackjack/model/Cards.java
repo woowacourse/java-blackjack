@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
@@ -9,7 +10,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int calculateScore() {
@@ -18,6 +19,10 @@ public class Cards {
             return score + EXTRA_SCORE;
         }
         return score;
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     private boolean hasAce() {
@@ -30,5 +35,9 @@ public class Cards {
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getScore)
                 .sum();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

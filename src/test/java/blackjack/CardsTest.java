@@ -40,4 +40,19 @@ class CardsTest {
 
         assertThat(score).isEqualTo(12);
     }
+
+    @DisplayName("카드를 지급받는다")
+    @Test
+    void addCard() {
+        List<Card> cards = List.of(
+                new Card(CardNumber.TWO, CardShape.HEART),
+                new Card(CardNumber.FIVE, CardShape.CLOVER)
+        );
+        Cards given = new Cards(cards);
+        Card card = new Card(CardNumber.ACE, CardShape.SPADE);
+
+        given.addCard(card);
+
+        assertThat(given.getCards()).hasSize(3);
+    }
 }
