@@ -3,7 +3,7 @@ package domain.user;
 import domain.card.Card;
 
 public class User {
-    private final UserDeck userDeck;
+    final UserDeck userDeck;
 
     public User() {
         this.userDeck = new UserDeck();
