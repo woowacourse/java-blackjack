@@ -29,4 +29,12 @@ public class Hand {
     public void addCard(final PlayingCard card) {
         playingCards.add(card);
     }
+
+    public HandStatus getHandStatus() {
+        return new HandStatus(playingCards, getCardsNumberSum());
+    }
+
+    public boolean isBlackJack() {
+        return getCardsNumberSum() == BLACKJACK_CONDITION;
+    }
 }
