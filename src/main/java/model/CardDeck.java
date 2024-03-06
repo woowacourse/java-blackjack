@@ -14,6 +14,22 @@ public class CardDeck {
 
     public void addCard(Card card) {
         cards.add(card);
+        changeSoftAceToHardWhenBust();
+    }
+
+    private void changeSoftAceToHardWhenBust() {
+        if (isBust()) {
+            cards.stream()
+                    .filter(AceCard.class::isInstance)
+                    .map(AceCard.class::cast)
+                    .filter(AceCard::isSoftAce)
+                    .findFirst()
+                    .ifPresent(AceCard::changeToHardAce);
+        }
+    }
+
+    public boolean isBust() {
+        return calculateHand() > 21;
     }
 
     public int calculateHand() {
@@ -23,9 +39,6 @@ public class CardDeck {
                 .orElse(0);
     }
 
-    public boolean isBust(){
-        return calculateHand() > 21;
-    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);

@@ -1,7 +1,9 @@
 package model;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -76,4 +78,32 @@ class CardDeckTest {
         assertFalse(cardDeck.isBust());
     }
 
+    @Test
+    @DisplayName("카드를 히트하여 덱에 더할 때 버스트되면, 소프트 에이스를 한 장 찾아 하드 에이스로 변경하여 계산한다.")
+    void calculateHand_ShouldNotReturnBustHand_WhenHavingSoftAce() {
+        // Given
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addCard(Card.from(Number.ACE, Emblem.SPADE));
+        cardDeck.addCard(Card.from(Number.NINE, Emblem.SPADE));
+
+        // When
+        cardDeck.addCard(Card.from(Number.TEN, Emblem.SPADE));
+
+        // Then
+        assertAll(() -> {
+            assertNotEquals(30, cardDeck.calculateHand());
+            assertEquals(20, cardDeck.calculateHand());
+        });
+    }
+
+    @Test
+    @DisplayName("카드를 히트하여 덱에 더할 때 버스트되면, 소프트 에이스를 한 장 찾아 하드 에이스로 변경하여 계산한다.")
+    void calculateHand_ShouldReturnBustHand_WhenNotHavingSoftAce() {
+        CardDeck deck = new CardDeck();
+        deck.addCard(Card.from(Number.QUEEN, Emblem.SPADE));
+        deck.addCard(Card.from(Number.KING, Emblem.CLUB));
+        deck.addCard(Card.from(Number.JACK, Emblem.DIAMOND));
+
+        assertEquals(30, deck.calculateHand());
+    }
 }

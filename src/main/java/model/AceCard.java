@@ -21,6 +21,10 @@ public class AceCard extends Card {
         throw new IllegalStateException("Cannot Change Again");
     }
 
+    public boolean isSoftAce() {
+        return softAce;
+    }
+
     @Override
     public int getCardActualValue() {
         if (softAce) {
