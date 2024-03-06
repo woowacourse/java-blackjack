@@ -61,4 +61,13 @@ class PlayerTest {
 
         assertThat(player.canHit()).isTrue();
     }
+
+    @Test
+    @DisplayName("자신이 가지고 있는 카드의 개수를 반환한다.")
+    void announceCardCount() {
+        Cards cards = new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
+        Player player = new Player("몰리", cards);
+
+        assertThat(player.announceCardCount()).isEqualTo(2);
+    }
 }

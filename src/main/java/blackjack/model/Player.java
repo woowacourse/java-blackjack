@@ -39,4 +39,8 @@ public class Player {
     public boolean canHit() {
         return !cards.isBust(BUST_THRESHOLD);
     }
+
+    public int announceCardCount() {
+        return cards.countSize();
+    }
 }
