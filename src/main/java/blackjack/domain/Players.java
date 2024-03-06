@@ -1,16 +1,18 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Players {
-    private final List<Player> values;
+    private final List<Player> players;
 
     public Players(final List<Player> players) {
         validateDuplicate(players);
-        this.values = players;
+        this.players = players;
     }
 
     public static Players from(final List<String> playerNames) {
@@ -27,10 +29,10 @@ public class Players {
         }
     }
 
-    public Map<Name, WinStatus> determineWinStatus(final Score dealerScore) {
-        Map<Name, WinStatus> playersWinStatus = new LinkedHashMap<>();
+    public Map<PlayerName, WinStatus> determineWinStatus(final Score dealerScore) {
+        Map<PlayerName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
-        for (Player player : values) {
+        for (Player player : players) {
             playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
         }
         return playersWinStatus;
@@ -39,12 +41,20 @@ public class Players {
     public void divideCard(final List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
             // TODO: 과연 이해가 되는가?
-            Player player = values.get(i / 2);
+            Player player = players.get(i / 2);
             player.addCard(cards.get(i));
         }
     }
 
     public int count() {
-        return values.size();
+        return players.size();
+    }
+
+    public Map<PlayerName, Hands> getPlayerHands() {
+        return players.stream()
+                .collect(toMap(Player::getName,
+                        Participant::getHands,
+                        (v1, v2) -> v1,
+                        LinkedHashMap::new));
     }
 }

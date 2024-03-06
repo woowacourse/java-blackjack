@@ -2,18 +2,22 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-public class Name {
-    private final String value;
+public class PlayerName {
+    private final String name;
 
-    public Name(final String input) {
+    public PlayerName(final String input) {
         validateBlank(input);
-        this.value = input;
+        this.name = input;
     }
 
     private void validateBlank(final String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("참여자 이름에 공백을 입력할 수 없습니다.");
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -24,12 +28,12 @@ public class Name {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Name name1 = (Name) o;
-        return Objects.equals(value, name1.value);
+        final PlayerName that = (PlayerName) o;
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(name);
     }
 }

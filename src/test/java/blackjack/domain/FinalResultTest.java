@@ -11,8 +11,8 @@ public class FinalResultTest {
     @DisplayName("딜러의 승패를 통계낸다.")
     void summarizeDealerResult() {
         FinalResult finalResult = new FinalResult(Map.of(
-                new Name("kirby"), WinStatus.LOSE,
-                new Name("baekho"), WinStatus.WIN));
+                new PlayerName("kirby"), WinStatus.LOSE,
+                new PlayerName("baekho"), WinStatus.WIN));
         Map<WinStatus, Integer> dealerResult = finalResult.summarizeDealerResult();
 
         assertThat(dealerResult).containsExactlyInAnyOrderEntriesOf(Map.of(

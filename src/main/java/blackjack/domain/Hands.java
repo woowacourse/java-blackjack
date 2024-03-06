@@ -1,19 +1,20 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class Cards {
+public class Hands {
 
-    private final List<Card> values;
+    private final List<Card> cards;
 
-    public Cards(final List<Card> cards) {
+    public Hands(final List<Card> cards) {
         validateDuplicate(cards);
-        this.values = new ArrayList<>(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(final Card... cards) {
+    public Hands(final Card... cards) {
         this(List.of(cards));
     }
 
@@ -24,18 +25,26 @@ public class Cards {
     }
 
     public int countAce() {
-        return (int) values.stream()
+        return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
     public int sum() {
-        return values.stream()
+        return cards.stream()
                 .mapToInt(Card::getRealNumber)
                 .sum();
     }
 
     public void add(final Card card) {
-        values.add(card);
+        cards.add(card);
+    }
+
+    public Card getLastCard() {
+        return cards.get(cards.size() - 1);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

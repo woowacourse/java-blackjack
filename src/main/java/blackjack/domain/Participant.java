@@ -1,15 +1,15 @@
 package blackjack.domain;
 
 public abstract class Participant {
-    protected final Cards cards;
+    protected final Hands hands;
 
-    protected Participant(final Cards cards) {
-        this.cards = cards;
+    protected Participant(final Hands hands) {
+        this.hands = hands;
     }
 
     public Score calculate() {
-        int sum = cards.sum();
-        int aceCount = cards.countAce();
+        int sum = hands.sum();
+        int aceCount = hands.countAce();
 
         while (sum > BlackjackStatus.BLACKJACK_NUMBER && aceCount > 0) {
             sum = sum - 10;
@@ -19,10 +19,14 @@ public abstract class Participant {
     }
 
     public void addCard(final Card card) {
-        cards.add(card);
+        hands.add(card);
     }
 
     public BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
+    }
+
+    public Hands getHands() {
+        return new Hands(hands.getCards());
     }
 }

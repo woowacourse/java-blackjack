@@ -3,18 +3,18 @@ package blackjack.domain;
 import java.util.ArrayList;
 
 public class Player extends Participant {
-    private final Name name;
+    private final PlayerName playerName;
 
-    private Player(final Name name, final Cards cards) {
-        super(cards);
-        this.name = name;
+    private Player(final PlayerName playerName, final Hands hands) {
+        super(hands);
+        this.playerName = playerName;
     }
 
     public static Player from(final String name) {
-        return new Player(new Name(name), new Cards(new ArrayList<>()));
+        return new Player(new PlayerName(name), new Hands(new ArrayList<>()));
     }
 
-    public Name getName() {
-        return name;
+    public PlayerName getName() {
+        return playerName;
     }
 }

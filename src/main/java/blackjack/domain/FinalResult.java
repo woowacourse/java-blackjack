@@ -4,9 +4,9 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class FinalResult {
-    private final Map<Name, WinStatus> playersWinstatus;
+    private final Map<PlayerName, WinStatus> playersWinstatus;
 
-    public FinalResult(final Map<Name, WinStatus> finalResult) {
+    public FinalResult(final Map<PlayerName, WinStatus> finalResult) {
         this.playersWinstatus = finalResult;
     }
 

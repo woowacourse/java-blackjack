@@ -19,6 +19,14 @@ public class Card {
         return number.getNumber();
     }
 
+    public String getNumberName() {
+        return number.name();
+    }
+
+    public String getShapeName() {
+        return shape.name();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

@@ -13,9 +13,9 @@ class PlayersTest {
     @DisplayName("카드 숫자 합으로 승패를 결정한다.")
     void determineWinStatus() {
         // TODO: 리팩토링 시급
-        Name kirby = new Name("kirby");
-        Name baekho = new Name("baekho");
-        Name pobi = new Name("pobi");
+        PlayerName kirby = new PlayerName("kirby");
+        PlayerName baekho = new PlayerName("baekho");
+        PlayerName pobi = new PlayerName("pobi");
 
         Score dealerScore = new Score(20);
         Player player1 = Player.from("kirby");
@@ -31,7 +31,7 @@ class PlayersTest {
         card3.forEach(player3::addCard);
 
         Players players = new Players(List.of(player1, player2, player3));
-        Map<Name, WinStatus> finalResult = players.determineWinStatus(dealerScore);
+        Map<PlayerName, WinStatus> finalResult = players.determineWinStatus(dealerScore);
 
         // TODO: 순서대로 검증도 되게
         assertThat(finalResult).containsExactlyInAnyOrderEntriesOf(Map.of(
@@ -41,10 +41,11 @@ class PlayersTest {
     }
 
     @Test
+    @DisplayName("중복된 플레이어를 생성할 수 없다.")
     void validateDuplicate() {
         // given
-        Name name = new Name("kirby");
-        Cards cards = new Cards(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
+        PlayerName playerName = new PlayerName("kirby");
+        Hands hands = new Hands(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
         Player player = Player.from("kirby");
         List<Player> players = List.of(player, player);
 

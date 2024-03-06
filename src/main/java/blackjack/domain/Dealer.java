@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     public static final Score NEED_CARD_CRITERION = new Score(17);
 
     protected Dealer() {
-        super(new Cards(new ArrayList<>()));
+        super(new Hands(new ArrayList<>()));
     }
 
     public boolean needMoreCard() {
@@ -17,5 +17,9 @@ public class Dealer extends Participant {
 
     public void addCard(final List<Card> cards) {
         cards.forEach(this::addCard);
+    }
+
+    public Card getOpenedCard() {
+        return hands.getLastCard();
     }
 }
