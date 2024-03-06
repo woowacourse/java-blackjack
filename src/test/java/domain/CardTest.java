@@ -3,12 +3,10 @@ package domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.NullSource;
 
 public class CardTest {
     @Test
     @DisplayName("생성자의 인자가 null일 경우 예외를 발생시킨다.")
-    @NullSource
     void createCard() {
         Assertions.assertThatThrownBy(() -> new Card(null, null))
                 .isInstanceOf(IllegalArgumentException.class)
