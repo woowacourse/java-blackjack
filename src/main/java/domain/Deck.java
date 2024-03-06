@@ -7,27 +7,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-    private final Stack<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
-        Stack<Card> deck = Stream.of(Symbol.values())
+        List<Card> deck = Stream.of(Symbol.values())
                 .flatMap(symbol -> Stream.of(Rank.values())
                         .map(number -> new Card(symbol, number)))
-                .collect(Collectors.toCollection(Stack::new));
-        Collections.shuffle(deck);
+                .toList();
         this.cards = deck;
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public Card draw() {
-        return cards.pop();
-    }
-
-
-    public boolean exist() {
-        return !cards.empty();
+        return cards;
     }
 }
