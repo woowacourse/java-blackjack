@@ -31,6 +31,11 @@ public class BlackJackController {
         for (Player player : players.getNames()) {
             deal(player, dealer);
         }
+
+        while (dealer.getTotalCardSum() <= 16) {  //TODO 테스트 코드 고민
+            dealer.deal();
+            outputView.printDealerCard();
+        }
     }
 
     private void deal(final Player player, final Dealer dealer) {

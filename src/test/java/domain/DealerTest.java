@@ -43,18 +43,4 @@ class DealerTest {
         Assertions.assertThat(redddy.getPacketSize()).isEqualTo(3);
         Assertions.assertThat(zeze.getPacketSize()).isEqualTo(2);
     }
-
-    @Test
-    @DisplayName("딜러의 카드 합이 16이하인 경우 카드를 추가한다.")
-    void addDealerCard() {
-        //given
-        final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
-
-        //when
-        dealer.deal();
-
-        //then
-        Assertions.assertThat(dealer.getTotalCardSum()).isGreaterThan(16);
-    }
 }

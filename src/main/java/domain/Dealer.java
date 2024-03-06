@@ -28,9 +28,7 @@ public class Dealer {
     }
 
     public void deal() {
-        while (hands.sum() <= 16) {
-            hands.add(cardDeck.pop());
-        }
+        hands.add(cardDeck.pop());
     }
 
     public List<String> getCards() {
