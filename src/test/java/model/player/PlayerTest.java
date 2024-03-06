@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
