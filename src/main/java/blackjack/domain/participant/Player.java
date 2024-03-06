@@ -8,12 +8,7 @@ public class Player extends Participant {
 
     private final Name name;
 
-    Player(List<Card> cards) {
-        super(cards);
-        this.name = new Name("name");
-    }
-
-    private Player(List<Card> cards, Name name) {
+    Player(List<Card> cards, Name name) {
         super(cards);
         this.name = name;
     }

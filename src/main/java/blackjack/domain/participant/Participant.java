@@ -11,7 +11,7 @@ public abstract class Participant {
 
     private final List<Card> cards;
 
-    public Participant(List<Card> cards) {
+    protected Participant(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 

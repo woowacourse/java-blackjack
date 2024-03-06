@@ -14,13 +14,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+class PlayerTest {
+
+    private static final Name DEFAULT_NAME = new Name("name");
 
     @DisplayName("점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCardsAndScore")
     void calculateScoreTest(List<Card> cards, int expected) {
-        Player player = new Player(cards);
+        Player player = new Player(cards, DEFAULT_NAME);
 
         assertThat(player.calculateScore()).isEqualTo(expected);
     }
@@ -43,7 +45,7 @@ public class PlayerTest {
                 new Card(Value.EIGHT, Shape.HEART),
                 new Card(Value.THREE, Shape.HEART)
         );
-        Player player = new Player(CardsScore21);
+        Player player = new Player(CardsScore21, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isTrue();
     }
@@ -57,7 +59,7 @@ public class PlayerTest {
                 new Card(Value.SEVEN, Shape.HEART),
                 new Card(Value.FIVE, Shape.HEART)
         );
-        Player player = new Player(CardsScore22);
+        Player player = new Player(CardsScore22, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isFalse();
     }
@@ -69,7 +71,7 @@ public class PlayerTest {
                 new Card(Value.KING, Shape.HEART),
                 new Card(Value.NINE, Shape.HEART),
                 new Card(Value.TWO, Shape.HEART)
-        ));
+        ), DEFAULT_NAME);
 
         player.add(new Card(Value.ACE, Shape.HEART));
 
@@ -88,7 +90,7 @@ public class PlayerTest {
                 new Card(Value.KING, Shape.HEART),
                 new Card(Value.NINE, Shape.HEART),
                 new Card(Value.THREE, Shape.HEART)
-        ));
+        ), DEFAULT_NAME);
         Card card = new Card(Value.ACE, Shape.HEART);
 
         assertThatThrownBy(() -> player.add(card))
