@@ -6,7 +6,7 @@ public record Name(String value) {
 
 	public Name {
 		if (value.isBlank() || value.length() > MAX_NAME_LENGTH) {
-			throw new IllegalArgumentException("이름의 길이는 최소 1글자부터 최대 5글자까지 가능합니다.");
+			throw new IllegalArgumentException("이름의 길이는 최소 1글자부터 최대 " + MAX_NAME_LENGTH + "글자까지 가능합니다.");
 		}
 	}
 }

@@ -19,7 +19,8 @@ class PlayersTest {
 	@DisplayName("플레이어는 적어도 2명 이상이어야 한다.")
 	void minimumPlayerCountTest() {
 		assertThatThrownBy(() -> new Players(of("a")))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다");
 
 	}
 
@@ -27,7 +28,7 @@ class PlayersTest {
 	@DisplayName("플레이어는 최대 8명까지만 가능하다.")
 	void maximumPlayerCountTest() {
 		assertThatThrownBy(() -> new Players(of("a", "b", "c", "d", "e", "f", "g", "h", "g")))
-			.isInstanceOf(IllegalArgumentException.class);
-
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("이름은 중복될 수 없습니다.");
 	}
 }

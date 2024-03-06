@@ -13,6 +13,7 @@ public class NameTest {
 	@DisplayName("이름의 길이가 0글자이거나, 5글자를 초과하면 예외가 발생된다.")
 	void nameLengthExceptionTest(String name) {
 		assertThatThrownBy(() -> new Name(name))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("이름의 길이는 최소 1글자부터 최대 5글자까지 가능합니다.");
 	}
 }

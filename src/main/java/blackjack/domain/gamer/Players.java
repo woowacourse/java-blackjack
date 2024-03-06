@@ -26,7 +26,9 @@ public class Players {
 
 	private void validateCount(int count) {
 		if (count < MIN_PLAYER_COUNT || count > MAX_PLAYER_COUNT) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(
+				"플레이어는 최소 " + MIN_PLAYER_COUNT + "명에서 최대 " + MAX_PLAYER_COUNT + "명까지 가능합니다"
+			);
 		}
 	}
 
@@ -34,7 +36,7 @@ public class Players {
 		Set<String> nonDuplicateNames = new HashSet<>(names);
 
 		if (names.size() != nonDuplicateNames.size()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
 		}
 	}
 }
