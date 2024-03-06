@@ -20,4 +20,14 @@ public class Dealer extends Participant {
     protected int getMaxDrawableScore() {
         return DRAWABLE_MAX_SCORE;
     }
+
+    public boolean isWin(Player player) {
+        if (player.isBusted()) {
+            return true;
+        }
+        if (this.isBusted()) {
+            return false;
+        }
+        return this.calculateScore() >= player.calculateScore();
+    }
 }

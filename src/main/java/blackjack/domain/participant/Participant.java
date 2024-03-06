@@ -36,6 +36,10 @@ public abstract class Participant {
         return calculateScore() <= getMaxDrawableScore();
     }
 
+    public final boolean isBusted() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
     public void drawStartCards(Deck deck) {
         if (!cards.isEmpty()) {
             throw new IllegalStateException("이미 시작 카드를 뽑았습니다.");

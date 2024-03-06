@@ -10,6 +10,7 @@ import blackjack.domain.Deck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -125,5 +126,124 @@ class DealerTest {
         assertThatThrownBy(() -> dealer.add(card))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("더 이상 카드를 추가할 수 없습니다.");
+    }
+
+    @DisplayName("플레이어와의 승패를 판단할 수 있다.")
+    @Nested
+    class IsWinTest {
+
+        @DisplayName("플레이어가 21일 넘을 경우, 딜러가 이긴다.")
+        @ParameterizedTest
+        @MethodSource("provideDealerCards")
+        void whenPlayerBusted_dealerWin(List<Card> cards) {
+            Dealer dealer = new Dealer(cards);
+            Player player = new Player(List.of(
+                    new Card(Value.KING, Shape.DIAMOND),
+                    new Card(Value.QUEEN, Shape.DIAMOND),
+                    new Card(Value.JACK, Shape.DIAMOND)
+            ), new Name("name"));
+
+            assertThat(dealer.isWin(player)).isTrue();
+        }
+
+        static Stream<List<Card>> provideDealerCards() {
+            return Stream.of(
+                    List.of(
+                            new Card(Value.ACE, Shape.HEART),
+                            new Card(Value.KING, Shape.HEART)
+                    ),
+                    List.of(
+                            new Card(Value.TWO, Shape.HEART),
+                            new Card(Value.TWO, Shape.SPADE)
+                    ),
+                    List.of(
+                            new Card(Value.KING, Shape.HEART),
+                            new Card(Value.TWO, Shape.HEART)
+                    ),
+                    List.of(
+                            new Card(Value.KING, Shape.HEART),
+                            new Card(Value.QUEEN, Shape.HEART),
+                            new Card(Value.JACK, Shape.HEART)
+                    )
+            );
+        }
+
+        @DisplayName("딜러만 21을 넘길 경우, 플레이어가 이긴다.")
+        @ParameterizedTest
+        @MethodSource("providePlayerCards")
+        void whenOnlyDealerBusted_playerWin(List<Card> cards) {
+
+            Dealer dealer = new Dealer(List.of(
+                    new Card(Value.KING, Shape.DIAMOND),
+                    new Card(Value.QUEEN, Shape.DIAMOND),
+                    new Card(Value.JACK, Shape.DIAMOND)
+            ));
+            Player player = new Player(cards, new Name("name"));
+
+            assertThat(dealer.isWin(player)).isFalse();
+        }
+
+        //TODO 픽스쳐 생성
+        static Stream<List<Card>> providePlayerCards() {
+            return Stream.of(
+                    List.of(
+                            new Card(Value.ACE, Shape.HEART),
+                            new Card(Value.KING, Shape.HEART)
+                    ),
+                    List.of(
+                            new Card(Value.TWO, Shape.HEART),
+                            new Card(Value.TWO, Shape.SPADE)
+                    ),
+                    List.of(
+                            new Card(Value.KING, Shape.HEART),
+                            new Card(Value.TWO, Shape.HEART)
+                    )
+            );
+        }
+
+        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 크다면 플레이어가 이긴다.")
+        @Test
+        void whenPlayerScoreIsBiggerThanDealerScore_playerWin() {
+            Player player = new Player(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SEVEN, Shape.HEART)
+            ), new Name("name"));
+            Dealer dealer = new Dealer(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SIX, Shape.HEART)
+            ));
+
+            assertThat(dealer.isWin(player)).isFalse();
+        }
+
+        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 같다면 딜러가 이긴다.")
+        @Test
+        void whenPlayerScoreIsEqualToDealerScore_dealerWin() {
+            Player player = new Player(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SEVEN, Shape.HEART)
+            ), new Name("name"));
+            Dealer dealer = new Dealer(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SEVEN, Shape.HEART)
+            ));
+
+            assertThat(dealer.isWin(player)).isTrue();
+        }
+
+        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 작다면 딜러가 이긴다.")
+        @Test
+        void whenPlayerScoreIsSmallerThanDealerScore_dealerWin() {
+            Player player = new Player(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SIX, Shape.HEART)
+            ), new Name("name"));
+            Dealer dealer = new Dealer(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.SEVEN, Shape.HEART)
+            ));
+
+            assertThat(dealer.isWin(player)).isTrue();
+        }
     }
 }
