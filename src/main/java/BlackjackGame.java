@@ -21,7 +21,7 @@ public class BlackjackGame {
         startSetting(blackjackService, dealer, players);
         proceedPlayerTurn(blackjackService);
         proceedDealerTurn(blackjackService);
-        handleResult(dealer, players, blackjackService);
+        handleResult(blackjackService);
     }
 
     private void startSetting(BlackjackService blackjackService, Player dealer, List<Player> players) {
@@ -52,8 +52,8 @@ public class BlackjackGame {
         }
     }
 
-    private void handleResult(Player dealer, List<Player> players, BlackjackService blackjackService) {
-        outputView.printResult(dealer, players);
+    private void handleResult(BlackjackService blackjackService) {
+        outputView.printResult(blackjackService.getDealer(), blackjackService.getPlayers());
         outputView.printVictory(blackjackService.calculateVictory());
     }
 }

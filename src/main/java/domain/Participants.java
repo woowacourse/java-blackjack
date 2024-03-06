@@ -85,4 +85,11 @@ public class Participants {
     }
 
 
+    public Player getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

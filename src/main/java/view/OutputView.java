@@ -63,7 +63,7 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.println();
         int dealerWinCount = (int) victoryResult.values().stream()
-                .filter(i -> i)
+                .filter(isWin -> !isWin)
                 .count();
         System.out.printf("딜러: %d승 %d패\n", dealerWinCount, victoryResult.size() - dealerWinCount);
         victoryResult.keySet().forEach(player -> {

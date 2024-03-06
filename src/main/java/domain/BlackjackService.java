@@ -74,4 +74,11 @@ public class BlackjackService {
     }
 
 
+    public Player getDealer() {
+        return participants.getDealer();
+    }
+
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
+    }
 }
