@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public static void printParticipants(Participants participants) {
@@ -8,7 +9,9 @@ public class OutputView {
         for (Name name : names) {
             names2.add(name.getValue());
         }
+        System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", names2));
+        System.out.println();
         System.out.println();
     }
 
@@ -30,7 +33,46 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printPlayerScore(Player player) {
+        Name name = player.getName();
+        List<Card> cards = player.getCards();
+        List<String> cardNames = new ArrayList<>();
+        for (Card card : cards) {
+            cardNames.add(card.getRank().getName() + card.getShape().getName());
+        }
+        System.out.printf("%s카드: %s - 결과: %d", name.getValue(), String.join(", ", cardNames), player.calculateScore());
+
+        System.out.println();
+    }
+
+    public static void printFinalResult(Map<Player, Boolean> result) {
+
+        long dealerWinCount = result.values().stream()
+                .filter(isWin -> false == isWin)
+                .count();
+
+        int totalResult = result.keySet().size();
+
+        System.out.println();
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d패", (int)dealerWinCount, totalResult - (int)dealerWinCount);
+        System.out.println();
+
+        for (Map.Entry<Player, Boolean> entry : result.entrySet()) {
+            if (entry.getValue() == true) {
+                System.out.printf("%s: 승", entry.getKey().getName().getValue());
+                System.out.println();
+            }
+            if (entry.getValue() == false) {
+                System.out.printf("%s: 패", entry.getKey().getName().getValue());
+                System.out.println();
+            }
+        }
+    }
+
     public static void printDealerHit() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 }

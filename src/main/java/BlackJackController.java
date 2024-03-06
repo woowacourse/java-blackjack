@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
     public void run() {
@@ -24,5 +25,15 @@ public class BlackJackController {
             OutputView.printDealerHit();
             dealer.receiveCard(deck.draw());
         }
+
+        OutputView.printPlayerScore(dealer);
+        for (Participant participant : participants.getValue()) {
+            OutputView.printPlayerScore(participant);
+        }
+
+        blackJack.savePlayerResult();
+        Map<Player, Boolean> result = blackJack.getResult();
+
+        OutputView.printFinalResult(result);
     }
 }

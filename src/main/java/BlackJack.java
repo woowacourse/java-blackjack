@@ -1,12 +1,17 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class BlackJack {
     private Deck deck;
     private Dealer dealer;
     private Participants participants;
+    private Map<Player, Boolean> result;
 
     public BlackJack(Deck deck, Dealer dealer, Participants participants) {
         this.deck = deck;
         this.dealer = dealer;
         this.participants = participants;
+        this.result = new HashMap<>();
     }
 
     public void beginDealing() {
@@ -26,6 +31,16 @@ public class BlackJack {
             return isWinnerByCardCount(participant);
         }
         return participantScore > dealerScore;
+    }
+
+    public void savePlayerResult() {
+        for (Participant participant : participants.getValue()) {
+            result.put(participant, isWinner(participant));
+        }
+    }
+
+    public Map<Player, Boolean> getResult() {
+        return result;
     }
 
     private boolean isWinnerByCardCount(Participant participant) {
