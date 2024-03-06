@@ -2,16 +2,16 @@ package dealer;
 
 import card.Card;
 import card.CardDeck;
-import java.util.List;
+import cardGame.GameParticipant;
+import java.util.ArrayList;
 
-public class Dealer {
+public class Dealer extends GameParticipant {
 
     private final CardDeck cardDeck;
 
-    private List<Card> cards;
-
-    public Dealer(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    public Dealer() {
+        super(new ArrayList<>());
+        this.cardDeck = new CardDeck();
     }
 
     public Card giveCard() {
