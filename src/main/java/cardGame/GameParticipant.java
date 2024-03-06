@@ -1,27 +1,34 @@
 package cardGame;
 
 import card.Card;
+import card.Cards;
 import java.util.List;
 
 public class GameParticipant {
 
     private static final int MAX_GAME_SCORE = 21;
 
-    private List<Card> cards;
+    private Cards cards;
 
-    public GameParticipant(List<Card> cards) {
-        this.cards = cards;
+    public GameParticipant(List<Card> cardDeck) {
+        this.cards = new Cards(cardDeck);
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
+        cards.addCard(card);
     }
 
-    public boolean isOverMaxGameScore() {
-        int totalCardScore = cards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
+    public boolean isOverMaxCardScore() {
+        int totalCardScore = cards.countRoundScore();
 
         return MAX_GAME_SCORE < totalCardScore;
+    }
+
+    public int getMaxGameScore() {
+        return cards.countMaxScore();
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

@@ -30,7 +30,7 @@ public class PlayerTest {
         player.receiveCard(queenCard);
         player.receiveCard(jackCard);
 
-        Assertions.assertThat(player.isOverMaxGameScore()).isTrue();
+        Assertions.assertThat(player.isOverMaxCardScore()).isTrue();
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘지 않을경우 false를 return한다.")
@@ -40,6 +40,6 @@ public class PlayerTest {
 
         player.receiveCard(kingCard);
 
-        Assertions.assertThat(player.isOverMaxGameScore()).isFalse();
+        Assertions.assertThat(player.isOverMaxCardScore()).isFalse();
     }
 }
