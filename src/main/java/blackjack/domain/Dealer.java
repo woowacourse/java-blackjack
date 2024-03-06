@@ -14,8 +14,12 @@ public class Dealer {
     }
 
     public void draw(Deck deck) {
+        player.draw(deck);
+    }
+
+    public void drawUntilExceedMinimum(Deck deck) {
         while (getScore() < MINIMUM_SCORE) {
-            player.draw(deck);
+            draw(deck);
         }
     }
 
