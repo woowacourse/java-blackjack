@@ -1,11 +1,14 @@
 package blackjack.model;
 
 
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CardTest {
     @ParameterizedTest
@@ -24,8 +27,8 @@ public class CardTest {
             }
         };
 
-        assertThat(card.getDenomination).isEqualTo(denomination);
-        asserThat(card.getSuit).isEqualTo(suit);
+        assertThat(card.getDenomination()).isEqualTo(denomination);
+        assertThat(card.getSuit()).isEqualTo(suit);
     }
 
     private static Stream<Arguments> provideDenominationAndSuit() {
