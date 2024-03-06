@@ -14,13 +14,13 @@ public class Card {
 
     private Suit generateSuit(final NumberGenerator numberGenerator) {
         int bound = Suit.getSize();
-        int randomIndex = numberGenerator.pick(bound);
+        int randomIndex = numberGenerator.pick() % bound;
         return Suit.findByIndex(randomIndex);
     }
 
     private Denomination generateDenomination(final NumberGenerator numberGenerator) {
         int bound = Denomination.getSize();
-        int randomIndex = numberGenerator.pick(bound);
+        int randomIndex = numberGenerator.pick() % bound;
         return Denomination.findByIndex(randomIndex);
     }
 
