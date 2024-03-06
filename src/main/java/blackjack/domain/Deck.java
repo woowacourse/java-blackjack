@@ -11,13 +11,26 @@ public class Deck {
     private final Queue<Card> cards;
 
     public Deck() {
-        cards = new LinkedList<>(Arrays.stream(Shape.values())
-                .map(this::makeCards)
+        this.cards = new LinkedList<>(Arrays.stream(Shape.values())
+                .map(Deck::makeCards)
                 .flatMap(List::stream)
                 .toList());
     }
 
-    private List<Card> makeCards(Shape shape) {
+    Deck(List<Card> cards) {
+        this.cards = new LinkedList<>(cards);
+    }
+
+    public static Deck createOrderedDeck() {
+        List<Card> cards = Arrays.stream(Shape.values())
+                .map(Deck::makeCards)
+                .flatMap(List::stream)
+                .toList();
+
+        return new Deck(cards);
+    }
+
+    private static List<Card> makeCards(Shape shape) {
         return Arrays.stream(Card.Value.values())
                 .map(value -> new Card(value, shape))
                 .toList();

@@ -1,11 +1,15 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class Card {
 
     private final Value value;
+    private final Shape shape;
 
     public Card(Value value, Shape shape) {
         this.value = value;
+        this.shape = shape;
     }
 
     public int getMinScore() {
@@ -14,6 +18,23 @@ public class Card {
 
     public int getMaxScore() {
         return value.getMaxScore();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Card card = (Card) object;
+        return value == card.value && shape == card.shape;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, shape);
     }
 
     // TODO 외부 class로 분리 할 것인지 논의

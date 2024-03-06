@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
     void isDrawableTest_whenScoreIsUnder16_returnTrue() {
@@ -23,6 +24,7 @@ class DealerTest {
         assertThat(dealer.isDrawable()).isTrue();
     }
 
+    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 17을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
     void isDrawableTest_whenScoreIsOver17_returnFalse() {
@@ -65,6 +67,50 @@ class DealerTest {
                                 new Card(Value.KING, Shape.HEART),
                                 new Card(Value.TWO, Shape.HEART)
                         ), 12)
+        );
+    }
+
+    @DisplayName("카드의 총 점수가 16 이하인 동안, 카드를 반복해서 뽑을 수 있다")
+    @Test
+    void drawTest_whenCardScoreIsUnder16() {
+        Dealer dealer = new Dealer(List.of(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.FIVE, Shape.HEART)
+        ));
+        Deck deck = new Deck(List.of(
+                new Card(Value.ACE, Shape.HEART),
+                new Card(Value.ACE, Shape.SPADE),
+                new Card(Value.ACE, Shape.DIAMOND)
+        ));
+
+        dealer.playTurn(deck);
+
+        assertThat(dealer.getCards()).containsExactly(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.FIVE, Shape.HEART),
+                new Card(Value.ACE, Shape.HEART),
+                new Card(Value.ACE, Shape.SPADE)
+        );
+    }
+
+    @DisplayName("카드의 총 점수가 16 초과일 때, 카드를 더 이상 뽑지 않는다")
+    @Test
+    void drawTest_cardScoreIsOver16() {
+        Dealer dealer = new Dealer(List.of(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.SEVEN, Shape.HEART)
+        ));
+        Deck deck = new Deck(List.of(
+                new Card(Value.ACE, Shape.HEART),
+                new Card(Value.ACE, Shape.SPADE),
+                new Card(Value.ACE, Shape.DIAMOND)
+        ));
+
+        dealer.playTurn(deck);
+
+        assertThat(dealer.getCards()).containsExactly(
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.SEVEN, Shape.HEART)
         );
     }
 }

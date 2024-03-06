@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer {
@@ -10,7 +11,7 @@ public class Dealer {
     private final List<Card> cards;
 
     public Dealer(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public boolean isDrawable() {
@@ -30,5 +31,15 @@ public class Dealer {
             score = score + card.getMinScore() - card.getMaxScore();
         }
         return score;
+    }
+
+    public void playTurn(Deck deck) {
+        while (isDrawable()) {
+            cards.add(deck.draw());
+        }
+    }
+
+    List<Card> getCards() {
+        return cards;
     }
 }
