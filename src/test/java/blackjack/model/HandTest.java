@@ -1,15 +1,12 @@
 package blackjack.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
     @Test
@@ -46,22 +43,6 @@ public class HandTest {
 
         // when & then
         assertThat(hand.isBlackJack()).isTrue();
-    }
-
-    private static class SequentialNumberGenerator implements NumberGenerator {
-        private final Iterator<Integer> numbers;
-
-        public SequentialNumberGenerator(final List<Integer> numbers) {
-            this.numbers = numbers.iterator();
-        }
-
-        @Override
-        public int pick() {
-            if (numbers.hasNext()) {
-                return numbers.next();
-            }
-            throw new NoSuchElementException("이미 모든 numbers가 반환되었습니다.");
-        }
     }
 
     @Test

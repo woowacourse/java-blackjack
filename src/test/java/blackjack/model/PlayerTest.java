@@ -1,9 +1,10 @@
 package blackjack.model;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
     @Test
@@ -12,5 +13,15 @@ public class PlayerTest {
         // when & then
         assertThatThrownBy(() -> new Player("", () -> 0))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("21을 넘지 않을 경우 얼마든지 카드를 계속 뽑을 수 있다")
+    void canHitTest() {
+        // given
+        Player player = new Player("dora", new SequentialNumberGenerator(List.of(0, 9, 0, 9)));
+
+        // when & then
+        assertThat(player.canHit()).isTrue();
     }
 }
