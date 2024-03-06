@@ -32,4 +32,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardNumber, cardPattern);
     }
+
+    public boolean isSameCardNumber(CardNumber checkNumber) {
+        return cardNumber == checkNumber;
+    }
 }
