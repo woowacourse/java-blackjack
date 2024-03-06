@@ -23,13 +23,13 @@ class PlayersTest {
         Name baekho = new Name("baekho");
         Name pobi = new Name("pobi");
 
-        Dealer dealer = new Dealer(cards1);
+        Score dealerScore = new Score(20);
         Player player1 = new Player(kirby, cards2);
         Player player2 = new Player(baekho, cards3);
         Player player3 = new Player(pobi, cards4);
 
         Players players = new Players(List.of(player1, player2, player3));
-        Map<Name, WinStatus> finalResult = players.determineWinStatus(dealer);
+        Map<Name, WinStatus> finalResult = players.determineWinStatus(dealerScore);
 
         // TODO: 순서대로 검증도 되게
         assertThat(finalResult).containsExactlyInAnyOrderEntriesOf(Map.of(

@@ -11,9 +11,7 @@ public class Players {
         this.values = players;
     }
 
-    public Map<Name, WinStatus> determineWinStatus(final Dealer dealer) {
-        final Score dealerScore = dealer.calculate();
-
+    public Map<Name, WinStatus> determineWinStatus(final Score dealerScore) {
         Map<Name, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : values) {
