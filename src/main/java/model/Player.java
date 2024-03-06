@@ -1,11 +1,17 @@
 package model;
 
+import java.util.List;
+
 public class Player {
 
     private static final int ADD_CARD_CONDITION = 22;
 
     private final String name;
     private final Cards cards;
+
+    public Player(String name) {
+        this(name, new Cards(List.of()));
+    }
 
     public Player(String name, Cards cards) {
         this.name = name;
