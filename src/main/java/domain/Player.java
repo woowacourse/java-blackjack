@@ -22,4 +22,8 @@ public class Player implements Participant {
     public void draw(final Deck deck) {
         hand.addCard(deck.drawn());
     }
+
+    public HandStatus getPlayerHandStatus() {
+        return hand.getHandStatus();
+    }
 }
