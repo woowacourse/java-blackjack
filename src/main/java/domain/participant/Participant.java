@@ -6,9 +6,9 @@ import domain.card.ParticipantCards;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
-    private static final int BLACKJACK_SCORE = 21;
+    protected static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
     private final ParticipantCards cards;
@@ -19,11 +19,19 @@ public class Participant {
     }
 
     public void receive(Card receivedCard) {
-        cards.receive(receivedCard);
+        if (isReceivable()) {
+            cards.receive(receivedCard);
+            return;
+        }
+        throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
     }
 
     public void receive(List<Card> receivedCards) {
-        cards.receive(receivedCards);
+        if (isReceivable()) {
+            cards.receive(receivedCards);
+            return;
+        }
+        throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
     }
 
     public int score() {
@@ -37,4 +45,6 @@ public class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
+
+    abstract boolean isReceivable();
 }
