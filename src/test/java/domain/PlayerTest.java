@@ -1,9 +1,14 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -13,7 +18,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"a", "abcde"})
 	void playerNameLengthSuccessTest(String name) {
-		assertThatCode(() -> new Player(name))
+		assertThatCode(() -> new Player(name, new ArrayList<>()))
 			.doesNotThrowAnyException();
 	}
 
@@ -21,8 +26,21 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"", "abcdef"})
 	void playerNameLengthErrorTest(String name) {
-		assertThatThrownBy(() -> new Player(name))
+		assertThatThrownBy(() -> new Player(name, new ArrayList<>()))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage(Name.LENGTH_ERROR_MESSAGE);
+	}
+
+	@DisplayName("초기 카드 2장을 받는다.")
+	@Test
+	void receiveInitCardsTest() {
+		// given
+		Player player = new Player("a", new ArrayList<>());
+
+		// when
+		player.receiveInitCards(List.of(new Card(Suit.HEART, Rank.A), new Card(Suit.HEART, Rank.J)));
+
+		// then
+		assertThat(player.getCardHand()).hasSize(2);
 	}
 }
