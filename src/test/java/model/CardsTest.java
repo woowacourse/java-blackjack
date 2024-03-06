@@ -1,14 +1,16 @@
 package model;
 
-import static model.CardNumber.FIVE;
-import static model.CardNumber.JACK;
-import static model.CardNumber.ONE;
-import static model.CardShape.CLOVER;
-import static model.CardShape.DIAMOND;
-import static model.CardShape.HEART;
+import static model.card.CardNumber.FIVE;
+import static model.card.CardNumber.JACK;
+import static model.card.CardNumber.ONE;
+import static model.card.CardShape.CLOVER;
+import static model.card.CardShape.DIAMOND;
+import static model.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import model.card.Card;
+import model.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
