@@ -9,4 +9,8 @@ public class Deck {
     public Deck(DeckFactory deckFactory) {
         this.deck = deckFactory.generate();
     }
+
+    public Card pop() {
+        return deck.pop();
+    }
 }
