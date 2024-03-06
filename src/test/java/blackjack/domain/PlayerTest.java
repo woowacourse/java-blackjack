@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("참가자 테스트")
 class PlayerTest {
 
     @DisplayName("플레이어 핸드에 카드를 추가할 수 있다")
