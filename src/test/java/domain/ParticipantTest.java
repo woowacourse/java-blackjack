@@ -9,10 +9,10 @@ class ParticipantTest {
 
     @DisplayName("참가자는 카드의 합을 구할 수 있다.")
     @Test
-    void sumCards() {
+    void cardSum() {
         Participant participant = new Participant();
         participant.receive(new Card(CardShape.SPADE, CardNumber.JACK));
-        assertThat(participant.sumCards())
+        assertThat(participant.cardSum())
                 .isEqualTo(10);
     }
 }
