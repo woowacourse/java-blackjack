@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Card.Shape;
 import blackjack.domain.Card.Value;
@@ -70,47 +71,34 @@ class DealerTest {
         );
     }
 
-    @DisplayName("카드의 총 점수가 16 이하인 동안, 카드를 반복해서 뽑을 수 있다")
+    @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 한 장 뽑을 수 있다")
     @Test
-    void drawTest_whenCardScoreIsUnder16() {
+    void addTest_whenScoreIsUnder16() {
         Dealer dealer = new Dealer(List.of(
                 new Card(Value.KING, Shape.HEART),
-                new Card(Value.FIVE, Shape.HEART)
-        ));
-        Deck deck = new Deck(List.of(
-                new Card(Value.ACE, Shape.HEART),
-                new Card(Value.ACE, Shape.SPADE),
-                new Card(Value.ACE, Shape.DIAMOND)
+                new Card(Value.SIX, Shape.HEART)
         ));
 
-        dealer.playTurn(deck);
+        dealer.add(new Card(Value.ACE, Shape.HEART));
 
         assertThat(dealer.getCards()).containsExactly(
                 new Card(Value.KING, Shape.HEART),
-                new Card(Value.FIVE, Shape.HEART),
-                new Card(Value.ACE, Shape.HEART),
-                new Card(Value.ACE, Shape.SPADE)
+                new Card(Value.SIX, Shape.HEART),
+                new Card(Value.ACE, Shape.HEART)
         );
     }
 
-    @DisplayName("카드의 총 점수가 16 초과일 때, 카드를 더 이상 뽑지 않는다")
+    @DisplayName("카드의 총 점수가 16을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
     @Test
-    void drawTest_cardScoreIsOver16() {
+    void addTest_whenScoreIsOver16_throwException() {
         Dealer dealer = new Dealer(List.of(
                 new Card(Value.KING, Shape.HEART),
                 new Card(Value.SEVEN, Shape.HEART)
         ));
-        Deck deck = new Deck(List.of(
-                new Card(Value.ACE, Shape.HEART),
-                new Card(Value.ACE, Shape.SPADE),
-                new Card(Value.ACE, Shape.DIAMOND)
-        ));
+        Card card = new Card(Value.ACE, Shape.HEART);
 
-        dealer.playTurn(deck);
-
-        assertThat(dealer.getCards()).containsExactly(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.SEVEN, Shape.HEART)
-        );
+        assertThatThrownBy(() -> dealer.add(card))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("더 이상 카드를 추가할 수 없습니다.");
     }
 }

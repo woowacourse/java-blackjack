@@ -33,13 +33,14 @@ public class Dealer {
         return score;
     }
 
-    public void playTurn(Deck deck) {
-        while (isDrawable()) {
-            cards.add(deck.draw());
-        }
-    }
-
     List<Card> getCards() {
         return cards;
+    }
+
+    public void add(Card card) {
+        if (!isDrawable()) {
+            throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
+        }
+        cards.add(card);
     }
 }
