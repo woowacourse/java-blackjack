@@ -16,4 +16,14 @@ class PlayerTest {
         int totalSize = player.getTotalSize();
         Assertions.assertThat(totalSize).isEqualTo(1);
     }
+
+    @DisplayName("카드의 총 점수를 계산한다.")
+    @Test
+    void calculateScore() {
+        Player player = new Player("pobi");
+        player.saveCard(new Card(CardValue.EIGHT, Shape.CLOVER));
+        player.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+        int totalScore = player.calculateScore();
+        Assertions.assertThat(totalScore).isEqualTo(17);
+    }
 }

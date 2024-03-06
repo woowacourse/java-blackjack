@@ -27,6 +27,14 @@ public class Player {
         cards.add(card);
     }
 
+
+    public int calculateScore() {
+        return cards.stream()
+                .map(card -> card.getScore())
+                .mapToInt(score -> score)
+                .sum();
+    }
+
     public int getTotalSize() {
         return cards.size();
     }
@@ -38,4 +46,5 @@ public class Player {
     public List<Card> getCards() {
         return cards;
     }
+
 }

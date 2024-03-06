@@ -13,7 +13,7 @@ public class Card {
         this.shape = shape;
     }
 
-    public int getValue() {
+    public int getScore() {
         return cardValue.getValue();
     }
 
