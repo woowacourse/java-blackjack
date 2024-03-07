@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class InputView {
     private static final String DEFAULT_DELIMITER = ",";
     private static final String DEFAULT_DELIMITER_NAME = "쉼표";
+    private static final List<String> INVALID_PLAYER_NAMES = List.of("딜러", "dealer");
 
     private final Scanner scanner;
 
@@ -23,10 +24,16 @@ public class InputView {
         return toList(playerNames);
     }
 
-    private List<String> toList(String playerNames) {
-        return Arrays.stream(playerNames.split(DEFAULT_DELIMITER, -1))
+    private List<String> toList(String input) {
+        String[] names = input.split(DEFAULT_DELIMITER, -1);
+        List<String> playerNames = Arrays.stream(names)
                 .map(String::trim)
+                .filter(s -> !INVALID_PLAYER_NAMES.contains(s))
                 .toList();
+        if (names.length != playerNames.size()) {
+            throw new IllegalArgumentException();
+        }
+        return playerNames;
     }
 
     public String readBlackjackAction(String name) {
