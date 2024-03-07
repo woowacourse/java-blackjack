@@ -78,15 +78,27 @@ public class BlackjackGame {
         return participants.getNames();
     }
 
-    public List<CardDTO> addCardToParticipant(final ParticipantsName name) {
-        Hands hands = participants.addCardTo(name, dealer.drawCard());
-
-        return hands.getCards().stream()
-                .map(CardDTO::from)
-                .toList();
+    public void addCardToParticipant(final ParticipantsName name) {
+        participants.addCardTo(name, dealer.drawCard());
     }
 
     public boolean isAlive(final ParticipantsName name) {
-        return participants.isAlive(name);
+        return participants.isAlive(name) || !participants.isNotBlackjack(name); // TODO : 부정
+    }
+
+    public int giveDealerMoreCard() {
+        int count = 0;
+        while (dealer.needMoreCard()) {
+            dealer.addCard();
+            count++;
+        }
+        return count;
+    }
+
+    public List<CardDTO> getCardsOf(final ParticipantsName name) {
+        Hands hands = participants.getCardsOf(name);
+        return hands.getCards().stream()
+                .map(CardDTO::from)
+                .toList();
     }
 }

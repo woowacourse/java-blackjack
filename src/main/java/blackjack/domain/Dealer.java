@@ -15,7 +15,11 @@ public class Dealer extends Participant {
     }
 
     public boolean needMoreCard() {
-        return NEED_CARD_CRITERION.isBiggerThan(calculate());
+        return NEED_CARD_CRITERION.isBiggerThan(calculate()) && getStatus().isAlive();
+    }
+
+    public void addCard() {
+        hands.add(drawCard());
     }
 
     public Hands getOpenedHands() {

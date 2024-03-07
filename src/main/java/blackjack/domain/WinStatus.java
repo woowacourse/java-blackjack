@@ -21,4 +21,14 @@ public enum WinStatus {
         }
         return LOSE;
     }
+
+    public WinStatus opposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
 }

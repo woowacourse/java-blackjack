@@ -32,16 +32,22 @@ public class BlackjackController {
 
             for (ParticipantsName name : participantsName) {
                 boolean needMoreCard = inputView.readNeedMoreCard(name.getName());
-                List<CardDTO> cards = blackjackGame.addCardToParticipant(name);
+                if (needMoreCard && participants.isNotBlackjack(name)) {
+                    blackjackGame.addCardToParticipant(name);
+                }
+                List<CardDTO> cards = blackjackGame.getCardsOf(name);
                 outputView.printPlayerCard(name.getName(), cards);
 
                 while (needMoreCard && blackjackGame.isAlive(name)) {
                     needMoreCard = inputView.readNeedMoreCard(name.getName());
-                    cards = blackjackGame.addCardToParticipant(name);
+                    blackjackGame.addCardToParticipant(name);
+                    cards = blackjackGame.getCardsOf(name);
                     outputView.printPlayerCard(name.getName(), cards);
                 }
             }
 
+            int count = blackjackGame.giveDealerMoreCard();
+            outputView.printDealerMoreCard(count);
 
         }
 

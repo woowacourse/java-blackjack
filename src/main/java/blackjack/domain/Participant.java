@@ -34,6 +34,7 @@ public class Participant {
         hands.add(card);
     }
 
+
     public BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
     }

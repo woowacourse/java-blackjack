@@ -92,7 +92,7 @@ public class OutputView {
     }
 
     private void printWinningResult(final WinningResultDTO winningResultDTO) {
-        System.out.println("%n## 최종 승패");
+        System.out.printf("%n## 최종 승패%n");
         printDealerWinningResult(winningResultDTO.dealerWinningResult());
         printPlayersWinningResult(winningResultDTO.playerWinningResult());
     }
@@ -112,5 +112,11 @@ public class OutputView {
         playersWinningResult.forEach((key, value) ->
                 System.out.printf("%s: %s%n", key, WinningStatusFormat.valueOf(value).getFormat()));
 
+    }
+
+    public void printDealerMoreCard(int count) {
+        while (count-- > 0) {
+            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", DealerFormat.DEALER.getFormat());
+        }
     }
 }

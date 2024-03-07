@@ -72,12 +72,10 @@ public class Participants {
                 .toList();
     }
 
-    public Hands addCardTo(final ParticipantsName name, final Card card) {
+    public void addCardTo(final ParticipantsName name, final Card card) {
         Participant findedParticipant = findParticipant(name);
 
         findedParticipant.addCard(card);
-
-        return findedParticipant.getHands();
     }
 
     public boolean isAlive(final ParticipantsName name) {
@@ -91,5 +89,15 @@ public class Participants {
                 .filter(participant -> participant.isName(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
+    }
+
+    public boolean isNotBlackjack(final ParticipantsName name) {
+        Participant participant = findParticipant(name);
+        return !participant.getStatus().isBlackjack();
+    }
+
+    public Hands getCardsOf(final ParticipantsName name) {
+        Participant findedParticipant = findParticipant(name);
+        return findedParticipant.getHands();
     }
 }

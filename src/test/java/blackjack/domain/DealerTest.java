@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +11,9 @@ class DealerTest {
     void needMoreCard() {
         Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card2 = new Card(CardNumber.SEVEN, CardShape.HEART);
-        Dealer dealer = new Dealer();
-        dealer.addCard(List.of(card1, card2));
+        Dealer dealer = new Dealer("DEALER");
+        dealer.addCard(card1);
+        dealer.addCard(card2);
 
         boolean needMoreCard = dealer.needMoreCard();
 
@@ -26,8 +26,9 @@ class DealerTest {
         Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card2 = new Card(CardNumber.EIGHT, CardShape.HEART);
 
-        Dealer dealer = new Dealer();
-        dealer.addCard(List.of(card1, card2));
+        Dealer dealer = new Dealer("DEALER");
+        dealer.addCard(card1);
+        dealer.addCard(card2);
 
         boolean needMoreCard = dealer.needMoreCard();
 

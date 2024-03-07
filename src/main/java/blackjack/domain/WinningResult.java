@@ -13,7 +13,7 @@ public class WinningResult {
     public Map<WinStatus, Integer> summarizeDealerResult() {
         Map<WinStatus, Integer> dealerResult = new EnumMap<>(WinStatus.class);
         for (WinStatus winStatus : playersWinstatus.values()) {
-            dealerResult.put(winStatus, dealerResult.getOrDefault(winStatus, 0) + 1);
+            dealerResult.put(winStatus.opposite(), dealerResult.getOrDefault(winStatus.opposite(), 0) + 1);
         }
         return dealerResult;
     }
