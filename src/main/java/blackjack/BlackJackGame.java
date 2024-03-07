@@ -7,6 +7,7 @@ import blackjack.model.Referee;
 import blackjack.model.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackGame {
@@ -20,5 +21,7 @@ public class BlackJackGame {
 
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer), players);
+
+        OutputView.printDistributionSubject(players.getNames());
     }
 }
