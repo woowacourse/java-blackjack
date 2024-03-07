@@ -1,5 +1,8 @@
 package player;
 
+import card.Deck;
+
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -38,5 +41,19 @@ public class Players {
         if (distinctNameCount != playerNames.size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
+    }
+
+    public void initDrawCards(Deck deck) {
+        players.forEach(player -> player.initDrawCards(deck));
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

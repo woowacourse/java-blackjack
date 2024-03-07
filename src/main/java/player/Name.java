@@ -25,4 +25,8 @@ public class Name {
             throw new IllegalArgumentException("[ERROR] 이름은 공백일 수 없습니다.");
         }
     }
+
+    String getName() {
+        return name;
+    }
 }

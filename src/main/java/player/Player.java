@@ -1,8 +1,11 @@
 package player;
 
+import card.Card;
 import card.Deck;
 import card.Hand;
 import game.BlackJackGame;
+
+import java.util.List;
 
 public class Player {
 
@@ -18,8 +21,21 @@ public class Player {
         hand.addCard(deck.draw());
     }
 
+    public void initDrawCards(Deck deck) {
+        drawCard(deck);
+        drawCard(deck);
+    }
+
     public boolean hasDrawableScore() {
         return hand.calculateScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public int getScore() {
+        return hand.calculateScore();
     }
 
     public List<Card> getCards() {
