@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class Dealer {
     private static final int STANDARD = 16;
 
@@ -19,8 +21,12 @@ public class Dealer {
         return cards.calculateScore() <= STANDARD;
     }
 
-    public void addCards(CardGenerator cardGenerator) {
-        cards.addCard(cardGenerator.drawCards());
+    public void addCards(List<Card> cardsToAdd) {
+        cards.addCard(cardsToAdd);
+    }
+
+    public ResultStatus determineWinner(Player player) {
+        return player.compareScore(cards);
     }
 
     public Cards getCards() {
