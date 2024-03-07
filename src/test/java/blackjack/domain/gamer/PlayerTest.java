@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 public class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
-    @DisplayName("플레이어 이름은 공백일 경우 예외가 발생한다.")
+    @DisplayName("이름이 공백일 경우 예외가 발생한다.")
     void validateEmptyTest(String name) {
         // given & when & then
         assertThatCode(() -> new Player(name))
@@ -22,7 +22,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 한명이 처음 받은 카드 두장을 반환한다.")
+    @DisplayName("처음 받은 카드 두장을 반환한다.")
     void gameDealTest() {
         // given
         Player player = new Player("lemone");
@@ -35,7 +35,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 한명이 카드를 뽑기로 결정했을 때 카드 한장을 반환한다.")
+    @DisplayName("카드를 뽑기로 결정했을 때 카드 한장을 반환한다.")
     void gameHitTest() {
         // given
         Player player = new Player("lemone");
