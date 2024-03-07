@@ -75,12 +75,12 @@ public class Game {
     public int giveCardsToDealer() {
         Dealer dealer = participant.dealer();
         int threshold = 16;
-        int currentScore = dealer.calculateScore();
+        int currentScore = dealer.calculateScore(21);
 
         int count = 0;
         while (currentScore <= threshold) {
             dealer.saveCard(cards.pick());
-            currentScore = dealer.calculateScore();
+            currentScore = dealer.calculateScore(21);
             count++;
         }
         return count;
@@ -131,19 +131,19 @@ public class Game {
     }
 
     private boolean isBlackJack(final Player player) {
-        return player.calculateScore() == BLACKJACK_SCORE;
+        return player.calculateScore(BLACKJACK_SCORE) == BLACKJACK_SCORE;
     }
 
     public List<Boolean> compareScore() {
         Dealer dealer = participant.dealer();
-        int dealerScore = dealer.calculateScore();
+        int dealerScore = dealer.calculateScore(BLACKJACK_SCORE);
 
         List<Boolean> isWinner = new ArrayList<>();
         List<Player> players = participant.players();
 
         return players.stream()
                 .map(
-                        player -> isWinner.add(doesPlayerWin(player.calculateScore(), dealerScore))
+                        player -> isWinner.add(doesPlayerWin(player.calculateScore(BLACKJACK_SCORE), dealerScore))
                 ).toList();
     }
 
@@ -164,6 +164,6 @@ public class Game {
     }
 
     private boolean isBusted(final Player player) {
-        return player.calculateScore() > BLACKJACK_SCORE;
+        return player.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
     }
 }

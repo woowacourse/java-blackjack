@@ -29,9 +29,9 @@ public class GameController {
             giveCardToDealer(game);
         }
         List<Integer> scores = new ArrayList<>();
-        scores.add(game.getParticipant().dealer().calculateScore());
+        scores.add(game.getParticipant().dealer().calculateScore(21));
         for (Player player : game.getParticipant().players()) {
-            scores.add(player.calculateScore());
+            scores.add(player.calculateScore(21));
         }
         outputView.printResult(getCurrentCardsStatus(game), scores);
         outputView.printGameResult(getResults(game));

@@ -23,15 +23,24 @@ public class Player {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        return cards.stream()
+    public int calculateScore(final int blackJackScore) {
+        int sum = cards.stream()
                 .map(Card::getScore)
                 .mapToInt(score -> score)
                 .sum();
+        int aceCardCount = 0;
+        for (Card card : cards) {
+            aceCardCount++;
+        }
+        while (aceCardCount > 0 && sum > blackJackScore) {
+            aceCardCount--;
+            sum -= 10;
+        }
+        return sum;
     }
 
     public boolean isBlackJack(final int blackJackScore) {
-        return this.calculateScore() == blackJackScore;
+        return this.calculateScore(blackJackScore) == blackJackScore;
     }
 
     public int getTotalSize() {
@@ -52,10 +61,10 @@ public class Player {
     }
 
     public boolean hasMoreScore(final Dealer dealer) {
-        return calculateScore() > dealer.calculateScore();
+        return calculateScore(21) > dealer.calculateScore(21);
     }
 
     public boolean hasLessScore(final Dealer dealer) {
-        return calculateScore() < dealer.calculateScore();
+        return calculateScore(21) < dealer.calculateScore(21);
     }
 }

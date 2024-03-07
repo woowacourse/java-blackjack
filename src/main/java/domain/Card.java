@@ -13,6 +13,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public boolean isAceCard() {
+        return this.cardValue.equals(CardValue.ACE);
+    }
+    
     public int getScore() {
         return cardValue.getValue();
     }
