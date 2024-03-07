@@ -16,7 +16,7 @@ public class CardGenerator {
     public Card drawCard() {
         int numberIndex = indexGenerator.generate(CardNumber.values().length);
         CardNumber cardNumber = CardNumber.generate(numberIndex);
-        int shapeIndex = indexGenerator.generate(CardNumber.values().length);
+        int shapeIndex = indexGenerator.generate(CardShape.values().length);
         CardShape cardShape = CardShape.generate(shapeIndex);
         return new Card(cardNumber, cardShape);
     }
