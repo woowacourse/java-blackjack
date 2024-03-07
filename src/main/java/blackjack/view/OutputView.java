@@ -4,8 +4,11 @@ import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
+import blackjack.model.referee.Outcome;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
+import blackjack.view.dto.PlayerOutcome;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ public class OutputView {
     private static final String DEALER_ACTION_FORM = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String DEALER_CARDS_FORM = "딜러 카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s";
+    private static final String FINAL_OUTCOME_INTRO = "## 최종 승패";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
@@ -57,7 +61,7 @@ public class OutputView {
         int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
         System.out.println(String.format(DEALER_CARDS_FORM, formatCards(dealerCards))
                 + String.format(TOTAL_SCORE_FORM, dealerTotalScore));
-        
+
         for (PlayerFinalCardsOutcome playerOutcome : playerFinalCardsOutcomes) {
             String playerName = playerOutcome.name();
             List<Card> playerCards = playerOutcome.cards();
@@ -65,5 +69,38 @@ public class OutputView {
             System.out.println(String.format(PLAYER_CARDS_FORM, playerName, formatCards(playerCards))
                     + String.format(TOTAL_SCORE_FORM, playerTotalScore));
         }
+    }
+
+    public void printFinalOutcome(final List<PlayerOutcome> playerOutcomes) {
+        System.out.println(FINAL_OUTCOME_INTRO);
+
+        System.out.println("딜러: " + formatDealerOutcome(playerOutcomes));
+        for (PlayerOutcome playerOutcome : playerOutcomes) {
+            System.out.println(playerOutcome.name() + ": " + formatPlayerOutcome(playerOutcome.outcome()));
+        }
+    }
+
+    private String formatPlayerOutcome(final Outcome outcome) {
+        if (outcome == Outcome.WIN) {
+            return "승";
+        }
+        if (outcome == Outcome.LOSE) {
+            return "패";
+        }
+        return "무";
+    }
+
+    private String formatDealerOutcome(final List<PlayerOutcome> playerOutcomes) {
+        int winCount = 0;
+        int loseCount = 0;
+        for (PlayerOutcome playerOutcome : playerOutcomes) {
+            if (playerOutcome.outcome() == Outcome.WIN) {
+                winCount++;
+            } else if (playerOutcome.outcome() == Outcome.LOSE) {
+                loseCount++;
+            }
+        }
+        int tieCount = playerOutcomes.size() - winCount - loseCount;
+        return String.format("%s승 %s패 %s무", winCount, loseCount, tieCount);
     }
 }
