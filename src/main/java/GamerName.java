@@ -1,11 +1,11 @@
-public class PlayerName {
+public class GamerName {
 
     private static final int MIN_LENGTH = 1;
     private static final int MAX_LENGTH = 20;
 
     private final String value;
 
-    public PlayerName(String value) {
+    public GamerName(String value) {
         validateLength(value);
         this.value = value;
     }
