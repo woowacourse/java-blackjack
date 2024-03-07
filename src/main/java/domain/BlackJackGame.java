@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -38,5 +40,13 @@ public class BlackJackGame {
             return true;
         }
         return false;
+    }
+
+    public Map<Player, Result> getGameResults() {
+        Map<Player, Result> results = new LinkedHashMap<>();
+        for (Player player : players) {
+            results.put(player, Result.of(dealer, player));
+        }
+        return results;
     }
 }

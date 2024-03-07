@@ -1,8 +1,10 @@
 package domain;
 
+import java.util.List;
+
 public class Player {
 
-    private static final int BLACK_JACK = 21;
+    protected static final int BLACK_JACK = 21;
 
     private final Name name;
     private final Hand hand;
@@ -10,6 +12,11 @@ public class Player {
     public Player(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
+    }
+
+    Player(List<Card> cards) {
+        this.name = new Name("Test");
+        this.hand = new Hand(cards);
     }
 
     public void hit(Card card) {
