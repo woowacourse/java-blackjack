@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Card;
+import blackjack.dto.MatchResultDto;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,20 @@ public class Dealer extends Participant {
             return false;
         }
         return this.calculateScore() >= player.calculateScore();
+    }
+
+    private boolean isLose(Player player) {
+        return !isWin(player);
+    }
+
+    public MatchResultDto match(Players players) {
+        int winCount = (int) players.getPlayers().stream()
+                .filter(this::isWin)
+                .count();
+        int loseCount = (int) players.getPlayers().stream()
+                .filter(this::isLose)
+                .count();
+        return new MatchResultDto(winCount, loseCount);
     }
 
     @Override
