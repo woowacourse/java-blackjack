@@ -18,6 +18,7 @@ public class BlackjackGame {
         Participants participants = createParticipants();
         outputView.printInitialHand(participants);
         participantsHitCard(participants);
+        outputView.printParticipantsHandWithScore(participants);
     }
 
     private Participants createParticipants() {
@@ -43,6 +44,7 @@ public class BlackjackGame {
         int hitCount = 0;
         while (dealer.canHit()) {
             dealer.addCard(deck);
+            hitCount++;
         }
         outputView.printDealerHitCount(hitCount);
     }

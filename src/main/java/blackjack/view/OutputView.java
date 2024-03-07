@@ -13,12 +13,13 @@ public class OutputView {
     private static final String PARTICIPANT_HAND = "%s카드: %s";
     private static final String DEALER_HIT_COUNT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String DEALER_NO_HIT = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
+    private static final String HAND_WITH_SCORE_FORMAT = "%s - 결과: %d";
 
     public void printInitialHand(Participants participants) {
         Dealer dealer = participants.getDealer();
         Players players = participants.getPlayers();
         printHandOutMessage(dealer, players);
-        printParticipantsHand(dealer, players);
+        printParticipantsHandWithScore(dealer, players);
     }
 
     public void printPlayerHand(Player player) {
@@ -36,6 +37,15 @@ public class OutputView {
         System.out.println(dealerHitCountMessage);
     }
 
+    public void printParticipantsHandWithScore(Participants participants) {
+        printNewLine();
+        Dealer dealer = participants.getDealer();
+        printParticipantHandWithScore(dealer);
+        participants.getPlayers()
+                .getValues()
+                .forEach(this::printParticipantHandWithScore);
+    }
+
     public void printException(IllegalArgumentException e) {
         System.out.println(ERROR_PREFIX + e.getMessage());
     }
@@ -47,7 +57,7 @@ public class OutputView {
         System.out.println(handOutMessage);
     }
 
-    private void printParticipantsHand(Dealer dealer, Players players) {
+    private void printParticipantsHandWithScore(Dealer dealer, Players players) {
         printParticipantsInitialHand(dealer);
         players.getValues()
                 .forEach(this::printParticipantsInitialHand);
@@ -66,6 +76,12 @@ public class OutputView {
         String participantName = participant.getName();
         String cardsWithName = String.format(PARTICIPANT_HAND, participantName, cardSignatures);
         System.out.println(cardsWithName);
+    }
+
+    private void printParticipantHandWithScore(Participant participant) {
+        String participantHand = getParticipantHand(participant);
+        String participantHandWithScore = String.format(HAND_WITH_SCORE_FORMAT, participantHand, participant.getScore());
+        System.out.println(participantHandWithScore);
     }
 
     private String getParticipantHand(Participant participant) {

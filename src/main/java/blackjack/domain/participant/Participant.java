@@ -33,6 +33,10 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
+    public int getScore() {
+        return hand.getOptimizedScore();
+    }
+
     public abstract List<Card> getInitialOpenedCards();
 
     public abstract boolean canHit();
