@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
-    private static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     public PlayerCards(List<Card> cards) {
@@ -21,21 +20,17 @@ public class PlayerCards {
     }
 
     public Score calculateScore() {
-        int score = cards.stream()
+        int scoreValue = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
 
-        int aceCount = getAceCount();
+        Score score = new Score(scoreValue);
+        int currentAceAmount = getAceCount();
 
-        // TODO: 인덴트 줄이기, 로직 개선
-        for (int i = 0; i < aceCount; i++) {
-            if (score <= BUST_THRESHOLD) {
-                break;
-            }
-            score -= 10;
+        if (currentAceAmount > 0 && score.isBusted()) {
+            return score.convertToSmallAce(currentAceAmount);
         }
-
-        return new Score(score);
+        return score;
     }
 
     public boolean isBusted() {

@@ -19,8 +19,8 @@ public record Score(int value) {
         return value > BUST_THRESHOLD;
     }
 
-    public boolean isLessThanDealerMinimumScore() {
-        return value < DEALER_MINIMUM_SCORE;
+    private boolean isBusted(int scoreValue) {
+        return scoreValue > BUST_THRESHOLD;
     }
 
     public boolean isGreaterThan(Score relativeScore) {
@@ -33,5 +33,20 @@ public record Score(int value) {
 
     public boolean isLessThan(Score relativeScore) {
         return value < relativeScore.value;
+    }
+
+    public boolean isLessThanDealerMinimumScore() {
+        return value < DEALER_MINIMUM_SCORE;
+    }
+
+    public Score convertToSmallAce(int currentBigAceAmount) {
+        int currentValue = value;
+        int convertedAceAmount = 0;
+        while (isBusted(currentValue) && convertedAceAmount < currentBigAceAmount) {
+            currentValue -= 10;
+            convertedAceAmount++;
+        }
+
+        return new Score(currentValue);
     }
 }
