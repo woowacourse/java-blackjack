@@ -26,6 +26,14 @@ public class Participant {
         return hand.hasAce() && total + 10 <= 21;
     }
 
+    public boolean isBust() {
+        return hand.sum() > 21;
+    }
+
+    public boolean isBlackjack() {
+        return hand.sum() == 21;
+    }
+
     public Name name() { return name;}
 
     public Cards cards() {
