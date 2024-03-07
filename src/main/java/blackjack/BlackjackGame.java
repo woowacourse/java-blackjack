@@ -39,6 +39,8 @@ public class BlackjackGame {
 
         printAddDealerCard(dealer, deck);
         printResultCardsStatus(dealer, players);
+
+        outputView.printFinalResult(names, players.createResult(dealer));
     }
 
     private String makeCardOutput(final Card card) {
