@@ -39,6 +39,18 @@ public class OutputView {
         nameCardsAScores.forEach(OutputView::printFinalCardsAndScore);
     }
 
+    public static void printDealerFinalResult(final Map<Result, Integer> dealerResults) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + formatFinalResult(dealerResults));
+    }
+
+    private static String formatFinalResult(final Map<Result, Integer> dealerResults) {
+        return dealerResults.entrySet().stream()
+                .map(resultIntegerEntry -> resultIntegerEntry.getValue() + ResultDisplay.getValue(
+                        resultIntegerEntry.getKey()))
+                .collect(Collectors.joining(" "));
+    }
+
     public static void printFinalResult(final Map<String, Result> playerResults) {
         playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name, result)));
     }

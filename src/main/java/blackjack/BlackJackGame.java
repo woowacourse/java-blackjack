@@ -80,7 +80,9 @@ public class BlackJackGame {
         OutputView.printFinalCardsAndScore(dealerNameCardsAScore);
         OutputView.printFinalCardsAndScore(playerNameCardsAScore);
 
-        Map<String, Result> playerResult = referee.judgePlayerResult();
-        OutputView.printFinalResult(playerResult);
+        Map<Result, Integer> dealerResults = referee.judgeDealerResult();
+        OutputView.printDealerFinalResult(dealerResults);
+        Map<String, Result> playerResults = referee.judgePlayerResult();
+        OutputView.printFinalResult(playerResults);
     }
 }
