@@ -1,4 +1,5 @@
 import domain.Blackjack;
+import domain.BlackjackResultDTO;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -24,10 +25,13 @@ public class Application {
             OutputView.printPlayerStatus(player);
         }
 
-        Player dealer1 = blackjack.getDealer();
-        blackjack.dealCard(dealer1);
+        Player dealer = blackjack.getDealer();
 
-        OutputView.printPlayerStatus(dealer1);
+        if (dealer.calculateScore() < 17) {
+            blackjack.dealCard(dealer);
+        }
+
+        OutputView.printPlayerStatus(dealer);
 
         // 결과 출력
         List<Player> players1 = blackjack.getPlayers().getPlayers();
@@ -36,7 +40,7 @@ public class Application {
         OutputView.printResults(players1);
 
         // 승패 출력 맨~
-        Map<Player, Entry<Integer, Integer>> playerIntegerMap = blackjack.finishGame();
-        OutputView.printGameResults(playerIntegerMap);
+        BlackjackResultDTO blackjackResult = blackjack.finishGame();
+        OutputView.printGameResults(blackjackResult);
     }
 }

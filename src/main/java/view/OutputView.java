@@ -1,5 +1,6 @@
 package view;
 
+import domain.BlackjackResultDTO;
 import domain.Card;
 import domain.Player;
 import java.util.List;
@@ -29,17 +30,21 @@ public class OutputView {
         }
     }
 
-    public static void printGameResults(final Map<Player, Entry<Integer, Integer>> playerIntegerMap) {
-        for (final Entry<Player, Entry<Integer, Integer>> playerEntryEntry : playerIntegerMap.entrySet()) {
-            Player player = playerEntryEntry.getKey();
-            Integer win = playerEntryEntry.getValue().getKey();
-            Integer lose = playerEntryEntry.getValue().getValue();
-            if (player.getName().equals("딜러")) {
-                System.out.print(win + "승" + lose + "패\n");
-            } else {
-                System.out.println(win > 0 ? "승" : "패");
-            }
+    public static void printGameResults(BlackjackResultDTO blackjackResult) {
+        System.out.println("## 최종 승패");
+        for (var player : blackjackResult.results().keySet()) {
+            Integer win = blackjackResult.getWin(player);
+            Integer lose = blackjackResult.getLose(player);
+            printWinOrLose(player, win, lose);
         }
+    }
+
+    private static void printWinOrLose(final Player player, final Integer win, final Integer lose) {
+        if (player.getName().equals("딜러")) {
+            System.out.print(player.getName() + ": " + win + "승" + lose + "패\n");
+            return;
+        }
+        System.out.println(player.getName() + ": " + (win > 0 ? "승" : "패"));
 
     }
 }
