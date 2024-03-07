@@ -4,7 +4,8 @@ import java.util.stream.IntStream;
 
 public class BlackJackGame {
 
-    private static final int INITIAL_CARD_COUNT = 2;
+    public static final int INITIAL_CARD_COUNT = 2;
+    public static final int DEALER_THRESHOLD = 16;
 
     public void ready(final Dealer dealer, final Players players) {
         giveCards(dealer, dealer);
@@ -15,6 +16,4 @@ public class BlackJackGame {
         IntStream.range(0, INITIAL_CARD_COUNT)
                 .forEach(__ -> dealer.deal(participant));
     }
-
-
 }
