@@ -83,4 +83,6 @@ class BlackJackTest {
         Map<Player, GameResult> result = blackJack.findResult();
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
     }
+
+    @DisplayName()
 }
