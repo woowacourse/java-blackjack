@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.fixture.CardFixture;
+import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,4 +44,19 @@ public class DealerTest {
         assertTrue(sut.isReceivable());
     }
 
+    @Test
+    @DisplayName("딜러는 게임 결과를 종합한다.")
+    public void Dealer_Count_result() {
+        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        var sut = new Dealer(name, cards);
+
+        var result = sut.checkResult(List.of(gamePlayer));
+        
+        assertThat(result.getGamePlayerResults()
+                         .get(0).resultStatus).isEqualTo(ResultStatus.LOSE);
+        assertThat(result.getDealerResult()
+                         .getResultWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
+    }
 }

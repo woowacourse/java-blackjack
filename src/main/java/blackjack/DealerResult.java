@@ -1,6 +1,5 @@
 package blackjack;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -17,7 +16,8 @@ public class DealerResult {
         EnumMap<ResultStatus, Integer> resultStatusBoard = initializeStatusBoard();
 
         for (GamePlayerResult gamePlayerResult : gamePlayerResults) {
-            increment(resultStatusBoard, gamePlayerResult.getResultStatus());
+            increment(resultStatusBoard, gamePlayerResult.getResultStatus()
+                                                         .reverse());
         }
 
         return new DealerResult(name, resultStatusBoard);

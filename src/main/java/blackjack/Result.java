@@ -10,4 +10,12 @@ public class Result {
         this.gamePlayerResults = gamePlayerResults;
         this.dealerResult = dealerResult;
     }
+
+    public List<GamePlayerResult> getGamePlayerResults() {
+        return gamePlayerResults;
+    }
+
+    public DealerResult getDealerResult() {
+        return dealerResult;
+    }
 }
