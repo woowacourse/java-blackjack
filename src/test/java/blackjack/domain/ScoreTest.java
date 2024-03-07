@@ -23,7 +23,52 @@ class ScoreTest {
     @DisplayName("점수가 21점을 초과하면 버스트")
     void burstIfExceed21Test(int value, boolean expected) {
         Score score = new Score(value);
-        
+
         assertThat(score.isBusted()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "21, 20, true",
+            "20, 20, false",
+            "19, 20, false",
+    })
+    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
+    void isGreaterThenTest(int currentValue, int relativeValue, boolean expected) {
+        Score currentScore = new Score(currentValue);
+        Score relativeScore = new Score(relativeValue);
+
+        boolean actual = currentScore.isGreaterThen(relativeScore);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "21, 20, false",
+            "20, 20, true",
+            "19, 20, false",
+    })
+    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
+    void isSameTest(int currentValue, int relativeValue, boolean expected) {
+        Score currentScore = new Score(currentValue);
+        Score relativeScore = new Score(relativeValue);
+
+        boolean actual = currentScore.isSame(relativeScore);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "21, 20, false",
+            "20, 20, false",
+            "19, 20, true",
+    })
+    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
+    void isLessThanTest(int currentValue, int relativeValue, boolean expected) {
+        Score currentScore = new Score(currentValue);
+        Score relativeScore = new Score(relativeValue);
+
+        boolean actual = currentScore.isLessThan(relativeScore);
+        assertThat(actual).isEqualTo(expected);
     }
 }
