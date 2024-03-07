@@ -36,4 +36,14 @@ public class Players {
             throw new IllegalArgumentException(DUPLICATED_NAMES);
         }
     }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

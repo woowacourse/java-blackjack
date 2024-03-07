@@ -1,10 +1,12 @@
 package blackjack.model.dealer;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.Hand;
 import blackjack.model.cardgenerator.CardGenerator;
 
 public class Dealer {
     private static final int ACTION_CONDITION = 17;
+    private static final int NON_ACTION_COUNT = 2;
 
     private final Hand hand;
 
@@ -28,5 +30,13 @@ public class Dealer {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public int getActionCount() {
+        return hand.getCards().size() - NON_ACTION_COUNT;
+    }
+
+    public Card getFirstCard() {
+        return hand.getCards().get(0);
     }
 }
