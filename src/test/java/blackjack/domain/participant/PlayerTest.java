@@ -25,18 +25,19 @@ class PlayerTest {
     private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
     private static final List<Card> CARDS_SCORE_22 = CardTest.CARDS_SCORE_22;
     private static final Name DEFAULT_NAME = new Name("name");
-    
+
     @DisplayName("점수를 계산할 수 있다.")
     @ParameterizedTest
-    @MethodSource("provideCardsAndScore")
+    @MethodSource("cardsAndScore")
     void calculateScoreTest(List<Card> cards, int expected) {
         Player player = new Player(cards, DEFAULT_NAME);
 
         assertThat(player.calculateScore()).isEqualTo(expected);
     }
 
-    static Stream<Arguments> provideCardsAndScore() {
-        return Stream.of(Arguments.of(BLACKJACK, 21),
+    static Stream<Arguments> cardsAndScore() {
+        return Stream.of(
+                Arguments.of(BLACKJACK, 21),
                 Arguments.of(TWO_ACE, 12),
                 Arguments.of(SCORE_13_WITH_ACE, 13),
                 Arguments.of(CARDS_SCORE_16, 16)
@@ -45,7 +46,7 @@ class PlayerTest {
 
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
-    void isDrawableTest_whenScoreIsUnder21_returnTrue() {
+    void isDrawableTest_whenScoreIsUnderBound_returnTrue() {
         Player player = new Player(CARDS_SCORE_21, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isTrue();
@@ -53,7 +54,7 @@ class PlayerTest {
 
     @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
-    void isDrawableTest_whenScoreIsOver21_returnFalse() {
+    void isDrawableTest_whenScoreIsOverBound_returnFalse() {
         Player player = new Player(CARDS_SCORE_22, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isFalse();
@@ -84,7 +85,7 @@ class PlayerTest {
 
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
-    void addTest_whenScoreIsUnder21() {
+    void addTest_whenScoreIsUnderBound() {
         Player player = new Player(CARDS_SCORE_21, DEFAULT_NAME);
 
         Card additionalCard = new Card(Value.ACE, Shape.HEART);
@@ -98,7 +99,7 @@ class PlayerTest {
 
     @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
     @Test
-    void addTest_whenScoreIsOver21_throwException() {
+    void addTest_whenScoreIsOverBound_throwException() {
         Player player = new Player(CARDS_SCORE_22, DEFAULT_NAME);
         Card card = new Card(Value.ACE, Shape.HEART);
 

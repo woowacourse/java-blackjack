@@ -16,10 +16,9 @@ class DeckTest {
         assertThat(deck.draw()).isNotNull();
     }
 
-    // TODO 테스트 네이밍 고민
     @DisplayName("카드는 최대 52장만 뽑을 수 있다.")
     @Test
-    void drawTest_whenDraw53Times_throwException() {
+    void drawTest_drawTooManyTimes_throwException() {
         Deck deck = Deck.createShuffledDeck();
         drawRepeat(deck, 52);
 

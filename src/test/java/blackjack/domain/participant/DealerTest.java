@@ -30,7 +30,7 @@ class DealerTest {
 
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
-    void isDrawableTest_whenScoreIsUnder16_returnTrue() {
+    void isDrawableTest_whenScoreIsUnderBound_returnTrue() {
         Dealer dealer = new Dealer(CARDS_SCORE_16);
 
         assertThat(dealer.isDrawable()).isTrue();
@@ -38,7 +38,7 @@ class DealerTest {
 
     @DisplayName("카드의 총 점수가 17을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
-    void isDrawableTest_whenScoreIsOver17_returnFalse() {
+    void isDrawableTest_whenScoreIsOverBound_returnFalse() {
         Dealer dealer = new Dealer(CARDS_SCORE_17);
 
         assertThat(dealer.isDrawable()).isFalse();
@@ -46,16 +46,16 @@ class DealerTest {
 
     @DisplayName("점수를 계산할 수 있다.")
     @ParameterizedTest
-    @MethodSource("provideCardsAndScore")
+    @MethodSource("cardsAndScore")
     void calculateScoreTest(List<Card> cards, int expected) {
         Dealer dealer = new Dealer(cards);
 
         assertThat(dealer.calculateScore()).isEqualTo(expected);
     }
 
-    // TODO Fixture로 추출하기
-    static Stream<Arguments> provideCardsAndScore() {
-        return Stream.of(Arguments.of(BLACKJACK, 21),
+    static Stream<Arguments> cardsAndScore() {
+        return Stream.of(
+                Arguments.of(BLACKJACK, 21),
                 Arguments.of(TWO_ACE, 12),
                 Arguments.of(SCORE_13_WITH_ACE, 13),
                 Arguments.of(CARDS_SCORE_16, 16)
@@ -87,7 +87,7 @@ class DealerTest {
 
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
-    void addTest_whenScoreIsUnder16() {
+    void addTest_whenScoreIsUnderBound() {
         Dealer dealer = new Dealer(CARDS_SCORE_16);
 
         Card additionalCard = new Card(Value.ACE, Shape.HEART);
@@ -101,7 +101,7 @@ class DealerTest {
 
     @DisplayName("카드의 총 점수가 16을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
     @Test
-    void addTest_whenScoreIsOver16_throwException() {
+    void addTest_whenScoreIsOverBound_throwException() {
         Dealer dealer = new Dealer(CARDS_SCORE_17);
         Card card = new Card(Value.ACE, Shape.HEART);
 
@@ -116,7 +116,7 @@ class DealerTest {
 
         @DisplayName("플레이어가 21일 넘을 경우, 딜러가 이긴다.")
         @ParameterizedTest
-        @MethodSource("provideDealerCards")
+        @MethodSource("dealerCards")
         void whenPlayerBusted_dealerWin(List<Card> cards) {
             Dealer dealer = new Dealer(cards);
             Player player = new Player(BUSTED, DEFAULT_NAME);
@@ -124,13 +124,13 @@ class DealerTest {
             assertThat(dealer.isWin(player)).isTrue();
         }
 
-        static Stream<List<Card>> provideDealerCards() {
+        static Stream<List<Card>> dealerCards() {
             return Stream.of(BLACKJACK, CARDS_SCORE_4, CARDS_SCORE_16, BUSTED);
         }
 
         @DisplayName("딜러만 21을 넘길 경우, 플레이어가 이긴다.")
         @ParameterizedTest
-        @MethodSource("providePlayerCards")
+        @MethodSource("playerCards")
         void whenOnlyDealerBusted_playerWin(List<Card> cards) {
 
             Dealer dealer = new Dealer(BUSTED);
@@ -139,8 +139,7 @@ class DealerTest {
             assertThat(dealer.isWin(player)).isFalse();
         }
 
-        //TODO 픽스쳐 생성
-        static Stream<List<Card>> providePlayerCards() {
+        static Stream<List<Card>> playerCards() {
             return Stream.of(BLACKJACK, CARDS_SCORE_4, CARDS_SCORE_16);
         }
 
