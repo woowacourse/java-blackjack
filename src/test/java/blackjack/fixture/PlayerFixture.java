@@ -1,9 +1,9 @@
 package blackjack.fixture;
 
-import blackjack.CardValue;
-import blackjack.Dealer;
-import blackjack.GamePlayer;
-import blackjack.Name;
+import blackjack.domain.card.CardValue;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.GamePlayer;
+import blackjack.domain.common.Name;
 import java.util.List;
 
 public class PlayerFixture {

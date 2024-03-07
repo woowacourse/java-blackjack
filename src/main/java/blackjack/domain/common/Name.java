@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.common;
 
 public class Name {
     private String value;

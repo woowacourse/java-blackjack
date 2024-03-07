@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.card;
 
 public class Card {
     private CardValue cardValue;

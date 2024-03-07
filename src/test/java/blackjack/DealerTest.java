@@ -4,6 +4,12 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Cards;
+import blackjack.domain.common.Name;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.GamePlayer;
+import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
@@ -53,9 +59,10 @@ public class DealerTest {
         var sut = new Dealer(name, cards);
 
         var result = sut.checkResult(List.of(gamePlayer));
-        
+
         assertThat(result.getGamePlayerResults()
-                         .get(0).resultStatus).isEqualTo(ResultStatus.LOSE);
+                         .get(0)
+                         .getResultStatus()).isEqualTo(ResultStatus.LOSE);
         assertThat(result.getDealerResult()
                          .getResultWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
     }

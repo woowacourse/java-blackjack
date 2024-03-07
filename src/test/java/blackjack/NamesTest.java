@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import blackjack.domain.common.Names;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

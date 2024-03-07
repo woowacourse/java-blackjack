@@ -1,4 +1,7 @@
-package blackjack;
+package blackjack.domain.player;
+
+import blackjack.domain.common.Name;
+import blackjack.domain.card.Cards;
 
 public class Player {
     protected final Name name;

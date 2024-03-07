@@ -1,5 +1,11 @@
-package blackjack;
+package blackjack.domain.player;
 
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GamePlayerResult;
+import blackjack.domain.common.Name;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultStatus;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 

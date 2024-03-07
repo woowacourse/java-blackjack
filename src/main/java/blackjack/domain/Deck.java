@@ -1,5 +1,8 @@
-package blackjack;
+package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.CardValue;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
