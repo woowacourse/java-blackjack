@@ -42,4 +42,25 @@ class GamerTest {
         Assertions.assertThat(gamer.getTotalScore())
                 .isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("Bust이면 true를 반환한다.")
+    void isBustTrue() {
+        Gamer gamer = new Gamer(new Name("test"));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Assertions.assertThat(gamer.isBust())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("Bust가 아니면 false를 반환한다.")
+    void isBustFalse() {
+        Gamer gamer = new Gamer(new Name("test"));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Assertions.assertThat(gamer.isBust())
+                .isFalse();
+    }
 }

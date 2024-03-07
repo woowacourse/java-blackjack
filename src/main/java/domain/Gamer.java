@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 public class Gamer {
+    private static final int BUST_THRESHOLD = 21;
     private final Name name;
     private final Hand hand;
 
@@ -29,5 +30,9 @@ public class Gamer {
 
     public int getTotalScore() {
         return hand.getResultScore();
+    }
+
+    public boolean isBust() {
+        return (hand.getResultScore() > BUST_THRESHOLD);
     }
 }
