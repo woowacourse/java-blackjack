@@ -14,10 +14,9 @@ public class CardGameTest {
     @Test
     void 카드_한_장을_플레이어에게_지급한다() {
         Player mangcho = player();
-        Card card = new Card(ACE, SPADE);
 
         CardGame cardGame = new CardGame();
-        cardGame.giveCard(mangcho, card);
+        cardGame.giveCard(mangcho);
 
         assertThat(mangcho.getCards().size()).isEqualTo(1);
     }

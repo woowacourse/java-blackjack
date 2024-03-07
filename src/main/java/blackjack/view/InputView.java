@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class InputView {
     // TODO: 상수명 변경
     private static final Scanner scanner = new Scanner(System.in);
-    public static final String YES = "y";
-    public static final String NO = "n";
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     public static List<String> readPlayerNames() {
         printPlayerNamesInputMessage();
