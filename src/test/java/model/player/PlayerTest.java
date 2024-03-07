@@ -19,7 +19,7 @@ class PlayerTest {
     void makePlayer() {
         this.player = new Player("켬미") {
             @Override
-            public boolean receiveCard() {
+            public boolean canReceiveCard() {
                 return false;
             }
         };
@@ -30,7 +30,7 @@ class PlayerTest {
     void validateBlankName() {
         Assertions.assertThatThrownBy(() -> new Player("") {
             @Override
-            public boolean receiveCard() {
+            public boolean canReceiveCard() {
                 return false;
             }
         }).isInstanceOf(IllegalArgumentException.class);
@@ -41,7 +41,7 @@ class PlayerTest {
     void validateNullName() {
         Assertions.assertThatThrownBy(() -> new Player(null) {
             @Override
-            public boolean receiveCard() {
+            public boolean canReceiveCard() {
                 return false;
             }
         }).isInstanceOf(IllegalArgumentException.class);
@@ -75,7 +75,7 @@ class PlayerTest {
     void sumCardNumbers() {
         player.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.addCard(new Card(CardShape.CLOVER, CardNumber.FIVE));
-        assertThat(player.getScore()).isEqualTo(13);
+        assertThat(player.calculateScore()).isEqualTo(13);
     }
 
     @DisplayName("Ace가 나왔을 때는 21을 초과하지 않으며 21과 가까운 수가 되도록 11이나 1을 고른다.")
@@ -84,6 +84,6 @@ class PlayerTest {
         player.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.addCard(new Card(CardShape.CLOVER, CardNumber.FIVE));
         player.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
-        assertThat(player.getScore()).isEqualTo(14);
+        assertThat(player.calculateScore()).isEqualTo(14);
     }
 }

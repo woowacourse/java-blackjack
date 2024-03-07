@@ -6,7 +6,6 @@ import model.BlackJack;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
-import model.player.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -30,7 +29,7 @@ public class BlackJackController {
         offerMoreCards(blackJack);
 
         outputView.printBlackJackScore(blackJack.getParticipants(), blackJack.getDealer());
-        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.findResult());
+        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
     }
 
     private BlackJack createBlackJack() {
@@ -46,15 +45,15 @@ public class BlackJackController {
     }
 
     private void askAndOfferMoreCards(BlackJack blackJack) {
-        for (Player player : blackJack.getParticipants()) {
-            askAndOfferMoreCard(player, blackJack);
+        for (Participant participant : blackJack.getParticipants()) {
+            askAndOfferMoreCard(participant, blackJack);
         }
     }
 
-    private void askAndOfferMoreCard(Player player, BlackJack blackJack) {
-        while (!player.isOverMaximumSum() && inputView.askOneMoreCard(player.getName())) {
-            blackJack.offerCardToPlayer(player, 1);
-            outputView.printPlayerCardMessage(player);
+    private void askAndOfferMoreCard(Participant participant, BlackJack blackJack) {
+        while (!participant.isOverMaximumSum() && inputView.askOneMoreCard(participant.getName())) {
+            blackJack.offerCardToParticipant(participant, 1);
+            outputView.printPlayerCardMessage(participant);
         }
     }
 

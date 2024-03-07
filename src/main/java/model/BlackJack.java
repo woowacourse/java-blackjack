@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import model.card.Cards;
@@ -27,72 +28,62 @@ public class BlackJack {
         offerCardToDealer(cardCount);
     }
 
-    public void offerCardToPlayer(Player player, int cardCount) {
-        participants.offerCardToPlayer(player, cardCount);
+    public void offerCardToParticipant(Participant participant, int cardCount) {
+        participants.offerCardToParticipant(participant, cardCount);
     }
 
     public void offerCardToDealer(int cardCount) {
         dealer.addCards(Cards.selectRandomCards(cardCount));
     }
 
-    public Map<Participant, GameResult> findResult() {
+    public Map<Participant, Outcome> matchParticipantsOutcome() {
         List<Participant> sumPlayers = participants.getParticipants();
         return sumPlayers.stream()
                 .collect(toMap(
                         participant -> participant,
-                        participant -> findGameResult(participant, dealer)
+                        participant -> findOutcome(participant, dealer)
                 ));
     }
 
-    private GameResult findGameResult(Player participant, Player dealer) {
+    private Outcome findOutcome(Player participant, Player dealer) {
         if (participant.isOverMaximumSum() && dealer.isOverMaximumSum()) {
-            return GameResult.DRAW;
+            return Outcome.DRAW;
         }
         if (participant.isOverMaximumSum()) {
-            return GameResult.LOSE;
+            return Outcome.LOSE;
         }
         if (dealer.isOverMaximumSum()) {
-            return GameResult.WIN;
+            return Outcome.WIN;
         }
-        return findResultByMinimumDifference(participant.findPlayerDifference(), dealer.findPlayerDifference());
+        return findCloseToThreshold(participant.findPlayerDifference(), dealer.findPlayerDifference());
     }
 
-    private GameResult findResultByMinimumDifference(int participantDifference, int dealerDifference) {
+    private Outcome findCloseToThreshold(int participantDifference, int dealerDifference) {//closestToThreshold
         if (participantDifference > dealerDifference) {
-            return GameResult.LOSE;
+            return Outcome.LOSE;
         }
         if (participantDifference < dealerDifference) {
-            return GameResult.WIN;
+            return Outcome.WIN;
         }
-        return GameResult.DRAW;
+        return Outcome.DRAW;
+    }
+
+    public boolean isDealerUnderThreshold() {
+        return dealer.canReceiveCard();
+    }
+
+    public Map<Outcome, Long> getDealerOutCome() {
+        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
+        return participantOutcome.values().stream()
+                .collect(groupingBy(Outcome::reverse, counting()));
     }
 
     public List<Participant> getParticipants() {
-        return participants.getParticipants();
+        return Collections.unmodifiableList(participants.getParticipants());
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public boolean isDealerUnderThreshold() {
-        Dealer dealer = getDealer();
-        return dealer.canReceiveCard();
-    }
-
-    public Map<GameResult, Long> getDealerOutCome() {
-        Map<Participant, GameResult> participantOutcome = findResult();
-        return participantOutcome.values().stream()
-                .collect(groupingBy(this::dealerGameResultToString, counting()));
-    }
-
-    private GameResult dealerGameResultToString(GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (gameResult == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return gameResult;
-    }
 }

@@ -10,7 +10,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean receiveCard() {
-        return getScore() <= NUMBER_THRESHOLD;
+    public boolean canReceiveCard() {
+        return calculateScore() <= NUMBER_THRESHOLD;
     }
 }

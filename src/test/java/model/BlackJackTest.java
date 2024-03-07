@@ -38,7 +38,7 @@ class BlackJackTest {
     void offerCardToPlayer() {
         Participants participants = new Participants(List.of(new Participant("배키")));
         BlackJack blackJack = new BlackJack(participants, new Dealer());
-        blackJack.offerCardToPlayer(new Participant("배키"), 1);
+        blackJack.offerCardToParticipant(new Participant("배키"), 1);
         List<Participant> result = participants.getParticipants();
 
         assertAll(
@@ -60,8 +60,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(participant));
         BlackJack blackJack = new BlackJack(participants, dealer);
 
-        Map<Participant, GameResult> result = blackJack.findResult();
-        Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.WIN));
+        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
+        Assertions.assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
     }
 
     @DisplayName("참가자 카드의 합이 딜러와 동일하면 무승부다.")
@@ -78,8 +78,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(participant));
         BlackJack blackJack = new BlackJack(participants, dealer);
 
-        Map<Participant, GameResult> result = blackJack.findResult();
-        Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
+        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
+        Assertions.assertThat(result).isEqualTo(Map.of(participant, Outcome.DRAW));
     }
 
     @DisplayName("딜러의 합이 16을 넘으면 거짓을 반환한다.")

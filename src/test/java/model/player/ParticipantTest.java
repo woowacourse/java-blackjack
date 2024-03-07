@@ -16,7 +16,7 @@ class ParticipantTest {
     void noticeTrue() {
         Participant participant = new Participant("배키");
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertTrue(participant.receiveCard());
+        assertTrue(participant.canReceiveCard());
     }
 
     @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
@@ -26,6 +26,6 @@ class ParticipantTest {
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertFalse(participant.receiveCard());
+        assertFalse(participant.canReceiveCard());
     }
 }

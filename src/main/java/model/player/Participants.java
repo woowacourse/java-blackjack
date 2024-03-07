@@ -1,5 +1,6 @@
 package model.player;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,15 +28,15 @@ public class Participants {
         }
     }
 
-    public void offerCardToPlayer(String name, int cardCount) {
+    public void offerCardToParticipant(Player receiver, int cardCount) {
         Player foundPlayer = participants.stream()
-                .filter(player -> player.isSameName(name))
+                .filter(player -> player.equals(receiver))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
         foundPlayer.addCards(Cards.selectRandomCards(cardCount));
     }
 
     public List<Participant> getParticipants() {
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 }

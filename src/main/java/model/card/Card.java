@@ -3,28 +3,28 @@ package model.card;
 import java.util.Objects;
 
 public class Card {
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private final CardShape shape;
+    private final CardNumber number;
 
-    public Card(CardShape cardShape, CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
+    public Card(CardShape shape, CardNumber number) {
+        this.shape = shape;
+        this.number = number;
     }
 
     public int minimumNumber() {
-        return cardNumber.minimumNumber();
+        return number.minimumNumber();
     }
 
     public int subtractMaxMinNumber() {
-        return cardNumber.maximumNumber() - cardNumber.maximumNumber();
+        return number.maximumNumber() - number.maximumNumber();
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
+    public CardShape getShape() {
+        return shape;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public CardNumber getNumber() {
+        return number;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardShape == card.cardShape && cardNumber == card.cardNumber;
+        return shape == card.shape && number == card.number;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
+        return Objects.hash(shape, number);
     }
 }

@@ -16,7 +16,7 @@ class DealerTest {
     void noticeTrue() {
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertTrue(dealer.receiveCard());
+        assertTrue(dealer.canReceiveCard());
     }
 
     @DisplayName("카드의 합이 16초과일 때는 거짓을 반환한다.")
@@ -26,6 +26,6 @@ class DealerTest {
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertFalse(dealer.receiveCard());
+        assertFalse(dealer.canReceiveCard());
     }
 }

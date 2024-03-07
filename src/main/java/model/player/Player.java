@@ -24,7 +24,6 @@ public abstract class Player implements NoticeStatus {
         }
     }
 
-
     public void addCards(List<Card> card) {
         cards.addAll(card);
     }
@@ -33,24 +32,22 @@ public abstract class Player implements NoticeStatus {
         cards.add(card);
     }
 
-    public int getScore() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.minimumNumber();
-        }
-        List<Integer> differenceNumbers = filterNonZeroDifferences();
+    public int calculateScore() {
+        int sum = cards.stream().mapToInt(Card::minimumNumber).sum();
+
+        List<Integer> differenceNumbers = mapDifferenceNumber();
         return differenceNumbers.stream()
-                .reduce(sum, Player::sumIfUnderMaximum);
+                .reduce(sum, this::changeToBestNumber);
     }
 
-    private List<Integer> filterNonZeroDifferences() {
+    private List<Integer> mapDifferenceNumber() {
         return cards.stream()
                 .map(Card::subtractMaxMinNumber)
                 .filter(subtractNumber -> subtractNumber != 0)
                 .toList();
     }
 
-    private static int sumIfUnderMaximum(Integer result, Integer number) {
+    private int changeToBestNumber(Integer result, Integer number) {
         if (result + number <= MAXIMUM_SUM) {
             return result + number;
         }
@@ -58,15 +55,11 @@ public abstract class Player implements NoticeStatus {
     }
 
     public boolean isOverMaximumSum() {
-        return getScore() > MAXIMUM_SUM;
+        return calculateScore() > MAXIMUM_SUM;
     }
 
     public int findPlayerDifference() {
-        return Math.abs(MAXIMUM_SUM - getScore());
-    }
-
-    public boolean isSameName(String name) {
-        return this.name.equals(name);
+        return Math.abs(MAXIMUM_SUM - calculateScore());
     }
 
     public String getName() {

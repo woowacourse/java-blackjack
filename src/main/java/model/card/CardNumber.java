@@ -19,19 +19,21 @@ public enum CardNumber {
 
     private final List<Integer> numbers;
 
-    public int minimumNumber() {
-        return numbers.get(0);
-    }
-
-    public int maximumNumber() {
-        return numbers.get(numbers.size() - 1);
-    }
-
     CardNumber(List<Integer> numbers) {
         this.numbers = numbers;
     }
 
-    public int getNumber() {
-        return numbers.get(0);
+    public int minimumNumber() {
+        return numbers.stream()
+                .mapToInt(number -> number)
+                .min()
+                .orElseThrow(() -> new IllegalStateException("숫자가 존재하지 않습니다."));
+    }
+
+    public int maximumNumber() {
+        return numbers.stream()
+                .mapToInt(number -> number)
+                .max()
+                .orElseThrow(() -> new IllegalStateException("숫자가 존재하지 않습니다."));
     }
 }
