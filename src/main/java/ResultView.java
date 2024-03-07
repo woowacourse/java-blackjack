@@ -3,14 +3,14 @@ import java.util.List;
 
 public class ResultView {
 
-    public void printPlayerCards(Player player) {
-        System.out.printf("%s카드: ", player.getPlayerName());
-        System.out.println(resolvePlayerCards(player));
+    public void printPlayerCards(Gamer gamer) {
+        System.out.printf("%s카드: ", gamer.getPlayerName());
+        System.out.println(resolvePlayerCards(gamer));
     }
 
-    private String resolvePlayerCards(Player player) {
+    private String resolvePlayerCards(Gamer gamer) {
         List<String> cards = new ArrayList<>();
-        for (Card card : player.getCards()) {
+        for (Card card : gamer.getCards()) {
             CardNumber cardNumber = card.getCardNumber();
             CardShape cardShape = card.getCardShape();
             cards.add(resolveCardNumber(cardNumber) + cardShape.getShape());
