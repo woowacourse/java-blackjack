@@ -3,13 +3,13 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class CardHand {
     private static final int ACE_BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public CardHand() {
         this.cards = new ArrayList<>();
     }
 

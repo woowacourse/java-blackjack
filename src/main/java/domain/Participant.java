@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Participant {
     private final Name name;
-    private final Cards cards;
+    private final CardHand cardHand;
 
     public Participant(String name) {
         this.name = new Name(name);
-        this.cards = new Cards();
+        this.cardHand = new CardHand();
     }
 
     public void add(Card card) {
-        cards.addCard(card);
+        cardHand.addCard(card);
     }
 
     public int calculateScore() {
-        return cards.sumAll();
+        return cardHand.sumAll();
     }
 
     public String getName() {

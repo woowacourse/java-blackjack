@@ -11,7 +11,7 @@ class CardDeckTest {
     void 카드_덱의_총_카드_수는_52장이다() {
         CardDeck cardDeck = new CardDeck(전체_카드());
 
-        assertThat(cardDeck).extracting("cards", InstanceOfAssertFactories.list(Card.class))
+        assertThat(cardDeck).extracting("cardDeck", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(52);
     }
 

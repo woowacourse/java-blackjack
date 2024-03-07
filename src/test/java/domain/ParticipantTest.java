@@ -14,7 +14,7 @@ class ParticipantTest {
 
         participant.add(카드());
 
-        assertThat(participant).extracting("cards")
+        assertThat(participant).extracting("cardHand")
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(1);
     }

@@ -23,7 +23,7 @@ class BlackjackGameTest {
 
         blackjackGame.initGame();
 
-        assertThat(dealer).extracting("cards").extracting("cards", InstanceOfAssertFactories.list(Card.class))
+        assertThat(dealer).extracting("cardHand").extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(2);
     }
 
