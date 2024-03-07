@@ -3,11 +3,11 @@ package blackjack.domain;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FinalResult {
+public class WinningResult {
     private final Map<PlayerName, WinStatus> playersWinstatus;
 
-    public FinalResult(final Map<PlayerName, WinStatus> finalResult) {
-        this.playersWinstatus = finalResult;
+    public WinningResult(final Map<PlayerName, WinStatus> winningResult) {
+        this.playersWinstatus = winningResult;
     }
 
     public Map<WinStatus, Integer> summarizeDealerResult() {

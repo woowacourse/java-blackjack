@@ -3,14 +3,14 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer extends Participant {
+public class Dealer extends Player {
 
     public static final Score NEED_CARD_CRITERION = new Score(17);
 
     private final Deck deck;
 
-    protected Dealer() {
-        super(new Hands(new ArrayList<>()));
+    public Dealer(final String name) {
+        super(new PlayerName(name), new Hands(new ArrayList<>()));
         this.deck = new Deck();
     }
 
@@ -18,8 +18,8 @@ public class Dealer extends Participant {
         return NEED_CARD_CRITERION.isBiggerThan(calculate());
     }
 
-    public Card getOpenedCard() {
-        return hands.getLastCard();
+    public Hands getOpenedHands() {
+        return hands.getFirstSkippedCards();
     }
 
     public void shuffleDeck() {

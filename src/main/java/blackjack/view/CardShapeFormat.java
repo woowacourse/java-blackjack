@@ -6,12 +6,12 @@ public enum CardShapeFormat {
     SPADE("스페이드"),
     HEART("하트");
 
-    private final String name;
-    CardShapeFormat(final String name) {
-        this.name = name;
+    private final String format;
+    CardShapeFormat(final String format) {
+        this.format = format;
     }
 
-    public String getName() {
-        return name;
+    public String getFormat() {
+        return format;
     }
 }

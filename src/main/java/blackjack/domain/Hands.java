@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,8 +43,10 @@ public class Hands {
         cards.add(card);
     }
 
-    public Card getLastCard() {
-        return cards.get(cards.size() - 1);
+    public Hands getFirstSkippedCards() {
+        return cards.stream()
+                .skip(1)
+                .collect(collectingAndThen(toList(), Hands::new));
     }
 
     public List<Card> getCards() {

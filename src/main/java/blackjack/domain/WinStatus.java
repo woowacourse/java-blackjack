@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 public enum WinStatus {
-    LOSE, DRAW, WIN;
+    LOSE,
+    DRAW,
+    WIN;
 
     public static WinStatus of(final Score dealerScore, final Score playerScore) {
         // TODO : 라인수 줄이기

@@ -6,14 +6,14 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class FinalResultTest {
+public class WinningResultTest {
     @Test
     @DisplayName("딜러의 승패를 통계낸다.")
     void summarizeDealerResult() {
-        FinalResult finalResult = new FinalResult(Map.of(
+        WinningResult winningResult = new WinningResult(Map.of(
                 new PlayerName("kirby"), WinStatus.LOSE,
                 new PlayerName("baekho"), WinStatus.WIN));
-        Map<WinStatus, Integer> dealerResult = finalResult.summarizeDealerResult();
+        Map<WinStatus, Integer> dealerResult = winningResult.summarizeDealerResult();
 
         assertThat(dealerResult).containsExactlyInAnyOrderEntriesOf(Map.of(
                 WinStatus.WIN, 1,

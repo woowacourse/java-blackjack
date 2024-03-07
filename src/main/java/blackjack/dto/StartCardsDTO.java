@@ -1,13 +1,16 @@
-package blackjack.domain;
+package blackjack.dto;
 
+import blackjack.domain.Card;
+import blackjack.domain.Hands;
+import blackjack.domain.PlayerName;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public record StartCardsDTO(CardDTO dealerCard, Map<String, List<CardDTO>> playersCard) {
+public record StartCardsDTO(Map<String, List<CardDTO>> playersCard) {
 
-    public static StartCardsDTO of(final Card dealerCard, final Map<PlayerName, Hands> playersCard) {
-        return new StartCardsDTO(CardDTO.from(dealerCard), convertToDTO(playersCard));
+    public static StartCardsDTO of(final Map<PlayerName, Hands> playersCard) {
+        return new StartCardsDTO(convertToDTO(playersCard));
     }
 
     private static Map<String, List<CardDTO>> convertToDTO(final Map<PlayerName, Hands> rawPlayersCard) {

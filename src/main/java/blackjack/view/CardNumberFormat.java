@@ -16,13 +16,13 @@ public enum CardNumberFormat {
     KING("K"),
     ACE("A");
 
-    private final String number;
+    private final String format;
 
-    CardNumberFormat(final String number) {
-        this.number = number;
+    CardNumberFormat(final String format) {
+        this.format = format;
     }
 
-    public String getNumber() {
-        return number;
+    public String getFormat() {
+        return format;
     }
 }
