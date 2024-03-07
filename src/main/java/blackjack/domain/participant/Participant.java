@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
-import blackjack.domain.Name;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.List;

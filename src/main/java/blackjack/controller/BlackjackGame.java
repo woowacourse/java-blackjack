@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
-import blackjack.domain.Name;
+import blackjack.domain.participant.Name;
 import blackjack.domain.RandomDeck;
 import blackjack.domain.participant.*;
 import blackjack.view.InputView;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import blackjack.exception.InvalidNameLengthException;
 import blackjack.exception.NonAlphabeticNameException;
