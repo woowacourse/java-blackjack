@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.controller;
 
 import blackjack.domain.card.CardPicker;
 import blackjack.domain.game.Referee;
@@ -48,22 +48,24 @@ public class BlackjackController {
         if (player.isBlackjack()) {
             return;
         }
-        while (true) {
-            PlayerCommand playerCommand = requestUntilValid(() ->
-                    PlayerCommand.from(InputView.readMoreCard(player.getName())));
-            if (playerCommand.equals(PlayerCommand.HIT)) {
-                player.hit(cardPicker);
-                OutputView.printDealCards(player.getName(), player.getCards());
-                if (player.isBurst() || player.isMaxScore()) {
-                    break;
-                }
-                continue;
-            }
-            if (player.getCards().size() == 2) {
-                OutputView.printDealCards(player.getName(), player.getCards());
-            }
-            break;
+        CommandController commandController = new CommandController();
+        commandController.put(PlayerCommand.HIT, () -> hitAndPrint(player, cardPicker));
+        commandController.put(PlayerCommand.STAND, () -> checkPlayerStandAfterDeal(player));
+
+        while (commandController.run(InputView.readPlayerCommand(player.getName()))) ;
+    }
+
+    private boolean hitAndPrint(Player player, CardPicker cardPicker) {
+        player.hit(cardPicker);
+        OutputView.printDealCards(player.getName(), player.getCards());
+        return !(player.isBurst() || player.isMaxScore());
+    }
+
+    private boolean checkPlayerStandAfterDeal(Player player) {
+        if (player.getCards().size() == 2) {
+            OutputView.printDealCards(player.getName(), player.getCards());
         }
+        return false;
     }
 
     private void dealerHitUntilBound(Dealer dealer, CardPicker cardPicker) {

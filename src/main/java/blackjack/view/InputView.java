@@ -24,7 +24,7 @@ public class InputView {
         return Arrays.stream(names.split(",")).toList();
     }
 
-    public static String readMoreCard(String name) {
+    public static String readPlayerCommand(String name) {
         // TODO: 질문 문자열 상수화
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
