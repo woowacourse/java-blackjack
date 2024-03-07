@@ -33,10 +33,7 @@ public class InputView {
         System.out.println(playerName + PLAYER_HIT_REQUEST);
         String input = scanner.nextLine();
         validateHitCommand(input);
-        if (HIT.equals(input)) {
-            return true;
-        }
-        return false;
+        return HIT.equals(input);
     }
 
     private void validateDelimiter(String input) {
