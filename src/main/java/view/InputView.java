@@ -7,6 +7,7 @@ import player.Name;
 public class InputView {
 
     private static final String SPLIT_SYMBOL = ",";
+    private static final String SPLIT_SYMBOL_NAME = "쉼표";
     private final Scanner scanner;
 
     public InputView(Scanner scanner) {
@@ -14,7 +15,7 @@ public class InputView {
     }
 
     public List<String> inputPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(" + SPLIT_SYMBOL + " 기준으로 분리)");
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(" + SPLIT_SYMBOL_NAME + " 기준으로 분리)");
         return List.of(scanner.nextLine().split(SPLIT_SYMBOL));
     }
 
