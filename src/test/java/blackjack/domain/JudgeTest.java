@@ -32,4 +32,26 @@ class JudgeTest {
         Hand hand = HandFixture.of(10, 9, 2);
         assertThat(judge.isBustedHand(hand)).isFalse();
     }
+
+    @DisplayName("딜러는 17점 미만이면 카드를 받아야 한다")
+    @Test
+    void testDealerShouldHit() {
+        Judge judge = new Judge();
+
+        Hand hand = HandFixture.of(10, 6);
+        boolean moreCard = judge.canDealerHit(hand);
+
+        assertThat(moreCard).isTrue();
+    }
+
+    @DisplayName("딜러는 17점 이상이면 카드를 받을 수 없다")
+    @Test
+    void testDealerShouldStay() {
+        Judge judge = new Judge();
+
+        Hand hand = HandFixture.of(10, 7);
+        boolean moreCard = judge.canDealerHit(hand);
+
+        assertThat(moreCard).isFalse();
+    }
 }
