@@ -13,12 +13,22 @@ public class CardGame {
     public CardGame(Player player, Dealer dealer) {
         this.player = player;
         this.dealer = dealer;
+        initPlayerCard();
     }
 
     public Cards playRound() {
+        giveCard();
+        return player.getCards();
+    }
+
+    private void initPlayerCard() {
+        giveCard();
+        giveCard();
+    }
+
+    private void giveCard() {
         Card pickedCard = dealer.giveCard();
         player.receiveCard(pickedCard);
-        return player.getCards();
     }
 
     public boolean isDealerWins() {
