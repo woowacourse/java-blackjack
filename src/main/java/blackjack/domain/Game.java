@@ -14,6 +14,7 @@ public class Game {
     }
 
     public void initializeHand() {
+        dealer.shuffle();
         for (Player player : players.getPlayers()) {
             initHand(player);
         }

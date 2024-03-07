@@ -11,6 +11,10 @@ public class Dealer extends Player {
         this.deck = deck;
     }
 
+    public void shuffle() {
+        deck.shuffle();
+    }
+
     public Card draw() {
         return deck.draw();
     }
