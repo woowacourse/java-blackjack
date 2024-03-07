@@ -15,7 +15,7 @@ public class Application {
 
         Players players = Players.from(names);
         Blackjack blackjack = new Blackjack(players);
-        OutputView.printPlayersStatus(blackjack.getPlayers().getPlayers());
+        OutputView.printPlayersStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
 
         // 참가자 게임진행
         for (var player : blackjack.getPlayers().getPlayers()) {
@@ -29,13 +29,13 @@ public class Application {
 
         if (dealer.calculateScore() < 17) {
             blackjack.dealCard(dealer);
+            OutputView.printDealerStatus();
         }
-
-        OutputView.printPlayerStatus(dealer);
 
         // 결과 출력
         List<Player> players1 = blackjack.getPlayers().getPlayers();
         Player dealer2 = blackjack.getDealer();
+        OutputView.printPlayerStatus(dealer);
         players1.add(dealer2);
         OutputView.printResults(players1);
 
