@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import controller.BlackjackController;
+import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Players;
 import view.InputView;
@@ -13,7 +14,8 @@ public class BlackjackApplication {
 		BlackjackController blackjackController = new BlackjackController(inputView, outputView);
 
 		Players players = blackjackController.createPlayers();
-		Dealer dealer = blackjackController.createDealer();
+		Deck deck = blackjackController.createDeck();
+		Dealer dealer = blackjackController.createDealer(deck);
 
 		blackjackController.dealInitCards(dealer, players);
 

@@ -11,26 +11,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.card.UnShuffledDeckGenerator;
 
 public class DealerTest {
-	List<Card> cards = new ArrayList<>();
+	private Deck deck;
 
 	@BeforeEach
 	void init() {
-		for (Suit suit : Suit.values()) {
-			for (Rank rank : Rank.values()) {
-				cards.add(new Card(suit, rank));
-			}
-		}
+		UnShuffledDeckGenerator deckGenerator = UnShuffledDeckGenerator.getInstance();
+
+		deck = deckGenerator.generate();
 	}
 
 	@DisplayName("딜러는 생성 시에 중복되지 않은 52장의 덱을 갖는다.")
 	@Test
 	void hasDeckTest() {
 		// given & when
-		Dealer dealer = new Dealer(cards, new ArrayList<>());
+		Dealer dealer = new Dealer(deck, new ArrayList<>());
 
 		// then
 		assertThat(dealer.deckSize()).isEqualTo(52);
@@ -40,7 +40,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsTest() {
 		// given
-		Dealer dealer = new Dealer(cards, new ArrayList<>());
+		Dealer dealer = new Dealer(deck, new ArrayList<>());
 
 		// when
 		List<Card> cards = dealer.dealInit();
@@ -53,7 +53,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsSelfTest() {
 		// given
-		Dealer dealer = new Dealer(cards, new ArrayList<>());
+		Dealer dealer = new Dealer(deck, new ArrayList<>());
 
 		// when
 		dealer.receiveInitCards(dealer.dealInit());
@@ -66,7 +66,7 @@ public class DealerTest {
 	@Test
 	void dealCardTest() {
 		// given
-		Dealer dealer = new Dealer(cards, new ArrayList<>());
+		Dealer dealer = new Dealer(deck, new ArrayList<>());
 
 		// when
 		Card card = dealer.dealCard();
@@ -82,7 +82,7 @@ public class DealerTest {
 	@Test
 	void dealerHitTest() {
 		// given
-		Dealer dealer = new Dealer(cards,
+		Dealer dealer = new Dealer(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SIX))));
 		int beforeDeckSize = dealer.deckSize();
 
@@ -97,7 +97,7 @@ public class DealerTest {
 	@Test
 	void dealerStandTest() {
 		// given
-		Dealer dealer = new Dealer(cards,
+		Dealer dealer = new Dealer(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SEVEN))));
 		int beforeDeckSize = dealer.deckSize();
 

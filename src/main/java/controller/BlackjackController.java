@@ -2,15 +2,13 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import domain.GameResult;
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.Deck;
+import domain.card.UnShuffledDeckGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -30,14 +28,12 @@ public class BlackjackController {
 		return new Players(inputView.readPlayerNames());
 	}
 
-	public Dealer createDealer() {
-		List<Card> deck = new ArrayList<>();
-		for (Suit suit : Suit.values()) {
-			for (Rank rank : Rank.values()) {
-				deck.add(new Card(suit, rank));
-			}
-		}
+	public Deck createDeck() {
+		UnShuffledDeckGenerator deckGenerator = UnShuffledDeckGenerator.getInstance();
+		return deckGenerator.generate();
+	}
 
+	public Dealer createDealer(Deck deck) {
 		return new Dealer(deck, new ArrayList<>());
 	}
 

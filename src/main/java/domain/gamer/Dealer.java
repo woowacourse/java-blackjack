@@ -8,11 +8,11 @@ import domain.card.Deck;
 public class Dealer extends Gamer {
 	private final Deck deck;
 
-	public Dealer(List<Card> cards, List<Card> cardHand) {
+	public Dealer(Deck deck, List<Card> cardHand) {
 		// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
 		super(cardHand);
-		this.deck = new Deck(cards);
-		deck.shuffle();
+		this.deck = deck;
+		this.deck.shuffle();
 	}
 
 	public List<Card> dealInit() {
