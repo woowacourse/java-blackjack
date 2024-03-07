@@ -20,6 +20,7 @@ public class OutputView {
 
             System.out.println(name.getValue() + "카드: " + playerCards.getCardsStatus());
         }
+        System.out.println();
     }
 
     // todo: 분리하면 좋을 듯 합니다.
@@ -27,5 +28,9 @@ public class OutputView {
         return names.stream()
                 .map(Name::getValue)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printCardsStatus(Name name, Cards cards) {
+        System.out.println(name.getValue() + "카드: " + cards.getCardsStatus());
     }
 }
