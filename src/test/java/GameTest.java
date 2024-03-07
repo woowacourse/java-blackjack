@@ -40,15 +40,13 @@ class GameTest {
     void giveCardsUntilDealerScoreOverThreshold() {
         // given
         Dealer dealer = new Dealer("딜러");
-        dealer.saveCard(new Card(CardValue.FIVE, Shape.DIAMOND));
-        dealer.saveCard(new Card(CardValue.FIVE, Shape.CLOVER));
+        dealer.saveCards(createNormalWithTwoCards());
+        
         List<Player> players = List.of(new Player("pobi"));
         Participant participant = new Participant(dealer, players);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardValue.THREE, Shape.DIAMOND));
-        cards.add(new Card(CardValue.THREE, Shape.CLOVER));
-        cards.add(new Card(CardValue.TWO, Shape.HEART));
 
         Game game = new Game(participant, new Cards(cards));
 
@@ -56,7 +54,7 @@ class GameTest {
         int count = game.giveCardsToDealer();
 
         // then
-        assertThat(count).isEqualTo(3);
+        assertThat(count).isEqualTo(1);
     }
 
     @DisplayName("참가자들의 승패 여부를 판단한다.")
@@ -64,17 +62,12 @@ class GameTest {
     void judgeWinners() {
         // given
         Dealer dealer = new Dealer("딜러");
-        dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-        dealer.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+        dealer.saveCards(createNormalWithTwoCards());
 
         Player player = new Player("pobi");
-        player.saveCard(new Card(CardValue.TEN, Shape.HEART));
-        player.saveCard(new Card(CardValue.EIGHT, Shape.SPADE));
+        player.saveCards(createNormalWithThreeCards());
 
-        List<Player> players = List.of(player);
-        Participant participant = new Participant(dealer, players);
-
-        Game game = new Game(participant, new Cards());
+        Game game = createGame(player, dealer);
 
         // when
         List<Boolean> isWinner = game.compareScore();
@@ -86,22 +79,16 @@ class GameTest {
     @DisplayName("딜러의 점수가 21을 초과한 경우")
     @Nested
     class dealerBusted {
-        @DisplayName("참가자의 점수가 21을 초과하면 패배한다.")
+        @DisplayName("모든 참가자는 21을 초과해도 승리한다.")
         @Test
         void playerBusted() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
-            dealer.saveCard(new Card(CardValue.TEN, Shape.HEART));
+            dealer.saveCards(createBustedCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.TEN, Shape.HEART));
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
+            player.saveCards(createBustedCards());
 
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judgePlayersIfDealerBusted();
 
@@ -113,17 +100,12 @@ class GameTest {
         @Test
         void playerDoesNotBusted() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
-            dealer.saveCard(new Card(CardValue.TEN, Shape.HEART));
+            dealer.saveCards(createBustedCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
+            player.saveCards(createNormalWithTwoCards());
 
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judgePlayersIfDealerBusted();
 
@@ -139,20 +121,12 @@ class GameTest {
         @Test
         void playerBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
-            dealer.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+            dealer.saveCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.TWO, Shape.HEART));
+            player.saveCards(createBlackJackWithThreeCards());
 
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
-
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judge();
 
@@ -164,19 +138,12 @@ class GameTest {
         @Test
         void playerIsNotBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
-            dealer.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+            dealer.saveCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+            player.saveCards(createNormalWithTwoCards());
 
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
-
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judge();
 
@@ -192,18 +159,12 @@ class GameTest {
         @Test
         void playerIsBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+            dealer.saveCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.FOUR, Shape.CLOVER));
+            player.saveCards(createBlackJackWithTwoCards());
 
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
-
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judge();
 
@@ -215,45 +176,82 @@ class GameTest {
         @Test
         void playerIsNotBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+            dealer.saveCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+            player.saveCards(createNormalWithThreeCards());
 
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
-
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judge();
 
             Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            Assertions.assertThat(gameResult).containsExactly(true);
         }
 
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerScoreEqualsToDealer() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+            dealer.saveCards(createNormalWithThreeCards());
 
             Player player = new Player("pobi");
-            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
-            player.saveCard(new Card(CardValue.FOUR, Shape.CLOVER));
-            player.saveCard(new Card(CardValue.FIVE, Shape.CLOVER));
+            player.saveCards(createSameScoreNormalWithTwoCards());
 
-            List<Player> players = List.of(player);
-            Participant participant = new Participant(dealer, players);
-
-            Game game = new Game(participant, new Cards());
+            Game game = createGame(player, dealer);
 
             List<Boolean> gameResult = game.judge();
 
             Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            Assertions.assertThat(gameResult).containsExactly(true);
         }
     }
+
+    private static Game createGame(final Player player, final Dealer dealer) {
+        List<Player> players = List.of(player);
+        Participant participant = new Participant(dealer, players);
+
+        Game game = new Game(participant, new Cards());
+        return game;
+    }
+
+    private List<Card> createBlackJackWithTwoCards() {
+        return List.of(
+                new Card(CardValue.TEN, Shape.CLOVER),
+                new Card(CardValue.ACE, Shape.DIAMOND));
+    }
+
+    private List<Card> createBlackJackWithThreeCards() {
+        return List.of(
+                new Card(CardValue.FIVE, Shape.CLOVER),
+                new Card(CardValue.FIVE, Shape.DIAMOND),
+                new Card(CardValue.ACE, Shape.DIAMOND));
+    }
+
+    private List<Card> createNormalWithTwoCards() {
+        return List.of(
+                new Card(CardValue.TEN, Shape.CLOVER),
+                new Card(CardValue.SIX, Shape.DIAMOND));
+    }
+
+    private List<Card> createNormalWithThreeCards() {
+        return List.of(
+                new Card(CardValue.TEN, Shape.CLOVER),
+                new Card(CardValue.THREE, Shape.DIAMOND),
+                new Card(CardValue.SIX, Shape.HEART));
+    }
+
+    private List<Card> createSameScoreNormalWithTwoCards() {
+        return List.of(
+                new Card(CardValue.TEN, Shape.CLOVER),
+                new Card(CardValue.NINE, Shape.DIAMOND));
+    }
+
+    private List<Card> createBustedCards() {
+        return List.of(
+                new Card(CardValue.TEN, Shape.CLOVER),
+                new Card(CardValue.FIVE, Shape.DIAMOND),
+                new Card(CardValue.EIGHT, Shape.HEART));
+    }
+
 }

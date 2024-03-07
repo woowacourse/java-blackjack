@@ -23,6 +23,10 @@ public class Player {
         cards.add(card);
     }
 
+    public void saveCards(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public int calculateScoreWhileDraw() {
         int sum = 0;
         for (Card card : cards) {
