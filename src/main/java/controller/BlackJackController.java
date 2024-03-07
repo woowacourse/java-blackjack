@@ -42,6 +42,7 @@ public class BlackJackController {
 
         outputView.printResult(blackJack.findPlayers(), blackJack.findDealer());
 
+        outputView.printGameResult(blackJack.findResult());
 
     }
 
