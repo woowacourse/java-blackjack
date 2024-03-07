@@ -1,9 +1,9 @@
 package domain;
 
-public record Name(String name) {
+public record Name(String value) {
 
     public Name {
-        validateNotBlank(name);
+        validateNotBlank(value);
     }
 
     private void validateNotBlank(final String name) {

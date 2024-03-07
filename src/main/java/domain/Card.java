@@ -1,7 +1,7 @@
 package domain;
 
-public record Card(CardShape cardShape, CardNumber cardNumber) {
+public record Card(CardShape shape, CardNumber number) {
     public int value() {
-        return cardNumber.value();
+        return number.value();
     }
 }
