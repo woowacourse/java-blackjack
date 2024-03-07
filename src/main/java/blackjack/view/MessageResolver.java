@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hand;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.*;
 
 import java.util.stream.Collectors;
 
@@ -52,4 +49,20 @@ public class MessageResolver {
         int sum = player.calculateHandSum();
         return String.format("%s - 결과: %d", handMessage, sum);
     }
+
+    public String resolvePlayerGameResult(Player player, boolean win) {
+        return String.format("%s: %s", player.getName(), resolveGameResultMessage(win));
+    }
+
+    private String resolveGameResultMessage(boolean win) {
+        if (win) {
+            return "승";
+        }
+        return "패";
+    }
+
+    public String resolveDealerGameResult(DealerGameResult dealerGameResult) {
+        return String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
+    }
+
 }
