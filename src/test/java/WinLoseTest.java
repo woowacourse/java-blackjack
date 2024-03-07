@@ -32,4 +32,18 @@ public class WinLoseTest {
         assertThat(winCount).isEqualTo(0);
         assertThat(loseCount).isEqualTo(1);
     }
+
+    @DisplayName("나와 상대방의 점수를 받아 무승부면 안 증가한다")
+    @Test
+    void decideDrawStateTest() {
+        WinLose winLose = new WinLose();
+        int myScore = 10;
+        int yourScore = 10;
+        winLose.decideWinningState(myScore, yourScore);
+        int winCount = winLose.getWinCount();
+        int loseCount = winLose.getLoseCount();
+
+        assertThat(winCount).isEqualTo(0);
+        assertThat(loseCount).isEqualTo(0);
+    }
 }
