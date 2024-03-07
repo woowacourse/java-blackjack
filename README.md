@@ -43,13 +43,14 @@
 - [x] 카드 종류, 번호
     - [x] 카드 번호 enum으로 관리
     - [x] 카드 종류 enum으로 관리
-- [ ] GameStatusDto
-    - [ ] List<GamerDto>로 생성한다.
-    - [ ] 이름이 들어오면 GamerDto를 반환한다.
+- [x] GameStatusDto
+    - [x] List<GamerDto>로 생성한다
+    - [x] List<GamerDto>를 반환한다
+    - [x] 이름이 들어오면 GamerDto를 반환한다
 - [x] GamerDto
     - [x] 총점을 반환한다
-    - [x] 이름을 반환한다.
-    - [x] List<Card>를 반환한다.
+    - [x] 이름을 반환한다
+    - [x] List<Card>를 반환한다
 
 
 - 참가자의 이름 입력받는다
