@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-class Card {
+public class Card {
 
     private final CardRank cardRank;
     private final CardShape cardShape;
@@ -14,6 +14,10 @@ class Card {
 
     public CardRank getCardRank() {
         return cardRank;
+    }
+
+    public String getName() {
+        return cardRank.getRank() + cardShape.getShape();
     }
 
     @Override

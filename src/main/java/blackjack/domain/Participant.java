@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-abstract class Participant {
+public abstract class Participant {
 
     private final Name name;
     protected final Hand hand;

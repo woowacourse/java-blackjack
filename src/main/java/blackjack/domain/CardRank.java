@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-enum CardRank {
+public enum CardRank {
 
     ACE("A", 1),
     TWO("2", 2),
@@ -34,5 +34,9 @@ enum CardRank {
 
     public int getScore() {
         return score;
+    }
+
+    public String getRank() {
+        return rank;
     }
 }

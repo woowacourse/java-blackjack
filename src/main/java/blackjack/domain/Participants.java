@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
@@ -43,5 +44,22 @@ public class Participants {
         if (playerNames.contains(dealerName)) {
             throw new IllegalArgumentException(String.format("플레이어 이름은 '%s'가 될 수 없습니다.", dealerName));
         }
+    }
+
+    public List<Participant> getParticipants() {
+        List<Participant> participants = new ArrayList<>();
+
+        participants.add(dealer);
+        participants.addAll(players);
+
+        return participants;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

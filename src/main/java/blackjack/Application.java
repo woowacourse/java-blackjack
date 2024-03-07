@@ -6,9 +6,10 @@ import blackjack.view.OutputView;
 class Application {
 
     public static void main(String[] args) {
-        new Controller(
-                new InputView(),
-                new OutputView()
-        ).run();
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
+        Controller controller = new Controller(inputView, outputView);
+
+        controller.run();
     }
 }

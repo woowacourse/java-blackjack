@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-enum CardShape {
+public enum CardShape {
 
     DIAMOND("다이아몬드"),
     SPADE("스페이드"),
@@ -11,5 +11,9 @@ enum CardShape {
 
     CardShape(String shape) {
         this.shape = shape;
+    }
+
+    public String getShape() {
+        return shape;
     }
 }

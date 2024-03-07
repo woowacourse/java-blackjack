@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
-class Deck {
+public class Deck {
 
     private final Queue<Card> cards = new ArrayDeque<>();
 
