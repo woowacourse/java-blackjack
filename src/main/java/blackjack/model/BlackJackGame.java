@@ -6,7 +6,7 @@ import java.util.List;
 public class BlackJackGame {
     private final Dealer dealer;
     private final CardGenerator cardGenerator;
-    private List<Player> players;
+    private final List<Player> players;
 
     public BlackJackGame(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
         this.dealer = dealer;

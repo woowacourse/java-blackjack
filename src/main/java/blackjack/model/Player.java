@@ -23,6 +23,24 @@ public class Player {
         return !cards.isGreaterThanWinningScore();
     }
 
+    public ResultStatus compareScore(Cards otherCards) {
+        if (cards.isGreaterThanWinningScore()) {
+            return ResultStatus.LOSE;
+        }
+        if (otherCards.isGreaterThanWinningScore()) {
+            return ResultStatus.WIN;
+        }
+        int calculatedScore = cards.calculateScore();
+        int otherScore = otherCards.calculateScore();
+        if (calculatedScore > otherScore) {
+            return ResultStatus.WIN;
+        }
+        if (calculatedScore < otherScore) {
+            return ResultStatus.LOSE;
+        }
+        return ResultStatus.PUSH;
+    }
+
     public Cards getCards() {
         return cards;
     }
