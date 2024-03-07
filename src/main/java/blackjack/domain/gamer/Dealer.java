@@ -1,15 +1,13 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
-
-public class Dealer extends BlackJackGamer {
+public class Dealer extends BlackjackGamer {
 
 	public Dealer() {
-		super(new Name("딜러"), new ArrayList<>());
+		super(new Name("딜러"));
 	}
 
 	@Override
 	public boolean canReceiveCard() {
-		return sumCardNumbers() <= 16;
+		return getScore() <= 16;
 	}
 }

@@ -1,20 +1,18 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
-
-public class Player extends BlackJackGamer {
+public class Player extends BlackjackGamer {
 
 	public Player(Name name) {
-		super(name, new ArrayList<>());
+		super(name);
 	}
 
 	@Override
 	public boolean canReceiveCard() {
-		return sumCardNumbers() <= 21;
+		return getScore() <= 21;
 	}
 
 	public boolean isWin(int dealerScore) {
-		int playerScore = sumCardNumbers();
+		int playerScore = getScore();
 
 		if (playerScore > 21) {
 			return false;
