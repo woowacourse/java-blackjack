@@ -92,10 +92,7 @@ public class BlackjackController {
 	}
 
 	private GameResult compareScore(Dealer dealer, Player player) {
-		if (player.isBust() || player.getScore() <= dealer.getScore()) {
-			return GameResult.LOSE;
-		}
-		return GameResult.WIN;
+		return GameResult.of(dealer, player);
 	}
 
 	private Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
