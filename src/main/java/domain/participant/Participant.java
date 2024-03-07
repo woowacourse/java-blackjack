@@ -9,9 +9,9 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    abstract boolean isDrawable();
+    abstract public boolean isDrawable();
 
-    abstract void draw(final Deck deck);
+    abstract public void draw(final Deck deck);
 
     public boolean isDealer() {
         return this instanceof Dealer;
