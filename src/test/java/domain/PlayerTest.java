@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
-
     @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
