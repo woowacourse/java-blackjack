@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackTest {
+class BlackJackGameTest {
 
     @DisplayName("카드 두장을 지급한다.")
     @Test
@@ -43,4 +43,26 @@ class BlackJackTest {
                 () -> assertThat(playerCards.get(1)).hasSize(2)
         );
     }
+
+    @DisplayName("플레이어 카드상태를 업데이트 한다")
+    @Test
+    void update() {
+        IndexGenerator indexGenerator = (maxRange) -> 2;
+        CardGenerator cardGenerator = new CardGenerator(indexGenerator);
+
+        Dealer dealer = new Dealer(new Cards());
+        Player player = new Player("daon", new Cards());
+        List<Player> players = List.of(
+                player,
+                new Player("ella", new Cards())
+        );
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardGenerator);
+
+        blackJackGame.update(0);
+        Player findPlayer = blackJackGame.getPlayers().get(0);
+
+        assertThat(findPlayer.getCards().getCards()).hasSize(1);
+    }
 }
+
+

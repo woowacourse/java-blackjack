@@ -1,20 +1,30 @@
 package blackjack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
     private final Dealer dealer;
-    private final List<Player> players;
     private final CardGenerator cardGenerator;
+    private List<Player> players;
 
     public BlackJackGame(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
         this.dealer = dealer;
-        this.players = players;
         this.cardGenerator = cardGenerator;
+        this.players = new ArrayList<>(players);
     }
 
     public void distributeCards() {
         dealer.addCards(cardGenerator);
-        players.forEach(player -> player.addCards(cardGenerator));
+        players.forEach(player -> player.addCards(cardGenerator.drawCards()));
+    }
+
+    public void update(int index) {
+        Player player = players.get(index);
+        player.addCard(cardGenerator.drawCard());
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
