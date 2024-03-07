@@ -23,4 +23,14 @@ public class Judge {
     public boolean canDealerHit(Dealer dealer) {
         return calculateBestScore(dealer.getHand()) < DEALER_HIT_THRESHOLD;
     }
+
+    public boolean isPlayerWin(Dealer dealer, Player player) {
+        if (isBustedHand(player.getHand())) {
+            return false;
+        }
+        if (isBustedHand(dealer.getHand())) {
+            return true;
+        }
+        return calculateBestScore(player.getHand()) > calculateBestScore(dealer.getHand());
+    }
 }
