@@ -1,7 +1,6 @@
 package view;
 
-import domain.Dealer;
-import domain.Player;
+import domain.Participant;
 import domain.Result;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
@@ -47,11 +46,11 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Participant, Result> playerResult) {
         System.out.println("## 최종결과");
         System.out.printf(RESULT_FORM, "딜러", format(dealerResult));
         System.out.println();
-        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
+        for (Map.Entry<Participant, Result> entry : playerResult.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
             System.out.println();
         }

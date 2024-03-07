@@ -7,11 +7,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class PlayerTest {
+class ParticipantTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Player("pobi", Hands.createEmptyPacket()))
+        Assertions.assertThatCode(() -> new Participant("pobi", Hands.createEmptyPacket()))
                 .doesNotThrowAnyException();
     }
 
@@ -20,7 +20,7 @@ class PlayerTest {
     @ValueSource(strings = {"", " ", "  "})
     @NullSource
     void nullOrBlankInputThrowException(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
+        Assertions.assertThatThrownBy(() -> new Participant(name, Hands.createEmptyPacket()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

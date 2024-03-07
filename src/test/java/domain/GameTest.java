@@ -40,9 +40,9 @@ class GameTest {
                 List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE),
                         new Card(ACE, SPADE)));
 
-        Player loser = new Player("레디", sum18);
-        Player winner = new Player("제제", sum21);
-        Player tier = new Player("수달", sum20);
+        Participant loser = new Participant("레디", sum18);
+        Participant winner = new Participant("제제", sum21);
+        Participant tier = new Participant("수달", sum20);
 
         Players players = new Players(List.of(loser, winner, tier));
         Dealer dealer = new Dealer(CardDeck.generate(), sum20);
@@ -50,7 +50,7 @@ class GameTest {
         Game game = new Game(dealer, players);
 
         //when & then
-        Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
+        Map<Participant, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
         Assertions.assertThat(game.getPlayersResult()).isEqualTo(expected);
     }
 
@@ -68,10 +68,10 @@ class GameTest {
                 List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE),
                         new Card(ACE, SPADE)));
 
-        Player loser1 = new Player("레디", sum18);
-        Player loser2 = new Player("피케이", sum18);
-        Player winner = new Player("제제", sum21);
-        Player tier = new Player("브라운", sum20);
+        Participant loser1 = new Participant("레디", sum18);
+        Participant loser2 = new Participant("피케이", sum18);
+        Participant winner = new Participant("제제", sum21);
+        Participant tier = new Participant("브라운", sum20);
 
         Players players = new Players(List.of(loser1, loser2, winner, tier));
         Dealer dealer = new Dealer(CardDeck.generate(), sum20);
@@ -99,24 +99,24 @@ class GameTest {
                         new Card(FOUR, DIAMOND))
         );
 
-        Player winner1 = new Player("레디", winner1PlayerHandsSum19);
+        Participant winner1 = new Participant("레디", winner1PlayerHandsSum19);
 
         Hands winner2PlayerHandsSum20 = new Hands(
                 List.of(new Card(QUEEN, CLOVER), new Card(KING, SPADE))
         );
-        Player winner2 = new Player("브라운", winner2PlayerHandsSum20);
+        Participant winner2 = new Participant("브라운", winner2PlayerHandsSum20);
 
         Hands loserPlayerHandsSum22 = new Hands(
                 List.of(new Card(SEVEN, CLOVER), new Card(QUEEN, HEART), new Card(FIVE, SPADE))
         );
-        Player loser = new Player("제제", loserPlayerHandsSum22);
+        Participant loser = new Participant("제제", loserPlayerHandsSum22);
 
         Players players = new Players(List.of(winner1, winner2, loser));
 
         //when
         Game game = new Game(bustDealer, players);
 
-        Map<Player, Result> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
+        Map<Participant, Result> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
         Map<Result, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then

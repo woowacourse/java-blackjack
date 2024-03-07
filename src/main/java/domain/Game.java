@@ -14,11 +14,11 @@ public class Game {
         this.players = players;
     }
 
-    public Map<Player, Result> getPlayersResult() {
-        final Map<Player, Result> playerResult = new LinkedHashMap<>();
+    public Map<Participant, Result> getPlayersResult() {
+        final Map<Participant, Result> playerResult = new LinkedHashMap<>();
 
-        for (Player player : players.getPlayers()) { //TODO getPlayers() 메서드명 고려
-            playerResult.put(player, player.calculateResult(dealer));
+        for (Participant participant : players.getPlayers()) { //TODO getPlayers() 메서드명 고려
+            playerResult.put(participant, participant.calculateResult(dealer));
         }
         return playerResult;
     }

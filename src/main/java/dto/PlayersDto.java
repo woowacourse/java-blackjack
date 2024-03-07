@@ -1,7 +1,7 @@
 package dto;
 
 import domain.Dealer;
-import domain.Player;
+import domain.Participant;
 import domain.Players;
 
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ public class PlayersDto {
 
     public static PlayersDto from(final Players players) {
         List<PlayerDto> result = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            result.add(PlayerDto.from(player));
+        for (Participant participant : players.getPlayers()) {
+            result.add(PlayerDto.from(participant));
         }
 
         return new PlayersDto(result);

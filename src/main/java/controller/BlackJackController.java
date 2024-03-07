@@ -4,7 +4,7 @@ import domain.Answer;
 import domain.CardDeck;
 import domain.Dealer;
 import domain.Game;
-import domain.Player;
+import domain.Participant;
 import domain.Players;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
@@ -30,8 +30,8 @@ public class BlackJackController {
         dealer.startDeal(players);
         outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
 
-        for (Player player : players.getPlayers()) {
-            deal(player, dealer);
+        for (Participant participant : players.getPlayers()) {
+            deal(participant, dealer);
         }
 
         if (players.isAllBust()) {
@@ -49,24 +49,24 @@ public class BlackJackController {
         outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
     }
 
-    private void deal(final Player player, final Dealer dealer) {
+    private void deal(final Participant participant, final Dealer dealer) {
         boolean changed = false;
         Answer answer = Answer.HIT;
 
         while (Answer.HIT.equals(answer)) {
-            answer = Answer.from(inputView.readAnswer(player.getName()));
-            dealer.deal(player, answer);
+            answer = Answer.from(inputView.readAnswer(participant.getName()));
+            dealer.deal(participant, answer);
 
             if (handsChanged(changed, answer)) {
-                outputView.printHands(PlayerDto.from(player));
+                outputView.printHands(PlayerDto.from(participant));
             }
-            if (player.isBust()) {
+            if (participant.isBust()) {
                 outputView.printBustMessage();
                 break;
             }
             changed = true;
 
-            if (player.isBlackJack()) {
+            if (participant.isBlackJack()) {
                 outputView.printBlackJack();
                 break;
             }

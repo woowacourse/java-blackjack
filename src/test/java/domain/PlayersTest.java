@@ -55,9 +55,9 @@ class PlayersTest {
         Hands noBustHands = new Hands(
                 List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE)));
 
-        Player player1 = new Player("레디", bustHands);
-        Player player2 = new Player("제제", noBustHands);
-        Players players = new Players(List.of(player1, player2));
+        Participant participant1 = new Participant("레디", bustHands);
+        Participant participant2 = new Participant("제제", noBustHands);
+        Players players = new Players(List.of(participant1, participant2));
 
         //when && then
         Assertions.assertThat(players.isAllBust()).isFalse();
@@ -71,12 +71,12 @@ class PlayersTest {
                 List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
                         new Card(Rank.TEN, Shape.HEART)));
 
-        Player player1 = new Player("레디", bustHands);
-        Player player2 = new Player("제제", bustHands);
-        Player player3 = new Player("수달", bustHands);
-        Player player4 = new Player("피케이", bustHands);
+        Participant participant1 = new Participant("레디", bustHands);
+        Participant participant2 = new Participant("제제", bustHands);
+        Participant participant3 = new Participant("수달", bustHands);
+        Participant participant4 = new Participant("피케이", bustHands);
 
-        Players players = new Players(List.of(player1, player2, player3, player4));
+        Players players = new Players(List.of(participant1, participant2, participant3, participant4));
 
         //when && then
         Assertions.assertThat(players.isAllBust()).isTrue();

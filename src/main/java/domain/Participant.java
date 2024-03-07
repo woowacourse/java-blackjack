@@ -5,11 +5,11 @@ import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
 
-public class Player {
+public class Participant {
     private final String name;
     private final Hands hands;
 
-    public Player(final String name, final Hands hands) {
+    public Participant(final String name, final Hands hands) {
         validate(name);
         this.name = name;
         this.hands = hands;
@@ -50,6 +50,10 @@ public class Player {
         return name;
     }
 
+    public Hands getHands() {
+        return hands;
+    }
+
     private void validate(final String name) {
         validateNull(name);
         validateBlank(name);
@@ -72,10 +76,10 @@ public class Player {
         if (this == target) {
             return true;
         }
-        if (!(target instanceof Player player)) {
+        if (!(target instanceof Participant participant)) {
             return true;
         }
-        return Objects.equals(name, player.name);
+        return Objects.equals(name, participant.name);
     }
 
     @Override
