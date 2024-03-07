@@ -26,4 +26,8 @@ public enum BlackjackAction {
     public boolean isHit() {
         return this == HIT;
     }
+
+    public String getExpression() {
+        return this.expression;
+    }
 }
