@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,5 +35,12 @@ class HandTest {
         hand.append(card1);
 
         assertThat(hand.getCards()).containsExactly(card1);
+    }
+
+    @DisplayName("핸드에 에이스 카드가 몇개 있는지 확인할 수 있다")
+    @Test
+    void testCountAceInHand() {
+        Hand hand = HandFixture.of(1, 1, 1, 3, 4, 5);
+        assertThat(hand.countAce()).isEqualTo(3);
     }
 }

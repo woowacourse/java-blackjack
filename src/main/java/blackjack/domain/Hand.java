@@ -20,6 +20,12 @@ public class Hand {
         cards.add(card);
     }
 
+    public int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
