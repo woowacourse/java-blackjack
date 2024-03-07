@@ -12,6 +12,11 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 
 public class OutputView {
+	private static final String CARD_INFO_DELIMITER = ", ";
+	private static final String PLAYER_NAME_DELIMITER = ", ";
+	private static final String CARD_INFO_MESSAGE = "%s%s";
+	private static final String PLAYER_CARD_INFO_MESSAGE = "%s카드: %s";
+	private static final String PLAYER_GAME_RESULT_MESSAGE = "%s: %s";
 	private static final Map<GameResult, String> gameResultTexts = new HashMap<>();
 
 	static {
@@ -22,7 +27,8 @@ public class OutputView {
 	public void printInitCardStatus(Dealer dealer, Players players) {
 		System.out.println();
 		List<Player> playerInfos = players.getPlayers();
-		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", createPlayerNamesText(playerInfos)));
+		System.out.println(String.format("딜러와 %s에게 %d장을 나누었습니다.",
+			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 
 		Card dealerInitCard = dealer.getCardHand().get(0);
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
@@ -34,7 +40,7 @@ public class OutputView {
 	}
 
 	private String createPlayerNamesText(List<Player> playerInfos) {
-		StringJoiner playerNameJoiner = new StringJoiner(", ");
+		StringJoiner playerNameJoiner = new StringJoiner(PLAYER_NAME_DELIMITER);
 
 		for (Player playerInfo : playerInfos) {
 			playerNameJoiner.add(playerInfo.getName());
@@ -43,15 +49,16 @@ public class OutputView {
 	}
 
 	private String createCardInfoText(Card card) {
-		return String.format("%s%s", card.getRankName(), card.getSuitName());
+		return String.format(CARD_INFO_MESSAGE, card.getRankName(), card.getSuitName());
 	}
 
 	public void printCardStatus(Player player) {
-		System.out.println(String.format("%s카드: %s", player.getName(), createCardsInfoText(player.getCardHand())));
+		System.out.println(
+			String.format(PLAYER_CARD_INFO_MESSAGE, player.getName(), createCardsInfoText(player.getCardHand())));
 	}
 
 	private String createCardsInfoText(List<Card> cards) {
-		StringJoiner cardInfoJoiner = new StringJoiner(", ");
+		StringJoiner cardInfoJoiner = new StringJoiner(CARD_INFO_DELIMITER);
 		for (Card card : cards) {
 			cardInfoJoiner.add(createCardInfoText(card));
 		}
@@ -60,7 +67,8 @@ public class OutputView {
 	}
 
 	public void printDealerHitMessage() {
-		System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+		System.out.println(System.lineSeparator() +
+			String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
 	}
 
 	public void printTotalCardStatus(Dealer dealer, Players players) {
@@ -82,7 +90,7 @@ public class OutputView {
 		for (Map.Entry<Player, GameResult> playerToResult : playerResults.entrySet()) {
 			String playerName = playerToResult.getKey().getName();
 			String result = gameResultTexts.get(playerToResult.getValue());
-			System.out.println(String.format("%s: %s", playerName, result));
+			System.out.println(String.format(PLAYER_GAME_RESULT_MESSAGE, playerName, result));
 		}
 	}
 }

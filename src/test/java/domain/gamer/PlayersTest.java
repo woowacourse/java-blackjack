@@ -35,7 +35,7 @@ public class PlayersTest {
 	void playersSizeErrorTest(List<String> players) {
 		assertThatThrownBy(() -> new Players(players))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage(Players.SIZE_ERROR_MESSAGE);
+			.hasMessage("플레이어의 수는 1 이상 또는 8 이하이어야 합니다.");
 	}
 
 	private static Stream<Arguments> playersSizeErrorTestArguments() {

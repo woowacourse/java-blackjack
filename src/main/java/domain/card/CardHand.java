@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardHand {
+	private static final int ACE_BONUS_SCORE = 10;
+	private static final int BLACKJACK_SCORE = 21;
+
 	private final List<Card> cards;
 
 	public CardHand(List<Card> cards) {
@@ -23,21 +26,21 @@ public class CardHand {
 			.map(Card::getScore)
 			.reduce(0, Integer::sum);
 
-		return calculateA(totalScore);
+		return calculateAceScore(totalScore);
 	}
 
-	private int calculateA(final int totalScore) {
-		boolean hasA = cards.stream()
-			.anyMatch(card -> card.isRank(Rank.A));
+	private int calculateAceScore(final int totalScore) {
+		boolean hasAceCard = cards.stream()
+			.anyMatch(card -> card.isRank(Rank.ACE));
 
-		if (hasA && totalScore <= 11) {
-			return totalScore + 10;
+		if (hasAceCard && totalScore + ACE_BONUS_SCORE <= BLACKJACK_SCORE) {
+			return totalScore + ACE_BONUS_SCORE;
 		}
 		return totalScore;
 	}
 
 	public boolean isBurst() {
-		return calculateScore() > 21;
+		return calculateScore() > BLACKJACK_SCORE;
 	}
 
 	public List<Card> getCards() {

@@ -1,13 +1,16 @@
 package domain.gamer;
 
 public class Name {
-	public static final String LENGTH_ERROR_MESSAGE = "이름의 길이는 1 이상 5 이하이어야 합니다.";
+	private static final int MIN_LENGTH = 1;
+	private static final int MAX_LENGTH = 5;
+	private static final String LENGTH_ERROR_MESSAGE =
+		String.format("이름의 길이는 %d 이상 %d 이하이어야 합니다.", MIN_LENGTH, MAX_LENGTH);
 
 	private final String value;
 
 	public Name(String value) {
 		// TODO : 메소드 분리 및 매직넘버 상수화, 예외 메시지
-		if (value.length() < 1 || value.length() > 5) {
+		if (value.length() < MIN_LENGTH || value.length() > MAX_LENGTH) {
 			throw new IllegalArgumentException(LENGTH_ERROR_MESSAGE);
 		}
 

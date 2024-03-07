@@ -23,6 +23,6 @@ public class NameTest {
 	void nameLengthErrorTest(String name) {
 		assertThatThrownBy(() -> new Name(name))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage(Name.LENGTH_ERROR_MESSAGE);
+			.hasMessage("이름의 길이는 1 이상 5 이하이어야 합니다.");
 	}
 }

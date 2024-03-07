@@ -19,29 +19,29 @@ public class CardHandTest {
 	void sumCardTest() {
 		// given
 		CardHand cardHand = new CardHand(
-			List.of(new Card(Suit.HEART, Rank.J), new Card(Suit.HEART, Rank.K)));
+			List.of(new Card(Suit.HEART, Rank.JACK), new Card(Suit.HEART, Rank.KING)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(20);
 	}
 
-	@DisplayName("A가 포함된 카드 패의 합이 11점 초과이면, A는 1점이 된다.")
+	@DisplayName("Ace가 포함된 카드 패의 합이 11점 초과이면, Ace는 1점이 된다.")
 	@Test
-	void sumACardAs1Test() {
+	void sumAceCardAs1Test() {
 		// given
 		CardHand cardHand = new CardHand(
-			List.of(new Card(Suit.HEART, Rank.A), new Card(Suit.HEART, Rank.K), new Card(Suit.HEART, Rank.J)));
+			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING), new Card(Suit.HEART, Rank.JACK)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(21);
 	}
 
-	@DisplayName("A가 포함된 카드 패의 합이 11점 이하이면, A는 11점이 된다.")
+	@DisplayName("Ace가 포함된 카드 패의 합이 11점 이하이면, Ace는 11점이 된다.")
 	@Test
-	void sumACardAs11Test() {
+	void sumAceCardAs11Test() {
 		// given
 		CardHand cardHand = new CardHand(
-			List.of(new Card(Suit.HEART, Rank.A), new Card(Suit.HEART, Rank.K)));
+			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(21);

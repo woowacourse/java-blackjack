@@ -6,6 +6,9 @@ import domain.card.Card;
 import domain.card.Deck;
 
 public class Dealer extends Gamer {
+	public static final int INIT_CARD_COUNT = 2;
+	public static final int MAX_HIT_SCORE = 16;
+
 	private final Deck deck;
 
 	public Dealer(Deck deck, List<Card> cardHand) {
@@ -16,7 +19,7 @@ public class Dealer extends Gamer {
 	}
 
 	public List<Card> dealInit() {
-		return deck.drawCards(2);
+		return deck.drawCards(INIT_CARD_COUNT);
 	}
 
 	public Card dealCard() {
@@ -28,7 +31,7 @@ public class Dealer extends Gamer {
 	}
 
 	private boolean hasHitScore() {
-		return cardHand.isScoreLessOrEqual(16);
+		return cardHand.isScoreLessOrEqual(MAX_HIT_SCORE);
 	}
 
 	public boolean tryHit() {

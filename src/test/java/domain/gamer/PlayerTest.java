@@ -32,7 +32,7 @@ public class PlayerTest {
 	void playerNameLengthErrorTest(String name) {
 		assertThatThrownBy(() -> new Player(name, new ArrayList<>()))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage(Name.LENGTH_ERROR_MESSAGE);
+			.hasMessage("이름의 길이는 1 이상 5 이하이어야 합니다.");
 	}
 
 	@DisplayName("초기 카드 2장을 받는다.")
@@ -42,7 +42,7 @@ public class PlayerTest {
 		Player player = new Player("a", new ArrayList<>());
 
 		// when
-		player.receiveInitCards(List.of(new Card(Suit.HEART, Rank.A), new Card(Suit.HEART, Rank.J)));
+		player.receiveInitCards(List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.JACK)));
 
 		// then
 		assertThat(player.getCardHand()).hasSize(2);
@@ -55,7 +55,7 @@ public class PlayerTest {
 		Player player = new Player("a", new ArrayList<>());
 
 		// when
-		player.receiveCard(new Card(Suit.HEART, Rank.A));
+		player.receiveCard(new Card(Suit.HEART, Rank.ACE));
 
 		// then
 		assertThat(player.getCardHand()).hasSize(1);
@@ -66,9 +66,9 @@ public class PlayerTest {
 	void cardValueSumTest() {
 		// given
 		Player player = new Player("eden", new ArrayList<>());
-		player.receiveCard(new Card(Suit.HEART, Rank.K));
-		player.receiveCard(new Card(Suit.HEART, Rank.J));
-		player.receiveCard(new Card(Suit.HEART, Rank.Q));
+		player.receiveCard(new Card(Suit.HEART, Rank.KING));
+		player.receiveCard(new Card(Suit.HEART, Rank.JACK));
+		player.receiveCard(new Card(Suit.HEART, Rank.QUEEN));
 
 		// when & then
 		assertThat(player.isBust()).isTrue();
