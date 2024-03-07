@@ -1,31 +1,41 @@
 package model;
 
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Entrant {
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Queue<Player> players;
 
     public Entrant(Names names) {
         this.dealer = new Dealer();
         this.players = generatePlayers(names);
     }
 
-    private List<Player> generatePlayers(Names names) {
+    private Queue<Player> generatePlayers(Names names) {
         return names.getPlayerNames()
                 .stream()
                 .map(Player::new)
-                .toList();
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public void hitCardToDealer(Card card) {
+    public void hitDealer(Card card) {
         dealer.hitCard(card);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public void hitPlayer(Card card){
+        Player player = Objects.requireNonNull(players.poll());
+        player.hitCard(card);
+        players.add(player);
     }
+
+    Queue<Player> getPlayers() {
+        return players;
+    }
+
 
     public IndividualFaceUpResult getDealerFaceUpResult() {
         return dealer.generateFaceUpResult();
@@ -37,4 +47,7 @@ public class Entrant {
                 .toList();
     }
 
+    public int getPlayerSize() {
+        return players.size();
+    }
 }

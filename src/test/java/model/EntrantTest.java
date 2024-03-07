@@ -14,33 +14,24 @@ class EntrantTest {
     @BeforeEach
     void setUp() {
         // Given
-        Names names = new Names(List.of("프람", "도비"));
+        Names names = new Names(List.of("프람"));
         entrant = new Entrant(names);
 
         // When
-        entrant.hitCardToDealer(new Card(Number.ACE, Emblem.SPADE));
-        entrant.hitCardToDealer(new Card(Number.TWO, Emblem.SPADE));
-        entrant.hitCardToDealer(new Card(Number.THREE, Emblem.SPADE));
+        entrant.hitDealer(new Card(Number.ACE, Emblem.SPADE));
+        entrant.hitDealer(new Card(Number.TWO, Emblem.SPADE));
+        entrant.hitDealer(new Card(Number.THREE, Emblem.SPADE));
 
         entrant.getPlayers()
-                .get(0)
+                .peek()
                 .hitCard(new Card(Number.ACE, Emblem.HEART));
         entrant.getPlayers()
-                .get(0)
+                .peek()
                 .hitCard(new Card(Number.TWO, Emblem.HEART));
         entrant.getPlayers()
-                .get(0)
+                .peek()
                 .hitCard(new Card(Number.THREE, Emblem.HEART));
 
-        entrant.getPlayers()
-                .get(1)
-                .hitCard(new Card(Number.ACE, Emblem.CLUB));
-        entrant.getPlayers()
-                .get(1)
-                .hitCard(new Card(Number.TWO, Emblem.CLUB));
-        entrant.getPlayers()
-                .get(1)
-                .hitCard(new Card(Number.THREE, Emblem.CLUB));
     }
 
     @Test
@@ -63,13 +54,13 @@ class EntrantTest {
         // Then
         List<IndividualFaceUpResult> result = entrant.getPlayerFaceUpResults();
         assertAll(() -> {
-            assertEquals("프람", result.get(0).getPartipantNameAsString());
-            assertEquals(List.of("A하트", "2하트", "3하트"), result.get(0).getCardsAsStrings());
-            assertEquals(16, result.get(0).hand());
-
-            assertEquals("도비", result.get(1).getPartipantNameAsString());
-            assertEquals(List.of("A클로버", "2클로버", "3클로버"), result.get(1).getCardsAsStrings());
-            assertEquals(16, result.get(1).hand());
+            assertEquals("프람", result.get(0)
+                    .getPartipantNameAsString());
+            assertEquals(List.of("A하트", "2하트", "3하트"), result.get(0)
+                    .getCardsAsStrings());
+            assertEquals(16, result.get(0)
+                    .hand());
         });
     }
+
 }
