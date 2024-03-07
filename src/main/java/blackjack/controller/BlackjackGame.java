@@ -5,6 +5,9 @@ import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.domain.RandomDeck;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerIterator;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,12 +20,40 @@ public class BlackjackGame {
     public void run() {
         Participants participants = createParticipants();
         outputView.printInitialCards(participants);
+        participantsHitCard(participants);
     }
 
     private Participants createParticipants() {
         Deck deck = RandomDeck.getInstance();
         HandGenerator handGenerator = new HandGenerator(deck);
         return retryOnException(() -> createParticipantsWithNames(handGenerator));
+    }
+
+    private void participantsHitCard(Participants participants) {
+        playersHitCard(participants.getPlayers());
+
+        //딜러 힛
+    }
+
+    private void playersHitCard(Players players) {
+        PlayerIterator playerIterator = new PlayerIterator(players);
+        while (playerIterator.hasNext()) {
+            hitIfCurrentPlayerWantCard(playerIterator);
+        }
+    }
+
+    private void hitIfCurrentPlayerWantCard(PlayerIterator playerIterator) {
+        Player player = playerIterator.getPlayer();
+        boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantHit(player));
+        playerIterator.update(isPlayerWantHit);
+        if (isPlayerWantHit) {
+            player.addCard(RandomDeck.getInstance());
+        }
+    }
+
+    private boolean readIsPlayerWantHit(Player player) {
+        String playerName = player.getName();
+        return inputView.readIsPlayerWantHit(playerName);
     }
 
     private Participants createParticipantsWithNames(HandGenerator handGenerator) {
