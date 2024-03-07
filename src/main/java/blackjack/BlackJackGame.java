@@ -23,6 +23,12 @@ public class BlackJackGame {
         final Referee referee = new Referee(new Rule(dealer), players);
 
         OutputView.printDistributionSubject(players.getNames());
+        printInitialCards(dealer, players);
+    }
+
+    private void printInitialCards(final Dealer dealer, final Players players) {
         OutputView.printInitialCards(dealer.getName(), dealer.openCard());
+        players.collectCardsOfEachPlayer()
+                .forEach(OutputView::printInitialCards);
     }
 }
