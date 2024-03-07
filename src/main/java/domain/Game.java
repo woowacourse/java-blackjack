@@ -97,41 +97,51 @@ public class Game {
         boolean isDealerBlackJack = isBlackJack(participant.dealer());
         List<Boolean> gameResult = new ArrayList<>();
         if (isDealerBlackJack) {
-            for (Player player : participant.players()) {
-                if (isBlackJack(player)) {
-                    if (player.hasMoreCard(participant.dealer())) {
-                        gameResult.add(false);
-                    } else {
-                        gameResult.add(true);
-                    }
-                } else {
-                    gameResult.add(false);
-                }
-            }
-        } else { // 딜러가 블랙잭이 아님
-            for (Player player : participant.players()) {
-                if (isBusted(player)) {
-                    gameResult.add(false);
-                    continue;
-                }
-                if (isBlackJack(player)) {
-                    gameResult.add(true);
-                } else {
-                    if (player.hasMoreScore(participant.dealer())) {
-                        gameResult.add(true);
-                    } else if (player.hasLessScore(participant.dealer())) {
-                        gameResult.add(false);
-                    } else {
-                        if (player.hasMoreCard(participant.dealer())) {
-                            gameResult.add(false);
-                        } else {
-                            gameResult.add(true);
-                        }
-                    }
-                }
-            }
+            return getGameResultIfDealerIsBlackJack(gameResult);
+        }
+        for (Player player : participant.players()) {
+            checkWinnerIfDealerIsNotBlackJack(player, gameResult);
         }
         return gameResult;
+    }
+
+    private List<Boolean> getGameResultIfDealerIsBlackJack(final List<Boolean> gameResult) {
+        for (Player player : participant.players()) {
+            gameResult.add(checkWinnerIfPlayerIsBlackJack(player));
+        }
+        return gameResult;
+    }
+
+    private boolean checkWinnerIfPlayerIsBlackJack(final Player player) {
+        return isBlackJack(player) && !hasMoreCard(player);
+    }
+
+    private void checkWinnerIfDealerIsNotBlackJack(final Player player, final List<Boolean> gameResult) {
+        if (isNotBustedOrBlackJack(player)) {
+            gameResult.add(true);
+            return;
+        }
+        if (hasSameScore(player)) {
+            gameResult.add(hasMoreCard(player));
+            return;
+        }
+        gameResult.add(hasMoreScore(player));
+    }
+
+    private boolean hasSameScore(final Player player) {
+        return player.hasSameScore(participant.dealer());
+    }
+
+    private boolean isNotBustedOrBlackJack(final Player player) {
+        return !isBusted(player) || isBlackJack(player);
+    }
+
+    private boolean hasMoreScore(final Player player) {
+        return player.hasMoreScore(participant.dealer());
+    }
+
+    private boolean hasMoreCard(final Player player) {
+        return player.hasMoreCard(participant.dealer());
     }
 
     private boolean isBlackJack(final Player player) {

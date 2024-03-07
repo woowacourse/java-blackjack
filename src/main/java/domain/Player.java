@@ -83,7 +83,7 @@ public class Player {
         return calculateScore(21) > dealer.calculateScore(21);
     }
 
-    public boolean hasLessScore(final Dealer dealer) {
-        return calculateScore(21) < dealer.calculateScore(21);
+    public boolean hasSameScore(final Dealer dealer) {
+        return calculateScore(21) == dealer.calculateScore(21);
     }
 }
