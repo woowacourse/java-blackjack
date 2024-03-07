@@ -51,11 +51,11 @@
     - [x] 총점을 반환한다
     - [x] 이름을 반환한다
     - [x] List<Card>를 반환한다
-- [ ] GamerResult
-    - [ ] WIN, DRAW, LOSE를 상수로 갖고 있는 enum
-- [ ] BlackJackResult
-    - [ ] Dealer와 Players와 총점 합계를 받아 Gamer들의 결과를 계산한다
-    - [ ] Dealer의 결과를 반환한다
+- [x] GamerResult
+    - [x] WIN, DRAW, LOSE를 상수로 갖고 있는 enum
+- [x] BlackJackResult
+    - [x] Dealer와 Players와 총점 합계를 받아 Gamer들의 결과를 계산한다
+    - [x] Dealer의 결과를 반환한다
     - [x] Players의 결과를 반환한다
 
 - 참가자의 이름 입력받는다
