@@ -2,6 +2,8 @@ package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -84,5 +86,33 @@ class BlackJackTest {
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
     }
 
-    @DisplayName()
+    @DisplayName("딜러의 합이 16을 넘으면 거짓을 반환한다.")
+    @Test
+    void isDealerOverThresholdTrue() {
+        Participant participant = new Participant("배키");
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+
+        Players players = new Players(List.of(participant, dealer), new Cards());
+        BlackJack blackJack = new BlackJack(players);
+
+        assertFalse(blackJack.isDealerUnderThreshold());
+    }
+
+    @DisplayName("딜러의 합이 16을 넘지 않으면 참을 반환한다.")
+    @Test
+    void isDealerOverThresholdFalse() {
+        Participant participant = new Participant("배키");
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.SIX));
+
+        Players players = new Players(List.of(participant, dealer), new Cards());
+        BlackJack blackJack = new BlackJack(players);
+
+        assertTrue(blackJack.isDealerUnderThreshold());
+    }
 }

@@ -66,6 +66,8 @@ public class BlackJack {
         return (Dealer) players.getDealer();
     }
 
-
-
+    public boolean isDealerUnderThreshold() {
+        Dealer dealer = findDealer();
+        return dealer.receiveCard();
+    }
 }
