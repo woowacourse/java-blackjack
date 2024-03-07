@@ -60,14 +60,14 @@ public class BlackjackController {
 
     // TODO: 딜러의 카드 한장 숨기기
     private void printDealerAndPlayers() {
-        GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(dealerDTO);
-        players.forEach(player -> {
-            GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
-                    player.getRawSummationCardPoint());
-            GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
-        });
+        printPlayer(dealer);
+        players.forEach(BlackjackController::printPlayer);
+    }
+
+    private static void printPlayer(Gamer player) {
+        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+                player.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
     }
 
     private void playersTryDraw(Deck deck) {
@@ -86,6 +86,7 @@ public class BlackjackController {
             if (needToDraw) {
                 playerDraw(deck, player);
             }
+            printPlayer(player);
         }
     }
 
