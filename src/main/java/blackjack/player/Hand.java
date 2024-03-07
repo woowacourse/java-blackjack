@@ -21,8 +21,8 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int maximumScore = calculateMaximumScore();
         int minimumScore = calculateMinimumScore();
+        int maximumScore = calculateMaximumScore();
 
         if (maximumScore > BlackJackGame.BLACKJACK_MAX_SCORE) {
             return minimumScore;
@@ -38,7 +38,8 @@ public class Hand {
 
     private int calculateMaximumScore() {
         int score = calculateMinimumScore();
-        boolean isAce = cards.stream().anyMatch(Card::isAce);
+        boolean isAce = cards.stream()
+                .anyMatch(Card::isAce);
 
         if (isAce) {
             return score + ADDITIONAL_ACE_SCORE;
