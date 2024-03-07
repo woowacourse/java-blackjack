@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"a", "abcde"})
 	void playerNameLengthSuccessTest(String name) {
-		assertThatCode(() -> new Player(name, new ArrayList<>()))
+		assertThatCode(() -> Player.newInstance(name))
 			.doesNotThrowAnyException();
 	}
 
@@ -30,7 +29,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"", "abcdef"})
 	void playerNameLengthErrorTest(String name) {
-		assertThatThrownBy(() -> new Player(name, new ArrayList<>()))
+		assertThatThrownBy(() -> Player.newInstance(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("이름의 길이는 1 이상 5 이하이어야 합니다.");
 	}
@@ -39,7 +38,7 @@ public class PlayerTest {
 	@Test
 	void receiveInitCardsTest() {
 		// given
-		Player player = new Player("a", new ArrayList<>());
+		Player player = Player.newInstance("a");
 
 		// when
 		player.receiveInitCards(List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.JACK)));
@@ -52,7 +51,7 @@ public class PlayerTest {
 	@Test
 	void receiveCardTest() {
 		// given
-		Player player = new Player("a", new ArrayList<>());
+		Player player = Player.newInstance("a");
 
 		// when
 		player.receiveCard(new Card(Suit.HEART, Rank.ACE));
@@ -65,7 +64,7 @@ public class PlayerTest {
 	@Test
 	void cardValueSumTest() {
 		// given
-		Player player = new Player("eden", new ArrayList<>());
+		Player player = Player.newInstance("a");
 		player.receiveCard(new Card(Suit.HEART, Rank.KING));
 		player.receiveCard(new Card(Suit.HEART, Rank.JACK));
 		player.receiveCard(new Card(Suit.HEART, Rank.QUEEN));

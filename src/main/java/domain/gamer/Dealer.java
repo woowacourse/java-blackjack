@@ -3,6 +3,7 @@ package domain.gamer;
 import java.util.List;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.Deck;
 
 public class Dealer extends Gamer {
@@ -11,11 +12,18 @@ public class Dealer extends Gamer {
 
 	private final Deck deck;
 
-	public Dealer(Deck deck, List<Card> cardHand) {
-		// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
+	private Dealer(Deck deck, CardHand cardHand) {
 		super(cardHand);
 		this.deck = deck;
 		this.deck.shuffle();
+	}
+
+	public static Dealer newInstance(Deck deck) {
+		return new Dealer(deck, CardHand.createEmpty());
+	}
+
+	public static Dealer of(Deck deck, List<Card> cards) {
+		return new Dealer(deck, CardHand.from(cards));
 	}
 
 	public List<Card> dealInit() {

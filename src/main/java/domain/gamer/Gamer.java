@@ -8,8 +8,8 @@ import domain.card.CardHand;
 public class Gamer {
 	protected final CardHand cardHand;
 
-	protected Gamer(List<Card> cardHand) {
-		this.cardHand = new CardHand(cardHand);
+	protected Gamer(CardHand cardHand) {
+		this.cardHand = cardHand;
 	}
 
 	public void receiveInitCards(List<Card> cards) {

@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -25,7 +24,7 @@ public class Players {
 		}
 
 		this.players = players.stream()
-			.map(player -> new Player(player, new ArrayList<>()))
+			.map(Player::newInstance)
 			.toList();
 	}
 

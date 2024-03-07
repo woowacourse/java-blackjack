@@ -18,7 +18,7 @@ public class CardHandTest {
 	@Test
 	void sumCardTest() {
 		// given
-		CardHand cardHand = new CardHand(
+		CardHand cardHand = CardHand.from(
 			List.of(new Card(Suit.HEART, Rank.JACK), new Card(Suit.HEART, Rank.KING)));
 
 		// when & then
@@ -29,7 +29,7 @@ public class CardHandTest {
 	@Test
 	void sumAceCardAs1Test() {
 		// given
-		CardHand cardHand = new CardHand(
+		CardHand cardHand = CardHand.from(
 			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING), new Card(Suit.HEART, Rank.JACK)));
 
 		// when & then
@@ -40,7 +40,7 @@ public class CardHandTest {
 	@Test
 	void sumAceCardAs11Test() {
 		// given
-		CardHand cardHand = new CardHand(
+		CardHand cardHand = CardHand.from(
 			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING)));
 
 		// when & then

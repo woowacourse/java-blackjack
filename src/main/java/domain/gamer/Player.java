@@ -3,14 +3,22 @@ package domain.gamer;
 import java.util.List;
 
 import domain.card.Card;
+import domain.card.CardHand;
 
 public class Player extends Gamer {
 	private final Name name;
 
-	// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
-	public Player(String name, List<Card> cardHand) {
+	private Player(String name, CardHand cardHand) {
 		super(cardHand);
 		this.name = new Name(name);
+	}
+
+	public static Player newInstance(String name) {
+		return new Player(name, CardHand.createEmpty());
+	}
+
+	public static Player of(String name, List<Card> cards) {
+		return new Player(name, CardHand.from(cards));
 	}
 
 	public void receiveCard(Card card) {

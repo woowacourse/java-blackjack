@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -34,7 +33,7 @@ public class BlackjackController {
 	}
 
 	public Dealer createDealer(Deck deck) {
-		return new Dealer(deck, new ArrayList<>());
+		return Dealer.newInstance(deck);
 	}
 
 	public void dealInitCards(Dealer dealer, Players players) {

@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,8 +10,16 @@ public class CardHand {
 
 	private final List<Card> cards;
 
-	public CardHand(List<Card> cards) {
+	private CardHand(List<Card> cards) {
 		this.cards = cards;
+	}
+
+	public static CardHand createEmpty() {
+		return new CardHand(new ArrayList<>());
+	}
+
+	public static CardHand from(List<Card> cards) {
+		return new CardHand(cards);
 	}
 
 	public void add(Card card) {

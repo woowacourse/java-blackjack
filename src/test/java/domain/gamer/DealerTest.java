@@ -30,7 +30,7 @@ public class DealerTest {
 	@Test
 	void hasDeckTest() {
 		// given & when
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = Dealer.newInstance(deck);
 
 		// then
 		assertThat(dealer.deckSize()).isEqualTo(52);
@@ -40,7 +40,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = Dealer.newInstance(deck);
 
 		// when
 		List<Card> cards = dealer.dealInit();
@@ -53,7 +53,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsSelfTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = Dealer.newInstance(deck);
 
 		// when
 		dealer.receiveInitCards(dealer.dealInit());
@@ -66,7 +66,7 @@ public class DealerTest {
 	@Test
 	void dealCardTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = Dealer.newInstance(deck);
 
 		// when
 		Card card = dealer.dealCard();
@@ -82,7 +82,7 @@ public class DealerTest {
 	@Test
 	void dealerHitTest() {
 		// given
-		Dealer dealer = new Dealer(deck,
+		Dealer dealer = Dealer.of(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SIX))));
 		int beforeDeckSize = dealer.deckSize();
 
@@ -97,7 +97,7 @@ public class DealerTest {
 	@Test
 	void dealerStandTest() {
 		// given
-		Dealer dealer = new Dealer(deck,
+		Dealer dealer = Dealer.of(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SEVEN))));
 		int beforeDeckSize = dealer.deckSize();
 
