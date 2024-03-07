@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static domain.constant.GameOption.BLACKJACK_CONDITION;
+import static java.util.Collections.unmodifiableList;
 
 public class Hand {
     private List<PlayingCard> playingCards;
@@ -36,7 +37,7 @@ public class Hand {
     }
 
     public HandStatus getHandStatus() {
-        return new HandStatus(playingCards, getCardsNumberSum());
+        return new HandStatus(unmodifiableList(playingCards), getCardsNumberSum());
     }
 
     public boolean isBlackJack() {
