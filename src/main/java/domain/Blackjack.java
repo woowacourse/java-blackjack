@@ -10,6 +10,7 @@ public class Blackjack {
     private final Player dealer;
     private final Deck deck;
 
+    // TODO : 필드 수 줄이기
     public Blackjack(final Players players, final Player dealer, final Deck deck) {
         this.players = players;
         this.dealer = dealer;
@@ -36,6 +37,7 @@ public class Blackjack {
     // player <= 21 dealer <= 21
     // player > dealer  -> player sungri
     // player
+    // TODO : 테스트 작성
     public Map<Player, Entry<Integer, Integer>> finishGame() {
         Map<Player, Entry<Integer, Integer>> results = new HashMap<>();
 
