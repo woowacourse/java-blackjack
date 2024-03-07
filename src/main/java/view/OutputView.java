@@ -28,4 +28,7 @@ public class OutputView {
         return String.join(": ", name, cardString);
     }
 
+    public static void printGamerStatus(GamerDto gamer) {
+        System.out.println(buildNameCards(gamer.getName(), gamer.getCards()));
+    }
 }

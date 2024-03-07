@@ -28,4 +28,19 @@ public class InputView {
             throw new IllegalArgumentException("이름에 공백이나 null을 넣을 수 없습니다.");
         }
     }
+
+    public static String readAnswer(Supplier<String> input, String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        String result = input.get();
+        validateEmpty(result);
+        validateAnswer(result);
+        return result;
+    }
+
+    private static void validateAnswer(String input) {
+        if (!input.equals("y") && !input.equals("n")) {
+            throw new IllegalArgumentException("y또는 n만 입력 받을 수 있습니다.");
+        }
+    }
+
 }
