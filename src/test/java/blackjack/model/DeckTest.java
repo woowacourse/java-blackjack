@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +12,14 @@ class DeckTest {
     @DisplayName("카드 덱을 생성한다.")
     void createDeck() {
         Deck deck = new Deck();
-        Assertions.assertThat(deck.getDeck()).hasSize(52);
+        assertThat(deck.getDeck()).hasSize(52);
+    }
+
+    @Test
+    @DisplayName("인원 수만큼 카드 목록을 생성한다.")
+    void distributeInitialCardByPlayerCount() {
+        Deck deck = new Deck();
+        assertThat(deck.distributeInitialCard(4)).hasSize(4);
     }
 
     @Test
