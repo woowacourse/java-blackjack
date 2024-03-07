@@ -2,6 +2,7 @@ package blackjack.domain;
 
 public record Score(int value) {
     private static final int MINIMUM_VALUE = 0;
+    private static final int BUST_THRESHOLD = 21;
 
     public Score {
         validateRange(value);
@@ -11,5 +12,9 @@ public record Score(int value) {
         if (value < MINIMUM_VALUE) {
             throw new IllegalArgumentException("음수는 점수로 사용될 수 없습니다.");
         }
+    }
+
+    public boolean isBusted() {
+        return value > BUST_THRESHOLD;
     }
 }
