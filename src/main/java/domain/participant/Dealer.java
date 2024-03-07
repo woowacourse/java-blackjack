@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    boolean isReceivable() {
+    public boolean isReceivable() {
         return score() <= THRESHOLD_SCORE;
     }
 }

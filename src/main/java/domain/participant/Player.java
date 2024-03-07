@@ -7,7 +7,7 @@ public class Player extends Participant {
     }
 
     @Override
-    boolean isReceivable() {
-        return score() <= BLACKJACK_SCORE;
+    public boolean isReceivable() {
+        return !isBusted();
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
     private final ParticipantCards cards;
@@ -45,5 +45,5 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards.getCards());
     }
 
-    abstract boolean isReceivable();
+    public abstract boolean isReceivable();
 }
