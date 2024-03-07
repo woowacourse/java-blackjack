@@ -2,19 +2,16 @@ package domain;
 
 import domain.user.Player;
 import domain.user.User;
-import domain.user.UserDeck;
 import domain.user.Users;
 
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static domain.Command.YES;
 import static domain.State.*;
 
 public class Game {
-    private final static String HIT_COMMAND = "y";
-    private final static String STAY_COMMAND = "n";
-    private final static int DEALER_CARD_CONDITION = 16;
     private final TotalDeck totalDeck;
     private final Users users;
 
@@ -24,16 +21,17 @@ public class Game {
         users.setStartCards(totalDeck);
     }
 
-    public State hitOrStay(String command) {
-        if (HIT_COMMAND.equals(command)) {
+    public boolean continueInput() {
+        return users.isCurrentUserPlayer();
+    }
+
+    public State hitOrStay(Command command) {
+        if (YES == command) {
             users.addCardOfCurrentUser(totalDeck.getNewCard());
             return hitOrBust();
         }
-        if (STAY_COMMAND.equals(command)) {
-            users.nextUser();
-            return STAY;
-        }
-        throw new IllegalArgumentException("입력은 y, n만 가능합니다.");
+        users.nextUser();
+        return STAY;
     }
 
     private State hitOrBust() {
@@ -44,20 +42,12 @@ public class Game {
         return HIT;
     }
 
-    public UserDeck showCurrentUserDeck() {
-        return users.showCurrentUserDeck();
-    }
-
-    public boolean continueInput() {
-        return users.isCurrentUserPlayer();
+    public boolean isDealerCardAddCondition() {
+        return users.isDealerCardAddCondition();
     }
 
     public void addDealerCard() {
         users.addDealerCard(totalDeck.getNewCard());
-    }
-
-    public boolean addDealerCardCondition() {
-        return users.getDealerCardSum() <= DEALER_CARD_CONDITION;
     }
 
     public PlayerResults generatePlayerResults() {
@@ -70,6 +60,6 @@ public class Game {
     }
 
     public User getCurrentPlayer() {
-        return users.getCurrentPlayer();
+        return users.getCurrentUser();
     }
 }

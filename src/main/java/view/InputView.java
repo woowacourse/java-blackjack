@@ -1,5 +1,6 @@
 package view;
 
+import domain.Command;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;
@@ -20,8 +21,8 @@ public class InputView {
         return new Users(collect);
     }
 
-    public static String inputAddCommand(Name name) {
+    public static Command inputAddCommand(Name name) {
         System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        return Command.get(scanner.nextLine());
     }
 }

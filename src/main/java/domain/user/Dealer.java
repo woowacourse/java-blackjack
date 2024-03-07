@@ -8,6 +8,6 @@ public class Dealer extends User {
     }
 
     public Card getVisibleCard() {
-        return this.userDeck.getFirstCard();
+        return userDeck.getFirstCard();
     }
 }

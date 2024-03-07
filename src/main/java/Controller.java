@@ -1,6 +1,4 @@
-import domain.Game;
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
+import domain.*;
 import domain.user.User;
 import domain.user.Users;
 import view.InputView;
@@ -9,7 +7,7 @@ import view.ResultView;
 public class Controller {
 
     public void play() {
-        Users users = InputView.inputNames();
+        Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
         ResultView.showStartStatus(users);
         run(game);
@@ -20,8 +18,7 @@ public class Controller {
         while (game.continueInput()) {
             hitOrStayOnce(game);
         }
-
-        while (game.addDealerCardCondition()) {
+        while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
             ResultView.dealerHit();
         }
@@ -29,8 +26,9 @@ public class Controller {
 
     private void hitOrStayOnce(Game game) {
         User currentPlayer = game.getCurrentPlayer();
-        String command = InputView.inputAddCommand(currentPlayer.getName());
-
+        Command command = ExceptionHandler.handle(
+                () -> InputView.inputAddCommand(currentPlayer.getName())
+        );
         switch (game.hitOrStay(command)) {
             case HIT -> ResultView.printPlayerAndDeck(currentPlayer);
             case BUST -> ResultView.printBust(currentPlayer);

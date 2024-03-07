@@ -33,7 +33,7 @@ public class UserDeck {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.isAce());
+                .anyMatch(Card::isAce);
     }
 
     public Card getFirstCard() {

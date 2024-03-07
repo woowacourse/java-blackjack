@@ -1,16 +1,18 @@
-import domain.*;
+package domain;
+
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.user.Name;
 import domain.user.Player;
-import domain.user.UserDeck;
 import domain.user.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static domain.Command.NO;
+import static domain.Command.YES;
 import static domain.Result.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -35,7 +37,7 @@ public class GameTest {
         Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        game.hitOrStay("y");
+        game.hitOrStay(YES);
 
         assertThat(player.getUserDeck().getCards()).hasSize(3);
     }
@@ -44,13 +46,13 @@ public class GameTest {
     @DisplayName("입력이 n이면 다음 유저로 넘어간다.")
     void stayTest() {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
-        Users users = new Users(List.of(new Player(new Name("a"))));
+        Player player = new Player(new Name("a"));
+        Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        UserDeck oldUserDeck = game.showCurrentUserDeck();
-        game.hitOrStay("n");
+        game.hitOrStay(NO);
 
-        assertThat(game.showCurrentUserDeck()).isNotEqualTo(oldUserDeck);
+        assertThat(game.getCurrentPlayer()).isNotEqualTo(player);
     }
 
     @Test
@@ -65,7 +67,7 @@ public class GameTest {
         Users users = new Users(List.of(new Player(new Name("pobi"))));
 
         Game game = new Game(totalDeck, users);
-        boolean actual = game.addDealerCardCondition();
+        boolean actual = game.isDealerCardAddCondition();
         assertThat(actual).isTrue();
     }
 

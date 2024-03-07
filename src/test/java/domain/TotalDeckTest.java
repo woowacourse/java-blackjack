@@ -1,4 +1,5 @@
-import domain.TotalDeck;
+package domain;
+
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
@@ -10,7 +11,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TotalDeckTest {
-
     @Test
     @DisplayName("전체 덱에서 카드를 가져온다.")
     void getNewCardTest() {

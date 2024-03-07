@@ -10,9 +10,8 @@ import static domain.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerResultsTest {
-
     @Test
-    void generateDealerResult() {
+    void generateDealerResultTest() {
         PlayerResults playerResults = new PlayerResults(
                 Map.of(new Player(new Name("a")), WIN));
 

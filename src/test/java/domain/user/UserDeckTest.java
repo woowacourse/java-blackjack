@@ -1,7 +1,8 @@
+package domain.user;
+
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.user.UserDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,7 +55,7 @@ public class UserDeckTest {
 
     @Test
     @DisplayName("ACE카드가 여러개일 때 최적의 값을 만든다.")
-    void reduceSumByAce() {
+    void reduceSumByAceTest() {
         UserDeck userDeck = new UserDeck();
 
         userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));

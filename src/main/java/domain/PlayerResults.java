@@ -16,17 +16,6 @@ public class PlayerResults {
         this.playerResults = playerResults;
     }
 
-    public Map<Player, Result> getPlayerResults() {
-        return Collections.unmodifiableMap(playerResults);
-    }
-
-    public int countResults(Result result) {
-        return (int) playerResults.values()
-                .stream()
-                .filter(playerResult -> playerResult == result)
-                .count();
-    }
-
     public DealerResult generateDealerResult() {
         Map<Result, Integer> dealerResult = Arrays.stream(values())
                 .collect(Collectors.toMap(
@@ -36,4 +25,14 @@ public class PlayerResults {
         return new DealerResult(dealerResult);
     }
 
+    private int countResults(Result result) {
+        return (int) playerResults.values()
+                .stream()
+                .filter(playerResult -> playerResult == result)
+                .count();
+    }
+
+    public Map<Player, Result> getPlayerResults() {
+        return Collections.unmodifiableMap(playerResults);
+    }
 }
