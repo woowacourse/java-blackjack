@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
-    private static final int DEALER_DRAW_THRESHOLD = 17;
+    private static final int DEALER_DRAW_THRESHOLD = 16;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -19,6 +19,6 @@ public class Dealer extends Participant {
     }
 
     private boolean shouldDraw() {
-        return hands.getHandsScore() < DEALER_DRAW_THRESHOLD;
+        return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
     }
 }
