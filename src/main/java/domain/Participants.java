@@ -1,26 +1,24 @@
 package domain;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Participants {
 
-    public static final int MAX_BOUNDARY_SCORE = 21;
     private static final int DEALER_COUNT = 1;
     private static final int DEALER_BOUNDARY_SCORE = 17;
 
     private final Player dealer;
-    private final List<Player> players;
+    private final Players players;
 
 
-    public Participants(Player dealer, List<Player> players) {
+    public Participants(Player dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
     }
 
     public void receivePlayerCard(Card card, int playerIndex) {
-        players.get(playerIndex).receiveCard(card);
+        players.receiveOnePlayerCard(card, playerIndex);
     }
 
     public void receiveDealerCard(Card card) {
@@ -33,28 +31,16 @@ public class Participants {
 
         for (int index = 0; index < players.size(); index++) {
             Deck currentDeck = decks.get(index);
-            players.get(index).receiveDeck(currentDeck);
+            players.receiveOnePlayerDeck(currentDeck, index);
         }
     }
 
     public Map<Player, Boolean> calculateResult() {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, calculateVictory(player)));
-        return result;
-    }
-
-    private boolean calculateVictory(Player player) {
-        if (player.calculateScore() > MAX_BOUNDARY_SCORE) {
-            return false;
-        }
-        if (dealer.calculateScore() > MAX_BOUNDARY_SCORE) {
-            return true;
-        }
-        return dealer.calculateScore() < player.calculateScore();
+        return players.calculateResult(dealer.calculateScore());
     }
 
     public boolean isPlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(MAX_BOUNDARY_SCORE);
+        return players.isOnePlayerNotOver(playerIndex);
     }
 
     public boolean isDealerNotOver() {
@@ -69,19 +55,19 @@ public class Participants {
         return players.size();
     }
 
-    public Name getPlayerName(int playerIndex) {
-        return players.get(playerIndex).getName();
+    public Name getOnePlayerName(int playerIndex) {
+        return players.getOnePlayerName(playerIndex);
     }
 
-    public Player getPlayer(int playerIndex) {
-        return players.get(playerIndex);
+    public Player getOnePlayer(int playerIndex) {
+        return players.getOnePlayer(playerIndex);
     }
 
     public Player getDealer() {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
+    public Players getPlayers() {
         return players;
     }
 }

@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackService {
+public class GameBoard {
     public static final int INITIAL_CARD_COUNT = 2;
     private final Participants participants;
     private final Deck allCardDeck;
 
-    public BlackjackService(Player dealer, List<Player> players) {
+    public GameBoard(Player dealer, Players players) {
         this.participants = new Participants(dealer, players);
         this.allCardDeck = new Deck();
         addAllCard();
@@ -71,15 +71,15 @@ public class BlackjackService {
     }
 
     public Name getPlayerName(int playerIndex) {
-        return participants.getPlayerName(playerIndex);
+        return participants.getOnePlayerName(playerIndex);
     }
 
-    public List<Player> getPlayers() {
+    public Players getPlayers() {
         return participants.getPlayers();
     }
 
     public Player getPlayer(int playerIndex) {
-        return participants.getPlayer(playerIndex);
+        return participants.getOnePlayer(playerIndex);
     }
 
     public Player getDealer() {

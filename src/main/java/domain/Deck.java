@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Players.MAX_BOUNDARY_SCORE;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -31,7 +33,7 @@ public class Deck {
                 .map(Card::getRank)
                 .mapToInt(Rank::getScore)
                 .sum();
-        if (hasAce() && totalScore + ACE_BONUS_SCORE <= Participants.MAX_BOUNDARY_SCORE) {
+        if (hasAce() && totalScore + ACE_BONUS_SCORE <= MAX_BOUNDARY_SCORE) {
             totalScore += ACE_BONUS_SCORE;
         }
         return totalScore;

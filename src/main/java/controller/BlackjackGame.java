@@ -2,9 +2,10 @@ package controller;
 
 import static view.InputView.DEALER_NAME;
 
-import domain.BlackjackService;
+import domain.GameBoard;
 import domain.Name;
 import domain.Player;
+import domain.Players;
 import dto.PlayerDto;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,28 +20,30 @@ public class BlackjackGame {
 
     public void run() {
         List<String> names = inputView.readNames();
-        List<Player> players = names.stream()
+        List<Player> playerList = names.stream()
                 .map(name -> new Player(new Name(name)))
                 .toList();
+        Players players = new Players(playerList);
         Player dealer = new Player(new Name(DEALER_NAME));
-        BlackjackService blackjackService = new BlackjackService(dealer, players);
+        GameBoard gameBoard = new GameBoard(dealer, players);
 
-        play(blackjackService);
+        play(gameBoard);
     }
 
-    private void play(BlackjackService blackjackService) {
-        startSetting(blackjackService);
-        proceedPlayerTurn(blackjackService);
-        proceedDealerTurn(blackjackService);
-        handleResult(blackjackService);
-        handleVictory(blackjackService);
+    private void play(GameBoard gameBoard) {
+        startSetting(gameBoard);
+        proceedPlayerTurn(gameBoard);
+        proceedDealerTurn(gameBoard);
+        handleResult(gameBoard);
+        handleVictory(gameBoard);
     }
 
-    private void startSetting(BlackjackService blackjackService) {
-        blackjackService.initialDistribute();
-        Player dealer = blackjackService.getDealer();
+    private void startSetting(GameBoard gameBoard) {
+        gameBoard.initialDistribute();
+        Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = blackjackService.getPlayers()
+        List<PlayerDto> playersDto = gameBoard.getPlayers()
+                .getPlayers()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();
@@ -48,43 +51,44 @@ public class BlackjackGame {
         outputView.printNewLine();
     }
 
-    private void proceedPlayerTurn(BlackjackService blackjackService) {
-        for (int playerIndex = 0; playerIndex < blackjackService.countPlayers(); playerIndex++) {
-            proceedOnePlayerTurn(blackjackService, playerIndex);
+    private void proceedPlayerTurn(GameBoard gameBoard) {
+        for (int playerIndex = 0; playerIndex < gameBoard.countPlayers(); playerIndex++) {
+            proceedOnePlayerTurn(gameBoard, playerIndex);
         }
     }
 
-    private void proceedDealerTurn(BlackjackService blackjackService) {
+    private void proceedDealerTurn(GameBoard gameBoard) {
         outputView.printNewLine();
-        while (blackjackService.isDealerNotOver()) {
-            blackjackService.addCardToDealer();
+        while (gameBoard.isDealerNotOver()) {
+            gameBoard.addCardToDealer();
             outputView.printDealerOneMoreCard();
         }
         outputView.printNewLine();
     }
 
-    private void proceedOnePlayerTurn(BlackjackService blackjackService, int playerIndex) {
-        while (blackjackService.isPlayerNotOver(playerIndex) &&
-                inputView.readCommand(blackjackService.getPlayerName(playerIndex).getName())) {
-            blackjackService.addCardToPlayer(playerIndex);
-            Player player = blackjackService.getPlayer(playerIndex);
+    private void proceedOnePlayerTurn(GameBoard gameBoard, int playerIndex) {
+        while (gameBoard.isPlayerNotOver(playerIndex) &&
+                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getName())) {
+            gameBoard.addCardToPlayer(playerIndex);
+            Player player = gameBoard.getPlayer(playerIndex);
             outputView.printCurrentCard(PlayerDto.from(player));
             outputView.printNewLine();
         }
     }
 
-    private void handleResult(BlackjackService blackjackService) {
-        Player dealer = blackjackService.getDealer();
+    private void handleResult(GameBoard gameBoard) {
+        Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = blackjackService.getPlayers()
+        List<PlayerDto> playersDto = gameBoard.getPlayers()
+                .getPlayers()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleVictory(BlackjackService blackjackService) {
-        Map<Player, Boolean> playerVictory = blackjackService.calculateVictory();
+    private void handleVictory(GameBoard gameBoard) {
+        Map<Player, Boolean> playerVictory = gameBoard.calculateVictory();
         Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
         playerVictory.forEach(
                 (key, value) -> playerNameVictory.put(key.getName().getName(), playerVictory.get(key)));

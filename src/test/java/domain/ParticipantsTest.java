@@ -16,7 +16,8 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
 
@@ -24,7 +25,7 @@ class ParticipantsTest {
 
         participants.receivePlayerCard(card, 0);
 
-        assertThat(participants.getPlayer(0).getDeck().size()).isEqualTo(1);
+        assertThat(participants.getOnePlayer(0).getDeck().size()).isEqualTo(1);
     }
 
     @Test
@@ -33,7 +34,8 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
 
@@ -51,9 +53,11 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
+
         Deck deck1 = new Deck();
         deck1.addCard(new Card(Shape.HEART, Rank.ACE));
         deck1.addCard(new Card(Shape.HEART, Rank.TWO));
@@ -82,9 +86,11 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
+
         Deck deck1 = new Deck();
         deck1.addCard(new Card(Shape.HEART, Rank.ACE));
         deck1.addCard(new Card(Shape.HEART, Rank.TWO));
@@ -112,9 +118,11 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
+
         Deck deck1 = new Deck();
         deck1.addCard(new Card(Shape.HEART, Rank.ACE));
         deck1.addCard(new Card(Shape.HEART, Rank.TWO));
@@ -142,9 +150,11 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
+
         Deck deck1 = new Deck();
         deck1.addCard(new Card(Shape.HEART, Rank.JACK));
         deck1.addCard(new Card(Shape.HEART, Rank.SIX));
@@ -172,7 +182,8 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
 
@@ -186,7 +197,8 @@ class ParticipantsTest {
         Player siso = new Player(new Name("시소"));
         Player tacan = new Player(new Name("타칸"));
         Player dealer = new Player(new Name("딜러"));
-        List<Player> players = List.of(siso, tacan);
+        List<Player> playerList = List.of(siso, tacan);
+        Players players = new Players(playerList);
 
         Participants participants = new Participants(dealer, players);
 
