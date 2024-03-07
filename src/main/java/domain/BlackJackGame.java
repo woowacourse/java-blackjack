@@ -8,8 +8,9 @@ public class BlackJackGame {
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer;
 
-    public BlackJackGame(PlayerNames playerNames, Dealer dealer) {
-        this.dealer = dealer;
+    public BlackJackGame(PlayerNames playerNames, CardDeck cardDeck) {
+
+        this.dealer = new Dealer(cardDeck);
 
         List<String> names = playerNames.names();
         for (String s : names) {
@@ -18,4 +19,6 @@ public class BlackJackGame {
             this.players.add(player);
         }
     }
+
+
 }
