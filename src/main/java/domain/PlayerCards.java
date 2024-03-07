@@ -14,7 +14,7 @@ public class PlayerCards extends Cards {
         return sum() <= MAX_SCORE;
     }
 
-    public String getPlayerName() {
+    public Name getPlayerName() {
         return ((Player) participant).getName();
     }
 }

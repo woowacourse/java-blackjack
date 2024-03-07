@@ -2,18 +2,18 @@ package view;
 
 import domain.Cards;
 import domain.DealerCards;
+import domain.Name;
 import domain.PlayerCards;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
 
     public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
-        List<String> names = new ArrayList<>();
-        for (PlayerCards playerCard : playerCards) {
-            names.add(playerCard.getPlayerName());
-        }
+        List<String> names = playerCards.stream()
+                .map(playerCard -> playerCard.getPlayerName().toString())
+                .toList();
+
         String joinNames = String.join(", ", names);
         System.out.println("딜러와 " + joinNames + "에게 2장을 나누었습니다.");
 
@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     public void printPlayerCards(PlayerCards cards) {
-        String playerName = cards.getPlayerName();
+        Name playerName = cards.getPlayerName();
         System.out.print(playerName + "카드: ");
         System.out.print(formatCards(cards));
     }

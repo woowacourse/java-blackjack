@@ -5,9 +5,11 @@ import java.util.List;
 public class Game {
 
     private final Rule rule;
+    private final ScoreBoard scoreBoard;
 
-    public Game(Rule rule) {
+    public Game(Rule rule, ScoreBoard scoreBoard) {
         this.rule = rule;
+        this.scoreBoard = scoreBoard;
     }
 
     public void decideResult(DealerCards dealer, List<PlayerCards> players) {
@@ -17,7 +19,7 @@ public class Game {
     private void decideResult(DealerCards dealer, PlayerCards player) {
         Status dealerStatus = rule.decideStatus(dealer, player);
         Status playerStatus = rule.decideStatus(player, dealer);
-        dealer.updateStatus(dealerStatus);
-        player.updateStatus(playerStatus);
+        scoreBoard.updateDealerScore(dealerStatus);
+        scoreBoard.updatePlayerScore(player.getPlayerName(), playerStatus);
     }
 }

@@ -9,7 +9,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public String getName() {
-        return name.toString();
+    public Name getName() {
+        return name;
     }
 }

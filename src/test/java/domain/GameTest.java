@@ -16,19 +16,21 @@ public class GameTest {
         Dealer dealer = new Dealer();
         DealerCards dealerCards = new DealerCards(dealer, List.of(new Card(10, Shape.CLUB), new Card(6, Shape.CLUB)));
 
-        Player player = new Player(new Name("capy"));
+        Name capy = new Name("capy");
+        Player player = new Player(capy);
         PlayerCards playerCards = new PlayerCards(player, List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
 
-        Game game = new Game(new Rule());
+        ScoreBoard scoreBoard = ScoreBoard.from(List.of(capy));
+        Game game = new Game(new Rule(), scoreBoard);
         game.decideResult(dealerCards, List.of(playerCards));
 
         assertAll(
-                () -> assertThat(dealer.getWinScore()).isEqualTo(0),
-                () -> assertThat(dealer.getTieScore()).isEqualTo(0),
-                () -> assertThat(dealer.getLoseScore()).isEqualTo(1),
-                () -> assertThat(player.getWinScore()).isEqualTo(1),
-                () -> assertThat(player.getTieScore()).isEqualTo(0),
-                () -> assertThat(player.getLoseScore()).isEqualTo(0)
+                () -> assertThat(scoreBoard.getDealerScore().getWinScore()).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getTieScore()).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getLoseScore()).isEqualTo(1),
+                () -> assertThat(scoreBoard.getPlayerScore(capy).getWinScore()).isEqualTo(1),
+                () -> assertThat(scoreBoard.getPlayerScore(capy).getTieScore()).isEqualTo(0),
+                () -> assertThat(scoreBoard.getPlayerScore(capy).getLoseScore()).isEqualTo(0)
         );
     }
 }
