@@ -1,8 +1,8 @@
 package controller;
 
+import domain.blackjack.DealerRandomCardDrawStrategy;
 import domain.blackjack.GameResult;
 import domain.blackjack.GameResultCalculator;
-import domain.blackjack.DealerRandomCardDrawStrategy;
 import domain.blackjack.Gamer;
 import domain.blackjack.PlayerRandomCardDrawStrategy;
 import domain.blackjack.SummationCardPoint;
@@ -45,7 +45,8 @@ public class BlackjackController {
         dealerDraw(deck);
         players.forEach(player -> playerDraw(deck, player));
         players.forEach(player -> playerDraw(deck, player));
-        OutputView.print("딜러와 pobi, jason에게 2장을 나누었습니다.");
+        String namesOutput = players.stream().map(Gamer::getRawName).collect(Collectors.joining(", "));
+        OutputView.print("딜러와 %s에게 2장을 나누었습니다.".formatted(namesOutput));
     }
 
     private void dealerDraw(Deck deck) {
