@@ -1,5 +1,7 @@
 package domain.blackjack;
 
+import static domain.card.CardName.TEN;
+
 import domain.card.Card;
 import domain.card.CardName;
 import domain.card.CardType;
@@ -30,8 +32,8 @@ class CardPointCalculatorTest {
 
     private static CardPoint makeCardPoint(CardName cardName) {
         CardPoint cardPoint = new CardPoint(cardName.getCardNumber());
-        if (cardName.getCardNumber() > 10) {
-            return new CardPoint(10);
+        if (cardName.getCardNumber() > TEN.getCardNumber()) {
+            return new CardPoint(TEN.getCardNumber());
         }
         return cardPoint;
     }

@@ -1,5 +1,7 @@
 package domain.blackjack;
 
+import static domain.card.CardName.TEN;
+
 import domain.card.Card;
 import domain.card.CardDrawStrategy;
 import domain.card.Deck;
@@ -29,7 +31,7 @@ public class Gamer {
     }
 
     private int fixPoint(int rawPoint) {
-        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + 10);
+        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + TEN.getCardNumber());
         if (!fixPoint.isDeadPoint()) {
             return fixPoint.summationCardPoint();
         }
