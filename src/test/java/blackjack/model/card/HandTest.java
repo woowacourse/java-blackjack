@@ -1,11 +1,10 @@
 package blackjack.model.card;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class HandTest {
     @Test
@@ -41,6 +40,30 @@ public class HandTest {
         assertThat(actualTotal).isEqualTo(expectedTotal);
     }
 
+    @Test
+    @DisplayName("Ace는 1 또는 11로 계산할 수 있다")
+    void calculateCardsTotalWithAceTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Suit.HEART, Denomination.THREE),
+                new Card(Suit.HEART, Denomination.THREE),
+                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.HEART, Denomination.ACE)
+        );
+        Hand hand = new Hand(cards);
+
+        // when
+        int actualTotal = hand.calculateCardsTotal();
+
+        // then
+        int totalWithoutAce = cards.stream()
+                .map(Card::getDenomination)
+                .filter(denomination -> denomination != Denomination.ACE)
+                .mapToInt(Denomination::getScore)
+                .sum();
+        int aceScore = 1;
+        assertThat(actualTotal).isEqualTo(totalWithoutAce + aceScore);
+    }
 
     @Test
     @DisplayName("BlackJack인지 확인한다")
