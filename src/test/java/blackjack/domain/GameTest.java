@@ -14,7 +14,7 @@ class GameTest {
     void should_getTwoCards_To_InitialHands() {
         Deck deck = Deck.createSuffledDeck();
         Players players = new Players(List.of("pobi", "honux"));
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
 
         Game game = Game.of(deck, dealer, players);
 

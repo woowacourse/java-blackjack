@@ -4,10 +4,11 @@ import java.util.function.BooleanSupplier;
 
 public class Dealer extends Participant {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_THRESHOLD = 17;
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     @Override
