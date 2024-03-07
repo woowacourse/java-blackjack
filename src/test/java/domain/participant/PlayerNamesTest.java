@@ -33,4 +33,16 @@ public class PlayerNamesTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 이름에 중복이 존재합니다.");
     }
+
+    @DisplayName("유효하지 않은 개수의 이름이 입력되면 예외를 발생한다.")
+    @Test
+    void validateSizeTest() {
+        // Given
+        List<String> inputPlayerNames = List.of("kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly");
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> PlayerNames.of(inputPlayerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임에 참여할 사람은 10명 이하여야 합니다.");
+    }
 }
