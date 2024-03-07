@@ -7,6 +7,7 @@ import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.PlayerName;
 import domain.participant.PlayerNames;
 import view.InputView;
 import view.OutputView;
@@ -70,7 +71,16 @@ public class BlackJackGame {
         if (!player.isDrawable()) {
             return false;
         }
-        return InputView.inputDrawDecision(player.getPlayerName());
+        return inputDrawDecision(player.getPlayerName());
+    }
+
+    private boolean inputDrawDecision(PlayerName playerName) {
+        try {
+            return InputView.inputDrawDecision(playerName);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputDrawDecision(playerName);
+        }
     }
 
     private void firstDraw(Deck deck, Dealer dealer, List<Player> players) {
