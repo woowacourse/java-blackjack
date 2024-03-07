@@ -23,9 +23,8 @@ public class BlackJackController {
     }
 
     private static void printResult(BlackJack blackJack) {
-        blackJack.savePlayerResult();
-        Map<Participant, Boolean> result = blackJack.getResult();
-        OutputView.printFinalResult(result);
+        BlackJackResult blackJackResult = blackJack.savePlayerResult();
+        OutputView.printFinalResult(blackJackResult);
     }
 
     private static void printScore(Dealer dealer, Participants participants) {

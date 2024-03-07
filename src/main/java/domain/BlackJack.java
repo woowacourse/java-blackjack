@@ -6,12 +6,10 @@ import java.util.Map;
 public class BlackJack {
     private Dealer dealer;
     private Participants participants;
-    private Map<Participant, Boolean> result;
 
     public BlackJack(Dealer dealer, Participants participants) {
         this.dealer = dealer;
         this.participants = participants;
-        this.result = new HashMap<>();
     }
 
     public void beginDealing() {
@@ -42,14 +40,12 @@ public class BlackJack {
         return participantScore > dealerScore;
     }
 
-    public void savePlayerResult() {
+    public BlackJackResult savePlayerResult() {
+        Map<Participant, Boolean> result = new HashMap<>();
         for (Participant participant : participants.getValue()) {
             result.put(participant, isWinner(participant));
         }
-    }
-
-    public Map<Participant, Boolean> getResult() {
-        return result;
+        return new BlackJackResult(result);
     }
 
     private boolean isWinnerByCardCount(Participant participant) {

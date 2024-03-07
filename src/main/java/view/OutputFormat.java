@@ -1,9 +1,6 @@
 package view;
 
-import domain.Card;
-import domain.Name;
-import domain.Participant;
-import domain.Participants;
+import domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +41,10 @@ public class OutputFormat {
         return String.format("%s: 패", entry.getKey().getName().getValue());
     }
 
-    public String formatDealerResult(Map<Participant, Boolean> result) {
-        long dealerWinCount = result.values().stream()
-                .filter(isWin -> !isWin)
-                .count();
+    public String formatDealerResult(BlackJackResult blackJackResult) {
+        int totalResult = blackJackResult.getTotalCount();
+        int dealerWinCount = blackJackResult.getDealerWinCount();
 
-        int totalResult = result.keySet().size();
-        return String.format("딜러: %d승 %d패", (int)dealerWinCount, totalResult - (int)dealerWinCount);
+        return String.format("딜러: %d승 %d패", dealerWinCount, totalResult - dealerWinCount);
     }
 }

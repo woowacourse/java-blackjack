@@ -34,13 +34,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalResult(Map<Participant, Boolean> result) {
+    public static void printFinalResult(BlackJackResult blackJackResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.printf(outputFormat.formatDealerResult(result));
+        System.out.printf(outputFormat.formatDealerResult(blackJackResult));
         System.out.println();
 
-        for (Map.Entry<Participant, Boolean> entry : result.entrySet()) {
+        for (Map.Entry<Participant, Boolean> entry : blackJackResult.getEntry()) {
             System.out.println(outputFormat.formatResult(entry));
         }
     }
