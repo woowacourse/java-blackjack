@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -23,7 +24,8 @@ public class CardDeck {
     }
 
     public Hand initHand() {
-        return new Hand(List.of(this.draw(), this.draw()));
+        List<Card> initialCards = new ArrayList<>(List.of(draw(), draw()));
+        return new Hand(initialCards);
     }
 
     public Card draw() {
