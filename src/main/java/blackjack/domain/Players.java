@@ -21,6 +21,7 @@ public class Players {
 
     public static Players of(final List<String> names, final Dealer dealer) {
         validate(names);
+
         List<Player> players = names.stream()
                 .map(name -> new Player(name, dealer))
                 .toList();
