@@ -34,4 +34,8 @@ public class ParticipantDto {
         CardShape shape = card.shape();
         return number.value() + shape.value();
     }
+
+    public int cardSum(){
+        return cards.sum();
+    }
 }
