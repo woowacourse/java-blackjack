@@ -11,7 +11,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 카드 덱의 핸드가 16이하이면 hit할 수 있다.")
     void canHit_ShouldReturnTrue_WhenCardDeckIsNotBust() {
-        Participant dealer = new Dealer(new Name("name"));
+        Participant dealer = new Dealer();
 
         dealer.hitCard(Card.from(Number.TEN, Emblem.SPADE));
         dealer.hitCard(Card.from(Number.SIX, Emblem.HEART));
@@ -23,7 +23,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 덱의 핸드가 16을 초과하면 hit 할 수 없다.")
     void canHit_ShouldReturnFalse_WhenCardDeckIsBust() {
 
-        Participant dealer = new Dealer(new Name("name"));
+        Participant dealer = new Dealer();
         dealer.hitCard(Card.from(Number.TEN, Emblem.SPADE));
         dealer.hitCard(Card.from(Number.SEVEN, Emblem.HEART));
 
