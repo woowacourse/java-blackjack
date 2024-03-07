@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Cards;
+import model.dealer.Dealer;
 import model.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,9 +23,18 @@ class GameScoreTest {
     @DisplayName("플레이어의 카드 합이 21 또는 21에 가깝게 스코어를 계산한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedScore")
-    void testCalculateGameScore(Cards cards, int expectedScore) {
+    void testCalculateGameScoreForPlayer(Cards cards, int expectedScore) {
         Player player = new Player("jojo", cards);
         GameScore gameScore = GameScore.from(player);
+        assertThat(gameScore.getScore()).isEqualTo(expectedScore);
+    }
+
+    @DisplayName("딜러의 카드 합이 21 또는 21에 가깝게 스코어를 계산한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedScore")
+    void testCalculateGameScoreForDealer(Cards cards, int expectedScore) {
+        Dealer dealer = new Dealer(cards);
+        GameScore gameScore = GameScore.from(dealer);
         assertThat(gameScore.getScore()).isEqualTo(expectedScore);
     }
 
@@ -35,11 +45,13 @@ class GameScoreTest {
                 21
             ),
             Arguments.of(
-                new Cards(List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE))),
+                new Cards(
+                    List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE))),
                 13
             ),
             Arguments.of(
-                new Cards(List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(EIGHT, HEART))),
+                new Cards(
+                    List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(EIGHT, HEART))),
                 20
             )
         );

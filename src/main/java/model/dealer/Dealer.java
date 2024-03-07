@@ -36,4 +36,8 @@ public class Dealer {
     public int cardsSize() {
         return cards.size();
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }

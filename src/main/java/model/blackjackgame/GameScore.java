@@ -4,6 +4,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.Cards;
+import model.dealer.Dealer;
 import model.player.Player;
 
 public class GameScore {
@@ -24,6 +25,12 @@ public class GameScore {
         Cards cards = player.getCards();
         int totalScore = calculateTotalScore(cards);
         return new GameScore(player.getName(), totalScore);
+    }
+
+    public static GameScore from(Dealer dealer) {
+        Cards cards = dealer.getCards();
+        int totalScore = calculateTotalScore(cards);
+        return new GameScore("딜러", totalScore);
     }
 
     private static int calculateTotalScore(Cards cards) {
