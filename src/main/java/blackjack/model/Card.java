@@ -7,9 +7,9 @@ public class Card {
     private final Denomination denomination;
     private final Random random = new Random();
 
-    public Card(final NumberGenerator numberGenerator) {
-        this.suit = generateSuit(numberGenerator);
-        this.denomination = generateDenomination(numberGenerator);
+    public Card(final Suit suit, final Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     private Suit generateSuit(final NumberGenerator numberGenerator) {

@@ -7,10 +7,10 @@ public class Player {
     private final String name;
     private final Hand hand;
 
-    public Player(final String name, final NumberGenerator numberGenerator) {
+    public Player(final String name, final CardGenerator cardGenerator) {
         validateName(name);
         this.name = name;
-        this.hand = new Hand(numberGenerator);
+        this.hand = new Hand(cardGenerator);
     }
 
     private void validateName(final String name) {
@@ -21,11 +21,11 @@ public class Player {
 
     public boolean canHit() {
         int cardsTotal = hand.calculateCardsTotal();
-        return cardsTotal <= 21;
+        return cardsTotal <= HIT_CONDITION;
     }
 
-    public void hit(final NumberGenerator numberGenerator) {
-        hand.addCard(numberGenerator);
+    public void hit(final CardGenerator cardGenerator) {
+        hand.addCard(cardGenerator);
     }
 
     public Hand getHand() {

@@ -12,7 +12,7 @@ public class PlayerTest {
     @DisplayName("참여자 이름은 한 글자 이상이 아니면 예외가 발생한다")
     void validatePlayerNameLengthTest() {
         // when & then
-        assertThatThrownBy(() -> new Player("", () -> 0))
+        assertThatThrownBy(() -> new Player("", () -> new Card(Suit.HEART, Denomination.TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -20,7 +20,11 @@ public class PlayerTest {
     @DisplayName("21을 넘지 않을 경우 얼마든지 카드를 계속 뽑을 수 있다")
     void canHitTest() {
         // given
-        Player player = new Player("dora", new SequentialNumberGenerator(List.of(0, 9, 0, 9)));
+        List<Card> cards = List.of(
+                new Card(Suit.HEART, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.QUEEN)
+        );
+        Player player = new Player("dora", new SequentialCardGenerator(cards));
 
         // when & then
         assertThat(player.canHit()).isTrue();
@@ -30,10 +34,14 @@ public class PlayerTest {
     @DisplayName("각 참여자들이 카드의 합을 맞추기 위해 카드를 더 받을 수 있다")
     void hitTest() {
         // given
-        Player player = new Player("dora", new SequentialNumberGenerator(List.of(0, 9, 0, 9)));
+        List<Card> cards = List.of(
+                new Card(Suit.HEART, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.QUEEN)
+        );
+        Player player = new Player("dora", new SequentialCardGenerator(cards));
 
         // when
-        player.hit(() -> 1);
+        player.hit(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
         assertThat(player.getHand().getCards()).hasSize(3);

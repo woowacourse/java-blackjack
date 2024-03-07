@@ -5,13 +5,13 @@ public class Dealer {
 
     private final Hand hand;
 
-    public Dealer(final NumberGenerator numberGenerator) {
-        this.hand = new Hand(numberGenerator);
+    public Dealer(final CardGenerator cardGenerator) {
+        this.hand = new Hand(cardGenerator);
     }
 
-    public void doAction(final NumberGenerator numberGenerator) {
+    public void doAction(final CardGenerator cardGenerator) {
         while (hand.calculateCardsTotal() < ACTION_CONDITION) {
-            hand.addCard(numberGenerator);
+            hand.addCard(cardGenerator);
         }
     }
 

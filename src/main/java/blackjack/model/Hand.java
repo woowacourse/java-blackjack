@@ -8,12 +8,16 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(final NumberGenerator numberGenerator) {
-        this.cards = new ArrayList<>(deal(numberGenerator));
+    Hand(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    private List<Card> deal(final NumberGenerator numberGenerator) {
-        return List.of(new Card(numberGenerator), new Card(numberGenerator));
+    public Hand(final CardGenerator cardGenerator) {
+        this.cards = new ArrayList<>(deal(cardGenerator));
+    }
+
+    private List<Card> deal(final CardGenerator cardGenerator) {
+        return List.of(cardGenerator.pick(), cardGenerator.pick());
     }
 
     public int calculateCardsTotal() {
@@ -27,8 +31,8 @@ public class Hand {
         return calculateCardsTotal() == BLACK_JACK_CONDITION;
     }
 
-    public void addCard(final NumberGenerator numberGenerator) {
-        cards.add(new Card(numberGenerator));
+    public void addCard(final CardGenerator cardGenerator) {
+        cards.add(cardGenerator.pick());
     }
 
     public List<Card> getCards() {

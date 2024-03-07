@@ -1,21 +1,23 @@
 package blackjack.model;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class DealerTest {
     @Test
     @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
     void canHitTest() {
         // given
-        Dealer dealer = new Dealer(new SequentialNumberGenerator(List.of(0, 0, 0, 0)));
+        Card cardCreatedByDeal = new Card(Suit.HEART, Denomination.TWO);
+        Dealer dealer = new Dealer(new SequentialCardGenerator(List.of(cardCreatedByDeal, cardCreatedByDeal)));
 
         // when
-        dealer.doAction(new SequentialNumberGenerator(List.of(0, 8, 0, 2)));
+        Card firstCardCreatedByAction = new Card(Suit.HEART, Denomination.TEN);
+        Card secondCardCreatedByAction = new Card(Suit.HEART, Denomination.FOUR);
+        dealer.doAction(new SequentialCardGenerator(List.of(firstCardCreatedByAction, secondCardCreatedByAction)));
 
         // then
         int cardsTotal = dealer.getHand().calculateCardsTotal();
