@@ -4,7 +4,7 @@ public class Card {
     private static final int MAX_CARD_VALUE = 13;
 
     private final Kind kind;
-    private final Value value;
+    private Value value;
 
     private Card(Kind kind, Value value) {
         this.kind = kind;
@@ -17,6 +17,10 @@ public class Card {
         Value value = Value.findValue(cardNumber);
 
         return new Card(kind, value);
+    }
+
+    public void downgradeAce() {
+        value = Value.ACELOW;
     }
 
     public String getCardName() {

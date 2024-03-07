@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.Kind.DIAMOND;
 import static blackjack.domain.Kind.SPADE;
-import static blackjack.domain.Value.ACE;
+import static blackjack.domain.Value.ACEHIGH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -19,10 +19,10 @@ class CardTest {
 
         assertAll(
                 () -> assertThat(testCard1.getKind()).isEqualTo(SPADE),
-                () -> assertThat(testCard1.getValue()).isEqualTo(ACE),
+                () -> assertThat(testCard1.getValue()).isEqualTo(ACEHIGH),
 
                 () -> assertThat(testCard2.getKind()).isEqualTo(DIAMOND),
-                () -> assertThat(testCard2.getValue()).isEqualTo(ACE)
+                () -> assertThat(testCard2.getValue()).isEqualTo(ACEHIGH)
         );
     }
 

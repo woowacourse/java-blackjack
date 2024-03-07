@@ -29,4 +29,16 @@ class HandsTest {
 
         assertThat(hands.getHandsScore()).isEqualTo(12);
     }
+
+    @DisplayName("에이스는 1 또는 11로 사용할 수 있다")
+    @Test
+    void should_downgradeAce() {
+        Hands hands = new Hands();
+        hands.addCard(Card.create(0));
+
+        assertThat(hands.getHandsScore()).isEqualTo(11);
+
+        hands.downgradeAce();
+        assertThat(hands.getHandsScore()).isOne();
+    }
 }
