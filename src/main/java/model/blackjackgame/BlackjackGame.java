@@ -24,7 +24,7 @@ public class BlackjackGame {
         players = players.addCards(cardsElement.subList(SETTING_CARD_COUNT, cardsElement.size()));
     }
 
-    public void hitOrStayForPlayer(Player player, Answer answer, Card card) {
+    public void hitOrStayForPlayer(Player player, HitAnswer answer, Card card) {
         if (answer.isHit()) {
             players = players.hit(player, card);
         }

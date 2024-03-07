@@ -58,7 +58,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Players players = blackjackGame.getPlayers();
         List<Player> playersElement = players.getPlayers();
-        List<Answer> answers = List.of(new Answer(true), new Answer(false));
+        List<HitAnswer> answers = List.of(new HitAnswer(true), new HitAnswer(false));
         List<Card> cards = List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER));
 
         for (int i = 0; i < answers.size(); i++) {
