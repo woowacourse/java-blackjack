@@ -2,6 +2,7 @@ package blackjack.domain;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
@@ -24,5 +25,18 @@ class DeckTest {
 
         Card expected = new Card(Shape.SPADE, Value.ACE);
         assertThat(deck.draw()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("중복되는 카드가 있다면 예외가 발생한다.")
+    void duplicatedCardsTest() {
+        List<Card> cards = List.of(
+                new Card(Shape.DIAMOND, Value.FOUR),
+                new Card(Shape.DIAMOND, Value.FOUR)
+        );
+
+        assertThatThrownBy(() -> Deck.from(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복되는 카드가 있습니다.");
     }
 }
