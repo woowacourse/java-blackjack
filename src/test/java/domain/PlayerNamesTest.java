@@ -20,4 +20,16 @@ public class PlayerNamesTest {
         // Then
         Assertions.assertThat(playerNames).isNotNull();
     }
+
+    @DisplayName("플레이어 이름에 중복이 있다면 예외를 발생한다.")
+    @Test
+    void validateDuplicatedTest() {
+        // Given
+        List<String> inputPlayerNames = List.of("kelly", "kelly");
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> PlayerNames.of(inputPlayerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 이름에 중복이 존재합니다.");
+    }
 }
