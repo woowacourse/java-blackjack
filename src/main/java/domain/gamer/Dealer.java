@@ -1,30 +1,26 @@
 package domain.gamer;
 
-import java.util.Collections;
 import java.util.List;
 
 import domain.card.Card;
+import domain.card.Deck;
 
 public class Dealer extends Gamer {
-	private final List<Card> deck;
+	private final Deck deck;
 
-	// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
-	public Dealer(List<Card> deck, List<Card> cardHand) {
+	public Dealer(List<Card> cards, List<Card> cardHand) {
+		// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
 		super(cardHand);
-		Collections.shuffle(deck);
-		this.deck = deck;
+		this.deck = new Deck(cards);
+		deck.shuffle();
 	}
 
 	public List<Card> dealInit() {
-		return List.of(deck.remove(0), deck.remove(0));
+		return deck.drawCards(2);
 	}
 
 	public Card dealCard() {
-		return deck.remove(0);
-	}
-
-	public boolean deckContains(Card card) {
-		return deck.contains(card);
+		return deck.drawCard();
 	}
 
 	public int deckSize() {

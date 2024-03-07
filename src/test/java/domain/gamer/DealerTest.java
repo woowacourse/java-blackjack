@@ -15,13 +15,13 @@ import domain.card.Rank;
 import domain.card.Suit;
 
 public class DealerTest {
-	List<Card> deck = new ArrayList<>();
+	List<Card> cards = new ArrayList<>();
 
 	@BeforeEach
 	void init() {
 		for (Suit suit : Suit.values()) {
 			for (Rank rank : Rank.values()) {
-				deck.add(new Card(suit, rank));
+				cards.add(new Card(suit, rank));
 			}
 		}
 	}
@@ -30,7 +30,7 @@ public class DealerTest {
 	@Test
 	void hasDeckTest() {
 		// given & when
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = new Dealer(cards, new ArrayList<>());
 
 		// then
 		assertThat(dealer.deckSize()).isEqualTo(52);
@@ -40,7 +40,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = new Dealer(cards, new ArrayList<>());
 
 		// when
 		List<Card> cards = dealer.dealInit();
@@ -53,7 +53,7 @@ public class DealerTest {
 	@Test
 	void dealInitCardsSelfTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = new Dealer(cards, new ArrayList<>());
 
 		// when
 		dealer.receiveInitCards(dealer.dealInit());
@@ -66,24 +66,23 @@ public class DealerTest {
 	@Test
 	void dealCardTest() {
 		// given
-		Dealer dealer = new Dealer(deck, new ArrayList<>());
+		Dealer dealer = new Dealer(cards, new ArrayList<>());
 
 		// when
-		int beforeDeckSize = dealer.deckSize();
 		Card card = dealer.dealCard();
 
 		// then
-		Assertions.assertAll(
-			() -> assertThat(dealer.deckSize()).isEqualTo(beforeDeckSize - 1),
-			() -> assertThat(dealer.deckContains(card)).isFalse()
-		);
+		assertThat(dealer)
+			.extracting("deck")
+			.extracting("cards")
+			.isNotIn(card);
 	}
 
 	@DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit한다.")
 	@Test
 	void dealerHitTest() {
 		// given
-		Dealer dealer = new Dealer(deck,
+		Dealer dealer = new Dealer(cards,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SIX))));
 		int beforeDeckSize = dealer.deckSize();
 
@@ -98,7 +97,7 @@ public class DealerTest {
 	@Test
 	void dealerStandTest() {
 		// given
-		Dealer dealer = new Dealer(deck,
+		Dealer dealer = new Dealer(cards,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SEVEN))));
 		int beforeDeckSize = dealer.deckSize();
 
