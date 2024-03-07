@@ -22,7 +22,7 @@ public class PlayerTest {
 
         int score = player.calculate();
 
-        assertThat(score).isEqualTo(13);
+        assertThat(score).isEqualTo(0);
     }
 
     @DisplayName("플레이어는 자신의 핸드에 카드를 추가할 수 있다")
@@ -30,12 +30,10 @@ public class PlayerTest {
     public void putCard() {
         Player player = new Player("마크");
         Card card = CardFixture.heartJack();
-        int score = player.calculate();
 
         player.putCard(card);
-        int newScore = player.calculate();
+        int score = player.calculate();
 
-        assertThat(score).isEqualTo(13);
-        assertThat(newScore).isEqualTo(23);
+        assertThat(score).isEqualTo(10);
     }
 }

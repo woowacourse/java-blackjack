@@ -17,4 +17,8 @@ public class Player {
     public void putCard(Card card) {
         hand.put(card);
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }
