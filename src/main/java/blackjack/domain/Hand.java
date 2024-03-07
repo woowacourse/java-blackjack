@@ -23,7 +23,7 @@ public class Hand {
 
     private int calculateCardNumber(int aceCounts) {
         int sum = calculateWithDefaultAceNumber();
-        for (int i = 0; i < aceCounts && !isBurst(sum); i++) {
+        for (int i = 0; i < aceCounts && !isAceAddable(sum); i++) {
             sum += 10;
         }
         return sum;
@@ -35,7 +35,7 @@ public class Hand {
                 .sum();
     }
 
-    private boolean isBurst(int sum) {
+    private boolean isAceAddable(int sum) {
         return sum + 10 > 21;
     }
 

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Player;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,5 +34,19 @@ public class InputView {
     private static boolean hasBlank(List<String> splitNames) {
         return splitNames.stream()
                 .anyMatch(name -> name.isEmpty() || name.isBlank());
+    }
+
+    public static boolean readHitOrStand(Player player) {
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
+        try {
+            String input = BUFFERED_READER.readLine();
+            if (!("y".equals(input) || "n".equals(input))) {
+                throw new IllegalArgumentException(String.format("y 또는 n만 입력 가능합니다. 입력값: %s", input));
+            }
+            return "y".equals(input);
+        } catch (IOException e) {
+            //TODO: OutputView.printError();
+            throw new IllegalStateException("입력도중 에러가 발생했습니다.");
+        }
     }
 }
