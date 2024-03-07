@@ -5,13 +5,19 @@ import java.util.List;
 
 public class DealerDto {
 
-    private final List<Card> values;
+    private final List<Card> cards;
+    private final int score;
 
-    public DealerDto(final List<Card> values) {
-        this.values = values;
+    public DealerDto(final List<Card> cards, final int score) {
+        this.cards = cards;
+        this.score = score;
     }
 
-    public List<Card> getValues() {
-        return values;
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

@@ -13,7 +13,7 @@ public class OutputView {
 
     public static void printInitialState(DealerDto dealerDto, PlayersDto playersDto) {
         System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
-        System.out.println(DEALER + ": " + makeCardsState(dealerDto.getValues()));
+        System.out.println(DEALER + ": " + makeCardsState(dealerDto.getCards()));
         for (PlayerDto playerDto : playersDto.getValues()) {
             System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards()));
         }
@@ -42,5 +42,15 @@ public class OutputView {
 
     public static void printDealerDrawMessage() {
         System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalState(final DealerDto dealerDto, final PlayersDto playersDto) {
+        System.out.println(System.lineSeparator() + DEALER + ": " + makeCardsState(dealerDto.getCards())
+                + " - 결과: " + dealerDto.getScore());
+        for (PlayerDto playerDto : playersDto.getValues()) {
+            System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards())
+                    + " - 결과: " + playerDto.getScore());
+        }
+        System.out.println();
     }
 }

@@ -25,6 +25,8 @@ public class Application {
 
         hitPlayers(gameBoard, players);
         hitDealer(gameBoard, dealer);
+
+        OutputView.printFinalState(dealer.allCardToDto(), players.toDto());
     }
 
     private static void hitPlayers(final GameBoard gameBoard, final Players players) {

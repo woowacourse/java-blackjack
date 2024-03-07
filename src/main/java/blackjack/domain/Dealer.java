@@ -29,15 +29,20 @@ public class Dealer implements Gamer {
         return cards.sum() <= THRESHOLD;
     }
 
+    @Override
+    public int calculateScore() {
+        return cards.sum();
+    }
+
     public Card findFaceUpCard() {
         return cards.findFirst();
     }
 
     public DealerDto firstCardToDto() {
-        return new DealerDto(List.of(this.findFaceUpCard()));
+        return new DealerDto(List.of(this.findFaceUpCard()), calculateScore());
     }
 
     public DealerDto allCardToDto() {
-        return new DealerDto(cards.getCards());
+        return new DealerDto(cards.getCards(), calculateScore());
     }
 }

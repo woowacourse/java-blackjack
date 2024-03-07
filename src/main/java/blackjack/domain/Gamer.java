@@ -7,4 +7,6 @@ public interface Gamer {
     void draw(Card card);
 
     boolean canDraw();
+
+    int calculateScore();
 }

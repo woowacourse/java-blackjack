@@ -32,6 +32,11 @@ public class Player implements Gamer {
         return cards.sum() <= THRESHOLD;
     }
 
+    @Override
+    public int calculateScore() {
+        return cards.sum();
+    }
+
     public Name getName() {
         return name;
     }
@@ -41,6 +46,6 @@ public class Player implements Gamer {
     }
 
     public PlayerDto toDto() {
-        return new PlayerDto(name, cards.getCards());
+        return new PlayerDto(name, cards.getCards(), calculateScore());
     }
 }
