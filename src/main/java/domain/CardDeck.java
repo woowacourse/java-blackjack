@@ -15,9 +15,10 @@ public class CardDeck {
                 .toList();
         deck = new Stack<>();
         deck.addAll(cards);
+        shuffle();
     }
 
-    public void shuffle() {
+    private void shuffle() {
         Collections.shuffle(deck);
     }
 
