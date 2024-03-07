@@ -1,5 +1,6 @@
 package dto;
 
+import domain.Dealer;
 import domain.Player;
 import domain.Players;
 
@@ -12,6 +13,12 @@ public class PlayersDto {
 
     private PlayersDto(final List<PlayerDto> players) {
         this.players = players;
+    }
+
+    public static PlayersDto from(final Dealer dealer, final Players players) { // TODO 추상화 고려
+        PlayersDto playersDto = from(players);
+        playersDto.players.add(0, PlayerDto.from(dealer));
+        return playersDto;
     }
 
     public static PlayersDto from(final Players players) {

@@ -9,6 +9,7 @@ import java.util.List;
 public class OutputView {
 
     private final String FORM = "%s카드: %s";
+    private final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d";
 
     public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayersDto playersDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
@@ -32,6 +33,14 @@ public class OutputView {
 
     public void printDealerCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다."); //TODO 메서드 변경
+        System.out.println();
+    }
+
+    public void printHandsResult(final PlayersDto playersDto) {
+        for (PlayerDto playerDto : playersDto.getPlayers()) {
+            System.out.printf(TOTAL_SUM_FORM, playerDto.getName(), format(playerDto.getCards()), playerDto.getTotalSum() );
+            System.out.println();
+        }
     }
 
     private String format(final List<String> playerNames) {

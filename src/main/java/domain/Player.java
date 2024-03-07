@@ -56,6 +56,10 @@ public class Player {
                 .toList();
     }
 
+    public int getTotalSum() {
+        return hands.sum();
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {

@@ -36,6 +36,8 @@ public class BlackJackController {
             dealer.deal();
             outputView.printDealerCard();
         }
+
+        outputView.printHandsResult(PlayersDto.from(dealer, players));
     }
 
     private void deal(final Player player, final Dealer dealer) {
