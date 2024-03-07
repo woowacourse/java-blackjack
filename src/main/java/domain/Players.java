@@ -12,7 +12,7 @@ public class Players {
     }
 
     public static Players from(String[] names) {
-        return new Players(Arrays.stream(names).map(name -> new Player(new Name(name))).collect(Collectors.toList()));
+        return new Players(Arrays.stream(names).map(name -> new Participant(new Name(name))).collect(Collectors.toList()));
     }
 
     public List<Player> getPlayers() {

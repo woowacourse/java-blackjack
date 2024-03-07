@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Player {
+public abstract class Player {
     private Name name;
     private final List<Card> cards = new ArrayList<>();
 
@@ -20,9 +20,7 @@ public class Player {
     }
 
 
-    public boolean alive() {
-        return calculateScore() < 21;
-    }
+    abstract public boolean alive();
 
     public int calculateScore() {
         int score = 0;
