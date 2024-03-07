@@ -19,7 +19,7 @@ class DealerTest {
         dealer.startDeal(players);
 
         //then
-        Assertions.assertThat(players.getNames()).allMatch(player -> player.getPacketSize() == 2);
+        Assertions.assertThat(players.getPlayers()).allMatch(player -> player.getPacketSize() == 2);
     }
 
     @Test

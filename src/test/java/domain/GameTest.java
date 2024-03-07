@@ -51,7 +51,7 @@ class GameTest {
 
         //when & then
         Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
-        Assertions.assertThat(game.getResult()).isEqualTo(expected);
+        Assertions.assertThat(game.getPlayersResult()).isEqualTo(expected);
     }
 
     @DisplayName("딜러의 승패무를 판단한다.")
@@ -120,7 +120,7 @@ class GameTest {
         Map<Result, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then
-        Assertions.assertThat(game.getResult()).isEqualTo(expectedPlayerResult);
+        Assertions.assertThat(game.getPlayersResult()).isEqualTo(expectedPlayerResult);
         Assertions.assertThat(game.getDealerResult()).isEqualTo(expectedDealerResult);
     }
 }

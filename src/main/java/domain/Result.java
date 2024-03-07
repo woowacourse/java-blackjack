@@ -1,6 +1,6 @@
 package domain;
 
-public enum Result { //TODO 무승부
+public enum Result {
 
     WIN("승"),
     LOSE("패"),

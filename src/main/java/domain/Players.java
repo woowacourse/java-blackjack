@@ -54,7 +54,7 @@ public class Players {
         }
     }
 
-    public List<Player> getNames() {
+    public List<Player> getPlayers() {
         return names;
     }
 }

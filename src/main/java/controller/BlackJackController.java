@@ -30,13 +30,13 @@ public class BlackJackController {
         dealer.startDeal(players);
         outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
 
-        for (Player player : players.getNames()) {
+        for (Player player : players.getPlayers()) {
             deal(player, dealer);
         }
 
         if (players.isAllBust()) {
             outputView.printHandsResult(PlayersDto.from(dealer, players));
-            outputView.printGameResult(game.getDealerResult(), game.getResult());
+            outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
             return;
         }
 
@@ -46,7 +46,7 @@ public class BlackJackController {
         }
 
         outputView.printHandsResult(PlayersDto.from(dealer, players));
-        outputView.printGameResult(game.getDealerResult(), game.getResult());
+        outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
     }
 
     private void deal(final Player player, final Dealer dealer) {

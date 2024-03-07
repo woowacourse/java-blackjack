@@ -23,7 +23,7 @@ public class PlayersDto {
 
     public static PlayersDto from(final Players players) {
         List<PlayerDto> result = new ArrayList<>();
-        for (Player player : players.getNames()) {
+        for (Player player : players.getPlayers()) {
             result.add(PlayerDto.from(player));
         }
 

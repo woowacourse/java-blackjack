@@ -16,14 +16,12 @@ public class Player {
     }
 
     public void add(final Card card) {
-        hands.add(card);
+        this.hands.add(card);
     }
 
-    public Result isWin(final Dealer dealer) {
+    public Result calculateResult(final Dealer dealer) {
         return this.hands.calculateResult(dealer.getHands());
     }
-
-    //TODO 메서드 명 변경
 
     private void validate(final String name) {
         validateNull(name);
