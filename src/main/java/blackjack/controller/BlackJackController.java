@@ -37,6 +37,7 @@ public class BlackJackController {
     private void drawCardWithCommand(Player player, BlackJackGame blackJackGame, int index) {
         while (player.checkDrawCardState() && inputView.readCommand(player) == Command.YES) {
             blackJackGame.update(index);
+            outputView.printPlayerCardsInfo(blackJackGame, index);
         }
     }
 }

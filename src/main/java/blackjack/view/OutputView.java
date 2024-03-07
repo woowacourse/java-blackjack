@@ -19,6 +19,11 @@ public class OutputView {
         players.forEach(player -> System.out.printf("%s: %s%n", player.getName(), getCards(player)));
     }
 
+    public void printPlayerCardsInfo(BlackJackGame blackJackGame, int index) {
+        Player player = blackJackGame.getPlayers().get(index);
+        System.out.printf("%s: %s%n", player.getName(), getCards(player));
+    }
+
     private String getPlayersNames(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
