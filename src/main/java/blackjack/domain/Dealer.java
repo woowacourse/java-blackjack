@@ -22,10 +22,6 @@ public class Dealer {
         }
     }
 
-    public boolean isBusted() {
-        return player.isBusted();
-    }
-
     public List<Card> getCards() {
         return player.getCards();
     }
