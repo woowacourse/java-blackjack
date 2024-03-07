@@ -28,4 +28,9 @@ public class Card {
     public CardNumber getCardNumber() {
         return cardNubmer;
     }
+
+    @Override
+    public String toString() {
+        return cardNubmer.getSymbol() + cardType.getType();
+    }
 }
