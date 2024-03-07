@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class Dealer extends Player {
     private static final int HITTABLE_THRESHOLD = 16;
 
@@ -12,7 +14,7 @@ public class Dealer extends Player {
         return cards.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
-    public Card openCard() {
-        return cards.getFirstCard();
+    public List<Card> openCard() {
+        return List.of(cards.getFirstCard());
     }
 }

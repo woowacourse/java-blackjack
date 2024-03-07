@@ -26,6 +26,6 @@ class DealerTest {
         Cards cards = new Cards(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
         Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.openCard()).isEqualTo(new Card(CLOVER, FIVE));
+        assertThat(dealer.openCard()).containsExactly(new Card(CLOVER, FIVE));
     }
 }
