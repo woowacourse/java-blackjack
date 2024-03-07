@@ -1,5 +1,8 @@
 package controller;
 
+import static domain.constants.CardCommand.HIT;
+import static domain.constants.CardCommand.STAND;
+
 import controller.dto.GameResult;
 import controller.dto.HandStatus;
 import controller.dto.PlayerResult;
@@ -8,6 +11,7 @@ import domain.Game;
 import domain.GameRule;
 import domain.Participant;
 import domain.Player;
+import domain.constants.CardCommand;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -64,18 +68,18 @@ public class GameController {
     private void startRound(final Game game) {
         List<String> names = game.getPlayerNames();
         for (String name : names) {
-            String command = inputView.decideToGetMoreCard(name);
+            CardCommand command = CardCommand.from(inputView.decideToGetMoreCard(name));
             HandStatus status = game.getCurrentCardStatus(name);
-            while ("y".equals(command)) {
+            while (HIT.equals(command)) {
                 status = game.pickOneCard(name);
                 outputView.printCardStatus(status);
                 int currentSum = game.getPlayer(name).calculateScoreWhileDraw();
                 if (currentSum >= 21) {
                     break;
                 }
-                command = inputView.decideToGetMoreCard(name);
+                command = CardCommand.from(inputView.decideToGetMoreCard(name));
             }
-            if (command.equals("n")) {
+            if (STAND.equals(command)) {
                 outputView.printCardStatus(status);
             }
         }
