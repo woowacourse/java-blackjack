@@ -16,7 +16,7 @@ public class GameRule {
         if (isBusted(participant.dealer())) {
             return judgePlayersIfDealerBusted();
         }
-        
+
         List<Boolean> gameResult = new ArrayList<>();
         for (Player player : participant.players()) {
             checkWinner(player, gameResult);
@@ -25,12 +25,7 @@ public class GameRule {
     }
 
     private boolean isBusted(final Player player) {
-        return player.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
-    }
-
-    public boolean isNotDealerBlackJack() {
-        Dealer dealer = participant.dealer();
-        return !dealer.isBlackJack(BLACKJACK_SCORE);
+        return player.calculateResultScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
     }
 
     private void checkWinner(final Player player, final List<Boolean> gameResult) {

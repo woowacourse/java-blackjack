@@ -24,17 +24,17 @@ public class Game {
     public List<HandStatus> initiateGameCondition() {
         List<HandStatus> status = new ArrayList<>();
         Dealer dealer = participant.dealer();
-        status.add(new HandStatus(dealer.getName(), pickTwoCards(dealer)));
+        status.add(new HandStatus(dealer.getName(), new Hand(pickTwoCards(dealer))));
         for (Player player : participant.players()) {
-            status.add(new HandStatus(player.getName(), pickTwoCards(player)));
+            status.add(new HandStatus(player.getName(), new Hand(pickTwoCards(player))));
         }
         return status;
     }
 
     private List<Card> pickTwoCards(final Player player) {
-        player.saveCard(deck.pick());
-        player.saveCard(deck.pick());
-        return player.getCards();
+        player.drawCard(deck.pick());
+        player.drawCard(deck.pick());
+        return player.getHand().getCards();
     }
 
     public HandStatus pickOneCard(final String name) {
@@ -43,8 +43,8 @@ public class Game {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-        foundPlayer.saveCard(deck.pick());
-        return new HandStatus(foundPlayer.getName(), foundPlayer.getCards());
+        foundPlayer.drawCard(deck.pick());
+        return new HandStatus(foundPlayer.getName(), foundPlayer.getHand());
     }
 
     public List<String> getPlayerNames() {
@@ -60,18 +60,19 @@ public class Game {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-        return new HandStatus(foundPlayer.getName(), foundPlayer.getCards());
+        return new HandStatus(foundPlayer.getName(), foundPlayer.getHand());
     }
 
+    // TODO: 매직 넘버 상수화
     public int giveCardsToDealer() {
         Dealer dealer = participant.dealer();
         int threshold = 16;
-        int currentScore = dealer.calculateScore(21);
+        int currentScore = dealer.calculateResultScore(21);
 
         int count = 0;
         while (currentScore <= threshold) {
-            dealer.saveCard(deck.pick());
-            currentScore = dealer.calculateScore(21);
+            dealer.drawCard(deck.pick());
+            currentScore = dealer.calculateResultScore(21);
             count++;
         }
         return count;

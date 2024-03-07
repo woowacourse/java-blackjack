@@ -1,6 +1,5 @@
 package domain.constants;
 
-// TODO: 클래스 명 수정
 public enum Score {
     ACE(11, "A"),
     TWO(2, "2"),

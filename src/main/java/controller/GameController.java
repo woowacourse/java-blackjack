@@ -24,15 +24,13 @@ public class GameController {
 
     public void run() {
         Game game = start();
-        GameRule rule = new GameRule(game.getParticipant());
-        if (rule.isNotDealerBlackJack()) {
-            startRound(game);
-            giveCardToDealer(game);
-        }
+        startRound(game);
+        giveCardToDealer(game);
+
         List<Integer> scores = new ArrayList<>();
-        scores.add(game.getParticipant().dealer().calculateScore(21));
+        scores.add(game.getParticipant().dealer().calculateResultScore(21));
         for (Player player : game.getParticipant().players()) {
-            scores.add(player.calculateScore(21));
+            scores.add(player.calculateResultScore(21));
         }
         outputView.printResult(getCurrentCardsStatus(game), scores);
         outputView.printGameResult(getResults(game));
@@ -54,14 +52,15 @@ public class GameController {
         Dealer dealer = participant.dealer();
         List<Player> players = participant.players();
 
-        handStatuses.add(new HandStatus(dealer.getName(), dealer.getCards()));
+        handStatuses.add(new HandStatus(dealer.getName(), dealer.getHand()));
         for (Player player : players) {
-            handStatuses.add(new HandStatus(player.getName(), player.getCards()));
+            handStatuses.add(new HandStatus(player.getName(), player.getHand()));
         }
 
         return handStatuses;
     }
 
+    // TODO: indent 줄이기
     private void startRound(final Game game) {
         List<String> names = game.getPlayerNames();
         for (String name : names) {
@@ -87,6 +86,7 @@ public class GameController {
         outputView.printDealerPickMessage(count);
     }
 
+    // TODO: indent 줄이기
     public GameResult getResults(final Game game) {
         GameRule rule = new GameRule(game.getParticipant());
         List<Boolean> results = rule.judge();

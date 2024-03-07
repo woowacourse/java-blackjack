@@ -1,12 +1,12 @@
 package controller.dto;
 
 import domain.Card;
-import java.util.List;
+import domain.Hand;
 import java.util.stream.Collectors;
 
 public record HandStatus(
         String name,
-        List<Card> cards
+        Hand hand
 ) {
 
     public String getCardInitStatus() {
@@ -45,7 +45,7 @@ public record HandStatus(
     }
 
     private String buildCardStatusMessage() {
-        return cards.stream()
+        return hand.getCards().stream()
                 .map(this::getCardMessage)
                 .collect(Collectors.joining(", "));
     }
@@ -55,6 +55,6 @@ public record HandStatus(
     }
 
     private Card getFirstCard() {
-        return cards.get(0);
+        return hand.getCards().get(0);
     }
 }

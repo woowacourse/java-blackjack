@@ -13,7 +13,7 @@ class PlayerTest {
     @Test
     void saveCard() {
         Player player = new Player("pobi");
-        player.saveCard(new Card(Score.ACE, Shape.CLOVER));
+        player.drawCard(new Card(Score.ACE, Shape.CLOVER));
         int totalSize = player.getTotalSize();
         Assertions.assertThat(totalSize).isEqualTo(1);
     }
@@ -26,9 +26,9 @@ class PlayerTest {
         @Test
         void calculateScoreWithNoAce() {
             Player player = new Player("pobi");
-            player.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            player.saveCard(new Card(Score.NINE, Shape.CLOVER));
-            int totalScore = player.calculateScore(21);
+            player.drawCard(new Card(Score.EIGHT, Shape.CLOVER));
+            player.drawCard(new Card(Score.NINE, Shape.CLOVER));
+            int totalScore = player.calculateResultScore(21);
             Assertions.assertThat(totalScore).isEqualTo(17);
         }
 
@@ -36,11 +36,11 @@ class PlayerTest {
         @Test
         void calculateScoreWithAceIfBusted() {
             Player player = new Player("pobi");
-            player.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            player.saveCard(new Card(Score.THREE, Shape.CLOVER));
-            player.saveCard(new Card(Score.ACE, Shape.CLOVER));
+            player.drawCard(new Card(Score.EIGHT, Shape.CLOVER));
+            player.drawCard(new Card(Score.THREE, Shape.CLOVER));
+            player.drawCard(new Card(Score.ACE, Shape.CLOVER));
 
-            int totalScore = player.calculateScore(21);
+            int totalScore = player.calculateResultScore(21);
             Assertions.assertThat(totalScore).isEqualTo(12);
         }
     }
@@ -49,9 +49,9 @@ class PlayerTest {
     @Test
     void drawAceCardAndCalculateScoreOne() {
         Player player = new Player("pobi");
-        player.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-        player.saveCard(new Card(Score.THREE, Shape.CLOVER));
-        player.saveCard(new Card(Score.ACE, Shape.CLOVER));
+        player.drawCard(new Card(Score.EIGHT, Shape.CLOVER));
+        player.drawCard(new Card(Score.THREE, Shape.CLOVER));
+        player.drawCard(new Card(Score.ACE, Shape.CLOVER));
 
         int totalScore = player.calculateScoreWhileDraw();
         Assertions.assertThat(totalScore).isEqualTo(12);

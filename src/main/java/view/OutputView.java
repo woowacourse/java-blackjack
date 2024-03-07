@@ -46,6 +46,7 @@ public class OutputView {
         }
     }
 
+    // TODO: indent 줄이기
     public void printGameResult(final GameResult results) {
         System.out.println();
         System.out.println("## 최종 승패");

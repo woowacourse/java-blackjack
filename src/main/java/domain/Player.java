@@ -1,16 +1,13 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
     private final String name;
-    private final List<Card> cards;
+    private final Hand hand;
 
     public Player(final String name) {
         validateName(name);
         this.name = name;
-        cards = new ArrayList<>();
+        hand = new Hand();
     }
 
     private void validateName(final String name) {
@@ -19,71 +16,39 @@ public class Player {
         }
     }
 
-    public void saveCard(final Card card) {
-        cards.add(card);
-    }
-
-    public void saveCards(final List<Card> cards) {
-        this.cards.addAll(cards);
+    public void drawCard(final Card card) {
+        hand.saveCard(card);
     }
 
     public int calculateScoreWhileDraw() {
-        int sum = 0;
-        for (Card card : cards) {
-            if (card.isAceCard()) {
-                sum += 1;
-                continue;
-            }
-            sum += card.getScore();
-        }
-        return sum;
+        return hand.calculateScoreWhileDraw();
     }
 
-
-    public int calculateScore(final int blackJackScore) {
-        int sum = cards.stream()
-                .map(Card::getScore)
-                .mapToInt(score -> score)
-                .sum();
-        int aceCardCount = 0;
-        for (Card card : cards) {
-            if (card.isAceCard()) {
-                aceCardCount++;
-            }
-        }
-        while (aceCardCount > 0 && sum > blackJackScore) {
-            aceCardCount--;
-            sum -= 10;
-        }
-        return sum;
+    public int calculateResultScore(final int blackjackScore) {
+        return hand.calculateScore(blackjackScore);
     }
 
-    public boolean isBlackJack(final int blackJackScore) {
-        return this.calculateScore(blackJackScore) == blackJackScore;
+    public boolean hasMoreScore(final Dealer dealer) {
+        return calculateResultScore(21) > dealer.calculateResultScore(21);
+    }
+
+    public boolean hasSameScore(final Dealer dealer) {
+        return calculateResultScore(21) == dealer.calculateResultScore(21);
+    }
+
+    public boolean hasMoreCard(final Dealer dealer) {
+        return getTotalSize() > dealer.getTotalSize();
     }
 
     public int getTotalSize() {
-        return cards.size();
+        return hand.size();
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-
-    public boolean hasMoreCard(final Dealer dealer) {
-        return getTotalSize() > dealer.getTotalSize();
-    }
-
-    public boolean hasMoreScore(final Dealer dealer) {
-        return calculateScore(21) > dealer.calculateScore(21);
-    }
-
-    public boolean hasSameScore(final Dealer dealer) {
-        return calculateScore(21) == dealer.calculateScore(21);
+    public Hand getHand() {
+        return hand;
     }
 }
