@@ -37,7 +37,6 @@ class PlayerTest {
                 Arguments.of(List.of(new Card(Value.KING, Shape.HEART), new Card(Value.TWO, Shape.HEART)), 12));
     }
 
-    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
     void isDrawableTest_whenScoreIsUnder21_returnTrue() {
@@ -51,7 +50,6 @@ class PlayerTest {
         assertThat(player.isDrawable()).isTrue();
     }
 
-    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
     void isDrawableTest_whenScoreIsOver21_returnFalse() {
@@ -88,7 +86,7 @@ class PlayerTest {
                 .hasMessage("이미 시작 카드를 뽑았습니다.");
     }
 
-    @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑을 수 있다")
+    @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
     void addTest_whenScoreIsUnder21() {
         Player player = new Player(List.of(

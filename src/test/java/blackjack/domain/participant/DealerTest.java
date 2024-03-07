@@ -18,7 +18,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
-    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
     void isDrawableTest_whenScoreIsUnder16_returnTrue() {
@@ -28,7 +27,6 @@ class DealerTest {
         assertThat(dealer.isDrawable()).isTrue();
     }
 
-    //TODO DisplayName 수정
     @DisplayName("카드의 총 점수가 17을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
     void isDrawableTest_whenScoreIsOver17_returnFalse() {
@@ -97,7 +95,7 @@ class DealerTest {
                 .hasMessage("이미 시작 카드를 뽑았습니다.");
     }
 
-    @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 한 장 뽑을 수 있다")
+    @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
     void addTest_whenScoreIsUnder16() {
         Dealer dealer = new Dealer(List.of(
