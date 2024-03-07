@@ -1,6 +1,7 @@
 package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,5 +76,17 @@ class DeckTest {
 		assertThat(deck)
 			.extracting("cards")
 			.isNotIn(cards);
+	}
+
+	@DisplayName("남은 카드가 없을 때 드로우하면 예외를 발생시킨다.")
+	@Test
+	void emptyDeckDrawTest() {
+		// given
+		Deck deck = new Deck(cards);
+		deck.drawCards(Deck.INIT_SIZE);
+
+		// when & then
+		assertThatThrownBy(deck::drawCard)
+			.isInstanceOf(IndexOutOfBoundsException.class);
 	}
 }

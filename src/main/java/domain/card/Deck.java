@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-	private static final int INIT_SIZE = 52;
+	static final int INIT_SIZE = 52;
 
 	private final List<Card> cards;
 
@@ -47,7 +47,6 @@ public class Deck {
 	}
 
 	public Card drawCard() {
-		// TODO: 52장 끝났을 때 처리
 		return cards.remove(0);
 	}
 
