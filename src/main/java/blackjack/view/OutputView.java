@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.GameResult;
+import blackjack.dto.BlackjackResult;
 import java.util.List;
 
 public class OutputView {
@@ -13,8 +13,6 @@ public class OutputView {
     private static final String DEALER_RESULT_CARDS_STATUS = "딜러 카드: %s - 결과: %d" + System.lineSeparator();
     private static final String FINAL_RESULT_TITLE = System.lineSeparator() + "## 최종 승패";
     private static final String DEALER_FINAL_RESULT = "딜러: %d승 %d패" + System.lineSeparator();
-    private static final String WINS_VIEW = "승";
-    private static final String LOSES_VIEW = "패";
 
     private static final OutputView instance = new OutputView();
 
@@ -55,25 +53,18 @@ public class OutputView {
         System.out.printf(RESULT_CARDS_STATUS, name, makeCommaString(card), score);
     }
 
-    public void printFinalResult(final List<String> names, final GameResult gameResult) {
+    public void printFinalResult(final List<String> names, final BlackjackResult blackjackResult) {
         System.out.println(FINAL_RESULT_TITLE);
 
-        printDealerFinalResult(gameResult);
+        printDealerFinalResult(blackjackResult);
         for (String name : names) {
             System.out.printf(CARD_STATUS + System.lineSeparator(), name,
-                    toResultView(gameResult.findPlayerResultByName(name)));
+                    ResultView.toResultView(blackjackResult.findPlayerResultByName(name)));
         }
     }
 
-    private void printDealerFinalResult(final GameResult gameResult) {
-        System.out.printf(DEALER_FINAL_RESULT, gameResult.countWins(), gameResult.countLoses());
-    }
-
-    private String toResultView(boolean result) {
-        if (result) {
-            return WINS_VIEW;
-        }
-        return LOSES_VIEW;
+    private void printDealerFinalResult(final BlackjackResult blackjackResult) {
+        System.out.printf(DEALER_FINAL_RESULT, blackjackResult.countWins(), blackjackResult.countLoses());
     }
 
     public boolean isMoreChoice(final String choice) {

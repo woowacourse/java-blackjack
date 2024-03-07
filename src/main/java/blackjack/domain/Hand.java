@@ -7,6 +7,7 @@ import java.util.List;
 public class Hand {
 
     public static final int BLACKJACK_BOUND = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 
     private final List<Card> cards;
@@ -46,6 +47,10 @@ public class Hand {
         return cards.stream()
                 .filter(card -> (card.getRank() == Rank.ACE))
                 .count();
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     public Card getFirstCard() {
