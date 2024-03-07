@@ -67,7 +67,7 @@ public class BlackjackMachine {
         Dealer dealer = game.getDealer();
         if (dealer.isReceivable()) {
             game.giveOneCard(dealer);
-            // print
+            outputView.printDealerDrawMessage();
             playDealerTurn(game);
         }
     }

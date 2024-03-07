@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final int STARTING_CARDS_AMOUNT = 2;
+    private static final int DEALER_THRESHOLD_SCORE = 16;
     private static final String DELIMITER = ", ";
 
     public void printDistributionMessage(BlackjackGame game) {
@@ -61,5 +62,9 @@ public class OutputView {
 
     private String cardText(Card card) {
         return card.getRank().getDisplayName() + card.getSymbol().getDisplayName();
+    }
+
+    public void printDealerDrawMessage() {
+        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", DEALER_THRESHOLD_SCORE);
     }
 }
