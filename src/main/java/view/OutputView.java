@@ -37,19 +37,19 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerScore(Player player) {
-        Name name = player.getName();
-        List<Card> cards = player.getCards();
+    public static void printPlayerScore(Participant participant) {
+        Name name = participant.getName();
+        List<Card> cards = participant.getCards();
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards) {
             cardNames.add(card.getRank().getName() + card.getShape().getName());
         }
-        System.out.printf("%s카드: %s - 결과: %d", name.getValue(), String.join(", ", cardNames), player.calculateScore());
+        System.out.printf("%s카드: %s - 결과: %d", name.getValue(), String.join(", ", cardNames), participant.calculateScore());
 
         System.out.println();
     }
 
-    public static void printFinalResult(Map<Player, Boolean> result) {
+    public static void printFinalResult(Map<Participant, Boolean> result) {
 
         long dealerWinCount = result.values().stream()
                 .filter(isWin -> false == isWin)
@@ -62,7 +62,7 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패", (int)dealerWinCount, totalResult - (int)dealerWinCount);
         System.out.println();
 
-        for (Map.Entry<Player, Boolean> entry : result.entrySet()) {
+        for (Map.Entry<Participant, Boolean> entry : result.entrySet()) {
             if (entry.getValue() == true) {
                 System.out.printf("%s: 승", entry.getKey().getName().getValue());
                 System.out.println();

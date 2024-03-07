@@ -7,7 +7,7 @@ public class BlackJack {
     private Deck deck;
     private Dealer dealer;
     private Participants participants;
-    private Map<Player, Boolean> result;
+    private Map<Participant, Boolean> result;
 
     public BlackJack(Deck deck, Dealer dealer, Participants participants) {
         this.deck = deck;
@@ -47,7 +47,7 @@ public class BlackJack {
         }
     }
 
-    public Map<Player, Boolean> getResult() {
+    public Map<Participant, Boolean> getResult() {
         return result;
     }
 

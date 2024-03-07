@@ -40,7 +40,7 @@ public class BlackJackController {
         }
 
         blackJack.savePlayerResult();
-        Map<Player, Boolean> result = blackJack.getResult();
+        Map<Participant, Boolean> result = blackJack.getResult();
 
         OutputView.printFinalResult(result);
     }
