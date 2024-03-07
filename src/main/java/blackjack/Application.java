@@ -24,6 +24,7 @@ public class Application {
         OutputView.printInitialState(dealerDto, playersDto);
 
         hitPlayers(players, deck);
+        hitDealer(dealer, deck);
     }
 
     private static void hitPlayers(final Players players, final Deck deck) {
@@ -36,6 +37,14 @@ public class Application {
         while (player.canDraw() && InputView.readDoesWantHit(player.getName())) {
             player.draw(deck.pop());
             OutputView.printCurrentState(player.toDto());
+        }
+    }
+
+    private static void hitDealer(final Dealer dealer, final Deck deck) {
+        System.out.println();
+        while (dealer.canDraw()) {
+            dealer.draw(deck.pop());
+            OutputView.printDealerDrawMessage();
         }
     }
 }

@@ -9,9 +9,11 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
+    private static final String DEALER = "딜러";
+
     public static void printInitialState(DealerDto dealerDto, PlayersDto playersDto) {
-        System.out.println(System.lineSeparator() + "딜러" + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
-        System.out.println("딜러" + ": " + makeCardsState(dealerDto.getValues()));
+        System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
+        System.out.println(DEALER + ": " + makeCardsState(dealerDto.getValues()));
         for (PlayerDto playerDto : playersDto.getValues()) {
             System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards()));
         }
@@ -36,5 +38,9 @@ public class OutputView {
 
     public static void printCurrentState(final PlayerDto playerDto) {
         System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards()));
+    }
+
+    public static void printDealerDrawMessage() {
+        System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }

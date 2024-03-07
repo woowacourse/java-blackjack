@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Dealer implements Gamer {
 
+    private static final int THRESHOLD = 16;
     private final Cards cards;
 
     private Dealer(final Cards cards) {
@@ -21,6 +22,10 @@ public class Dealer implements Gamer {
     @Override
     public void draw(final Card card) {
         cards.add(card);
+    }
+
+    public boolean canDraw() {
+        return cards.sum() <= THRESHOLD;
     }
 
     public Card findFaceUpCard() {

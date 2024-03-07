@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Player implements Gamer {
 
-    private static final int MAX_VALUE = 21;
+    private static final int THRESHOLD = 21;
 
     private final Name name;
     private final Cards cards;
@@ -28,7 +28,7 @@ public class Player implements Gamer {
     }
 
     public boolean canDraw() {
-        return cards.sum() < MAX_VALUE;
+        return cards.sum() < THRESHOLD;
     }
 
     public Name getName() {
