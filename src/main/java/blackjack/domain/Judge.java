@@ -9,7 +9,7 @@ public class Judge {
     public int calculateBestScore(Hand hand) {
         int aceCount = hand.countAce();
         int sum = hand.sum();
-        while (aceCount > 0 && (sum + ACE_WEIGHT) < BLACK_JACK) {
+        while (aceCount > 0 && (sum + ACE_WEIGHT) <= BLACK_JACK) {
             sum += ACE_WEIGHT;
             aceCount--;
         }
@@ -32,5 +32,12 @@ public class Judge {
             return true;
         }
         return calculateBestScore(player.getHand()) > calculateBestScore(dealer.getHand());
+    }
+
+    public DealerGameResult calculateDealerResult(Dealer dealer, Players players) {
+        int dealerLoseCount = (int) players.getPlayers().stream()
+                .filter(player -> isPlayerWin(dealer, player))
+                .count();
+        return new DealerGameResult(players.countPlayer() - dealerLoseCount, dealerLoseCount);
     }
 }

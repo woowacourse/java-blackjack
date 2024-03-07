@@ -6,7 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class JudgeTest {
 
@@ -20,8 +23,8 @@ class JudgeTest {
     @DisplayName("핸드가 건네지면 가장 최선의 합계를 구할 수 있다")
     @Test
     void testCalculateBestScore() {
-        Hand hand = HandFixture.of(1, 1);
-        assertThat(judge.calculateBestScore(hand)).isEqualTo(12);
+        Hand hand = HandFixture.of(2, 8, 1);
+        assertThat(judge.calculateBestScore(hand)).isEqualTo(21);
     }
 
     @DisplayName("버스트 된 핸드를 판별할 수 있다")
@@ -66,5 +69,23 @@ class JudgeTest {
         Player player = PlayerFixture.of("pobi", 10, 6);
 
         assertThat(judge.isPlayerWin(dealer, player)).isFalse();
+    }
+
+    @DisplayName("딜러의 게임 결과를 계산할 수 있다")
+    @Test
+    void testDealerResult() {
+        Hand hand = HandFixture.of(3, 9, 8);
+        Dealer dealer = new Dealer(hand);
+
+        Player player1 = PlayerFixture.of("pobi", 2, 8, 1);
+        Player player2 = PlayerFixture.of("jason", 7, 10);
+        Players players = new Players(List.of(player1, player2));
+
+        DealerGameResult dealerGameResult = judge.calculateDealerResult(dealer, players);
+
+        assertAll(
+                () -> assertThat(dealerGameResult.getWinCount()).isEqualTo(1),
+                () -> assertThat(dealerGameResult.getLoseCount()).isEqualTo(1)
+        );
     }
 }
