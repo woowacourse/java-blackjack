@@ -14,15 +14,15 @@ public class PlayerResults {
         return results;
     }
 
-    public int findWinCount(){
+    public int findWinCount() {
         return (int) results.values().stream().filter(result -> result.equals(Result.WIN)).count();
     }
 
-    public int findLoseCount(){
+    public int findLoseCount() {
         return (int) results.values().stream().filter(result -> result.equals(Result.LOSE)).count();
     }
 
-    public int findTieCount(){
+    public int findTieCount() {
         return (int) results.values().stream().filter(result -> result.equals(Result.TIE)).count();
     }
 }

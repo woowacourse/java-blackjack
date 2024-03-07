@@ -27,7 +27,7 @@ public class Gamers {
         return players;
     }
 
-    public Dealer findDealer(){
+    public Dealer findDealer() {
         return (Dealer) gamers.stream()
                 .filter(gamer -> gamer instanceof Dealer)
                 .findFirst()

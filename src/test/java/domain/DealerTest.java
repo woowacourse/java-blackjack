@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.strategy.SettedDecksGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +63,7 @@ public class DealerTest {
         // then
         assertThat(bust).isTrue();
     }
-    
+
     @DisplayName("딜러가 카드를 더 받을 수 있는지 판단한다.")
     @Test
     void isStayTest() {
@@ -73,7 +72,7 @@ public class DealerTest {
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
-        Dealer dealer  = new Dealer();
+        Dealer dealer = new Dealer();
 
         dealer.hit(card1);
         dealer.hit(card2);

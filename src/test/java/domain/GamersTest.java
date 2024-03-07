@@ -11,7 +11,7 @@ class GamersTest {
 
     @DisplayName("게이머들에서 딜러를 찾는다.")
     @Test
-    void findDealerTest(){
+    void findDealerTest() {
         // given
         Dealer dealer = new Dealer();
 
@@ -32,7 +32,7 @@ class GamersTest {
 
     @DisplayName("게이머들에서 플레이어들을 찾는다.")
     @Test
-    void findPlayerTest(){
+    void findPlayerTest() {
         // given
         Dealer dealer = new Dealer();
 

@@ -2,8 +2,6 @@ package domain;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.print.DocFlavor.READER;
 
 public enum Rank {
     SMALL_ACE(1),
