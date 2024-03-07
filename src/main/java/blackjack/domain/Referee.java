@@ -40,6 +40,9 @@ public class Referee {
         if (dealerCards.sum() < playerCards.sum()) {
             return Outcome.WIN;
         }
-        return Outcome.LOSE;
+        if (dealerCards.sum() > playerCards.sum()) {
+            return Outcome.LOSE;
+        }
+        return Outcome.PUSH;
     }
 }

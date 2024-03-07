@@ -12,22 +12,6 @@ import org.junit.jupiter.api.Test;
 
 class RefereeTest {
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 높으면 승리한다.")
-    @Test
-    void decidePlayerWinningResult() {
-        Cards playerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)));
-        Cards dealerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
-
-        Referee referee = new Referee(dealerCards);
-        Outcome outcome = referee.doesPlayerWin(playerCards);
-
-        assertThat(outcome).isEqualTo(Outcome.WIN);
-    }
-
     @DisplayName("플레이어와 딜러가 모두 버스트된 경우 무승부이다.")
     @Test
     void pushWhenBothBust() {
@@ -93,5 +77,53 @@ class RefereeTest {
         Outcome outcome = referee.doesPlayerWin(playerCards);
 
         assertThat(outcome).isEqualTo(Outcome.WIN);
+    }
+
+    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 높으면 승리한다.")
+    @Test
+    void playerWinWhenBiggerThanDealer() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.EIGHT, Suit.CLOVER),
+                new Card(Number.TEN, Suit.CLOVER)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.WIN);
+    }
+
+    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 낮으면 패배한다.")
+    @Test
+    void playerLoseWhenLessThanDealer() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.EIGHT, Suit.CLOVER),
+                new Card(Number.TEN, Suit.CLOVER)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.LOSE);
+    }
+
+    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수와 딜러의 점수가 같으면 무승부이다.")
+    @Test
+    void pushWhenSame() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.DIAMOND),
+                new Card(Number.TEN, Suit.CLOVER)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.PUSH);
     }
 }
