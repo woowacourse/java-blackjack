@@ -1,10 +1,10 @@
-package blackjack.domain.participant;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
-import blackjack.domain.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.dto.BlackjackResult;
 import blackjack.strategy.ShuffleStrategy;
@@ -30,6 +30,17 @@ public class PlayersTest {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
         players = Players.of(List.of(nameA, nameB), dealer);
+    }
+
+    @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
+    @Test
+    void validateDuplicatedNames() {
+        //given
+        List<String> names = List.of("choco", "choco", "chip");
+
+        //when & then
+        assertThatThrownBy(() -> Players.of(names, dealer))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어들의 승패를 계산한다.")
