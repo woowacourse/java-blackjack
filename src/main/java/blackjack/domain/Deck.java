@@ -6,6 +6,7 @@ import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
 
 public class Deck {
+    private static final String NO_CARD_EXCEPTION = "카드가 부족하여 더 이상 뽑을 수 없습니다.";
 
     private final List<Card> cards;
 
@@ -15,6 +16,9 @@ public class Deck {
     }
 
     public Card drawn() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(NO_CARD_EXCEPTION);
+        }
         return cards.remove(0);
     }
 
