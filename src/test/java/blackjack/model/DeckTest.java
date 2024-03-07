@@ -30,4 +30,13 @@ class DeckTest {
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("카드가 부족합니다.");
     }
+
+    @Test
+    @DisplayName("Deck에서 가장 앞에 있는 카드를 반환한다.")
+    void distribute() {
+        Deck deck = new Deck();
+        Card expected = deck.getDeck().getFirst();
+        assertThat(deck.distribute()).isEqualTo(expected);
+    }
+
 }
