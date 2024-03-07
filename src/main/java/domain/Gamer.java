@@ -11,11 +11,11 @@ abstract class Gamer {
         this.hand = new Hand();
     }
 
+    abstract boolean isStay();
+
     public void hit(final Card card) {
         hand.add(card);
     }
-
-    abstract boolean isStay();
 
     public int calculateTotalScore() {
         return hand.sum();
@@ -25,9 +25,14 @@ abstract class Gamer {
         return hand.isOverBlackJack();
     }
 
+    public boolean isBlackJack() {
+        return hand.sum() == 21 && hand.getCards().size() == 2;
+    }
+
     public List<Card> getHand() {
         return hand.getCards();
     }
+
 
     public Name getName() {
         return name;

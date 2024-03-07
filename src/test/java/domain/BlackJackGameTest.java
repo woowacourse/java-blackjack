@@ -121,4 +121,47 @@ public class BlackJackGameTest {
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
+
+    @DisplayName("플레이어의 승패를 결정한다.")
+    @Test
+    void findResultsTest() {
+        // given
+        Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
+        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card3 = new Card(Symbol.SPADE, Rank.KING);
+        Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);
+        Card card5 = new Card(Symbol.SPADE, Rank.EIGHT);
+        Card card6 = new Card(Symbol.HEART, Rank.TWO);
+        Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
+        Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
+                card7, card8);
+        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Dealer dealer = new Dealer();
+
+        Name name1 = new Name("pobi");
+        Name name2 = new Name("jason");
+        Player pobi = new Player(name1);
+        Player jason = new Player(name2);
+
+        Players players = new Players(List.of(pobi, jason));
+        Gamers gamers = Gamers.of(players, dealer);
+
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        blackJackGame.prepareCards(gamers);
+
+        blackJackGame.succeededGiving(pobi);
+        blackJackGame.succeededGiving(dealer);
+
+        // when
+        PlayerResults playerResults = blackJackGame.findPlayerResult(gamers);
+
+        // then
+        assertAll(
+                () -> assertThat(playerResults.getResults().get(pobi)).isEqualTo(Result.WIN),
+                () -> assertThat(playerResults.getResults().get(jason)).isEqualTo(Result.LOSE)
+        );
+    }
 }

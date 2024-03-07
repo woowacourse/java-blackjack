@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Hand {
     private static final int BLACK_JACK = 21;
-    private static final int ACE_SCORE_CRITERIA = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -46,7 +45,7 @@ public class Hand {
     }
 
     private static int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= ACE_SCORE_CRITERIA) {
+        if (sum + card.getScore() <= BLACK_JACK) {
             return sum + card.getScore();
         }
         return sum + Rank.SMALL_ACE.getScore();
