@@ -29,7 +29,7 @@ class GameResultBoardTest {
     void calculateGameResultTest(List<Card> playerCards, GameResult expected) {
         List<Card> cards = new ArrayList<>(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, NINE)));
         cards.addAll(playerCards);
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);
@@ -62,7 +62,7 @@ class GameResultBoardTest {
     @DisplayName("딜러의 전적을 반환할 수 있다.")
     void calculateDealerResultTest() {
         List<Card> cards = generateCards();
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);

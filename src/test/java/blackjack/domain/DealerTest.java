@@ -22,7 +22,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드 한 장을 뽑는다.")
     void drawCardTest() {
-        Deck deck = Deck.from(List.of(
+        Deck deck = new Deck(List.of(
                 new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR)
         ));
         Dealer dealer = new Dealer();
@@ -38,7 +38,7 @@ class DealerTest {
     @MethodSource("cardsAndScore")
     @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
     void drawCardsUntilScoreBelow17Test(List<Card> cards, int expectedValue) {
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
         Dealer dealer = new Dealer();
 
         dealer.drawUntilExceedMinimum(deck);

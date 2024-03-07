@@ -21,7 +21,7 @@ class DeckTest {
                 new Card(Shape.CLOVER, Value.FOUR),
                 new Card(Shape.HEART, Value.KING)
         ));
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Card expected = new Card(Shape.SPADE, Value.ACE);
         assertThat(deck.draw()).isEqualTo(expected);
@@ -35,7 +35,7 @@ class DeckTest {
                 new Card(Shape.DIAMOND, Value.FOUR)
         );
 
-        assertThatThrownBy(() -> Deck.from(cards))
+        assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복되는 카드가 있습니다.");
     }

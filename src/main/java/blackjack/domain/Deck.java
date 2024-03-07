@@ -12,9 +12,9 @@ import java.util.List;
 public class Deck {
     private final List<Card> cards;
 
-    private Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         validateUniqueCard(cards);
-        this.cards = cards;
+        this.cards = new LinkedList<>(cards);
     }
 
     private void validateUniqueCard(List<Card> cards) {
@@ -25,10 +25,6 @@ public class Deck {
         if (distinctCount != cards.size()) {
             throw new IllegalArgumentException("중복되는 카드가 있습니다.");
         }
-    }
-
-    public static Deck from(List<Card> cards) {
-        return new Deck(new LinkedList<>(cards));
     }
 
     public static Deck createShuffledDeck() {

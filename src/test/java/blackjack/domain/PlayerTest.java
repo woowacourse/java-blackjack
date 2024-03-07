@@ -23,7 +23,7 @@ class PlayerTest {
     @DisplayName("덱으로 부터 카드 한장을 받아올 수 있다.")
     void drawCardTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Player player = new Player("pedro");
         player.draw(deck);
@@ -36,7 +36,7 @@ class PlayerTest {
     @DisplayName("자신의 점수를 계산할 수 있다.")
     void calculateScoreTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
@@ -53,7 +53,7 @@ class PlayerTest {
     @MethodSource("cardsAndBustStatus")
     @DisplayName("자신의 버스트 여부를 판단할 수 있다.")
     void checkBustTest(List<Card> cards, boolean expected) {
-        Deck deck = Deck.from(cards);
+        Deck deck = new Deck(cards);
 
         Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
