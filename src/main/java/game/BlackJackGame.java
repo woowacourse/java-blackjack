@@ -15,71 +15,119 @@ public class BlackJackGame {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final MatchResults matchResults;
 
     public BlackJackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        matchResults = new MatchResults();
     }
 
     public void play() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
 
+        Players players = createPlayers();
+        initGame(deck, dealer, players);
+        playersDrawMore(deck, players);
+        dealerDrawMore(deck, dealer);
+
+        showCardResultWithScore(dealer, players);
+        showMatchResult(dealer, players);
+    }
+
+    private Players createPlayers() {
         outputView.printNamesRequest();
         List<String> names = inputView.readNames();
         Players players = new Players(names);
         outputView.printNewLine();
+        return players;
+    }
 
+    private void initGame(Deck deck, Dealer dealer, Players players) {
         players.initDrawCards(deck);
         dealer.initDrawCards(deck);
         outputView.printInitializeBlackJack(players.getNames());
+        showInitCard(dealer, players);
+    }
+
+    private void showInitCard(Dealer dealer, Players players) {
         outputView.printDealerFirstCard(dealer.getFirstCard());
+
         for (Player player : players.getPlayers()) {
             outputView.printPlayerCards(player.getName(), player.getCards());
         }
         outputView.printNewLine();
+    }
 
+    private void playersDrawMore(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
-            while (player.hasDrawableScore()) {
-                outputView.printDrawMoreCardRequest(player.getName());
-                String input = inputView.readCommand();
-                Command command = Command.from(input);
-                if (command == Command.NO) {
-                    break;
-                }
-                player.drawCard(deck);
-                outputView.printPlayerCards(player.getName(), player.getCards());
-            }
+            playerDrawMore(deck, player);
         }
         outputView.printNewLine();
+    }
 
+    private void playerDrawMore(Deck deck, Player player) {
+        Command command = askPlayerToDrawMore(player);
+        if (command == Command.NO) {
+            return;
+        }
+        player.drawCard(deck);
+        outputView.printPlayerCards(player.getName(), player.getCards());
+
+        if (player.hasDrawableScore()) {
+            playerDrawMore(deck, player);
+        }
+    }
+
+    private Command askPlayerToDrawMore(Player player) {
+        outputView.printDrawMoreCardRequest(player.getName());
+        String input = inputView.readCommand();
+        return Command.from(input);
+    }
+
+    private void dealerDrawMore(Deck deck, Dealer dealer) {
         while (dealer.hasDrawableScore()) {
             dealer.drawCard(deck);
             outputView.printDealerDrawCard();
             outputView.printNewLine();
         }
+    }
 
-
+    private void showCardResultWithScore(Dealer dealer, Players players) {
         outputView.printDealerCardsWithResult(dealer.getCards(), dealer.getScore());
         for (Player player : players.getPlayers()) {
             outputView.printPlayerCardsWithResult(player.getName(), player.getCards(), player.getScore());
         }
+        outputView.printNewLine();
+    }
+
+    private void showMatchResult(Dealer dealer, Players players) {
+        MatchResults matchResults = calculateMatchResults(dealer, players);
+        outputView.printResultStart();
+        showDealerResult(matchResults);
+        showPlayersResult(players, matchResults);
+    }
+
+    private MatchResults calculateMatchResults(Dealer dealer, Players players) {
+        MatchResults matchResults = new MatchResults();
         for (Player player : players.getPlayers()) {
             matchResults.addResult(player.getName(), player.getScore(), dealer.getScore());
         }
-        outputView.printNewLine();
+        return matchResults;
+    }
 
-        outputView.printResultStart();
+    private void showDealerResult(MatchResults matchResults) {
         outputView.printDealerResult(
                 matchResults.getResultCount(MatchResult.DEALER_WIN),
                 matchResults.getResultCount(MatchResult.TIE),
                 matchResults.getResultCount(MatchResult.PLAYER_WIN)
         );
+    }
+
+    private void showPlayersResult(Players players, MatchResults matchResults) {
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
-            outputView.printPlayerResult(playerName, matchResults.getResultByName(playerName));
+            MatchResult result = matchResults.getResultByName(playerName);
+            outputView.printPlayerResult(playerName, result);
         }
     }
 }
