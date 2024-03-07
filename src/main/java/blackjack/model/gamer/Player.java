@@ -11,6 +11,10 @@ public class Player extends Gamer {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean canHit() {
         int cardScore = handDeck.calculateTotalScore();
