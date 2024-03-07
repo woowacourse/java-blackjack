@@ -24,7 +24,7 @@ public class Application {
 
         Player dealer = blackjack.getDealer();
 
-        if (dealer.calculateScore() < 17) {
+        if (dealer.alive()) {
             blackjack.dealCard(dealer);
             OutputView.printDealerStatus();
         }

@@ -14,7 +14,7 @@ public class Blackjack {
     // TODO : 필드 수 줄이기
     public Blackjack(final Players players) {
         this.players = players;
-        this.dealer = new Player(new Name("딜러"));
+        this.dealer = new Dealer(new Name("딜러"));
         this.deck = new Deck();
         dealCardsToPlayers();
         dealCardsToDealer();
