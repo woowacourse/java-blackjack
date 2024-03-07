@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Card.Shape;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -27,7 +29,7 @@ public class Deck {
     }
 
     private static List<Card> makeCards(Shape shape) {
-        return Arrays.stream(Card.Value.values())
+        return Arrays.stream(Value.values())
                 .map(value -> new Card(value, shape))
                 .toList();
     }

@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Card;
 import blackjack.domain.Deck;
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +51,6 @@ public abstract class Participant {
         }
     }
 
-    //TODO : 시작 카드를 뽑은 이후에 호출 가능해야 한다.
     public final void add(Card card) {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");

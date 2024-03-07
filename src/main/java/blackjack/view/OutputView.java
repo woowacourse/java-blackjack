@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Card.Shape;
-import blackjack.domain.Card.Value;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -11,16 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// TODO 메서드 순서 및 private 메서드 기능 재정리
 public class OutputView {
 
-    private static final Map<Card.Shape, String> SHAPE_NAME = Map.of(
+    private static final Map<Shape, String> SHAPE_NAME = Map.of(
             Shape.HEART, "하트",
             Shape.SPADE, "스페이드",
             Shape.DIAMOND, "다이아몬드",
             Shape.CLOVER, "클로버"
     );
 
-    private static final Map<Card.Value, String> VALUE_NAME = Map.ofEntries(
+    private static final Map<Value, String> VALUE_NAME = Map.ofEntries(
             Map.entry(Value.ACE, "A"), Map.entry(Value.TWO, "2"),
             Map.entry(Value.THREE, "3"), Map.entry(Value.FOUR, "4"),
             Map.entry(Value.FIVE, "5"), Map.entry(Value.SIX, "6"),
