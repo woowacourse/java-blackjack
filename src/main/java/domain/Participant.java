@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Participant {
@@ -35,6 +36,6 @@ public class Participant {
     }
 
     public List<Card> getCards() {
-        return hands.getValue();
+        return Collections.unmodifiableList(hands.getValue());
     }
 }

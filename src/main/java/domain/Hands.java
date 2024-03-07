@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hands {
@@ -47,6 +48,6 @@ public class Hands {
     }
 
     public List<Card> getValue() {
-        return value;
+        return Collections.unmodifiableList(value);
     }
 }
