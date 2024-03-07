@@ -33,7 +33,7 @@ public abstract class Player implements NoticeStatus {
         cards.add(card);
     }
 
-    public int sumCardNumbers() {
+    public int getScore() {
         int sum = 0;
         for (Card card : cards) {
             sum += card.minimumNumber();
@@ -58,11 +58,11 @@ public abstract class Player implements NoticeStatus {
     }
 
     public boolean isOverMaximumSum() {
-        return sumCardNumbers() > MAXIMUM_SUM;
+        return getScore() > MAXIMUM_SUM;
     }
 
     public int findPlayerDifference() {
-        return Math.abs(MAXIMUM_SUM - sumCardNumbers());
+        return Math.abs(MAXIMUM_SUM - getScore());
     }
 
     public boolean isSameName(String name) {

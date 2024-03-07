@@ -30,24 +30,35 @@ public class OutputView {
     }
 
     private void printPlayerCards(List<Participant> players, Dealer dealer) {
-        System.out.println(playerCardMessage(dealer, 1));
+        System.out.println(cardsToString(dealer, 1));
         for (Player player : players) {
-            System.out.println(playerCardMessage(player));
+            System.out.println(cardsToString(player));
         }
     }
 
     public void printPlayerCardMessage(Player player) {
-        System.out.println(playerCardMessage(player));
+        System.out.println(cardsToString(player));
     }
 
-    private String playerCardMessage(Player player) {
-        return playerCardMessage(player, player.getCards().size());
+    public void printBlackJackScore(List<Participant> players, Dealer dealer) {
+        System.out.println();
+        System.out.println(cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.getScore()));
+        for (Participant player : players) {
+            System.out.println(cardsToString(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.getScore()));
+        }
     }
 
-    private String playerCardMessage(Player player, int printCardCounts) {
+    private String cardsToString(Player player) {
+        return cardsToString(player, player.getCards().size());
+    }
+
+    private String cardsToString(Player player, int cardCountToPrint) {
         List<Card> cards = player.getCards();
-        int skipCount = cards.size() - printCardCounts;
-        String cardNames = String.join(", ", cards.stream().skip(skipCount).map(this::cardToString).toList());
+        int cardCountNotToPrint = cards.size() - cardCountToPrint;
+        String cardNames = String.join(", ", cards.stream()
+                .skip(cardCountNotToPrint)
+                .map(this::cardToString)
+                .toList());
         return RECEIVED_CARD_MESSAGE.formatted(player.getName(), cardNames);
     }
 
@@ -55,14 +66,6 @@ public class OutputView {
         String cardNumber = cardNumberToString(card.getCardNumber());
         String cardShape = cardShapeToString(card.getCardShape());
         return cardNumber + cardShape;
-    }
-
-    public void printResult(List<Participant> players, Dealer dealer) {
-        System.out.println();
-        System.out.println(playerCardMessage(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.sumCardNumbers()));
-        for (Participant player : players) {
-            System.out.println(playerCardMessage(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.sumCardNumbers()));
-        }
     }
 
     public void printDealerAddCard() {

@@ -8,6 +8,6 @@ public class Participant extends Player {
 
     @Override
     public boolean receiveCard() {
-        return sumCardNumbers() <= MAXIMUM_SUM;
+        return getScore() <= MAXIMUM_SUM;
     }
 }

@@ -11,6 +11,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean receiveCard() {
-        return sumCardNumbers() <= NUMBER_THRESHOLD;
+        return getScore() <= NUMBER_THRESHOLD;
     }
 }

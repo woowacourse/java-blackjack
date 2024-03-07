@@ -28,7 +28,7 @@ public class BlackJackController {
         askAndOfferMoreCards(blackJack);
         checkDealerMoreCards(blackJack);
 
-        outputView.printResult(blackJack.getParticipants(), blackJack.getDealer());
+        outputView.printBlackJackScore(blackJack.getParticipants(), blackJack.getDealer());
         Map< GameResult, Long> dealerOutcome = blackJack.getDealerOutCome();
         outputView.printDealerOutcome(dealerOutcome);
         outputView.printGameResult(blackJack.findResult());
