@@ -11,6 +11,7 @@ public abstract class Gamer {
     private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
     private static final int MAX_SCORE = 21;
     private static final int HIT_CARD_COUNT = 1;
+
     protected final Cards cards;
     private final String name;
 
@@ -47,7 +48,6 @@ public abstract class Gamer {
     public boolean isMaxScore() {
         return cards.totalScore() == MAX_SCORE;
     }
-
 
     public String getName() {
         return name;

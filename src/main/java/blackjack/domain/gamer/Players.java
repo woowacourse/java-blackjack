@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
+
     private final List<Player> values;
 
     private Players(List<Player> values) {
