@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPicker;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.BeforeEach;

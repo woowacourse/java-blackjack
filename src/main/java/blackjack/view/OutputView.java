@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.game.GameResult;
 
 import java.util.List;
 import java.util.Map;

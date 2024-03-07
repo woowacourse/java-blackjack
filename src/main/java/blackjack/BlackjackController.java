@@ -1,8 +1,8 @@
 package blackjack;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.Referee;
 import blackjack.domain.card.CardPicker;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
