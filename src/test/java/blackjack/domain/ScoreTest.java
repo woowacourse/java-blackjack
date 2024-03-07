@@ -38,7 +38,7 @@ class ScoreTest {
         Score currentScore = new Score(currentValue);
         Score relativeScore = new Score(relativeValue);
 
-        boolean actual = currentScore.isGreaterThen(relativeScore);
+        boolean actual = currentScore.isGreaterThan(relativeScore);
         assertThat(actual).isEqualTo(expected);
     }
 

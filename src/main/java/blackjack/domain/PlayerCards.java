@@ -20,7 +20,7 @@ public class PlayerCards {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -35,11 +35,12 @@ public class PlayerCards {
             score -= 10;
         }
 
-        return score;
+        return new Score(score);
     }
 
     public boolean isBusted() {
-        return calculateScore() > BUST_THRESHOLD;
+        Score score = calculateScore();
+        return score.isBusted();
     }
 
     private int getAceCount() {

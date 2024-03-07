@@ -43,9 +43,10 @@ class PlayerTest {
             player.draw(deck);
         }
 
-        int score = player.getScore();
+        Score score = player.getScore();
 
-        assertThat(score).isEqualTo(9);
+        Score expected = new Score(9);
+        assertThat(score).isEqualTo(expected);
     }
 
     @ParameterizedTest

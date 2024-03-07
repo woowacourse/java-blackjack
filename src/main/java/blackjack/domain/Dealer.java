@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Dealer {
     private static final String DEALER_NAME = "딜러";
-    private static final int MINIMUM_SCORE = 17;
 
     private final Player player;
 
@@ -18,7 +17,7 @@ public class Dealer {
     }
 
     public void drawUntilExceedMinimum(Deck deck) {
-        while (getScore() < MINIMUM_SCORE) {
+        while (getScore().isLessThanDealerMinimumScore()) {
             draw(deck);
         }
     }
@@ -31,7 +30,7 @@ public class Dealer {
         return player.getCards();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return player.getScore();
     }
 

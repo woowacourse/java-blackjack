@@ -25,7 +25,7 @@ public class Player {
         return playerCards.getCards();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return playerCards.calculateScore();
     }
 

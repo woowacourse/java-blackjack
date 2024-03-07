@@ -8,27 +8,27 @@ public class GameResultBoard {
     private final Map<String, GameResult> resultBoard = new HashMap<>();
 
     public GameResultBoard(Dealer dealer, List<Player> players) {
-        int dealerScore = dealer.getScore();
+        Score dealerScore = dealer.getScore();
         for (Player player : players) {
             String playerName = player.getName();
-            int playerScore = player.getScore();
+            Score playerScore = player.getScore();
             GameResult gameResult = calculateGameResult(playerScore, dealerScore);
             resultBoard.put(playerName, gameResult);
         }
     }
 
-    private GameResult calculateGameResult(int playerScore, int dealerScore) {
-        if (playerScore > 21) {
+    private GameResult calculateGameResult(Score playerScore, Score dealerScore) {
+        if (playerScore.isBusted()) {
             return GameResult.LOSE;
         }
-        if (dealerScore > 21) {
+        if (dealerScore.isBusted()) {
             return GameResult.WIN;
         }
 
-        if (playerScore > dealerScore) {
+        if (playerScore.isGreaterThan(dealerScore)) {
             return GameResult.WIN;
         }
-        if (playerScore < dealerScore) {
+        if (playerScore.isLessThan(dealerScore)) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;

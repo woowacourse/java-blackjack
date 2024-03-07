@@ -35,10 +35,10 @@ class PlayerCardsTest {
         );
         PlayerCards playerCards = new PlayerCards(cards);
 
-        // TODO: score를 래핑해야 할 지도.
-        int score = playerCards.calculateScore();
+        Score score = playerCards.calculateScore();
+        Score expected = new Score(9);
 
-        assertThat(score).isEqualTo(9);
+        assertThat(score).isEqualTo(expected);
     }
 
     @Test
@@ -51,18 +51,20 @@ class PlayerCardsTest {
         );
         PlayerCards playerCards = new PlayerCards(cards);
 
-        int score = playerCards.calculateScore();
+        Score score = playerCards.calculateScore();
+        Score expected = new Score(30);
 
-        assertThat(score).isEqualTo(30);
+        assertThat(score).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("cardsAndScore")
     @DisplayName("ACE 는 1점 혹은 11점으로 계산된다.")
-    void calculateScoreWithAce(List<Card> cards, int expected) {
+    void calculateScoreWithAce(List<Card> cards, int expectedValue) {
         PlayerCards playerCards = new PlayerCards(cards);
-        int score = playerCards.calculateScore();
+        Score score = playerCards.calculateScore();
 
+        Score expected = new Score(expectedValue);
         assertThat(score).isEqualTo(expected);
     }
 

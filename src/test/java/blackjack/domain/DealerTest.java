@@ -28,19 +28,23 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         dealer.draw(deck);
-        int score = dealer.getScore();
-        assertThat(score).isEqualTo(10);
+        Score score = dealer.getScore();
+        Score expected = new Score(10);
+
+        assertThat(score).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("cardsAndScore")
     @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
-    void drawCardsUntilScoreBelow17Test(List<Card> cards, int expected) {
+    void drawCardsUntilScoreBelow17Test(List<Card> cards, int expectedValue) {
         Deck deck = Deck.from(cards);
         Dealer dealer = new Dealer();
 
         dealer.drawUntilExceedMinimum(deck);
-        int score = dealer.getScore();
+        Score score = dealer.getScore();
+        Score expected = new Score(expectedValue);
+
         assertThat(score).isEqualTo(expected);
     }
 

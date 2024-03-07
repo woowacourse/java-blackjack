@@ -3,6 +3,7 @@ package blackjack.domain;
 public record Score(int value) {
     private static final int MINIMUM_VALUE = 0;
     private static final int BUST_THRESHOLD = 21;
+    private static final int DEALER_MINIMUM_SCORE = 17;
 
     public Score {
         validateRange(value);
@@ -18,7 +19,11 @@ public record Score(int value) {
         return value > BUST_THRESHOLD;
     }
 
-    public boolean isGreaterThen(Score relativeScore) {
+    public boolean isLessThanDealerMinimumScore() {
+        return value < DEALER_MINIMUM_SCORE;
+    }
+
+    public boolean isGreaterThan(Score relativeScore) {
         return value > relativeScore.value;
     }
 
