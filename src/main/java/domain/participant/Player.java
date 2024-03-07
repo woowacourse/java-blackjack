@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.Name;
-
 public class Player extends Participant {
 
     public Player(Name name) {

@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.Name;
 import domain.card.Card;
 import domain.card.ParticipantCards;
 import java.util.Collections;
