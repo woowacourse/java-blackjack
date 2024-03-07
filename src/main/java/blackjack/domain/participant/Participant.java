@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -17,11 +16,6 @@ public abstract class Participant {
     }
 
     abstract boolean canReceiveCard();
-
-    public void draw(Deck deck) {
-        Card card = deck.drawn();
-        hand.add(card);
-    }
 
     public boolean isBurst() {
         return hand.calculateScore() > BLACKJACK_BOUND;

@@ -1,16 +1,21 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
+import blackjack.domain.card.Card;
 
 public class Player extends Participant {
 
     private static final int BLACKJACK_BOUND = 21;
 
-    public Player(final String name, final Deck deck) {
+    public Player(final String name, final Dealer dealer) {
         super(name);
 
-        draw(deck);
-        draw(deck);
+        draw(dealer);
+        draw(dealer);
+    }
+
+    public void draw(final Dealer dealer) {
+        Card card = dealer.draw();
+        hand.add(card);
     }
 
     @Override

@@ -28,15 +28,15 @@ public class BlackjackGame {
         Deck deck = new Deck(new RandomShuffleStrategy());
 
         List<String> names = inputView.readPlayersName();
-        Players players = Players.of(names, deck);
         Dealer dealer = new Dealer(DEALER_NAME, deck);
+        Players players = Players.of(names, dealer);
 
         printCardDistribute(names, players, dealer);
 
         players.getPlayers()
-                .forEach(player -> readMoreCardChoice(player, deck));
+                .forEach(player -> readMoreCardChoice(player, dealer));
 
-        printAddDealerCard(dealer, deck);
+        printAddDealerCard(dealer);
         printResultCardsStatus(dealer, players);
 
         outputView.printFinalResult(names, players.createResult(dealer));
@@ -66,7 +66,7 @@ public class BlackjackGame {
         outputView.printNewLine();
     }
 
-    private void readMoreCardChoice(final Player player, final Deck deck) {
+    private void readMoreCardChoice(final Player player, final Dealer dealer) {
         String choice = inputView.readMoreCardChoice(player.getName());
 
         if (!outputView.isMoreChoice(choice)) {
@@ -75,14 +75,14 @@ public class BlackjackGame {
         }
 
         do {
-            player.draw(deck);
+            player.draw(dealer);
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
         } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
     }
 
-    private void printAddDealerCard(final Dealer dealer, final Deck deck) {
+    private void printAddDealerCard(final Dealer dealer) {
         if (dealer.canReceiveCard()) {
-            dealer.draw(deck);
+            dealer.draw();
             outputView.printAddDealerCard(dealer.getName());
             return;
         }

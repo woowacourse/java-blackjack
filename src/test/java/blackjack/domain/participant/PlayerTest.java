@@ -9,6 +9,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,20 +17,27 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+    private Deck deck;
+    private Dealer dealer;
+
+    @BeforeEach
+    void setUp() {
+        deck = new Deck(shuffleStrategy);
+        dealer = new Dealer("딜러", deck);
+    }
 
     @DisplayName("플레이어에게 카드를 더 뽑을지 물어본다.")
     @Test
     void canReceiveCard() {
         //given
-        Deck deck = new Deck(shuffleStrategy);
+        Player canAddCardPlayer = new Player("choco", dealer);
+        Player cantAddCardPlayer = new Player("clover", dealer);
 
         //when
-        Player canAddCardPlayer = new Player("choco", deck);
-        canAddCardPlayer.draw(deck);
+        canAddCardPlayer.draw(dealer);
 
-        Player cantAddCardPlayer = new Player("clover", deck);
         IntStream.range(0, 6)
-                .forEach(i -> cantAddCardPlayer.draw(deck));
+                .forEach(i -> cantAddCardPlayer.draw(dealer));
 
         //then
         assertThat(canAddCardPlayer.canReceiveCard()).isTrue();
@@ -40,12 +48,11 @@ public class PlayerTest {
     @Test
     void draw() {
         //given
-        Deck deck = new Deck(shuffleStrategy);
-        Player player = new Player("choco", deck);
-        Card card = new Card(Rank.ACE, Suit.SPADE);
+        Player player = new Player("choco", dealer);
+        Card card = new Card(Rank.THREE, Suit.SPADE);
 
         //when
-        player.draw(deck);
+        player.draw(dealer);
 
         //then
         assertThat(player.getHandCards()).contains(card);

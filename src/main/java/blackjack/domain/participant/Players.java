@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
 import blackjack.dto.GameResult;
 import blackjack.dto.PlayerResult;
 import java.util.List;
@@ -13,9 +12,9 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final Deck deck) {
+    public static Players of(final List<String> names, final Dealer dealer) {
         List<Player> players = names.stream()
-                .map(name -> new Player(name, deck))
+                .map(name -> new Player(name, dealer))
                 .toList();
 
         return new Players(players);

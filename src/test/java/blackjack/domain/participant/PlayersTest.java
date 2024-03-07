@@ -28,7 +28,7 @@ public class PlayersTest {
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(dealerName, deck);
-        players = Players.of(List.of(nameA, nameB), deck);
+        players = Players.of(List.of(nameA, nameB), dealer);
     }
 
     @DisplayName("플레이어들의 승패를 계산한다.")
@@ -38,10 +38,10 @@ public class PlayersTest {
         GameResult gameResult = players.createResult(dealer);
 
         //then
-        assertThat(gameResult.findPlayerResultByName(nameA)).isTrue();
+        assertThat(gameResult.findPlayerResultByName(nameA)).isFalse();
         assertThat(gameResult.findPlayerResultByName(nameB)).isFalse();
-        assertThat(gameResult.countWins()).isEqualTo(1);
-        assertThat(gameResult.countLoses()).isEqualTo(1);
+        assertThat(gameResult.countWins()).isEqualTo(2);
+        assertThat(gameResult.countLoses()).isEqualTo(0);
     }
 
     @DisplayName("버스트된 플레이어는 패배한다.")
@@ -53,10 +53,10 @@ public class PlayersTest {
 
         //when
         IntStream.range(0, 12)
-                .forEach(i -> player.draw(deck));
+                .forEach(i -> player.draw(dealer));
 
         IntStream.range(0, 12)
-                .forEach(i -> burstedDealer.draw(deck));
+                .forEach(i -> burstedDealer.draw());
 
         //then
         GameResult gameResult = players.createResult(dealer);
@@ -74,7 +74,9 @@ public class PlayersTest {
 
         //when
         IntStream.range(0, 12)
-                .forEach(i -> burstedDealer.draw(deck));
+                .forEach(i -> burstedDealer.selfDraw());
+        System.out.println(burstedDealer.getScore());
+        System.out.println(burstedDealer.getHandCards());
 
         //then
         GameResult gameResult = players.createResult(burstedDealer);

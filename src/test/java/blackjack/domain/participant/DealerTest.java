@@ -33,7 +33,7 @@ public class DealerTest {
         Card card = new Card(Rank.ACE, Suit.SPADE);
 
         //when
-        dealer.draw(deck);
+        dealer.draw();
 
         //then
         assertThat(dealer.getHandCards()).contains(card);
@@ -44,8 +44,6 @@ public class DealerTest {
     void showFirstCard() {
         //given
         Card card = new Card(Rank.ACE, Suit.SPADE);
-
-        dealer.draw(deck);
 
         //when & then
         assertThat(dealer.showFirstCard()).isEqualTo(card);
