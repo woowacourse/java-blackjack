@@ -1,14 +1,13 @@
 package domain;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 class HandsTest {
 
@@ -66,6 +65,52 @@ class HandsTest {
         // then
         Assertions.assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("카드 합이 21이하이면서 승리한다.")
+    void isWin() {
+        //given
+        final Hands sum20 = new Hands(
+                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        final Hands sum21 = new Hands(
+                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        //when && then
+        Assertions.assertThat(sum21.isWin(sum20)).isTrue();
+    }
+
+
+    @Test
+    @DisplayName("카드 합이 21이하이면서 패배한다.")
+    void isLose() {
+        final Hands sum20 = new Hands(
+                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        final Hands sum21 = new Hands(
+                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        //when && then
+        Assertions.assertThat(sum20.isWin(sum21)).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 합이 21초과이면 패배한다.")
+    void isLoseWhenCardSumGreater21() {
+        //given
+        final Hands sum18 = new Hands(
+                List.of(new Card(CardNumber.SEVEN, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        final Hands sum22 = new Hands(
+                List.of(new Card(CardNumber.NINE, CardShape.HEART), new Card(CardNumber.EIGHT, CardShape.SPADE),
+                        new Card(CardNumber.FIVE, CardShape.HEART)));
+
+        //when && then
+        Assertions.assertThat(sum22.isWin(sum18)).isFalse();
+    }
+
 
     static Stream<Arguments> sumParameterProvider() {
         return Stream.of(

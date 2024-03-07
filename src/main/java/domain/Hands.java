@@ -29,6 +29,11 @@ public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
         return total;
     }
 
+    //TODO: 메서드 명 수정 , blackjack 을 넘는지도 확인하고 있음
+    public boolean isWin(final Hands target) {
+        return this.sum() >= target.sum() && this.sum() <= BLACK_JACK;
+    }
+
     public void add(final Card card) {
         cards.add(card);
     }
