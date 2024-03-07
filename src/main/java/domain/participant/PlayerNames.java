@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
 import java.util.Set;

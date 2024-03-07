@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public record PlayerName (String value) {
     public PlayerName {

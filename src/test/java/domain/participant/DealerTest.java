@@ -1,5 +1,8 @@
-package domain;
+package domain.participant;
 
+import domain.Deck;
+import domain.GameResults;
+import domain.PlayingCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

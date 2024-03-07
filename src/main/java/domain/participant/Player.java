@@ -1,15 +1,16 @@
-package domain;
+package domain.participant;
 
-public class Player implements Participant {
+import domain.*;
+
+public class Player extends Participant {
     private final PlayerName playerName;
-    private final Hand hand;
 
-    Player(final PlayerName playerName, Hand hand) {
+    Player(final PlayerName playerName, final Hand hand) {
+        super(hand);
         this.playerName = playerName;
-        this.hand = hand;
     }
 
-    public static Player of(PlayerName playerName) {
+    public static Player of(final PlayerName playerName) {
         return new Player(playerName, Hand.init());
     }
 
@@ -21,9 +22,5 @@ public class Player implements Participant {
     @Override
     public void draw(final Deck deck) {
         hand.addCard(deck.drawn());
-    }
-
-    public HandStatus getPlayerHandStatus() {
-        return hand.getHandStatus();
     }
 }
