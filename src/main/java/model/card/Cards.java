@@ -9,10 +9,11 @@ public class Cards {
 
     private static List<Card> cards;
 
-    private Cards() {}
+    private Cards() {
+    }
 
     public static List<Card> selectRandomCards(int size) {
-        if(cards == null) {
+        if (cards == null) {
             Cards.createCards();
         }
         return Stream.generate(Cards::selectRandomCard).limit(size).toList();

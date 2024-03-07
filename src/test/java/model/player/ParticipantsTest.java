@@ -1,7 +1,6 @@
 package model.player;
 
 import java.util.List;
-import model.card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

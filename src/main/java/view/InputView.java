@@ -23,10 +23,10 @@ public class InputView {
         System.out.println(ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
 
         String input = in.nextLine();
-        if(input.equals("y")) {
+        if (input.equals("y")) {
             return true;
         }
-        if(input.equals("n")) {
+        if (input.equals("n")) {
             return false;
         }
         throw new IllegalArgumentException("y/n 만 입력할 수 있습니다.");

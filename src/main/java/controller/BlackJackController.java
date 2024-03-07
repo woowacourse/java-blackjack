@@ -15,6 +15,7 @@ import view.OutputView;
 public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
+
     public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
@@ -29,7 +30,7 @@ public class BlackJackController {
         checkDealerMoreCards(blackJack);
 
         outputView.printBlackJackScore(blackJack.getParticipants(), blackJack.getDealer());
-        Map< GameResult, Long> dealerOutcome = blackJack.getDealerOutCome();
+        Map<GameResult, Long> dealerOutcome = blackJack.getDealerOutCome();
         outputView.printDealerOutcome(dealerOutcome);
         outputView.printGameResult(blackJack.findResult());
     }
@@ -58,6 +59,6 @@ public class BlackJackController {
         List<String> names = inputView.askParticipantNames();
         List<Participant> players = new ArrayList<>(names.stream()
                 .map(Participant::new).toList());
-        return new BlackJack(new Participants(players),new Dealer());
+        return new BlackJack(new Participants(players), new Dealer());
     }
 }
