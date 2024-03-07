@@ -39,6 +39,10 @@ public class DealerResult {
         resultStatusBoard.put(resultStatus, resultStatusBoard.get(resultStatus) + 1);
     }
 
+    public String getName() {
+        return name.asString();
+    }
+
     public int getResultWithResultStatus(ResultStatus resultStatus) {
         return resultStatusBoard.get(resultStatus);
     }

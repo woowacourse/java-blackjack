@@ -3,11 +3,15 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GamePlayerResult;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultStatus;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +20,7 @@ import java.util.stream.Stream;
 public class OutputView {
     private static final EnumMap<CardSymbol, String> symbolBoard = initializeSymbol();
     private static final EnumMap<CardValue, String> valueBoard = initializeValue();
+    private static final EnumMap<ResultStatus, String> resultBoard = initializeResultStatus();
 
 
     public static void printPlayers(Players players) {
@@ -32,6 +37,43 @@ public class OutputView {
         printGamePlayers(players.getGamePlayers());
     }
 
+    public static void printPlayersWithScore(Players players) {
+        printPlayerWithScore(players.getDealer());
+        players.getGamePlayers()
+               .forEach(OutputView::printPlayerWithScore);
+    }
+
+    public static void printResult(Result result) {
+        printDealerResult(result.getDealerResult());
+        printGamePlayerResults(result.getGamePlayerResults());
+    }
+
+    private static void printDealerResult(DealerResult dealerResult) {
+        System.out.println(dealerResult.getName() + ": " + Arrays.stream(ResultStatus.values())
+                                                                 .map(resultStatus ->
+                                                                         dealerResult.getResultWithResultStatus(
+                                                                                 resultStatus)
+                                                                                 + resultBoard.get(
+                                                                                 resultStatus))
+                                                                 .collect(Collectors.joining(" ")));
+    }
+
+    private static void printGamePlayerResults(List<GamePlayerResult> gamePlayerResults) {
+        gamePlayerResults.forEach(OutputView::printGamePlayerResult);
+    }
+
+    private static void printGamePlayerResult(GamePlayerResult gamePlayerResult) {
+        System.out.println(String.format("%s: %s", gamePlayerResult.getName(),
+                resultBoard.get(gamePlayerResult.getResultStatus())));
+    }
+
+    private static void printPlayerWithScore(Player player) {
+        String result = joiningCard(player.getCards()
+                                          .stream());
+        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getName(), result,
+                player.calculateScore()));
+    }
+
     private static void printDealer(Dealer dealer) {
         String result = joiningCard(dealer.getCards()
                                           .stream()
@@ -44,7 +86,7 @@ public class OutputView {
         gamePlayers.forEach(OutputView::printGamePlayer);
     }
 
-    private static void printGamePlayer(GamePlayer gamePlayer) {
+    public static void printGamePlayer(GamePlayer gamePlayer) {
         String result = joiningCard(gamePlayer.getCards()
                                               .stream());
 
@@ -85,5 +127,13 @@ public class OutputView {
         valueBoard.put(CardValue.QUEEN, "Q");
         valueBoard.put(CardValue.KING, "K");
         return valueBoard;
+    }
+
+    private static EnumMap<ResultStatus, String> initializeResultStatus() {
+        EnumMap<ResultStatus, String> resultStatusBoard = new EnumMap<>(ResultStatus.class);
+        resultStatusBoard.put(ResultStatus.WIN, "승");
+        resultStatusBoard.put(ResultStatus.DRAW, "무");
+        resultStatusBoard.put(ResultStatus.LOSE, "패");
+        return resultStatusBoard;
     }
 }

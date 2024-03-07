@@ -11,8 +11,8 @@ public class GamePlayerResult {
         this.resultStatus = resultStatus;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.asString();
     }
 
     public ResultStatus getResultStatus() {
