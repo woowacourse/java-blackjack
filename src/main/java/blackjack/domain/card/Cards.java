@@ -22,35 +22,23 @@ public class Cards {
     }
 
     public int totalScore() {
-        // TODO: 라인 수 10 이하로 줄이기
         Set<Integer> scoreCases = new HashSet<>();
-        calculateScoreCases(scoreCases, values.stream().map(card -> card.getScore().get()).toList(), 0, 0);
+        List<List<Integer>> cardsScores = values.stream().map(card -> card.getScore().get()).toList();
+        calculateScoreCases(scoreCases, cardsScores, 0, 0);
 
-        int maxScore = 0;
-        // TODO: 인덴트 1 이하로 줄이기
-        for (int scoreCase : scoreCases) {
-            if (scoreCase > MAX_SCORE) {
-                continue;
-            }
-
-            if (scoreCase > maxScore) {
-                maxScore = scoreCase;
-            }
-        }
-        if (maxScore == 0) {
-            return scoreCases.stream().toList().get(0);
-        }
-        return maxScore;
+        return scoreCases.stream()
+                .filter(score -> score <= MAX_SCORE)
+                .max(Integer::compare)
+                .orElse(scoreCases.stream().min(Integer::compare).get());
     }
 
-    // TODO: 파라미터 수 3개 이하로 줄이기
-    private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> scores, int sum, int index) {
-        if (index == scores.size()) {
+    private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> cardsScores, int sum, int index) {
+        if (index == cardsScores.size()) {
             scoreCases.add(sum);
             return;
         }
-        for (int score : scores.get(index)) {
-            calculateScoreCases(scoreCases, scores, sum + score, index + 1);
+        for (int score : cardsScores.get(index)) {
+            calculateScoreCases(scoreCases, cardsScores, sum + score, index + 1);
         }
     }
 }
