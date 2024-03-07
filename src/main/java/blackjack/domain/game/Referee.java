@@ -20,19 +20,22 @@ public class Referee {
     }
 
     private GameResult judgeGameResult(Player player, Dealer dealer) {
-        // TODO: 함수 분리
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
-        if (player.getScore() > dealer.getScore() ||
-                player.isBlackjack() ||
-                dealer.isBurst()) {
+        if (isWinCondition(player, dealer)) {
             return GameResult.WIN;
         }
         if (dealer.getScore() == player.getScore()) {
             return GameResult.DRAW;
         }
         return GameResult.LOSE;
+    }
+
+    private boolean isWinCondition(Player player, Dealer dealer) {
+        return player.getScore() > dealer.getScore() ||
+                player.isBlackjack() ||
+                dealer.isBurst();
     }
 
     public Map<String, GameResult> getPlayersResults() {
