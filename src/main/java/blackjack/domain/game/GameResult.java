@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 public enum GameResult {
+    // TODO: 문자열 view 단으로 이동
     WIN("승"),
     LOSE("패"),
     DRAW("무");

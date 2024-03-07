@@ -11,6 +11,7 @@ public class OutputView {
     private static final String ERROR_PREFIX = "[ERROR] ";
 
     public static void printDealAnnounce(List<String> names) {
+        // TODO: 콤마와 결과 문자열 상수화
         String nameFormat = String.join(", ", names);
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", nameFormat);
     }

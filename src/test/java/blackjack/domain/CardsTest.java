@@ -17,7 +17,7 @@ public class CardsTest {
         cards.addCard(Card.CLUB_ACE);
 
         // then
-        assertThat(cards.getValues().size()).isEqualTo(2);
+        assertThat(cards.get().size()).isEqualTo(2);
     }
 
     @Test

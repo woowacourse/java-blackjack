@@ -17,15 +17,17 @@ public class Cards {
         values.add(card);
     }
 
-    public List<Card> getValues() {
+    public List<Card> get() {
         return List.copyOf(values);
     }
 
     public int totalScore() {
+        // TODO: 라인 수 10 이하로 줄이기
         Set<Integer> scoreCases = new HashSet<>();
         calculateScoreCases(scoreCases, values.stream().map(Card::getScores).toList(), 0, 0);
 
         int maxScore = 0;
+        // TODO: 인덴트 1 이하로 줄이기
         for (int scoreCase : scoreCases) {
             if (scoreCase > MAX_SCORE) {
                 continue;
@@ -41,6 +43,7 @@ public class Cards {
         return maxScore;
     }
 
+    // TODO: 파라미터 수 3개 이하로 줄이기
     private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> scores, int sum, int index) {
         if (index == scores.size()) {
             scoreCases.add(sum);

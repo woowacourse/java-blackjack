@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-import static blackjack.domain.card.CardScore.*;
+import static blackjack.domain.card.CardScores.*;
 import static blackjack.domain.card.CardSymbol.*;
 
 public enum Card {
@@ -59,29 +59,23 @@ public enum Card {
     CLUB_KING(CLUB, K),
     CLUB_ACE(CLUB, A);
 
-    private static final List<Integer> ACE_SCORES = List.of(1, 11);
-    private static final List<CardScore> SEPCIALS = List.of(J, Q, K, A);
-
     private final CardSymbol symbol;
-    private final CardScore score;
+    private final CardScores scores;
 
-    Card(CardSymbol symbol, CardScore score) {
+    Card(CardSymbol symbol, CardScores scores) {
         this.symbol = symbol;
-        this.score = score;
+        this.scores = scores;
     }
 
     @Override
     public String toString() {
-        if (SEPCIALS.contains(score)) {
-            return score.name() + symbol.get();
+        if (COURTS.contains(scores)) {
+            return scores.name() + symbol.get();
         }
-        return score.get() + symbol.get();
+        return scores.get().get(0) + symbol.get();
     }
 
     public List<Integer> getScores() {
-        if (score == A) {
-            return ACE_SCORES;
-        }
-        return List.of(score.get());
+        return scores.get();
     }
 }

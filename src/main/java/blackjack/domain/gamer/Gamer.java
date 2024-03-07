@@ -17,11 +17,13 @@ public abstract class Gamer {
     }
 
     public void deal(CardPicker cardPicker) {
+        // TODO: 2 매직넘버 상수화
         cardPicker.pick(2)
                 .forEach(cards::addCard);
     }
 
     public void hit(CardPicker cardPicker) {
+        // TODO: 1 매직넘버 상수화
         cardPicker.pick(1)
                 .forEach(cards::addCard);
     }
@@ -31,7 +33,7 @@ public abstract class Gamer {
     }
 
     public boolean isBlackjack() {
-        return isMaxScore() && cards.getValues().size() == 2;
+        return isMaxScore() && cards.get().size() == 2;
     }
 
     public boolean isMaxScore() {
@@ -44,7 +46,7 @@ public abstract class Gamer {
     }
 
     public List<Card> getCards() {
-        return cards.getValues();
+        return cards.get();
     }
 
     public int getScore() {

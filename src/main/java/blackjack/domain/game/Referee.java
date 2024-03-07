@@ -13,6 +13,7 @@ public class Referee {
 
 
     public GameResult judgeGameResult(Player player) {
+        // TODO: 함수 분리
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
