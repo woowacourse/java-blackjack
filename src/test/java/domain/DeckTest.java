@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
@@ -14,7 +13,7 @@ public class DeckTest {
         Deck deck = new Deck();
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(deck.poll());
+            cards.add(deck.draw());
         }
         Assertions.assertThat(cards).size().isEqualTo(52);
     }
