@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnShuffledDeckGenerator {
-	private static final UnShuffledDeckGenerator GENERATOR = new UnShuffledDeckGenerator();
+	private static final UnShuffledDeckGenerator INSTANCE = new UnShuffledDeckGenerator();
 
 	private UnShuffledDeckGenerator() {
 	}
 
 	public static UnShuffledDeckGenerator getInstance() {
-		return GENERATOR;
+		return INSTANCE;
 	}
 
 	public Deck generate() {
@@ -19,7 +19,6 @@ public class UnShuffledDeckGenerator {
 
 	private List<Card> createCards() {
 		List<Card> cards = new ArrayList<>();
-
 		for (Suit suit : Suit.values()) {
 			cards.addAll(createSuitCards(suit));
 		}
@@ -29,7 +28,6 @@ public class UnShuffledDeckGenerator {
 
 	private List<Card> createSuitCards(Suit suit) {
 		List<Card> cards = new ArrayList<>();
-
 		for (Rank rank : Rank.values()) {
 			cards.add(new Card(suit, rank));
 		}

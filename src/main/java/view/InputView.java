@@ -6,13 +6,19 @@ import java.util.Scanner;
 import domain.gamer.Player;
 
 public class InputView {
+	private static final InputView INSTANCE = new InputView(new Scanner(System.in));
+
 	private static final String PLAYER_NAME_DELIMITER = ",";
 	private static final String COMMAND_YES = "y";
 	private static final String COMMAND_NO = "n";
 	private final Scanner scanner;
 
-	public InputView(Scanner scanner) {
+	private InputView(Scanner scanner) {
 		this.scanner = scanner;
+	}
+
+	public static InputView getInstance() {
+		return INSTANCE;
 	}
 
 	public List<String> readPlayerNames() {
@@ -39,5 +45,4 @@ public class InputView {
 			throw new IllegalArgumentException(String.format("%s 또는 %s만 입력할 수 있습니다.", COMMAND_YES, COMMAND_NO));
 		}
 	}
-
 }

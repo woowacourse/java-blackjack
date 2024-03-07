@@ -8,7 +8,6 @@ public enum GameResult {
 		if (this.equals(GameResult.WIN)) {
 			return GameResult.LOSE;
 		}
-
 		return GameResult.WIN;
 	}
 }

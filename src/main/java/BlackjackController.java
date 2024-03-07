@@ -1,5 +1,3 @@
-package controller;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,7 +34,12 @@ public class BlackjackController {
 		return Dealer.newInstance(deck);
 	}
 
-	public void dealInitCards(Dealer dealer, Players players) {
+	public void startGame(Dealer dealer, Players players) {
+		dealInitCards(dealer, players);
+		receiveAdditionalCard(dealer, players);
+	}
+
+	private void dealInitCards(Dealer dealer, Players players) {
 		for (Player player : players.getPlayers()) {
 			player.receiveInitCards(dealer.dealInit());
 		}
@@ -45,7 +48,7 @@ public class BlackjackController {
 		outputView.printInitCardStatus(dealer, players);
 	}
 
-	public void receiveAdditionalCard(Dealer dealer, Players players) {
+	private void receiveAdditionalCard(Dealer dealer, Players players) {
 		for (Player player : players.getPlayers()) {
 			receivePlayerAdditionalCard(dealer, player);
 		}
@@ -69,13 +72,17 @@ public class BlackjackController {
 		}
 	}
 
-	public void printTotalCardStatus(Dealer dealer, Players players) {
+	public void printResult(Dealer dealer, Players players) {
+		printTotalCardStatus(dealer, players);
+		printGameResult(dealer, players);
+	}
+
+	private void printTotalCardStatus(Dealer dealer, Players players) {
 		outputView.printTotalCardStatus(dealer, players);
 	}
 
-	public void printGameResult(Dealer dealer, Players players) {
+	private void printGameResult(Dealer dealer, Players players) {
 		Map<Player, GameResult> playerResults = new HashMap<>();
-
 		for (Player player : players.getPlayers()) {
 			playerResults.put(player, compareScore(dealer, player));
 		}
