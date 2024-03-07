@@ -1,5 +1,6 @@
 package view;
 
+import domain.Cards;
 import domain.DealerCards;
 import domain.PlayerCards;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class OutputView {
 
-    public void printCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
         List<String> names = new ArrayList<>();
         for (PlayerCards playerCard : playerCards) {
             names.add(playerCard.getPlayerName());
@@ -20,9 +21,19 @@ public class OutputView {
         System.out.println("딜러: " + firstCard);
 
         for (PlayerCards playerCard : playerCards) {
-            List<String> cards = playerCard.getCards();
-            String joinCards = String.join(", ", cards);
+            String joinCards = formatCards(playerCard);
             System.out.println(playerCard.getPlayerName() + "카드: " + joinCards);
         }
+    }
+
+    public void printPlayerCards(PlayerCards cards) {
+        String playerName = cards.getPlayerName();
+        System.out.print(playerName + "카드: ");
+        System.out.println(formatCards(cards));
+    }
+
+    private String formatCards(Cards playerCard) {
+        List<String> cards = playerCard.getCards();
+        return String.join(", ", cards);
     }
 }
