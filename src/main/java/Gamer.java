@@ -19,6 +19,10 @@ public class Gamer {
         return cards.hasScoreUnderBustThreshold();
     }
 
+    public int finalizeCardsScore() {
+        return cards.calculateScore();
+    }
+
     public String getPlayerName() {
         return name.getValue();
     }
