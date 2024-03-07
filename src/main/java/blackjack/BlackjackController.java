@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.card.CardPicker;
-import blackjack.domain.game.GameResult;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -10,7 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -27,14 +25,13 @@ public class BlackjackController {
         Referee referee = new Referee();
         referee.calculatePlayersResults(players, dealer);
 
-        printAllGameResult(dealer, referee.getDealerResult(), referee.getPlayersResults());
+        printAllGameResult(dealer, referee);
     }
 
-    // TODO: 파라미터 일급컬렉션으로 변경
-    private void printAllGameResult(Dealer dealer, Map<GameResult, Integer> dealerResults, Map<String, GameResult> playersResults) {
+    private void printAllGameResult(Dealer dealer, Referee referee) {
         OutputView.printWinAnnounce();
-        OutputView.printDealerWinStatus(dealer.getName(), dealerResults);
-        playersResults.forEach(OutputView::printPlayerWinStatus);
+        OutputView.printDealerWinStatus(dealer.getName(), referee.getDealerResult());
+        referee.getPlayersResults().forEach(OutputView::printPlayerWinStatus);
     }
 
     private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
