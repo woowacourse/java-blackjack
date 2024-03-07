@@ -21,14 +21,14 @@ class BlackjackTest {
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
     void initializePlayers() {
         Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
-        assertThat(blackjack.getPlayers().getPlayers().get(0).getCards().size()).isEqualTo(2);
+        assertThat(blackjack.getPlayers().get(0).getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
     void dealCardsToPlayer() {
         Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
-        Player player = blackjack.getPlayers().getPlayers().get(0);
+        Player player = blackjack.getPlayers().get(0);
 
         blackjack.dealCard(player);
 
