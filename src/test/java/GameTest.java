@@ -14,8 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import view.InputView;
-import view.OutputView;
 
 class GameTest {
 
@@ -24,7 +22,7 @@ class GameTest {
     void startBlackJack() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
         Dealer dealer = new Dealer("딜러");
-        Game game = new Game(dealer, playerNames, new InputView(), new OutputView());
+        Game game = new Game(dealer, playerNames);
 
         List<HandStatus> statuses = game.initiateGameCondition();
 
@@ -46,7 +44,7 @@ class GameTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Score.THREE, Shape.DIAMOND));
 
-        Game game = new Game(new InputView(), new OutputView(), participant, new Deck(cards));
+        Game game = new Game(participant, new Deck(cards));
 
         // when
         int count = game.giveCardsToDealer();

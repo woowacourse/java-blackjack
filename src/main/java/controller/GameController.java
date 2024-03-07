@@ -40,7 +40,7 @@ public class GameController {
         List<String> names = inputView.enterPlayerNames();
         Dealer dealer = new Dealer("딜러");
 
-        Game game = new Game(dealer, names, inputView, outputView);
+        Game game = new Game(dealer, names);
         outputView.printAfterStartGame(game.initiateGameCondition());
         return game;
     }
@@ -63,7 +63,7 @@ public class GameController {
     private void startRound(final Game game) {
         List<String> names = game.getPlayerNames();
         for (String name : names) {
-            game.giveCardToPlayer(name);
+            game.giveCardToPlayer(name, outputView, inputView);
         }
     }
 

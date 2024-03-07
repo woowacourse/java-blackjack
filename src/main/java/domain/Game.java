@@ -11,15 +11,10 @@ import view.InputView;
 import view.OutputView;
 
 public class Game {
-    private final InputView inputView;
-    private final OutputView outputView;
     private final Participant participant;
     private final Deck deck;
 
-    public Game(final Dealer dealer, final List<String> playerNames, final InputView inputView,
-                final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public Game(final Dealer dealer, final List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
@@ -27,10 +22,7 @@ public class Game {
         deck = new Deck();
     }
 
-    public Game(final InputView inputView, final OutputView outputView, final Participant participant,
-                final Deck deck) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public Game(final Participant participant, final Deck deck) {
         this.participant = participant;
         this.deck = deck;
     }
@@ -51,17 +43,7 @@ public class Game {
         return player.getHand().getCards();
     }
 
-    public HandStatus pickOneCard(final String name) {
-        List<Player> players = participant.players();
-        Player foundPlayer = players.stream()
-                .filter(player -> player.getName().equals(name))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
-        foundPlayer.drawCard(deck.pick());
-        return new HandStatus(foundPlayer.getName(), foundPlayer.getHand());
-    }
-
-    public void giveCardToPlayer(String name) {
+    public void giveCardToPlayer(String name, OutputView outputView, InputView inputView) {
         CardCommand command = CardCommand.from(inputView.decideToGetMoreCard(name));
         HandStatus status = getCurrentCardStatus(name);
         int currentSum = getPlayer(name).calculateScoreWhileDraw();
@@ -74,6 +56,16 @@ public class Game {
         if (STAND.equals(command)) {
             outputView.printCardStatus(status);
         }
+    }
+
+    private HandStatus pickOneCard(final String name) {
+        List<Player> players = participant.players();
+        Player foundPlayer = players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        foundPlayer.drawCard(deck.pick());
+        return new HandStatus(foundPlayer.getName(), foundPlayer.getHand());
     }
 
     public List<String> getPlayerNames() {
