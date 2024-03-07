@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 public class Dealer {
+    private static final String NAME = "딜러";
 
     private static final int INIT_CARD_NUMBER = 2; //TODO 이름 생각해보기
 
@@ -12,6 +13,11 @@ public class Dealer {
     public Dealer(final CardDeck cardDeck) {
         this.cardDeck = cardDeck;
         this.hands = Hands.createEmptyPacket();
+    }
+
+    public Dealer(final CardDeck cardDeck, final Hands hands) {
+        this.cardDeck = cardDeck;
+        this.hands = hands;
     }
 
     public void startDeal(final Players players) {
@@ -40,5 +46,13 @@ public class Dealer {
 
     public int getTotalCardSum() {
         return hands.sum();
+    }
+
+    public Hands getHands() {
+        return hands;
+    }
+
+    public String getName() {
+        return NAME;
     }
 }
