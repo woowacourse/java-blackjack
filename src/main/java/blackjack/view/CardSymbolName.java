@@ -3,17 +3,15 @@ package blackjack.view;
 import blackjack.domain.card.CardSymbol;
 
 public enum CardSymbolName {
-    SPADE("스페이드", CardSymbol.SPADE),
-    DIAMOND("다이아몬드", CardSymbol.DIAMOND),
-    HEART("하트", CardSymbol.HEART),
-    CLUB("클로버", CardSymbol.CLUB);
+    SPADE("스페이드"),
+    DIAMOND("다이아몬드"),
+    HEART("하트"),
+    CLUB("클로버");
 
     private final String name;
-    private final CardSymbol cardSymbol;
 
-    CardSymbolName(String name, CardSymbol cardSymbol) {
+    CardSymbolName(String name) {
         this.name = name;
-        this.cardSymbol = cardSymbol;
     }
 
     public static String convert(CardSymbol cardSymbol) {

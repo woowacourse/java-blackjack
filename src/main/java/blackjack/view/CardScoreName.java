@@ -3,25 +3,23 @@ package blackjack.view;
 import blackjack.domain.card.CardScore;
 
 public enum CardScoreName {
-    TWO("2", CardScore.TWO),
-    THREE("3", CardScore.THREE),
-    FOUR("4", CardScore.FOUR),
-    FIVE("5", CardScore.FIVE),
-    SIX("6", CardScore.SIX),
-    SEVEN("7", CardScore.SEVEN),
-    EIGHT("8", CardScore.EIGHT),
-    NINE("9", CardScore.NINE),
-    JACK("J", CardScore.JACK),
-    QUEEN("Q", CardScore.QUEEN),
-    KING("K", CardScore.KING),
-    ACE("A", CardScore.ACE);
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8"),
+    NINE("9"),
+    JACK("J"),
+    QUEEN("Q"),
+    KING("K"),
+    ACE("A");
 
     private final String name;
-    private final CardScore cardScore;
 
-    CardScoreName(String name, CardScore cardScore) {
+    CardScoreName(String name) {
         this.name = name;
-        this.cardScore = cardScore;
     }
 
     public static String convert(CardScore cardScore) {

@@ -16,8 +16,6 @@ public enum CardScore {
     KING(List.of(10)),
     ACE(List.of(1, 11));
 
-    static final List<CardScore> COURTS = List.of(JACK, QUEEN, KING, ACE);
-
     private final List<Integer> scores;
 
     CardScore(List<Integer> scores) {

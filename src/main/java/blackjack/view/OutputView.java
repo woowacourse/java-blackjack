@@ -52,12 +52,12 @@ public class OutputView {
 
     public static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
         String gameResultsFormat = gameResults.keySet().stream()
-                .map(key -> gameResults.get(key) + key.get())
+                .map(key -> gameResults.get(key) + GameResultName.convert(key))
                 .collect(Collectors.joining(" "));
         System.out.printf("%s: %s%n", name, gameResultsFormat);
     }
 
     public static void printPlayerWinStatus(String name, GameResult gameResult) {
-        System.out.printf("%s: %s%n", name, gameResult.get());
+        System.out.printf("%s: %s%n", name, GameResultName.convert(gameResult));
     }
 }
