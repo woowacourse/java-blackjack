@@ -1,14 +1,14 @@
 package blackjack.domain.card;
 
 
-import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
     List<Card> cards;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int sum() {
