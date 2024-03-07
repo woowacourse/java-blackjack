@@ -49,10 +49,6 @@ public class Player {
         return cards.countSize();
     }
 
-    public boolean announceBlackJack() {
-        return cards.isBlackJack();
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
