@@ -4,14 +4,11 @@ import view.dto.PlayerDto;
 
 public class Player extends Participant {
 
-    private final Name name;
-
     public Player(final Name name) {
-        super();
-        this.name = name;
+        super(name);
     }
 
-    public Player(final PlayerDto playerDto){
-        this(new Name(playerDto.name()));
+    public Player(final PlayerDto playerDto) {
+        this(playerDto.name());
     }
 }

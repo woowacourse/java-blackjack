@@ -14,7 +14,7 @@ public class Players {
 
     public Players(final List<Player> players) {
         validateSize(players);
-        this.players = players;
+        this.players = List.copyOf(players);
     }
 
     public Players(final PlayersDto playersDto) {
@@ -33,5 +33,9 @@ public class Players {
 
     public void forEach(final Consumer<Player> action) {
         players.forEach(action);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

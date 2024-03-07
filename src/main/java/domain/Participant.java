@@ -2,9 +2,11 @@ package domain;
 
 public class Participant {
 
+    protected final Name name;
     protected final Cards hand;
 
-    public Participant() {
+    public Participant(final Name name) {
+        this.name = name;
         hand = new Cards();
     }
 
@@ -23,6 +25,8 @@ public class Participant {
     private boolean hasAceAsEleven(final int total) {
         return hand.hasAce() && total + 10 <= 21;
     }
+
+    public Name name() { return name;}
 
     public Cards cards() {
         return hand;
