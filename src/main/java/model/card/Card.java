@@ -13,4 +13,8 @@ public class Card {
     public CardNumber getNumber() {
         return number;
     }
+
+    public CardShape getShape() {
+        return shape;
+    }
 }
