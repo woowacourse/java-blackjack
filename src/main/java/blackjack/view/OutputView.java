@@ -19,7 +19,8 @@ public class OutputView {
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
 
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), names));
+        final String initialDistributionMessage = String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), names);
+        System.out.println(initialDistributionMessage);
     }
 
     private static void printDealerCard(final Dealer dealer) {
@@ -36,5 +37,10 @@ public class OutputView {
                 .map(card -> card.getNumber() + card.getShape())
                 .collect(Collectors.joining(", "));
         System.out.println(player.getName() + ": " + cardInfo);
+    }
+
+    public static void printDealerDrawMessage(final Dealer dealer) {
+        final String dealerDrawMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
+        System.out.println(dealerDrawMessage);
     }
 }
