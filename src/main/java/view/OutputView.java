@@ -1,9 +1,14 @@
 package view;
 
+import domain.BlackJackResult;
 import domain.Card;
+import domain.GamerResult;
+import domain.Name;
 import domain.dto.GameStatusDto;
 import domain.dto.GamerDto;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -25,10 +30,44 @@ public class OutputView {
 
     private static String buildNameCards(String name, List<Card> cards) {
         String cardString = cards.stream().map(Card::toString).collect(Collectors.joining(", "));
-        return String.join(": ", name, cardString);
+        return String.join("카드: ", name, cardString);
     }
 
     public static void printGamerStatus(GamerDto gamer) {
         System.out.println(buildNameCards(gamer.getName(), gamer.getCards()));
+    }
+
+    public static void printTotalStatus(GameStatusDto gameStatusDto) {
+        GamerDto dealerDto = gameStatusDto.getDealerDto();
+        List<GamerDto> playersDto = gameStatusDto.getGamerDtos();
+        System.out.println(buildTotalStatus(dealerDto));
+        playersDto.stream().map(OutputView::buildTotalStatus)
+                .forEach(System.out::println);
+    }
+
+    private static String buildTotalStatus(GamerDto gamer) {
+        String nameCards = buildNameCards(gamer.getName(), gamer.getCards());
+        String totalScores = buildTotalScore(gamer);
+        return "%s - %s".formatted(nameCards, totalScores);
+    }
+
+    private static String buildTotalScore(GamerDto gamer) {
+        return "결과: %d".formatted(gamer.getTotalScore());
+    }
+
+    public static void printGameResult(BlackJackResult gameResult) {
+        System.out.println("## 최종 승패");
+        Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
+        Map<Name, GamerResult> playersGameResult = gameResult.getPlayersResult();
+
+        //1승 1무 1패
+        String dealerResult = Arrays.stream(GamerResult.values())
+                .filter(dealerGameResult::containsKey)
+                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
+                .collect(Collectors.joining(" "));
+        System.out.println("딜러:" + dealerResult);
+        playersGameResult.forEach(
+                (name, result) -> System.out.println("%s:%s".formatted(name.name(), result.getResult())));
+
     }
 }

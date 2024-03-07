@@ -5,6 +5,7 @@ import domain.dto.GamerDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final List<Gamer> players;
@@ -59,5 +60,13 @@ public class BlackJackGame {
         while (dealer.getTotalScore() <= 16) {
             dealer.takeCard(deck.draw());
         }
+    }
+
+    public BlackJackResult getGameResult() {
+        return new BlackJackResult(
+                dealer.getTotalScore(),
+                players.stream()
+                        .collect(Collectors
+                                .toMap(Gamer::getName, Gamer::getTotalScore)));
     }
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackResult {
+    private static final int BUST_THRESHOLD = 21;
     private final Map<Name, GamerResult> playersResult;
     private final Map<GamerResult, Integer> dealerResult;
 
@@ -22,6 +23,14 @@ public class BlackJackResult {
     }
 
     private GamerResult judgeResult(int dealerScore, int playerScore) {
+        if (playerScore > BUST_THRESHOLD) {
+            dealerResult.put(GamerResult.WIN, dealerResult.computeIfAbsent(GamerResult.WIN, score -> 0) + 1);
+            return GamerResult.LOSE;
+        }
+        if (dealerScore > BUST_THRESHOLD) {
+            dealerResult.put(GamerResult.LOSE, dealerResult.computeIfAbsent(GamerResult.LOSE, score -> 0) + 1);
+            return GamerResult.WIN;
+        }
         if (dealerScore > playerScore) {
             dealerResult.put(GamerResult.WIN, dealerResult.computeIfAbsent(GamerResult.WIN, score -> 0) + 1);
             return GamerResult.LOSE;
