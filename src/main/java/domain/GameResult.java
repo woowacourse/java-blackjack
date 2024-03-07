@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,5 +25,9 @@ public class GameResult {
         }
 
         return dealerResults;
+    }
+
+    public Map<Player, ResultStatus> getPlayerResult() {
+        return Collections.unmodifiableMap(this.results);
     }
 }

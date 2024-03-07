@@ -34,4 +34,31 @@ public class BlackjackGame {
         Card playerCard = dealer.pickCard();
         players.giveCardToPlayer(playerIndex, playerCard);
     }
+
+    public GameResult createGameResult() {
+        int dealerScore = dealer.calculateScore();
+
+        GameResult gameResult = new GameResult();
+        for (int i = 0; i < players.count(); i++) {
+            Player player = players.getPlayerByIndex(i);
+            int playerScore = player.calculateScore();
+            ResultStatus status = getResultStatus(dealerScore, playerScore);
+            gameResult.record(player, status);
+        }
+
+        return gameResult;
+    }
+
+    private static ResultStatus getResultStatus(int dealerScore, int playerScore) {
+        if (playerScore > 21) {
+            return ResultStatus.LOSE;
+        } else if (dealerScore > 21) {
+            return ResultStatus.WIN;
+        } else if (playerScore > dealerScore) {
+            return ResultStatus.WIN;
+        } else if (playerScore == dealerScore) {
+            return ResultStatus.DRAW;
+        }
+        return ResultStatus.LOSE;
+    }
 }
