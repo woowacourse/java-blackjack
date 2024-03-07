@@ -2,6 +2,10 @@ package domain;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +29,7 @@ class HandsTest {
         final Hands hands = Hands.createEmptyPacket();
 
         //when
-        hands.add(new Card(CardNumber.EIGHT, CardShape.CLOVER));
+        hands.add(new Card(Rank.EIGHT, Shape.CLOVER));
 
         //then
         Assertions.assertThat(hands.size()).isEqualTo(1);
@@ -71,11 +75,11 @@ class HandsTest {
     void isTie() {
         // given
         final Hands sum1 = new Hands(
-                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.SEVEN, Shape.SPADE), new Card(Rank.TWO, Shape.SPADE),
+                        new Card(Rank.ACE, Shape.SPADE)));
         final Hands sum2 = new Hands(
-                List.of(new Card(CardNumber.FOUR, CardShape.SPADE), new Card(CardNumber.FIVE, CardShape.SPADE),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.FOUR, Shape.SPADE), new Card(Rank.FIVE, Shape.SPADE),
+                        new Card(Rank.ACE, Shape.SPADE)));
 
         // when && then
         Assertions.assertThat(sum1.calculateResult(sum2)).isEqualTo(Result.TIE);
@@ -86,10 +90,10 @@ class HandsTest {
     void isWinBySize() {
         // given
         final Hands sum20Size2 = new Hands(
-                List.of(new Card(CardNumber.NINE, CardShape.SPADE), new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.NINE, Shape.SPADE), new Card(Rank.ACE, Shape.SPADE)));
         final Hands sum20Size3 = new Hands(
-                List.of(new Card(CardNumber.FOUR, CardShape.SPADE), new Card(CardNumber.FIVE, CardShape.SPADE),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.FOUR, Shape.SPADE), new Card(Rank.FIVE, Shape.SPADE),
+                        new Card(Rank.ACE, Shape.SPADE)));
 
         // when && then
         Assertions.assertThat(sum20Size2.calculateResult(sum20Size3)).isEqualTo(Result.WIN);
@@ -100,12 +104,12 @@ class HandsTest {
     void isWin() {
         //given
         final Hands sum20 = new Hands(
-                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.SEVEN, Shape.SPADE), new Card(Rank.TWO, Shape.SPADE),
+                        new Card(Rank.ACE, Shape.SPADE)));
 
         final Hands sum21 = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.JACK, Shape.HEART),
+                        new Card(Rank.ACE, Shape.SPADE)));
 
         //when && then
         Assertions.assertThat(sum21.calculateResult(sum20)).isEqualTo(Result.WIN);
@@ -116,11 +120,11 @@ class HandsTest {
     @DisplayName("카드 합이 21이하이면서 패배한다.")
     void isLose() {
         final Hands sum20 = new Hands(
-                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
-                        new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.SEVEN, Shape.SPADE), new Card(Rank.TWO, Shape.SPADE),
+                        new Card(Rank.ACE, Shape.SPADE)));
 
         final Hands sum21 = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.ACE, Shape.SPADE)));
 
         //when && then
         Assertions.assertThat(sum20.calculateResult(sum21)).isEqualTo(Result.LOSE);
@@ -131,11 +135,11 @@ class HandsTest {
     void isLoseWhenCardSumGreater21() {
         //given
         final Hands sum18 = new Hands(
-                List.of(new Card(CardNumber.SEVEN, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(Rank.SEVEN, Shape.HEART), new Card(Rank.ACE, Shape.SPADE)));
 
         final Hands sum22 = new Hands(
-                List.of(new Card(CardNumber.NINE, CardShape.HEART), new Card(CardNumber.EIGHT, CardShape.SPADE),
-                        new Card(CardNumber.FIVE, CardShape.HEART)));
+                List.of(new Card(Rank.NINE, Shape.HEART), new Card(Rank.EIGHT, Shape.SPADE),
+                        new Card(Rank.FIVE, Shape.HEART)));
 
         //when && then
         Assertions.assertThat(sum22.calculateResult(sum18)).isEqualTo(Result.LOSE);
@@ -144,41 +148,41 @@ class HandsTest {
 
     static Stream<Arguments> sumParameterProvider() {
         return Stream.of(
-                Arguments.of(new Hands(List.of(new Card(CardNumber.TWO, CardShape.HEART),
-                                new Card(CardNumber.EIGHT, CardShape.SPADE),
-                                new Card(CardNumber.JACK, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.TWO, Shape.HEART),
+                                new Card(Rank.EIGHT, Shape.SPADE),
+                                new Card(Rank.JACK, Shape.CLOVER))),
                         20),
-                Arguments.of(new Hands(List.of(new Card(CardNumber.THREE, CardShape.DIAMOND),
-                                new Card(CardNumber.NINE, CardShape.CLOVER),
-                                new Card(CardNumber.NINE, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.THREE, Shape.DIAMOND),
+                                new Card(Rank.NINE, Shape.CLOVER),
+                                new Card(Rank.NINE, Shape.CLOVER))),
                         21)
         );
     }
 
     static Stream<Arguments> sumAce11ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.HEART),
-                                new Card(CardNumber.EIGHT, CardShape.SPADE),
-                                new Card(CardNumber.TWO, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.ACE, Shape.HEART),
+                                new Card(Rank.EIGHT, Shape.SPADE),
+                                new Card(Rank.TWO, Shape.CLOVER))),
                         21),
-                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
-                                new Card(CardNumber.TWO, CardShape.CLOVER),
-                                new Card(CardNumber.FOUR, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.ACE, Shape.DIAMOND),
+                                new Card(Rank.TWO, Shape.CLOVER),
+                                new Card(Rank.FOUR, Shape.CLOVER),
+                                new Card(Rank.TWO, Shape.CLOVER))),
                         19)
         );
     }
 
     static Stream<Arguments> sumAce1ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.HEART),
-                                new Card(CardNumber.NINE, CardShape.SPADE),
-                                new Card(CardNumber.NINE, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.ACE, Shape.HEART),
+                                new Card(Rank.NINE, Shape.SPADE),
+                                new Card(Rank.NINE, Shape.CLOVER))),
                         19),
-                Arguments.of(new Hands(List.of(new Card(CardNumber.ACE, CardShape.DIAMOND),
-                                new Card(CardNumber.EIGHT, CardShape.CLOVER),
-                                new Card(CardNumber.FIVE, CardShape.CLOVER),
-                                new Card(CardNumber.SIX, CardShape.CLOVER))),
+                Arguments.of(new Hands(List.of(new Card(Rank.ACE, Shape.DIAMOND),
+                                new Card(Rank.EIGHT, Shape.CLOVER),
+                                new Card(Rank.FIVE, Shape.CLOVER),
+                                new Card(Rank.SIX, Shape.CLOVER))),
                         20)
         );
     }

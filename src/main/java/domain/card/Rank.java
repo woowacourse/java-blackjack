@@ -1,9 +1,8 @@
-package domain;
+package domain.card;
 
-//TODO Number말고 더 좋은 클래스명짓기
-public enum CardNumber {
+public enum Rank {
 
-    ACE("A", 1), // TODO: 1 혹은 11
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -17,11 +16,10 @@ public enum CardNumber {
     QUEEN("Q", 10),
     KING("K", 10);
 
-
     private final String name;
     private final int value;
 
-    CardNumber(final String name, final int value) {
+    Rank(final String name, final int value) {
         this.name = name;
         this.value = value;
     }

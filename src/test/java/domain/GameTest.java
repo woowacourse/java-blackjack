@@ -1,24 +1,26 @@
 package domain;
 
-import static domain.CardNumber.ACE;
-import static domain.CardNumber.EIGHT;
-import static domain.CardNumber.FIVE;
-import static domain.CardNumber.FOUR;
-import static domain.CardNumber.JACK;
-import static domain.CardNumber.KING;
-import static domain.CardNumber.QUEEN;
-import static domain.CardNumber.SEVEN;
-import static domain.CardNumber.TEN;
-import static domain.CardNumber.THREE;
-import static domain.CardNumber.TWO;
-import static domain.CardShape.CLOVER;
-import static domain.CardShape.DIAMOND;
-import static domain.CardShape.HEART;
-import static domain.CardShape.SPADE;
+import static domain.card.Rank.ACE;
+import static domain.card.Rank.EIGHT;
+import static domain.card.Rank.FIVE;
+import static domain.card.Rank.FOUR;
+import static domain.card.Rank.JACK;
+import static domain.card.Rank.KING;
+import static domain.card.Rank.QUEEN;
+import static domain.card.Rank.SEVEN;
+import static domain.card.Rank.TEN;
+import static domain.card.Rank.THREE;
+import static domain.card.Rank.TWO;
+import static domain.card.Shape.CLOVER;
+import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 import static domain.Result.*;
 
 import java.util.List;
 import java.util.Map;
+
+import domain.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

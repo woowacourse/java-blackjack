@@ -2,6 +2,10 @@ package domain;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,11 +49,11 @@ class PlayersTest {
     void isAllBustFalse() {
         //given
         Hands bustHands = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE),
-                        new Card(CardNumber.TEN, CardShape.HEART)));
+                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
+                        new Card(Rank.TEN, Shape.HEART)));
 
         Hands noBustHands = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE)));
+                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE)));
 
         Player player1 = new Player("레디", bustHands);
         Player player2 = new Player("제제", noBustHands);
@@ -64,8 +68,8 @@ class PlayersTest {
     void isAllBustTrue() {
         //given
         Hands bustHands = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE),
-                        new Card(CardNumber.TEN, CardShape.HEART)));
+                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
+                        new Card(Rank.TEN, Shape.HEART)));
 
         Player player1 = new Player("레디", bustHands);
         Player player2 = new Player("제제", bustHands);

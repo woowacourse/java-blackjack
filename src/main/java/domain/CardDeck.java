@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,9 +33,9 @@ public class CardDeck {
     private static List<Card> generateOneCardDeck() { //TODO 인덴트 줄이기
         final List<Card> cards = new ArrayList<>();
 
-        for (CardShape cardShape : CardShape.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
-                cards.add(new Card(cardNumber, cardShape));
+        for (Shape shape : Shape.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(rank, shape));
             }
         }
 
