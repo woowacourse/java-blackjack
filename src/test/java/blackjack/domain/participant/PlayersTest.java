@@ -28,5 +28,13 @@ class PlayersTest {
                 .hasMessage("최대 4명의 플레이어만 참여 가능합니다.");
     }
 
-    //TODO : 중복
+    @DisplayName("중복된 이름을 사용하면, 예외가 발생한다.")
+    @Test
+    void validateTest_whenNameIsDuplicated_throwException() {
+        List<String> duplicatedNames = List.of("짱수", "커찬", "커찬");
+
+        assertThatThrownBy(() -> Players.from(duplicatedNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름을 사용할 수 없습니다.");
+    }
 }

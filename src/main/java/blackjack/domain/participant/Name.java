@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import java.util.Objects;
+
 public class Name {
 
     private final String name;
@@ -17,5 +19,22 @@ public class Name {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Name name1 = (Name) object;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

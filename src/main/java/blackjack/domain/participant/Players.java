@@ -10,6 +10,7 @@ public class Players {
 
     private Players(List<Player> players) {
         validateSize(players);
+        validateDistinct(players);
         this.players = players;
     }
 
@@ -27,5 +28,15 @@ public class Players {
         if (players.size() > MAX_PLAYERS_SIZE) {
             throw new IllegalArgumentException("최대 4명의 플레이어만 참여 가능합니다.");
         }
+    }
+
+    private void validateDistinct(List<Player> players) {
+        if (isDuplicated(players)) {
+            throw new IllegalArgumentException("중복된 이름을 사용할 수 없습니다.");
+        }
+    }
+
+    private boolean isDuplicated(List<Player> players) {
+        return players.size() != players.stream().distinct().count();
     }
 }

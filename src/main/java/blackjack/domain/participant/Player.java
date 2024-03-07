@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Card;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -28,5 +29,22 @@ public class Player extends Participant {
 
     public Name getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Player player = (Player) object;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
