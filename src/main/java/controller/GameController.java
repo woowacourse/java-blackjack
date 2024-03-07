@@ -90,16 +90,13 @@ public class GameController {
         outputView.printDealerPickMessage(count);
     }
 
-    // TODO: indent 줄이기
     public GameResult getResults(final Game game) {
         GameRule rule = new GameRule(game.getParticipant());
         List<Boolean> results = rule.judge();
         List<String> names = game.getPlayerNames();
+
         List<PlayerResult> playerResults = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            if (names.get(i).equals("딜러")) {
-                continue;
-            }
             playerResults.add(new PlayerResult(names.get(i), results.get(i)));
         }
         return new GameResult(playerResults);
