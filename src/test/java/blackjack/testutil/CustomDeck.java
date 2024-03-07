@@ -21,6 +21,12 @@ public class CustomDeck implements Deck {
                 .iterator();
     }
 
+    public CustomDeck(List<Number> numbers) {
+        cards = numbers.stream()
+                .map(number -> new Card(number, Shape.HEART))
+                .iterator();
+    }
+
     @Override
     public Card drawCard() {
         if (!cards.hasNext()) {
