@@ -4,30 +4,31 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
-import blackjack.util.Constants;
 
 public class Judge {
 
 
     public static DealerResult judge(
-            final ResultStatus resultStatus, final Player player, final Dealer dealer, final PlayerResult playerResult) {
+            final ResultStatus resultStatus, final Player player, final Dealer dealer,
+            final PlayerResult playerResult) {
         if (player.isBust()) {
             return judgePlayerBust(dealer, playerResult, player, resultStatus);
-        }
-
-        if (dealer.isSameScore(player.getScore())) {
-            return judgeDifferentScores(dealer, playerResult, player, resultStatus);
         }
 
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return draw(playerResult, player, resultStatus);
         }
 
-        return dealerLose(playerResult, player, resultStatus);
+        if (dealer.isSameScore(player.getScore())) {
+            return judgeSameScores(dealer, playerResult, player, resultStatus);
+        }
+
+        return judgeDifferentScores(dealer, playerResult, player, resultStatus);
     }
 
     private static DealerResult judgePlayerBust(
-            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+            final Dealer dealer, final PlayerResult playerResult, final Player player,
+            final ResultStatus resultStatus) {
         if (dealer.isBust()) {
             return draw(playerResult, player, resultStatus);
         }
@@ -35,8 +36,12 @@ public class Judge {
         return dealerWins(playerResult, player, resultStatus);
     }
 
-    private static DealerResult judgeDealerNotBust(
-            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+    private static DealerResult judgeDifferentScores(
+            final Dealer dealer, final PlayerResult playerResult, final Player player,
+            final ResultStatus resultStatus) {
+        if (dealer.isBust()) {
+            return dealerLose(playerResult, player, resultStatus);
+        }
         if (dealer.getScore() >= player.getScore()) {
             return dealerWins(playerResult, player, resultStatus);
         }
@@ -44,11 +49,9 @@ public class Judge {
         return dealerLose(playerResult, player, resultStatus);
     }
 
-    private static DealerResult judgeDifferentScores(
-            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        if (dealer.getScore() <= Constants.BLACKJACK_BOUND) {
-            return judgeDealerNotBust(dealer, playerResult, player, resultStatus);
-        }
+    private static DealerResult judgeSameScores(
+            final Dealer dealer, final PlayerResult playerResult, final Player player,
+            final ResultStatus resultStatus) {
 
         if (dealer.isBlackjack()) {
             return dealerWins(playerResult, player, resultStatus);
