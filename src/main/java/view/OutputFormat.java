@@ -44,8 +44,8 @@ public class OutputFormat {
         return String.format("%s - 결과: %d", formatHands(participant), participant.getScore());
     }
 
-    public String formatBlackJackResult(Map.Entry<Participant, Boolean> entry) {
-        if (Boolean.TRUE.equals(entry.getValue())) {
+    public String formatBlackJackResult(Map.Entry<Participant, WinStatus> entry) {
+        if (WinStatus.WIN.equals(entry.getValue())) {
             return String.format("%s: 승", entry.getKey().getName().getValue());
         }
         return String.format("%s: 패", entry.getKey().getName().getValue());

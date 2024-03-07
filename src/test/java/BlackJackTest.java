@@ -37,8 +37,8 @@ class BlackJackTest {
 
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
-        boolean isWinner = blackJack.isWinner(participant);
-        assertThat(isWinner).isTrue();
+        WinStatus winStatus = blackJack.isWinner(participant);
+        assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
     @DisplayName("참가자와 딜러의 점수가 같은경우 ")
@@ -56,7 +56,7 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        boolean isWinner = blackJack.isWinner(participant);
-        assertThat(isWinner).isFalse();
+        WinStatus winStatus = blackJack.isWinner(participant);
+        assertThat(winStatus).isEqualTo(WinStatus.LOSE);
     }
 }

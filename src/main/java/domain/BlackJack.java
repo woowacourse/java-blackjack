@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJack {
@@ -22,34 +22,34 @@ public class BlackJack {
         }
     }
 
-    public boolean isWinner(Participant participant) {
+    public WinStatus isWinner(Participant participant) {
         if (!participant.canHit()) {
-            return false;
+            return WinStatus.from(false);
         }
         if (!dealer.canHit()) {
-            return true;
+            return WinStatus.from(true);
         }
         return isWinnerWhenNotBust(participant);
     }
 
-    private boolean isWinnerWhenNotBust(Participant participant) {
+    private WinStatus isWinnerWhenNotBust(Participant participant) {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
         if (participantScore == dealerScore) {
             return isWinnerByCardCount(participant);
         }
-        return participantScore > dealerScore;
+        return WinStatus.from(participantScore > dealerScore);
     }
 
-    private boolean isWinnerByCardCount(Participant participant) {
+    private WinStatus isWinnerByCardCount(Participant participant) {
         int participantCardCount = participant.getCardCount();
         int dealerCardCount = dealer.getCardCount();
 
-        return participantCardCount < dealerCardCount;
+        return WinStatus.from(participantCardCount < dealerCardCount);
     }
 
     public BlackJackResult saveParticipantResult() {
-        Map<Participant, Boolean> result = new HashMap<>();
+        Map<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
             result.put(participant, isWinner(participant));
         }

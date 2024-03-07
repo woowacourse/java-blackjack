@@ -49,7 +49,7 @@ public class OutputView {
         System.out.printf(outputFormat.formatDealerResult(blackJackResult));
         System.out.println();
 
-        for (Map.Entry<Participant, Boolean> entry : blackJackResult.getEntry()) {
+        for (Map.Entry<Participant, WinStatus> entry : blackJackResult.getEntry()) {
             System.out.println(outputFormat.formatBlackJackResult(entry));
         }
     }
