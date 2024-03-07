@@ -32,4 +32,8 @@ public class Card {
     public int getCardNumber() {
         return cardNumber.getValue();
     }
+
+    public String getCardShape() {
+        return cardShape.getName();
+    }
 }
