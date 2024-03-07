@@ -17,6 +17,10 @@ public class Player {
         cards.addCard(cardGenerator.drawCards());
     }
 
+    public boolean checkDrawCardState() {
+        return !cards.isGreaterThanWinningScore();
+    }
+
     public Cards getCards() {
         return cards;
     }

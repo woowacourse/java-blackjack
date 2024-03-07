@@ -28,4 +28,34 @@ class PlayerTest {
         player.addCard(cardGenerator);
         assertThat(player.getCards().getCards()).hasSize(3);
     }
+
+    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
+    @Test
+    void checkDrawCardState() {
+        List<Card> given = List.of(
+                new Card(CardNumber.SIX, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards cards = new Cards();
+        cards.addCard(given);
+        Player player = new Player("daon", cards);
+
+        assertThat(player.checkDrawCardState()).isTrue();
+    }
+
+    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
+    @Test
+    void checkDrawCardStateOverWinningScore() {
+        List<Card> given = List.of(
+                new Card(CardNumber.SIX, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
+        Cards cards = new Cards();
+        cards.addCard(given);
+
+        Player player = new Player("daon", cards);
+
+        assertThat(player.checkDrawCardState()).isFalse();
+    }
 }
