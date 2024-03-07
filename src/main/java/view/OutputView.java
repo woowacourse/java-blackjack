@@ -1,8 +1,5 @@
 package view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import java.util.List;
 import java.util.Map;
 import model.GameResult;
@@ -11,7 +8,6 @@ import model.card.CardNumber;
 import model.card.CardShape;
 import model.player.Dealer;
 import model.player.Participant;
-import model.player.Participants;
 import model.player.Player;
 
 public class OutputView {
@@ -30,7 +26,7 @@ public class OutputView {
 
     private void printPlayerNames(List<Participant> players) {
         String names = String.join(", ", players.stream().map(Player::getName).toList());
-        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(names) + System.lineSeparator());
+        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(names));
     }
 
     private void printPlayerCards(List<Participant> players, Dealer dealer) {
@@ -59,6 +55,36 @@ public class OutputView {
         String cardNumber = cardNumberToString(card.getCardNumber());
         String cardShape = cardShapeToString(card.getCardShape());
         return cardNumber + cardShape;
+    }
+
+    public void printResult(List<Participant> players, Dealer dealer) {
+        System.out.println();
+        System.out.println(playerCardMessage(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.sumCardNumbers()));
+        for (Participant player : players) {
+            System.out.println(playerCardMessage(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.sumCardNumbers()));
+        }
+    }
+
+    public void printDealerAddCard() {
+        System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
+    }
+
+    public void printGameResult(Map<Participant, GameResult> results) {
+        for (Map.Entry<Participant, GameResult> result : results.entrySet()) {
+            System.out.println(
+                    GAME_RESULT_MESSAGE.formatted(result.getKey().getName(), gameResultToString(result.getValue())));
+        }
+    }
+
+
+    public void printDealerOutcome(Map<GameResult, Long> dealerOutcomes) {
+        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<GameResult, Long> dealerOutcome : dealerOutcomes.entrySet()) {
+            stringBuilder.append(dealerOutcome.getValue()).append(gameResultToString(dealerOutcome.getKey()));
+        }
+        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", stringBuilder.toString()));
     }
 
     private String cardNumberToString(CardNumber cardNumber) {
@@ -90,54 +116,14 @@ public class OutputView {
         return "다이아몬드";
     }
 
-    public void printResult(List<Participant> players, Dealer dealer) {
-        System.out.println();
-        System.out.println(playerCardMessage(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.sumCardNumbers()));
-        for (Participant player : players) {
-            System.out.println(playerCardMessage(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.sumCardNumbers()));
-        }
-    }
-
-    public void printDealerAddCard() {
-        System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
-    }
-
-    public void printGameResult(Map<Participant, GameResult> results) {
-        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
-
-        Map<GameResult, Long> dealerGameResult = results.values().stream()
-                .collect(groupingBy(gameResult -> gameResult, counting()));
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<GameResult, Long> gameResult : dealerGameResult.entrySet()) {
-            stringBuilder.append(gameResult.getValue()).append(dealerGameResultToString(gameResult.getKey()));
-        }
-
-        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", stringBuilder.toString()));
-        for (Map.Entry<Participant, GameResult> result : results.entrySet()) {
-            System.out.println(
-                    GAME_RESULT_MESSAGE.formatted(result.getKey().getName(), gameResultToString(result.getValue())));
-        }
-    }
-
     private String gameResultToString(GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
-            return "승";
+            return "승 ";
         }
         if (gameResult == GameResult.LOSE) {
-            return "패";
+            return "패 ";
         }
-        return "무";
-    }
-
-    private String dealerGameResultToString(GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return "패";
-        }
-        if (gameResult == GameResult.LOSE) {
-            return "승";
-        }
-        return "무";
+        return "무 ";
     }
 
 }

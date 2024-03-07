@@ -2,7 +2,9 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import model.BlackJack;
+import model.GameResult;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -17,7 +19,7 @@ public class BlackJackController {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-    
+
     public void startGame() {
         BlackJack blackJack = createBlackJack();
         blackJack.offerCardToPlayers(2);
@@ -27,6 +29,8 @@ public class BlackJackController {
         checkDealerMoreCards(blackJack);
 
         outputView.printResult(blackJack.getParticipants(), blackJack.getDealer());
+        Map< GameResult, Long> dealerOutcome = blackJack.getDealerOutCome();
+        outputView.printDealerOutcome(dealerOutcome);
         outputView.printGameResult(blackJack.findResult());
     }
 

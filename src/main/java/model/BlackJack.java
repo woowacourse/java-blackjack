@@ -1,15 +1,16 @@
 package model;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
-import model.player.Player;
 import model.player.Participants;
+import model.player.Player;
 
 public class BlackJack {
 
@@ -74,12 +75,24 @@ public class BlackJack {
         return dealer;
     }
 
-    public void giveCard() {
-        offerCardToPlayers(1);
-    }
-
     public boolean isDealerUnderThreshold() {
         Dealer dealer = getDealer();
         return dealer.receiveCard();
+    }
+
+    public Map<GameResult, Long> getDealerOutCome() {
+        Map<Participant, GameResult> participantOutcome = findResult();
+        return participantOutcome.values().stream()
+                .collect(groupingBy(this::dealerGameResultToString, counting()));
+    }
+
+    private GameResult dealerGameResultToString(GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return gameResult;
     }
 }
