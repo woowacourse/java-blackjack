@@ -1,4 +1,10 @@
-import domain.*;
+package controller;
+
+import domain.Command;
+import domain.ExceptionHandler;
+import domain.TotalDeck;
+import domain.TotalDeckGenerator;
+import domain.game.Game;
 import domain.user.User;
 import domain.user.Users;
 import view.InputView;

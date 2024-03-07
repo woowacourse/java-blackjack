@@ -1,15 +1,18 @@
-package domain;
+package domain.game;
 
+import domain.Command;
+import domain.TotalDeck;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static domain.Command.YES;
-import static domain.State.*;
+import static domain.game.State.*;
 
 public class Game {
     private final TotalDeck totalDeck;
@@ -54,7 +57,9 @@ public class Game {
         Map<Player, Result> playerResults = users.getPlayers().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        users::generatePlayerResult
+                        users::generatePlayerResult,
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
                 ));
         return new PlayerResults(playerResults);
     }

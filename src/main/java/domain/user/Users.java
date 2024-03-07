@@ -1,16 +1,16 @@
 package domain.user;
 
-import domain.Result;
 import domain.TotalDeck;
 import domain.card.Card;
+import domain.game.Result;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Result.LOSE;
-import static domain.Result.WIN;
+import static domain.game.Result.LOSE;
+import static domain.game.Result.WIN;
 
 public class Users {
     private static final int BLACK_JACK_CONDITION = 21;
@@ -21,10 +21,21 @@ public class Users {
     private User currentUser;
 
     public Users(List<Player> players) {
+        validateDuplicatedName(players);
         this.users = new ArrayList<>();
         users.add(new Dealer());
         users.addAll(players);
         currentUser = users.get(FIRST_PLAYER_INDEX);
+    }
+
+    private void validateDuplicatedName(List<Player> players) {
+        long count = players.stream()
+                .map(player -> player.getName().value())
+                .distinct()
+                .count();
+        if (players.size() != count) {
+            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
+        }
     }
 
     public void setStartCards(TotalDeck totalDeck) {

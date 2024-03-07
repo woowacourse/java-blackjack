@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.user.Player;
 
@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.Result.values;
+import static domain.game.Result.values;
 
 public class PlayerResults {
     private final Map<Player, Result> playerResults;

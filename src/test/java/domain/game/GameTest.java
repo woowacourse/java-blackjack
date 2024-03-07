@@ -1,5 +1,7 @@
-package domain;
+package domain.game;
 
+import domain.TotalDeck;
+import domain.TotalDeckGenerator;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
@@ -13,7 +15,7 @@ import java.util.List;
 
 import static domain.Command.NO;
 import static domain.Command.YES;
-import static domain.Result.LOSE;
+import static domain.game.Result.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

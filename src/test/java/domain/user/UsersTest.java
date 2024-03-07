@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.Result.WIN;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.TEN;
 import static domain.card.Shape.CLOVER;
+import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-import static domain.Result.*;
+import static domain.game.Result.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {

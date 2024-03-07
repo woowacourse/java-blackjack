@@ -19,7 +19,7 @@ public enum Number {
 
     private final int number;
 
-    private String name;
+    private final String name;
 
     Number(int number, String name) {
         this.number = number;

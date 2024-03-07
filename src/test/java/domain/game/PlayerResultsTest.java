@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.user.Name;
 import domain.user.Player;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static domain.Result.WIN;
+import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerResultsTest {
