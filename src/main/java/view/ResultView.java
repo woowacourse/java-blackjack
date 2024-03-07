@@ -1,9 +1,9 @@
 package view;
 
-import domain.DealerResult;
-import domain.Game;
-import domain.PlayerResults;
 import domain.card.Card;
+import domain.game.DealerResult;
+import domain.game.Game;
+import domain.game.PlayerResults;
 import domain.user.Dealer;
 import domain.user.User;
 import domain.user.UserDeck;
@@ -16,6 +16,7 @@ public class ResultView {
     public static void showStartStatus(Users users) {
         printUserNames(users);
         printUserCards(users);
+        System.out.println();
     }
 
     private static void printUserNames(Users users) {
@@ -47,7 +48,7 @@ public class ResultView {
     private static String joinDeck(UserDeck userDeck) {
         return userDeck.getCards()
                 .stream()
-                .map(card -> card.getInformation())
+                .map(Card::getInformation)
                 .collect(Collectors.joining(", "));
     }
 
@@ -56,6 +57,7 @@ public class ResultView {
     }
 
     public static void showCardsAndSum(Users users) {
+        System.out.println();
         users.getUsers()
                 .forEach((user) ->
                         System.out.println(joinUserNameAndDeck(user)
@@ -63,7 +65,7 @@ public class ResultView {
     }
 
     public static void showResult(Game game) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         PlayerResults playerResults = game.generatePlayerResults();
         DealerResult dealerResult = playerResults.generateDealerResult();
         System.out.println("딜러: " + dealerResult.getInformation());
