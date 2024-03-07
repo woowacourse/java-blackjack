@@ -74,4 +74,9 @@ public class OutputView {
         System.out.println("BUST");
         System.out.println();
     }
+
+    public void printBlackJack() {
+        System.out.println("BLACK JACK!!!");
+        System.out.println();
+    }
 }
