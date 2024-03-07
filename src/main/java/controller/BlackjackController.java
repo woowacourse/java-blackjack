@@ -48,11 +48,23 @@ public class BlackjackController {
 
 	public void receiveAdditionalCard(Dealer dealer, Players players) {
 		for (Player player : players.getPlayers()) {
-			while (!player.isBust() && inputView.readHitOrStand(player).equals("y")) {
-				player.receiveCard(dealer.dealCard());
-				outputView.printCardStatus(player);
-			}
+			receivePlayerAdditionalCard(dealer, player);
 		}
+		receiveDealerAdditionalCard(dealer);
+	}
+
+	private void receivePlayerAdditionalCard(Dealer dealer, Player player) {
+		while (!player.isBust() && isPlayerInputHit(player)) {
+			player.receiveCard(dealer.dealCard());
+			outputView.printCardStatus(player);
+		}
+	}
+
+	private boolean isPlayerInputHit(Player player) {
+		return inputView.readHitOrStand(player).equals("y");
+	}
+
+	private void receiveDealerAdditionalCard(Dealer dealer) {
 		while (dealer.tryHit()) {
 			outputView.printDealerHitMessage();
 		}
