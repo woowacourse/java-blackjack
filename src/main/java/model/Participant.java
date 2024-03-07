@@ -15,4 +15,8 @@ public abstract class Participant {
     public void hitCard(Card card) {
         cardDeck.addCard(card);
     }
+
+    public IndividualFaceUpResult generateFaceUpResult() {
+        return new IndividualFaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    }
 }
