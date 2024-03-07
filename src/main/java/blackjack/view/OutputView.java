@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private String getParticipantHand(Participant participant) {
-        String cardSignatures = getCardSignatures(participant.getCards());
+        String cardSignatures = getCardSignatures(participant.getInitialOpenedCards());
         String participantName = participant.getName();
         return String.format(PARTICIPANT_HAND, participantName, cardSignatures);
     }
