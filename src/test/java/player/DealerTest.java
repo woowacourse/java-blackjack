@@ -59,4 +59,17 @@ class DealerTest {
         // when, then
         assertThat(dealer.getFirstCard()).isEqualTo(new Card(Shape.HEART, Number.JACK));
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 가지고 있지 않을 때 가져가는 것을 시도하면 예외를 발생시킨다.")
+    void getFirstCardOnEmptyHandTest() {
+        // given
+        List<Card> cards = List.of();
+        Hand hand = new Hand(cards);
+        Dealer dealer = new Dealer(hand);
+        // when, then
+        assertThatThrownBy(dealer::getFirstCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
+    }
 }
