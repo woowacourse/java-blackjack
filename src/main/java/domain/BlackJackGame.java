@@ -22,9 +22,9 @@ public class BlackJackGame {
         }
     }
 
-    public boolean hitPlayer(String name) {
+    public boolean hitPlayer(Player player) {
         Player targetPlayer = players.stream()
-                .filter(player -> player.getName().name().equals(name))
+                .filter(p -> p.equals(player))
                 .findFirst()
                 .get();
         return isHitSuccess(targetPlayer);
@@ -48,5 +48,15 @@ public class BlackJackGame {
             results.put(player, Result.of(dealer, player));
         }
         return results;
+    }
+
+    public List<Player> getEveryParticipants() {
+        ArrayList<Player> participants = new ArrayList<>(players);
+        participants.add(0, dealer);
+        return participants;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
