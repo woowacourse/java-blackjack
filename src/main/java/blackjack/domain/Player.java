@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player {
     private final Name name;
     private final Hands hands;
@@ -9,7 +11,11 @@ public class Player {
         this.hands = new Hands();
     }
 
-    void addCard(Card card) {
+    public void addCard(Card card) {
         hands.addCard(card);
+    }
+
+    public List<Card> getHandsCards() {
+        return hands.getHands();
     }
 }

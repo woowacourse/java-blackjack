@@ -18,4 +18,8 @@ public class Players {
             player.addCard(deck.draw());
         }
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
