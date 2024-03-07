@@ -1,13 +1,11 @@
 package domain;
 
 import domain.card.Card;
-
 import java.util.List;
 
 public class Dealer {
     private static final String NAME = "딜러";
-
-    private static final int INIT_CARD_NUMBER = 2; //TODO 이름 생각해보기
+    private static final int INIT_HANDS_SIZE = 2;
 
     private final CardDeck cardDeck;
     private final Hands hands;
@@ -23,7 +21,7 @@ public class Dealer {
     }
 
     public void startDeal(final Players players) {
-        for (int i = 0; i < INIT_CARD_NUMBER; i++) {
+        for (int i = 0; i < INIT_HANDS_SIZE; i++) {
             players.forEach(player -> player.add(cardDeck.pop()));
             hands.add(cardDeck.pop());
         }
