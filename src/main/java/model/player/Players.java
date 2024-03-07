@@ -10,6 +10,7 @@ import model.card.Card;
 public class Players {
 
     private static final String INVALID_PLAYERS_SIZE = "플레이어 수는 1명 이상이어야 합니다.";
+    private static final int CARDS_PER_PLAYER = 2;
 
     private final List<Player> players;
 
@@ -34,9 +35,10 @@ public class Players {
         int index = 0;
         List<Player> updatedPlayers = new ArrayList<>();
         for (Player player : players) {
-            Player updatedPlayer = player.addCards(cardsElement.subList(index, index + 2));
+            List<Card> cards = cardsElement.subList(index, index + CARDS_PER_PLAYER);
+            Player updatedPlayer = player.addCards(cards);
             updatedPlayers.add(updatedPlayer);
-            index += 2;
+            index += CARDS_PER_PLAYER;
         }
         return new Players(updatedPlayers);
     }
@@ -45,8 +47,7 @@ public class Players {
         List<Player> updatedPlayers = new ArrayList<>(players);
         Player updatedPlayer = player.addCard(card);
         int index = updatedPlayers.indexOf(player);
-        updatedPlayers.remove(player);
-        updatedPlayers.add(index, updatedPlayer);
+        updatedPlayers.set(index, updatedPlayer);
         return new Players(updatedPlayers);
     }
 
