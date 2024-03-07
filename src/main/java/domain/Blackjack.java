@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,23 +11,25 @@ public class Blackjack {
     private final Deck deck;
 
     // TODO : 필드 수 줄이기
-    public Blackjack(final Players players, final Player dealer, final Deck deck) {
+    public Blackjack(final Players players) {
         this.players = players;
-        this.dealer = dealer;
-        this.deck = deck;
+        this.dealer = new Player("딜러");
+        this.deck = new Deck();
+        dealCardsToPlayers();
+        dealCardsToDealer();
     }
 
-    public void dealCardsToPlayer(final Player player) {
-        player.addCard(deck.poll());
+    public void dealCard(final Player player) {
+        player.addCard(deck.draw());
     }
 
-    public void initializePlayers() {
+    private void dealCardsToPlayers() {
         players.getPlayers().forEach(this::initializePlayer);
     }
 
-    public void initializeDealer() {
-        dealer.addCard(deck.poll());
-        dealer.addCard(deck.poll());
+    private void dealCardsToDealer() {
+        dealer.addCard(deck.draw());
+        dealer.addCard(deck.draw());
     }
 
     // "에포케"
@@ -37,9 +39,9 @@ public class Blackjack {
     // player <= 21 dealer <= 21
     // player > dealer  -> player sungri
     // player
-    // TODO : 테스트 작성
+    // TODO : 로직 개선
     public Map<Player, Entry<Integer, Integer>> finishGame() {
-        Map<Player, Entry<Integer, Integer>> results = new HashMap<>();
+        Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
         results.put(dealer, Map.entry(0, 0));
         for (var player : players.getPlayers()) {
@@ -71,8 +73,8 @@ public class Blackjack {
     }
 
     private void initializePlayer(final Player player) {
-        player.addCard(deck.poll());
-        player.addCard(deck.poll());
+        player.addCard(deck.draw());
+        player.addCard(deck.draw());
     }
 
     public Players getPlayers() {
