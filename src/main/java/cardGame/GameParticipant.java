@@ -31,4 +31,8 @@ public class GameParticipant {
     public Cards getCards() {
         return cards;
     }
+
+    public int getCardsSize() {
+        return cards.countCard();
+    }
 }
