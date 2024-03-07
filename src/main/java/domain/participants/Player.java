@@ -1,5 +1,8 @@
-package domain;
+package domain.participants;
 
+
+import domain.deck.Card;
+import domain.deck.Deck;
 
 public class Player {
 

@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Card;
+import domain.deck.Card;
 
 public record CardDto (String cardName){
     public static CardDto from(Card card) {

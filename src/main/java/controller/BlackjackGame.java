@@ -3,9 +3,9 @@ package controller;
 import static view.InputView.DEALER_NAME;
 
 import domain.GameBoard;
-import domain.Name;
-import domain.Player;
-import domain.Players;
+import domain.participants.Name;
+import domain.participants.Player;
+import domain.participants.Players;
 import dto.PlayerDto;
 import java.util.LinkedHashMap;
 import java.util.List;

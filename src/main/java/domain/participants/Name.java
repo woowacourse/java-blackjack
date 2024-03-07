@@ -1,4 +1,4 @@
-package domain;
+package domain.participants;
 
 public class Name {
 

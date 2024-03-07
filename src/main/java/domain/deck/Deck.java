@@ -1,6 +1,6 @@
-package domain;
+package domain.deck;
 
-import static domain.Players.MAX_BOUNDARY_SCORE;
+import static domain.participants.Players.MAX_BOUNDARY_SCORE;
 
 import java.util.LinkedList;
 import java.util.List;

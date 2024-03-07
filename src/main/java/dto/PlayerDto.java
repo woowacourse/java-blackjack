@@ -1,8 +1,8 @@
 package dto;
 
-import domain.Deck;
-import domain.Name;
-import domain.Player;
+import domain.deck.Deck;
+import domain.participants.Name;
+import domain.participants.Player;
 import java.util.List;
 
 public record PlayerDto(String playerName, List<String> deck, int score) {

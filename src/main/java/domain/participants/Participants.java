@@ -1,5 +1,7 @@
-package domain;
+package domain.participants;
 
+import domain.deck.Card;
+import domain.deck.Deck;
 import java.util.List;
 import java.util.Map;
 

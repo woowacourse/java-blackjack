@@ -1,6 +1,10 @@
-package domain;
+package domain.participants;
 
 
+import domain.deck.Card;
+import domain.deck.Deck;
+import domain.participants.Name;
+import domain.participants.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

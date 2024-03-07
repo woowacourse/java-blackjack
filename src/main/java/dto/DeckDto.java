@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Deck;
+import domain.deck.Deck;
 import java.util.List;
 
 public record DeckDto (List<String> cardNames){
