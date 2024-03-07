@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.view;
 
 import java.util.Arrays;
 
