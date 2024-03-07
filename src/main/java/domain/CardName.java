@@ -1,5 +1,6 @@
 package domain;
 
+// TODO: 인덴트 수정
 public enum CardName {
     ACE(1),
     TWO(2),

@@ -37,6 +37,7 @@ public class BlackjackController {
         printDealerAndPlayersGameResult();
     }
 
+    // TODO: 메시지 OutputView에서 처리
     private void initDealerAndPlayers(Deck deck) {
         dealerDraw(deck);
         dealerDraw(deck);
@@ -45,6 +46,8 @@ public class BlackjackController {
         OutputView.print("딜러와 pobi, jason에게 2장을 나누었습니다.");
     }
 
+    // TODO: 16 상수화
+    // TODO: 랜덤으로 카드 뽑는 전략 함수화 (아래랑 중복)
     private void dealerDraw(Deck deck) {
         dealer.draw(deck, cards -> {
             Random random = new Random();
@@ -53,6 +56,7 @@ public class BlackjackController {
         }, new SummationCardPoint(16));
     }
 
+    // TODO: 21 상수화
     private void playerDraw(Deck deck, Gamer player) {
         player.draw(deck, cards -> {
             Random random = new Random();
@@ -61,8 +65,8 @@ public class BlackjackController {
         }, new SummationCardPoint(21));
     }
 
+    // TODO: 딜러의 카드 한장 숨기기
     private void printDealerAndPlayers() {
-        // TODO: 딜러의 카드 한장 숨기기
         GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
                 dealer.getRawSummationCardPoint());
         GamerOutputView.printWithoutSummationCardPoint(dealerDTO);
@@ -79,9 +83,10 @@ public class BlackjackController {
         });
     }
 
+    // TODO: 메서드 인덴트 줄이기
+    // TODO: 메시지 OutputView에서 처리
     private void playerTryDraw(Deck deck, Gamer player) {
         boolean needToDraw = true;
-        //Todo 메서드 인덴트 줄이기
         while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
             OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
             needToDraw = YNInputView.getYNAsBoolean();
@@ -95,6 +100,8 @@ public class BlackjackController {
         return !player.getSummationCardPoint().isBiggerThan(threshold);
     }
 
+    // TODO: 장 수를 그대로 숫자로 처리 할 것인지 고민
+    // TODO: 메시지 OutputView에서 처리
     private void dealerTryDraw(Deck deck) {
         int count = 0;
         while (canDraw(dealer, new SummationCardPoint(16))) {
@@ -106,6 +113,8 @@ public class BlackjackController {
         }
     }
 
+    // TODO: printDealerAndPlayers 메서드와 DTO 선언부 중복
+    // TODO: gamerDTO2 변수명 변경
     private void printDealerAndPlayersWithPoint() {
         GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
                 dealer.getRawSummationCardPoint());

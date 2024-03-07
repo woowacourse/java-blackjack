@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardPointCalculatorTest {
 
-    //ToDo 메서드 분리 완전 필요
+    // TODO: 메서드 분리 및 정리 필요
     static Stream<Arguments> calculateParameter() {
         List<Arguments> arguments = new ArrayList<>();
         for (CardType cardType : CardType.values()) {

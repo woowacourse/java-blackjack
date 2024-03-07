@@ -6,6 +6,7 @@ import java.util.List;
 public class NameInputView {
     private static final String SEPARATOR = ",";
 
+    // TODO: 배열 대신 컬렉션 사용하기 (요구사항)
     public static List<String> getNames() {
         String input = Console.getInputFromConsole();
         validateSeparator(input);

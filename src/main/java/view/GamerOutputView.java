@@ -15,6 +15,7 @@ public class GamerOutputView {
         System.out.printf("%s - %s\n", outputWithoutSummationCardPoint, summationCardPointOutput);
     }
 
+    // TODO: 메서드 라인 10줄 맞추기
     private static String mapToString(CardType cardType) {
         if (cardType == CardType.HEART) {
             return "하트";
@@ -31,6 +32,7 @@ public class GamerOutputView {
         throw new IllegalArgumentException("잘못된 카드 타입입니다.");
     }
 
+    // TODO: 메서드 라인 10줄 맞추기
     private static String mapToString(CardName cardName) {
         if (cardName == CardName.ACE) {
             return "A";

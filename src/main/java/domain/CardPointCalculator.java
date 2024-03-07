@@ -1,5 +1,6 @@
 package domain;
 
+// TODO: cardName.getCardNumber() 중복
 public class CardPointCalculator {
     public static CardPoint calculate(Card card) {
         CardName cardName = card.name();

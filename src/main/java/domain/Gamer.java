@@ -34,6 +34,9 @@ public class Gamer {
         return holdingCards.getHoldingCards();
     }
 
+    // TODO: getSummationCardPoint -> 프로그램의 동작을 위한 메서드
+    // TODO: getRawSummationCardPoint -> DTO를 위한 메서드
+    // TODO: holdingCards.calculateTotalPoint()를 내부 메서드로 만들기 (. 줄이고 가시성 향상)
     public int getRawSummationCardPoint() {
         return holdingCards.calculateTotalPoint().summationCardPoint();
     }
@@ -42,6 +45,7 @@ public class Gamer {
         return holdingCards.calculateTotalPoint().isBiggerThan(new SummationCardPoint(21));
     }
 
+    // TODO: 안쓰이는 메서드
     int countOfAceInHoldingCards() {
         return holdingCards.countOfAce();
     }

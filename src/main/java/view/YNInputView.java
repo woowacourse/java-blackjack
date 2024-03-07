@@ -1,5 +1,6 @@
 package view;
 
+// TODO: 클래스명 수정
 public class YNInputView {
 
     public static Boolean getYNAsBoolean() {

@@ -8,6 +8,7 @@ public class GameResultCalculator {
      * @param otherGamer 상대 게이머
      * @return baseGamer의 otherGamer 에 대한 승부 결과
      */
+    // TODO: 메서드 분리 필요
     public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
         if (baseGamer.isDead() && otherGamer.isDead()) {
             return GameResult.TIE;
@@ -19,7 +20,7 @@ public class GameResultCalculator {
             return GameResult.WIN;
         }
 
-        // ???
+        // TODO: 딜러가 Ace를 가지고 있는 경우 고려해야 함
 
         SummationCardPoint baseGamerSummationCardPoint = fix(baseGamer);
         SummationCardPoint otherGamerSummationCardPoint = fix(otherGamer);
@@ -33,6 +34,7 @@ public class GameResultCalculator {
         return GameResult.LOSE;
     }
 
+    // TODO: 메서드명 변경 필요
     private static SummationCardPoint fix(Gamer gamer) {
         int rawPoint = gamer.getSummationCardPoint().summationCardPoint();
 
@@ -43,6 +45,7 @@ public class GameResultCalculator {
         return gamer.getSummationCardPoint();
     }
 
+    // TODO: 메서드명, 변수명 변경 필요
     private static int fixPoint(int rawPoint) {
         int fixPoint = rawPoint + 10;
         if (fixPoint <= 21) {
