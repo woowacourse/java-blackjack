@@ -8,6 +8,7 @@ import blackjack.domain.CardShape;
 import blackjack.domain.Deck;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,7 +27,7 @@ class Controller {
         Deck deck = new Deck(createCards());
 
         initialDeal(participants, deck);
-        outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
+        playersTurn(participants.getPlayers(), deck);
     }
 
     private void initialDeal(Participants participants, Deck deck) {
@@ -34,6 +35,33 @@ class Controller {
             participant.hit(deck.draw());
             participant.hit(deck.draw());
         }
+
+        outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
+    }
+
+    private void playersTurn(List<Player> players, Deck deck) {
+        for (Player player : players) {
+            playerTurn(player, deck);
+        }
+    }
+
+    private void playerTurn(Player player, Deck deck) {
+        while (player.isPlayable()) {
+            GameCommand command = createGameCommand(player);
+            if (command.isNo()) {
+                outputView.printCards(player);
+                break;
+            }
+
+            player.hit(deck.draw());
+            outputView.printCards(player);
+        }
+    }
+
+    private GameCommand createGameCommand(Player player) {
+        String command = inputView.readDecision(player.getName());
+
+        return GameCommand.from(command);
     }
 
     private Participants createParticipants() {

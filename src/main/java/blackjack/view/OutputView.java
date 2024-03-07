@@ -12,12 +12,16 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), buildPlayerNameMessage(players));
         System.out.printf("%s: %s%n", dealer.getName(), buildDealerInitialDealMessage(dealer.getCards()));
         for (Player player : players) {
-            System.out.printf("%s카드: %s%n", player.getName(), buildCardsMessage(player.getCards()));
+            printCards(player);
         }
     }
 
     private String buildDealerInitialDealMessage(List<Card> cards) {
         return buildCardsMessage(cards.subList(1, cards.size()));
+    }
+
+    public void printCards(Player player) {
+        System.out.printf("%s카드: %s%n", player.getName(), buildCardsMessage(player.getCards()));
     }
 
     private String buildCardsMessage(List<Card> cards) {
