@@ -2,6 +2,7 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,12 +13,12 @@ class BlackjackResultTest {
     @Test
     @DisplayName("플레이어가 버스트 되면 딜러가 게임을 이긴다")
     void playerBust() {
-        Player dealer = new Player(new Name("딜러"));
-        Player teba = new Player(new Name("테바"));
+        Player dealer = new Dealer();
+        Player teba = new Participant(new Name("테바"));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));
-        Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
+        Blackjack blackjack = new Blackjack(new Players(List.of(teba, dealer)), dealer);
 
         BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
         Integer tebaLose = blackjackResultDTO.getLose(teba);
@@ -30,8 +31,8 @@ class BlackjackResultTest {
     @Test
     @DisplayName("딜러가 버스트 되면 플레이어가 게임을 이긴다")
     void dealerBust() {
-        Player dealer = new Player(new Name("딜러"));
-        Player teba = new Player(new Name("테바"));
+        Player dealer = new Dealer();
+        Player teba = new Participant(new Name("테바"));
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));

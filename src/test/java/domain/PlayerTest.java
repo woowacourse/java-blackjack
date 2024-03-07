@@ -15,7 +15,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
-        final Player player = new Player();
+        final Player player = new Participant(new Name("지쳐버린종이"));;
 
         player.addCard(new Card(Denomination.FIVE, Symbol.CLOVER));
         player.addCard(new Card(Denomination.FIVE, Symbol.CLOVER));
@@ -28,7 +28,7 @@ class PlayerTest {
     @MethodSource("argumentProvider")
     @DisplayName("플레이어의 버스트 여부를 반환한다.")
     void alive(List<Card> cards, boolean expected) {
-        final Player player = new Player();
+        final Player player = new Participant(new Name("지쳐버린종이"));
 
         player.addCard(cards.get(0));
         player.addCard(cards.get(1));
