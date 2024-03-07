@@ -1,9 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.List;
 
-import static blackjack.domain.CardScore.*;
-import static blackjack.domain.CardSymbol.*;
+import static blackjack.domain.card.CardScore.*;
+import static blackjack.domain.card.CardSymbol.*;
 
 public enum Card {
 
