@@ -8,7 +8,7 @@ public class Name {
 
     public Name(String name) {
         validate(name);
-        this.name = name;
+        this.name = name.trim();
     }
 
     private void validate(String name) {
@@ -17,7 +17,7 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
-        if (10 < name.length()) {
+        if (10 < name.trim().length()) {
             throw new IllegalArgumentException("이름은 " + MAX_NAME_LENGTH + "글자를 넘을 수 없습니다.");
         }
     }
@@ -26,5 +26,9 @@ public class Name {
         if (name.isBlank()) {
             throw new IllegalArgumentException("이름은 빈값이 될 수 없습니다.");
         }
+    }
+
+    public String getValue() {
+        return name;
     }
 }
