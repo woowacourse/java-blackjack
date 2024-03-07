@@ -24,6 +24,14 @@ public class BlackJackGame {
         player.addCard(cardGenerator.drawCard());
     }
 
+    public boolean checkDealerState() {
+        return dealer.isScoreLessThanStandard();
+    }
+
+    public void updateDealer() {
+        dealer.addCard(cardGenerator);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

@@ -32,6 +32,11 @@ public class BlackJackController {
             Player player = players.get(index);
             drawCardWithCommand(player, blackJackGame, index);
         }
+        if (blackJackGame.checkDealerState()) {
+            blackJackGame.updateDealer();
+            outputView.printDealerChange();
+        }
+        outputView.printFinalScore(blackJackGame);
     }
 
     private void drawCardWithCommand(Player player, BlackJackGame blackJackGame, int index) {

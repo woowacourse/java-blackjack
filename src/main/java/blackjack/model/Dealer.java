@@ -1,6 +1,8 @@
 package blackjack.model;
 
 public class Dealer {
+    private static final int STANDARD = 16;
+
     private final Cards cards;
 
     public Dealer(Cards cards) {
@@ -8,9 +10,13 @@ public class Dealer {
     }
 
     public void addCard(CardGenerator cardGenerator) {
-        if (cards.calculateScore() <= 16) {
+        if (isScoreLessThanStandard()) {
             cards.addCard(cardGenerator.drawCard());
         }
+    }
+
+    public boolean isScoreLessThanStandard() {
+        return cards.calculateScore() <= STANDARD;
     }
 
     public void addCards(CardGenerator cardGenerator) {
