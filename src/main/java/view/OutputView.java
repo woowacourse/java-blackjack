@@ -39,12 +39,10 @@ public class OutputView {
         System.out.println();
         for (Player player : players) {
             StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
-            List<String> cardInfos = new ArrayList<>();
-            for (var card : player.getCards()) {
-                String denomination = denominationToMessage(card.getDenomination());
-                String symbol = symbolToMessage(card.getSymbol());
-                cardInfos.add(denomination + symbol);
-            }
+            List<String> cardInfos = player.getCards()
+                    .stream()
+                    .map(card -> denominationToMessage(card.getDenomination()) + symbolToMessage(card.getSymbol()))
+                    .toList();
             stringBuilder.append(String.join(", ", cardInfos));
             System.out.print(stringBuilder);
             System.out.println(" - 결과 : " + player.calculateScore());
@@ -71,8 +69,15 @@ public class OutputView {
             System.out.print(player.getName() + ": " + win + "승" + lose + "패\n");
             return;
         }
-        System.out.println(player.getName() + ": " + (win > 0 ? "승" : "패"));
 
+        System.out.println(player.getName() + ": " + determineWinOrLose(win));
+    }
+
+    private static String determineWinOrLose(final Integer win) {
+        if (win > 0) {
+            return "승";
+        }
+        return "패";
     }
 
     // 2~9

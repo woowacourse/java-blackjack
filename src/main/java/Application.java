@@ -19,10 +19,7 @@ public class Application {
 
         // 참가자 게임진행
         for (var player : blackjack.getPlayers().getPlayers()) {
-            while (player.alive() && InputView.tryPoll(player.getName())) {
-                blackjack.dealCard(player);
-            }
-            OutputView.printPlayerStatus(player);
+            drawCardDuringPlayerTurn(player, blackjack);
         }
 
         Player dealer = blackjack.getDealer();
@@ -42,5 +39,12 @@ public class Application {
         // 승패 출력 맨~
         BlackjackResultDTO blackjackResult = blackjack.finishGame();
         OutputView.printGameResults(blackjackResult);
+    }
+
+    private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
+        while (player.alive() && InputView.tryPoll(player.getName())) {
+            blackjack.dealCard(player);
+        }
+        OutputView.printPlayerStatus(player);
     }
 }
