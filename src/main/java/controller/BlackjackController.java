@@ -1,16 +1,17 @@
 package controller;
 
+import domain.DealerRandomCardDrawStrategy;
 import domain.Deck;
 import domain.GameResult;
 import domain.GameResultCalculator;
 import domain.Gamer;
+import domain.PlayerRandomCardDrawStrategy;
 import domain.SummationCardPoint;
 import dto.DealerGameResultDTO;
 import dto.GameResultDTO;
 import dto.GamerDTO;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 import view.GameResultOutputView;
 import view.GamerOutputView;
@@ -49,20 +50,12 @@ public class BlackjackController {
     // TODO: 16 상수화
     // TODO: 랜덤으로 카드 뽑는 전략 함수화 (아래랑 중복)
     private void dealerDraw(Deck deck) {
-        dealer.draw(deck, cards -> {
-            Random random = new Random();
-            int idx = random.nextInt(cards.size());
-            return cards.get(idx);
-        }, new SummationCardPoint(16));
+        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
     }
 
     // TODO: 21 상수화
     private void playerDraw(Deck deck, Gamer player) {
-        player.draw(deck, cards -> {
-            Random random = new Random();
-            int idx = random.nextInt(cards.size());
-            return cards.get(idx);
-        }, new SummationCardPoint(21));
+        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
     }
 
     // TODO: 딜러의 카드 한장 숨기기
@@ -103,13 +96,11 @@ public class BlackjackController {
     // TODO: 장 수를 그대로 숫자로 처리 할 것인지 고민
     // TODO: 메시지 OutputView에서 처리
     private void dealerTryDraw(Deck deck) {
-        int count = 0;
-        while (canDraw(dealer, new SummationCardPoint(16))) {
-            count++;
+        try {
             dealerDraw(deck);
-        }
-        if (count != 0) {
-            OutputView.print("딜러는 16이하라 " + count + "장의 카드를 더 받았습니다.\n");
+            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        } catch (IllegalStateException e) {
+
         }
     }
 

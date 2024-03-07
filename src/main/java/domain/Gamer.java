@@ -11,19 +11,26 @@ public class Gamer {
         this.holdingCards = holdingCards;
     }
 
-    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, SummationCardPoint thresholdPoint) {
-        validateCanDraw(thresholdPoint);
-        holdingCards.add(deck.draw(cardDrawStrategy));
+    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
+        Card draw = deck.draw(cardDrawStrategy);
+        holdingCards.add(draw);
     }
-
-    private void validateCanDraw(SummationCardPoint thresholdPoint) {
-        if (getSummationCardPoint().isBiggerThan(thresholdPoint)) {
-            throw new IllegalStateException("카드를 더이상 뽑을 수 없습니다.");
-        }
-    }
-
+    
     public SummationCardPoint getSummationCardPoint() {
-        return holdingCards.calculateTotalPoint();
+        SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
+        if (hasAceInHoldingCards()) {
+            int rawPoint = fixPoint(summationCardPoint.summationCardPoint());
+            return new SummationCardPoint(rawPoint);
+        }
+        return summationCardPoint;
+    }
+
+    private int fixPoint(int rawPoint) {
+        int fixPoint = rawPoint + 10;
+        if (fixPoint <= 21) {
+            rawPoint = fixPoint;
+        }
+        return rawPoint;
     }
 
     public String getRawName() {
@@ -38,16 +45,11 @@ public class Gamer {
     // TODO: getRawSummationCardPoint -> DTO를 위한 메서드
     // TODO: holdingCards.calculateTotalPoint()를 내부 메서드로 만들기 (. 줄이고 가시성 향상)
     public int getRawSummationCardPoint() {
-        return holdingCards.calculateTotalPoint().summationCardPoint();
+        return getSummationCardPoint().summationCardPoint();
     }
 
     public boolean isDead() {
         return holdingCards.calculateTotalPoint().isBiggerThan(new SummationCardPoint(21));
-    }
-
-    // TODO: 안쓰이는 메서드
-    int countOfAceInHoldingCards() {
-        return holdingCards.countOfAce();
     }
 
     boolean hasAceInHoldingCards() {

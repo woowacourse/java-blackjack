@@ -20,11 +20,8 @@ public class GameResultCalculator {
             return GameResult.WIN;
         }
 
-        // TODO: 딜러가 Ace를 가지고 있는 경우 고려해야 함
-
-        SummationCardPoint baseGamerSummationCardPoint = fix(baseGamer);
-        SummationCardPoint otherGamerSummationCardPoint = fix(otherGamer);
-
+        SummationCardPoint baseGamerSummationCardPoint = baseGamer.getSummationCardPoint();
+        SummationCardPoint otherGamerSummationCardPoint = otherGamer.getSummationCardPoint();
         if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;
         }
@@ -32,25 +29,5 @@ public class GameResultCalculator {
             return GameResult.TIE;
         }
         return GameResult.LOSE;
-    }
-
-    // TODO: 메서드명 변경 필요
-    private static SummationCardPoint fix(Gamer gamer) {
-        int rawPoint = gamer.getSummationCardPoint().summationCardPoint();
-
-        if (gamer.hasAceInHoldingCards()) {
-            rawPoint = fixPoint(rawPoint);
-            return new SummationCardPoint(rawPoint);
-        }
-        return gamer.getSummationCardPoint();
-    }
-
-    // TODO: 메서드명, 변수명 변경 필요
-    private static int fixPoint(int rawPoint) {
-        int fixPoint = rawPoint + 10;
-        if (fixPoint <= 21) {
-            rawPoint = fixPoint;
-        }
-        return rawPoint;
     }
 }

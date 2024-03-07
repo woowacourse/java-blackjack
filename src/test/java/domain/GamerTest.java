@@ -23,7 +23,7 @@ class GamerTest {
     void draw() {
         Gamer Gamer = new Gamer("robin", HoldingCards.of());
         Deck deck = Deck.of(new Card(CardName.JACK, CardType.HEART), new Card(CardName.EIGHT, CardType.HEART));
-        Gamer.draw(deck, cards -> cards.get(0), new SummationCardPoint(21));
+        Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer));
 
         SummationCardPoint actual = Gamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
@@ -44,7 +44,7 @@ class GamerTest {
                 new Card(CardName.TWO, CardType.SPADE)
         );
 
-        Assertions.assertThatThrownBy(() -> Gamer.draw(deck, cards -> cards.get(0), new SummationCardPoint(21)))
+        Assertions.assertThatThrownBy(() -> Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }
@@ -60,7 +60,7 @@ class GamerTest {
                 new Card(CardName.TWO, CardType.SPADE)
         );
 
-        Assertions.assertThatThrownBy(() -> gamer.draw(deck, cards -> cards.get(0), new SummationCardPoint(16)))
+        Assertions.assertThatThrownBy(() -> gamer.draw(deck, new TestDealerCardDrawStrategy(gamer)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }
