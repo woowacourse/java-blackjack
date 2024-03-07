@@ -22,12 +22,16 @@ public class OutputView {
 
     private static String formatCards(List<Card> cards) {
         return cards.stream()
-                .map(Card::toString)
+                .map(OutputView::formatCard)
                 .collect(Collectors.joining(", "));
     }
 
+    private static String formatCard(Card card) {
+        return CardScoreName.convert(card.getScore()) + CardSymbolName.convert(card.getSymbol());
+    }
+
     public static void printDealCard(String name, Card card) {
-        System.out.printf("%s : %s%n", name, card);
+        System.out.printf("%s : %s%n", name, formatCard(card));
     }
 
     public static void printErrorMessage(String message) {

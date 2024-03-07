@@ -24,7 +24,7 @@ public class Cards {
     public int totalScore() {
         // TODO: 라인 수 10 이하로 줄이기
         Set<Integer> scoreCases = new HashSet<>();
-        calculateScoreCases(scoreCases, values.stream().map(Card::getScores).toList(), 0, 0);
+        calculateScoreCases(scoreCases, values.stream().map(card -> card.getScore().get()).toList(), 0, 0);
 
         int maxScore = 0;
         // TODO: 인덴트 1 이하로 줄이기

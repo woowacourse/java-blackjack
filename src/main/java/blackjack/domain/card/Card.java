@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
-import static blackjack.domain.card.CardScores.*;
+import static blackjack.domain.card.CardScore.*;
 import static blackjack.domain.card.CardSymbol.*;
 
 public enum Card {
@@ -15,10 +13,10 @@ public enum Card {
     SPADE_SEVEN(SPADE, SEVEN),
     SPADE_EIGHT(SPADE, EIGHT),
     SPADE_NINE(SPADE, NINE),
-    SPADE_JACK(SPADE, J),
-    SPADE_QUEEN(SPADE, Q),
-    SPADE_KING(SPADE, K),
-    SPADE_ACE(SPADE, A),
+    SPADE_JACK(SPADE, JACK),
+    SPADE_QUEEN(SPADE, QUEEN),
+    SPADE_KING(SPADE, KING),
+    SPADE_ACE(SPADE, ACE),
 
     DIAMOND_TWO(DIAMOND, TWO),
     DIAMOND_THREE(DIAMOND, THREE),
@@ -28,10 +26,10 @@ public enum Card {
     DIAMOND_SEVEN(DIAMOND, SEVEN),
     DIAMOND_EIGHT(DIAMOND, EIGHT),
     DIAMOND_NINE(DIAMOND, NINE),
-    DIAMOND_JACK(DIAMOND, J),
-    DIAMOND_QUEEN(DIAMOND, Q),
-    DIAMOND_KING(DIAMOND, K),
-    DIAMOND_ACE(DIAMOND, A),
+    DIAMOND_JACK(DIAMOND, JACK),
+    DIAMOND_QUEEN(DIAMOND, QUEEN),
+    DIAMOND_KING(DIAMOND, KING),
+    DIAMOND_ACE(DIAMOND, ACE),
 
     HEART_TWO(HEART, TWO),
     HEART_THREE(HEART, THREE),
@@ -41,10 +39,10 @@ public enum Card {
     HEART_SEVEN(HEART, SEVEN),
     HEART_EIGHT(HEART, EIGHT),
     HEART_NINE(HEART, NINE),
-    HEART_JACK(HEART, J),
-    HEART_QUEEN(HEART, Q),
-    HEART_KING(HEART, K),
-    HEART_ACE(HEART, A),
+    HEART_JACK(HEART, JACK),
+    HEART_QUEEN(HEART, QUEEN),
+    HEART_KING(HEART, KING),
+    HEART_ACE(HEART, ACE),
 
     CLUB_TWO(CLUB, TWO),
     CLUB_THREE(CLUB, THREE),
@@ -54,28 +52,24 @@ public enum Card {
     CLUB_SEVEN(CLUB, SEVEN),
     CLUB_EIGHT(CLUB, EIGHT),
     CLUB_NINE(CLUB, NINE),
-    CLUB_JACK(CLUB, J),
-    CLUB_QUEEN(CLUB, Q),
-    CLUB_KING(CLUB, K),
-    CLUB_ACE(CLUB, A);
+    CLUB_JACK(CLUB, JACK),
+    CLUB_QUEEN(CLUB, QUEEN),
+    CLUB_KING(CLUB, KING),
+    CLUB_ACE(CLUB, ACE);
 
     private final CardSymbol symbol;
-    private final CardScores scores;
+    private final CardScore score;
 
-    Card(CardSymbol symbol, CardScores scores) {
+    Card(CardSymbol symbol, CardScore score) {
         this.symbol = symbol;
-        this.scores = scores;
+        this.score = score;
     }
 
-    @Override
-    public String toString() {
-        if (COURTS.contains(scores)) {
-            return scores.name() + symbol.get();
-        }
-        return scores.get().get(0) + symbol.get();
+    public CardSymbol getSymbol() {
+        return symbol;
     }
 
-    public List<Integer> getScores() {
-        return scores.get();
+    public CardScore getScore() {
+        return score;
     }
 }
