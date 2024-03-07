@@ -1,8 +1,14 @@
 package blackjack.domain.gamer;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import blackjack.domain.card.Deck;
+import blackjack.dto.GamerHandDto;
+import blackjack.dto.PlayerResultsDto;
 
 public class Players {
 
@@ -38,5 +44,26 @@ public class Players {
 		if (names.size() != nonDuplicateNames.size()) {
 			throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
 		}
+	}
+
+	public void initAllPlayersCard(Deck deck) {
+		players.forEach(player -> player.initCard(deck));
+	}
+
+	public List<Player> getPlayers() {
+		return List.copyOf(players);
+	}
+
+	public List<GamerHandDto> convertPlayersToDto() {
+		return players.stream()
+			.map(Player::convertGamerToDto)
+			.toList();
+	}
+
+	public PlayerResultsDto convertPlayersToResultDto(int dealerScore) {
+		Map<Name, GameResult> resultMap = new LinkedHashMap<>();
+		players.forEach(player -> resultMap.put(player.getName(), player.isWin(dealerScore)));
+
+		return new PlayerResultsDto(resultMap);
 	}
 }
