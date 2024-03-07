@@ -79,4 +79,6 @@ class GameTest {
         // then
         assertThat(isWinner).containsExactly(true);
     }
+
+    @DisplayName("")
 }
