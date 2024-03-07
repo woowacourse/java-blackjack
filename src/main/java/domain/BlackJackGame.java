@@ -41,4 +41,18 @@ public class BlackJackGame {
                 .forEach(gamerDtos::add);
         return Collections.unmodifiableList(gamerDtos);
     }
+
+    public void drawCardFromName(String name) {
+        players.stream().filter(player -> player.isName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."))
+                .takeCard(deck.draw());
+    }
+
+    public boolean isBustFromName(String name) {
+        return players.stream().filter(player -> player.isName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."))
+                .isBust();
+    }
 }
