@@ -1,9 +1,6 @@
 package card;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Deck {
 
@@ -14,15 +11,20 @@ public class Deck {
     }
 
     public static Deck createShuffledFullDeck() {
-        List<Card> initCards = new LinkedList<>();
-        // TODO: indent 줄이기
+        List<Card> cards = new LinkedList<>();
         for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                initCards.add(new Card(shape, number));
-            }
+            cards.addAll(createNumberCardsOf(shape));
         }
-        Collections.shuffle(initCards);
-        return new Deck(initCards);
+        Collections.shuffle(cards);
+        return new Deck(cards);
+    }
+
+    private static List<Card> createNumberCardsOf(Shape shape) {
+        List<Card> cards = new ArrayList<>();
+        for (Number number : Number.values()) {
+            cards.add(new Card(shape, number));
+        }
+        return cards;
     }
 
     public Card draw() {
