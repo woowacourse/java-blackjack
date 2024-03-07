@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.cardgenerator.CardGenerator;
-
+import blackjack.view.dto.PlayerFinalCardsOutcome;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +35,12 @@ public class Players {
         if (uniquePlayerNames.size() != playerNames.size()) {
             throw new IllegalArgumentException(DUPLICATED_NAMES);
         }
+    }
+
+    public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
+        return players.stream()
+                .map(PlayerFinalCardsOutcome::of)
+                .toList();
     }
 
     public List<String> getNames() {
