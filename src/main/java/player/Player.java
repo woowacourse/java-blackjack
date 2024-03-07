@@ -2,7 +2,6 @@ package player;
 
 import card.Card;
 import card.Deck;
-import card.Hand;
 import game.BlackJackGame;
 
 import java.util.List;
@@ -13,8 +12,12 @@ public class Player {
     protected final Hand hand;
 
     Player(String name) {
+        this(name, new Hand());
+    }
+
+    Player(String name, Hand hand) {
         this.name = new Name(name);
-        this.hand = new Hand();
+        this.hand = hand;
     }
 
     public void drawCard(Deck deck) {
