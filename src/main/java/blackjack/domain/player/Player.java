@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Player {
+    private static final int BUST_SIZE = 21;
     protected final Name name;
     protected final Cards cards;
 
@@ -32,5 +33,9 @@ public class Player {
 
     public List<Card> getCards() {
         return cards.toList();
+    }
+
+    public boolean isBust() {
+        return cards.sum() > BUST_SIZE;
     }
 }

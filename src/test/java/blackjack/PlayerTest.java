@@ -5,7 +5,10 @@ import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.common.Name;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.result.ResultStatus;
+import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
     @Test
@@ -57,5 +62,25 @@ public class PlayerTest {
         assertThat(result).isEqualTo(16);
     }
 
+    @Test
+    @DisplayName("숫자 합이 21을 넘으면 버스트다.")
+    public void GamePlayer_Bust_if_exceed_21() {
+        var sut = PlayerFixture.게임_플레이어_생성(
+                List.of(CardValue.EIGHT, CardValue.TEN, CardValue.SEVEN));
 
+        var result = sut.isBust();
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("숫자 합이 21을 넘지 않으면 버스트가 아니다.")
+    public void GamePlayer_Not_bust_if_under_21() {
+        var sut = PlayerFixture.게임_플레이어_생성(
+                List.of(CardValue.EIGHT, CardValue.SEVEN));
+
+        var result = sut.isBust();
+
+        assertFalse(result);
+    }
 }
