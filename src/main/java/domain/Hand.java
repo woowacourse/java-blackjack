@@ -7,7 +7,7 @@ import java.util.List;
 public class Hand {
     private static final int BURST_THRESHOLD = 21;
     private static final int ACE_VALUE_GAP = 10;
-    List<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
         cards = new ArrayList<>();
