@@ -28,10 +28,11 @@ public enum CardNumberDisplay {
         this.display = display;
     }
 
-    public static CardNumberDisplay fromNumber(Number number) {
+    public static String fromNumber(Number number) {
         return Arrays.stream(CardNumberDisplay.values())
                 .filter(displayNumber -> displayNumber.number == number)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 수입니다."))
+                .display;
     }
 }

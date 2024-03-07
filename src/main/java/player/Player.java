@@ -21,4 +21,8 @@ public class Player {
     public boolean hasDrawableScore() {
         return hand.calculateScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
     }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
 }

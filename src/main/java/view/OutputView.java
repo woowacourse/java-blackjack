@@ -1,5 +1,7 @@
 package view;
 
+import card.Card;
+
 import java.util.List;
 
 public class OutputView {
@@ -12,12 +14,15 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerCards(String card) {
-        System.out.println("딜러: " + card);
+    public void printDealerFirstCard(Card card) {
+        System.out.println("딜러: " + convertCard(card));
     }
 
-    public void printPlayerCards(String name, List<String> cards) {
-        System.out.println(name + "카드: " + String.join(", ", cards));
+    public void printPlayerCards(String name, List<Card> cards) {
+        List<String> convertedCards = cards.stream()
+                .map(this::convertCard)
+                .toList();
+        System.out.println(name + "카드: " + String.join(", ", convertedCards));
     }
 
     public void printDrawMoreCardRequest(String name) {
@@ -28,12 +33,18 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerCardsWithResult(List<String> cards, int score) {
-        System.out.println("딜러 카드: " + String.join(", ", cards) + " - 결과: " + score + "점");
+    public void printDealerCardsWithResult(List<Card> cards, int score) {
+        List<String> convertedCards = cards.stream()
+                .map(this::convertCard)
+                .toList();
+        System.out.println("딜러 카드: " + String.join(", ", convertedCards) + " - 결과: " + score + "점");
     }
 
-    public void printPlayerCardsWithResult(String name, List<String> cards, int score) {
-        System.out.println(name + " 카드: " + String.join(", ", cards) + " - 결과: " + score + "점");
+    public void printPlayerCardsWithResult(String name, List<Card> cards, int score) {
+        List<String> convertedCards = cards.stream()
+                .map(this::convertCard)
+                .toList();
+        System.out.println(name + " 카드: " + String.join(", ", convertedCards) + " - 결과: " + score + "점");
     }
 
     public void printResultStart() {
@@ -50,5 +61,15 @@ public class OutputView {
             return;
         }
         System.out.println(name + ": 패");
+    }
+
+    public void printNewLine() {
+        System.out.println();
+    }
+
+    public String convertCard(Card card) {
+        String convertedNumber = CardNumberDisplay.fromNumber(card.getNumber());
+        String convertedShape = CardShapeDisplay.fromShape(card.getShape());
+        return convertedNumber + convertedShape;
     }
 }

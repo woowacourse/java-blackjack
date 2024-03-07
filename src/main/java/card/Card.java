@@ -20,6 +20,14 @@ public class Card {
         return number.getScore();
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
