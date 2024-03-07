@@ -5,9 +5,11 @@ import blackjack.domain.card.Card;
 public class Player extends Participant {
 
     private static final int BLACKJACK_BOUND = 21;
+    private final String name;
 
     public Player(final String name, final Dealer dealer) {
-        super(name);
+        super();
+        this.name = name;
 
         draw(dealer);
         draw(dealer);
@@ -21,5 +23,9 @@ public class Player extends Participant {
     @Override
     public boolean canReceiveCard() {
         return hand.calculateScore() < BLACKJACK_BOUND;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -7,11 +7,9 @@ import java.util.List;
 public abstract class Participant {
     private static final int BLACKJACK_BOUND = 21;
 
-    protected final String name;
     protected final Hand hand;
 
-    public Participant(final String name) {
-        this.name = name;
+    public Participant() {
         this.hand = new Hand();
     }
 
@@ -27,9 +25,5 @@ public abstract class Participant {
 
     public List<Card> getHandCards() {
         return hand.getCards();
-    }
-
-    public String getName() {
-        return name;
     }
 }

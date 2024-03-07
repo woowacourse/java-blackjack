@@ -28,7 +28,7 @@ public class BlackjackGame {
         Deck deck = new Deck(new RandomShuffleStrategy());
 
         List<String> names = inputView.readPlayersName();
-        Dealer dealer = new Dealer(DEALER_NAME, deck);
+        Dealer dealer = new Dealer(deck);
         Players players = Players.of(names, dealer);
 
         printCardDistribute(names, players, dealer);
@@ -43,7 +43,7 @@ public class BlackjackGame {
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
-        outputView.printCardDistribute(dealer.getName(), names);
+        outputView.printCardDistribute(names);
         printHandCardsStatus(dealer, players);
     }
 
@@ -58,7 +58,7 @@ public class BlackjackGame {
     }
 
     private void printHandCardsStatus(final Dealer dealer, final Players players) {
-        outputView.printHandCards(dealer.getName(), makeCardOutput(dealer.showFirstCard()));
+        outputView.printHandCards(makeCardOutput(dealer.showFirstCard()));
 
         for (Player player : players.getPlayers()) {
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
@@ -83,14 +83,14 @@ public class BlackjackGame {
     private void printAddDealerCard(final Dealer dealer) {
         if (dealer.canReceiveCard()) {
             dealer.draw();
-            outputView.printAddDealerCard(dealer.getName());
+            outputView.printAddDealerCard();
             return;
         }
         outputView.printNewLine();
     }
 
     private void printResultCardsStatus(final Dealer dealer, final Players players) {
-        outputView.printCardResultStatus(dealer.getName(), makeCardOutput(dealer.getHandCards()), dealer.getScore());
+        outputView.printCardResultStatus(makeCardOutput(dealer.getHandCards()), dealer.getScore());
 
         for (Player player : players.getPlayers()) {
             outputView.printCardResultStatus(

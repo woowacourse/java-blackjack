@@ -23,7 +23,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         deck = new Deck(shuffleStrategy);
-        dealer = new Dealer("딜러", deck);
+        dealer = new Dealer(deck);
     }
 
     @DisplayName("플레이어에게 카드를 더 뽑을지 물어본다.")

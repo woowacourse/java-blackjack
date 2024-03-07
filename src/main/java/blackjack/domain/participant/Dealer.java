@@ -9,8 +9,8 @@ public class Dealer extends Participant {
 
     private final Deck deck;
 
-    public Dealer(final String name, final Deck deck) {
-        super(name);
+    public Dealer(final Deck deck) {
+        super();
         this.deck = deck;
 
         selfDraw();

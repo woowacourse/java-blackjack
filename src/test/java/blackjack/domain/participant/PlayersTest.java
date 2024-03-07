@@ -22,12 +22,11 @@ public class PlayersTest {
     private Players players;
     private final String nameA = "a";
     private final String nameB = "b";
-    private final String dealerName = "딜러";
 
     @BeforeEach
     void setUp() {
         deck = new Deck(shuffleStrategy);
-        dealer = new Dealer(dealerName, deck);
+        dealer = new Dealer(deck);
         players = Players.of(List.of(nameA, nameB), dealer);
     }
 
@@ -48,7 +47,7 @@ public class PlayersTest {
     @Test
     void playerBurstLose() {
         //given
-        Dealer burstedDealer = new Dealer(dealerName, deck);
+        Dealer burstedDealer = new Dealer(deck);
         Player player = players.getPlayers().get(0);
 
         //when
@@ -70,7 +69,7 @@ public class PlayersTest {
     @Test
     void dealerBurstPlayerWins() {
         //given
-        Dealer burstedDealer = new Dealer(dealerName, deck);
+        Dealer burstedDealer = new Dealer(deck);
 
         //when
         IntStream.range(0, 12)
