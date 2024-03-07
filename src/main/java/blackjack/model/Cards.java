@@ -41,7 +41,7 @@ public class Cards {
     private int calculateBaseScore() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::getScoreValue)
                 .sum();
     }
 

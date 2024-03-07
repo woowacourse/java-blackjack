@@ -15,8 +15,16 @@ public class Card {
         return score.isAce();
     }
 
-    public int getScore() {
+    public int getScoreValue() {
         return score.getValue();
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 
     @Override
