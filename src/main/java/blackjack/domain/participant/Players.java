@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class Players {
@@ -48,14 +49,13 @@ public class Players {
         }
     }
 
-    //TODO 현재 얘는 테스트만을 위해서 임시로 작성된 코드
     public List<Player> getPlayers() {
         return players;
     }
 
-    public void play(Consumer<Player> playTurn) {
+    public void play(BiConsumer<Player, Deck> playTurn, Deck deck) {
         for (Player player : players) {
-            playTurn.accept(player);
+            playTurn.accept(player, deck);
         }
     }
 }
