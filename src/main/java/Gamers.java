@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Gamers {
 
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 8;
+    private static final int DEALER_INDEX = 0;
+    private static final int PLAYER_FIRST_INDEX = 1;
     private static final String DEALER_NAME = "딜러";
 
     private final List<Gamer> gamers;
@@ -13,12 +17,11 @@ public class Gamers {
     public Gamers(List<String> playersNames) {
         validate(playersNames);
         gamers = new ArrayList<>();
-
+        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
         for (String playerName : playersNames) {
             PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
             gamers.add(new Player(playerName, emptyHand));
         }
-        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
     }
 
     private void validate(List<String> playersNames) {
@@ -46,6 +49,16 @@ public class Gamers {
         if (playersNames.contains(DEALER_NAME)) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"딜러\"가 될 수 없습니다.");
         }
+    }
+
+    public Dealer callDealer() {
+        return (Dealer) gamers.get(DEALER_INDEX);
+    }
+
+    public List<Player> callPlayers() {
+        return IntStream.range(PLAYER_FIRST_INDEX, gamers.size() - 1)
+                .mapToObj(index -> (Player) gamers.get(index))
+                .collect(Collectors.toList());
     }
 
     public List<Gamer> getGamers() {

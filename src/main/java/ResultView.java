@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultView {
+
+    private final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printPlayerCards(Gamer gamer) {
         System.out.printf("%s카드: ", gamer.getPlayerName());
@@ -24,5 +27,13 @@ public class ResultView {
             return cardNumber.name();
         }
         return String.valueOf(cardNumber.getScore());
+    }
+
+    public void printInitialCards(Gamers gamers) {
+        String dealerName = gamers.callDealer().getPlayerName();
+        String playersNames = gamers.callPlayers().stream()
+                .map(Gamer::getPlayerName)
+                .collect(Collectors.joining(", "));
+        System.out.println(LINE_SEPARATOR + String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames));
     }
 }
