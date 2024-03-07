@@ -5,20 +5,22 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class DealerResult {
+    private Name name;
     private EnumMap<ResultStatus, Integer> resultStatusBoard;
 
-    private DealerResult(EnumMap<ResultStatus, Integer> resultStatusBoard) {
+    private DealerResult(Name name, EnumMap<ResultStatus, Integer> resultStatusBoard) {
+        this.name = name;
         this.resultStatusBoard = resultStatusBoard;
     }
 
-    public static DealerResult of(List<GamePlayerResult> gamePlayerResults) {
+    public static DealerResult of(Name name, List<GamePlayerResult> gamePlayerResults) {
         EnumMap<ResultStatus, Integer> resultStatusBoard = initializeStatusBoard();
 
         for (GamePlayerResult gamePlayerResult : gamePlayerResults) {
             increment(resultStatusBoard, gamePlayerResult.getResultStatus());
         }
 
-        return new DealerResult(resultStatusBoard);
+        return new DealerResult(name, resultStatusBoard);
     }
 
     private static EnumMap<ResultStatus, Integer> initializeStatusBoard() {
