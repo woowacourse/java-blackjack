@@ -26,6 +26,10 @@ public abstract class Participant {
 
     protected abstract boolean isPlayable();
 
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }

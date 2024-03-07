@@ -1,6 +1,7 @@
 package blackjack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
@@ -30,6 +31,13 @@ class Controller {
         initialDeal(participants, deck);
         playersTurn(participants.getPlayers(), deck);
         dealerTurn(participants.getDealer(), deck);
+        printResult(participants);
+    }
+
+    private Participants createParticipants() {
+        List<String> playerNames = inputView.readPlayerNames();
+
+        return new Participants(playerNames);
     }
 
     private void initialDeal(Participants participants, Deck deck) {
@@ -73,10 +81,8 @@ class Controller {
         }
     }
 
-    private Participants createParticipants() {
-        List<String> playerNames = inputView.readPlayerNames();
-
-        return new Participants(playerNames);
+    private void printResult(Participants participants) {
+        outputView.printAllCardsWithScore(participants.getParticipants());
     }
 
     private List<Card> createCards() {
@@ -86,6 +92,7 @@ class Controller {
                 cards.add(new Card(rank, shape));
             }
         }
+        Collections.shuffle(cards);
 
         return cards;
     }

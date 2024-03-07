@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 
 public class OutputView {
@@ -38,5 +39,18 @@ public class OutputView {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printAllCardsWithScore(List<Participant> participants) {
+        for (Participant participant : participants) {
+            System.out.println(buildCardsWithScoreMessage(participant));
+        }
+    }
+
+    private String buildCardsWithScoreMessage(Participant participant) {
+        return String.format("%s 카드: %s - 결과: %d",
+                participant.getName(),
+                buildCardsMessage(participant.getCards()),
+                participant.calculateScore());
     }
 }
