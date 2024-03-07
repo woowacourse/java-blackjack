@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -50,5 +51,11 @@ public class Players {
     //TODO 현재 얘는 테스트만을 위해서 임시로 작성된 코드
     List<Player> getPlayers() {
         return players;
+    }
+
+    public void play(Consumer<Player> playTurn) {
+        for (Player player : players) {
+            playTurn.accept(player);
+        }
     }
 }

@@ -27,8 +27,8 @@ public class Player extends Participant {
         return !dealer.isWin(this);
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
     @Override
