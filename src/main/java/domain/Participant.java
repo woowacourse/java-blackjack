@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Participant {
     private final Name name;
     private final Cards cards;
@@ -19,5 +21,21 @@ public class Participant {
 
     public String getName() {
         return this.name.getValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Participant other) {
+            return this.name.equals(other.name);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
