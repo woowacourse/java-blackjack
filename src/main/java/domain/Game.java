@@ -1,14 +1,20 @@
 package domain;
 
 import domain.user.Player;
+import domain.user.User;
 import domain.user.UserDeck;
 import domain.user.Users;
 
-import java.util.EnumMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static domain.State.*;
+
 public class Game {
+    private final static String HIT_COMMAND = "y";
+    private final static String STAY_COMMAND = "n";
+    private final static int DEALER_CARD_CONDITION = 16;
     private final TotalDeck totalDeck;
     private final Users users;
 
@@ -18,13 +24,24 @@ public class Game {
         users.setStartCards(totalDeck);
     }
 
-    public void doOrDie(String command) {
-        if ("y".equals(command)) {
+    public State hitOrStay(String command) {
+        if (HIT_COMMAND.equals(command)) {
             users.addCardOfCurrentUser(totalDeck.getNewCard());
+            return hitOrBust();
         }
-        if ("n".equals(command)) {
+        if (STAY_COMMAND.equals(command)) {
             users.nextUser();
+            return STAY;
         }
+        throw new IllegalArgumentException("입력은 y, n만 가능합니다.");
+    }
+
+    private State hitOrBust() {
+        if (users.busted()) {
+            users.nextUser();
+            return BUST;
+        }
+        return HIT;
     }
 
     public UserDeck showCurrentUserDeck() {
@@ -40,31 +57,19 @@ public class Game {
     }
 
     public boolean addDealerCardCondition() {
-        return users.getDealerCardSum() <= 16;
+        return users.getDealerCardSum() <= DEALER_CARD_CONDITION;
     }
 
-    public Map<Player, Result> generatePlayerResults() {
-        return users.getPlayers().stream()
+    public PlayerResults generatePlayerResults() {
+        Map<Player, Result> playerResults = users.getPlayers().stream()
                 .collect(Collectors.toMap(
-                        player -> player,
-                        player -> users.generatePlayerResult(player)
+                        Function.identity(),
+                        users::generatePlayerResult
                 ));
+        return new PlayerResults(playerResults);
     }
 
-    public Map<Result, Integer> generateDealerResult() {
-        Map<Player, Result> playerResult = generatePlayerResults();
-
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        int loseCount = (int) playerResult.values()
-                .stream()
-                .filter(result -> result == Result.WIN)
-                .count();
-        dealerResult.put(Result.LOSE, loseCount);
-        dealerResult.put(Result.WIN, playerResult.size() - loseCount);
-        return dealerResult;
-    }
-
-    public Player getCurrentPlayer() {
+    public User getCurrentPlayer() {
         return users.getCurrentPlayer();
     }
 }

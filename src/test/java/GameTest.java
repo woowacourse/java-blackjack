@@ -1,21 +1,17 @@
-import domain.Game;
-import domain.Result;
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
+import domain.*;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.user.Name;
 import domain.user.Player;
+import domain.user.UserDeck;
 import domain.user.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static domain.Result.LOSE;
-import static domain.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -33,28 +29,27 @@ public class GameTest {
 
     @Test
     @DisplayName("입력이 y이면 현재 유저가 카드를 추가로 받는다.")
-    void doTest() {
-        //given
+    void hitTest() {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
-        Users users = new Users(List.of(new Player(new Name("a"))));
-        //when
+        Player player = new Player(new Name("a"));
+        Users users = new Users(List.of(player));
+
         Game game = new Game(totalDeck, users);
-        game.doOrDie("y");
-        //then
-        assertThat(game.showCurrentUserDeck().getCards()).hasSize(3);
+        game.hitOrStay("y");
+
+        assertThat(player.getUserDeck().getCards()).hasSize(3);
     }
 
     @Test
     @DisplayName("입력이 n이면 다음 유저로 넘어간다.")
-    void dieTest() {
-        //given
+    void stayTest() {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
         Users users = new Users(List.of(new Player(new Name("a"))));
-        //when
+
         Game game = new Game(totalDeck, users);
-        List<Card> oldUserDeck = game.showCurrentUserDeck().getCards();
-        game.doOrDie("n");
-        //then
+        UserDeck oldUserDeck = game.showCurrentUserDeck();
+        game.hitOrStay("n");
+
         assertThat(game.showCurrentUserDeck()).isNotEqualTo(oldUserDeck);
     }
 
@@ -62,11 +57,12 @@ public class GameTest {
     @DisplayName("카드의 합이 16 이하이면 카드를 추가로 받는다.")
     void addDealerCardAtConditionTest() {
         TotalDeck totalDeck = new TotalDeck(List.of(
+                new Card(Shape.DIAMOND, Number.FIVE),
                 new Card(Shape.CLOVER, Number.FIVE),
                 new Card(Shape.CLOVER, Number.SIX),
                 new Card(Shape.CLOVER, Number.SEVEN)
         ));
-        Users users = new Users(List.of());
+        Users users = new Users(List.of(new Player(new Name("pobi"))));
 
         Game game = new Game(totalDeck, users);
         boolean actual = game.addDealerCardCondition();
@@ -86,12 +82,12 @@ public class GameTest {
         Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        Map<Player, Result> playerResults = game.generatePlayerResults();
-        Map<Result, Integer> dealerResult = game.generateDealerResult();
+        PlayerResults playerResults = game.generatePlayerResults();
+        DealerResult dealerResult = playerResults.generateDealerResult();
 
         assertAll(
-                () -> assertThat(playerResults.get(player)).isEqualTo(WIN),
-                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(1)
+                () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),
+                () -> assertThat(dealerResult.getInformation()).isEqualTo("1승")
         );
     }
 }

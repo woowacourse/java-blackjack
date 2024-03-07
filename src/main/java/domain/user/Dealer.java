@@ -4,10 +4,10 @@ import domain.card.Card;
 
 public class Dealer extends User {
     Dealer() {
-        super();
+        super(new Name("딜러"));
     }
 
     public Card getVisibleCard() {
-        return this.userDeck.getCards().get(0);
+        return this.userDeck.getFirstCard();
     }
 }

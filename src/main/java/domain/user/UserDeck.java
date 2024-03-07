@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.card.Number.ACE;
-
 public class UserDeck {
     private final List<Card> cards = new ArrayList<>();
 
@@ -35,6 +33,10 @@ public class UserDeck {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.number() == ACE);
+                .anyMatch(card -> card.isAce());
+    }
+
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 }

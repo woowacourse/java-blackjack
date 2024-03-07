@@ -1,7 +1,7 @@
 package domain;
 
 public enum Result {
-    WIN("승"), LOSE("패");
+    WIN("승"), LOSE("패"), DRAW("무");
 
     private final String result;
 
@@ -11,5 +11,13 @@ public enum Result {
 
     public String getResult() {
         return result;
+    }
+
+    public Result reverse() {
+        return switch (this) {
+            case WIN -> LOSE;
+            case LOSE -> WIN;
+            case DRAW -> DRAW;
+        };
     }
 }

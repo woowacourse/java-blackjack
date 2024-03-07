@@ -5,22 +5,24 @@ import domain.TotalDeck;
 import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static domain.Result.*;
 
 public class Users {
+    private static final int BLACK_JACK_CONDITION = 21;
+    private static final int DEALER_INDEX = 0;
+    private static final int FIRST_PLAYER_INDEX = 1;
     private final List<User> users;
     private User currentUser;
 
-    public Users(List<Player> users) {
-        this.users = new ArrayList<>(users);
-        this.users.add(new Dealer());
-        currentUser = this.users.get(0);
-    }
-
-    public Stream<User> stream() {
-        return users.stream();
+    public Users(List<Player> players) {
+        this.users = new ArrayList<>();
+        users.add(new Dealer());
+        users.addAll(players);
+        currentUser = users.get(FIRST_PLAYER_INDEX);
     }
 
     public UserDeck showCurrentUserDeck() {
@@ -32,6 +34,10 @@ public class Users {
     }
 
     public void nextUser() {
+        if (users.get(users.size() - 1).equals(currentUser)) {
+            currentUser = getDealer();
+            return;
+        }
         currentUser = users.get(users.indexOf(currentUser) + 1);
     }
 
@@ -44,29 +50,31 @@ public class Users {
     }
 
     public int getDealerCardSum() {
-        User dealer = getDealer();
-        return dealer.sumUserDeck();
+        return getDealer().sumUserDeck();
     }
 
     public Result generatePlayerResult(Player player) {
         if (player.sumUserDeck() < getDealerCardSum()) {
-            return Result.LOSE;
+            return LOSE;
         }
-        if (player.sumUserDeck() > 21) {
-            return Result.LOSE;
+        if (player.sumUserDeck() > BLACK_JACK_CONDITION) {
+            return LOSE;
         }
-        return Result.WIN;
+        if (player.sumUserDeck() == getDealerCardSum()) {
+            return DRAW;
+        }
+        return WIN;
     }
 
     public List<Player> getPlayers() {
-        List<User> users = this.users.subList(0, this.users.size() - 1);
-        return users.stream()
+        List<User> players = users.subList(FIRST_PLAYER_INDEX, users.size());
+        return players.stream()
                 .map(user -> (Player) user)
                 .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {
-        return (Dealer) users.get(users.size() - 1);
+        return (Dealer) users.get(DEALER_INDEX);
     }
 
     public void setStartCards(TotalDeck totalDeck) {
@@ -76,11 +84,15 @@ public class Users {
         }
     }
 
-    public Card getDealerVisibleCard() {
-        return getDealer().getVisibleCard();
+    public User getCurrentPlayer() {
+        return currentUser;
     }
 
-    public Player getCurrentPlayer() {
-        return (Player) currentUser;
+    public boolean busted() {
+        return currentUser.sumUserDeck() > BLACK_JACK_CONDITION;
+    }
+
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 }
