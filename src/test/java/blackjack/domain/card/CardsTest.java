@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("카드들")
 public class CardsTest {
     @Test
     @DisplayName("뽑은 카드를 저장한다.")

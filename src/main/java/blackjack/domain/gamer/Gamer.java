@@ -7,15 +7,23 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public abstract class Gamer {
+    public static final int DEAL_CARD_COUNT = 2;
+    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
     private static final int MAX_SCORE = 21;
-    private static final int DEAL_CARD_COUNT = 2;
     private static final int HIT_CARD_COUNT = 1;
     protected final Cards cards;
     private final String name;
 
     protected Gamer(String name) {
+        validate(name);
         this.name = name;
         this.cards = new Cards();
+    }
+
+    private void validate(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
+        }
     }
 
     public void deal(CardPicker cardPicker) {

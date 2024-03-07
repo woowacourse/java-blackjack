@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("딜러")
 class DealerTest {
     @Test
     @DisplayName("딜러의 첫 카드를 반환한다.")

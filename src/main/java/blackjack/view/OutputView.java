@@ -7,31 +7,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
+import static blackjack.domain.gamer.Gamer.DEAL_CARD_COUNT;
+
 public class OutputView {
+    public static final String WIN_STATUS_FORMAT = "%s: %s";
+    public static final String RESULT_SCORES_FORMAT = " - 결과: %d";
+    public static final String DEALER_HIT_FORMAT = String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", HIT_UPPER_BOUND);
     private static final String ERROR_PREFIX = "[ERROR] ";
+    private static final String DELIMITER = ", ";
+    private static final String DEAL_ANNOUNCE_FORMAT = String.format("딜러와 %%s에게 %d장을 나누었습니다.", DEAL_CARD_COUNT);
+    private static final String CARD_FORMAT = "%s 카드 : %s";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void printDealAnnounce(List<String> names) {
-        // TODO: 콤마와 결과 문자열 상수화
-        String nameFormat = String.join(", ", names);
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", nameFormat);
+        String nameFormat = String.join(DELIMITER, names);
+        System.out.printf(DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
     public static void printDealCards(String name, List<Card> cards) {
-        System.out.printf("%s카드 : %s%n", name, formatCards(cards));
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCards(cards));
+    }
+
+    public static void printDealCard(String name, Card card) {
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCard(card));
     }
 
     private static String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(OutputView::formatCard)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
     }
 
     private static String formatCard(Card card) {
         return CardScoreName.convert(card.getScore()) + CardSymbolName.convert(card.getSymbol());
-    }
-
-    public static void printDealCard(String name, Card card) {
-        System.out.printf("%s : %s%n", name, formatCard(card));
     }
 
     public static void printErrorMessage(String message) {
@@ -39,11 +48,11 @@ public class OutputView {
     }
 
     public static void printDealerHitAnnounce() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_HIT_FORMAT + LINE_SEPARATOR);
     }
 
     public static void printGamerCards(String name, List<Card> cards, int totalScore) {
-        System.out.printf("%s 카드: %s - 결과: %d%n", name, formatCards(cards), totalScore);
+        System.out.printf(CARD_FORMAT + RESULT_SCORES_FORMAT + LINE_SEPARATOR, name, formatCards(cards), totalScore);
     }
 
     public static void printWinAnnounce() {
@@ -54,10 +63,10 @@ public class OutputView {
         String gameResultsFormat = gameResults.keySet().stream()
                 .map(key -> gameResults.get(key) + GameResultName.convert(key))
                 .collect(Collectors.joining(" "));
-        System.out.printf("%s: %s%n", name, gameResultsFormat);
+        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, gameResultsFormat);
     }
 
     public static void printPlayerWinStatus(String name, GameResult gameResult) {
-        System.out.printf("%s: %s%n", name, GameResultName.convert(gameResult));
+        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(gameResult));
     }
 }

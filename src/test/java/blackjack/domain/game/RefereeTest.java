@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("심판")
 public class RefereeTest {
     private static final String name = "lemone";
     Referee referee;

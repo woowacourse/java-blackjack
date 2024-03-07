@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+@DisplayName("플레이어")
 public class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})

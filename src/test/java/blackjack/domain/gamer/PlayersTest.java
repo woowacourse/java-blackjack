@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+@DisplayName("플레이어들")
 public class PlayersTest {
     @Test
     @DisplayName("플레이어는 여러명일 수 있다.")
