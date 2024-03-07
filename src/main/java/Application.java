@@ -1,5 +1,4 @@
 import domain.Blackjack;
-import domain.Deck;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -14,24 +13,19 @@ public class Application {
         String[] names = InputView.inputPlayers();
 
         Players players = Players.from(names);
-        Player dealer = new Player("딜러");
-        Deck deck = new Deck();
-        Blackjack blackjack = new Blackjack(players, dealer, deck);
-
-        blackjack.initializePlayers();
-        blackjack.initializeDealer();
+        Blackjack blackjack = new Blackjack(players);
         OutputView.printPlayersStatus(blackjack.getPlayers().getPlayers());
 
         // 참가자 게임진행
         for (var player : blackjack.getPlayers().getPlayers()) {
             while (player.alive() && InputView.tryPoll(player.getName())) {
-                blackjack.dealCardsToPlayer(player);
+                blackjack.dealCard(player);
             }
             OutputView.printPlayerStatus(player);
         }
 
         Player dealer1 = blackjack.getDealer();
-        blackjack.dealCardsToPlayer(dealer1);
+        blackjack.dealCard(dealer1);
 
         OutputView.printPlayerStatus(dealer1);
 

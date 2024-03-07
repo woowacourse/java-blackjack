@@ -13,27 +13,24 @@ class BlackjackTest {
     @Test
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
     void initializeDealer() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")), new Player(), new Deck());
-        blackjack.initializeDealer();
+        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
         assertThat(blackjack.getDealer().getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
     void initializePlayers() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")), new Player(), new Deck());
-        blackjack.initializePlayers();
+        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
         assertThat(blackjack.getPlayers().getPlayers().get(0).getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
     void dealCardsToPlayer() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")), new Player(), new Deck());
+        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
         Player player = blackjack.getPlayers().getPlayers().get(0);
 
-        blackjack.initializePlayers();
-        blackjack.dealCardsToPlayer(player);
+        blackjack.dealCard(player);
 
         assertThat(player.getCards().size()).isEqualTo(3);
     }
@@ -44,10 +41,9 @@ class BlackjackTest {
         Player dealer = new Player("딜러");
         Player teba = new Player("테바");
         Player jonge = new Player("종이");
-        dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(0, 1)));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(1, 2)));
         jonge.addCard(Card.makeRandomCard(new RandomNumberGeneartor(1, 2)));
-        Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge)), dealer, new Deck());
+        Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge)));
 
         Map<Player, Entry<Integer, Integer>> playerEntryMap = blackjack.finishGame();
 
