@@ -15,7 +15,7 @@ public abstract class Gamer {
 
     abstract boolean canReceiveCard();
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return hand.calculateScore() > BLACKJACK_BOUND;
     }
 

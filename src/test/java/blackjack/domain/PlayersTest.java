@@ -58,9 +58,9 @@ public class PlayersTest {
 
     @DisplayName("버스트된 플레이어는 패배한다.")
     @Test
-    void playerBurstLose() {
+    void playerBustLose() {
         //given
-        Dealer burstedDealer = new Dealer(deck);
+        Dealer bustedDealer = new Dealer(deck);
         Player player = players.getPlayers().get(0);
 
         //when
@@ -68,28 +68,28 @@ public class PlayersTest {
                 .forEach(i -> player.draw(dealer));
 
         IntStream.range(0, 12)
-                .forEach(i -> burstedDealer.draw());
+                .forEach(i -> bustedDealer.draw());
 
         //then
         BlackjackResult blackjackResult = players.createResult(dealer);
         assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
 
-        BlackjackResult burstedDealerBlackjackResult = players.createResult(burstedDealer);
-        assertThat(burstedDealerBlackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
+        BlackjackResult bustedDealerBlackjackResult = players.createResult(bustedDealer);
+        assertThat(bustedDealerBlackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("딜러가 버스트 된 경우 버스트 안된 참가자는 승리한다.")
     @Test
-    void dealerBurstPlayerWins() {
+    void dealerBustPlayerWins() {
         //given
-        Dealer burstedDealer = new Dealer(deck);
+        Dealer bustedDealer = new Dealer(deck);
 
         //when
         IntStream.range(0, 6)
-                .forEach(i -> burstedDealer.isCardAdded());
+                .forEach(i -> bustedDealer.isCardAdded());
 
         //then
-        BlackjackResult blackjackResult = players.createResult(burstedDealer);
+        BlackjackResult blackjackResult = players.createResult(bustedDealer);
         assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.WIN);
     }
 }
