@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.*;
-
 public class Player extends Participant {
     private final PlayerName playerName;
 
@@ -19,8 +17,7 @@ public class Player extends Participant {
         return !hand.isBurst();
     }
 
-    @Override
-    public void draw(final Deck deck) {
-        hand.addCard(deck.drawn());
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 }

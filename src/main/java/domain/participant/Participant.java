@@ -1,6 +1,9 @@
 package domain.participant;
 
 import domain.Deck;
+import domain.PlayingCard;
+
+import java.util.List;
 
 public abstract class Participant {
     protected final Hand hand;
@@ -11,17 +14,19 @@ public abstract class Participant {
 
     abstract public boolean isDrawable();
 
-    abstract public void draw(final Deck deck);
+    public void draw(final Deck deck) {
+        hand.addCard(deck.drawn());
+    }
 
     public boolean isDealer() {
         return this instanceof Dealer;
     }
 
-    public HandStatus getHandStatus() {
-        return hand.getHandStatus();
-    }
-
     public int getHandSum() {
         return hand.getCardsNumberSum();
+    }
+
+    public List<PlayingCard> getHandCards() {
+        return hand.getPlayingCards();
     }
 }
