@@ -43,4 +43,16 @@ public class OutputView {
         final String dealerDrawMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println(dealerDrawMessage);
     }
+
+    // 보유한 모든 카드의 합을 출력한다.
+    // TODO: 중복 제거
+    public static void printHandSum(final Player player) {
+        // TODO: 문자열 분리 (상수 or 메서드)
+        String cardInfo = player.getName() + "카드: " + player.getCards()
+                .stream()
+                // TODO: 이름 합치는 책임을 어디로 할 것인가 (도메인 vs 뷰)
+                .map(card -> card.getNumber() + card.getShape())
+                .collect(Collectors.joining(", "));
+        System.out.println(player.getName() + ": " + cardInfo + " - 결과: " + player.getScore());
+    }
 }
