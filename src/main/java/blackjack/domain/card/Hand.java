@@ -38,6 +38,10 @@ public class Hand {
         return getCardTotalScore() > score;
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     private int getCardTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)

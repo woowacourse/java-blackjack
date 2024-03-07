@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.domain.card.Card;
@@ -25,6 +26,11 @@ public abstract class Participant {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public void addCard(Deck deck) {
+        Card card = deck.drawCard();
+        hand.addCard(card);
     }
 
     public abstract List<Card> getInitialOpenedCards();

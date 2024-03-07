@@ -16,4 +16,9 @@ public class Player extends Participant {
     public List<Card> getInitialOpenedCards() {
         return getCardsByCount(INITIAL_OPENED_CARD_COUNT);
     }
+
+    @Override
+    public boolean canHit() {
+        return !isBust();
+    }
 }
