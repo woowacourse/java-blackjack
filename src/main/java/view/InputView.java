@@ -7,21 +7,21 @@ import model.player.Player;
 
 public class InputView {
 
+    private static final String NEWLINE = System.lineSeparator();
     private static final String SPLIT_DELIMITER = ",";
-    private static final String ASK_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ASK_PLAYER_NAMES = NEWLINE + "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String SUBJECT_FOR_VOWEL = "%s는 ";
     private static final String SUBJECT_FOR_CONSONANT = "%s은 ";
-    private static final String ASK_HIT_ANSWER = "한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String ASK_HIT_ANSWER = "한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEWLINE;
     private static final String REGEXP_VOWEL_ENGLISH = "^[aeiouAEIOU]$";
     private static final char KOREAN_START_LETTER = '가';
     private static final int KOREAN_LETTER_COUNT = 28;
-    private static final String NEWLINE = System.lineSeparator();
 
     private InputView() {
     }
 
     public static List<String> askPlayerNames() {
-        System.out.println(NEWLINE + ASK_PLAYER_NAMES);
+        System.out.println(ASK_PLAYER_NAMES);
         String playerNames = Console.readLine();
         return splitInputByDelimiter(playerNames);
     }
@@ -33,7 +33,7 @@ public class InputView {
     }
 
     public static String askHitAnswer(Player player) {
-        System.out.printf(NEWLINE + determineHitAnswerPrompt(player) + NEWLINE, player.getName());
+        System.out.printf(determineHitAnswerPrompt(player), player.getName());
         return Console.readLine().strip();
     }
 

@@ -15,12 +15,16 @@ public enum CardNumber {
     KING("K", 10),
     JACK("J", 10);
 
-    private final String number;
+    private final String displayName;
     private final int score;
 
-    CardNumber(String number, int score) {
-        this.number = number;
+    CardNumber(String displayName, int score) {
+        this.displayName = displayName;
         this.score = score;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public int getScore() {

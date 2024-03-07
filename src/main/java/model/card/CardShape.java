@@ -6,9 +6,13 @@ public enum CardShape {
     DIAMOND("다이아몬드"),
     CLOVER("클로버");
 
-    private final String shape;
+    private final String displayName;
 
-    CardShape(String shape) {
-        this.shape = shape;
+    CardShape(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

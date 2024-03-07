@@ -17,4 +17,9 @@ public class Card {
     public CardShape getShape() {
         return shape;
     }
+
+    @Override
+    public String toString() {
+        return number.getDisplayName() + shape.getDisplayName();
+    }
 }

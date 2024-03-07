@@ -46,9 +46,22 @@ public class Players {
     public Players hit(Player player, Card card) {
         List<Player> updatedPlayers = new ArrayList<>(players);
         Player updatedPlayer = player.addCard(card);
+
         int index = updatedPlayers.indexOf(player);
         updatedPlayers.set(index, updatedPlayer);
+
         return new Players(updatedPlayers);
+    }
+
+    public Player findPlayer(Player player) {
+        return players.stream()
+            .filter(player1 -> player1.equals(player))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하는 플레이어가 없습니다."));
+    }
+
+    public int count() {
+        return players.size();
     }
 
     public List<Player> getPlayers() {
