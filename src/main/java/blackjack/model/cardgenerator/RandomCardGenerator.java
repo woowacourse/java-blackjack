@@ -1,4 +1,8 @@
-package blackjack.model;
+package blackjack.model.cardgenerator;
+
+import blackjack.model.card.Card;
+import blackjack.model.card.Denomination;
+import blackjack.model.card.Suit;
 
 import java.util.Random;
 

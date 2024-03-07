@@ -1,4 +1,7 @@
-package blackjack.model;
+package blackjack.model.dealer;
+
+import blackjack.model.card.Hand;
+import blackjack.model.cardgenerator.CardGenerator;
 
 public class Dealer {
     private static final int ACTION_CONDITION = 17;

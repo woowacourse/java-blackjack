@@ -1,4 +1,7 @@
-package blackjack.model;
+package blackjack.model.player;
+
+import blackjack.model.card.Hand;
+import blackjack.model.cardgenerator.CardGenerator;
 
 public class Player {
     private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
