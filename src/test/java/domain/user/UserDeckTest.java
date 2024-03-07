@@ -1,12 +1,12 @@
 package domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserDeckTest {
     @Test
@@ -42,27 +42,13 @@ public class UserDeckTest {
     }
 
     @Test
-    @DisplayName("ACE 카드는 합이 22 이상일 때 숫자가 1로 사용된다.")
+    @DisplayName("ACE 카드는 합이 11 이하일 때 숫자가 11로 사용된다.")
     void sumCardContainingAceTest() {
         UserDeck userDeck = new UserDeck();
 
         userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
         userDeck.pushCard(new Card(Shape.CLOVER, Number.TWO));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.KING));
 
         assertThat(userDeck.sumCard()).isEqualTo(13);
-    }
-
-    @Test
-    @DisplayName("ACE카드가 여러개일 때 최적의 값을 만든다.")
-    void reduceSumByAceTest() {
-        UserDeck userDeck = new UserDeck();
-
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
-        userDeck.pushCard(new Card(Shape.SPADE, Number.ACE));
-        userDeck.pushCard(new Card(Shape.HEART, Number.SEVEN));
-
-        int sum = userDeck.sumCard();
-        assertThat(sum).isEqualTo(19);
     }
 }

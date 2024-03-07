@@ -1,12 +1,14 @@
 package domain.user;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class UserDeck {
+    private static final int ACE_CONVERT_VALUE = 10;
+    private static final int ACE_CONVERT_MAX_CONDITION = 11;
+    private static final int FIRST_INDEX = 0;
     private final List<Card> cards = new ArrayList<>();
 
     public void pushCard(Card card) {
@@ -25,8 +27,8 @@ public class UserDeck {
     }
 
     private int addSumByAce(int sum) {
-        if (sum < 12 && hasAce()) {
-            sum += 10;
+        if (sum <= ACE_CONVERT_MAX_CONDITION && hasAce()) {
+            sum += ACE_CONVERT_VALUE;
         }
         return sum;
     }
@@ -37,6 +39,6 @@ public class UserDeck {
     }
 
     public Card getFirstCard() {
-        return cards.get(0);
+        return cards.get(FIRST_INDEX);
     }
 }

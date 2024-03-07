@@ -4,10 +4,8 @@ import domain.Command;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;
-
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -17,7 +15,7 @@ public class InputView {
         List<String> names = List.of(scanner.nextLine().split(",", -1));
         List<Player> collect = names.stream()
                 .map((name) -> new Player(new Name(name)))
-                .collect(Collectors.toList());
+                .toList();
         return new Users(collect);
     }
 

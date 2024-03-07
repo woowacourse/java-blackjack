@@ -32,6 +32,7 @@ public enum Result {
         return Arrays.stream(values())
                 .filter(result -> result.condition.test(current, opponent))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Result의 BiPredicate가 모든 경우의 수를 포함하지 않습니다."));
+                .orElseThrow(() ->
+                        new IllegalStateException("Result의 BiPredicate가 모든 경우의 수를 포함하지 않습니다."));
     }
 }

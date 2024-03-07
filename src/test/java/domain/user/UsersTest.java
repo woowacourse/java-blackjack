@@ -1,18 +1,17 @@
 package domain.user;
 
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
-import domain.card.Card;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static domain.card.Number.FIVE;
 import static domain.card.Number.TEN;
 import static domain.card.Shape.CLOVER;
 import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.TotalDeck;
+import domain.TotalDeckGenerator;
+import domain.card.Card;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class UsersTest {
     @Test
@@ -111,8 +110,8 @@ class UsersTest {
         assertThat(dealer.userDeck.getCards()).hasSize(2);
     }
 
-
     @Test
+    @DisplayName("플레이어의 숫자가 21을 넘으면 busted된다.")
     void bustedTest() {
         Player player1 = new Player(new Name("a"));
         Users users = new Users(List.of(player1));
@@ -121,6 +120,6 @@ class UsersTest {
         player1.addCard(new Card(CLOVER, TEN));
         player1.addCard(new Card(CLOVER, TEN));
 
-        assertThat(users.busted()).isTrue();
+        assertThat(users.currentUserBusted()).isTrue();
     }
 }

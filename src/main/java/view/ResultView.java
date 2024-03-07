@@ -8,11 +8,9 @@ import domain.user.Dealer;
 import domain.user.User;
 import domain.user.UserDeck;
 import domain.user.Users;
-
 import java.util.stream.Collectors;
 
 public class ResultView {
-
     public static void showStartStatus(Users users) {
         printUserNames(users);
         printUserCards(users);

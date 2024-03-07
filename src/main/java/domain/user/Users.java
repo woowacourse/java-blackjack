@@ -1,16 +1,15 @@
 package domain.user;
 
+import static domain.game.Result.LOSE;
+import static domain.game.Result.WIN;
+
 import domain.TotalDeck;
 import domain.card.Card;
 import domain.game.Result;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static domain.game.Result.LOSE;
-import static domain.game.Result.WIN;
 
 public class Users {
     private static final int BLACK_JACK_CONDITION = 21;
@@ -54,11 +53,19 @@ public class Users {
     }
 
     public void nextUser() {
-        if (users.get(users.size() - 1).equals(currentUser)) {
+        if (lastPlayer()) {
             currentUser = getDealer();
             return;
         }
-        currentUser = users.get(users.indexOf(currentUser) + 1);
+        currentUser = users.get(nextUserIndex());
+    }
+
+    private boolean lastPlayer() {
+        return users.get(users.size() - 1).equals(currentUser);
+    }
+
+    private int nextUserIndex() {
+        return users.indexOf(currentUser) + 1;
     }
 
     public boolean isDealerCardAddCondition() {
@@ -74,17 +81,21 @@ public class Users {
     }
 
     public Result generatePlayerResult(Player player) {
-        if (player.sumUserDeck() > BLACK_JACK_CONDITION) {
+        if (busted(player)) {
             return LOSE;
         }
-        if (getDealer().sumUserDeck() > BLACK_JACK_CONDITION) {
+        if (busted(getDealer())) {
             return WIN;
         }
         return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
     }
 
-    public boolean busted() {
-        return currentUser.sumUserDeck() > BLACK_JACK_CONDITION;
+    public boolean currentUserBusted() {
+        return busted(currentUser);
+    }
+
+    private boolean busted(User user) {
+        return user.sumUserDeck() > BLACK_JACK_CONDITION;
     }
 
     public List<User> getUsers() {
