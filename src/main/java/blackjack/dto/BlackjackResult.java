@@ -23,4 +23,8 @@ public class BlackjackResult {
     public int countLoses() {
         return dealerResult.getLoses();
     }
+
+    public int countDraws() {
+        return dealerResult.getDraws();
+    }
 }

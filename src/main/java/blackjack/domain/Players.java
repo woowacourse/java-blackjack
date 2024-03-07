@@ -57,6 +57,11 @@ public class Players {
                                final Player player, final Dealer dealer, PlayerResult playerResult) {
         long dealerScore = dealer.getScore();
 
+        if (player.isBust() && dealer.isBust()) {
+            playerResult.addResult(player, GameResult.DRAW);
+            return new DealerResult(wins, loses, draws + 1);
+        }
+
         if (player.isBust()) {
             playerResult.addResult(player, GameResult.LOSE);
             return new DealerResult(wins + 1, loses, draws);
