@@ -42,6 +42,7 @@ public class BlackjackGame {
                 .map(PlayerDto::from)
                 .toList();
         outputView.printSetting(dealerDto, playersDto);
+        outputView.printNewLine();
     }
 
     private void proceedPlayerTurn(BlackjackService blackjackService) {
@@ -51,10 +52,12 @@ public class BlackjackGame {
     }
 
     private void proceedDealerTurn(BlackjackService blackjackService) {
+        outputView.printNewLine();
         while (blackjackService.isDealerNotOver()) {
             blackjackService.addCardToDealer();
             outputView.printDealerOneMoreCard();
         }
+        outputView.printNewLine();
     }
 
     private void proceedOnePlayerTurn(BlackjackService blackjackService, int playerIndex) {

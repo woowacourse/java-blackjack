@@ -16,7 +16,7 @@ public class OutputView {
 
     public void printSetting(PlayerDto dealer, List<PlayerDto> players) {
         String playerNames = playerNameToString(players);
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.playerName(), playerNames);
+        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealer.playerName(), playerNames);
         printDealerCard(dealer);
         players.forEach(player -> {
             printCurrentCard(player);
@@ -39,6 +39,7 @@ public class OutputView {
             printCurrentCard(player);
             printScore(player);
         });
+        System.out.println();
     }
 
     public void printDealerOneMoreCard() {
@@ -51,7 +52,6 @@ public class OutputView {
 
     public void printResult(Map<String, Boolean> victoryResult) {
         System.out.println("## 최종 승패");
-        System.out.println();
         int dealerWinCount = (int) victoryResult.values().stream()
                 .filter(isWin -> !isWin)
                 .count();
