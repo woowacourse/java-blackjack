@@ -28,7 +28,6 @@ class DealerTest {
         assertThat(isDrawable).isTrue();
     }
 
-
     @Test
     @DisplayName("딜러는 16점 초과이면 추가 드로우가 불가능하다.")
     void unableToDrawTest() {

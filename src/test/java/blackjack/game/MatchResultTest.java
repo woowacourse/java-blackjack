@@ -30,7 +30,7 @@ class MatchResultTest {
 
     @ParameterizedTest
     @CsvSource(value = {"21, 21", "20, 20"})
-    @DisplayName("무승부인 경를 올바르게 판단한다.")
+    @DisplayName("무승부인 경우를 올바르게 판단한다.")
     void tieTest(int playerScore, int dealerScore) {
         // when
         MatchResult result = MatchResult.chooseWinner(playerScore, dealerScore);
