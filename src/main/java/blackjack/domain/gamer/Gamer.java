@@ -8,6 +8,8 @@ import java.util.List;
 
 public abstract class Gamer {
     private static final int MAX_SCORE = 21;
+    private static final int DEAL_CARD_COUNT = 2;
+    private static final int HIT_CARD_COUNT = 1;
     protected final Cards cards;
     private final String name;
 
@@ -17,14 +19,12 @@ public abstract class Gamer {
     }
 
     public void deal(CardPicker cardPicker) {
-        // TODO: 2 매직넘버 상수화
-        cardPicker.pick(2)
+        cardPicker.pick(DEAL_CARD_COUNT)
                 .forEach(cards::addCard);
     }
 
     public void hit(CardPicker cardPicker) {
-        // TODO: 1 매직넘버 상수화
-        cardPicker.pick(1)
+        cardPicker.pick(HIT_CARD_COUNT)
                 .forEach(cards::addCard);
     }
 
@@ -33,7 +33,7 @@ public abstract class Gamer {
     }
 
     public boolean isBlackjack() {
-        return isMaxScore() && cards.get().size() == 2;
+        return isMaxScore() && cards.get().size() == DEAL_CARD_COUNT;
     }
 
     public boolean isMaxScore() {
