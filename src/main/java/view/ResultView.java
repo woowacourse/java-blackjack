@@ -24,7 +24,7 @@ public class ResultView {
                 .stream()
                 .map(player -> player.getName().value())
                 .collect(Collectors.joining(", "));
-        System.out.println("\n딜러와 %s에게 2장을 나누었습니다.".formatted(names));
+        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.%n", names);
     }
 
     private static void printUserCards(Users users) {

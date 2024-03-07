@@ -26,7 +26,7 @@ public class GameTest {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
         Users users = new Users(List.of(new Player(new Name("a"))));
 
-        Game game = new Game(totalDeck, users);
+        new Game(totalDeck, users);
 
         assertThat(totalDeck.size()).isEqualTo(48);
     }

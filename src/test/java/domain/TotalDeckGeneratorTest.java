@@ -12,9 +12,7 @@ public class TotalDeckGeneratorTest {
     @Test
     @DisplayName("전체 덱을 만든다.")
     void generateTest() {
-        TotalDeckGenerator totalDeckGenerator = new TotalDeckGenerator();
-
-        List<Card> cards = totalDeckGenerator.generate();
+        List<Card> cards = TotalDeckGenerator.generate();
 
         assertThat(cards).hasSize(52);
     }
