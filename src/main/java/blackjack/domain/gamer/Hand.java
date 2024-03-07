@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import java.util.List;
 
 import blackjack.domain.card.Card;
+import blackjack.dto.CardDto;
 
 public class Hand {
 
@@ -31,5 +32,15 @@ public class Hand {
 			}
 		}
 		return sum;
+	}
+
+	public Card getFirstCard() {
+		return cards.get(0);
+	}
+
+	public List<CardDto> convertHandToDto() {
+		return cards.stream()
+			.map(Card::convertCardToDto)
+			.toList();
 	}
 }

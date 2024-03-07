@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.dto.CardDto;
-import blackjack.dto.GamerResponseDto;
+import blackjack.dto.GamerHandDto;
 
 public abstract class BlackjackGamer {
 
@@ -41,10 +41,10 @@ public abstract class BlackjackGamer {
 		return name;
 	}
 
-	public GamerResponseDto convertGamerToDto() {
+	public GamerHandDto convertGamerToDto() {
 		String playerName = name.value();
 		List<CardDto> gamerHand = hand.convertHandToDto();
 
-		return new GamerResponseDto(playerName, gamerHand);
+		return new GamerHandDto(playerName, gamerHand);
 	}
 }

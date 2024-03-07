@@ -2,6 +2,8 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
+import blackjack.dto.CardDto;
+
 public class Card {
 
 	private final CardShape cardShape;
@@ -12,12 +14,16 @@ public class Card {
 		this.cardNumber = cardNumber;
 	}
 
-	public int getCardNumber() {
+	public boolean isAce() {
+		return cardNumber == CardNumber.ACE;
+	}
+
+	public int getNumber() {
 		return cardNumber.getValue();
 	}
 
-	public boolean isAce() {
-		return cardNumber == CardNumber.ACE;
+	public CardDto convertCardToDto() {
+		return new CardDto(cardNumber.getName(), cardShape.getName());
 	}
 
 	@Override
