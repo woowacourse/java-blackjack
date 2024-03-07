@@ -1,2 +1,5 @@
-package domain;public interface NumberGenerator {
+package domain;
+
+public interface NumberGenerator {
+    int generate();
 }

@@ -16,7 +16,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        String s = "qwrqwr";
         return players;
     }
 }

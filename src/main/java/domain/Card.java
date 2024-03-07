@@ -1,8 +1,10 @@
 package domain;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Card {
+
     private final Denomination denomination;
     private final Symbol symbol;
 
@@ -11,9 +13,17 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int getValue(int score){
+    public static Card makeRandomCard(NumberGenerator generator) {
+        Random random = new Random();
+        final Denomination denomination = Denomination.getDenomination(generator.generate());
+        final Symbol symbol = Symbol.getSymbol(random.nextInt(4));
+        return new Card(denomination, symbol);
+    }
+
+    public int getValue(int score) {
         return denomination.getValue(score);
     }
+
     public Denomination getDenomination() {
         return denomination;
     }
