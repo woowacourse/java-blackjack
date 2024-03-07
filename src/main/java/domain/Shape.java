@@ -12,4 +12,8 @@ public enum Shape {
     Shape(String shape) {
         this.shape = shape;
     }
+
+    public String getShape() {
+        return shape;
+    }
 }

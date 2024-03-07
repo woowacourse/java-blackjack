@@ -6,8 +6,8 @@ public class DealerCards extends Cards {
 
     private static final int MIN_SCORE = 16;
 
-    public DealerCards(Participant participant, List<Card> cards) {
-        super(participant, cards);
+    public DealerCards(Dealer dealer, List<Card> cards) {
+        super(dealer, cards);
     }
 
     public boolean canDraw() {

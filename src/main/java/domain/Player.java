@@ -8,4 +8,8 @@ public class Player extends Participant {
         super();
         this.name = name;
     }
+
+    public String getName() {
+        return name.toString();
+    }
 }

@@ -43,4 +43,10 @@ public abstract class Cards {
     public void draw() {
         cards.add(new Card(new Random().nextInt(10) + 1, Shape.CLUB));
     }
+
+    public List<String> getCards() {
+        return cards.stream()
+                .map(Card::toString)
+                .toList();
+    }
 }
