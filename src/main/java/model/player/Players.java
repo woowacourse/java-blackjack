@@ -65,6 +65,8 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .toList();
     }
 }

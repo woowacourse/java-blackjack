@@ -6,4 +6,5 @@ public enum CardShape {
     HEART,
     DIAMOND,
     ;
+
 }

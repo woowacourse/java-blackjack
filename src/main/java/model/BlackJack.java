@@ -2,8 +2,10 @@ package model;
 
 import static java.util.stream.Collectors.toMap;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.player.Dealer;
 import model.player.Player;
 import model.player.Players;
 
@@ -55,4 +57,15 @@ public class BlackJack {
         }
         return GameResult.DRAW;
     }
+
+    public List<Player> findPlayers() {
+        return players.getPlayers();
+    }
+
+    public Dealer findDealer() {
+        return (Dealer) players.getDealer();
+    }
+
+
+
 }

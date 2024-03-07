@@ -26,10 +26,6 @@ public abstract class Player implements NoticeStatus {
 
     public abstract boolean isDealer();
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public void addCards(List<Card> card) {
         cards.addAll(card);
     }
@@ -72,6 +68,14 @@ public abstract class Player implements NoticeStatus {
 
     public boolean isSameName(String name) {
         return this.name.equals(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override

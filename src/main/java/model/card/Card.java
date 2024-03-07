@@ -19,6 +19,14 @@ public class Card {
         return cardNumber.maximumNumber() - cardNumber.maximumNumber();
     }
 
+    public CardShape getCardShape() {
+        return cardShape;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

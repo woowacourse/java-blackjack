@@ -31,4 +31,7 @@ public enum CardNumber {
         this.numbers = numbers;
     }
 
+    public int getNumber() {
+        return numbers.get(0);
+    }
 }
