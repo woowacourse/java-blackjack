@@ -81,4 +81,4 @@ example feat: 사용자 입력 후 도메인 사용
 - [x] 딜러의 이름 필드를 제거한다.
 - [ ] 공통된 코드 추가 메서드로 묶는다.
 - [x] `protected` 필드 직접 접근 문제 해결한다.
-- [ ] `Participant`를 `Gamer`로 변경한다. 
+- [x] `Participant`를 `Gamer`로 변경한다. 

@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 
-public class Dealer extends Participant {
+public class Dealer extends Gamer {
 
     private static final int DEALER_BOUND = 16;
 

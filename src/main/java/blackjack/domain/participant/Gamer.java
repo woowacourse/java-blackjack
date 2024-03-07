@@ -4,12 +4,12 @@ import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public abstract class Participant {
+public abstract class Gamer {
     private static final int BLACKJACK_BOUND = 21;
 
     protected final Hand hand;
 
-    public Participant() {
+    public Gamer() {
         this.hand = new Hand();
     }
 
