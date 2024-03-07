@@ -9,11 +9,8 @@ import java.util.Stack;
 public class TestDeckFactory implements DeckFactory {
 
     /**
-     * 카드 순서 :
-     * Ace - HEART, SPADE, CLOVER, DIAMOND
-     * 2 - HEART, SPADE, CLOVER, DIAMOND
-     * ...
-     * KING - HEART, SPADE, CLOVER, DIAMOND
+     * 카드 순서 : Ace - HEART, SPADE, CLOVER, DIAMOND 2 - HEART, SPADE, CLOVER, DIAMOND ... KING - HEART, SPADE, CLOVER,
+     * DIAMOND
      */
     @Override
     public Stack<Card> generate() {

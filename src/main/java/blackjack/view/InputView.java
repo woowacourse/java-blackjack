@@ -16,10 +16,6 @@ public class InputView {
     public static boolean readDoesWantHit(final Name name) {
         System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
-        if (input.equals("y")) {
-            return true;
-        }
-
-        return false;
+        return input.equals("y");
     }
 }
