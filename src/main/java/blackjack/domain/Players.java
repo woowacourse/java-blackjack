@@ -20,6 +20,10 @@ public class Players {
                 .toList());
     }
 
+    public int countPlayer() {
+        return players.size();
+    }
+
     private void validate(List<Player> players) {
         validateEachPlayerNameUnique(players);
         validateEntryNotEmpty(players);
