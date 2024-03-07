@@ -7,8 +7,10 @@ import java.util.Scanner;
 
 public class InputView {
 
-    // TODO: 뷰 로직 수정 필요
-    public static final String DELIMITER = ",";
+    private static final String DELIMITER = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     private final Scanner scanner;
 
     public InputView() {
@@ -16,13 +18,12 @@ public class InputView {
     }
 
     public List<String> readNames() {
-        System.out.println("이름을 입력해 주세요");
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return Arrays.asList(scanner.nextLine().split(DELIMITER));
     }
 
     public String readYesOrNo(Player player) {
-        System.out.println(player.getName() + "님의 차례입니다.");
-        System.out.println("y/n 입력해 주세요");
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), YES, NO);
         return scanner.nextLine();
     }
 }
