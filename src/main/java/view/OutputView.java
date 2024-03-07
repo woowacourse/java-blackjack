@@ -20,10 +20,7 @@ public class OutputView {
     }
 
     public void printPlayerCards(String name, List<Card> cards) {
-        List<String> convertedCards = cards.stream()
-                .map(this::convertCard)
-                .toList();
-        System.out.println(name + "카드: " + String.join(", ", convertedCards));
+        System.out.println(name + "카드: " + convertCards(cards));
     }
 
     public void printDrawMoreCardRequest(String name) {
@@ -35,17 +32,11 @@ public class OutputView {
     }
 
     public void printDealerCardsWithResult(List<Card> cards, int score) {
-        List<String> convertedCards = cards.stream()
-                .map(this::convertCard)
-                .toList();
-        System.out.println("딜러 카드: " + String.join(", ", convertedCards) + " - 결과: " + score + "점");
+        System.out.println("딜러 카드: " + convertCards(cards) + " - 결과: " + score + "점");
     }
 
     public void printPlayerCardsWithResult(String name, List<Card> cards, int score) {
-        List<String> convertedCards = cards.stream()
-                .map(this::convertCard)
-                .toList();
-        System.out.println(name + " 카드: " + String.join(", ", convertedCards) + " - 결과: " + score + "점");
+        System.out.println(name + " 카드: " + convertCards(cards) + " - 결과: " + score + "점");
     }
 
     public void printResultStart() {
@@ -65,9 +56,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public String convertCard(Card card) {
+    private String convertCard(Card card) {
         String convertedNumber = CardNumberDisplay.fromNumber(card.getNumber());
         String convertedShape = CardShapeDisplay.fromShape(card.getShape());
         return convertedNumber + convertedShape;
+    }
+
+    private String convertCards(List<Card> cards) {
+        List<String> convertedCards = cards.stream()
+                .map(this::convertCard)
+                .toList();
+        return String.join(", ", convertedCards);
     }
 }
