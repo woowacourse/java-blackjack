@@ -4,7 +4,7 @@ import domain.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record CardStatus(
+public record HandStatus(
         String name,
         List<Card> cards
 ) {

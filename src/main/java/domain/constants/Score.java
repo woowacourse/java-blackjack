@@ -1,7 +1,7 @@
 package domain.constants;
 
 // TODO: 클래스 명 수정
-public enum CardValue {
+public enum Score {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -19,7 +19,7 @@ public enum CardValue {
     private final int value;
     private final String name;
 
-    CardValue(final int value, final String name) {
+    Score(final int value, final String name) {
         this.value = value;
         this.name = name;
     }

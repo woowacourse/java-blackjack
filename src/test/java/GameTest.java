@@ -1,14 +1,13 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import controller.dto.CardStatus;
-import controller.dto.CardsStatus;
+import controller.dto.HandStatus;
 import domain.Card;
-import domain.Cards;
 import domain.Dealer;
+import domain.Deck;
 import domain.Game;
 import domain.Participant;
 import domain.Player;
-import domain.constants.CardValue;
+import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,10 +24,9 @@ class GameTest {
         Dealer dealer = new Dealer("딜러");
         Game game = new Game(dealer, playerNames);
 
-        CardsStatus cardsStatus = game.initiateGameCondition();
-        List<CardStatus> statuses = cardsStatus.status();
+        List<HandStatus> statuses = game.initiateGameCondition();
 
-        for (CardStatus status : statuses) {
+        for (HandStatus status : statuses) {
             assertThat(status.cards()).hasSize(2);
         }
     }
@@ -44,9 +42,9 @@ class GameTest {
         Participant participant = new Participant(dealer, players);
 
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardValue.THREE, Shape.DIAMOND));
+        cards.add(new Card(Score.THREE, Shape.DIAMOND));
 
-        Game game = new Game(participant, new Cards(cards));
+        Game game = new Game(participant, new Deck(cards));
 
         // when
         int count = game.giveCardsToDealer();
@@ -57,7 +55,7 @@ class GameTest {
 
     private List<Card> createNormalWithTwoCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.SIX, Shape.DIAMOND));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.SIX, Shape.DIAMOND));
     }
 }

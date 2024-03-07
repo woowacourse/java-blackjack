@@ -5,7 +5,7 @@ import domain.Dealer;
 import domain.GameRule;
 import domain.Participant;
 import domain.Player;
-import domain.constants.CardValue;
+import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -27,7 +27,7 @@ class GameRuleTest {
         GameRule rule = createGameRule(player, dealer);
 
         // when
-        List<Boolean> isWinner = rule.compareScore();
+        List<Boolean> isWinner = rule.judge();
 
         // then
         assertThat(isWinner).containsExactly(true);
@@ -173,40 +173,40 @@ class GameRuleTest {
 
     private List<Card> createBlackJackWithTwoCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.ACE, Shape.DIAMOND));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.ACE, Shape.DIAMOND));
     }
 
     private List<Card> createBlackJackWithThreeCards() {
         return List.of(
-                new Card(CardValue.FIVE, Shape.CLOVER),
-                new Card(CardValue.FIVE, Shape.DIAMOND),
-                new Card(CardValue.ACE, Shape.DIAMOND));
+                new Card(Score.FIVE, Shape.CLOVER),
+                new Card(Score.FIVE, Shape.DIAMOND),
+                new Card(Score.ACE, Shape.DIAMOND));
     }
 
     private List<Card> createNormalWithTwoCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.SIX, Shape.DIAMOND));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.SIX, Shape.DIAMOND));
     }
 
     private List<Card> createNormalWithThreeCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.THREE, Shape.DIAMOND),
-                new Card(CardValue.SIX, Shape.HEART));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.THREE, Shape.DIAMOND),
+                new Card(Score.SIX, Shape.HEART));
     }
 
     private List<Card> createSameScoreNormalWithTwoCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.NINE, Shape.DIAMOND));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.NINE, Shape.DIAMOND));
     }
 
     private List<Card> createBustedCards() {
         return List.of(
-                new Card(CardValue.TEN, Shape.CLOVER),
-                new Card(CardValue.FIVE, Shape.DIAMOND),
-                new Card(CardValue.EIGHT, Shape.HEART));
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.FIVE, Shape.DIAMOND),
+                new Card(Score.EIGHT, Shape.HEART));
     }
 }

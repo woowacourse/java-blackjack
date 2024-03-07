@@ -1,8 +1,7 @@
 package controller;
 
-import controller.dto.CardStatus;
-import controller.dto.CardsStatus;
 import controller.dto.GameResult;
+import controller.dto.HandStatus;
 import controller.dto.PlayerResult;
 import domain.Dealer;
 import domain.Game;
@@ -48,26 +47,26 @@ public class GameController {
         return game;
     }
 
-    private CardsStatus getCurrentCardsStatus(final Game game) {
-        List<CardStatus> cardStatuses = new ArrayList<>();
+    private List<HandStatus> getCurrentCardsStatus(final Game game) {
+        List<HandStatus> handStatuses = new ArrayList<>();
 
         Participant participant = game.getParticipant();
         Dealer dealer = participant.dealer();
         List<Player> players = participant.players();
 
-        cardStatuses.add(new CardStatus(dealer.getName(), dealer.getCards()));
+        handStatuses.add(new HandStatus(dealer.getName(), dealer.getCards()));
         for (Player player : players) {
-            cardStatuses.add(new CardStatus(player.getName(), player.getCards()));
+            handStatuses.add(new HandStatus(player.getName(), player.getCards()));
         }
 
-        return new CardsStatus(cardStatuses);
+        return handStatuses;
     }
 
     private void startRound(final Game game) {
         List<String> names = game.getPlayerNames();
         for (String name : names) {
             String command = inputView.decideToGetMoreCard(name);
-            CardStatus status = game.getCurrentCardStatus(name);
+            HandStatus status = game.getCurrentCardStatus(name);
             while ("y".equals(command)) {
                 status = game.pickOneCard(name);
                 outputView.printCardStatus(status);

@@ -1,28 +1,28 @@
 package domain;
 
-import domain.constants.CardValue;
+import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.Objects;
 
 public class Card {
-    private final CardValue cardValue;
+    private final Score score;
     private final Shape shape;
 
-    public Card(CardValue cardValue, Shape shape) {
-        this.cardValue = cardValue;
+    public Card(Score score, Shape shape) {
+        this.score = score;
         this.shape = shape;
     }
 
     public boolean isAceCard() {
-        return this.cardValue.equals(CardValue.ACE);
+        return this.score.equals(Score.ACE);
     }
-    
+
     public int getScore() {
-        return cardValue.getValue();
+        return score.getValue();
     }
 
     public String getName() {
-        return cardValue.getName();
+        return score.getName();
     }
 
     public String getShape() {
@@ -38,11 +38,11 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return cardValue == card.cardValue && shape == card.shape;
+        return score == card.score && shape == card.shape;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardValue, shape);
+        return Objects.hash(score, shape);
     }
 }

@@ -1,51 +1,50 @@
 package domain;
 
-import controller.dto.CardStatus;
-import controller.dto.CardsStatus;
+import controller.dto.HandStatus;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     private final Participant participant;
-    private final Cards cards;
+    private final Deck deck;
 
     public Game(final Dealer dealer, final List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
         this.participant = new Participant(dealer, players);
-        cards = new Cards();
+        deck = new Deck();
     }
 
-    public Game(final Participant participant, final Cards cards) {
+    public Game(final Participant participant, final Deck deck) {
         this.participant = participant;
-        this.cards = cards;
+        this.deck = deck;
     }
 
-    public CardsStatus initiateGameCondition() {
-        List<CardStatus> status = new ArrayList<>();
+    public List<HandStatus> initiateGameCondition() {
+        List<HandStatus> status = new ArrayList<>();
         Dealer dealer = participant.dealer();
-        status.add(new CardStatus(dealer.getName(), pickTwoCards(dealer)));
+        status.add(new HandStatus(dealer.getName(), pickTwoCards(dealer)));
         for (Player player : participant.players()) {
-            status.add(new CardStatus(player.getName(), pickTwoCards(player)));
+            status.add(new HandStatus(player.getName(), pickTwoCards(player)));
         }
-        return new CardsStatus(status);
+        return status;
     }
 
     private List<Card> pickTwoCards(final Player player) {
-        player.saveCard(cards.pick());
-        player.saveCard(cards.pick());
+        player.saveCard(deck.pick());
+        player.saveCard(deck.pick());
         return player.getCards();
     }
 
-    public CardStatus pickOneCard(final String name) {
+    public HandStatus pickOneCard(final String name) {
         List<Player> players = participant.players();
         Player foundPlayer = players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-        foundPlayer.saveCard(cards.pick());
-        return new CardStatus(foundPlayer.getName(), foundPlayer.getCards());
+        foundPlayer.saveCard(deck.pick());
+        return new HandStatus(foundPlayer.getName(), foundPlayer.getCards());
     }
 
     public List<String> getPlayerNames() {
@@ -55,13 +54,13 @@ public class Game {
                 .toList();
     }
 
-    public CardStatus getCurrentCardStatus(final String name) {
+    public HandStatus getCurrentCardStatus(final String name) {
         List<Player> players = participant.players();
         Player foundPlayer = players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-        return new CardStatus(foundPlayer.getName(), foundPlayer.getCards());
+        return new HandStatus(foundPlayer.getName(), foundPlayer.getCards());
     }
 
     public int giveCardsToDealer() {
@@ -71,7 +70,7 @@ public class Game {
 
         int count = 0;
         while (currentScore <= threshold) {
-            dealer.saveCard(cards.pick());
+            dealer.saveCard(deck.pick());
             currentScore = dealer.calculateScore(21);
             count++;
         }

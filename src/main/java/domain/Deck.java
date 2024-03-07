@@ -1,21 +1,21 @@
 package domain;
 
-import domain.constants.CardValue;
+import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Deck {
     private final List<Card> cards;
 
-    public Cards() {
+    public Deck() {
         cards = new ArrayList<>();
         create();
         Collections.shuffle(cards);
     }
 
-    public Cards(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -26,8 +26,8 @@ public class Cards {
     }
 
     private void addCardsOfShape(final Shape shape) {
-        for (CardValue cardValue : CardValue.values()) {
-            cards.add(new Card(cardValue, shape));
+        for (Score score : Score.values()) {
+            cards.add(new Card(score, shape));
         }
     }
 
