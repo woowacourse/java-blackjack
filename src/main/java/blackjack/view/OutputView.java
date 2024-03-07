@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.NameCardsAScore;
 import blackjack.model.Card;
 import blackjack.view.display.ScoreDisplay;
 import blackjack.view.display.ShapeDisplay;
@@ -24,5 +25,14 @@ public class OutputView {
 
     public static void printDealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalCardsAndScore(final NameCardsAScore nameCardsAScore) {
+        System.out.println(
+                nameCardsAScore.name() + ": " + convert(nameCardsAScore.cards()) + " - 결과: " + nameCardsAScore.score());
+    }
+
+    public static void printFinalCardsAndScore(final List<NameCardsAScore> nameCardsAScores) {
+        nameCardsAScores.forEach(OutputView::printFinalCardsAndScore);
     }
 }
