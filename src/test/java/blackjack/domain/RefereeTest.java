@@ -27,4 +27,39 @@ class RefereeTest {
 
         assertThat(outcome).isEqualTo(Outcome.WIN);
     }
+
+    @DisplayName("플레이어와 딜러가 모두 버스트된 경우 무승부이다.")
+    @Test
+    void pushWhenBothBust() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.EIGHT, Suit.CLOVER),
+                new Card(Number.TEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.DIAMOND)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART),
+                new Card(Number.TEN, Suit.SPADE)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.PUSH);
+    }
+
+    @DisplayName("플레이어만 버스트했다면 플레이어의 패배이다.")
+    @Test
+    void playerLoseWhenOnlyBust() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.EIGHT, Suit.CLOVER),
+                new Card(Number.TEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.DIAMOND)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.SEVEN, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.LOSE);
+    }
 }
