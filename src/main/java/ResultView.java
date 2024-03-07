@@ -14,9 +14,7 @@ public class ResultView {
     private String resolvePlayerCards(Gamer gamer) {
         List<String> cards = new ArrayList<>();
         for (Card card : gamer.getCards()) {
-            CardNumber cardNumber = card.getCardNumber();
-            CardShape cardShape = card.getCardShape();
-            cards.add(resolveCardNumber(cardNumber) + cardShape.getShape());
+            cards.add(resolveCardExpression(card));
         }
         return String.join(", ", cards);
     }
@@ -30,10 +28,26 @@ public class ResultView {
     }
 
     public void printInitialCards(Gamers gamers) {
-        String dealerName = gamers.callDealer().getPlayerName();
-        String playersNames = gamers.callPlayers().stream()
+        Dealer dealer = gamers.callDealer();
+        List<Player> players = gamers.callPlayers();
+
+        String dealerName = dealer.getPlayerName();
+        String playersNames = players.stream()
                 .map(Gamer::getPlayerName)
                 .collect(Collectors.joining(", "));
         System.out.println(LINE_SEPARATOR + String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames));
+
+        Card dealerCard = dealer.openOneCard();
+        System.out.println(dealerName + ": " + resolveCardExpression(dealerCard));
+        for (Gamer gamer : gamers.callPlayers()) {
+            printPlayerCards(gamer);
+        }
+        System.out.print(LINE_SEPARATOR);
+    }
+
+    private String resolveCardExpression(Card card) {
+        CardNumber cardNumber = card.getCardNumber();
+        CardShape cardShape = card.getCardShape();
+        return resolveCardNumber(cardNumber) + cardShape.getShape();
     }
 }

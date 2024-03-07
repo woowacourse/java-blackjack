@@ -10,4 +10,8 @@ public class Dealer extends Gamer {
         DealerCards dealerCards = (DealerCards) cards;
         return dealerCards.hasScoreUnderHitThreshold();
     }
+
+    public Card openOneCard() {
+        return ((DealerCards) cards).pickFirstCard();
+    }
 }

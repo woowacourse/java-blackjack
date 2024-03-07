@@ -7,7 +7,7 @@ public class GamerCards {
     private static final int CONDITION_DECIDING_A_SCORE = 10;
     private static final int A_SCORE_GAP = 10;
 
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
     public GamerCards(List<Card> cards) {
         this.cards = cards;
