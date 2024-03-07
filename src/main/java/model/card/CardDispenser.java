@@ -1,8 +1,12 @@
 package model.card;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class CardDispenser {
 
@@ -40,6 +44,12 @@ public class CardDispenser {
             cardDispenser = new CardDispenser();
         }
         return cardDispenser;
+    }
+
+    public Cards dispenseCards(int count) {
+        return IntStream.range(0, count)
+            .mapToObj(i -> dispenseCard())
+            .collect(collectingAndThen(toList(), Cards::new));
     }
 
     public Card dispenseCard() {
