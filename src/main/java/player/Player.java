@@ -11,13 +11,13 @@ public class Player {
     private final Name name;
     protected final Hand hand;
 
-    Player(String name) {
-        this(name, new Hand());
-    }
-
     Player(String name, Hand hand) {
         this.name = new Name(name);
         this.hand = hand;
+    }
+
+    Player(String name) {
+        this(name, new Hand());
     }
 
     public void drawCard(Deck deck) {

@@ -13,12 +13,12 @@ public class Hand {
 
     private final List<Card> cards;
 
-    Hand() {
-        this(new ArrayList<>());
-    }
-
     Hand(List<Card> cards) {
         this.cards = cards;
+    }
+
+    Hand() {
+        this(new ArrayList<>());
     }
 
     public int calculateScore() {
