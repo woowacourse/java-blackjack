@@ -7,7 +7,7 @@ public class Dealer extends Player {
     private final Deck deck;
 
     public Dealer(Deck deck) {
-        super("딜러", new Hand());
+        super("딜러");
         this.deck = deck;
     }
 

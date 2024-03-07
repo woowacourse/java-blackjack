@@ -5,9 +5,9 @@ public class Player {
     private final String name;
     private final Hand hand;
 
-    public Player(String name, Hand hand) {
+    public Player(String name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new Hand();
     }
 
     public int calculate() {
