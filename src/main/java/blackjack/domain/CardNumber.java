@@ -22,6 +22,10 @@ public enum CardNumber {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getValue() {
         return value;
     }
