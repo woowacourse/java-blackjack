@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardGameResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 
@@ -54,5 +55,15 @@ public class OutputView {
                 .map(card -> card.getNumber() + card.getShape())
                 .collect(Collectors.joining(", "));
         System.out.println(player.getName() + ": " + cardInfo + " - 결과: " + player.getScore());
+    }
+
+    public static void printResult(final CardGameResult cardGameResult) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + cardGameResult.getDealerWinCount() + "승 " + cardGameResult.getDealerLoseCount() + "패");
+        cardGameResult.getTotalResult()
+                .entrySet()
+                .stream()
+                .map(result -> result.getKey().getName() + ": " + result.getValue().name())
+                .forEach(System.out::println);
     }
 }
