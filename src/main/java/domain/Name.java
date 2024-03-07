@@ -3,13 +3,11 @@ package domain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Name {
+public record Name(String name) {
     private static final Pattern pattern = Pattern.compile("^[^가-힣a-zA-Z-_0-9].*$");
-    private final String name;
 
-    public Name(String name) {
+    public Name {
         validateName(name);
-        this.name = name;
     }
 
     private void validateName(String name) {
@@ -35,9 +33,5 @@ public class Name {
         if (matcher.matches()) {
             throw new IllegalArgumentException("이름은 알파벳, 한글, 숫자, '_', '-'로만 이루어져야 합니다.");
         }
-    }
-
-    public String getName() {
-        return name;
     }
 }

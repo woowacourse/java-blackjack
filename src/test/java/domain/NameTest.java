@@ -11,7 +11,7 @@ public class NameTest {
     @Test
     @DisplayName("생성자로 받은 이름 문자열을 반환한다")
     void getName() {
-        Assertions.assertThat(new Name("이름").getName())
+        Assertions.assertThat(new Name("이름").name())
                 .isEqualTo("이름");
     }
 

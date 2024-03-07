@@ -21,7 +21,7 @@ public class Gamer {
     }
 
     public boolean isName(String test) {
-        return name.getName().equals(test);
+        return name.name().equals(test);
     }
 
     public Name getName() {

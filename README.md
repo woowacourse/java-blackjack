@@ -56,7 +56,7 @@
 - [ ] BlackJackResult
     - [ ] Dealer와 Players와 총점 합계를 받아 Gamer들의 결과를 계산한다
     - [ ] Dealer의 결과를 반환한다
-    - [ ] Players의 결과를 반환한다
+    - [x] Players의 결과를 반환한다
 
 - 참가자의 이름 입력받는다
     - 쉼표 기준으로 분리한다
