@@ -18,18 +18,20 @@ public abstract class Participant {
     }
 
     public final int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::getMaxScore)
-                .sum();
-
-        //TODO 인덴트 해결하기
-        for (Card card : cards) {
-            if (score <= BLACKJACK_SCORE) {
-                return score;
-            }
+        int score = getMaxScore();
+        int cardIndex = 0;
+        while (score > BLACKJACK_SCORE && cardIndex < cards.size()) {
+            Card card = cards.get(cardIndex);
             score = score + card.getMinScore() - card.getMaxScore();
+            cardIndex++;
         }
         return score;
+    }
+
+    private int getMaxScore() {
+        return cards.stream()
+                .mapToInt(Card::getMaxScore)
+                .sum();
     }
 
     public final boolean isDrawable() {
