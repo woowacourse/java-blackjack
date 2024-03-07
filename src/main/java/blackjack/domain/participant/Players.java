@@ -1,0 +1,31 @@
+package blackjack.domain.participant;
+
+import java.util.List;
+
+public class Players {
+
+    private static final int MAX_PLAYERS_SIZE = 4;
+
+    private final List<Player> players;
+
+    private Players(List<Player> players) {
+        validateSize(players);
+        this.players = players;
+    }
+
+    public static Players from(List<String> names) {
+        List<Player> players = names.stream()
+                .map(Player::from)
+                .toList();
+        return new Players(players);
+    }
+
+    private void validateSize(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("최소 한 명의 플레이어가 있어야 합니다.");
+        }
+        if (players.size() > MAX_PLAYERS_SIZE) {
+            throw new IllegalArgumentException("최대 4명의 플레이어만 참여 가능합니다.");
+        }
+    }
+}
