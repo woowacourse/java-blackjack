@@ -11,16 +11,15 @@ public class Player extends BlackjackGamer {
 		return getScore() <= 21;
 	}
 
-	public boolean isWin(int dealerScore) {
+	public GameResult isWin(int dealerScore) {
 		int playerScore = getScore();
 
 		if (playerScore > 21) {
-			return false;
+			return GameResult.LOSE;
 		}
-		if (dealerScore > 21) {
-			return true;
+		if (dealerScore > 21 || playerScore > dealerScore) {
+			return GameResult.WIN;
 		}
-
-		return playerScore > dealerScore;
+		return GameResult.LOSE;
 	}
 }
