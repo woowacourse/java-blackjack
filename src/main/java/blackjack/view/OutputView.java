@@ -56,7 +56,7 @@ public class OutputView {
 	}
 
 	public void printDealerMessage(String dealerName) {
-		System.out.printf("\n%s는(은) 16이하라 한장의 카드를 더 받았습니다.\n\n", dealerName);
+		System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", dealerName);
 	}
 
 	public void printScore(GamerHandDto gamerHandDto, int score) {
@@ -93,5 +93,9 @@ public class OutputView {
 		playerResultsDto.resultMap().forEach((name, result) ->
 			System.out.println(name.value() + ": " + result.getName())
 		);
+	}
+
+	public void printEmptyLine() {
+		System.out.println();
 	}
 }

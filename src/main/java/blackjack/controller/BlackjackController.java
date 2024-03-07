@@ -93,6 +93,7 @@ public class BlackjackController {
 	}
 
 	private void printAllGamerScores(Dealer dealer, Players players) {
+		outputView.printEmptyLine();
 		outputView.printScore(dealer.convertGamerToDto(), dealer.getScore());
 		printPlayersScores(players);
 	}
