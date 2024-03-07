@@ -23,7 +23,7 @@ class HandTest {
 			new Card(CardShape.HEART, CardNumber.FIVE)
 		));
 
-		assertThat(hand.sum()).isEqualTo(15);
+		assertThat(hand.calculateScore()).isEqualTo(15);
 	}
 
 	@Test
@@ -35,7 +35,7 @@ class HandTest {
 			new Card(CardShape.DIAMOND, CardNumber.KING)
 		));
 
-		assertThat(hand.sum()).isEqualTo(21);
+		assertThat(hand.calculateScore()).isEqualTo(21);
 	}
 
 	@Test
@@ -46,6 +46,6 @@ class HandTest {
 			new Card(CardShape.CLOVER, CardNumber.KING)
 		));
 
-		assertThat(hand.sum()).isEqualTo(21);
+		assertThat(hand.calculateScore()).isEqualTo(21);
 	}
 }

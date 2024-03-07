@@ -34,7 +34,7 @@ public abstract class BlackjackGamer {
 	}
 
 	public int getScore() {
-		return hand.sum();
+		return hand.calculateScore();
 	}
 
 	public Name getName() {
