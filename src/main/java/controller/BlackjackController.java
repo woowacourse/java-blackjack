@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Card;
 import domain.DealerRandomCardDrawStrategy;
 import domain.Deck;
 import domain.GameResult;
@@ -10,6 +11,7 @@ import domain.SummationCardPoint;
 import dto.DealerGameResultDTO;
 import dto.GameResultDTO;
 import dto.GamerDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,10 +60,17 @@ public class BlackjackController {
         player.draw(deck, new PlayerRandomCardDrawStrategy(player));
     }
 
-    // TODO: 딜러의 카드 한장 숨기기
     private void printDealerAndPlayers() {
-        printPlayer(dealer);
+        printDealer(dealer);
         players.forEach(BlackjackController::printPlayer);
+    }
+
+    private static void printDealer(Gamer dealer) {
+        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
+        rawHoldingCards.remove(0);
+        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
+                dealer.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
     }
 
     private static void printPlayer(Gamer player) {

@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HoldingCards {
@@ -28,7 +29,7 @@ public class HoldingCards {
     }
 
     List<Card> getHoldingCards() {
-        return holdingCards;
+        return Collections.unmodifiableList(holdingCards);
     }
 
     // TODO: countOfAce 메서드가 쓰이는가? 아래 hasAce로 충분한 듯 보임.

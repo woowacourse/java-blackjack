@@ -15,7 +15,7 @@ public class Gamer {
         Card draw = deck.draw(cardDrawStrategy);
         holdingCards.add(draw);
     }
-    
+
     public SummationCardPoint getSummationCardPoint() {
         SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
         if (hasAceInHoldingCards()) {
@@ -38,7 +38,7 @@ public class Gamer {
     }
 
     public List<Card> getRawHoldingCards() {
-        return holdingCards.getHoldingCards();
+        return List.copyOf(holdingCards.getHoldingCards());
     }
 
     // TODO: getSummationCardPoint -> 프로그램의 동작을 위한 메서드
