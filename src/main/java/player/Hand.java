@@ -13,7 +13,7 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
+    Hand() {
         this(new ArrayList<>());
     }
 
