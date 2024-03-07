@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import player.Name;
 import player.Player;
 
-class CardGameTest {
+class SingleMatchTest {
 
     @DisplayName("Dealer의 승패 결과를 가져온다.")
     @Test
@@ -24,8 +24,8 @@ class CardGameTest {
         dealer.receiveCard(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN));
         dealer.receiveCard(new Card(CardNumber.QUEEN, CardPattern.CLOVER_PATTERN));
 
-        CardGame cardGame = new CardGame(player, dealer);
+        SingleMatch singleMatch = new SingleMatch(player, dealer);
 
-        Assertions.assertThat(cardGame.isDealerWins()).isTrue();
+        Assertions.assertThat(singleMatch.isPlayerWins()).isTrue();
     }
 }

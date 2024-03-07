@@ -1,23 +1,25 @@
 package cardGame;
 
 import card.Card;
-import card.Cards;
 import dealer.Dealer;
 import player.Player;
 
-public class CardGame {
+public class SingleMatch {
 
     private final Player player;
     private final Dealer dealer;
 
-    public CardGame(Player player, Dealer dealer) {
+    public SingleMatch(Player player, Dealer dealer) {
         this.player = player;
         this.dealer = dealer;
     }
 
-    public Cards playRound() {
+    public void playRound() {
         giveCard();
-        return player.getCards();
+    }
+
+    public boolean isCanPlayGamePlayer() {
+        return player.isOverMaxCardScore();
     }
 
     private void giveCard() {
@@ -25,11 +27,16 @@ public class CardGame {
         player.receiveCard(pickedCard);
     }
 
-    public boolean isDealerWins() {
+    public boolean isPlayerWins() {
         int dealerScore = dealer.getMaxGameScore();
         int playerScore = player.getMaxGameScore();
-
-        return dealerScore >= playerScore;
+        if (playerScore > 21) {
+            return false;
+        }
+        if (dealerScore > 21) {
+            return true;
+        }
+        return dealerScore < playerScore;
     }
 
     public Player getPlayer() {
