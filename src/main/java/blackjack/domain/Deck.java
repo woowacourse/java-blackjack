@@ -8,11 +8,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Deck {
     private static final int SHUFFLED_DECK_SIZE = 52;
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public Deck(List<Card> cards) {
         validateUniqueCard(cards);
@@ -47,6 +48,6 @@ public class Deck {
     }
 
     public Card draw() {
-        return cards.remove(0);
+        return cards.poll();
     }
 }
