@@ -1,5 +1,7 @@
 package controller;
 
+import static view.InputView.DEALER_NAME;
+
 import domain.BlackjackService;
 import domain.Name;
 import domain.Player;
@@ -20,7 +22,7 @@ public class BlackjackGame {
         List<Player> players = names.stream()
                 .map(name -> new Player(new Name(name)))
                 .toList();
-        Player dealer = new Player(new Name("딜러"));
+        Player dealer = new Player(new Name(DEALER_NAME));
         BlackjackService blackjackService = new BlackjackService(dealer, players);
 
         play(blackjackService);
@@ -31,6 +33,7 @@ public class BlackjackGame {
         proceedPlayerTurn(blackjackService);
         proceedDealerTurn(blackjackService);
         handleResult(blackjackService);
+        handleVictory(blackjackService);
     }
 
     private void startSetting(BlackjackService blackjackService) {
@@ -78,14 +81,13 @@ public class BlackjackGame {
                 .map(PlayerDto::from)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
-        handleVictory(blackjackService);
     }
 
     private void handleVictory(BlackjackService blackjackService) {
-        Map<Player, Boolean> playerBooleanMap = blackjackService.calculateVictory();
-        Map<String, Boolean> playerDtoBooleanMap = new LinkedHashMap<>();
-        playerBooleanMap.forEach(
-                (key, value) -> playerDtoBooleanMap.put(key.getName().getName(), playerBooleanMap.get(key)));
-        outputView.printResult(playerDtoBooleanMap);
+        Map<Player, Boolean> playerVictory = blackjackService.calculateVictory();
+        Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
+        playerVictory.forEach(
+                (key, value) -> playerNameVictory.put(key.getName().getName(), playerVictory.get(key)));
+        outputView.printResult(playerNameVictory);
     }
 }

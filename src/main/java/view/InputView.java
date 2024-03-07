@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ",";
     private static final String YES = "y";
     private static final String NO = "n";
