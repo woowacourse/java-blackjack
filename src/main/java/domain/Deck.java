@@ -26,7 +26,7 @@ public class Deck {
          return cards.remove(0);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public int getCardCount() {
+        return cards.size();
     }
 }

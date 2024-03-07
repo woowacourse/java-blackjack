@@ -16,6 +16,10 @@ public class Participant {
         hands.receive(card);
     }
 
+    public boolean canHit() {
+        return hands.calculateScore() <= BLACK_JACK_COUNT;
+    }
+
     public int getCardCount() {
         return hands.getCardCount();
     }
@@ -30,9 +34,5 @@ public class Participant {
 
     public List<Card> getCards() {
         return hands.getValue();
-    }
-
-    public boolean canHit() {
-        return hands.calculateScore() <= BLACK_JACK_COUNT;
     }
 }

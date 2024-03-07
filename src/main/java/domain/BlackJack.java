@@ -26,15 +26,18 @@ public class BlackJack {
     }
 
     public boolean isWinner(Participant participant) {
-        int participantScore = participant.getScore();
-        int dealerScore = dealer.getScore();
         if (!participant.canHit()) {
             return false;
         }
         if (!dealer.canHit()) {
             return true;
         }
+        return isNotBustWinner(participant);
+    }
 
+    private boolean isNotBustWinner(Participant participant) {
+        int participantScore = participant.getScore();
+        int dealerScore = dealer.getScore();
         if (participantScore == dealerScore) {
             return isWinnerByCardCount(participant);
         }

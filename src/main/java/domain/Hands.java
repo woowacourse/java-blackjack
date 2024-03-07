@@ -15,7 +15,6 @@ public class Hands {
     }
 
     public int calculateScore() {
-
         int totalScore = 0;
         for (Card card : value) {
             totalScore += card.getScore();
