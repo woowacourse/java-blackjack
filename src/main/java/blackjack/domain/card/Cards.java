@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_CANDIDATE = 21;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -19,10 +21,23 @@ public class Cards {
     }
 
     public int sum() {
-        return cards.stream()
+        final List<Number> numbers = cards.stream()
                 .map(Card::number)
-                .mapToInt(Number::getValue)
-                .sum();
+                .toList();
+
+        if (numbers.contains(Number.ACE)) {
+            return calculateOptimalSum(numbers);
+        }
+        return Number.sum(numbers);
+    }
+
+    private int calculateOptimalSum(List<Number> numbers) {
+        int softHandSum = Number.sumOneAceToSoftHand(numbers);
+
+        if (softHandSum <= BLACKJACK_CANDIDATE) {
+            return softHandSum;
+        }
+        return Number.sum(numbers);
     }
 
     public List<Card> getCards() {
