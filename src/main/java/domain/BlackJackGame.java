@@ -29,13 +29,12 @@ public class BlackJackGame {
     }
 
     public GameStatusDto getGameStatusDto() {
-        return GameStatusDto.of(toGamerDto());
+        return GameStatusDto.of(GamerDto.from(dealer), toGamerDto());
     }
 
     public List<GamerDto> toGamerDto() {
         // TODO: 네이밍 생각하기
         List<GamerDto> gamerDtos = new ArrayList<>();
-        gamerDtos.add(GamerDto.from(dealer));
         players.stream()
                 .map(GamerDto::from)
                 .forEach(gamerDtos::add);

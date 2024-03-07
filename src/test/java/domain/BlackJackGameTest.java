@@ -89,7 +89,7 @@ public class BlackJackGameTest {
         blackJackGame.initialDealing();
         blackJackGame.drawDealerCard();
         GameStatusDto gameStatusDto = blackJackGame.getGameStatusDto();
-        GamerDto gamerDto = gameStatusDto.getGamerDtoFromName("딜러");
+        GamerDto gamerDto = gameStatusDto.getDealerDto();
         Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
     }
 }

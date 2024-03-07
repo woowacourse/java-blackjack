@@ -11,16 +11,19 @@ class GameStatusDtoTest {
     @Test
     @DisplayName("List<GamerDto>로 생성한다.")
     void create() {
-        Assertions.assertThatCode(() -> GameStatusDto.of(List.of(
-                GamerDto.from(new Gamer(new Name("test")))
-        ))).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> GameStatusDto.of(
+                GamerDto.from(new Gamer(new Name("딜러"))),
+                List.of(GamerDto.from(new Gamer(new Name("test")))
+                ))).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("List<GamerDto>를 반환한다.")
     void getGamerDtos() {
         GamerDto gamerDto = GamerDto.from(new Gamer(new Name("test")));
-        GameStatusDto gameStatusDto = GameStatusDto.of(List.of(gamerDto));
+        GameStatusDto gameStatusDto = GameStatusDto.of(
+                GamerDto.from(new Gamer(new Name("딜러"))),
+                List.of(gamerDto));
 
         Assertions.assertThat(gameStatusDto.getGamerDtos())
                 .isEqualTo(List.of(gamerDto));
@@ -30,7 +33,9 @@ class GameStatusDtoTest {
     @DisplayName("이름이 들어오면 GamerDto를 반환한다.")
     void getGamerDtoFromName() {
         GamerDto gamerDto = GamerDto.from(new Gamer(new Name("test")));
-        GameStatusDto gameStatusDto = GameStatusDto.of(List.of(gamerDto));
+        GameStatusDto gameStatusDto = GameStatusDto.of(
+                GamerDto.from(new Gamer(new Name("딜러"))),
+                List.of(gamerDto));
 
         Assertions.assertThat(gameStatusDto.getGamerDtoFromName("test"))
                 .isEqualTo(gamerDto);
@@ -40,7 +45,9 @@ class GameStatusDtoTest {
     @DisplayName("없는 이름이 들어오면 예외를 발생한다.")
     void getGamerDtoFromNameException() {
         GamerDto gamerDto = GamerDto.from(new Gamer(new Name("test")));
-        GameStatusDto gameStatusDto = GameStatusDto.of(List.of(gamerDto));
+        GameStatusDto gameStatusDto = GameStatusDto.of(
+                GamerDto.from(new Gamer(new Name("딜러"))),
+                List.of(gamerDto));
 
         Assertions.assertThatThrownBy(() -> gameStatusDto.getGamerDtoFromName("wrongName"))
                 .isInstanceOf(IllegalArgumentException.class)
