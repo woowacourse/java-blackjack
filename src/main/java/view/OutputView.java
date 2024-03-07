@@ -17,13 +17,9 @@ public class OutputView {
     public static void printPlayerStatus(final Player player) {
         System.out.print(player.getName() + " : ");
         for (Card card : player.getCards()) {
-            System.out.print(card.getSymbol() + card.getDenomination().toString());
+            System.out.print(card.getDenomination().getValue(0) + "" + card.getSymbol() + ", ");
         }
         System.out.println();
-    }
-
-    public static void printDealerNotification(int score) {
-        System.out.println("딜러는 " + score + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResults(List<Player> players) {
@@ -41,7 +37,7 @@ public class OutputView {
             if (player.getName().equals("딜러")) {
                 System.out.print(win + "승" + lose + "패\n");
             } else {
-                System.out.println(win > 0 ? "패" : "승");
+                System.out.println(win > 0 ? "승" : "패");
             }
         }
 
