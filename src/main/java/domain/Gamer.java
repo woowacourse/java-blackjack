@@ -26,9 +26,9 @@ public class Gamer {
     }
 
     private int fixPoint(int rawPoint) {
-        int fixPoint = rawPoint + 10;
-        if (fixPoint <= 21) {
-            rawPoint = fixPoint;
+        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + 10);
+        if (!fixPoint.isDeadPoint()) {
+            return fixPoint.summationCardPoint();
         }
         return rawPoint;
     }
@@ -41,15 +41,12 @@ public class Gamer {
         return List.copyOf(holdingCards.getHoldingCards());
     }
 
-    // TODO: getSummationCardPoint -> 프로그램의 동작을 위한 메서드
-    // TODO: getRawSummationCardPoint -> DTO를 위한 메서드
-    // TODO: holdingCards.calculateTotalPoint()를 내부 메서드로 만들기 (. 줄이고 가시성 향상)
     public int getRawSummationCardPoint() {
         return getSummationCardPoint().summationCardPoint();
     }
 
     public boolean isDead() {
-        return holdingCards.calculateTotalPoint().isBiggerThan(new SummationCardPoint(21));
+        return holdingCards.calculateTotalPoint().isDeadPoint();
     }
 
     boolean hasAceInHoldingCards() {

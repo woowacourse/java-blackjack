@@ -7,20 +7,16 @@ import java.util.Set;
 
 public class Deck {
     private final List<Card> cards;
-    
+
     private Deck(List<Card> cards) {
         validateDuplicateCard(cards);
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
-    // TODO: tmpCards 변수명 변경
-    // TODO: 아래 팩토리 메서드처럼 의미있는 이름으로 변경
     public static Deck of(Card... cards) {
-        List<Card> tmpCards = new ArrayList<>(List.of(cards));
-        return new Deck(tmpCards);
+        return new Deck(List.of(cards));
     }
-
-    // TODO: 인덴트 줄이기
+    
     public static Deck fullDeck() {
         List<Card> cards = new ArrayList<>();
         for (CardType cardType : CardType.values()) {

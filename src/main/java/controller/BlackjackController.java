@@ -9,8 +9,8 @@ import domain.Gamer;
 import domain.PlayerRandomCardDrawStrategy;
 import domain.SummationCardPoint;
 import dto.DealerGameResultDTO;
-import dto.GameResultDTO;
 import dto.GamerDTO;
+import dto.PlayerGameResultDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import view.GameResultOutputView;
 import view.GamerOutputView;
 import view.OutputView;
-import view.YNInputView;
+import view.YesOrNoInputView;
 
 public class BlackjackController {
     private final Gamer dealer;
@@ -40,7 +40,6 @@ public class BlackjackController {
         printDealerAndPlayersGameResult();
     }
 
-    // TODO: 메시지 OutputView에서 처리
     private void initDealerAndPlayers(Deck deck) {
         dealerDraw(deck);
         dealerDraw(deck);
@@ -49,13 +48,10 @@ public class BlackjackController {
         OutputView.print("딜러와 pobi, jason에게 2장을 나누었습니다.");
     }
 
-    // TODO: 16 상수화
-    // TODO: 랜덤으로 카드 뽑는 전략 함수화 (아래랑 중복)
     private void dealerDraw(Deck deck) {
         dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
     }
 
-    // TODO: 21 상수화
     private void playerDraw(Deck deck, Gamer player) {
         player.draw(deck, new PlayerRandomCardDrawStrategy(player));
     }
@@ -85,47 +81,47 @@ public class BlackjackController {
         });
     }
 
-    // TODO: 메서드 인덴트 줄이기
-    // TODO: 메시지 OutputView에서 처리
     private void playerTryDraw(Deck deck, Gamer player) {
         boolean needToDraw = true;
         while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
-            OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
-            needToDraw = YNInputView.getYNAsBoolean();
-            if (needToDraw) {
-                playerDraw(deck, player);
-            }
-            printPlayer(player);
+            needToDraw = playerTryDrawOnce(deck, player);
         }
+    }
+
+    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
+        boolean needToDraw;
+        OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
+        needToDraw = YesOrNoInputView.getYNAsBoolean();
+        if (needToDraw) {
+            playerDraw(deck, player);
+        }
+        printPlayer(player);
+        return needToDraw;
     }
 
     private boolean canDraw(Gamer player, SummationCardPoint threshold) {
         return !player.getSummationCardPoint().isBiggerThan(threshold);
     }
 
-    // TODO: 장 수를 그대로 숫자로 처리 할 것인지 고민
-    // TODO: 메시지 OutputView에서 처리
     private void dealerTryDraw(Deck deck) {
         try {
             dealerDraw(deck);
             OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException ignored) {
 
         }
     }
 
-    // TODO: printDealerAndPlayers 메서드와 DTO 선언부 중복
-    // TODO: gamerDTO2 변수명 변경
     private void printDealerAndPlayersWithPoint() {
-        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
+        GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
                 dealer.getRawSummationCardPoint());
-        GamerOutputView.print(gamerDTO);
+        GamerOutputView.print(dealerDTO);
 
-        players.forEach(player -> {
-            GamerDTO gamerDTO2 = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+        for (Gamer player : players) {
+            GamerDTO playerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.getRawSummationCardPoint());
-            GamerOutputView.print(gamerDTO2);
-        });
+            GamerOutputView.print(playerDTO);
+        }
     }
 
     private void printDealerAndPlayersGameResult() {
@@ -134,11 +130,12 @@ public class BlackjackController {
                         Collectors.summingInt(value -> 1)));
         DealerGameResultDTO dealerGameResultDTO = new DealerGameResultDTO(dealerGameResultCounts);
 
-        List<GameResultDTO> gameResultDTOS = players.stream()
-                .map(player -> new GameResultDTO(player.getRawName(), GameResultCalculator.calculate(player, dealer)))
+        List<PlayerGameResultDTO> playerGameResultDTOS = players.stream()
+                .map(player -> new PlayerGameResultDTO(player.getRawName(),
+                        GameResultCalculator.calculate(player, dealer)))
                 .toList();
 
         GameResultOutputView.print(dealerGameResultDTO);
-        gameResultDTOS.forEach(GameResultOutputView::print);
+        playerGameResultDTOS.forEach(GameResultOutputView::print);
     }
 }

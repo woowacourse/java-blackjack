@@ -9,6 +9,6 @@ public class PlayerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy
 
     @Override
     protected boolean canDraw() {
-        return !player.getSummationCardPoint().isBiggerThan(new SummationCardPoint(21));
+        return !player.getSummationCardPoint().isDeadPoint();
     }
 }

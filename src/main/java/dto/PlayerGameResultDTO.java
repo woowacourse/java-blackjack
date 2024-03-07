@@ -2,11 +2,11 @@ package dto;
 
 import domain.GameResult;
 
-public class GameResultDTO {
+public class PlayerGameResultDTO {
     private final String gamerName;
     private final GameResult gameResult;
 
-    public GameResultDTO(String gamerName, GameResult gameResult) {
+    public PlayerGameResultDTO(String gamerName, GameResult gameResult) {
         this.gamerName = gamerName;
         this.gameResult = gameResult;
     }

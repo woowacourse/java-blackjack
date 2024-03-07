@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-// TODO: 인덴트 수정
 public class Console {
-
     public static String getInputFromConsole() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input;

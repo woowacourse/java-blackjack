@@ -8,7 +8,6 @@ public class GameResultCalculator {
      * @param otherGamer 상대 게이머
      * @return baseGamer의 otherGamer 에 대한 승부 결과
      */
-    // TODO: 메서드 분리 필요
     public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
         if (baseGamer.isDead() && otherGamer.isDead()) {
             return GameResult.TIE;
@@ -19,9 +18,13 @@ public class GameResultCalculator {
         if (otherGamer.isDead()) {
             return GameResult.WIN;
         }
+        return getGameResultWhenNobodyDead(baseGamer, otherGamer);
+    }
 
+    private static GameResult getGameResultWhenNobodyDead(Gamer baseGamer, Gamer otherGamer) {
         SummationCardPoint baseGamerSummationCardPoint = baseGamer.getSummationCardPoint();
         SummationCardPoint otherGamerSummationCardPoint = otherGamer.getSummationCardPoint();
+
         if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;
         }

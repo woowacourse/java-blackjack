@@ -18,7 +18,7 @@ public class TestPlayerCardDrawStrategy implements CardDrawStrategy {
     }
 
     private boolean canDraw() {
-        return !player.getSummationCardPoint().isBiggerThan(new SummationCardPoint(21));
+        return !player.getSummationCardPoint().isDeadPoint();
     }
 
     private Card cardSelectStrategy(List<Card> cards) {

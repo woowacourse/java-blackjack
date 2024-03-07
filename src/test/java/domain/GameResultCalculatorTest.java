@@ -1,5 +1,14 @@
 package domain;
 
+import static domain.CardName.ACE;
+import static domain.CardName.JACK;
+import static domain.CardName.NINE;
+import static domain.CardName.QUEEN;
+import static domain.CardName.SEVEN;
+import static domain.CardName.SIX;
+import static domain.CardName.TWO;
+import static domain.CardType.DIAMOND;
+import static domain.CardType.HEART;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
@@ -12,28 +21,22 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultCalculatorTest {
-    private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(new Card(CardName.SIX, CardType.HEART));
-    private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(new Card(CardName.SEVEN, CardType.HEART));
+    private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(new Card(SIX, HEART));
+    private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(new Card(SEVEN, HEART));
     private static final HoldingCards DEAD_CARDS = HoldingCards.of(
-            new Card(CardName.JACK, CardType.HEART),
-            new Card(CardName.QUEEN, CardType.HEART),
-            new Card(CardName.TWO, CardType.HEART)
+            new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(TWO, HEART)
     );
 
     private static final HoldingCards WIN_CARDS_WITH_ACE = HoldingCards.of(
-            new Card(CardName.ACE, CardType.HEART),
-            new Card(CardName.QUEEN, CardType.HEART)
+            new Card(ACE, HEART), new Card(QUEEN, HEART)
     );
 
     private static final HoldingCards WIN_CARDS_WITHOUT_ACE = HoldingCards.of(
-            new Card(CardName.JACK, CardType.HEART),
-            new Card(CardName.NINE, CardType.HEART),
-            new Card(CardName.TWO, CardType.HEART)
+            new Card(JACK, HEART), new Card(NINE, HEART), new Card(TWO, HEART)
     );
 
     private static final HoldingCards TWO_SIX_CARDS = HoldingCards.of(
-            new Card(CardName.SIX, CardType.HEART),
-            new Card(CardName.SIX, CardType.DIAMOND)
+            new Card(SIX, HEART), new Card(SIX, DIAMOND)
     );
 
     public static Stream<Arguments> getGameResultParameters() {

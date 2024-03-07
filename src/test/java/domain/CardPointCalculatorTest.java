@@ -11,22 +11,24 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardPointCalculatorTest {
 
-    // TODO: 메서드 분리 및 정리 필요
     static Stream<Arguments> calculateParameter() {
         List<Arguments> arguments = new ArrayList<>();
         for (CardType cardType : CardType.values()) {
             for (CardName cardName : CardName.values()) {
                 Card card = new Card(cardName, cardType);
-                CardPoint cardPoint;
-                if (cardName.getCardNumber() > 10) {
-                    cardPoint = new CardPoint(10);
-                } else {
-                    cardPoint = new CardPoint(cardName.getCardNumber());
-                }
+                CardPoint cardPoint = makeCardPoint(cardName);
                 arguments.add(Arguments.of(card, cardPoint));
             }
         }
         return Stream.of(arguments.toArray(new Arguments[0]));
+    }
+
+    private static CardPoint makeCardPoint(CardName cardName) {
+        CardPoint cardPoint = new CardPoint(cardName.getCardNumber());
+        if (cardName.getCardNumber() > 10) {
+            return new CardPoint(10);
+        }
+        return cardPoint;
     }
 
     @ParameterizedTest

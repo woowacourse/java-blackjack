@@ -1,5 +1,12 @@
 package domain;
 
+import static domain.CardName.ACE;
+import static domain.CardName.FIVE;
+import static domain.CardName.JACK;
+import static domain.CardName.QUEEN;
+import static domain.CardName.SIX;
+import static domain.CardType.HEART;
+
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,17 +18,9 @@ class DealerCardDrawStrategyTest {
 
     public static Stream<Arguments> canDrawParameters() {
         return Stream.of(
-                Arguments.of(
-                        HoldingCards.of(new Card(CardName.ACE, CardType.HEART), new Card(CardName.SIX, CardType.HEART)),
-                        false),
-                Arguments.of(
-                        HoldingCards.of(new Card(CardName.ACE, CardType.HEART),
-                                new Card(CardName.FIVE, CardType.HEART)),
-                        true),
-                Arguments.of(
-                        HoldingCards.of(new Card(CardName.JACK, CardType.HEART),
-                                new Card(CardName.QUEEN, CardType.HEART)),
-                        false)
+                Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(SIX, HEART)), false),
+                Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(FIVE, HEART)), true),
+                Arguments.of(HoldingCards.of(new Card(JACK, HEART), new Card(QUEEN, HEART)), false)
         );
     }
 

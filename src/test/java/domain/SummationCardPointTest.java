@@ -12,12 +12,11 @@ class SummationCardPointTest {
     void getSummationCardPoint() {
         List<CardPoint> cardPoints = List.of(
                 new CardPoint(1), new CardPoint(2),
-                new CardPoint(3), new CardPoint(4),
-                new CardPoint(5), new CardPoint(6)
+                new CardPoint(3), new CardPoint(4)
         );
         SummationCardPoint summationCardPoint = SummationCardPoint.of(cardPoints);
 
         Assertions.assertThat(summationCardPoint)
-                .isEqualTo(new SummationCardPoint(21));
+                .isEqualTo(new SummationCardPoint(10));
     }
 }

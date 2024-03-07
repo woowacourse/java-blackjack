@@ -1,6 +1,5 @@
 package domain;
 
-// TODO: 인덴트 수정
 public enum CardName {
     ACE(1),
     TWO(2),
@@ -15,13 +14,13 @@ public enum CardName {
     JACK(11),
     QUEEN(12),
     KING(13);
+
     private final int cardNumber;
 
     CardName(int cardNumber) {
         this.cardNumber = cardNumber;
     }
-
-
+    
     public int getCardNumber() {
         return cardNumber;
     }
