@@ -1,35 +1,22 @@
 package domain;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class CardDeck {
-    private final Stack<Card> cards;
+    private final Stack<Card> cardDeck;
 
-    public CardDeck() {
-        this.cards = initializeCards();
+    public CardDeck(List<Card> cards) {
+        Stack<Card> cardDeck = new Stack<>();
+        cardDeck.addAll(cards);
+        this.cardDeck = cardDeck;
     }
 
-    private Stack<Card> initializeCards() {
-        Stack<Card> cards = new Stack<>();
-
-        for (Denomination denomination : Denomination.values()) {
-            addCards(cards, denomination);
-        }
-        return cards;
-    }
-
-    private void addCards(Stack<Card> cards, Denomination denomination) {
-        for (Emblem emblem : Emblem.values()) {
-            cards.push(new Card(denomination, emblem));
-        }
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
+    public void shuffle(CardShuffleStrategy cardShuffleStrategy) {
+        cardShuffleStrategy.shuffle(cardDeck);
     }
 
     public Card draw() {
-        return cards.pop();
+        return cardDeck.pop();
     }
 }

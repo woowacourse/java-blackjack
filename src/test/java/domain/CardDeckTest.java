@@ -1,5 +1,6 @@
 package domain;
 
+import static fixture.CardFixture.전체_카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
     @Test
     void 카드_덱의_총_카드_수는_52장이다() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(전체_카드());
 
         assertThat(cardDeck).extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(52);
@@ -17,7 +18,7 @@ class CardDeckTest {
     // todo 셔플 전략 추가 후 원하는 카드를 draw하도록 변경
     @Test
     void 카드를_한_장_드로우한다() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(전체_카드());
 
         Card card = cardDeck.draw();
 
