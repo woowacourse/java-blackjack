@@ -9,7 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,5 +84,21 @@ class PlayersTest {
                 new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThat(Players.from(names, cards).getNames()).isEqualTo(names);
+    }
+
+    @Test
+    @DisplayName("각 플레이어의 이름과 카드들을 모아서 반환한다.")
+    void collectCardsOfEachPlayer() {
+        List<String> names = List.of("리브", "몰리");
+        List<Cards> cards = List.of(
+                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        );
+
+        Map<String, List<Card>> expected = new LinkedHashMap<>();
+        expected.put("리브", List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE)));
+        expected.put("몰리", (List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))));
+        assertThat(Players.from(names, cards).collectCardsOfEachPlayer())
+                .containsExactlyEntriesOf(expected);
     }
 }

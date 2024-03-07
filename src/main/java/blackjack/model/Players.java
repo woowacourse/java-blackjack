@@ -1,9 +1,10 @@
 package blackjack.model;
 
-import blackjack.dto.FinalResult;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -38,6 +39,14 @@ public class Players {
         if (players.size() < MINIMUM_PLAYER_SIZE || players.size() > MAXIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
         }
+    }
+
+    public Map<String, List<Card>> collectCardsOfEachPlayer() {
+        Map<String, List<Card>> result = new LinkedHashMap<>();
+        for (Player player : players) {
+            result.put(player.getName(), player.openCards());
+        }
+        return result;
     }
 
     public List<Player> getPlayers() {
