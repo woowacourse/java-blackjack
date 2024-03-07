@@ -1,6 +1,5 @@
 package blackjack.model;
 
-import java.util.Deque;
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,8 +9,8 @@ class DeckTest {
     @Test
     @DisplayName("카드 덱을 생성한다.")
     void createDeck() {
-        Deque<Card> deck = Deck.getDeck();
-        Assertions.assertThat(deck).hasSize(52);
+        Deck deck = new Deck();
+        Assertions.assertThat(deck.getDeck()).hasSize(52);
     }
 
     @Test

@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-    private static final Deque<Card> deck = new ArrayDeque<>();
+    private final Deque<Card> deck;
 
-    static {
-        makeDeck();
+    public Deck() {
+        this.deck = makeDeck();
     }
 
-    private static void makeDeck() {
+    private static Deque<Card> makeDeck() {
         List<Card> originDeck = Arrays.stream(Shape.values())
                 .flatMap(Deck::matchScore)
                 .collect(Collectors.toList());
-        deck.addAll(shuffleDeck(originDeck));
+        return new ArrayDeque<>(shuffleDeck(originDeck));
     }
 
     private static Deque<Card> shuffleDeck(final List<Card> originDeck) {
@@ -52,7 +52,7 @@ public class Deck {
         }
     }
 
-    public static Deque<Card> getDeck() {
+    public Deque<Card> getDeck() {
         return deck;
     }
 }
