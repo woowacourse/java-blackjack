@@ -1,4 +1,4 @@
-package blackjack.domain.controller;
+package blackjack.controller;
 
 import blackjack.view.PlayerCommand;
 

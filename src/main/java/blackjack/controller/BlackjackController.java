@@ -1,4 +1,4 @@
-package blackjack.domain.controller;
+package blackjack.controller;
 
 import blackjack.domain.card.CardPicker;
 import blackjack.domain.game.Referee;
