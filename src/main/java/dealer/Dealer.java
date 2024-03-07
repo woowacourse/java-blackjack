@@ -12,6 +12,11 @@ public class Dealer extends GameParticipant {
     public Dealer() {
         super(new ArrayList<>());
         this.cardDeck = new CardDeck();
+        initDealerCard();
+    }
+
+    private void initDealerCard() {
+        this.receiveCard(giveCard());
     }
 
     public Card giveCard() {
