@@ -12,11 +12,7 @@ public class Dealer {
         hand.append(card);
     }
 
-    public int calculateLowestScore() {
-        return hand.calculateMinSum();
-    }
-
-    public int calculateHighestScore() {
-        return hand.calculateMaxSum();
+    public int calculateHandSum() {
+        return hand.sum();
     }
 }
