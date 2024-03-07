@@ -49,7 +49,7 @@ public class BlackJack {
     }
 
     public BlackJackResult saveParticipantResult() {
-        Map<Participant, WinStatus> result = new LinkedHashMap<>();
+        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
             result.put(participant, isWinner(participant));
         }

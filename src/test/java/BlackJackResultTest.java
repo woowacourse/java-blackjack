@@ -7,14 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 class BlackJackResultTest {
 
     @DisplayName("딜러가 이긴 횟수 반환")
     @Test
     void getDealerWinCount() {
-        Map<Participant, WinStatus> result = new HashMap<>();
+        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         result.put(new Participant(new Name("rush")), WinStatus.WIN);
         result.put(new Participant(new Name("pobi")), WinStatus.WIN);
         result.put(new Participant(new Name("bito")), WinStatus.LOSE);
@@ -26,7 +26,7 @@ class BlackJackResultTest {
     @DisplayName("승패의 총 합계 반환")
     @Test
     void getTotalCount() {
-        Map<Participant, WinStatus> result = new HashMap<>();
+        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         result.put(new Participant(new Name("rush")), WinStatus.WIN);
         result.put(new Participant(new Name("pobi")), WinStatus.WIN);
         result.put(new Participant(new Name("bito")), WinStatus.LOSE);

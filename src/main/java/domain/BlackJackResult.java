@@ -1,13 +1,14 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class BlackJackResult {
 
-    private final Map<Participant, WinStatus> resultByParticipant;
+    private final LinkedHashMap<Participant, WinStatus> resultByParticipant;
 
-    public BlackJackResult(final Map<Participant, WinStatus> resultByParticipant) {
+    public BlackJackResult(final LinkedHashMap<Participant, WinStatus> resultByParticipant) {
         this.resultByParticipant = resultByParticipant;
     }
 
