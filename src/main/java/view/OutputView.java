@@ -60,6 +60,6 @@ public class OutputView {
     }
 
     private String cardText(Card card) {
-        return card.getRank().name() + card.getSymbol().name();
+        return card.getRank().getDisplayName() + card.getSymbol().getDisplayName();
     }
 }
