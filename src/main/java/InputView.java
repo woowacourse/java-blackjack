@@ -12,7 +12,7 @@ public class InputView {
         return Arrays.asList(rawNames.split(","));
     }
 
-    public String readHitOrNot(Player player) {
+    public String readHitOrNot(Gamer player) {
         System.out.println(player.getPlayerName() + "은/는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
