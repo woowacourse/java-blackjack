@@ -65,6 +65,11 @@ public class BlackJackController {
                 break;
             }
             changed = true;
+
+            if (player.isBlackJack()) {
+                outputView.printBlackJack();
+                break;
+            }
         }
     }
 

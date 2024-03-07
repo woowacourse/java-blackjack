@@ -52,6 +52,10 @@ public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
         return sum() > BLACK_JACK;
     }
 
+    public boolean isBlackJack() {
+        return sum() == BLACK_JACK;
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
