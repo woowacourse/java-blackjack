@@ -1,8 +1,5 @@
 package blackjack.model.card;
 
-import java.util.Arrays;
-import java.util.List;
-
 public enum CardNumber {
 
     TWO(2),
@@ -23,10 +20,6 @@ public enum CardNumber {
 
     CardNumber(int number) {
         this.number = number;
-    }
-
-    public static List<CardNumber> getCardNumber() {
-        return Arrays.asList(values());
     }
 
     public int getNumber() {
