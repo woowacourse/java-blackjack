@@ -27,8 +27,9 @@ public class Player implements Gamer {
         cards.add(card);
     }
 
+    @Override
     public boolean canDraw() {
-        return cards.sum() < THRESHOLD;
+        return cards.sum() <= THRESHOLD;
     }
 
     public Name getName() {
