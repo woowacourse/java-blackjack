@@ -36,4 +36,8 @@ public class Player {
     public String getName() {
         return name.getValue();
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }
