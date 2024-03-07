@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardShape;
+import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
@@ -28,6 +29,7 @@ class Controller {
 
         initialDeal(participants, deck);
         playersTurn(participants.getPlayers(), deck);
+        dealerTurn(participants.getDealer(), deck);
     }
 
     private void initialDeal(Participants participants, Deck deck) {
@@ -62,6 +64,13 @@ class Controller {
         String command = inputView.readDecision(player.getName());
 
         return GameCommand.from(command);
+    }
+
+    private void dealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.isPlayable()) {
+            dealer.hit(deck.draw());
+            outputView.printDealerHitMessage();
+        }
     }
 
     private Participants createParticipants() {
