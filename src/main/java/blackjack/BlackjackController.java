@@ -21,46 +21,54 @@ public class BlackjackController {
         Players players = requestPlayers();
         Dealer dealer = new Dealer();
         CardPicker cardPicker = new CardPicker();
-        OutputView.printDealAnnounce(players.getNames());
-        requestDeal(players, dealer, cardPicker);
 
-        OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
-        players.forEach(player ->
-                OutputView.printDealCards(player.getName(), player.getCards()));
+        processDeal(players, dealer, cardPicker);
+        processHitOrStand(players, dealer, cardPicker);
 
-        players.forEach(player -> requestHitOrStand(player, cardPicker));
+        // TODO: 파라미터 일급컬렉션으로 변경
+        Map<String, GameResult> gameResults = calculatePlayersResult(players, dealer);
+        Map<GameResult, Integer> dealerResults = calculateDealerResult(gameResults);
 
-        while (dealer.isHitUnderBound()) {
-            dealer.hit(cardPicker);
-            OutputView.printDealerHitAnnounce();
-        }
+        printAllGameResult(dealer, dealerResults, gameResults);
+    }
 
-        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
-        players.forEach(player ->
-                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
+    // TODO: 파라미터 일급컬렉션으로 변경
+    private void printAllGameResult(Dealer dealer, Map<GameResult, Integer> dealerResults, Map<String, GameResult> gameResults) {
+        OutputView.printWinAnnounce();
+        OutputView.printDealerWinStatus(dealer.getName(), dealerResults);
+        gameResults.forEach(OutputView::printPlayerWinStatus);
+    }
 
-        Referee referee = new Referee(dealer);
-        Map<String, GameResult> gameResults = new HashMap<>();
-        players.forEach(player ->
-                gameResults.put(player.getName(), referee.judgeGameResult(player))
-        );
-
+    private Map<GameResult, Integer> calculateDealerResult(Map<String, GameResult> gameResults) {
+        // TODO: 스트림 이용해서 바로 리턴할 수 있게 수정
         Map<GameResult, Integer> dealerResults = new HashMap<>();
         gameResults.values().forEach(gameResult -> {
                     GameResult reversedResult = gameResult.reverse();
                     dealerResults.put(reversedResult, dealerResults.getOrDefault(reversedResult, 0) + 1);
                 }
         );
-        OutputView.printWinAnnounce();
-        OutputView.printDealerWinStatus(dealer.getName(), dealerResults);
-        gameResults.forEach(OutputView::printPlayerWinStatus);
+        return dealerResults;
     }
 
-    private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
-        players.forEach(player -> player.deal(cardPicker));
-        dealer.deal(cardPicker);
+    private Map<String, GameResult> calculatePlayersResult(Players players, Dealer dealer) {
+        Referee referee = new Referee(dealer);
+        Map<String, GameResult> gameResults = new HashMap<>();
+        // TODO: 스트림 이용해서 바로 리턴할 수 있게 수정
+        players.forEach(player ->
+                gameResults.put(player.getName(), referee.judgeGameResult(player))
+        );
+        return gameResults;
     }
 
+    private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
+        players.forEach(player -> requestHitOrStand(player, cardPicker));
+
+        dealerHitUntilBound(dealer, cardPicker);
+
+        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
+        players.forEach(player ->
+                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
+    }
 
     private void requestHitOrStand(Player player, CardPicker cardPicker) {
         if (player.isBlackjack()) {
@@ -84,10 +92,27 @@ public class BlackjackController {
         }
     }
 
+    private void dealerHitUntilBound(Dealer dealer, CardPicker cardPicker) {
+        while (dealer.isHitUnderBound()) {
+            dealer.hit(cardPicker);
+            OutputView.printDealerHitAnnounce();
+        }
+    }
+
+
+    private void processDeal(Players players, Dealer dealer, CardPicker cardPicker) {
+        OutputView.printDealAnnounce(players.getNames());
+        players.forEach(player -> player.deal(cardPicker));
+        dealer.deal(cardPicker);
+
+        OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
+        players.forEach(player ->
+                OutputView.printDealCards(player.getName(), player.getCards()));
+    }
+
     private Players requestPlayers() {
         return requestUntilValid(() -> Players.from(InputView.readPlayersName()));
     }
-
 
     private <T> T requestUntilValid(Supplier<T> supplier) {
         Optional<T> result = Optional.empty();
