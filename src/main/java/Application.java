@@ -15,10 +15,10 @@ public class Application {
 
         Players players = Players.from(names);
         Blackjack blackjack = new Blackjack(players);
-        OutputView.printPlayersStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
+        OutputView.printPlayersStatus(blackjack.getDealer(), blackjack.getPlayers());
 
         // 참가자 게임진행
-        for (var player : blackjack.getPlayers().getPlayers()) {
+        for (var player : blackjack.getPlayers()) {
             drawCardDuringPlayerTurn(player, blackjack);
         }
 
@@ -30,7 +30,7 @@ public class Application {
         }
 
         // 결과 출력
-        List<Player> players1 = blackjack.getPlayers().getPlayers();
+        List<Player> players1 = blackjack.getPlayers();
         Player dealer2 = blackjack.getDealer();
         OutputView.printPlayerStatus(dealer);
         players1.add(dealer2);

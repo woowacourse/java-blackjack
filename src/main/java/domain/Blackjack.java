@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -38,14 +39,6 @@ public class Blackjack {
         dealer.addCard(deck.draw());
     }
 
-    // "에포케"
-
-    // player > 21, dealer > 21 <- 패배
-    // player = 21, dealer = 21 <- 승
-    // player <= 21 dealer <= 21
-    // player > dealer  -> player sungri
-    // player
-    // TODO : 로직 개선
     public BlackjackResultDTO finishGame() {
         BlackjackResult blackjackResult = new BlackjackResult();
         return blackjackResult.finishGame(players, dealer);
@@ -56,8 +49,8 @@ public class Blackjack {
         player.addCard(deck.draw());
     }
 
-    public Players getPlayers() {
-        return players;
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
     public Player getDealer() {
