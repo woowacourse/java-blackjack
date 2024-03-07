@@ -1,7 +1,10 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.Card.Shape;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,12 +17,12 @@ public class Deck {
         this.cards = new LinkedList<>(cards);
     }
 
-    public static Deck createOrderedDeck() {
+    public static Deck createShuffledDeck() {
         List<Card> cards = Arrays.stream(Shape.values())
                 .map(Deck::makeCards)
                 .flatMap(List::stream)
-                .toList();
-
+                .collect(toList());
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 

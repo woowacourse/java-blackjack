@@ -78,7 +78,7 @@ class DealerTest {
     @Test
     void drawStartCardsTest() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createOrderedDeck();
+        Deck deck = Deck.createShuffledDeck();
 
         dealer.drawStartCards(deck);
 
@@ -89,7 +89,7 @@ class DealerTest {
     @Test
     void drawStartCardsTest_whenAlreadyStarted_throwException() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createOrderedDeck();
+        Deck deck = Deck.createShuffledDeck();
         dealer.drawStartCards(deck);
 
         assertThatThrownBy(() -> dealer.drawStartCards(deck))

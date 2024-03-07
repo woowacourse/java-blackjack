@@ -69,7 +69,7 @@ class PlayerTest {
     @Test
     void drawStartCardsTest() {
         Player player = Player.from("name");
-        Deck deck = Deck.createOrderedDeck();
+        Deck deck = Deck.createShuffledDeck();
 
         player.drawStartCards(deck);
 
@@ -80,7 +80,7 @@ class PlayerTest {
     @Test
     void drawStartCardsTest_whenAlreadyStarted_throwException() {
         Player player = Player.from("name");
-        Deck deck = Deck.createOrderedDeck();
+        Deck deck = Deck.createShuffledDeck();
         player.drawStartCards(deck);
 
         assertThatThrownBy(() -> player.drawStartCards(deck))
