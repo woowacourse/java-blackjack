@@ -90,7 +90,51 @@ public class Game {
         return participant;
     }
 
-    public List<Boolean> judgeWinners() {
+    public List<Boolean> judge() {
+        if (isBusted(participant.dealer())) {
+            return judgePlayersIfDealerBusted();
+        }
+        boolean isDealerBlackJack = isBlackJack(participant.dealer());
+        List<Boolean> gameResult = new ArrayList<>();
+        if (isDealerBlackJack) {
+            for (Player player : participant.players()) {
+                if (isBlackJack(player)) {
+                    if (player.hasMoreCard(participant.dealer())) {
+                        gameResult.add(false);
+                    } else {
+                        gameResult.add(true);
+                    }
+                } else {
+                    gameResult.add(false);
+                }
+            }
+        } else { // 딜러가 블랙잭이 아님
+            for (Player player : participant.players()) {
+                if (isBlackJack(player)) {
+                    gameResult.add(true);
+                } else {
+                    if (player.hasMoreScore(participant.dealer())) {
+                        gameResult.add(true);
+                    } else if (player.hasLessScore(participant.dealer())) {
+                        gameResult.add(false);
+                    } else {
+                        if (player.hasMoreCard(participant.dealer())) {
+                            gameResult.add(false);
+                        } else {
+                            gameResult.add(true);
+                        }
+                    }
+                }
+            }
+        }
+        return gameResult;
+    }
+
+    private boolean isBlackJack(final Player player) {
+        return player.calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public List<Boolean> compareScore() {
         Dealer dealer = participant.dealer();
         int dealerScore = dealer.calculateScore();
 

@@ -47,4 +47,15 @@ public class Player {
     }
 
 
+    public boolean hasMoreCard(final Dealer dealer) {
+        return getTotalSize() > dealer.getTotalSize();
+    }
+
+    public boolean hasMoreScore(final Dealer dealer) {
+        return calculateScore() > dealer.calculateScore();
+    }
+
+    public boolean hasLessScore(final Dealer dealer) {
+        return calculateScore() < dealer.calculateScore();
+    }
 }

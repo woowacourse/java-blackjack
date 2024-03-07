@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
+
     @DisplayName("참가자들에게 2장 씩 카드를 분배한다.")
     @Test
     void startBlackJack() {
@@ -76,7 +77,7 @@ class GameTest {
         Game game = new Game(participant, new Cards());
 
         // when
-        List<Boolean> isWinner = game.judgeWinners();
+        List<Boolean> isWinner = game.compareScore();
 
         // then
         assertThat(isWinner).containsExactly(true);
@@ -103,6 +104,153 @@ class GameTest {
             Game game = new Game(participant, new Cards());
 
             List<Boolean> gameResult = game.judgePlayersIfDealerBusted();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(false);
+        }
+
+        @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
+        @Test
+        void playerDoesNotBusted() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
+            dealer.saveCard(new Card(CardValue.TEN, Shape.HEART));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judgePlayersIfDealerBusted();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(true);
+        }
+    }
+
+    @DisplayName("딜러가 블랙잭인 경우")
+    @Nested
+    class dealerBlackJack {
+        @DisplayName("참가자가 블랙잭인 경우 카드 개수가 적은 사람이 승리한다.")
+        @Test
+        void playerBlackJack() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+            dealer.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.TWO, Shape.HEART));
+
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judge();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(false);
+        }
+
+        @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
+        @Test
+        void playerIsNotBlackJack() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+            dealer.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.TWO, Shape.CLOVER));
+
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judge();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(false);
+        }
+    }
+
+    @DisplayName("딜러의 점수가 21 미만인 경우")
+    @Nested
+    class DealerIsNotBlackJack {
+        @DisplayName("참가자의 점수가 21인 경우 참가자가 승리한다.")
+        @Test
+        void playerIsBlackJack() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.FOUR, Shape.CLOVER));
+
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judge();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(true);
+        }
+
+        @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
+        @Test
+        void playerIsNotBlackJack() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judge();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(false);
+        }
+
+        @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
+        @Test
+        void playerScoreEqualsToDealer() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.NINE, Shape.CLOVER));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.FOUR, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.FIVE, Shape.CLOVER));
+
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judge();
 
             Assertions.assertThat(gameResult).hasSize(1);
             Assertions.assertThat(gameResult).containsExactly(false);
