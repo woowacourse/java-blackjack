@@ -29,6 +29,7 @@ public class Players {
 
         for (Player player : players) {
             if (player.isBurst()) {
+                wins += 1;
                 playerResult.addResult(player, false);
                 continue;
             }
