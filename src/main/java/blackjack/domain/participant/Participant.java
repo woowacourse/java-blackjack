@@ -23,10 +23,24 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public abstract List<Card> getInitialOpenedCards();
+
+    public abstract boolean canHit();
 
     protected List<Card> getCardsByCount(int count) {
         List<Card> cards = getCards();
         return cards.subList(0, count);
+    }
+
+    protected boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    protected boolean isTotalScoreGreaterThan(int score) {
+        return hand.isTotalScoreGreaterThan(score);
     }
 }

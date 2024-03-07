@@ -36,7 +36,6 @@ class ParticipantTest {
         assertThat(cardSignatures).containsExactly("A스페이드");
     }
 
-
     private static class TestParticipant extends Participant {
         public TestParticipant(Name name, HandGenerator handGenerator) {
             super(name, handGenerator);
@@ -45,6 +44,11 @@ class ParticipantTest {
         @Override
         public List<Card> getInitialOpenedCards() {
             return getCards();
+        }
+
+        @Override
+        public boolean canHit() {
+            return false;
         }
     }
 }
