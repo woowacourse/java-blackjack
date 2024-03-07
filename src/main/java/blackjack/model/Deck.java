@@ -1,13 +1,13 @@
 package blackjack.model;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Deck {
@@ -34,14 +34,14 @@ public class Deck {
                 .map(score -> new Card(shape, score));
     }
 
-    public List<Cards> distributeInitialCard(final int playerCount) {
-        final List<Cards> cards = new ArrayList<>();
-        for (int i = 0; i < playerCount; i++) {
-            List<Card> twoCard = List.of(distribute(), distribute());
-            cards.add(new Cards(twoCard));
-        }
+    public Cards distributeInitialCard() {
+        return new Cards(List.of(distribute(), distribute()));
+    }
 
-        return cards;
+    public List<Cards> distributeInitialCard(final int playerCount) {
+        return IntStream.range(0, playerCount)
+                .mapToObj(i -> distributeInitialCard())
+                .toList();
     }
 
     public Card distribute() {
