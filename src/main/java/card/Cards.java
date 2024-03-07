@@ -47,4 +47,8 @@ public class Cards {
                 .filter(card -> card.isSameCardNumber(CardNumber.ACE))
                 .count();
     }
+
+    public int countCard() {
+        return cards.size();
+    }
 }
