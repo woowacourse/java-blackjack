@@ -22,7 +22,7 @@ public class BlackJackGame {
     }
 
     public void play() {
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledFullDeck();
         Dealer dealer = new Dealer();
 
         Players players = createPlayers();

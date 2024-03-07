@@ -9,20 +9,20 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    public Deck() {
+    Deck(List<Card> cards) {
+        this.cards = new LinkedList<>(cards);
+    }
+
+    public static Deck createShuffledFullDeck() {
         List<Card> initCards = new LinkedList<>();
-        // TODO: indent 줄이기, 덱 생성 책임 정하기
+        // TODO: indent 줄이기
         for (Shape shape : Shape.values()) {
             for (Number number : Number.values()) {
                 initCards.add(new Card(shape, number));
             }
         }
         Collections.shuffle(initCards);
-        this.cards = new LinkedList<>(initCards);
-    }
-
-    public Deck(List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
+        return new Deck(initCards);
     }
 
     public Card draw() {
