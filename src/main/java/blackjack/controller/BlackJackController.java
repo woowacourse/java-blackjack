@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.GameResultBoard;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
@@ -46,16 +47,26 @@ public class BlackJackController {
         dealer.drawUntilExceedMinimum(deck);
         printExtraDealerDraw(dealer);
 
-        printResult(dealer, players);
+        printCardStatus(dealer, players);
+        printGameResult(dealer, players);
     }
 
-    private void printResult(Dealer dealer, List<Player> players) {
+    private void printGameResult(Dealer dealer, List<Player> players) {
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
+
+        outputView.printDealerResult(gameResultBoard.getDealerResult());
+        for (Player player : players) {
+            outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
+        }
+    }
+
+    private void printCardStatus(Dealer dealer, List<Player> players) {
         PlayerResultDto dealerResult = PlayerResultDto.from(dealer.getPlayer());
 
         List<PlayerResultDto> playerResultDtos = players.stream()
                 .map(PlayerResultDto::from)
                 .toList();
-        outputView.printResult(dealerResult, playerResultDtos);
+        outputView.printCardStatus(dealerResult, playerResultDtos);
     }
 
     private void printExtraDealerDraw(Dealer dealer) {

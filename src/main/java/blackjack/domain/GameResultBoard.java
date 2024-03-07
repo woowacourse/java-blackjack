@@ -18,6 +18,13 @@ public class GameResultBoard {
     }
 
     private GameResult calculateGameResult(int playerScore, int dealerScore) {
+        if (playerScore > 21) {
+            return GameResult.LOSE;
+        }
+        if (dealerScore > 21) {
+            return GameResult.WIN;
+        }
+
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }

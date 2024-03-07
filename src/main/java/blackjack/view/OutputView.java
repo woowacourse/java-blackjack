@@ -1,19 +1,21 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayerResultDto;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public void printPlayerInitialCards(List<PlayerDto> playerDtos) {
         StringBuilder stringBuilder = new StringBuilder();
 
         playerDtos.forEach(playerDto ->
-            stringBuilder.append(playerDto.name())
-                    .append("카드: ")
-                    .append(generateCardDescription(playerDto.cards()))
-                    .append(System.lineSeparator())
+                stringBuilder.append(playerDto.name())
+                        .append("카드: ")
+                        .append(generateCardDescription(playerDto.cards()))
+                        .append(System.lineSeparator())
         );
 
         System.out.println(stringBuilder);
@@ -32,7 +34,7 @@ public class OutputView {
     }
 
     public void printInitialMessage(List<String> playerNames) {
-        System.out.println("딜러와 "  + String.join(", ", playerNames) + " 에게 2장을 나누었습니다.");
+        System.out.println("딜러와 " + String.join(", ", playerNames) + " 에게 2장을 나누었습니다.");
     }
 
     public void printPlayerCard(PlayerDto playerDto) {
@@ -44,7 +46,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 " + extraDrawCount + "장의 카드를 더 받았습니다.");
     }
 
-    public void printResult(PlayerResultDto dealerResult, List<PlayerResultDto> playerResultDtos) {
+    public void printCardStatus(PlayerResultDto dealerResult, List<PlayerResultDto> playerResultDtos) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("딜러 카드: ")
@@ -63,5 +65,15 @@ public class OutputView {
         );
 
         System.out.println(stringBuilder);
+    }
+
+    public void printDealerResult(Map<GameResult, Integer> dealerResult) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + dealerResult.get(GameResult.WIN) + "승" + dealerResult.get(GameResult.LOSE) + "패"
+                + dealerResult.get(GameResult.DRAW) + "무");
+    }
+
+    public void printPlayerResult(String playerName, GameResult gameResult) {
+        System.out.println(playerName + ": " + gameResult.getDescription());
     }
 }
