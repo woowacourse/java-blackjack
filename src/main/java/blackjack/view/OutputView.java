@@ -13,6 +13,9 @@ public class OutputView {
     private static final String DEALER_RESULT_CARDS_STATUS = "딜러 카드: %s - 결과: %d" + System.lineSeparator();
     private static final String FINAL_RESULT_TITLE = System.lineSeparator() + "## 최종 승패";
     private static final String DEALER_FINAL_RESULT = "딜러: %d승 %d패" + System.lineSeparator();
+    private static final String INVALID_CHOICE_EXCEPTION = "%s 또는 %s을 입력해주세요.";
+    private static final String YES_CHOICE = "y";
+    private static final String NO_CHOICE = "n";
 
     private static final OutputView instance = new OutputView();
 
@@ -68,7 +71,11 @@ public class OutputView {
     }
 
     public boolean isMoreChoice(final String choice) {
-        return choice.equals("y");
+        if (!List.of(YES_CHOICE, NO_CHOICE).contains(choice)) {
+            throw new IllegalArgumentException(String.format(INVALID_CHOICE_EXCEPTION, YES_CHOICE, NO_CHOICE));
+        }
+
+        return choice.equals(YES_CHOICE);
     }
 
     public void printNewLine() {
