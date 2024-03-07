@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class Cards {
@@ -25,6 +26,10 @@ public class Cards {
         return cards.pop();
     }
 
+    public Card peek() {
+        return cards.peek();
+    }
+
     public void shuffle() {
         Collections.shuffle(cards);
     }
@@ -37,10 +42,14 @@ public class Cards {
 
     public boolean hasAce() {
         for (Card card : cards) {
-            if (card.cardNumber() == CardNumber.ACE) {
+            if (card.number() == CardNumber.ACE) {
                 return true;
             }
         }
         return false;
+    }
+
+    public List<Card> toList() {
+        return List.copyOf(cards);
     }
 }
