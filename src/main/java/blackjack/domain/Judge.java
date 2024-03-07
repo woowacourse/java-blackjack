@@ -6,10 +6,6 @@ public class Judge {
     private static final int ACE_WEIGHT = 10;
     private static final int DEALER_HIT_THRESHOLD = 17;
 
-    //    private static final int DEA
-    public Judge() {
-    }
-
     public int calculateBestScore(Hand hand) {
         int aceCount = hand.countAce();
         int sum = hand.sum();
@@ -24,7 +20,7 @@ public class Judge {
         return BLACK_JACK < calculateBestScore(hand);
     }
 
-    public boolean canDealerHit(Hand hand) {
-        return calculateBestScore(hand) < DEALER_HIT_THRESHOLD;
+    public boolean canDealerHit(Dealer dealer) {
+        return calculateBestScore(dealer.getHand()) < DEALER_HIT_THRESHOLD;
     }
 }

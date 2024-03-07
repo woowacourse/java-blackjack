@@ -37,21 +37,21 @@ class JudgeTest {
     @Test
     void testDealerShouldHit() {
         Judge judge = new Judge();
-
         Hand hand = HandFixture.of(10, 6);
-        boolean moreCard = judge.canDealerHit(hand);
+        Dealer dealer = new Dealer(hand);
+        boolean hit = judge.canDealerHit(dealer);
 
-        assertThat(moreCard).isTrue();
+        assertThat(hit).isTrue();
     }
 
     @DisplayName("딜러는 17점 이상이면 카드를 받을 수 없다")
     @Test
     void testDealerShouldStay() {
         Judge judge = new Judge();
-
         Hand hand = HandFixture.of(10, 7);
-        boolean moreCard = judge.canDealerHit(hand);
+        Dealer dealer = new Dealer(hand);
+        boolean hit = judge.canDealerHit(dealer);
 
-        assertThat(moreCard).isFalse();
+        assertThat(hit).isFalse();
     }
 }
