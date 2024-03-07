@@ -4,7 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.Players;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

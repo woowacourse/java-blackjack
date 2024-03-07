@@ -3,8 +3,10 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
+import blackjack.domain.Players;
 import blackjack.domain.stategy.TestShuffleStrategy;
-import blackjack.dto.GameResult;
+import blackjack.dto.BlackjackResult;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -34,13 +36,13 @@ public class PlayersTest {
     @Test
     void decideResult() {
         //given & when
-        GameResult gameResult = players.createResult(dealer);
+        BlackjackResult blackjackResult = players.createResult(dealer);
 
         //then
-        assertThat(gameResult.findPlayerResultByName(nameA)).isFalse();
-        assertThat(gameResult.findPlayerResultByName(nameB)).isFalse();
-        assertThat(gameResult.countWins()).isEqualTo(2);
-        assertThat(gameResult.countLoses()).isEqualTo(0);
+        assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
+        assertThat(blackjackResult.findPlayerResultByName(nameB)).isEqualTo(GameResult.LOSE);
+        assertThat(blackjackResult.countWins()).isEqualTo(2);
+        assertThat(blackjackResult.countLoses()).isEqualTo(0);
     }
 
     @DisplayName("버스트된 플레이어는 패배한다.")
@@ -58,11 +60,11 @@ public class PlayersTest {
                 .forEach(i -> burstedDealer.draw());
 
         //then
-        GameResult gameResult = players.createResult(dealer);
-        assertThat(gameResult.findPlayerResultByName(nameA)).isFalse();
+        BlackjackResult blackjackResult = players.createResult(dealer);
+        assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
 
-        GameResult burstedDealerGameResult = players.createResult(burstedDealer);
-        assertThat(burstedDealerGameResult.findPlayerResultByName(nameA)).isFalse();
+        BlackjackResult burstedDealerBlackjackResult = players.createResult(burstedDealer);
+        assertThat(burstedDealerBlackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("딜러가 버스트 된 경우 버스트 안된 참가자는 승리한다.")
@@ -76,7 +78,7 @@ public class PlayersTest {
                 .forEach(i -> burstedDealer.isCardAdded());
 
         //then
-        GameResult gameResult = players.createResult(burstedDealer);
-        assertThat(gameResult.findPlayerResultByName(nameA)).isTrue();
+        BlackjackResult blackjackResult = players.createResult(burstedDealer);
+        assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.WIN);
     }
 }
