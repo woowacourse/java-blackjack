@@ -1,21 +1,17 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.function.BooleanSupplier;
 
-public class Player {
-    private final Name name;
-    private final Hands hands;
+public class Player extends Participant {
 
     public Player(String name) {
-        this.name = new Name(name);
-        this.hands = new Hands();
+        super(name);
     }
 
-    public void addCard(Card card) {
-        hands.addCard(card);
-    }
-
-    public List<Card> getHandsCards() {
-        return hands.getHands();
+    @Override
+    public void decideDraw(BooleanSupplier supplier, Deck deck) {
+        if (supplier.getAsBoolean()) {
+            hands.addCard(deck.draw());
+        }
     }
 }
