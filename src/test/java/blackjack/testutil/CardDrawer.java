@@ -1,6 +1,6 @@
 package blackjack.testutil;
 
-import blackjack.domain.Deck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Participant;
 
 public class CardDrawer {

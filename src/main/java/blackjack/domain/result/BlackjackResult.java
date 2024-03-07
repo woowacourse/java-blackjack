@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;

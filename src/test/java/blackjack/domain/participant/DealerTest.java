@@ -2,8 +2,8 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Deck;
-import blackjack.domain.HandGenerator;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;

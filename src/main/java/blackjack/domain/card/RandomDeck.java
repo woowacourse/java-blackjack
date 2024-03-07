@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Shape;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

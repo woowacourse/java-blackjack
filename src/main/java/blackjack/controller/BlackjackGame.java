@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackResult;
-import blackjack.domain.Deck;
-import blackjack.domain.HandGenerator;
-import blackjack.domain.RandomDeck;
-import blackjack.domain.Referee;
+import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.HandGenerator;
+import blackjack.domain.card.RandomDeck;
+import blackjack.domain.result.Referee;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
