@@ -60,7 +60,7 @@ public class OutputView {
     private String format(final Map<Result, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
-            stringBuilder.append(String.valueOf(entry.getValue()) + entry.getKey().getValue() + " ");
+            stringBuilder.append(entry.getValue() + entry.getKey().getValue() + " ");
         }
 
         return stringBuilder.toString();
@@ -68,5 +68,10 @@ public class OutputView {
 
     private String format(final List<String> playerNames) {
         return String.join(", ", playerNames);
+    }
+
+    public void printBustMessage() {
+        System.out.println("BUST");
+        System.out.println();
     }
 }

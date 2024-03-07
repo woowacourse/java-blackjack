@@ -54,6 +54,10 @@ public class BlackJackController {
             if (handsChanged(changed, answer)) {
                 outputView.printHands(PlayerDto.from(player));
             }
+            if (player.isBust()) {
+                outputView.printBustMessage();
+                break;
+            }
             changed = true;
         }
     }

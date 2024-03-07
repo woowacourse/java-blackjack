@@ -56,6 +56,10 @@ public class Player {
                 .toList();
     }
 
+    public boolean isBust() {
+        return hands.isBust();
+    }
+
     public int getTotalSum() {
         return hands.sum();
     }
