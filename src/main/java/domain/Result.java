@@ -4,6 +4,7 @@ public enum Result { //TODO 무승부
 
     WIN("승"),
     LOSE("패"),
+    TIE("무")
     ;
 
     private final String value;
@@ -16,7 +17,10 @@ public enum Result { //TODO 무승부
         if (Result.WIN.equals(this)) {
             return LOSE;
         }
-        return WIN;
+        if (Result.LOSE.equals(this)) {
+            return WIN;
+        }
+        return TIE;
     }
 
     public String getValue() {

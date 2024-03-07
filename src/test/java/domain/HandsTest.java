@@ -66,8 +66,37 @@ class HandsTest {
         Assertions.assertThat(result).isEqualTo(expected);
     }
 
+    @DisplayName("카드 합이 같고 카드 갯수가 같으면 무승부이다.")
     @Test
-    @DisplayName("카드 합이 21이하이면서 승리한다.")
+    void isTie() {
+        // given
+        final Hands sum1 = new Hands(
+                List.of(new Card(CardNumber.SEVEN, CardShape.SPADE), new Card(CardNumber.TWO, CardShape.SPADE),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
+        final Hands sum2 = new Hands(
+                List.of(new Card(CardNumber.FOUR, CardShape.SPADE), new Card(CardNumber.FIVE, CardShape.SPADE),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        // when && then
+        Assertions.assertThat(sum1.calculateResult(sum2)).isEqualTo(Result.TIE);
+    }
+
+    @DisplayName("카드 합이 같은데 카드 갯수가 더 적으면 승리이다.")
+    @Test
+    void isWinBySize() {
+        // given
+        final Hands sum20Size2 = new Hands(
+                List.of(new Card(CardNumber.NINE, CardShape.SPADE), new Card(CardNumber.ACE, CardShape.SPADE)));
+        final Hands sum20Size3 = new Hands(
+                List.of(new Card(CardNumber.FOUR, CardShape.SPADE), new Card(CardNumber.FIVE, CardShape.SPADE),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
+
+        // when && then
+        Assertions.assertThat(sum20Size2.calculateResult(sum20Size3)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("카드 합이 21이하이면서 승리한다.") //TODO 이름 변경
     void isWin() {
         //given
         final Hands sum20 = new Hands(
@@ -75,10 +104,11 @@ class HandsTest {
                         new Card(CardNumber.ACE, CardShape.SPADE)));
 
         final Hands sum21 = new Hands(
-                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
+                List.of(new Card(CardNumber.JACK, CardShape.HEART),
+                        new Card(CardNumber.ACE, CardShape.SPADE)));
 
         //when && then
-        Assertions.assertThat(sum21.isWin(sum20)).isTrue();
+        Assertions.assertThat(sum21.calculateResult(sum20)).isEqualTo(Result.WIN);
     }
 
 
@@ -93,7 +123,7 @@ class HandsTest {
                 List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.ACE, CardShape.SPADE)));
 
         //when && then
-        Assertions.assertThat(sum20.isWin(sum21)).isFalse();
+        Assertions.assertThat(sum20.calculateResult(sum21)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -108,7 +138,7 @@ class HandsTest {
                         new Card(CardNumber.FIVE, CardShape.HEART)));
 
         //when && then
-        Assertions.assertThat(sum22.isWin(sum18)).isFalse();
+        Assertions.assertThat(sum22.calculateResult(sum18)).isEqualTo(Result.LOSE);
     }
 
 

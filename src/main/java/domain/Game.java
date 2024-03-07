@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,11 +32,7 @@ public class Game {
     private Map<Player, Result> calculate() {
         final Map<Player, Result> map = new LinkedHashMap<>();
         for (Player player : players.getNames()) { // TODO 인덴트 줄이기
-            if (player.isWin(dealer)) {
-                map.put(player, Result.WIN);
-                continue;
-            }
-            map.put(player, Result.LOSE);
+            map.put(player, player.isWin(dealer));
         }
         return map;
     }
