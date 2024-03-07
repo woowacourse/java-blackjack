@@ -11,4 +11,8 @@ public class Player extends GameParticipant {
         super(new ArrayList<>());
         this.name = name;
     }
+
+    public Name getName() {
+        return name;
+    }
 }
