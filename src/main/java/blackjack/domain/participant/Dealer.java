@@ -30,6 +30,10 @@ public class Dealer extends Gamer {
         return hand.getFirstCard();
     }
 
+    public boolean isSameScore(final long score) {
+        return hand.calculateScore() == score;
+    }
+
     @Override
     boolean canReceiveCard() {
         return hand.calculateScore() <= DEALER_BOUND;

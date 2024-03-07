@@ -11,7 +11,6 @@ import java.util.Set;
 public class Players {
 
     private static final String NAME_DUPLICATED_EXCEPTION = "플레이어의 이름은 중복될 수 없습니다.";
-    private static final int BLACKJACK_BOUND = 21;
 
     private final List<Player> players;
 
@@ -36,65 +35,17 @@ public class Players {
     }
 
     public BlackjackResult createResult(final Dealer dealer) {
-        int wins = 0;
-        int loses = 0;
-        int draws = 0;
+        ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
         PlayerResult playerResult = new PlayerResult();
 
         for (Player player : players) {
-            DealerResult result = judge(wins, loses, draws, player, dealer, playerResult);
+            DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
 
-            wins = result.getWins();
-            loses = result.getLoses();
-            draws = result.getDraws();
+           resultStatus.setResultStatus(result.getWins(), result.getLoses(), result.getDraws());
         }
 
-        return new BlackjackResult(new DealerResult(wins, loses, draws), playerResult);
-    }
-
-    private DealerResult judge(final int wins, int loses, int draws,
-                               final Player player, final Dealer dealer, PlayerResult playerResult) {
-        long dealerScore = dealer.getScore();
-
-        if (player.isBust() && dealer.isBust()) {
-            playerResult.addResult(player, GameResult.DRAW);
-            return new DealerResult(wins, loses, draws + 1);
-        }
-
-        if (player.isBust()) {
-            playerResult.addResult(player, GameResult.LOSE);
-            return new DealerResult(wins + 1, loses, draws);
-        }
-
-        if (dealerScore <= BLACKJACK_BOUND && (dealerScore != player.getScore()) && (dealerScore
-                >= player.getScore())) {
-            playerResult.addResult(player, GameResult.LOSE);
-            return new DealerResult(wins + 1, loses, draws);
-        }
-
-        if (dealerScore <= BLACKJACK_BOUND && (dealerScore != player.getScore())) {
-            playerResult.addResult(player, GameResult.WIN);
-            return new DealerResult(wins, loses + 1, draws);
-        }
-
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            playerResult.addResult(player, GameResult.DRAW);
-            return new DealerResult(wins, loses, draws + 1);
-        }
-
-        if (dealer.getScore() != player.getScore() && dealer.isBlackjack()) {
-            playerResult.addResult(player, GameResult.LOSE);
-            return new DealerResult(wins + 1, loses, draws);
-        }
-
-        if (dealer.getScore() != player.getScore() && player.isBlackjack()) {
-            playerResult.addResult(player, GameResult.WIN);
-            return new DealerResult(wins, loses + 1, draws);
-        }
-
-        playerResult.addResult(player, GameResult.WIN);
-        return new DealerResult(wins, loses + 1, draws);
+        return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
     }
 
     public List<Player> getPlayers() {
