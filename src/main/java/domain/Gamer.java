@@ -22,4 +22,12 @@ public class Gamer {
     public boolean isName(String test) {
         return name.getName().equals(test);
     }
+
+    public Name getName() {
+        return name;
+    }
+
+    public int getTotalScore() {
+        return hand.getResultScore();
+    }
 }

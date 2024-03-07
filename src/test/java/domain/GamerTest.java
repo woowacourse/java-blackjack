@@ -32,4 +32,14 @@ class GamerTest {
         Gamer gamer = new Gamer(new Name("test"));
         Assertions.assertThat(gamer.isName("test")).isTrue();
     }
+
+    @Test
+    @DisplayName("게이머의 점수 합계를 반환한다.")
+    void getTotalScore() {
+        Gamer gamer = new Gamer(new Name("test"));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.ACE));
+        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Assertions.assertThat(gamer.getTotalScore())
+                .isEqualTo(21);
+    }
 }
