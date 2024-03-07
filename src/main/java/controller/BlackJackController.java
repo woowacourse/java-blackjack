@@ -31,9 +31,18 @@ public class BlackJackController {
                     break;
                 }
                 blackJack.offerCardToPlayer(name, 1);
-                outputView.printPlayerCard(player);
+                outputView.printPlayerCardMessage(player);
             }
         }
+
+        while (blackJack.isDealerUnderThreshold()) {
+            outputView.printDealerAddCard();
+            blackJack.offerCardToPlayer("딜러", 1);
+        }
+
+        outputView.printResult(blackJack.findPlayers(), blackJack.findDealer());
+
+
     }
 
     private BlackJack createBlackJack() {
