@@ -25,6 +25,10 @@ public abstract class Cards {
 
     public abstract boolean canDraw();
 
+    public void updateStatus(Status status) {
+        participant.updateStatus(status);
+    }
+
     public List<Card> add(Card card) {
         cards.add(card);
         return List.copyOf(cards);
