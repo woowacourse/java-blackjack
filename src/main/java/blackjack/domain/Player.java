@@ -4,8 +4,8 @@ public class Player {
     private final Name name;
     private final Hands hands;
 
-    public Player(Name name) {
-        this.name = name;
+    public Player(String name) {
+        this.name = new Name(name);
         this.hands = new Hands();
     }
 

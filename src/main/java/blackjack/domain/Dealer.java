@@ -9,8 +9,8 @@ public class Dealer {
     private final Name name;
     private final Hands hands;
 
-    public Dealer(Name name) {
-        this.name = name;
+    public Dealer(String name) {
+        this.name = new Name(name);
         this.hands = new Hands();
     }
 
