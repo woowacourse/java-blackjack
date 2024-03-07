@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.CardTest;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
@@ -18,11 +19,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    private static final List<Card> CARDS_SCORE_4 = CardTest.CARDS_SCORE_4;
+    private static final List<Card> TWO_ACE = CardTest.TWO_ACE;
+    private static final List<Card> SCORE_13_WITH_ACE = CardTest.SCORE_13_WITH_ACE;
+    private static final List<Card> CARDS_SCORE_16 = CardTest.CARDS_SCORE_16;
+    private static final List<Card> CARDS_SCORE_17 = CardTest.CARDS_SCORE_17;
+    private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
+    private static final List<Card> BUSTED = CardTest.BUSTED;
+    private static final Name DEFAULT_NAME = new Name("name");
+
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
     void isDrawableTest_whenScoreIsUnder16_returnTrue() {
-        List<Card> CardsScore16 = List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.SIX, Shape.HEART));
-        Dealer dealer = new Dealer(CardsScore16);
+        Dealer dealer = new Dealer(CARDS_SCORE_16);
 
         assertThat(dealer.isDrawable()).isTrue();
     }
@@ -30,8 +39,7 @@ class DealerTest {
     @DisplayName("카드의 총 점수가 17을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
     void isDrawableTest_whenScoreIsOver17_returnFalse() {
-        List<Card> CardsScore17 = List.of(new Card(Value.JACK, Shape.HEART), new Card(Value.SEVEN, Shape.HEART));
-        Dealer dealer = new Dealer(CardsScore17);
+        Dealer dealer = new Dealer(CARDS_SCORE_17);
 
         assertThat(dealer.isDrawable()).isFalse();
     }
@@ -47,28 +55,10 @@ class DealerTest {
 
     // TODO Fixture로 추출하기
     static Stream<Arguments> provideCardsAndScore() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Value.ACE, Shape.HEART),
-                                new Card(Value.KING, Shape.HEART)
-                        ), 21),
-                Arguments.of(
-                        List.of(
-                                new Card(Value.ACE, Shape.HEART),
-                                new Card(Value.ACE, Shape.SPADE)
-                        ), 12),
-                Arguments.of(
-                        List.of(
-                                new Card(Value.ACE, Shape.HEART),
-                                new Card(Value.KING, Shape.HEART),
-                                new Card(Value.TWO, Shape.HEART)
-                        ), 13),
-                Arguments.of(
-                        List.of(
-                                new Card(Value.KING, Shape.HEART),
-                                new Card(Value.TWO, Shape.HEART)
-                        ), 12)
+        return Stream.of(Arguments.of(BLACKJACK, 21),
+                Arguments.of(TWO_ACE, 12),
+                Arguments.of(SCORE_13_WITH_ACE, 13),
+                Arguments.of(CARDS_SCORE_16, 16)
         );
     }
 
@@ -98,27 +88,21 @@ class DealerTest {
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
     void addTest_whenScoreIsUnder16() {
-        Dealer dealer = new Dealer(List.of(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.SIX, Shape.HEART)
-        ));
+        Dealer dealer = new Dealer(CARDS_SCORE_16);
 
-        dealer.add(new Card(Value.ACE, Shape.HEART));
+        Card additionalCard = new Card(Value.ACE, Shape.HEART);
+        dealer.add(additionalCard);
 
-        assertThat(dealer.getCards()).containsExactly(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.SIX, Shape.HEART),
-                new Card(Value.ACE, Shape.HEART)
-        );
+        assertThat(dealer.getCards())
+                .containsAll(CARDS_SCORE_16)
+                .contains(additionalCard)
+                .hasSize(3);
     }
 
     @DisplayName("카드의 총 점수가 16을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
     @Test
     void addTest_whenScoreIsOver16_throwException() {
-        Dealer dealer = new Dealer(List.of(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.SEVEN, Shape.HEART)
-        ));
+        Dealer dealer = new Dealer(CARDS_SCORE_17);
         Card card = new Card(Value.ACE, Shape.HEART);
 
         assertThatThrownBy(() -> dealer.add(card))
@@ -135,35 +119,13 @@ class DealerTest {
         @MethodSource("provideDealerCards")
         void whenPlayerBusted_dealerWin(List<Card> cards) {
             Dealer dealer = new Dealer(cards);
-            Player player = new Player(List.of(
-                    new Card(Value.KING, Shape.DIAMOND),
-                    new Card(Value.QUEEN, Shape.DIAMOND),
-                    new Card(Value.JACK, Shape.DIAMOND)
-            ), new Name("name"));
+            Player player = new Player(BUSTED, DEFAULT_NAME);
 
             assertThat(dealer.isWin(player)).isTrue();
         }
 
         static Stream<List<Card>> provideDealerCards() {
-            return Stream.of(
-                    List.of(
-                            new Card(Value.ACE, Shape.HEART),
-                            new Card(Value.KING, Shape.HEART)
-                    ),
-                    List.of(
-                            new Card(Value.TWO, Shape.HEART),
-                            new Card(Value.TWO, Shape.SPADE)
-                    ),
-                    List.of(
-                            new Card(Value.KING, Shape.HEART),
-                            new Card(Value.TWO, Shape.HEART)
-                    ),
-                    List.of(
-                            new Card(Value.KING, Shape.HEART),
-                            new Card(Value.QUEEN, Shape.HEART),
-                            new Card(Value.JACK, Shape.HEART)
-                    )
-            );
+            return Stream.of(BLACKJACK, CARDS_SCORE_4, CARDS_SCORE_16, BUSTED);
         }
 
         @DisplayName("딜러만 21을 넘길 경우, 플레이어가 이긴다.")
@@ -171,45 +133,22 @@ class DealerTest {
         @MethodSource("providePlayerCards")
         void whenOnlyDealerBusted_playerWin(List<Card> cards) {
 
-            Dealer dealer = new Dealer(List.of(
-                    new Card(Value.KING, Shape.DIAMOND),
-                    new Card(Value.QUEEN, Shape.DIAMOND),
-                    new Card(Value.JACK, Shape.DIAMOND)
-            ));
-            Player player = new Player(cards, new Name("name"));
+            Dealer dealer = new Dealer(BUSTED);
+            Player player = new Player(cards, DEFAULT_NAME);
 
             assertThat(dealer.isWin(player)).isFalse();
         }
 
         //TODO 픽스쳐 생성
         static Stream<List<Card>> providePlayerCards() {
-            return Stream.of(
-                    List.of(
-                            new Card(Value.ACE, Shape.HEART),
-                            new Card(Value.KING, Shape.HEART)
-                    ),
-                    List.of(
-                            new Card(Value.TWO, Shape.HEART),
-                            new Card(Value.TWO, Shape.SPADE)
-                    ),
-                    List.of(
-                            new Card(Value.KING, Shape.HEART),
-                            new Card(Value.TWO, Shape.HEART)
-                    )
-            );
+            return Stream.of(BLACKJACK, CARDS_SCORE_4, CARDS_SCORE_16);
         }
 
         @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 크다면 플레이어가 이긴다.")
         @Test
         void whenPlayerScoreIsBiggerThanDealerScore_playerWin() {
-            Player player = new Player(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SEVEN, Shape.HEART)
-            ), new Name("name"));
-            Dealer dealer = new Dealer(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SIX, Shape.HEART)
-            ));
+            Player player = new Player(CARDS_SCORE_17, DEFAULT_NAME);
+            Dealer dealer = new Dealer(CARDS_SCORE_16);
 
             assertThat(dealer.isWin(player)).isFalse();
         }
@@ -217,14 +156,8 @@ class DealerTest {
         @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 같다면 딜러가 이긴다.")
         @Test
         void whenPlayerScoreIsEqualToDealerScore_dealerWin() {
-            Player player = new Player(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SEVEN, Shape.HEART)
-            ), new Name("name"));
-            Dealer dealer = new Dealer(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SEVEN, Shape.HEART)
-            ));
+            Player player = new Player(CARDS_SCORE_17, DEFAULT_NAME);
+            Dealer dealer = new Dealer(CARDS_SCORE_17);
 
             assertThat(dealer.isWin(player)).isTrue();
         }
@@ -232,14 +165,8 @@ class DealerTest {
         @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 작다면 딜러가 이긴다.")
         @Test
         void whenPlayerScoreIsSmallerThanDealerScore_dealerWin() {
-            Player player = new Player(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SIX, Shape.HEART)
-            ), new Name("name"));
-            Dealer dealer = new Dealer(List.of(
-                    new Card(Value.KING, Shape.HEART),
-                    new Card(Value.SEVEN, Shape.HEART)
-            ));
+            Player player = new Player(CARDS_SCORE_16, DEFAULT_NAME);
+            Dealer dealer = new Dealer(CARDS_SCORE_17);
 
             assertThat(dealer.isWin(player)).isTrue();
         }

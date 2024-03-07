@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.CardTest;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
@@ -17,8 +18,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
 
+    private static final List<Card> TWO_ACE = CardTest.TWO_ACE;
+    private static final List<Card> SCORE_13_WITH_ACE = CardTest.SCORE_13_WITH_ACE;
+    private static final List<Card> CARDS_SCORE_16 = CardTest.CARDS_SCORE_16;
+    private static final List<Card> CARDS_SCORE_21 = CardTest.CARDS_SCORE_21;
+    private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
+    private static final List<Card> CARDS_SCORE_22 = CardTest.CARDS_SCORE_22;
     private static final Name DEFAULT_NAME = new Name("name");
-
+    
     @DisplayName("점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCardsAndScore")
@@ -28,24 +35,18 @@ class PlayerTest {
         assertThat(player.calculateScore()).isEqualTo(expected);
     }
 
-    // TODO Fixture로 추출하기
     static Stream<Arguments> provideCardsAndScore() {
-        return Stream.of(Arguments.of(List.of(new Card(Value.ACE, Shape.HEART), new Card(Value.KING, Shape.HEART)), 21),
-                Arguments.of(List.of(new Card(Value.ACE, Shape.HEART), new Card(Value.ACE, Shape.SPADE)), 12),
-                Arguments.of(List.of(new Card(Value.ACE, Shape.HEART), new Card(Value.KING, Shape.HEART),
-                        new Card(Value.TWO, Shape.HEART)), 13),
-                Arguments.of(List.of(new Card(Value.KING, Shape.HEART), new Card(Value.TWO, Shape.HEART)), 12));
+        return Stream.of(Arguments.of(BLACKJACK, 21),
+                Arguments.of(TWO_ACE, 12),
+                Arguments.of(SCORE_13_WITH_ACE, 13),
+                Arguments.of(CARDS_SCORE_16, 16)
+        );
     }
 
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test
     void isDrawableTest_whenScoreIsUnder21_returnTrue() {
-        List<Card> CardsScore21 = List.of(
-                new Card(Value.JACK, Shape.HEART),
-                new Card(Value.EIGHT, Shape.HEART),
-                new Card(Value.THREE, Shape.HEART)
-        );
-        Player player = new Player(CardsScore21, DEFAULT_NAME);
+        Player player = new Player(CARDS_SCORE_21, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isTrue();
     }
@@ -53,12 +54,7 @@ class PlayerTest {
     @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 더 뽑을 수 없다")
     @Test
     void isDrawableTest_whenScoreIsOver21_returnFalse() {
-        List<Card> CardsScore22 = List.of(
-                new Card(Value.JACK, Shape.HEART),
-                new Card(Value.SEVEN, Shape.HEART),
-                new Card(Value.FIVE, Shape.HEART)
-        );
-        Player player = new Player(CardsScore22, DEFAULT_NAME);
+        Player player = new Player(CARDS_SCORE_22, DEFAULT_NAME);
 
         assertThat(player.isDrawable()).isFalse();
     }
@@ -89,30 +85,21 @@ class PlayerTest {
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 한 장 뽑는다")
     @Test
     void addTest_whenScoreIsUnder21() {
-        Player player = new Player(List.of(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.NINE, Shape.HEART),
-                new Card(Value.TWO, Shape.HEART)
-        ), DEFAULT_NAME);
+        Player player = new Player(CARDS_SCORE_21, DEFAULT_NAME);
 
-        player.add(new Card(Value.ACE, Shape.HEART));
+        Card additionalCard = new Card(Value.ACE, Shape.HEART);
+        player.add(additionalCard);
 
-        assertThat(player.getCards()).containsExactly(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.NINE, Shape.HEART),
-                new Card(Value.TWO, Shape.HEART),
-                new Card(Value.ACE, Shape.HEART)
-        );
+        assertThat(player.getCards())
+                .containsAll(CARDS_SCORE_21)
+                .contains(additionalCard)
+                .hasSize(4);
     }
 
     @DisplayName("카드의 총 점수가 21을 넘으면, 카드를 뽑을 때 예외가 발생한다.")
     @Test
     void addTest_whenScoreIsOver21_throwException() {
-        Player player = new Player(List.of(
-                new Card(Value.KING, Shape.HEART),
-                new Card(Value.NINE, Shape.HEART),
-                new Card(Value.THREE, Shape.HEART)
-        ), DEFAULT_NAME);
+        Player player = new Player(CARDS_SCORE_22, DEFAULT_NAME);
         Card card = new Card(Value.ACE, Shape.HEART);
 
         assertThatThrownBy(() -> player.add(card))
