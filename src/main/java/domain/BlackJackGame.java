@@ -25,6 +25,14 @@ public class BlackJackGame {
                 .filter(player -> player.getName().name().equals(name))
                 .findFirst()
                 .get();
+        return isHitSuccess(targetPlayer);
+    }
+
+    public boolean hitDealer() {
+        return isHitSuccess(dealer);
+    }
+
+    private boolean isHitSuccess(Player targetPlayer) {
         if (targetPlayer.isHittable()) {
             targetPlayer.hit(dealer.dealCard());
             return true;
