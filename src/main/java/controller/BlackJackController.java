@@ -40,10 +40,14 @@ public class BlackJackController {
     }
 
     private void participantHit(Participant participant, Dealer dealer) {
-        while (participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()))) {
+        while (isHitOption(participant)) {
             participant.receiveCard(dealer.draw());
             OutputView.printParticipantHands(participant);
         }
+    }
+
+    private static boolean isHitOption(Participant participant) {
+        return participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()));
     }
 
     private void dealerHit(Dealer dealer) {
