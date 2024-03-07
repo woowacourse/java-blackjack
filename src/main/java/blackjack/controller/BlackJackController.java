@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.model.Command;
 import blackjack.model.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,7 +18,10 @@ public class BlackJackController {
 
     public void run() {
         List<Player> players = inputView.readPlayers();
+
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            Command command = inputView.readCommand(player);
+        }
     }
-
-
 }

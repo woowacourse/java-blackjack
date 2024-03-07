@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.Cards;
+import blackjack.model.Command;
 import blackjack.model.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,13 @@ public class InputView {
         return Arrays.stream(input.split(INPUT_DELIMITER))
                 .map(name -> new Player(name, new Cards()))
                 .toList();
+    }
+
+    public Command readCommand(Player player) {
+        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
+        System.out.println(message);
+        String input = scanner.nextLine();
+        return Command.generate(input);
     }
 
     private void validateMultipleInputs(String input) {

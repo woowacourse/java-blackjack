@@ -41,6 +41,10 @@ public class Player {
         return ResultStatus.PUSH;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Cards getCards() {
         return cards;
     }
