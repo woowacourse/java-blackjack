@@ -21,4 +21,8 @@ public class OutputView {
                 .map(card -> ScoreDisplay.getValue(card.getScore()) + ShapeDisplay.getValue(card.getShape()))
                 .collect(Collectors.joining(", "));
     }
+
+    public static void printDealerHit() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }

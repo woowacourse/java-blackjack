@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
+import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.model.Referee;
 import blackjack.model.Rule;
@@ -24,11 +25,46 @@ public class BlackJackGame {
 
         OutputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
+
+        playPlayersTurn(players.getPlayers(), deck);
+        playDealerTurn(dealer, deck);
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
         OutputView.printInitialCards(dealer.getName(), dealer.openCard());
         players.collectCardsOfEachPlayer()
                 .forEach(OutputView::printInitialCards);
+    }
+
+    private void playPlayersTurn(final List<Player> players, final Deck deck) {
+        for (Player player : players) {
+            playPlayerTurn(player, deck);
+        }
+    }
+
+    private void playPlayerTurn(final Player player, final Deck deck) {
+        if (!player.isBust()) {
+            final boolean isHit = InputView.readHitOrNot(player.getName(), CONSOLE_READER);
+            distributeIfPlayerWant(isHit, player, deck);
+        }
+    }
+
+    private void distributeIfPlayerWant(final boolean isHit, final Player player, final Deck deck) {
+        if (isHit) {
+            distributeNewCard(player, deck);
+            System.out.println(player.openCards());
+            playPlayerTurn(player, deck);
+        }
+    }
+
+    private void playDealerTurn(final Dealer dealer, final Deck deck) {
+        while (dealer.canHit()) {
+            OutputView.printDealerHit();
+            distributeNewCard(dealer, deck);
+        }
+    }
+
+    private void distributeNewCard(final Player player, final Deck deck) {
+        player.receiveCard(deck.distribute());
     }
 }
