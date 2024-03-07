@@ -24,6 +24,7 @@ public class Dealer implements Gamer {
         cards.add(card);
     }
 
+    @Override
     public boolean canDraw() {
         return cards.sum() <= THRESHOLD;
     }

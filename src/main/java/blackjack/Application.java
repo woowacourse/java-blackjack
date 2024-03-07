@@ -23,27 +23,27 @@ public class Application {
 
         OutputView.printInitialState(dealerDto, playersDto);
 
-        hitPlayers(players, deck);
-        hitDealer(dealer, deck);
+        hitPlayers(gameBoard, players);
+        hitDealer(gameBoard, dealer);
     }
 
-    private static void hitPlayers(final Players players, final Deck deck) {
+    private static void hitPlayers(final GameBoard gameBoard, final Players players) {
         for (Player player : players.getPlayers()) {
-            hitPlayer(player, deck);
+            hitPlayer(gameBoard, player);
         }
     }
 
-    private static void hitPlayer(final Player player, final Deck deck) {
-        while (player.canDraw() && InputView.readDoesWantHit(player.getName())) {
-            player.draw(deck.pop());
+    private static void hitPlayer(final GameBoard gameBoard, final Player player) {
+        while (gameBoard.isHit(player) && InputView.readDoesWantHit(player.getName())) {
+            gameBoard.hit(player);
             OutputView.printCurrentState(player.toDto());
         }
     }
 
-    private static void hitDealer(final Dealer dealer, final Deck deck) {
+    private static void hitDealer(final GameBoard gameBoard, final Dealer dealer) {
         System.out.println();
-        while (dealer.canDraw()) {
-            dealer.draw(deck.pop());
+        while (gameBoard.isHit(dealer)) {
+            gameBoard.hit(dealer);
             OutputView.printDealerDrawMessage();
         }
     }

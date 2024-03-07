@@ -33,4 +33,12 @@ public class GameBoard {
         gamer.draw(deck.pop());
         gamer.draw(deck.pop());
     }
+
+    public void hit(Gamer gamer) {
+        gamer.draw(deck.pop());
+    }
+
+    public boolean isHit(Gamer gamer) {
+        return gamer.canDraw();
+    }
 }
