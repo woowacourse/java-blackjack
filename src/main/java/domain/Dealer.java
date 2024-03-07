@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final String NAME = "딜러";
     private static final int INIT_CARD_NUMBER = 2; //TODO 이름 생각해보기
 
     private final CardDeck cardDeck;
@@ -41,4 +42,9 @@ public class Dealer {
     public int getTotalCardSum() {
         return hands.sum();
     }
+
+    public String getName() {
+        return NAME;
+    }
+
 }
