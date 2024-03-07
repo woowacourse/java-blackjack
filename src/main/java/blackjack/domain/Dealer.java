@@ -1,42 +1,18 @@
 package blackjack.domain;
 
-import java.util.List;
-
-public class Dealer {
+public class Dealer extends Participant {
 
     private static final int STAND_BOUND = 17;
-
-    private final Name name;
-    private final Hand hand;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        this.name = new Name("딜러");
-        this.hand = new Hand();
+        super(DEALER_NAME);
     }
 
-    public void draw(Card card) {
-        validateIsPlayable();
-
-        hand.add(card);
-    }
-
-    private void validateIsPlayable() {
-        if (!isPlayable()) {
-            throw new IllegalStateException("카드를 더이상 받을 없습니다.");
-        }
-    }
-
+    @Override
     public boolean isPlayable() {
         int score = hand.calculateScore();
 
         return score < STAND_BOUND;
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
     }
 }
