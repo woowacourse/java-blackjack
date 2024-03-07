@@ -36,4 +36,15 @@ public class PlayerCardsTest {
 
         assertThat(cards.canDraw()).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 뽑는다.")
+    void draw_SizeUp() {
+        Player player = new Player(new Name("capy"));
+        PlayerCards playerCards = new PlayerCards(player, new ArrayList<>(List.of(new Card(6, Shape.CLUB), new Card(10, Shape.CLUB))));
+
+        playerCards.draw();
+
+        assertThat(playerCards.cards).hasSize(3);
+    }
 }

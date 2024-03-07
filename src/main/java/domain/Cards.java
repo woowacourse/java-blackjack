@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Cards {
 
@@ -35,7 +36,7 @@ public abstract class Cards {
                 .sum();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public void draw() {
+        cards.add(new Card(new Random().nextInt(10) + 1, Shape.CLUB));
     }
 }

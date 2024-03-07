@@ -33,4 +33,14 @@ class DealerCardsTest {
 
         assertThat(dealerCards.canDraw()).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 뽑는다.")
+    void draw_SizeUp() {
+        DealerCards dealerCards = new DealerCards(new Dealer(), new ArrayList<>(List.of(new Card(6, Shape.CLUB), new Card(10, Shape.CLUB))));
+
+        dealerCards.draw();
+
+        assertThat(dealerCards.cards).hasSize(3);
+    }
 }
