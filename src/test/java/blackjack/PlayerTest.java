@@ -25,7 +25,7 @@ class PlayerTest {
         Player player = new Player("daon", cards);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
 
-        player.addCard(cardGenerator);
+        player.addCard(cardGenerator.drawCard());
         assertThat(player.getCards().getCards()).hasSize(3);
     }
 

@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class Player {
     private final String name;
     private final Cards cards;
@@ -9,12 +11,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public void addCard(CardGenerator cardGenerator) {
-        cards.addCard(cardGenerator.drawCard());
+    public void addCard(Card card) {
+        cards.addCard(card);
     }
 
-    public void addCards(CardGenerator cardGenerator) {
-        cards.addCard(cardGenerator.drawCards());
+    public void addCards(List<Card> cardToAdd) {
+        cards.addCard(cardToAdd);
     }
 
     public boolean checkDrawCardState() {
