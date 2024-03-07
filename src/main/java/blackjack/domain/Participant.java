@@ -12,7 +12,7 @@ abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void draw(Card card) {
+    public void hit(Card card) {
         validateIsPlayable();
 
         hand.add(card);
