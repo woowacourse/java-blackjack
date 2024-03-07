@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Deck {
+    private static final int SHUFFLED_DECK_SIZE = 52;
+
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -28,19 +30,23 @@ public class Deck {
     }
 
     public static Deck createShuffledDeck() {
-        List<Card> cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>(SHUFFLED_DECK_SIZE);
 
-        // TODO: 구조개선
         for (Shape shape : Shape.values()) {
-            Arrays.stream(Value.values())
-                    .forEach(value -> cards.add(new Card(shape, value)));
+            cards.addAll(createAllCardsOf(shape));
         }
         Collections.shuffle(cards);
+
         return new Deck(cards);
+    }
+
+    private static List<Card> createAllCardsOf(Shape shape) {
+        return Arrays.stream(Value.values())
+                .map(value -> new Card(shape, value))
+                .toList();
     }
 
     public Card draw() {
         return cards.remove(0);
     }
-
 }
