@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 public class OutputView {
 
     public static void printInitialState(DealerDto dealerDto, PlayersDto playersDto) {
-        System.out.println("딜러" + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
+        System.out.println(System.lineSeparator() + "딜러" + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
         System.out.println("딜러" + ": " + makeCardsState(dealerDto.getValues()));
         for (PlayerDto playerDto : playersDto.getValues()) {
             System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards()));
@@ -32,5 +32,9 @@ public class OutputView {
             cardJoiner.add(card.number().getValue() + SuitTranslator.translate(card.suit()));
         }
         return cardJoiner.toString();
+    }
+
+    public static void printCurrentState(final PlayerDto playerDto) {
+        System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards()));
     }
 }

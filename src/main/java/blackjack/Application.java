@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.GameBoard;
+import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
@@ -21,5 +22,20 @@ public class Application {
         final PlayersDto playersDto = gameBoard.drawInitialPlayersCards();
 
         OutputView.printInitialState(dealerDto, playersDto);
+
+        hitPlayers(players, deck);
+    }
+
+    private static void hitPlayers(final Players players, final Deck deck) {
+        for (Player player : players.getPlayers()) {
+            hitPlayer(player, deck);
+        }
+    }
+
+    private static void hitPlayer(final Player player, final Deck deck) {
+        while (player.canDraw() && InputView.readDoesWantHit(player.getName())) {
+            player.draw(deck.pop());
+            OutputView.printCurrentState(player.toDto());
+        }
     }
 }
