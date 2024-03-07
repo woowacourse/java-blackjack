@@ -1,6 +1,7 @@
 package player;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -23,8 +24,24 @@ public class Players {
         return new Players(players);
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private static void validate(List<Name> players) {
         validatePlayerCountRange(players);
+        validateHasDuplicateName(players);
+    }
+
+    private static void validateHasDuplicateName(List<Name> players) {
+        int uniqueNameCount = players.stream()
+                .map(Name::getValue)
+                .collect(Collectors.toSet())
+                .size();
+
+        if (players.size() != uniqueNameCount) {
+            throw new IllegalArgumentException("참가자는 중복된 이름을 가질 수 없습니다.");
+        }
     }
 
     private static void validatePlayerCountRange(List<Name> players) {

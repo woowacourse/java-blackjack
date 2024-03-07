@@ -41,4 +41,18 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
+
+    @DisplayName("플레이어의 이름이 중복이 되는 경우 에러를 반환한다.")
+    @Test
+    void isPlayersHasDuplicateName() {
+        List<Name> names = List.of(
+                new Name("pola"),
+                new Name("pola"),
+                new Name("kaki")
+        );
+
+        Assertions.assertThatThrownBy(() -> Players.from(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자는 중복된 이름을 가질 수 없습니다.");
+    }
 }
