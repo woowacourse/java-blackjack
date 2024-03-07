@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class Deck {
     public static Deck of(Card... cards) {
         return new Deck(List.of(cards));
     }
-    
+
     public static Deck fullDeck() {
         List<Card> cards = new ArrayList<>();
         for (CardType cardType : CardType.values()) {

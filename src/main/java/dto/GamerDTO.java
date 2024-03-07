@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 public class GamerDTO {

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum CardName {
     ACE(1),
@@ -20,7 +20,7 @@ public enum CardName {
     CardName(int cardNumber) {
         this.cardNumber = cardNumber;
     }
-    
+
     public int getCardNumber() {
         return cardNumber;
     }

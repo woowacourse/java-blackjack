@@ -1,5 +1,8 @@
-package domain;
+package domain.blackjack;
 
+import domain.blackjack.Gamer;
+import domain.card.Card;
+import domain.card.CardDrawStrategy;
 import java.util.List;
 
 public class TestPlayerCardDrawStrategy implements CardDrawStrategy {

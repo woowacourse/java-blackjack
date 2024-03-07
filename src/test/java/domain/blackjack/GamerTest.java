@@ -1,14 +1,16 @@
-package domain;
+package domain.blackjack;
 
-import static domain.CardName.ACE;
-import static domain.CardName.EIGHT;
-import static domain.CardName.JACK;
-import static domain.CardName.QUEEN;
-import static domain.CardName.SEVEN;
-import static domain.CardName.TWO;
-import static domain.CardType.HEART;
-import static domain.CardType.SPADE;
+import static domain.card.CardName.ACE;
+import static domain.card.CardName.EIGHT;
+import static domain.card.CardName.JACK;
+import static domain.card.CardName.QUEEN;
+import static domain.card.CardName.SEVEN;
+import static domain.card.CardName.TWO;
+import static domain.card.CardType.HEART;
+import static domain.card.CardType.SPADE;
 
+import domain.card.Card;
+import domain.card.Deck;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

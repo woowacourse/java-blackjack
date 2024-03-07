@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 public class PlayerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy {
     private final Gamer player;
@@ -8,7 +8,7 @@ public class PlayerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy
     }
 
     @Override
-    protected boolean canDraw() {
+    public boolean canDraw() {
         return !player.getSummationCardPoint().isDeadPoint();
     }
 }

@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 public class DealerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy {
     private final Gamer dealer;
@@ -8,7 +8,7 @@ public class DealerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy
     }
 
     @Override
-    protected boolean canDraw() {
+    public boolean canDraw() {
         SummationCardPoint summationCardPoint = dealer.getSummationCardPoint();
         return !summationCardPoint.isBiggerThan(new SummationCardPoint(16));
     }

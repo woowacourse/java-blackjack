@@ -1,6 +1,6 @@
 package dto;
 
-import domain.GameResult;
+import domain.blackjack.GameResult;
 import java.util.Map;
 
 public class DealerGameResultDTO {

@@ -1,5 +1,7 @@
-package domain;
+package domain.blackjack;
 
+import domain.card.Card;
+import domain.card.CardName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

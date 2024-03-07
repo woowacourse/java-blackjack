@@ -1,5 +1,8 @@
-package domain;
+package domain.blackjack;
 
+import domain.card.Card;
+import domain.card.CardDrawStrategy;
+import domain.card.Deck;
 import java.util.List;
 
 public class Gamer {

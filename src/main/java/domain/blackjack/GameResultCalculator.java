@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 public class GameResultCalculator {
     /**

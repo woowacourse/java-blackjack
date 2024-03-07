@@ -1,13 +1,13 @@
 package controller;
 
-import domain.Card;
-import domain.DealerRandomCardDrawStrategy;
-import domain.Deck;
-import domain.GameResult;
-import domain.GameResultCalculator;
-import domain.Gamer;
-import domain.PlayerRandomCardDrawStrategy;
-import domain.SummationCardPoint;
+import domain.blackjack.GameResult;
+import domain.blackjack.GameResultCalculator;
+import domain.blackjack.DealerRandomCardDrawStrategy;
+import domain.blackjack.Gamer;
+import domain.blackjack.PlayerRandomCardDrawStrategy;
+import domain.blackjack.SummationCardPoint;
+import domain.card.Card;
+import domain.card.Deck;
 import dto.DealerGameResultDTO;
 import dto.GamerDTO;
 import dto.PlayerGameResultDTO;

@@ -1,5 +1,8 @@
-package domain;
+package domain.blackjack;
 
+import domain.card.Card;
+import domain.card.CardName;
+import domain.card.CardType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;

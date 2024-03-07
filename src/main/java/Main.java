@@ -1,7 +1,7 @@
 import controller.BlackjackController;
-import domain.Deck;
-import domain.Gamer;
-import domain.HoldingCards;
+import domain.blackjack.Gamer;
+import domain.blackjack.HoldingCards;
+import domain.card.Deck;
 import java.util.List;
 import view.NameInputView;
 import view.OutputView;

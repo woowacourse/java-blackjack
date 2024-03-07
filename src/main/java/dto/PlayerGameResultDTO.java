@@ -1,6 +1,6 @@
 package dto;
 
-import domain.GameResult;
+import domain.blackjack.GameResult;
 
 public class PlayerGameResultDTO {
     private final String gamerName;

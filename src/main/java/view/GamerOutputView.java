@@ -1,8 +1,8 @@
 package view;
 
-import domain.Card;
-import domain.CardName;
-import domain.CardType;
+import domain.card.Card;
+import domain.card.CardName;
+import domain.card.CardType;
 import dto.GamerDTO;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class GamerOutputView {
         }
         throw new IllegalArgumentException("잘못된 카드 타입입니다.");
     }
-    
+
     private static String mapToString(CardName cardName) {
         if (cardName == CardName.ACE) {
             return "A";

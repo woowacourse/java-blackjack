@@ -1,6 +1,6 @@
 package view;
 
-import domain.GameResult;
+import domain.blackjack.GameResult;
 import dto.DealerGameResultDTO;
 import dto.PlayerGameResultDTO;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class GameResultOutputView {
                 .collect(Collectors.joining(" "));
         System.out.printf("딜러: %s\n", dealersGameResultOutput);
     }
-    
+
     private static String mapToString(GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
             return "승";
