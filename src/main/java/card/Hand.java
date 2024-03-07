@@ -1,10 +1,14 @@
 package card;
 
+import game.BlackJackGame;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+
+    private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -20,7 +24,7 @@ public class Hand {
         int maximumScore = calculateMaximumScore();
         int minimumScore = calculateMinimumScore();
 
-        if (maximumScore > 21) {
+        if (maximumScore > BlackJackGame.BLACKJACK_MAX_SCORE) {
             return minimumScore;
         }
         return maximumScore;
@@ -37,7 +41,7 @@ public class Hand {
         boolean isAce = cards.stream().anyMatch(Card::isAce);
 
         if (isAce) {
-            return score + 10;
+            return score + ADDITIONAL_ACE_SCORE;
         }
         return score;
     }

@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Players {
 
+    private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_PLAYER_COUNT = 10;
+
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
@@ -28,7 +31,7 @@ public class Players {
     }
 
     private void validateSize(List<String> playerNames) {
-        if (playerNames.size() < 1 || playerNames.size() > 10) {
+        if (playerNames.size() < MIN_PLAYER_COUNT || playerNames.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 수는 1명 이상 10명 이하여야 합니다.");
         }
     }

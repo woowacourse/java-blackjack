@@ -2,6 +2,9 @@ package player;
 
 public class Name {
 
+    private static final int MIN_NAME_LENGTH = 2;
+    private static final int MAX_NAME_LENGTH = 5;
+
     private final String name;
 
     Name(String name) {
@@ -15,7 +18,7 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() < 2 || name.length() > 5) {
+        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 이름은 2글자 이상 5글자 이하여야 합니다.");
         }
     }
