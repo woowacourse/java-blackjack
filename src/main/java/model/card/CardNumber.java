@@ -1,8 +1,7 @@
 package model.card;
 
 public enum CardNumber {
-    ONE("A", 1),
-    ELEVEN("A", 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -17,14 +16,14 @@ public enum CardNumber {
     JACK("J", 10);
 
     private final String number;
-    private final int value;
+    private final int score;
 
-    CardNumber(String number, int value) {
+    CardNumber(String number, int score) {
         this.number = number;
-        this.value = value;
+        this.score = score;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 }

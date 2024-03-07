@@ -13,7 +13,7 @@ public class Cards {
 
     public int calculateTotalNumbers() {
         return cards.stream()
-            .mapToInt(card -> card.getNumber().getValue())
+            .mapToInt(card -> card.getNumber().getScore())
             .sum();
     }
 

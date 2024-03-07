@@ -2,7 +2,7 @@ package model.blackjackgame;
 
 import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;
-import static model.card.CardNumber.ONE;
+import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.SEVEN;
 import static model.card.CardNumber.SIX;
 import static model.card.CardNumber.THREE;
@@ -32,8 +32,8 @@ class BlackjackGameTest {
     void testDistributeCardsForSetting() {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Cards cards = new Cards(
-            List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ONE, HEART),
-                new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
+            List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART),
+                new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
 
         blackjackGame.distributeCardsForSetting(cards);
@@ -90,5 +90,4 @@ class BlackjackGameTest {
             Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), 3)
         );
     }
-
 }

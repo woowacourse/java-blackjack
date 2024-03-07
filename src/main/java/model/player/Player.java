@@ -38,4 +38,12 @@ public class Player {
     public int cardsSize() {
         return cards.size();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
 }
