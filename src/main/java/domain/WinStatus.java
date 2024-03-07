@@ -1,6 +1,7 @@
 package domain;
 
 public enum WinStatus {
+
     WIN,
     LOSE;
 

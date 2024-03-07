@@ -26,7 +26,7 @@ class ParticipantsTest {
 
     @DisplayName("사람 이름은 중복이 될 수 없다.")
     @Test
-    void methodName() {
+    void validateDuplicateNames() {
         List<String> names = List.of("pobi", "pobi");
 
         assertThatThrownBy(() -> new Participants(names)).isInstanceOf(IllegalArgumentException.class);

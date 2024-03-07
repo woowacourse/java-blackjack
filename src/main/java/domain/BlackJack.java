@@ -15,9 +15,10 @@ public class BlackJack {
     public void beginDealing() {
         dealer.receiveCard(dealer.draw());
         dealer.receiveCard(dealer.draw());
-        for (int i = 0; i < participants.getValue().size(); i++) {
-            participants.getValue().get(i).receiveCard(dealer.draw());
-            participants.getValue().get(i).receiveCard(dealer.draw());
+
+        for (Participant participant : participants.getValue()) {
+            participant.receiveCard(dealer.draw());
+            participant.receiveCard(dealer.draw());
         }
     }
 

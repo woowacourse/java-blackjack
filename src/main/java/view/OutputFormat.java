@@ -12,11 +12,11 @@ public class OutputFormat {
 
     public String formatParticipantNames(Participants participants) {
         List<Name> names = participants.getNames();
-        List<String> names2 = new ArrayList<>();
+        List<String> participantNames = new ArrayList<>();
         for (Name name : names) {
-            names2.add(name.getValue());
+            participantNames.add(name.getValue());
         }
-        return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, names2));
+        return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, participantNames));
     }
 
     public String formatHands(Participant participant) {
@@ -44,10 +44,10 @@ public class OutputFormat {
         return String.format("%s - 결과: %d", formatHands(participant), participant.getScore());
     }
 
-    public String formatBlackJackResult(Map.Entry<Participant, WinStatus> entry) {
-        if (WinStatus.WIN.equals(entry.getValue())) {
-            return String.format("%s: 승", entry.getKey().getName().getValue());
+    public String formatBlackJackResult(Map.Entry<Participant, WinStatus> winStatusEntry) {
+        if (WinStatus.WIN.equals(winStatusEntry.getValue())) {
+            return String.format("%s: 승", winStatusEntry.getKey().getName().getValue());
         }
-        return String.format("%s: 패", entry.getKey().getName().getValue());
+        return String.format("%s: 패", winStatusEntry.getKey().getName().getValue());
     }
 }

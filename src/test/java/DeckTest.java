@@ -18,7 +18,7 @@ class DeckTest {
     @Test
     void cardRemove() {
         Deck deck = new Deck();
-        Card card = deck.draw();
+        deck.draw();
 
         Assertions.assertThat(deck.getCardCount())
                 .isEqualTo(51);

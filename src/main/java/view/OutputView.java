@@ -49,8 +49,8 @@ public class OutputView {
         System.out.printf(outputFormat.formatDealerResult(blackJackResult));
         System.out.println();
 
-        for (Map.Entry<Participant, WinStatus> entry : blackJackResult.getEntry()) {
-            System.out.println(outputFormat.formatBlackJackResult(entry));
+        for (Map.Entry<Participant, WinStatus> winStatusEntry : blackJackResult.getEntry()) {
+            System.out.println(outputFormat.formatBlackJackResult(winStatusEntry));
         }
     }
 }
