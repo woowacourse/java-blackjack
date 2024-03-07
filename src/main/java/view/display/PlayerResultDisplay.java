@@ -1,4 +1,4 @@
-package view;
+package view.display;
 
 import game.MatchResult;
 

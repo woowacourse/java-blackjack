@@ -2,6 +2,9 @@ package view;
 
 import card.Card;
 import game.MatchResult;
+import view.display.CardNumberDisplay;
+import view.display.CardShapeDisplay;
+import view.display.PlayerResultDisplay;
 
 import java.util.List;
 
