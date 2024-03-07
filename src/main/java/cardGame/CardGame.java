@@ -13,17 +13,11 @@ public class CardGame {
     public CardGame(Player player, Dealer dealer) {
         this.player = player;
         this.dealer = dealer;
-        initPlayerCard();
     }
 
     public Cards playRound() {
         giveCard();
         return player.getCards();
-    }
-
-    private void initPlayerCard() {
-        giveCard();
-        giveCard();
     }
 
     private void giveCard() {
@@ -36,5 +30,9 @@ public class CardGame {
         int playerScore = player.getMaxGameScore();
 
         return dealerScore >= playerScore;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
