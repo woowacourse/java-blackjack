@@ -1,21 +1,75 @@
 package blackjack.view;
 
+import blackjack.domain.Card;
+import blackjack.domain.Card.Shape;
+import blackjack.domain.Card.Value;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final Map<Card.Shape, String> SHAPE_NAME = Map.of(
+            Shape.HEART, "하트",
+            Shape.SPADE, "스페이드",
+            Shape.DIAMOND, "다이아몬드",
+            Shape.CLOVER, "클로버"
+    );
+
+    private static final Map<Card.Value, String> VALUE_NAME = Map.ofEntries(
+            Map.entry(Value.ACE, "A"), Map.entry(Value.TWO, "2"),
+            Map.entry(Value.THREE, "3"), Map.entry(Value.FOUR, "4"),
+            Map.entry(Value.FIVE, "5"), Map.entry(Value.SIX, "6"),
+            Map.entry(Value.SEVEN, "7"), Map.entry(Value.EIGHT, "8"),
+            Map.entry(Value.NINE, "9"), Map.entry(Value.TEN, "10"),
+            Map.entry(Value.JACK, "J"), Map.entry(Value.QUEEN, "Q"),
+            Map.entry(Value.KING, "K")
+    );
+
+    private static final int DEALER_START_CARDS_SIZE = 1;
+    private static final int PLAYER_START_CARDS_SIZE = 2;
+
     public void printStartCards(Dealer dealer, Players players) {
-        System.out.println("딜러:" + dealer.getStartCards());
-        List<Player> allPlayers = players.getPlayers();
-        for (Player player : allPlayers) {
-            System.out.println(player.getName() + ": " + player.getStartCards());
+        System.out.println();
+        System.out.println("딜러와 " + toPrintedFormat(players) + "에게 2장을 나누었습니다.");
+        printDealerCards(dealer.getCards().subList(0, DEALER_START_CARDS_SIZE));
+        for (Player player : players.getPlayers()) {
+            printPlayerCards(player.getName(), player.getCards().subList(0, PLAYER_START_CARDS_SIZE));
         }
+        System.out.println();
     }
 
-    public void printCards() {
+    private void printDealerCards(List<Card> cards) {
+        System.out.print("딜러: ");
+        printCards(cards);
     }
 
+    public void printPlayerCards(Player player) {
+        printPlayerCards(player.getName(), player.getCards());
+    }
+
+    private void printPlayerCards(String name, List<Card> cards) {
+        System.out.print(name + ": ");
+        printCards(cards);
+    }
+
+    private void printCards(List<Card> cards) {
+        String printingFormat = cards.stream()
+                .map(this::toPrintedFormat)
+                .collect(Collectors.joining(", "));
+        System.out.println(printingFormat);
+    }
+
+    private String toPrintedFormat(Players players) {
+        return players.getPlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String toPrintedFormat(Card card) {
+        return VALUE_NAME.get(card.getValue()) + SHAPE_NAME.get(card.getShape());
+    }
 }

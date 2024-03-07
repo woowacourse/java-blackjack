@@ -37,6 +37,14 @@ public class Card {
         return Objects.hash(value, shape);
     }
 
+    public Value getValue() {
+        return value;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
     // TODO 외부 class로 분리 할 것인지 논의, 접근 제어자 논의
     public enum Value {
         ACE(1),
