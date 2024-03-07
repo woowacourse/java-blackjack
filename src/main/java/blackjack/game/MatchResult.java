@@ -7,19 +7,27 @@ public enum MatchResult {
     TIE;
 
     public static MatchResult chooseWinner(int playerScore, int dealerScore) {
-        if (isBurst(playerScore)) {
-            return DEALER_WIN;
-        }
-        if (isBurst(dealerScore)) {
+        if (isPlayerWinningCondition(playerScore, dealerScore)) {
             return PLAYER_WIN;
         }
-        if (dealerScore == playerScore) {
-            return TIE;
-        }
-        if (dealerScore > playerScore) {
+        if (isDealerWinningCondition(playerScore, dealerScore)) {
             return DEALER_WIN;
         }
-        return PLAYER_WIN;
+        return TIE;
+    }
+
+    private static boolean isPlayerWinningCondition(int playerScore, int dealerScore) {
+        if (isBurst(playerScore)) {
+            return false;
+        }
+        return isBurst(dealerScore) || playerScore > dealerScore;
+    }
+
+    private static boolean isDealerWinningCondition(int playerScore, int dealerScore) {
+        if (isBurst(playerScore)) {
+            return true;
+        }
+        return !isBurst(dealerScore) && dealerScore > playerScore;
     }
 
     private static boolean isBurst(int score) {
