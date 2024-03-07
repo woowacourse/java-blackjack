@@ -2,9 +2,12 @@ package blackjack.view;
 
 import blackjack.dto.NameCardsAScore;
 import blackjack.model.Card;
+import blackjack.model.Result;
+import blackjack.view.display.ResultDisplay;
 import blackjack.view.display.ScoreDisplay;
 import blackjack.view.display.ShapeDisplay;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -34,5 +37,13 @@ public class OutputView {
 
     public static void printFinalCardsAndScore(final List<NameCardsAScore> nameCardsAScores) {
         nameCardsAScores.forEach(OutputView::printFinalCardsAndScore);
+    }
+
+    public static void printFinalResult(final Map<String, Result> playerResults) {
+        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name, result)));
+    }
+
+    private static String formatFinalResult(final String name, final Result result) {
+        return name + ": " + ResultDisplay.getValue(result);
     }
 }

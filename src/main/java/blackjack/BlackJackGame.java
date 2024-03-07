@@ -6,11 +6,13 @@ import blackjack.model.Deck;
 import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.model.Referee;
+import blackjack.model.Result;
 import blackjack.model.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
@@ -72,9 +74,13 @@ public class BlackJackGame {
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
-        NameCardsAScore dealerNameCardsAScore = new NameCardsAScore(dealer.getName(), dealer.openCards(), dealer.notifyScore());
+        NameCardsAScore dealerNameCardsAScore = new NameCardsAScore(dealer.getName(), dealer.openCards(),
+                dealer.notifyScore());
         List<NameCardsAScore> playerNameCardsAScore = players.collectFinalResults();
         OutputView.printFinalCardsAndScore(dealerNameCardsAScore);
         OutputView.printFinalCardsAndScore(playerNameCardsAScore);
+
+        Map<String, Result> playerResult = referee.judgePlayerResult();
+        OutputView.printFinalResult(playerResult);
     }
 }
