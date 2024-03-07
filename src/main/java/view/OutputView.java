@@ -11,12 +11,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
-    public static void printPlayersStatus(Player dealer, List<Player> players) {
+    public static void printPlayersStatus(List<Player> players) {
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
-        printPlayerStatus(dealer);
 
         for (Player player : players) {
             printPlayerStatus(player);

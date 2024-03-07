@@ -10,15 +10,18 @@ import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
+        Blackjack blackjack = createBlackjack();
+        OutputView.printPlayersStatus(blackjack.getPlayers());
 
-        String[] names = InputView.inputPlayers();
+        playGame(blackjack);
+        OutputView.printResults(blackjack.getPlayers());
 
-        Players players = Players.from(names);
-        Blackjack blackjack = new Blackjack(players);
-        OutputView.printPlayersStatus(blackjack.getDealer(), blackjack.getPlayers());
+        BlackjackResultDTO blackjackResult = blackjack.finishGame();
+        OutputView.printGameResults(blackjackResult);
+    }
 
-        // 참가자 게임진행
-        for (var player : blackjack.getPlayers()) {
+    private static void playGame(final Blackjack blackjack) {
+        for (var player : blackjack.getParticipants()) {
             drawCardDuringPlayerTurn(player, blackjack);
         }
 
@@ -28,17 +31,12 @@ public class Application {
             blackjack.dealCard(dealer);
             OutputView.printDealerStatus();
         }
+    }
 
-        // 결과 출력
-        List<Player> players1 = blackjack.getPlayers();
-        Player dealer2 = blackjack.getDealer();
-        OutputView.printPlayerStatus(dealer);
-        players1.add(dealer2);
-        OutputView.printResults(players1);
-
-        // 승패 출력 맨~
-        BlackjackResultDTO blackjackResult = blackjack.finishGame();
-        OutputView.printGameResults(blackjackResult);
+    private static Blackjack createBlackjack() {
+        String[] names = InputView.inputPlayers();
+        Players players = Players.from(names);
+        return new Blackjack(players);
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
