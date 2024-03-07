@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int BURST_THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
     private static final int ACE_VALUE_GAP = 10;
     private final List<Card> cards;
 
@@ -21,7 +21,7 @@ public class Hand {
     public int getResultScore() {
         int total = getTotalScore();
 
-        if (total <= BURST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
+        if (total <= BUST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
             return total + ACE_VALUE_GAP;
         }
 

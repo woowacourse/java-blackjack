@@ -16,7 +16,7 @@ public class HandTest {
     }
 
     @Test
-    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst가 아니면 총합을 반환한다")
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 bust가 아니면 총합을 반환한다")
     void notChangeAceScore() {
         Hand hand = new Hand();
         hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
@@ -26,7 +26,7 @@ public class HandTest {
     }
 
     @Test
-    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst이면 22보다 작은 가능한 수 중 가장 큰 수를 반환한다")
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 bust이면 22보다 작은 가능한 수 중 가장 큰 수를 반환한다")
     void changeAceScore() {
         Hand hand = new Hand();
         hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
@@ -38,8 +38,8 @@ public class HandTest {
     }
 
     @Test
-    @DisplayName("DEFAULT_ACE가 포함되어 있고 burst인데, 22보다 작은 가능한 수를 만들 수 없다면 가장 작은 수를 반환한다")
-    void changeAceScoreBurstCase() {
+    @DisplayName("DEFAULT_ACE가 포함되어 있고 bust인데, 22보다 작은 가능한 수를 만들 수 없다면 가장 작은 수를 반환한다")
+    void changeAceScoreBustCase() {
         Hand hand = new Hand();
         hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
         hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
