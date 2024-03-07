@@ -89,4 +89,21 @@ public class Game {
     public Participant getParticipant() {
         return participant;
     }
+
+    public List<Boolean> judgeWinners() {
+        Dealer dealer = participant.dealer();
+        int dealerScore = dealer.calculateScore();
+
+        List<Boolean> isWinner = new ArrayList<>();
+        List<Player> players = participant.players();
+
+        return players.stream()
+                .map(
+                        player -> isWinner.add(doesPlayerWin(player.calculateScore(), dealerScore))
+                ).toList();
+    }
+
+    private boolean doesPlayerWin(final int playerScore, final int dealerScore) {
+        return playerScore >= dealerScore;
+    }
 }

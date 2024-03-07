@@ -55,4 +55,28 @@ class GameTest {
         // then
         assertThat(count).isEqualTo(3);
     }
+
+    @DisplayName("참가자들의 승패 여부를 판단한다.")
+    @Test
+    void judgeWinners() {
+        // given
+        Dealer dealer = new Dealer("딜러");
+        dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+        dealer.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
+
+        Player player = new Player("pobi");
+        player.saveCard(new Card(CardValue.TEN, Shape.HEART));
+        player.saveCard(new Card(CardValue.EIGHT, Shape.SPADE));
+
+        List<Player> players = List.of(player);
+        Participant participant = new Participant(dealer, players);
+
+        Game game = new Game(participant, new Cards());
+
+        // when
+        List<Boolean> isWinner = game.judgeWinners();
+
+        // then
+        assertThat(isWinner).containsExactly(true);
+    }
 }

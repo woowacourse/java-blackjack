@@ -12,8 +12,8 @@ public class DealerTest {
     void isUpToThreshold() {
         int threshold = 16;
         Dealer dealer = new Dealer("딜러");
-        dealer.add(new Card(CardValue.TEN, Shape.CLOVER));
-        dealer.add(new Card(CardValue.SEVEN, Shape.CLOVER));
+        dealer.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
+        dealer.saveCard(new Card(CardValue.SEVEN, Shape.CLOVER));
 
         boolean isUp = dealer.isUpToThreshold(threshold);
         Assertions.assertTrue(isUp);
