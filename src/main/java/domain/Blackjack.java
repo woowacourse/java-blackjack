@@ -12,14 +12,13 @@ public class Blackjack {
 
     public Blackjack(final Players players) {
         this.players = players;
-        players.getPlayers().add(new Dealer(new Name("딜러")));
+        players.getPlayers().add(new Dealer());
         this.deck = new Deck();
         dealCardsToPlayers();
     }
 
     public Blackjack(Players players, Player dealer) {
         this.players = players;
-        players.getPlayers().add(dealer);
         this.deck = new Deck();
     }
 

@@ -20,7 +20,7 @@ public class Players {
     }
 
     public List<Player> getParticipants() {
-        return players.stream().filter(player -> !player.getName().equals("딜러")).toList();
+        return players.stream().filter(player -> !player.getName().equals("딜러")).collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {

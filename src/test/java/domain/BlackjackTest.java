@@ -38,9 +38,9 @@ class BlackjackTest {
     @Test
     @DisplayName("게임의 결과가 제대로 계산됐는지 확인한다")
     void gameResultTest() {
-        Player dealer = new Player(new Name("딜러"));
-        Player teba = new Player(new Name("테바"));
-        Player jonge = new Player(new Name("종이"));
+        Player dealer = new Dealer();
+        Player teba = new Participant(new Name("테바"));
+        Player jonge = new Participant(new Name("종이"));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(1, 2)));
         jonge.addCard(Card.makeRandomCard(new RandomNumberGeneartor(1, 2)));
         Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge)));
