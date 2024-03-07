@@ -13,44 +13,44 @@ public class OutputView {
 
     }
 
-    public static void printParticipants(Participants participants) {
+    public static void printBeginDealingInformation(Participants participants) {
         System.out.println();
         System.out.printf(outputFormat.formatParticipantNames(participants));
         System.out.println();
         System.out.println();
     }
 
-    public static void printDealerCard(Dealer dealer) {
+    public static void printDealerHands(Dealer dealer) {
         Name name = dealer.getName();
         List<Card> cards = dealer.getCards();
         System.out.printf("%s카드: %s", name.getValue(), outputFormat.formatCard(cards.get(0)));
         System.out.println();
     }
 
-    public static void printCard(Participant participant) {
-        System.out.printf(outputFormat.formatCardSet(participant));
+    public static void printParticipantHands(Participant participant) {
+        System.out.printf(outputFormat.formatHands(participant));
         System.out.println();
-    }
-
-    public static void printPlayerScore(Participant participant) {
-        System.out.printf(outputFormat.formatCardResult(participant));
-        System.out.println();
-    }
-
-    public static void printFinalResult(BlackJackResult blackJackResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf(outputFormat.formatDealerResult(blackJackResult));
-        System.out.println();
-
-        for (Map.Entry<Participant, Boolean> entry : blackJackResult.getEntry()) {
-            System.out.println(outputFormat.formatResult(entry));
-        }
     }
 
     public static void printDealerHit() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
+    }
+
+    public static void printParticipantResult(Participant participant) {
+        System.out.printf(outputFormat.formatParticipantResult(participant));
+        System.out.println();
+    }
+
+    public static void printBlackJackResult(BlackJackResult blackJackResult) {
+        System.out.println();
+        System.out.println("## 최종 승패");
+        System.out.printf(outputFormat.formatDealerResult(blackJackResult));
+        System.out.println();
+
+        for (Map.Entry<Participant, Boolean> entry : blackJackResult.getEntry()) {
+            System.out.println(outputFormat.formatBlackJackResult(entry));
+        }
     }
 }

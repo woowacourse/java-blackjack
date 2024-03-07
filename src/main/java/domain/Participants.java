@@ -10,19 +10,9 @@ public class Participants {
 
     private final List<Participant> value;
 
-    public Participants(List<String> names) {
+    public Participants(final List<String> names) {
         validate(names);
         value = names.stream().map(name -> new Participant(new Name(name)))
-                .toList();
-    }
-
-    public List<Participant> getValue() {
-        return value;
-    }
-
-    public List<Name> getNames() {
-        return value.stream()
-                .map(Participant::getName)
                 .toList();
     }
 
@@ -35,5 +25,15 @@ public class Participants {
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
+    }
+
+    public List<Name> getNames() {
+        return value.stream()
+                .map(Participant::getName)
+                .toList();
+    }
+
+    public List<Participant> getValue() {
+        return value;
     }
 }

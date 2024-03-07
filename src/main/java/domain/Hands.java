@@ -26,6 +26,11 @@ public class Hands {
         return totalScore;
     }
 
+    public boolean hasAce() {
+        return value.stream()
+                .anyMatch(card -> Rank.ACE == card.getRank());
+    }
+
     private int calculateAceScore(int totalScore) {
         if (totalScore + ADDITIONAL_SCORE <= BLACK_JACK_COUNT) {
             totalScore = totalScore + ADDITIONAL_SCORE;
@@ -35,11 +40,6 @@ public class Hands {
 
     public void receive(Card card) {
         value.add(card);
-    }
-
-    public boolean hasAce() {
-        return value.stream()
-                .anyMatch(card -> Rank.ACE == card.getRank());
     }
 
     public int getCardCount() {

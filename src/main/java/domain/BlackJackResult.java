@@ -7,7 +7,7 @@ public class BlackJackResult {
 
     private final Map<Participant, Boolean> resultByParticipant;
 
-    public BlackJackResult(Map<Participant, Boolean> resultByParticipant) {
+    public BlackJackResult(final Map<Participant, Boolean> resultByParticipant) {
         this.resultByParticipant = resultByParticipant;
     }
 

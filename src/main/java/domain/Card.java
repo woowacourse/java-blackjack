@@ -7,7 +7,7 @@ public class Card {
     private final Shape shape;
     private final Rank rank;
 
-    public Card(Shape shape, Rank rank) {
+    public Card(final Shape shape, final Rank rank) {
         this.shape = shape;
         this.rank = rank;
     }

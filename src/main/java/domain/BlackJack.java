@@ -8,7 +8,7 @@ public class BlackJack {
     private final Dealer dealer;
     private final Participants participants;
 
-    public BlackJack(Dealer dealer, Participants participants) {
+    public BlackJack(final Dealer dealer, final Participants participants) {
         this.dealer = dealer;
         this.participants = participants;
     }
@@ -29,10 +29,10 @@ public class BlackJack {
         if (!dealer.canHit()) {
             return true;
         }
-        return isNotBustWinner(participant);
+        return isWinnerWhenNotBust(participant);
     }
 
-    private boolean isNotBustWinner(Participant participant) {
+    private boolean isWinnerWhenNotBust(Participant participant) {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
         if (participantScore == dealerScore) {
@@ -41,18 +41,18 @@ public class BlackJack {
         return participantScore > dealerScore;
     }
 
-    public BlackJackResult savePlayerResult() {
-        Map<Participant, Boolean> result = new HashMap<>();
-        for (Participant participant : participants.getValue()) {
-            result.put(participant, isWinner(participant));
-        }
-        return new BlackJackResult(result);
-    }
-
     private boolean isWinnerByCardCount(Participant participant) {
         int participantCardCount = participant.getCardCount();
         int dealerCardCount = dealer.getCardCount();
 
         return participantCardCount < dealerCardCount;
+    }
+
+    public BlackJackResult saveParticipantResult() {
+        Map<Participant, Boolean> result = new HashMap<>();
+        for (Participant participant : participants.getValue()) {
+            result.put(participant, isWinner(participant));
+        }
+        return new BlackJackResult(result);
     }
 }

@@ -9,7 +9,7 @@ public class Participant {
     protected Hands hands;
     private final Name name;
 
-    public Participant(Name name) {
+    public Participant(final Name name) {
         this.hands = new Hands();
         this.name = name;
     }

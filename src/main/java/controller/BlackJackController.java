@@ -8,29 +8,41 @@ import java.util.List;
 
 public class BlackJackController {
 
+    public static final String HIT_OPTION = "y";
+
     public void run() {
         List<String> names = InputView.inputParticipantName();
         Participants participants = new Participants(names);
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
-        startBlackJack(blackJack, participants, dealer);
-        askHit(participants, dealer);
+        beginBlackJack(blackJack, participants, dealer);
+        askParticipantHit(participants, dealer);
         dealerHit(dealer);
 
         printScore(dealer, participants);
         printResult(blackJack);
     }
 
-    private void printResult(BlackJack blackJack) {
-        BlackJackResult blackJackResult = blackJack.savePlayerResult();
-        OutputView.printFinalResult(blackJackResult);
+    private void beginBlackJack(BlackJack blackJack, Participants participants, Dealer dealer) {
+        blackJack.beginDealing();
+        OutputView.printBeginDealingInformation(participants);
+        OutputView.printDealerHands(dealer);
+        for (Participant participant : participants.getValue()) {
+            OutputView.printParticipantHands(participant);
+        }
     }
 
-    private void printScore(Dealer dealer, Participants participants) {
-        OutputView.printPlayerScore(dealer);
+    private void askParticipantHit(Participants participants, Dealer dealer) {
         for (Participant participant : participants.getValue()) {
-            OutputView.printPlayerScore(participant);
+            participantHit(participant, dealer);
+        }
+    }
+
+    private void participantHit(Participant participant, Dealer dealer) {
+        while (participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()))) {
+            participant.receiveCard(dealer.draw());
+            OutputView.printParticipantHands(participant);
         }
     }
 
@@ -41,25 +53,15 @@ public class BlackJackController {
         }
     }
 
-    private void askHit(Participants participants, Dealer dealer) {
+    private void printScore(Dealer dealer, Participants participants) {
+        OutputView.printParticipantResult(dealer);
         for (Participant participant : participants.getValue()) {
-            hit(participant, dealer);
+            OutputView.printParticipantResult(participant);
         }
     }
 
-    private void startBlackJack(BlackJack blackJack, Participants participants, Dealer dealer) {
-        blackJack.beginDealing();
-        OutputView.printParticipants(participants);
-        OutputView.printDealerCard(dealer);
-        for (Participant participant : participants.getValue()) {
-            OutputView.printCard(participant);
-        }
-    }
-
-    private void hit(Participant participant, Dealer dealer) {
-        while (participant.canHit() && "y".equals(InputView.inputDraw(participant.getName()))) {
-            participant.receiveCard(dealer.draw());
-            OutputView.printCard(participant);
-        }
+    private void printResult(BlackJack blackJack) {
+        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
+        OutputView.printBlackJackResult(blackJackResult);
     }
 }

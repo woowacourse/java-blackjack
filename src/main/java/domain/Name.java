@@ -4,7 +4,7 @@ public class Name {
 
     private final String value;
 
-    public Name(String value) {
+    public Name(final String value) {
         validate(value);
         this.value = value;
     }
