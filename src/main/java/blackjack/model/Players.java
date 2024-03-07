@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import blackjack.dto.FinalResult;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,5 +42,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 }

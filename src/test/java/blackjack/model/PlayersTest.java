@@ -5,6 +5,7 @@ import static blackjack.model.Score.EIGHT;
 import static blackjack.model.Score.FIVE;
 import static blackjack.model.Score.FOUR;
 import static blackjack.model.Shape.CLOVER;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -70,5 +71,16 @@ class PlayersTest {
                 Arguments.arguments(List.of()),
                 Arguments.arguments(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
         );
+    }
+
+    @Test
+    @DisplayName("플레이어들의 이름 목록을 반환한다.")
+    void getNames() {
+        List<String> names = List.of("리브", "몰리");
+        List<Cards> cards = List.of(
+                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        );
+        assertThat(Players.from(names, cards).getNames()).isEqualTo(names);
     }
 }
