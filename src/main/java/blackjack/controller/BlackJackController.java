@@ -4,6 +4,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResultBoard;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayerResultDto;
@@ -24,24 +25,15 @@ public class BlackJackController {
     public void start() {
         Dealer dealer = new Dealer();
         List<String> playerNames = inputView.inputPlayerNames();
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+        Players players = Players.from(playerNames);
         Deck deck = Deck.createShuffledDeck();
 
         doInitialDraw(dealer, players, deck);
-
         outputView.printInitialMessage(playerNames);
         printInitialCards(dealer, players);
-        for (Player player : players) {
-            while (!player.isBusted()) {
-                String drawChoice = inputView.inputDrawChoice(player.getName());
-                if (drawChoice.equals("n")) {
-                    break;
-                }
-                player.draw(deck);
-                outputView.printPlayerCard(PlayerDto.from(player));
-            }
+
+        for (Player player : players.getPlayers()) {
+            doRound(player, deck);
         }
 
         dealer.drawUntilExceedMinimum(deck);
@@ -51,19 +43,30 @@ public class BlackJackController {
         printGameResult(dealer, players);
     }
 
-    private void printGameResult(Dealer dealer, List<Player> players) {
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
+    private void doRound(Player player, Deck deck) {
+        while (!player.isBusted()) {
+            String drawChoice = inputView.inputDrawChoice(player.getName());
+            if (drawChoice.equals("n")) {
+                break;
+            }
+            player.draw(deck);
+            outputView.printPlayerCard(PlayerDto.from(player));
+        }
+    }
+
+    private void printGameResult(Dealer dealer, Players players) {
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
 
         outputView.printDealerResult(gameResultBoard.getDealerResult());
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
         }
     }
 
-    private void printCardStatus(Dealer dealer, List<Player> players) {
+    private void printCardStatus(Dealer dealer, Players players) {
         PlayerResultDto dealerResult = PlayerResultDto.from(dealer.getPlayer());
 
-        List<PlayerResultDto> playerResultDtos = players.stream()
+        List<PlayerResultDto> playerResultDtos = players.getPlayers().stream()
                 .map(PlayerResultDto::from)
                 .toList();
         outputView.printCardStatus(dealerResult, playerResultDtos);
@@ -77,23 +80,26 @@ public class BlackJackController {
         }
     }
 
-    private void printInitialCards(Dealer dealer, List<Player> players) {
+    private void printInitialCards(Dealer dealer, Players players) {
         Card dealerCard = dealer.getFirstCard();
         outputView.printDealerInitialCard(dealerCard);
 
-        List<PlayerDto> playerDtos = players.stream()
+        List<PlayerDto> playerDtos = players.getPlayers().stream()
                 .map(PlayerDto::from)
                 .toList();
         outputView.printPlayerInitialCards(playerDtos);
     }
 
-    private static void doInitialDraw(Dealer dealer, List<Player> players, Deck deck) {
-        for (Player player : players) {
-            player.draw(deck);
+    private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
+        players.getPlayers().forEach(
+                player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
+        );
+        drawCard(dealer.getPlayer(), deck, INITIAL_CARDS_COUNT);
+    }
+
+    private void drawCard(Player player, Deck deck, int amount) {
+        for (int i = 0; i < amount; i++) {
             player.draw(deck);
         }
-
-        dealer.draw(deck);
-        dealer.draw(deck);
     }
 }

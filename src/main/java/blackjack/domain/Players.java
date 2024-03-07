@@ -32,4 +32,8 @@ public class Players {
 
         return new Players(players);
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
