@@ -50,4 +50,8 @@ public class ResultView {
         CardShape cardShape = card.getCardShape();
         return resolveCardNumber(cardNumber) + cardShape.getShape();
     }
+
+    public void printDealerHitMessage(Dealer dealer, Card card) {
+        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.", dealer.getPlayerName(), resolveCardExpression(card));
+    }
 }
