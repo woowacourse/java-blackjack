@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
-import model.card.Card;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
@@ -32,6 +31,7 @@ public class BlackJackController {
                     break;
                 }
                 blackJack.offerCardToPlayer(name, 1);
+                outputView.printPlayerCard(player);
             }
         }
     }

@@ -1,8 +1,6 @@
 package view;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
@@ -29,6 +27,10 @@ public class OutputView {
         for (Player player : players) {
             printPlayerCard(player, "카드");
         }
+    }
+
+    public void printPlayerCard(Player player) {
+        printPlayerCard(player, player.getCards().size(), "카드");
     }
 
     private void printPlayerCard(Player player, String nameSuffix) {
