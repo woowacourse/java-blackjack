@@ -36,7 +36,7 @@ public class BlackjackController {
 
     private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
         players.forEach(player -> requestHitOrStand(player, cardPicker));
-
+        OutputView.printNewLine();
         dealerHitUntilBound(dealer, cardPicker);
 
         OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
@@ -84,6 +84,7 @@ public class BlackjackController {
         OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
         players.forEach(player ->
                 OutputView.printDealCards(player.getName(), player.getCards()));
+        OutputView.printNewLine();
     }
 
     private Players requestPlayers() {

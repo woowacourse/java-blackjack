@@ -11,18 +11,19 @@ import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
 import static blackjack.domain.gamer.Gamer.DEAL_CARD_COUNT;
 
 public class OutputView {
-    public static final String WIN_STATUS_FORMAT = "%s: %s";
-    public static final String RESULT_SCORES_FORMAT = " - 결과: %d";
-    public static final String DEALER_HIT_FORMAT = String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", HIT_UPPER_BOUND);
+    static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String DELIMITER = ", ";
     private static final String DEAL_ANNOUNCE_FORMAT = String.format("딜러와 %%s에게 %d장을 나누었습니다.", DEAL_CARD_COUNT);
+    private static final String DEALER_HIT_FORMAT = String.format("딜러는 %d 이하라 한장의 카드를 더 받았습니다.", HIT_UPPER_BOUND);
     private static final String CARD_FORMAT = "%s 카드 : %s";
-    private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
+    private static final String WIN_STATUS_FORMAT = "%s: %s";
+    private static final String WIN_ANNOUNCE = "## 최종 승패";
 
     public static void printDealAnnounce(List<String> names) {
         String nameFormat = String.join(DELIMITER, names);
-        System.out.printf(DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
+        System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
     public static void printDealCards(String name, List<Card> cards) {
@@ -43,12 +44,16 @@ public class OutputView {
         return CardScoreName.convert(card.getScore()) + CardSymbolName.convert(card.getSymbol());
     }
 
+    public static void printNewLine() {
+        System.out.println();
+    }
+
     public static void printErrorMessage(String message) {
         System.out.println(ERROR_PREFIX + message);
     }
 
     public static void printDealerHitAnnounce() {
-        System.out.println(DEALER_HIT_FORMAT + LINE_SEPARATOR);
+        System.out.println(DEALER_HIT_FORMAT);
     }
 
     public static void printGamerCards(String name, List<Card> cards, int totalScore) {
@@ -56,7 +61,7 @@ public class OutputView {
     }
 
     public static void printWinAnnounce() {
-        System.out.println("## 최종 승패");
+        System.out.println(LINE_SEPARATOR + WIN_ANNOUNCE);
     }
 
     public static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
