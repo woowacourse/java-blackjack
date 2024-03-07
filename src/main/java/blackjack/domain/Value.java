@@ -2,15 +2,17 @@ package blackjack.domain;
 
 public enum Value {
 
-    NONE(0),
-    ACE(1), TWO(2), THREE(3),
-    FOUR(4), FIVE(5), SIX(6),
-    SEVEN(7), EIGHT(8), NINE(9),
-    TEN(10), JACK(10), QUEEN(10), KING(10);
+    NONE("", 0),
+    ACE("A", 1), TWO("2", 2), THREE("3", 3),
+    FOUR("4", 4), FIVE("5", 5), SIX("6", 6),
+    SEVEN("7", 7), EIGHT("8", 8), NINE("9", 9),
+    TEN("10", 10), JACK("J", 10), QUEEN("Q", 10), KING("K", 10);
 
+    private final String valueName;
     private final int score;
 
-    Value(int score) {
+    Value(String valueName, int score) {
+        this.valueName = valueName;
         this.score = score;
     }
 
@@ -21,7 +23,11 @@ public enum Value {
         return values()[cardNumber];
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
+    }
+
+    public String getValueName() {
+        return valueName;
     }
 }

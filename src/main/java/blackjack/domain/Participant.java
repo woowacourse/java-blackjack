@@ -19,4 +19,12 @@ public abstract class Participant {
     public List<Card> getHandsCards() {
         return hands.getHands();
     }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public int getHandsScore() {
+        return hands.getHandsScore();
+    }
 }

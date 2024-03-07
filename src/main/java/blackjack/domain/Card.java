@@ -19,6 +19,10 @@ public class Card {
         return new Card(kind, value);
     }
 
+    public String getCardName() {
+        return value.getValueName() + kind.getKindName();
+    }
+
     public int getScore() {
         return value.getScore();
     }
