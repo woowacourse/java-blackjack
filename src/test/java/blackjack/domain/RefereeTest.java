@@ -62,4 +62,36 @@ class RefereeTest {
 
         assertThat(outcome).isEqualTo(Outcome.LOSE);
     }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우 무승부이다.")
+    @Test
+    void pushWhenBothBlackJack() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.ACE, Suit.CLOVER),
+                new Card(Number.TEN, Suit.CLOVER)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.ACE, Suit.DIAMOND),
+                new Card(Number.QUEEN, Suit.HEART)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.PUSH);
+    }
+
+    @DisplayName("플레이어만 블랙잭이라면 플레이어의 승리이다.")
+    @Test
+    void playerWinWhenOnlyBlackJack() {
+        Cards playerCards = new Cards(List.of(
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.TEN, Suit.CLOVER)));
+        Cards dealerCards = new Cards(List.of(
+                new Card(Number.TWO, Suit.CLOVER),
+                new Card(Number.TEN, Suit.HEART)));
+
+        Referee referee = new Referee(dealerCards);
+        Outcome outcome = referee.doesPlayerWin(playerCards);
+
+        assertThat(outcome).isEqualTo(Outcome.WIN);
+    }
 }

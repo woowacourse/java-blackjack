@@ -5,6 +5,7 @@ import java.util.List;
 public class Cards {
 
     private static final int BLACKJACK_CANDIDATE = 21;
+    private static final int INITIAL_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -38,6 +39,10 @@ public class Cards {
             return softHandSum;
         }
         return Number.sum(numbers);
+    }
+
+    public boolean hasOnlyInitialCard() {
+        return cards.size() == INITIAL_CARD_SIZE;
     }
 
     public List<Card> getCards() {

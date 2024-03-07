@@ -16,6 +16,9 @@ public class Referee {
         if (playerCards.sum() > BLACKJACK_CANDIDATE) {
             return calculatePlayerBustCase();
         }
+        if (playerCards.sum() == BLACKJACK_CANDIDATE && playerCards.hasOnlyInitialCard()) {
+            return calculatePlayerBlackJackCase();
+        }
         return calculateNormalCase(playerCards);
     }
 
@@ -24,6 +27,13 @@ public class Referee {
             return Outcome.PUSH;
         }
         return Outcome.LOSE;
+    }
+
+    private Outcome calculatePlayerBlackJackCase() {
+        if (dealerCards.sum() == BLACKJACK_CANDIDATE && dealerCards.hasOnlyInitialCard()) {
+            return Outcome.PUSH;
+        }
+        return Outcome.WIN;
     }
 
     private Outcome calculateNormalCase(final Cards playerCards) {
