@@ -52,9 +52,9 @@ class BlackjackGameTest {
         return new BlackjackGame(dealer, players);
     }
 
-    @DisplayName("각 플레이어에게 추가 카드를 지급한다")
+    @DisplayName("플레이어가 Hit 하면 추가 카드를 지급한다")
     @Test
-    void testHitFromPlayer() {
+    void testHitOrStayFromPlayer() {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Players players = blackjackGame.getPlayers();
         List<Player> playersElement = players.getPlayers();
@@ -62,7 +62,7 @@ class BlackjackGameTest {
         List<Card> cards = List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER));
 
         for (int i = 0; i < answers.size(); i++) {
-            blackjackGame.hitOrStay(playersElement.get(i), answers.get(i), cards.get(i));
+            blackjackGame.hitOrStayForPlayer(playersElement.get(i), answers.get(i), cards.get(i));
         }
 
         Players updatedPlayers = blackjackGame.getPlayers();
