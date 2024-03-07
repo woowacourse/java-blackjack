@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return !hand.isBurst();
+        return !hand.isBurst() && !hand.isBlackJack();
     }
 
     public PlayerName getPlayerName() {

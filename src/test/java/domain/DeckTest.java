@@ -32,17 +32,4 @@ public class DeckTest {
         // Then
         assertThat(card).isNotNull();
     }
-
-    @DisplayName("덱에 카드가 모두 소진되었다면 true를 반환한다.")
-    @Test
-    void isEmptyTest() {
-        // Given
-        Deck deck = new Deck(List.of());
-
-        // When
-        boolean isEmpty = deck.isEmpty();
-
-        // Then
-        Assertions.assertThat(isEmpty).isTrue();
-    }
 }

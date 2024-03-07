@@ -35,8 +35,4 @@ public class Deck {
 
         return card;
     }
-
-    public boolean isEmpty() {
-       return playingCards.isEmpty();
-    }
 }

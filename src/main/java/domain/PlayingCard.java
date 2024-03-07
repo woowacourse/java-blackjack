@@ -25,4 +25,12 @@ public class PlayingCard {
         }
         return playingCardValue.getValue();
     }
+
+    public PlayingCardShape getPlayingCardShape() {
+        return playingCardShape;
+    }
+
+    public PlayingCardValue getPlayingCardValue() {
+        return playingCardValue;
+    }
 }

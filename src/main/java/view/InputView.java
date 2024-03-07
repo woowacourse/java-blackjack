@@ -1,5 +1,7 @@
 package view;
 
+import domain.participant.PlayerName;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +19,8 @@ public class InputView {
         return Arrays.stream(inputString.split(",")).toList();
     }
 
-    public static boolean inputDrawDecision() {
+    public static boolean inputDrawDecision(PlayerName playerName) {
+        System.out.println(playerName.value() + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         String inputString = scanner.nextLine();
         return convertInputToDecision(inputString);
     }

@@ -36,8 +36,8 @@ public class Hand {
         playingCards.add(card);
     }
 
-    public HandStatus getHandStatus() {
-        return new HandStatus(unmodifiableList(playingCards), getCardsNumberSum());
+    public List<PlayingCard> getPlayingCards() {
+        return unmodifiableList(playingCards);
     }
 
     public boolean isBlackJack() {

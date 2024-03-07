@@ -1,31 +1,35 @@
 package controller;
 
-import domain.*;
+import domain.Deck;
+import domain.GameResults;
+import domain.dto.DealerHandStatusDto;
+import domain.dto.PlayerHandStatusDto;
+import domain.dto.PlayingCardDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
     public void run() {
-        // 1. 참가자를 세팅한다.
-        List<Participant> participants = initParticipants();
+        Dealer dealer = Dealer.init();
+        List<Player> players = initPlayers();
+        Deck deck = Deck.init();
 
-        // 2. 카드분배
+        play(deck, dealer, players);
 
-        // 3. 결과 추출 및 출력
+        GameResults gameResults = dealer.getGameResults(players);
+        OutputView.printGameResult(gameResults.dealerGameResult(), gameResults.getPlayerGameResultDto());
     }
 
-    private List<Participant> initParticipants() {
-        PlayerNames playerNames = initPlayerNames();
-        List<Participant> participants = new ArrayList<>();
-        playerNames.values()
+    private List<Player> initPlayers() {
+        return initPlayerNames().values()
                 .stream()
-                .map(playerName -> participants.add(Player.of(playerName)));
-        participants.add(Dealer.init());
-
-        return participants;
+                .map(Player::of)
+                .toList();
     }
 
     private PlayerNames initPlayerNames() {
@@ -36,5 +40,48 @@ public class BlackJackGame {
             OutputView.printErrorMessage(e.getMessage());
             return initPlayerNames();
         }
+    }
+
+    private void play(Deck deck, Dealer dealer, List<Player> players) {
+        firstDraw(deck, dealer, players);
+        players.forEach(player -> playForPlayer(deck, player));
+        playForDealer(deck, dealer);
+
+        DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(dealer);
+        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream().map(PlayerHandStatusDto::of).toList();
+        OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
+    }
+
+    private void playForDealer(Deck deck, Dealer dealer) {
+        while (dealer.isDrawable()) {
+            dealer.draw(deck);
+            OutputView.printDealerDrawMessage();
+        }
+    }
+
+    private void playForPlayer(Deck deck, Player player) {
+        while (checkAcceptDraw(player)) {
+            player.draw(deck);
+            OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
+        }
+    }
+
+    private boolean checkAcceptDraw(Player player) {
+        if (!player.isDrawable()) {
+            return false;
+        }
+        return InputView.inputDrawDecision(player.getPlayerName());
+    }
+
+    private void firstDraw(Deck deck, Dealer dealer, List<Player> players) {
+        for (int gameCount = 0; gameCount < 2; gameCount++) {
+            players.forEach(player -> player.draw(deck));
+            dealer.draw(deck);
+        }
+        PlayingCardDto dealerCardDto = PlayingCardDto.of(dealer.getHandCards().get(0));
+        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
+        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
     }
 }
