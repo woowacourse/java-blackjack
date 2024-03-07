@@ -1,30 +1,29 @@
 package player.dto;
 
-import card.Cards;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import player.Name;
 import player.Player;
 import player.Players;
 
-public record PlayersCardStatusDto(Map<Name, Cards> cards) {
+public record PlayersCardStatusDto(List<SinglePlayerStatusDto> multiPlayersStatus) {
 
     public static PlayersCardStatusDto of(Players players) {
-        Map<Name, Cards> cards = new HashMap<>();
+        ArrayList<SinglePlayerStatusDto> singlePlayerStatus = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
-            cards.put(player.getName(), player.getCards());
+            singlePlayerStatus.add(SinglePlayerStatusDto.from(player));
         }
-        return new PlayersCardStatusDto(cards);
+        return new PlayersCardStatusDto(singlePlayerStatus);
     }
 
     public List<Name> getNames() {
-        return cards.keySet()
-                .stream().toList();
+        return multiPlayersStatus.stream()
+                .map(SinglePlayerStatusDto::name)
+                .toList();
     }
 
     public int size() {
-        return cards.size();
+        return multiPlayersStatus.size();
     }
 }
