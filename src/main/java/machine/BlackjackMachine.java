@@ -48,21 +48,28 @@ public class BlackjackMachine {
     }
 
     private void playPlayerTurn(BlackjackGame game, Player player) {
-        String yesOrNo = inputView.readYesOrNo(player);
-        if (yesOrNo.equals("y") && player.isReceivable()) {
-            game.giveOneCard(player);
-            playPlayerTurn(game, player);
+        while (player.isReceivable()) {
+            String yesOrNo = inputView.readYesOrNo(player);
+            if (yesOrNo.equals("y")) {
+                game.giveOneCard(player);
+            }
+            outputView.printParticipantCards(player);
+            if (yesOrNo.equals("n")) {
+                break;
+            }
+            if (player.isBusted()) {
+                outputView.printBustMessage(player);
+            }
         }
-//        outputView.printCards(player.getCards()); // TODO: y를 받거나 첫 번째 요청일 때만 프린트하기
     }
 
     private void playDealerTurn(BlackjackGame game) {
         Dealer dealer = game.getDealer();
         if (dealer.isReceivable()) {
             game.giveOneCard(dealer);
+            // print
             playDealerTurn(game);
         }
-//        outputView.printCards(dealer.getCards()); // TODO: y를 받거나 첫 번째 요청일 때만 프린트하기
     }
 
     private void printResult(BlackjackGame game) {

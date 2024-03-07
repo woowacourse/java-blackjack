@@ -16,35 +16,40 @@ public class OutputView {
         String playerNames = game.getPlayers().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(DELIMITER));
-        System.out.printf("딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, STARTING_CARDS_AMOUNT);
+        System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, STARTING_CARDS_AMOUNT);
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
-            printParticipantCards(player);
-            System.out.println();
+            System.out.println(participantText(player));
         }
-        printParticipantCards(game.getDealer());
+        System.out.println(participantText(game.getDealer()));
         System.out.println();
     }
 
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
+        System.out.println();
         for (Player player : game.getPlayers()) {
-            printParticipantCards(player);
-            printScore(player.score());
+            System.out.println(participantText(player) + scoreText(player.score()));
         }
-        printParticipantCards(game.getDealer());
-        printScore(game.getDealer().score());
+        System.out.println(participantText(game.getDealer()) + scoreText(game.getDealer().score()));
+        System.out.println();
     }
 
     public void printParticipantCards(Participant participant) {
-        System.out.print(participant.getName());
-        System.out.print(" 카드: ");
-        System.out.print(cardsText(participant.getCards()));
+        System.out.println(participantText(participant));
     }
 
-    private void printScore(int score) {
-        System.out.println(" - 결과: " + score);
+    public void printBustMessage(Participant participant) {
+        System.out.println(participant.getName() + "님은 버스트되었습니다.");
+    }
+
+    private String scoreText(int score) {
+        return " - 결과: " + score;
+    }
+
+    private String participantText(Participant participant) {
+        return participant.getName() + " 카드: " + cardsText(participant.getCards());
     }
 
     private String cardsText(List<Card> cards) {
