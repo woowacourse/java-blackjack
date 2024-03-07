@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MatchResultsTest {
+class MatchResultsTest {
 
     @Test
     @DisplayName("이름으로 결과를 올바르게 가져온다.")

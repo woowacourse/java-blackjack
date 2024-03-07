@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class HandTest {
+class HandTest {
 
     @Test
     @DisplayName("플레이어의 점수를 계산한다.")
