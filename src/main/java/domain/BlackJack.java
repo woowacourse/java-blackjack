@@ -4,24 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJack {
-    private Deck deck;
     private Dealer dealer;
     private Participants participants;
     private Map<Participant, Boolean> result;
 
-    public BlackJack(Deck deck, Dealer dealer, Participants participants) {
-        this.deck = deck;
+    public BlackJack(Dealer dealer, Participants participants) {
         this.dealer = dealer;
         this.participants = participants;
         this.result = new HashMap<>();
     }
 
     public void beginDealing() {
-        dealer.receiveCard(deck.draw());
-        dealer.receiveCard(deck.draw());
+        dealer.receiveCard(dealer.draw());
+        dealer.receiveCard(dealer.draw());
         for (int i = 0; i < participants.getValue().size(); i++) {
-            participants.getValue().get(i).receiveCard(deck.draw());
-            participants.getValue().get(i).receiveCard(deck.draw());
+            participants.getValue().get(i).receiveCard(dealer.draw());
+            participants.getValue().get(i).receiveCard(dealer.draw());
         }
     }
 

@@ -10,10 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BlackJackTest {
     @Test
     void name() {
-        Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(deck, dealer, participants);
+        BlackJack blackJack = new BlackJack(dealer, participants);
         blackJack.beginDealing();
 
         Assertions.assertAll(
@@ -27,10 +26,9 @@ class BlackJackTest {
     @DisplayName("참가자의 승패를 결정한다.")
     void isWinner() {
         //given
-        Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(deck, dealer, participants);
+        BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant participant = participants.getValue().get(0);
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
@@ -49,10 +47,9 @@ class BlackJackTest {
     @DisplayName("참가자와 딜러의 점수가 같은경우 ")
     void isWinner2() {
         //given
-        Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(deck, dealer, participants);
+        BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant participant = participants.getValue().get(0);
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
