@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 public class BlackjackResult {
 
-    Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
+    private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
     public BlackjackResultDTO finishGame(Players players, Player dealer) {
         results.put(dealer, Map.entry(0, 0));

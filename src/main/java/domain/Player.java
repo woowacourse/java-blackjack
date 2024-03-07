@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-    private String name;
+    private Name name;
     private final List<Card> cards = new ArrayList<>();
 
-    public Player(final String name) {
+    public Player(final Name name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> getCards() {
