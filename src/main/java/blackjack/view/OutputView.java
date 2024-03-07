@@ -25,7 +25,6 @@ public class OutputView {
         String gamePlayerNames = gamePlayers.stream()
                                             .map(Player::getName)
                                             .collect(Collectors.joining(","));
-
         System.out.println(
                 String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), gamePlayerNames));
 

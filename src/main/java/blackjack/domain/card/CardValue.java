@@ -15,18 +15,18 @@ public enum CardValue {
     QUEEN(10),
     KING(10);
 
-    private int value;
+    private int score;
 
-    private CardValue(int value) {
-        this.value = value;
+    private CardValue(int score) {
+        this.score = score;
     }
 
     public boolean isAce() {
         return this == ACE;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 
 }

@@ -45,10 +45,8 @@ public class Dealer extends Player implements CardReceivable {
         return ResultStatus.LOSE;
     }
 
-
     @Override
     public boolean isReceivable() {
         return cards.sum() <= RECEIVE_SIZE;
     }
-
 }

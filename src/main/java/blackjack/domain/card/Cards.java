@@ -13,12 +13,16 @@ public class Cards {
 
     public int sum() {
         return cards.stream()
-                    .mapToInt(Card::getCardValue)
+                    .mapToInt(Card::getCardScore)
                     .sum();
     }
 
     public boolean containAce() {
         return cards.stream()
                     .anyMatch(Card::isAce);
+    }
+
+    public List<Card> toList() {
+        return cards;
     }
 }

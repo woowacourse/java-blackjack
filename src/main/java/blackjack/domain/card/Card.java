@@ -9,11 +9,20 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
-    public int getCardValue() {
-        return cardValue.getValue();
-    }
-    
     public boolean isAce() {
         return cardValue.isAce();
+    }
+
+    public int getCardScore() {
+        return cardValue.getScore();
+    }
+
+
+    public CardValue getCardValue() {
+        return cardValue;
+    }
+
+    public CardSymbol getCardSymbol() {
+        return cardSymbol;
     }
 }
