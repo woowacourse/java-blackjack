@@ -1,10 +1,5 @@
 package view;
 
-import static view.BlackJackGameCommand.NO;
-import static view.BlackJackGameCommand.YES;
-import static view.BlackJackGameCommand.contains;
-import static view.BlackJackGameCommand.valueOf;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,15 +30,12 @@ public class InputView {
     }
 
     public BlackJackGameCommand askMoreCard(final PlayerDto playerDto) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.name());
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.name());
         return requireYesOrNo(readLine());
     }
 
     private BlackJackGameCommand requireYesOrNo(final String input){
-        if (!contains(input)) {
-            throw new IllegalArgumentException("%s 또는 %s을 입력하여 주세요".formatted(YES.getCommand(), NO.getCommand()));
-        }
-        return valueOf(input);
+        return BlackJackGameCommand.from(input);
     }
 
     private String readLine() {

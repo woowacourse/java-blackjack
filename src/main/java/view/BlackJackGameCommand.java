@@ -8,16 +8,19 @@ public enum BlackJackGameCommand {
 
     private final String command;
 
-    BlackJackGameCommand(String command) {
+    BlackJackGameCommand(final String command) {
         this.command = command;
     }
 
-    public static boolean contains(String command) {
+    public static BlackJackGameCommand from(final String command) {
         return Arrays.stream(values())
-                .anyMatch(value -> command.equals(value.command));
+                .filter(value -> command.equals(value.command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "%s또는 %s을 입력해주세요.".formatted(YES.command, NO.command)));
     }
 
-    public String getCommand() {
-        return command;
+    public boolean yes() {
+        return this == YES;
     }
 }
