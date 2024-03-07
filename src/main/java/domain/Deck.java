@@ -12,7 +12,6 @@ public class Deck {
         cards = new ArrayList<>();
         for (CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
-                    .filter(number -> !number.equals(CardNumber.SMALL_ACE))
                     .forEach(number -> cards.add(new Card(type, number)));
         }
     }

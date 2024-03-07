@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BURST_THRESHOLD = 21;
+    private static final int ACE_VALUE_GAP = 10;
     List<Card> cards;
 
     public Hand() {
@@ -19,8 +20,8 @@ public class Hand {
     public int getResultScore() {
         int total = getTotalScore();
 
-        if (total > BURST_THRESHOLD) {
-            return changeAces(countAces(), total);
+        if (total <= BURST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
+            return total + ACE_VALUE_GAP;
         }
 
         return total;
@@ -35,20 +36,7 @@ public class Hand {
     }
 
 
-    private int countAces() {
-        return (int) cards.stream()
-                .map(Card::getCardNumber)
-                .filter(cardNumber -> cardNumber.equals(CardNumber.DEFAULT_ACE))
-                .count();
-    }
-
-    private int changeAces(int aceCount, int total) {
-        // TODO: 가독성 있게 바꿀 수 있을까?
-        int convertedAce = 0;
-        while (total > 21 && convertedAce < aceCount) {
-            total -= 10;
-            convertedAce++;
-        }
-        return total;
+    private boolean containsAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 }

@@ -15,7 +15,7 @@ class DeckTest {
         Card card = new Deck().draw();
         Assertions.assertAll(
                 () -> assertThat(card.getCardType()).isEqualTo(CardType.CLOVER),
-                () -> assertThat(card.getCardNumber()).isEqualTo(CardNumber.DEFAULT_ACE)
+                () -> assertThat(card.getCardNumber()).isEqualTo(CardNumber.KING)
         );
     }
 

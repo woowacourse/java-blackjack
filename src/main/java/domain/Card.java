@@ -17,6 +17,10 @@ public class Card {
         }
     }
 
+    public boolean isAce() {
+        return cardNubmer.equals(CardNumber.ACE);
+    }
+
     public CardType getCardType() {
         return cardType;
     }
