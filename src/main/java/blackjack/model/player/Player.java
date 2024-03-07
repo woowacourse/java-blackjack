@@ -31,7 +31,19 @@ public class Player {
         hand.addCard(cardGenerator);
     }
 
+    public int calculateCardsTotal() {
+        return hand.calculateCardsTotal();
+    }
+
+    public boolean isBurst() {
+        return hand.isBurst();
+    }
+
     public Hand getHand() {
         return hand;
+    }
+
+    public String getName() {
+        return name;
     }
 }

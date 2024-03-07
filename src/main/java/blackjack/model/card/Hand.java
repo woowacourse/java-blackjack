@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+    private static final int BURST_CONDITION = 21;
     private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
@@ -53,6 +54,10 @@ public class Hand {
 
     public void addCard(final CardGenerator cardGenerator) {
         cards.add(cardGenerator.pick());
+    }
+
+    public boolean isBurst() {
+        return calculateCardsTotal() > BURST_CONDITION;
     }
 
     public List<Card> getCards() {

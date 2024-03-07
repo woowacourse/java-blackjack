@@ -18,6 +18,14 @@ public class Dealer {
         }
     }
 
+    public int calculateCardsTotal() {
+        return hand.calculateCardsTotal();
+    }
+
+    public boolean isBurst() {
+        return hand.isBurst();
+    }
+
     public Hand getHand() {
         return hand;
     }

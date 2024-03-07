@@ -1,15 +1,16 @@
 package blackjack.model.referee;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class RefereeTest {
     @Test
@@ -29,9 +30,9 @@ public class RefereeTest {
 
         // when
         Referee referee = new Referee();
-        PlayerOutcome playerOutcome = referee.determineOutcome(player, dealer);
+        Outcome outcome = referee.determineOutcome(player, dealer);
 
         // then
-        assertThat(playerOutcome.getResult()).isEqualTo("패");
+        assertThat(outcome).isEqualTo(Outcome.LOSE);
     }
 }
