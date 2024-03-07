@@ -45,4 +45,15 @@ class PlayerTest {
         }
     }
 
+    @DisplayName("에이스 카드가 포함된 카드를 받았을 때 1로 계산한다.")
+    @Test
+    void drawAceCardAndCalculateScoreOne() {
+        Player player = new Player("pobi");
+        player.saveCard(new Card(CardValue.EIGHT, Shape.CLOVER));
+        player.saveCard(new Card(CardValue.THREE, Shape.CLOVER));
+        player.saveCard(new Card(CardValue.ACE, Shape.CLOVER));
+
+        int totalScore = player.calculateScoreWhileDraw();
+        Assertions.assertThat(totalScore).isEqualTo(12);
+    }
 }

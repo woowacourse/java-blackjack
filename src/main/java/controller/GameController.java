@@ -69,9 +69,15 @@ public class GameController {
             while ("y".equals(command)) {
                 status = game.pickOneCard(name);
                 outputView.printCardStatus(status);
+                int currentSum = game.getPlayer(name).calculateScoreWhileDraw();
+                if (currentSum >= 21) {
+                    break;
+                }
                 command = inputView.decideToGetMoreCard(name);
             }
-            outputView.printCardStatus(status);
+            if (command.equals("n")) {
+                outputView.printCardStatus(status);
+            }
         }
     }
 

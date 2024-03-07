@@ -23,6 +23,19 @@ public class Player {
         cards.add(card);
     }
 
+    public int calculateScoreWhileDraw() {
+        int sum = 0;
+        for (Card card : cards) {
+            if (card.isAceCard()) {
+                sum += 1;
+                continue;
+            }
+            sum += card.getScore();
+        }
+        return sum;
+    }
+
+
     public int calculateScore(final int blackJackScore) {
         int sum = cards.stream()
                 .map(Card::getScore)
@@ -30,7 +43,9 @@ public class Player {
                 .sum();
         int aceCardCount = 0;
         for (Card card : cards) {
-            aceCardCount++;
+            if (card.isAceCard()) {
+                aceCardCount++;
+            }
         }
         while (aceCardCount > 0 && sum > blackJackScore) {
             aceCardCount--;

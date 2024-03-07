@@ -110,6 +110,10 @@ public class Game {
             }
         } else { // 딜러가 블랙잭이 아님
             for (Player player : participant.players()) {
+                if (isBusted(player)) {
+                    gameResult.add(false);
+                    continue;
+                }
                 if (isBlackJack(player)) {
                     gameResult.add(true);
                 } else {
@@ -165,5 +169,13 @@ public class Game {
 
     private boolean isBusted(final Player player) {
         return player.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
+    }
+
+    public Player getPlayer(final String name) {
+        return participant.players()
+                .stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }
