@@ -48,7 +48,7 @@ public class Gamer {
         return getSummationCardPoint().summationCardPoint();
     }
 
-    public boolean isDead() {
+    boolean isDead() {
         return holdingCards.calculateTotalPoint().isDeadPoint();
     }
 

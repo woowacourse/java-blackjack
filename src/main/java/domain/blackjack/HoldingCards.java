@@ -17,7 +17,7 @@ public class HoldingCards {
         return new HoldingCards(new ArrayList<>(List.of(cards)));
     }
 
-    public SummationCardPoint calculateTotalPoint() {
+    SummationCardPoint calculateTotalPoint() {
         List<CardPoint> cardPoints = holdingCards.stream()
                 .map(CardPointCalculator::calculate)
                 .toList();
@@ -25,7 +25,7 @@ public class HoldingCards {
         return SummationCardPoint.of(cardPoints);
     }
 
-    public void add(Card card) {
+    void add(Card card) {
         holdingCards.add(card);
     }
 

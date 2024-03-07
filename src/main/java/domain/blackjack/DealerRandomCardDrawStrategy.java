@@ -8,7 +8,7 @@ public class DealerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy
     }
 
     @Override
-    public boolean canDraw() {
+    boolean canDraw() {
         SummationCardPoint summationCardPoint = dealer.getSummationCardPoint();
         return !summationCardPoint.isBiggerThan(new SummationCardPoint(16));
     }

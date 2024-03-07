@@ -1,5 +1,5 @@
 package domain.blackjack;
 
-public record CardPoint(int point) {
+record CardPoint(int point) {
 
 }
