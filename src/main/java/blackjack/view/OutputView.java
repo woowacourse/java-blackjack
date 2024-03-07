@@ -8,18 +8,17 @@ import blackjack.model.referee.Outcome;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerOutcome;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALING_RESULT_INTRO = "딜러와 %s에게 2장을 나누었습니다.";
+    private static final String DEALING_RESULT_INTRO = "\n딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_DEALING_FORM = "딜러: %s";
     private static final String PLAYER_CARDS_FORM = "%s카드: %s";
-    private static final String DEALER_ACTION_FORM = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
-    private static final String DEALER_CARDS_FORM = "딜러 카드: %s";
+    private static final String DEALER_ACTION_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.";
+    private static final String DEALER_CARDS_FORM = "\n딜러 카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s";
-    private static final String FINAL_OUTCOME_INTRO = "## 최종 승패";
+    private static final String FINAL_OUTCOME_INTRO = "\n## 최종 승패";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
@@ -95,9 +94,9 @@ public class OutputView {
         int loseCount = 0;
         for (PlayerOutcome playerOutcome : playerOutcomes) {
             if (playerOutcome.outcome() == Outcome.WIN) {
-                winCount++;
-            } else if (playerOutcome.outcome() == Outcome.LOSE) {
                 loseCount++;
+            } else if (playerOutcome.outcome() == Outcome.LOSE) {
+                winCount++;
             }
         }
         int tieCount = playerOutcomes.size() - winCount - loseCount;
