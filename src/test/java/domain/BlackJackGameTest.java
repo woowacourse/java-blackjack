@@ -14,9 +14,9 @@ class BlackJackGameTest {
         List<String> names = List.of("위브", "산초");
         PlayerNames playerNames = new PlayerNames(names);
 
-        Dealer dealer = new Dealer(new CardDeck());
+        CardDeck cardDeck = new CardDeck();
 
-        Assertions.assertThatCode(() -> new BlackJackGame(playerNames, dealer))
+        Assertions.assertThatCode(() -> new BlackJackGame(playerNames, cardDeck))
                 .doesNotThrowAnyException();
     }
 }
