@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO 메서드 순서 및 private 메서드 기능 재정리
 public class OutputView {
 
     private static final Map<Shape, String> SHAPE_NAME = Map.of(
@@ -39,10 +38,7 @@ public class OutputView {
         System.out.println("딜러와 " + toPrintedFormat(players) + "에게 2장을 나누었습니다.");
         printDealerCards(dealer.getCards().subList(0, DEALER_START_CARDS_SIZE));
         System.out.println();
-        for (Player player : players.getPlayers()) {
-            printPlayerCards(player.getName(), player.getCards().subList(0, PLAYER_START_CARDS_SIZE));
-            System.out.println();
-        }
+        printPlayersCards(players);
         System.out.println();
     }
 
@@ -52,16 +48,15 @@ public class OutputView {
         printDealerCards(dealer.getCards());
         printScore(dealer.calculateScore());
         System.out.println();
-        for (Player player : players.getPlayers()) {
-            printPlayerCards(player.getName(), player.getCards());
-            printScore(player.calculateScore());
-            System.out.println();
-        }
+        printPlayersCardAndScore(players);
         System.out.println();
     }
 
-    private void printScore(int score) {
-        System.out.print(" - 결과 : " + score);
+    private void printPlayersCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            printPlayerCards(player.getName(), player.getCards().subList(0, PLAYER_START_CARDS_SIZE));
+            System.out.println();
+        }
     }
 
     private void printDealerCards(List<Card> cards) {
@@ -69,14 +64,22 @@ public class OutputView {
         printCards(cards);
     }
 
-    public void printPlayerCards(Player player) {
-        printPlayerCards(player.getName(), player.getCards());
-        System.out.println();
-    }
-
     private void printPlayerCards(String name, List<Card> cards) {
         System.out.print(name + "카드: ");
         printCards(cards);
+    }
+
+    private void printPlayersCardAndScore(Players players) {
+        for (Player player : players.getPlayers()) {
+            printPlayerCards(player.getName(), player.getCards());
+            printScore(player.calculateScore());
+            System.out.println();
+        }
+    }
+
+    public void printPlayerCards(Player player) {
+        printPlayerCards(player.getName(), player.getCards());
+        System.out.println();
     }
 
     private void printCards(List<Card> cards) {
@@ -84,6 +87,10 @@ public class OutputView {
                 .map(this::toPrintedFormat)
                 .collect(Collectors.joining(", "));
         System.out.print(printingFormat);
+    }
+
+    private void printScore(int score) {
+        System.out.print(" - 결과 : " + score);
     }
 
     private String toPrintedFormat(Players players) {
