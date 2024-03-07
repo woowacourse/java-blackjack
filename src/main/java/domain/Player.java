@@ -9,7 +9,7 @@ public class Player extends Participant {
     }
 
     public Player(final PlayerDto playerDto) {
-        this(playerDto.name());
+        this(new Name(playerDto.name()));
     }
 
     public boolean isBust() {
