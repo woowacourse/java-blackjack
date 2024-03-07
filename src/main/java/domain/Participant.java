@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Participant {
@@ -21,6 +22,10 @@ public class Participant {
 
     public String getName() {
         return this.name.getValue();
+    }
+
+    public List<Card> getCardHand() {
+        return cardHand.getCards();
     }
 
     @Override

@@ -11,12 +11,16 @@ public class Card {
         this.emblem = emblem;
     }
 
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
     public boolean isAce() {
         return denomination.isAce();
+    }
+
+    public int getDenomination() {
+        return denomination.getScore();
+    }
+
+    public String getEmblem() {
+        return emblem.getName();
     }
 
     @Override

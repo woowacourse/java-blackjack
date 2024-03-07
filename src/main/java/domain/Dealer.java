@@ -24,4 +24,8 @@ public class Dealer extends Participant {
     public void shuffle() {
         cardDeck.shuffle(cardShuffleStrategy);
     }
+
+    public Card getFirstCardHand() {
+        return super.getCardHand().get(0);
+    }
 }

@@ -51,4 +51,14 @@ public class Players {
     public int count() {
         return this.players.size();
     }
+
+    public Player getPlayerByIndex(int index) { // todo index validation
+        return this.players.get(index);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
 }

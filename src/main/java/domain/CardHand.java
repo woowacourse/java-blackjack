@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardHand {
@@ -28,9 +29,8 @@ public class CardHand {
 
     private int calculateSum() {
         return cards.stream()
-                .map(Card::getDenomination)
-                .map(Denomination::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Card::getDenomination)
+                .sum();
     }
 
     private boolean hasAce() {
@@ -45,5 +45,9 @@ public class CardHand {
             return sumWithBonusScore;
         }
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 }
