@@ -2,12 +2,12 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-public class ParticipantsName {
+public class ParticipantName {
     private final String name;
 
-    public ParticipantsName(final String input) {
+    public ParticipantName(final String input) {
         validateBlank(input);
-        this.name = input;
+        this.name = input.trim();
     }
 
     private void validateBlank(final String input) {
@@ -28,7 +28,7 @@ public class ParticipantsName {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final ParticipantsName that = (ParticipantsName) o;
+        final ParticipantName that = (ParticipantName) o;
         return Objects.equals(name, that.name);
     }
 

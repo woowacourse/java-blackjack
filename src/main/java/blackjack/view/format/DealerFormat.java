@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.format;
 
 public enum DealerFormat {
     DEALER("딜러");
@@ -15,5 +15,9 @@ public enum DealerFormat {
 
     public boolean isNot(final String input) {
         return !this.name().equals(input);
+    }
+
+    public boolean isSignal(final String name) {
+        return this.name().equals(name) || format.equals(name);
     }
 }

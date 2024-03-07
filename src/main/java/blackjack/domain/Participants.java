@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Participants {
+
     private final List<Participant> participants;
 
     public Participants(final List<Participant> participants) {
@@ -16,7 +17,7 @@ public class Participants {
     }
 
     public static Participants from(final List<String> playerNames) {
-        List<Participant> participants = playerNames.stream()
+        final List<Participant> participants = playerNames.stream()
                 .map(Participant::from)
                 .toList();
 
@@ -29,28 +30,50 @@ public class Participants {
         }
     }
 
-    public Map<ParticipantsName, WinStatus> determineWinStatus(final Score dealerScore) {
-        Map<ParticipantsName, WinStatus> playersWinStatus = new LinkedHashMap<>();
+    public void divideCard(final List<Card> cards) {
+        for (int i = 0; i < cards.size(); i++) {
+            Participant participant = participants.get(i / 2);
+            participant.addCard(cards.get(i));
+        }
+    }
+
+    public void addCardTo(final ParticipantName name, final Card card) {
+        final Participant findedParticipant = findParticipant(name);
+        findedParticipant.addCard(card);
+    }
+
+    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
+        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Participant participant : participants) {
             playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculate()));
         }
-        return playersWinStatus;
-    }
 
-    public void divideCard(final List<Card> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            // TODO: 과연 이해가 되는가?
-            Participant participant = participants.get(i / 2);
-            participant.addCard(cards.get(i));
-        }
+        return playersWinStatus;
     }
 
     public int count() {
         return participants.size();
     }
 
-    public Map<ParticipantsName, Hands> getPlayerHands() {
+    public boolean isNotDead(final ParticipantName name) {
+        final Participant participant = findParticipant(name);
+        return participant.isNotDead();
+    }
+
+    private Participant findParticipant(final ParticipantName name) {
+        return participants.stream()
+                .filter(participant -> participant.isName(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
+    }
+
+    public Hands getCardsOf(final ParticipantName name) {
+        final Participant findedParticipant = findParticipant(name);
+        return findedParticipant.getHands();
+    }
+
+    public Map<ParticipantName, Hands> getPlayerHands() {
         return participants.stream()
                 .collect(toMap(Participant::getName,
                         Participant::getHands,
@@ -58,7 +81,7 @@ public class Participants {
                         LinkedHashMap::new));
     }
 
-    public Map<ParticipantsName, Score> getPlayerScores() {
+    public Map<ParticipantName, Score> getPlayerScores() {
         return participants.stream()
                 .collect(toMap(Participant::getName,
                         Participant::calculate,
@@ -66,38 +89,9 @@ public class Participants {
                         LinkedHashMap::new));
     }
 
-    public List<ParticipantsName> getNames() {
+    public List<ParticipantName> getNames() {
         return participants.stream()
                 .map(Participant::getName)
                 .toList();
-    }
-
-    public void addCardTo(final ParticipantsName name, final Card card) {
-        Participant findedParticipant = findParticipant(name);
-
-        findedParticipant.addCard(card);
-    }
-
-    public boolean isAlive(final ParticipantsName name) {
-        Participant findedParticipant = findParticipant(name);
-
-        return findedParticipant.getStatus().isAlive();
-    }
-
-    private Participant findParticipant(final ParticipantsName name) {
-        return participants.stream()
-                .filter(participant -> participant.isName(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
-    }
-
-    public boolean isNotBlackjack(final ParticipantsName name) {
-        Participant participant = findParticipant(name);
-        return !participant.getStatus().isBlackjack();
-    }
-
-    public Hands getCardsOf(final ParticipantsName name) {
-        Participant findedParticipant = findParticipant(name);
-        return findedParticipant.getHands();
     }
 }

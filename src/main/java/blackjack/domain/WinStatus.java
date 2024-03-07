@@ -6,20 +6,16 @@ public enum WinStatus {
     WIN;
 
     public static WinStatus of(final Score dealerScore, final Score playerScore) {
-        // TODO : 라인수 줄이기
-        final BlackjackStatus playerStatus = BlackjackStatus.from(playerScore);
-        final BlackjackStatus dealerStatus = BlackjackStatus.from(dealerScore);
-
-        if (playerStatus.isDead()) {
+        if (BlackjackStatus.from(playerScore).isDead()) {
             return LOSE;
         }
-        if (playerScore.equals(dealerScore)) {
-            return DRAW;
-        }
-        if (playerStatus.isBlackjack() || dealerStatus.isDead() || playerScore.isBiggerThan(dealerScore)) {
+        if (BlackjackStatus.from(dealerScore).isDead() || playerScore.isBiggerThan(dealerScore)) {
             return WIN;
         }
-        return LOSE;
+        if (dealerScore.isBiggerThan(playerScore)) {
+            return LOSE;
+        }
+        return DRAW;
     }
 
     public WinStatus opposite() {

@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,12 @@ class DeckTest {
     @Test
     void validateDuplicate() {
         // given
-        Deck deck = new Deck();
-
+        Card expected = new Card(CardNumber.TWO, CardShape.CLOVER);
+        Deck deck = new Deck(Set.of(expected));
         // when
         Card card = deck.pick();
 
         // then
-        assertThat(card).isEqualTo(new Card(CardNumber.TWO, CardShape.CLOVER));
+        assertThat(card).isEqualTo(expected);
     }
 }

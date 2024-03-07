@@ -1,22 +1,18 @@
 package blackjack.domain;
 
-import blackjack.service.BlackjackGame;
 import java.util.ArrayList;
 
 public class Participant {
-    private final ParticipantsName name;
     protected final Hands hands;
+    private final ParticipantName name;
 
-    protected Participant(final ParticipantsName name, final Hands hands) {
-        this.name = name;
-        this.hands = hands;
+    protected Participant(final String name) {
+        this.name = new ParticipantName(name);
+        this.hands = new Hands(new ArrayList<>());
     }
 
     public static Participant from(final String name) {
-        if (BlackjackGame.DEALER_SIGNAL.equals(name)) {
-            return new Dealer(name);
-        }
-        return new Participant(new ParticipantsName(name), new Hands(new ArrayList<>()));
+        return new Participant(name);
     }
 
     public Score calculate() {
@@ -34,8 +30,19 @@ public class Participant {
         hands.add(card);
     }
 
+    public boolean isName(final ParticipantName name) {
+        return this.name.equals(name);
+    }
 
-    public BlackjackStatus getStatus() {
+    public boolean isNotBlackjack() {
+        return !getStatus().isBlackjack();
+    }
+
+    public boolean isNotDead() {
+        return !getStatus().isDead();
+    }
+
+    protected BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
     }
 
@@ -43,11 +50,11 @@ public class Participant {
         return new Hands(hands.getCards());
     }
 
-    public ParticipantsName getName() {
-        return name;
+    public Hands getFirstCard() {
+        return hands.getFirstCard();
     }
 
-    public boolean isName(final ParticipantsName name) {
-        return this.name.equals(name);
+    public ParticipantName getName() {
+        return name;
     }
 }

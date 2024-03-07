@@ -27,10 +27,8 @@ public class Hands {
         }
     }
 
-    public int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    public void add(final Card card) {
+        cards.add(card);
     }
 
     public int sum() {
@@ -39,13 +37,15 @@ public class Hands {
                 .sum();
     }
 
-    public void add(final Card card) {
-        cards.add(card);
+    public int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
-    public Hands getFirstSkippedCards() {
+    public Hands getFirstCard() {
         return cards.stream()
-                .skip(1)
+                .limit(1)
                 .collect(collectingAndThen(toList(), Hands::new));
     }
 

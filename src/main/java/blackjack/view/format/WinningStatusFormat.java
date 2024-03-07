@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.format;
 
 public enum WinningStatusFormat {
     LOSE("패"),

@@ -25,8 +25,4 @@ public enum BlackjackStatus {
     public boolean isBlackjack() {
         return this == BLACKJACK;
     }
-
-    public boolean isAlive() {
-        return this == ALIVE;
-    }
 }

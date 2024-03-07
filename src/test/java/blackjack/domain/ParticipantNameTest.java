@@ -13,7 +13,7 @@ class ParticipantNameTest {
     @ValueSource(strings = {"", " ", "   "})
     @NullSource
     void validateBlank(String input) {
-        assertThatThrownBy(() -> new ParticipantsName(input))
+        assertThatThrownBy(() -> new ParticipantName(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참여자 이름에 공백을 입력할 수 없습니다.");
     }

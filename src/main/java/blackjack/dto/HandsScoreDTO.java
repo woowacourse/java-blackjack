@@ -6,10 +6,10 @@ import java.util.List;
 
 public record HandsScoreDTO(List<CardDTO> cards, int score) {
     public static HandsScoreDTO of(final Hands hands, final Score score) {
-        return new HandsScoreDTO(converToCardDTO(hands), score.getValue());
+        return new HandsScoreDTO(convertToCardDTO(hands), score.getValue());
     }
 
-    private static List<CardDTO> converToCardDTO(final Hands hands) {
+    private static List<CardDTO> convertToCardDTO(final Hands hands) {
         return hands.getCards().stream()
                 .map(CardDTO::from)
                 .toList();

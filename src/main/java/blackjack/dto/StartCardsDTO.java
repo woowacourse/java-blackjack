@@ -2,22 +2,22 @@ package blackjack.dto;
 
 import blackjack.domain.Card;
 import blackjack.domain.Hands;
-import blackjack.domain.ParticipantsName;
+import blackjack.domain.ParticipantName;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public record StartCardsDTO(Map<String, List<CardDTO>> playersCard) {
+public record StartCardsDTO(Map<String, List<CardDTO>> participantsCard) {
 
-    public static StartCardsDTO of(final Map<ParticipantsName, Hands> playersCard) {
-        return new StartCardsDTO(convertToDTO(playersCard));
+    public static StartCardsDTO of(final Map<ParticipantName, Hands> participantsCard) {
+        return new StartCardsDTO(convertToDTO(participantsCard));
     }
 
-    private static Map<String, List<CardDTO>> convertToDTO(final Map<ParticipantsName, Hands> rawPlayersCard) {
-        final Map<String, List<CardDTO>> playersCard = new LinkedHashMap<>();
-        rawPlayersCard.forEach((key, value) -> playersCard.put(key.getName(), convertToCardDTO(value.getCards())));
+    private static Map<String, List<CardDTO>> convertToDTO(final Map<ParticipantName, Hands> rawParticipantsCard) {
+        final Map<String, List<CardDTO>> participantsCard = new LinkedHashMap<>();
+        rawParticipantsCard.forEach((key, value) -> participantsCard.put(key.getName(), convertToCardDTO(value.getCards())));
 
-        return playersCard;
+        return participantsCard;
     }
 
     private static List<CardDTO> convertToCardDTO(final List<Card> values) {
