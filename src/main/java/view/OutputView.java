@@ -1,11 +1,11 @@
 package view;
 
-import domain.Cards;
-import domain.DealerCards;
-import domain.Name;
-import domain.PlayerCards;
+import domain.*;
 
 import java.util.List;
+import java.util.Map;
+
+import static domain.Status.*;
 
 public class OutputView {
 
@@ -54,5 +54,19 @@ public class OutputView {
 
     private void printSumOfCards(Cards cards) {
         System.out.println(" - 결과: " + cards.sum());
+    }
+
+    public void printScores(ScoreBoard scoreBoard) {
+        System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
+        Score dealerScore = scoreBoard.getDealerScore();
+        String winScore = dealerScore.getWinScore() + WIN.getStatus();
+        String tieScore = dealerScore.getTieScore() + TIE.getStatus();
+        String loseScore = dealerScore.getLoseScore() + LOSE.getStatus();
+
+        System.out.println(String.join(" ", winScore, tieScore, loseScore));
+
+        Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
+        playerStatus.forEach((name, status) -> System.out.println(name + " : " + status.getStatus()));
     }
 }

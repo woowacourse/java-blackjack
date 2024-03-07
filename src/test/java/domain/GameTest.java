@@ -28,9 +28,7 @@ public class GameTest {
                 () -> assertThat(scoreBoard.getDealerScore().getWinScore()).isEqualTo(0),
                 () -> assertThat(scoreBoard.getDealerScore().getTieScore()).isEqualTo(0),
                 () -> assertThat(scoreBoard.getDealerScore().getLoseScore()).isEqualTo(1),
-                () -> assertThat(scoreBoard.getPlayerScore(capy).getWinScore()).isEqualTo(1),
-                () -> assertThat(scoreBoard.getPlayerScore(capy).getTieScore()).isEqualTo(0),
-                () -> assertThat(scoreBoard.getPlayerScore(capy).getLoseScore()).isEqualTo(0)
+                () -> assertThat(scoreBoard.getPlayerScore().get(capy)).isEqualTo(Status.WIN)
         );
     }
 }

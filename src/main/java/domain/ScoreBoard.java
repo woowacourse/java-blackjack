@@ -1,44 +1,41 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
-    private static final Name dealer = new Name("dealer");
+    private final Score dealerScore = new Score();
+    private final Map<Name, Status> playerStatus;
 
-    private final Map<Name, Score> scores;
-
-    private ScoreBoard(Map<Name, Score> scores) {
-        this.scores = scores;
+    private ScoreBoard(Map<Name, Status> playerStatus) {
+        this.playerStatus = playerStatus;
     }
 
     public static ScoreBoard from(List<Name> names) {
-        Map<Name, Score> scoreBoard = names.stream()
+        Map<Name, Status> scoreBoard = names.stream()
                 .collect(Collectors.toMap(
                         name -> name,
-                        name -> new Score()
+                        name -> Status.TIE
                 ));
-        scoreBoard.put(dealer, new Score());
         return new ScoreBoard(scoreBoard);
     }
 
     public void updatePlayerScore(Name name, Status status) {
-        Score score = scores.get(name);
-        score.increaseScore(status);
+        playerStatus.put(name, status);
     }
 
     public void updateDealerScore(Status status) {
-        Score score = scores.get(dealer);
-        score.increaseScore(status);
+        dealerScore.increaseScore(status);
     }
 
-    public Score getPlayerScore(Name name) {
-        return scores.get(name);
+    public Map<Name, Status> getPlayerScore() {
+        return Collections.unmodifiableMap(playerStatus);
     }
 
     public Score getDealerScore() {
-        return scores.get(dealer);
+        return dealerScore;
     }
 }
