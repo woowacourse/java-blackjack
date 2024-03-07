@@ -10,7 +10,6 @@ import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +21,14 @@ class DealerTest {
         Deck deck = new CustomDeck(numbers, shapes);
         HandGenerator handGenerator = new HandGenerator(deck);
         return new Dealer(handGenerator);
+    }
+
+    private static Stream<Arguments> provideNumbersWithCanHit() {
+        return Stream.of(
+                Arguments.of(List.of(Number.ACE, Number.JACK), false),
+                Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
+                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
+        );
     }
 
     @DisplayName("딜러는 처음에 한 장의 카드를 오픈한다.")
@@ -48,13 +55,5 @@ class DealerTest {
         Dealer dealer = new Dealer(handGenerator);
 
         assertThat(dealer.canHit()).isEqualTo(canHit);
-    }
-
-    private static Stream<Arguments> provideNumbersWithCanHit() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.JACK), false),
-                Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
-                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
-        );
     }
 }

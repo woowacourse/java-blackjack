@@ -14,6 +14,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class RefereeTest {
+    private static Stream<Arguments> provideParticipantsWithHandResult() {
+        return Stream.of(
+                Arguments.of(List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT), HandResult.LOSE),
+                Arguments.of(List.of(Number.ACE, Number.EIGHT, Number.ACE, Number.SIX), HandResult.WIN),
+                Arguments.of(List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN), HandResult.DRAW)
+        );
+    }
+
     @DisplayName("게임의 최종 결과를 생성한다.")
     @ParameterizedTest
     @MethodSource("provideParticipantsWithHandResult")
@@ -26,13 +34,5 @@ class RefereeTest {
         BlackjackResult blackjackResult = referee.generateResult(participants);
 
         assertThat(blackjackResult.getPlayersResult().values()).containsExactly(playerHandResult);
-    }
-
-    private static Stream<Arguments> provideParticipantsWithHandResult() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT), HandResult.LOSE),
-                Arguments.of(List.of(Number.ACE, Number.EIGHT, Number.ACE, Number.SIX), HandResult.WIN),
-                Arguments.of(List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN), HandResult.DRAW)
-        );
     }
 }

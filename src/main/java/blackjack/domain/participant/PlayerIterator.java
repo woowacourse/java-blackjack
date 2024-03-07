@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import java.util.List;
 
 public class PlayerIterator {
-    private int order = 0;
     private final List<Player> players;
+    private int order = 0;
 
     public PlayerIterator(Players players) {
         this.players = players.getValues();

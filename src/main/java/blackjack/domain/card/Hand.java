@@ -49,7 +49,7 @@ public class Hand {
     }
 
     private int countAceForAlter() {
-        int aceCount = (int)cards.stream()
+        int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
         int cardTotalScore = getCardTotalScore();

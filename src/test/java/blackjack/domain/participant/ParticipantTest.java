@@ -1,17 +1,16 @@
 package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
     private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {

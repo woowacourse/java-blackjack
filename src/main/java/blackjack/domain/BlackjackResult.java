@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Player;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

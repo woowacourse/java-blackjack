@@ -21,7 +21,8 @@ class BlackjackResultTest {
                 generatePlayer(), HandResult.LOSE);
         BlackjackResult blackjackResult = new BlackjackResult(playerResults);
         Map<HandResult, Integer> dealerResults = blackjackResult.getDealerResults();
-        assertThat(dealerResults).contains(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2), Map.entry(HandResult.DRAW, 1));
+        assertThat(dealerResults).contains(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2),
+                Map.entry(HandResult.DRAW, 1));
     }
 
     private Player generatePlayer() {

@@ -3,8 +3,11 @@ package blackjack.view;
 import blackjack.domain.BlackjackResult;
 import blackjack.domain.HandResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.*;
-
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -94,7 +97,8 @@ public class OutputView {
 
     private void printParticipantHandWithScore(Participant participant) {
         String participantHand = getParticipantHand(participant);
-        String participantHandWithScore = String.format(HAND_WITH_SCORE_FORMAT, participantHand, participant.getScore());
+        String participantHandWithScore = String.format(HAND_WITH_SCORE_FORMAT, participantHand,
+                participant.getScore());
         System.out.println(participantHandWithScore);
     }
 
