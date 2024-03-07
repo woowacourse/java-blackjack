@@ -19,16 +19,22 @@ public class Entrant {
                 .toList();
     }
 
-    public void hitCardToDealer(Card card){
+    public void hitCardToDealer(Card card) {
         dealer.hitCard(card);
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
     public IndividualFaceUpResult getDealerFaceUpResult() {
         return dealer.generateFaceUpResult();
+    }
+
+    public List<IndividualFaceUpResult> getPlayerFaceUpResults() {
+        return players.stream()
+                .map(Player::generateFaceUpResult)
+                .toList();
     }
 
 }
