@@ -15,6 +15,14 @@ public class Players {
         return new Players(Arrays.stream(names).map(name -> new Participant(new Name(name))).collect(Collectors.toList()));
     }
 
+    public Player getDealer() {
+        return players.stream().filter(player -> player.getName().equals("딜러")).findAny().orElseThrow();
+    }
+
+    public List<Player> getParticipants() {
+        return players.stream().filter(player -> !player.getName().equals("딜러")).toList();
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

@@ -8,21 +8,18 @@ import java.util.Map.Entry;
 public class Blackjack {
 
     private final Players players;
-    private final Player dealer;
     private final Deck deck;
 
-    // TODO : 필드 수 줄이기
     public Blackjack(final Players players) {
         this.players = players;
-        this.dealer = new Dealer(new Name("딜러"));
+        players.getPlayers().add(new Dealer(new Name("딜러")));
         this.deck = new Deck();
         dealCardsToPlayers();
-        dealCardsToDealer();
     }
 
     public Blackjack(Players players, Player dealer) {
         this.players = players;
-        this.dealer = dealer;
+        players.getPlayers().add(dealer);
         this.deck = new Deck();
     }
 
@@ -34,14 +31,9 @@ public class Blackjack {
         players.getPlayers().forEach(this::initializePlayer);
     }
 
-    private void dealCardsToDealer() {
-        dealer.addCard(deck.draw());
-        dealer.addCard(deck.draw());
-    }
-
     public BlackjackResultDTO finishGame() {
         BlackjackResult blackjackResult = new BlackjackResult();
-        return blackjackResult.finishGame(players, dealer);
+        return blackjackResult.finishGame(players, players.getDealer());
     }
 
     private void initializePlayer(final Player player) {
@@ -54,6 +46,10 @@ public class Blackjack {
     }
 
     public Player getDealer() {
-        return dealer;
+        return players.getDealer();
+    }
+
+    public List<Player> getParticipants() {
+        return players.getParticipants();
     }
 }
