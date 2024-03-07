@@ -22,4 +22,11 @@ public class MatchResults {
         }
         return results.get(playerName);
     }
+
+    public int getResultCount(MatchResult result) {
+        return (int) results.values()
+                .stream()
+                .filter(matchResult -> matchResult == result)
+                .count();
+    }
 }

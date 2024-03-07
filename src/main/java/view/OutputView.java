@@ -1,6 +1,7 @@
 package view;
 
 import card.Card;
+import game.MatchResult;
 
 import java.util.List;
 
@@ -51,16 +52,13 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerResult(int winCount, int loseCount) {
-        System.out.println("딜러: " + winCount + "승 " + loseCount + "패");
+    public void printDealerResult(int winCount, int tieCount, int loseCount) {
+        System.out.println("딜러: " + winCount + "승 " + tieCount + "무 " + loseCount + "패");
     }
 
-    public void printPlayerResult(String name, boolean isWin) {
-        if (isWin) {
-            System.out.println(name + ": 승");
-            return;
-        }
-        System.out.println(name + ": 패");
+    public void printPlayerResult(String name, MatchResult result) {
+        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result);
+        System.out.println(name + ": " + resultDisplay);
     }
 
     public void printNewLine() {
