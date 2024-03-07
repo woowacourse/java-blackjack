@@ -1,36 +1,76 @@
 package view;
 
-import card.Cards;
+import cardGame.dto.BlackJackGameStatus;
+import cardGame.dto.ParticipantsTotalGameResult;
+import controller.dto.SingleWinOrNotResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import player.Name;
 import player.dto.PlayersCardStatusDto;
+import player.dto.SinglePlayerStatusDto;
 
 public class OutputView {
 
-    public void printInitCardStatus(PlayersCardStatusDto cardStatus, Cards cards) {
-        Map<Name, Cards> playerGameStatus = cardStatus.cards();
-        String playersNames = changeNameFormat(cardStatus.getNames());
+    public void printInitCardStatus(BlackJackGameStatus blackJackGameStatus) {
+        PlayersCardStatusDto playersCardStatus = blackJackGameStatus.playerCardStatus();
+
+        String playersNames = changeNameFormat(playersCardStatus.getNames());
         System.out.println("\n딜러와 " + playersNames + "에게 2장을 나누었습니다.");
 
-        System.out.println("딜러: " + cards.getCardsStatus());
-        for (Name name : playerGameStatus.keySet()) {
-            Cards playerCards = playerGameStatus.get(name);
+        System.out.println("딜러: " + blackJackGameStatus.dealerCards().getCardsStatus());
 
-            System.out.println(name.getValue() + "카드: " + playerCards.getCardsStatus());
+        for (int i = 0; i < playersCardStatus.size(); i++) {
+            SinglePlayerStatusDto singlePlayerStatus = playersCardStatus.multiPlayersStatus().get(i);
+            System.out.println(
+                    singlePlayerStatus.name().getValue() + "카드: " + singlePlayerStatus.cards().getCardsStatus());
         }
+
         System.out.println();
     }
 
-    // todo: 분리하면 좋을 듯 합니다.
+    public void printInfo(int dealerExtraCardCount) {
+        System.out.println();
+        for (int i = 0; i < dealerExtraCardCount; i++) {
+            System.out.println("딜러가 16이하라 한장의 카드를 더 받았습니다.\n");
+        }
+    }
+
+    public void printPariticipantsScore(ParticipantsTotalGameResult participantsTotalGameResult) {
+        Map<SinglePlayerStatusDto, Integer> participantsResult = participantsTotalGameResult.totalGameResult();
+
+        for (SinglePlayerStatusDto singlePlayerStatusDto : participantsResult.keySet()) {
+            System.out.println(
+                    makeCardsStatus(singlePlayerStatusDto) + " - 결과: " + participantsResult.get(singlePlayerStatusDto));
+        }
+    }
+
+    public void printCardsStatus(SinglePlayerStatusDto singlePlayerStatus) {
+        System.out.println(makeCardsStatus(singlePlayerStatus));
+    }
+
+    private String makeCardsStatus(SinglePlayerStatusDto singlePlayerStatus) {
+        return singlePlayerStatus.name().getValue() + "카드: " + singlePlayerStatus.cards().getCardsStatus();
+    }
+
     private String changeNameFormat(List<Name> names) {
         return names.stream()
                 .map(Name::getValue)
                 .collect(Collectors.joining(", "));
     }
 
-    public void printCardsStatus(Name name, Cards cards) {
-        System.out.println(name.getValue() + "카드: " + cards.getCardsStatus());
+    public void printDealerResult(int dealerWinningCount, int size) {
+        System.out.println("\n## 최종 승패");
+        System.out.println(
+                "딜러: " + dealerWinningCount + GameResultSymbol.WINNING_SYMBOL.symbolName + " " + (size
+                        - dealerWinningCount)
+                        + GameResultSymbol.LOSE_SYMBOL.symbolName);
+    }
+
+    public void printPlayerResult(List<SingleWinOrNotResult> winOrNotResults) {
+        for (SingleWinOrNotResult singleWinOrNotResult : winOrNotResults) {
+            System.out.println(singleWinOrNotResult.name().getValue() + " : " + GameResultSymbol.changeToSymbol(
+                    singleWinOrNotResult.isWinner()).symbolName);
+        }
     }
 }
