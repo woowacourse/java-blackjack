@@ -18,4 +18,12 @@ public class Judge {
         }
         return sum;
     }
+
+    public boolean isBustedHand(Hand hand) {
+        return BLACK_JACK < calculateBestScore(hand);
+    }
+//
+//    public void completeDealerHand(Hand hand) {
+//        a
+//    }
 }
