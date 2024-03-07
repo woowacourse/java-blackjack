@@ -22,7 +22,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Players players = Players.from(inputView.readPlayerNames());
+        final Players players = Players.from(inputView.readNames());
         final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = new Dealer(cardDeck);
         final Game game = new Game(dealer, players);

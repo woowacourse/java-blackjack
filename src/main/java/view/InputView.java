@@ -13,14 +13,14 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public List<String> readPlayerNames() {
+    public List<String> readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String rawNames = scanner.nextLine().trim();
         validateBlank(rawNames);
         validateSeparators(rawNames);
-        List<String> players = List.of(rawNames.split(NAME_SEPARATOR));
+        List<String> names = List.of(rawNames.split(NAME_SEPARATOR));
         System.out.println();
-        return players;
+        return names;
     }
 
     public String readAnswer(String name) {

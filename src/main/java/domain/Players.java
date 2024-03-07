@@ -16,12 +16,9 @@ public class Players {
     }
 
     public static Players from(final List<String> names) {
-        List<Player> players = names.stream()
-                .map(String::trim)
-                .map(name -> new Player(name, Hands.createEmptyPacket()))
-                .toList();
-        validate(players);
-        return new Players(players); //TODO 이름바꾸기
+        List<Player> playerNames = mapToPlayers(names);
+        validate(playerNames);
+        return new Players(playerNames);
     }
 
     public void forEach(Consumer<? super Player> action) {
@@ -31,6 +28,13 @@ public class Players {
     public boolean isAllBust() {
         return names.stream()
                 .allMatch(Player::isBust);
+    }
+
+    private static List<Player> mapToPlayers(final List<String> names) {
+        return names.stream()
+                .map(String::trim)
+                .map(name -> new Player(name, Hands.createEmptyPacket()))
+                .toList();
     }
 
     private static void validate(final List<Player> players) {

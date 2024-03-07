@@ -1,11 +1,10 @@
 package domain;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
+public class Hands {
 
     private static final int BLACK_JACK = 21;
 
