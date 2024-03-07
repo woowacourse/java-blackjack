@@ -52,7 +52,7 @@ public class OutputView {
         playersCard.forEach(this::printPlayerCard);
     }
 
-    private void printPlayerCard(final String name, final List<CardDTO> cards) {
+    public void printPlayerCard(final String name, final List<CardDTO> cards) {
         System.out.printf("%s카드: %s%n", name, convertToCardsFormat(cards));
     }
 

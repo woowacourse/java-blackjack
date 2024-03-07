@@ -3,20 +3,20 @@ package blackjack.domain;
 import blackjack.service.BlackjackGame;
 import java.util.ArrayList;
 
-public class Player {
-    private final PlayerName name;
+public class Participant {
+    private final ParticipantsName name;
     protected final Hands hands;
 
-    protected Player(final PlayerName name, final Hands hands) {
+    protected Participant(final ParticipantsName name, final Hands hands) {
         this.name = name;
         this.hands = hands;
     }
 
-    public static Player from(final String name) {
+    public static Participant from(final String name) {
         if (BlackjackGame.DEALER_SIGNAL.equals(name)) {
             return new Dealer(name);
         }
-        return new Player(new PlayerName(name), new Hands(new ArrayList<>()));
+        return new Participant(new ParticipantsName(name), new Hands(new ArrayList<>()));
     }
 
     public Score calculate() {
@@ -42,7 +42,11 @@ public class Player {
         return new Hands(hands.getCards());
     }
 
-    public PlayerName getName() {
+    public ParticipantsName getName() {
         return name;
+    }
+
+    public boolean isName(final ParticipantsName name) {
+        return this.name.equals(name);
     }
 }

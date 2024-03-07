@@ -8,30 +8,30 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
+class ParticipantsTest {
     @Test
     @DisplayName("카드 숫자 합으로 승패를 결정한다.")
     void determineWinStatus() {
         // TODO: 리팩토링 시급
-        PlayerName kirby = new PlayerName("kirby");
-        PlayerName baekho = new PlayerName("baekho");
-        PlayerName pobi = new PlayerName("pobi");
+        ParticipantsName kirby = new ParticipantsName("kirby");
+        ParticipantsName baekho = new ParticipantsName("baekho");
+        ParticipantsName pobi = new ParticipantsName("pobi");
 
         Score dealerScore = new Score(20);
-        Player player1 = Player.from("kirby");
+        Participant participant1 = Participant.from("kirby");
         List<Card> cards1 = List.of(new Card(CardNumber.TEN, CardShape.CLOVER), new Card(CardNumber.ACE, CardShape.CLOVER));
-        cards1.forEach(player1::addCard);
+        cards1.forEach(participant1::addCard);
 
-        Player player2 = Player.from("baekho");
+        Participant participant2 = Participant.from("baekho");
         List<Card> card2 = List.of(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
-        card2.forEach(player2::addCard);
+        card2.forEach(participant2::addCard);
 
-        Player player3 = Player.from("pobi");
+        Participant participant3 = Participant.from("pobi");
         List<Card> card3 = List.of(new Card(CardNumber.TEN, CardShape.DIA), new Card(CardNumber.KING, CardShape.DIA));
-        card3.forEach(player3::addCard);
+        card3.forEach(participant3::addCard);
 
-        Players players = new Players(List.of(player1, player2, player3));
-        Map<PlayerName, WinStatus> finalResult = players.determineWinStatus(dealerScore);
+        Participants participants = new Participants(List.of(participant1, participant2, participant3));
+        Map<ParticipantsName, WinStatus> finalResult = participants.determineWinStatus(dealerScore);
 
         // TODO: 순서대로 검증도 되게
         assertThat(finalResult).containsExactlyInAnyOrderEntriesOf(Map.of(
@@ -44,13 +44,13 @@ class PlayersTest {
     @DisplayName("중복된 플레이어를 생성할 수 없다.")
     void validateDuplicate() {
         // given
-        PlayerName playerName = new PlayerName("kirby");
+        ParticipantsName participantsName = new ParticipantsName("kirby");
         Hands hands = new Hands(new Card(CardNumber.TEN, CardShape.SPADE), new Card(CardNumber.NINE, CardShape.SPADE));
-        Player player = Player.from("kirby");
-        List<Player> players = List.of(player, player);
+        Participant participant = Participant.from("kirby");
+        List<Participant> participants = List.of(participant, participant);
 
         // when & then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
     }

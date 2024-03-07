@@ -23,4 +23,16 @@ public class InputView {
             throw new IllegalArgumentException(DELIMITER + " 로 끝날 수 없습니다.");
         }
     }
+
+    public boolean readNeedMoreCard(final String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        String input = SCANNER.nextLine();
+        if ("y".equals(input)) {
+            return true;
+        }
+        if ("n".equals(input)) {
+            return false;
+        }
+        throw new IllegalArgumentException("입력은 y또는 n으로 해주세요.");
+    }
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PlayerTest {
+class ParticipantTest {
 
     @ParameterizedTest
     @DisplayName("숫자 합이 21이 넘지 않고 에이스가 존재하지 않을 때까지 에이스를 하나씩 1로 바꿔 계산한다.")
@@ -29,11 +29,11 @@ class PlayerTest {
         Card card3 = new Card(cardNumber3, CardShape.CLOVER);
         Card card4 = new Card(cardNumber4, CardShape.SPADE);
         List<Card> cards = List.of(card1, card2, card3, card4);
-        Player player = Player.from("kirby");
-        cards.forEach(player::addCard);
+        Participant participant = Participant.from("kirby");
+        cards.forEach(participant::addCard);
 
         // when
-        Score sum = player.calculate();
+        Score sum = participant.calculate();
 
         // then
         assertThat(sum).isEqualTo(new Score(expected));
@@ -46,11 +46,11 @@ class PlayerTest {
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.TEN, CardShape.CLOVER);
         List<Card> cards = List.of(card1, card2);
-        Player player = Player.from("kirby");
-        cards.forEach(player::addCard);
+        Participant participant = Participant.from("kirby");
+        cards.forEach(participant::addCard);
 
         // when
-        BlackjackStatus blackjackStatus = player.getStatus();
+        BlackjackStatus blackjackStatus = participant.getStatus();
 
         // then
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.BLACKJACK);
@@ -64,11 +64,11 @@ class PlayerTest {
         Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card3 = new Card(CardNumber.NINE, CardShape.CLOVER);
         List<Card> cards = List.of(card1, card2, card3);
-        Player player = Player.from("kirby");
-        cards.forEach(player::addCard);
+        Participant participant = Participant.from("kirby");
+        cards.forEach(participant::addCard);
 
         // when
-        BlackjackStatus blackjackStatus = player.getStatus();
+        BlackjackStatus blackjackStatus = participant.getStatus();
 
         // then
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.DEAD);
@@ -81,11 +81,11 @@ class PlayerTest {
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.NINE, CardShape.CLOVER);
         List<Card> cards = List.of(card1, card2);
-        Player player = Player.from("kirby");
-        cards.forEach(player::addCard);
+        Participant participant = Participant.from("kirby");
+        cards.forEach(participant::addCard);
 
         // when
-        BlackjackStatus blackjackStatus = player.getStatus();
+        BlackjackStatus blackjackStatus = participant.getStatus();
 
         // then
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.ALIVE);
