@@ -55,4 +55,10 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."))
                 .isBust();
     }
+
+    public void drawDealerCard() {
+        while (dealer.getTotalScore() <= 16) {
+            dealer.takeCard(deck.draw());
+        }
+    }
 }

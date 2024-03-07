@@ -1,5 +1,7 @@
 package domain;
 
+import domain.dto.GameStatusDto;
+import domain.dto.GamerDto;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.assertj.core.api.Assertions;
@@ -76,5 +78,18 @@ public class BlackJackGameTest {
                 .forEach(ignored -> blackJackGame.drawCardFromName("test"));
         Assertions.assertThat(blackJackGame.isBustFromName("test"))
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 17 이상이 될 때까지 카드를 뽑는다.")
+    void drawDealerCard() {
+        BlackJackGame blackJackGame = new BlackJackGame(List.of(
+                new Gamer(new Name("test"))
+        ));
+        blackJackGame.initialDealing();
+        blackJackGame.drawDealerCard();
+        GameStatusDto gameStatusDto = blackJackGame.getGameStatusDto();
+        GamerDto gamerDto = gameStatusDto.getGamerDtoFromName("딜러");
+        Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
     }
 }
