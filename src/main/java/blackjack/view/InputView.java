@@ -20,4 +20,10 @@ public class InputView {
                      .map(String::trim)
                      .toList();
     }
+
+    public static BlackjackCommand inputBlackjackCommand(String playerName) {
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
+
+        return BlackjackCommand.from(input());
+    }
 }
