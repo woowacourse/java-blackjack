@@ -1,6 +1,8 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,14 +20,17 @@ public class Deck {
     }
 
     public static Deck fullDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (CardType cardType : CardType.values()) {
-            for (CardName cardName : CardName.values()) {
-                Card card = new Card(cardName, cardType);
-                cards.add(card);
-            }
-        }
+        List<Card> cards = Arrays.stream(CardType.values())
+                .map(Deck::makeSameTypeCards)
+                .flatMap(Collection::stream)
+                .toList();
         return new Deck(cards);
+    }
+
+    private static List<Card> makeSameTypeCards(CardType cardType) {
+        return Arrays.stream(CardName.values())
+                .map(cardName -> new Card(cardName, cardType))
+                .toList();
     }
 
     private void validateDuplicateCard(List<Card> cards) {
