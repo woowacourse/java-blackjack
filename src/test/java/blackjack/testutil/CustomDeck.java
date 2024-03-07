@@ -1,7 +1,7 @@
 package blackjack.testutil;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import java.util.Iterator;

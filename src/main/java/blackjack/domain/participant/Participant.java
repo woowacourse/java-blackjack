@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.HandGenerator;
 import java.util.List;
 
 public abstract class Participant {

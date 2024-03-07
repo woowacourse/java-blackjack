@@ -2,11 +2,6 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.HandGenerator;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
