@@ -12,7 +12,7 @@ public class OutputView {
         System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", formattedName));
     }
 
-    public static void printInitialCards(final String name, final List<Card> cards) {
+    public static void printNameAndCards(final String name, final List<Card> cards) {
         System.out.println(name + ": " + convert(cards));
     }
 

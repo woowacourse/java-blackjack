@@ -31,9 +31,9 @@ public class BlackJackGame {
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
-        OutputView.printInitialCards(dealer.getName(), dealer.openCard());
+        OutputView.printNameAndCards(dealer.getName(), dealer.openCard());
         players.collectCardsOfEachPlayer()
-                .forEach(OutputView::printInitialCards);
+                .forEach(OutputView::printNameAndCards);
     }
 
     private void playPlayersTurn(final List<Player> players, final Deck deck) {
@@ -52,7 +52,7 @@ public class BlackJackGame {
     private void distributeIfPlayerWant(final boolean isHit, final Player player, final Deck deck) {
         if (isHit) {
             distributeNewCard(player, deck);
-            System.out.println(player.openCards());
+            OutputView.printNameAndCards(player.getName(), player.openCards());
             playPlayerTurn(player, deck);
         }
     }
