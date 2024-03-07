@@ -39,39 +39,31 @@ public class Blackjack {
     public Map<Player, Entry<Integer, Integer>> finishGame() {
         Map<Player, Entry<Integer, Integer>> results = new HashMap<>();
 
+        results.put(dealer, Map.entry(0, 0));
         for (var player : players.getPlayers()) {
-            results.put(dealer, Map.entry(0, 0));
+            Entry<Integer, Integer> dealerEntry = results.get(dealer);
+            if (player.getName().equals(dealer.getName())) {
+                continue;
+            }
             results.put(player, Map.entry(0, 0));
-            if (player.calculateScore() > 21 && dealer.calculateScore() > 21) {
-                results.put(player, Map.entry(results.get(player).getKey(), results.get(player).getValue() + 1));
-                results.put(dealer, Map.entry(results.get(dealer).getKey(), results.get(dealer).getValue() + 1));
-            } else if (player.calculateScore() > 21) {
-                results.put(player, Map.entry(results.get(player).getKey(), results.get(player).getValue() + 1));
-                results.put(dealer, Map.entry(results.get(dealer).getKey() + 1, results.get(dealer).getValue()));
+            Entry<Integer, Integer> playerEntry = results.get(player);
+
+            if (player.calculateScore() > 21) {
+                results.put(dealer, Map.entry(dealerEntry.getKey() + 1, dealerEntry.getValue()));
+                results.put(player, Map.entry(playerEntry.getKey(), playerEntry.getValue() + 1));
             } else if (dealer.calculateScore() > 21) {
-                results.put(player, Map.entry(results.get(player).getKey() + 1, results.get(player).getValue()));
-                results.put(dealer, Map.entry(results.get(dealer).getKey(), results.get(dealer).getValue() + 1));
-            } else if (player.calculateScore() == 21 && dealer.calculateScore() == 21) {
-                results.put(player, Map.entry(results.get(player).getKey() + 1, results.get(player).getValue()));
-                results.put(dealer, Map.entry(results.get(dealer).getKey() + 1, results.get(dealer).getValue()));
+                results.put(dealer, Map.entry(dealerEntry.getKey(), dealerEntry.getValue() + 1));
+                results.put(player, Map.entry(playerEntry.getKey() + 1, playerEntry.getValue()));
             } else {
-                if (player.calculateScore() <= 21 && player.calculateScore() < dealer.calculateScore()) {
-                    results.put(player, Map.entry(results.get(player).getKey() + 1, results.get(player).getValue()));
-                    results.put(dealer, Map.entry(results.get(dealer).getKey(), results.get(dealer).getValue() + 1));
-                } else if (dealer.calculateScore() <= 21 && dealer.calculateScore() < player.calculateScore()) {
-                    results.put(player, Map.entry(results.get(player).getKey(), results.get(player).getValue() + 1));
-                    results.put(dealer, Map.entry(results.get(dealer).getKey() + 1, results.get(dealer).getValue()));
+                if (dealer.calculateScore() >= player.calculateScore()) {
+                    results.put(dealer, Map.entry(dealerEntry.getKey() + 1, dealerEntry.getValue()));
+                    results.put(player, Map.entry(playerEntry.getKey(), playerEntry.getValue() + 1));
+                } else {
+                    results.put(dealer, Map.entry(dealerEntry.getKey(), dealerEntry.getValue() + 1));
+                    results.put(player, Map.entry(playerEntry.getKey() + 1, playerEntry.getValue()));
                 }
             }
 
-//            if (player.calculateScore() <= 21 && player.calculateScore() > dealer.calculateScore()) {
-//                results.put(player, Map.entry(0, 0));
-//            } else {
-
-//                results.put(player, 0);
-//                Integer dealerScore = results.get(dealer);
-//                results.put(dealer, dealerScore + 1);
-//            }
         }
         return results;
     }
