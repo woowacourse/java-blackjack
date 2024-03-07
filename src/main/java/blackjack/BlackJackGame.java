@@ -23,6 +23,7 @@ public class BlackJackGame {
         dealer.drawStartCards(deck);
         players.drawStartCards(deck);
         // TODO 카드 출력하기
+        outputView.printStartCards(dealer, players);
 
         players.play(this::playTurn);
         while (dealer.isDrawable()) {

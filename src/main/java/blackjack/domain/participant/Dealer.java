@@ -7,6 +7,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int DRAWABLE_MAX_SCORE = 16;
+    private static final int VISIBLE_START_CARD_SIZE = 1;
 
     public Dealer() {
         super(Collections.emptyList());
@@ -14,11 +15,6 @@ public class Dealer extends Participant {
 
     Dealer(List<Card> cards) {
         super(cards);
-    }
-
-    @Override
-    protected int getMaxDrawableScore() {
-        return DRAWABLE_MAX_SCORE;
     }
 
     public boolean isWin(Player player) {
@@ -30,4 +26,16 @@ public class Dealer extends Participant {
         }
         return this.calculateScore() >= player.calculateScore();
     }
+
+    @Override
+    protected int getVisibleStartCardSize() {
+        return VISIBLE_START_CARD_SIZE;
+    }
+
+    @Override
+    protected int getMaxDrawableScore() {
+        return DRAWABLE_MAX_SCORE;
+    }
+
+
 }

@@ -49,7 +49,7 @@ public class Players {
     }
 
     //TODO 현재 얘는 테스트만을 위해서 임시로 작성된 코드
-    List<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
