@@ -7,11 +7,6 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
     public boolean receiveCard() {
         return sumCardNumbers() <= MAXIMUM_SUM;
     }

@@ -28,11 +28,4 @@ class ParticipantTest {
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         assertFalse(participant.receiveCard());
     }
-
-    @DisplayName("딜러가 아니면 거짓을 반환한다.")
-    @Test
-    void isDealer() {
-        Participant participant = new Participant("배키");
-        assertFalse(participant.isDealer());
-    }
 }

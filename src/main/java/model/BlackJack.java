@@ -5,33 +5,41 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.card.Cards;
 import model.player.Dealer;
+import model.player.Participant;
 import model.player.Player;
-import model.player.Players;
+import model.player.Participants;
 
 public class BlackJack {
 
-    private final Players players;
+    private final Participants participants;
+    private final Dealer dealer;
 
-    public BlackJack(Players players) {
-        this.players = players;
+    public BlackJack(Participants participants, Dealer dealer) {
+        this.participants = participants;
+        this.dealer = dealer;
     }
 
     public void offerCardToPlayers(int cardCount) {
-        players.offerCardToPlayers(cardCount);
+        participants.offerCardToPlayers(cardCount);
+        offerCardToDealer(cardCount);
     }
 
     public void offerCardToPlayer(String name, int cardCount) {
-        players.offerCardToPlayer(name, cardCount);
+        participants.offerCardToPlayer(name, cardCount);
     }
 
-    public Map<Player, GameResult> findResult() {
-        Map<Player, Integer> sumPlayers = players.sumCardNumbersWithoutDealer();
+    public void offerCardToDealer(int cardCount) {
+        dealer.addCards(Cards.selectRandomCards(cardCount));
+    }
 
-        return sumPlayers.entrySet().stream()
+    public Map<Participant, GameResult> findResult() {
+        List<Participant> sumPlayers = participants.getParticipants();
+        return sumPlayers.stream()
                 .collect(toMap(
-                        Entry::getKey,
-                        sumPlayer -> findGameResult(sumPlayer.getKey(), players.getDealer())
+                        participant -> participant,
+                        participant -> findGameResult(participant, dealer)
                 ));
     }
 
@@ -58,16 +66,20 @@ public class BlackJack {
         return GameResult.DRAW;
     }
 
-    public List<Player> findPlayers() {
-        return players.getPlayers();
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
     }
 
-    public Dealer findDealer() {
-        return (Dealer) players.getDealer();
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void giveCard() {
+        offerCardToPlayers(1);
     }
 
     public boolean isDealerUnderThreshold() {
-        Dealer dealer = findDealer();
+        Dealer dealer = getDealer();
         return dealer.receiveCard();
     }
 }

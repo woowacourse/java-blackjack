@@ -5,33 +5,34 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Cards {//TODO 싱글톤
+public class Cards {
 
-    private final List<Card> cards;
+    private static List<Card> cards;
 
-    public Cards() {
+    private Cards() {}
+
+    public static List<Card> selectRandomCards(int size) {
+        if(cards == null) {
+            Cards.createCards();
+        }
+        return Stream.generate(Cards::selectRandomCard).limit(size).toList();
+    }
+
+    private static void createCards() {
         cards = new ArrayList<>();
         for (CardShape cardShape : CardShape.values()) {
             createSameShapeCards(cardShape);
         }
     }
 
-    private void createSameShapeCards(CardShape cardShape) {
+    private static void createSameShapeCards(CardShape cardShape) {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }
     }
 
-    public List<Card> selectRandomCards(int size) {
-        return Stream.generate(this::selectRandomCard).limit(size).toList();
-    }
-
-    public Card selectRandomCard() {
+    private static Card selectRandomCard() {
         Collections.shuffle(cards);
         return cards.remove(0);
-    }
-
-    public boolean contains(Card card) {
-        return cards.contains(card);
     }
 }

@@ -10,11 +10,9 @@ import java.util.Map;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
-import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
-import model.player.Player;
-import model.player.Players;
+import model.player.Participants;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,14 +22,13 @@ class BlackJackTest {
     @DisplayName("참가자에게 카드를 준다.")
     @Test
     void offerCardToPlayers() {
-        Players players = new Players(List.of(new Participant("배키"), new Dealer()), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(new Participant("배키")));
+        BlackJack blackJack = new BlackJack(participants, new Dealer());
         blackJack.offerCardToPlayers(2);
-        List<Player> result = players.getPlayers();
+        List<Participant> result = participants.getParticipants();
 
         assertAll(
-                () -> assertThat(result.get(0).getCards()).hasSize(2),
-                () -> assertThat(result.get(1).getCards()).hasSize(2)
+                () -> assertThat(result.get(0).getCards()).hasSize(2)
         );
     }
 
@@ -39,14 +36,13 @@ class BlackJackTest {
     @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
     @Test
     void offerCardToPlayer() {
-        Players players = new Players(List.of(new Participant("배키"), new Dealer()), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(new Participant("배키")));
+        BlackJack blackJack = new BlackJack(participants, new Dealer());
         blackJack.offerCardToPlayer("배키", 1);
-        List<Player> result = players.getPlayers();
+        List<Participant> result = participants.getParticipants();
 
         assertAll(
-                () -> assertThat(result.get(0).getCards()).hasSize(1),
-                () -> assertThat(result.get(1).getCards()).hasSize(0)
+                () -> assertThat(result.get(0).getCards()).hasSize(1)
         );
     }
 
@@ -61,10 +57,10 @@ class BlackJackTest {
         dealer.addCard(new Card(CardShape.SPACE, CardNumber.EIGHT));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
 
-        Players players = new Players(List.of(participant, dealer), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
 
-        Map<Player, GameResult> result = blackJack.findResult();
+        Map<Participant, GameResult> result = blackJack.findResult();
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.WIN));
     }
 
@@ -76,13 +72,13 @@ class BlackJackTest {
         participant.addCard(new Card(CardShape.DIAMOND, CardNumber.NINE));
 
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
 
-        Players players = new Players(List.of(participant, dealer), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
 
-        Map<Player, GameResult> result = blackJack.findResult();
+        Map<Participant, GameResult> result = blackJack.findResult();
         Assertions.assertThat(result).isEqualTo(Map.of(participant, GameResult.DRAW));
     }
 
@@ -95,8 +91,8 @@ class BlackJackTest {
         dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
 
-        Players players = new Players(List.of(participant, dealer), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
 
         assertFalse(blackJack.isDealerUnderThreshold());
     }
@@ -110,8 +106,8 @@ class BlackJackTest {
         dealer.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.SIX));
 
-        Players players = new Players(List.of(participant, dealer), new Cards());
-        BlackJack blackJack = new BlackJack(players);
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
 
         assertTrue(blackJack.isDealerUnderThreshold());
     }

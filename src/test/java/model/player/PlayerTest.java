@@ -19,11 +19,6 @@ class PlayerTest {
     void makePlayer() {
         this.player = new Player("켬미") {
             @Override
-            public boolean isDealer() {
-                return false;
-            }
-
-            @Override
             public boolean receiveCard() {
                 return false;
             }
@@ -35,11 +30,6 @@ class PlayerTest {
     void validateBlankName() {
         Assertions.assertThatThrownBy(() -> new Player("") {
             @Override
-            public boolean isDealer() {
-                return false;
-            }
-
-            @Override
             public boolean receiveCard() {
                 return false;
             }
@@ -50,11 +40,6 @@ class PlayerTest {
     @Test
     void validateNullName() {
         Assertions.assertThatThrownBy(() -> new Player(null) {
-            @Override
-            public boolean isDealer() {
-                return false;
-            }
-
             @Override
             public boolean receiveCard() {
                 return false;

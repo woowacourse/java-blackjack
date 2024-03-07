@@ -24,7 +24,6 @@ public abstract class Player implements NoticeStatus {
         }
     }
 
-    public abstract boolean isDealer();
 
     public void addCards(List<Card> card) {
         cards.addAll(card);

@@ -10,6 +10,8 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.player.Dealer;
+import model.player.Participant;
+import model.player.Participants;
 import model.player.Player;
 
 public class OutputView {
@@ -21,17 +23,17 @@ public class OutputView {
     private static final String DEALER_ADD_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 승패";
 
-    public void printStartBlackJack(List<Player> players, Dealer dealer) {
+    public void printStartBlackJack(List<Participant> players, Dealer dealer) {
         printPlayerNames(players);
         printPlayerCards(players, dealer);
     }
 
-    private void printPlayerNames(List<Player> players) {
+    private void printPlayerNames(List<Participant> players) {
         String names = String.join(", ", players.stream().map(Player::getName).toList());
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(names) + System.lineSeparator());
     }
 
-    private void printPlayerCards(List<Player> players, Dealer dealer) {
+    private void printPlayerCards(List<Participant> players, Dealer dealer) {
         System.out.println(playerCardMessage(dealer, 1));
         for (Player player : players) {
             System.out.println(playerCardMessage(player));
@@ -59,7 +61,7 @@ public class OutputView {
         return cardNumber + cardShape;
     }
 
-    private String cardNumberToString(CardNumber cardNumber) {//TODO : enumMap
+    private String cardNumberToString(CardNumber cardNumber) {
         if (cardNumber == CardNumber.ACE) {
             return "A";
         }
@@ -75,7 +77,7 @@ public class OutputView {
         return String.valueOf(cardNumber.getNumber());
     }
 
-    private String cardShapeToString(CardShape cardShape) {//TODO : enumMap
+    private String cardShapeToString(CardShape cardShape) {
         if (cardShape == CardShape.SPACE) {
             return "스페이드";
         }
@@ -88,10 +90,10 @@ public class OutputView {
         return "다이아몬드";
     }
 
-    public void printResult(List<Player> players, Dealer dealer) {
+    public void printResult(List<Participant> players, Dealer dealer) {
         System.out.println();
         System.out.println(playerCardMessage(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.sumCardNumbers()));
-        for (Player player : players) {
+        for (Participant player : players) {
             System.out.println(playerCardMessage(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.sumCardNumbers()));
         }
     }
@@ -100,7 +102,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
     }
 
-    public void printGameResult(Map<Player, GameResult> results) {
+    public void printGameResult(Map<Participant, GameResult> results) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
 
         Map<GameResult, Long> dealerGameResult = results.values().stream()
@@ -112,7 +114,7 @@ public class OutputView {
         }
 
         System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", stringBuilder.toString()));
-        for (Map.Entry<Player, GameResult> result : results.entrySet()) {
+        for (Map.Entry<Participant, GameResult> result : results.entrySet()) {
             System.out.println(
                     GAME_RESULT_MESSAGE.formatted(result.getKey().getName(), gameResultToString(result.getValue())));
         }

@@ -3,11 +3,10 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
-import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
+import model.player.Participants;
 import model.player.Player;
-import model.player.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -18,13 +17,15 @@ public class BlackJackController {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-    
+
+    // TODO: 코드줄 줄이기
     public void run() {
         BlackJack blackJack = createBlackJack();
         blackJack.offerCardToPlayers(2);
-        outputView.printStartBlackJack(blackJack.findPlayers(), blackJack.findDealer());
+        outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
-        for (Player player : blackJack.findPlayers()) {
+        // TODO : 인덴트 줄이기
+        for (Player player : blackJack.getParticipants()) {
             while (!player.isOverMaximumSum()) {
                 String name = player.getName();
                 if (!inputView.inputEnd(name)) {
@@ -37,10 +38,10 @@ public class BlackJackController {
 
         while (blackJack.isDealerUnderThreshold()) {
             outputView.printDealerAddCard();
-            blackJack.offerCardToPlayer("딜러", 1);
+            blackJack.offerCardToDealer(1);
         }
 
-        outputView.printResult(blackJack.findPlayers(), blackJack.findDealer());
+        outputView.printResult(blackJack.getParticipants(), blackJack.getDealer());
 
         outputView.printGameResult(blackJack.findResult());
 
@@ -48,9 +49,8 @@ public class BlackJackController {
 
     private BlackJack createBlackJack() {
         List<String> names = inputView.inputParticipantNames();
-        List<Player> players = new ArrayList<>(names.stream()
-                .map(name -> (Player) new Participant(name)).toList());
-        players.add(new Dealer());
-        return new BlackJack(new Players(players, new Cards()));
+        List<Participant> players = new ArrayList<>(names.stream()
+                .map(Participant::new).toList());
+        return new BlackJack(new Participants(players),new Dealer());
     }
 }
