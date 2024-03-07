@@ -1,12 +1,12 @@
 package blackjack.model.card;
 
 import blackjack.model.cardgenerator.CardGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+    private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
 
@@ -23,10 +23,28 @@ public class Hand {
     }
 
     public int calculateCardsTotal() {
-        return cards.stream()
+        int total = cards.stream()
                 .map(Card::getDenomination)
                 .mapToInt(Denomination::getScore)
                 .sum();
+
+        if (hasAce() && canBeAdjusted(total)) {
+            return adjustTotalForAce(total);
+        }
+        return total;
+    }
+
+    public boolean canBeAdjusted(int total) {
+        return total + ACE_ADJUSTMENT <= BLACK_JACK_CONDITION;
+    }
+
+    public int adjustTotalForAce(int total) {
+        return total + ACE_ADJUSTMENT;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getDenomination().isAce());
     }
 
     public boolean isBlackJack() {

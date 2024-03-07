@@ -47,7 +47,7 @@ public class HandTest {
         List<Card> cards = List.of(
                 new Card(Suit.HEART, Denomination.THREE),
                 new Card(Suit.HEART, Denomination.THREE),
-                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.HEART, Denomination.FOUR),
                 new Card(Suit.HEART, Denomination.ACE)
         );
         Hand hand = new Hand(cards);
@@ -56,13 +56,7 @@ public class HandTest {
         int actualTotal = hand.calculateCardsTotal();
 
         // then
-        int totalWithoutAce = cards.stream()
-                .map(Card::getDenomination)
-                .filter(denomination -> denomination != Denomination.ACE)
-                .mapToInt(Denomination::getScore)
-                .sum();
-        int aceScore = 1;
-        assertThat(actualTotal).isEqualTo(totalWithoutAce + aceScore);
+        assertThat(actualTotal).isEqualTo(21);
     }
 
     @Test

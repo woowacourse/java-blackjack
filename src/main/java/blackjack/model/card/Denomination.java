@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 public enum Denomination {
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -12,8 +13,7 @@ public enum Denomination {
     TEN(10),
     QUEEN(10),
     KING(10),
-    JACK(10),
-    ACE(11);
+    JACK(10);
 
     private int score;
 
@@ -31,5 +31,9 @@ public enum Denomination {
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
     }
 }
