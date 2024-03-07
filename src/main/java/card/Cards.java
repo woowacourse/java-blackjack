@@ -36,6 +36,12 @@ public class Cards {
                 .sum();
     }
 
+    public List<String> getCardsStatus() {
+        return cards.stream()
+                .map(Card::getCard)
+                .toList();
+    }
+
     private int countAceCard() {
         return (int) cards.stream()
                 .filter(card -> card.isSameCardNumber(CardNumber.ACE))
