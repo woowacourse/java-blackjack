@@ -19,6 +19,18 @@ public class Dealer extends GameParticipant {
         this.receiveCard(giveCard());
     }
 
+    public void checkNeedExtraCard() {
+        receiveCard(giveCard());
+
+        while (getMaxGameScore() <= 16) {
+            receiveCard(giveCard());
+        }
+    }
+
+    public int countExtraCard() {
+        return getCardsSize() - 2;
+    }
+
     public Card giveCard() {
         cardDeck.shuffleCard();
         return cardDeck.pickCard();
