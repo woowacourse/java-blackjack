@@ -56,7 +56,7 @@ public class Gamers {
     }
 
     public List<Player> callPlayers() {
-        return IntStream.range(PLAYER_FIRST_INDEX, gamers.size() - 1)
+        return IntStream.range(PLAYER_FIRST_INDEX, gamers.size())
                 .mapToObj(index -> (Player) gamers.get(index))
                 .collect(Collectors.toList());
     }
