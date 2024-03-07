@@ -46,4 +46,8 @@ public abstract class Participant {
     }
 
     public abstract boolean isReceivable();
+
+    public String getName() {
+        return name.getName();
+    }
 }

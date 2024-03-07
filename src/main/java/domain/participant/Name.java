@@ -8,8 +8,11 @@ public class Name {
     private static final int MAX_NAME_LENGTH = 5;
     private static final Pattern HANGUL_ALPHABET_NUMBER = Pattern.compile("^[가-힣a-zA-Z0-9]*$");
 
+    private final String name;
+
     public Name(String rawName) {
         validate(rawName);
+        this.name = rawName;
     }
 
     private void validate(String rawName) {
@@ -36,5 +39,9 @@ public class Name {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 한글, 영어, 숫자만 입력 가능합니다.");
+    }
+
+    public String getName() {
+        return name;
     }
 }
