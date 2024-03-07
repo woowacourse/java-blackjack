@@ -45,11 +45,11 @@ class BlackjackTest {
         jonge.addCard(Card.makeRandomCard(new RandomNumberGeneartor(1, 2)));
         Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge)));
 
-        Map<Player, Entry<Integer, Integer>> playerEntryMap = blackjack.finishGame();
+        BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
 
-        Integer dealerLose = playerEntryMap.get(dealer).getValue();
-        Integer tebaWin = playerEntryMap.get(teba).getKey();
-        Integer jongeWin = playerEntryMap.get(jonge).getKey();
+        Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
+        Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();
+        Integer jongeWin = blackjackResultDTO.results().get(jonge).getKey();
         assertThat(tebaWin + jongeWin).isEqualTo(dealerLose);
     }
 }
