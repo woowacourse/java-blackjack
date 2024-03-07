@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class CardGameJudge {
 
+    public static final int BUST_CONDITION = 21;
+
     public CardGameResult judge(final Player dealer, final List<Player> players) {
         Map<Player, WinningStatus> result = new LinkedHashMap<>();
 
@@ -26,7 +28,14 @@ public class CardGameJudge {
     }
 
     // TODO: 이름 바꾸기
+    // TODO: 정리
     private WinningStatus doesPlayerWin(final int dealerScore, final int playerScore) {
+        if (playerScore > BUST_CONDITION) {
+            return WinningStatus.LOSE;
+        }
+        if (dealerScore > BUST_CONDITION) {
+            return WinningStatus.WIN;
+        }
         if (dealerScore == playerScore) {
             return WinningStatus.PUSH;  // TODO: 도메인 지식 없으면 이해하기 힘듦
         }
