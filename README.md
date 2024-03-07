@@ -46,10 +46,10 @@
 - [ ] GameStatusDto
     - [ ] List<GamerDto>로 생성한다.
     - [ ] 이름이 들어오면 GamerDto를 반환한다.
-- [ ] GamerDto
-    - [ ] 총점을 반환한다
-    - [ ] 이름을 반환한다.
-    - [ ] List<Card>를 반환한다.
+- [x] GamerDto
+    - [x] 총점을 반환한다
+    - [x] 이름을 반환한다.
+    - [x] List<Card>를 반환한다.
 
 
 - 참가자의 이름 입력받는다
