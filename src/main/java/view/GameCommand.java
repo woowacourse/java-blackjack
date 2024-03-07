@@ -15,6 +15,6 @@ public enum GameCommand {
 
     public static boolean isGetCardCommand(String inputCommand) {
         return Arrays.stream(values())
-                .anyMatch(gameCommand -> gameCommand.command.equals(inputCommand));
+                .anyMatch(gameCommand -> GET_CARD.command.equals(inputCommand));
     }
 }
