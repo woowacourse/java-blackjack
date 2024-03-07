@@ -2,8 +2,11 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.common.Name;
@@ -41,13 +44,13 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 숫자의 합이 16이하면 카드를 받아야 한다.")
+    @DisplayName("딜러는 숫자의 합이 17이상이면 카드를 받아야 한다.")
     public void Dealer_Can_not_receive_additional_card() {
         Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.JACK, CardValue.FOUR));
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.JACK, CardValue.KING));
         var sut = new Dealer(name, cards);
 
-        assertTrue(sut.isReceivable());
+        assertFalse(sut.isReceivable());
     }
 
     @Test
@@ -65,5 +68,37 @@ public class DealerTest {
                          .getResultStatus()).isEqualTo(ResultStatus.LOSE);
         assertThat(result.getDealerResult()
                          .getResultWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트 일때 플레이어가 버스트가 아니면 플레이어가 승리한다.")
+    public void Dealer_Player_win_when_dealer_is_burst() {
+        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        var sut = new Dealer(name, cards);
+        sut.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
+
+        var result = sut.checkResult(List.of(gamePlayer));
+
+        assertThat(result.getGamePlayerResults()
+                         .get(0)
+                         .getResultStatus()).isEqualTo(ResultStatus.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어는 버스트이면 무조건 플레이어가 패배한다.")
+    public void Dealer_Player_lose_when_burst() {
+        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.FIVE));
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        var sut = new Dealer(name, cards);
+        gamePlayer.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
+
+        var result = sut.checkResult(List.of(gamePlayer));
+
+        assertThat(result.getGamePlayerResults()
+                         .get(0)
+                         .getResultStatus()).isEqualTo(ResultStatus.LOSE);
     }
 }
