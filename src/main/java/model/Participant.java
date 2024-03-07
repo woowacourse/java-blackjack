@@ -5,9 +5,9 @@ public abstract class Participant {
     private final Name name;
     final CardDeck cardDeck;
 
-    protected Participant(Name name, CardDeck cardDeck) {
+    protected Participant(Name name) {
         this.name = name;
-        this.cardDeck = cardDeck;
+        this.cardDeck = new CardDeck();
     }
 
     public abstract boolean canHit();

@@ -30,7 +30,7 @@ public class Names {
         }
     }
 
-    public List<Name> getValue() {
+    public List<Name> getPlayerNames() {
         return Collections.unmodifiableList(playerNames);
     }
 }
