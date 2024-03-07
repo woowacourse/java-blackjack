@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.model.Card;
-import blackjack.view.score.Converter;
-import blackjack.view.score.ShapeConverter;
+import blackjack.view.display.ScoreDisplay;
+import blackjack.view.display.ShapeDisplay;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +18,7 @@ public class OutputView {
 
     private static String convert(final List<Card> cards) {
         return cards.stream()
-                .map(card -> Converter.getValue(card.getScore()) + ShapeConverter.getValue(card.getShape()))
+                .map(card -> ScoreDisplay.getValue(card.getScore()) + ShapeDisplay.getValue(card.getShape()))
                 .collect(Collectors.joining(", "));
     }
 }
