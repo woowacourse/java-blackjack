@@ -17,6 +17,10 @@ public class Player {
         hands.add(card);
     }
 
+    public boolean isWin(final Dealer dealer) {
+        return this.hands.isWin(dealer.getHands());
+    }
+
     //TODO 메서드 명 변경
 
     private void validate(final String name) {

@@ -14,6 +14,11 @@ public class Dealer {
         this.hands = Hands.createEmptyPacket();
     }
 
+    public Dealer(final CardDeck cardDeck, final Hands hands) {
+        this.cardDeck = cardDeck;
+        this.hands = hands;
+    }
+
     public void startDeal(final Players players) {
         for (int i = 0; i < INIT_CARD_NUMBER; i++) {
             players.forEach(player -> player.add(cardDeck.pop()));
@@ -40,5 +45,9 @@ public class Dealer {
 
     public int getTotalCardSum() {
         return hands.sum();
+    }
+
+    public Hands getHands() {
+        return hands;
     }
 }
