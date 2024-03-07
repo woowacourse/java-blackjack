@@ -35,7 +35,7 @@ public class BlackJackGame {
     }
 
     private void playTurn(Player player) {
-        while (player.isDrawable() && inputView.isAddCard(player.getName())) {
+        while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
             player.add(deck.draw());
             outputView.printCards();
         }
