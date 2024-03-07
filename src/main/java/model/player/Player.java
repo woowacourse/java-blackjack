@@ -1,6 +1,7 @@
 package model.player;
 
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
 
@@ -33,6 +34,23 @@ public class Player {
     public Player addCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Player(name, addedCards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     public int cardsSize() {

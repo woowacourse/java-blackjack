@@ -27,7 +27,7 @@ public class HitAnswer {
         throw new IllegalArgumentException(INVALID_ANSWER);
     }
 
-    public boolean isHit() {
-        return isHit;
+    public boolean isStay() {
+        return !isHit;
     }
 }
