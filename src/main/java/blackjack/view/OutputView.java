@@ -28,7 +28,7 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + card.getNumber() + card.getShape());
     }
 
-    private static void printPlayerCard(final Player player) {
+    public static void printPlayerCard(final Player player) {
         // TODO: 문자열 분리 (상수 or 메서드)
         String cardInfo = player.getName() + "카드: " + player.getCards()
                 .stream()
