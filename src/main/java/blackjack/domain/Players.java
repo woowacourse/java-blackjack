@@ -48,4 +48,8 @@ public class Players {
                 .filter(player -> !player.handSummationExceed(target))
                 .count();
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
