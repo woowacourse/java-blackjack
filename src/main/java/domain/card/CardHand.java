@@ -11,7 +11,7 @@ public class CardHand {
 	private final List<Card> cards;
 
 	private CardHand(List<Card> cards) {
-		this.cards = cards;
+		this.cards = new ArrayList<>(cards);
 	}
 
 	public static CardHand createEmpty() {

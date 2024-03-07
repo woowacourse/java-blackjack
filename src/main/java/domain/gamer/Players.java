@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -12,20 +13,31 @@ public class Players {
 	private final List<Player> players;
 
 	public Players(List<String> players) {
-		// TODO : 메소드 분리, 예외 메시지, Collection 방어적 복사
-		if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
-			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
-		}
+		List<String> copyPlayers = new ArrayList<>(players);
+		validate(copyPlayers);
 
+		this.players = copyPlayers.stream()
+			.map(Player::newInstance)
+			.toList();
+	}
+
+	private void validate(List<String> players) {
+		validateSize(players);
+		validateDuplication(players);
+	}
+
+	private void validateDuplication(List<String> players) {
 		long distinctCount = players.stream()
 			.distinct().count();
 		if (players.size() != distinctCount) {
 			throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
 		}
+	}
 
-		this.players = players.stream()
-			.map(Player::newInstance)
-			.toList();
+	private void validateSize(List<String> players) {
+		if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
+			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
+		}
 	}
 
 	public List<Player> getPlayers() {

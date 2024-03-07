@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.card.CardHand;
 
@@ -15,10 +13,6 @@ public class Player extends Gamer {
 
 	public static Player newInstance(String name) {
 		return new Player(name, CardHand.createEmpty());
-	}
-
-	public static Player of(String name, List<Card> cards) {
-		return new Player(name, CardHand.from(cards));
 	}
 
 	public void receiveCard(Card card) {
