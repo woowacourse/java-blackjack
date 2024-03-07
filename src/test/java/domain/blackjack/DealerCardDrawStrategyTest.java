@@ -7,9 +7,6 @@ import static domain.card.CardName.QUEEN;
 import static domain.card.CardName.SIX;
 import static domain.card.CardType.HEART;
 
-import domain.blackjack.DealerRandomCardDrawStrategy;
-import domain.blackjack.Gamer;
-import domain.blackjack.HoldingCards;
 import domain.card.Card;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -19,7 +16,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerCardDrawStrategyTest {
-
     public static Stream<Arguments> canDrawParameters() {
         return Stream.of(
                 Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(SIX, HEART)), false),

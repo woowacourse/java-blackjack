@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class SummationCardPointTest {
-
     @Test
     @DisplayName("카드 포인트 합이 잘 생성되는지 검증")
     void getSummationCardPoint() {

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HoldingCardsTest {
-
     @Test
     @DisplayName("포함된 카드의 포인트 합계가 올바른지 검증")
     void calculateTotalPoint() {

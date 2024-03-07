@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-
     @Test
     @DisplayName("원하는 방식대로 카드가 뽑히는지 검증")
     void validateDraw() {
