@@ -10,11 +10,19 @@ public class Card {
         this.mark = mark;
     }
 
+    public boolean isAceCard() {
+        return this.letter.isAce();
+    }
+
     public int getValue() {
         return letter.getValue();
     }
 
-    public boolean isAceCard() {
-        return this.letter.isAce();
+    public String getText() {
+        return letter.getText();
+    }
+
+    public String getMark() {
+        return mark.getName();
     }
 }
