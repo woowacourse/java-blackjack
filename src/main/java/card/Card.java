@@ -17,4 +17,8 @@ public class Card {
     public boolean isSameCardNumber(CardNumber checkNumber) {
         return cardNumber == checkNumber;
     }
+
+    public String getCard() {
+        return cardNumber.number + cardPattern.name;
+    }
 }
