@@ -39,7 +39,7 @@ public class Hands {
 
     public boolean hasAce() {
         return value.stream()
-                .anyMatch(card -> 1 == card.getScore());
+                .anyMatch(card -> Rank.ACE == card.getRank());
     }
 
     public int getCardCount() {

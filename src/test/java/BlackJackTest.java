@@ -8,8 +8,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackTest {
+
+    @DisplayName("카드를 두장씩 나눠준다.")
     @Test
-    void name() {
+    void beginDealing() {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
@@ -22,10 +24,9 @@ class BlackJackTest {
         );
     }
 
-    @Test
     @DisplayName("참가자의 승패를 결정한다.")
+    @Test
     void isWinner() {
-        //given
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
@@ -36,17 +37,13 @@ class BlackJackTest {
 
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
-        //when
-
-        //then
         boolean isWinner = blackJack.isWinner(participant);
         assertThat(isWinner).isTrue();
     }
 
-    @Test
     @DisplayName("참가자와 딜러의 점수가 같은경우 ")
-    void isWinner2() {
-        //given
+    @Test
+    void isWinnerWhenSameScore() {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
@@ -59,12 +56,7 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        //when
-
-        //then
         boolean isWinner = blackJack.isWinner(participant);
         assertThat(isWinner).isFalse();
     }
-
-
 }

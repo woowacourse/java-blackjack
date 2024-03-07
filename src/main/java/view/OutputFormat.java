@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputFormat {
+
+    private static final String DELIMITER = ", ";
+
     public String formatParticipantNames(Participants participants) {
         List<Name> names = participants.getNames();
         List<String> names2 = new ArrayList<>();
         for (Name name : names) {
             names2.add(name.getValue());
         }
-        return String.format("딜러와 %s에게 2장을 나누었습니다.",String.join(", ", names2));
+        return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, names2));
     }
 
     public String formatCardSet(Participant participant) {
@@ -23,7 +26,7 @@ public class OutputFormat {
         for (Card card : cards) {
             cardNames.add(formatCard(card));
         }
-        return String.format("%s카드: %s", name.getValue(), String.join(", ", cardNames));
+        return String.format("%s카드: %s", name.getValue(), String.join(DELIMITER, cardNames));
     }
 
     public String formatCardResult(Participant participant) {
@@ -35,7 +38,7 @@ public class OutputFormat {
     }
 
     public String formatResult(Map.Entry<Participant, Boolean> entry) {
-        if (entry.getValue()) {
+        if (Boolean.TRUE.equals(entry.getValue())) {
             return String.format("%s: 승", entry.getKey().getName().getValue());
         }
         return String.format("%s: 패", entry.getKey().getName().getValue());

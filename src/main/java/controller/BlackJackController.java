@@ -5,9 +5,9 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
+
     public void run() {
         List<String> names = InputView.inputParticipantName();
         Participants participants = new Participants(names);
@@ -22,32 +22,32 @@ public class BlackJackController {
         printResult(blackJack);
     }
 
-    private static void printResult(BlackJack blackJack) {
+    private void printResult(BlackJack blackJack) {
         BlackJackResult blackJackResult = blackJack.savePlayerResult();
         OutputView.printFinalResult(blackJackResult);
     }
 
-    private static void printScore(Dealer dealer, Participants participants) {
+    private void printScore(Dealer dealer, Participants participants) {
         OutputView.printPlayerScore(dealer);
         for (Participant participant : participants.getValue()) {
             OutputView.printPlayerScore(participant);
         }
     }
 
-    private static void dealerHit(Dealer dealer) {
+    private void dealerHit(Dealer dealer) {
         while (dealer.shouldHit()) {
             OutputView.printDealerHit();
             dealer.receiveCard(dealer.draw());
         }
     }
 
-    private static void askHit(Participants participants, Dealer dealer) {
+    private void askHit(Participants participants, Dealer dealer) {
         for (Participant participant : participants.getValue()) {
             hit(participant, dealer);
         }
     }
 
-    private static void startBlackJack(BlackJack blackJack, Participants participants, Dealer dealer) {
+    private void startBlackJack(BlackJack blackJack, Participants participants, Dealer dealer) {
         blackJack.beginDealing();
         OutputView.printParticipants(participants);
         OutputView.printDealerCard(dealer);
@@ -56,7 +56,7 @@ public class BlackJackController {
         }
     }
 
-    private static void hit(Participant participant, Dealer dealer) {
+    private void hit(Participant participant, Dealer dealer) {
         while (participant.canHit() && "y".equals(InputView.inputDraw(participant.getName()))) {
             participant.receiveCard(dealer.draw());
             OutputView.printCard(participant);

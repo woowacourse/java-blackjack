@@ -1,14 +1,14 @@
 package domain;
 
-import domain.Card;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    List<Card> cards;
+
+    private final List<Card> cards;
+
     public Deck() {
         cards = new ArrayList<>();
         init();

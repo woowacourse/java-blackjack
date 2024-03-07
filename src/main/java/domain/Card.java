@@ -3,8 +3,9 @@ package domain;
 import java.util.Objects;
 
 public class Card {
-    private Shape shape;
-    private Rank rank;
+
+    private final Shape shape;
+    private final Rank rank;
 
     public Card(Shape shape, Rank rank) {
         this.shape = shape;

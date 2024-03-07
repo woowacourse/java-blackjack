@@ -8,14 +8,15 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlackJackResultTest {
+class BlackJackResultTest {
+
     @DisplayName("딜러가 이긴 횟수 반환")
     @Test
     void getDealerWinCount() {
         Map<Participant, Boolean> result = new HashMap<>();
-        result.put(new Participant(new Name("Dgs")), true);
-        result.put(new Participant(new Name("dsf")), true);
-        result.put(new Participant(new Name("dewf")), false);
+        result.put(new Participant(new Name("rush")), true);
+        result.put(new Participant(new Name("pobi")), true);
+        result.put(new Participant(new Name("bito")), false);
         BlackJackResult blackJackResult = new BlackJackResult(result);
 
         Assertions.assertThat(blackJackResult.getDealerWinCount()).isEqualTo(1);
@@ -25,9 +26,9 @@ public class BlackJackResultTest {
     @Test
     void getTotalCount() {
         Map<Participant, Boolean> result = new HashMap<>();
-        result.put(new Participant(new Name("Dgs")), true);
-        result.put(new Participant(new Name("dsf")), true);
-        result.put(new Participant(new Name("dewf")), false);
+        result.put(new Participant(new Name("rush")), true);
+        result.put(new Participant(new Name("pobi")), true);
+        result.put(new Participant(new Name("bito")), false);
         BlackJackResult blackJackResult = new BlackJackResult(result);
 
         Assertions.assertThat(blackJackResult.getTotalCount()).isEqualTo(3);

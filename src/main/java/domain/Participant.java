@@ -3,9 +3,11 @@ package domain;
 import java.util.List;
 
 public class Participant {
+
     private static final int BLACK_JACK_COUNT = 21;
+
     protected Hands hands;
-    private Name name;
+    private final Name name;
 
     public Participant(Name name) {
         this.hands = new Hands();

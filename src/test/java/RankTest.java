@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RankTest {
+
     @DisplayName("점수 반환")
     @Test
     void getScore() {

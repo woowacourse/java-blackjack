@@ -2,7 +2,9 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private Deck deck;
+    public static final int DEALER_HIT_COUNT = 16;
+
+    private final Deck deck;
 
     public Dealer() {
         super(new Name("딜러"));
@@ -10,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldHit() {
-        return hands.calculateScore() <= 16;
+        return hands.calculateScore() <= DEALER_HIT_COUNT;
     }
 
     public Card draw() {

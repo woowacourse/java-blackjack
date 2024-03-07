@@ -2,14 +2,17 @@ package view;
 
 import domain.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
     private static final OutputFormat outputFormat = new OutputFormat();
 
-    private OutputView() {}
+    private OutputView() {
+
+    }
+
     public static void printParticipants(Participants participants) {
         System.out.println();
         System.out.printf(outputFormat.formatParticipantNames(participants));

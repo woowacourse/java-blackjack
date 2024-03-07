@@ -20,21 +20,19 @@ class HandsTest {
         assertThat(score).isEqualTo(10);
     }
 
+    @DisplayName("사용자의 카드중 ACE 포함여부를 반환한다.")
     @Test
-    @DisplayName("사용자의 카드중 ACE 포함여부를 반환한다. ")
     void hasAce() {
         Hands hands = new Hands();
         hands.receive(new Card(Shape.HEART, Rank.ACE));
 
-        //when
         boolean hasAce = hands.hasAce();
-        //then
+
         assertThat(hasAce).isTrue();
     }
 
-
-    @Test
     @DisplayName("ace를 11로 결정한다.")
+    @Test
     void calculateAceIsEleven() {
         Hands hands = new Hands();
         hands.receive(new Card(Shape.HEART, Rank.KING));
@@ -45,8 +43,8 @@ class HandsTest {
         Assertions.assertThat(totalScore).isEqualTo(21);
     }
 
-    @Test
     @DisplayName("ace를 1로 결정한다.")
+    @Test
     void calculateAceIsOne() {
         Hands hands = new Hands();
         hands.receive(new Card(Shape.HEART, Rank.KING));

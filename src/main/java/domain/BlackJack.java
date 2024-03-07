@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJack {
-    private Dealer dealer;
-    private Participants participants;
+
+    private final Dealer dealer;
+    private final Participants participants;
 
     public BlackJack(Dealer dealer, Participants participants) {
         this.dealer = dealer;

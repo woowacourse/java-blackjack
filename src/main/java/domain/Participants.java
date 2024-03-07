@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Participants {
+
+    public static final int MIN_PARTICIPANT_COUNT = 2;
+    public static final int MAX_PARTICIPANT_COUNT = 8;
+
     private final List<Participant> value;
+
     public Participants(List<String> names) {
         validate(names);
         value = names.stream().map(name -> new Participant(new Name(name)))
@@ -22,8 +27,8 @@ public class Participants {
     }
 
     private static void validate(List<String> names) {
-        if (names.size() < 2 || names.size() > 8) {
-            throw new IllegalArgumentException("최소 2명 최대 8명까지 입력받을 수 있습니다.");
+        if (names.size() < MIN_PARTICIPANT_COUNT || names.size() > MAX_PARTICIPANT_COUNT) {
+            throw new IllegalArgumentException(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
         }
         Set<String> distinctNames = Set.copyOf(names);
 

@@ -1,6 +1,7 @@
 package domain;
 
 public enum Shape {
+
     HEART("하트"),
     SPADE("스페이드"),
     CLOVER("클로버"),

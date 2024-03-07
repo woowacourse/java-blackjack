@@ -4,7 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class BlackJackResult {
-    private Map<Participant, Boolean> resultByParticipant;
+
+    private final Map<Participant, Boolean> resultByParticipant;
 
     public BlackJackResult(Map<Participant, Boolean> resultByParticipant) {
         this.resultByParticipant = resultByParticipant;
@@ -16,7 +17,7 @@ public class BlackJackResult {
 
     public int getDealerWinCount() {
         long dealerWinCount = resultByParticipant.values().stream()
-                .filter(isWin -> !isWin)
+                .filter(isWin -> false == isWin)
                 .count();
         return (int) dealerWinCount;
     }

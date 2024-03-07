@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
     @DisplayName("카드 덱 초기화")
     @Test
     void initDeck() {
