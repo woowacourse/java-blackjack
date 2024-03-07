@@ -4,8 +4,8 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final Name name;
     protected final Hand hand;
+    private final Name name;
 
     protected Participant(String name) {
         this.name = new Name(name);

@@ -3,18 +3,18 @@ package blackjack;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-enum GameCommand {
+enum Command {
 
     YES("y"),
     NO("n");
 
     private final String command;
 
-    GameCommand(String command) {
+    Command(String command) {
         this.command = command;
     }
 
-    public static GameCommand from(String command) {
+    public static Command from(String command) {
         return Arrays.stream(values())
                 .filter(gameCommand -> gameCommand.command.equals(command))
                 .findFirst()

@@ -2,12 +2,17 @@ package blackjack;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardShape;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
@@ -57,7 +62,7 @@ class Controller {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.isPlayable()) {
-            GameCommand command = createGameCommand(player);
+            Command command = createGameCommand(player);
             if (command.isNo()) {
                 outputView.printCards(player);
                 break;
@@ -68,10 +73,10 @@ class Controller {
         }
     }
 
-    private GameCommand createGameCommand(Player player) {
+    private Command createGameCommand(Player player) {
         String command = inputView.readDecision(player.getName());
 
-        return GameCommand.from(command);
+        return Command.from(command);
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
@@ -82,7 +87,38 @@ class Controller {
     }
 
     private void printResult(Participants participants) {
+        Map<Player, GameResult> playerGameResults = createPlayerGameResults(participants);
+        Map<GameResult, Integer> dealerGameResult = createDealerGameResult(playerGameResults);
+
         outputView.printAllCardsWithScore(participants.getParticipants());
+        outputView.printGameResult(playerGameResults, dealerGameResult);
+    }
+
+    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
+        EnumMap<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
+
+        for (GameResult gameResult : GameResult.values()) {
+            dealerGameResults.put(gameResult, 0);
+        }
+
+        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
+            int current = dealerGameResults.get(entry.getValue().getOpposite());
+            dealerGameResults.put(entry.getValue().getOpposite(), current + 1);
+        }
+
+        return dealerGameResults;
+    }
+
+    private Map<Player, GameResult> createPlayerGameResults(Participants participants) {
+        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
+        Dealer dealer = participants.getDealer();
+
+        for (Player player : participants.getPlayers()) {
+            GameResult gameResult = dealer.compareWith(player);
+            playerGameResults.put(player, gameResult.getOpposite());
+        }
+
+        return playerGameResults;
     }
 
     private List<Card> createCards() {
