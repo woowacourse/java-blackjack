@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public class Gamer {
+abstract class Gamer {
     Name name;
     Hand hand;
 
@@ -13,7 +13,9 @@ public class Gamer {
 
     public void hit(final Card card) {
         hand.add(card);
-    };
+    }
+
+    abstract boolean isStay();
 
     public int calculateTotalScore() {
         return hand.sum();

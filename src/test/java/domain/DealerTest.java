@@ -64,4 +64,25 @@ public class DealerTest {
         // then
         assertThat(bust).isTrue();
     }
+    
+    @DisplayName("딜러가 카드를 더 받을 수 있는지 판단한다.")
+    @Test
+    void isStayTest() {
+        // given
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
+
+        Dealer dealer  = new Dealer();
+
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        // when
+        boolean stay = dealer.isStay();
+
+        // then
+        assertThat(stay).isTrue();
+    }
 }

@@ -66,4 +66,26 @@ public class PlayerTest {
         // then
         assertThat(bust).isTrue();
     }
+
+    @DisplayName("플레이어가 카드를 더 받을 수 있는지 판단한다.")
+    @Test
+    void isStayTest() {
+        // given
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
+
+        Name name = new Name("lini");
+        Player player = new Player(name);
+
+        player.hit(card1);
+        player.hit(card2);
+        player.hit(card3);
+
+        // when
+        boolean stay = player.isStay();
+
+        // then
+        assertThat(stay).isTrue();
+    }
 }
