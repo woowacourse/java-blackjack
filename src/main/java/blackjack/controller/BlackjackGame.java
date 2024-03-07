@@ -46,8 +46,8 @@ public class BlackjackGame {
         boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantHit(player));
         if (isPlayerWantHit) {
             player.addCard(RandomDeck.getInstance());
-            outputView.printPlayerHand(player);
         }
+        outputView.printPlayerHand(player);
         playerIterator.update(isPlayerWantHit);
     }
 
