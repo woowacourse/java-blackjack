@@ -1,21 +1,22 @@
 package domain;
 
-import java.util.List;
-import java.util.Random;
-
 public class Participant {
 
-    protected final Cards cards;
+    protected final Score score = new Score();
 
-    public Participant(Cards cards) {
-        this.cards = cards;
+    public void updateStatus(Status status) {
+        score.increaseScore(status);
     }
 
-    public List<Card> draw() {
-        if (cards.canDraw()) {
-            cards.add(new Card(new Random().nextInt(10) + 1, Shape.CLUB));
-            return cards.getCards();
-        }
-        return cards.getCards();
+    public int getWinScore() {
+        return score.getWinScore();
+    }
+
+    public int getTieScore() {
+        return score.getTieScore();
+    }
+
+    public int getLoseScore() {
+        return score.getLoseScore();
     }
 }

@@ -4,8 +4,8 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(Name name, PlayerCards cards) {
-        super(cards);
+    public Player(Name name) {
+        super();
         this.name = name;
     }
 }

@@ -6,8 +6,8 @@ public class PlayerCards extends Cards {
 
     private static final int MAX_SCORE = 21;
 
-    public PlayerCards(List<Card> cards) {
-        super(cards);
+    public PlayerCards(Participant participant, List<Card> cards) {
+        super(participant, cards);
     }
 
     public boolean canDraw() {

@@ -7,9 +7,11 @@ public abstract class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
 
+    protected final Participant participant;
     protected final List<Card> cards;
 
-    Cards(List<Card> cards) {
+    Cards(Participant participant, List<Card> cards) {
+        this.participant = participant;
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }
