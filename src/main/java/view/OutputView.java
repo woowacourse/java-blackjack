@@ -1,15 +1,19 @@
 package view;
 
 import domain.Dealer;
+import domain.Player;
+import domain.Result;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
     private final String FORM = "%s카드: %s";
     private final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d";
+    private final String RESULT_FORM = "%s: %s";
 
     public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayersDto playersDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
@@ -38,9 +42,28 @@ public class OutputView {
 
     public void printHandsResult(final PlayersDto playersDto) {
         for (PlayerDto playerDto : playersDto.getPlayers()) {
-            System.out.printf(TOTAL_SUM_FORM, playerDto.getName(), format(playerDto.getCards()), playerDto.getTotalSum() );
+            System.out.printf(TOTAL_SUM_FORM, playerDto.getName(), format(playerDto.getCards()), playerDto.getTotalSum());
             System.out.println();
         }
+    }
+
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
+        System.out.println("## 최종결과");
+        System.out.printf(RESULT_FORM, "딜러", format(dealerResult));
+        System.out.println();
+        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
+            System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
+            System.out.println();
+        }
+    }
+
+    private String format(final Map<Result, Integer> dealerResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
+            stringBuilder.append(String.valueOf(entry.getValue()) + entry.getKey().getValue() + " ");
+        }
+
+        return stringBuilder.toString();
     }
 
     private String format(final List<String> playerNames) {

@@ -3,6 +3,7 @@ package controller;
 import domain.Answer;
 import domain.CardDeck;
 import domain.Dealer;
+import domain.Game;
 import domain.Player;
 import domain.Players;
 import dto.DealerHandsDto;
@@ -24,6 +25,7 @@ public class BlackJackController {
         final Players players = Players.from(inputView.readPlayerNames());
         final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = new Dealer(cardDeck);
+        final Game game = new Game(dealer, players);
 
         dealer.startDeal(players);
         outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
@@ -38,6 +40,7 @@ public class BlackJackController {
         }
 
         outputView.printHandsResult(PlayersDto.from(dealer, players));
+        outputView.printGameResult(game.getDealerResult(), game.getResult());
     }
 
     private void deal(final Player player, final Dealer dealer) {

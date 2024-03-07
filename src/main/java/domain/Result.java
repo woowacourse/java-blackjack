@@ -18,4 +18,8 @@ public enum Result { //TODO 무승부
         }
         return WIN;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
