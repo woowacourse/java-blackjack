@@ -1,18 +1,14 @@
 package domain;
 
-import java.util.List;
-
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
-    private final Gamers gamers;
     private final Decks decks;
 
-    public BlackJackGame(final Gamers gamers, final Decks decks) {
-        this.gamers = gamers;
+    public BlackJackGame(final Decks decks) {
         this.decks = decks;
     }
 
-    public void prepareCards() {
+    public void prepareCards(Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
             drawTwoCardsForGamer(gamer);
         }
@@ -24,7 +20,15 @@ public class BlackJackGame {
         }
     }
 
-    public List<Card> getGamerHandAt(int index) {
-        return gamers.getHandAt(index);
+    public boolean succeededGiving(Gamer gamer) {
+        if(!gamer.isStay()) {
+            gamer.hit(decks.draw());
+            return true;
+        }
+        return false;
     }
+
+//    public List<Card> getGamerHandAt(int index) {
+//        return gamers.getHandAt(index);
+//    }
 }

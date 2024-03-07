@@ -12,7 +12,7 @@ public class BlackJackGameTest {
 
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")
     @Test
-    void giveCardTest() {
+    void prepareCardTest() {
         // given
         Card card1 = new Card(Symbol.HEART, Rank.NINE);
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
@@ -32,16 +32,93 @@ public class BlackJackGameTest {
         Players players = new Players(List.of(player1, player2));
 
         Gamers gamers = Gamers.of(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(gamers, decks);
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
 
         // when
-        blackJackGame.prepareCards();
+        blackJackGame.prepareCards(gamers);
 
         // then
         assertAll(
-                () -> assertThat(blackJackGame.getGamerHandAt(0)).hasSize(2),
-                () -> assertThat(blackJackGame.getGamerHandAt(1)).hasSize(2),
-                () -> assertThat(blackJackGame.getGamerHandAt(2)).hasSize(2)
+                () -> assertThat(gamers.getGamers().get(0).getHand()).hasSize(2),
+                () -> assertThat(gamers.getGamers().get(1).getHand()).hasSize(2),
+                () -> assertThat(gamers.getGamers().get(2).getHand()).hasSize(2)
+        );
+    }
+
+    @DisplayName("게이머의 점수가 21 이하이므로 카드를 주는 것을 성공한다.")
+    @Test
+    void giveCardSuccessTest() {
+        // given
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2);
+        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Name name = new Name("lini");
+        Player player = new Player(name);
+        Dealer dealer = new Dealer();
+
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
+
+        // when
+        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+        boolean playerResult = blackJackGame.succeededGiving(player);
+
+        Card expectedDealerCard = card2;
+        Card expectedPlayerCard = card1;
+
+        // then
+        assertAll(
+                () -> assertThat(dealerResult).isTrue(),
+                () -> assertThat(playerResult).isTrue(),
+                () -> assertThat(dealer.getHand().get(0)).isEqualTo(expectedDealerCard),
+                () -> assertThat(player.getHand().get(0)).isEqualTo(expectedPlayerCard)
+        );
+    }
+
+    @DisplayName("게이머의 점수가 21을 초과하여 카드 주기를 실패한다.")
+    @Test
+    void giveCardFailureTest() {
+        // given
+        Card card1 = new Card(Symbol.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Symbol.HEART, Rank.NINE);
+        Card card3 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card4 = new Card(Symbol.HEART, Rank.BIG_ACE);
+        Card card5 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card6 = new Card(Symbol.HEART, Rank.SEVEN);
+        Card card7 = new Card(Symbol.SPADE, Rank.QUEEN);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
+                card7);
+        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+
+        Name name = new Name("lini");
+        Player player = new Player(name);
+        Dealer dealer = new Dealer();
+
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
+
+        // when
+        blackJackGame.succeededGiving(dealer);
+        blackJackGame.succeededGiving(dealer);
+        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+
+        blackJackGame.succeededGiving(player);
+        blackJackGame.succeededGiving(player);
+        blackJackGame.succeededGiving(player);
+        blackJackGame.succeededGiving(player);
+        boolean playerResult = blackJackGame.succeededGiving(player);
+
+        int expectedDealerSize = 2;
+        int expectedPlayerSize = 4;
+
+        // then
+        assertAll(
+                () -> assertThat(dealerResult).isFalse(),
+                () -> assertThat(playerResult).isFalse(),
+                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize),
+                () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
 }
