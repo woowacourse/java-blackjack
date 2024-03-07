@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Number;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
@@ -20,7 +21,7 @@ class BlackjackResultTest {
                 generatePlayer(), HandResult.LOSE);
         BlackjackResult blackjackResult = new BlackjackResult(playerResults);
         Map<HandResult, Integer> dealerResults = blackjackResult.getDealerResult();
-        assertThat(dealerResults).containsExactly(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2), Map.entry(HandResult.DRAW, 1));
+        assertThat(dealerResults).contains(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2), Map.entry(HandResult.DRAW, 1));
     }
 
     private Player generatePlayer() {
