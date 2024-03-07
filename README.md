@@ -6,6 +6,12 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
+# Git commit 메세지
+
+접두어로 `docs`, `test`, `feat`, `fix`, `refactor`, `chore` 사용
+example feat: 사용자 입력 후 도메인 사용
+
 ## 기능 목록
 
 ### 덱
@@ -62,7 +68,6 @@
     - [x] 응답이 n이거나 카드의 합이 21일때까지 물어본다.
     - [x] y/n 여부와 상관없이 현플레이어의 손패를 출력한다.
 
-# Git commit 메세지
+### 리팩터링
 
-접두어로 `docs`, `test`, `feat`, `fix`, `refactor`, `chore` 사용
-example feat: 사용자 입력 후 도메인 사용
+- [ ] 

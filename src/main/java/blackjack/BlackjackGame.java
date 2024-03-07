@@ -31,8 +31,7 @@ public class BlackjackGame {
         Players players = Players.of(names, deck);
         Dealer dealer = new Dealer(DEALER_NAME, deck);
 
-        outputView.printCardDistribute(dealer.getName(), names);
-        printHandCardsStatus(dealer, players);
+        printCardDistribute(names, players, dealer);
 
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, deck));
@@ -41,6 +40,11 @@ public class BlackjackGame {
         printResultCardsStatus(dealer, players);
 
         outputView.printFinalResult(names, players.createResult(dealer));
+    }
+
+    private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
+        outputView.printCardDistribute(dealer.getName(), names);
+        printHandCardsStatus(dealer, players);
     }
 
     private String makeCardOutput(final Card card) {
@@ -59,12 +63,13 @@ public class BlackjackGame {
         for (Player player : players.getPlayers()) {
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
         }
+        outputView.printNewLine();
     }
 
     private void readMoreCardChoice(final Player player, final Deck deck) {
         String choice = inputView.readMoreCardChoice(player.getName());
 
-        if (choice.equals("n")) {
+        if (!outputView.isMoreChoice(choice)) {
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
             return;
         }
@@ -72,18 +77,16 @@ public class BlackjackGame {
         do {
             player.draw(deck);
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
-        } while ((player.canReceiveCard()) && (choice = inputView.readMoreCardChoice(player.getName())).equals("y"));
-
-        if (choice.equals("n")) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
-        }
+        } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
     }
 
     private void printAddDealerCard(final Dealer dealer, final Deck deck) {
         if (dealer.canReceiveCard()) {
             dealer.draw(deck);
             outputView.printAddDealerCard(dealer.getName());
+            return;
         }
+        outputView.printNewLine();
     }
 
     private void printResultCardsStatus(final Dealer dealer, final Players players) {

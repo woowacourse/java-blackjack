@@ -36,7 +36,7 @@ public class InputView {
     }
 
     public String readMoreCardChoice(final String name) {
-        System.out.printf(System.lineSeparator() + MORE_CARD_CHOICE + System.lineSeparator(), name);
+        System.out.printf(MORE_CARD_CHOICE + System.lineSeparator(), name);
         try {
             return bufferedReader.readLine();
         } catch (IOException exception) {

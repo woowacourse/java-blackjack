@@ -74,4 +74,12 @@ public class OutputView {
         }
         return LOSES_VIEW;
     }
+
+    public boolean isMoreChoice(final String choice) {
+        return choice.equals("y");
+    }
+
+    public void printNewLine() {
+        System.out.println();
+    }
 }
