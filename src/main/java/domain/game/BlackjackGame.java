@@ -22,12 +22,11 @@ public class BlackjackGame {
 
     public void distributeStartingCards() {
         for (Player player : players) {
-            List<Card> cards = List.of(deckCards.draw(),
-                deckCards.draw()); // TODO: draw 2개 가능하게 리팩토링
+            List<Card> cards = deckCards.drawStartingCards();
             player.receive(cards);
         }
 
-        List<Card> cards = List.of(deckCards.draw(), deckCards.draw());
+        List<Card> cards = deckCards.drawStartingCards();
         dealer.receive(cards);
     }
 
