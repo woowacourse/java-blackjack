@@ -4,8 +4,11 @@ import blackjack.model.BlackJackGame;
 import blackjack.model.Card;
 import blackjack.model.Cards;
 import blackjack.model.Dealer;
+import blackjack.model.GameResults;
 import blackjack.model.Player;
+import blackjack.model.ResultStatus;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -37,6 +40,23 @@ public class OutputView {
         players.forEach(player ->
                 System.out.printf("%s: %s - 결과: %d%n", player.getName(), getCardsText(player.getCards()),
                         player.getCards().calculateScore()));
+    }
+
+    public void printGameResults(GameResults gameResults) {
+        System.out.println("### 최종 승패");
+        Map<ResultStatus, Long> dealerResult = gameResults.getDealerResult();
+        String result = dealerResult.entrySet()
+                .stream()
+                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDealerResult()))
+                .collect(Collectors.joining(" "));
+        System.out.printf("딜러: %s%n", result);
+
+        Map<Player, ResultStatus> gameResult = gameResults.getResult();
+        gameResult.entrySet()
+                .stream()
+                .map(entry -> String.format("%s: %s%n", entry.getKey().getName(), entry.getValue().getPlayerResult()))
+                .forEach(System.out::print);
+
     }
 
     private String getPlayersNames(List<Player> players) {

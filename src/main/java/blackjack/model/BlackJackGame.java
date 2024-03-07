@@ -1,7 +1,9 @@
 package blackjack.model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
     private final Dealer dealer;
@@ -15,7 +17,7 @@ public class BlackJackGame {
     }
 
     public void distributeCards() {
-        dealer.addCards(cardGenerator);
+        dealer.addCards(cardGenerator.drawCards());
         players.forEach(player -> player.addCards(cardGenerator.drawCards()));
     }
 
@@ -30,6 +32,12 @@ public class BlackJackGame {
 
     public void updateDealer() {
         dealer.addCard(cardGenerator);
+    }
+
+    public GameResults calculateFinalResults() {
+        Map<Player, ResultStatus> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, dealer.determineWinner(player)));
+        return new GameResults(result);
     }
 
     public Dealer getDealer() {

@@ -5,6 +5,7 @@ import blackjack.model.CardGenerator;
 import blackjack.model.Cards;
 import blackjack.model.Command;
 import blackjack.model.Dealer;
+import blackjack.model.GameResults;
 import blackjack.model.Player;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.view.InputView;
@@ -37,6 +38,9 @@ public class BlackJackController {
             outputView.printDealerChange();
         }
         outputView.printFinalScore(blackJackGame);
+
+        GameResults gameResults = blackJackGame.calculateFinalResults();
+        outputView.printGameResults(gameResults);
     }
 
     private void drawCardWithCommand(Player player, BlackJackGame blackJackGame, int index) {
