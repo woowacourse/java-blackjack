@@ -3,7 +3,7 @@ package model;
 public abstract class Participant {
 
     private final Name name;
-    final CardDeck cardDeck;
+    protected final CardDeck cardDeck;
 
     protected Participant(Name name) {
         this.name = name;
@@ -18,5 +18,9 @@ public abstract class Participant {
 
     public IndividualFaceUpResult generateFaceUpResult() {
         return new IndividualFaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    }
+
+    public Name getName(){
+        return name;
     }
 }
