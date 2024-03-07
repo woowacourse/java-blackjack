@@ -8,4 +8,5 @@ public class Dealer extends Player {
     public boolean isUpToThreshold(final int threshold) {
         return this.calculateResultScore(21) > threshold;
     }
+
 }

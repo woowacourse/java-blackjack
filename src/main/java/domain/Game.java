@@ -1,14 +1,25 @@
 package domain;
 
+import static domain.constants.CardCommand.HIT;
+import static domain.constants.CardCommand.STAND;
+
 import controller.dto.HandStatus;
+import domain.constants.CardCommand;
 import java.util.ArrayList;
 import java.util.List;
+import view.InputView;
+import view.OutputView;
 
 public class Game {
+    private final InputView inputView;
+    private final OutputView outputView;
     private final Participant participant;
     private final Deck deck;
 
-    public Game(final Dealer dealer, final List<String> playerNames) {
+    public Game(final Dealer dealer, final List<String> playerNames, final InputView inputView,
+                final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
@@ -16,7 +27,10 @@ public class Game {
         deck = new Deck();
     }
 
-    public Game(final Participant participant, final Deck deck) {
+    public Game(final InputView inputView, final OutputView outputView, final Participant participant,
+                final Deck deck) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.participant = participant;
         this.deck = deck;
     }
@@ -45,6 +59,21 @@ public class Game {
                 .orElseThrow(IllegalStateException::new);
         foundPlayer.drawCard(deck.pick());
         return new HandStatus(foundPlayer.getName(), foundPlayer.getHand());
+    }
+
+    public void giveCardToPlayer(String name) {
+        CardCommand command = CardCommand.from(inputView.decideToGetMoreCard(name));
+        HandStatus status = getCurrentCardStatus(name);
+        int currentSum = getPlayer(name).calculateScoreWhileDraw();
+        while (HIT.equals(command) && currentSum < 21) {
+            status = pickOneCard(name);
+            outputView.printCardStatus(status);
+            command = CardCommand.from(inputView.decideToGetMoreCard(name));
+            currentSum = getPlayer(name).calculateScoreWhileDraw();
+        }
+        if (STAND.equals(command)) {
+            outputView.printCardStatus(status);
+        }
     }
 
     public List<String> getPlayerNames() {

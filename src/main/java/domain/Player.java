@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Player {
     private final String name;
     private final Hand hand;
@@ -18,6 +20,10 @@ public class Player {
 
     public void drawCard(final Card card) {
         hand.saveCard(card);
+    }
+
+    public void drawCards(final List<Card> cards) {
+        hand.saveCards(cards);
     }
 
     public int calculateScoreWhileDraw() {
