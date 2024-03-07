@@ -14,7 +14,8 @@ public class Referee {
             return GameResult.LOSE;
         }
         if (player.getScore() > dealer.getScore() ||
-                player.getScore() == 21) {
+                player.isBlackjack() ||
+                dealer.isBurst()) {
             return GameResult.WIN;
         }
         if (dealer.getScore() == player.getScore()) {

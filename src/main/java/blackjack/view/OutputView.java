@@ -1,8 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.GameResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -37,5 +39,20 @@ public class OutputView {
 
     public static void printGamerCards(String name, List<Card> cards, int totalScore) {
         System.out.printf("%s 카드: %s - 결과: %d%n", name, formatCards(cards), totalScore);
+    }
+
+    public static void printWinAnnounce() {
+        System.out.println("## 최종 승패");
+    }
+
+    public static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
+        String gameResultsFormat = gameResults.keySet().stream()
+                .map(key -> gameResults.get(key) + key.get())
+                .collect(Collectors.joining(" "));
+        System.out.printf("%s: %s%n", name, gameResultsFormat);
+    }
+
+    public static void printPlayerWinStatus(String name, GameResult gameResult) {
+        System.out.printf("%s: %s%n", name, gameResult.get());
     }
 }

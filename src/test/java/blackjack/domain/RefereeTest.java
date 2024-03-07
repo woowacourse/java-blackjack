@@ -150,4 +150,56 @@ public class RefereeTest {
         // then
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 모두 burst이면, 플레이어가 패배한다.")
+    void playerDealerAllBustPlayerLoseTest() {
+        // given
+        CardPicker playerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+            }
+        };
+        CardPicker dealerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+            }
+        };
+
+        // when
+        player.deal(playerCardPicker);
+        dealer.deal(dealerCardPicker);
+        GameResult gameResult = referee.judgeGameResult(player);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러가 burst이고 플레이가 brust가 아닐 경우, 플레이어가 승리한다.")
+    void dealerBurstPlayerNonBurstWinTest() {
+        // given
+        CardPicker playerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_KING, Card.CLUB_JACK);
+            }
+        };
+        CardPicker dealerCardPicker = new CardPicker() {
+            @Override
+            public List<Card> pick(int count) {
+                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+            }
+        };
+
+        // when
+        player.deal(playerCardPicker);
+        dealer.deal(dealerCardPicker);
+        GameResult gameResult = referee.judgeGameResult(player);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.WIN);
+    }
 }

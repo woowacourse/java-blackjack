@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BLACKJACK = 21;
+    private static final int MAX_SCORE = 21;
     protected final Cards cards;
     private final String name;
 
@@ -23,12 +23,17 @@ public abstract class Gamer {
     }
 
     public boolean isBurst() {
-        return cards.totalScore() > BLACKJACK;
+        return cards.totalScore() > MAX_SCORE;
     }
 
     public boolean isBlackjack() {
-        return cards.totalScore() == BLACKJACK;
+        return isMaxScore() && cards.getValues().size() == 2;
     }
+
+    public boolean isMaxScore() {
+        return cards.totalScore() == MAX_SCORE;
+    }
+
 
     public String getName() {
         return name;

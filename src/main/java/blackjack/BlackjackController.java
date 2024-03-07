@@ -4,6 +4,8 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -30,6 +32,22 @@ public class BlackjackController {
         OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
         players.forEach(player ->
                 OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
+
+        Referee referee = new Referee(dealer);
+        Map<String, GameResult> gameResults = new HashMap<>();
+        players.forEach(player ->
+                gameResults.put(player.getName(), referee.judgeGameResult(player))
+        );
+
+        Map<GameResult, Integer> dealerResults = new HashMap<>();
+        gameResults.values().forEach(gameResult -> {
+                    GameResult reversedResult = gameResult.reverse();
+                    dealerResults.put(reversedResult, dealerResults.getOrDefault(reversedResult, 0) + 1);
+                }
+        );
+        OutputView.printWinAnnounce();
+        OutputView.printDealerWinStatus(dealer.getName(), dealerResults);
+        gameResults.forEach(OutputView::printPlayerWinStatus);
     }
 
     private void requestDeal(Players players, Dealer dealer, CardPicker cardPicker) {
@@ -48,7 +66,7 @@ public class BlackjackController {
             if (playerCommand.equals(PlayerCommand.HIT)) {
                 player.hit(cardPicker);
                 OutputView.printDealCards(player.getName(), player.getCards());
-                if (player.isBurst() || player.isBlackjack()) {
+                if (player.isBurst() || player.isMaxScore()) {
                     break;
                 }
                 continue;
