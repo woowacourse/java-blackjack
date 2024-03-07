@@ -21,10 +21,16 @@ public class BlackjackMachine {
 
     public void run() {
         BlackjackGame game = initializeGame();
-        game.distributeStartingCards();
+        distributeStartingCards(game);
         playPlayerTurns(game);
         playDealerTurn(game);
         printResult(game);
+    }
+
+    private void distributeStartingCards(BlackjackGame game) {
+        game.distributeStartingCards();
+        outputView.printDistributionMessage(game);
+        outputView.printAllParticipantsCards(game);
     }
 
     private BlackjackGame initializeGame() {
@@ -60,6 +66,6 @@ public class BlackjackMachine {
     }
 
     private void printResult(BlackjackGame game) {
-        outputView.printGame(game);
+        outputView.printAllParticipantsCardsWithScore(game);
     }
 }
