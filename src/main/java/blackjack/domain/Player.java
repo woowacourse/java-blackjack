@@ -25,4 +25,8 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public boolean canHit() {
+        return hand.calculate() <= 21;
+    }
 }

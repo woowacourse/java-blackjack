@@ -13,8 +13,12 @@ public class OutputView {
 
         print(singleCard(dealer));
         for (Player player : players) {
-            print(totalHand(player));
+            printTotalHand(player);
         }
+    }
+
+    public static void printTotalHand(Player player) {
+        print(totalHand(player));
     }
 
     private static String dealOut(Dealer dealer, List<Player> players) {
