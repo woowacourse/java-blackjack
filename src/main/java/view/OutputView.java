@@ -1,16 +1,22 @@
 package view;
 
-import domain.Card;
-import domain.Deck;
-import domain.Player;
+import dto.PlayerDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public void printSetting(Player dealer, List<Player> players) {
+    private static void printVictory(Map<String, Boolean> victoryResult, String playerName) {
+        if (victoryResult.get(playerName)) {
+            System.out.println(playerName + ": 승");
+            return;
+        }
+        System.out.println(playerName + ": 패");
+    }
+
+    public void printSetting(PlayerDto dealer, List<PlayerDto> players) {
         String playerNames = playerNameToString(players);
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getName().getName(),playerNames);
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.playerName(), playerNames);
         printDealerCard(dealer);
         players.forEach(player -> {
             printCurrentCard(player);
@@ -18,17 +24,15 @@ public class OutputView {
         });
     }
 
-    private void printDealerCard(Player dealer) {
-        Card dealerFirstCard = dealer.getDeck().getCards().get(0);
-        String card = cardToString(dealerFirstCard);
-        System.out.printf("%s: %s\n", dealer.getName().getName(), card);
+    private void printDealerCard(PlayerDto dealer) {
+        System.out.printf("%s: %s\n", dealer.playerName(), dealer.deck().get(0));
     }
 
-    public void printCurrentCard(Player player) {
-        System.out.printf("%s카드 : %s", player.getName().getName(), deckToString(player.getDeck()));
+    public void printCurrentCard(PlayerDto player) {
+        System.out.printf("%s카드 : %s", player.playerName(), deckWithDelimiter(player.deck()));
     }
 
-    public void printScoreResult(Player dealer, List<Player> playerList) {
+    public void printScoreResult(PlayerDto dealer, List<PlayerDto> playerList) {
         printCurrentCard(dealer);
         printScore(dealer);
         playerList.forEach(player -> {
@@ -37,15 +41,15 @@ public class OutputView {
         });
     }
 
-    private void printScore(Player player) {
-        System.out.printf(" - 결과: %d\n", player.calculateScore());
-    }
-
     public void printDealerOneMoreCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printResult(Map<Player, Boolean> victoryResult) {
+    private void printScore(PlayerDto player) {
+        System.out.printf(" - 결과: %d\n", player.score());
+    }
+
+    public void printResult(Map<String, Boolean> victoryResult) {
         System.out.println("## 최종 승패");
         System.out.println();
         int dealerWinCount = (int) victoryResult.values().stream()
@@ -53,35 +57,20 @@ public class OutputView {
                 .count();
         int dealerLoseCount = victoryResult.size() - dealerWinCount;
         System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        victoryResult.keySet().forEach(player -> printVictory(victoryResult, player));
-    }
-
-    private static void printVictory(Map<Player, Boolean> victoryResult, Player player) {
-        if (victoryResult.get(player)) {
-            System.out.println(player.getName().getName() + ": 승");
-            return;
-        }
-        System.out.println(player.getName().getName() + ": 패");
+        victoryResult.keySet().forEach(playerName -> printVictory(victoryResult, playerName));
     }
 
     public void printNewLine() {
         System.out.println();
     }
 
-    private String playerNameToString(List<Player> players) {
+    private String playerNameToString(List<PlayerDto> players) {
         return players.stream()
-                .map(player -> player.getName().getName())
+                .map(PlayerDto::playerName)
                 .collect(Collectors.joining(", "));
     }
 
-    private String deckToString(Deck deck) {
-        return deck.getCards()
-                .stream()
-                .map(this::cardToString)
-                .collect(Collectors.joining(", "));
-    }
-
-    private String cardToString(Card card) {
-        return card.getRank().getRankName() + card.getShape().getShapeName();
+    private String deckWithDelimiter(List<String> cards) {
+        return String.join(", ", cards);
     }
 }
