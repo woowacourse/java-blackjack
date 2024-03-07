@@ -15,4 +15,8 @@ public class Dealer {
     public int calculateHandSum() {
         return hand.sum();
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }
