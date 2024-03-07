@@ -10,7 +10,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -25,39 +24,17 @@ public class BlackjackController {
         processDeal(players, dealer, cardPicker);
         processHitOrStand(players, dealer, cardPicker);
 
-        // TODO: 파라미터 일급컬렉션으로 변경
-        Map<String, GameResult> gameResults = calculatePlayersResult(players, dealer);
-        Map<GameResult, Integer> dealerResults = calculateDealerResult(gameResults);
+        Referee referee = new Referee();
+        referee.calculatePlayersResults(players, dealer);
 
-        printAllGameResult(dealer, dealerResults, gameResults);
+        printAllGameResult(dealer, referee.getDealerResult(), referee.getPlayersResults());
     }
 
     // TODO: 파라미터 일급컬렉션으로 변경
-    private void printAllGameResult(Dealer dealer, Map<GameResult, Integer> dealerResults, Map<String, GameResult> gameResults) {
+    private void printAllGameResult(Dealer dealer, Map<GameResult, Integer> dealerResults, Map<String, GameResult> playersResults) {
         OutputView.printWinAnnounce();
         OutputView.printDealerWinStatus(dealer.getName(), dealerResults);
-        gameResults.forEach(OutputView::printPlayerWinStatus);
-    }
-
-    private Map<GameResult, Integer> calculateDealerResult(Map<String, GameResult> gameResults) {
-        // TODO: 스트림 이용해서 바로 리턴할 수 있게 수정
-        Map<GameResult, Integer> dealerResults = new HashMap<>();
-        gameResults.values().forEach(gameResult -> {
-                    GameResult reversedResult = gameResult.reverse();
-                    dealerResults.put(reversedResult, dealerResults.getOrDefault(reversedResult, 0) + 1);
-                }
-        );
-        return dealerResults;
-    }
-
-    private Map<String, GameResult> calculatePlayersResult(Players players, Dealer dealer) {
-        Referee referee = new Referee(dealer);
-        Map<String, GameResult> gameResults = new HashMap<>();
-        // TODO: 스트림 이용해서 바로 리턴할 수 있게 수정
-        players.forEach(player ->
-                gameResults.put(player.getName(), referee.judgeGameResult(player))
-        );
-        return gameResults;
+        playersResults.forEach(OutputView::printPlayerWinStatus);
     }
 
     private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
