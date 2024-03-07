@@ -30,4 +30,30 @@ public class GameResultBoard {
     public GameResult getGameResult(Player player) {
         return resultBoard.get(player.getName());
     }
+
+    public Map<GameResult, Integer> getDealerResult() {
+        return Map.of(
+                GameResult.WIN, getDealerWinCount(),
+                GameResult.DRAW, getDealerDrawCount(),
+                GameResult.LOSE, getDealerLoseCount()
+        );
+    }
+
+    private int getDealerWinCount() {
+        return (int) resultBoard.values().stream()
+                .filter(playerResult -> playerResult.equals(GameResult.LOSE))
+                .count();
+    }
+
+    private int getDealerLoseCount() {
+        return (int) resultBoard.values().stream()
+                .filter(playerResult -> playerResult.equals(GameResult.WIN))
+                .count();
+    }
+
+    private int getDealerDrawCount() {
+        return (int) resultBoard.values().stream()
+                .filter(playerResult -> playerResult.equals(GameResult.DRAW))
+                .count();
+    }
 }
