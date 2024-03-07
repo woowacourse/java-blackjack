@@ -19,7 +19,7 @@ class DealerTest {
         dealer.startDeal(players);
 
         //then
-        Assertions.assertThat(players.getPlayers()).allMatch(player -> player.getPacketSize() == 2);
+        Assertions.assertThat(players.getPlayers()).allMatch(player -> player.handsSize() == 2);
     }
 
     @Test
@@ -40,7 +40,7 @@ class DealerTest {
         dealer.deal(zeze, Answer.STAY);
 
         //then
-        Assertions.assertThat(redddy.getPacketSize()).isEqualTo(3);
-        Assertions.assertThat(zeze.getPacketSize()).isEqualTo(2);
+        Assertions.assertThat(redddy.handsSize()).isEqualTo(3);
+        Assertions.assertThat(zeze.handsSize()).isEqualTo(2);
     }
 }

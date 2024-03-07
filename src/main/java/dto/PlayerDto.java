@@ -17,7 +17,7 @@ public class PlayerDto {
     }
 
     public static PlayerDto from(final Player player) {
-        return new PlayerDto(player.getName(), player.getCards(), player.getTotalSum());
+        return new PlayerDto(player.getName(), player.getCardNames(), player.handsSum());
     }
 
     public static PlayerDto from(final Dealer dealer) {

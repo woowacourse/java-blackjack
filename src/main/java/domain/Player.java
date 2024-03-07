@@ -16,11 +16,38 @@ public class Player {
     }
 
     public void add(final Card card) {
-        this.hands.add(card);
+        hands.add(card);
     }
 
     public Result calculateResult(final Dealer dealer) {
-        return this.hands.calculateResult(dealer.getHands());
+        return hands.calculateResult(dealer.getHands());
+    }
+
+    //TODO 메서드가 조잡해요
+    public boolean isBust() {
+        return hands.isBust();
+    }
+
+    public int handsSum() {
+        return hands.sum();
+    }
+
+    public int handsSize() {
+        return hands.size();
+    }
+
+    public boolean isBlackJack() {
+        return hands.isBlackJack();
+    }
+
+    public List<String> getCardNames() {
+        return hands.getCards().stream()
+                .map(Card::toString)
+                .toList();
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void validate(final String name) {
@@ -40,30 +67,6 @@ public class Player {
         }
     }
 
-    //TODO: 메서드 handsSize 수정
-    public int getPacketSize() {
-        return hands.size();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getCards() {
-        return hands.getCards()
-                .stream()
-                .map(Card::toString)
-                .toList();
-    }
-
-    public boolean isBust() {
-        return hands.isBust();
-    }
-
-    public int getTotalSum() {
-        return hands.sum();
-    }
-
     @Override
     public boolean equals(final Object target) {
         if (this == target) {
@@ -78,9 +81,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public boolean isBlackJack() {
-        return hands.isBlackJack();
     }
 }
