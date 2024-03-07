@@ -72,10 +72,8 @@ public class PlayersTest {
         Dealer burstedDealer = new Dealer(deck);
 
         //when
-        IntStream.range(0, 12)
-                .forEach(i -> burstedDealer.selfDraw());
-        System.out.println(burstedDealer.getScore());
-        System.out.println(burstedDealer.getHandCards());
+        IntStream.range(0, 6)
+                .forEach(i -> burstedDealer.isCardAdded());
 
         //then
         GameResult gameResult = players.createResult(burstedDealer);

@@ -81,8 +81,7 @@ public class BlackjackGame {
     }
 
     private void printAddDealerCard(final Dealer dealer) {
-        if (dealer.canReceiveCard()) {
-            dealer.draw();
+        if (dealer.isCardAdded()) {
             outputView.printAddDealerCard();
             return;
         }

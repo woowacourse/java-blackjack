@@ -21,7 +21,7 @@ public class Dealer extends Participant {
         return deck.drawn();
     }
 
-    public void selfDraw() {
+    private void selfDraw() {
         Card card = this.deck.drawn();
         hand.add(card);
     }
@@ -31,7 +31,15 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canReceiveCard() {
+    boolean canReceiveCard() {
         return hand.calculateScore() <= DEALER_BOUND;
+    }
+
+    public boolean isCardAdded() {
+        if (canReceiveCard()) {
+            selfDraw();
+            return true;
+        }
+        return false;
     }
 }
