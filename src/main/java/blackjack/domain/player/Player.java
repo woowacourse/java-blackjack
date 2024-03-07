@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.common.Name;
 import blackjack.domain.card.Cards;
+import java.util.List;
 
 public class Player {
     protected final Name name;
@@ -22,5 +24,9 @@ public class Player {
 
     public String getName() {
         return name.asString();
+    }
+
+    public List<Card> getCards() {
+        return cards.toList();
     }
 }
