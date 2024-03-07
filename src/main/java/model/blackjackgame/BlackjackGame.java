@@ -30,6 +30,12 @@ public class BlackjackGame {
         }
     }
 
+    public void hitForDealer(Card card) {
+        if (dealer.isPossibleAddCard()) {
+            dealer = dealer.addCard(card);
+        }
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

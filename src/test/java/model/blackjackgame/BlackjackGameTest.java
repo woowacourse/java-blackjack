@@ -5,6 +5,7 @@ import static model.card.CardNumber.JACK;
 import static model.card.CardNumber.ONE;
 import static model.card.CardNumber.SEVEN;
 import static model.card.CardNumber.SIX;
+import static model.card.CardNumber.THREE;
 import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.DIAMOND;
 import static model.card.CardShape.HEART;
@@ -12,6 +13,7 @@ import static model.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Cards;
 import model.dealer.Dealer;
@@ -19,6 +21,9 @@ import model.player.Player;
 import model.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackGameTest {
 
@@ -64,4 +69,26 @@ class BlackjackGameTest {
         assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
         assertThat(updatedPlayers.getPlayers().get(1).cardsSize()).isEqualTo(0);
     }
+
+    @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드를 1장을 지급한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedCardSize")
+    void testHitIfDealerPossible(Cards cards, int expectedCardSize) {
+        Dealer dealer = new Dealer(cards);
+        Players players = Players.from(List.of("lily", "jojo"));
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+        blackjackGame.hitForDealer(new Card(THREE, SPADE));
+
+        Dealer updatedDealer = blackjackGame.getDealer();
+        assertThat(updatedDealer.cardsSize()).isEqualTo(expectedCardSize);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedCardSize() {
+        return Stream.of(
+            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), 2),
+            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), 3)
+        );
+    }
+
 }
