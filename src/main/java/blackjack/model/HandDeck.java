@@ -4,7 +4,7 @@ import blackjack.model.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck {
+public class HandDeck {
 
     private final List<Card> cards = new ArrayList<>();
 

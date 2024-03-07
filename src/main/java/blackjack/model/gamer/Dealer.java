@@ -6,7 +6,7 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canHit() {
-        int cardScore = deck.calculateTotalScore();
+        int cardScore = handDeck.calculateTotalScore();
         return GameRule.dealerHitRule(cardScore);
     }
 }

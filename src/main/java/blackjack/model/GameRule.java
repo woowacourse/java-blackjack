@@ -9,11 +9,11 @@ public class GameRule {
     private static final int PLAYER_HIT_MAX_SCORE = 21;
     private static final int DEALER_HIT_MAX_SCORE = 16;
 
-    public static void adjustAceValue(Deck deck) {
-        int aceCount = deck.countElevenAce();
+    public static void adjustAceValue(HandDeck handDeck) {
+        int aceCount = handDeck.countElevenAce();
 
-        while (aceCount > 0 && deck.calculateTotalScore() > BUST_STANDARD) {
-            deck.switchAceValueInRow();
+        while (aceCount > 0 && handDeck.calculateTotalScore() > BUST_STANDARD) {
+            handDeck.switchAceValueInRow();
             aceCount--;
         }
     }

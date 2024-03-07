@@ -13,7 +13,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canHit() {
-        int cardScore = deck.calculateTotalScore();
+        int cardScore = handDeck.calculateTotalScore();
         return GameRule.playerHitRule(cardScore);
     }
 }
