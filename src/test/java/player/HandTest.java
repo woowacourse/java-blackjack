@@ -1,5 +1,8 @@
-package card;
+package player;
 
+import card.Card;
+import card.Number;
+import card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
