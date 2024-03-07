@@ -22,6 +22,10 @@ public class Player {
         return sum;
     }
 
+    public void drawCard(Card card) {
+        cards.add(card);
+    }
+
     public String getName() {
         return name.asString();
     }

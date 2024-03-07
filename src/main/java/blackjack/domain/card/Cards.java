@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    List<Card> cards;
+    private List<Card> cards;
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -20,6 +20,10 @@ public class Cards {
     public boolean containAce() {
         return cards.stream()
                     .anyMatch(Card::isAce);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public List<Card> toList() {
