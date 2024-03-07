@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 public class Deck {
     private final List<PlayingCard> playingCards;
 
-    private Deck(final List<PlayingCard> playingCards) {
+   Deck(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
@@ -34,5 +34,9 @@ public class Deck {
         playingCards.remove(0);
 
         return card;
+    }
+
+    public boolean isEmpty() {
+       return playingCards.isEmpty();
     }
 }
