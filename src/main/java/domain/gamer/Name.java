@@ -9,12 +9,14 @@ public class Name {
 	private final String value;
 
 	public Name(String value) {
-		// TODO : 메소드 분리 및 매직넘버 상수화, 예외 메시지
+		validateLength(value);
+		this.value = value;
+	}
+
+	private void validateLength(String value) {
 		if (value.length() < MIN_LENGTH || value.length() > MAX_LENGTH) {
 			throw new IllegalArgumentException(LENGTH_ERROR_MESSAGE);
 		}
-
-		this.value = value;
 	}
 
 	public String getValue() {
