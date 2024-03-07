@@ -22,17 +22,20 @@ public class BlackJackGame {
 
         dealer.drawStartCards(deck);
         players.drawStartCards(deck);
-        // TODO 카드 출력하기
         outputView.printStartCards(dealer, players);
 
         players.play(this::playTurn);
         while (dealer.isDrawable()) {
-            // TODO 출력 -> 딜러는 16이하라 한장의 카드를 더 받았습니다.
+            outputView.printDealerDraw();
             dealer.add(deck.draw());
         }
 
-        // TODO 딜러, 플레이어들 카드 결과 및 점수 출력
-        // TODO 딜러, 플레이어의 최종 승패 출력
+        outputView.printResultCardAndScore(dealer, players);
+
+        outputView.printDealerMatchResult(dealer.match(players));
+        for (Player player : players.getPlayers()) {
+            outputView.printPlayerMatchResult(player.getName(), player.isWin(dealer));
+        }
     }
 
     private void playTurn(Player player) {
