@@ -9,7 +9,7 @@ public class GamerDto {
     private final List<Card> cards;
     private final int totalScore;
 
-    public GamerDto(String name, List<Card> cards, int totalScore) {
+    private GamerDto(String name, List<Card> cards, int totalScore) {
         this.name = name;
         this.cards = cards;
         this.totalScore = totalScore;

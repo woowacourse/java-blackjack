@@ -6,7 +6,7 @@ import java.util.List;
 public class GameStatusDto {
     private final List<GamerDto> gamerDtos;
 
-    public GameStatusDto(List<GamerDto> gamerDtos) {
+    private GameStatusDto(List<GamerDto> gamerDtos) {
         this.gamerDtos = gamerDtos;
     }
 
