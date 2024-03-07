@@ -5,8 +5,8 @@ import java.util.List;
 
 public class BlackJackGame {
     private final Dealer dealer;
-    private final CardGenerator cardGenerator;
     private final List<Player> players;
+    private final CardGenerator cardGenerator;
 
     public BlackJackGame(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
         this.dealer = dealer;
@@ -22,6 +22,10 @@ public class BlackJackGame {
     public void update(int index) {
         Player player = players.get(index);
         player.addCard(cardGenerator.drawCard());
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public List<Player> getPlayers() {

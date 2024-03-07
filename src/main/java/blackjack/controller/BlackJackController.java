@@ -26,6 +26,7 @@ public class BlackJackController {
         List<Player> players = inputView.readPlayers();
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new CardGenerator(new RandomIndexGenerator()));
         blackJackGame.distributeCards();
+        outputView.printDistributedCardsInfo(blackJackGame);
 
         for (int index = 0; index < players.size(); index++) {
             Player player = players.get(index);

@@ -3,26 +3,28 @@ package blackjack.model;
 import java.util.Arrays;
 
 public enum CardNumber {
-    ACE(1, 1),
-    TWO(2, 2),
-    THREE(3, 3),
-    FOUR(4, 4),
-    FIVE(5, 5),
-    SIX(6, 6),
-    SEVEN(7, 7),
-    EIGHT(8, 8),
-    NINE(9, 9),
-    TEN(10, 10),
-    JACK(11, 10),
-    QUEEN(12, 10),
-    KING(13, 10);
+    ACE(1, 1, "A"),
+    TWO(2, 2, "2"),
+    THREE(3, 3, "3"),
+    FOUR(4, 4, "4"),
+    FIVE(5, 5, "5"),
+    SIX(6, 6, "6"),
+    SEVEN(7, 7, "7"),
+    EIGHT(8, 8, "8"),
+    NINE(9, 9, "9"),
+    TEN(10, 10, "10"),
+    JACK(11, 10, "J"),
+    QUEEN(12, 10, "Q"),
+    KING(13, 10, "K");
 
     private final int order;
     private final int score;
+    private final String text;
 
-    CardNumber(int order, int score) {
+    CardNumber(int order, int score, String text) {
         this.order = order;
         this.score = score;
+        this.text = text;
     }
 
     public static CardNumber generate(int number) {
@@ -38,5 +40,9 @@ public enum CardNumber {
 
     public int getScore() {
         return score;
+    }
+
+    public String getText() {
+        return text;
     }
 }
