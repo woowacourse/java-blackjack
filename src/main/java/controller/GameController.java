@@ -6,6 +6,7 @@ import controller.dto.GameResult;
 import controller.dto.PlayerResult;
 import domain.Dealer;
 import domain.Game;
+import domain.GameRule;
 import domain.Participant;
 import domain.Player;
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class GameController {
 
     public void run() {
         Game game = start();
-        if (game.isNotDealerBlackJack()) {
+        GameRule rule = new GameRule(game.getParticipant());
+        if (rule.isNotDealerBlackJack()) {
             startRound(game);
             giveCardToDealer(game);
         }
@@ -87,7 +89,8 @@ public class GameController {
     }
 
     public GameResult getResults(final Game game) {
-        List<Boolean> results = game.judge();
+        GameRule rule = new GameRule(game.getParticipant());
+        List<Boolean> results = rule.judge();
         List<String> names = game.getPlayerNames();
         List<PlayerResult> playerResults = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {

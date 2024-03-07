@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private static final int BLACKJACK_SCORE = 21;
-
     private final Participant participant;
     private final Cards cards;
 
@@ -34,11 +32,6 @@ public class Game {
         return new CardsStatus(status);
     }
 
-    public boolean isNotDealerBlackJack() {
-        Dealer dealer = participant.dealer();
-        return !dealer.isBlackJack(BLACKJACK_SCORE);
-    }
-
     private List<Card> pickTwoCards(final Player player) {
         player.saveCard(cards.pick());
         player.saveCard(cards.pick());
@@ -54,7 +47,6 @@ public class Game {
         foundPlayer.saveCard(cards.pick());
         return new CardStatus(foundPlayer.getName(), foundPlayer.getCards());
     }
-
 
     public List<String> getPlayerNames() {
         List<Player> players = participant.players();
@@ -88,97 +80,6 @@ public class Game {
 
     public Participant getParticipant() {
         return participant;
-    }
-
-    public List<Boolean> judge() {
-        if (isBusted(participant.dealer())) {
-            return judgePlayersIfDealerBusted();
-        }
-        boolean isDealerBlackJack = isBlackJack(participant.dealer());
-        List<Boolean> gameResult = new ArrayList<>();
-        if (isDealerBlackJack) {
-            return getGameResultIfDealerIsBlackJack(gameResult);
-        }
-        for (Player player : participant.players()) {
-            checkWinnerIfDealerIsNotBlackJack(player, gameResult);
-        }
-        return gameResult;
-    }
-
-    private List<Boolean> getGameResultIfDealerIsBlackJack(final List<Boolean> gameResult) {
-        for (Player player : participant.players()) {
-            gameResult.add(checkWinnerIfPlayerIsBlackJack(player));
-        }
-        return gameResult;
-    }
-
-    private boolean checkWinnerIfPlayerIsBlackJack(final Player player) {
-        return isBlackJack(player) && !hasMoreCard(player);
-    }
-
-    private void checkWinnerIfDealerIsNotBlackJack(final Player player, final List<Boolean> gameResult) {
-        if (isNotBustedOrBlackJack(player)) {
-            gameResult.add(true);
-            return;
-        }
-        if (hasSameScore(player)) {
-            gameResult.add(hasMoreCard(player));
-            return;
-        }
-        gameResult.add(hasMoreScore(player));
-    }
-
-    private boolean hasSameScore(final Player player) {
-        return player.hasSameScore(participant.dealer());
-    }
-
-    private boolean isNotBustedOrBlackJack(final Player player) {
-        return !isBusted(player) || isBlackJack(player);
-    }
-
-    private boolean hasMoreScore(final Player player) {
-        return player.hasMoreScore(participant.dealer());
-    }
-
-    private boolean hasMoreCard(final Player player) {
-        return player.hasMoreCard(participant.dealer());
-    }
-
-    private boolean isBlackJack(final Player player) {
-        return player.calculateScore(BLACKJACK_SCORE) == BLACKJACK_SCORE;
-    }
-
-    public List<Boolean> compareScore() {
-        Dealer dealer = participant.dealer();
-        int dealerScore = dealer.calculateScore(BLACKJACK_SCORE);
-
-        List<Boolean> isWinner = new ArrayList<>();
-        List<Player> players = participant.players();
-
-        return players.stream()
-                .map(
-                        player -> isWinner.add(doesPlayerWin(player.calculateScore(BLACKJACK_SCORE), dealerScore))
-                ).toList();
-    }
-
-    private boolean doesPlayerWin(final int playerScore, final int dealerScore) {
-        return playerScore >= dealerScore;
-    }
-
-    public List<Boolean> judgePlayersIfDealerBusted() {
-        List<Boolean> gameResult = new ArrayList<>();
-        for (Player player : participant.players()) {
-            if (isBusted(player)) {
-                gameResult.add(false);
-            } else {
-                gameResult.add(true);
-            }
-        }
-        return gameResult;
-    }
-
-    private boolean isBusted(final Player player) {
-        return player.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
     }
 
     public Player getPlayer(final String name) {
