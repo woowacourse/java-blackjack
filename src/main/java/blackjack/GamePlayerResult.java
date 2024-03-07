@@ -9,5 +9,11 @@ public class GamePlayerResult {
         this.resultStatus = resultStatus;
     }
 
+    public Name getName() {
+        return name;
+    }
 
+    public ResultStatus getResultStatus() {
+        return resultStatus;
+    }
 }
