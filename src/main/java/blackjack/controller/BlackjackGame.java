@@ -1,9 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.Deck;
-import blackjack.domain.HandGenerator;
+import blackjack.domain.*;
 import blackjack.domain.participant.Name;
-import blackjack.domain.RandomDeck;
 import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,6 +17,7 @@ public class BlackjackGame {
         outputView.printInitialHand(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
+        printBlackjackResult(participants);
     }
 
     private Participants createParticipants() {
@@ -30,6 +29,12 @@ public class BlackjackGame {
     private void participantsHitCard(Participants participants) {
         playersHitCard(participants.getPlayers());
         dealerHitCard(participants.getDealer());
+    }
+
+    private void printBlackjackResult(Participants participants) {
+        Referee referee = Referee.getInstance();
+        BlackjackResult blackjackResult = referee.generateResult(participants);
+        outputView.printBlackjackResult(blackjackResult);
     }
 
     private void playersHitCard(Players players) {

@@ -1,7 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Player;
-import java.util.HashMap;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackResult {
@@ -11,12 +12,20 @@ public class BlackjackResult {
         this.playersResult = playersResult;
     }
 
-    public Map<HandResult, Integer> getDealerResult() {
-        Map<HandResult, Integer> dealerResults = new HashMap<>();
+    public Map<HandResult, Integer> getDealerResults() {
+        Map<HandResult, Integer> dealerResults = initializeDealerResults();
         for (HandResult playerResult : playersResult.values()) {
             HandResult dealerResult = playerResult.getOpposite();
-            int currentResultCount = dealerResults.getOrDefault(dealerResult, 0);
+            int currentResultCount = dealerResults.get(dealerResult);
             dealerResults.put(dealerResult, currentResultCount + 1);
+        }
+        return dealerResults;
+    }
+
+    private Map<HandResult, Integer> initializeDealerResults() {
+        Map<HandResult, Integer> dealerResults = new LinkedHashMap<>();
+        for (HandResult handResult : HandResult.values()) {
+            dealerResults.put(handResult, 0);
         }
         return dealerResults;
     }
