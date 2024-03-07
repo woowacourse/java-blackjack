@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.DealerDto;
+import blackjack.domain.dto.OutcomesDto;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayersDto;
 import java.util.List;
@@ -45,11 +46,21 @@ public class OutputView {
     }
 
     public static void printFinalState(final DealerDto dealerDto, final PlayersDto playersDto) {
-        System.out.println(System.lineSeparator() + DEALER + ": " + makeCardsState(dealerDto.getCards())
+        System.out.println(DEALER + ": " + makeCardsState(dealerDto.getCards())
                 + " - 결과: " + dealerDto.getScore());
         for (PlayerDto playerDto : playersDto.getValues()) {
             System.out.println(playerDto.getName().value() + ": " + makeCardsState(playerDto.getCards())
                     + " - 결과: " + playerDto.getScore());
+        }
+        System.out.println();
+    }
+
+    public static void printFinalOutcomes(final OutcomesDto dealerOutcomesDto) {
+        System.out.println(System.lineSeparator() + "## 최종 승패");
+        System.out.print(
+                DEALER + ": " + dealerOutcomesDto.getWinCount() + "승 " + dealerOutcomesDto.getLoseCount() + "패 ");
+        if (dealerOutcomesDto.getPushCount() > 0) {
+            System.out.print(dealerOutcomesDto.getPushCount() + "무");
         }
         System.out.println();
     }

@@ -5,6 +5,7 @@ import blackjack.domain.dto.PlayersDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
 
@@ -40,5 +41,12 @@ public class Players {
             playerDtos.add(player.toDto());
         }
         return new PlayersDto(playerDtos);
+    }
+
+    public Player findByName(final Name name) {
+        return players.stream()
+                .filter(player -> Objects.equals(player.getName(), name))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("해당 이름을 가진 플레이어가 존재하지 않습니다."));
     }
 }

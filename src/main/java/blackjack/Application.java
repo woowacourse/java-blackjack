@@ -2,14 +2,17 @@ package blackjack;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.GameBoard;
+import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
 import blackjack.domain.dto.DealerDto;
 import blackjack.domain.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class Application {
 
@@ -27,6 +30,10 @@ public class Application {
         hitDealer(gameBoard, dealer);
 
         OutputView.printFinalState(dealer.allCardToDto(), players.toDto());
+
+        Referee referee = new Referee(dealer.getCards());
+        final List<Outcome> reversedOutcomes = Outcome.reverse(gameBoard.calculateOutcomes(referee));
+        OutputView.printFinalOutcomes(Outcome.toDto(reversedOutcomes));
     }
 
     private static void hitPlayers(final GameBoard gameBoard, final Players players) {

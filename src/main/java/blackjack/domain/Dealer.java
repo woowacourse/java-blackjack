@@ -45,4 +45,8 @@ public class Dealer implements Gamer {
     public DealerDto allCardToDto() {
         return new DealerDto(cards.getCards(), calculateScore());
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }
