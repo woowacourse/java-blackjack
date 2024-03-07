@@ -37,6 +37,10 @@ public class Hands { //TODO: 더 좋은 이름이 있다면 날 설득해줘
 
             return Result.WIN;
         }
+
+        if (!this.isBust() && target.isBust()) {
+            return Result.WIN;
+        }
         return Result.LOSE;
     }
 
