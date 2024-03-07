@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 
 public class DealerTest {
 	List<Card> deck = new ArrayList<>();

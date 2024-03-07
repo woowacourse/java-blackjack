@@ -1,38 +1,27 @@
-package domain;
+package domain.gamer;
 
 import java.util.List;
 
-public class Player {
+import domain.card.Card;
+
+public class Player extends Gamer {
 	private final Name name;
-	private final CardHand cardHand;
 
 	// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
 	public Player(String name, List<Card> cardHand) {
+		super(cardHand);
 		this.name = new Name(name);
-		this.cardHand = new CardHand(cardHand);
-	}
-
-	public void receiveInitCards(List<Card> cards) {
-		cardHand.add(cards);
 	}
 
 	public void receiveCard(Card card) {
 		cardHand.add(card);
 	}
 
-	public boolean isBurst() {
+	public boolean isBust() {
 		return cardHand.isBurst();
-	}
-
-	public int getScore() {
-		return cardHand.calculateScore();
 	}
 
 	public String getName() {
 		return name.getValue();
-	}
-
-	public List<Card> getCardHand() {
-		return cardHand.getCards();
 	}
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import domain.Card;
-import domain.Dealer;
 import domain.GameResult;
-import domain.Player;
-import domain.Players;
+import domain.card.Card;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.Players;
 
 public class OutputView {
 	private static final Map<GameResult, String> gameResultTexts = new HashMap<>();

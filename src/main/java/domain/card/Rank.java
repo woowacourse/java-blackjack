@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Rank {
 	A("A", 1),

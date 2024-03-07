@@ -1,25 +1,22 @@
-package domain;
+package domain.gamer;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Dealer {
+import domain.card.Card;
+
+public class Dealer extends Gamer {
 	private final List<Card> deck;
-	private final CardHand cardHand;
 
 	// TODO: 빈 리스트를 초기에 가지도록 하는 정팩메 만들기
 	public Dealer(List<Card> deck, List<Card> cardHand) {
+		super(cardHand);
 		Collections.shuffle(deck);
 		this.deck = deck;
-		this.cardHand = new CardHand(cardHand);
 	}
 
 	public List<Card> dealInit() {
 		return List.of(deck.remove(0), deck.remove(0));
-	}
-
-	public void receiveInitCards(List<Card> cards) {
-		cardHand.add(cards);
 	}
 
 	public Card dealCard() {
@@ -32,18 +29,6 @@ public class Dealer {
 
 	public int deckSize() {
 		return deck.size();
-	}
-
-	public int getScore() {
-		return cardHand.calculateScore();
-	}
-
-	public boolean isBurst() {
-		return cardHand.isBurst();
-	}
-
-	public List<Card> getCardHand() {
-		return cardHand.getCards();
 	}
 
 	private boolean hasHitScore() {

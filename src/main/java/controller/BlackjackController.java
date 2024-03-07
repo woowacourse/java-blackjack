@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import domain.Card;
-import domain.Dealer;
 import domain.GameResult;
-import domain.Player;
-import domain.Players;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -52,7 +52,7 @@ public class BlackjackController {
 
 	public void receiveAdditionalCard(Dealer dealer, Players players) {
 		for (Player player : players.getPlayers()) {
-			while (!player.isBurst() && inputView.readHitOrStand(player).equals("y")) {
+			while (!player.isBust() && inputView.readHitOrStand(player).equals("y")) {
 				player.receiveCard(dealer.dealCard());
 				outputView.printCardStatus(player);
 			}
@@ -78,7 +78,7 @@ public class BlackjackController {
 	}
 
 	private GameResult compareScore(Dealer dealer, Player player) {
-		if (player.isBurst() || player.getScore() <= dealer.getScore()) {
+		if (player.isBust() || player.getScore() <= dealer.getScore()) {
 			return GameResult.LOSE;
 		}
 		return GameResult.WIN;

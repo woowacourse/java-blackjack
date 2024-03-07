@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 import controller.BlackjackController;
-import domain.Dealer;
-import domain.Players;
+import domain.gamer.Dealer;
+import domain.gamer.Players;
 import view.InputView;
 import view.OutputView;
 

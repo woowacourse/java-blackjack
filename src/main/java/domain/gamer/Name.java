@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 public class Name {
 	public static final String LENGTH_ERROR_MESSAGE = "이름의 길이는 1 이상 5 이하이어야 합니다.";
