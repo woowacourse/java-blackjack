@@ -17,38 +17,41 @@ public class BlackJackController {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-
-    // TODO: 코드줄 줄이기
-    public void run() {
+    
+    public void startGame() {
         BlackJack blackJack = createBlackJack();
         blackJack.offerCardToPlayers(2);
         outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
-        // TODO : 인덴트 줄이기
-        for (Player player : blackJack.getParticipants()) {
-            while (!player.isOverMaximumSum()) {
-                String name = player.getName();
-                if (!inputView.inputEnd(name)) {
-                    break;
-                }
-                blackJack.offerCardToPlayer(name, 1);
-                outputView.printPlayerCardMessage(player);
-            }
-        }
+        askAndOfferMoreCards(blackJack);
+        checkDealerMoreCards(blackJack);
 
+        outputView.printResult(blackJack.getParticipants(), blackJack.getDealer());
+        outputView.printGameResult(blackJack.findResult());
+    }
+
+    private void checkDealerMoreCards(BlackJack blackJack) {
         while (blackJack.isDealerUnderThreshold()) {
             outputView.printDealerAddCard();
             blackJack.offerCardToDealer(1);
         }
+    }
 
-        outputView.printResult(blackJack.getParticipants(), blackJack.getDealer());
+    private void askAndOfferMoreCards(BlackJack blackJack) {
+        for (Player player : blackJack.getParticipants()) {
+            askAndOfferMoreCard(player, blackJack);
+        }
+    }
 
-        outputView.printGameResult(blackJack.findResult());
-
+    private void askAndOfferMoreCard(Player player, BlackJack blackJack) {
+        while (!player.isOverMaximumSum() && inputView.askOneMoreCard(player.getName())) {
+            blackJack.offerCardToPlayer(player.getName(), 1);
+            outputView.printPlayerCardMessage(player);
+        }
     }
 
     private BlackJack createBlackJack() {
-        List<String> names = inputView.inputParticipantNames();
+        List<String> names = inputView.askParticipantNames();
         List<Participant> players = new ArrayList<>(names.stream()
                 .map(Participant::new).toList());
         return new BlackJack(new Participants(players),new Dealer());
