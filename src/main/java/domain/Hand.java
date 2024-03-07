@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -38,5 +39,9 @@ public class Hand {
 
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
