@@ -7,6 +7,6 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldHit() {
-        return calculateScore() <= 16;
+        return hands.calculateScore() <= 16;
     }
 }

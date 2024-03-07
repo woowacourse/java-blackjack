@@ -44,7 +44,7 @@ public class OutputView {
         for (Card card : cards) {
             cardNames.add(card.getRank().getName() + card.getShape().getName());
         }
-        System.out.printf("%s카드: %s - 결과: %d", name.getValue(), String.join(", ", cardNames), participant.calculateScore());
+        System.out.printf("%s카드: %s - 결과: %d", name.getValue(), String.join(", ", cardNames), participant.getScore());
 
         System.out.println();
     }
