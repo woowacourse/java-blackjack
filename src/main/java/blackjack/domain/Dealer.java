@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.function.BooleanSupplier;
-
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -11,15 +9,16 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    @Override
-    public void decideDraw(BooleanSupplier supplier, Deck deck) {
-        if (supplier.getAsBoolean()) {
+    public boolean draw(Deck deck) {
+        if (shouldDraw()) {
             Card card = deck.draw();
             hands.addCard(card);
+            return true;
         }
+        return false;
     }
 
-    public Boolean shouldDraw() {
+    private boolean shouldDraw() {
         return hands.getHandsScore() < DEALER_DRAW_THRESHOLD;
     }
 }

@@ -8,10 +8,11 @@ public class Player extends Participant {
         super(name);
     }
 
-    @Override
-    public void decideDraw(BooleanSupplier supplier, Deck deck) {
+    public boolean draw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
             hands.addCard(deck.draw());
+            return true;
         }
+        return false;
     }
 }
