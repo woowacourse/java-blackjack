@@ -106,4 +106,20 @@ public class Game {
     private boolean doesPlayerWin(final int playerScore, final int dealerScore) {
         return playerScore >= dealerScore;
     }
+
+    public List<Boolean> judgePlayersIfDealerBusted() {
+        List<Boolean> gameResult = new ArrayList<>();
+        for (Player player : participant.players()) {
+            if (isBusted(player)) {
+                gameResult.add(false);
+            } else {
+                gameResult.add(true);
+            }
+        }
+        return gameResult;
+    }
+
+    private boolean isBusted(final Player player) {
+        return player.calculateScore() > BLACKJACK_SCORE;
+    }
 }

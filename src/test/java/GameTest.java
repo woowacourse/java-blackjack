@@ -13,7 +13,9 @@ import domain.constants.Shape;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
@@ -80,5 +82,30 @@ class GameTest {
         assertThat(isWinner).containsExactly(true);
     }
 
-    @DisplayName("")
+    @DisplayName("딜러의 점수가 21을 초과한 경우")
+    @Nested
+    class dealerBusted {
+        @DisplayName("참가자의 점수가 21을 초과하면 패배한다.")
+        @Test
+        void playerBusted() {
+            Dealer dealer = new Dealer("딜러");
+            dealer.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            dealer.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
+            dealer.saveCard(new Card(CardValue.TEN, Shape.HEART));
+
+            Player player = new Player("pobi");
+            player.saveCard(new Card(CardValue.TEN, Shape.DIAMOND));
+            player.saveCard(new Card(CardValue.TEN, Shape.CLOVER));
+            player.saveCard(new Card(CardValue.TEN, Shape.HEART));
+            List<Player> players = List.of(player);
+            Participant participant = new Participant(dealer, players);
+
+            Game game = new Game(participant, new Cards());
+
+            List<Boolean> gameResult = game.judgePlayersIfDealerBusted();
+
+            Assertions.assertThat(gameResult).hasSize(1);
+            Assertions.assertThat(gameResult).containsExactly(false);
+        }
+    }
 }
