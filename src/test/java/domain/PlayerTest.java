@@ -15,7 +15,7 @@ public class PlayerTest {
     @Test
     void createPlayerTest() {
         // Given
-        String playerName = "kelly";
+        PlayerName playerName = new PlayerName("kelly");
 
         // When
         Player player = Player.of(playerName);

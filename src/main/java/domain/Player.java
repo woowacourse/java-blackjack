@@ -9,8 +9,8 @@ public class Player implements Participant {
         this.hand = hand;
     }
 
-    public static Player of(String playerName) {
-        return new Player(new PlayerName(playerName), Hand.init());
+    public static Player of(PlayerName playerName) {
+        return new Player(playerName, Hand.init());
     }
 
     @Override
