@@ -2,9 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import model.BlackJack;
-import model.GameResult;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -13,6 +11,9 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
+
+    private static final int INITIAL_CARD_COUNT = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -23,23 +24,25 @@ public class BlackJackController {
 
     public void startGame() {
         BlackJack blackJack = createBlackJack();
-        blackJack.offerCardToPlayers(2);
+        blackJack.offerCardToPlayers(INITIAL_CARD_COUNT);
         outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
-        askAndOfferMoreCards(blackJack);
-        checkDealerMoreCards(blackJack);
+        offerMoreCards(blackJack);
 
         outputView.printBlackJackScore(blackJack.getParticipants(), blackJack.getDealer());
-        Map<GameResult, Long> dealerOutcome = blackJack.getDealerOutCome();
-        outputView.printDealerOutcome(dealerOutcome);
-        outputView.printGameResult(blackJack.findResult());
+        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.findResult());
     }
 
-    private void checkDealerMoreCards(BlackJack blackJack) {
-        while (blackJack.isDealerUnderThreshold()) {
-            outputView.printDealerAddCard();
-            blackJack.offerCardToDealer(1);
-        }
+    private BlackJack createBlackJack() {
+        List<String> names = inputView.askParticipantNames();
+        List<Participant> players = new ArrayList<>(names.stream()
+                .map(Participant::new).toList());
+        return new BlackJack(new Participants(players), new Dealer());
+    }
+
+    private void offerMoreCards(BlackJack blackJack) {
+        askAndOfferMoreCards(blackJack);
+        checkDealerMoreCards(blackJack);
     }
 
     private void askAndOfferMoreCards(BlackJack blackJack) {
@@ -50,15 +53,15 @@ public class BlackJackController {
 
     private void askAndOfferMoreCard(Player player, BlackJack blackJack) {
         while (!player.isOverMaximumSum() && inputView.askOneMoreCard(player.getName())) {
-            blackJack.offerCardToPlayer(player.getName(), 1);
+            blackJack.offerCardToPlayer(player, 1);
             outputView.printPlayerCardMessage(player);
         }
     }
 
-    private BlackJack createBlackJack() {
-        List<String> names = inputView.askParticipantNames();
-        List<Participant> players = new ArrayList<>(names.stream()
-                .map(Participant::new).toList());
-        return new BlackJack(new Participants(players), new Dealer());
+    private void checkDealerMoreCards(BlackJack blackJack) {
+        while (blackJack.isDealerUnderThreshold()) {
+            outputView.printDealerAddCard();
+            blackJack.offerCardToDealer(1);
+        }
     }
 }

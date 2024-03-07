@@ -38,7 +38,7 @@ class BlackJackTest {
     void offerCardToPlayer() {
         Participants participants = new Participants(List.of(new Participant("배키")));
         BlackJack blackJack = new BlackJack(participants, new Dealer());
-        blackJack.offerCardToPlayer("배키", 1);
+        blackJack.offerCardToPlayer(new Participant("배키"), 1);
         List<Participant> result = participants.getParticipants();
 
         assertAll(

@@ -7,7 +7,7 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean receiveCard() {
-        return getScore() <= MAXIMUM_SUM;
+    public boolean canReceiveCard() {
+        return calculateScore() <= MAXIMUM_SUM;
     }
 }

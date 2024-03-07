@@ -27,8 +27,8 @@ public class BlackJack {
         offerCardToDealer(cardCount);
     }
 
-    public void offerCardToPlayer(String name, int cardCount) {
-        participants.offerCardToPlayer(name, cardCount);
+    public void offerCardToPlayer(Player player, int cardCount) {
+        participants.offerCardToPlayer(player, cardCount);
     }
 
     public void offerCardToDealer(int cardCount) {
@@ -77,7 +77,7 @@ public class BlackJack {
 
     public boolean isDealerUnderThreshold() {
         Dealer dealer = getDealer();
-        return dealer.receiveCard();
+        return dealer.canReceiveCard();
     }
 
     public Map<GameResult, Long> getDealerOutCome() {
