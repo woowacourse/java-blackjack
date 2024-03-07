@@ -2,6 +2,7 @@ package view;
 
 import controller.dto.CardStatus;
 import controller.dto.CardsStatus;
+import controller.dto.GameResult;
 import java.util.List;
 
 public class OutputView {
@@ -38,5 +39,26 @@ public class OutputView {
             CardStatus cardStatus = currentCardsStatus.status().get(i);
             System.out.println(cardStatus.getCardFinalStatus() + " - 결과: " + scores.get(i));
         }
+    }
+
+    public void printGameResult(final GameResult results) {
+        System.out.println("## 최종 승패");
+        int loseCount = 0;
+        for (int i = 0; i < results.results().size(); i++) {
+            if (results.results().get(i).isWin()) {
+                loseCount++;
+            }
+        }
+        System.out.println("딜러: " + (results.results().size() - loseCount) + "승 " + loseCount + "패");
+        for (int i = 0; i < results.results().size(); i++) {
+            System.out.println(results.results().get(i).name() + ": " + checkIsWin(results.results().get(i).isWin()));
+        }
+    }
+
+    private String checkIsWin(final boolean isWin) {
+        if (isWin) {
+            return "승";
+        }
+        return "패";
     }
 }

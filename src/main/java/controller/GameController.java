@@ -2,6 +2,8 @@ package controller;
 
 import controller.dto.CardStatus;
 import controller.dto.CardsStatus;
+import controller.dto.GameResult;
+import controller.dto.PlayerResult;
 import domain.Dealer;
 import domain.Game;
 import domain.Participant;
@@ -32,6 +34,7 @@ public class GameController {
             scores.add(player.calculateScore());
         }
         outputView.printResult(getCurrentCardsStatus(game), scores);
+        outputView.printGameResult(getResults(game));
     }
 
     private Game start() {
@@ -75,5 +78,18 @@ public class GameController {
     private void giveCardToDealer(final Game game) {
         int count = game.giveCardsToDealer();
         outputView.printDealerPickMessage(count);
+    }
+
+    public GameResult getResults(final Game game) {
+        List<Boolean> results = game.judge();
+        List<String> names = game.getPlayerNames();
+        List<PlayerResult> playerResults = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).equals("딜러")) {
+                continue;
+            }
+            playerResults.add(new PlayerResult(names.get(i), results.get(i)));
+        }
+        return new GameResult(playerResults);
     }
 }
