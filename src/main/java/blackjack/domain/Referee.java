@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+
 public class Referee {
 
     private final Dealer dealer;
