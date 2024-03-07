@@ -20,6 +20,10 @@ public class Player {
         return hand.sum() > target;
     }
 
+    public int calculateHandSum() {
+        return hand.sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
