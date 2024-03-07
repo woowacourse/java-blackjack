@@ -19,7 +19,7 @@ public class BlackjackGame {
 
     public void run() {
         Participants participants = createParticipants();
-        outputView.printInitialCards(participants);
+        outputView.printInitialHand(participants);
         participantsHitCard(participants);
     }
 
@@ -31,8 +31,7 @@ public class BlackjackGame {
 
     private void participantsHitCard(Participants participants) {
         playersHitCard(participants.getPlayers());
-
-        //딜러 힛
+        // TODO 딜러 Hit
     }
 
     private void playersHitCard(Players players) {
@@ -45,10 +44,11 @@ public class BlackjackGame {
     private void hitIfCurrentPlayerWantCard(PlayerIterator playerIterator) {
         Player player = playerIterator.getPlayer();
         boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantHit(player));
-        playerIterator.update(isPlayerWantHit);
         if (isPlayerWantHit) {
             player.addCard(RandomDeck.getInstance());
+            outputView.printPlayerHand(player);
         }
+        playerIterator.update(isPlayerWantHit);
     }
 
     private boolean readIsPlayerWantHit(Player player) {
