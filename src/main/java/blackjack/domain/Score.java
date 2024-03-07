@@ -17,4 +17,16 @@ public record Score(int value) {
     public boolean isBusted() {
         return value > BUST_THRESHOLD;
     }
+
+    public boolean isGreaterThen(Score relativeScore) {
+        return value > relativeScore.value;
+    }
+
+    public boolean isSame(Score relativeScore) {
+        return value == relativeScore.value;
+    }
+
+    public boolean isLessThan(Score relativeScore) {
+        return value < relativeScore.value;
+    }
 }
