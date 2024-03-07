@@ -20,4 +20,8 @@ public abstract class Participant {
     public HandStatus getHandStatus() {
         return hand.getHandStatus();
     }
+
+    public int getHandSum() {
+        return hand.getCardsNumberSum();
+    }
 }
