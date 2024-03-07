@@ -26,7 +26,7 @@ class DealerTest {
     private static final List<Card> CARDS_SCORE_17 = CardTest.CARDS_SCORE_17;
     private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
     private static final List<Card> BUSTED = CardTest.BUSTED;
-    private static final Name DEFAULT_NAME = new Name("name");
+    private static final Name DEFAULT_NAME = NameTest.DEFAULT_NAME;
 
     @DisplayName("카드의 총 점수가 16을 넘지 않으면, 카드를 더 뽑을 수 있다")
     @Test

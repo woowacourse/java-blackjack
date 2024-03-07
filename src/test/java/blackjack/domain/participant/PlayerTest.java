@@ -24,7 +24,7 @@ class PlayerTest {
     private static final List<Card> CARDS_SCORE_21 = CardTest.CARDS_SCORE_21;
     private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
     private static final List<Card> CARDS_SCORE_22 = CardTest.CARDS_SCORE_22;
-    private static final Name DEFAULT_NAME = new Name("name");
+    private static final Name DEFAULT_NAME = NameTest.DEFAULT_NAME;
 
     @DisplayName("점수를 계산할 수 있다.")
     @ParameterizedTest
