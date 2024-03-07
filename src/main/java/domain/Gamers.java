@@ -19,10 +19,6 @@ public class Gamers {
         return new Gamers(gamers);
     }
 
-    public List<Card> getHandAt(int index) {
-        return gamers.get(index).getHand();
-    }
-
     public List<Player> findPlayers() {
         List<Player> players = new ArrayList<>();
         gamers.stream()
