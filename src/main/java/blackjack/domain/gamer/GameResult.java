@@ -10,4 +10,12 @@ public enum GameResult {
 	GameResult(String name) {
 		this.name = name;
 	}
+
+	public boolean isLose() {
+		return this == LOSE;
+	}
+
+	public String getName() {
+		return name;
+	}
 }
