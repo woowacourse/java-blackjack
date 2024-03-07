@@ -4,10 +4,10 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
+import blackjack.util.Constants;
 
 public class Judge {
 
-    private static final int BLACKJACK_BOUND = 21;
 
     public static DealerResult judge(
             final ResultStatus resultStatus, final Player player, final Dealer dealer, final PlayerResult playerResult) {
@@ -46,7 +46,7 @@ public class Judge {
 
     private static DealerResult judgeDifferentScores(
             final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        if (dealer.getScore() <= BLACKJACK_BOUND) {
+        if (dealer.getScore() <= Constants.BLACKJACK_BOUND) {
             return judgeDealerNotBust(dealer, playerResult, player, resultStatus);
         }
 

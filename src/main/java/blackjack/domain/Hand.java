@@ -1,12 +1,12 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    public static final int BLACKJACK_BOUND = 21;
     public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 
@@ -24,7 +24,7 @@ public class Hand {
         long aceCount = countAce();
         int scoreWithoutAce = calculateScoreWithoutAce();
 
-        int residualScore = BLACKJACK_BOUND - scoreWithoutAce;
+        int residualScore = Constants.BLACKJACK_BOUND - scoreWithoutAce;
 
         int quotient = residualScore / MAX_ACE_SCORE;
         long minAceCount = Math.min(quotient, aceCount);
@@ -50,7 +50,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
+        return calculateScore() == Constants.BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     public Card getFirstCard() {

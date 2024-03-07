@@ -2,10 +2,10 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
+import blackjack.util.Constants;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BLACKJACK_BOUND = 21;
 
     protected final Hand hand;
 
@@ -16,7 +16,7 @@ public abstract class Gamer {
     abstract boolean canReceiveCard();
 
     public boolean isBust() {
-        return hand.calculateScore() > BLACKJACK_BOUND;
+        return hand.calculateScore() > Constants.BLACKJACK_BOUND;
     }
 
     public long getScore() {

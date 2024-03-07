@@ -1,13 +1,13 @@
 package blackjack.view;
 
 import blackjack.dto.BlackjackResult;
+import blackjack.util.Constants;
 import java.util.List;
 
 public class OutputView {
     private static final String CARD_DISTRIBUTE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_CARD_STATUS = "딜러: %s";
     private static final String CARD_STATUS = "%s: %s";
-    private static final int DEALER_BOUND = 16;
     private static final String DEALER_ADDED_CARD = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d" + System.lineSeparator();
     private static final String DEALER_RESULT_CARDS_STATUS = "딜러 카드: %s - 결과: %d" + System.lineSeparator();
@@ -45,7 +45,7 @@ public class OutputView {
 
     public void printAddDealerCard() {
         System.out.printf(System.lineSeparator() + DEALER_ADDED_CARD + System.lineSeparator() + System.lineSeparator(),
-                DEALER_BOUND);
+                Constants.DEALER_BOUND);
     }
 
     public void printCardResultStatus(final List<String> card, final long score) {

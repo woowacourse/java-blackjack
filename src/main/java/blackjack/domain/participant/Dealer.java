@@ -2,10 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
+import blackjack.util.Constants;
 
 public class Dealer extends Gamer {
-
-    private static final int DEALER_BOUND = 16;
 
     private final Deck deck;
 
@@ -36,7 +35,7 @@ public class Dealer extends Gamer {
 
     @Override
     boolean canReceiveCard() {
-        return hand.calculateScore() <= DEALER_BOUND;
+        return hand.calculateScore() <= Constants.DEALER_BOUND;
     }
 
     public boolean isCardAdded() {
