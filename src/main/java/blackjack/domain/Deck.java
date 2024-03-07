@@ -13,8 +13,18 @@ public class Deck {
     private final List<Card> cards;
 
     private Deck(List<Card> cards) {
-        // TODO: 중복되는 카드 검사 로직 추가
+        validateUniqueCard(cards);
         this.cards = cards;
+    }
+
+    private void validateUniqueCard(List<Card> cards) {
+        int distinctCount = (int) cards.stream()
+                .distinct()
+                .count();
+
+        if (distinctCount != cards.size()) {
+            throw new IllegalArgumentException("중복되는 카드가 있습니다.");
+        }
     }
 
     public static Deck from(List<Card> cards) {
