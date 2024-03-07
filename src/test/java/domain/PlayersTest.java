@@ -2,7 +2,6 @@ package domain;
 
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +39,45 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 참여자 수입니다.");
     }
+
+    @Test
+    @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 False를 반환한다.")
+    void isAllBustFalse() {
+        //given
+        Hands bustHands = new Hands(
+                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE),
+                        new Card(CardNumber.TEN, CardShape.HEART)));
+
+        Hands noBustHands = new Hands(
+                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE)));
+
+        Player player1 = new Player("레디", bustHands);
+        Player player2 = new Player("제제", noBustHands);
+        Players players = new Players(List.of(player1, player2));
+
+        //when && then
+        Assertions.assertThat(players.isAllBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("모든 참가자가 버스트되면 True를 반환한다.")
+    void isAllBustTrue() {
+        //given
+        Hands bustHands = new Hands(
+                List.of(new Card(CardNumber.JACK, CardShape.HEART), new Card(CardNumber.TEN, CardShape.SPADE),
+                        new Card(CardNumber.TEN, CardShape.HEART)));
+
+        Player player1 = new Player("레디", bustHands);
+        Player player2 = new Player("제제", bustHands);
+        Player player3 = new Player("수달", bustHands);
+        Player player4 = new Player("피케이", bustHands);
+
+        Players players = new Players(List.of(player1, player2, player3, player4));
+
+        //when && then
+        Assertions.assertThat(players.isAllBust()).isTrue();
+    }
+
 
     static Stream<Arguments> validPlayersSizeParameterProvider() {
         return Stream.of(

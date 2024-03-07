@@ -28,6 +28,11 @@ public class Players {
         names.forEach(action);
     }
 
+    public boolean isAllBust() {
+        return names.stream()
+                .allMatch(Player::isBust);
+    }
+
     private static void validate(final List<Player> players) {
         validateSize(players);
         validateDuplicate(players);
