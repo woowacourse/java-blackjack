@@ -2,7 +2,11 @@ package blackjack.domain;
 
 public class Dealer extends Player {
 
-    public Dealer(final Hand hand) {
-        super(hand);
+    public Dealer(final Name name, final Hand hand) {
+        super(name, hand);
+    }
+
+    public Card getFirstCard() {
+        return hand.getAllCards().get(0);
     }
 }

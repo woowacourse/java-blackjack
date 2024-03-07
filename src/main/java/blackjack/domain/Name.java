@@ -20,4 +20,8 @@ public class Name {
                 MINIMUM_LENGTH, MAXIMUM_LENGTH);
         throw new IllegalArgumentException(errorMessage);
     }
+
+    public String getValue() {
+        return value;
+    }
 }

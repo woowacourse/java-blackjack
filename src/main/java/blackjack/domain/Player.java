@@ -3,9 +3,11 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player {
-    private final Hand hand;
+    private final Name name;
+    protected final Hand hand;
 
-    public Player(final Hand hand) {
+    public Player(final Name name, final Hand hand) {
+        this.name = name;
         this.hand = hand;
     }
 
@@ -26,5 +28,9 @@ public class Player {
     // TODO : 꼭 필요한 메서드일까?
     public int getScore() {
         return hand.getSum();
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 }
