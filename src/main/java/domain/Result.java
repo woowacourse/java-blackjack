@@ -11,4 +11,11 @@ public enum Result {
     Result(final String value) {
         this.value = value;
     }
+
+    public Result reverse() {
+        if (Result.WIN.equals(this)) {
+            return LOSE;
+        }
+        return WIN;
+    }
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,6 +17,17 @@ public class Game {
 
     public Map<Player, Result> getResult() {
         return calculate();
+    }
+
+    public Map<Result, Integer> getDealerResult() {
+        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+
+        for (Result value : getResult().values()) {
+            Result reversed = value.reverse();
+            Integer orDefault = dealerResult.getOrDefault(reversed, 0);
+            dealerResult.put(reversed, orDefault + 1);
+        }
+        return dealerResult;
     }
 
     private Map<Player, Result> calculate() {
