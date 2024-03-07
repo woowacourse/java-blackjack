@@ -2,18 +2,18 @@ package domain;
 
 import java.util.List;
 
-abstract class Gamer {
+public class Gamer {
     Name name;
     Hand hand;
 
-    public Gamer(Decks decks) {
+    public Gamer(final Name name) {
+        this.name = name;
         this.hand = new Hand();
-        for (int i = 0; i < 2; i++) {
-            hand.add(decks.draw());
-        }
     }
 
-    abstract void hit(final Decks decks);
+    public void hit(final Card card) {
+        hand.add(card);
+    };
 
     public int calculateTotalScore() {
         return hand.sum();
@@ -25,5 +25,9 @@ abstract class Gamer {
 
     public List<Card> getHand() {
         return hand.getCards();
+    }
+
+    public Name getName() {
+        return name;
     }
 }

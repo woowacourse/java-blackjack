@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.strategy.SettedDecksGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,23 +10,18 @@ public class PlayerTest {
     //TODO : 생성 부분 리팩터링
     @DisplayName("플레이어가 카드를 뽑아서 저장한다.")
     @Test
-    void drawTest() {
+    void hitTest() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
-
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+        Card card = new Card(Symbol.HEART, Rank.NINE);
 
         Name name = new Name("lini");
-        Player player = new Player(name, decks);
+        Player player = new Player(name);
 
         // when
-        player.hit(decks);
+        player.hit(card);
 
         // then
-        assertThat(player.getHand()).hasSize(3);
+        assertThat(player.getHand()).hasSize(1);
     }
 
     @DisplayName("플레이어가 가진 카드의 점수를 알 수 있다.")
@@ -37,12 +31,11 @@ public class PlayerTest {
         Card card1 = new Card(Symbol.HEART, Rank.NINE);
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
         Name name = new Name("lini");
-        Player player = new Player(name, decks);
+        Player player = new Player(name);
 
+        player.hit(card1);
+        player.hit(card2);
         int expectedScore = 19;
 
         // when
@@ -60,13 +53,12 @@ public class PlayerTest {
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
         Name name = new Name("lini");
-        Player player = new Player(name, decks);
+        Player player = new Player(name);
 
-        player.hit(decks);
+        player.hit(card1);
+        player.hit(card2);
+        player.hit(card3);
 
         // when
         boolean bust = player.isBust();

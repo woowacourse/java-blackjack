@@ -8,46 +8,34 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    @DisplayName("합계가 17 이상이 될 때 까지 카드를 뽑는다.")
+    //TODO : 생성 부분 리팩터링
+    @DisplayName("딜러가 카드를 뽑아서 저장한다.")
     @Test
-    void drawTest() {
+    void hitTest() {
         // given
-        Card card1 = new Card(Symbol.DIAMOND, Rank.THREE);
-        Card card2 = new Card(Symbol.HEART, Rank.THREE);
-        Card card3 = new Card(Symbol.CLOVER, Rank.TEN);
-        Card card4 = new Card(Symbol.SPADE, Rank.FOUR);
-        Card card5 = new Card(Symbol.HEART, Rank.TWO);
+        Card card = new Card(Symbol.HEART, Rank.NINE);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
-        Dealer dealer = new Dealer(decks);
-
-        int expectedSize = 4;
+        Dealer dealer = new Dealer();
 
         // when
-        dealer.hit(decks);
+        dealer.hit(card);
 
         // then
-        assertThat(dealer.getHand()).hasSize(expectedSize);
+        assertThat(dealer.getHand()).hasSize(1);
     }
 
-    @DisplayName("카드의 총 합계를 구한다.")
+    @DisplayName("딜러가 가진 카드의 점수를 알 수 있다.")
     @Test
-    void calculateScoreTest() {
+    void calculateTotalScoreTest() {
         // given
-        Card card1 = new Card(Symbol.DIAMOND, Rank.THREE);
-        Card card2 = new Card(Symbol.HEART, Rank.THREE);
-        Card card3 = new Card(Symbol.CLOVER, Rank.TEN);
-        Card card4 = new Card(Symbol.SPADE, Rank.FOUR);
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+        Dealer dealer = new Dealer();
 
-        Dealer dealer = new Dealer(decks);
-        dealer.hit(decks);
-
-        int expectedScore = 17;
+        dealer.hit(card1);
+        dealer.hit(card2);
+        int expectedScore = 19;
 
         // when
         int result = dealer.calculateTotalScore();
@@ -58,19 +46,17 @@ public class DealerTest {
 
     @DisplayName("딜러가 버스트인지 확인한다.")
     @Test
-    void isBustTest() {
+    void isBust() {
         // given
         Card card1 = new Card(Symbol.HEART, Rank.NINE);
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
+        Dealer dealer = new Dealer();
 
-        Dealer dealer = new Dealer(decks);
-        dealer.hit(decks);
-        dealer.hit(decks);
-        dealer.hit(decks);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
 
         // when
         boolean bust = dealer.isBust();
