@@ -23,11 +23,6 @@ public class Player extends Participant {
     }
 
     @Override
-    protected int getVisibleStartCardSize() {
-        return START_CARDS_SIZE;
-    }
-
-    @Override
     protected int getMaxDrawableScore() {
         return BLACKJACK_SCORE;
     }

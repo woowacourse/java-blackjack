@@ -61,13 +61,5 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    public final List<Card> getStartCards() {
-        if (cards.size() < START_CARDS_SIZE) {
-            throw new IllegalStateException("시작 카드를 가지고 있지 않습니다.");
-        }
-        return getCards().subList(0, getVisibleStartCardSize());
-    }
-
-    protected abstract int getVisibleStartCardSize();
     protected abstract int getMaxDrawableScore();
 }
