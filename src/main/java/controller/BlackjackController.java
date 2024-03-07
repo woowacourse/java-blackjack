@@ -77,9 +77,7 @@ public class BlackjackController {
     }
 
     private void playersTryDraw(Deck deck) {
-        players.forEach(player -> {
-            playerTryDraw(deck, player);
-        });
+        players.forEach(player -> playerTryDraw(deck, player));
     }
 
     private void playerTryDraw(Deck deck, Gamer player) {
