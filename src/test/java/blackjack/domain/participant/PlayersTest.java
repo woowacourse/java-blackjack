@@ -1,7 +1,10 @@
 package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.Deck;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -36,5 +39,21 @@ class PlayersTest {
         assertThatThrownBy(() -> Players.from(duplicatedNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름을 사용할 수 없습니다.");
+    }
+
+    @DisplayName("게임을 시작할 때 모든 플레이어들은 카드를 두 장 뽑는다.")
+    @Test
+    void drawStartCardsTest() {
+        Players players = Players.from(List.of("1", "2"));
+        Deck deck = Deck.createShuffledDeck();
+
+        players.drawStartCards(deck);
+
+        List<Player> allPlayers = players.getPlayers();
+        assertAll(
+                () -> assertThat(allPlayers.get(0).getCards()).hasSize(2),
+                () -> assertThat(allPlayers.get(1).getCards()).hasSize(2)
+        );
+
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Deck;
 import java.util.List;
 
 public class Players {
@@ -38,5 +39,16 @@ public class Players {
 
     private boolean isDuplicated(List<Player> players) {
         return players.size() != players.stream().distinct().count();
+    }
+
+    public void drawStartCards(Deck deck) {
+        for (Player player : players) {
+            player.drawStartCards(deck);
+        }
+    }
+
+    //TODO 현재 얘는 테스트만을 위해서 임시로 작성된 코드
+    List<Player> getPlayers() {
+        return players;
     }
 }
