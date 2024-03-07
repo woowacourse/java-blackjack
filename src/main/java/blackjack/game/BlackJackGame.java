@@ -29,7 +29,7 @@ public class BlackJackGame {
         playersDrawMore(deck, players);
         dealerDrawMore(deck, dealer);
 
-        showCardResultWithScore(dealer, players);
+        showCardsWithScore(dealer, players);
         showMatchResult(dealer, players);
     }
 
@@ -91,10 +91,10 @@ public class BlackJackGame {
         }
     }
 
-    private void showCardResultWithScore(Dealer dealer, Players players) {
-        outputView.printDealerCardsWithResult(dealer.getCards(), dealer.getScore());
+    private void showCardsWithScore(Dealer dealer, Players players) {
+        outputView.printDealerCardsWithScore(dealer.getCards(), dealer.getScore());
         for (Player player : players.getPlayers()) {
-            outputView.printPlayerCardsWithResult(player.getName(), player.getCards(), player.getScore());
+            outputView.printPlayerCardsWithScore(player.getName(), player.getCards(), player.getScore());
         }
         outputView.printNewLine();
     }

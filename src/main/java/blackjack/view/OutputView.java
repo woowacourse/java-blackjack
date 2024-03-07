@@ -33,11 +33,11 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerCardsWithResult(List<Card> cards, int score) {
-        System.out.println("딜러 카드: " + convertCards(cards) + " - 결과: " + score + "점");
+    public void printDealerCardsWithScore(List<Card> cards, int score) {
+        printPlayerCardsWithScore("딜러", cards, score);
     }
 
-    public void printPlayerCardsWithResult(String name, List<Card> cards, int score) {
+    public void printPlayerCardsWithScore(String name, List<Card> cards, int score) {
         System.out.println(name + " 카드: " + convertCards(cards) + " - 결과: " + score + "점");
     }
 
