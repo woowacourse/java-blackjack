@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String ERROR_PREFIX = "[ERROR] ";
-    private static final String HAND_OUT_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다.";
+    private static final String HAND_OUT_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
     private static final String PARTICIPANT_HAND = "%s카드: %s";
+    private static final String DEALER_HIT_COUNT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
+    private static final String DEALER_NO_HIT = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
 
     public void printInitialHand(Participants participants) {
         Dealer dealer = participants.getDealer();
@@ -24,6 +26,16 @@ public class OutputView {
         System.out.println(playerHand);
     }
 
+    public void printDealerHitCount(int hitCount) {
+        printNewLine();
+        if (hitCount == 0) {
+            System.out.println(DEALER_NO_HIT);
+            return;
+        }
+        String dealerHitCountMessage = String.format(DEALER_HIT_COUNT, hitCount);
+        System.out.println(dealerHitCountMessage);
+    }
+
     public void printException(IllegalArgumentException e) {
         System.out.println(ERROR_PREFIX + e.getMessage());
     }
@@ -31,6 +43,7 @@ public class OutputView {
     private void printHandOutMessage(Dealer dealer, Players players) {
         String playersName = formatPlayersName(players);
         String handOutMessage = String.format(HAND_OUT_MESSAGE, dealer.getName(), playersName);
+        printNewLine();
         System.out.println(handOutMessage);
     }
 
@@ -66,5 +79,9 @@ public class OutputView {
         return cards.stream()
                 .map(Card::getSignature)
                 .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void printNewLine() {
+        System.out.println();
     }
 }

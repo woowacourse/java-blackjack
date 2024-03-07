@@ -4,10 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.HandGenerator;
 import blackjack.domain.Name;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerIterator;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,7 +28,7 @@ public class BlackjackGame {
 
     private void participantsHitCard(Participants participants) {
         playersHitCard(participants.getPlayers());
-        // TODO 딜러 Hit
+        dealerHitCard(participants.getDealer());
     }
 
     private void playersHitCard(Players players) {
@@ -39,6 +36,15 @@ public class BlackjackGame {
         while (playerIterator.hasNext()) {
             hitIfCurrentPlayerWantCard(playerIterator);
         }
+    }
+
+    private void dealerHitCard(Dealer dealer) {
+        Deck deck = RandomDeck.getInstance();
+        int hitCount = 0;
+        while (dealer.canHit()) {
+            dealer.addCard(deck);
+        }
+        outputView.printDealerHitCount(hitCount);
     }
 
     private void hitIfCurrentPlayerWantCard(PlayerIterator playerIterator) {
