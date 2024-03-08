@@ -34,7 +34,6 @@ public class BlackJackGame {
     }
 
     public List<GamerDto> toGamerDto() {
-        // TODO: 네이밍 생각하기
         List<GamerDto> gamerDtos = new ArrayList<>();
         players.stream()
                 .map(GamerDto::from)

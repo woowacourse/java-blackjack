@@ -6,9 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GamerTest {
-
-//    TODO: "private final Name TEST_NAME = new Name("test")" fixture를 써야 하나?
-
     @Test
     @DisplayName("게이머는 자신의 패를 반환할 수 있다.")
     void getHand() {
