@@ -93,7 +93,7 @@ public class OutputView {
         if (denomination == Denomination.KING) {
             return "K";
         }
-        return "" + denomination.getValue(0);
+        return "" + denomination.getValue();
     }
 
     private static String symbolToMessage(final Symbol symbol) {

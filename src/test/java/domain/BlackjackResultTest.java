@@ -18,8 +18,6 @@ class BlackjackResultTest {
         teba.hit(new Card(Denomination.KING, Symbol.CLOVER));
         teba.hit(new Card(Denomination.SIX, Symbol.CLOVER));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
-        //
-
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();
         final Integer tebaLose = blackjackResultDTO.getLose(teba);
