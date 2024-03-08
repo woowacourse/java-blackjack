@@ -28,7 +28,8 @@ public class GameResult {
                 || dealer.getHandsScore() == player.getHandsScore()) {
             return Result.DRAW;
         }
-        if (player.getHandsScore() > dealer.getHandsScore()) {
+        if (dealer.isBurst()
+                || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBurst())) {
             return Result.WIN;
         }
         return Result.LOSE;
