@@ -12,26 +12,40 @@ public class Referee {
         this.dealerCards = dealerCards;
     }
 
-    public Outcome doesPlayerWin(Cards playerCards) {
-        if (playerCards.sum() > BLACKJACK_CANDIDATE) {
-            return calculatePlayerBustCase();
+    public Outcome doesPlayerWin(final Cards playerCards) {
+        if (isBust(playerCards.sum()) || isBust(dealerCards.sum())) {
+            return calculateBustCase(playerCards.sum());
         }
-        if (playerCards.sum() == BLACKJACK_CANDIDATE && playerCards.hasOnlyInitialCard()) {
-            return calculatePlayerBlackJackCase();
+        if (isBlackJack(dealerCards) || isBlackJack(playerCards)) {
+            return calculateBlackJackCase(playerCards);
         }
         return calculateNormalCase(playerCards);
     }
 
-    private Outcome calculatePlayerBustCase() {
-        if (dealerCards.sum() > BLACKJACK_CANDIDATE) {
+    private boolean isBust(int score) {
+        return score > BLACKJACK_CANDIDATE;
+    }
+
+    private Outcome calculateBustCase(final int playerScore) {
+        if (isBust(dealerCards.sum()) && isBust(playerScore)) {
             return Outcome.PUSH;
+        }
+        if (isBust(dealerCards.sum())) {
+            return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
-    private Outcome calculatePlayerBlackJackCase() {
-        if (dealerCards.sum() == BLACKJACK_CANDIDATE && dealerCards.hasOnlyInitialCard()) {
+    private boolean isBlackJack(Cards cards) {
+        return cards.sum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
+    }
+
+    private Outcome calculateBlackJackCase(final Cards playerCards) {
+        if (isBlackJack(dealerCards) && isBlackJack(playerCards)) {
             return Outcome.PUSH;
+        }
+        if (isBlackJack(dealerCards)) {
+            return Outcome.LOSE;
         }
         return Outcome.WIN;
     }
