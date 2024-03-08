@@ -23,9 +23,10 @@ public class Player {
         hand.addCard(deck.draw());
     }
 
-    public void initDrawCards(Deck deck) {
-        drawCard(deck);
-        drawCard(deck);
+    public void drawCards(Deck deck, int amount) {
+        for (int i = 0; i < amount; i++) {
+            drawCard(deck);
+        }
     }
 
     public boolean hasDrawableScore() {

@@ -11,6 +11,7 @@ import java.util.List;
 public class BlackJackGame {
 
     public static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int BLACKJACK_INIT_CARD_AMOUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -42,8 +43,8 @@ public class BlackJackGame {
     }
 
     private void initGame(Deck deck, Dealer dealer, Players players) {
-        players.initDrawCards(deck);
-        dealer.initDrawCards(deck);
+        players.drawCardsForAll(deck, BLACKJACK_INIT_CARD_AMOUNT);
+        dealer.drawCards(deck, BLACKJACK_INIT_CARD_AMOUNT);
         outputView.printInitializeBlackJack(players.getNames());
         showInitCard(dealer, players);
     }

@@ -44,8 +44,8 @@ public class Players {
         }
     }
 
-    public void initDrawCards(Deck deck) {
-        players.forEach(player -> player.initDrawCards(deck));
+    public void drawCardsForAll(Deck deck, int amount) {
+        players.forEach(player -> player.drawCards(deck, amount));
     }
 
     public List<String> getNames() {
