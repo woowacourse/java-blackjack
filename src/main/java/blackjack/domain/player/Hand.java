@@ -1,15 +1,18 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.ScoreCalculateStrategy;
 
 import java.util.List;
 
 public class Hand {
 
     private final List<Card> cards;
+    private final ScoreCalculateStrategy scoreCalculateStrategy;
 
-    public Hand(List<Card> cards) {
+    public Hand(List<Card> cards, ScoreCalculateStrategy scoreCalculateStrategy) {
         this.cards = cards;
+        this.scoreCalculateStrategy = scoreCalculateStrategy;
     }
 
     public int sum() {
