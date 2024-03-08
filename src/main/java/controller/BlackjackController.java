@@ -84,7 +84,7 @@ public class BlackjackController {
 
     private void playerTryDraw(Deck deck, Gamer player) {
         boolean needToDraw = true;
-        while (needToDraw && !player.getSummationCardPoint().isDeadPoint()) {
+        while (needToDraw) {
             needToDraw = playerTryDrawOnce(deck, player);
         }
     }
@@ -94,9 +94,13 @@ public class BlackjackController {
         OutputView.printPlayerAdditionalCardMessage(player.getRawName());
         needToDraw = YesOrNoInputView.getYNAsBoolean();
         if (needToDraw) {
-            playerDraw(deck, player);
+            try {
+                playerDraw(deck, player);
+                printPlayer(player);
+            } catch (IllegalStateException e) {
+                return false;
+            }
         }
-        printPlayer(player);
         return needToDraw;
     }
 
