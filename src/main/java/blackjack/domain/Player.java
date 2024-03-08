@@ -4,12 +4,16 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player {
-    private final String name; // TODO: 감싸기
+    private final PlayerName playerName;
     private final PlayerCards playerCards;
 
-    public Player(String name) {
-        this.name = name;
+    public Player(PlayerName playerName) {
+        this.playerName = playerName;
         this.playerCards = PlayerCards.createEmptyCards();
+    }
+
+    public static Player fromName(String name) {
+        return new Player(new PlayerName(name));
     }
 
     public void draw(Deck deck) {
@@ -34,6 +38,6 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return playerName.name();
     }
 }

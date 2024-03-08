@@ -33,7 +33,7 @@ class GameResultBoardTest {
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);
-        Player player = new Player("testPlayer");
+        Player player = Player.fromName("testPlayer");
         giveCardToPlayer(player, deck, 2);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
@@ -93,7 +93,7 @@ class GameResultBoardTest {
     private List<Player> generatePlayers() {
         List<String> playerNames = List.of("loki", "pedro", "poke", "alpaca");
         return playerNames.stream()
-                .map(Player::new)
+                .map(Player::fromName)
                 .toList();
     }
 

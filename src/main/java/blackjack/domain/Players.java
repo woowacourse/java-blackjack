@@ -3,11 +3,11 @@ package blackjack.domain;
 import java.util.List;
 
 public class Players {
-    private final List<Player> players;
+    private final List<Player> playerGroup;
 
-    public Players(List<Player> players) {
-        validate(players);
-        this.players = players;
+    public Players(List<Player> playerGroup) {
+        validate(playerGroup);
+        this.playerGroup = playerGroup;
     }
 
     private static void validate(List<Player> players) {
@@ -27,18 +27,18 @@ public class Players {
 
     public static Players from(List<String> names) {
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(Player::fromName)
                 .toList();
 
         return new Players(players);
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return playerGroup;
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
+        return playerGroup.stream()
                 .map(Player::getName)
                 .toList();
     }
