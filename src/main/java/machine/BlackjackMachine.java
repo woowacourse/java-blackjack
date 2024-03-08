@@ -51,7 +51,7 @@ public class BlackjackMachine {
     }
 
     private void playPlayerTurn(BlackjackGame game, Player player) {
-        while (player.isReceivable() && isRequestedYes(player)) {
+        while (player.isReceivable() && isHitRequested(player)) {
             game.giveOneCard(player);
             outputView.printParticipantCards(player);
         }
@@ -62,8 +62,8 @@ public class BlackjackMachine {
         outputView.printParticipantCards(player);
     }
 
-    private boolean isRequestedYes(Player player) {
-        return inputView.readYesOrNo(player).equals("y");
+    private boolean isHitRequested(Player player) {
+        return HitStay.from(inputView.readHitOrStay(player)) == HitStay.HIT;
     }
 
     private void playDealerTurn(BlackjackGame game) {
