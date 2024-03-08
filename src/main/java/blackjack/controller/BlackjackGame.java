@@ -48,7 +48,7 @@ public class BlackjackGame {
     private void playersHitCard(Players players) {
         PlayerIterator playerIterator = new PlayerIterator(players);
         while (playerIterator.hasNext()) {
-            hitIfCurrentPlayerWantCard(playerIterator);
+            hitIfCurrentPlayerWants(playerIterator);
         }
     }
 
@@ -62,9 +62,9 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void hitIfCurrentPlayerWantCard(PlayerIterator playerIterator) {
+    private void hitIfCurrentPlayerWants(PlayerIterator playerIterator) {
         Player player = playerIterator.getPlayer();
-        boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantHit(player));
+        boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantsHit(player));
         if (isPlayerWantHit) {
             player.addCard(RandomDeck.getInstance());
         }
@@ -72,9 +72,9 @@ public class BlackjackGame {
         playerIterator.update(isPlayerWantHit);
     }
 
-    private boolean readIsPlayerWantHit(Player player) {
+    private boolean readIsPlayerWantsHit(Player player) {
         String playerName = player.getName();
-        return inputView.readIsPlayerWantHit(playerName);
+        return inputView.readIsPlayerWantsHit(playerName);
     }
 
     private Participants createParticipantsWithNames(HandGenerator handGenerator) {

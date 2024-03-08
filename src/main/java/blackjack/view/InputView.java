@@ -29,7 +29,7 @@ public class InputView {
                 .toList();
     }
 
-    public boolean readIsPlayerWantHit(String playerName) {
+    public boolean readIsPlayerWantsHit(String playerName) {
         System.out.println(playerName + PLAYER_HIT_REQUEST);
         String input = scanner.nextLine();
         validateHitCommand(input);
