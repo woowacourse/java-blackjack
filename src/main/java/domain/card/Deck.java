@@ -7,9 +7,12 @@ import java.util.stream.IntStream;
 public class Deck {
 
     private final List<Card> deck;
+    private final DrawStrategy strategy;
 
-    public Deck() {
+    public Deck(DrawStrategy strategy) {
         this.deck = createDeck();
+        this.strategy = strategy;
+
     }
 
     private List<Card> createDeck() {
@@ -20,7 +23,11 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public Card draw(DrawStrategy strategy) {
+    public List<Card> drawInitialHands() {
+        return List.of(draw(), draw());
+    }
+
+    public Card draw() {
         int randomNumber = strategy.generateNumber(deck.size());
         Card card = deck.get(randomNumber);
         deck.remove(randomNumber);
