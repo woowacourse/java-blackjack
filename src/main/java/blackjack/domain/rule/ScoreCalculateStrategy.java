@@ -2,7 +2,7 @@ package blackjack.domain.rule;
 
 import blackjack.domain.player.Hand;
 
-public class ScoreCalculator {
+public class ScoreCalculateStrategy {
 
     private static final int BLACK_JACK = 21;
     private static final int ACE_WEIGHT = 10;
