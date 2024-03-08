@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int ALTERNATIVE_ACE_SCORE = 1;
+    private static final int ALTER_ACE_GAP = 10;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -22,20 +25,21 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    // TODO: indent 줄이기
     public int calculateScoreWhileDraw() {
         int sum = 0;
         for (Card card : cards) {
-            if (card.isAceCard()) {
-                sum += 1;
-                continue;
-            }
-            sum += card.getScore();
+            sum += getScoreToAdd(card);
         }
         return sum;
     }
 
-    // TODO: indent 줄이기
+    private static int getScoreToAdd(final Card card) {
+        if (card.isAceCard()) {
+            return ALTERNATIVE_ACE_SCORE;
+        }
+        return card.getScore();
+    }
+
     public int calculateScore(final int blackJackScore) {
         int sum = cards.stream()
                 .map(Card::getScore)
@@ -43,15 +47,20 @@ public class Hand {
                 .sum();
         int aceCardCount = 0;
         for (Card card : cards) {
-            if (card.isAceCard()) {
-                aceCardCount++;
-            }
+            aceCardCount = getAceCardCount(card, aceCardCount);
         }
         while (aceCardCount > 0 && sum > blackJackScore) {
             aceCardCount--;
-            sum -= 10;
+            sum -= ALTER_ACE_GAP;
         }
         return sum;
+    }
+
+    private int getAceCardCount(final Card card, int aceCardCount) {
+        if (card.isAceCard()) {
+            aceCardCount++;
+        }
+        return aceCardCount;
     }
 
     public int size() {
@@ -61,6 +70,4 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
-
-    // TODO: 매직 넘버 상수화
 }

@@ -19,10 +19,10 @@ class GameRuleTest {
     void judgeWinners() {
         // given
         Dealer dealer = new Dealer("딜러");
-        dealer.saveCards(createNormalWithTwoCards());
+        dealer.drawCards(createNormalWithTwoCards());
 
         Player player = new Player("pobi");
-        player.saveCards(createNormalWithThreeCards());
+        player.drawCards(createNormalWithThreeCards());
 
         GameRule rule = createGameRule(player, dealer);
 
@@ -40,10 +40,10 @@ class GameRuleTest {
         @Test
         void playerBusted() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createBustedCards());
+            dealer.drawCards(createBustedCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createBustedCards());
+            player.drawCards(createBustedCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -57,10 +57,10 @@ class GameRuleTest {
         @Test
         void playerDoesNotBusted() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createBustedCards());
+            dealer.drawCards(createBustedCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createNormalWithTwoCards());
+            player.drawCards(createNormalWithTwoCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -78,10 +78,10 @@ class GameRuleTest {
         @Test
         void playerBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createBlackJackWithTwoCards());
+            dealer.drawCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createBlackJackWithThreeCards());
+            player.drawCards(createBlackJackWithThreeCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -95,10 +95,10 @@ class GameRuleTest {
         @Test
         void playerIsNotBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createBlackJackWithTwoCards());
+            dealer.drawCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createNormalWithTwoCards());
+            player.drawCards(createNormalWithTwoCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -116,10 +116,10 @@ class GameRuleTest {
         @Test
         void playerIsBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createNormalWithTwoCards());
+            dealer.drawCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createBlackJackWithTwoCards());
+            player.drawCards(createBlackJackWithTwoCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -133,10 +133,10 @@ class GameRuleTest {
         @Test
         void playerIsNotBlackJack() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createNormalWithTwoCards());
+            dealer.drawCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createNormalWithThreeCards());
+            player.drawCards(createNormalWithThreeCards());
 
             GameRule rule = createGameRule(player, dealer);
 
@@ -150,10 +150,10 @@ class GameRuleTest {
         @Test
         void playerScoreEqualsToDealer() {
             Dealer dealer = new Dealer("딜러");
-            dealer.saveCards(createNormalWithThreeCards());
+            dealer.drawCards(createNormalWithThreeCards());
 
             Player player = new Player("pobi");
-            player.saveCards(createSameScoreNormalWithTwoCards());
+            player.drawCards(createSameScoreNormalWithTwoCards());
 
             GameRule rule = createGameRule(player, dealer);
 

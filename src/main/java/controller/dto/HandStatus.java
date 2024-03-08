@@ -14,7 +14,7 @@ public record HandStatus(
         if (name.equals("딜러")) {
             return buildDealerStatus(builder);
         }
-        return buildGamerStatus(builder);
+        return buildPlayerStatus(builder);
     }
 
     public String getCardFinalStatus() {
@@ -22,7 +22,7 @@ public record HandStatus(
         if (name.equals("딜러")) {
             return buildDealerFinalStatus(builder);
         }
-        return buildGamerStatus(builder);
+        return buildPlayerStatus(builder);
     }
 
     private String buildDealerFinalStatus(final StringBuilder builder) {
@@ -37,7 +37,7 @@ public record HandStatus(
         return builder.toString();
     }
 
-    private String buildGamerStatus(final StringBuilder builder) {
+    private String buildPlayerStatus(final StringBuilder builder) {
         builder.append(name);
         builder.append("카드: ");
         builder.append(buildCardStatusMessage());

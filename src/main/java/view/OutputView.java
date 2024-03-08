@@ -2,6 +2,7 @@ package view;
 
 import controller.dto.GameResult;
 import controller.dto.HandStatus;
+import controller.dto.PlayerResult;
 import java.util.List;
 
 public class OutputView {
@@ -18,7 +19,7 @@ public class OutputView {
             builder.append("\n");
         }
 
-        System.out.print(builder);
+        System.out.println(builder);
     }
 
     private List<String> getPlayerNames(final List<HandStatus> statuses) {
@@ -28,13 +29,13 @@ public class OutputView {
     }
 
     public void printCardStatus(final HandStatus status) {
-        System.out.print(status.getCardInitStatus());
+        System.out.println(status.getCardInitStatus());
     }
 
     public void printDealerPickMessage(final int count) {
         System.out.println();
         for (int index = 0; index < count; index++) {
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
     }
 
@@ -46,19 +47,16 @@ public class OutputView {
         }
     }
 
-    // TODO: indent 줄이기
     public void printGameResult(final GameResult results) {
         System.out.println();
         System.out.println("## 최종 승패");
-        int loseCount = 0;
-        for (int i = 0; i < results.results().size(); i++) {
-            if (results.results().get(i).isWin()) {
-                loseCount++;
-            }
-        }
-        System.out.println("딜러: " + (results.results().size() - loseCount) + "승 " + loseCount + "패");
-        for (int i = 0; i < results.results().size(); i++) {
-            System.out.println(results.results().get(i).name() + ": " + checkIsWin(results.results().get(i).isWin()));
+        List<PlayerResult> playerResults = results.results();
+        int loseCount = (int) playerResults.stream()
+                .filter(PlayerResult::isWin)
+                .count();
+        System.out.println("딜러: " + (playerResults.size() - loseCount) + "승 " + loseCount + "패");
+        for (PlayerResult playerResult : playerResults) {
+            System.out.println(playerResult.name() + ": " + checkIsWin(playerResult.isWin()));
         }
     }
 

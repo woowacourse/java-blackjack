@@ -25,7 +25,7 @@ public class GameRule {
     }
 
     private boolean isBusted(final Player player) {
-        return player.calculateResultScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
+        return player.calculateResultScore() > BLACKJACK_SCORE;
     }
 
     private void checkWinner(final Player player, final List<Boolean> gameResult) {
