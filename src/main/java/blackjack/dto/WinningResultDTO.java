@@ -15,12 +15,14 @@ public record WinningResultDTO(Map<String, String> playerWinningResult, Map<Stri
             final Map<ParticipantName, WinStatus> rawPlayerWinningResult) {
         final Map<String, String> playerWinningResults = new LinkedHashMap<>();
         rawPlayerWinningResult.forEach((key, value) -> playerWinningResults.put(key.getName(), value.name()));
+
         return playerWinningResults;
     }
 
     private static Map<String, Long> convertToDealerDTO(final Map<WinStatus, Long> rawDealerWinningResult) {
         final Map<String, Long> dealerWinningResults = new LinkedHashMap<>();
         rawDealerWinningResult.forEach((key, value) -> dealerWinningResults.put(key.name(), value));
+
         return dealerWinningResults;
     }
 }

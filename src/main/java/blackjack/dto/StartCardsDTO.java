@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public record StartCardsDTO(Map<String, List<CardDTO>> participantsCard) {
-    public static StartCardsDTO of(final Map<ParticipantName, Hands> participantsCard) {
+    public static StartCardsDTO from(final Map<ParticipantName, Hands> participantsCard) {
         return new StartCardsDTO(convertToDTO(participantsCard));
     }
 

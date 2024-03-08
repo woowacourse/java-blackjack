@@ -3,7 +3,7 @@ package blackjack.view;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.dto.CardDTO;
-import blackjack.dto.FinalResultDTO;
+import blackjack.dto.FinalHandsScoreDTO;
 import blackjack.dto.HandsScoreDTO;
 import blackjack.dto.StartCardsDTO;
 import blackjack.dto.WinningResultDTO;
@@ -42,13 +42,13 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", name, convertToCardsFormat(cards));
     }
 
-    public void printFinalResult(final FinalResultDTO finalResultDTO, final WinningResultDTO winningResultDTO) {
-        printCardScore(finalResultDTO);
+    public void printFinalResult(final FinalHandsScoreDTO finalHandsScoreDTO, final WinningResultDTO winningResultDTO) {
+        printCardScore(finalHandsScoreDTO);
         printWinningResult(winningResultDTO);
     }
 
-    private void printCardScore(final FinalResultDTO finalResultDTO) {
-        final Map<String, HandsScoreDTO> playersWithScore = finalResultDTO.finalCards();
+    private void printCardScore(final FinalHandsScoreDTO finalHandsScoreDTO) {
+        final Map<String, HandsScoreDTO> playersWithScore = finalHandsScoreDTO.finalCards();
 
         printDealerCardScore(getOnlyDealer(playersWithScore));
         printPlayersCardScore(getExceptDealer(playersWithScore));

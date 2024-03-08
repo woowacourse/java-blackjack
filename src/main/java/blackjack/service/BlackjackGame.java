@@ -9,7 +9,7 @@ import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDTO;
-import blackjack.dto.FinalResultDTO;
+import blackjack.dto.FinalHandsScoreDTO;
 import blackjack.dto.StartCardsDTO;
 import blackjack.dto.WinningResultDTO;
 import java.util.List;
@@ -22,6 +22,10 @@ public class BlackjackGame {
     public BlackjackGame(final List<String> playersName) {
         this.players = Players.from(playersName);
         this.dealer = new Dealer(Deck.create());
+    }
+
+    public boolean isNotDealerBlackjack() {
+        return dealer.isNotBlackjack();
     }
 
     public StartCardsDTO start() {
@@ -40,7 +44,17 @@ public class BlackjackGame {
         final Hands dealerHands = dealer.getOpenedHands();
         playersCard.put(dealer.getName(), dealerHands);
 
-        return StartCardsDTO.of(playersCard);
+        return StartCardsDTO.from(playersCard);
+    }
+
+    public List<String> getPlayersName() {
+        return players.getNames().stream()
+                .map(ParticipantName::getName)
+                .toList();
+    }
+
+    public boolean isPlayerAliveByName(final String name) {
+        return players.isNotDead(name);
     }
 
     public void addCardToPlayers(final String name) {
@@ -58,7 +72,13 @@ public class BlackjackGame {
         return count;
     }
 
-    public FinalResultDTO getFinalResults() {
+    public List<CardDTO> getCardsOf(final String name) {
+        return players.getHandsOf(name).getCards().stream()
+                .map(CardDTO::from)
+                .toList();
+    }
+
+    public FinalHandsScoreDTO getFinalResults() {
         final Map<ParticipantName, Hands> participantsHands = players.getPlayersHands();
         final Map<ParticipantName, Score> participantsScores = players.getPlayersScore();
 
@@ -68,7 +88,7 @@ public class BlackjackGame {
         participantsHands.put(dealer.getName(), dealerHands);
         participantsScores.put(dealer.getName(), dealerScore);
 
-        return FinalResultDTO.of(participantsHands, participantsScores);
+        return FinalHandsScoreDTO.of(participantsHands, participantsScores);
     }
 
     public WinningResultDTO getWinningResults() {
@@ -77,25 +97,5 @@ public class BlackjackGame {
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
         return WinningResultDTO.of(playerWinningResults, dealerWinningResult);
-    }
-
-    public boolean isPlayerAliveByName(final String name) {
-        return players.isNotDead(name);
-    }
-
-    public boolean isNotDealerBlackjack() {
-        return dealer.isNotBlackjack();
-    }
-
-    public List<CardDTO> getCardsOf(final String name) {
-        return players.getHandsOf(name).getCards().stream()
-                .map(CardDTO::from)
-                .toList();
-    }
-
-    public List<String> getPlayersName() {
-        return players.getNames().stream()
-                .map(ParticipantName::getName)
-                .toList();
     }
 }
