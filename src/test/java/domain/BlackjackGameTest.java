@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackGameTest {
+class BlackjackGameTest {
 
     @DisplayName("게임을 시작하면 딜러와 플레이어에게 카드를 나누어준다.")
     @Test
     void ready() {
-        BlackJackGame game = new BlackJackGame();
+        BlackjackGame game = new BlackjackGame();
         Cards cards = new Cards(
                 List.of(
                         new Card(CardShape.SPADE, CardNumber.THREE),
