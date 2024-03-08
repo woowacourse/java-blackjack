@@ -50,20 +50,19 @@ public class BlackjackMachine {
     }
 
     private void playPlayerTurn(BlackjackGame game, Player player) {
-        // TODO: depth 정리하기!
-        while (player.isReceivable()) {
-            String yesOrNo = inputView.readYesOrNo(player);
-            if (yesOrNo.equals("y")) {
-                game.giveOneCard(player);
-            }
+        while (player.isReceivable() && isRequestedYes(player)) {
+            game.giveOneCard(player);
             outputView.printParticipantCards(player);
-            if (yesOrNo.equals("n")) {
-                break;
-            }
-            if (player.isBusted()) {
-                outputView.printBustMessage(player);
-            }
         }
+        if (player.isBusted()) {
+            outputView.printBustMessage(player);
+            return;
+        }
+        outputView.printParticipantCards(player);
+    }
+
+    private boolean isRequestedYes(Player player) {
+        return inputView.readYesOrNo(player).equals("y");
     }
 
     private void playDealerTurn(BlackjackGame game) {
