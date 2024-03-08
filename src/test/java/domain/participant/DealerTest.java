@@ -66,7 +66,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = dealer.getGameResults(players);
+        GameResults gameResults = dealer.determineGameResults(players);
 
         // Then
         Assertions.assertThat(gameResults).isNotNull();

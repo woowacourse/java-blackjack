@@ -23,7 +23,7 @@ public class Dealer extends Participant {
         return hand.getCardsNumberSum() <= MAX_DEALER_HAND_VALUE;
     }
 
-    public GameResults getGameResults(final List<Player> players) {
+    public GameResults determineGameResults(final List<Player> players) {
         List<GameResult> dealerGameResults = new ArrayList<>();
         Map<Player, GameResult> playerGameResults = new HashMap<>();
 

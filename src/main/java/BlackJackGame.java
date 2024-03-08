@@ -13,6 +13,7 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackJackGame {
+
     public void run() {
         Dealer dealer = Dealer.init();
         List<Player> players = initPlayers();
@@ -20,7 +21,7 @@ public class BlackJackGame {
 
         play(deck, dealer, players);
 
-        GameResults gameResults = dealer.getGameResults(players);
+        GameResults gameResults = dealer.determineGameResults(players);
         OutputView.printGameResult(gameResults.dealerGameResult(), gameResults.getPlayerGameResultDto());
     }
 
@@ -41,7 +42,7 @@ public class BlackJackGame {
         }
     }
 
-    private void play(Deck deck, Dealer dealer, List<Player> players) {
+    private void play(final Deck deck, final Dealer dealer, final List<Player> players) {
         firstDraw(deck, dealer, players);
         players.forEach(player -> playForPlayer(deck, player));
         playForDealer(deck, dealer);
@@ -51,21 +52,21 @@ public class BlackJackGame {
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
     }
 
-    private void playForDealer(Deck deck, Dealer dealer) {
+    private void playForDealer(final Deck deck, final Dealer dealer) {
         while (dealer.isDrawable()) {
             dealer.draw(deck);
             OutputView.printDealerDrawMessage();
         }
     }
 
-    private void playForPlayer(Deck deck, Player player) {
-        while (checkAcceptDraw(player)) {
+    private void playForPlayer(final Deck deck, final Player player) {
+        while (checkPlayerDrawAvailable(player)) {
             player.draw(deck);
             OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
         }
     }
 
-    private boolean checkAcceptDraw(Player player) {
+    private boolean checkPlayerDrawAvailable(final Player player) {
         if (!player.isDrawable()) {
             return false;
         }
