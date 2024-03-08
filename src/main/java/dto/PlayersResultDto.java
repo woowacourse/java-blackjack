@@ -11,7 +11,7 @@ public record PlayersResultDto(Map<String, String> playerResults) {
     public static PlayersResultDto from(Map<Player, Result> gameResult) {
         Map<String, String> playerResults = new LinkedHashMap<>();
         for (Map.Entry<Player, Result> entry : gameResult.entrySet()) {
-            String playerName = entry.getKey().getName().name();
+            String playerName = entry.getKey().getName();
             String result = convertResult(entry.getValue());
             playerResults.put(playerName, result);
         }

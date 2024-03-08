@@ -40,8 +40,8 @@ public class Player {
         return hand;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.name();
     }
 
     @Override
