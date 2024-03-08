@@ -11,8 +11,8 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int getValue(final int score) {
-        return denomination.getValue(score);
+    public int getValue() {
+        return denomination.getValue();
     }
 
     public Denomination getDenomination() {

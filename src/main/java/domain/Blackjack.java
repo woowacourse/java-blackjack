@@ -29,7 +29,8 @@ public class Blackjack {
 
     public BlackjackResult finishGame() {
         final BlackjackRule blackjackResult = new BlackjackRule();
-        return blackjackResult.finishGame(getParticipants(), players.getDealer());
+        final Player dealer = players.getDealer();
+        return blackjackResult.finishGame(getParticipants(), dealer);
     }
 
     private void dealInitialCards(final Player player) {

@@ -23,6 +23,18 @@ class PlayerTest {
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
 
+    @Test
+    @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    void sum2() {
+        final Player player = new Participant(new Name("지쳐버린종이"));;
+
+        player.hit(new Card(Denomination.KING, Symbol.CLOVER));
+        player.hit(new Card(Denomination.KING, Symbol.CLOVER));
+        player.hit(new Card(Denomination.ACE, Symbol.CLOVER));
+
+        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+    }
+
     @ParameterizedTest
     @MethodSource("argumentProvider")
     @DisplayName("플레이어의 버스트 여부를 반환한다.")

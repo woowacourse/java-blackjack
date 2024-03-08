@@ -54,7 +54,7 @@ public class Players {
 
     public List<Player> getParticipants() {
         return players.stream()
-                .filter(Player::isDealer)
+                .filter(player -> !player.isDealer())
                 .collect(Collectors.toList());
     }
 
