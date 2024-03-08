@@ -5,6 +5,7 @@ import static domain.card.Number.TEN;
 import static domain.card.Shape.CLOVER;
 import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.TotalDeck;
 import domain.TotalDeckGenerator;
@@ -121,5 +122,15 @@ class UsersTest {
         player1.addCard(new Card(CLOVER, TEN));
 
         assertThat(users.currentUserBusted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("중복된 이름을 입력하면 오류를 던진다.")
+    void validateDuplicatedNamesTest() {
+        assertThatThrownBy(
+                () -> new Users(List.of(new Player(new Name("a")), new Player(new Name("a"))))
+        )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름은 입력할 수 없습니다: a");
     }
 }
