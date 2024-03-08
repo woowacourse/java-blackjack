@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.dto.NameCardsAScore;
+import blackjack.dto.NameCardsScore;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Player;
@@ -74,11 +74,11 @@ public class BlackJackGame {
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
-        NameCardsAScore dealerNameCardsAScore = new NameCardsAScore(dealer.getName(), dealer.openCards(),
+        NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
                 dealer.notifyScore());
-        List<NameCardsAScore> playerNameCardsAScore = players.collectFinalResults();
-        OutputView.printFinalCardsAndScore(dealerNameCardsAScore);
-        OutputView.printFinalCardsAndScore(playerNameCardsAScore);
+        List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
+        OutputView.printFinalCardsAndScore(dealerNameCardsScore);
+        OutputView.printFinalCardsAndScore(playerNameCardsScore);
 
         Map<Result, Integer> dealerResults = referee.judgeDealerResult();
         OutputView.printDealerFinalResult(dealerResults);
