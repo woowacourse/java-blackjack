@@ -46,5 +46,4 @@ public class Dealer extends Gamer {
     public boolean isSameScore(final long score) {
         return hand.calculateScore() == score;
     }
-
 }
