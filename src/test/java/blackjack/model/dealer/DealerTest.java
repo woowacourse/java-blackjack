@@ -24,7 +24,7 @@ public class DealerTest {
         dealer.doAction(new SequentialCardGenerator(List.of(firstCardCreatedByAction, secondCardCreatedByAction)));
 
         // then
-        int cardsTotal = dealer.getCards().calculateCardsTotal();
+        int cardsTotal = dealer.calculateCardsTotal();
         assertThat(cardsTotal).isGreaterThan(17);
     }
 }

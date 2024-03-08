@@ -8,7 +8,6 @@ import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class OutputView {
     }
 
     private String formatPlayerCards(final Player player) {
-        List<Card> cards = player.getCards().getCards();
+        List<Card> cards = player.getCards();
         String joinedCards = formatCards(cards);
         return String.format(PLAYER_CARDS_FORM, player.getName(), joinedCards);
     }

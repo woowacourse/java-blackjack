@@ -3,6 +3,7 @@ package blackjack.model.dealer;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
+import java.util.List;
 
 public class Dealer {
     private static final int ACTION_CONDITION = 17;
@@ -33,14 +34,14 @@ public class Dealer {
     }
 
     public int getActionCount() {
-        return cards.getCards().size() - NON_ACTION_COUNT;
+        return cards.size() - NON_ACTION_COUNT;
     }
 
     public Card getFirstCard() {
-        return cards.getCards().get(0);
+        return cards.get(0);
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }

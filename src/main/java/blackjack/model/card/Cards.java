@@ -60,6 +60,14 @@ public class Cards {
         return calculateCardsTotal() > BURST_CONDITION;
     }
 
+    public int size() {
+        return cards.size();
+    }
+
+    public Card get(int index) {
+        return cards.get(index);
+    }
+
     public List<Card> getCards() {
         return cards;
     }

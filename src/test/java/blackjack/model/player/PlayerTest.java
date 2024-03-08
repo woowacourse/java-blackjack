@@ -48,6 +48,6 @@ public class PlayerTest {
         player.hit(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
-        assertThat(player.getCards().getCards()).hasSize(3);
+        assertThat(player.getCards()).hasSize(3);
     }
 }
