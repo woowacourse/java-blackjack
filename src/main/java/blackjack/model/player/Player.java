@@ -3,6 +3,7 @@ package blackjack.model.player;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
+
 import java.util.List;
 
 public class Player {
@@ -26,10 +27,6 @@ public class Player {
 
     public int calculateCardsTotal() {
         return cards.calculateCardsTotal();
-    }
-
-    public boolean isBurst() {
-        return cards.isBurst();
     }
 
     public boolean isBlackJack() {
