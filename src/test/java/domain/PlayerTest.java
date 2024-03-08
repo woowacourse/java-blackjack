@@ -16,12 +16,21 @@ class PlayerTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("null이나 공백을 입력하면 예외를 발생시킨다.")
+    @DisplayName("공백을 입력하면 예외를 발생시킨다.")
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
-    @NullSource
-    void nullOrBlankInputThrowException(String name) {
+    void BlankInputThrowException(String name) {
         Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 참여자 이름에 공백을 입력할 수 없습니다.");
+    }
+
+    @DisplayName("null을 입력하면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @NullSource
+    void nullInputThrowException(String name) {
+        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 유효하지 않은 참여자 이름입니다.");
     }
 }
