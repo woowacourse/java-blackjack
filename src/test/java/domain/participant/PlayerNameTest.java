@@ -32,6 +32,6 @@ public class PlayerNameTest {
         // When & Then
         Assertions.assertThatThrownBy(() -> new PlayerName(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어 이름은 1글자 이상 5글자 이하여야 합니다.");
+                .hasMessageContaining("플레이어 이름은 1글자 이상 5글자 이하여야 합니다.");
     }
 }

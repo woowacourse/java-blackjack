@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static boolean inputDrawDecision(PlayerName playerName) {
-        System.out.println(playerName.value() + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
+        System.out.println(playerName.value() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String inputString = scanner.nextLine();
         return convertInputToDecision(inputString);
     }
@@ -34,6 +34,6 @@ public class InputView {
             return false;
         }
 
-        throw new IllegalArgumentException("카드를 받을지 여부는 y/n만 입력할 수 있습니다.");
+        throw new IllegalArgumentException(String.format("%s는 올바른 입력이 아닙니다. 카드를 받을지 여부는 y/n만 입력할 수 있습니다.", input));
     }
 }

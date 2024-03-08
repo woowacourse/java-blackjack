@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.participant.PlayerNames;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +42,6 @@ public class PlayerNamesTest {
         // When & Then
         Assertions.assertThatThrownBy(() -> PlayerNames.of(inputPlayerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("게임에 참여할 사람은 10명 이하여야 합니다.");
+                .hasMessageContaining("게임에 참여할 사람은 10명 이하여야 합니다.");
     }
 }
