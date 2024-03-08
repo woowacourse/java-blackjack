@@ -42,9 +42,6 @@ public class Player {
         return hand.calculateScoreWhileDraw();
     }
 
-    public int calculateResultScore() {
-        return hand.calculateScore(BLACKJACK_SCORE);
-    }
 
     public boolean hasMoreScore(final Dealer dealer) {
         return calculateResultScore() > dealer.calculateResultScore();
@@ -54,8 +51,12 @@ public class Player {
         return calculateResultScore() == dealer.calculateResultScore();
     }
 
-    public boolean hasMoreCard(final Dealer dealer) {
-        return getTotalSize() > dealer.getTotalSize();
+    public int calculateResultScore() {
+        return hand.calculateScore(BLACKJACK_SCORE);
+    }
+
+    public boolean hasLessOrSameCard(final Dealer dealer) {
+        return getTotalSize() <= dealer.getTotalSize();
     }
 
     public boolean cannotDraw() {
@@ -73,4 +74,5 @@ public class Player {
     public Hand getHand() {
         return hand;
     }
+
 }

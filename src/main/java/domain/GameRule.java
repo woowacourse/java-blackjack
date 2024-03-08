@@ -14,7 +14,7 @@ public class GameRule {
     }
 
     public List<Outcome> judge() {
-        if (isNotBusted(participant.dealer())) {
+        if (isBusted(participant.dealer())) {
             return judgePlayersWhenDealerBusted();
         }
 
@@ -25,10 +25,6 @@ public class GameRule {
         return gameResult;
     }
 
-    private boolean isNotBusted(final Player player) {
-        return player.calculateResultScore() <= BLACKJACK_SCORE;
-    }
-
     public List<Outcome> judgePlayersWhenDealerBusted() {
         List<Outcome> gameResult = new ArrayList<>();
         for (Player player : participant.players()) {
@@ -37,23 +33,36 @@ public class GameRule {
         return gameResult;
     }
 
+    private boolean isNotBusted(final Player player) {
+        return player.calculateResultScore() <= BLACKJACK_SCORE;
+    }
+
     private void checkWinner(final Player player, final List<Outcome> gameResult) {
-        if (isNotBusted(player)) {
+        if (isBusted(player)) {
             gameResult.add(Outcome.from(false));
             return;
         }
-        if (hasSameScoreWithDealer(player)) {
-            gameResult.add(Outcome.from(true));
+        if (isNotSameWithDealer(player)) {
+            gameResult.add(Outcome.from(player.hasMoreScore(participant.dealer())));
             return;
         }
-        gameResult.add(Outcome.from(hasMoreScoreThanDealer(player)));
+        gameResult.add(Outcome.from(hasLessThanOrEqualsCardWithDealer(player)));
     }
+
+    private boolean isNotSameWithDealer(final Player player) {
+        return player.calculateResultScore() != participant.dealer().calculateResultScore();
+    }
+
+    private boolean hasLessThanOrEqualsCardWithDealer(final Player player) {
+        return player.hasLessOrSameCard(participant.dealer());
+    }
+
+    private boolean isBusted(final Player player) {
+        return !isNotBusted(player);
+    }
+
 
     private boolean hasSameScoreWithDealer(final Player player) {
         return player.hasSameScore(participant.dealer());
-    }
-
-    private boolean hasMoreScoreThanDealer(final Player player) {
-        return player.hasMoreScore(participant.dealer());
     }
 }

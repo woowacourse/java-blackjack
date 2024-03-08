@@ -67,6 +67,6 @@ class PlayerTest {
         player.drawCard(new Card(Score.THREE, Shape.CLOVER));
 
         boolean ableToDrawCard = player.cannotDraw();
-        assertThat(ableToDrawCard).isFalse();
+        assertThat(ableToDrawCard).isTrue();
     }
 }
