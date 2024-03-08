@@ -41,11 +41,14 @@ public class BlackJackController {
         completeDealerHand(dealer, cardDeck);
 
         int dealerPopCount = dealer.getHand().getCards().size() - 2;
-        outputView.printDealerPopCount(16, dealerPopCount);
+
+        if (dealerPopCount > 0) {
+            outputView.printDealerPopCount(16, dealerPopCount);
+        }
 
         printPlayerScore(dealer);
         printPlayersScore(players);
-        
+
         printDealerGameResult(dealer, players);
         printPlayersGameResult(players, dealer);
 

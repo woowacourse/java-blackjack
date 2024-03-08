@@ -16,7 +16,8 @@ public class MessageResolver {
 
     public String resolveHandOutEventMessage(Players players, int handOutCount) {
         String namesMessage = resolveNamesMessage(players);
-        return String.format("딜러와 %s에게 %d장을 나누었습니다.", namesMessage, handOutCount);
+        String message = String.format("딜러와 %s에게 %d장을 나누었습니다.", namesMessage, handOutCount);
+        return String.join("", LINE_SEPARATOR, message);
     }
 
     private String resolveNamesMessage(Players players) {
@@ -45,7 +46,8 @@ public class MessageResolver {
     }
 
     public String resolveDealerPopCountMessage(int dealerDrawThreshold, int popCount) {
-        return String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
+        String message = String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
+        return String.join("", LINE_SEPARATOR, message, LINE_SEPARATOR);
     }
 
     public String resolvePlayerScoreMessage(Player player, Score score) {
@@ -65,7 +67,8 @@ public class MessageResolver {
     }
 
     public String resolveDealerGameResult(DealerGameResult dealerGameResult) {
-        return String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
+        String prefix = String.join("", LINE_SEPARATOR, "## 최종 승패");
+        String message = String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
+        return String.join("", prefix, LINE_SEPARATOR, message);
     }
-
 }
