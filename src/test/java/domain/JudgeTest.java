@@ -1,6 +1,6 @@
 package domain;
 
-import domain.cards.*;
+import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.cards.gamercards.DealerCards;
@@ -32,7 +32,7 @@ class JudgeTest {
     void decidePlayerWinByDealer() {
         Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.K, CardShape.HEART))));
         judge.decidePlayerResult(player, dealer);
-        assertThat(judge.getResult().get(player)).isEqualTo(WinState.WIN);
+        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
     }
 
     @DisplayName("플레이어가 딜러를 상대로 패배를 판단한다.")
@@ -40,7 +40,7 @@ class JudgeTest {
     void decidePlayerLoseByDealer() {
         Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.TWO, CardShape.HEART))));
         judge.decidePlayerResult(player, dealer);
-        assertThat(judge.getResult().get(player)).isEqualTo(WinState.LOSE);
+        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
     }
 
     @DisplayName("플레이어가 딜러를 상대로 무승부를 판단한다.")
@@ -48,7 +48,7 @@ class JudgeTest {
     void decidePlayerDrawByDealer() {
         Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.FIVE, CardShape.HEART))));
         judge.decidePlayerResult(player, dealer);
-        assertThat(judge.getResult().get(player)).isEqualTo(WinState.DRAW);
+        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
     }
 
     @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")

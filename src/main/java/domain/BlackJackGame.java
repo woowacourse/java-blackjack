@@ -11,9 +11,10 @@ import view.InputView;
 import view.ResultView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
+
+    private static final int INIT_CARD_COUNT = 2;
 
     private final InputView inputView;
     private final ResultView resultView;
@@ -25,43 +26,70 @@ public class BlackJackGame {
 
     public void play() {
         Gamers gamers = new Gamers(inputView.readPlayersNames());
+        CardPack cardPack = generateCardPack();
 
+        configureSetup(gamers, cardPack);
+        progressGame(gamers, cardPack);
+
+        makeFinalResult(gamers);
+    }
+
+    private CardPack generateCardPack() {
         List<Card> cards = CardsGenerator.generateRandomCards();
-        CardPack cardPack = new CardPack(cards);
+        return new CardPack(cards);
+    }
 
+    private void configureSetup(Gamers gamers, CardPack cardPack) {
         for (Gamer gamer : gamers.getGamers()) {
-            gamer.hit(cardPack.pickOneCard());
-            gamer.hit(cardPack.pickOneCard());
-
+            shareInitCards(gamer, cardPack);
         }
         resultView.printInitialCards(gamers);
+    }
 
-        for (Gamer gamer : gamers.callPlayers()) {
-            HitOption hitOption = new HitOption(inputView.readHitOrNot(gamer));
-
-            while (gamer.isNotBust() && hitOption.doHit()) {
-                gamer.hit(cardPack.pickOneCard());
-                resultView.printPlayerCards(gamer);
-                hitOption = new HitOption(inputView.readHitOrNot(gamer));
-            }
+    private void shareInitCards(Gamer gamer, CardPack cardPack) {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            gamer.hit(cardPack.pickOneCard());
+            gamer.hit(cardPack.pickOneCard());
         }
+    }
 
-        Dealer dealer = gamers.callDealer();
+    private void progressGame(Gamers gamers, CardPack cardPack) {
+        progressPlayersGame(gamers.callPlayers(), cardPack);
+        progressDealerGame(gamers.callDealer(), cardPack);
+        resultView.printAllGamersCardsResult(gamers);
+    }
+
+    private void progressPlayersGame(List<Player> players, CardPack cardPack) {
+        for (Gamer player : players) {
+            progressPlayerGame(player, cardPack);
+        }
+    }
+
+    private void progressPlayerGame(Gamer player, CardPack cardPack) {
+        while (player.isNotBust()) {
+            giveHitChance(player, cardPack);
+        }
+    }
+
+    private void giveHitChance(Gamer player, CardPack cardPack) {
+        HitOption hitOption = new HitOption(inputView.readHitOrNot(player));
+        if (hitOption.doHit()) {
+            player.hit(cardPack.pickOneCard());
+            resultView.printPlayerCards(player);
+        }
+    }
+
+    private void progressDealerGame(Dealer dealer, CardPack cardPack) {
         while (dealer.canHit()) {
             Card pickedCard = cardPack.pickOneCard();
             dealer.hit(pickedCard);
             resultView.printDealerHitMessage(dealer, pickedCard);
         }
+    }
 
-        resultView.printAllGamersResult(gamers);
-
+    private void makeFinalResult(Gamers gamers) {
         Judge judge = new Judge();
-        for (Player player : gamers.callPlayers()) {
-            judge.decidePlayerResult(player, dealer);
-        }
-        Map<Player, WinState> playersResult = judge.getResult();
-        Map<WinState, Integer> dealerResult = judge.decideDealerResult();
-
-        resultView.printFinalResults(dealer, dealerResult, playersResult);
+        judge.decideResult(gamers, judge);
+        resultView.printFinalResults(gamers.callDealer(), judge);
     }
 }

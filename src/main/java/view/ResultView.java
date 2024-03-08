@@ -1,5 +1,6 @@
 package view;
 
+import domain.Judge;
 import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -22,15 +23,25 @@ public class ResultView {
     public void printInitialCards(Gamers gamers) {
         Dealer dealer = gamers.callDealer();
         List<Player> players = gamers.callPlayers();
+        printSharingCardsMessage(dealer, players);
+        printDealerCard(dealer);
+        printPlayersCards(gamers);
+    }
 
+    private void printSharingCardsMessage(Dealer dealer, List<Player> players) {
         String dealerName = dealer.getPlayerName();
         String playersNames = players.stream()
                 .map(Gamer::getPlayerName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.println(LINE_SEPARATOR + String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames));
+    }
 
+    private void printDealerCard(Dealer dealer) {
         Card dealerCard = dealer.openOneCard();
-        System.out.println(dealerName + ": " + resolveCardExpression(dealerCard));
+        System.out.println(dealer.getPlayerName() + ": " + resolveCardExpression(dealerCard));
+    }
+
+    private void printPlayersCards(Gamers gamers) {
         for (Gamer gamer : gamers.callPlayers()) {
             printPlayerCards(gamer);
         }
@@ -56,6 +67,14 @@ public class ResultView {
         return resolveCardNumber(cardNumber) + resolveCardShape(cardShape);
     }
 
+    private String resolveCardNumber(CardNumber cardNumber) {
+        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
+                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
+            return cardNumber.name();
+        }
+        return String.valueOf(cardNumber.getScore());
+    }
+
     private String resolveCardShape(CardShape cardShape) {
         StringBuilder stringBuilder = new StringBuilder();
         if (cardShape.equals(CardShape.HEART)) {
@@ -73,21 +92,13 @@ public class ResultView {
         return stringBuilder.toString();
     }
 
-    private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
-                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
-            return cardNumber.name();
-        }
-        return String.valueOf(cardNumber.getScore());
-    }
-
     public void printDealerHitMessage(Dealer dealer, Card card) {
-        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.", dealer.getPlayerName(), resolveCardExpression(card));
+        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.",
+                dealer.getPlayerName(), resolveCardExpression(card));
     }
 
-    public void printAllGamersResult(Gamers gamers) {
+    public void printAllGamersCardsResult(Gamers gamers) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append(LINE_SEPARATOR);
         for (Gamer gamer : gamers.getGamers()) {
             stringBuilder.append(String.format("%s카드: ", gamer.getPlayerName()));
@@ -99,22 +110,33 @@ public class ResultView {
         System.out.println(stringBuilder);
     }
 
-    public void printFinalResults(Dealer dealer, Map<WinState, Integer> dealerResult, Map<Player, WinState> playersResult) {
+    public void printFinalResults(Dealer dealer, Judge judge) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 승패");
         stringBuilder.append(LINE_SEPARATOR);
-        String formattedDealerResult = String.format("%s: %s", dealer.getPlayerName(), resolveDealerResult(dealerResult));
-        stringBuilder.append(formattedDealerResult);
-        stringBuilder.append(LINE_SEPARATOR);
-
-        for (Map.Entry<Player, WinState> playerWinState : playersResult.entrySet()) {
-            Player player = playerWinState.getKey();
-            WinState winState = playerWinState.getValue();
-            String formattedPlayerResult = String.format("%s: %s", player.getPlayerName(), resolvePlayerResult(winState));
-            stringBuilder.append(formattedPlayerResult);
-            stringBuilder.append(LINE_SEPARATOR);
-        }
+        stringBuilder.append(resolveDealerFinalResult(dealer, judge));
+        stringBuilder.append(resolvePlayersFinalResult(judge));
         System.out.println(stringBuilder);
+    }
+
+    private String resolvePlayersFinalResult(Judge judge) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<Player, WinState> playerWinState : judge.getPlayerResult().entrySet()) {
+            stringBuilder.append(resolvePlayerFinalResult(playerWinState));
+        }
+        return stringBuilder.toString();
+    }
+
+    private String resolvePlayerFinalResult(Map.Entry<Player, WinState> playerWinState) {
+        Player player = playerWinState.getKey();
+        WinState winState = playerWinState.getValue();
+        String formattedPlayerResult = String.format("%s: %s", player.getPlayerName(), resolvePlayerResult(winState));
+        return formattedPlayerResult + LINE_SEPARATOR;
+    }
+
+    private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
+        String formattedDealerResult = String.format("%s: %s", dealer.getPlayerName(), resolveDealerResult(judge.getDealerResult()));
+        return formattedDealerResult + LINE_SEPARATOR;
     }
 
     private String resolveDealerResult(Map<WinState, Integer> dealerResult) {

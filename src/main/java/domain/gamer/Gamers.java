@@ -21,12 +21,8 @@ public class Gamers {
 
     public Gamers(List<String> playersNames) {
         validate(playersNames);
-        gamers = new ArrayList<>();
-        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
-        for (String playerName : playersNames) {
-            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
-            gamers.add(new Player(playerName, emptyHand));
-        }
+        this.gamers = new ArrayList<>();
+        addGamers(playersNames);
     }
 
     private void validate(List<String> playersNames) {
@@ -53,6 +49,14 @@ public class Gamers {
     private void validateNotDealerName(List<String> playersNames) {
         if (playersNames.contains(DEALER_NAME)) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"" + DEALER_NAME + "\"가 될 수 없습니다.");
+        }
+    }
+
+    private void addGamers(List<String> playersNames) {
+        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
+        for (String playerName : playersNames) {
+            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
+            gamers.add(new Player(playerName, emptyHand));
         }
     }
 
