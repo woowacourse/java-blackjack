@@ -29,8 +29,8 @@ public class RefereeTest {
         Player player = new Player("mia", new SequentialCardGenerator(playerCards));
 
         // when
-        Referee referee = new Referee();
-        Outcome outcome = referee.determineOutcome(player, dealer);
+        Referee referee = new Referee(dealer);
+        Outcome outcome = referee.determineOutcome(player); // TODO: 접근제어자 default 인데 private으로 변경해야함
 
         // then
         assertThat(outcome).isEqualTo(Outcome.LOSE);

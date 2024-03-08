@@ -27,34 +27,32 @@ public class BlackjackController {
         Players players = preparePlayers(cardGenerator);
         Dealer dealer = new Dealer(cardGenerator);
         outputView.printDealingResult(players, dealer);
+        play(cardGenerator, players, dealer);
+        end(players, dealer);
+    }
 
+    private Players preparePlayers(final CardGenerator cardGenerator) {
+        List<String> playerNames = inputView.askPlayerNames();
+        return new Players(playerNames, cardGenerator);
+    }
+
+    private void play(final CardGenerator cardGenerator, final Players players, final Dealer dealer) {
         List<Player> playersInAction = players.getPlayers();
         for (Player player : playersInAction) {
             doPlayerActionUtilEnd(player, cardGenerator);
         }
         dealer.doAction(cardGenerator);
         outputView.printDealerActionResult(dealer);
-
-        DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.of(dealer);
-        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
-        outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
-
-        Referee referee = new Referee();
-        List<PlayerOutcome> outcomes = playersInAction.stream()
-                .map(player -> referee.determinePlayerOutcome(player, dealer))
-                .toList();
-
-        outputView.printFinalOutcome(outcomes);
     }
 
-    private void doPlayerActionUtilEnd(Player player, CardGenerator cardGenerator) {
+    private void doPlayerActionUtilEnd(final Player player, final CardGenerator cardGenerator) {
         boolean isContinue = true;
         while (isContinue) {
             isContinue = doPlayerAction(player, cardGenerator);
         }
     }
 
-    private boolean doPlayerAction(Player player, CardGenerator cardGenerator) {
+    private boolean doPlayerAction(final Player player, final CardGenerator cardGenerator) {
         boolean command = inputView.askHitOrStandCommand(player.getName());
         if (command) {
             player.hit(cardGenerator);
@@ -63,8 +61,20 @@ public class BlackjackController {
         return player.canHit() && command;
     }
 
-    private Players preparePlayers(final CardGenerator cardGenerator) {
-        List<String> playerNames = inputView.askPlayerNames();
-        return new Players(playerNames, cardGenerator);
+    private void end(final Players players, final Dealer dealer) {
+        showCardOutcome(players, dealer);
+        showGameOutcome(players, dealer);
+    }
+
+    private void showCardOutcome(final Players players, final Dealer dealer) {
+        DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.of(dealer);
+        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
+        outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
+    }
+
+    private void showGameOutcome(final Players players, final Dealer dealer) {
+        Referee referee = new Referee(dealer);
+        List<PlayerOutcome> outcomes = referee.determinePlayersOutcome(players);
+        outputView.printFinalOutcome(outcomes);
     }
 }

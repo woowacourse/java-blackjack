@@ -2,14 +2,28 @@ package blackjack.model.referee;
 
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import blackjack.view.dto.PlayerOutcome;
+import java.util.List;
 
 public class Referee {
-    public PlayerOutcome determinePlayerOutcome(final Player player, final Dealer dealer) {
-        return new PlayerOutcome(player.getName(), determineOutcome(player, dealer));
+    private final Dealer dealer;
+
+    public Referee(Dealer dealer) {
+        this.dealer = dealer;
     }
 
-    public Outcome determineOutcome(final Player player, final Dealer dealer) {
+    public List<PlayerOutcome> determinePlayersOutcome(final Players players) {
+        return players.getPlayers().stream()
+                .map(this::determinePlayerOutcome)
+                .toList();
+    }
+
+    private PlayerOutcome determinePlayerOutcome(final Player player) {
+        return new PlayerOutcome(player.getName(), determineOutcome(player));
+    }
+
+    Outcome determineOutcome(final Player player) {
         int playerTotal = player.calculateCardsTotal();
         int dealerTotal = dealer.calculateCardsTotal();
 
