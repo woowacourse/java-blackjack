@@ -19,7 +19,7 @@ public enum Rank {
     QUEEN(List.of(10)),
     KING(List.of(10));
 
-    private List<Integer> score;
+    private final List<Integer> score;
 
     Rank(final List<Integer> score) {
         this.score = score;

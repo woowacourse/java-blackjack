@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerResult {
-    private final Map<String, GameResult> result = new HashMap<>();
+
+    private final Map<String, GameResult> result;
 
     public PlayerResult() {
+        result = new HashMap<>();
     }
 
     public void addResult(final Player player, final GameResult result) {

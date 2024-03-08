@@ -10,6 +10,7 @@ public class Dealer extends Gamer {
 
     public Dealer(final Deck deck) {
         super();
+
         this.deck = deck;
 
         selfDraw();
@@ -18,6 +19,19 @@ public class Dealer extends Gamer {
 
     public Card draw() {
         return deck.drawn();
+    }
+
+    public boolean extraCard() {
+        if (canReceiveCard()) {
+            selfDraw();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    boolean canReceiveCard() {
+        return hand.calculateScore() <= Constants.DEALER_BOUND;
     }
 
     private void selfDraw() {
@@ -33,16 +47,4 @@ public class Dealer extends Gamer {
         return hand.calculateScore() == score;
     }
 
-    @Override
-    boolean canReceiveCard() {
-        return hand.calculateScore() <= Constants.DEALER_BOUND;
-    }
-
-    public boolean extraCard() {
-        if (canReceiveCard()) {
-            selfDraw();
-            return true;
-        }
-        return false;
-    }
 }

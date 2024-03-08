@@ -3,6 +3,7 @@ package blackjack.dto;
 import blackjack.domain.ResultStatus;
 
 public class DealerResult {
+
     private final int wins;
     private final int loses;
     private final int draws;

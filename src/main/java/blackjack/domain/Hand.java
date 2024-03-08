@@ -19,7 +19,7 @@ public class Hand {
     }
 
     public void add(final Card... card) {
-        this.cards.addAll(List.of(card));
+        cards.addAll(List.of(card));
     }
 
     public long calculateScore() {
@@ -34,12 +34,10 @@ public class Hand {
         return calculate(aceCount, scoreWithoutAce, minAceCount);
     }
 
-    private long calculate(final long aceCount, final int scoreWithoutAce, final long minAceCount) {
-        if (aceCount > 0) {
-            return scoreWithoutAce + minAceCount * MAX_ACE_SCORE + (aceCount - minAceCount);
-        }
-
-        return scoreWithoutAce;
+    private long countAce() {
+        return cards.stream()
+                .filter(card -> (card.getRank() == Rank.ACE))
+                .count();
     }
 
     private int calculateScoreWithoutAce() {
@@ -49,10 +47,12 @@ public class Hand {
                 .sum();
     }
 
-    private long countAce() {
-        return cards.stream()
-                .filter(card -> (card.getRank() == Rank.ACE))
-                .count();
+    private long calculate(final long aceCount, final int scoreWithoutAce, final long minAceCount) {
+        if (aceCount > 0) {
+            return scoreWithoutAce + minAceCount * MAX_ACE_SCORE + (aceCount - minAceCount);
+        }
+
+        return scoreWithoutAce;
     }
 
     public boolean isBlackjack() {

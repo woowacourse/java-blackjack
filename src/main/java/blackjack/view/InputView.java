@@ -26,10 +26,9 @@ public class InputView {
     public List<String> readPlayersName() {
         System.out.println(PLAYER_NAME_INPUT);
         try {
-            List<String> names = Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
+            return Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
                     .map(String::trim)
                     .toList();
-            return names;
         } catch (IOException exception) {
             throw new IllegalArgumentException(IOEXCEPTION_ERROR);
         }

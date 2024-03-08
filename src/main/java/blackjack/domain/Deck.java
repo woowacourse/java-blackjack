@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+
     private static final String NO_CARD_EXCEPTION = "카드가 부족하여 더 이상 뽑을 수 없습니다.";
 
     private final List<Card> cards;

@@ -19,15 +19,15 @@ public abstract class Gamer {
         return hand.calculateScore() > Constants.BLACKJACK_BOUND;
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public long getScore() {
         return hand.calculateScore();
     }
 
     public List<Card> getHandCards() {
         return hand.getCards();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
     }
 }

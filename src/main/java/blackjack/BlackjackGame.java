@@ -34,27 +34,9 @@ public class BlackjackGame {
         outputView.printFinalResult(names, players.createResult(dealer));
     }
 
-    private void extraCardRequest(final Dealer dealer, final Players players) {
-        players.getPlayers()
-                .forEach(player -> readMoreCardChoice(player, dealer));
-
-        printDealerExtraCard(dealer);
-        printResultCardsStatus(dealer, players);
-    }
-
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
         outputView.printCardDistribute(names);
         printHandCardsStatus(dealer, players);
-    }
-
-    private String makeCardOutput(final Card card) {
-        return RankView.toSymbol(card.getRank()) + SuitView.toSuitView(card.getSuit());
-    }
-
-    private List<String> makeCardOutput(final List<Card> cards) {
-        return cards.stream()
-                .map(this::makeCardOutput)
-                .toList();
     }
 
     private void printHandCardsStatus(final Dealer dealer, final Players players) {
@@ -66,18 +48,12 @@ public class BlackjackGame {
         outputView.printNewLine();
     }
 
-    private void readMoreCardChoice(final Player player, final Dealer dealer) {
-        String choice = inputView.readMoreCardChoice(player.getName());
+    private void extraCardRequest(final Dealer dealer, final Players players) {
+        players.getPlayers()
+                .forEach(player -> readMoreCardChoice(player, dealer));
 
-        if (!outputView.isMoreChoice(choice)) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
-            return;
-        }
-
-        do {
-            player.draw(dealer);
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
-        } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
+        printDealerExtraCard(dealer);
+        printResultCardsStatus(dealer, players);
     }
 
     private void printDealerExtraCard(final Dealer dealer) {
@@ -100,4 +76,27 @@ public class BlackjackGame {
         }
     }
 
+    private void readMoreCardChoice(final Player player, final Dealer dealer) {
+        String choice = inputView.readMoreCardChoice(player.getName());
+
+        if (!outputView.isMoreChoice(choice)) {
+            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            return;
+        }
+
+        do {
+            player.draw(dealer);
+            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+        } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
+    }
+
+    private List<String> makeCardOutput(final List<Card> cards) {
+        return cards.stream()
+                .map(this::makeCardOutput)
+                .toList();
+    }
+
+    private String makeCardOutput(final Card card) {
+        return RankView.toSymbol(card.getRank()) + SuitView.toSuitView(card.getSuit());
+    }
 }
