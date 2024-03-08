@@ -5,10 +5,10 @@ import static fixture.DealerFixture.딜러;
 import static fixture.PlayersFixture.플레이어;
 import static fixture.PlayersFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Map;
 import java.util.stream.Stream;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -19,15 +19,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(Lifecycle.PER_CLASS)
 class BlackjackGameTest {
     @Test
-    void 게임을_시작하면_딜러와_플레이어들에게_카드를_나눠준다() { // todo 플레이어의 카드 개수도 검증
+    void 게임을_시작하면_딜러와_플레이어들에게_카드를_두장씩_나눠준다() {
         Dealer dealer = 딜러();
         Players players = 플레이어들("뽀로로", "프린", "포비");
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
         blackjackGame.startGame();
-
-        assertThat(dealer).extracting("cardHand").extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(2);
+        assertAll(
+                () -> assertThat(dealer.getCardHand()).hasSize(2),
+                () -> assertThat(players.getPlayerByIndex(0).getCardHand()).hasSize(2),
+                () -> assertThat(players.getPlayerByIndex(1).getCardHand()).hasSize(2),
+                () -> assertThat(players.getPlayerByIndex(2).getCardHand()).hasSize(2)
+        );
     }
 
     @ParameterizedTest
