@@ -48,16 +48,12 @@ class JudgeTest {
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            bustPlayer1(dealer);
+            bustPlayerChoco(dealer);
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(1);
+            assertThat(isDealerResultDraw(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 블랙잭인 경우 딜러가 패배한다.")
@@ -74,12 +70,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultLose(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 일반 카드인 경우 딜러가 패배한다.")
@@ -95,12 +87,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultLose(dealerResult))
+                    .isTrue();
         }
     }
 
@@ -125,16 +113,12 @@ class JudgeTest {
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            bustPlayer1(dealer);
+            bustPlayerChoco(dealer);
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultWin(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 블랙잭이면 무승부로 판단한다.")
@@ -153,12 +137,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(1);
+            assertThat(isDealerResultDraw(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 일반이면 딜러가 승리한다.")
@@ -175,12 +155,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultWin(dealerResult))
+                    .isTrue();
         }
     }
 
@@ -204,16 +180,12 @@ class JudgeTest {
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            bustPlayer1(dealer);
+            bustPlayerChoco(dealer);
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultWin(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 블랙잭이면 딜러가 패배한다.")
@@ -232,12 +204,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultLose(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 일반이면 딜러 카드가 클 경우 딜러가 승리한다.")
@@ -254,12 +222,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultWin(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어가 일반이면 딜러 카드가 작을 경우 딜러가 패배한다.")
@@ -277,12 +241,8 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(1);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(0);
+            assertThat(isDealerResultLose(dealerResult))
+                    .isTrue();
         }
 
         @DisplayName("플레이어와 점수가 같을 경우 딜러는 무승부로 판정한다.")
@@ -300,16 +260,12 @@ class JudgeTest {
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
-            assertThat(dealerResult.getWins())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getLoses())
-                    .isEqualTo(0);
-            assertThat(dealerResult.getDraws())
-                    .isEqualTo(1);
+            assertThat(isDealerResultDraw(dealerResult))
+                    .isTrue();
         }
     }
 
-    private void bustPlayer1(final Dealer dealer) {
+    private void bustPlayerChoco(final Dealer dealer) {
         IntStream.range(0, bustDrawCount)
                 .forEach(i -> choco.draw(dealer));
     }
@@ -321,5 +277,17 @@ class JudgeTest {
     private void deckDrawLoop(final int count) {
         IntStream.range(0, count)
                 .forEach(i -> deck.drawn());
+    }
+
+    private boolean isDealerResultWin(final DealerResult dealerResult) {
+        return new DealerResult(1, 0, 0).equals(dealerResult);
+    }
+
+    private boolean isDealerResultLose(final DealerResult dealerResult) {
+        return new DealerResult(0, 1, 0).equals(dealerResult);
+    }
+
+    private boolean isDealerResultDraw(final DealerResult dealerResult) {
+        return new DealerResult(0, 0, 1).equals(dealerResult);
     }
 }
