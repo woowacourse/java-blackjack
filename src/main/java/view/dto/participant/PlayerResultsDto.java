@@ -1,10 +1,10 @@
-package view.dto;
+package view.dto.participant;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import domain.GameResultStatus;
-import domain.PlayersGameResult;
+import domain.participant.PlayersGameResult;
 
 public class PlayerResultsDto {
 

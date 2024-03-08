@@ -1,9 +1,10 @@
-package view.dto;
+package view.dto.participant;
 
 import java.util.List;
 
-import domain.Card;
-import domain.Dealer;
+import domain.card.Card;
+import domain.participant.Dealer;
+import view.dto.card.CardsDto;
 
 public class DealerDto extends ParticipantDto {
 

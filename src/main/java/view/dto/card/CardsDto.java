@@ -1,10 +1,10 @@
-package view.dto;
+package view.dto.card;
 
 import java.util.List;
 
-import domain.Card;
-import domain.CardNumber;
-import domain.Cards;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.Cards;
 
 public class CardsDto {
 

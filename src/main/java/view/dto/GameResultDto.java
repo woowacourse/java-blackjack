@@ -1,5 +1,8 @@
 package view.dto;
 
+import view.dto.participant.DealerResultDto;
+import view.dto.participant.PlayerResultsDto;
+
 public class GameResultDto {
 
     private final DealerResultDto dealerResultDto;

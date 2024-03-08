@@ -6,14 +6,21 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Stream;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
 import view.dto.GameResultDto;
-import view.dto.DealerDto;
-import view.dto.ParticipantDto;
-import view.dto.PlayerDto;
-import view.dto.PlayersDto;
+import view.dto.participant.DealerDto;
+import view.dto.participant.ParticipantDto;
+import view.dto.participant.PlayerDto;
+import view.dto.participant.PlayersDto;
 
 public class Casino {
 

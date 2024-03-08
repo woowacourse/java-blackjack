@@ -1,6 +1,6 @@
-package domain;
+package domain.participant;
 
-import view.dto.PlayerDto;
+import view.dto.participant.PlayerDto;
 
 public class Player extends Participant {
 

@@ -1,8 +1,9 @@
-package view.dto;
+package view.dto.participant;
 
-import domain.Cards;
-import domain.Name;
-import domain.Player;
+import domain.card.Cards;
+import domain.participant.Name;
+import domain.participant.Player;
+import view.dto.card.CardsDto;
 
 public class PlayerDto extends ParticipantDto {
     public PlayerDto(final Player player) {

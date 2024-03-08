@@ -7,10 +7,10 @@ import java.util.StringJoiner;
 
 import domain.BlackjackGame;
 import view.dto.GameResultDto;
-import view.dto.DealerDto;
-import view.dto.ParticipantDto;
-import view.dto.PlayerDto;
-import view.dto.PlayersDto;
+import view.dto.participant.DealerDto;
+import view.dto.participant.ParticipantDto;
+import view.dto.participant.PlayerDto;
+import view.dto.participant.PlayersDto;
 
 public class ResultView {
 

@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-import view.dto.PlayerDto;
-import view.dto.PlayersDto;
+import view.dto.participant.PlayerDto;
+import view.dto.participant.PlayersDto;
 
 public class InputView {
 

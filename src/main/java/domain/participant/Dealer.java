@@ -1,9 +1,13 @@
-package domain;
+package domain.participant;
 
 import static domain.BlackjackGame.DEALER_THRESHOLD;
 import static domain.GameResultStatus.PUSH;
 import static domain.GameResultStatus.LOSE;
 import static domain.GameResultStatus.WIN;
+
+import domain.card.Card;
+import domain.card.Cards;
+import domain.GameResultStatus;
 
 public class Dealer extends Participant {
 

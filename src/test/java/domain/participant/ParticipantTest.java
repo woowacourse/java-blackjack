@@ -1,11 +1,18 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static domain.CardShape.HEART;
+import static domain.card.CardShape.HEART;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
 
 class ParticipantTest {
 

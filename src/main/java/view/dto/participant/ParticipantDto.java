@@ -1,6 +1,7 @@
-package view.dto;
+package view.dto.participant;
 
-import domain.Name;
+import domain.participant.Name;
+import view.dto.card.CardsDto;
 
 public class ParticipantDto {
 

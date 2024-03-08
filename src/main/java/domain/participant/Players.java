@@ -1,9 +1,9 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import view.dto.PlayersDto;
+import view.dto.participant.PlayersDto;
 
 public class Players {
 

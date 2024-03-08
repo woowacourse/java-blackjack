@@ -1,10 +1,10 @@
-package view.dto;
+package view.dto.participant;
 
 import java.util.Map;
 
 import domain.GameResultStatus;
-import domain.Dealer;
-import domain.DealerGameResult;
+import domain.participant.Dealer;
+import domain.participant.DealerGameResult;
 
 public class DealerResultDto {
 

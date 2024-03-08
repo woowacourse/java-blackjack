@@ -3,9 +3,14 @@ package domain;
 import java.util.EnumMap;
 import java.util.stream.IntStream;
 
+import domain.participant.Dealer;
+import domain.participant.DealerGameResult;
+import domain.participant.Participant;
+import domain.participant.Players;
+import domain.participant.PlayersGameResult;
 import view.dto.GameResultDto;
-import view.dto.DealerResultDto;
-import view.dto.PlayerResultsDto;
+import view.dto.participant.DealerResultDto;
+import view.dto.participant.PlayerResultsDto;
 
 public class BlackjackGame {
 

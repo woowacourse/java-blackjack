@@ -1,7 +1,9 @@
-package domain;
+package domain.participant;
 
 import java.util.EnumMap;
 import java.util.Map;
+
+import domain.GameResultStatus;
 
 public class DealerGameResult {
 
