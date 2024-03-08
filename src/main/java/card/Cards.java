@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.ACE.getAdditionalScore();
+    private static final int MAX_BLACK_JACK_SCORE = 21;
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -18,21 +20,22 @@ public class Cards {
         int aceCardCount = countAceCard();
         int minResultScore = countRoundScore();
 
-        if (aceCardCount == 0) {
-            return minResultScore;
+        for (int aceCard = 0; aceCard < aceCardCount; aceCard++) {
+            minResultScore = convertAceScore(minResultScore);
         }
+        return minResultScore;
+    }
 
-        for (int i = 0; i < aceCardCount; i++) {
-            if (minResultScore + 10 <= 21) {
-                minResultScore += 10;
-            }
+    private int convertAceScore(int minResultScore) {
+        if (minResultScore + ADDITIONAL_ACE_CARD_SCORE <= MAX_BLACK_JACK_SCORE) {
+            minResultScore += ADDITIONAL_ACE_CARD_SCORE;
         }
         return minResultScore;
     }
 
     public int countRoundScore() {
         return cards.stream()
-                .mapToInt(Card::getCardNumber)
+                .mapToInt(Card::getFirstCardNumber)
                 .sum();
     }
 
