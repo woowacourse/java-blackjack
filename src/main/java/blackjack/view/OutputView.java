@@ -42,6 +42,12 @@ public class OutputView {
                 , participant.getHandsScore());
     }
 
+    public static void printDealerFirstCard(Dealer dealer) {
+        System.out.println(dealer.getName()
+                + ": "
+                + dealer.getFirstCardName());
+    }
+
     private static String resolveParticipantHandsMessage(Participant participant) {
         return participant.getName()
                 + "카드: "

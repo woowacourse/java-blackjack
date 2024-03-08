@@ -18,6 +18,12 @@ public class Dealer extends Participant {
         return false;
     }
 
+    public String getFirstCardName(){
+        return hands.getHands()
+                .get(0)
+                .getCardName();
+    }
+
     private boolean shouldDraw() {
         return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
     }

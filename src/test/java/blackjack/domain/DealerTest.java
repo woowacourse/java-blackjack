@@ -3,6 +3,7 @@ package blackjack.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,4 +30,17 @@ class DealerTest {
 
         assertFalse(dealer.draw(deck));
     }
+
+    @DisplayName("딜러는 첫번째 패를 보여준다")
+    @Test
+    void should_ShowFirstCard() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.create(6));
+        dealer.addCard(Card.create(45));
+
+        assertThat(dealer.getFirstCardName())
+                .isEqualTo(Card.create(6)
+                        .getCardName());
+    }
+
 }
