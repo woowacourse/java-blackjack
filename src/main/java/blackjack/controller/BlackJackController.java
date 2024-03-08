@@ -103,8 +103,7 @@ public class BlackJackController {
     }
 
     private Score calculateScore(Player player) {
-        ScoreCalculateStrategy scoreCalculateStrategy = new ScoreCalculateStrategy();
-        return player.calculateHandScore(scoreCalculateStrategy);
+        return player.calculateHandScore();
     }
 
     private void printDealerPopCount(Player dealer) {

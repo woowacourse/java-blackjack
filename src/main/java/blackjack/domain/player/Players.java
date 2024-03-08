@@ -22,7 +22,7 @@ public class Players {
 
     public int countPlayerWithScoreAbove(Score target, ScoreCalculateStrategy scoreCalculateStrategy) {
         return (int) players.stream()
-                .map(player -> player.calculateHandScore(scoreCalculateStrategy))
+                .map(Player::calculateHandScore)
                 .filter(playerScore -> playerScore.isAbove(target))
                 .count();
     }
