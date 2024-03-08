@@ -68,7 +68,6 @@ public class BlackJackGame {
         return new BlackJackResult(
                 dealer.getTotalScore(),
                 players.stream()
-                        .collect(Collectors
-                                .toMap(Gamer::getName, Gamer::getTotalScore)));
+                        .collect(Collectors.toMap(Gamer::getName, Gamer::getTotalScore)));
     }
 }
