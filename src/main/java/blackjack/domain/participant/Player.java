@@ -11,7 +11,7 @@ public class Player extends Participant {
 
     Player(List<Card> cards, Name name) {
         super(cards);
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
     }
 
     public static Player from(String name) {

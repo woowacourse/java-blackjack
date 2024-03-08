@@ -8,8 +8,8 @@ public class Card {
     private final Shape shape;
 
     public Card(Value value, Shape shape) {
-        this.value = value;
-        this.shape = shape;
+        this.value = Objects.requireNonNull(value);
+        this.shape = Objects.requireNonNull(shape);
     }
 
     public int getMinScore() {
