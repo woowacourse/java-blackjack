@@ -12,11 +12,11 @@ public abstract class Participant {
     public abstract boolean checkDrawCardState();
 
     public void addCard(Card card) {
-        cards.addCard(card);
+        cards.add(card);
     }
 
     public void addCards(List<Card> cardToAdd) {
-        cards.addCard(cardToAdd);
+        cards.add(cardToAdd);
     }
 
     public Cards getCards() {

@@ -20,24 +20,24 @@ class CardsTest {
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
         Cards given = new Cards();
-        given.addCard(cards);
+        given.add(cards);
 
-        int score = given.calculateScore();
+        int score = given.getCardsScore();
 
         assertThat(score).isEqualTo(18);
     }
 
     @DisplayName("점수 총합을 반환한다.")
     @Test
-    void calculate() {
+    void getCardsScore() {
         List<Card> cards = List.of(
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
         Cards given = new Cards();
-        given.addCard(cards);
-        int score = given.calculateScore();
+        given.add(cards);
+        int score = given.getCardsScore();
 
         assertThat(score).isEqualTo(12);
     }
@@ -52,7 +52,7 @@ class CardsTest {
         );
 
         Cards given = new Cards();
-        given.addCard(cards);
+        given.add(cards);
 
         boolean result = given.isGreaterThanWinningScore();
 
@@ -67,10 +67,10 @@ class CardsTest {
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
         Cards given = new Cards();
-        given.addCard(cards);
+        given.add(cards);
         Card card = new Card(CardNumber.ACE, CardShape.SPADE);
 
-        given.addCard(card);
+        given.add(card);
 
         assertThat(given.getCards()).hasSize(3);
     }

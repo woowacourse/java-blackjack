@@ -73,7 +73,7 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
         Cards comparisonCards = new Cards();
-        comparisonCards.addCard(comparison);
+        comparisonCards.add(comparison);
 
         Player player = new Player("daon");
         player.addCards(given);
@@ -95,7 +95,7 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
         Cards comparisonCards = new Cards();
-        comparisonCards.addCard(comparison);
+        comparisonCards.add(comparison);
 
         Player player = new Player("daon");
         player.addCards(given);
@@ -118,7 +118,7 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
         Cards comparisonCards = new Cards();
-        comparisonCards.addCard(comparison);
+        comparisonCards.add(comparison);
 
         Player player = new Player("daon");
         player.addCards(given);

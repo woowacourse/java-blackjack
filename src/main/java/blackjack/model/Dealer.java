@@ -5,7 +5,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean checkDrawCardState() {
-        return cards.calculateScore() <= STANDARD;
+        return cards.getCardsScore() <= STANDARD;
     }
 
     public ResultStatus determineWinner(Player player) {

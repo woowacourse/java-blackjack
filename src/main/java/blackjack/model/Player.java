@@ -23,8 +23,8 @@ public class Player extends Participant {
     }
 
     private ResultStatus compareScore(Cards otherCards) {
-        int calculatedScore = cards.calculateScore();
-        int otherScore = otherCards.calculateScore();
+        int calculatedScore = cards.getCardsScore();
+        int otherScore = otherCards.getCardsScore();
 
         if (calculatedScore > otherScore) {
             return ResultStatus.WIN;

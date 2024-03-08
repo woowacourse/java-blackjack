@@ -9,25 +9,28 @@ public class Cards {
     private static final int WINNING_SCORE = 21;
 
     private final List<Card> cards = new ArrayList<>();
+    private int score = 0;
 
-    public int calculateScore() {
-        int score = calculate();
+    public void add(Card card) {
+        cards.add(card);
+        score += card.getScore();
+    }
+
+    public void add(List<Card> cardsToAdd) {
+        cards.addAll(cardsToAdd);
+        score += calculate(cardsToAdd);
+    }
+
+
+    public boolean isGreaterThanWinningScore() {
+        return score > WINNING_SCORE;
+    }
+
+    public int getCardsScore() {
         if (hasAce() && score <= BOUNDARY_SCORE) {
             return score + EXTRA_SCORE;
         }
         return score;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public void addCard(List<Card> cardsToAdd) {
-        cards.addAll(cardsToAdd);
-    }
-
-    public boolean isGreaterThanWinningScore() {
-        return calculateScore() > WINNING_SCORE;
     }
 
     private boolean hasAce() {
@@ -35,10 +38,9 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculate() {
-        return cards.stream()
-                .map(Card::getCardNumber)
-                .mapToInt(CardNumber::getScore)
+    private int calculate(List<Card> cardsToAdd) {
+        return cardsToAdd.stream()
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
