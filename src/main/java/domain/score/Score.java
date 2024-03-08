@@ -23,15 +23,7 @@ public class Score {
         score.put(status, presentScore + 1);
     }
 
-    public int getWinScore() {
-        return score.get(WIN);
-    }
-
-    public int getTieScore() {
-        return score.get(TIE);
-    }
-
-    public int getLoseScore() {
-        return score.get(LOSE);
+    public int getScore(Status status) {
+        return score.get(status);
     }
 }

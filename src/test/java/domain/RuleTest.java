@@ -47,9 +47,9 @@ class RuleTest {
         new Rule(scoreBoard).decideResult(dealerCards, List.of(playerCards));
 
         assertAll(
-                () -> assertThat(scoreBoard.getDealerScore().getWinScore()).isEqualTo(0),
-                () -> assertThat(scoreBoard.getDealerScore().getTieScore()).isEqualTo(0),
-                () -> assertThat(scoreBoard.getDealerScore().getLoseScore()).isEqualTo(1),
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.WIN)).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.TIE)).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.LOSE)).isEqualTo(1),
                 () -> assertThat(scoreBoard.getPlayerScore().get(capy)).isEqualTo(Status.WIN)
         );
     }

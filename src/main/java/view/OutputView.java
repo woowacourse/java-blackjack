@@ -10,8 +10,7 @@ import domain.score.Status;
 
 import java.util.List;
 import java.util.Map;
-
-import static domain.score.Status.*;
+import java.util.StringJoiner;
 
 public class OutputView {
 
@@ -68,14 +67,16 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
         Score dealerScore = scoreBoard.getDealerScore();
-        String winScore = dealerScore.getWinScore() + WIN.getStatus();
-        String tieScore = dealerScore.getTieScore() + TIE.getStatus();
-        String loseScore = dealerScore.getLoseScore() + LOSE.getStatus();
 
-        System.out.println(String.join(" ", winScore, tieScore, loseScore));
+        StringJoiner stringJoiner = new StringJoiner(" ");
+        for (Status status : Status.values()) {
+            String score = dealerScore.getScore(status) + status.getStatus();
+            stringJoiner.add(score);
+        }
+        System.out.println(stringJoiner);
 
         Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
-        playerStatus.forEach((name, status) -> System.out.println(name + " : " + status.getStatus()));
+        playerStatus.forEach((name, status) -> System.out.println(name + ": " + status.getStatus()));
     }
 
     public void printDealerGivenCard() {
