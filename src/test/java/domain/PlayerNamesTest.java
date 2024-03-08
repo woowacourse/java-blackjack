@@ -9,12 +9,23 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static domain.Name.DEALER_NAME_MESSAGE;
 import static domain.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
 import static domain.PlayerNames.NAME_DUPLICATE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerNamesTest {
+
+    @DisplayName("플레이어 이름은 딜러가 될 수 없다.")
+    @Test
+    void validateNotDealerName() {
+        List<String> playerNames = List.of("딜러");
+
+        assertThatThrownBy(() -> new PlayerNames(playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(DEALER_NAME_MESSAGE);
+    }
 
     @DisplayName("중복되는 이름은 허용하지 않는다.")
     @Test

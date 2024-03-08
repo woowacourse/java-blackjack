@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import static domain.Name.DEALER_NAME_MESSAGE;
+
 public record PlayerNames(List<String> names) {
 
     static final String NAME_DUPLICATE_MESSAGE = "중복된 이름은 허용하지 않습니다.";
@@ -10,8 +12,15 @@ public record PlayerNames(List<String> names) {
     private static final int MAXIMUM_NAMES_SIZE = 10;
 
     public PlayerNames {
+        validateNotDealerName(names);
         validateDuplicate(names);
         validatePlayerNamesSize(names);
+    }
+
+    private void validateNotDealerName(List<String> names) {
+        if (names.contains("딜러")) {
+            throw new IllegalArgumentException(DEALER_NAME_MESSAGE);
+        }
     }
 
     private void validateDuplicate(List<String> names) {
