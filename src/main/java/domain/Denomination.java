@@ -15,7 +15,6 @@ public enum Denomination {
     QUEEN(10),
     KING(10);
 
-
     private final int value;
 
     Denomination(final int value) {

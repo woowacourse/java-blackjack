@@ -19,7 +19,7 @@ public class Players {
         validateDuplicate(players);
     }
 
-    private static void validatePlayerNumbers(final List<Player> players) {
+    private void validatePlayerNumbers(final List<Player> players) {
         if(isInvalidPlayersNumber(players)){
             throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
         }
@@ -29,7 +29,7 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    private static boolean isInvalidPlayersNumber(final List<Player> players) {
+    private boolean isInvalidPlayersNumber(final List<Player> players) {
         return players.size() > 8;
     }
 
