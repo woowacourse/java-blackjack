@@ -1,8 +1,10 @@
 package domain;
 
 import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hands {
 
@@ -68,5 +70,23 @@ public class Hands {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+
+        if (!(target instanceof Hands hands)) {
+            return false;
+        }
+
+        return Objects.equals(cards, hands.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 }

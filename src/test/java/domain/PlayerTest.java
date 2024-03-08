@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,11 +8,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ParticipantTest {
+class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Participant("pobi", Hands.createEmptyPacket()))
+        Assertions.assertThatCode(() -> new Player("pobi", Hands.createEmptyPacket()))
                 .doesNotThrowAnyException();
     }
 
@@ -20,7 +21,7 @@ class ParticipantTest {
     @ValueSource(strings = {"", " ", "  "})
     @NullSource
     void nullOrBlankInputThrowException(String name) {
-        Assertions.assertThatThrownBy(() -> new Participant(name, Hands.createEmptyPacket()))
+        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

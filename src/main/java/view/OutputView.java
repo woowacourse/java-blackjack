@@ -1,10 +1,11 @@
 package view;
 
-import domain.Participant;
 import domain.Result;
+import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
+
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +47,11 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Participant, Result> playerResult) {
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
         System.out.println("## 최종결과");
         System.out.printf(RESULT_FORM, "딜러", format(dealerResult));
         System.out.println();
-        for (Map.Entry<Participant, Result> entry : playerResult.entrySet()) {
+        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
             System.out.println();
         }

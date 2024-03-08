@@ -1,9 +1,13 @@
 package domain;
 
-import java.util.List;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 class DealerTest {
 
@@ -26,8 +30,8 @@ class DealerTest {
     @DisplayName("참여자의 답변이 y라면 카드를 한장 추가한다.")
     void addOneCard() {
         //given
-        final Participant redddy = new Participant("레디", Hands.createEmptyPacket());
-        final Participant zeze = new Participant("제제", Hands.createEmptyPacket());
+        final Player redddy = new Player("레디", Hands.createEmptyPacket());
+        final Player zeze = new Player("제제", Hands.createEmptyPacket());
 
         final Players players = new Players(List.of(redddy, zeze));
 

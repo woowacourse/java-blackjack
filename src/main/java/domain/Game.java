@@ -1,5 +1,9 @@
 package domain;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,11 +18,11 @@ public class Game {
         this.players = players;
     }
 
-    public Map<Participant, Result> getPlayersResult() {
-        final Map<Participant, Result> playerResult = new LinkedHashMap<>();
+    public Map<Player, Result> getPlayersResult() {
+        final Map<Player, Result> playerResult = new LinkedHashMap<>();
 
-        for (Participant participant : players.getPlayers()) { //TODO getPlayers() 메서드명 고려
-            playerResult.put(participant, participant.calculateResult(dealer));
+        for (Player player : players.getPlayers()) { //TODO getPlayers() 메서드명 고려
+            playerResult.put(player, player.calculateResult(dealer));
         }
         return playerResult;
     }

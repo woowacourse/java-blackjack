@@ -2,10 +2,10 @@ package controller;
 
 import domain.Answer;
 import domain.CardDeck;
-import domain.Dealer;
 import domain.Game;
-import domain.Participant;
-import domain.Players;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
@@ -30,8 +30,8 @@ public class BlackJackController {
         dealer.startDeal(players);
         outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
 
-        for (Participant participant : players.getPlayers()) {
-            deal(participant, dealer);
+        for (Player player : players.getPlayers()) {
+            deal(player, dealer);
         }
 
         if (players.isAllBust()) {
@@ -40,7 +40,7 @@ public class BlackJackController {
             return;
         }
 
-        while (dealer.getTotalCardSum() <= 16) {  //TODO 테스트 코드 고민
+        while (dealer.handsSum() <= 16) {  //TODO 테스트 코드 고민
             dealer.deal();
             outputView.printDealerCard();
         }
@@ -49,24 +49,24 @@ public class BlackJackController {
         outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
     }
 
-    private void deal(final Participant participant, final Dealer dealer) {
+    private void deal(final Player player, final Dealer dealer) {
         boolean changed = false;
         Answer answer = Answer.HIT;
 
         while (Answer.HIT.equals(answer)) {
-            answer = Answer.from(inputView.readAnswer(participant.getName()));
-            dealer.deal(participant, answer);
+            answer = Answer.from(inputView.readAnswer(player.getName()));
+            dealer.deal(player, answer);
 
             if (handsChanged(changed, answer)) {
-                outputView.printHands(PlayerDto.from(participant));
+                outputView.printHands(PlayerDto.from(player));
             }
-            if (participant.isBust()) {
+            if (player.isBust()) {
                 outputView.printBustMessage();
                 break;
             }
             changed = true;
 
-            if (participant.isBlackJack()) {
+            if (player.isBlackJack()) {
                 outputView.printBlackJack();
                 break;
             }

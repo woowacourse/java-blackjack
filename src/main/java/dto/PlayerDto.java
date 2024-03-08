@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Dealer;
-import domain.Participant;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class PlayerDto {
         this.totalSum = totalSum;
     }
 
-    public static PlayerDto from(final Participant participant) {
-        return new PlayerDto(participant.getName(), participant.getCardNames(), participant.handsSum());
+    public static PlayerDto from(final Player player) {
+        return new PlayerDto(player.getName(), player.getCardNames(), player.handsSum());
     }
 
     public static PlayerDto from(final Dealer dealer) {
-        return new PlayerDto(dealer.getName(), dealer.getCardNames(), dealer.getTotalCardSum());
+        return new PlayerDto(dealer.getName(), dealer.getCardNames(), dealer.handsSum());
     }
 
     public String getName() {

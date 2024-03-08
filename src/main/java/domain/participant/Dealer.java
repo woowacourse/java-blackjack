@@ -1,4 +1,8 @@
-package domain;
+package domain.participant;
+
+import domain.Answer;
+import domain.CardDeck;
+import domain.Hands;
 
 public class Dealer extends Participant {
 
@@ -24,25 +28,13 @@ public class Dealer extends Participant {
         }
     }
 
-    public void deal(final Participant participant, final Answer answer) {
+    public void deal(final Player player, final Answer answer) {
         if (Answer.HIT.equals(answer)) {
-            participant.add(cardDeck.pop());
+            player.add(cardDeck.pop());
         }
     }
 
     public void deal() {
         super.add(cardDeck.pop());
-    }
-
-    public int getTotalCardSum() {
-        return super.handsSum();
-    }
-
-    public Hands getHands() {
-        return super.getHands();
-    }
-
-    public String getName() {
-        return NAME;
     }
 }

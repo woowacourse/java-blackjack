@@ -1,7 +1,6 @@
 package dto;
 
-import domain.Dealer;
-import domain.Participant;
+import domain.participant.Participant;
 
 import java.util.List;
 
