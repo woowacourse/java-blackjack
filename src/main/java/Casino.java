@@ -1,5 +1,3 @@
-package blackjack;
-
 import blackjack.domain.Blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.common.Names;
@@ -53,13 +51,12 @@ public class Casino {
 
     private void processDealer(Blackjack blackjack, Dealer dealer) {
         if (dealer.isReceivable()) {
-            //TODO: OutputView로 분리해야 함
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            PlayerView.printDealerDrawMessage();
             Card card = blackjack.draw();
             dealer.drawCard(card);
             return;
         }
-        System.out.println("딜러는 17이상라 카드를 받지 않았습니다.");
+        PlayerView.printDealerNotDrawMessage();
     }
 
     private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {

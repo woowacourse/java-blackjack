@@ -15,6 +15,15 @@ public class PlayerView {
         printGamePlayersCard(gamePlayers);
     }
 
+    public static void printDealerDrawMessage() {
+        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.RECEIVE_SIZE));
+    }
+
+    public static void printDealerNotDrawMessage() {
+        System.out.println(String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.", Dealer.RECEIVE_SIZE));
+    }
+
+
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
         String result = gamePlayers.stream()
                                    .map(GamePlayer::getNameAsString)
