@@ -6,15 +6,15 @@ import player.Name;
 import player.Player;
 import player.Players;
 
-public record PlayersCardStatusDto(List<SinglePlayerStatusDto> multiPlayersStatus) {
+public record AllPlayerStatusDto(List<SinglePlayerStatusDto> multiPlayersStatus) {
 
-    public static PlayersCardStatusDto of(Players players) {
+    public static AllPlayerStatusDto of(Players players) {
         ArrayList<SinglePlayerStatusDto> singlePlayerStatus = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
             singlePlayerStatus.add(SinglePlayerStatusDto.from(player));
         }
-        return new PlayersCardStatusDto(singlePlayerStatus);
+        return new AllPlayerStatusDto(singlePlayerStatus);
     }
 
     public List<Name> getNames() {

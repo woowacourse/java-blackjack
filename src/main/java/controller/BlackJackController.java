@@ -2,7 +2,7 @@ package controller;
 
 import cardGame.BlackJackGame;
 import cardGame.SingleMatch;
-import controller.dto.SingleWinOrNotResult;
+import controller.dto.SinglePlayerResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import player.Player;
@@ -24,38 +24,45 @@ public class BlackJackController {
         BlackJackGame blackJackGame = getBlackJackGame();
         int dealerExtraCardCount = blackJackGame.countDealerExtraCard();
 
-        List<SingleWinOrNotResult> winOrNotResults = runGame(blackJackGame, new ArrayList<>());
+        List<SinglePlayerResultDto> winOrNotResults = runGame(blackJackGame, new ArrayList<>());
         List<Boolean> playersWinningInfo = getPlayersWinningInfo(winOrNotResults);
 
-        outputView.printInfo(dealerExtraCardCount);
-        outputView.printPariticipantsScore(blackJackGame.getFinalBlackJackGameResult());
-        outputView.printDealerResult(countDealerWinning(playersWinningInfo), playersWinningInfo.size());
+        outputView.printExtraCardInfo(dealerExtraCardCount);
+        outputView.printPariticipantsScore(blackJackGame.getParticipantScore());
+        outputView.printDealerResult(countDealerWinning(playersWinningInfo), countDealerFail(playersWinningInfo));
         outputView.printPlayerResult(winOrNotResults);
+    }
+
+    private int countDealerFail(List<Boolean> playersWinningInfo) {
+        return playersWinningInfo.size() - countDealerWinning(playersWinningInfo);
     }
 
     private BlackJackGame getBlackJackGame() {
         List<String> nameString = inputView.inputPlayerNames();
+
         BlackJackGame blackJackGame = new BlackJackGame(nameString);
         outputView.printInitCardStatus(blackJackGame.getBackJackGameStatus());
+
         return blackJackGame;
     }
 
-    private List<SingleWinOrNotResult> runGame(BlackJackGame blackJackGame,
-                                               List<SingleWinOrNotResult> winOrNotResults) {
+    private List<SinglePlayerResultDto> runGame(BlackJackGame blackJackGame,
+                                                List<SinglePlayerResultDto> winOrNotResults) {
         for (SingleMatch singleMatch : blackJackGame.startGame()) {
             Player player = singleMatch.getPlayer();
             retry(singleMatch, player);
 
             boolean isPlayerWins = singleMatch.isPlayerWins();
-            winOrNotResults.add(new SingleWinOrNotResult(player.getName(), isPlayerWins));
+            winOrNotResults.add(new SinglePlayerResultDto(player.getName(), isPlayerWins));
         }
         return winOrNotResults;
     }
 
-    private List<Boolean> getPlayersWinningInfo(List<SingleWinOrNotResult> winOrNotResults) {
+    private List<Boolean> getPlayersWinningInfo(List<SinglePlayerResultDto> singlePlayerResultDtos) {
         List<Boolean> playersWinningInfo = new ArrayList<>();
-        for (SingleWinOrNotResult winOrNotResult : winOrNotResults) {
-            playersWinningInfo.add(winOrNotResult.isWinner());
+
+        for (SinglePlayerResultDto singleResult : singlePlayerResultDtos) {
+            playersWinningInfo.add(singleResult.isWinner());
         }
         return playersWinningInfo;
     }
