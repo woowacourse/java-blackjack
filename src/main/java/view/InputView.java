@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public static String readSelectionOf(Player player) {
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(),
+        String message = String.format(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
                 player.getName().getValue());
         System.out.println(message);
         return scanner.nextLine().trim();

@@ -35,6 +35,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             printAllCards(player);
         }
+        System.out.println();
     }
 
     private static void printWithoutHiddenCard(final Dealer dealer) {
@@ -49,21 +50,23 @@ public class OutputView {
 
     public static void printDealerHit(Dealer dealer) {
         String dealerName = dealer.getName().getValue();
-        String message = String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerName, DEALER_HIT_CONDITION);
+        String message = String.format(System.lineSeparator() + "%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerName,
+                DEALER_HIT_CONDITION);
         System.out.println(message);
     }
 
     public static void printCardsAndResult(Gamer gamer) {
         String gamerName = gamer.getName().getValue();
         int totalScore = gamer.calculateTotalScore();
-        String message = String.format("%s 카드: %s - 결과: %d", gamerName, printCards(gamer.getHand()), totalScore);
+        String cardInfos = String.join(", ", printCards(gamer.getHand()));
+        String message = String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore);
         System.out.println(message);
     }
 
     private static List<String> printCards(List<Card> cards) {
         List<String> cardInfos = new ArrayList<>();
         for (Card card : cards) {
-            printCard(card);
+            cardInfos.add(printCard(card));
         }
         return cardInfos;
     }
@@ -71,15 +74,16 @@ public class OutputView {
     private static String printCard(final Card card) {
         String symbol = card.getSymbol().getName();
         String rank = card.getRank().getName();
-        return symbol + rank;
+        return rank + symbol;
     }
 
     public static void printFinalGameResult(final PlayerResults playerResults) {
-        System.out.println("## 최종 승패");
+        System.out.println(System.lineSeparator() + "## 최종 승패");
         int winCount = playerResults.findWinCount();
         int loseCount = playerResults.findLoseCount();
         int tieCount = playerResults.findTieCount();
-        String.format("딜러: %d승 %d패 %d무", loseCount, winCount, tieCount);
+        String message = String.format("딜러: %d승 %d패 %d무", loseCount, winCount, tieCount);
+        System.out.println(message);
         printPlayerResults(playerResults);
     }
 

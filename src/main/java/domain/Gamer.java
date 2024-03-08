@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-abstract class Gamer {
+public abstract class Gamer {
     Name name;
     Hand hand;
 

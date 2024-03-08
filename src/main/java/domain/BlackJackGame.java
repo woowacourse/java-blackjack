@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackGame {
@@ -32,35 +32,36 @@ public class BlackJackGame {
         return false;
     }
 
-    public PlayerResults findPlayerResult(Gamers gamers){
+    public PlayerResults findPlayerResult(Gamers gamers) {
         Dealer dealer = gamers.findDealer();
-        Map<Player, Result> playerResults = new HashMap<>();
+        Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : gamers.findPlayers()) {
             Result playerResult = isPlayerWin(dealer, player);
-            playerResults.put(player,playerResult);
+            playerResults.put(player, playerResult);
         }
         return new PlayerResults(playerResults);
     }
 
     private Result isPlayerWin(Dealer dealer, Player player) {
-        if (!player.isBust() && dealer.isBust()) {
+        if (player.isBust()) {
+            return Result.LOSE;
+        }
+        if (dealer.isBust()) {
             return Result.WIN;
         }
-
-        if (!dealer.isBlackJack()) {
-            if (player.calculateTotalScore() == dealer.calculateTotalScore() && player.isBlackJack()) {
-                return Result.WIN;
+        if (player.isBlackJack()) {
+            if (dealer.isBlackJack()) {
+                return Result.TIE;
             }
-
-            if (player.calculateTotalScore() > dealer.calculateTotalScore()) {
-                return Result.WIN;
-            }
+            return Result.WIN;
         }
-
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            return Result.TIE;
+        if (dealer.isBlackJack()) {
+            return Result.LOSE;
         }
-        if (player.calculateTotalScore() == dealer.calculateTotalScore() && !player.isBlackJack() && !dealer.isBlackJack()) {
+        if (player.calculateTotalScore() > dealer.calculateTotalScore()) {
+            return Result.WIN;
+        }
+        if (player.calculateTotalScore() == dealer.calculateTotalScore()) {
             return Result.TIE;
         }
         return Result.LOSE;

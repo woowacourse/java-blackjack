@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,11 +8,7 @@ public class PlayerResults {
     private final Map<Player, Result> results;
 
     public PlayerResults(final Map<Player, Result> results) {
-        this.results = Map.copyOf(new LinkedHashMap<>(results));
-    }
-
-    public Map<Player, Result> getResults() {
-        return results;
+        this.results = new LinkedHashMap<>(results);
     }
 
     public int findWinCount() {
@@ -24,5 +21,9 @@ public class PlayerResults {
 
     public int findTieCount() {
         return (int) results.values().stream().filter(result -> result.equals(Result.TIE)).count();
+    }
+
+    public Map<Player, Result> getResults() {
+        return Collections.unmodifiableMap(results);
     }
 }
