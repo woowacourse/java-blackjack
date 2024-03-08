@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.GamerResult;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;

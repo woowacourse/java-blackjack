@@ -1,10 +1,10 @@
 package domain.dto;
 
 import domain.Card;
-import domain.CardNumber;
-import domain.CardType;
 import domain.Gamer;
 import domain.Name;
+import domain.constant.CardNumber;
+import domain.constant.CardType;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

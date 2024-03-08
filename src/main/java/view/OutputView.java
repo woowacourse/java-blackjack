@@ -2,7 +2,7 @@ package view;
 
 import domain.BlackJackResult;
 import domain.Card;
-import domain.GamerResult;
+import domain.constant.GamerResult;
 import domain.dto.GameStatusDto;
 import domain.dto.GamerDto;
 import java.util.Arrays;

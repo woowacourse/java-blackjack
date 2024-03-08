@@ -1,5 +1,8 @@
 package domain;
 
+import domain.constant.CardNumber;
+import domain.constant.CardType;
+
 public class Card {
     private final CardType cardType;
     private final CardNumber cardNubmer;

@@ -1,4 +1,4 @@
-package domain;
+package domain.constant;
 
 public enum CardNumber {
     ACE(1, "A"),
@@ -18,7 +18,7 @@ public enum CardNumber {
     private final int score;
     private final String symbol;
 
-    private CardNumber(int score, String symbol) {
+    CardNumber(int score, String symbol) {
         this.score = score;
         this.symbol = symbol;
     }

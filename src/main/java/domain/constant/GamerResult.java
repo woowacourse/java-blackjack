@@ -1,4 +1,4 @@
-package domain;
+package domain.constant;
 
 public enum GamerResult {
     WIN("승"),
@@ -8,7 +8,7 @@ public enum GamerResult {
     private static final int BUST_THRESHOLD = 21;
     private final String result;
 
-    private GamerResult(String result) {
+    GamerResult(String result) {
         this.result = result;
     }
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.constant;
 
 public enum CardType {
     HEART("하트"),
@@ -8,7 +8,7 @@ public enum CardType {
 
     private final String type;
 
-    private CardType(String type) {
+    CardType(String type) {
         this.type = type;
     }
 

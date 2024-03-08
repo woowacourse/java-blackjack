@@ -1,5 +1,7 @@
 package domain;
 
+import domain.constant.CardNumber;
+import domain.constant.CardType;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
