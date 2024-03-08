@@ -16,6 +16,10 @@ public class OutputView {
         throw new AssertionError("인스턴스를 생성할 수 없습니다.");
     }
 
+    public static void println() {
+        System.out.println();
+    }
+
     public static void printDistributionSubject(final List<String> names) {
         String formattedName = String.join(", ", names);
         System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", formattedName));
@@ -35,16 +39,17 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    public static void printFinalCardsAndScore(final List<NameCardsScore> nameCardsScores) {
+        nameCardsScores.forEach(OutputView::printFinalCardsAndScore);
+    }
+
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
         System.out.println(
                 nameCardsScore.name() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
     }
 
-    public static void printFinalCardsAndScore(final List<NameCardsScore> nameCardsScores) {
-        nameCardsScores.forEach(OutputView::printFinalCardsAndScore);
-    }
-
     public static void printDealerFinalResult(final Map<ResultCommand, Integer> dealerResults) {
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + formatFinalResult(dealerResults));
     }

@@ -39,6 +39,7 @@ public class BlackJackGame {
         OutputView.printNameAndCards(dealer.getName(), dealer.openCard());
         players.collectCardsOfEachPlayer()
                 .forEach(OutputView::printNameAndCards);
+        OutputView.println();
     }
 
     private void playPlayersTurn(final List<Player> players, final Deck deck) {
@@ -74,6 +75,7 @@ public class BlackJackGame {
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
+        OutputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
                 dealer.notifyScore());
         List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
