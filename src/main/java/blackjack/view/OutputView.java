@@ -14,10 +14,16 @@ public class OutputView {
     public void printInitialDeal(Dealer dealer, List<Player> players) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), buildPlayerNameMessage(players));
-        System.out.printf("%s: %s%n", dealer.getName(), buildDealerInitialDealMessage(dealer.getCards()));
+        System.out.printf("%s카드: %s%n", dealer.getName(), buildDealerInitialDealMessage(dealer.getCards()));
         for (Player player : players) {
             printCards(player);
         }
+    }
+
+    private String buildPlayerNameMessage(List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
     }
 
     private String buildDealerInitialDealMessage(List<Card> cards) {
@@ -31,18 +37,6 @@ public class OutputView {
     public void printDealerHitMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    private String buildCardsMessage(List<Card> cards) {
-        return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
-    }
-
-    private String buildPlayerNameMessage(List<Player> players) {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
     }
 
     public void printAllCardsWithScore(List<Participant> participants) {
@@ -73,5 +67,11 @@ public class OutputView {
                 .filter(entry -> entry.getValue() > 0)
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getValue()))
                 .collect(Collectors.joining(" "));
+    }
+
+    private String buildCardsMessage(List<Card> cards) {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
     }
 }
