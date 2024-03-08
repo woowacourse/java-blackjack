@@ -36,4 +36,8 @@ public class OutputView {
     public void printDealerGameResult(DealerGameResult dealerGameResult) {
         System.out.println(messageResolver.resolveDealerGameResult(dealerGameResult));
     }
+
+    public void printDealerInitialHand(Player dealer) {
+        System.out.println(messageResolver.resolveDealerHandMessage(dealer));
+    }
 }

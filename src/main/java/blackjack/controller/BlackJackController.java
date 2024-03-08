@@ -34,10 +34,8 @@ public class BlackJackController {
         issueInitialCardsToPlayers(players, cardDeck);
         issueInitialCardsToDealer(dealer, cardDeck);
         outputView.printHandOutEvent(players, 2);
+        outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
-
-        //딜러 카드 보여주는 메서드 만들어야 함 (카드 한장만)
-        outputView.printPlayerHand(dealer);
 
         completePlayersHand(players, cardDeck);
         completeDealerHand(dealer, cardDeck);
