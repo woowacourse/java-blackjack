@@ -1,8 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Shape;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.assertj.core.api.Assertions;
@@ -15,7 +13,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static domain.card.Rank.JACK;
+import static domain.card.Rank.TEN;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
+
 class PlayersTest {
+
+    final Hands bustHands = new Hands(
+            List.of(new Card(JACK, HEART), new Card(TEN, SPADE),
+                    new Card(TEN, HEART)));
+
+    final Hands noBustHands = new Hands(
+            List.of(new Card(JACK, HEART), new Card(TEN, SPADE)));
+
 
     @Test
     @DisplayName("참여자 이름 중복시 예외가 발생한다.")
@@ -50,16 +61,9 @@ class PlayersTest {
     @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 False를 반환한다.")
     void isAllBustFalse() {
         //given
-        Hands bustHands = new Hands(
-                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
-                        new Card(Rank.TEN, Shape.HEART)));
-
-        Hands noBustHands = new Hands(
-                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE)));
-
-        Player player1 = new Player("레디", bustHands);
-        Player player2 = new Player("제제", noBustHands);
-        Players players = new Players(List.of(player1, player2));
+        final Player player1 = new Player("레디", bustHands);
+        final Player player2 = new Player("제제", noBustHands);
+        final Players players = new Players(List.of(player1, player2));
 
         //when && then
         Assertions.assertThat(players.isAllBust()).isFalse();
@@ -69,10 +73,6 @@ class PlayersTest {
     @DisplayName("모든 참가자가 버스트되면 True를 반환한다.")
     void isAllBustTrue() {
         //given
-        Hands bustHands = new Hands(
-                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
-                        new Card(Rank.TEN, Shape.HEART)));
-
         Player player1 = new Player("레디", bustHands);
         Player player2 = new Player("제제", bustHands);
         Player player3 = new Player("수달", bustHands);
