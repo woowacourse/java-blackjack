@@ -8,15 +8,15 @@ public class Blackjack {
 
     public Blackjack(final Players players) {
         this.players = players;
-        players.getAllPlayers().add(new Dealer());
         this.deck = new Deck();
+        players.getAllPlayers().add(new Dealer());
         dealCardsToPlayers();
     }
 
     public Blackjack(final Players players, final Player dealer) {
         this.players = players;
-        players.getAllPlayers().add(dealer);
         this.deck = new Deck();
+        players.getAllPlayers().add(dealer);
     }
 
     public void dealCard(final Player player) {
