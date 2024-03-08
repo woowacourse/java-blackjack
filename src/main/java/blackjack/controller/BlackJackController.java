@@ -73,8 +73,17 @@ public class BlackJackController {
     }
 
     private void printDealerGameResult(Player dealer, Players players) {
+        Score dealerScore = calculateScore(dealer);
         Judge judge = new Judge();
-        DealerGameResult dealerGameResult = judge.calculateDealerResult(dealer, players);
+
+        int playerWinCount = (int) players.getPlayers().stream()
+                .map(this::calculateScore)
+                .filter(playerScore -> judge.isPlayerWin(dealerScore, playerScore))
+                .count();
+
+        int dealerWinCount = players.countPlayer() - playerWinCount;
+
+        DealerGameResult dealerGameResult = new DealerGameResult(dealerWinCount, playerWinCount);
         outputView.printDealerGameResult(dealerGameResult);
     }
 
