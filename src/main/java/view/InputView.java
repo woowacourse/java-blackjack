@@ -14,14 +14,16 @@ public class InputView {
         String input = bufferedReader.readLine();
         validateNotBlank(input);
         input = removeBlank(input);
+
         return Arrays.stream(input.split(",")).toList();
     }
 
     public String readCommand(String playerName) throws IOException {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         String command = bufferedReader.readLine();
         validateNotBlank(command);
         command = removeBlank(command);
+
         return command;
     }
 
