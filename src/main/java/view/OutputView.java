@@ -3,8 +3,8 @@ package view;
 import domain.Result;
 import domain.participant.Player;
 import dto.DealerHandsDto;
-import dto.PlayerDto;
-import dto.PlayersDto;
+import dto.ParticipantDto;
+import dto.ParticipantsDto;
 
 import java.util.List;
 import java.util.Map;
@@ -15,23 +15,23 @@ public class OutputView {
     private final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d";
     private final String RESULT_FORM = "%s: %s";
 
-    public void printStartDeal(final DealerHandsDto dealerHandsDto, final PlayersDto playersDto) {
+    public void printStartDeal(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
 
-        final List<String> playerNames = playersDto.getNames();
+        final List<String> playerNames = participantsDto.getNames();
         System.out.println("딜러와 " + format(playerNames) + " 에게 2장을 나누었습니다.");
 
         System.out.println("딜러: " + dealerCard);
 
-        for (PlayerDto playerDto : playersDto.getPlayers()) {
-            System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
+        for (ParticipantDto participantDto : participantsDto.getPlayers()) {
+            System.out.printf(FORM, participantDto.getName(), format(participantDto.getCards()));
             System.out.println();
         }
         System.out.println();
     }
 
-    public void printHands(final PlayerDto playerDto) {
-        System.out.printf(FORM, playerDto.getName(), format(playerDto.getCards()));
+    public void printHands(final ParticipantDto participantDto) {
+        System.out.printf(FORM, participantDto.getName(), format(participantDto.getCards()));
         System.out.println();
     }
 
@@ -40,9 +40,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printHandsResult(final PlayersDto playersDto) {
-        for (PlayerDto playerDto : playersDto.getPlayers()) {
-            System.out.printf(TOTAL_SUM_FORM, playerDto.getName(), format(playerDto.getCards()), playerDto.getTotalSum());
+    public void printHandsResult(final ParticipantsDto participantsDto) {
+        for (ParticipantDto participantDto : participantsDto.getPlayers()) {
+            System.out.printf(TOTAL_SUM_FORM, participantDto.getName(), format(participantDto.getCards()), participantDto.getTotalSum());
             System.out.println();
         }
     }

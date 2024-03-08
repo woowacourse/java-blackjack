@@ -7,8 +7,8 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.DealerHandsDto;
-import dto.PlayerDto;
-import dto.PlayersDto;
+import dto.ParticipantDto;
+import dto.ParticipantsDto;
 import view.InputView;
 import view.OutputView;
 
@@ -28,14 +28,14 @@ public class BlackJackController {
         final Game game = new Game(dealer, players);
 
         dealer.startDeal(players);
-        outputView.printStartDeal(DealerHandsDto.from(dealer), PlayersDto.from(players));
+        outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
 
         for (Player player : players.getPlayers()) {
             deal(player, dealer);
         }
 
         if (players.isAllBust()) {
-            outputView.printHandsResult(PlayersDto.from(dealer, players));
+            outputView.printHandsResult(ParticipantsDto.of(dealer, players));
             outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
             return;
         }
@@ -45,7 +45,7 @@ public class BlackJackController {
             outputView.printDealerCard();
         }
 
-        outputView.printHandsResult(PlayersDto.from(dealer, players));
+        outputView.printHandsResult(ParticipantsDto.of(dealer, players));
         outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
     }
 
@@ -58,7 +58,7 @@ public class BlackJackController {
             dealer.deal(player, answer);
 
             if (handsChanged(changed, answer)) {
-                outputView.printHands(PlayerDto.from(player));
+                outputView.printHands(ParticipantDto.from(player));
             }
             if (player.isBust()) {
                 outputView.printBustMessage();
