@@ -51,9 +51,11 @@ public class BlackjackController {
         if (dealer.isBlackJack()) {
             return;
         }
+        doAction(players, dealer, cardGenerator);
+    }
 
-        List<Player> playersInAction = players.getPlayers();
-        for (Player player : playersInAction) {
+    private void doAction(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
+        for (Player player : players.getPlayers()) {
             doPlayerActionUtilEnd(player, cardGenerator);
         }
         dealer.doAction(cardGenerator);
