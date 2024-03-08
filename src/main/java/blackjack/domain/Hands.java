@@ -27,6 +27,7 @@ public class Hands {
         if (values.contains(Value.ACEHIGH)) {
             hands.get(values.indexOf(Value.ACEHIGH))
                     .downgradeAce();
+            handsScore.addScore(-DOWNGRADE_SCORE);
             return true;
         }
         return false;
