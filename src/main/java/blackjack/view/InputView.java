@@ -21,14 +21,21 @@ public class InputView {
         System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getPlayerName());
         String input = SCANNER.nextLine();
 
-        if (!input.equals("y") && !input.equals("n")) {
+        return isHit(input);
+    }
+
+    private static boolean isHit(String input) {
+        boolean isYes = input.equals("Y") || input.equals("y");
+        boolean isNo = input.equals("n") || input.equals("N");
+
+        validateHitAnswer(isYes, isNo);
+
+        return isYes;
+    }
+
+    private static void validateHitAnswer(boolean isYes, boolean isNo) {
+        if (!isYes && !isNo) {
             throw new IllegalArgumentException("[ERROR] 입력값은 y 또는 n 으로만 가능핣니다.");
         }
-
-        if (input.equals("y")) {
-            return true;
-        }
-
-        return false;
     }
 }
