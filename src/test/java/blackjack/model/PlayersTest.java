@@ -25,9 +25,9 @@ class PlayersTest {
     @DisplayName("플레이어의 이름과 초기 카드들을 받아서 플레이어 그룹을 생성한다.")
     void createPlayers() {
         List<String> names = List.of("리브", "몰리");
-        List<Cards> cards = List.of(
-                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        List<Hand> cards = List.of(
+                new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThatCode(() -> Players.of(names, cards));
     }
@@ -36,9 +36,9 @@ class PlayersTest {
     @DisplayName("플레이어의 이름이 중복되는 경우 예외를 던진다.")
     void createPlayersByDuplicatedName() {
         List<String> names = List.of("몰리", "몰리");
-        List<Cards> cards = List.of(
-                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        List<Hand> cards = List.of(
+                new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Players.of(names, cards))
@@ -49,18 +49,18 @@ class PlayersTest {
     @MethodSource("InvalidNames")
     @DisplayName("플레이어의 이름이 1개 이상 10개 이하가 아니면 예외를 던진다.")
     void createPlayersByOutBound(List<String> names) {
-        List<Cards> cards = List.of(
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        List<Hand> cards = List.of(
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
 
         assertThatIllegalArgumentException()
@@ -79,9 +79,9 @@ class PlayersTest {
     @DisplayName("플레이어들의 이름 목록을 반환한다.")
     void getNames() {
         List<String> names = List.of("리브", "몰리");
-        List<Cards> cards = List.of(
-                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        List<Hand> cards = List.of(
+                new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThat(Players.of(names, cards).getNames()).isEqualTo(names);
     }
@@ -90,9 +90,9 @@ class PlayersTest {
     @DisplayName("각 플레이어의 이름과 카드들을 모아서 반환한다.")
     void collectCardsOfEachPlayer() {
         List<String> names = List.of("리브", "몰리");
-        List<Cards> cards = List.of(
-                new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
-                new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+        List<Hand> cards = List.of(
+                new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
+                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
 
         Map<String, List<Card>> expected = new LinkedHashMap<>();

@@ -34,11 +34,11 @@ public class Deck {
                 .map(score -> new Card(shape, score));
     }
 
-    public Cards distributeInitialCard() {
-        return new Cards(List.of(distribute(), distribute()));
+    public Hand distributeInitialCard() {
+        return new Hand(List.of(distribute(), distribute()));
     }
 
-    public List<Cards> distributeInitialCard(final int playerCount) {
+    public List<Hand> distributeInitialCard(final int playerCount) {
         return IntStream.range(0, playerCount)
                 .mapToObj(i -> distributeInitialCard())
                 .toList();

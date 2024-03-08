@@ -7,12 +7,12 @@ public class Player {
     private static final int HITTABLE_THRESHOLD = 21;
 
     protected final String name;
-    protected Cards cards;
+    protected Hand hand;
 
-    public Player(final String name, final Cards cards) {
+    public Player(final String name, final Hand hand) {
         validateNullAndEmptyName(name);
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
     private void validateNullAndEmptyName(final String name) {
@@ -22,11 +22,11 @@ public class Player {
     }
 
     public void receiveCard(final Card card) {
-        this.cards = cards.addCard(card);
+        this.hand = hand.addCard(card);
     }
 
     public int notifyScore() {
-        return cards.calculateScore();
+        return hand.calculateScore();
     }
 
     public String getName() {
@@ -34,19 +34,19 @@ public class Player {
     }
 
     public List<Card> openCards() {
-        return cards.getCards();
+        return hand.getCards();
     }
 
     public boolean canHit() {
-        return cards.calculateScore() < HITTABLE_THRESHOLD;
+        return hand.calculateScore() < HITTABLE_THRESHOLD;
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public int announceCardCount() {
-        return cards.countSize();
+        return hand.countSize();
     }
 
     @Override

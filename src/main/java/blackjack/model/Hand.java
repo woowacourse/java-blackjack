@@ -5,13 +5,13 @@ import static blackjack.model.Score.ACE;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
     private static final int BUST_THRESHOLD = 21;
     private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
-    public Cards(final List<Card> cards) {
+    public Hand(final List<Card> cards) {
         validateSize(cards);
         this.cards = new ArrayList<>(cards);
     }
@@ -22,9 +22,9 @@ public class Cards {
         }
     }
 
-    public Cards addCard(final Card card) {
+    public Hand addCard(final Card card) {
         cards.add(card);
-        return new Cards(cards);
+        return new Hand(cards);
     }
 
     public int calculateScore() {

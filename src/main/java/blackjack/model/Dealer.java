@@ -5,16 +5,16 @@ import java.util.List;
 public class Dealer extends Player {
     private static final int HITTABLE_THRESHOLD = 16;
 
-    public Dealer(final Cards cards) {
-        super("딜러", cards);
+    public Dealer(final Hand hand) {
+        super("딜러", hand);
     }
 
     @Override
     public boolean canHit() {
-        return cards.calculateScore() <= HITTABLE_THRESHOLD;
+        return hand.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
     public List<Card> openCard() {
-        return List.of(cards.getFirstCard());
+        return List.of(hand.getFirstCard());
     }
 }
