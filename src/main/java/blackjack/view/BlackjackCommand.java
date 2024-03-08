@@ -16,7 +16,8 @@ public enum BlackjackCommand {
         return Arrays.stream(BlackjackCommand.values())
                      .filter(command -> value.equals(command.value))
                      .findFirst()
-                     .orElseThrow();
+                     .orElseThrow(() -> new IllegalArgumentException(
+                             String.format("%s %s 명령어만 가능합니다.", HIT, STAY)));
     }
 
     public boolean isHit() {
