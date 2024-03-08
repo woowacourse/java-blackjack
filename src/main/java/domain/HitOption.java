@@ -13,7 +13,7 @@ public class HitOption {
 
     private void validate(String value) {
         if (!value.equalsIgnoreCase(YES) && !value.equalsIgnoreCase(NO)) {
-            throw new IllegalArgumentException("[ERROR] " + YES + " 혹은 " + NO + "만 입력 가능합니다.");
+            throw new IllegalArgumentException("[ERROR] " + YES + " 혹은 " + NO + " 만 입력 가능합니다.");
         }
     }
 
