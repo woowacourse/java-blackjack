@@ -1,4 +1,7 @@
-package domain;
+package domain.game;
+
+import domain.card.Cards;
+import domain.score.Status;
 
 public class Rule {
 

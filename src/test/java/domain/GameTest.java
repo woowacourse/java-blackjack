@@ -1,5 +1,13 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.DealerCards;
+import domain.card.PlayerCards;
+import domain.card.Shape;
+import domain.game.Game;
+import domain.game.Rule;
+import domain.score.ScoreBoard;
+import domain.score.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.score;
 
 public enum Status {
     WIN("승"),

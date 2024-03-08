@@ -1,11 +1,17 @@
 package view;
 
-import domain.*;
+import domain.Name;
+import domain.card.Cards;
+import domain.card.DealerCards;
+import domain.card.PlayerCards;
+import domain.score.Score;
+import domain.score.ScoreBoard;
+import domain.score.Status;
 
 import java.util.List;
 import java.util.Map;
 
-import static domain.Status.*;
+import static domain.score.Status.*;
 
 public class OutputView {
 

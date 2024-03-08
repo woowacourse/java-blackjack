@@ -1,4 +1,9 @@
-package domain;
+package domain.game;
+
+import domain.card.DealerCards;
+import domain.card.PlayerCards;
+import domain.score.ScoreBoard;
+import domain.score.Status;
 
 import java.util.List;
 

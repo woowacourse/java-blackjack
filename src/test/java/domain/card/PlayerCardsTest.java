@@ -1,5 +1,6 @@
-package domain;
+package domain.card;
 
+import domain.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,9 @@
-package domain;
+package domain.score;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static domain.Status.*;
+import static domain.score.Status.*;
 
 
 public class Score {

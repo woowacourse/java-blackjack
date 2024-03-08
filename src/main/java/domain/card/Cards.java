@@ -1,16 +1,16 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Cards {
+public class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
 
     protected final List<Card> cards;
 
-    Cards(List<Card> cards) {
+    public Cards(List<Card> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }

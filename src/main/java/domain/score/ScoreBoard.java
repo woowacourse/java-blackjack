@@ -1,4 +1,6 @@
-package domain;
+package domain.score;
+
+import domain.Name;
 
 import java.util.Collections;
 import java.util.List;
