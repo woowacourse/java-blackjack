@@ -10,19 +10,20 @@ import java.util.Map;
 public class Players {
 
     public static final int MAX_SCORE = 21;
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
         this.players = players;
     }
 
-    public Map<Player, Boolean> calculateResult(int dealerScore) {
+    public Map<Player, Boolean> calculateVictory(int dealerScore) {
         Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, calculateVictory(player, dealerScore)));
+        players.forEach(player -> result.put(player, isPlayerWin(player, dealerScore)));
         return result;
     }
 
-    private boolean calculateVictory(Player player, int dealerScore) {
+    private boolean isPlayerWin(Player player, int dealerScore) {
         if (player.calculateScore() > MAX_SCORE) {
             return false;
         }

@@ -40,8 +40,8 @@ public class Participants {
         return decks.remove(decks.size() - 1);
     }
 
-    public Map<Player, Boolean> calculateResult() {
-        return players.calculateResult(dealer.calculateScore());
+    public Map<Player, Boolean> calculateVictory() {
+        return players.calculateVictory(dealer.calculateScore());
     }
 
     public boolean isPlayerNotOver(int playerIndex) {

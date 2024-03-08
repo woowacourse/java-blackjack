@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GameBoard {
+
     public static final int INITIAL_CARD_COUNT = 2;
+
     private final Participants participants;
     private final Deck allCardDeck;
 
@@ -76,7 +78,7 @@ public class GameBoard {
     }
 
     public Map<Player, Boolean> calculateVictory() {
-        return participants.calculateResult();
+        return participants.calculateVictory();
     }
 
     public Deck getAllCardDeck() {

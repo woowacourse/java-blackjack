@@ -97,7 +97,7 @@ class ParticipantsTest {
         participants.receiveInitialDecks(
                 new ArrayList<>(List.of(deck1, deck2, deck3))
         );
-        Map<Player, Boolean> result = participants.calculateResult();
+        Map<Player, Boolean> result = participants.calculateVictory();
         assertThat(result.get(siso)).isFalse();
     }
 
