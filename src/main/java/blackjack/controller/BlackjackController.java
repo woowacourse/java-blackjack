@@ -11,7 +11,6 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -93,8 +92,8 @@ public class BlackjackController {
     }
 
     private void showMatchResult(final Players players, final Dealer dealer) {
-        Referee referee = new Referee(dealer);
-        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult(players);
+        Referee referee = new Referee(players, dealer);
+        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
         outputView.printMatchResult(playerMatchResults);
     }
 

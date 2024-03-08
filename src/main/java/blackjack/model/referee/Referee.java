@@ -4,17 +4,18 @@ import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.dto.PlayerMatchResult;
-
 import java.util.List;
 
 public class Referee {
+    private final Players players;
     private final Dealer dealer;
 
-    public Referee(Dealer dealer) {
+    public Referee(final Players players, final Dealer dealer) {
+        this.players = players;
         this.dealer = dealer;
     }
 
-    public List<PlayerMatchResult> determinePlayersMatchResult(final Players players) {
+    public List<PlayerMatchResult> determinePlayersMatchResult() {
         return players.getPlayers().stream()
                 .map(this::determinePlayerResult)
                 .toList();
@@ -24,7 +25,7 @@ public class Referee {
         return new PlayerMatchResult(player.getName(), determineMatchResult(player));
     }
 
-    MatchResult determineMatchResult(final Player player) {
+    private MatchResult determineMatchResult(final Player player) {
         int playerTotal = player.calculateCardsTotal();
         int dealerTotal = dealer.calculateCardsTotal();
 

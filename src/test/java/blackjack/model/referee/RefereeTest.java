@@ -7,7 +7,8 @@ import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.player.Player;
+import blackjack.model.player.Players;
+import blackjack.view.dto.PlayerMatchResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,22 +18,22 @@ public class RefereeTest {
     @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
     void determineOutcomeTest() {
         // given
+        List<Card> playerCards = List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.TWO)
+        );
+        Players players = new Players(List.of("mia"), new SequentialCardGenerator(playerCards));
         List<Card> dealerCards = List.of(
                 new Card(Suit.HEART, Denomination.TEN),
                 new Card(Suit.HEART, Denomination.TEN)
         );
         Dealer dealer = new Dealer(new SequentialCardGenerator(dealerCards));
-        List<Card> playerCards = List.of(
-                new Card(Suit.HEART, Denomination.TWO),
-                new Card(Suit.HEART, Denomination.TWO)
-        );
-        Player player = new Player("mia", new SequentialCardGenerator(playerCards));
 
         // when
-        Referee referee = new Referee(dealer);
-        MatchResult matchResult = referee.determineMatchResult(player); // TODO: 접근제어자 default 인데 private으로 변경해야함
+        Referee referee = new Referee(players, dealer);
+        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
 
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.LOSE);
+        assertThat(playerMatchResults.get(0).matchResult()).isEqualTo(MatchResult.LOSE);
     }
 }
