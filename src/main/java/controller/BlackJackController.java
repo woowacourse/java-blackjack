@@ -47,7 +47,7 @@ public class BlackJackController {
     }
 
     private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) throws IOException {
-        while (player.isHittable() && inputView.readCommand(player.getName().name()).equals("y")) {
+        while (player.isHittable() && inputView.readCommand(player.getName()).equals("y")) {
             blackJackGame.hitPlayer(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
         }
