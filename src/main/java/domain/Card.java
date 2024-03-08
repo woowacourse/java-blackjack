@@ -14,11 +14,11 @@ public class Card {
         return this.letter.isAce();
     }
 
-    public int getValue() {
+    public int getLetterValue() {
         return letter.getValue();
     }
 
-    public String getText() {
+    public String getLetterText() {
         return letter.getText();
     }
 
