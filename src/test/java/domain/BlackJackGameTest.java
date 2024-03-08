@@ -11,25 +11,34 @@ import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.strategy.SettedDecksGenerator;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
 
+    Decks decks;
+
+    @BeforeEach
+    void  init(){
+        Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
+        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card3 = new Card(Symbol.SPADE, Rank.KING);
+        Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);
+        Card card5 = new Card(Symbol.SPADE, Rank.EIGHT);
+        Card card6 = new Card(Symbol.HEART, Rank.TWO);
+        Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
+        Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
+
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
+                card7, card8);
+        decks = Decks.createByStrategy(settedDecksGenerator);
+    }
+
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")
     @Test
     void prepareCardTest() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card3 = new Card(Symbol.HEART, Rank.NINE);
-        Card card4 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card5 = new Card(Symbol.HEART, Rank.NINE);
-        Card card6 = new Card(Symbol.SPADE, Rank.QUEEN);
-
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
         Name name1 = new Name("lini");
         Name name2 = new Name("kaki");
         Player player1 = new Player(name1);
@@ -51,79 +60,103 @@ public class BlackJackGameTest {
         );
     }
 
-    @DisplayName("게이머의 점수가 21 이하이므로 카드를 주는 것을 성공한다.")
+    @DisplayName("딜러의 점수가 17 미만이므로 카드 주기를 성공한다.")
     @Test
-    void giveCardSuccessTest() {
+    void giveDealerCardSuccessTest() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
-        Name name = new Name("lini");
-        Player player = new Player(name);
         Dealer dealer = new Dealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
+        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
+        blackJackGame.succeededGiving(dealer); // 9 클로버
+        blackJackGame.succeededGiving(dealer); // 2 하트
+
         // when
         boolean dealerResult = blackJackGame.succeededGiving(dealer);
-        boolean playerResult = blackJackGame.succeededGiving(player);
 
-        Card expectedDealerCard = card2;
-        Card expectedPlayerCard = card1;
+        int expectedDealerSize = 4;
 
         // then
         assertAll(
                 () -> assertThat(dealerResult).isTrue(),
-                () -> assertThat(playerResult).isTrue(),
-                () -> assertThat(dealer.getHand().get(0)).isEqualTo(expectedDealerCard),
-                () -> assertThat(player.getHand().get(0)).isEqualTo(expectedPlayerCard)
+                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize)
         );
     }
 
-    @DisplayName("게이머의 점수가 21을 초과하여 카드 주기를 실패한다.")
+    @DisplayName("플레이어의 버스트가 아니므로, 카드 추가에 성공한다.")
     @Test
-    void giveCardFailureTest() {
+    void givePlayerCardSuccessTest() {
         // given
-        Card card1 = new Card(Symbol.DIAMOND, Rank.TWO);
-        Card card2 = new Card(Symbol.HEART, Rank.NINE);
-        Card card3 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card4 = new Card(Symbol.HEART, Rank.BIG_ACE);
-        Card card5 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card6 = new Card(Symbol.HEART, Rank.SEVEN);
-        Card card7 = new Card(Symbol.SPADE, Rank.QUEEN);
-
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
-                card7);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
         Name name = new Name("lini");
         Player player = new Player(name);
-        Dealer dealer = new Dealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
-        // when
-        blackJackGame.succeededGiving(dealer);
-        blackJackGame.succeededGiving(dealer);
-        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+        blackJackGame.succeededGiving(player); // 3 다이아몬드
+        blackJackGame.succeededGiving(player); // 9 클로버
+        blackJackGame.succeededGiving(player); // 2 하트
 
-        blackJackGame.succeededGiving(player);
-        blackJackGame.succeededGiving(player);
-        blackJackGame.succeededGiving(player);
-        blackJackGame.succeededGiving(player);
+        // when
         boolean playerResult = blackJackGame.succeededGiving(player);
 
-        int expectedDealerSize = 2;
         int expectedPlayerSize = 4;
 
         // then
         assertAll(
+                () -> assertThat(playerResult).isTrue(),
+                () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
+        );
+    }
+
+
+    @DisplayName("딜러의 점수가 17 이상이므로 카드 주기를 실패한다.")
+    @Test
+    void giveDealerCardFailureTest() {
+        // given
+        Dealer dealer = new Dealer();
+
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
+
+        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
+        blackJackGame.succeededGiving(dealer); // 9 클로버
+        blackJackGame.succeededGiving(dealer); // 2 하트
+        blackJackGame.succeededGiving(dealer); // 8 스페이드
+
+        // when
+        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+
+        int expectedDealerSize = 4;
+
+        // then
+        assertAll(
                 () -> assertThat(dealerResult).isFalse(),
+                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize)
+        );
+    }
+
+    @DisplayName("플레이어의 버스트이면 카드 주기를 실패한다.")
+    @Test
+    void givePlayerCardFailureTest() {
+        // given
+        Name name = new Name("lini");
+        Player player = new Player(name);
+
+        BlackJackGame blackJackGame = new BlackJackGame(decks);
+
+        blackJackGame.succeededGiving(player); // 3 다이아몬드
+        blackJackGame.succeededGiving(player); // 9 클로버
+        blackJackGame.succeededGiving(player); // 2 하트
+        blackJackGame.succeededGiving(player); // 8 스페이드
+
+        // when
+        boolean playerResult = blackJackGame.succeededGiving(player);
+
+        int expectedPlayerSize = 4;
+
+        // then
+        assertAll(
                 () -> assertThat(playerResult).isFalse(),
-                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize),
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
@@ -132,19 +165,6 @@ public class BlackJackGameTest {
     @Test
     void findResultsTest() {
         // given
-        Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
-        Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);
-        Card card5 = new Card(Symbol.SPADE, Rank.EIGHT);
-        Card card6 = new Card(Symbol.HEART, Rank.TWO);
-        Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
-        Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
-
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
-                card7, card8);
-        Decks decks = Decks.createByStrategy(settedDecksGenerator);
-
         Dealer dealer = new Dealer();
 
         Name name1 = new Name("pobi");
