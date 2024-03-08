@@ -1,6 +1,6 @@
 package view;
 
-import domain.*;
+import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
@@ -52,7 +52,24 @@ public class ResultView {
     private String resolveCardExpression(Card card) {
         CardNumber cardNumber = card.getCardNumber();
         CardShape cardShape = card.getCardShape();
-        return resolveCardNumber(cardNumber) + cardShape.getShape();
+        return resolveCardNumber(cardNumber) + resolveCardShape(cardShape);
+    }
+
+    private String resolveCardShape(CardShape cardShape) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (cardShape.equals(CardShape.HEART)) {
+            stringBuilder.append("하트");
+        }
+        if (cardShape.equals(CardShape.CLOVER)) {
+            stringBuilder.append("클로버");
+        }
+        if (cardShape.equals(CardShape.DIAMOND)) {
+            stringBuilder.append("다이아몬드");
+        }
+        if (cardShape.equals(CardShape.SPADE)) {
+            stringBuilder.append("스페이드");
+        }
+        return stringBuilder.toString();
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
