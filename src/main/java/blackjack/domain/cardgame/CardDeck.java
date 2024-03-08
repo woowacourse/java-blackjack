@@ -13,8 +13,8 @@ public class CardDeck {
     public CardDeck() {
         final Stack<Card> deck = new Stack<>();
         // TODO: 2중 for문 제거
-        for (CardNumber cardNumber : CardNumber.values()) {
-            for (CardShape cardShape : CardShape.values()) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
+            for (final CardShape cardShape : CardShape.values()) {
                 deck.push(new Card(cardNumber, cardShape));
             }
         }

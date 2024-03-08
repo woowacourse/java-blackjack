@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CardGameJudge {
-
-    public static final int BUST_CONDITION = 21;
+    public static final int BUST_THRESHOLD = 21;
 
     public CardGameResult judge(final Player dealer, final List<Player> players) {
         Map<Player, WinningStatus> result = new LinkedHashMap<>();
@@ -32,10 +31,10 @@ public class CardGameJudge {
     // TODO: 이름 바꾸기
     // TODO: 정리
     private WinningStatus doesPlayerWin(final int dealerScore, final int playerScore) {
-        if (playerScore > BUST_CONDITION) {
+        if (playerScore > BUST_THRESHOLD) {
             return WinningStatus.LOSE;
         }
-        if (dealerScore > BUST_CONDITION) {
+        if (dealerScore > BUST_THRESHOLD) {
             return WinningStatus.WIN;
         }
         if (dealerScore == playerScore) {

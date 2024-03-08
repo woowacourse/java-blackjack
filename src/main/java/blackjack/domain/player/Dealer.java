@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 
 public class Dealer extends Player {
-    public static final String NAME = "딜러";
-    public static final int HIT_THRESHOLD = 16;
+    private static final String NAME = "딜러";
+    private static final int HIT_THRESHOLD = 16;    // TODO: 16이라는 조건을 어디서 관리해야 하는가|
 
     public Dealer() {
         super(NAME);

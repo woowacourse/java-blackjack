@@ -3,34 +3,21 @@ package blackjack.view;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
-    // TODO: 상수명 변경
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final String YES = "y";
-    private static final String NO = "n";
+import static blackjack.view.PlayerChoice.*;
 
-    public static List<String> readPlayerNames() {
+public class InputView {
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static List<String> askPlayerNames() {
         printPlayerNamesInputMessage();
         String rawInput = scanner.nextLine();
         return List.of(rawInput.split(",", -1));
     }
 
-    // TODO: 메서드명 변경
-    public static boolean askForAnotherCard(final String name) {
+    public static boolean askForMoreCard(final String name) {
         printAskingForAnotherCardMessage(name);
         final String rawInput = scanner.nextLine();
-        validateYesOrNo(rawInput);
-        return YES.equals(rawInput);
-    }
-
-    // TODO: 메서드명 변경
-    private static void validateYesOrNo(final String input) {
-        if (YES.equals(input) || NO.equals(input)) {
-            return;
-        }
-
-        final String errorMessage = String.format("%s 또는 %s 만 입력할 수 있습니다.", YES, NO);
-        throw new IllegalArgumentException(errorMessage);
+        return PlayerChoice.isDrawable(rawInput);
     }
 
     private static void printPlayerNamesInputMessage() {
@@ -38,6 +25,12 @@ public class InputView {
     }
 
     private static void printAskingForAnotherCardMessage(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        printLineSeparator();
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + HIT.getMessage() +
+                ", 아니오는 " + STAND.getMessage() + ")");
+    }
+
+    private static void printLineSeparator() {
+        System.out.println();
     }
 }

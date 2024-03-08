@@ -5,6 +5,8 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player {
+    private static final int BUST_THRESHOLD = 21;
+
     protected final Hand hand;
     private final Name name;
 
@@ -17,15 +19,14 @@ public class Player {
         hand.add(card);
     }
 
+    public boolean isAlive() {
+        return hand.getSum() <= BUST_THRESHOLD;
+    }
+
     public List<Card> getCards() {
         return hand.getAllCards();
     }
 
-    public boolean isDead() {
-        return hand.getSum() > 21;
-    }
-
-    // TODO : 꼭 필요한 메서드일까?
     public int getScore() {
         return hand.getSum();
     }

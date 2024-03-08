@@ -23,8 +23,8 @@ public class CardGame {
     }
 
     // TODO: 이름 수정
-    public void giveTwoCardsEachPlayer(final List<Player> players) {
-        for (Player player : players) {
+    private void giveTwoCardsEachPlayer(final List<Player> players) {
+        for (final Player player : players) {
             giveCard(player);
             giveCard(player);
         }

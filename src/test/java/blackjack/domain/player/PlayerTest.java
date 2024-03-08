@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.CardNumber.KING;
@@ -20,8 +19,8 @@ public class PlayerTest {
                 new Card(KING, SPADE),
                 new Card(KING, HEART));
 
-        boolean isDead = player.isDead();
+        boolean isAlive = player.isAlive();
 
-        assertThat(isDead).isTrue();
+        assertThat(isAlive).isFalse();
     }
 }
