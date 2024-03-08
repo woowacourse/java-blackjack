@@ -6,6 +6,7 @@ public class Cards {
 
     private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.ACE.getAdditionalScore();
     private static final int MAX_BLACK_JACK_SCORE = 21;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -18,22 +19,22 @@ public class Cards {
 
     public int countMaxScore() {
         int aceCardCount = countAceCard();
-        int minResultScore = countRoundScore();
+        int maxResultScore = countMatchScore();
 
         for (int aceCard = 0; aceCard < aceCardCount; aceCard++) {
-            minResultScore = convertAceScore(minResultScore);
+            maxResultScore = convertAceScore(maxResultScore);
         }
-        return minResultScore;
+        return maxResultScore;
     }
 
-    private int convertAceScore(int minResultScore) {
-        if (minResultScore + ADDITIONAL_ACE_CARD_SCORE <= MAX_BLACK_JACK_SCORE) {
-            minResultScore += ADDITIONAL_ACE_CARD_SCORE;
+    private int convertAceScore(int maxResultScore) {
+        if (maxResultScore + ADDITIONAL_ACE_CARD_SCORE <= MAX_BLACK_JACK_SCORE) {
+            maxResultScore += ADDITIONAL_ACE_CARD_SCORE;
         }
-        return minResultScore;
+        return maxResultScore;
     }
 
-    public int countRoundScore() {
+    public int countMatchScore() {
         return cards.stream()
                 .mapToInt(Card::getFirstCardNumber)
                 .sum();

@@ -9,7 +9,7 @@ public class GameParticipant {
     private static final int MAX_GAME_SCORE = 21;
     private static final int MIN_GAME_SCORE = 0;
 
-    private Cards cards;
+    private final Cards cards;
 
     public GameParticipant(List<Card> cardDeck) {
         this.cards = new Cards(cardDeck);
@@ -20,7 +20,7 @@ public class GameParticipant {
     }
 
     public boolean isOverMaxCardScore() {
-        int totalCardScore = cards.countRoundScore();
+        int totalCardScore = cards.countMatchScore();
 
         return MAX_GAME_SCORE < totalCardScore;
     }
