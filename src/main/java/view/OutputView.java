@@ -28,7 +28,7 @@ public class OutputView {
 
         print("딜러와 " + playerNameFormattedText + "에게 2장을 나누었습니다.");
         printDealerHoleCard(dealerResult);
-        printPlayerFaceUp(playersResult);
+        printPlayersFaceUp(playersResult);
     }
 
     private static void printDealerHoleCard(IndividualFaceUpResult faceUpResult) {
@@ -36,9 +36,16 @@ public class OutputView {
                 .get(HOLE_CARD_INDEX));
     }
 
-    private static void printPlayerFaceUp(List<IndividualFaceUpResult> faceUpResults) {
-        faceUpResults.forEach(result -> print(
-                result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                        result.getCardsAsStrings())));
+    private static void printPlayersFaceUp(List<IndividualFaceUpResult> faceUpResults) {
+        faceUpResults.forEach(result -> printPlayersFaceUp(result));
+    }
+
+    public static void printPlayersFaceUp(IndividualFaceUpResult result) {
+        print(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
+                result.getCardsAsStrings()));
+    }
+
+    private static void printRequestPlayerChoice(IndividualFaceUpResult faceUpResult) {
+        faceUpResult.getPartipantNameAsString();
     }
 }
