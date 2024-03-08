@@ -31,4 +31,8 @@ public abstract class Participant {
     public int getHandsScore() {
         return hands.getHandsScore();
     }
+
+    public boolean isBurst() {
+        return hands.isBurst();
+    }
 }
