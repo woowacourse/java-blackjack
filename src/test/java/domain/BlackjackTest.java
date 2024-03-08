@@ -1,34 +1,33 @@
 package domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BlackjackTest {
 
     @Test
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
     void initializeDealer() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
+        final Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
         assertThat(blackjack.getDealer().getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
     void initializePlayers() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
+        final Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
         assertThat(blackjack.getPlayers().get(0).getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
     void dealCardsToPlayer() {
-        Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
-        Player player = blackjack.getPlayers().get(0);
+        final Blackjack blackjack = new Blackjack(Players.from("a,b,c".split(",")));
+        final Player player = blackjack.getPlayers().get(0);
 
         blackjack.dealCard(player);
 
@@ -38,18 +37,18 @@ class BlackjackTest {
     @Test
     @DisplayName("게임의 결과가 제대로 계산됐는지 확인한다")
     void gameResultTest() {
-        Player dealer = new Dealer();
-        Player teba = new Participant(new Name("테바"));
-        Player jonge = new Participant(new Name("종이"));
+        final Player dealer = new Dealer();
+        final Player teba = new Participant(new Name("테바"));
+        final Player jonge = new Participant(new Name("종이"));
         teba.addCard(new Card(Denomination.ACE,Symbol.CLOVER));
         jonge.addCard(new Card(Denomination.ACE,Symbol.HEART));
-        Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge, dealer)), dealer);
+        final Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge, dealer)), dealer);
 
-        BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
+        final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
 
-        Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
-        Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();
-        Integer jongeWin = blackjackResultDTO.results().get(jonge).getKey();
+        final Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
+        final Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();
+        final Integer jongeWin = blackjackResultDTO.results().get(jonge).getKey();
         assertThat(tebaWin + jongeWin).isEqualTo(dealerLose);
     }
 }

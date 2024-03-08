@@ -1,34 +1,32 @@
 package view;
 
 import domain.BlackjackResultDTO;
-import domain.Card;
 import domain.Denomination;
 import domain.Player;
 import domain.Symbol;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class OutputView {
-    public static void printPlayersStatus(List<Player> players) {
-        List<String> names = players.stream()
+    public static void printPlayersStatus(final List<Player> players) {
+        final List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
 
-        for (Player player : players) {
+        for (final Player player : players) {
             printPlayerStatus(player);
         }
         System.out.println();
     }
 
     public static void printPlayerStatus(final Player player) {
-        StringBuilder stringBuilder = new StringBuilder(player.getName() + ": ");
-        List<String> cardInfos = new ArrayList<>();
-        for (var card : player.getCards()) {
-            String denomination = denominationToMessage(card.getDenomination());
-            String symbol = symbolToMessage(card.getSymbol());
+        final StringBuilder stringBuilder = new StringBuilder(player.getName() + ": ");
+        final List<String> cardInfos = new ArrayList<>();
+        for (final var card : player.getCards()) {
+            final String denomination = denominationToMessage(card.getDenomination());
+            final String symbol = symbolToMessage(card.getSymbol());
             cardInfos.add(denomination + symbol);
         }
         stringBuilder.append(String.join(", ", cardInfos));
@@ -36,11 +34,11 @@ public class OutputView {
     }
 
 
-    public static void printResults(List<Player> players) {
+    public static void printResults(final List<Player> players) {
         System.out.println();
         players.forEach(player -> {
-            StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
-            List<String> cardInfos = player.getCards()
+            final StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
+            final List<String> cardInfos = player.getCards()
                     .stream()
                     .map(card -> denominationToMessage(card.getDenomination()) + symbolToMessage(card.getSymbol()))
                     .toList();
@@ -50,12 +48,12 @@ public class OutputView {
         });
     }
 
-    public static void printGameResults(BlackjackResultDTO blackjackResult) {
+    public static void printGameResults(final BlackjackResultDTO blackjackResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        for (var player : blackjackResult.results().keySet()) {
-            Integer win = blackjackResult.getWin(player);
-            Integer lose = blackjackResult.getLose(player);
+        for (final var player : blackjackResult.results().keySet()) {
+            final Integer win = blackjackResult.getWin(player);
+            final Integer lose = blackjackResult.getLose(player);
             printWinOrLose(player, win, lose);
         }
     }
@@ -82,7 +80,7 @@ public class OutputView {
         return "패";
     }
 
-    private static String denominationToMessage(Denomination denomination) {
+    private static String denominationToMessage(final Denomination denomination) {
         if (denomination == Denomination.ACE) {
             return "A";
         }
@@ -98,7 +96,7 @@ public class OutputView {
         return "" + denomination.getValue(0);
     }
 
-    private static String symbolToMessage(Symbol symbol) {
+    private static String symbolToMessage(final Symbol symbol) {
         if (symbol == Symbol.HEART) {
             return "하트";
         }

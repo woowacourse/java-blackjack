@@ -32,6 +32,4 @@ class PlayersTest {
 
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }
