@@ -40,4 +40,8 @@ public class Player {
     public String getName() {
         return playerName.name();
     }
+
+    public int getTotalCardsCount() {
+        return playerCards.size();
+    }
 }

@@ -44,7 +44,6 @@ public class Dealer {
     }
 
     public int getCardsCount() {
-        // TODO: 메시지 보내기
-        return player.getCards().size();
+        return player.getTotalCardsCount();
     }
 }
