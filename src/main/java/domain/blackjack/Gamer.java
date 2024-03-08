@@ -6,6 +6,8 @@ import domain.card.Deck;
 import java.util.List;
 
 public class Gamer {
+    private static final int DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN = 10;
+
     private final String name;
     private final HoldingCards holdingCards;
 
@@ -29,7 +31,7 @@ public class Gamer {
     }
 
     private int fixPoint(int rawPoint) {
-        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + 10);
+        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN);
         if (!fixPoint.isDeadPoint()) {
             return fixPoint.summationCardPoint();
         }
