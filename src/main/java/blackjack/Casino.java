@@ -4,12 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.common.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.view.BlackjackCommand;
 import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.view.PlayerView;
+import blackjack.view.ResultView;
 
 public class Casino {
     private final Blackjack blackjack;
@@ -33,22 +33,21 @@ public class Casino {
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
         Players players = blackjack.acceptPlayers(names);
-        OutputView.printPlayers(players);
+        PlayerView.printPlayers(players.getDealer(), players.getGamePlayers());
         return players;
     }
 
     private void processGame(Players players) {
         players.getGamePlayers()
                .forEach(gamePlayer -> processGamePlayer(blackjack, gamePlayer));
-
         processDealer(blackjack, players.getDealer());
-        OutputView.printPlayersWithScore(players);
+        PlayerView.printPlayersWithScore(players);
     }
 
     private void checkGameResult(Players players) {
         Result result = players.getDealer()
                                .checkResult(players.getGamePlayers());
-        OutputView.printResult(result);
+        ResultView.printResult(result);
     }
 
 
@@ -67,7 +66,7 @@ public class Casino {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
             gamePlayer.drawCard(card);
-            OutputView.printGamePlayer(gamePlayer);
+            PlayerView.printGamePlayer(gamePlayer);
         }
     }
 
