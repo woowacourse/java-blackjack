@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class Players {
 
     private final List<Player> players;
 
-    Players(List<Player> players) {
+    public Players(List<Player> players) {
         validate(players);
         this.players = players;
     }

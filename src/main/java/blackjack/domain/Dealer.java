@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Hand;
+
 public class Dealer {
 
     private final Hand hand;

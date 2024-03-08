@@ -1,5 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.rule;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.DealerGameResult;
+import blackjack.domain.player.Hand;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import fixture.HandFixture;
 import fixture.PlayerFixture;
 import org.junit.jupiter.api.BeforeEach;

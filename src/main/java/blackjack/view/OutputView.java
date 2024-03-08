@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.DealerGameResult;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 public class OutputView {
 

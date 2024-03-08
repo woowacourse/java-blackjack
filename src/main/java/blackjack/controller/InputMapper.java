@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.DrawDecision;
-import blackjack.domain.PlayerName;
+import blackjack.domain.player.PlayerName;
 
 import java.util.Arrays;
 import java.util.List;

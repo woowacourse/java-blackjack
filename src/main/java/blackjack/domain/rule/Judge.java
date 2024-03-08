@@ -1,4 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.rule;
+
+import blackjack.domain.Dealer;
+import blackjack.domain.DealerGameResult;
+import blackjack.domain.player.Hand;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 public class Judge {
 

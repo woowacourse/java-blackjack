@@ -1,6 +1,6 @@
 package fixture;
 
-import blackjack.domain.CardDeck;
+import blackjack.domain.card.CardDeck;
 
 import java.util.Arrays;
 

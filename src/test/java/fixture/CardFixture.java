@@ -1,11 +1,11 @@
 package fixture;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 
 import java.util.Arrays;
 
-import static blackjack.domain.CardShape.HEART;
+import static blackjack.domain.card.CardShape.HEART;
 
 public class CardFixture {
 

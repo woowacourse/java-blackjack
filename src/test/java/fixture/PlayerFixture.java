@@ -1,7 +1,7 @@
 package fixture;
 
-import blackjack.domain.Player;
-import blackjack.domain.PlayerName;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.PlayerName;
 
 public class PlayerFixture {
 
