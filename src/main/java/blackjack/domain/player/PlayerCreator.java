@@ -13,10 +13,10 @@ public class PlayerCreator {
     }
 
     public Player createPlayerFrom(PlayerName playerName, CardDeck cardDeck) {
-        return new Player(playerName, handCreator.createFromDeck(cardDeck));
+        return new Player(playerName, handCreator.createPlayerHandFrom(cardDeck));
     }
 
     public Player createDealerFrom(CardDeck cardDeck) {
-        return new Player(new PlayerName(DEALER_NAME), handCreator.createFromDeck(cardDeck));
+        return new Player(new PlayerName(DEALER_NAME), handCreator.createPlayerHandFrom(cardDeck));
     }
 }

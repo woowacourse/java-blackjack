@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.HitStrategy;
 import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
 
@@ -10,10 +11,12 @@ public class Hand {
 
     private final List<Card> cards;
     private final ScoreCalculateStrategy scoreCalculateStrategy;
+    private final HitStrategy hitStrategy;
 
-    public Hand(List<Card> cards, ScoreCalculateStrategy scoreCalculateStrategy) {
+    public Hand(List<Card> cards, ScoreCalculateStrategy scoreCalculateStrategy, HitStrategy hitStrategy) {
         this.cards = cards;
         this.scoreCalculateStrategy = scoreCalculateStrategy;
+        this.hitStrategy = hitStrategy;
     }
 
     public int sum() {
