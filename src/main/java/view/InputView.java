@@ -22,8 +22,8 @@ public class InputView {
         return new PlayersDto(players);
     }
 
-    private String requireNotBlank(final String input){
-        if(input.isBlank()){
+    private String requireNotBlank(final String input) {
+        if (input.isBlank()) {
             throw new IllegalArgumentException("입력이 공백으로만 이루어질 수 없습니다.");
         }
         return input;
@@ -34,7 +34,7 @@ public class InputView {
         return requireYesOrNo(readLine());
     }
 
-    private BlackJackGameCommand requireYesOrNo(final String input){
+    private BlackJackGameCommand requireYesOrNo(final String input) {
         return BlackJackGameCommand.from(input);
     }
 

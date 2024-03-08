@@ -34,7 +34,9 @@ public class Participant {
         return hand.sum() == 21;
     }
 
-    public Name name() { return name;}
+    public Name name() {
+        return name;
+    }
 
     public Cards cards() {
         return hand;

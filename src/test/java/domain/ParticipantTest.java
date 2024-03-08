@@ -20,7 +20,7 @@ class ParticipantTest {
 
     @DisplayName("카드의 합계로 `Bust`를 판단한다.")
     @Test
-    void isBust(){
+    void isBust() {
         Card cardTwo = new Card(CardShape.SPADE, CardNumber.TWO);
         Card cardKing = new Card(HEART, CardNumber.KING);
         Card cardQueen = new Card(HEART, CardNumber.QUEEN);
@@ -33,7 +33,7 @@ class ParticipantTest {
 
     @DisplayName("카드의 합계로 `Blackjack`를 판단한다.")
     @Test
-    void isBlackjack(){
+    void isBlackjack() {
         Card cardAce = new Card(CardShape.SPADE, CardNumber.ACE);
         Card cardKing = new Card(HEART, CardNumber.KING);
         Card cardQueen = new Card(HEART, CardNumber.QUEEN);

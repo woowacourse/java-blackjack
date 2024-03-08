@@ -17,10 +17,11 @@ public class PlayerResultsDto {
                         .value(), resultStatus));
     }
 
-    public String parseResult(){
+    public String parseResult() {
         return result.keySet()
                 .stream()
-                .map(player -> player +  ": " + result.get(player).getValue() + System.lineSeparator())
+                .map(player -> player + ": " + result.get(player)
+                        .getValue() + System.lineSeparator())
                 .reduce((a, b) -> a + b)
                 .orElse("");
     }

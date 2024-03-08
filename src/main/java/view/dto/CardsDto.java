@@ -28,7 +28,8 @@ public class CardsDto {
     }
 
     private String parseCard(final Card card) {
-        var shape = card.shape();;
+        var shape = card.shape();
+        ;
         CardNumber cardNumber = card.number();
         String number = String.valueOf(cardNumber.value());
         if (cardNumber == CardNumber.ACE) {
