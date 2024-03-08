@@ -26,12 +26,12 @@ public class Referee {
     public Map<ResultCommand, Integer> judgeDealerResult() {
         EnumMap<ResultCommand, Integer> dealerResult = new EnumMap<>(ResultCommand.class);
         for (ResultCommand playerResult : judgePlayerResult().values()) {
-            dealerResult.merge(findOpposite(playerResult), 1, Integer::sum);
+            dealerResult.merge(changeToOppositeResultCommand(playerResult), 1, Integer::sum);
         }
         return dealerResult;
     }
 
-    private ResultCommand findOpposite(final ResultCommand originResult) {
+    private ResultCommand changeToOppositeResultCommand(final ResultCommand originResult) {
         if (originResult == ResultCommand.WIN) {
             return ResultCommand.LOSE;
         }
