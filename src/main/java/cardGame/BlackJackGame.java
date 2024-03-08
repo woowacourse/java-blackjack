@@ -16,14 +16,18 @@ public class BlackJackGame {
 
     public BlackJackGame(List<String> names) {
         this.dealer = new Dealer();
-        this.players = joinPlayers(names);
+        this.players = initGamePlayer(names);
     }
 
-    private Players joinPlayers(List<String> names) {
+    private Players initGamePlayer(List<String> names) {
         List<Name> playerNames = names.stream()
                 .map(Name::new)
                 .toList();
 
+        return initPlayersCard(playerNames);
+    }
+
+    private Players initPlayersCard(List<Name> playerNames) {
         Players players = Players.from(playerNames);
 
         for (Player player : players.getPlayers()) {
