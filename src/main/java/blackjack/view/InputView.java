@@ -25,11 +25,14 @@ public class InputView {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 		String names = scanner.nextLine().replace(" ", "");
 
-		// TODO: 검증 로직 분리 및 예외 메시지 추가
-		if (names.startsWith(PLAYER_NAME_DELIMITER) || names.endsWith(PLAYER_NAME_DELIMITER)) {
-			throw new IllegalArgumentException();
-		}
+		validatePlayerNamesFormat(names);
 		return List.of(names.split(PLAYER_NAME_DELIMITER));
+	}
+
+	private void validatePlayerNamesFormat(String names) {
+		if (names.startsWith(PLAYER_NAME_DELIMITER) || names.endsWith(PLAYER_NAME_DELIMITER)) {
+			throw new IllegalArgumentException("플레이어의 이름은 쉼표(,)로 시작하거나 끝날 수 없습니다.");
+		}
 	}
 
 	public String readHitOrStand(Player player) {
