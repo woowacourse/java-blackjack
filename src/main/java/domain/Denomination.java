@@ -25,7 +25,6 @@ public enum Denomination {
     public int getValue(final int score) {
         if (this == ACE && score + 11 <= 21) {
             return 11;
-
         }
         return this.value;
     }

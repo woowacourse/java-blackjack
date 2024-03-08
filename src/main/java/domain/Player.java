@@ -11,14 +11,10 @@ public abstract class Player {
     public Player(final Name name) {
         this.name = name;
     }
-
-    public Player() {
-    }
-
+    
     public void hit(final Card card) {
         cards.add(card);
     }
-
 
     public abstract boolean isNotBust();
 

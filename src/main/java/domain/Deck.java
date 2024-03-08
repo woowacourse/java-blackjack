@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,15 +14,13 @@ public class Deck {
 
     private void initialize() {
         for (final Denomination denomination : Denomination.values()) {
-            for (final Symbol symbol : Symbol.values()) {
-                cards.add(new Card(denomination, symbol));
-            }
+            Arrays.stream(Symbol.values()).map(symbol -> new Card(denomination, symbol)).forEach(cards::add);
         }
     }
 
     public Card draw() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("덱이 비어있습니다");
         }
         Collections.shuffle(cards);
         return pollLastCard();
