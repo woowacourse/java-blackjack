@@ -39,7 +39,7 @@ class DealerCardsTest {
     void draw_SizeUp() {
         DealerCards dealerCards = new DealerCards(new ArrayList<>(List.of(new Card(6, Shape.CLUB), new Card(10, Shape.CLUB))));
 
-        dealerCards.draw();
+        dealerCards.receive(new Card(1, Shape.CLUB));
 
         assertThat(dealerCards.cards).hasSize(3);
     }

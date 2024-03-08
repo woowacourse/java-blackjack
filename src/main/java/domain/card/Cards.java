@@ -2,7 +2,6 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Cards {
 
@@ -21,7 +20,7 @@ public class Cards {
         }
     }
 
-    public List<Card> add(Card card) {
+    public List<Card> receive(Card card) {
         cards.add(card);
         return List.copyOf(cards);
     }
@@ -30,10 +29,6 @@ public class Cards {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
-    }
-
-    public void draw() {
-        cards.add(new Card(new Random().nextInt(10) + 1, Shape.CLUB));
     }
 
     public List<String> getCards() {
