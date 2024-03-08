@@ -47,6 +47,7 @@ public class PlayerCardsTest {
     }
 
     @Test
+    @DisplayName("현재 뽑은 카드의 가장 좋은 점수의 합을 반환한다.")
     void bestSum() {
         PlayerCards playerCards = new PlayerCards(new Name("capy"), new ArrayList<>(List.of(new Card(1, Shape.CLUB), new Card(1, Shape.CLUB))));
 
