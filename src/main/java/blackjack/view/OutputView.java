@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.*;
 
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -63,6 +64,22 @@ public class OutputView {
         System.out.println(dealer.getName()
                 + ": "
                 + dealer.getFirstCardName());
+    }
+
+    public static void printDealerGameResult(Dealer dealer, GameResult gameResult) {
+        String dealerResultMessage = resolveDealerResultMessage(gameResult, Result.WIN)
+                                    + resolveDealerResultMessage(gameResult, Result.LOSE)
+                                    + resolveDealerResultMessage(gameResult, Result.DRAW);
+
+        System.out.println(dealer.getName() + ": " + dealerResultMessage);
+    }
+
+    private static String resolveDealerResultMessage(GameResult gameResult, Result result) {
+        long cnt = gameResult.getTargetResultCount(Result.reverseResult(result));
+        if (cnt == 0) {
+            return "";
+        }
+        return cnt + result.getResult() + " ";
     }
 
     private static String resolveParticipantHandsMessage(Participant participant) {
