@@ -9,11 +9,15 @@ public class DeckShuffleFactory implements DeckFactory {
     public Stack<Card> generate() {
         Stack<Card> deck = new Stack<>();
         for (Number number : Number.values()) {
-            for (Suit suit : Suit.values()) {
-                deck.push(new Card(number, suit));
-            }
+            generateCardsForNumber(number, deck);
         }
         Collections.shuffle(deck);
         return deck;
+    }
+
+    private static void generateCardsForNumber(Number number, Stack<Card> deck) {
+        for (Suit suit : Suit.values()) {
+            deck.push(new Card(number, suit));
+        }
     }
 }
