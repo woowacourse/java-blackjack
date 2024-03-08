@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.game.WinLose;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final int DEALER_THRESHOLD_SCORE = 16;
     private static final String DELIMITER = ", ";
 
     public void printDistributionMessage(BlackjackGame game) {
@@ -67,7 +67,7 @@ public class OutputView {
     }
 
     public void printDealerDrawMessage() {
-        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", DEALER_THRESHOLD_SCORE);
+        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.THRESHOLD_SCORE);
     }
 
     public void printResult(BlackjackGame game, Result result) {
