@@ -25,6 +25,7 @@ class JudgeTest {
     private List<String> playerNames = List.of("choco");
     private Players players;
     private Player choco;
+    ResultStatus resultStatus;
     private int bustDrawCount = 10;
 
     @DisplayName("딜러가 버스트된 경우")
@@ -33,6 +34,7 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
+            resultStatus = ResultStatus.init();
             deckDrawLoop(6);
             dealer = new Dealer(deck);
             bustDealer();
@@ -45,7 +47,6 @@ class JudgeTest {
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayerChoco(dealer);
@@ -64,7 +65,6 @@ class JudgeTest {
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -81,7 +81,6 @@ class JudgeTest {
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -98,6 +97,7 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
+            resultStatus = ResultStatus.init();
             deckDrawLoop(12);
             dealer = new Dealer(deck);
         }
@@ -110,7 +110,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayerChoco(dealer);
@@ -131,7 +130,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -149,7 +147,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -167,6 +164,7 @@ class JudgeTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             dealer = new Dealer(deck);
+            resultStatus = ResultStatus.init();
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
@@ -177,7 +175,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayerChoco(dealer);
@@ -198,7 +195,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -216,7 +212,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -235,7 +230,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
@@ -254,7 +248,6 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
-            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);

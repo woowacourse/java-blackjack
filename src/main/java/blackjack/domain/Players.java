@@ -35,14 +35,12 @@ public class Players {
     }
 
     public BlackjackResult createResult(final Dealer dealer) {
-        ResultStatus resultStatus = new ResultStatus(0, 0, 0);
-
+        ResultStatus resultStatus = ResultStatus.init();
         PlayerResult playerResult = new PlayerResult();
 
         for (Player player : players) {
             DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
-
-            resultStatus.setResultStatus(result.getWins(), result.getLoses(), result.getDraws());
+            resultStatus.updateResultStatus(result);
         }
 
         return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
