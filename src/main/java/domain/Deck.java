@@ -1,22 +1,33 @@
 package domain;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Deck {
-    private final Set<Card> cards = new LinkedHashSet<>();
+    private final List<Card> cards = new ArrayList<>();
 
-    public Card draw() {
-        int currentSize = cards.size();
-        while (currentSize == cards.size()) {
-            cards.add(Card.makeRandomCard(new RandomNumberGeneartor(0, 13)));
+    public Deck() {
+        initialize();
+    }
+    private void initialize() {
+        for (Denomination denomination : Denomination.values()) {
+            for (Symbol symbol : Symbol.values()) {
+                cards.add(new Card(denomination, symbol));
+            }
         }
-        return lastElement();
     }
 
-    private Card lastElement() {
-        return cards.stream().skip(cards.size() - 1).findAny().orElseThrow();
+    public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        Collections.shuffle(cards);
+        return pollLastCard();
+    }
+
+    private Card pollLastCard() {
+        Card card = cards.get(cards.size() - 1);
+        cards.remove(cards.size()-1);
+        return card;
     }
 }
 
