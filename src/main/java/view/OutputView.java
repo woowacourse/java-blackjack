@@ -1,12 +1,11 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Gamer;
+import domain.card.Card;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.Gamers;
-import domain.Player;
+import domain.gamer.Player;
 import domain.PlayerResults;
-import domain.Players;
 import domain.Result;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +24,16 @@ public class OutputView {
 
     public static void printInitialCardsMessage(final Gamers gamers) {
         Dealer dealer = gamers.findDealer();
-        String dealerName = dealer.getName().getValue();
         List<Player> players = gamers.findPlayers();
+
+        printHandOutMessage(dealer, players);
+        printDealerCard(dealer);
+        printPlayersCards(players);
+        System.out.println();
+    }
+
+    private static void printHandOutMessage(final Dealer dealer, final List<Player> players) {
+        String dealerName = dealer.getName().getValue();
         StringJoiner playerNames = new StringJoiner(",");
         for (Player player : players) {
             playerNames.add(player.getName().getValue());
@@ -34,19 +41,20 @@ public class OutputView {
         String message = String.format(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.", dealerName, playerNames,
                 INITIAL_CARD_COUNT);
         System.out.println(message);
-        printWithoutHiddenCard(dealer);
+    }
+
+    private static void printDealerCard(final Dealer dealer) {
+        System.out.println(dealer.getName().getValue() + ": " + printCardInfo(dealer.getHand().get(0)));
+    }
+
+    private static void printPlayersCards(final List<Player> players) {
         for (Player player : players) {
             printAllCards(player);
         }
-        System.out.println();
-    }
-
-    private static void printWithoutHiddenCard(final Dealer dealer) {
-        System.out.println(dealer.getName().getValue() + ": " + printCard(dealer.getHand().get(0)));
     }
 
     public static void printAllCards(final Player player) {
-        String cardInfos = String.join(", ", printCards(player.getHand()));
+        String cardInfos = String.join(", ", printCardInfos(player.getHand()));
         String message = String.format("%s카드: %s", player.getName().getValue(), cardInfos);
         System.out.println(message);
     }
@@ -63,22 +71,22 @@ public class OutputView {
         for (Gamer gamer : gamers.getGamers()) {
             String gamerName = gamer.getName().getValue();
             int totalScore = gamer.calculateTotalScore();
-            String cardInfos = String.join(", ", printCards(gamer.getHand()));
+            String cardInfos = String.join(", ", printCardInfos(gamer.getHand()));
             builder.append(String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore))
                     .append(System.lineSeparator());
         }
         System.out.println(builder);
     }
 
-    private static List<String> printCards(List<Card> cards) {
+    private static List<String> printCardInfos(List<Card> cards) {
         List<String> cardInfos = new ArrayList<>();
         for (Card card : cards) {
-            cardInfos.add(printCard(card));
+            cardInfos.add(printCardInfo(card));
         }
         return cardInfos;
     }
 
-    private static String printCard(final Card card) {
+    private static String printCardInfo(final Card card) {
         String symbol = card.getSymbol().getName();
         String rank = card.getRank().getName();
         return rank + symbol;
@@ -100,8 +108,7 @@ public class OutputView {
             String playerName = player.getKey().getName().getValue();
             String result = player.getValue().getName();
             String message = String.format("%s: %s", playerName, result);
-            builder.append(message)
-                    .append(System.lineSeparator());
+            builder.append(message).append(System.lineSeparator());
         }
         System.out.println(builder);
     }
