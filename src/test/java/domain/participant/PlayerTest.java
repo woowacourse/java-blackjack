@@ -35,10 +35,10 @@ public class PlayerTest {
         Player player = new Player(new PlayerName("kelly"), hand);
 
         // When
-        Boolean isBurst = player.isDrawable();
+        Boolean isBust = player.isDrawable();
 
         // Then
-        assertThat(isBurst).isTrue();
+        assertThat(isBust).isTrue();
     }
 
     @DisplayName("플레이어는 덱으로부터 카드를 한 장 뽑는다.")

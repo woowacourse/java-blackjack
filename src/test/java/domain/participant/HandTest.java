@@ -39,16 +39,16 @@ public class HandTest {
 
     @DisplayName("손패에 있는 카드의 합이 21을 넘으면 true반환한다.")
     @Test
-    void isBurstTest() {
+    void isBustTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
         Hand hand = new Hand(playingCards);
 
         // When
-        boolean isBurst = hand.isBurst();
+        boolean isBust = hand.isBust();
 
         // Then
-        assertThat(isBurst).isTrue();
+        assertThat(isBust).isTrue();
     }
 
     @DisplayName("손패에 새로운 카드를 추가한다.")

@@ -29,4 +29,8 @@ public abstract class Participant {
     public List<PlayingCard> getHandCards() {
         return hand.getPlayingCards();
     }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }

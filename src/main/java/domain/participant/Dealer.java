@@ -45,7 +45,9 @@ public class Dealer extends Participant {
     }
 
     private boolean isDealerWin(final Player player) {
-        return hand.isBlackJack() || (hand.getCardsNumberSum() > player.getHandSum());
+        return hand.isBlackJack()
+                || player.isBust()
+                || (hand.getCardsNumberSum() > player.getHandSum());
     }
 
     private void dealerWin(
