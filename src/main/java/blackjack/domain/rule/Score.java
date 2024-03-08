@@ -16,6 +16,10 @@ public class Score {
         return bustCondition < value;
     }
 
+    public boolean isBiggerThan(Score target) {
+        return this.value > target.value;
+    }
+
     public int getValue() {
         return value;
     }
