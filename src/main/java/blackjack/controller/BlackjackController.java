@@ -11,6 +11,7 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -25,17 +26,13 @@ public class BlackjackController {
     }
 
     public void run() {
-        Game game = prepare();
-        play(game);
-        end(game);
-    }
-
-    private Game prepare() {
         CardGenerator cardGenerator = new RandomCardGenerator();
         Players players = retryOnException(() -> preparePlayers(cardGenerator));
         Dealer dealer = new Dealer(cardGenerator);
         outputView.printDealingResult(players, dealer);
-        return new Game(players, dealer, cardGenerator);
+
+        play(players, dealer, cardGenerator);
+        end(players, dealer);
     }
 
     private Players preparePlayers(final CardGenerator cardGenerator) {
@@ -43,17 +40,10 @@ public class BlackjackController {
         return new Players(playerNames, cardGenerator);
     }
 
-    private void play(final Game game) {
-        Players players = game.players();
-        CardGenerator cardGenerator = game.cardGenerator();
-        Dealer dealer = game.dealer();
+    private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         if (dealer.isBlackJack()) {
             return;
         }
-        doAction(players, dealer, cardGenerator);
-    }
-
-    private void doAction(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         for (Player player : players.getPlayers()) {
             doPlayerActionUtilEnd(player, cardGenerator);
         }
@@ -77,9 +67,7 @@ public class BlackjackController {
         return player.canHit() && command;
     }
 
-    private void end(final Game game) {
-        Players players = game.players();
-        Dealer dealer = game.dealer();
+    private void end(final Players players, final Dealer dealer) {
         showCardOutcome(players, dealer);
         showMatchResult(players, dealer);
     }
