@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private static void printAfterSettingIntro(Players players) {
-        String playerNames = players.getPlayers()
+        String playerNames = players.getElements()
             .stream()
             .map(Player::getName)
             .collect(collectingAndThen(toList(), names -> String.join(DELIMITER, names)));
@@ -54,12 +54,12 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        List<Card> cards = dealer.getCards().getCards();
+        List<Card> cards = dealer.getCards().getElements();
         System.out.printf(DEALER_CARD_FORMAT, cards.get(0));
     }
 
     private static void printPlayersCards(Players players) {
-        players.getPlayers()
+        players.getElements()
             .forEach(OutputView::printPlayerCard);
         System.out.println();
     }
@@ -76,7 +76,7 @@ public class OutputView {
     public static void printFinalScore(Dealer dealer, Players players, GameResult gameResult) {
         String dealerCards = createCardsMessage(dealer.getCards());
         System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards, gameResult.findDealerScore());
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getElements()) {
             String playerName = player.getName();
             String playerCards = createCardsMessage(player.getCards());
             System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards, gameResult.findPlayerScore(playerName));
@@ -84,7 +84,7 @@ public class OutputView {
     }
 
     private static String createCardsMessage(Cards cards) {
-        return cards.getCards()
+        return cards.getElements()
             .stream()
             .map(Card::toString)
             .collect(collectingAndThen(toList(), result -> String.join(DELIMITER, result)));

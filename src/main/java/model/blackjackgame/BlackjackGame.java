@@ -21,7 +21,7 @@ public class BlackjackGame {
     }
 
     public void distributeCardsForSetting(Cards cards) {
-        List<Card> cardsElement = cards.getCards();
+        List<Card> cardsElement = cards.getElements();
         dealer = dealer.addCards(cardsElement.subList(0, SETTING_CARD_COUNT));
         players = players.addCards(cardsElement.subList(SETTING_CARD_COUNT, cardsElement.size()));
     }

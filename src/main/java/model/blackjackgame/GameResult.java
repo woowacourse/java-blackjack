@@ -1,7 +1,7 @@
 package model.blackjackgame;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import model.dealer.Dealer;
@@ -21,7 +21,7 @@ public class GameResult {
 
     public static GameResult of(Dealer dealer, Players players) {
         GameScore dealerScore = GameScore.from(dealer);
-        List<GameScore> playersScore = players.getPlayers()
+        List<GameScore> playersScore = players.getElements()
             .stream()
             .map(GameScore::from)
             .toList();
@@ -29,7 +29,7 @@ public class GameResult {
     }
 
     public Map<ResultStatus, Integer> findDealerGameResult() {
-        Map<ResultStatus, Integer> gameResult = new HashMap<>();
+        Map<ResultStatus, Integer> gameResult = new EnumMap<>(ResultStatus.class);
         for (GameScore playerScore : playersScore) {
             ResultStatus resultStatus = findGameResult(dealerScore, playerScore);
             int previousCount = gameResult.getOrDefault(resultStatus, 0);

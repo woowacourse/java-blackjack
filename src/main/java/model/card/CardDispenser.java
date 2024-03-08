@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 public class CardDispenser {
 
     private static final int END_OFFSET = 1;
-    private static CardDispenser cardDispenser;
+    private static CardDispenser cardDispenser = new CardDispenser();
 
     private final Map<Integer, CardNumber> cardNumbers;
     private final Map<Integer, CardShape> cardShapes;
@@ -22,21 +22,21 @@ public class CardDispenser {
     }
 
     private Map<Integer, CardNumber> initialCardNumbers() {
-        Map<Integer, CardNumber> cardNumbers = new HashMap<>();
+        Map<Integer, CardNumber> numbers = new HashMap<>();
         int index = 0;
         for (CardNumber cardNumber : CardNumber.values()) {
-            cardNumbers.put(index++, cardNumber);
+            numbers.put(index++, cardNumber);
         }
-        return cardNumbers;
+        return numbers;
     }
 
     private Map<Integer, CardShape> initialCardShapes() {
-        Map<Integer, CardShape> cardShapes = new HashMap<>();
+        Map<Integer, CardShape> shapes = new HashMap<>();
         int index = 0;
         for (CardShape cardShape : CardShape.values()) {
-            cardShapes.put(index++, cardShape);
+            shapes.put(index++, cardShape);
         }
-        return cardShapes;
+        return shapes;
     }
 
     public static CardDispenser getCardDispenser() {

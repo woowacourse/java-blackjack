@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayersTest {
+class PlayersTest {
 
     @DisplayName("총 플레이어 수가 1명 이상이면 객체 생성 성공")
     @ParameterizedTest

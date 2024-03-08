@@ -24,8 +24,8 @@ class CardDispenserTest {
     @ValueSource(ints = {0, 1, 5, 10, 29, 60})
     void testDispenseCards(int count) {
         Cards cards = cardDispenser.dispenseCards(count);
-        assertThat(cards.getCards()).hasSize(count);
-        cards.getCards().forEach(card -> {
+        assertThat(cards.getElements()).hasSize(count);
+        cards.getElements().forEach(card -> {
             assertThat(card.getNumber()).isNotNull();
             assertThat(card.getShape()).isNotNull();
         });

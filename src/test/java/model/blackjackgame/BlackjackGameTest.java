@@ -42,7 +42,7 @@ class BlackjackGameTest {
         Players updatedPlayers = blackjackGame.getPlayers();
 
         assertThat(updatedDealer.cardsSize()).isEqualTo(2);
-        updatedPlayers.getPlayers()
+        updatedPlayers.getElements()
             .forEach(player -> assertThat(player.cardsSize()).isEqualTo(2));
     }
 
@@ -57,7 +57,7 @@ class BlackjackGameTest {
     void testHitOrStayFromPlayer() {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Players players = blackjackGame.getPlayers();
-        List<Player> playersElement = players.getPlayers();
+        List<Player> playersElement = players.getElements();
         List<Card> cards = List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER));
 
         for (int i = 0; i < playersElement.size(); i++) {
@@ -65,8 +65,8 @@ class BlackjackGameTest {
         }
 
         Players updatedPlayers = blackjackGame.getPlayers();
-        assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
-        assertThat(updatedPlayers.getPlayers().get(1).cardsSize()).isEqualTo(1);
+        assertThat(updatedPlayers.getElements().get(0).cardsSize()).isEqualTo(1);
+        assertThat(updatedPlayers.getElements().get(1).cardsSize()).isEqualTo(1);
     }
 
     @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드를 1장을 지급한다")

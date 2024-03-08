@@ -39,7 +39,7 @@ public class BlackjackController {
 
     private void executeGame(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getElements()) {
             continueHit(blackjackGame, player);
         }
         Card card = cardDispenser.dispenseCard();
