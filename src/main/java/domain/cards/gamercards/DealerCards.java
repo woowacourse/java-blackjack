@@ -17,7 +17,7 @@ public class DealerCards extends GamerCards {
         return calculateScore() <= DEALER_HIT_THRESHOLD;
     }
 
-    protected Card pickFirstCard() {
+    public Card pickFirstCard() {
         return cards.get(FIRST_CARD_INDEX);
     }
 }
