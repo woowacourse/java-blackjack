@@ -2,6 +2,8 @@ package domain;
 
 public class HitOption {
 
+    private static final String YES = "y";
+    private static final String NO = "n";
     private final String value;
 
     public HitOption(String value) {
@@ -10,12 +12,12 @@ public class HitOption {
     }
 
     private void validate(String value) {
-        if (!value.equalsIgnoreCase("y") && !value.equalsIgnoreCase("n")) {
-            throw new IllegalArgumentException("[ERROR] y 혹은 n 만 입력 가능합니다.");
+        if (!value.equalsIgnoreCase(YES) && !value.equalsIgnoreCase(NO)) {
+            throw new IllegalArgumentException("[ERROR] " + YES + " 혹은 " + NO + "만 입력 가능합니다.");
         }
     }
 
     public boolean doHit() {
-        return value.equalsIgnoreCase("y");
+        return value.equalsIgnoreCase(YES);
     }
 }

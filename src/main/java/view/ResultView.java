@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ResultView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String DELIMITER = ", ";
 
     public void printInitialCards(Gamers gamers) {
         Dealer dealer = gamers.callDealer();
@@ -25,7 +26,7 @@ public class ResultView {
         String dealerName = dealer.getPlayerName();
         String playersNames = players.stream()
                 .map(Gamer::getPlayerName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
         System.out.println(LINE_SEPARATOR + String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames));
 
         Card dealerCard = dealer.openOneCard();
@@ -46,7 +47,7 @@ public class ResultView {
         for (Card card : gamer.getCards()) {
             cards.add(resolveCardExpression(card));
         }
-        return String.join(", ", cards);
+        return String.join(DELIMITER, cards);
     }
 
     private String resolveCardExpression(Card card) {

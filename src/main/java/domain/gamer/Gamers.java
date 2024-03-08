@@ -52,7 +52,7 @@ public class Gamers {
 
     private void validateNotDealerName(List<String> playersNames) {
         if (playersNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"딜러\"가 될 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 " + DEALER_NAME + "가 될 수 없습니다.");
         }
     }
 
