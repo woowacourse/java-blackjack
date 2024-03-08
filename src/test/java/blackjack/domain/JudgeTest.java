@@ -184,7 +184,7 @@ class JudgeTest {
         }
     }
 
-    @DisplayName("딜러가 블랙재도 아니고, 버스트되지 않은 일반 경우")
+    @DisplayName("딜러가 블랙잭도 아니고, 버스트되지 않은 일반 경우")
     @Nested
     class whenDealerNormal {
         @BeforeEach
@@ -283,6 +283,29 @@ class JudgeTest {
                     .isEqualTo(1);
             assertThat(dealerResult.getDraws())
                     .isEqualTo(0);
+        }
+
+        @DisplayName("플레이어와 점수가 같을 경우 딜러는 무승부로 판정한다.")
+        @Test
+        void drawWhenPlayerNormalWithSameScore() {
+            //given
+            deckDrawLoop(3);
+            players = Players.of(playerNames, dealer);
+            player1 = players.getPlayers().get(0);
+
+            PlayerResult playerResult = new PlayerResult();
+            ResultStatus resultStatus = new ResultStatus(0, 0, 0);
+
+            //when
+            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+
+            //then
+            assertThat(dealerResult.getWins())
+                    .isEqualTo(0);
+            assertThat(dealerResult.getLoses())
+                    .isEqualTo(0);
+            assertThat(dealerResult.getDraws())
+                    .isEqualTo(1);
         }
     }
 

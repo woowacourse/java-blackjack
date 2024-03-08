@@ -12,35 +12,21 @@ public class Judge {
 
     public static DealerResult judge(
             final ResultStatus resultStatus, final Player player, final Dealer dealer, final PlayerResult playerResult) {
-        if (player.isBust()) {
-            return judgePlayerBust(dealer, playerResult, player, resultStatus);
-        }
-
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            return draw(playerResult, player, resultStatus);
-        }
-
-        if (dealer.isSameScore(player.getScore())) {
-            return judgeSameScores(dealer, playerResult, player, resultStatus);
-        }
-
-        return judgeDifferentScores(dealer, playerResult, player, resultStatus);
-    }
-
-    private static DealerResult judgePlayerBust(
-            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
         if (dealer.isBust()) {
-            return draw(playerResult, player, resultStatus);
+            return judgeWhenDealerBust(playerResult, player, resultStatus);
         }
-
-        return dealerWins(playerResult, player, resultStatus);
-    }
-
-    private static DealerResult judgeSameScores(
-            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
 
         if (dealer.isBlackjack()) {
-            return dealerWins(playerResult, player, resultStatus);
+            return judgeWhenDealerBlackjack(playerResult, player, resultStatus);
+        }
+
+        return judgeWhenDealerNormal(dealer, playerResult, player, resultStatus);
+    }
+
+    public static DealerResult judgeWhenDealerBust(
+            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+        if (player.isBust()) {
+            return draw(playerResult, player, resultStatus);
         }
 
         if (player.isBlackjack()) {
@@ -50,12 +36,39 @@ public class Judge {
         return dealerLose(playerResult, player, resultStatus);
     }
 
-    private static DealerResult judgeDifferentScores(
+    public static DealerResult judgeWhenDealerBlackjack(
+            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+        if (player.isBust()) {
+            return dealerWins(playerResult, player, resultStatus);
+        }
+
+        if (player.isBlackjack()) {
+            return draw(playerResult, player, resultStatus);
+        }
+
+        return dealerWins(playerResult, player, resultStatus);
+    }
+
+    public static DealerResult judgeWhenDealerNormal(
             final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        if (dealer.isBust()) {
+        if (player.isBust()) {
+            return dealerWins(playerResult, player, resultStatus);
+        }
+
+        if (player.isBlackjack()) {
             return dealerLose(playerResult, player, resultStatus);
         }
-        if (dealer.getScore() >= player.getScore()) {
+
+        return judgeWhenNormalTogether(dealer, playerResult, player, resultStatus);
+    }
+
+    private static DealerResult judgeWhenNormalTogether(
+            final Dealer dealer, final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+        if(dealer.isSameScore(player.getScore())){
+            return draw(playerResult, player, resultStatus);
+        }
+
+        if(dealer.getScore() > player.getScore()){
             return dealerWins(playerResult, player, resultStatus);
         }
 
