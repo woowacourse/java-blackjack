@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class BlackjackController {
+public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
