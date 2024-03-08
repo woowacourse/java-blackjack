@@ -46,7 +46,6 @@ class GameBoardTest {
         gameBoard.drawInitialDealerCards();
 
         final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos(referee);
-
         final Name name = playerOutcomeDtos.get(0).getName();
         final Outcome outcome = playerOutcomeDtos.get(0).getOutcome();
 

@@ -17,8 +17,8 @@ class DeckShuffleFactoryTest {
                 expectedCards.push(new Card(number, suit));
             }
         }
-
         DeckFactory deckFactory = new DeckShuffleFactory();
+
         final Stack<Card> resultCards = deckFactory.generate();
 
         assertThat(resultCards).containsExactlyInAnyOrderElementsOf(expectedCards);

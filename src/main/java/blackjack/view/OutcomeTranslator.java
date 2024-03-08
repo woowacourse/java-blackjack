@@ -9,7 +9,6 @@ public enum OutcomeTranslator {
     PUSH(Outcome.PUSH, "무");
 
     private final Outcome outcome;
-
     private final String viewName;
 
     OutcomeTranslator(final Outcome outcome, final String viewName) {

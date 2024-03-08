@@ -14,7 +14,6 @@ public class GameBoard {
     private final Dealer dealer;
     private final Players players;
 
-
     public GameBoard(final Deck deck, final Dealer dealer, final Players players) {
         this.deck = deck;
         this.dealer = dealer;

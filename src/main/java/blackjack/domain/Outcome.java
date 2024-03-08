@@ -27,7 +27,8 @@ public enum Outcome {
         return new OutcomesDto(
                 calculateWinCount(outcomes),
                 calculateLoseCount(outcomes),
-                calculatePushCount(outcomes));
+                calculatePushCount(outcomes)
+        );
     }
 
     private static int calculateWinCount(final List<Outcome> outcomes) {
