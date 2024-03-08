@@ -13,7 +13,9 @@ public class InputView {
     public List<String> readNames() {
         String input = scanner.nextLine();
         String[] names = input.split(DELIMITER);
-        return Arrays.stream(names).toList();
+        return Arrays.stream(names)
+                .map(String::trim)
+                .toList();
     }
 
     public String readCommand() {
