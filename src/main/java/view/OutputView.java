@@ -3,6 +3,7 @@ package view;
 import domain.Card;
 import domain.Dealer;
 import domain.Gamer;
+import domain.Gamers;
 import domain.Player;
 import domain.PlayerResults;
 import domain.Players;
@@ -22,17 +23,19 @@ public class OutputView {
 
     }
 
-    public static void printHandOutCardMessage(Dealer dealer, Players players) {
+    public static void printInitialCardsMessage(final Gamers gamers) {
+        Dealer dealer = gamers.findDealer();
         String dealerName = dealer.getName().getValue();
+        List<Player> players = gamers.findPlayers();
         StringJoiner playerNames = new StringJoiner(",");
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             playerNames.add(player.getName().getValue());
         }
         String message = String.format(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.", dealerName, playerNames,
                 INITIAL_CARD_COUNT);
         System.out.println(message);
         printWithoutHiddenCard(dealer);
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             printAllCards(player);
         }
         System.out.println();
@@ -55,12 +58,16 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printCardsAndResult(Gamer gamer) {
-        String gamerName = gamer.getName().getValue();
-        int totalScore = gamer.calculateTotalScore();
-        String cardInfos = String.join(", ", printCards(gamer.getHand()));
-        String message = String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore);
-        System.out.println(message);
+    public static void printCardsAndResult(Gamers gamers) {
+        StringBuilder builder = new StringBuilder();
+        for (Gamer gamer : gamers.getGamers()) {
+            String gamerName = gamer.getName().getValue();
+            int totalScore = gamer.calculateTotalScore();
+            String cardInfos = String.join(", ", printCards(gamer.getHand()));
+            builder.append(String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore))
+                    .append(System.lineSeparator());
+        }
+        System.out.println(builder);
     }
 
     private static List<String> printCards(List<Card> cards) {
