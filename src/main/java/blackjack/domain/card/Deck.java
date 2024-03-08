@@ -22,7 +22,6 @@ public class Deck {
         return new Deck(new ArrayDeque<>(cards));
     }
 
-    //TODO : 셔플 하기 위해 이게 최선인가?
     private static List<Card> createCards() {
         return Arrays.stream(CardSymbol.values())
                      .flatMap(Deck::addCard)

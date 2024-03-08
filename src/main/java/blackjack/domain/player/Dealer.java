@@ -44,8 +44,6 @@ public class Dealer extends Player implements CardReceivable {
 
     @Override
     public boolean isReceivable() {
-        //TODO : 딜러는 A를 11로 인식해야 한다.
-        //TODO : calculateScore 는 Cards 에 분리 할지 고민
         return cards.sum() <= RECEIVE_SIZE;
     }
 }
