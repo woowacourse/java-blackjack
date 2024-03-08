@@ -10,8 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
-import blackjack.model.participant.Hand;
-import blackjack.model.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

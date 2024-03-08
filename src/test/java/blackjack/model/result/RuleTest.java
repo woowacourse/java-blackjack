@@ -8,8 +8,6 @@ import blackjack.model.deck.Shape;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Hand;
 import blackjack.model.participant.Player;
-import blackjack.model.result.ResultCommand;
-import blackjack.model.result.Rule;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
