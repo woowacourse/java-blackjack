@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public class Game {
+    //TODO 멤버 줄이기
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -23,7 +24,7 @@ public class Game {
         dealer.addCard(deck.draw());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public GameResult makeGameResult(){
+        return GameResult.of(dealer, players);
     }
 }

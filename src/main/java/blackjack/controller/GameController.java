@@ -16,29 +16,22 @@ public class GameController {
         Deck deck = Deck.createSuffledDeck();
         Game game = Game.of(deck, dealer, players);
 
-        // 초기패 분배
         OutputView.printDrawInitialHandsMessage(dealer, players);
-        printParticipantsInitialHands(dealer, players);
+        OutputView.printParticipantsInitialHands(dealer, players);
 
-        //참여자들의 패 확정
         askDrawUntilConfirmHands(players, deck);
         confirmDealerHands(dealer, deck);
 
-        //최종패 출력
         OutputView.printFinalHandsAndScoreMessage(dealer, players);
-    }
-
-    private static void printParticipantsInitialHands(Dealer dealer, Players players) {
-        OutputView.printDealerFirstCard(dealer);
-        for(Player player : players.getPlayers()){
-            OutputView.printParticipantHands(player);
-        }
+        OutputView.printGameResult(dealer, game.makeGameResult());
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
+        System.out.println();
         while (dealer.draw(deck)) {
             OutputView.printDealerDrawMessage(dealer);
         }
+        System.out.println();
     }
 
     private static void askDrawUntilConfirmHands(Players players, Deck deck) {
