@@ -1,14 +1,14 @@
 package domain.participant;
 
-import domain.Deck;
-import domain.PlayingCard;
+import domain.playingcard.Deck;
+import domain.playingcard.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.PlayingCardShape.DIAMOND;
-import static domain.PlayingCardValue.KING;
+import static domain.playingcard.PlayingCardShape.DIAMOND;
+import static domain.playingcard.PlayingCardValue.KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {

@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.participant.Player;
 import domain.participant.PlayerName;

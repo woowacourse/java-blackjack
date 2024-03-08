@@ -1,10 +1,10 @@
 package view;
 
 import domain.constant.GameResult;
-import domain.dto.DealerHandStatusDto;
-import domain.dto.PlayerGameResultDto;
-import domain.dto.PlayerHandStatusDto;
-import domain.dto.PlayingCardDto;
+import dto.DealerHandStatusDto;
+import dto.PlayerGameResultDto;
+import dto.PlayerHandStatusDto;
+import dto.PlayingCardDto;
 import domain.participant.PlayerName;
 
 import java.util.List;

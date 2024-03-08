@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.*;
 import domain.constant.GameResult;
 
 import java.util.ArrayList;

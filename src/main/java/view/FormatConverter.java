@@ -1,13 +1,13 @@
 package view;
 
-import domain.PlayingCardShape;
-import domain.PlayingCardValue;
+import domain.playingcard.PlayingCardShape;
+import domain.playingcard.PlayingCardValue;
 import domain.constant.GameResult;
 
 import java.util.Map;
 
-import static domain.PlayingCardShape.*;
-import static domain.PlayingCardValue.*;
+import static domain.playingcard.PlayingCardShape.*;
+import static domain.playingcard.PlayingCardValue.*;
 import static java.util.Map.entry;
 
 public final class FormatConverter {

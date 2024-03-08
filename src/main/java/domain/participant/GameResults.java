@@ -1,7 +1,7 @@
-package domain;
+package domain.participant;
 
 import domain.constant.GameResult;
-import domain.dto.PlayerGameResultDto;
+import dto.PlayerGameResultDto;
 import domain.participant.Player;
 
 import java.util.List;

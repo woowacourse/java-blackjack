@@ -1,10 +1,9 @@
-package domain;
+package domain.playingcard;
 
-import org.assertj.core.api.Assertions;
+import domain.playingcard.Deck;
+import domain.playingcard.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.constant.GameResult;
 import domain.participant.PlayerName;

@@ -1,6 +1,6 @@
-package domain;
+package domain.playingcard;
 
-import static domain.PlayingCardValue.SMALL_ACE;
+import static domain.playingcard.PlayingCardValue.SMALL_ACE;
 import static domain.constant.GameOption.BLACKJACK_CONDITION;
 
 public class PlayingCard {

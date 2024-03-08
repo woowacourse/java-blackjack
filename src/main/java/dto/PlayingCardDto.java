@@ -1,8 +1,8 @@
-package domain.dto;
+package dto;
 
-import domain.PlayingCard;
-import domain.PlayingCardShape;
-import domain.PlayingCardValue;
+import domain.playingcard.PlayingCard;
+import domain.playingcard.PlayingCardShape;
+import domain.playingcard.PlayingCardValue;
 
 public record PlayingCardDto(PlayingCardShape playingCardShape, PlayingCardValue playingCardValue) {
 

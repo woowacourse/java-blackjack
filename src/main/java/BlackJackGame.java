@@ -1,10 +1,8 @@
-package controller;
-
-import domain.Deck;
-import domain.GameResults;
-import domain.dto.DealerHandStatusDto;
-import domain.dto.PlayerHandStatusDto;
-import domain.dto.PlayingCardDto;
+import domain.playingcard.Deck;
+import domain.participant.GameResults;
+import dto.DealerHandStatusDto;
+import dto.PlayerHandStatusDto;
+import dto.PlayingCardDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.PlayerName;

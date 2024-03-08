@@ -1,14 +1,14 @@
 package domain.participant;
 
-import domain.PlayingCard;
+import domain.playingcard.PlayingCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.PlayingCardShape.*;
-import static domain.PlayingCardValue.*;
+import static domain.playingcard.PlayingCardShape.*;
+import static domain.playingcard.PlayingCardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
