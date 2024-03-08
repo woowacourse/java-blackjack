@@ -9,9 +9,13 @@ public class UserDeck {
     private static final int ACE_CONVERT_VALUE = 10;
     private static final int ACE_CONVERT_MAX_CONDITION = 11;
     private static final int FIRST_INDEX = 0;
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
-    public void pushCard(Card card) {
+    public UserDeck() {
+        this.cards = new ArrayList<>();
+    }
+
+    public void addCard(Card card) {
         cards.add(card);
     }
 

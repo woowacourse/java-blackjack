@@ -15,7 +15,7 @@ public class UserDeckTest {
         Card card = new Card(Shape.CLOVER, Number.ACE);
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(card);
+        userDeck.addCard(card);
 
         assertThat(userDeck.getCards()).contains(card);
     }
@@ -25,8 +25,8 @@ public class UserDeckTest {
     void sumCardTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.THREE));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.EIGHT));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.THREE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.EIGHT));
 
         assertThat(userDeck.sumCard()).isEqualTo(11);
     }
@@ -36,7 +36,7 @@ public class UserDeckTest {
     void hasAceTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
 
         assertThat(userDeck.hasAce()).isTrue();
     }
@@ -46,8 +46,8 @@ public class UserDeckTest {
     void sumCardContainingAceTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.TWO));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
 
         assertThat(userDeck.sumCard()).isEqualTo(13);
     }

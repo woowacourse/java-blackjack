@@ -55,7 +55,8 @@ public class Game {
     }
 
     public PlayerResults generatePlayerResults() {
-        Map<Player, Result> playerResults = users.getPlayers().stream()
+        Map<Player, Result> playerResults = users.getPlayers()
+                .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         users::generatePlayerResult,
