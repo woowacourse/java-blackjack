@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjackgame;
 
 public enum ResultStatus {
     WIN("승"),

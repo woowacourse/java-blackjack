@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjackgame;
 
 import static fixture.PlayersFixture.플레이어;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,7 +1,7 @@
 package fixture;
 
-import domain.Player;
-import domain.Players;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Arrays;
 
 public class PlayersFixture {

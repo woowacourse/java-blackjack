@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjackgame;
 
 import static fixture.CardFixture.카드;
 import static fixture.DealerFixture.딜러;
@@ -7,6 +7,10 @@ import static fixture.PlayersFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Denomination;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;

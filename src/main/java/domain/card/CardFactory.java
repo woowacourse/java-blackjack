@@ -1,10 +1,9 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardFactory {
-
     public static List<Card> create(Emblem emblem) {
         List<Card> cards = new ArrayList<>();
 

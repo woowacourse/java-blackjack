@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static fixture.CardFixture.카드;
 import static fixture.CardFixture.카드들;

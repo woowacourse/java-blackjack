@@ -1,11 +1,11 @@
 package ui;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
-import domain.ResultStatus;
+import domain.blackjackgame.ResultStatus;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Map;
 import java.util.stream.Collectors;
 

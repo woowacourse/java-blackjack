@@ -1,6 +1,6 @@
 package ui;
 
-import domain.BlackjackAction;
+import domain.blackjackgame.BlackjackAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

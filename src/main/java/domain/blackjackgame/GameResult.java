@@ -1,5 +1,6 @@
-package domain;
+package domain.blackjackgame;
 
+import domain.participant.Player;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;

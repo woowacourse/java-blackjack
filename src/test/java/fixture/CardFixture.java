@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.Card;
-import domain.Denomination;
-import domain.Emblem;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Emblem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

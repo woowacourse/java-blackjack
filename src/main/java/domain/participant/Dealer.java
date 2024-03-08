@@ -1,4 +1,8 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardShuffleStrategy;
 
 public class Dealer extends Participant {
     private static final String DEFAULT_NAME = "딜러";

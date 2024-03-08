@@ -3,9 +3,9 @@ package fixture;
 import static fixture.CardFixture.전체_카드;
 import static fixture.CardFixture.카드들;
 
-import domain.Card;
-import domain.CardDeck;
-import domain.Dealer;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.participant.Dealer;
 
 public class DealerFixture {
     public static Dealer 딜러(Card... cards) {

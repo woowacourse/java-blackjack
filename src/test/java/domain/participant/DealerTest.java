@@ -1,9 +1,13 @@
-package domain;
+package domain.participant;
 
 import static fixture.CardFixture.전체_카드;
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.Denomination;
+import domain.card.Emblem;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
