@@ -34,14 +34,18 @@ public class Players {
     }
 
     private static void validateHasDuplicateName(List<Name> players) {
-        int uniqueNameCount = players.stream()
-                .map(Name::getValue)
-                .collect(Collectors.toSet())
-                .size();
+        int uniqueNameCount = countPlayerUniqueName(players);
 
         if (players.size() != uniqueNameCount) {
             throw new IllegalArgumentException("참가자는 중복된 이름을 가질 수 없습니다.");
         }
+    }
+
+    private static int countPlayerUniqueName(List<Name> players) {
+        return players.stream()
+                .map(Name::getValue)
+                .collect(Collectors.toSet())
+                .size();
     }
 
     private static void validatePlayerCountRange(List<Name> players) {
