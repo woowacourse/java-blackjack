@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
 import blackjack.util.Constants;
 import java.util.ArrayList;
 import java.util.Collections;

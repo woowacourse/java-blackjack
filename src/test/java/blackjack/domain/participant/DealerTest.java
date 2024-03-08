@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
-import blackjack.domain.Rank;
-import blackjack.domain.Suit;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;

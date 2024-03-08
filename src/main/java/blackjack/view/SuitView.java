@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Suit;
+import blackjack.domain.card.Suit;
 import java.util.Arrays;
 
 public enum SuitView {

@@ -83,7 +83,7 @@ example feat: 사용자 입력 후 도메인 사용
 - [x] `Participant`를 `Gamer`로 변경한다. 
 - [x] 불변 리스트로 변환한다.
 - [ ] `Judge`의 테스트를 진행한다.
-- [ ] `Rank`, `Suit`를 card 패키지로 변경한다.
+- [x] `Rank`, `Suit`를 card 패키지로 변경한다.
 - [ ] 용도 별로 메서드들을 정리한다.
 - [ ] `calculateAce` 메서드명을 변경한다.
 - [ ] `BlackjackResult`에서 count 대신 getter로 변경한다.

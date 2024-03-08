@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Rank;
-import blackjack.domain.Suit;
 import java.util.List;
 import java.util.Objects;
 
