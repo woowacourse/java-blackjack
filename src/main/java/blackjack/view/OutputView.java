@@ -37,9 +37,10 @@ public class OutputView {
                 // TODO: 이름 합치는 책임을 어디로 할 것인가 (도메인 vs 뷰)
                 .map(card -> card.getNumber() + card.getShape())
                 .collect(Collectors.joining(", "));
-        System.out.println(player.getName() + ": " + cardInfo);
+        System.out.println(cardInfo);
     }
 
+    // TODO: Dealer 타입이 아닌 Name을 받도록 수정
     public static void printDealerDrawMessage(final Dealer dealer) {
         final String dealerDrawMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println(dealerDrawMessage);
@@ -54,7 +55,7 @@ public class OutputView {
                 // TODO: 이름 합치는 책임을 어디로 할 것인가 (도메인 vs 뷰)
                 .map(card -> card.getNumber() + card.getShape())
                 .collect(Collectors.joining(", "));
-        System.out.println(player.getName() + ": " + cardInfo + " - 결과: " + player.getScore());
+        System.out.println(cardInfo + " - 결과: " + player.getScore());
     }
 
     public static void printResult(final CardGameResult cardGameResult) {
