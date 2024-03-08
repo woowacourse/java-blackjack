@@ -8,7 +8,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayName("참가자들 테스트")
 class PlayersTest {
@@ -53,15 +52,5 @@ class PlayersTest {
 
         assertThatCode(() -> new Players(List.of(player1, player2)))
                 .doesNotThrowAnyException();
-    }
-
-    @DisplayName("특정 카드합보다 초과하는 카드합을 가진 플레이어 수를 셀 수 있다")
-    @Test
-    void testCountPlayerWithLowerSummation() {
-        Player player1 = PlayerFixture.of("리비", 4, 5);
-        Player player2 = PlayerFixture.of("제리", 2, 9);
-        Players players = new Players(List.of(player1, player2));
-
-        assertThat(players.countPlayerWithSumExceed(10)).isEqualTo(1);
     }
 }

@@ -54,12 +54,6 @@ public class Players {
         }
     }
 
-    public int countPlayerWithSumExceed(int target) {
-        return (int) players.stream()
-                .filter(player -> !player.handSummationExceed(target))
-                .count();
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
