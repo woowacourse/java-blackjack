@@ -85,6 +85,7 @@ public class BlackJackController {
         while (dealerScore.hitAllowed(hitStrategy)) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
+            dealerScore = calculateScore(dealer);
         }
     }
 

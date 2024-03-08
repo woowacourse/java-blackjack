@@ -36,10 +36,10 @@ public class Judge {
     }
 
     public boolean isPlayerWin(Score dealerScore, Score playerScore) {
-        if (dealerScore.isAbove(BLACK_JACK)) {
+        if (playerScore.isAbove(BLACK_JACK)) {
             return false;
         }
-        if (playerScore.isAbove(BLACK_JACK)) {
+        if (dealerScore.isAbove(BLACK_JACK)) {
             return true;
         }
         return playerScore.isBiggerThan(dealerScore);
