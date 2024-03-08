@@ -30,12 +30,7 @@ public class SingleMatch {
     public boolean isPlayerWins() {
         int dealerScore = dealer.getMaxGameScore();
         int playerScore = player.getMaxGameScore();
-        if (playerScore > 21) {
-            return false;
-        }
-        if (dealerScore > 21) {
-            return true;
-        }
+
         return dealerScore < playerScore;
     }
 

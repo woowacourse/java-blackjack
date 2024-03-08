@@ -7,6 +7,7 @@ import java.util.List;
 public class GameParticipant {
 
     private static final int MAX_GAME_SCORE = 21;
+    private static final int MIN_GAME_SCORE = 0;
 
     private Cards cards;
 
@@ -25,7 +26,12 @@ public class GameParticipant {
     }
 
     public int getMaxGameScore() {
-        return cards.countMaxScore();
+        int maxScore = cards.countMaxScore();
+
+        if (maxScore > MAX_GAME_SCORE) {
+            return MIN_GAME_SCORE;
+        }
+        return maxScore;
     }
 
     public Cards getCards() {
