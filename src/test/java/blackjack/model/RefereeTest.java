@@ -3,7 +3,6 @@ package blackjack.model;
 import static blackjack.model.Result.DRAW;
 import static blackjack.model.Result.LOSE;
 import static blackjack.model.Result.WIN;
-import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.LinkedHashMap;
@@ -21,7 +20,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어의 합이 딜러보다 크면 플레이어가 승리한다.")
         void playerWinWhenBiggerThanDealer() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
             Dealer dealer = new Dealer(
@@ -34,7 +33,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어 결과가 딜러의 결과와 동일하지만 카드 수는 적은 경우 플레이어가 승리한다.")
         void playerWinWhenHasLittleCardsThanDealer() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
             Dealer dealer = new Dealer(new Cards(
@@ -53,7 +52,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerBlackJack() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
             Dealer dealer = new Dealer(new Cards(
@@ -67,7 +66,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어의 카드 수가 딜러의 카드 수보다 적은 경우 플레이어가 승리한다.")
         void playerWinWhenHasLittleCardsThanDealer() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.CLOVER, Score.NINE),
                             new Card(Shape.SPADE, Score.TWO)))));
@@ -87,7 +86,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어 결과가 21이하인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerNotBust() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR),
                             new Card(Shape.DIA, Score.SIX)))));
@@ -107,7 +106,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
         void bothBlackJack() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE)))));
             Dealer dealer = new Dealer(
@@ -120,7 +119,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어와 딜러의 결과, 카드 수가 모두 동일한 경우")
         void sameScoreAndCount() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.SPADE, Score.FIVE)))));
             Dealer dealer = new Dealer(
@@ -133,7 +132,7 @@ class RefereeTest {
         @Test
         @DisplayName("플레이어와 딜러 모두 21 초과인 경우")
         void bothBust() {
-            Players players = Players.from(
+            Players players = Players.of(
                     List.of("몰리"),
                     List.of(new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN),
                             new Card(Shape.SPADE, Score.NINE)))));
@@ -156,7 +155,7 @@ class RefereeTest {
                 new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))
         );
 
-        Players players = Players.from(List.of("몰리", "리브", "포비"), cards);
+        Players players = Players.of(List.of("몰리", "리브", "포비"), cards);
         Dealer dealer = new Dealer(
                 new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
 
@@ -178,7 +177,7 @@ class RefereeTest {
                 new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN)))
         );
 
-        Players players = Players.from(List.of("몰리", "리브", "포비"), cards);
+        Players players = Players.of(List.of("몰리", "리브", "포비"), cards);
         Dealer dealer = new Dealer(
                 new Cards(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
 

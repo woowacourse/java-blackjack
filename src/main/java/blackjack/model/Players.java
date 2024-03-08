@@ -19,7 +19,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names, final List<Cards> cards) {
+    public static Players of(final List<String> names, final List<Cards> cards) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             players.add(new Player(names.get(i), cards.get(i)));

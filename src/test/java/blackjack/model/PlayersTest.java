@@ -29,7 +29,7 @@ class PlayersTest {
                 new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
                 new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
-        assertThatCode(() -> Players.from(names, cards));
+        assertThatCode(() -> Players.of(names, cards));
     }
 
     @Test
@@ -41,7 +41,7 @@ class PlayersTest {
                 new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Players.from(names, cards))
+                .isThrownBy(() -> Players.of(names, cards))
                 .withMessage("중복되는 이름을 입력할 수 없습니다.");
     }
 
@@ -64,7 +64,7 @@ class PlayersTest {
         );
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Players.from(names, cards))
+                .isThrownBy(() -> Players.of(names, cards))
                 .withMessage("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
     }
 
@@ -83,7 +83,7 @@ class PlayersTest {
                 new Cards(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
                 new Cards(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
-        assertThat(Players.from(names, cards).getNames()).isEqualTo(names);
+        assertThat(Players.of(names, cards).getNames()).isEqualTo(names);
     }
 
     @Test
@@ -98,7 +98,7 @@ class PlayersTest {
         Map<String, List<Card>> expected = new LinkedHashMap<>();
         expected.put("리브", List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE)));
         expected.put("몰리", (List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))));
-        assertThat(Players.from(names, cards).collectCardsOfEachPlayer())
+        assertThat(Players.of(names, cards).collectCardsOfEachPlayer())
                 .containsExactlyEntriesOf(expected);
     }
 }

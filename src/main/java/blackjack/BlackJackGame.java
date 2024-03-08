@@ -21,7 +21,7 @@ public class BlackJackGame {
         final Deck deck = new Deck();
 
         final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
-        final Players players = Players.from(names, deck.distributeInitialCard(names.size()));
+        final Players players = Players.of(names, deck.distributeInitialCard(names.size()));
 
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer), players);
