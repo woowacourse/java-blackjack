@@ -1,11 +1,11 @@
 package controller;
 
 import domain.BlackJackGame;
-import domain.Dealer;
+import domain.gamer.Dealer;
 import domain.Decks;
 import domain.Gamers;
-import domain.Name;
-import domain.Player;
+import domain.gamer.Name;
+import domain.gamer.Player;
 import domain.PlayerResults;
 import domain.Players;
 import domain.strategy.ShuffledDecksGenerator;

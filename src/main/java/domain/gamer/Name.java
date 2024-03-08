@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 public class Name {
     private final String value;

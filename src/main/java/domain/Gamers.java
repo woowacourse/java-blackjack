@@ -1,5 +1,8 @@
 package domain;
 
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Player;
 import java.util.ArrayList;
 import java.util.List;
 

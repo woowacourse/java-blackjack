@@ -1,6 +1,4 @@
-package domain;
-
-import java.util.Arrays;
+package domain.card;
 
 public enum Symbol {
     HEART("하트"),

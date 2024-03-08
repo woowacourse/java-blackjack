@@ -1,6 +1,6 @@
 package domain.strategy;
 
-import domain.Card;
+import domain.card.Card;
 import domain.Deck;
 import domain.DecksGenerator;
 import java.util.Collections;

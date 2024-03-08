@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 public class Player extends Gamer {
 
@@ -7,7 +7,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    boolean isStay() {
+    public boolean isStay() {
         return hand.isOverBlackJack();
     }
 }
