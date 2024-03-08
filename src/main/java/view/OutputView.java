@@ -2,6 +2,8 @@ package view;
 
 import domain.card.Card;
 import domain.game.BlackjackGame;
+import domain.game.Result;
+import domain.game.WinLose;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
@@ -21,19 +23,19 @@ public class OutputView {
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
+        System.out.println(participantText(game.getDealer()));
         for (Player player : game.getPlayers()) {
             System.out.println(participantText(player));
         }
-        System.out.println(participantText(game.getDealer()));
         System.out.println();
     }
 
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
         System.out.println();
+        System.out.println(participantText(game.getDealer()) + scoreText(game.getDealer().score()));
         for (Player player : game.getPlayers()) {
             System.out.println(participantText(player) + scoreText(player.score()));
         }
-        System.out.println(participantText(game.getDealer()) + scoreText(game.getDealer().score()));
         System.out.println();
     }
 
@@ -66,5 +68,34 @@ public class OutputView {
 
     public void printDealerDrawMessage() {
         System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", DEALER_THRESHOLD_SCORE);
+    }
+
+    public void printResult(BlackjackGame game, Result result) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %s%s%s%n",
+            resultText(result.dealerWinCount(), "승 "),
+            resultText(result.dealerTieCount(), "무 "),
+            resultText(result.dealerLoseCount(), "패")
+        );
+        for (Player player : game.getPlayers()) {
+            System.out.println(player.getName() + ": " + winLoseText(result.playerWinLose(player)));
+        }
+    }
+
+    private String resultText(long resultCount, String resultSuffix) {
+        if (resultCount == 0) {
+            return "";
+        }
+        return resultCount + resultSuffix;
+    }
+
+    private String winLoseText(WinLose winLose) {
+        if (winLose == WinLose.WIN) {
+            return "승";
+        }
+        if (winLose == WinLose.LOSE) {
+            return "패";
+        }
+        return "무";
     }
 }

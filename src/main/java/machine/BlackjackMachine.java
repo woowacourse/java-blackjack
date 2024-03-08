@@ -1,6 +1,7 @@
 package machine;
 
 import domain.game.BlackjackGame;
+import domain.game.Result;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -24,6 +25,7 @@ public class BlackjackMachine {
         distributeStartingCards(game);
         playPlayerTurns(game);
         playDealerTurn(game);
+        printCardsAndScores(game);
         printResult(game);
     }
 
@@ -48,6 +50,7 @@ public class BlackjackMachine {
     }
 
     private void playPlayerTurn(BlackjackGame game, Player player) {
+        // TODO: depth 정리하기!
         while (player.isReceivable()) {
             String yesOrNo = inputView.readYesOrNo(player);
             if (yesOrNo.equals("y")) {
@@ -72,7 +75,12 @@ public class BlackjackMachine {
         }
     }
 
-    private void printResult(BlackjackGame game) {
+    private void printCardsAndScores(BlackjackGame game) {
         outputView.printAllParticipantsCardsWithScore(game);
+    }
+
+    private void printResult(BlackjackGame game) {
+        Result result = Result.of(game.getPlayers(), game.getDealer());
+        outputView.printResult(game, result);
     }
 }

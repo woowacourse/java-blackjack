@@ -45,6 +45,24 @@ public class Result {
         return WinLose.TIE;
     }
 
+    public long dealerWinCount() {
+        return resultMap.values().stream()
+            .filter(value -> value == WinLose.LOSE)
+            .count();
+    }
+
+    public long dealerLoseCount() {
+        return resultMap.values().stream()
+            .filter(value -> value == WinLose.WIN)
+            .count();
+    }
+
+    public long dealerTieCount() {
+        return resultMap.values().stream()
+            .filter(value -> value == WinLose.TIE)
+            .count();
+    }
+
     public WinLose playerWinLose(Player player) {
         return resultMap.get(player);
     }

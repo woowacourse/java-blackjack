@@ -7,7 +7,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +70,7 @@ class ResultTest {
 
         Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
-    
+
     @Test
     @DisplayName("플레이어 승리: 딜러 버스트(경계값 22점), 플레이어 생존")
     void playerWin_DealerIsBustedAndPlayerIsNotBusted() {
