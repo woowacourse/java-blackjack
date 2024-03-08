@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class DecksTest {
 
-    @DisplayName("6벌의 덱을 생성한다.")
+    @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
     void createDecksTest() {
         // given
