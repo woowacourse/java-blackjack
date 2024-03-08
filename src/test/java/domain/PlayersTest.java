@@ -1,8 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Shape;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.assertj.core.api.Assertions;
@@ -15,14 +13,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static domain.card.Rank.JACK;
+import static domain.card.Rank.TEN;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
+
 class PlayersTest {
 
     final Hands bustHands = new Hands(
-            List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE),
-                    new Card(Rank.TEN, Shape.HEART)));
+            List.of(new Card(JACK, HEART), new Card(TEN, SPADE),
+                    new Card(TEN, HEART)));
 
     final Hands noBustHands = new Hands(
-            List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.TEN, Shape.SPADE)));
+            List.of(new Card(JACK, HEART), new Card(TEN, SPADE)));
 
 
     @Test
