@@ -5,7 +5,7 @@ import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantsDto { // TODO: parit dto
+public class ParticipantsDto {
 
     private final List<ParticipantDto> players;
 
@@ -32,7 +32,7 @@ public class ParticipantsDto { // TODO: parit dto
 
     public List<String> getNames() {
         return players.stream()
-                .map(ParticipantDto::getName)
+                .map(ParticipantDto::name)
                 .toList();
     }
 

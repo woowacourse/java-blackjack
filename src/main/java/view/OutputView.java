@@ -23,14 +23,14 @@ public class OutputView {
         System.out.println("딜러: " + dealerCard);
 
         for (ParticipantDto participantDto : participantsDto.getPlayers()) {
-            System.out.printf(FORM, participantDto.getName(), format(participantDto.getCards()));
+            System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
             System.out.println();
         }
         System.out.println();
     }
 
     public void printHands(final ParticipantDto participantDto) {
-        System.out.printf(FORM, participantDto.getName(), format(participantDto.getCards()));
+        System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
         System.out.println();
     }
 
@@ -41,8 +41,8 @@ public class OutputView {
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
         for (ParticipantDto participantDto : participantsDto.getPlayers()) {
-            System.out.printf(TOTAL_SUM_FORM, participantDto.getName(), format(participantDto.getCards()),
-                    participantDto.getTotalSum());
+            System.out.printf(TOTAL_SUM_FORM, participantDto.name(), format(participantDto.cards()),
+                    participantDto.totalSum());
             System.out.println();
         }
     }
