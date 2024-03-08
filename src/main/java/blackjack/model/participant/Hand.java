@@ -1,7 +1,8 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-import static blackjack.model.Score.ACE;
+import static blackjack.model.deck.Score.ACE;
 
+import blackjack.model.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
 

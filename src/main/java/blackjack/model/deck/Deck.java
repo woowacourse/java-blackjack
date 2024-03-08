@@ -1,5 +1,6 @@
-package blackjack.model;
+package blackjack.model.deck;
 
+import blackjack.model.participant.Hand;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;

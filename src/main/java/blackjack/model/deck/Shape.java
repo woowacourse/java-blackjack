@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.deck;
 
 public enum Shape {
     SPADE,

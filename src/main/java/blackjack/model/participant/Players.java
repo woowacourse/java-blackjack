@@ -1,6 +1,7 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
+import blackjack.model.deck.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -1,7 +1,9 @@
-package blackjack.model;
+package blackjack.model.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.deck.Card;
+import blackjack.model.deck.Deck;
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,13 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-import static blackjack.model.Score.FIVE;
-import static blackjack.model.Score.FOUR;
-import static blackjack.model.Shape.CLOVER;
+import static blackjack.model.deck.Score.FIVE;
+import static blackjack.model.deck.Score.FOUR;
+import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.deck.Card;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

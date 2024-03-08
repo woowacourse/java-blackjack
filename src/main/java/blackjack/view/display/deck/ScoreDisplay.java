@@ -1,6 +1,6 @@
-package blackjack.view.display;
+package blackjack.view.display.deck;
 
-import blackjack.model.Score;
+import blackjack.model.deck.Score;
 import java.util.Arrays;
 
 public enum ScoreDisplay {

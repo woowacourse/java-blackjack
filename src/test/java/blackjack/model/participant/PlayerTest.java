@@ -1,14 +1,17 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-import static blackjack.model.Score.ACE;
-import static blackjack.model.Score.TEN;
-import static blackjack.model.Score.THREE;
-import static blackjack.model.Score.TWO;
-import static blackjack.model.Shape.CLOVER;
-import static blackjack.model.Shape.DIA;
+import static blackjack.model.deck.Score.ACE;
+import static blackjack.model.deck.Score.TEN;
+import static blackjack.model.deck.Score.THREE;
+import static blackjack.model.deck.Score.TWO;
+import static blackjack.model.deck.Shape.CLOVER;
+import static blackjack.model.deck.Shape.DIA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import blackjack.model.deck.Card;
+import blackjack.model.participant.Hand;
+import blackjack.model.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

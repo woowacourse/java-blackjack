@@ -1,10 +1,19 @@
-package blackjack.model;
+package blackjack.model.result;
 
-import static blackjack.model.Result.DRAW;
-import static blackjack.model.Result.LOSE;
-import static blackjack.model.Result.WIN;
+import static blackjack.model.result.ResultCommand.DRAW;
+import static blackjack.model.result.ResultCommand.LOSE;
+import static blackjack.model.result.ResultCommand.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.deck.Card;
+import blackjack.model.deck.Score;
+import blackjack.model.deck.Shape;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Hand;
+import blackjack.model.participant.Players;
+import blackjack.model.result.Referee;
+import blackjack.model.result.ResultCommand;
+import blackjack.model.result.Rule;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +169,7 @@ class RefereeTest {
                 new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
 
         Referee referee = new Referee(new Rule(dealer), players);
-        Map<String, Result> expected = new LinkedHashMap<>();
+        Map<String, ResultCommand> expected = new LinkedHashMap<>();
         expected.put("몰리", LOSE);
         expected.put("리브", WIN);
         expected.put("포비", DRAW);

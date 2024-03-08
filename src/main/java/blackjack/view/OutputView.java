@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.Card;
-import blackjack.model.Result;
-import blackjack.view.display.ResultDisplay;
-import blackjack.view.display.ScoreDisplay;
-import blackjack.view.display.ShapeDisplay;
+import blackjack.model.deck.Card;
+import blackjack.model.result.ResultCommand;
+import blackjack.view.display.result.ResultCommandDisplay;
+import blackjack.view.display.deck.ScoreDisplay;
+import blackjack.view.display.deck.ShapeDisplay;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,23 +44,23 @@ public class OutputView {
         nameCardsScores.forEach(OutputView::printFinalCardsAndScore);
     }
 
-    public static void printDealerFinalResult(final Map<Result, Integer> dealerResults) {
+    public static void printDealerFinalResult(final Map<ResultCommand, Integer> dealerResults) {
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + formatFinalResult(dealerResults));
     }
 
-    private static String formatFinalResult(final Map<Result, Integer> dealerResults) {
+    private static String formatFinalResult(final Map<ResultCommand, Integer> dealerResults) {
         return dealerResults.entrySet().stream()
-                .map(resultIntegerEntry -> resultIntegerEntry.getValue() + ResultDisplay.getValue(
+                .map(resultIntegerEntry -> resultIntegerEntry.getValue() + ResultCommandDisplay.getValue(
                         resultIntegerEntry.getKey()))
                 .collect(Collectors.joining(" "));
     }
 
-    public static void printFinalResult(final Map<String, Result> playerResults) {
+    public static void printFinalResult(final Map<String, ResultCommand> playerResults) {
         playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name, result)));
     }
 
-    private static String formatFinalResult(final String name, final Result result) {
-        return name + ": " + ResultDisplay.getValue(result);
+    private static String formatFinalResult(final String name, final ResultCommand result) {
+        return name + ": " + ResultCommandDisplay.getValue(result);
     }
 }

@@ -1,4 +1,7 @@
-package blackjack.model;
+package blackjack.model.result;
+
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Player;
 
 public class Rule {
     private final Dealer dealer;
@@ -7,35 +10,35 @@ public class Rule {
         this.dealer = dealer;
     }
 
-    public Result calculateResult(final Player player) {
+    public ResultCommand calculateResult(final Player player) {
         if (dealer.isBust()) {
             return judgePlayerResultWhenDealerBust(player);
         }
         return judgePlayerResultWhenDealerNotBust(player);
     }
 
-    private Result judgePlayerResultWhenDealerBust(final Player player) {
+    private ResultCommand judgePlayerResultWhenDealerBust(final Player player) {
         if (!player.isBust()) {
-            return Result.WIN;
+            return ResultCommand.WIN;
         }
-        return Result.DRAW;
+        return ResultCommand.DRAW;
     }
 
-    private Result judgePlayerResultWhenDealerNotBust(final Player player) {
+    private ResultCommand judgePlayerResultWhenDealerNotBust(final Player player) {
         int playerCardCount = player.announceCardCount();
         int dealerCardCount = dealer.announceCardCount();
         if (player.isBust()) {
-            return Result.LOSE;
+            return ResultCommand.LOSE;
         }
         if (player.notifyScore() > dealer.notifyScore()) {
-            return Result.WIN;
+            return ResultCommand.WIN;
         }
         if (playerCardCount < dealerCardCount) {
-            return Result.WIN;
+            return ResultCommand.WIN;
         }
         if (playerCardCount == dealerCardCount) {
-            return Result.DRAW;
+            return ResultCommand.DRAW;
         }
-        return Result.LOSE;
+        return ResultCommand.LOSE;
     }
 }

@@ -1,14 +1,17 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-import static blackjack.model.Score.ACE;
-import static blackjack.model.Score.EIGHT;
-import static blackjack.model.Score.FIVE;
-import static blackjack.model.Score.FOUR;
-import static blackjack.model.Shape.CLOVER;
+import static blackjack.model.deck.Score.ACE;
+import static blackjack.model.deck.Score.EIGHT;
+import static blackjack.model.deck.Score.FIVE;
+import static blackjack.model.deck.Score.FOUR;
+import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import blackjack.model.deck.Card;
+import blackjack.model.participant.Hand;
+import blackjack.model.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package blackjack.view.display;
+package blackjack.view.display.deck;
 
-import blackjack.model.Shape;
+import blackjack.model.deck.Shape;
 import java.util.Arrays;
 
 public enum ShapeDisplay {

@@ -1,13 +1,13 @@
 package blackjack;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.Dealer;
-import blackjack.model.Deck;
-import blackjack.model.Player;
-import blackjack.model.Players;
-import blackjack.model.Referee;
-import blackjack.model.Result;
-import blackjack.model.Rule;
+import blackjack.model.participant.Dealer;
+import blackjack.model.deck.Deck;
+import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
+import blackjack.model.result.Referee;
+import blackjack.model.result.ResultCommand;
+import blackjack.model.result.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -80,9 +80,9 @@ public class BlackJackGame {
         OutputView.printFinalCardsAndScore(dealerNameCardsScore);
         OutputView.printFinalCardsAndScore(playerNameCardsScore);
 
-        Map<Result, Integer> dealerResults = referee.judgeDealerResult();
+        Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
         OutputView.printDealerFinalResult(dealerResults);
-        Map<String, Result> playerResults = referee.judgePlayerResult();
+        Map<String, ResultCommand> playerResults = referee.judgePlayerResult();
         OutputView.printFinalResult(playerResults);
     }
 }
