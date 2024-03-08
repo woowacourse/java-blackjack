@@ -22,6 +22,14 @@ public class BlackJack {
         }
     }
 
+    public BlackJackResult saveParticipantResult() {
+        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
+        for (Participant participant : participants.getValue()) {
+            result.put(participant, isWinner(participant));
+        }
+        return new BlackJackResult(result);
+    }
+
     public WinStatus isWinner(Participant participant) {
         if (!participant.canHit()) {
             return WinStatus.from(false);
@@ -46,13 +54,5 @@ public class BlackJack {
         int dealerCardCount = dealer.getCardCount();
 
         return WinStatus.from(participantCardCount < dealerCardCount);
-    }
-
-    public BlackJackResult saveParticipantResult() {
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        for (Participant participant : participants.getValue()) {
-            result.put(participant, isWinner(participant));
-        }
-        return new BlackJackResult(result);
     }
 }

@@ -12,15 +12,15 @@ public class BlackJackResult {
         this.resultByParticipant = resultByParticipant;
     }
 
-    public Set<Map.Entry<Participant, WinStatus>> getEntry() {
-        return resultByParticipant.entrySet();
-    }
-
     public int getDealerWinCount() {
         long dealerWinCount = resultByParticipant.values().stream()
                 .filter(isWin -> WinStatus.LOSE == isWin)
                 .count();
         return (int) dealerWinCount;
+    }
+
+    public Set<Map.Entry<Participant, WinStatus>> getEntry() {
+        return resultByParticipant.entrySet();
     }
 
     public int getTotalCount() {
