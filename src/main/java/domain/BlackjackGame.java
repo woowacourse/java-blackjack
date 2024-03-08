@@ -49,7 +49,7 @@ public class BlackjackGame {
         return gameResult;
     }
 
-    private static ResultStatus getResultStatus(int dealerScore, int playerScore) {
+    private ResultStatus getResultStatus(int dealerScore, int playerScore) {
         if (playerScore > 21) {
             return ResultStatus.LOSE;
         } else if (dealerScore > 21) {
