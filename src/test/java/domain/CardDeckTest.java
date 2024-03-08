@@ -1,27 +1,18 @@
 package domain;
 
-import static fixture.CardFixture.전체_카드;
+import static fixture.CardFixture.카드들;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
     @Test
-    void 카드_덱의_총_카드_수는_52장이다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
+    void 맨_위에서부터_카드를_한_장씩_드로우한다() {
+        Card targetFirst = new Card(Denomination.KING, Emblem.HEART);
+        Card targetSecond = new Card(Denomination.ACE, Emblem.CLOVER);
+        CardDeck cardDeck = new CardDeck(카드들(targetSecond, targetFirst));
 
-        assertThat(cardDeck).extracting("cardDeck", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(52);
-    }
-
-    // todo 셔플 전략 추가 후 원하는 카드를 draw하도록 변경
-    @Test
-    void 카드를_한_장_드로우한다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-
-        Card card = cardDeck.draw();
-
-        assertThat(card).isEqualTo(new Card(Denomination.KING, Emblem.DIAMOND));
+        assertThat(cardDeck.draw()).isEqualTo(targetFirst);
+        assertThat(cardDeck.draw()).isEqualTo(targetSecond);
     }
 }
