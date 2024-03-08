@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String DELIMITER = ",";
+    private static final String NOT_ALLOWED_DELIMITER_POSITION = String.format("참가자 이름 입력은 %s로 시작하거나, 끝날 수 없습니다.",
+            DELIMITER);
 
     private InputView() {
     }
@@ -14,8 +17,22 @@ public class InputView {
     public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
-        String[] playerNames = input.split(",");
+        validateStartsWithDelimiter(input);
+        validateEndsWithDelimiter(input);
+        String[] playerNames = input.split(DELIMITER);
         return Arrays.stream(playerNames).map(String::trim).toList();
+    }
+
+    private static void validateStartsWithDelimiter(final String input) {
+        if (input.startsWith(DELIMITER)) {
+            throw new IllegalArgumentException(NOT_ALLOWED_DELIMITER_POSITION);
+        }
+    }
+
+    private static void validateEndsWithDelimiter(final String input) {
+        if (input.endsWith(DELIMITER)) {
+            throw new IllegalArgumentException(NOT_ALLOWED_DELIMITER_POSITION);
+        }
     }
 
     public static String readSelectionOf(final Player player) {
