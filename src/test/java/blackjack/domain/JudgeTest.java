@@ -24,7 +24,7 @@ class JudgeTest {
     private Dealer dealer;
     private List<String> playerNames = List.of("choco");
     private Players players;
-    private Player player1;
+    private Player choco;
     private int bustDrawCount = 10;
 
     @DisplayName("딜러가 버스트된 경우")
@@ -43,13 +43,13 @@ class JudgeTest {
         void drawWhenBustTogether() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayer1(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -66,12 +66,12 @@ class JudgeTest {
             //given
             deckDrawLoop(3);
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -87,12 +87,12 @@ class JudgeTest {
         void loseWhenPlayerNormal() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -119,14 +119,14 @@ class JudgeTest {
         void winWhenPlayerBust() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayer1(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -144,13 +144,13 @@ class JudgeTest {
             deckDrawLoop(11);
 
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -166,13 +166,13 @@ class JudgeTest {
         void winWhenPlayerNormal() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -198,14 +198,14 @@ class JudgeTest {
         void winWhenPlayerBust() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
             bustPlayer1(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -223,13 +223,13 @@ class JudgeTest {
             deckDrawLoop(10);
 
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -245,13 +245,13 @@ class JudgeTest {
         void winWhenPlayerNormalWithSmallerScore() {
             //given
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -268,13 +268,13 @@ class JudgeTest {
             //given
             deckDrawLoop(5);
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -291,13 +291,13 @@ class JudgeTest {
             //given
             deckDrawLoop(3);
             players = Players.of(playerNames, dealer);
-            player1 = players.getPlayers().get(0);
+            choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
             ResultStatus resultStatus = new ResultStatus(0, 0, 0);
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, player1, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
             assertThat(dealerResult.getWins())
@@ -311,7 +311,7 @@ class JudgeTest {
 
     private void bustPlayer1(final Dealer dealer) {
         IntStream.range(0, bustDrawCount)
-                .forEach(i -> player1.draw(dealer));
+                .forEach(i -> choco.draw(dealer));
     }
 
     private void bustDealer() {
