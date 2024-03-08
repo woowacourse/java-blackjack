@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class Participant {
 
     protected static final int BLACKJACK_SCORE = 21;
-    protected static final int START_CARDS_SIZE = 2;
+    private static final int START_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
