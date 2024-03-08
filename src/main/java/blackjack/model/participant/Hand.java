@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int BUST_THRESHOLD = 21;
+    private static final int MIN_INITIAL_CARD_SIZE = 2;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ADDITIONAL_ACE_SCORE = 10;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int SOFT_ACE_COUNT = 1;
+    private static final int SOFT_MAX_SCORE_WITHOUT_ACE = 10;
 
     private final List<Card> cards;
 
@@ -18,7 +22,7 @@ public class Hand {
     }
 
     private void validateSize(final List<Card> cards) {
-        if (cards.size() < 2) {
+        if (cards.size() < MIN_INITIAL_CARD_SIZE) {
             throw new IllegalArgumentException("카드는 두 장 이상이어야 합니다.");
         }
     }
@@ -53,11 +57,11 @@ public class Hand {
     }
 
     private boolean isSoft(final int aceCount, final int baseScore) {
-        return aceCount == 1 && baseScore <= 10;
+        return aceCount == SOFT_ACE_COUNT && baseScore <= SOFT_MAX_SCORE_WITHOUT_ACE;
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_THRESHOLD;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public int countSize() {
@@ -65,7 +69,7 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateScore() == 21;
+        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {
