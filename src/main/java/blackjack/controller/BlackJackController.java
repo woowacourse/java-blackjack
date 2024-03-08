@@ -81,10 +81,8 @@ public class BlackJackController {
     }
 
     private DrawDecision readHitDecision(Player player) {
-        String name = player.getName();
         InputMapper inputMapper = new InputMapper();
-        DrawDecision hitDecision = inputMapper.mapToDrawDecision(inputView.readDrawPlan(name));
-        return hitDecision;
+        return inputMapper.mapToDrawDecision(inputView.readDrawPlan(player.getName()));
     }
 
     private void completeDealerHand(Player dealer, CardDeck cardDeck) {
