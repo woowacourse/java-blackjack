@@ -23,6 +23,7 @@ public class InputView {
         String command = bufferedReader.readLine();
         validateNotBlank(command);
         command = removeBlank(command);
+        validateCommand(command);
 
         return command;
     }
@@ -36,5 +37,11 @@ public class InputView {
     private String removeBlank(String input) {
         input = input.replace(" ", "");
         return input;
+    }
+
+    private void validateCommand(String input) {
+        if (!"y".equals(input) && !"n".equals(input)) {
+            throw new IllegalArgumentException("입력은 y 또는 n 이어야 합니다.");
+        }
     }
 }
