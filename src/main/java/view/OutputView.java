@@ -75,13 +75,11 @@ public class OutputView {
 
     public static void printFinalScore(Dealer dealer, Players players, GameResult gameResult) {
         String dealerCards = createCardsMessage(dealer.getCards());
-        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards,
-            gameResult.findDealerScore());
+        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards, gameResult.findDealerScore());
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
             String playerCards = createCardsMessage(player.getCards());
-            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards,
-                gameResult.findPlayerScore(playerName));
+            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards, gameResult.findPlayerScore(playerName));
         }
     }
 

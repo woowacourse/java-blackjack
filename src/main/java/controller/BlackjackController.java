@@ -49,13 +49,14 @@ public class BlackjackController {
     }
 
     private void continueHit(BlackjackGame blackjackGame, Player player) {
-        while (player.isPossibleAddCard()) {
-            HitAnswer hitAnswer = InputView.prepareHitAnswer(player);
-            if (hitAnswer.isStay()) {
-                break;
-            }
+        HitAnswer hitAnswer = new HitAnswer(true);
+        if (player.isPossibleAddCard()) {
+            hitAnswer = InputView.prepareHitAnswer(player);
+        }
+        while (player.isPossibleAddCard() && hitAnswer.isHit()) {
             player = hit(blackjackGame, player);
             OutputView.printPlayerCard(player);
+            hitAnswer = InputView.prepareHitAnswer(player);
         }
     }
 
