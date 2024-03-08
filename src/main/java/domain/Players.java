@@ -8,19 +8,33 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final int UNIQUE_COUNT = 1;
+    private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_PLAYER_COUNT = 6;
 
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
+        validatePlayerCount(playerNames);
         validateDuplicatedName(playerNames);
         this.players = generatePlayers(playerNames);
+    }
+
+    private void validatePlayerCount(List<String> playerNames) {
+        int playerCount = playerNames.size();
+        if (playerCount < MIN_PLAYER_COUNT || MAX_PLAYER_COUNT < playerCount) {
+            throw new IllegalArgumentException(
+                    String.format("플레이어의 수는 %d ~ %d명이어야 합니다.", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT)
+            );
+        }
     }
 
     private void validateDuplicatedName(List<String> playerNames) {
         Map<String, Long> nameCounts = getNameCounts(playerNames);
         Optional<String> duplicatedName = findDuplicatedName(nameCounts);
         if (duplicatedName.isPresent()) {
-            throw new IllegalArgumentException(duplicatedName.get());
+            throw new IllegalArgumentException(
+                    String.format("rejected value: %s - 중복된 이름이 존재합니다.", duplicatedName.get())
+            );
         }
     }
 
