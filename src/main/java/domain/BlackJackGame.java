@@ -49,7 +49,6 @@ public class BlackJackGame {
     private void shareInitCards(Gamer gamer, CardPack cardPack) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             gamer.hit(cardPack.pickOneCard());
-            gamer.hit(cardPack.pickOneCard());
         }
     }
 
@@ -67,13 +66,10 @@ public class BlackJackGame {
 
     private void progressPlayerGame(Gamer player, CardPack cardPack) {
         while (player.isNotBust()) {
-            giveHitChance(player, cardPack);
-        }
-    }
-
-    private void giveHitChance(Gamer player, CardPack cardPack) {
-        HitOption hitOption = new HitOption(inputView.readHitOrNot(player));
-        if (hitOption.doHit()) {
+            HitOption hitOption = new HitOption(inputView.readHitOrNot(player));
+            if (!hitOption.doHit()) {
+                break;
+            }
             player.hit(cardPack.pickOneCard());
             resultView.printPlayerCards(player);
         }
