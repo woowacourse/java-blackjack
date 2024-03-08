@@ -13,6 +13,12 @@ public class CardGame {
         player.addCards(cardDeck.draw());
     }
 
+    public void initializeHand(final Dealer dealer, final List<Player> players) {
+        giveCard(dealer);
+        giveCard(dealer);
+        giveTwoCardsEachPlayer(players);
+    }
+
     // TODO: 이름 수정
     public void giveTwoCardsEachPlayer(final List<Player> players) {
         for (Player player : players) {

@@ -8,6 +8,8 @@ import blackjack.domain.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.WinningStatus.*;
+
 public class OutputView {
     public static void printInitialHandOfEachPlayer(final Dealer dealer, final List<Player> players) {
         printInitialDistributionMessage(dealer, players);
@@ -60,11 +62,12 @@ public class OutputView {
 
     public static void printResult(final CardGameResult cardGameResult) {
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + cardGameResult.getDealerWinCount() + "승 " + cardGameResult.getDealerLoseCount() + "패");
+        // TODO: 무승부 처리 추가
+        System.out.println("딜러: " + cardGameResult.getDealerWinCount() + WIN.getValue() + " " + cardGameResult.getDealerLoseCount() + LOSE.getValue());
         cardGameResult.getTotalResult()
                 .entrySet()
                 .stream()
-                .map(result -> result.getKey().getName() + ": " + result.getValue().name())
+                .map(result -> result.getKey().getName() + ": " + result.getValue().getValue())
                 .forEach(System.out::println);
     }
 }
