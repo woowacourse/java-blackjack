@@ -19,9 +19,7 @@ public class OutputView {
     public void printInitialHand(List<PlayerDto> playerDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         for (PlayerDto playerDto : playerDtos) {
-            //TODO: 딜러 한장만 보여주기
-            stringBuilder.append(buildPlayerCards(playerDto));
-            stringBuilder.append("\n");
+            stringBuilder.append(buildInitialHand(playerDto));
         }
 
         System.out.println(stringBuilder);
@@ -36,6 +34,7 @@ public class OutputView {
     }
 
     public void printFinalHandAndScore(List<PlayerDto> playerDtos) {
+        System.out.println();
         for (PlayerDto playerDto : playerDtos) {
             System.out.println(buildPlayerCardsWithResult(playerDto));
         }
@@ -51,7 +50,7 @@ public class OutputView {
     }
 
     public void printWinLoss(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         printDealerWinLoss(dealerResultDto);
         printPlayerWinLoss(playersResultDto);
     }
@@ -73,5 +72,13 @@ public class OutputView {
             stringBuilder.append(playerResult.getKey() + ": " + playerResult.getValue() + "\n");
         }
         System.out.println(stringBuilder);
+    }
+
+    private String buildInitialHand(PlayerDto playerDto) {
+        if (playerDto.name().equals("딜러")) {
+            return playerDto.name() + ": " + playerDto.hands().get(0) + "\n";
+        }
+
+        return buildPlayerCards(playerDto) + "\n";
     }
 }
