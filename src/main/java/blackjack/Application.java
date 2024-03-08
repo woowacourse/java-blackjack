@@ -35,7 +35,7 @@ public class Application {
         Deck deck = new Deck(new DeckShuffleFactory());
         Dealer dealer = Dealer.create();
         Players players = Players.from(InputView.readPlayerNames());
-        return  new GameBoard(deck, dealer, players);
+        return new GameBoard(deck, dealer, players);
     }
 
     private static void drawInitialCard(GameBoard gameBoard) {
