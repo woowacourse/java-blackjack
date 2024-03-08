@@ -10,6 +10,7 @@ public class Player {
     protected final Name name;
     protected final Cards cards;
 
+
     public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
@@ -27,8 +28,12 @@ public class Player {
         cards.add(card);
     }
 
-    public String getName() {
+    public String getNameAsString() {
         return name.asString();
+    }
+
+    public Name getName() {
+        return name;
     }
 
     public List<Card> getCards() {
