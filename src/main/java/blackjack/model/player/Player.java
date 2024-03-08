@@ -28,10 +28,6 @@ public class Player {
         return cards.calculateCardsTotal();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
-    }
-
     public boolean isBlackJack() {
         return cards.isBlackJack();
     }
