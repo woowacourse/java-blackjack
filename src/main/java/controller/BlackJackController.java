@@ -40,8 +40,8 @@ public class BlackJackController {
             return;
         }
 
-        while (dealer.handsSum() <= 16) {  //TODO 테스트 코드 고민
-            dealer.deal();
+        int turn = dealer.turn();
+        for (int i = 0; i < turn; i++) {
             outputView.printDealerCard();
         }
 

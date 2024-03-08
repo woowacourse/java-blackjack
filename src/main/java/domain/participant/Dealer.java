@@ -8,6 +8,7 @@ public class Dealer extends Participant {
 
     private static final String NAME = "딜러";
     private static final int INIT_HANDS_SIZE = 2;
+    private static final int MIN_HANDS_SUM = 16;
 
     private final CardDeck cardDeck;
 
@@ -34,7 +35,12 @@ public class Dealer extends Participant {
         }
     }
 
-    public void deal() {
-        super.add(cardDeck.pop());
+    public int turn() {
+        int result = 0;
+        while (handsSum() <= MIN_HANDS_SUM) {
+            super.add(cardDeck.pop());
+            result++;
+        }
+        return result;
     }
 }

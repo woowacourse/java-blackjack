@@ -11,8 +11,8 @@ public class Hands {
 
     private final List<Card> cards;
 
-    public Hands(final List<Card> cards) { //TODO validation
-        this.cards = cards;
+    public Hands(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Hands createEmptyPacket() {
