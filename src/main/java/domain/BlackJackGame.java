@@ -89,7 +89,7 @@ public class BlackJackGame {
 
     private void makeFinalResult(Gamers gamers) {
         Judge judge = new Judge();
-        judge.decideResult(gamers, judge);
+        judge.decideResult(gamers);
         resultView.printFinalResults(gamers.callDealer(), judge);
     }
 }

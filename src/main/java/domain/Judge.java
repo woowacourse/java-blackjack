@@ -18,11 +18,11 @@ public class Judge {
         this.dealerResult = new LinkedHashMap<>();
     }
 
-    public void decideResult(Gamers gamers, Judge judge) {
+    public void decideResult(Gamers gamers) {
         for (Player player : gamers.callPlayers()) {
-            judge.decidePlayerResult(player, gamers.callDealer());
+            decidePlayerResult(player, gamers.callDealer());
         }
-        judge.decideDealerResult();
+        decideDealerResult();
     }
 
     private void decidePlayerResult(Player player, Dealer dealer) {
