@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
-
     Decks decks;
 
     @BeforeEach
@@ -30,8 +29,8 @@ public class BlackJackGameTest {
         Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(card1, card2, card3, card4, card5, card6,
-                card7, card8);
+        List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
+        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(cards);
         decks = Decks.createByStrategy(settedDecksGenerator);
     }
 
