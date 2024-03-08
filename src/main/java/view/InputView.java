@@ -10,6 +10,9 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String NOT_ALLOWED_DELIMITER_POSITION = String.format("참가자 이름 입력은 %s로 시작하거나, 끝날 수 없습니다.",
             DELIMITER);
+    private static final String YES = "y";
+    private static final String NO = "n";
+    private static final String INVALID_SELECTION = String.format("%s 또는 %s만 입력할 수 있습니다.", YES, NO);
 
     private InputView() {
     }
@@ -35,10 +38,18 @@ public class InputView {
         }
     }
 
-    public static String readSelectionOf(final Player player) {
+    public static boolean readSelectionOf(final Player player) {
         String message = String.format(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
                 player.getName().getValue());
         System.out.println(message);
-        return scanner.nextLine().trim();
+        String input = scanner.nextLine().trim();
+        validateInvalidSelection(input);
+        return input.equalsIgnoreCase(YES);
+    }
+
+    private static void validateInvalidSelection(final String input) {
+        if (!input.equalsIgnoreCase(YES) && !input.equalsIgnoreCase(NO)) {
+            throw new IllegalArgumentException(INVALID_SELECTION);
+        }
     }
 }
