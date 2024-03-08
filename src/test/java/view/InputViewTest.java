@@ -11,10 +11,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class InputViewTest {
     @Nested
+    @DisplayName("사용자에게 이름을 입력 받는 테스트")
     class ReadNames {
         @DisplayName("interface Reader로부터 받은 String을 List<String>으로 반환한다.")
         @Test
-        void stringToListTest() {
+        void stringToList() {
             Assertions.assertThat(InputView.readNames(() -> "a,b,c"))
                     .isEqualTo(List.of("a", "b", "c"));
         }
@@ -23,7 +24,7 @@ class InputViewTest {
         @ParameterizedTest
         @NullAndEmptySource
         @ValueSource(strings = {" ", "\t", "\n"})
-        void emptyInputTest(String input) {
+        void emptyInputException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readNames(() -> input))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
@@ -32,7 +33,7 @@ class InputViewTest {
         @DisplayName("쉼표로 구분된 이름이 null 혹은 빈 문자열이면 예외를 발생한다.")
         @ParameterizedTest
         @ValueSource(strings = {"a,b,"})
-        void emptyNameTest(String input) {
+        void emptyNameException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readNames(() -> input))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
@@ -40,7 +41,7 @@ class InputViewTest {
 
         @Test
         @DisplayName("중복된 이름이 있으면 예외를 발생한다.")
-        void duplicateNameTest() {
+        void duplicateNameException() {
             Assertions.assertThatThrownBy(() -> InputView.readNames(() -> "a,a,a"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이름은 중복될 수 없습니다.");
@@ -48,19 +49,20 @@ class InputViewTest {
 
         @DisplayName("공백을 제거한 이름을 반환한다.")
         @Test
-        void nameWithSpacesTest() {
+        void nameWithSpaces() {
             Assertions.assertThat(InputView.readNames(() -> "a , b , c"))
                     .isEqualTo(List.of("a", "b", "c"));
         }
     }
 
     @Nested
+    @DisplayName("사용자에게 대답(y 또는 n) 입력 받는 테스트")
     class ReadAnswer {
         @DisplayName("null 혹은 빈 문자열을 받으면 예외를 발생한다.")
         @ParameterizedTest
         @NullAndEmptySource
         @ValueSource(strings = {" ", "\t", "\n"})
-        void emptyInputTest(String input) {
+        void emptyInputException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readAnswer(() -> input, "test"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
@@ -73,7 +75,5 @@ class InputViewTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("y또는 n만 입력 받을 수 있습니다.");
         }
-
-
     }
 }
