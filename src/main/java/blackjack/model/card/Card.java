@@ -39,6 +39,10 @@ public class Card {
         return Objects.hash(cardProperties, score);
     }
 
+    public CardProperties getCardProperties() {
+        return cardProperties;
+    }
+
     public int getScore() {
         return score;
     }
