@@ -1,6 +1,11 @@
 package view;
 
-import domain.*;
+import domain.balckjack.BlackJackResult;
+import domain.balckjack.WinStatus;
+import domain.card.Card;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Participants;
 
 import java.util.ArrayList;
 import java.util.List;

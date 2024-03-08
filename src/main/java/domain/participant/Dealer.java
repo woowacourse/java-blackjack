@@ -1,4 +1,7 @@
-package domain;
+package domain.participant;
+
+import domain.balckjack.Deck;
+import domain.card.Card;
 
 public class Dealer extends Participant {
 

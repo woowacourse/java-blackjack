@@ -1,4 +1,7 @@
-package domain;
+package domain.card;
+
+import domain.card.Card;
+import domain.card.Rank;
 
 import java.util.ArrayList;
 import java.util.Collections;

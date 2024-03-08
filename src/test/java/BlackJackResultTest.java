@@ -1,7 +1,7 @@
-import domain.BlackJackResult;
-import domain.Name;
-import domain.Participant;
-import domain.WinStatus;
+import domain.balckjack.BlackJackResult;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.balckjack.WinStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

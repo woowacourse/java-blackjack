@@ -1,7 +1,7 @@
-import domain.Card;
-import domain.Dealer;
-import domain.Rank;
-import domain.Shape;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.card.Rank;
+import domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

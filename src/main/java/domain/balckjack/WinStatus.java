@@ -1,4 +1,4 @@
-package domain;
+package domain.balckjack;
 
 public enum WinStatus {
 

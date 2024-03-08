@@ -1,4 +1,6 @@
-package domain;
+package domain.balckjack;
+
+import domain.participant.Participant;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

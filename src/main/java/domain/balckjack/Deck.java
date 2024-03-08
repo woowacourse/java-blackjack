@@ -1,4 +1,8 @@
-package domain;
+package domain.balckjack;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 
 import java.util.ArrayList;
 import java.util.Arrays;
