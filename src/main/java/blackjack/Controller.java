@@ -120,7 +120,7 @@ class Controller {
         List<Card> cards = new ArrayList<>();
 
         for (CardRank rank : CardRank.values()) {
-            cards.addAll(extracted(rank));
+            cards.addAll(createRankCards(rank));
         }
 
         Collections.shuffle(cards);
@@ -128,7 +128,7 @@ class Controller {
         return cards;
     }
 
-    private List<Card> extracted(CardRank rank) {
+    private List<Card> createRankCards(CardRank rank) {
         List<Card> cards = new ArrayList<>();
 
         for (CardShape shape : CardShape.values()) {
