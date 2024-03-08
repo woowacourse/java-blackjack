@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static boolean askPlayerForCard(Player player) {
-        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getPlayerName());
+        System.out.printf(NEW_LINE + "%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getPlayerName());
         String input = SCANNER.nextLine();
 
         return isHit(input);
