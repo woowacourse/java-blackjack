@@ -7,12 +7,15 @@ import view.NameInputView;
 import view.OutputView;
 
 public class Main {
+    private static final String DEALER_NAME = "딜러";
+
     public static void main(String[] args) {
-        Gamer dealer = new Gamer("딜러", HoldingCards.of());
-        OutputView.print("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        Gamer dealer = new Gamer(DEALER_NAME, HoldingCards.of());
+        OutputView.printInputNamesMessage();
         List<Gamer> players = NameInputView.getNames().stream()
                 .map(name -> new Gamer(name, HoldingCards.of()))
                 .toList();
+        
         BlackjackController blackjackController = new BlackjackController(dealer, players);
         blackjackController.startBlackjackGame(Deck.fullDeck());
     }

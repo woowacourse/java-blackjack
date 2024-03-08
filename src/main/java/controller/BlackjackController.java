@@ -1,8 +1,8 @@
 package controller;
 
+import domain.blackjack.DealerRandomCardDrawStrategy;
 import domain.blackjack.GameResult;
 import domain.blackjack.GameResultCalculator;
-import domain.blackjack.DealerRandomCardDrawStrategy;
 import domain.blackjack.Gamer;
 import domain.blackjack.PlayerRandomCardDrawStrategy;
 import domain.blackjack.SummationCardPoint;
@@ -45,15 +45,11 @@ public class BlackjackController {
         dealerDraw(deck);
         players.forEach(player -> playerDraw(deck, player));
         players.forEach(player -> playerDraw(deck, player));
-        OutputView.print("딜러와 pobi, jason에게 2장을 나누었습니다.");
-    }
 
-    private void dealerDraw(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
-    }
-
-    private void playerDraw(Deck deck, Gamer player) {
-        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+        List<String> playerNames = players.stream()
+                .map(Gamer::getRawName)
+                .toList();
+        OutputView.printCardSplitMessage(dealer.getRawName(), playerNames);
     }
 
     private void printDealerAndPlayers() {
@@ -61,52 +57,14 @@ public class BlackjackController {
         players.forEach(BlackjackController::printPlayer);
     }
 
-    private static void printDealer(Gamer dealer) {
-        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
-        rawHoldingCards.remove(0);
-        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
-    }
-
-    private static void printPlayer(Gamer player) {
-        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
-                player.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
-    }
-
     private void playersTryDraw(Deck deck) {
-        players.forEach(player -> {
-            playerTryDraw(deck, player);
-        });
-    }
-
-    private void playerTryDraw(Deck deck, Gamer player) {
-        boolean needToDraw = true;
-        while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
-            needToDraw = playerTryDrawOnce(deck, player);
-        }
-    }
-
-    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
-        boolean needToDraw;
-        OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
-        needToDraw = YesOrNoInputView.getYNAsBoolean();
-        if (needToDraw) {
-            playerDraw(deck, player);
-        }
-        printPlayer(player);
-        return needToDraw;
-    }
-
-    private boolean canDraw(Gamer player, SummationCardPoint threshold) {
-        return !player.getSummationCardPoint().isBiggerThan(threshold);
+        players.forEach(player -> playerTryDraw(deck, player));
     }
 
     private void dealerTryDraw(Deck deck) {
         try {
             dealerDraw(deck);
-            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+            OutputView.printDealerAdditionalCardMessage();
         } catch (IllegalStateException ignored) {
 
         }
@@ -135,7 +93,52 @@ public class BlackjackController {
                         GameResultCalculator.calculate(player, dealer)))
                 .toList();
 
+        OutputView.printGameResultMessage();
         GameResultOutputView.print(dealerGameResultDTO);
         playerGameResultDTOS.forEach(GameResultOutputView::print);
+    }
+
+    private void dealerDraw(Deck deck) {
+        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
+    }
+
+    private void playerDraw(Deck deck, Gamer player) {
+        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+    }
+
+    private static void printDealer(Gamer dealer) {
+        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
+        rawHoldingCards.remove(0);
+        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
+                dealer.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+    }
+
+    private static void printPlayer(Gamer player) {
+        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+                player.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+    }
+
+    private void playerTryDraw(Deck deck, Gamer player) {
+        boolean needToDraw = true;
+        while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
+            needToDraw = playerTryDrawOnce(deck, player);
+        }
+    }
+
+    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
+        boolean needToDraw;
+        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
+        needToDraw = YesOrNoInputView.getYNAsBoolean();
+        if (needToDraw) {
+            playerDraw(deck, player);
+        }
+        printPlayer(player);
+        return needToDraw;
+    }
+
+    private boolean canDraw(Gamer player, SummationCardPoint threshold) {
+        return !player.getSummationCardPoint().isBiggerThan(threshold);
     }
 }
