@@ -4,6 +4,7 @@ import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.dto.PlayerMatchResult;
+
 import java.util.List;
 
 public class Referee {
@@ -32,13 +33,7 @@ public class Referee {
         if (dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.TIE;
         }
-        if (dealer.isBurst()) {
-            return MatchResult.WIN;
-        }
-        if (player.isBurst()) {
-            return MatchResult.LOSE;
-        }
-        if (playerTotal >= dealerTotal) {
+        if (dealer.isBurst() || playerTotal >= dealerTotal) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;
