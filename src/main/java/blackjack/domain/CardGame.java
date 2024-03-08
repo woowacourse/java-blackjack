@@ -10,7 +10,7 @@ public class CardGame {
     }
 
     public void giveCard(final Player player) {
-        player.addCards(cardDeck.draw());
+        player.addCard(cardDeck.draw());
     }
 
     public void initializeHand(final Dealer dealer, final List<Player> players) {

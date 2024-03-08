@@ -3,18 +3,16 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player {
-    private final Name name;
     protected final Hand hand;
+    private final Name name;
 
-    public Player(final Name name, final Hand hand) {
-        this.name = name;
-        this.hand = hand;
+    public Player(final String name) {
+        this.hand = new Hand();
+        this.name = new Name(name);
     }
 
-    public void addCards(final Card... cards) {
-        for (Card card : cards) {
-            hand.add(card);
-        }
+    public void addCard(final Card card) {
+        hand.add(card);
     }
 
     public List<Card> getCards() {

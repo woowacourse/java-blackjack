@@ -4,8 +4,6 @@ import blackjack.domain.CardGame;
 import blackjack.domain.CardGameJudge;
 import blackjack.domain.CardGameResult;
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
-import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,9 +15,9 @@ public class BlackjackController {
         final CardGame cardGame = new CardGame();
         final List<String> names = InputView.readPlayerNames();
         final List<Player> players = names.stream()
-                .map(name -> new Player(new Name(name), new Hand()))
+                .map(Player::new)
                 .toList();
-        final Dealer dealer = new Dealer(new Name("딜러"), new Hand());
+        final Dealer dealer = new Dealer();
 
         cardGame.initializeHand(dealer, players);
         OutputView.printInitialHandOfEachPlayer(dealer, players);

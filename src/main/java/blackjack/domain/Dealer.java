@@ -2,10 +2,11 @@ package blackjack.domain;
 
 public class Dealer extends Player {
     // TODO: 이름 고민
+    public static final String DEALER_NAME = "딜러";
     public static final int MINIMUM_NUMBER_OF_CARD = 16;
 
-    public Dealer(final Name name, final Hand hand) {
-        super(name, hand);
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     public boolean needMoreCard() {

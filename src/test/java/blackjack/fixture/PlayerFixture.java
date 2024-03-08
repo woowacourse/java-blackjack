@@ -2,26 +2,22 @@ package blackjack.fixture;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
-import blackjack.domain.Name;
 import blackjack.domain.Player;
 
 public class PlayerFixture {
-    private static final Name name = new Name("player");
-
     public static Player player(Card... cards) {
-        Hand hand = new Hand();
+        Player player = new Player("player");
         for (Card card : cards) {
-            hand.add(card);
+            player.addCard(card);
         }
-        return new Player(name, hand);
+        return player;
     }
 
     public static Dealer dealer(Card... cards) {
-        Hand hand = new Hand();
+        Dealer dealer = new Dealer();
         for (Card card : cards) {
-            hand.add(card);
+            dealer.addCard(card);
         }
-        return new Dealer(name, hand);
+        return dealer;
     }
 }
