@@ -1,20 +1,18 @@
 package view;
 
+import domain.Gamers;
+import domain.PlayerResults;
+import domain.Result;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.Gamers;
 import domain.gamer.Player;
-import domain.PlayerResults;
-import domain.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.StringJoiner;
 
 public class OutputView {
-
-
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int DEALER_HIT_CONDITION = 16;
 
@@ -59,14 +57,14 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printDealerHit(Dealer dealer) {
+    public static void printDealerHit(final Dealer dealer) {
         String dealerName = dealer.getName().getValue();
         String message = String.format(System.lineSeparator() + "%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerName,
                 DEALER_HIT_CONDITION);
         System.out.println(message);
     }
 
-    public static void printCardsAndResult(Gamers gamers) {
+    public static void printCardsAndResult(final Gamers gamers) {
         StringBuilder builder = new StringBuilder();
         for (Gamer gamer : gamers.getGamers()) {
             String gamerName = gamer.getName().getValue();
@@ -78,7 +76,7 @@ public class OutputView {
         System.out.println(builder);
     }
 
-    private static List<String> printCardInfos(List<Card> cards) {
+    private static List<String> printCardInfos(final List<Card> cards) {
         List<String> cardInfos = new ArrayList<>();
         for (Card card : cards) {
             cardInfos.add(printCardInfo(card));

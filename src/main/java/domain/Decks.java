@@ -12,7 +12,7 @@ public class Decks {
         this.cards = cards;
     }
 
-    public static Decks createByStrategy(DecksGenerator decksGenerator) {
+    public static Decks createByStrategy(final DecksGenerator decksGenerator) {
         Stack<Card> cards = decksGenerator.generate();
         return new Decks(cards);
     }

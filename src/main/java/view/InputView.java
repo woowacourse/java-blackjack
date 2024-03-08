@@ -18,7 +18,7 @@ public class InputView {
         return Arrays.stream(playerNames).map(String::trim).toList();
     }
 
-    public static String readSelectionOf(Player player) {
+    public static String readSelectionOf(final Player player) {
         String message = String.format(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
                 player.getName().getValue());
         System.out.println(message);

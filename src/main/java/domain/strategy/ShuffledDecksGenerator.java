@@ -1,15 +1,14 @@
 package domain.strategy;
 
-import domain.card.Card;
 import domain.Deck;
 import domain.DecksGenerator;
+import domain.card.Card;
 import java.util.Collections;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ShuffledDecksGenerator implements DecksGenerator {
-
     private static final int DECKS_COUNT = 6;
 
     @Override

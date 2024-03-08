@@ -8,7 +8,7 @@ public enum Symbol {
 
     private final String name;
 
-    Symbol(String name) {
+    Symbol(final String name) {
         this.name = name;
     }
 

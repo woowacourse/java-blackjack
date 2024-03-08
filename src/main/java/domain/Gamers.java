@@ -9,11 +9,11 @@ import java.util.List;
 public class Gamers {
     private final List<Gamer> gamers;
 
-    private Gamers(List<Gamer> gamers) {
+    private Gamers(final List<Gamer> gamers) {
         this.gamers = List.copyOf(gamers);
     }
 
-    public static Gamers of(Players players, Dealer dealer) {
+    public static Gamers of(final Players players, final Dealer dealer) {
         List<Gamer> gamers = new ArrayList<>();
         gamers.add(dealer);
         for (Player player : players.getPlayers()) {

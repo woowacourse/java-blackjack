@@ -14,7 +14,7 @@ public class BlackJackGame {
         this.decks = decks;
     }
 
-    public void prepareCards(Gamers gamers) {
+    public void prepareCards(final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
             drawTwoCardsForGamer(gamer);
         }
@@ -26,7 +26,7 @@ public class BlackJackGame {
         }
     }
 
-    public boolean succeededGiving(Gamer gamer) {
+    public boolean succeededGiving(final Gamer gamer) {
         if (!gamer.isStay()) {
             gamer.hit(decks.draw());
             return true;
@@ -34,7 +34,7 @@ public class BlackJackGame {
         return false;
     }
 
-    public PlayerResults findPlayerResult(Gamers gamers) {
+    public PlayerResults findPlayerResult(final Gamers gamers) {
         Dealer dealer = gamers.findDealer();
         Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : gamers.findPlayers()) {
@@ -44,7 +44,7 @@ public class BlackJackGame {
         return new PlayerResults(playerResults);
     }
 
-    private Result isPlayerWin(Dealer dealer, Player player) {
+    private Result isPlayerWin(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return Result.LOSE;
         }
