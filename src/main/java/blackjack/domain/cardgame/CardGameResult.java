@@ -1,10 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.cardgame;
+
+import blackjack.domain.player.Player;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static blackjack.domain.WinningStatus.LOSE;
-import static blackjack.domain.WinningStatus.WIN;
+import static blackjack.domain.cardgame.WinningStatus.LOSE;
+import static blackjack.domain.cardgame.WinningStatus.WIN;
 
 public class CardGameResult {
     private final Map<Player, WinningStatus> totalResult;

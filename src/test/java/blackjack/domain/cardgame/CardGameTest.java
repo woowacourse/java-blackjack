@@ -1,11 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.cardgame;
 
+import blackjack.domain.cardgame.CardGame;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.CardNumber.ACE;
-import static blackjack.domain.CardShape.SPADE;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;

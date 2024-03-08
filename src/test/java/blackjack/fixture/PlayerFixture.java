@@ -1,8 +1,8 @@
 package blackjack.fixture;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 
 public class PlayerFixture {
     public static Player player(Card... cards) {

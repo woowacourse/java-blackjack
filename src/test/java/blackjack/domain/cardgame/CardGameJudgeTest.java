@@ -1,17 +1,22 @@
-package blackjack.domain;
+package blackjack.domain.cardgame;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.cardgame.CardGameJudge;
+import blackjack.domain.cardgame.WinningStatus;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.CardNumber.ACE;
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardNumber.QUEEN;
-import static blackjack.domain.CardNumber.TWO;
-import static blackjack.domain.CardShape.CLOVER;
-import static blackjack.domain.CardShape.DIAMOND;
-import static blackjack.domain.CardShape.HEART;
-import static blackjack.domain.CardShape.SPADE;
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardNumber.TWO;
+import static blackjack.domain.card.CardShape.CLOVER;
+import static blackjack.domain.card.CardShape.DIAMOND;
+import static blackjack.domain.card.CardShape.HEART;
+import static blackjack.domain.card.CardShape.SPADE;
 import static blackjack.fixture.PlayerFixture.dealer;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;

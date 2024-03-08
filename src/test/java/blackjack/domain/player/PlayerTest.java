@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardShape.CLOVER;
-import static blackjack.domain.CardShape.HEART;
-import static blackjack.domain.CardShape.SPADE;
+import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardShape.CLOVER;
+import static blackjack.domain.card.CardShape.HEART;
+import static blackjack.domain.card.CardShape.SPADE;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
 

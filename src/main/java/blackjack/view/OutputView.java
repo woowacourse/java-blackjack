@@ -1,14 +1,14 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardGameResult;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.cardgame.CardGameResult;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.WinningStatus.*;
+import static blackjack.domain.cardgame.WinningStatus.*;
 
 public class OutputView {
     public static void printInitialHandOfEachPlayer(final Dealer dealer, final List<Player> players) {

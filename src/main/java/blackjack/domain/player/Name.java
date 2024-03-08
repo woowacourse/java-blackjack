@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 public class Name {
     private static final int MINIMUM_LENGTH = 1;

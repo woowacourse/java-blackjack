@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.cardgame;
+
+import blackjack.domain.player.Player;
 
 import java.util.LinkedHashMap;
 import java.util.List;

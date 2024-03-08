@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Hand;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.CardNumber.JACK;
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardNumber.QUEEN;
-import static blackjack.domain.CardShape.SPADE;
+import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
