@@ -95,7 +95,7 @@ class DealerTest {
 
     @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 진다.")
     @Test
-    void whenDealerWin() {
+    void whenDealerLose() {
         Dealer dealer = new Dealer();
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
@@ -111,7 +111,7 @@ class DealerTest {
 
     @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 높으면 이긴다.")
     @Test
-    void whenDealerLose() {
+    void whenDealerWin() {
         Dealer dealer = new Dealer();
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
