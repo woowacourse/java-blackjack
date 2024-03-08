@@ -1,5 +1,6 @@
 package blackjack.fixture;
 
+import blackjack.domain.card.CardValue;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.common.Name;
