@@ -38,17 +38,9 @@ public class MessageResolver {
         return String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
     }
 
-    public String resolvePlayersScoreMessage(Players players) {
-        return players.getPlayers().stream()
-                .map(this::resolvePlayerScoreMessage)
-                .collect(Collectors.joining(LINE_SEPARATOR));
-    }
-
-    //TODO: 이름과 최고 점수를 파라미터로 받도록 개선
-    private String resolvePlayerScoreMessage(Player player) {
+    public String resolvePlayerScoreMessage(Player player, int score) {
         String handMessage = resolvePlayerHandMessage(player);
-        int sum = player.calculateHandSum();
-        return String.format("%s - 결과: %d", handMessage, sum);
+        return String.format("%s - 결과: %d", handMessage, score);
     }
 
     public String resolvePlayerGameResult(Player player, boolean win) {

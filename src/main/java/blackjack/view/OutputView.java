@@ -24,8 +24,8 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealerPopCountMessage(dealerPopThreshold, count));
     }
 
-    public void printPlayersScore(Players players) {
-        System.out.println(messageResolver.resolvePlayersScoreMessage(players));
+    public void printPlayerScore(Player player, int score) {
+        System.out.println(messageResolver.resolvePlayerScoreMessage(player, score));
     }
 
     public void printPlayerGameResult(Player player, boolean win) {
