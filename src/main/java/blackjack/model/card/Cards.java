@@ -1,8 +1,11 @@
 package blackjack.model.card;
 
 import blackjack.model.cardgenerator.CardGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
 
 public class Cards {
     private static final int BLACK_JACK_CONDITION = 21;
@@ -69,6 +72,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return unmodifiableList(cards);
     }
 }
