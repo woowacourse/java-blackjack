@@ -1,10 +1,9 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
@@ -19,6 +18,7 @@ public class DealerTest {
 
     private Deck deck;
     private Dealer dealer;
+    private final TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
 
     @BeforeEach
     void setUp() {
@@ -29,23 +29,17 @@ public class DealerTest {
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
     @Test
     void draw() {
-        //given
-        TrumpCard trumpCard = new TrumpCard(Rank.ACE, Suit.SPADE);
-
-        //when
+        //given & when
         dealer.draw();
 
         //then
-        assertThat(dealer.getHandCards()).contains(trumpCard);
+        assertThat(dealer.getHandCards()).contains(trumpCardAceSpade);
     }
 
     @DisplayName("딜러의 첫번째 카드를 공개한다.")
     @Test
     void showFirstCard() {
-        //given
-        TrumpCard trumpCard = new TrumpCard(Rank.ACE, Suit.SPADE);
-
-        //when & then
-        assertThat(dealer.showFirstCard()).isEqualTo(trumpCard);
+        //given & when & then
+        assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
     }
 }

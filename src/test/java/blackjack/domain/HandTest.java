@@ -1,44 +1,43 @@
 package blackjack.domain;
 
+import static blackjack.fixture.TrumpCardFixture.aceCloverTrumpCard;
+import static blackjack.fixture.TrumpCardFixture.aceDiamondTrumpCard;
+import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
+import static blackjack.fixture.TrumpCardFixture.fiveSpadeKingCard;
+import static blackjack.fixture.TrumpCardFixture.fiveSpadeTrumpCard;
+import static blackjack.fixture.TrumpCardFixture.fourSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("카드 손패")
 public class HandTest {
 
+    private final TrumpCard trumpCardFourSpade = fourSpadeTrumpCard();
+    private final TrumpCard trumpCardFiveSpade = fiveSpadeTrumpCard();
+
     @DisplayName("패에 카드를 추가한다.")
     @Test
     void addCard() {
-        //given
-        TrumpCard trumpCardFourDiamond = new TrumpCard(Rank.FOUR, Suit.DIAMOND);
-        TrumpCard trumpCardFiveDiamond = new TrumpCard(Rank.FIVE, Suit.DIAMOND);
-
-        //when
+        //given & when
         Hand hand = new Hand();
-        hand.add(trumpCardFourDiamond);
-        hand.add(trumpCardFiveDiamond);
+        hand.add(trumpCardFourSpade);
+        hand.add(trumpCardFiveSpade);
 
         //then
         assertThat(hand.getCards())
-                .contains(trumpCardFourDiamond, trumpCardFiveDiamond);
+                .contains(trumpCardFourSpade, trumpCardFiveSpade);
     }
 
     @DisplayName("패에 있는 카드들의 점수를 반환한다.")
     @Test
     void calculateScore() {
-        //given
-        TrumpCard trumpCardFourDiamond = new TrumpCard(Rank.FOUR, Suit.DIAMOND);
-        TrumpCard trumpCardFiveDiamond = new TrumpCard(Rank.FIVE, Suit.DIAMOND);
-
-        //when
+        //given & when
         Hand hand = new Hand();
-        hand.add(trumpCardFourDiamond);
-        hand.add(trumpCardFiveDiamond);
+        hand.add(trumpCardFourSpade);
+        hand.add(trumpCardFiveSpade);
 
         //then
         assertThat(hand.calculateScore())
@@ -49,11 +48,10 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         //given
-        TrumpCard trumpCardAceClover = new TrumpCard(Rank.ACE, Suit.CLOVER);
-        TrumpCard trumpCardAceDiamond = new TrumpCard(Rank.ACE, Suit.DIAMOND);
-        TrumpCard trumpCardAceSpade = new TrumpCard(Rank.ACE, Suit.SPADE);
-        TrumpCard trumpCardFourSpade = new TrumpCard(Rank.FOUR, Suit.SPADE);
-        TrumpCard trumpCardKingSpade = new TrumpCard(Rank.KING, Suit.SPADE);
+        TrumpCard trumpCardAceClover = aceCloverTrumpCard();
+        TrumpCard trumpCardAceDiamond = aceDiamondTrumpCard();
+        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
+        TrumpCard trumpCardKingSpade = fiveSpadeKingCard();
 
         //when
         Hand hand1 = new Hand();

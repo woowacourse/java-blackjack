@@ -1,10 +1,9 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
@@ -49,7 +48,7 @@ public class PlayerTest {
     void draw() {
         //given
         Player player = new Player("choco", dealer);
-        TrumpCard trumpCard = new TrumpCard(Rank.THREE, Suit.SPADE);
+        TrumpCard trumpCard = threeSpadeKingCard();
 
         //when
         player.draw(dealer);
