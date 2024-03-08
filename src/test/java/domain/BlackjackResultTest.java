@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class BlackjackResultTest {
@@ -13,10 +14,10 @@ class BlackjackResultTest {
     void playerBust() {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
-        teba.addCard(new Card(Denomination.JACK,Symbol.CLOVER));
-        teba.addCard(new Card(Denomination.KING,Symbol.CLOVER));
-        teba.addCard(new Card(Denomination.SIX,Symbol.CLOVER));
-        final Blackjack blackjack = new Blackjack(new Players(List.of(teba, dealer)), dealer);
+        teba.addCard(new Card(Denomination.JACK, Symbol.CLOVER));
+        teba.addCard(new Card(Denomination.KING, Symbol.CLOVER));
+        teba.addCard(new Card(Denomination.SIX, Symbol.CLOVER));
+        final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
         //
 
 
@@ -33,10 +34,10 @@ class BlackjackResultTest {
     void dealerBust() {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
-        dealer.addCard(new Card(Denomination.JACK,Symbol.CLOVER));
-        dealer.addCard(new Card(Denomination.KING,Symbol.CLOVER));
-        dealer.addCard(new Card(Denomination.SIX,Symbol.CLOVER));
-        final Blackjack blackjack = new Blackjack(new Players(List.of(teba,dealer)), dealer);
+        dealer.addCard(new Card(Denomination.JACK, Symbol.CLOVER));
+        dealer.addCard(new Card(Denomination.KING, Symbol.CLOVER));
+        dealer.addCard(new Card(Denomination.SIX, Symbol.CLOVER));
+        final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
         final Integer dealerLose = blackjackResultDTO.getLose(dealer);
