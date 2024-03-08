@@ -3,16 +3,15 @@ package blackjack.model.gamer;
 import blackjack.model.GameRule;
 
 public class Player extends Gamer {
+    
+    private final Name playerName;
 
-    //TODO 원시값 포장
-    private final String name;
-
-    public Player(String name) {
-        this.name = name;
+    public Player(String playerName) {
+        this.playerName = new Name(playerName);
     }
 
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName.getName();
     }
 
     @Override

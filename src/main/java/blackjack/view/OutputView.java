@@ -66,7 +66,7 @@ public class OutputView {
 
     private static String playerCardMessage(Player player) {
         String separatedPlayerCardName = convertCardNames(player.getHandDeck());
-        return String.format("%s 카드: %s", player.getName(), separatedPlayerCardName);
+        return String.format("%s 카드: %s", player.getPlayerName(), separatedPlayerCardName);
     }
 
 
@@ -87,7 +87,7 @@ public class OutputView {
         Map<Player, Result> playersResult = gameResult.getPlayersResult();
 
         for (Player player : playersResult.keySet()) {
-            String playerName = player.getName();
+            String playerName = player.getPlayerName();
             String playerResult = playersResult.get(player).getName();
             System.out.printf("%s : %s" + NEW_LINE, playerName, playerResult);
         }
@@ -95,7 +95,7 @@ public class OutputView {
 
     private static String convertPlayerNames(List<Player> players) {
         List<String> playersName = players.stream()
-                .map(Player::getName)
+                .map(Player::getPlayerName)
                 .toList();
         return String.join(SEPARATOR, playersName);
     }
