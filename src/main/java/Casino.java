@@ -26,7 +26,6 @@ public class Casino {
 
         // 결과
         checkGameResult(players);
-
     }
 
     private Players joinPlayer() {
@@ -70,5 +69,4 @@ public class Casino {
         BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getNameAsString());
         return command.isHit();
     }
-
 }

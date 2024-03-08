@@ -10,10 +10,12 @@ import java.util.stream.Collectors;
 public class CardPrinter {
     private static final EnumMap<CardSymbol, String> symbolBoard = initializeSymbol();
     private static final EnumMap<CardValue, String> valueBoard = initializeValue();
+    private static final String JOIN_SPLITER = ", ";
 
     public static String printCards(List<Card> cards) {
-        return cards.stream().map(CardPrinter::printCard)
-                           .collect(Collectors.joining(", "));
+        return cards.stream()
+                    .map(CardPrinter::printCard)
+                    .collect(Collectors.joining(JOIN_SPLITER));
     }
 
     public static String printCard(Card card) {

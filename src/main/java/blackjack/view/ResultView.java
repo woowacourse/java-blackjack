@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ResultView {
     private static final EnumMap<ResultStatus, String> resultBoard = initializeResultStatus();
@@ -27,13 +28,19 @@ public class ResultView {
     }
 
     private static void printDealerResult(DealerResult dealerResult) {
-        System.out.println(dealerResult.getName() + ": " + Arrays.stream(ResultStatus.values())
-                                                                 .map(resultStatus ->
-                                                                         dealerResult.getResultWithResultStatus(
-                                                                                 resultStatus)
-                                                                                 + resultBoard.get(
-                                                                                 resultStatus))
-                                                                 .collect(Collectors.joining(" ")));
+        System.out.println(formatDealerResult(dealerResult));
+    }
+
+    private static String formatDealerResult(DealerResult dealerResult) {
+        return dealerResult.getName() + ": " +
+                Arrays.stream(ResultStatus.values())
+                      .map(resultStatus -> formatDealerResultStatus(dealerResult, resultStatus))
+                      .collect(Collectors.joining(" "));
+    }
+
+    private static String formatDealerResultStatus(DealerResult dealerResult,
+                                                   ResultStatus resultStatus) {
+        return dealerResult.getResultWithResultStatus(resultStatus) + resultBoard.get(resultStatus);
     }
 
     private static EnumMap<ResultStatus, String> initializeResultStatus() {

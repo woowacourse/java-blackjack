@@ -10,7 +10,6 @@ public class Player {
     protected final Name name;
     protected final Cards cards;
 
-
     public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;

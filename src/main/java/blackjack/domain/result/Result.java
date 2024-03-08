@@ -3,8 +3,8 @@ package blackjack.domain.result;
 import java.util.List;
 
 public class Result {
-    private List<GamePlayerResult> gamePlayerResults;
-    private DealerResult dealerResult;
+    private final List<GamePlayerResult> gamePlayerResults;
+    private final DealerResult dealerResult;
 
     public Result(List<GamePlayerResult> gamePlayerResults, DealerResult dealerResult) {
         this.gamePlayerResults = gamePlayerResults;

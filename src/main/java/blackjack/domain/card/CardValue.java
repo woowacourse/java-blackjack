@@ -28,5 +28,4 @@ public enum CardValue {
     public int getScore() {
         return score;
     }
-
 }

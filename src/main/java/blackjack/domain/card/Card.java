@@ -17,7 +17,6 @@ public class Card {
         return cardValue.getScore();
     }
 
-
     public CardValue getCardValue() {
         return cardValue;
     }
