@@ -31,10 +31,10 @@ public class Hand {
         int quotient = residualScore / MAX_ACE_SCORE;
         long minAceCount = Math.min(quotient, aceCount);
 
-        return calculateAce(aceCount, scoreWithoutAce, minAceCount);
+        return calculate(aceCount, scoreWithoutAce, minAceCount);
     }
 
-    private long calculateAce(final long aceCount, final int scoreWithoutAce, final long minAceCount) {
+    private long calculate(final long aceCount, final int scoreWithoutAce, final long minAceCount) {
         if (aceCount > 0) {
             return scoreWithoutAce + minAceCount * MAX_ACE_SCORE + (aceCount - minAceCount);
         }

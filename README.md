@@ -84,7 +84,7 @@ example feat: 사용자 입력 후 도메인 사용
 - [x] 불변 리스트로 변환한다.
 - [x] `Judge`의 테스트를 진행한다.
 - [x] `Rank`, `Suit`를 card 패키지로 변경한다.
-- [ ] `calculateAce` 메서드명을 변경한다.
+- [x] `calculateAce` 메서드명을 변경한다.
 - [x] `BlackjackResult`에서 count 대신 getter로 변경한다.
 - [ ] `BlackjackGame` 메서드 분리
 - [ ] 호출되는 메서드는 호출하는 메서드 아래에 위치한다.
