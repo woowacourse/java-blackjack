@@ -30,6 +30,10 @@ public abstract class Player {
         return score;
     }
 
+    public boolean isDealer() {
+        return this.name.equals("딜러");
+    }
+
     public String getName() {
         return name.getName();
     }

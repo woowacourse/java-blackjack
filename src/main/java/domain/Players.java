@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -14,7 +15,6 @@ public class Players {
 
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
-        //2
         validateDuplicate(players);
     }
 
@@ -40,15 +40,22 @@ public class Players {
     }
 
     public static Players from(final String[] names) {
-        return new Players(Arrays.stream(names).map(name -> new Participant(new Name(name))).collect(Collectors.toList()));
+        return new Players(Arrays.stream(names)
+                .map(name -> new Participant(new Name(name)))
+                .collect(Collectors.toList()));
     }
 
     public Player getDealer() {
-        return players.stream().filter(player -> player.getName().equals("딜러")).findAny().orElseThrow();
+        return players.stream()
+                .filter(Player::isDealer)
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException("플레이어 목록에 딜러가 존재하지 않습니다."));
     }
 
     public List<Player> getParticipants() {
-        return players.stream().filter(player -> !player.getName().equals("딜러")).collect(Collectors.toList());
+        return players.stream()
+                .filter(Player::isDealer)
+                .collect(Collectors.toList());
     }
 
     public List<Player> getAllPlayers() {
