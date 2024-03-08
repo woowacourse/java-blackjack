@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static domain.FixtureCard.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -18,10 +19,9 @@ class CardTest {
     static Stream<Arguments> createCard() {
         return Stream.of(
                 Arguments.of(
-                        Map.entry(new Card(Letter.TWO, Mark.CLOVER), 2),
-                        Map.entry(new Card(Letter.TEN, Mark.CLOVER), 10),
-                        Map.entry(new Card(Letter.K, Mark.CLOVER), 10),
-                        Map.entry(new Card(Letter.A, Mark.CLOVER), 11)
+                        Map.entry(TWO_HEART, 2),
+                        Map.entry(TEN_HEART, 10),
+                        Map.entry(ACE_HEART, 11)
                 )
         );
     }
@@ -29,7 +29,7 @@ class CardTest {
     @DisplayName("문자(String)와 모양(String)을 가지고 있다.")
     @Test
     void create_success() {
-        assertThatCode(() -> new Card(Letter.THREE, Mark.DIAMOND))
+        assertThatCode(() -> new Card(Letter.FOUR, Mark.DIAMOND))
                 .doesNotThrowAnyException();
     }
 
@@ -46,15 +46,12 @@ class CardTest {
     @DisplayName("현재 카드가 Ace인지 판단한다.")
     @Test
     void isAceCard() {
-        Card card1 = new Card(Letter.A, Mark.DIAMOND);
-        Card card2 = new Card(Letter.J, Mark.SPADE);
-
-        boolean actual1 = card1.isAceCard();
-        boolean actual2 = card2.isAceCard();
+        boolean isAce = ACE_HEART.isAceCard();
+        boolean isNotAce = TEN_HEART.isAceCard();
 
         Assertions.assertAll(
-                () -> assertThat(actual1).isTrue(),
-                () -> assertThat(actual2).isFalse()
+                () -> assertThat(isAce).isTrue(),
+                () -> assertThat(isNotAce).isFalse()
         );
     }
 }

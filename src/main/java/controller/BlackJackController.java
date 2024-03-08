@@ -1,9 +1,6 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.CardDeck;
-import domain.Player;
-import domain.PlayerNames;
+import domain.*;
 import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersResultDto;
@@ -25,7 +22,8 @@ public class BlackJackController {
     public void run() throws IOException {
         PlayerNames playerNames = readPlayerNames();
         CardDeck cardDeck = new CardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(playerNames, cardDeck);
+        Dealer dealer = new Dealer(cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(playerNames, dealer);
 
         printInitialDealAndHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);

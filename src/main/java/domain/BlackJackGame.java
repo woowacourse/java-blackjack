@@ -7,8 +7,9 @@ public class BlackJackGame {
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer;
 
-    public BlackJackGame(PlayerNames playerNames, CardDeck cardDeck) {
-        this.dealer = new Dealer(cardDeck);
+    public BlackJackGame(PlayerNames playerNames, Dealer dealer) {
+        this.dealer = dealer;
+
         List<String> names = playerNames.names();
         for (String s : names) {
             Name name = new Name(s);
@@ -17,16 +18,18 @@ public class BlackJackGame {
         }
     }
 
-    public boolean hitPlayer(Player targetPlayer) {
+    public void hitPlayer(Player targetPlayer) {
         if (targetPlayer.isHittable()) {
             targetPlayer.hit(dealer.dealCard());
-            return true;
         }
-        return false;
     }
 
     public boolean hitDealer() {
-        return hitPlayer(dealer);
+        if (dealer.isHittable()) {
+            hitPlayer(dealer);
+            return true;
+        }
+        return false;
     }
 
     public Map<Player, Result> getGameResults() {
