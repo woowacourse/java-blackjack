@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 abstract class AbstractRandomCardDrawStrategy implements CardDrawStrategy {
+    private final Random random = new Random();
+
     @Override
     public final Card nextCard(List<Card> cards) {
         if (canDraw()) {
@@ -17,7 +19,6 @@ abstract class AbstractRandomCardDrawStrategy implements CardDrawStrategy {
     abstract boolean canDraw();
 
     private Card cardSelectStrategy(List<Card> cards) {
-        Random random = new Random();
         int idx = random.nextInt(cards.size());
         return cards.get(idx);
     }
