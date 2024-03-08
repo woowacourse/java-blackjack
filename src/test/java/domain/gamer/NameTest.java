@@ -11,7 +11,7 @@ class NameTest {
     @DisplayName("이름의 길이가 1 미만, 5초과면 예외를 던진다.")
     @ParameterizedTest
     @ValueSource(strings = {"", "liniri"})
-    void invalidNameLength(String name) {
+    void invalidNameLengthTest(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Name.INVALID_NAME_LENGTH);
     }

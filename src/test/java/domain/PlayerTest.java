@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import net.bytebuddy.build.ToStringPlugin.Enhance;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,5 +103,17 @@ public class PlayerTest {
 
         // then
         assertThat(stay).isFalse();
+    }
+
+    @DisplayName("플레이어는 '딜러'와 동일한 이름을 사용하면 예외를 던진다.")
+    @Test
+    void invalidNameTest(){
+        // given
+        Name name = new Name("딜러");
+
+        // then
+        assertThatThrownBy(() -> new Player(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Player.NOT_ALLOWED_NAME);
     }
 }
