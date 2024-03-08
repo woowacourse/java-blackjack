@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -68,8 +67,10 @@ public class Hands {
         return cards.size();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<String> getCards() {
+        return cards.stream()
+                .map(Card::toString)
+                .toList();
     }
 
     @Override

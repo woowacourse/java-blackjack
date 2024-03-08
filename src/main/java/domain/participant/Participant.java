@@ -3,7 +3,6 @@ package domain.participant;
 import domain.Hands;
 import domain.Result;
 import domain.card.Card;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -42,9 +41,7 @@ public abstract class Participant {
     }
 
     public List<String> getCardNames() {
-        return hands.getCards().stream()
-                .map(Card::toString)
-                .toList();
+        return hands.getCards();
     }
 
     public String getName() {
