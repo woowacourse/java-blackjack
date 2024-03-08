@@ -5,15 +5,11 @@ import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckCreator;
-import blackjack.domain.player.Hand;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.*;
 import blackjack.domain.rule.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -27,11 +23,11 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = initPlayers();
         CardDeck cardDeck = initCardDeck();
-        Player dealer = initDealer();
+        Players players = initPlayers(cardDeck);
+        Player dealer = initDealer(cardDeck);
 
-        prepareGame(players, cardDeck, dealer);
+        printPlayersInformation(players, cardDeck, dealer);
 
         completePlayersHand(players, cardDeck);
         completeDealerHand(dealer, cardDeck);
@@ -44,48 +40,30 @@ public class BlackJackController {
         printPlayersGameResult(players, dealer);
     }
 
-    private Players initPlayers() {
-        InputMapper inputMapper = new InputMapper();
-        List<PlayerName> playerNames = inputMapper.mapToPlayers(inputView.readNames());
-        return Players.from(playerNames);
-    }
-
     private CardDeck initCardDeck() {
         CardDeckCreator cardDeckCreator = new CardDeckCreator();
         return cardDeckCreator.create();
     }
 
-    private Player initDealer() {
-        Hand hand = new Hand(new ArrayList<>());
-        return new Player(new PlayerName("딜러"), hand);
+    private Players initPlayers(CardDeck cardDeck) {
+        InputMapper inputMapper = new InputMapper();
+        PlayerCreator playerCreator = new PlayerCreator(new HandCreator());
+        List<PlayerName> playerNames = inputMapper.mapToPlayers(inputView.readNames());
+
+        return new Players(playerNames.stream()
+                .map(playerName -> playerCreator.createPlayerFrom(playerName, cardDeck))
+                .toList());
     }
 
-    private void prepareGame(Players players, CardDeck cardDeck, Player dealer) {
-        issueInitialCardsToPlayers(players, cardDeck);
-        issueInitialCardsToDealer(dealer, cardDeck);
+    private Player initDealer(CardDeck cardDeck) {
+        PlayerCreator playerCreator = new PlayerCreator(new HandCreator());
+        return playerCreator.createDealerFrom(cardDeck);
+    }
 
+    private void printPlayersInformation(Players players, CardDeck cardDeck, Player dealer) {
         outputView.printHandOutEvent(players, 2);
         outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
-    }
-
-    private void issueInitialCardsToPlayers(Players players, CardDeck cardDeck) {
-        players.getPlayers().stream()
-                .map(Player::getHand)
-                .forEach(hand -> addIssuedCardToHand(hand, issueInitialHand(cardDeck)));
-    }
-
-    private void issueInitialCardsToDealer(Player dealer, CardDeck cardDeck) {
-        List<Card> cards = issueInitialHand(cardDeck);
-        addIssuedCardToHand(dealer.getHand(), cards);
-    }
-
-    private List<Card> issueInitialHand(CardDeck cardDeck) {
-        return cardDeck.popCards(2);
-    }
-
-    private void addIssuedCardToHand(Hand hand, List<Card> cards) {
-        cards.forEach(hand::append);
     }
 
     private void completePlayersHand(Players players, CardDeck cardDeck) {
