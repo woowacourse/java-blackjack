@@ -8,37 +8,34 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
-    private static final Referee INSTANCE = new Referee();
+    private final Players players;
+    private final Dealer dealer;
 
-    private Referee() {
+    public Referee(Participants participants) {
+        this.players = participants.getPlayers();
+        this.dealer = participants.getDealer();
     }
 
-    public static Referee getInstance() {
-        return INSTANCE;
-    }
-
-    public BlackjackResult generateResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        Players players = participants.getPlayers();
+    public BlackjackResult generateResult() {
         Map<Player, HandResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getValues()) {
-            HandResult playerResult = getPlayerResult(player, dealer);
+            HandResult playerResult = getPlayerResult(player);
             playerResults.put(player, playerResult);
         }
         return new BlackjackResult(playerResults);
     }
 
-    private HandResult getPlayerResult(Player player, Dealer dealer) {
+    private HandResult getPlayerResult(Player player) {
         if (dealer.isBust()) {
             return HandResult.WIN;
         }
         if (player.isBust()) {
             return HandResult.LOSE;
         }
-        return getPlayerResultWithoutBust(player, dealer);
+        return getPlayerResultWithoutBust(player);
     }
 
-    private HandResult getPlayerResultWithoutBust(Player player, Dealer dealer) {
+    private HandResult getPlayerResultWithoutBust(Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
         if (playerScore == dealerScore) {
