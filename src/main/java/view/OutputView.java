@@ -3,6 +3,7 @@ package view;
 import controller.dto.GameResult;
 import controller.dto.HandStatus;
 import controller.dto.PlayerResult;
+import domain.constants.Outcome;
 import java.util.List;
 
 public class OutputView {
@@ -52,11 +53,11 @@ public class OutputView {
         System.out.println("## 최종 승패");
         List<PlayerResult> playerResults = results.results();
         int loseCount = (int) playerResults.stream()
-                .filter(PlayerResult::isWin)
+                .filter(playerResult -> playerResult.outcome().equals(Outcome.LOSE))
                 .count();
         System.out.println("딜러: " + (playerResults.size() - loseCount) + "승 " + loseCount + "패");
         for (PlayerResult playerResult : playerResults) {
-            System.out.println(playerResult.name() + ": " + checkIsWin(playerResult.isWin()));
+            System.out.println(playerResult.name() + ": " + checkIsWin(playerResult.outcome().equals(Outcome.WIN)));
         }
     }
 

@@ -1,4 +1,6 @@
 package controller.dto;
 
-public record PlayerResult(String name, boolean isWin) {
+import domain.constants.Outcome;
+
+public record PlayerResult(String name, Outcome outcome) {
 }

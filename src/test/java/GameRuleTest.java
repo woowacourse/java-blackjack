@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.GameRule;
 import domain.Participant;
 import domain.Player;
+import domain.constants.Outcome;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.List;
@@ -26,10 +27,10 @@ class GameRuleTest {
         GameRule rule = createGameRule(player, dealer);
 
         // when
-        List<Boolean> isWinner = rule.judge();
+        List<Outcome> isWinner = rule.judge();
 
         // then
-        assertThat(isWinner).containsExactly(true);
+        assertThat(isWinner).containsExactly(Outcome.WIN);
     }
 
     @DisplayName("딜러의 점수가 21을 초과한 경우")
@@ -46,11 +47,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
+            List<Outcome> gameResult = rule.judgePlayersWhenDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(Outcome.LOSE);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
@@ -64,11 +65,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
+            List<Outcome> gameResult = rule.judgePlayersWhenDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(Outcome.WIN);
         }
     }
 
@@ -86,11 +87,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<Outcome> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(Outcome.LOSE);
         }
 
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
@@ -104,11 +105,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<Outcome> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(Outcome.LOSE);
         }
     }
 
@@ -126,11 +127,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<Outcome> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(Outcome.WIN);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
@@ -144,11 +145,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<Outcome> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(Outcome.WIN);
         }
 
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
@@ -162,11 +163,11 @@ class GameRuleTest {
 
             GameRule rule = createGameRule(player, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<Outcome> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(Outcome.WIN);
         }
     }
 

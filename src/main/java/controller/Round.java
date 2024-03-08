@@ -12,6 +12,7 @@ import domain.GameRule;
 import domain.Participant;
 import domain.Player;
 import domain.constants.CardCommand;
+import domain.constants.Outcome;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -99,7 +100,7 @@ public class Round {
 
     public GameResult getGameResult() {
         GameRule rule = new GameRule(participant);
-        List<Boolean> results = rule.judge();
+        List<Outcome> results = rule.judge();
         List<String> names = getPlayerNames();
 
         List<PlayerResult> playerResults = new ArrayList<>();
