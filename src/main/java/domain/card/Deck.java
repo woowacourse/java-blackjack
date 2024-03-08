@@ -12,13 +12,12 @@ public class Deck {
     public Deck(DrawStrategy strategy) {
         this.deck = createDeck();
         this.strategy = strategy;
-
     }
 
     private List<Card> createDeck() {
-        return IntStream.range(1, 13)
+        return IntStream.range(1, 14)
                 .boxed()
-                .flatMap(cardNumber -> IntStream.range(0, 3)
+                .flatMap(cardNumber -> IntStream.range(0, 4)
                         .mapToObj(index -> new Card(cardNumber, Shape.getShapeByIndex(index))))
                 .collect(Collectors.toList());
     }
