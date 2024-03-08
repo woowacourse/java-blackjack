@@ -16,6 +16,7 @@ public final class FormatConverter {
     );
     private static final Map<PlayingCardValue, String> PLAYING_CARD_VALUE_STRING = Map.ofEntries(
             entry(DEFAULT_ACE, "A"),
+            entry(SMALL_ACE, "A"),
             entry(TWO, "2"),
             entry(THREE, "3"),
             entry(FOUR, "4"),
