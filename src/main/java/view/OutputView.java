@@ -23,24 +23,25 @@ public class OutputView {
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
-        System.out.println(participantText(game.getDealer()));
+        System.out.println(dealerNameAndCardsText(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            System.out.println(participantText(player));
+            System.out.println(participantNameAndCardsText(player));
         }
         System.out.println();
     }
 
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
         System.out.println();
-        System.out.println(participantText(game.getDealer()) + scoreText(game.getDealer().score()));
+        System.out.println(
+            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().score()));
         for (Player player : game.getPlayers()) {
-            System.out.println(participantText(player) + scoreText(player.score()));
+            System.out.println(participantNameAndCardsText(player) + scoreText(player.score()));
         }
         System.out.println();
     }
 
     public void printParticipantCards(Participant participant) {
-        System.out.println(participantText(participant));
+        System.out.println(participantNameAndCardsText(participant));
     }
 
     public void printBustMessage(Participant participant) {
@@ -51,7 +52,11 @@ public class OutputView {
         return " - 결과: " + score;
     }
 
-    private String participantText(Participant participant) {
+    private String dealerNameAndCardsText(Dealer dealer) {
+        return dealer.getName() + " 카드: " + cardText(dealer.findShowingCard());
+    }
+
+    private String participantNameAndCardsText(Participant participant) {
         return participant.getName() + " 카드: " + cardsText(participant.getCards());
     }
 
@@ -59,7 +64,6 @@ public class OutputView {
         return cards.stream()
             .map(this::cardText)
             .collect(Collectors.joining(DELIMITER));
-
     }
 
     private String cardText(Card card) {
