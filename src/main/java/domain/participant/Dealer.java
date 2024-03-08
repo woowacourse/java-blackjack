@@ -5,7 +5,7 @@ import domain.card.Card;
 
 public class Dealer extends Participant {
 
-    public static final int DEALER_HIT_COUNT = 16;
+    private static final int DEALER_HIT_COUNT = 16;
 
     private final Deck deck;
 

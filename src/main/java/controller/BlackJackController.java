@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static final String HIT_OPTION = "y";
+    private static final String HIT_OPTION = "y";
 
     public void run() {
         List<String> names = InputView.inputParticipantName();
