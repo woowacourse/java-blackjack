@@ -35,8 +35,7 @@ public class Application {
     }
 
     private static void playMainGame(List<GamerDto> gamerDtos, BlackJackGame blackJackGame) {
-        gamerDtos.stream().forEach(gamer ->
-                askForGamer(gamer, blackJackGame));
+        gamerDtos.forEach(gamer -> askForGamer(gamer, blackJackGame));
         int dealerDrawCount = blackJackGame.drawDealerCard();
         OutputView.printDealerTurn(dealerDrawCount);
     }
