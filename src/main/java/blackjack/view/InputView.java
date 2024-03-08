@@ -13,8 +13,15 @@ public class InputView {
         return List.of(line.split(","));
     }
 
-    public String inputDrawChoice(String playerName) {
+    public boolean inputDrawChoice(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까? (y/n)");
-        return scanner.nextLine();
+        String choice = scanner.nextLine();
+        if ("y".equals(choice)) {
+            return true;
+        }
+        if ("n".equals(choice)) {
+            return false;
+        }
+        throw new IllegalArgumentException("y 또는 n만 선택할 수 있습니다.");
     }
 }

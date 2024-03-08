@@ -40,49 +40,6 @@ public class BlackJackController {
         doDealerRound(dealer, deck);
     }
 
-    private void doRound(Player player, Deck deck) {
-        while (!player.isBusted()) {
-            String drawChoice = inputView.inputDrawChoice(player.getName());
-            if (drawChoice.equals("n")) {
-                break;
-            }
-            player.draw(deck);
-            outputView.printPlayerCard(PlayerDto.from(player));
-        }
-    }
-
-    private void doDealerRound(Dealer dealer, Deck deck) {
-        dealer.drawUntilExceedMinimum(deck);
-        printExtraDealerDraw(dealer);
-    }
-
-    private void printGameResult(Dealer dealer, Players players) {
-        printCardStatus(dealer, players);
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
-
-        outputView.printDealerResult(gameResultBoard.getDealerResult());
-        for (Player player : players.getPlayers()) {
-            outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
-        }
-    }
-
-    private void printCardStatus(Dealer dealer, Players players) {
-        PlayerResultDto dealerResult = PlayerResultDto.from(dealer.getPlayer());
-
-        List<PlayerResultDto> playerResultDtos = players.getPlayers().stream()
-                .map(PlayerResultDto::from)
-                .toList();
-        outputView.printCardStatus(dealerResult, playerResultDtos);
-    }
-
-    private void printExtraDealerDraw(Dealer dealer) {
-        int dealerCardsCount = dealer.getCardsCount();
-        int extraDrawCount = dealerCardsCount - INITIAL_CARDS_COUNT;
-        if (extraDrawCount > 0) {
-            outputView.printExtraDealerDraw(extraDrawCount);
-        }
-    }
-
     private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
         players.getPlayers().forEach(
                 player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
@@ -107,5 +64,48 @@ public class BlackJackController {
                 .map(PlayerDto::from)
                 .toList();
         outputView.printPlayerInitialCards(playerDtos);
+    }
+
+    private void doRound(Player player, Deck deck) {
+        while (!player.isBusted() && hasAdditionalCardRequest(player)) {
+            player.draw(deck);
+            outputView.printPlayerCard(PlayerDto.from(player));
+        }
+    }
+
+    private boolean hasAdditionalCardRequest(Player player) {
+        return inputView.inputDrawChoice(player.getName());
+    }
+
+    private void doDealerRound(Dealer dealer, Deck deck) {
+        dealer.drawUntilExceedMinimum(deck);
+        printExtraDealerDraw(dealer);
+    }
+
+    private void printExtraDealerDraw(Dealer dealer) {
+        int dealerCardsCount = dealer.getCardsCount();
+        int extraDrawCount = dealerCardsCount - INITIAL_CARDS_COUNT;
+        if (extraDrawCount > 0) {
+            outputView.printExtraDealerDraw(extraDrawCount);
+        }
+    }
+
+    private void printGameResult(Dealer dealer, Players players) {
+        printCardStatus(dealer, players);
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
+
+        outputView.printDealerResult(gameResultBoard.getDealerResult());
+        for (Player player : players.getPlayers()) {
+            outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
+        }
+    }
+
+    private void printCardStatus(Dealer dealer, Players players) {
+        PlayerResultDto dealerResult = PlayerResultDto.from(dealer.getPlayer());
+
+        List<PlayerResultDto> playerResultDtos = players.getPlayers().stream()
+                .map(PlayerResultDto::from)
+                .toList();
+        outputView.printCardStatus(dealerResult, playerResultDtos);
     }
 }
