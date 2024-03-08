@@ -15,7 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-
     Stack<Card> cards;
     Dealer dealer;
 
@@ -70,7 +69,7 @@ public class DealerTest {
         assertThat(bust).isTrue();
     }
 
-    @DisplayName("딜러가 카드를 더 받을 수 있다.")
+    @DisplayName("딜러가 카드를 더 받는다.")
     @Test
     void isNotStayTest() {
         // given
@@ -84,7 +83,7 @@ public class DealerTest {
         assertThat(stay).isFalse();
     }
 
-    @DisplayName("딜러가 카드를 더 받을 수 없다.")
+    @DisplayName("딜러가 카드를 더 받지 않는다.")
     @Test
     void isStayTest() {
         // given
