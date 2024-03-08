@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static void printInitialHand(Dealer dealer, List<Player> players) {
+        System.out.println();
         print(dealOut(dealer, players));
 
         print(singleCard(dealer));
         for (Player player : players) {
             printTotalHand(player);
         }
+        System.out.println();
     }
 
     public static void printTotalHand(Player player) {
@@ -46,14 +48,21 @@ public class OutputView {
         return String.format("%s: %s", player.getName(), hand);
     }
 
-    private static String resultScore(Player player) { //TODO: 결과 점수 출력 때 totalHand() 같이 사용
+    public static void printHandWithScore(Dealer dealer, List<Player> players) {
+        print(totalHand(dealer) + resultScore(dealer));
+        for (Player player : players) {
+            print(totalHand(player) + resultScore(player));
+        }
+        System.out.println();
+    }
+
+    private static String resultScore(Player player) {
         int score = player.calculate();
         return String.format(" - 결과: %d", score);
     }
 
     private static void print(String message) {
         System.out.println(message);
-        System.out.println();
     }
 
     private static String extractCardName(Card card) {
@@ -70,13 +79,11 @@ public class OutputView {
         System.out.println();
     }
 
-    /**
-     * ## 최종 승패 딜러: 1승 1패 pobi: 승 jason: 패
-     */
     public static void printResult(Result result, Dealer dealer) {
         Map<Player, ResultStatus> results = result.getResults();
-
         Map<ResultStatus, Long> resultStatusLongMap = result.calculateDealerResult();
+
+        System.out.println("## 최종 승패");
         printDealerResult(dealer, resultStatusLongMap);
         printPlayerResult(results);
     }
@@ -92,5 +99,14 @@ public class OutputView {
     private static void printPlayerResult(Map<Player, ResultStatus> results) {
         results.forEach(
                 ((player, status) -> System.out.println(String.format("%s: %s", player.getName(), status.getName()))));
+    }
+
+    public static void printError(String message) {
+        print(message);
+    }
+
+    public static void printBurst() {
+        System.out.println("버스트 되었습니다.");
+        System.out.println();
     }
 }
