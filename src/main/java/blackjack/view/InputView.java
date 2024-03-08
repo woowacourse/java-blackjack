@@ -43,7 +43,7 @@ public class InputView {
                 CardRequestFormat.YES.getFormat(),
                 CardRequestFormat.NO.getFormat());
 
-        String input = SCANNER.nextLine();
+        final String input = SCANNER.nextLine();
 
         return CardRequestFormat.from(input);
     }

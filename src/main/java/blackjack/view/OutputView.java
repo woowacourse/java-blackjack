@@ -18,12 +18,14 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String DELIMITER = ", ";
+
     public void printStartCards(final StartCardsDTO startCardsDTO) {
         final Map<String, List<CardDTO>> participantsCards = startCardsDTO.participantsCard();
         final Map<String, List<CardDTO>> playersCard = getExceptDealer(participantsCards);
 
         System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", DealerFormat.DEALER.getFormat(),
-                String.join(", ", playersCard.keySet()));
+                String.join(DELIMITER, playersCard.keySet()));
         System.out.printf("%s: %s%n", DealerFormat.DEALER.getFormat(),
                 convertToCardsFormat(getOnlyDealer(participantsCards)));
         playersCard.forEach(this::printPlayerCard);
@@ -35,7 +37,7 @@ public class OutputView {
     }
 
     private String convertToCardsFormat(final List<CardDTO> cards) {
-        return String.join(", ", cards.stream().map(this::convertToCardFormat).toList());
+        return String.join(DELIMITER, cards.stream().map(this::convertToCardFormat).toList());
     }
 
     public void printPlayerCard(final String name, final List<CardDTO> cards) {
