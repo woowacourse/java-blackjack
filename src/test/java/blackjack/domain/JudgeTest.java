@@ -292,7 +292,7 @@ class JudgeTest {
     }
 
     private void bustDealer() {
-        dealer.isCardAdded();
+        dealer.extraCard();
     }
 
     private void deckDrawLoop(final int count) {

@@ -38,7 +38,7 @@ public class Dealer extends Gamer {
         return hand.calculateScore() <= Constants.DEALER_BOUND;
     }
 
-    public boolean isCardAdded() {
+    public boolean extraCard() {
         if (canReceiveCard()) {
             selfDraw();
             return true;

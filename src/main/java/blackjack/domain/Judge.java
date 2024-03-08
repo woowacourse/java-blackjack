@@ -7,7 +7,6 @@ import blackjack.dto.PlayerResult;
 
 public class Judge {
 
-
     public static DealerResult judge(
             final ResultStatus resultStatus, final Player player, final Dealer dealer,
             final PlayerResult playerResult) {

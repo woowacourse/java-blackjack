@@ -14,8 +14,6 @@ import java.util.List;
 
 public class BlackjackGame {
 
-    private static final String DEALER_NAME = "딜러";
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -32,14 +30,16 @@ public class BlackjackGame {
         Players players = Players.of(names, dealer);
 
         printCardDistribute(names, players, dealer);
+        extraCardRequest(dealer, players);
+        outputView.printFinalResult(names, players.createResult(dealer));
+    }
 
+    private void extraCardRequest(final Dealer dealer, final Players players) {
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, dealer));
 
-        printAddDealerCard(dealer);
+        printDealerExtraCard(dealer);
         printResultCardsStatus(dealer, players);
-
-        outputView.printFinalResult(names, players.createResult(dealer));
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
@@ -80,8 +80,8 @@ public class BlackjackGame {
         } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
     }
 
-    private void printAddDealerCard(final Dealer dealer) {
-        if (dealer.isCardAdded()) {
+    private void printDealerExtraCard(final Dealer dealer) {
+        if (dealer.extraCard()) {
             outputView.printAddDealerCard();
             return;
         }
