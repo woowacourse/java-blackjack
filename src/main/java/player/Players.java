@@ -55,12 +55,4 @@ public class Players {
                     "참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
         }
     }
-
-    public Player getSinglePlayer(int index) {
-        return players.get(index);
-    }
-
-    public int getSize() {
-        return players.size();
-    }
 }
