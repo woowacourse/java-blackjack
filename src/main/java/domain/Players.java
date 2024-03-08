@@ -20,7 +20,7 @@ public class Players {
     }
 
     private void validatePlayerNumbers(final List<Player> players) {
-        if(isInvalidPlayersNumber(players)){
+        if (isInvalidPlayersNumber(players)) {
             throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
         }
     }
@@ -30,7 +30,7 @@ public class Players {
     }
 
     private void validateDuplicate(final List<Player> players) {
-        if(hasDuplicatePlayers(players)){
+        if (hasDuplicatePlayers(players)) {
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다");
         }
     }

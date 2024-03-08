@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BlackjackRule {
+    private static final int BUST_CONDITION = 21;
+
     private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
     public BlackjackResult finishGame(final List<Player> players, final Player dealer) {
@@ -18,11 +20,11 @@ public class BlackjackRule {
     }
 
     private void judgeWinningHand(final Player dealer, final Player player) {
-        if (player.calculateScore() > 21) {
+        if (player.calculateScore() > BUST_CONDITION) {
             calculate(dealer, player, 0, 1);
             return;
         }
-        if (dealer.calculateScore() > 21) {
+        if (dealer.calculateScore() > BUST_CONDITION) {
             calculate(dealer, player, 1, 0);
             return;
         }
