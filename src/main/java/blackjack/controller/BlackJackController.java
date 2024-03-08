@@ -24,23 +24,20 @@ public class BlackJackController {
 
     public void start() {
         Dealer dealer = new Dealer();
-        List<String> playerNames = inputView.inputPlayerNames();
-        Players players = Players.from(playerNames);
+        Players players = Players.from(inputView.inputPlayerNames());
         Deck deck = Deck.createShuffledDeck();
 
-        doInitialDraw(dealer, players, deck);
-        outputView.printInitialMessage(playerNames);
-        printInitialCards(dealer, players);
-
-        for (Player player : players.getPlayers()) {
-            doRound(player, deck);
-        }
-
-        dealer.drawUntilExceedMinimum(deck);
-        printExtraDealerDraw(dealer);
-
-        printCardStatus(dealer, players);
+        playGame(dealer, players, deck);
         printGameResult(dealer, players);
+    }
+
+    private void playGame(Dealer dealer, Players players, Deck deck) {
+        doInitialDraw(dealer, players, deck);
+
+        players.getPlayers().forEach(
+                player -> doRound(player, deck)
+        );
+        doDealerRound(dealer, deck);
     }
 
     private void doRound(Player player, Deck deck) {
@@ -54,7 +51,13 @@ public class BlackJackController {
         }
     }
 
+    private void doDealerRound(Dealer dealer, Deck deck) {
+        dealer.drawUntilExceedMinimum(deck);
+        printExtraDealerDraw(dealer);
+    }
+
     private void printGameResult(Dealer dealer, Players players) {
+        printCardStatus(dealer, players);
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
 
         outputView.printDealerResult(gameResultBoard.getDealerResult());
@@ -80,6 +83,22 @@ public class BlackJackController {
         }
     }
 
+    private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
+        players.getPlayers().forEach(
+                player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
+        );
+        drawCard(dealer.getPlayer(), deck, INITIAL_CARDS_COUNT);
+
+        outputView.printInitialMessage(players.getPlayerNames());
+        printInitialCards(dealer, players);
+    }
+
+    private void drawCard(Player player, Deck deck, int amount) {
+        for (int i = 0; i < amount; i++) {
+            player.draw(deck);
+        }
+    }
+
     private void printInitialCards(Dealer dealer, Players players) {
         Card dealerCard = dealer.getFirstCard();
         outputView.printDealerInitialCard(dealerCard);
@@ -88,18 +107,5 @@ public class BlackJackController {
                 .map(PlayerDto::from)
                 .toList();
         outputView.printPlayerInitialCards(playerDtos);
-    }
-
-    private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
-        players.getPlayers().forEach(
-                player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
-        );
-        drawCard(dealer.getPlayer(), deck, INITIAL_CARDS_COUNT);
-    }
-
-    private void drawCard(Player player, Deck deck, int amount) {
-        for (int i = 0; i < amount; i++) {
-            player.draw(deck);
-        }
     }
 }
