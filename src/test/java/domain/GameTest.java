@@ -1,5 +1,16 @@
 package domain;
 
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
+
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
@@ -13,16 +24,6 @@ import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
-
-import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
-import java.util.List;
-import java.util.Map;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class GameTest {
 

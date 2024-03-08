@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Objects;
 public class Hands {
 
     private static final int BLACK_JACK = 21;
+    public static final int EXTRA_ACE_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -24,26 +26,7 @@ public class Hands {
                 .mapToInt(Card::getCardNumber)
                 .sum();
 
-        if (hasAce() && total + 10 <= BLACK_JACK) { //TODO 메서드분리
-            return total + 10;
-        }
-
-        return total;
-    }
-
-    public Result calculateResult(final Hands target) {
-        if (this.sum() >= target.sum() && this.sum() <= BLACK_JACK) {
-            if (this.size() == target.size() && this.sum() == target.sum()) {
-                return Result.TIE;
-            }
-
-            return Result.WIN;
-        }
-
-        if (!this.isBust() && target.isBust()) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+        return calculateTotalByAce(total);
     }
 
     public void add(final Card card) {
@@ -71,6 +54,29 @@ public class Hands {
         return cards.stream()
                 .map(Card::toString)
                 .toList();
+    }
+
+    public Result calculateResult(final Hands target) {
+        if (this.sum() >= target.sum() && this.sum() <= BLACK_JACK) {
+            if (this.size() == target.size() && this.sum() == target.sum()) {
+                return Result.TIE;
+            }
+
+            return Result.WIN;
+        }
+
+        if (!this.isBust() && target.isBust()) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
+    private int calculateTotalByAce(final int total) {
+        if (hasAce() && total + EXTRA_ACE_VALUE <= BLACK_JACK) {
+            return total + EXTRA_ACE_VALUE;
+        }
+
+        return total;
     }
 
     @Override
