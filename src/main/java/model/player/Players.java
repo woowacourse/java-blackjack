@@ -10,6 +10,7 @@ import model.card.Card;
 public class Players {
 
     private static final String INVALID_PLAYERS_SIZE = "플레이어 수는 1명 이상이어야 합니다.";
+    private static final String NOT_EXIST_PLAYER = "존재하는 플레이어가 없습니다.";
     private static final int CARDS_PER_PLAYER = 2;
 
     private final List<Player> players;
@@ -57,7 +58,7 @@ public class Players {
         return players.stream()
             .filter(player1 -> player1.equals(player))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하는 플레이어가 없습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
     }
 
     public int count() {
