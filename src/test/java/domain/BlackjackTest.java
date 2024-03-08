@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -42,7 +43,7 @@ class BlackjackTest {
         final Player jonge = new Participant(new Name("종이"));
         teba.addCard(new Card(Denomination.ACE,Symbol.CLOVER));
         jonge.addCard(new Card(Denomination.ACE,Symbol.HEART));
-        final Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge, dealer)), dealer);
+        final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
         final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
 
