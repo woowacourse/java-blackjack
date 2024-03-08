@@ -12,7 +12,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return number == CardNumber.ACE;
+        return number.isAce();
     }
 
     public int getRealNumber() {

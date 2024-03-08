@@ -38,9 +38,7 @@ public class Players {
     public void divideCard(final List<Card> cards) {
         final Iterator<Card> cardIterator = cards.iterator();
 
-        for (final Participant player : players) {
-            player.addStartCard(cardIterator.next(), cardIterator.next());
-        }
+        players.forEach(player -> player.addStartCard(cardIterator.next(), cardIterator.next()));
     }
 
     public void addCardTo(final String name, final Card card) {
