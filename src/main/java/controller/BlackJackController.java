@@ -2,7 +2,6 @@ package controller;
 
 import cardGame.BlackJackGame;
 import cardGame.SingleMatch;
-import cardGame.dto.ParticipantsTotalGameResult;
 import controller.dto.SingleWinOrNotResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,36 +21,50 @@ public class BlackJackController {
     }
 
     public void playGame() {
-        List<String> nameString = inputView.inputPlayerNames();
-
-        BlackJackGame blackJackGame = new BlackJackGame(nameString);
-
-        outputView.printInitCardStatus(blackJackGame.getBackJackGameStatus());
-
-        List<SingleWinOrNotResult> winOrNotResults = new ArrayList<>();
-        List<Boolean> playersWinningInfo = new ArrayList<>();
-
+        BlackJackGame blackJackGame = getBlackJackGame();
         int dealerExtraCardCount = blackJackGame.countDealerExtraCard();
 
-        for (SingleMatch singleMatch : blackJackGame.startGame()) {
-            Player player = singleMatch.getPlayer();
-
-            while (!singleMatch.isCanPlayGamePlayer() && inputView.inputPlayerCommand(player.getName())) {
-                singleMatch.playRound();
-                outputView.printCardsStatus(SinglePlayerStatusDto.from(player));
-            }
-            boolean isPlayerWins = singleMatch.isPlayerWins();
-            winOrNotResults.add(new SingleWinOrNotResult(player.getName(), isPlayerWins));
-            playersWinningInfo.add(isPlayerWins);
-        }
+        List<SingleWinOrNotResult> winOrNotResults = runGame(blackJackGame, new ArrayList<>());
+        List<Boolean> playersWinningInfo = getPlayersWinningInfo(winOrNotResults);
 
         outputView.printInfo(dealerExtraCardCount);
-
-        ParticipantsTotalGameResult participantsTotalGameResult = blackJackGame.getFinalBlackJackGameResult();
-
-        outputView.printPariticipantsScore(participantsTotalGameResult);
+        outputView.printPariticipantsScore(blackJackGame.getFinalBlackJackGameResult());
         outputView.printDealerResult(countDealerWinning(playersWinningInfo), playersWinningInfo.size());
         outputView.printPlayerResult(winOrNotResults);
+    }
+
+    private BlackJackGame getBlackJackGame() {
+        List<String> nameString = inputView.inputPlayerNames();
+        BlackJackGame blackJackGame = new BlackJackGame(nameString);
+        outputView.printInitCardStatus(blackJackGame.getBackJackGameStatus());
+        return blackJackGame;
+    }
+
+    private List<SingleWinOrNotResult> runGame(BlackJackGame blackJackGame,
+                                               List<SingleWinOrNotResult> winOrNotResults) {
+        for (SingleMatch singleMatch : blackJackGame.startGame()) {
+            Player player = singleMatch.getPlayer();
+            retry(singleMatch, player);
+
+            boolean isPlayerWins = singleMatch.isPlayerWins();
+            winOrNotResults.add(new SingleWinOrNotResult(player.getName(), isPlayerWins));
+        }
+        return winOrNotResults;
+    }
+
+    private List<Boolean> getPlayersWinningInfo(List<SingleWinOrNotResult> winOrNotResults) {
+        List<Boolean> playersWinningInfo = new ArrayList<>();
+        for (SingleWinOrNotResult winOrNotResult : winOrNotResults) {
+            playersWinningInfo.add(winOrNotResult.isWinner());
+        }
+        return playersWinningInfo;
+    }
+
+    private void retry(SingleMatch singleMatch, Player player) {
+        while (!singleMatch.isCanPlayGamePlayer() && inputView.inputPlayerCommand(player.getName())) {
+            singleMatch.playRound();
+            outputView.printCardsStatus(SinglePlayerStatusDto.from(player));
+        }
     }
 
     private int countDealerWinning(List<Boolean> playersWinningInfo) {
