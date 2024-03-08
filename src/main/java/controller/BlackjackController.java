@@ -40,6 +40,10 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             continueHit(blackjackGame, player);
         }
+        Card card = cardDispenser.dispenseCard();
+        if (blackjackGame.hitForDealer(card)) {
+            OutputView.printAfterDealerHit();
+        }
     }
 
     private void continueHit(BlackjackGame blackjackGame, Player player) {

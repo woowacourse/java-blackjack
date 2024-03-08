@@ -17,6 +17,8 @@ public class OutputView {
     private static final String AFTER_SETTING_INTRO = NEWLINE + "딜러와 %s에게 2장을 나누었습니다." + NEWLINE;
     private static final String DEALER_CARD_FORMAT = "딜러: %s" + NEWLINE;
     private static final String PLAYER_CARD_FORMAT = "%s카드: %s" + NEWLINE;
+    private static final String DEALER_HIT = NEWLINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE;
+
 
     public static void printCardsAfterSetting(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
@@ -52,5 +54,9 @@ public class OutputView {
             .map(Card::toString)
             .collect(collectingAndThen(toList(), cards -> String.join(DELIMITER, cards)));
         System.out.printf(PLAYER_CARD_FORMAT, player.getName(), playerCards);
+    }
+
+    public static void printAfterDealerHit() {
+        System.out.println(DEALER_HIT);
     }
 }
