@@ -27,7 +27,6 @@ public class Player extends Participant {
         return BLACKJACK_SCORE;
     }
 
-
     public String getName() {
         return name.getName();
     }

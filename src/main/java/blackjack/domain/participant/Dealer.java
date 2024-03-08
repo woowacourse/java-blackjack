@@ -45,6 +45,4 @@ public class Dealer extends Participant {
     protected int getMaxDrawableScore() {
         return DRAWABLE_MAX_SCORE;
     }
-
-
 }
