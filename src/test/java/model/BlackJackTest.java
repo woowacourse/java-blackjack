@@ -48,7 +48,7 @@ class BlackJackTest {
 
     @DisplayName("카드의 합이 21을 초과하면 패한다.")
     @Test
-    void findLoseResult() {
+    void findLoseOutcome() {
         Participant participant = new Participant("배키");
         participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         participant.addCard(new Card(CardShape.DIAMOND, CardNumber.NINE));
@@ -66,7 +66,7 @@ class BlackJackTest {
 
     @DisplayName("참가자 카드의 합이 딜러와 동일하면 무승부다.")
     @Test
-    void findDrawResult() {
+    void findDrawOutcome() {
         Participant participant = new Participant("배키");
         participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         participant.addCard(new Card(CardShape.DIAMOND, CardNumber.NINE));
@@ -84,7 +84,7 @@ class BlackJackTest {
 
     @DisplayName("딜러의 합이 16을 넘으면 거짓을 반환한다.")
     @Test
-    void isDealerOverThresholdTrue() {
+    void isDealerOverThresholdFalse() {
         Participant participant = new Participant("배키");
 
         Dealer dealer = new Dealer();
@@ -99,7 +99,7 @@ class BlackJackTest {
 
     @DisplayName("딜러의 합이 16을 넘지 않으면 참을 반환한다.")
     @Test
-    void isDealerOverThresholdFalse() {
+    void isDealerOverThresholdTrue() {
         Participant participant = new Participant("배키");
 
         Dealer dealer = new Dealer();
