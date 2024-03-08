@@ -11,10 +11,8 @@ public class Dealer {
         this.cards = cards;
     }
 
-    public void addCard(CardGenerator cardGenerator) {
-        if (isScoreLessThanStandard()) {
-            cards.addCard(cardGenerator.drawCard());
-        }
+    public void addCard(Card card) {
+        cards.addCard(card);
     }
 
     public boolean isScoreLessThanStandard() {

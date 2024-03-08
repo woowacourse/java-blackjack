@@ -31,7 +31,7 @@ public class BlackJackGame {
     }
 
     public void updateDealer() {
-        dealer.addCard(cardGenerator);
+        dealer.addCard(cardGenerator.drawCard());
     }
 
     public GameResults calculateFinalResults() {
