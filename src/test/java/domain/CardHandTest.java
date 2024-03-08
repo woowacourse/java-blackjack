@@ -3,28 +3,20 @@ package domain;
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CardHandTest {
-    private CardHand cardHand;
-
-    @BeforeEach
-    void setUp() {
-        cardHand = new CardHand();
-    }
-
     @Test
-    void 카드를_받을_수_있다() {
+    void 카드를_한_장_받는다() {
+        CardHand cardHand = new CardHand();
         cardHand.addCard(카드());
 
-        assertThat(cardHand).extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(1);
+        assertThat(cardHand.getCards()).hasSize(1);
     }
 
     @Test
     void 카드의_합을_계산한다() {
+        CardHand cardHand = new CardHand();
         cardHand.addCard(카드(Denomination.TEN));
         cardHand.addCard(카드(Denomination.SIX));
 
@@ -35,6 +27,7 @@ class CardHandTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_1() {
+        CardHand cardHand = new CardHand();
         cardHand.addCard(카드(Denomination.ACE));
         cardHand.addCard(카드(Denomination.SIX));
 
@@ -45,6 +38,7 @@ class CardHandTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_2() {
+        CardHand cardHand = new CardHand();
         cardHand.addCard(카드(Denomination.ACE));
         cardHand.addCard(카드(Denomination.ACE));
 
@@ -55,6 +49,7 @@ class CardHandTest {
 
     @Test
     void Ace는_1_또는_11로_계산할_수_있다_3() {
+        CardHand cardHand = new CardHand();
         cardHand.addCard(카드(Denomination.ACE));
         cardHand.addCard(카드(Denomination.KING));
         cardHand.addCard(카드(Denomination.JACK));
