@@ -30,9 +30,9 @@ class ResultTest {
         player.receive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.receive(new Card(Rank.EIGHT, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.TIE);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.TIE);
     }
 
     @Test
@@ -41,9 +41,9 @@ class ResultTest {
         player.receive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.receive(new Card(Rank.NINE, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
 
     @Test
@@ -52,9 +52,9 @@ class ResultTest {
         player.receive(new Card(Rank.NINE, Symbol.DIAMOND));
         dealer.receive(new Card(Rank.EIGHT, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.WIN);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
     }
 
     // 버스트
@@ -67,9 +67,9 @@ class ResultTest {
         player.receive(new Card(Rank.TWO, Symbol.HEART));
         dealer.receive(new Card(Rank.KING, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
     
     @Test
@@ -80,9 +80,9 @@ class ResultTest {
         dealer.receive(new Card(Rank.SIX, Symbol.HEART));
         player.receive(new Card(Rank.KING, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.WIN);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
     }
 
     @Test
@@ -96,8 +96,8 @@ class ResultTest {
         player.receive(new Card(Rank.KING, Symbol.CLUB));
         player.receive(new Card(Rank.TWO, Symbol.HEART));
 
-        Map<Player, WinLose> resultMap = Result.of(List.of(player), dealer).getResultMap();
+        Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(resultMap.get(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
 }

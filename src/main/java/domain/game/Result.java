@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,20 +32,20 @@ public class Result {
         if (dealer.isBusted()) {
             return WinLose.WIN;
         }
-        return compareScore(player, dealer);
+        return decideWinLoseByScore(player, dealer);
     }
 
-    private static WinLose compareScore(Player player, Dealer dealer) {
-        if (dealer.score() > player.score()) {
-            return WinLose.LOSE;
-        }
+    private static WinLose decideWinLoseByScore(Player player, Dealer dealer) {
         if (dealer.score() < player.score()) {
             return WinLose.WIN;
+        }
+        if (dealer.score() > player.score()) {
+            return WinLose.LOSE;
         }
         return WinLose.TIE;
     }
 
-    public Map<Player, WinLose> getResultMap() {
-        return Collections.unmodifiableMap(resultMap);
+    public WinLose playerWinLose(Player player) {
+        return resultMap.get(player);
     }
 }
