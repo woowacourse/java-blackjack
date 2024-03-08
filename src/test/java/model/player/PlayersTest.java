@@ -35,4 +35,19 @@ public class PlayersTest {
         assertThatThrownBy(() -> Players.from(playerNames))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("플레이어 이름이 중복되면 예외 발생")
+    @ParameterizedTest
+    @MethodSource("provideDuplicatedPlayerNames")
+    void testInvalidPlayerNamesUnique(List<String> names) {
+        assertThatThrownBy(() -> Players.from(names))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> provideDuplicatedPlayerNames() {
+        return Stream.of(
+            Arguments.of(List.of("lily", "jojo", "lily")),
+            Arguments.of(List.of("릴리", "조조", "조조"))
+        );
+    }
 }
