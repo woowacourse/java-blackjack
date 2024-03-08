@@ -17,6 +17,6 @@ class PlayerResultsTest {
                 Map.of(new Player(new Name("a")), WIN));
 
         DealerResult dealerResult = playerResults.generateDealerResult();
-        assertThat(dealerResult.getInformation()).isEqualTo("1패");
+        assertThat(dealerResult.getResultsDetail()).isEqualTo("1패");
     }
 }

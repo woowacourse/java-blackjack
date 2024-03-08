@@ -31,7 +31,7 @@ class UsersTest {
         Card card = new Card(CLOVER, FIVE);
         users.addCardOfCurrentUser(card);
 
-        assertThat(users.getCurrentUser().userDeck.getFirstCard()).isEqualTo(card);
+        assertThat(users.getCurrentUser().userDeck.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
@@ -74,7 +74,7 @@ class UsersTest {
         users.addDealerCard(card);
 
         Dealer dealer = users.getDealer();
-        assertThat(dealer.userDeck.getFirstCard()).isEqualTo(card);
+        assertThat(dealer.userDeck.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
@@ -111,8 +111,8 @@ class UsersTest {
     }
 
     @Test
-    @DisplayName("플레이어의 숫자가 21을 넘으면 busted된다.")
-    void bustedTest() {
+    @DisplayName("현재 플레이어가 busted인지 확인한다.")
+    void currentUserBustedTest() {
         Player player1 = new Player(new Name("a"));
         Users users = new Users(List.of(player1));
 

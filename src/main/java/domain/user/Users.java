@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {
-    private static final int BLACK_JACK_CONDITION = 21;
-    private final static int DEALER_CARD_CONDITION = 16;
     private static final int DEALER_INDEX = 0;
     private static final int FIRST_PLAYER_INDEX = 1;
     private final List<User> users;
@@ -27,16 +25,6 @@ public class Users {
         currentUser = users.get(FIRST_PLAYER_INDEX);
     }
 
-    private void validateDuplicatedName(List<Player> players) {
-        long count = players.stream()
-                .map(player -> player.getName().value())
-                .distinct()
-                .count();
-        if (players.size() != count) {
-            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
-        }
-    }
-
     public void setStartCards(TotalDeck totalDeck) {
         for (User user : users) {
             user.addCard(totalDeck.getNewCard());
@@ -45,7 +33,7 @@ public class Users {
     }
 
     public boolean isCurrentUserPlayer() {
-        return currentUser instanceof Player;
+        return currentUser.isPlayer();
     }
 
     public void addCardOfCurrentUser(Card card) {
@@ -69,33 +57,25 @@ public class Users {
     }
 
     public boolean isDealerCardAddCondition() {
-        return sumDealerCard() <= DEALER_CARD_CONDITION;
+        return getDealer().isAddCondition();
     }
 
     public void addDealerCard(Card card) {
         getDealer().addCard(card);
     }
 
-    private int sumDealerCard() {
-        return getDealer().sumUserDeck();
-    }
-
     public Result generatePlayerResult(Player player) {
-        if (busted(player)) {
+        if (player.busted()) {
             return LOSE;
         }
-        if (busted(getDealer())) {
+        if (getDealer().busted()) {
             return WIN;
         }
         return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
     }
 
     public boolean currentUserBusted() {
-        return busted(currentUser);
-    }
-
-    private boolean busted(User user) {
-        return user.sumUserDeck() > BLACK_JACK_CONDITION;
+        return currentUser.busted();
     }
 
     public List<User> getUsers() {
@@ -115,5 +95,15 @@ public class Users {
 
     public Dealer getDealer() {
         return (Dealer) users.get(DEALER_INDEX);
+    }
+
+    private void validateDuplicatedName(List<Player> players) {
+        long count = players.stream()
+                .map(player -> player.getName().value())
+                .distinct()
+                .count();
+        if (players.size() != count) {
+            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
+        }
     }
 }

@@ -1,19 +1,30 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.deck.UserDeck;
 
-public class User {
+public abstract class User {
     final UserDeck userDeck;
     final Name name;
 
-    public User(Name name) {
-        this.userDeck = new UserDeck();
+    public User(UserDeck userDeck, Name name) {
+        this.userDeck = userDeck;
         this.name = name;
     }
 
     public void addCard(Card card) {
-        userDeck.pushCard(card);
+        userDeck.addCard(card);
     }
+
+    public int sumUserDeck() {
+        return userDeck.sumCard();
+    }
+
+    public boolean busted() {
+        return userDeck.busted();
+    }
+
+    abstract boolean isPlayer();
 
     public Name getName() {
         return name;
@@ -21,9 +32,5 @@ public class User {
 
     public UserDeck getUserDeck() {
         return userDeck;
-    }
-
-    public int sumUserDeck() {
-        return userDeck.sumCard();
     }
 }

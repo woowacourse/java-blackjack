@@ -11,7 +11,6 @@ import view.InputView;
 import view.ResultView;
 
 public class Controller {
-
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);

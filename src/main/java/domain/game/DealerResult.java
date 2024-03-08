@@ -11,7 +11,7 @@ public class DealerResult {
         this.dealerResult = dealerResult;
     }
 
-    public String getInformation() {
+    public String getResultsDetail() {
         return dealerResult.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() > NONE)

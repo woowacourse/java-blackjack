@@ -1,7 +1,14 @@
 package domain.user;
 
+import domain.deck.PlayerDeck;
+
 public class Player extends User {
     public Player(Name name) {
-        super(name);
+        super(new PlayerDeck(), name);
+    }
+
+    @Override
+    boolean isPlayer() {
+        return true;
     }
 }

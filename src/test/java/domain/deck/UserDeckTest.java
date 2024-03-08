@@ -1,4 +1,4 @@
-package domain.user;
+package domain.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,5 +50,17 @@ public class UserDeckTest {
         userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
 
         assertThat(userDeck.sumCard()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("카드의 합이 21 초과이면 busted이다.")
+    void bustedTest() {
+        UserDeck userDeck = new UserDeck();
+
+        userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.QUEEN));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.KING));
+
+        assertThat(userDeck.busted()).isTrue();
     }
 }

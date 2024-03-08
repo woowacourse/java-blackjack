@@ -1,5 +1,11 @@
 package domain.game;
 
+import static domain.Command.NO;
+import static domain.Command.YES;
+import static domain.game.Result.LOSE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import domain.TotalDeck;
 import domain.TotalDeckGenerator;
 import domain.card.Card;
@@ -8,16 +14,9 @@ import domain.card.Shape;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static domain.Command.NO;
-import static domain.Command.YES;
-import static domain.game.Result.LOSE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class GameTest {
     @Test
@@ -58,22 +57,6 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 16 이하이면 카드를 추가로 받는다.")
-    void addDealerCardAtConditionTest() {
-        TotalDeck totalDeck = new TotalDeck(List.of(
-                new Card(Shape.DIAMOND, Number.FIVE),
-                new Card(Shape.CLOVER, Number.FIVE),
-                new Card(Shape.CLOVER, Number.SIX),
-                new Card(Shape.CLOVER, Number.SEVEN)
-        ));
-        Users users = new Users(List.of(new Player(new Name("pobi"))));
-
-        Game game = new Game(totalDeck, users);
-        boolean actual = game.isDealerCardAddCondition();
-        assertThat(actual).isTrue();
-    }
-
-    @Test
     @DisplayName("결과를 반환한다.")
     void gameResultTest() {
         TotalDeck totalDeck = new TotalDeck(List.of(
@@ -91,7 +74,7 @@ public class GameTest {
 
         assertAll(
                 () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),
-                () -> assertThat(dealerResult.getInformation()).isEqualTo("1승")
+                () -> assertThat(dealerResult.getResultsDetail()).isEqualTo("1승")
         );
     }
 }
