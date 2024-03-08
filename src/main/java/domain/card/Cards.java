@@ -21,9 +21,8 @@ public class Cards {
         }
     }
 
-    public List<Card> receive(Card card) {
+    public void receive(Card card) {
         cards.add(card);
-        return List.copyOf(cards);
     }
 
     public int bestSum() {
