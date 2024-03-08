@@ -14,4 +14,13 @@ public class UserTest {
 
         assertThat(player.getName()).isEqualTo(name);
     }
+
+    @Test
+    @DisplayName("유저가 플레이어인지 확인한다")
+    void isPlayerTest() {
+        User player = new Player(new Name("a"));
+        User dealer = new Dealer();
+        assertThat(player.isPlayer()).isTrue();
+        assertThat(dealer.isPlayer()).isFalse();
+    }
 }
