@@ -15,15 +15,25 @@ public class OutputView {
     public static void printInitialStatus(GameStatusDto gameStatusDto) {
         GamerDto dealerDto = gameStatusDto.getDealerDto();
         List<GamerDto> gamerDtos = gameStatusDto.getGamerDtos();
-        // "딜러와 pobi, jason에게 2장을 나누었습니다.";
-        String gamerNames = gamerDtos.stream().map(GamerDto::getName).collect(Collectors.joining(", "));
-        System.out.println("딜러와 %s에게 2장을 나누었습니다.".formatted(gamerNames));
-        System.out.println("");
-        System.out.println(
-                String.join(": ",
-                        dealerDto.getName(),
-                        dealerDto.getCards().get(0).toString()));
-        gamerDtos.stream()
+        System.out.println("%n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(gamerDtos)));
+        System.out.println(buildDealerInitialStatus(dealerDto));
+        System.out.println(buildPlayersInitialStatus(gamerDtos) + "\n");
+    }
+
+    private static String buildGamerNames(List<GamerDto> gamerDtos) {
+        return gamerDtos.stream()
+                .map(GamerDto::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private static String buildDealerInitialStatus(GamerDto dealerDto) {
+        return String.join(": ",
+                dealerDto.getName(),
+                dealerDto.getCards().get(0).toString());
+    }
+
+    private static String buildPlayersInitialStatus(List<GamerDto> gamerDtos) {
+        return gamerDtos.stream()
                 .map(gamerDto -> buildNameCards(gamerDto.getName(), gamerDto.getCards()))
                 .collect(Collectors.joining("\n"));
     }
@@ -45,6 +55,7 @@ public class OutputView {
     public static void printTotalStatus(GameStatusDto gameStatusDto) {
         GamerDto dealerDto = gameStatusDto.getDealerDto();
         List<GamerDto> playersDto = gameStatusDto.getGamerDtos();
+        System.out.println();
         System.out.println(buildTotalStatus(dealerDto));
         playersDto.stream().map(OutputView::buildTotalStatus)
                 .forEach(System.out::println);
@@ -61,18 +72,20 @@ public class OutputView {
     }
 
     public static void printGameResult(BlackJackResult gameResult) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
         Map<Name, GamerResult> playersGameResult = gameResult.getPlayersResult();
 
-        //1승 1무 1패
-        String dealerResult = Arrays.stream(GamerResult.values())
-                .filter(dealerGameResult::containsKey)
-                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
-                .collect(Collectors.joining(" "));
-        System.out.println("딜러:" + dealerResult);
+        System.out.println("딜러:" + buildDealerResult(dealerGameResult));
         playersGameResult.forEach(
                 (name, result) -> System.out.println("%s:%s".formatted(name.name(), result.getResult())));
 
+    }
+
+    private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {
+        return Arrays.stream(GamerResult.values())
+                .filter(dealerGameResult::containsKey)
+                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
+                .collect(Collectors.joining(" "));
     }
 }
