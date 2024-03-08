@@ -19,9 +19,10 @@ public class Users {
 
     public Users(List<Player> players) {
         validateDuplicatedName(players);
-        this.users = new ArrayList<>();
-        users.add(new Dealer());
-        users.addAll(players);
+        users = players.stream()
+                .map(player -> (User) player)
+                .collect(Collectors.toList());
+        users.add(DEALER_INDEX, new Dealer());
         currentUser = users.get(FIRST_PLAYER_INDEX);
     }
 
@@ -106,7 +107,8 @@ public class Users {
     }
 
     private static void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
-        if (distinctPlayers.stream().anyMatch(distinctPlayer -> distinctPlayer.getName().equals(player.getName()))) {
+        if (distinctPlayers.stream()
+                .anyMatch(distinctPlayer -> distinctPlayer.getName().equals(player.getName()))) {
             throw new IllegalArgumentException(
                     "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getName().value())
             );
