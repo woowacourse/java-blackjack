@@ -30,10 +30,6 @@ public class Player {
         return hand.calculateScore();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<Card> openCards() {
         return hand.getCards();
     }
@@ -48,6 +44,10 @@ public class Player {
 
     public int announceCardCount() {
         return hand.countSize();
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
