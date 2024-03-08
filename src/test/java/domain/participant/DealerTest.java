@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.card.Rank;
 import domain.card.Shape;
 import org.assertj.core.api.Assertions;

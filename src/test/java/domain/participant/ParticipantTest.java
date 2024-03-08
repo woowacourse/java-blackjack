@@ -3,8 +3,6 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
-import domain.participant.Name;
-import domain.participant.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
