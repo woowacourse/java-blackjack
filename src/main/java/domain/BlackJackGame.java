@@ -11,9 +11,9 @@ public class BlackJackGame {
         this.dealer = dealer;
 
         List<String> names = playerNames.names();
-        for (String s : names) {
-            Name name = new Name(s);
-            Player player = new Player(name, dealer.dealHand());
+        for (String name : names) {
+            Name playerName = new Name(name);
+            Player player = new Player(playerName, dealer.dealHand());
             this.players.add(player);
         }
     }

@@ -40,11 +40,11 @@ public class Hand {
         return sum;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     private boolean isBustWithAce(int sum, int aceCount) {
         return sum > BLACK_JACK && aceCount > 0;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
