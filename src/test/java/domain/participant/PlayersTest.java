@@ -43,7 +43,7 @@ class PlayersTest {
     void 인덱스로_플레이어를_찾는다() {
         Players players = new Players(List.of("뽀로로", "프린", "포비"));
 
-        Player player = players.getPlayerByIndex(2);
+        Player player = players.findPlayerByIndex(2);
 
         assertThat(player.getName()).isEqualTo("포비");
     }
@@ -53,7 +53,7 @@ class PlayersTest {
     void 인덱스가_범위를_벗어날_경우_예외가_발생한다(int invalidIndex) {
         Players players = new Players(List.of("뽀로로", "프린", "포비"));
 
-        assertThatThrownBy(() -> players.getPlayerByIndex(invalidIndex))
+        assertThatThrownBy(() -> players.findPlayerByIndex(invalidIndex))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("인덱스가 범위를 벗어났습니다.");
     }

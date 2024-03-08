@@ -66,7 +66,7 @@ public class BlackjackController {
 
     private void dealToPlayers(Players players, BlackjackGame blackjackGame) {
         for (int i = 0; i < players.count(); i++) {
-            Player player = players.getPlayerByIndex(i);
+            Player player = players.findPlayerByIndex(i);
             hitUntilStay(blackjackGame, player, i);
         }
     }

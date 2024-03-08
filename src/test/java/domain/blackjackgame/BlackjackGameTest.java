@@ -31,9 +31,9 @@ class BlackjackGameTest {
         blackjackGame.startGame();
         assertAll(
                 () -> assertThat(dealer.getCardHand()).hasSize(2),
-                () -> assertThat(players.getPlayerByIndex(0).getCardHand()).hasSize(2),
-                () -> assertThat(players.getPlayerByIndex(1).getCardHand()).hasSize(2),
-                () -> assertThat(players.getPlayerByIndex(2).getCardHand()).hasSize(2)
+                () -> assertThat(players.findPlayerByIndex(0).getCardHand()).hasSize(2),
+                () -> assertThat(players.findPlayerByIndex(1).getCardHand()).hasSize(2),
+                () -> assertThat(players.findPlayerByIndex(2).getCardHand()).hasSize(2)
         );
     }
 

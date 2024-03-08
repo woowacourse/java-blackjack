@@ -1,16 +1,18 @@
 package domain.participant;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import domain.card.Card;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Players {
-    private static final int UNIQUE_COUNT = 1;
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 6;
+    private static final int UNIQUE_COUNT = 1;
 
     private final List<Player> players;
 
@@ -39,17 +41,17 @@ public class Players {
         }
     }
 
+    private Map<String, Long> getNameCounts(List<String> playerNames) {
+        return playerNames.stream()
+                .collect(groupingBy(name -> name, counting()));
+    }
+
     private Optional<String> findDuplicatedName(Map<String, Long> nameCounts) {
         return nameCounts.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() > UNIQUE_COUNT)
                 .map(Entry::getKey)
                 .findFirst();
-    }
-
-    private Map<String, Long> getNameCounts(List<String> playerNames) {
-        return playerNames.stream()
-                .collect(Collectors.groupingBy(name -> name, Collectors.counting()));
     }
 
     private List<Player> generatePlayers(List<String> playerNames) {
@@ -59,15 +61,11 @@ public class Players {
     }
 
     public void giveCardToPlayer(int playerIndex, Card card) {
-        Player player = players.get(playerIndex);
+        Player player = findPlayerByIndex(playerIndex);
         player.add(card);
     }
 
-    public int count() {
-        return this.players.size();
-    }
-
-    public Player getPlayerByIndex(int index) {
+    public Player findPlayerByIndex(int index) {
         if (isOutOfRange(index)) {
             throw new IllegalArgumentException("인덱스가 범위를 벗어났습니다.");
         }
@@ -76,6 +74,10 @@ public class Players {
 
     private boolean isOutOfRange(int index) {
         return index < 0 || players.size() <= index;
+    }
+
+    public int count() {
+        return this.players.size();
     }
 
     public List<String> getPlayerNames() {
