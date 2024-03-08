@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Console {
+
+    private Console() {
+    }
+
     public static String getInputFromConsole() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input;

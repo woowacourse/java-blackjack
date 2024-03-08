@@ -1,6 +1,10 @@
 package view;
 
 public class YesOrNoInputView {
+
+    private YesOrNoInputView() {
+    }
+
     public static Boolean getYNAsBoolean() {
         String input = Console.getInputFromConsole();
         if (input.equals("y")) {

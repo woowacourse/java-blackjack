@@ -1,6 +1,10 @@
 package domain.blackjack;
 
 public class GameResultCalculator {
+
+    private GameResultCalculator() {
+    }
+
     /**
      * baseGamer의 otherGamer 에 대한 승부 결과 반환
      *

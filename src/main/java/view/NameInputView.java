@@ -5,6 +5,9 @@ import java.util.List;
 public class NameInputView {
     private static final String SEPARATOR = ",";
 
+    private NameInputView() {
+    }
+
     public static List<String> getNames() {
         String input = Console.getInputFromConsole();
         validateSeparator(input);

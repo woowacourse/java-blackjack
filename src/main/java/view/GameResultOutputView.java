@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameResultOutputView {
+
+    private GameResultOutputView() {
+    }
+
     public static void print(PlayerGameResultDTO playerGameResultDTO) {
         String gamerName = playerGameResultDTO.getGamerName();
         String gameResult = mapToString(playerGameResultDTO.getGameResult());

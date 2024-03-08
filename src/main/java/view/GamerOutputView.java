@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class GamerOutputView {
 
+    private GamerOutputView() {
+    }
+
     public static void print(GamerDTO gamerDTO) {
         String outputWithoutSummationCardPoint = generateOutputWithoutSummationCardPoint(gamerDTO);
         String summationCardPointOutput = "결과: %d".formatted(gamerDTO.getSummationCardPoint());
