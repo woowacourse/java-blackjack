@@ -1,16 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GamePlayerResult;
-import blackjack.domain.common.Name;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultStatus;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.common.Name;
+import blackjack.domain.result.ResultStatus;
 
-//TODO : Player가 아닌 GamePlayer를 상속하면 안되나?
 public class Dealer extends Player implements CardReceivable {
     private static final Integer RECEIVE_SIZE = 16;
     private static final String DEFAULT_DEALER_NAME = "딜러";
@@ -24,17 +18,8 @@ public class Dealer extends Player implements CardReceivable {
         return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
     }
 
-    public Result checkResult(List<GamePlayer> gamePlayers) {
-        List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
 
-        for (GamePlayer gamePlayer : gamePlayers) {
-            gamePlayerResults.add(new GamePlayerResult(gamePlayer.name, checkPlayer(gamePlayer)));
-        }
-
-        return new Result(gamePlayerResults, DealerResult.of(name, gamePlayerResults));
-    }
-
-    private ResultStatus checkPlayer(GamePlayer gamePlayer) {
+    public ResultStatus checkPlayer(GamePlayer gamePlayer) {
         int playerScore = gamePlayer.calculateScore();
         int dealerScore = calculateScore();
 

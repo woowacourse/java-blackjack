@@ -28,7 +28,7 @@ public class DealerTest {
 
         assertThatCode(() -> {
                     var sut = Dealer.createDefaultDealer(cards);
-                    assertThat(sut.getName()).isEqualTo("딜러");
+                    assertThat(sut.getNameAsString()).isEqualTo("딜러");
                 }
         ).doesNotThrowAnyException();
     }
@@ -53,22 +53,6 @@ public class DealerTest {
         assertFalse(sut.isReceivable());
     }
 
-    @Test
-    @DisplayName("딜러는 게임 결과를 종합한다.")
-    public void Dealer_Count_result() {
-        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        var sut = new Dealer(name, cards);
-
-        var result = sut.checkResult(List.of(gamePlayer));
-
-        assertThat(result.getGamePlayerResults()
-                         .get(0)
-                         .getResultStatus()).isEqualTo(ResultStatus.LOSE);
-        assertThat(result.getDealerResult()
-                         .getResultWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
-    }
 
     @Test
     @DisplayName("딜러가 버스트 일때 플레이어가 버스트가 아니면 플레이어가 승리한다.")
@@ -79,11 +63,9 @@ public class DealerTest {
         var sut = new Dealer(name, cards);
         sut.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
 
-        var result = sut.checkResult(List.of(gamePlayer));
+        var result = sut.checkPlayer(gamePlayer);
 
-        assertThat(result.getGamePlayerResults()
-                         .get(0)
-                         .getResultStatus()).isEqualTo(ResultStatus.WIN);
+        assertThat(result).isEqualTo(ResultStatus.WIN);
     }
 
     @Test
@@ -95,10 +77,8 @@ public class DealerTest {
         var sut = new Dealer(name, cards);
         gamePlayer.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
 
-        var result = sut.checkResult(List.of(gamePlayer));
+        var result = sut.checkPlayer(gamePlayer);
 
-        assertThat(result.getGamePlayerResults()
-                         .get(0)
-                         .getResultStatus()).isEqualTo(ResultStatus.LOSE);
+        assertThat(result).isEqualTo(ResultStatus.LOSE);
     }
 }

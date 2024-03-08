@@ -45,8 +45,7 @@ public class Casino {
     }
 
     private void checkGameResult(Players players) {
-        Result result = players.getDealer()
-                               .checkResult(players.getGamePlayers());
+        Result result = blackjack.checkResult(players.getDealer(), players.getGamePlayers());
         ResultView.printResult(result);
     }
 
@@ -71,7 +70,7 @@ public class Casino {
     }
 
     private boolean isHit(GamePlayer gamePlayer) {
-        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
+        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getNameAsString());
         return command.isHit();
     }
 
