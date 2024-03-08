@@ -32,7 +32,7 @@ public class Hands {
 
     public Result calculateResult(final Hands target) {
         if (this.sum() >= target.sum() && this.sum() <= BLACK_JACK) {
-            if (this.size() == target.size()) {
+            if (this.size() == target.size() && this.sum() == target.sum()) {
                 return Result.TIE;
             }
 

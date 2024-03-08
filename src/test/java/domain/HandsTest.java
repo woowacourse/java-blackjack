@@ -146,6 +146,21 @@ class HandsTest {
     }
 
 
+    @Test
+    @DisplayName("blackjack이 이긴다.")
+    void isWinBlackJack() {
+        //given
+        final Hands blackJack = new Hands(
+                List.of(new Card(Rank.JACK, Shape.HEART), new Card(Rank.ACE, Shape.SPADE)));
+
+        final Hands sum19 = new Hands(
+                List.of(new Card(Rank.NINE, Shape.HEART), new Card(Rank.TEN, Shape.SPADE)));
+
+        //when && then
+        Assertions.assertThat(blackJack.calculateResult(sum19)).isEqualTo(Result.WIN);
+        Assertions.assertThat(sum19.calculateResult(blackJack)).isEqualTo(Result.LOSE);
+    }
+
     static Stream<Arguments> sumParameterProvider() {
         return Stream.of(
                 Arguments.of(new Hands(List.of(new Card(Rank.TWO, Shape.HEART),
