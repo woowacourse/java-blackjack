@@ -13,7 +13,7 @@ class DealerTest {
     void isUpToThreshold() {
         int threshold = 16;
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.drawCard(new Card(Score.TEN, Shape.CLOVER));
         dealer.drawCard(new Card(Score.SEVEN, Shape.CLOVER));
 

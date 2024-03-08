@@ -17,7 +17,7 @@ class GameRuleTest {
     @Test
     void judgeWinners() {
         // given
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.drawCards(createNormalWithTwoCards());
 
         Player player = new Player("pobi");
@@ -38,7 +38,7 @@ class GameRuleTest {
         @DisplayName("모든 참가자는 21을 초과해도 승리한다.")
         @Test
         void playerBusted() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createBustedCards());
 
             Player player = new Player("pobi");
@@ -56,7 +56,7 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
         @Test
         void playerDoesNotBusted() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createBustedCards());
 
             Player player = new Player("pobi");
@@ -78,7 +78,7 @@ class GameRuleTest {
         @DisplayName("참가자가 블랙잭인 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerBlackJack() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
@@ -96,7 +96,7 @@ class GameRuleTest {
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
         @Test
         void playerIsNotBlackJack() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createBlackJackWithTwoCards());
 
             Player player = new Player("pobi");
@@ -118,7 +118,7 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21인 경우 참가자가 승리한다.")
         @Test
         void playerIsBlackJack() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
@@ -136,7 +136,7 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
         @Test
         void playerIsNotBlackJack() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createNormalWithTwoCards());
 
             Player player = new Player("pobi");
@@ -154,7 +154,7 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerScoreEqualsToDealer() {
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             dealer.drawCards(createNormalWithThreeCards());
 
             Player player = new Player("pobi");

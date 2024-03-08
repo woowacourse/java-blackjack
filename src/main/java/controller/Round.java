@@ -24,7 +24,7 @@ public class Round {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
-        this.participant = new Participant(new Dealer("딜러"), players);
+        this.participant = new Participant(new Dealer(), players);
         deck = new Deck();
     }
 

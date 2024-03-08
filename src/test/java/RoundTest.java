@@ -34,7 +34,7 @@ class RoundTest {
     @Test
     void giveCardsUntilDealerScoreOverThreshold() {
         // given
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.drawCards(createNormalWithTwoCards());
 
         List<Player> players = List.of(new Player("pobi"));
