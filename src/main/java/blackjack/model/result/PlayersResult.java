@@ -21,7 +21,7 @@ public class PlayersResult {
         playerResult.put(player, Result.TIE);
     }
 
-    public Result getPlayerResult (Player player) {
-        return playerResult.get(player);
+    public Map<Player, Result> getPlayerResult() {
+        return playerResult;
     }
 }
