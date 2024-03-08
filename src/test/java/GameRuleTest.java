@@ -2,13 +2,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
 import domain.Dealer;
+import domain.Deck;
 import domain.GameRule;
 import domain.Participant;
 import domain.Player;
 import domain.constants.Score;
 import domain.constants.Shape;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,11 +20,18 @@ class GameRuleTest {
     @Test
     void judgeWinners() {
         // given
+        Deck twoCards = createNormalWithTwoCards();
+        Deck threeCards = createNormalWithThreeCards();
+
         Dealer dealer = new Dealer("딜러");
-        dealer.drawCards(createNormalWithTwoCards());
+        for (int i = 0; i < 2; i++) {
+            dealer.pickOneCard(twoCards);
+        }
 
         Player player = new Player("pobi");
-        player.drawCards(createNormalWithThreeCards());
+        for (int i = 0; i < 3; i++) {
+            dealer.pickOneCard(threeCards);
+        }
 
         GameRule rule = createGameRule(player, dealer);
 
@@ -39,35 +48,50 @@ class GameRuleTest {
         @DisplayName("모든 참가자는 21을 초과해도 승리한다.")
         @Test
         void playerBusted() {
+            Deck bustedCardsForDealer = createBustedCards();
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createBustedCards());
+            for (int i = 0; i < 3; i++) {
+                dealer.pickOneCard(bustedCardsForDealer);
+            }
 
+            Deck bustedCardsForPlayer = createBustedCards();
             Player player = new Player("pobi");
-            player.drawCards(createBustedCards());
+            for (int i = 0; i < 3; i++) {
+                player.pickOneCard(bustedCardsForPlayer);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
         @Test
         void playerDoesNotBusted() {
+            Deck bustedCards = createBustedCards();
+            Deck twoCards = createNormalWithTwoCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createBustedCards());
+            for (int i = 0; i < 3; i++) {
+                dealer.pickOneCard(bustedCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createNormalWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                player.pickOneCard(twoCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
     }
 
@@ -77,35 +101,51 @@ class GameRuleTest {
         @DisplayName("참가자가 블랙잭인 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerBlackJack() {
+            Deck blackJackTwoCards = createBlackJackWithTwoCards();
+            Deck blackJackThreeCards = createBlackJackWithThreeCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createBlackJackWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                dealer.pickOneCard(blackJackTwoCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createBlackJackWithThreeCards());
+            for (int i = 0; i < 3; i++) {
+                player.pickOneCard(blackJackThreeCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
 
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
         @Test
         void playerIsNotBlackJack() {
+            Deck blackJackTwoCards = createBlackJackWithTwoCards();
+            Deck twoCards = createNormalWithTwoCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createBlackJackWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                dealer.pickOneCard(blackJackTwoCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createNormalWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                player.pickOneCard(twoCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
     }
 
@@ -115,52 +155,76 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21인 경우 참가자가 승리한다.")
         @Test
         void playerIsBlackJack() {
+            Deck twoCards = createNormalWithTwoCards();
+            Deck blackJackTwoCards = createBlackJackWithTwoCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createNormalWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                dealer.pickOneCard(twoCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createBlackJackWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                player.pickOneCard(blackJackTwoCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
         @Test
         void playerIsNotBlackJack() {
+            Deck twoCards = createNormalWithTwoCards();
+            Deck threeCards = createNormalWithThreeCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createNormalWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                dealer.pickOneCard(twoCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createNormalWithThreeCards());
+            for (int i = 0; i < 3; i++) {
+                player.pickOneCard(threeCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
 
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerScoreEqualsToDealer() {
+            Deck threeCards = createNormalWithThreeCards();
+            Deck twoCards = createSameScoreNormalWithTwoCards();
+
             Dealer dealer = new Dealer("딜러");
-            dealer.drawCards(createNormalWithThreeCards());
+            for (int i = 0; i < 3; i++) {
+                dealer.pickOneCard(threeCards);
+            }
 
             Player player = new Player("pobi");
-            player.drawCards(createSameScoreNormalWithTwoCards());
+            for (int i = 0; i < 2; i++) {
+                player.pickOneCard(twoCards);
+            }
 
             GameRule rule = createGameRule(player, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
     }
 
@@ -171,42 +235,48 @@ class GameRuleTest {
         return new GameRule(participant);
     }
 
-    private List<Card> createBlackJackWithTwoCards() {
-        return List.of(
+    private Deck createBlackJackWithTwoCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.ACE, Shape.DIAMOND));
+                new Card(Score.ACE, Shape.DIAMOND)
+        )));
     }
 
-    private List<Card> createBlackJackWithThreeCards() {
-        return List.of(
+    private Deck createBlackJackWithThreeCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.FIVE, Shape.CLOVER),
                 new Card(Score.FIVE, Shape.DIAMOND),
-                new Card(Score.ACE, Shape.DIAMOND));
+                new Card(Score.ACE, Shape.DIAMOND)
+        )));
     }
 
-    private List<Card> createNormalWithTwoCards() {
-        return List.of(
+    private Deck createNormalWithTwoCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.SIX, Shape.DIAMOND));
+                new Card(Score.SIX, Shape.DIAMOND)
+        )));
     }
 
-    private List<Card> createNormalWithThreeCards() {
-        return List.of(
+    private Deck createNormalWithThreeCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.THREE, Shape.DIAMOND),
-                new Card(Score.SIX, Shape.HEART));
+                new Card(Score.SIX, Shape.HEART)
+        )));
     }
 
-    private List<Card> createSameScoreNormalWithTwoCards() {
-        return List.of(
+    private Deck createSameScoreNormalWithTwoCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.NINE, Shape.DIAMOND));
+                new Card(Score.NINE, Shape.DIAMOND)
+        )));
     }
 
-    private List<Card> createBustedCards() {
-        return List.of(
+    private Deck createBustedCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.FIVE, Shape.DIAMOND),
-                new Card(Score.EIGHT, Shape.HEART));
+                new Card(Score.EIGHT, Shape.HEART)
+        )));
     }
 }

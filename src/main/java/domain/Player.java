@@ -20,49 +20,43 @@ public class Player {
         }
     }
 
-    public List<Card> pickTwoCards(final Deck deck) {
+    public void pickTwoCards(final Deck deck) {
         hand.saveCards(List.of(deck.pick(), deck.pick()));
-        return hand.getCards();
     }
 
-    public List<Card> pickOneCard(final Deck deck) {
+    public void pickOneCard(final Deck deck) {
         hand.saveCard(deck.pick());
-        return hand.getCards();
     }
 
-    public void drawCard(final Card card) {
-        hand.saveCard(card);
-    }
-
-    public void drawCards(final List<Card> cards) {
-        hand.saveCards(cards);
-    }
-
-    public int calculateScoreWhileDraw() {
-        return hand.calculateScoreWhileDraw();
+    public int calculateRoundScore() {
+        return hand.calculateScoreWhileRound();
     }
 
     public int calculateResultScore() {
-        return hand.calculateScore(BLACKJACK_SCORE);
+        return hand.calculateScoreAfterRound(BLACKJACK_SCORE);
     }
 
-    public boolean hasMoreScore(final Dealer dealer) {
+    public boolean hasMoreScoreThan(final Dealer dealer) {
         return calculateResultScore() > dealer.calculateResultScore();
     }
 
-    public boolean hasSameScore(final Dealer dealer) {
+    public boolean hasSameScoreAs(final Dealer dealer) {
         return calculateResultScore() == dealer.calculateResultScore();
     }
 
-    public boolean hasMoreCard(final Dealer dealer) {
-        return getTotalSize() > dealer.getTotalSize();
+    public boolean hasLessCardThan(final Dealer dealer) {
+        return getHandSize() <= dealer.getHandSize();
     }
 
     public boolean isAbleToDrawCard() {
-        return hand.calculateScore(BLACKJACK_SCORE) < BLACKJACK_SCORE;
+        return hand.calculateScoreWhileRound() < BLACKJACK_SCORE;
     }
 
-    public int getTotalSize() {
+    public boolean isBusted() {
+        return calculateResultScore() > BLACKJACK_SCORE;
+    }
+
+    public int getHandSize() {
         return hand.size();
     }
 

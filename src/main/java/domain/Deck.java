@@ -15,7 +15,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Deck(List<Card> cards) {
+    public Deck(final List<Card> cards) {
         this.cards = cards;
     }
 

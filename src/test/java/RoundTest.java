@@ -35,8 +35,12 @@ class RoundTest {
     @Test
     void giveCardsUntilDealerScoreOverThreshold() {
         // given
+        Deck twoCards = createNormalWithTwoCards();
+
         Dealer dealer = new Dealer("딜러");
-        dealer.drawCards(createNormalWithTwoCards());
+        for (int i = 0; i < 2; i++) {
+            dealer.pickOneCard(twoCards);
+        }
 
         List<Player> players = List.of(new Player("pobi"));
         Participant participant = new Participant(dealer, players);
@@ -53,9 +57,10 @@ class RoundTest {
         assertThat(count).isEqualTo(1);
     }
 
-    private List<Card> createNormalWithTwoCards() {
-        return List.of(
+    private Deck createNormalWithTwoCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.SIX, Shape.DIAMOND));
+                new Card(Score.SIX, Shape.DIAMOND)
+        )));
     }
 }

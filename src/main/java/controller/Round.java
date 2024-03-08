@@ -1,7 +1,6 @@
 package controller;
 
 import static domain.constants.CardCommand.HIT;
-import static domain.constants.CardCommand.STAND;
 
 import controller.dto.HandStatus;
 import domain.Dealer;
@@ -49,17 +48,18 @@ public class Round {
 
     public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
-        HandStatus currentHand;
+        HandStatus currentHand = new HandStatus(player.getName(), player.getHand());
         CardCommand command = inputCommand(name, inputView);
-        while (player.isAbleToDrawCard() && HIT.equals(command)) {
+
+        while (HIT.equals(command)) {
             currentHand = createHandStatusAfterPick(player);
+            if (player.isBusted()) {
+                break;
+            }
             outputView.printCardStatus(currentHand);
             command = inputCommand(name, inputView);
         }
-        if (STAND.equals(command)) {
-            currentHand = new HandStatus(player.getName(), player.getHand());
-            outputView.printCardStatus(currentHand);
-        }
+        outputView.printCardStatus(currentHand);
     }
 
     private HandStatus createHandStatusAfterPick(final Player player) {
@@ -80,7 +80,6 @@ public class Round {
 
     public int giveCardsToDealer() {
         Dealer dealer = participant.dealer();
-
         int currentScore = dealer.calculateResultScore();
 
         int count = 0;

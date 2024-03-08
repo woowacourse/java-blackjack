@@ -21,7 +21,7 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public int calculateScoreWhileDraw() {
+    public int calculateScoreWhileRound() {
         int sum = 0;
         for (Card card : cards) {
             sum += getScoreToAdd(card);
@@ -29,22 +29,16 @@ public class Hand {
         return sum;
     }
 
-    private static int getScoreToAdd(final Card card) {
+    private int getScoreToAdd(final Card card) {
         if (card.isAceCard()) {
             return ALTERNATIVE_ACE_SCORE;
         }
         return card.getScore();
     }
 
-    public int calculateScore(final int blackJackScore) {
-        int sum = cards.stream()
-                .map(Card::getScore)
-                .mapToInt(score -> score)
-                .sum();
-        int aceCardCount = 0;
-        for (Card card : cards) {
-            aceCardCount = getAceCardCount(card, aceCardCount);
-        }
+    public int calculateScoreAfterRound(final int blackJackScore) {
+        int sum = calculateScoreSum();
+        int aceCardCount = countAceCard();
         while (aceCardCount > 0 && sum > blackJackScore) {
             aceCardCount--;
             sum -= ALTER_ACE_GAP;
@@ -52,11 +46,17 @@ public class Hand {
         return sum;
     }
 
-    private int getAceCardCount(final Card card, int aceCardCount) {
-        if (card.isAceCard()) {
-            aceCardCount++;
-        }
-        return aceCardCount;
+    private int calculateScoreSum() {
+        return cards.stream()
+                .map(Card::getScore)
+                .mapToInt(score -> score)
+                .sum();
+    }
+
+    private int countAceCard() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
     }
 
     public int size() {
