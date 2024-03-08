@@ -64,15 +64,16 @@ public class Casino {
     }
 
     private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {
-        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
-        while (command.isHit() && gamePlayer.isReceivable()) {
+        while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
             gamePlayer.drawCard(card);
             OutputView.printGamePlayer(gamePlayer);
-            //TODO : 플레이어가 버스트여도 끝내야함
-
-            command = InputView.inputBlackjackCommand(gamePlayer.getName());
         }
+    }
+
+    private boolean isHit(GamePlayer gamePlayer) {
+        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
+        return command.isHit();
     }
 
 }
