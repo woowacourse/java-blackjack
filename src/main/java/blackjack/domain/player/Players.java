@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
-
 import java.util.List;
 
 public class Players {

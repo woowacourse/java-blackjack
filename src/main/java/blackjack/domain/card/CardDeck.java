@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public class CardDeck {
 
     private final List<Card> cards;
-
+    
     public CardDeck(List<Card> cards) {
         this.cards = cards;
     }

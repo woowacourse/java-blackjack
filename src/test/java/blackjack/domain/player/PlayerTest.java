@@ -1,12 +1,12 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("참가자 테스트")
 class PlayerTest {

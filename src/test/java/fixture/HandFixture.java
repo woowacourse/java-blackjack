@@ -3,7 +3,6 @@ package fixture;
 import blackjack.domain.player.Hand;
 import blackjack.domain.rule.PlayerHitStrategy;
 import blackjack.domain.rule.ScoreCalculateStrategy;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

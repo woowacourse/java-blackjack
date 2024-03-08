@@ -1,13 +1,12 @@
 package blackjack.domain.player;
 
-import fixture.PlayerFixture;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import fixture.PlayerFixture;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("참가자들 테스트")
 class PlayersTest {

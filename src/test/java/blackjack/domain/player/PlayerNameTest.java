@@ -1,9 +1,9 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("참가자 이름 테스트")
 class PlayerNameTest {

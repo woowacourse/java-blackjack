@@ -1,12 +1,12 @@
 package blackjack.domain.rule;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.player.Hand;
 import fixture.HandFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("점수 계산 전략 테스트")
 class ScoreCalculateStrategyTest {

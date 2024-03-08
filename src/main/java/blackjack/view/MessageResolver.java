@@ -6,7 +6,6 @@ import blackjack.domain.player.Hand;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Score;
-
 import java.util.stream.Collectors;
 
 public class MessageResolver {
