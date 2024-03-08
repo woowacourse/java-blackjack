@@ -20,6 +20,8 @@ public class Controller {
         casino.initializeGame();
         showInitialFaceUpResults(casino);
         proceedPlayersTurn(casino);
+        proceedDealerTurn(casino);
+        showFinalFaceUpResults(casino);
     }
 
     private Casino initCasino() {
@@ -49,5 +51,18 @@ public class Controller {
                 .size() == 2)) {
             OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
         }
+    }
+
+    private void proceedDealerTurn(Casino casino) {
+        while (casino.isDealerHitAllowed()) {
+            casino.hitCardToDealer();
+            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
+
+    private void showFinalFaceUpResults(Casino casino) {
+        List<IndividualFaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
+        IndividualFaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
+        OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
     }
 }

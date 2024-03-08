@@ -5,14 +5,10 @@ import model.dto.IndividualFaceUpResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;
-    public static final String NAME_CARD_DELIMITER = ": ";
+    public static final String NAME_CARD_DELIMITER = "카드: ";
     public static final String CARD_DELIMITER = ", ";
 
     private OutputView() {
-    }
-
-    public static void printNewLine() {
-        System.out.print(System.lineSeparator());
     }
 
     public static void print(String toBePrint) {
@@ -37,15 +33,23 @@ public class OutputView {
     }
 
     private static void printPlayersFaceUp(List<IndividualFaceUpResult> faceUpResults) {
-        faceUpResults.forEach(result -> printPlayersFaceUp(result));
+        faceUpResults.forEach(OutputView::printSinglePlayerFaceUp);
     }
 
-    public static void printPlayersFaceUp(IndividualFaceUpResult result) {
+    public static void printSinglePlayerFaceUp(IndividualFaceUpResult result) {
         print(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
                 result.getCardsAsStrings()));
     }
 
-    private static void printRequestPlayerChoice(IndividualFaceUpResult faceUpResult) {
-        faceUpResult.getPartipantNameAsString();
+    public static void printFinalFaceUpResult(IndividualFaceUpResult dealerFaceUpResult,
+                                              List<IndividualFaceUpResult> playerFaceUpResults) {
+        printSinglePlayerFinalFaceUp(dealerFaceUpResult);
+        playerFaceUpResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
     }
+
+    private static void printSinglePlayerFinalFaceUp(IndividualFaceUpResult result) {
+        print(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
+                result.getCardsAsStrings()) + " - 결과: " + result.hand());
+    }
+
 }
