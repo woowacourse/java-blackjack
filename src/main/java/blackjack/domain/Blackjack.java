@@ -32,7 +32,7 @@ public class Blackjack {
         return new Players(dealer, gamePlayers);
     }
 
-    public Result checkResult(Dealer dealer, List<GamePlayer> gamePlayers) {
+    public Result checkPlayersResult(Dealer dealer, List<GamePlayer> gamePlayers) {
         List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
 
         for (GamePlayer gamePlayer : gamePlayers) {

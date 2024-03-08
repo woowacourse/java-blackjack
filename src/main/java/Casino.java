@@ -44,10 +44,9 @@ public class Casino {
     }
 
     private void checkGameResult(Players players) {
-        Result result = blackjack.checkResult(players.getDealer(), players.getGamePlayers());
+        Result result = blackjack.checkPlayersResult(players.getDealer(), players.getGamePlayers());
         ResultView.printResult(result);
     }
-
 
     private void processDealer(Blackjack blackjack, Dealer dealer) {
         if (dealer.isReceivable()) {
