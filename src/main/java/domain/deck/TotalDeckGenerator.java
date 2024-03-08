@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import domain.card.Card;
 import domain.card.Number;

@@ -2,8 +2,8 @@ package controller;
 
 import domain.Command;
 import domain.ExceptionHandler;
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
+import domain.deck.TotalDeck;
+import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
 import domain.user.User;
 import domain.user.Users;

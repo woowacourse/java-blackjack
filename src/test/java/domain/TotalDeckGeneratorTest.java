@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.deck.TotalDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

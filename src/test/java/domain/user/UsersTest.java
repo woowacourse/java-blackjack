@@ -1,8 +1,8 @@
 package domain.user;
 
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
 import domain.card.Card;
+import domain.deck.TotalDeck;
+import domain.deck.TotalDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ class UsersTest {
         Card card = new Card(CLOVER, FIVE);
         users.addCardOfCurrentUser(card);
 
-        assertThat(users.getCurrentUser().userDeck.getFirstCard()).isEqualTo(card);
+        assertThat(users.getCurrentUser().userDeck.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
@@ -75,7 +75,7 @@ class UsersTest {
         users.addDealerCard(card);
 
         Dealer dealer = users.getDealer();
-        assertThat(dealer.userDeck.getFirstCard()).isEqualTo(card);
+        assertThat(dealer.userDeck.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
@@ -111,8 +111,8 @@ class UsersTest {
         assertThat(dealer.userDeck.getCards()).hasSize(2);
     }
 
-
     @Test
+    @DisplayName("현재 플레이어의 버스트 여부를 확인한다.")
     void bustedTest() {
         Player player1 = new Player(new Name("a"));
         Users users = new Users(List.of(player1));
@@ -121,6 +121,6 @@ class UsersTest {
         player1.addCard(new Card(CLOVER, TEN));
         player1.addCard(new Card(CLOVER, TEN));
 
-        assertThat(users.busted()).isTrue();
+        assertThat(users.currentUserBusted()).isTrue();
     }
 }

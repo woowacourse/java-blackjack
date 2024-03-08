@@ -1,20 +1,21 @@
-package domain;
+package domain.deck;
 
 import domain.card.Card;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class TotalDeck {
-    private final Stack<Card> totalDeck;
+    private final Deque<Card> totalDeck;
 
     public TotalDeck(List<Card> cards) {
-        totalDeck = new Stack<>();
+        totalDeck = new ArrayDeque<>();
         totalDeck.addAll(cards);
     }
 
     public Card getNewCard() {
-        return totalDeck.pop();
+        return totalDeck.removeLast();
     }
 
     public int size() {

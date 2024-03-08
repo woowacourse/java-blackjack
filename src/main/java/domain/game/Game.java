@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.Command;
-import domain.TotalDeck;
+import domain.deck.TotalDeck;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
@@ -38,7 +38,7 @@ public class Game {
     }
 
     private State hitOrBust() {
-        if (users.busted()) {
+        if (users.currentUserBusted()) {
             users.nextUser();
             return BUST;
         }
@@ -54,7 +54,8 @@ public class Game {
     }
 
     public PlayerResults generatePlayerResults() {
-        Map<Player, Result> playerResults = users.getPlayers().stream()
+        Map<Player, Result> playerResults = users.getPlayers()
+                .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         users::generatePlayerResult,

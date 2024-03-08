@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
+import domain.deck.UserDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class UserDeckTest {
         Card card = new Card(Shape.CLOVER, Number.ACE);
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(card);
+        userDeck.addCard(card);
 
         assertThat(userDeck.getCards()).contains(card);
     }
@@ -25,8 +26,8 @@ public class UserDeckTest {
     void sumCardTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.THREE));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.EIGHT));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.THREE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.EIGHT));
 
         assertThat(userDeck.sumCard()).isEqualTo(11);
     }
@@ -36,33 +37,30 @@ public class UserDeckTest {
     void hasAceTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
 
         assertThat(userDeck.hasAce()).isTrue();
     }
 
     @Test
-    @DisplayName("ACE 카드는 합이 22 이상일 때 숫자가 1로 사용된다.")
+    @DisplayName("ACE 카드는 합이 11 이하일 때 숫자가 11로 사용된다.")
     void sumCardContainingAceTest() {
         UserDeck userDeck = new UserDeck();
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.TWO));
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.KING));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
 
         assertThat(userDeck.sumCard()).isEqualTo(13);
     }
 
     @Test
-    @DisplayName("ACE카드가 여러개일 때 최적의 값을 만든다.")
-    void reduceSumByAceTest() {
+    @DisplayName("카드 덱의 결과합이 버스트 됐는지 확인한다")
+    void isBustTest() {
         UserDeck userDeck = new UserDeck();
+        userDeck.addCard(new Card(Shape.CLOVER, Number.FIVE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
 
-        userDeck.pushCard(new Card(Shape.CLOVER, Number.ACE));
-        userDeck.pushCard(new Card(Shape.SPADE, Number.ACE));
-        userDeck.pushCard(new Card(Shape.HEART, Number.SEVEN));
-
-        int sum = userDeck.sumCard();
-        assertThat(sum).isEqualTo(19);
+        assertThat(userDeck.isBust()).isTrue();
     }
 }
