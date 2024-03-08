@@ -1,6 +1,5 @@
 package blackjack.domain.rule;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.DealerGameResult;
 import blackjack.domain.player.Hand;
 import blackjack.domain.player.Player;
@@ -26,11 +25,7 @@ public class Judge {
         return BLACK_JACK < calculateBestScore(hand);
     }
 
-    public boolean canDealerHit(Dealer dealer) {
-        return calculateBestScore(dealer.getHand()) < DEALER_HIT_THRESHOLD;
-    }
-
-    public boolean isPlayerWin(Dealer dealer, Player player) {
+    public boolean isPlayerWin(Player dealer, Player player) {
         if (isBustedHand(player.getHand())) {
             return false;
         }
@@ -40,7 +35,7 @@ public class Judge {
         return calculateBestScore(player.getHand()) > calculateBestScore(dealer.getHand());
     }
 
-    public DealerGameResult calculateDealerResult(Dealer dealer, Players players) {
+    public DealerGameResult calculateDealerResult(Player dealer, Players players) {
         int dealerLoseCount = (int) players.getPlayers().stream()
                 .filter(player -> isPlayerWin(dealer, player))
                 .count();
