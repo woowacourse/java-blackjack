@@ -14,14 +14,14 @@ class BlackjackResultTest {
     void playerBust() {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
-        teba.addCard(new Card(Denomination.JACK, Symbol.CLOVER));
-        teba.addCard(new Card(Denomination.KING, Symbol.CLOVER));
-        teba.addCard(new Card(Denomination.SIX, Symbol.CLOVER));
+        teba.hit(new Card(Denomination.JACK, Symbol.CLOVER));
+        teba.hit(new Card(Denomination.KING, Symbol.CLOVER));
+        teba.hit(new Card(Denomination.SIX, Symbol.CLOVER));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
         //
 
 
-        final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
+        final BlackjackResult blackjackResultDTO = blackjack.finishGame();
         final Integer tebaLose = blackjackResultDTO.getLose(teba);
         final Integer dealerWin = blackjackResultDTO.getWin(dealer);
 
@@ -34,12 +34,12 @@ class BlackjackResultTest {
     void dealerBust() {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
-        dealer.addCard(new Card(Denomination.JACK, Symbol.CLOVER));
-        dealer.addCard(new Card(Denomination.KING, Symbol.CLOVER));
-        dealer.addCard(new Card(Denomination.SIX, Symbol.CLOVER));
+        dealer.hit(new Card(Denomination.JACK, Symbol.CLOVER));
+        dealer.hit(new Card(Denomination.KING, Symbol.CLOVER));
+        dealer.hit(new Card(Denomination.SIX, Symbol.CLOVER));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
-        final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
+        final BlackjackResult blackjackResultDTO = blackjack.finishGame();
         final Integer dealerLose = blackjackResultDTO.getLose(dealer);
         final Integer tebaWin = blackjackResultDTO.getWin(teba);
 

@@ -8,7 +8,7 @@ public class Dealer extends Player{
     }
 
     @Override
-    public boolean alive() {
+    public boolean isNotBust() {
         return calculateScore() < 17;
     }
 }

@@ -16,9 +16,9 @@ class PlayerTest {
     void sum() {
         final Player player = new Participant(new Name("지쳐버린종이"));;
 
-        player.addCard(new Card(Denomination.FIVE, Symbol.CLOVER));
-        player.addCard(new Card(Denomination.FIVE, Symbol.CLOVER));
-        player.addCard(new Card(Denomination.ACE, Symbol.CLOVER));
+        player.hit(new Card(Denomination.FIVE, Symbol.CLOVER));
+        player.hit(new Card(Denomination.FIVE, Symbol.CLOVER));
+        player.hit(new Card(Denomination.ACE, Symbol.CLOVER));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -29,11 +29,11 @@ class PlayerTest {
     void alive(final List<Card> cards, final boolean expected) {
         final Player player = new Participant(new Name("지쳐버린종이"));
 
-        player.addCard(cards.get(0));
-        player.addCard(cards.get(1));
-        player.addCard(cards.get(2));
+        player.hit(cards.get(0));
+        player.hit(cards.get(1));
+        player.hit(cards.get(2));
 
-        Assertions.assertThat(player.alive()).isEqualTo(expected);
+        Assertions.assertThat(player.isNotBust()).isEqualTo(expected);
     }
 
 

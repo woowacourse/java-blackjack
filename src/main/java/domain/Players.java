@@ -51,7 +51,7 @@ public class Players {
         return players.stream().filter(player -> !player.getName().equals("딜러")).collect(Collectors.toList());
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getAllPlayers() {
         return players;
     }
 }

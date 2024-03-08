@@ -1,6 +1,6 @@
 package view;
 
-import domain.BlackjackResultDTO;
+import domain.BlackjackResult;
 import domain.Denomination;
 import domain.Player;
 import domain.Symbol;
@@ -48,7 +48,7 @@ public class OutputView {
         });
     }
 
-    public static void printGameResults(final BlackjackResultDTO blackjackResult) {
+    public static void printBlackjackResults(final BlackjackResult blackjackResult) {
         System.out.println();
         System.out.println("## 최종 승패");
         for (final var player : blackjackResult.results().keySet()) {
@@ -58,7 +58,7 @@ public class OutputView {
         }
     }
 
-    public static void printDealerStatus() {
+    public static void printDealerHitMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }

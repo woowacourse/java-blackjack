@@ -41,11 +41,11 @@ class BlackjackTest {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
-        teba.addCard(new Card(Denomination.ACE,Symbol.CLOVER));
-        jonge.addCard(new Card(Denomination.ACE,Symbol.HEART));
+        teba.hit(new Card(Denomination.ACE,Symbol.CLOVER));
+        jonge.hit(new Card(Denomination.ACE,Symbol.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
-        final BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
+        final BlackjackResult blackjackResultDTO = blackjack.finishGame();
 
         final Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
         final Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();

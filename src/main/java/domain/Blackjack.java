@@ -3,43 +3,42 @@ package domain;
 import java.util.List;
 
 public class Blackjack {
-
     private final Players players;
     private final Deck deck;
 
     public Blackjack(final Players players) {
         this.players = players;
-        players.getPlayers().add(new Dealer());
+        players.getAllPlayers().add(new Dealer());
         this.deck = new Deck();
         dealCardsToPlayers();
     }
 
     public Blackjack(final Players players, final Player dealer) {
         this.players = players;
-        players.getPlayers().add(dealer);
+        players.getAllPlayers().add(dealer);
         this.deck = new Deck();
     }
 
     public void dealCard(final Player player) {
-        player.addCard(deck.draw());
+        player.hit(deck.draw());
     }
 
     private void dealCardsToPlayers() {
-        players.getPlayers().forEach(this::initializePlayer);
+        players.getAllPlayers().forEach(this::dealInitialCards);
     }
 
-    public BlackjackResultDTO finishGame() {
-        final BlackjackResult blackjackResult = new BlackjackResult();
+    public BlackjackResult finishGame() {
+        final BlackjackRule blackjackResult = new BlackjackRule();
         return blackjackResult.finishGame(getParticipants(), players.getDealer());
     }
 
-    private void initializePlayer(final Player player) {
-        player.addCard(deck.draw());
-        player.addCard(deck.draw());
+    private void dealInitialCards(final Player player) {
+        player.hit(deck.draw());
+        player.hit(deck.draw());
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return players.getAllPlayers();
     }
 
     public Player getDealer() {

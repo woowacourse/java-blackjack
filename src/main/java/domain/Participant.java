@@ -6,7 +6,7 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean alive() {
+    public boolean isNotBust() {
         return calculateScore() < 21;
     }
 }
