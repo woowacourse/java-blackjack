@@ -5,7 +5,6 @@ import domain.blackjack.GameResult;
 import domain.blackjack.GameResultCalculator;
 import domain.blackjack.Gamer;
 import domain.blackjack.PlayerRandomCardDrawStrategy;
-import domain.blackjack.SummationCardPoint;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerGameResultDTO;
@@ -122,7 +121,7 @@ public class BlackjackController {
 
     private void playerTryDraw(Deck deck, Gamer player) {
         boolean needToDraw = true;
-        while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
+        while (needToDraw && !player.getSummationCardPoint().isDeadPoint()) {
             needToDraw = playerTryDrawOnce(deck, player);
         }
     }
@@ -136,9 +135,5 @@ public class BlackjackController {
         }
         printPlayer(player);
         return needToDraw;
-    }
-
-    private boolean canDraw(Gamer player, SummationCardPoint threshold) {
-        return !player.getSummationCardPoint().isBiggerThan(threshold);
     }
 }
