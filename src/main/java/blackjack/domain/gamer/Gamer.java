@@ -37,7 +37,7 @@ public abstract class Gamer {
                 .forEach(cards::addCard);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.totalScore() > MAX_SCORE;
     }
 

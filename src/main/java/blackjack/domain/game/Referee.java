@@ -20,7 +20,7 @@ public class Referee {
     }
 
     private GameResult judgeGameResult(Player player, Dealer dealer) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return GameResult.LOSE;
         }
         if (isWinCondition(player, dealer)) {
@@ -35,7 +35,7 @@ public class Referee {
     private boolean isWinCondition(Player player, Dealer dealer) {
         return player.getScore() > dealer.getScore() ||
                 player.isBlackjack() ||
-                dealer.isBurst();
+                dealer.isBust();
     }
 
     public Map<String, GameResult> getPlayersResults() {

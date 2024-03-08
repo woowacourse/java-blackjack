@@ -65,7 +65,7 @@ public class RefereeTest {
 
     @Test
     @DisplayName("플레이어는 자신의 숫자 합이 21을 초과할 경우 패배한다.")
-    void playerLoseWhenBurstTest() {
+    void playerLoseWhenBustTest() {
         // given
         playerCardPicker = new CardPicker() {
             @Override
@@ -140,7 +140,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러가 모두 burst이면, 플레이어가 패배한다.")
+    @DisplayName("플레이어와 딜러가 모두 bust 이면, 플레이어가 패배한다.")
     void playerDealerAllBustPlayerLoseTest() {
         // given
         playerCardPicker = new CardPicker() {
@@ -159,8 +159,8 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("딜러가 burst이고 플레이가 brust가 아닐 경우, 플레이어가 승리한다.")
-    void dealerBurstPlayerNonBurstWinTest() {
+    @DisplayName("딜러가 bust이고 플레이가 bust가 아닐 경우, 플레이어가 승리한다.")
+    void dealerBustPlayerNonBustWinTest() {
         // given
         playerCardPicker = new CardPicker() {
             @Override
