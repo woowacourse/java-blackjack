@@ -1,12 +1,12 @@
 package view;
 
 import domain.card.Card;
+import domain.deck.UserDeck;
 import domain.game.DealerResult;
 import domain.game.Game;
 import domain.game.PlayerResults;
 import domain.user.Dealer;
 import domain.user.User;
-import domain.user.UserDeck;
 import domain.user.Users;
 
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class ResultView {
     private static void printUserCards(Users users) {
         Dealer dealer = users.getDealer();
         Card dealerVisibleCard = dealer.getVisibleCard();
-        System.out.println(dealer.getName().value() + ": " + dealerVisibleCard.getInformation());
+        System.out.println(dealer.getName().value() + ": " + dealerVisibleCard.getName());
         users.getPlayers()
                 .forEach(player -> System.out.println(joinUserNameAndDeck(player)));
     }
@@ -48,7 +48,7 @@ public class ResultView {
     private static String joinDeck(UserDeck userDeck) {
         return userDeck.getCards()
                 .stream()
-                .map(Card::getInformation)
+                .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
 
@@ -68,7 +68,7 @@ public class ResultView {
         System.out.println("\n## 최종 승패");
         PlayerResults playerResults = game.generatePlayerResults();
         DealerResult dealerResult = playerResults.generateDealerResult();
-        System.out.println("딜러: " + dealerResult.getInformation());
+        System.out.println("딜러: " + dealerResult.getResultDetail());
 
         playerResults.getPlayerResults()
                 .forEach(((player, result) ->

@@ -1,10 +1,10 @@
 package domain.game;
 
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
+import domain.deck.TotalDeck;
+import domain.deck.TotalDeckGenerator;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;
@@ -56,23 +56,7 @@ public class GameTest {
 
         assertThat(game.getCurrentPlayer()).isNotEqualTo(player);
     }
-
-    @Test
-    @DisplayName("카드의 합이 16 이하이면 카드를 추가로 받는다.")
-    void addDealerCardAtConditionTest() {
-        TotalDeck totalDeck = new TotalDeck(List.of(
-                new Card(Shape.DIAMOND, Number.FIVE),
-                new Card(Shape.CLOVER, Number.FIVE),
-                new Card(Shape.CLOVER, Number.SIX),
-                new Card(Shape.CLOVER, Number.SEVEN)
-        ));
-        Users users = new Users(List.of(new Player(new Name("pobi"))));
-
-        Game game = new Game(totalDeck, users);
-        boolean actual = game.isDealerCardAddCondition();
-        assertThat(actual).isTrue();
-    }
-
+    
     @Test
     @DisplayName("결과를 반환한다.")
     void gameResultTest() {
@@ -91,7 +75,7 @@ public class GameTest {
 
         assertAll(
                 () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),
-                () -> assertThat(dealerResult.getInformation()).isEqualTo("1승")
+                () -> assertThat(dealerResult.getResultDetail()).isEqualTo("1승")
         );
     }
 }

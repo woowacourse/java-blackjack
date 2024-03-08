@@ -15,7 +15,9 @@ class ResultTest {
     @DisplayName("정반대의 결과를 반환한다.")
     void reverseTest() {
         List<Result> results = List.of(WIN, DRAW, LOSE);
-        List<Result> reverseResult = results.stream().map(Result::reverse).toList();
+        List<Result> reverseResult = results.stream()
+                .map(Result::reverse)
+                .toList();
 
         assertThat(reverseResult).isEqualTo(List.of(LOSE, DRAW, WIN));
     }

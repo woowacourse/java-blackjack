@@ -7,7 +7,7 @@ public record Card(Shape shape, Number number) {
         return number.getNumber();
     }
 
-    public String getInformation() {
+    public String getName() {
         return number.getName() + shape.getName();
     }
 
