@@ -1,6 +1,7 @@
 package controller;
 
 import model.blackjackgame.BlackjackGame;
+import model.blackjackgame.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
 import model.card.CardDispenser;
@@ -19,6 +20,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = start();
         setting(blackjackGame);
         executeGame(blackjackGame);
+        finishGameWithResult(blackjackGame);
     }
 
     private BlackjackGame start() {
@@ -60,5 +62,12 @@ public class BlackjackController {
     private Player hit(BlackjackGame blackjackGame, Player player) {
         Card card = cardDispenser.dispenseCard();
         return blackjackGame.hitForPlayer(player, card);
+    }
+
+    private void finishGameWithResult(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getDealer();
+        Players players = blackjackGame.getPlayers();
+        GameResult gameResult = GameResult.of(dealer, players);
+        OutputView.printFinalScore(dealer, players, gameResult);
     }
 }
