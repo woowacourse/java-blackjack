@@ -1,6 +1,8 @@
 package domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
     private final List<Card> cards = new ArrayList<>();
@@ -9,8 +11,8 @@ public class Deck {
         initialize();
     }
     private void initialize() {
-        for (Denomination denomination : Denomination.values()) {
-            for (Symbol symbol : Symbol.values()) {
+        for (final Denomination denomination : Denomination.values()) {
+            for (final Symbol symbol : Symbol.values()) {
                 cards.add(new Card(denomination, symbol));
             }
         }
@@ -25,7 +27,7 @@ public class Deck {
     }
 
     private Card pollLastCard() {
-        Card card = cards.get(cards.size() - 1);
+        final Card card = cards.get(cards.size() - 1);
         cards.remove(cards.size()-1);
         return card;
     }

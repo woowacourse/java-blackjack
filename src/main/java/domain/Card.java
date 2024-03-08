@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class Card {
 
@@ -13,7 +12,7 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int getValue(int score) {
+    public int getValue(final int score) {
         return denomination.getValue(score);
     }
 

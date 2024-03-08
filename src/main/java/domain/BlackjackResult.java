@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 
 public class BlackjackResult {
 
-    Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
+    private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
-    public BlackjackResultDTO finishGame(List<Player> players, Player dealer) {
+    public BlackjackResultDTO finishGame(final List<Player> players, final Player dealer) {
         results.put(dealer, Map.entry(0, 0));
         players.forEach(player -> {
             results.put(player, Map.entry(0, 0));
@@ -18,7 +18,7 @@ public class BlackjackResult {
         return new BlackjackResultDTO(results);
     }
 
-    private void judgeWinningHand(Player dealer, Player player) {
+    private void judgeWinningHand(final Player dealer, final Player player) {
         if (player.calculateScore() > 21) {
             calculate(dealer, player, 0, 1);
             return;
@@ -33,8 +33,8 @@ public class BlackjackResult {
     }
 
     private void calculate(final Player dealer, final Player player, final int win, final int lose) {
-        Entry<Integer, Integer> playerEntry = results.get(player);
-        Entry<Integer, Integer> dealerEntry = results.get(dealer);
+        final Entry<Integer, Integer> playerEntry = results.get(player);
+        final Entry<Integer, Integer> dealerEntry = results.get(dealer);
 
         results.put(player, Map.entry(playerEntry.getKey() + win, playerEntry.getValue() + lose));
         results.put(dealer, Map.entry(dealerEntry.getKey() + lose, dealerEntry.getValue() + win));

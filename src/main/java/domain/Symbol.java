@@ -8,7 +8,7 @@ public enum Symbol {
     CLOVER,
     DIAMOND;
 
-    public static Symbol getSymbol(int number) {
+    public static Symbol getSymbol(final int number) {
         return Arrays.stream(Symbol.values())
                 .filter(symbol -> symbol.ordinal() == number)
                 .findAny()

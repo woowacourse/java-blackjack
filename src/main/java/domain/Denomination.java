@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.Arrays;
-import java.util.function.Function;
 
 public enum Denomination {
     ACE(1),
@@ -25,7 +24,7 @@ public enum Denomination {
         this.value = value;
     }
 
-    public int getValue(int score) {
+    public int getValue(final int score) {
         if (this == ACE && score + 11 <= 21) {
             return 11;
 
@@ -33,7 +32,7 @@ public enum Denomination {
         return this.value;
     }
 
-    public static Denomination getDenomination(int number) {
+    public static Denomination getDenomination(final int number) {
         return Arrays.stream(Denomination.values())
                 .filter(denomination -> denomination.ordinal() == number)
                 .findAny()

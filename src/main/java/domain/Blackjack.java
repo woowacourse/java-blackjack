@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Blackjack {
 
@@ -17,10 +14,11 @@ public class Blackjack {
         dealCardsToPlayers();
     }
 
-    public Blackjack(Players players, Player dealer) {
+    public Blackjack(final Players players, final Player dealer) {
         this.players = players;
         this.deck = new Deck();
     }
+
     public void dealCard(final Player player) {
         player.addCard(deck.draw());
     }
@@ -30,7 +28,7 @@ public class Blackjack {
     }
 
     public BlackjackResultDTO finishGame() {
-        BlackjackResult blackjackResult = new BlackjackResult();
+        final BlackjackResult blackjackResult = new BlackjackResult();
         return blackjackResult.finishGame(getParticipants(), players.getDealer());
     }
 

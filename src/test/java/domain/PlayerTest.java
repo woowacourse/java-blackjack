@@ -1,15 +1,14 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
-import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 class PlayerTest {
     @Test
@@ -27,7 +26,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("argumentProvider")
     @DisplayName("플레이어의 버스트 여부를 반환한다.")
-    void alive(List<Card> cards, boolean expected) {
+    void alive(final List<Card> cards, final boolean expected) {
         final Player player = new Participant(new Name("지쳐버린종이"));
 
         player.addCard(cards.get(0));
