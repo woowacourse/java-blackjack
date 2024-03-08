@@ -3,13 +3,12 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Game {
-    //TODO Map 필드 고려
+
     private final Dealer dealer;
     private final Players players;
 
@@ -21,7 +20,7 @@ public class Game {
     public Map<Player, Result> getPlayersResult() {
         final Map<Player, Result> playerResult = new LinkedHashMap<>();
 
-        for (Player player : players.getPlayers()) { //TODO getPlayers() 메서드명 고려
+        for (Player player : players.getPlayers()) {
             playerResult.put(player, player.calculateResult(dealer));
         }
         return playerResult;

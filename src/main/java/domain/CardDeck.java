@@ -19,8 +19,6 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    //TODO 모르는 사람이 봐도 이해할 수 있도록 수정해보기
-    // DECK_SIZE 파라미터로 받아오는 거 고려
     public static CardDeck generate() {
         final List<Card> deck = new ArrayList<>();
 
@@ -30,6 +28,14 @@ public class CardDeck {
 
         Collections.shuffle(deck);
         return new CardDeck(new ArrayDeque<>(deck));
+    }
+
+    public Card pop() {
+        return cards.pop();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     private static List<Card> generateOneCardDeck() {
@@ -44,11 +50,4 @@ public class CardDeck {
                 .toList();
     }
 
-    public Card pop() {
-        return cards.pop();
-    }
-
-    public int size() {
-        return cards.size();
-    }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.Hands;
-
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;

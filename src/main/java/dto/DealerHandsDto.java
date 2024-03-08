@@ -1,7 +1,6 @@
 package dto;
 
 import domain.participant.Participant;
-
 import java.util.List;
 
 public class DealerHandsDto {

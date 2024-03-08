@@ -12,7 +12,6 @@ public enum Answer {
         this.value = value;
     }
 
-
     public static Answer from(final String value) {
         return Arrays.stream(Answer.values())
                 .filter(answer -> answer.value.equals(value))
