@@ -8,7 +8,6 @@ import domain.Player;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -49,8 +48,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
@@ -66,8 +66,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
     }
 
@@ -87,8 +88,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
 
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
@@ -104,8 +106,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(false);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(false);
         }
     }
 
@@ -125,8 +128,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
@@ -142,8 +146,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
 
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
@@ -159,8 +164,9 @@ class GameRuleTest {
 
             List<Boolean> gameResult = rule.judge();
 
-            Assertions.assertThat(gameResult).hasSize(1);
-            Assertions.assertThat(gameResult).containsExactly(true);
+            assertThat(gameResult)
+                    .hasSize(1)
+                    .containsExactly(true);
         }
     }
 

@@ -6,7 +6,6 @@ import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +28,6 @@ class DeckTest {
 
         Deck createdDeck = new Deck(cards);
         Card picked = createdDeck.pick();
-        Assertions.assertThat(picked).isEqualTo(new Card(Score.ACE, Shape.CLOVER));
+        assertThat(picked).isEqualTo(new Card(Score.ACE, Shape.CLOVER));
     }
 }
