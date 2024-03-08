@@ -47,7 +47,6 @@ public class BlackjackController {
         Players players = game.players();
         CardGenerator cardGenerator = game.cardGenerator();
         Dealer dealer = game.dealer();
-
         if (dealer.isBlackJack()) {
             return;
         }
@@ -81,7 +80,6 @@ public class BlackjackController {
     private void end(final Game game) {
         Players players = game.players();
         Dealer dealer = game.dealer();
-
         showCardOutcome(players, dealer);
         showMatchResult(players, dealer);
     }
