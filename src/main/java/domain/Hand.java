@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import static domain.Player.BLACK_JACK;
+
 public class Hand {
 
     private final List<Card> cards;
@@ -12,7 +14,7 @@ public class Hand {
 
     public int calculateSum() {
         return cards.stream()
-                .mapToInt(Card::getValue)
+                .mapToInt(Card::getLetterValue)
                 .sum();
     }
 
@@ -26,11 +28,11 @@ public class Hand {
                 .count();
     }
 
-    public int calculateScore() {
+    public int calculateScore() { //TODO: 이부분 의미 전달되게 코드 작성할 수 있지 않을까?
         int aceCount = countAceCard();
         int sum = calculateSum();
-
-        while (sum > 21 && aceCount > 0) {
+        //메소드 or 상수로 이름부여
+        while (sum > BLACK_JACK && aceCount > 0) {
             aceCount--;
             sum -= 10;
         }
