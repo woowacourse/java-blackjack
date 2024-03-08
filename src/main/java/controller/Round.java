@@ -53,7 +53,7 @@ public class Round {
 
         while (HIT.equals(command)) {
             currentHand = createHandStatusAfterPick(player);
-            if (player.isBusted()) {
+            if (!player.isAbleToDrawCard()) {
                 break;
             }
             outputView.printCardStatus(currentHand);
