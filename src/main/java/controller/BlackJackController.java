@@ -15,40 +15,6 @@ import view.OutputView;
 
 public class BlackJackController {
 
-    private static void handOutCard(final BlackJackGame blackJackGame, final Gamers gamers) {
-        List<Player> players = gamers.findPlayers();
-        askPlayersHit(blackJackGame, players);
-
-        Dealer dealer = gamers.findDealer();
-        askDealerHit(blackJackGame, dealer);
-    }
-
-    private static void askPlayersHit(final BlackJackGame blackJackGame, final List<Player> players) {
-        for (Player player : players) {
-            askSelection(blackJackGame, player);
-        }
-    }
-
-    private static void askSelection(final BlackJackGame blackJackGame, final Player player) {
-        while (!player.isBust() && isRetry(blackJackGame, player)) {
-            OutputView.printAllCards(player);
-        }
-    }
-
-    private static boolean isRetry(final BlackJackGame blackJackGame, final Player player) {
-        String selection = InputView.readSelectionOf(player);
-        if (!Command.isRetry(selection)) {
-            return false;
-        }
-        return blackJackGame.succeededGiving(player);
-    }
-
-    private static void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (blackJackGame.succeededGiving(dealer)) {
-            OutputView.printDealerHit(dealer);
-        }
-    }
-
     public void start() {
         Gamers gamers = readGamers();
         BlackJackGame blackJackGame = new BlackJackGame(Decks.createByStrategy(new ShuffledDecksGenerator()));
@@ -72,5 +38,39 @@ public class BlackJackController {
                 .map(name -> new Player(new Name(name)))
                 .toList();
         return new Players(players);
+    }
+
+    private void handOutCard(final BlackJackGame blackJackGame, final Gamers gamers) {
+        List<Player> players = gamers.findPlayers();
+        askPlayersHit(blackJackGame, players);
+
+        Dealer dealer = gamers.findDealer();
+        askDealerHit(blackJackGame, dealer);
+    }
+
+    private void askPlayersHit(final BlackJackGame blackJackGame, final List<Player> players) {
+        for (Player player : players) {
+            askSelection(blackJackGame, player);
+        }
+    }
+
+    private void askSelection(final BlackJackGame blackJackGame, final Player player) {
+        while (!player.isBust() && isRetry(blackJackGame, player)) {
+            OutputView.printAllCards(player);
+        }
+    }
+
+    private boolean isRetry(final BlackJackGame blackJackGame, final Player player) {
+        boolean retry = InputView.readSelectionOf(player);
+        if (!retry) {
+            return false;
+        }
+        return blackJackGame.succeededGiving(player);
+    }
+
+    private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
+        while (blackJackGame.succeededGiving(dealer)) {
+            OutputView.printDealerHit(dealer);
+        }
     }
 }
