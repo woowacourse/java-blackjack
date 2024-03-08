@@ -3,7 +3,6 @@ package view;
 import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersResultDto;
-
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class OutputView {
     }
 
     private String buildPlayerCardsWithResult(PlayerDto playerDto) {
-        return buildPlayerCards(playerDto) + " - 결과: " + playerDto.score();
+        return String.format("%s - 결과: %d", buildPlayerCards(playerDto), playerDto.score());
     }
 
     private String buildPlayerCards(PlayerDto playerDto) {
@@ -58,10 +57,13 @@ public class OutputView {
     private void printDealerWinLoss(DealerResultDto dealerResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러: ");
-        stringBuilder.append(dealerResultDto.winCount() + "승 ");
-        stringBuilder.append(dealerResultDto.lossCount() + "패 ");
+        stringBuilder.append(dealerResultDto.winCount())
+                .append("승 ");
+        stringBuilder.append(dealerResultDto.lossCount())
+                .append("패 ");
         if (dealerResultDto.pushCount() != 0) {
-            stringBuilder.append(dealerResultDto.winCount() + "무");
+            stringBuilder.append(dealerResultDto.winCount())
+                    .append("무");
         }
         System.out.println(stringBuilder);
     }
@@ -69,7 +71,10 @@ public class OutputView {
     private void printPlayerWinLoss(PlayersResultDto playersResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, String> playerResult : playersResultDto.playerResults().entrySet()) {
-            stringBuilder.append(playerResult.getKey() + ": " + playerResult.getValue() + "\n");
+            stringBuilder.append(playerResult.getKey())
+                    .append(": ")
+                    .append(playerResult.getValue())
+                    .append("\n");
         }
         System.out.println(stringBuilder);
     }
