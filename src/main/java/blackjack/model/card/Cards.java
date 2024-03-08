@@ -1,7 +1,6 @@
 package blackjack.model.card;
 
 import blackjack.model.cardgenerator.CardGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,10 @@ public class Cards {
         return List.of(cardGenerator.pick(), cardGenerator.pick());
     }
 
+    public void addCard(final CardGenerator cardGenerator) {
+        cards.add(cardGenerator.pick());
+    }
+
     public int calculateCardsTotal() {
         int total = cards.stream()
                 .map(Card::getDenomination)
@@ -36,6 +39,11 @@ public class Cards {
         return total;
     }
 
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getDenomination().isAce());
+    }
+
     private boolean canBeAdjusted(int total) {
         return total + ACE_ADJUSTMENT <= BLACK_JACK_CONDITION;
     }
@@ -44,17 +52,8 @@ public class Cards {
         return total + ACE_ADJUSTMENT;
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getDenomination().isAce());
-    }
-
     public boolean isBlackJack() {
         return calculateCardsTotal() == BLACK_JACK_CONDITION;
-    }
-
-    public void addCard(final CardGenerator cardGenerator) {
-        cards.add(cardGenerator.pick());
     }
 
     public boolean isBurst() {
