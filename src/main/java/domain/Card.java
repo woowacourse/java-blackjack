@@ -9,7 +9,6 @@ public class Card {
 
     public Card(CardType cardType, CardNumber cardNumber) {
         validateNull(cardType, cardNumber);
-
         this.cardType = cardType;
         this.cardNubmer = cardNumber;
     }
