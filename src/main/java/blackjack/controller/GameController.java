@@ -16,6 +16,7 @@ public class GameController {
         Deck deck = Deck.createSuffledDeck();
         Game game = Game.of(deck, dealer, players);
 
+        OutputView.printDrawInitialHandsMessage(dealer, players);
         printParticipantsInitialHands(dealer, players);
 
         askDrawUntilConfirmHands(players, deck);
