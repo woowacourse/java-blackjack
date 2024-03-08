@@ -8,6 +8,10 @@ public class Score {
         this.value = value;
     }
 
+    public boolean hitAllowed(HitStrategy hitStrategy) {
+        return hitStrategy.canHit(this);
+    }
+
     public int getValue() {
         return value;
     }
