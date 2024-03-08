@@ -21,7 +21,7 @@ class PlayerTest {
         Card card = new Card(cardProperties);
         //when
         player.receiveCard(card);
-        List<Card> playerDeck = player.getDeck();
+        List<Card> playerDeck = player.getHandDeck();
 
         //then
         assertThat(playerDeck).containsExactly(card);

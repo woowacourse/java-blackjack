@@ -20,7 +20,7 @@ public abstract class Gamer {
         return handDeck.calculateTotalScore();
     }
 
-    public List<Card> getDeck() {
+    public List<Card> getHandDeck() {
         return handDeck.getCards();
     }
 }

@@ -22,7 +22,7 @@ class DealerTest {
 
         //when
         dealer.receiveCard(card);
-        List<Card> dealerDeck = dealer.getDeck();
+        List<Card> dealerDeck = dealer.getHandDeck();
 
         //then
         assertThat(dealerDeck).containsExactly(card);
