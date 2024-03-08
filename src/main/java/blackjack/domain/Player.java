@@ -29,6 +29,10 @@ public class Player {
         return playerCards.calculateScore();
     }
 
+    public int getScoreValue() {
+        return getScore().value();
+    }
+
     public String getName() {
         return name;
     }
