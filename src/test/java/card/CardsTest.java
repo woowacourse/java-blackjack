@@ -13,7 +13,7 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(CardNumber.ACE, CardPattern.CLOVER_PATTERN),
                 new Card(CardNumber.ACE, CardPattern.DIA_PATTERN)));
 
-        Assertions.assertThat(cards.countMaxScore()).isEqualTo(2);
+        Assertions.assertThat(cards.countAceCard()).isEqualTo(2);
     }
 
     @DisplayName("Result로 낼 수 있는 가장 큰 결과 값을 return 하는지 확인한다.")

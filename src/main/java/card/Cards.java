@@ -46,7 +46,7 @@ public class Cards {
                 .toList();
     }
 
-    private int countAceCard() {
+    public int countAceCard() {
         return (int) cards.stream()
                 .filter(card -> card.isSameCardNumber(CardNumber.ACE))
                 .count();
