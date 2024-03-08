@@ -5,9 +5,11 @@ import java.util.List;
 public class PlayerCards extends Cards implements Drawable {
 
     private static final int MAX_SCORE = 21;
+    private final Name name;
 
-    public PlayerCards(Player player, List<Card> cards) {
-        super(player, cards);
+    public PlayerCards(Name name, List<Card> cards) {
+        super(cards);
+        this.name = name;
     }
 
     @Override
@@ -16,6 +18,6 @@ public class PlayerCards extends Cards implements Drawable {
     }
 
     public Name getPlayerName() {
-        return ((Player) participant).getName();
+        return name;
     }
 }

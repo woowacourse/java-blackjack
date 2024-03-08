@@ -13,12 +13,10 @@ public class GameTest {
     @Test
     @DisplayName("플레이어와 딜러의 승패를 반영한다.")
     void decideResult() {
-        Dealer dealer = new Dealer();
-        DealerCards dealerCards = new DealerCards(dealer, List.of(new Card(10, Shape.CLUB), new Card(6, Shape.CLUB)));
+        DealerCards dealerCards = new DealerCards(List.of(new Card(10, Shape.CLUB), new Card(6, Shape.CLUB)));
 
         Name capy = new Name("capy");
-        Player player = new Player(capy);
-        PlayerCards playerCards = new PlayerCards(player, List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
+        PlayerCards playerCards = new PlayerCards(capy, List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
 
         ScoreBoard scoreBoard = ScoreBoard.from(List.of(capy));
         Game game = new Game(new Rule(), scoreBoard);

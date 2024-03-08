@@ -6,8 +6,8 @@ public class DealerCards extends Cards implements Drawable {
 
     private static final int MIN_SCORE = 16;
 
-    public DealerCards(Dealer dealer, List<Card> cards) {
-        super(dealer, cards);
+    public DealerCards(List<Card> cards) {
+        super(cards);
     }
 
     @Override
