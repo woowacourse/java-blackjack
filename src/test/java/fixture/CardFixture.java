@@ -16,6 +16,11 @@ public class CardFixture {
         return 카드(Denomination.ACE);
     }
 
+    public static List<Card> 카드들(Card... cards) {
+        return Arrays.asList(cards);
+    }
+
+
     public static List<Card> 전체_카드() {
         List<Card> cards = new ArrayList<>();
 
