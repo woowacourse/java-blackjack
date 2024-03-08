@@ -19,10 +19,10 @@ public class CardTest {
 
     @ParameterizedTest
     @DisplayName("유효한 카드 숫자가 아니라면 예외가 발생한다.")
-    @ValueSource(ints = {-1, 0, 12, 13})
+    @ValueSource(ints = {-1, 14})
     void card_Number_Invalid(int number) {
         assertThatThrownBy(() -> new Card(number, Shape.CLUB))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(ArrayIndexOutOfBoundsException.class);
     }
 
     @Test

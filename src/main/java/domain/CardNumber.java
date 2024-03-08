@@ -1,38 +1,40 @@
 package domain;
 
-import java.util.Arrays;
-
 public enum CardNumber {
 
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    ELEVEN(11),
-    J(10),
-    Q(10),
-    K(10);
+    ONE(1, "A"),
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K");
 
-    private final int number;
+    private final int value;
 
-    CardNumber(int number) {
-        this.number = number;
+    private final String sign;
+
+    CardNumber(int value, String sign) {
+        this.value = value;
+        this.sign = sign;
     }
 
-    public static CardNumber find(int rawNumber) {
-        return Arrays.stream(values())
-                .filter(cardNumber -> cardNumber.number == rawNumber)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+    public static CardNumber find(int random) {
+        CardNumber[] values = values();
+        return values[random - 1];
     }
 
-    public int getNumber() {
-        return number;
+    public int getValue() {
+        return value;
+    }
+
+    public String getSign() {
+        return sign;
     }
 }

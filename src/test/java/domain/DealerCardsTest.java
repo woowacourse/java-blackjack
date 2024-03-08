@@ -29,7 +29,7 @@ class DealerCardsTest {
     @Test
     @DisplayName("딜러의 카드 숫자의 합이 최소 점수 조건 초과면 뽑을 수 없다.")
     void canDraw_isOverMinScore_False() {
-        DealerCards dealerCards = new DealerCards(new Dealer(), new ArrayList<>(List.of(new Card(6, Shape.CLUB), new Card(11, Shape.CLUB))));
+        DealerCards dealerCards = new DealerCards(new Dealer(), new ArrayList<>(List.of(new Card(7, Shape.CLUB), new Card(10, Shape.CLUB))));
 
         assertThat(dealerCards.canDraw()).isFalse();
     }

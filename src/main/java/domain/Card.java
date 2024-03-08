@@ -11,11 +11,11 @@ public class Card {
     }
 
     public int getCardNumber() {
-        return cardNumber.getNumber();
+        return cardNumber.getValue();
     }
 
     @Override
     public String toString() {
-        return cardNumber.getNumber() + shape.getShape();
+        return cardNumber.getSign() + shape.getShape();
     }
 }

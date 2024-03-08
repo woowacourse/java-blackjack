@@ -29,10 +29,11 @@ public class PlayerCardsTest {
     }
 
     @Test
-    @DisplayName("플레이어의 카드 숫자의 합이 최소 점수 조건 초과면 뽑을 수 없다.")
+    @DisplayName("플레이어의 카드 숫자의 합이 최대 점수 조건 초과면 뽑을 수 없다.")
     void sum_IsBelowMax_False() {
         Player player = new Player(new Name("capy"));
-        PlayerCards cards = new PlayerCards(player, new ArrayList<>(List.of(new Card(11, Shape.CLUB), new Card(11, Shape.CLUB))));
+        PlayerCards cards = new PlayerCards(player, new ArrayList<>(List.of(new Card(10, Shape.CLUB), new Card(10, Shape.CLUB))));
+        cards.add(new Card(2, Shape.CLUB));
 
         assertThat(cards.canDraw()).isFalse();
     }
