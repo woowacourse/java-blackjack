@@ -20,6 +20,10 @@ public class Card {
         return cardRank.getRank() + cardShape.getShape();
     }
 
+    public int getScore() {
+        return cardRank.getScore();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -16,22 +16,22 @@ public class Dealer extends Participant {
         return score < STAND_BOUND;
     }
 
-    public GameResult compareWith(Player player) {
+    public GameResult judge(Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = calculateScore();
 
         if (player.isBust()) {
-            return GameResult.WIN;
-        }
-
-        if (isBust() || playerScore > dealerScore) {
             return GameResult.LOSE;
         }
 
-        if (player.isBlackJack()) {
-            return GameResult.DRAW;
+        if (isBust() || playerScore > dealerScore) {
+            return GameResult.WIN;
         }
 
-        return GameResult.WIN;
+        if (player.isBlackJack()) {
+            return GameResult.TIE;
+        }
+
+        return GameResult.LOSE;
     }
 }

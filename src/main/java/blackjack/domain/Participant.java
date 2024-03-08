@@ -8,8 +8,8 @@ public abstract class Participant {
     private final Name name;
 
     protected Participant(String name) {
-        this.name = new Name(name);
         this.hand = new Hand();
+        this.name = new Name(name);
     }
 
     public void hit(Card card) {
@@ -30,16 +30,16 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public String getName() {

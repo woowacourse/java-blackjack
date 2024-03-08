@@ -5,7 +5,7 @@ import java.util.List;
 
 class Hand {
 
-    private static final int MAX_ACE_SCORE = 11;
+    private static final int BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards = new ArrayList<>();
@@ -15,43 +15,26 @@ class Hand {
     }
 
     public int calculateScore() {
-        int notAceScore = calculateNotAceScore();
-        int aceCount = getAceCount();
+        int hardHandScore = calculateHardHandScore();
+        int softHandScore = hardHandScore + BONUS_SCORE;
 
-        return calculateScoreWithAce(notAceScore, aceCount);
+        if (hasAce() && softHandScore <= BLACKJACK_SCORE) {
+            return softHandScore;
+        }
+
+        return hardHandScore;
     }
 
-    private int calculateNotAceScore() {
+    private boolean hasAce() {
         return cards.stream()
                 .map(Card::getCardRank)
-                .filter(CardRank::isNotAce)
-                .mapToInt(CardRank::getScore)
-                .sum();
+                .anyMatch(CardRank::isAce);
     }
 
-    private int getAceCount() {
-        return (int) cards.stream()
-                .map(Card::getCardRank)
-                .filter(CardRank::isAce)
-                .count();
-    }
-
-    private int calculateScoreWithAce(int notAceScore, int aceCount) {
-        int scoreWithAce = notAceScore;
-
-        for (int i = 0; i < aceCount; i++) {
-            scoreWithAce += decideAceScore(scoreWithAce);
-        }
-
-        return scoreWithAce;
-    }
-
-    private int decideAceScore(int score) {
-        if (isBust(score + MAX_ACE_SCORE)) {
-            return CardRank.ACE.getScore();
-        }
-
-        return MAX_ACE_SCORE;
+    private int calculateHardHandScore() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
     }
 
     public boolean isBust() {

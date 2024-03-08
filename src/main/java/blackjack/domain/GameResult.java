@@ -3,7 +3,7 @@ package blackjack.domain;
 public enum GameResult {
 
     WIN("승"),
-    DRAW("무"),
+    TIE("무"),
     LOSE("패");
 
     private final String value;
@@ -21,7 +21,7 @@ public enum GameResult {
             return WIN;
         }
 
-        return DRAW;
+        return TIE;
     }
 
     public String getValue() {

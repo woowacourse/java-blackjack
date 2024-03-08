@@ -19,7 +19,7 @@ public class Participants {
     private void validate(List<String> playerNames) {
         validatePlayerSize(playerNames);
         validateDuplicatedPlayerNames(playerNames);
-        validateDuplicatedDealerName(playerNames, dealer.getName());
+        validateInvalidPlayerName(playerNames, dealer.getName());
     }
 
     private void validatePlayerSize(List<String> playerNames) {
@@ -40,7 +40,7 @@ public class Participants {
                 .count();
     }
 
-    private void validateDuplicatedDealerName(List<String> playerNames, String dealerName) {
+    private void validateInvalidPlayerName(List<String> playerNames, String dealerName) {
         if (playerNames.contains(dealerName)) {
             throw new IllegalArgumentException(String.format("플레이어 이름은 '%s'가 될 수 없습니다.", dealerName));
         }

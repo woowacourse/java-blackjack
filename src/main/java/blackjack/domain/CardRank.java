@@ -25,11 +25,7 @@ public enum CardRank {
     }
 
     public boolean isAce() {
-        return CardRank.ACE == this;
-    }
-
-    public boolean isNotAce() {
-        return CardRank.ACE != this;
+        return this == CardRank.ACE;
     }
 
     public int getScore() {
