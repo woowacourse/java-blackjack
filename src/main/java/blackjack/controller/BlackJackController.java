@@ -12,6 +12,8 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
+import static blackjack.domain.DrawDecision.YES;
+
 public class BlackJackController {
 
     private final InputView inputView;
@@ -26,7 +28,6 @@ public class BlackJackController {
         CardDeck cardDeck = initCardDeck();
         Players players = initPlayers(cardDeck);
         Player dealer = initDealer(cardDeck);
-
         printPlayersInformation(players, cardDeck, dealer);
 
         completePlayersHand(players, cardDeck);
@@ -76,13 +77,8 @@ public class BlackJackController {
         Score playerScore = calculateScore(player);
         HitStrategy hitStrategy = new PlayerHitStrategy();
 
-        while (playerScore.hitAllowed(hitStrategy)) {
-            DrawDecision drawDecision = readHitDecision(player);
-            if (drawDecision == DrawDecision.NO) {
-                break;
-            }
-            Card card = cardDeck.popCard();
-            player.appendCard(card);
+        while (playerScore.hitAllowed(hitStrategy) && readHitDecision(player) == YES) {
+            player.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(player);
             playerScore = calculateScore(player);
         }
@@ -106,6 +102,11 @@ public class BlackJackController {
         }
     }
 
+    private Score calculateScore(Player player) {
+        ScoreCalculateStrategy scoreCalculateStrategy = new ScoreCalculateStrategy();
+        return player.calculateHandScore(scoreCalculateStrategy);
+    }
+
     private void printDealerPopCount(Player dealer) {
         int dealerPopCount = dealer.handSize() - 2;
         if (dealerPopCount > 0) {
@@ -124,13 +125,7 @@ public class BlackJackController {
 
     private void printDealerGameResult(Player dealer, Players players) {
         Score dealerScore = calculateScore(dealer);
-        Judge judge = new Judge();
-
-        int playerWinCount = (int) players.getPlayers().stream()
-                .map(this::calculateScore)
-                .filter(playerScore -> judge.isPlayerWin(dealerScore, playerScore))
-                .count();
-
+        int playerWinCount = players.countPlayerWithScoreAbove(dealerScore, new ScoreCalculateStrategy());
         int dealerWinCount = players.countPlayer() - playerWinCount;
 
         DealerGameResult dealerGameResult = new DealerGameResult(dealerWinCount, playerWinCount);
@@ -145,10 +140,5 @@ public class BlackJackController {
                     Score playerScore = calculateScore(player);
                     outputView.printPlayerGameResult(player, judge.isPlayerWin(dealerScore, playerScore));
                 });
-    }
-
-    private Score calculateScore(Player player) {
-        ScoreCalculateStrategy scoreCalculateStrategy = new ScoreCalculateStrategy();
-        return player.calculateHandScore(scoreCalculateStrategy);
     }
 }

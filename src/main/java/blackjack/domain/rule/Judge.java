@@ -2,7 +2,7 @@ package blackjack.domain.rule;
 
 public class Judge {
 
-    private static final int BLACK_JACK = 21;
+    private static final Score BLACK_JACK = new Score(21);
 
     public boolean isPlayerWin(Score dealerScore, Score playerScore) {
         if (playerScore.isAbove(BLACK_JACK)) {
@@ -11,6 +11,6 @@ public class Judge {
         if (dealerScore.isAbove(BLACK_JACK)) {
             return true;
         }
-        return playerScore.isBiggerThan(dealerScore);
+        return playerScore.isAbove(dealerScore);
     }
 }

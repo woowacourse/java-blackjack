@@ -30,7 +30,7 @@ public class Players {
     public int countPlayerWithScoreAbove(Score target, ScoreCalculateStrategy scoreCalculateStrategy) {
         return (int) players.stream()
                 .map(player -> player.calculateHandScore(scoreCalculateStrategy))
-                .filter(playerScore -> playerScore.isBiggerThan(target))
+                .filter(playerScore -> playerScore.isAbove(target))
                 .count();
     }
 
