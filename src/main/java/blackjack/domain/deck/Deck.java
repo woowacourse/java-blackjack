@@ -22,8 +22,8 @@ public class Deck {
 
     public Card pickRandomCard() {
         validateDeck();
-        int cardIndex = RANDOM.nextInt(cards.size());
-        return cards.remove(cardIndex);
+        int pickCardIndex = RANDOM.nextInt(cards.size());
+        return cards.remove(pickCardIndex);
     }
 
     public int calculateTotalScore() {
@@ -32,10 +32,14 @@ public class Deck {
                 .map(Card::getRank)
                 .mapToInt(Rank::getScore)
                 .sum();
-        if (hasAce() && totalScore + ACE_BONUS_SCORE <= Players.MAX_BOUNDARY_SCORE) {
+        if (hasAce() && canAddAceBonusScore(totalScore)) {
             totalScore += ACE_BONUS_SCORE;
         }
         return totalScore;
+    }
+
+    private static boolean canAddAceBonusScore(int totalScore) {
+        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
     }
 
     private void validateDeck() {

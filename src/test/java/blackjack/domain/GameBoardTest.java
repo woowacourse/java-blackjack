@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.GameBoard;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.Rank;
@@ -86,7 +85,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("초기에 딜러와 플레이어는 카드 두 장을 받는다.")
     void initialDistributeTest() {
-        gameBoard.initialDistribute();
+        gameBoard.distributeInitialDecks();
 
         assertThat(dealer.getDeck().size()).isEqualTo(2);
     }

@@ -42,7 +42,7 @@ public class BlackjackGame {
     }
 
     private void startSetting(GameBoard gameBoard) {
-        gameBoard.initialDistribute();
+        gameBoard.distributeInitialDecks();
         Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
         List<PlayerDto> playersDto = gameBoard.getPlayers()

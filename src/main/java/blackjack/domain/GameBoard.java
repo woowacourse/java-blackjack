@@ -46,12 +46,17 @@ public class GameBoard {
         return participants.isDealerNotOver();
     }
 
-    public void initialDistribute() {
-        List<Deck> initialCards = new ArrayList<>();
+    public void distributeInitialDecks() {
+        List<Deck> initialDecks = makeInitialDecks();
+        participants.receiveInitialDecks(initialDecks);
+    }
+
+    private List<Deck> makeInitialDecks() {
+        List<Deck> initialDecks = new ArrayList<>();
         for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
-            initialCards.add(makeInitialDeck());
+            initialDecks.add(makeInitialDeck());
         }
-        participants.receiveInitialDecks(initialCards);
+        return initialDecks;
     }
 
     private Deck makeInitialDeck() {

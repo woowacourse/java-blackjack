@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Players {
 
-    public static final int MAX_BOUNDARY_SCORE = 21;
+    public static final int MAX_SCORE = 21;
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -23,10 +23,10 @@ public class Players {
     }
 
     private boolean calculateVictory(Player player, int dealerScore) {
-        if (player.calculateScore() > MAX_BOUNDARY_SCORE) {
+        if (player.calculateScore() > MAX_SCORE) {
             return false;
         }
-        if (dealerScore > MAX_BOUNDARY_SCORE) {
+        if (dealerScore > MAX_SCORE) {
             return true;
         }
         return dealerScore < player.calculateScore();
@@ -41,7 +41,7 @@ public class Players {
     }
 
     public boolean isOnePlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(MAX_BOUNDARY_SCORE);
+        return players.get(playerIndex).isNotOver(MAX_SCORE);
     }
 
     public int size() {

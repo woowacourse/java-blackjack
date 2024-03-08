@@ -13,7 +13,6 @@ public class Participants {
     private final Player dealer;
     private final Players players;
 
-
     public Participants(Player dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
@@ -27,14 +26,18 @@ public class Participants {
         dealer.receiveCard(card);
     }
 
-    public void receiveInitialDecks(List<Deck> decks) { //TODO 의미 더 잘 전달하게
-        Deck dealerDeck = decks.remove(decks.size() - 1);
+    public void receiveInitialDecks(List<Deck> decks) {
+        Deck dealerDeck = extractOneDeck(decks);
         dealer.receiveDeck(dealerDeck);
 
         for (int index = 0; index < players.size(); index++) {
             Deck currentDeck = decks.get(index);
             players.receiveOnePlayerDeck(currentDeck, index);
         }
+    }
+
+    private Deck extractOneDeck(List<Deck> decks) {
+        return decks.remove(decks.size() - 1);
     }
 
     public Map<Player, Boolean> calculateResult() {
