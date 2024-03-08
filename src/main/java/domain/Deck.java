@@ -20,7 +20,7 @@ public class Deck {
                 .collect(collectingAndThen(toList(), Deck::new));
     }
 
-    private static List<PlayingCard> generateCardByShape(PlayingCardShape playingCardShape) {
+    private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
         return Arrays.stream(PlayingCardValue.values())
                 .filter(playingCardValue -> playingCardValue != PlayingCardValue.SMALL_ACE)
                 .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))

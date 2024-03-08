@@ -31,15 +31,15 @@ public final class FormatConverter {
             entry(KING, "K")
     );
 
-    public static String convertPlayingCardShapeToString(PlayingCardShape playingCardShape) {
+    public static String convertPlayingCardShapeToString(final PlayingCardShape playingCardShape) {
         return PLAYING_CARD_SHAPE_STRING.get(playingCardShape);
     }
 
-    public static String convertPlayingCardValueToString(PlayingCardValue playingCardValue) {
+    public static String convertPlayingCardValueToString(final PlayingCardValue playingCardValue) {
         return PLAYING_CARD_VALUE_STRING.get(playingCardValue);
     }
 
-    public static String convertGameResultToString(GameResult gameResult) {
+    public static String convertGameResultToString(final GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
             return "승";
         }
