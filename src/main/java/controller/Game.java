@@ -41,7 +41,7 @@ public class Game {
 
     private Round start() {
         List<String> names = inputView.enterPlayerNames();
-        Round round = new Round(names);
+        Round round = Round.from(names);
         outputView.printAfterStartGame(round.initiateGameCondition());
         return round;
     }

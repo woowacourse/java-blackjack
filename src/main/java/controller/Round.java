@@ -20,17 +20,19 @@ public class Round {
     private final Participant participant;
     private final Deck deck;
 
-    public Round(final List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList();
-        this.participant = new Participant(new Dealer(), players);
-        deck = new Deck();
-    }
-
     public Round(final Participant participant, final Deck deck) {
         this.participant = participant;
         this.deck = deck;
+    }
+
+    public static Round from(final List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .toList();
+        return new Round(
+                new Participant(new Dealer(), players),
+                new Deck()
+        );
     }
 
     public List<HandStatus> initiateGameCondition() {
