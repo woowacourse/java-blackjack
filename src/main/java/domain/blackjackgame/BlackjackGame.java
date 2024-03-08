@@ -6,6 +6,9 @@ import domain.participant.Player;
 import domain.participant.Players;
 
 public class BlackjackGame {
+    private static final int INITIAL_CARD_COUNT = 2;
+    private static final int BLACKJACK_SCORE = 21;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -17,7 +20,7 @@ public class BlackjackGame {
     public void startGame() {
         dealer.shuffle();
 
-        for (int count = 0; count < 2; count++) {
+        for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
             dealAllParticipants();
         }
     }
@@ -45,7 +48,7 @@ public class BlackjackGame {
 
         GameResult gameResult = new GameResult();
         for (int i = 0; i < players.count(); i++) {
-            Player player = players.getPlayerByIndex(i);
+            Player player = players.findPlayerByIndex(i);
             int playerScore = player.calculateScore();
             ResultStatus status = getResultStatus(dealerScore, playerScore);
             gameResult.record(player, status);
@@ -55,13 +58,16 @@ public class BlackjackGame {
     }
 
     private ResultStatus getResultStatus(int dealerScore, int playerScore) {
-        if (playerScore > 21) {
+        if (playerScore > BLACKJACK_SCORE) {
             return ResultStatus.LOSE;
-        } else if (dealerScore > 21) {
+        }
+        if (dealerScore > BLACKJACK_SCORE) {
             return ResultStatus.WIN;
-        } else if (playerScore > dealerScore) {
+        }
+        if (playerScore > dealerScore) {
             return ResultStatus.WIN;
-        } else if (playerScore == dealerScore) {
+        }
+        if (playerScore == dealerScore) {
             return ResultStatus.DRAW;
         }
         return ResultStatus.LOSE;
