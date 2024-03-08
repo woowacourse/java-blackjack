@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.model.blackjackgame.BlackJackGame;
+import blackjack.model.blackjackgame.GameResults;
+import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
-import blackjack.model.blackjackgame.GameResults;
 import blackjack.model.participants.Player;
-import blackjack.model.blackjackgame.ResultStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,6 +54,10 @@ public class OutputView {
         System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
         Map<Player, ResultStatus> gameResult = gameResults.getResult();
         printPlayerResultsFormat(gameResult);
+    }
+
+    public void printInvalidDrawCardState() {
+        System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }
 
     private String getDealerCardFormat(String name, Card card) {

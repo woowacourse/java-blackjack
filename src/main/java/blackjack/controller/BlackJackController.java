@@ -1,12 +1,12 @@
 package blackjack.controller;
 
 import blackjack.model.blackjackgame.BlackJackGame;
-import blackjack.model.generator.CardGenerator;
-import blackjack.view.Command;
-import blackjack.model.participants.Dealer;
 import blackjack.model.blackjackgame.GameResults;
-import blackjack.model.participants.Player;
+import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
+import blackjack.model.participants.Dealer;
+import blackjack.model.participants.Player;
+import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -46,9 +46,16 @@ public class BlackJackController {
     }
 
     private void drawCardWithCommand(Player player, BlackJackGame blackJackGame, int index) {
-        while (player.checkDrawCardState() && inputView.readCommand(player) == Command.YES) {
+        while (checkDrawCardState(player) && inputView.readCommand(player) == Command.YES) {
             blackJackGame.update(index);
             outputView.printPlayerCardsInfo(blackJackGame, index);
         }
+    }
+
+    private boolean checkDrawCardState(Player player) {
+        if (!player.checkDrawCardState()) {
+            outputView.printInvalidDrawCardState();
+        }
+        return player.checkDrawCardState();
     }
 }
