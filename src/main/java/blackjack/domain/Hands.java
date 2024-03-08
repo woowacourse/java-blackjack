@@ -20,12 +20,14 @@ public class Hands {
     }
 
     public boolean downgradeAce() {
-        for (Card card : hands) {
-            if (card.getValue() == Value.ACEHIGH) {
-                card.downgradeAce();
-                handsScore.addScore(-DOWNGRADE_SCORE);
-                return true;
-            }
+        List<Value> values = hands.stream()
+                .map(Card::getValue)
+                .toList();
+
+        if (values.contains(Value.ACEHIGH)) {
+            hands.get(values.indexOf(Value.ACEHIGH))
+                    .downgradeAce();
+            return true;
         }
         return false;
     }
