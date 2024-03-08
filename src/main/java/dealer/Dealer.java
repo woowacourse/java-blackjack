@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 public class Dealer extends GameParticipant {
 
+    private static final int MIN_DEALER_SCORE = 16;
+    private static final int INIT_CARD_SIZE = 2;
+
     private final CardDeck cardDeck;
 
     public Dealer() {
@@ -22,13 +25,13 @@ public class Dealer extends GameParticipant {
     public void checkNeedExtraCard() {
         receiveCard(giveCard());
 
-        while (getMaxGameScore() <= 16) {
+        while (getMaxGameScore() <= MIN_DEALER_SCORE) {
             receiveCard(giveCard());
         }
     }
 
     public int countExtraCard() {
-        return getCardsSize() - 2;
+        return getCardsSize() - INIT_CARD_SIZE;
     }
 
     public Card giveCard() {
