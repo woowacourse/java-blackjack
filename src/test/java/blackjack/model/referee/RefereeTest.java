@@ -30,9 +30,9 @@ public class RefereeTest {
 
         // when
         Referee referee = new Referee(dealer);
-        Outcome outcome = referee.determineOutcome(player); // TODO: 접근제어자 default 인데 private으로 변경해야함
+        MatchResult matchResult = referee.determineMatchResult(player); // TODO: 접근제어자 default 인데 private으로 변경해야함
 
         // then
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(matchResult).isEqualTo(MatchResult.LOSE);
     }
 }

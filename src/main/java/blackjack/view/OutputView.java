@@ -4,11 +4,10 @@ import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
-import blackjack.model.referee.Outcome;
+import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerOutcome;
-
+import blackjack.view.dto.PlayerMatchResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,12 +18,12 @@ public class OutputView {
     private static final String DEALER_ACTION_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
     private static final String DEALER_CARDS_FORM = "\n딜러 카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
-    private static final String FINAL_OUTCOME_INTRO = "\n## 최종 승패";
-    public static final String DEALER_FINAL_OUTCOME_PREFIX = "딜러: ";
+    private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
+    public static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
     public static final String WIN_MESSAGE = "승";
     public static final String LOSE_MESSAGE = "패";
     public static final String TIE_MESSAGE = "무";
-    public static final String DEALER_FINAL_OUTCOME_FORM = "%s승 %s패 %s무";
+    public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
@@ -77,30 +76,34 @@ public class OutputView {
         }
     }
 
-    public void printFinalOutcome(final List<PlayerOutcome> playerOutcomes) {
-        System.out.println(FINAL_OUTCOME_INTRO);
-        System.out.println(DEALER_FINAL_OUTCOME_PREFIX + formatDealerOutcome(playerOutcomes));
-        for (PlayerOutcome playerOutcome : playerOutcomes) {
-            System.out.println(playerOutcome.name() + ": " + formatPlayerOutcome(playerOutcome.outcome()));
+    public void printMatchResult(final List<PlayerMatchResult> playerMatchResults) {
+        System.out.println(MATCH_RESULT_INTRO);
+        System.out.println(formatDealerMatchResult(playerMatchResults));
+        for (PlayerMatchResult playerMatchResult : playerMatchResults) {
+            System.out.println(formatPlayerMatchResult(playerMatchResult));
         }
     }
 
-    private String formatPlayerOutcome(final Outcome outcome) {
-        if (outcome == Outcome.WIN) {
+    private String formatDealerMatchResult(final List<PlayerMatchResult> playerMatchResults) {
+        Map<MatchResult, Long> outcomeCounts = playerMatchResults.stream()
+                .collect(Collectors.groupingBy(PlayerMatchResult::matchResult, Collectors.counting()));
+        long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
+        long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
+        long tieCount = outcomeCounts.getOrDefault(MatchResult.TIE, 0L);
+        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, tieCount);
+    }
+
+    private String formatPlayerMatchResult(final PlayerMatchResult playerMatchResult) {
+        return playerMatchResult.name() + ": " + formatMatchResult(playerMatchResult.matchResult());
+    }
+
+    private String formatMatchResult(final MatchResult matchResult) {
+        if (matchResult == MatchResult.WIN) {
             return WIN_MESSAGE;
         }
-        if (outcome == Outcome.LOSE) {
+        if (matchResult == MatchResult.LOSE) {
             return LOSE_MESSAGE;
         }
         return TIE_MESSAGE;
-    }
-
-    private String formatDealerOutcome(final List<PlayerOutcome> playerOutcomes) {
-        Map<Outcome, Long> outcomeCounts = playerOutcomes.stream()
-                .collect(Collectors.groupingBy(PlayerOutcome::outcome, Collectors.counting()));
-        long winCount = outcomeCounts.getOrDefault(Outcome.LOSE, 0L);
-        long loseCount = outcomeCounts.getOrDefault(Outcome.WIN, 0L);
-        long tieCount = outcomeCounts.getOrDefault(Outcome.TIE, 0L);
-        return String.format(DEALER_FINAL_OUTCOME_FORM, winCount, loseCount, tieCount);
     }
 }

@@ -10,8 +10,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerOutcome;
-
+import blackjack.view.dto.PlayerMatchResult;
 import java.util.List;
 
 public class BlackjackController {
@@ -64,7 +63,7 @@ public class BlackjackController {
 
     private void end(final Players players, final Dealer dealer) {
         showCardOutcome(players, dealer);
-        showGameOutcome(players, dealer);
+        showMatchResult(players, dealer);
     }
 
     private void showCardOutcome(final Players players, final Dealer dealer) {
@@ -74,9 +73,9 @@ public class BlackjackController {
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
     }
 
-    private void showGameOutcome(final Players players, final Dealer dealer) {
+    private void showMatchResult(final Players players, final Dealer dealer) {
         Referee referee = new Referee(dealer);
-        List<PlayerOutcome> outcomes = referee.determinePlayersOutcome(players);
-        outputView.printFinalOutcome(outcomes);
+        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult(players);
+        outputView.printMatchResult(playerMatchResults);
     }
 }

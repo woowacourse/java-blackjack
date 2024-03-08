@@ -3,7 +3,7 @@ package blackjack.model.referee;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
-import blackjack.view.dto.PlayerOutcome;
+import blackjack.view.dto.PlayerMatchResult;
 import java.util.List;
 
 public class Referee {
@@ -13,29 +13,29 @@ public class Referee {
         this.dealer = dealer;
     }
 
-    public List<PlayerOutcome> determinePlayersOutcome(final Players players) {
+    public List<PlayerMatchResult> determinePlayersMatchResult(final Players players) {
         return players.getPlayers().stream()
-                .map(this::determinePlayerOutcome)
+                .map(this::determinePlayerResult)
                 .toList();
     }
 
-    private PlayerOutcome determinePlayerOutcome(final Player player) {
-        return new PlayerOutcome(player.getName(), determineOutcome(player));
+    private PlayerMatchResult determinePlayerResult(final Player player) {
+        return new PlayerMatchResult(player.getName(), determineMatchResult(player));
     }
 
-    Outcome determineOutcome(final Player player) {
+    MatchResult determineMatchResult(final Player player) {
         int playerTotal = player.calculateCardsTotal();
         int dealerTotal = dealer.calculateCardsTotal();
 
         if (dealer.isBurst()) {
-            return Outcome.WIN;
+            return MatchResult.WIN;
         }
         if (player.isBurst()) {
-            return Outcome.LOSE;
+            return MatchResult.LOSE;
         }
         if (playerTotal >= dealerTotal) {
-            return Outcome.WIN;
+            return MatchResult.WIN;
         }
-        return Outcome.LOSE;
+        return MatchResult.LOSE;
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.model.referee;
 
-public enum Outcome {
+public enum MatchResult {
     WIN,
     LOSE,
     TIE;
