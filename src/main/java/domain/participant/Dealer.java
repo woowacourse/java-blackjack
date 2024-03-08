@@ -28,7 +28,7 @@ public class Dealer extends Participant {
         return deck.draw();
     }
 
-    public void shuffle() {
+    public void shuffleCards() {
         deck.shuffle();
     }
 
@@ -36,18 +36,22 @@ public class Dealer extends Participant {
         participant.receive(drawCard());
     }
 
-    public boolean doesGetCard() {
+    public boolean canGetCard() {
         return cardSum() <= DEALER_THRESHOLD;
     }
 
     public GameResultStatus resultStatusOf(final Player player) {
-        if (isBothBust(player) || this.cardSum() == player.cardSum()) {
+        if (isPush(player)) {
             return PUSH;
         }
         if (isWin(player)) {
             return WIN;
         }
         return LOSE;
+    }
+
+    private boolean isPush(final Player player) {
+        return isBothBust(player) || this.cardSum() == player.cardSum();
     }
 
     private boolean isWin(final Player player) {

@@ -16,14 +16,12 @@ import domain.participant.Players;
 import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
-import view.dto.GameResultDto;
 import view.dto.participant.DealerDto;
 import view.dto.participant.ParticipantDto;
 import view.dto.participant.PlayerDto;
 import view.dto.participant.PlayersDto;
 
 public class Casino {
-
 
     private final InputView inputView;
     private final ResultView resultView;
@@ -35,25 +33,30 @@ public class Casino {
 
     public void play(final BlackjackGame game) {
         Dealer dealer = new Dealer(createCards());
-        dealer.shuffle();
+        dealer.shuffleCards();
         Players players = new Players(inputView.askPlayerNames());
         game.ready(dealer, players);
+        proceed(dealer, players);
+        result(game, dealer, players);
+    }
+
+    private void proceed(final Dealer dealer, final Players players) {
         resultView.printInitialCards(new DealerDto(dealer, dealer.peek()), new PlayersDto(players));
-        players.forEach(player -> askMoreCardAndDeal(dealer, player));
-        if (dealer.doesGetCard()) {
+        players.forEach(player -> askAndDealMoreCard(dealer, player));
+        if (dealer.canGetCard()) {
             resultView.printDealerCardMessage(new DealerDto(dealer));
             dealer.deal(dealer);
         }
-        DealerDto dealerDto = new DealerDto(dealer);
-        PlayersDto playersDto = new PlayersDto(players);
-        List<ParticipantDto> dealerAndPlayers = new ArrayList<>();
-        dealerAndPlayers.add(dealerDto);
-        dealerAndPlayers.addAll(playersDto.dtos());
-        GameResultDto gameResultDto = game.resultsOf(dealer, players);
-        resultView.printResult(dealerAndPlayers, gameResultDto);
     }
 
-    private void askMoreCardAndDeal(final Dealer dealer, final Player player) {
+    private void result(final BlackjackGame game, final Dealer dealer, final Players players) {
+        List<ParticipantDto> dealerAndPlayers = new ArrayList<>();
+        dealerAndPlayers.add(new DealerDto(dealer));
+        dealerAndPlayers.addAll(new PlayersDto(players).players());
+        resultView.printResults(dealerAndPlayers, game.resultsOf(dealer, players));
+    }
+
+    private void askAndDealMoreCard(final Dealer dealer, final Player player) {
         if (player.isBust() || player.isBlackjack()) {
             return;
         }
@@ -61,7 +64,7 @@ public class Casino {
         if (command.yes()) {
             dealer.deal(player);
             resultView.printParticipantHand(new PlayerDto(player));
-            askMoreCardAndDeal(dealer, player);
+            askAndDealMoreCard(dealer, player);
         }
     }
 

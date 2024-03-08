@@ -13,7 +13,7 @@ public class PlayersGameResult {
         this.result = new HashMap<>();
     }
 
-    public void put(Player player, GameResultStatus resultStatus) {
+    public void put(final Player player, final GameResultStatus resultStatus) {
         result.put(player, resultStatus);
     }
 

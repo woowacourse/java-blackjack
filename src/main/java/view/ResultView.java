@@ -1,15 +1,16 @@
 package view;
 
+import static domain.BlackjackGame.DEALER_THRESHOLD;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
 import java.util.List;
-import java.util.StringJoiner;
 
-import domain.BlackjackGame;
 import view.dto.GameResultDto;
+import view.dto.card.CardsDto;
 import view.dto.participant.DealerDto;
+import view.dto.participant.DealerResultDto;
 import view.dto.participant.ParticipantDto;
-import view.dto.participant.PlayerDto;
+import view.dto.participant.PlayerResultsDto;
 import view.dto.participant.PlayersDto;
 
 public class ResultView {
@@ -30,31 +31,33 @@ public class ResultView {
     }
 
     private String parsePlayerNames(final PlayersDto playersDto) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (PlayerDto playerDto : playersDto.dtos()) {
-            stringJoiner.add(playerDto.name());
-        }
-        return stringJoiner.toString();
+        return playersDto.players()
+                .stream()
+                .map(ParticipantDto::name)
+                .reduce((player1, player2) -> player1 + ", " + player2)
+                .orElse("");
     }
 
     public void printPlayerHands(final PlayersDto playersDto) {
-        List<PlayerDto> playerDtos = playersDto.dtos();
-        for (PlayerDto playerDto : playerDtos) {
-            printParticipantHand(playerDto);
-        }
+        playersDto.players().forEach(this::printParticipantHand);
     }
 
     public void printParticipantHand(final ParticipantDto participantDto) {
-        System.out.printf("%n%s: %s", participantDto.name(), participantDto.getCards()
-                .parseCards());
+        CardsDto cards = participantDto.getCards();
+        System.out.printf("%n%s: %s",
+                participantDto.name(),
+                cards.parseCards()
+        );
     }
 
     public void printDealerCardMessage(final DealerDto dealerDto) {
-        System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n%n", dealerDto.name(), BlackjackGame.DEALER_THRESHOLD);
+        System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n%n",
+                dealerDto.name(),
+                DEALER_THRESHOLD
+        );
     }
 
-    public void printResult(final List<ParticipantDto> participantDtos,
-                            final GameResultDto gameResultDto) {
+    public void printResults(final List<ParticipantDto> participantDtos, final GameResultDto gameResultDto) {
         System.out.println();
         participantDtos.forEach(this::printCardAndSum);
         System.out.println();
@@ -63,16 +66,19 @@ public class ResultView {
     }
 
     private void printCardAndSum(final ParticipantDto participantDto) {
-        System.out.printf("%s: %s - 결과: %d%n", participantDto.name(), participantDto.getCards()
-                        .parseCards(),
-                participantDto.score());
+        CardsDto cards = participantDto.getCards();
+        System.out.printf("%s: %s - 결과: %d%n",
+                participantDto.name(),
+                cards.parseCards(),
+                participantDto.score()
+        );
     }
 
     private void printGameResults(final GameResultDto gameResultDto) {
+        DealerResultDto dealerResult = gameResultDto.getDealerResult();
+        PlayerResultsDto playerResults = gameResultDto.getPlayersResult();
         System.out.println("## 최종 승패");
-        System.out.println(gameResultDto.getDealerResult()
-                .parseResult());
-        System.out.print(gameResultDto.getPlayersResult()
-                .parseResult());
+        System.out.println(dealerResult.parseResult());
+        System.out.print(playerResults.parseResult());
     }
 }

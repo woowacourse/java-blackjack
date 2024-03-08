@@ -18,7 +18,7 @@ public class Players {
     }
 
     public Players(final PlayersDto playersDto) {
-        this(playersDto.dtos()
+        this(playersDto.players()
                 .stream()
                 .map(Player::new)
                 .toList());

@@ -4,9 +4,9 @@ import java.util.List;
 
 import domain.participant.Players;
 
-public record PlayersDto(List<PlayerDto> dtos) {
-    public PlayersDto(final List<PlayerDto> dtos) {
-        this.dtos = List.copyOf(dtos);
+public record PlayersDto(List<PlayerDto> players) {
+    public PlayersDto(final List<PlayerDto> players) {
+        this.players = List.copyOf(players);
     }
 
     public PlayersDto(final Players players) {

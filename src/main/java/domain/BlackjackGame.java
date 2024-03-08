@@ -36,8 +36,7 @@ public class BlackjackGame {
             playerResults.put(player, playerResultStatus);
             dealerResults.put(dealerResultStatus);
         });
-        return new GameResultDto(new DealerResultDto(dealer, dealerResults),
-                new PlayerResultsDto(playerResults));
+        return new GameResultDto(new DealerResultDto(dealer, dealerResults), new PlayerResultsDto(playerResults));
     }
 
 }

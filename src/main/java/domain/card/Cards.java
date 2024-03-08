@@ -1,5 +1,7 @@
 package domain.card;
 
+import static domain.card.CardNumber.ACE;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,12 +43,7 @@ public class Cards {
     }
 
     public boolean hasAce() {
-        for (Card card : cards) {
-            if (card.number() == CardNumber.ACE) {
-                return true;
-            }
-        }
-        return false;
+        return cards.stream().anyMatch(card -> card.number() == ACE);
     }
 
     public List<Card> toList() {
