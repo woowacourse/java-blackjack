@@ -74,13 +74,10 @@ public class BlackJackController {
     }
 
     private void completePlayerHand(Player player, CardDeck cardDeck) {
-        Score playerScore = calculateScore(player);
         HitStrategy hitStrategy = new PlayerHitStrategy();
-
-        while (playerScore.hitAllowed(hitStrategy) && readHitDecision(player) == YES) {
+        while (player.calculateHandScore().hitAllowed(hitStrategy) && readHitDecision(player) == YES) {
             player.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(player);
-            playerScore = calculateScore(player);
         }
     }
 
@@ -92,18 +89,11 @@ public class BlackJackController {
     }
 
     private void completeDealerHand(Player dealer, CardDeck cardDeck) {
-        Score dealerScore = calculateScore(dealer);
         HitStrategy hitStrategy = new DealerHitStrategy();
-
-        while (dealerScore.hitAllowed(hitStrategy)) {
+        while (dealer.calculateHandScore().hitAllowed(hitStrategy)) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
-            dealerScore = calculateScore(dealer);
         }
-    }
-
-    private Score calculateScore(Player player) {
-        return player.calculateHandScore();
     }
 
     private void printDealerPopCount(Player dealer) {
@@ -118,12 +108,11 @@ public class BlackJackController {
     }
 
     private void printPlayerScore(Player player) {
-        Score score = calculateScore(player);
-        outputView.printPlayerScore(player, score);
+        outputView.printPlayerScore(player, player.calculateHandScore());
     }
 
     private void printDealerGameResult(Player dealer, Players players) {
-        Score dealerScore = calculateScore(dealer);
+        Score dealerScore = dealer.calculateHandScore();
         int playerWinCount = players.countPlayerWithScoreAbove(dealerScore, new ScoreCalculateStrategy());
         int dealerWinCount = players.countPlayer() - playerWinCount;
 
@@ -133,10 +122,10 @@ public class BlackJackController {
 
     private void printPlayersGameResult(Players players, Player dealer) {
         Judge judge = new Judge();
-        Score dealerScore = calculateScore(dealer);
+        Score dealerScore = dealer.calculateHandScore();
         players.getPlayers()
                 .forEach(player -> {
-                    Score playerScore = calculateScore(player);
+                    Score playerScore = player.calculateHandScore();
                     outputView.printPlayerGameResult(player, judge.isPlayerWin(dealerScore, playerScore));
                 });
     }
