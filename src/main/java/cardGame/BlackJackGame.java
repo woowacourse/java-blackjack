@@ -1,7 +1,7 @@
 package cardGame;
 
-import cardGame.dto.BlackJackGameStatus;
-import cardGame.dto.ParticipantsTotalGameResult;
+import cardGame.dto.BlackJackGameStatusDto;
+import cardGame.dto.ParticipantsTotalGameResultDto;
 import dealer.Dealer;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +46,12 @@ public class BlackJackGame {
         return singleMatches;
     }
 
-    public BlackJackGameStatus getBackJackGameStatus() {
-        return BlackJackGameStatus.of(players, dealer);
+    public BlackJackGameStatusDto getBackJackGameStatus() {
+        return BlackJackGameStatusDto.of(players, dealer);
     }
 
-    public ParticipantsTotalGameResult getFinalBlackJackGameResult() {
-        return ParticipantsTotalGameResult.of(players, dealer);
+    public ParticipantsTotalGameResultDto getParticipantScore() {
+        return ParticipantsTotalGameResultDto.of(players, dealer);
     }
 
     public int countDealerExtraCard() {
