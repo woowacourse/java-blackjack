@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("게임 결과")
+@DisplayName("게임 결과들")
 public class GameResultsTest {
     @Test
     @DisplayName("플레이어의 승패 결과를 Map으로 반환한다.")

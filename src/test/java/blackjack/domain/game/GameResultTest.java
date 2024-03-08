@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static blackjack.domain.game.GameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("게임 결과")
 public class GameResultTest {
 
     @Test
