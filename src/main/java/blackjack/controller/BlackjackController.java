@@ -13,6 +13,8 @@ import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -31,7 +33,7 @@ public class BlackjackController {
 
     private Game prepare() {
         CardGenerator cardGenerator = new RandomCardGenerator();
-        Players players = preparePlayers(cardGenerator);
+        Players players = retryOnException(() -> preparePlayers(cardGenerator));
         Dealer dealer = new Dealer(cardGenerator);
         outputView.printDealingResult(players, dealer);
         return new Game(players, dealer, cardGenerator);
@@ -67,7 +69,7 @@ public class BlackjackController {
     }
 
     private boolean doPlayerAction(final Player player, final CardGenerator cardGenerator) {
-        boolean command = inputView.askHitOrStandCommand(player.getName());
+        boolean command = retryOnException(() -> inputView.askHitOrStandCommand(player.getName()));
         if (command) {
             player.hit(cardGenerator);
             outputView.printPlayerActionResult(player);
@@ -94,5 +96,24 @@ public class BlackjackController {
         Referee referee = new Referee(dealer);
         List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult(players);
         outputView.printMatchResult(playerMatchResults);
+    }
+
+    public <T> T retryOnException(final Supplier<T> retryOperation) {
+        boolean retry = true;
+        T result = null;
+        while (retry) {
+            result = tryOperation(retryOperation);
+            retry = Objects.isNull(result);
+        }
+        return result;
+    }
+
+    private <T> T tryOperation(final Supplier<T> operation) {
+        try {
+            return operation.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return null;
+        }
     }
 }

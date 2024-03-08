@@ -8,6 +8,7 @@ import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class OutputView {
     public static final String LOSE_MESSAGE = "패";
     public static final String TIE_MESSAGE = "무";
     public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
+    public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
@@ -105,5 +107,9 @@ public class OutputView {
             return LOSE_MESSAGE;
         }
         return TIE_MESSAGE;
+    }
+
+    public void printException(final String errorMessage) {
+        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
     }
 }
