@@ -32,7 +32,7 @@ public class Blackjack {
 
     public BlackjackResultDTO finishGame() {
         BlackjackResult blackjackResult = new BlackjackResult();
-        return blackjackResult.finishGame(getPlayers(), players.getDealer());
+        return blackjackResult.finishGame(getParticipants(), players.getDealer());
     }
 
     private void initializePlayer(final Player player) {

@@ -15,9 +15,9 @@ class BlackjackResultTest {
     void playerBust() {
         Player dealer = new Dealer();
         Player teba = new Participant(new Name("테바"));
-        teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
-        teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
-        teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));
+        teba.addCard(new Card(Denomination.JACK,Symbol.CLOVER));
+        teba.addCard(new Card(Denomination.KING,Symbol.CLOVER));
+        teba.addCard(new Card(Denomination.SIX,Symbol.CLOVER));
         Blackjack blackjack = new Blackjack(new Players(List.of(teba, dealer)), dealer);
         //
 
@@ -35,9 +35,9 @@ class BlackjackResultTest {
     void dealerBust() {
         Player dealer = new Dealer();
         Player teba = new Participant(new Name("테바"));
-        dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
-        dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
-        dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));
+        dealer.addCard(new Card(Denomination.JACK,Symbol.CLOVER));
+        dealer.addCard(new Card(Denomination.KING,Symbol.CLOVER));
+        dealer.addCard(new Card(Denomination.SIX,Symbol.CLOVER));
         Blackjack blackjack = new Blackjack(new Players(List.of(teba,dealer)), dealer);
 
         BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
