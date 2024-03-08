@@ -1,15 +1,14 @@
-package blackjack;
+package blackjack.model.blackjackgame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.model.BlackJackGame;
-import blackjack.model.Card;
-import blackjack.model.CardGenerator;
-import blackjack.model.Cards;
-import blackjack.model.Dealer;
-import blackjack.model.Player;
+import blackjack.model.cards.Card;
+import blackjack.model.cards.Cards;
+import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.IndexGenerator;
+import blackjack.model.participants.Dealer;
+import blackjack.model.participants.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

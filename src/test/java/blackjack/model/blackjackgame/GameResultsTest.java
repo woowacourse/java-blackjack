@@ -1,11 +1,9 @@
-package blackjack;
+package blackjack.model.blackjackgame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.model.GameResults;
-import blackjack.model.Player;
-import blackjack.model.ResultStatus;
+import blackjack.model.participants.Player;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,6 @@
-package blackjack.model;
+package blackjack.model.participants;
+
+import blackjack.model.blackjackgame.ResultStatus;
 
 public class Dealer extends Participant {
     private static final int STANDARD = 16;

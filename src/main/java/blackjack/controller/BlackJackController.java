@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.model.BlackJackGame;
-import blackjack.model.CardGenerator;
-import blackjack.model.Command;
-import blackjack.model.Dealer;
-import blackjack.model.GameResults;
-import blackjack.model.Player;
+import blackjack.model.blackjackgame.BlackJackGame;
+import blackjack.model.generator.CardGenerator;
+import blackjack.view.Command;
+import blackjack.model.participants.Dealer;
+import blackjack.model.blackjackgame.GameResults;
+import blackjack.model.participants.Player;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

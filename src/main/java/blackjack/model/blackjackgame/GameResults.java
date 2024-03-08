@@ -1,5 +1,6 @@
-package blackjack.model;
+package blackjack.model.blackjackgame;
 
+import blackjack.model.participants.Player;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.stream.Collectors;

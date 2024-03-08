@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.cards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,6 @@ public class Cards {
         cards.addAll(cardsToAdd);
         score += calculate(cardsToAdd);
     }
-
 
     public boolean isGreaterThanWinningScore() {
         return score > WINNING_SCORE;

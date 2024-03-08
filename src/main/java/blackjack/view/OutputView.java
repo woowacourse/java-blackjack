@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.model.BlackJackGame;
-import blackjack.model.Card;
-import blackjack.model.Cards;
-import blackjack.model.Dealer;
-import blackjack.model.GameResults;
-import blackjack.model.Player;
-import blackjack.model.ResultStatus;
+import blackjack.model.blackjackgame.BlackJackGame;
+import blackjack.model.cards.Card;
+import blackjack.model.cards.Cards;
+import blackjack.model.participants.Dealer;
+import blackjack.model.blackjackgame.GameResults;
+import blackjack.model.participants.Player;
+import blackjack.model.blackjackgame.ResultStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
