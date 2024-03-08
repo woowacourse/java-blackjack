@@ -8,14 +8,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
+    private static final int MAX_PLAYERS_COUNT = 8;
     private final List<Gamer> players;
     private final Gamer dealer;
     private final Deck deck;
 
     public BlackJackGame(List<Gamer> players) {
+        validatePlayerCount(players);
         this.players = players;
         this.dealer = new Gamer(new Name("딜러"));
         this.deck = new Deck();
+    }
+
+    private void validatePlayerCount(List<Gamer> players) {
+        if (players.size() > MAX_PLAYERS_COUNT) {
+            throw new IllegalArgumentException("플레이어의 수는 최대 8명 입니다.");
+        }
     }
 
     public void initialDealing() {

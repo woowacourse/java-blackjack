@@ -3,6 +3,7 @@ package domain;
 import domain.dto.GameStatusDto;
 import domain.dto.GamerDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -91,5 +92,17 @@ public class BlackJackGameTest {
         GameStatusDto gameStatusDto = blackJackGame.getGameStatusDto();
         GamerDto gamerDto = gameStatusDto.getDealerDto();
         Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
+    }
+
+    @Test
+    @DisplayName("플레이어가 8명을 초과하면 예외를 발생한다.")
+    void validatePlayerCountException() {
+        List<Gamer> gamers = IntStream.range(0, 9)
+                .mapToObj(number -> new Gamer(new Name("test%d".formatted(number))))
+                .collect(Collectors.toList());
+
+        Assertions.assertThatThrownBy(() -> new BlackJackGame(gamers))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 수는 최대 8명 입니다.");
     }
 }
