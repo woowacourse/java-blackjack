@@ -1,11 +1,12 @@
 package view;
 
-import static domain.BlackJackGame.INITIAL_CARD_COUNT;
+import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
 import java.util.List;
 import java.util.StringJoiner;
 
-import domain.BlackJackGame;
+import domain.BlackjackGame;
+import view.dto.GameResultDto;
 import view.dto.DealerDto;
 import view.dto.ParticipantDto;
 import view.dto.PlayerDto;
@@ -44,27 +45,34 @@ public class ResultView {
     }
 
     public void printParticipantHand(final ParticipantDto participantDto) {
-        System.out.printf("%n%s: %s", participantDto.name(), parseCards(participantDto.cards()));
-    }
-
-    private String parseCards(final List<String> cards) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String card : cards) {
-            stringJoiner.add(card);
-        }
-        return stringJoiner.toString();
+        System.out.printf("%n%s: %s", participantDto.name(), participantDto.getCards()
+                .parseCards());
     }
 
     public void printDealerCardMessage(final DealerDto dealerDto) {
-        System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n", dealerDto.name(), BlackJackGame.DEALER_THRESHOLD);
+        System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n%n", dealerDto.name(), BlackjackGame.DEALER_THRESHOLD);
     }
 
-    public void printResult(final List<ParticipantDto> participantDtos){
+    public void printResult(final List<ParticipantDto> participantDtos,
+                            final GameResultDto gameResultDto) {
+        System.out.println();
         participantDtos.forEach(this::printCardAndSum);
         System.out.println();
-
+        printGameResults(gameResultDto);
+        System.out.println();
     }
-    private void printCardAndSum(final ParticipantDto participantDto){
-        System.out.printf("%n%s: %s - 결과: %d", participantDto.name(), parseCards(participantDto.cards()), participantDto.cardSum());
+
+    private void printCardAndSum(final ParticipantDto participantDto) {
+        System.out.printf("%s: %s - 결과: %d%n", participantDto.name(), participantDto.getCards()
+                        .parseCards(),
+                participantDto.score());
+    }
+
+    private void printGameResults(final GameResultDto gameResultDto) {
+        System.out.println("## 최종 승패");
+        System.out.println(gameResultDto.getDealerResult()
+                .parseResult());
+        System.out.print(gameResultDto.getPlayersResult()
+                .parseResult());
     }
 }
