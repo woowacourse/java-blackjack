@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Result {
 
@@ -13,4 +14,10 @@ public class Result {
     public Map<Player, ResultStatus> getResults() {
         return results;
     }
+
+    public Map<ResultStatus, Long> calculateDealerResult() {
+        return results.values().stream()
+                .collect(Collectors.groupingBy(ResultStatus::swap, Collectors.counting()));
+    }
+
 }

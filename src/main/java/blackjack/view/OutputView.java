@@ -3,7 +3,10 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
+import blackjack.domain.Result;
+import blackjack.domain.ResultStatus;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -59,9 +62,35 @@ public class OutputView {
 
     public static void printDealerDraw(Dealer dealer) {
         System.out.println(String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName()));
+        System.out.println();
     }
 
     public static void printDealerStand(Dealer dealer) {
         System.out.println(String.format("%s는 17이상이라 카드를 더 받지 않습니다.", dealer.getName()));
+        System.out.println();
+    }
+
+    /**
+     * ## 최종 승패 딜러: 1승 1패 pobi: 승 jason: 패
+     */
+    public static void printResult(Result result, Dealer dealer) {
+        Map<Player, ResultStatus> results = result.getResults();
+
+        Map<ResultStatus, Long> resultStatusLongMap = result.calculateDealerResult();
+        printDealerResult(dealer, resultStatusLongMap);
+        printPlayerResult(results);
+    }
+
+    private static void printDealerResult(Dealer dealer, Map<ResultStatus, Long> dealerResult) {
+        System.out.print(String.format("%s: ", dealer.getName()));
+        dealerResult.forEach((key, value) ->
+                System.out.print(value + key.getName() + " ")
+        );
+        System.out.println();
+    }
+
+    private static void printPlayerResult(Map<Player, ResultStatus> results) {
+        results.forEach(
+                ((player, status) -> System.out.println(String.format("%s: %s", player.getName(), status.getName()))));
     }
 }

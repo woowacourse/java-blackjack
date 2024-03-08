@@ -15,4 +15,15 @@ public class ResultTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("딜러의 승패를 반환한다")
+    @Test
+    public void dealerResult() {
+        Result result = new Result(
+                Map.of(new Player("mark"), ResultStatus.DRAW, new Player("isang"), ResultStatus.WIN,
+                        new Player("isang"), ResultStatus.WIN));
+
+        Map<ResultStatus, Long> results = result.calculateDealerResult();
+        results.forEach((key, value) -> System.out.println(key.getName() + " : " + value));
+    }
+
 }
