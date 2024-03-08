@@ -23,9 +23,9 @@ public class GamerCards {
     }
 
     public int calculateScore() {
-        int totalScore = sumExceptAceCards();
-        totalScore += sumAceCards(totalScore);
-        return totalScore;
+        int scoreExceptAce = sumExceptAceCards();
+        int scoreWithAce = sumAceCards(scoreExceptAce);
+        return scoreExceptAce + scoreWithAce;
     }
 
     private int sumExceptAceCards() {
