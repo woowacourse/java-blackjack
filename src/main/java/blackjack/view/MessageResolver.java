@@ -41,7 +41,7 @@ public class MessageResolver {
 
     public String resolveDealerHandMessage(Player dealer) {
         Card card = dealer.getHand().getCards().get(0);
-        return String.format("딜러: %s", resolveCardMessage(card));
+        return String.format("%s: %s", dealer.getName(), resolveCardMessage(card));
     }
 
     public String resolveDealerPopCountMessage(int dealerDrawThreshold, int popCount) {

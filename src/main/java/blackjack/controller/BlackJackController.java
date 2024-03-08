@@ -43,16 +43,16 @@ public class BlackJackController {
         int dealerPopCount = dealer.getHand().getCards().size() - 2;
         outputView.printDealerPopCount(16, dealerPopCount);
 
+        printPlayerScore(dealer);
         printPlayersScore(players);
+        
         printDealerGameResult(dealer, players);
-
         printPlayersGameResult(players, dealer);
 
     }
 
     private void printPlayersScore(Players players) {
         players.getPlayers().forEach(this::printPlayerScore);
-
     }
 
     private void printPlayerScore(Player player) {
