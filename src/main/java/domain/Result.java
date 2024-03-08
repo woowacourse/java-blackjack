@@ -5,7 +5,7 @@ public enum Result {
     PLAYER_WIN,
     PUSH;
 
-    public static Result of(Dealer dealer, Player player) {
+    public static Result of(Dealer dealer, Player player) { //TODO: 시간 남으면 생각해보기
         int playerTotalScore = player.getTotalScore();
         int dealerTotalScore = dealer.getTotalScore();
 

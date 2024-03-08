@@ -42,5 +42,4 @@ public enum Letter {
     public int getValue() {
         return this.value;
     }
-
 }
