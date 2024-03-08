@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import blackjack.model.cardgenerator.CardGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +36,11 @@ public class Cards {
         return total;
     }
 
-    public boolean canBeAdjusted(int total) {
+    private boolean canBeAdjusted(int total) {
         return total + ACE_ADJUSTMENT <= BLACK_JACK_CONDITION;
     }
 
-    public int adjustTotalForAce(int total) {
+    private int adjustTotalForAce(int total) {
         return total + ACE_ADJUSTMENT;
     }
 
