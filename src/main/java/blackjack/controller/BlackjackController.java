@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.game.Game;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.referee.Referee;
@@ -12,7 +11,6 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerOutcome;
-
 import java.util.List;
 
 public class BlackjackController {
@@ -25,19 +23,14 @@ public class BlackjackController {
     }
 
     public void run() {
-        Game game = prepareGame();
+        CardGenerator cardGenerator = new RandomCardGenerator();
+        Players players = preparePlayers(cardGenerator);
+        Dealer dealer = new Dealer(cardGenerator);
+        outputView.printDealingResult(players, dealer);
+
         List<Player> playersInAction = players.getPlayers();
         for (Player player : playersInAction) {
-            while (player.canHit()) {
-                boolean command = inputView.askHitOrStandCommand(player.getName());
-                if (command) {
-                    player.hit(cardGenerator);
-                    outputView.printPlayerActionResult(player);
-                } else {
-                    outputView.printPlayerActionResult(player);
-                    break;
-                }
-            }
+            doPlayerActionUtilEnd(player, cardGenerator);
         }
         dealer.doAction(cardGenerator);
         outputView.printDealerActionResult(dealer);
@@ -54,12 +47,20 @@ public class BlackjackController {
         outputView.printFinalOutcome(outcomes);
     }
 
-    private Game prepareGame() {
-        CardGenerator cardGenerator = new RandomCardGenerator();
-        Players players = preparePlayers(cardGenerator);
-        Dealer dealer = new Dealer(cardGenerator);
-        outputView.printDealingResult(players, dealer);
-        return new Game(players, dealer, cardGenerator);
+    private void doPlayerActionUtilEnd(Player player, CardGenerator cardGenerator) {
+        boolean isContinue = true;
+        while (isContinue) {
+            isContinue = doPlayerAction(player, cardGenerator);
+        }
+    }
+
+    private boolean doPlayerAction(Player player, CardGenerator cardGenerator) {
+        boolean command = inputView.askHitOrStandCommand(player.getName());
+        if (command) {
+            player.hit(cardGenerator);
+            outputView.printPlayerActionResult(player);
+        }
+        return player.canHit() && command;
     }
 
     private Players preparePlayers(final CardGenerator cardGenerator) {
