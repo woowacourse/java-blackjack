@@ -9,7 +9,7 @@ import java.util.List;
 import view.dto.participant.PlayerDto;
 import view.dto.participant.PlayersDto;
 
-public class InputView {
+public class InputView implements AutoCloseable {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
@@ -44,5 +44,10 @@ public class InputView {
         } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        READER.close();
     }
 }
