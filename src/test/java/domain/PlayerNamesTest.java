@@ -1,18 +1,18 @@
 package domain;
 
+import static domain.Name.DEALER_NAME_MESSAGE;
+import static domain.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
+import static domain.PlayerNames.NAME_DUPLICATE_MESSAGE;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static domain.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
-import static domain.PlayerNames.NAME_DUPLICATE_MESSAGE;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerNamesTest {
 
@@ -68,5 +68,13 @@ class PlayerNamesTest {
         assertThatThrownBy(() -> new PlayerNames(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(NAMES_SIZE_INVALID_MESSAGE);
+    }
+
+    @DisplayName("플레이어 이름은 딜러가 될 수 없습니다.")
+    @Test
+    void validateNotDealerName() {
+        assertThatThrownBy(() -> new PlayerNames(List.of("위브", "산초", "딜러")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(DEALER_NAME_MESSAGE);
     }
 }
