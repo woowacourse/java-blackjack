@@ -5,15 +5,14 @@ import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
-
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    private final String FORM = "%s카드: %s";
-    private final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d";
-    private final String RESULT_FORM = "%s: %s";
+    private static final String FORM = "%s카드: %s";
+    private static final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d";
+    private static final String RESULT_FORM = "%s: %s";
 
     public void printStartDeal(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
@@ -36,13 +35,14 @@ public class OutputView {
     }
 
     public void printDealerTurnMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다."); //TODO 메서드 변경
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
         for (ParticipantDto participantDto : participantsDto.getPlayers()) {
-            System.out.printf(TOTAL_SUM_FORM, participantDto.getName(), format(participantDto.getCards()), participantDto.getTotalSum());
+            System.out.printf(TOTAL_SUM_FORM, participantDto.getName(), format(participantDto.getCards()),
+                    participantDto.getTotalSum());
             System.out.println();
         }
     }
@@ -60,7 +60,7 @@ public class OutputView {
     private String format(final Map<Result, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
-            stringBuilder.append(entry.getValue() + entry.getKey().getValue() + " ");
+            stringBuilder.append(entry.getValue()).append(entry.getKey().getValue()).append(" ");
         }
 
         return stringBuilder.toString();
