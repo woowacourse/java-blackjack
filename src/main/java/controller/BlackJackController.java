@@ -1,14 +1,17 @@
 package controller;
 
-import domain.*;
+import domain.BlackJackGame;
+import domain.CardDeck;
+import domain.Dealer;
+import domain.Player;
+import domain.PlayerNames;
 import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersResultDto;
-import view.InputView;
-import view.OutputView;
-
 import java.io.IOException;
 import java.util.List;
+import view.InputView;
+import view.OutputView;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -36,6 +39,15 @@ public class BlackJackController {
         return new PlayerNames(inputNames);
     }
 
+    private void printInitialDealAndHand(BlackJackGame blackJackGame) {
+        List<Player> initialParticipants = blackJackGame.getEveryParticipants();
+        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
+
+        outputView.printInitialDeal(playerInitDtos);
+        outputView.printInitialHand(playerInitDtos);
+    }
+
+
     private void repeatHitUntilStand(BlackJackGame blackJackGame) throws IOException {
         for (Player player : blackJackGame.getPlayers()) {
             repeatHitUntilPlayerStand(blackJackGame, player);
@@ -55,14 +67,6 @@ public class BlackJackController {
         while (blackJackGame.hitDealer()) {
             outputView.printDealerHitMessage();
         }
-    }
-
-    private void printInitialDealAndHand(BlackJackGame blackJackGame) {
-        List<Player> initialParticipants = blackJackGame.getEveryParticipants();
-        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
-
-        outputView.printInitialDeal(playerInitDtos);
-        outputView.printInitialHand(playerInitDtos);
     }
 
     private void printGameResult(BlackJackGame blackJackGame) {
