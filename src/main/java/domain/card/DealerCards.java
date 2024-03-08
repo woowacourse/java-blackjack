@@ -14,4 +14,8 @@ public class DealerCards extends Cards implements Drawable {
     public boolean canDraw() {
         return bestSum() <= MIN_SCORE;
     }
+
+    public String getFirstCard() {
+        return cards.get(0).toString();
+    }
 }

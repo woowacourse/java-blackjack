@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String POSITIVE = "y";
+
     private Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
@@ -16,8 +18,10 @@ public class InputView {
         return Arrays.stream(input).toList();
     }
 
-    public String readHitOpinion(Name name) {
+    public boolean readHitOpinion(Name name) {
+        System.out.println();
         System.out.println(name + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        String opinion = scanner.nextLine();
+        return POSITIVE.equals(opinion);
     }
 }
