@@ -13,5 +13,4 @@ class ResultStatusTest {
 
         assertThat(actual).isEqualTo(expected);
     }
-
 }
