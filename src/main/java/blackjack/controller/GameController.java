@@ -16,9 +16,18 @@ public class GameController {
         Deck deck = Deck.createSuffledDeck();
         Game game = Game.of(deck, dealer, players);
 
+        printParticipantsInitialHands(dealer, players);
+
         askDrawUntilConfirmHands(players, deck);
 
         confirmDealerHands(dealer, deck);
+    }
+
+    private static void printParticipantsInitialHands(Dealer dealer, Players players) {
+        OutputView.printDealerFirstCard(dealer);
+        for(Player player : players.getPlayers()){
+            OutputView.printParticipantHands(player);
+        }
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
