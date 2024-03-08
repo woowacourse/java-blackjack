@@ -25,10 +25,6 @@ public class Players {
         }
     }
 
-    private boolean hasDuplicatePlayers(final List<Player> players) {
-        return Set.copyOf(players).size() != players.size();
-    }
-
     private boolean isInvalidPlayersNumber(final List<Player> players) {
         return players.size() > 8;
     }
@@ -37,6 +33,10 @@ public class Players {
         if(hasDuplicatePlayers(players)){
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다");
         }
+    }
+
+    private boolean hasDuplicatePlayers(final List<Player> players) {
+        return Set.copyOf(players).size() != players.size();
     }
 
     public static Players from(final String[] names) {
