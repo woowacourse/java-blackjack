@@ -13,13 +13,6 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public static Card makeRandomCard(NumberGenerator generator) {
-        Random random = new Random();
-        final Denomination denomination = Denomination.getDenomination(generator.generate());
-        final Symbol symbol = Symbol.getSymbol(random.nextInt(4));
-        return new Card(denomination, symbol);
-    }
-
     public int getValue(int score) {
         return denomination.getValue(score);
     }
