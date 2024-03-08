@@ -46,7 +46,7 @@ public class BlackjackController {
     private static void giveDealerMoreCardsIfNeeded(final CardGame cardGame, final Dealer dealer) {
         while (dealer.isMoreCardNeeded()) {
             cardGame.giveCard(dealer);
-            OutputView.printDealerDrawMessage(dealer);
+            OutputView.printDealerHitMessage(dealer);
         }
     }
 
