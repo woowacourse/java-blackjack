@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -15,12 +14,6 @@ public class Players {
     public Players(List<Player> players) {
         validate(players);
         this.players = players;
-    }
-
-    public static Players from(List<PlayerName> playerNames) {
-        return new Players(playerNames.stream()
-                .map(playerName -> new Player(playerName, new Hand(new ArrayList<>())))
-                .toList());
     }
 
     public int countPlayer() {
