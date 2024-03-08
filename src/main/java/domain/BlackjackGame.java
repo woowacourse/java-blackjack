@@ -4,10 +4,10 @@ import java.util.EnumMap;
 import java.util.stream.IntStream;
 
 import domain.participant.Dealer;
-import domain.participant.DealerGameResult;
+import domain.participant.DealerResult;
 import domain.participant.Participant;
 import domain.participant.Players;
-import domain.participant.PlayersGameResult;
+import domain.participant.PlayerResults;
 import view.dto.GameResultDto;
 import view.dto.participant.DealerResultDto;
 import view.dto.participant.PlayerResultsDto;
@@ -28,8 +28,8 @@ public class BlackjackGame {
     }
 
     public GameResultDto resultsOf(final Dealer dealer, final Players players) {
-        DealerGameResult dealerResults = new DealerGameResult(new EnumMap<>(GameResultStatus.class));
-        PlayersGameResult playerResults = new PlayersGameResult();
+        DealerResult dealerResults = new DealerResult(new EnumMap<>(GameResultStatus.class));
+        PlayerResults playerResults = new PlayerResults();
         players.forEach(player -> {
             GameResultStatus playerResultStatus = dealer.resultStatusOf(player);
             GameResultStatus dealerResultStatus = playerResultStatus.opposite();

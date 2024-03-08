@@ -4,15 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import domain.GameResultStatus;
-import domain.participant.PlayersGameResult;
+import domain.participant.PlayerResults;
 
 public class PlayerResultsDto {
 
     private final Map<String, GameResultStatus> result;
 
-    public PlayerResultsDto(final PlayersGameResult playersGameResult) {
+    public PlayerResultsDto(final PlayerResults playerResults) {
         this.result = new LinkedHashMap<>();
-        playersGameResult.getResult()
+        playerResults.getResult()
                 .forEach((player, resultStatus) -> result.put(player.name()
                         .value(), resultStatus));
     }

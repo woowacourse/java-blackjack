@@ -5,11 +5,11 @@ import java.util.Map;
 
 import domain.GameResultStatus;
 
-public class DealerGameResult {
+public class DealerResult {
 
     private final EnumMap<GameResultStatus, Integer> result;
 
-    public DealerGameResult(final EnumMap<GameResultStatus, Integer> result) {
+    public DealerResult(final EnumMap<GameResultStatus, Integer> result) {
         this.result = new EnumMap<>(result);
     }
 

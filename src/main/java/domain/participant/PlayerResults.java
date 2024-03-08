@@ -5,11 +5,11 @@ import java.util.Map;
 
 import domain.GameResultStatus;
 
-public class PlayersGameResult {
+public class PlayerResults {
 
     private final Map<Player, GameResultStatus> result;
 
-    public PlayersGameResult() {
+    public PlayerResults() {
         this.result = new HashMap<>();
     }
 
