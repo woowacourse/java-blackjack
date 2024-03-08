@@ -1,15 +1,15 @@
-package view;
+package blackjack.view;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import domain.GameResult;
-import domain.card.Card;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 public class OutputView {
 	private static final OutputView INSTANCE = new OutputView();
@@ -34,8 +34,8 @@ public class OutputView {
 		List<Player> playerInfos = players.getPlayers();
 		printDealMessage(playerInfos);
 
-		printDealerInitCardStatusMessage(dealer);
-		printPlayersInitCardStatusMessage(playerInfos);
+		printDealerInitCardHandStatusMessage(dealer);
+		printPlayersInitCardHandStatusMessage(playerInfos);
 	}
 
 	private void printDealMessage(List<Player> playerInfos) {
@@ -43,16 +43,16 @@ public class OutputView {
 			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 	}
 
-	private void printDealerInitCardStatusMessage(Dealer dealer) {
+	private void printDealerInitCardHandStatusMessage(Dealer dealer) {
 		Card dealerInitCard = dealer.getCardHand().get(0);
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
 	}
 
-	private void printPlayersInitCardStatusMessage(List<Player> playerInfos) {
+	private void printPlayersInitCardHandStatusMessage(List<Player> playerInfos) {
 		for (Player playerInfo : playerInfos) {
-			printCardStatus(playerInfo);
+			printCardHandStatus(playerInfo);
 		}
-		System.out.println();
+		printLine();
 	}
 
 	private String createPlayerNamesText(List<Player> playerInfos) {
@@ -68,7 +68,7 @@ public class OutputView {
 		return String.format(CARD_INFO_MESSAGE, card.getRankName(), card.getSuitName());
 	}
 
-	public void printCardStatus(Player player) {
+	public void printCardHandStatus(Player player) {
 		System.out.println(
 			String.format(PLAYER_CARD_INFO_MESSAGE, player.getName(), createCardsInfoText(player.getCardHand())));
 	}
@@ -87,18 +87,18 @@ public class OutputView {
 			String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
 	}
 
-	public void printTotalCardStatus(Dealer dealer, Players players) {
-		printDealerTotalCardStatus(dealer);
-		printPlayersTotalCardStatus(players);
+	public void printTotalCardHandStatus(Dealer dealer, Players players) {
+		printDealerTotalCardHandStatus(dealer);
+		printPlayersTotalCardHandStatus(players);
 	}
 
-	private void printDealerTotalCardStatus(Dealer dealer) {
-		System.out.println();
+	private void printDealerTotalCardHandStatus(Dealer dealer) {
+		printLine();
 		System.out.println(String.format("딜러 카드: %s - 결과: %d",
 			createCardsInfoText(dealer.getCardHand()), dealer.getScore()));
 	}
 
-	private void printPlayersTotalCardStatus(Players players) {
+	private void printPlayersTotalCardHandStatus(Players players) {
 		for (Player player : players.getPlayers()) {
 			System.out.println(String.format("%s카드: %s - 결과: %d",
 				player.getName(), createCardsInfoText(player.getCardHand()), player.getScore()));
@@ -123,5 +123,9 @@ public class OutputView {
 			String result = gameResultTexts.get(playerToResult.getValue());
 			System.out.println(String.format(PLAYER_GAME_RESULT_MESSAGE, playerName, result));
 		}
+	}
+
+	private void printLine() {
+		System.out.println();
 	}
 }

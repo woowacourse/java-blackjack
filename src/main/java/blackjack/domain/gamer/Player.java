@@ -1,7 +1,7 @@
-package domain.gamer;
+package blackjack.domain.gamer;
 
-import domain.card.Card;
-import domain.card.CardHand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHand;
 
 public class Player extends Gamer {
 	private final Name name;

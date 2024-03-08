@@ -1,4 +1,4 @@
-package domain.gamer;
+package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 
 public class PlayerTest {
 

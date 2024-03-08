@@ -1,9 +1,9 @@
-package domain.gamer;
+package blackjack.domain.gamer;
 
 import java.util.List;
 
-import domain.card.Card;
-import domain.card.CardHand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHand;
 
 public class Gamer {
 	protected final CardHand cardHand;

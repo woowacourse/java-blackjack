@@ -1,10 +1,10 @@
-package domain.gamer;
+package blackjack.domain.gamer;
 
 import java.util.List;
 
-import domain.card.Card;
-import domain.card.CardHand;
-import domain.card.Deck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHand;
+import blackjack.domain.card.Deck;
 
 public class Dealer extends Gamer {
 	public static final int INIT_CARD_COUNT = 2;

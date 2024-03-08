@@ -1,16 +1,18 @@
+package blackjack;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import domain.GameResult;
-import domain.card.Deck;
-import domain.card.UnShuffledDeckGenerator;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
-import view.InputView;
-import view.OutputView;
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.UnShuffledDeckGenerator;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackController {
 	private final InputView inputView;
@@ -58,7 +60,7 @@ public class BlackjackController {
 	private void receivePlayerAdditionalCard(Dealer dealer, Player player) {
 		while (!player.isBust() && isPlayerInputHit(player)) {
 			player.receiveCard(dealer.dealCard());
-			outputView.printCardStatus(player);
+			outputView.printCardHandStatus(player);
 		}
 	}
 
@@ -78,7 +80,7 @@ public class BlackjackController {
 	}
 
 	private void printTotalCardStatus(Dealer dealer, Players players) {
-		outputView.printTotalCardStatus(dealer, players);
+		outputView.printTotalCardHandStatus(dealer, players);
 	}
 
 	private void printGameResult(Dealer dealer, Players players) {

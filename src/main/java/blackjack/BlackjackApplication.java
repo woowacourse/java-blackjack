@@ -1,8 +1,10 @@
-import domain.card.Deck;
-import domain.gamer.Dealer;
-import domain.gamer.Players;
-import view.InputView;
-import view.OutputView;
+package blackjack;
+
+import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Players;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackApplication {
 	public static void main(String[] args) {

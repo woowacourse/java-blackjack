@@ -1,7 +1,7 @@
-package domain;
+package blackjack.domain;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 
 public enum GameResult {
 	WIN,

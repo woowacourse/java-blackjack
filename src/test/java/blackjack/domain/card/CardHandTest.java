@@ -1,4 +1,4 @@
-package domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,11 +6,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import domain.card.Card;
-import domain.card.CardHand;
-import domain.card.Rank;
-import domain.card.Suit;
 
 public class CardHandTest {
 

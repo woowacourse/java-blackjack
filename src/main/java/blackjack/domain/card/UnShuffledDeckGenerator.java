@@ -1,4 +1,4 @@
-package domain.card;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public class UnShuffledDeckGenerator {
 	private List<Card> createCards() {
 		List<Card> cards = new ArrayList<>();
 		for (Suit suit : Suit.values()) {
-			cards.addAll(createSuitCards(suit));
+			cards.addAll(createCardsOfSuit(suit));
 		}
 
 		return cards;
 	}
 
-	private List<Card> createSuitCards(Suit suit) {
+	private List<Card> createCardsOfSuit(Suit suit) {
 		List<Card> cards = new ArrayList<>();
 		for (Rank rank : Rank.values()) {
 			cards.add(new Card(suit, rank));

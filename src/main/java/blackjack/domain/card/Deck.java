@@ -1,4 +1,4 @@
-package domain.card;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,6 @@ public class Deck {
 
 	private void validateSize(List<Card> deck) {
 		if (deck.size() != INIT_SIZE) {
-			// TODO: 시스템 에러는 따로 처리
 			throw new IllegalArgumentException(String.format("덱의 사이즈가 %d장이 아닙니다.", INIT_SIZE));
 		}
 	}
