@@ -21,7 +21,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateSum())
-                .isEqualTo(card1.getValue() + card2.getValue());
+                .isEqualTo(card1.getLetterValue() + card2.getLetterValue());
     }
 
     @DisplayName("카드 한 장을 손 패로 가지고 온다.")
