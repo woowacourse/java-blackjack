@@ -44,7 +44,7 @@ public class BlackjackController {
     private void playGame(final BlackjackGame blackjackGame) {
         final List<String> participantName = blackjackGame.getPlayersName();
 
-        for (String name : participantName) {
+        for (final String name : participantName) {
             runPlayerTurn(blackjackGame, name);
         }
 
@@ -66,11 +66,6 @@ public class BlackjackController {
         }
     }
 
-    private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
-        final List<CardDTO> cards = blackjackGame.getCardsOf(name);
-        outputView.printPlayerCard(name, cards);
-    }
-
     private boolean isContinue(final BlackjackGame blackjackGame, final String name) {
         return blackjackGame.isPlayerAliveByName(name) && needMoreCard(name);
     }
@@ -82,6 +77,11 @@ public class BlackjackController {
             outputView.printError(e.getMessage());
             return needMoreCard(name);
         }
+    }
+
+    private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
+        final List<CardDTO> cards = blackjackGame.getCardsOf(name);
+        outputView.printPlayerCard(name, cards);
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {

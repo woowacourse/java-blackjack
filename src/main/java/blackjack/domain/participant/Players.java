@@ -35,7 +35,7 @@ public class Players {
 
     public void divideCard(final List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
-            Participant participant = players.get(i / 2);
+            final Participant participant = players.get(i / 2);
             participant.addCard(cards.get(i));
         }
     }
@@ -71,12 +71,12 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
     }
 
-    public Hands getCardsOf(final String name) {
+    public Hands getHandsOf(final String name) {
         final Participant findedParticipant = findParticipant(name);
         return findedParticipant.getHands();
     }
 
-    public Map<ParticipantName, Hands> getPlayerHands() {
+    public Map<ParticipantName, Hands> getPlayersHands() {
         return players.stream()
                 .collect(toMap(Participant::getName,
                         Participant::getHands,
@@ -84,7 +84,7 @@ public class Players {
                         LinkedHashMap::new));
     }
 
-    public Map<ParticipantName, Score> getPlayerScores() {
+    public Map<ParticipantName, Score> getPlayersScore() {
         return players.stream()
                 .collect(toMap(Participant::getName,
                         Participant::calculate,

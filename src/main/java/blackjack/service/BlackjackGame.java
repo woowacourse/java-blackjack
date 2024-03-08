@@ -35,7 +35,7 @@ public class BlackjackGame {
     }
 
     private StartCardsDTO getStartCards() {
-        final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
+        final Map<ParticipantName, Hands> playersCard = players.getPlayersHands();
 
         final Hands dealerHands = dealer.getOpenedHands();
         playersCard.put(dealer.getName(), dealerHands);
@@ -59,8 +59,8 @@ public class BlackjackGame {
     }
 
     public FinalResultDTO getFinalResults() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
+        final Map<ParticipantName, Hands> participantsHands = players.getPlayersHands();
+        final Map<ParticipantName, Score> participantsScores = players.getPlayersScore();
 
         final Hands dealerHands = dealer.getHands();
         final Score dealerScore = dealer.calculate();
@@ -88,7 +88,7 @@ public class BlackjackGame {
     }
 
     public List<CardDTO> getCardsOf(final String name) {
-        return players.getCardsOf(name).getCards().stream()
+        return players.getHandsOf(name).getCards().stream()
                 .map(CardDTO::from)
                 .toList();
     }

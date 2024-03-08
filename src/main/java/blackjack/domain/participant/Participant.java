@@ -23,10 +23,10 @@ public class Participant {
         int sum = hands.sum();
         int aceCount = hands.countAce();
 
-        while (sum > BlackjackStatus.BLACKJACK_NUMBER && aceCount > 0) {
-            sum = sum - 10;
-            aceCount--;
+        while (sum > BlackjackStatus.BLACKJACK_NUMBER && aceCount-- > 0) {
+            sum -= 10;
         }
+
         return new Score(sum);
     }
 

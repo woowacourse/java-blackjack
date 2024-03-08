@@ -43,10 +43,10 @@ class PlayersTest {
 
         // then
         assertAll(
-                () -> assertThat(players.getCardsOf(kirby).getCards())
+                () -> assertThat(players.getHandsOf(kirby).getCards())
                         .hasSize(2)
                         .containsExactly(card1, card2),
-                () -> assertThat(players.getCardsOf(pobi).getCards())
+                () -> assertThat(players.getHandsOf(pobi).getCards())
                         .hasSize(2)
                         .containsExactly(card3, card4));
     }
