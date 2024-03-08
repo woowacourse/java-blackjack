@@ -3,12 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerIterator;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 import blackjack.domain.result.BlackjackResult;
 import blackjack.domain.result.Referee;
 import blackjack.view.InputView;
@@ -64,17 +59,18 @@ public class BlackjackGame {
 
     private void hitIfCurrentPlayerWants(PlayerIterator playerIterator) {
         Player player = playerIterator.getPlayer();
-        boolean isPlayerWantHit = retryOnException(() -> readIsPlayerWantsHit(player));
-        if (isPlayerWantHit) {
+        PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
+        if (playerAction.equals(PlayerAction.HIT)) {
             player.addCard(RandomDeck.getInstance());
         }
         outputView.printPlayerHand(player);
-        playerIterator.update(isPlayerWantHit);
+        playerIterator.increaseOrderByActionAndHand(playerAction);
     }
 
-    private boolean readIsPlayerWantsHit(Player player) {
+    private PlayerAction getPlayerAction(Player player) {
         String playerName = player.getName();
-        return inputView.readIsPlayerWantsHit(playerName);
+        String command = inputView.readPlayerActionCommand(playerName);
+        return PlayerAction.getAction(command);
     }
 
     private Participants createParticipantsWithNames(HandGenerator handGenerator) {

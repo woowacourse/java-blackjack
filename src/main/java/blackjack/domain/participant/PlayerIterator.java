@@ -18,8 +18,8 @@ public class PlayerIterator {
         return players.get(order);
     }
 
-    public void update(boolean isPlayerWantHit) {
-        if (!isPlayerWantHit || !getPlayer().canHit()) {
+    public void increaseOrderByActionAndHand(PlayerAction playerAction) {
+        if (playerAction.equals(PlayerAction.STAND) || !getPlayer().canHit()) {
             order++;
         }
     }

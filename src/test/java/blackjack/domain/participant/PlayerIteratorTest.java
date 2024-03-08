@@ -31,7 +31,7 @@ class PlayerIteratorTest {
         Player expectedPlayer = getPlayerByIndex(players, 1);
         PlayerIterator playerIterator = new PlayerIterator(players);
         bustFirstPlayer(players);
-        playerIterator.update(false);
+        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
         assertThat(playerIterator.getPlayer()).isEqualTo(expectedPlayer);
     }
 
@@ -40,8 +40,8 @@ class PlayerIteratorTest {
     void hasNextTest() {
         Players players = createPlayers(List.of(Number.ACE, Number.JACK, Number.FIVE, Number.SIX));
         PlayerIterator playerIterator = new PlayerIterator(players);
-        playerIterator.update(false);
-        playerIterator.update(false);
+        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
+        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
         assertFalse(playerIterator.hasNext());
     }
 
