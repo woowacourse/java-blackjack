@@ -46,6 +46,10 @@ public class OutputView {
         System.out.println(generateParticipantCardHand(player));
     }
 
+    public void printDealerReceiveCardMessage() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
     public void printCardHandWithScore(Dealer dealer, Players players) {
         String dealerCardHand = generateParticipantCardHand(dealer);
         System.out.printf("%s - 결과: %d%n", dealerCardHand, dealer.calculateScore());

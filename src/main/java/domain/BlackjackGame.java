@@ -25,7 +25,7 @@ public class BlackjackGame {
         }
     }
 
-    private void dealToDealer() {
+    public void dealToDealer() {
         Card dealerCard = dealer.pickCard();
         dealer.add(dealerCard);
     }
@@ -60,5 +60,9 @@ public class BlackjackGame {
             return ResultStatus.DRAW;
         }
         return ResultStatus.LOSE;
+    }
+
+    public boolean shouldDealerDrawCard() {
+        return dealer.isNecessaryMoreCard();
     }
 }
