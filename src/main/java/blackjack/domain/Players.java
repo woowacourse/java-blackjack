@@ -42,7 +42,7 @@ public class Players {
         for (Player player : players) {
             DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
 
-           resultStatus.setResultStatus(result.getWins(), result.getLoses(), result.getDraws());
+            resultStatus.setResultStatus(result.getWins(), result.getLoses(), result.getDraws());
         }
 
         return new BlackjackResult(DealerResult.of(resultStatus), playerResult);

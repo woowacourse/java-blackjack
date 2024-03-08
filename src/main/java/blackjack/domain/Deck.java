@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Card;
 import blackjack.strategy.ShuffleStrategy;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -23,6 +24,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
