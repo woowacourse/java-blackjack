@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.DealerGameResult;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.Score;
 
 public class OutputView {
 
@@ -24,7 +25,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealerPopCountMessage(dealerPopThreshold, count));
     }
 
-    public void printPlayerScore(Player player, int score) {
+    public void printPlayerScore(Player player, Score score) {
         System.out.println(messageResolver.resolvePlayerScoreMessage(player, score));
     }
 

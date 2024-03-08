@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.player.Hand;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.Score;
 
 import java.util.stream.Collectors;
 
@@ -42,9 +43,9 @@ public class MessageResolver {
         return String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
     }
 
-    public String resolvePlayerScoreMessage(Player player, int score) {
+    public String resolvePlayerScoreMessage(Player player, Score score) {
         String handMessage = resolvePlayerHandMessage(player);
-        return String.format("%s - 결과: %d", handMessage, score);
+        return String.format("%s - 결과: %d", handMessage, score.getValue());
     }
 
     public String resolvePlayerGameResult(Player player, boolean win) {
