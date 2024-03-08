@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +37,18 @@ public class GameTest {
 
         assertThat(findDealer.calculate()).isNotZero();
         assertThat(findPlayers.stream().allMatch(player -> player.calculate() != 0)).isTrue();
+    }
+
+    @DisplayName("게임의 결과를 반환한다")
+    @Test
+    public void calculateResult() {
+        Game game = getGame();
+        game.initializeHand();
+
+        Result result = game.calculateResult();
+        Map<Player, ResultStatus> results = result.getResults();
+
+        assertThat(results.size()).isEqualTo(game.getPlayers().size());
+
     }
 }
