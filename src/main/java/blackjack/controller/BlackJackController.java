@@ -11,6 +11,8 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Judge;
+import blackjack.domain.rule.Score;
+import blackjack.domain.rule.ScoreCalculateStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -55,9 +57,14 @@ public class BlackJackController {
     }
 
     private void printPlayersScore(Players players) {
-        Judge judge = new Judge();
-        players.getPlayers()
-                .forEach(player -> outputView.printPlayerScore(player, judge.calculateBestScore(player.getHand())));
+        players.getPlayers().forEach(this::printPlayerScore);
+
+    }
+
+    private void printPlayerScore(Player player) {
+        ScoreCalculateStrategy scoreCalculateStrategy = new ScoreCalculateStrategy();
+        Score score = player.calculateHandScore(scoreCalculateStrategy);
+        outputView.printPlayerScore(player, score);
     }
 
     private void printPlayersGameResult(Players players, Dealer dealer) {
