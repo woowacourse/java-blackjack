@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.FixtureCard.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
@@ -14,24 +15,20 @@ class HandTest {
     @DisplayName("손에 들고 있는 카드의 합계를 반환한다.")
     @Test
     void calculateSum() {
-        Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
-        Card card2 = new Card(Letter.K, Mark.SPADE);
-        List<Card> cards = List.of(card1, card2);
+        List<Card> cards = List.of(SEVEN_HEART, TEN_HEART);
 
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateSum())
-                .isEqualTo(card1.getLetterValue() + card2.getLetterValue());
+                .isEqualTo(SEVEN_HEART.getLetterValue() + TEN_HEART.getLetterValue());
     }
 
     @DisplayName("카드 한 장을 손 패로 가지고 온다.")
     @Test
     void add() {
-        Card card1 = new Card(Letter.SEVEN, Mark.CLOVER);
-        Card card2 = new Card(Letter.K, Mark.SPADE);
-        List<Card> cards = new ArrayList<>(List.of(card1, card2));
+        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEART, TEN_HEART));
         Hand hand = new Hand(cards);
-        Card addCard = new Card(Letter.J, Mark.DIAMOND);
+        Card addCard = TWO_HEART;
 
         hand.add(addCard);
 
@@ -41,7 +38,7 @@ class HandTest {
     @DisplayName("손 패에 Ace카드가 몇개 있는지 반환한다.")
     @Test
     void containAce() {
-        List<Card> hasAceCard = List.of(new Card(Letter.A, Mark.SPADE), new Card(Letter.J, Mark.SPADE));
+        List<Card> hasAceCard = List.of(ACE_HEART, TEN_HEART);
         Hand hasAceHand = new Hand(hasAceCard);
         int actual1 = hasAceHand.countAceCard();
 
@@ -56,8 +53,9 @@ class HandTest {
         @Test
         void blackJack() {
             List<Card> cards = List.of(
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.J, Mark.SPADE));
+                    ACE_HEART,
+                    TEN_HEART
+            );
 
             Hand hand = new Hand(cards);
             int score = hand.calculateScore();
@@ -69,9 +67,9 @@ class HandTest {
         @Test
         void oneAceOneRegard() {
             List<Card> cards = List.of(
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.J, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE)
+                    ACE_HEART,
+                    TEN_HEART,
+                    TEN_HEART
             );
 
             Hand hand = new Hand(cards);
@@ -80,13 +78,13 @@ class HandTest {
             assertThat(score).isEqualTo(21);
         }
 
-        @DisplayName("A가 두개 있고, A를 둘 다 1로 계산해야 하는 경우")
+        @DisplayName("A가 두개 이상이고, 모두 1로 계산해야 하는 경우")
         @Test
         void TwoAceTwoRegard() {
             List<Card> cards = List.of(
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE)
+                    ACE_HEART,
+                    ACE_HEART,
+                    TEN_HEART
             );
 
             Hand hand = new Hand(cards);
@@ -95,43 +93,42 @@ class HandTest {
             assertThat(score).isEqualTo(12);
         }
 
-        @DisplayName("A가 세개 있고, 하나만 11로 계산해야 하는 경우")
+        @DisplayName("A가 두개 이상이고, 하나만 11로 계산해야 하는 경우")
         @Test
         void ThreeAceTwoRegard() {
             List<Card> cards = List.of(
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.TWO, Mark.SPADE)
+                    ACE_HEART,
+                    ACE_HEART,
+                    TWO_HEART
             );
 
             Hand hand = new Hand(cards);
             int score = hand.calculateScore();
 
-            assertThat(score).isEqualTo(15);
+            assertThat(score).isEqualTo(14);
         }
 
         @DisplayName("A가 없는 경우 - 버스트")
         @Test
         void NoAceBust() {
             List<Card> cards = List.of(
-                    new Card(Letter.K, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE)
+                    TEN_HEART,
+                    TEN_HEART,
+                    TWO_HEART
             );
 
             Hand hand = new Hand(cards);
             int score = hand.calculateScore();
 
-            assertThat(score).isEqualTo(30);
+            assertThat(score).isEqualTo(22);
         }
 
         @DisplayName("A가 없는 경우 - 버스트아님")
         @Test
         void NoAceNotBust() {
             List<Card> cards = List.of(
-                    new Card(Letter.J, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE)
+                    TEN_HEART,
+                    TEN_HEART
             );
 
             Hand hand = new Hand(cards);
@@ -144,17 +141,16 @@ class HandTest {
         @Test
         void HasAceBust() {
             List<Card> cards = List.of(
-                    new Card(Letter.J, Mark.SPADE),
-                    new Card(Letter.A, Mark.SPADE),
-                    new Card(Letter.EIGHT, Mark.SPADE),
-                    new Card(Letter.K, Mark.SPADE)
+                    ACE_HEART,
+                    TWO_HEART,
+                    TEN_HEART,
+                    TEN_HEART
             );
 
             Hand hand = new Hand(cards);
             int score = hand.calculateScore();
 
-            assertThat(score).isEqualTo(29);
+            assertThat(score).isEqualTo(23);
         }
-
     }
 }
