@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String WANT_MORE = "y";
+    private static final String DOES_NOT_WANT_MORE = "n";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
@@ -14,8 +16,9 @@ public class InputView {
     }
 
     public static boolean readDoesWantHit(final Name name) {
-        System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)" + System.lineSeparator(),
+                name.value(), WANT_MORE, DOES_NOT_WANT_MORE);
         String input = scanner.nextLine();
-        return input.equals("y");
+        return input.equals(WANT_MORE);
     }
 }
