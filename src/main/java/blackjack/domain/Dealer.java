@@ -22,4 +22,9 @@ public class Dealer extends Player {
     public List<Card> doubleDraw() {
         return List.of(draw(), draw());
     }
+
+    @Override
+    public boolean canHit() {
+        return hand.calculate() <= 16;
+    }
 }

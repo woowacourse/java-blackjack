@@ -50,9 +50,18 @@ public class OutputView {
 
     private static void print(String message) {
         System.out.println(message);
+        System.out.println();
     }
 
     private static String extractCardName(Card card) {
         return card.getNumber().getName() + card.getSymbol().getName();
+    }
+
+    public static void printDealerDraw(Dealer dealer) {
+        System.out.println(String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName()));
+    }
+
+    public static void printDealerStand(Dealer dealer) {
+        System.out.println(String.format("%s는 17이상이라 카드를 더 받지 않습니다.", dealer.getName()));
     }
 }

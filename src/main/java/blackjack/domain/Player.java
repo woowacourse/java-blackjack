@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Player {
 
     private final String name;
-    private final Hand hand;
+    protected final Hand hand;
 
     public Player(String name) {
         this.name = name;
