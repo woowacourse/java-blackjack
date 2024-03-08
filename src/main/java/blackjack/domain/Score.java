@@ -4,6 +4,7 @@ public record Score(int value) {
     private static final int MINIMUM_VALUE = 0;
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_MINIMUM_SCORE = 17;
+    public static final int CONVERTED_ACE_DIFFERENCE = 10;
 
     public Score {
         validateRange(value);
@@ -43,7 +44,7 @@ public record Score(int value) {
         int currentValue = value;
         int convertedAceAmount = 0;
         while (isBusted(currentValue) && convertedAceAmount < currentBigAceAmount) {
-            currentValue -= 10;
+            currentValue -= CONVERTED_ACE_DIFFERENCE;
             convertedAceAmount++;
         }
 
