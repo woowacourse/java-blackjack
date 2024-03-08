@@ -98,12 +98,18 @@ public class Users {
     }
 
     private void validateDuplicatedName(List<Player> players) {
-        long count = players.stream()
-                .map(player -> player.getName().value())
-                .distinct()
-                .count();
-        if (players.size() != count) {
-            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
+        List<Player> distinctPlayers = new ArrayList<>();
+        players.forEach(player -> {
+            throwExceptionIfContains(distinctPlayers, player);
+            distinctPlayers.add(player);
+        });
+    }
+
+    private static void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
+        if (distinctPlayers.stream().anyMatch(distinctPlayer -> distinctPlayer.getName().equals(player.getName()))) {
+            throw new IllegalArgumentException(
+                    "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getName().value())
+            );
         }
     }
 }
