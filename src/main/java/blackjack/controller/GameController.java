@@ -10,20 +10,34 @@ public class GameController {
     }
 
     public static void run() {
+        Deck deck = Deck.createSuffledDeck();
+        Game game = makeGame(deck);
+        Dealer gameDealer = game.getDealer();
+        Players gamePlayers = game.getPlayers();
+
+        printInitialHands(gameDealer, gamePlayers);
+
+        confirmParticipantsHands(gamePlayers, deck, gameDealer);
+
+        OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
+        OutputView.printGameResult(gameDealer, game.makeGameResult());
+    }
+
+    private static Game makeGame(Deck deck) {
         OutputView.printAskNameMessage();
         Players players = new Players(InputView.readNames());
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createSuffledDeck();
-        Game game = Game.of(deck, dealer, players);
+        return Game.of(deck, dealer, players);
+    }
 
-        OutputView.printDrawInitialHandsMessage(dealer, players);
-        OutputView.printParticipantsInitialHands(dealer, players);
-
+    private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
         askDrawUntilConfirmHands(players, deck);
         confirmDealerHands(dealer, deck);
+    }
 
-        OutputView.printFinalHandsAndScoreMessage(dealer, players);
-        OutputView.printGameResult(dealer, game.makeGameResult());
+    private static void printInitialHands(Dealer dealer, Players players) {
+        OutputView.printDrawInitialHandsMessage(dealer, players);
+        OutputView.printParticipantsInitialHands(dealer, players);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {

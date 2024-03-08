@@ -24,4 +24,12 @@ public class Game {
         dealer.addCard(deck.draw());
         dealer.addCard(deck.draw());
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
 }
