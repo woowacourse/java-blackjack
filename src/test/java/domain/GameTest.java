@@ -1,50 +1,42 @@
 package domain;
 
-import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
 import static domain.card.Rank.ACE;
 import static domain.card.Rank.EIGHT;
-import static domain.card.Rank.FIVE;
-import static domain.card.Rank.FOUR;
 import static domain.card.Rank.JACK;
-import static domain.card.Rank.KING;
-import static domain.card.Rank.QUEEN;
 import static domain.card.Rank.SEVEN;
 import static domain.card.Rank.TEN;
-import static domain.card.Rank.THREE;
 import static domain.card.Rank.TWO;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import java.util.List;
+import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 class GameTest {
+
+    final Hands sum18 = new Hands(List.of(new Card(EIGHT, CLOVER), new Card(TEN, DIAMOND)));
+    final Hands sum20 = new Hands(List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE), new Card(ACE, SPADE)));
+    final Hands sum21 = new Hands(List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
+    final Hands bustHands = new Hands(List.of(new Card(EIGHT, DIAMOND), new Card(TWO, DIAMOND),
+            new Card(TWO, DIAMOND), new Card(JACK, CLOVER)));
+
 
     @Test
     @DisplayName("참여자의 승패무를 판단한다.")
     void playerResult() {
         //given
-        Hands sum18 = new Hands(List.of(new Card(EIGHT, CLOVER),
-                new Card(TEN, DIAMOND))); // 18
-        Hands sum21 = new Hands(
-                List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
-
-        Hands sum20 = new Hands(
-                List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE),
-                        new Card(ACE, SPADE)));
-
         Player loser = new Player("레디", sum18);
         Player winner = new Player("제제", sum21);
         Player tier = new Player("수달", sum20);
@@ -63,16 +55,6 @@ class GameTest {
     @Test
     void dealerResult() {
         // given
-        Hands sum18 = new Hands(List.of(new Card(EIGHT, CLOVER),
-                new Card(TEN, DIAMOND))); // 18
-
-        Hands sum21 = new Hands(
-                List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
-
-        Hands sum20 = new Hands(
-                List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE),
-                        new Card(ACE, SPADE)));
-
         Player loser1 = new Player("레디", sum18);
         Player loser2 = new Player("피케이", sum18);
         Player winner = new Player("제제", sum21);
@@ -94,27 +76,10 @@ class GameTest {
     @DisplayName("딜러가 버스트일때 참여자가 버스트가 아니면 WIN")
     void all() {
         //given
-        Hands dealerBustHands = new Hands(
-                List.of(new Card(EIGHT, DIAMOND), new Card(TWO, DIAMOND), new Card(TWO, DIAMOND),
-                        new Card(JACK, CLOVER)));
-        Dealer bustDealer = new Dealer(CardDeck.generate(), dealerBustHands);
-
-        Hands winner1PlayerHandsSum19 = new Hands(
-                List.of(new Card(FIVE, DIAMOND), new Card(THREE, CLOVER), new Card(SEVEN, HEART),
-                        new Card(FOUR, DIAMOND))
-        );
-
-        Player winner1 = new Player("레디", winner1PlayerHandsSum19);
-
-        Hands winner2PlayerHandsSum20 = new Hands(
-                List.of(new Card(QUEEN, CLOVER), new Card(KING, SPADE))
-        );
-        Player winner2 = new Player("브라운", winner2PlayerHandsSum20);
-
-        Hands loserPlayerHandsSum22 = new Hands(
-                List.of(new Card(SEVEN, CLOVER), new Card(QUEEN, HEART), new Card(FIVE, SPADE))
-        );
-        Player loser = new Player("제제", loserPlayerHandsSum22);
+        Dealer bustDealer = new Dealer(CardDeck.generate(), bustHands);
+        Player winner1 = new Player("레디", sum18);
+        Player winner2 = new Player("브라운", sum20);
+        Player loser = new Player("제제", bustHands);
 
         Players players = new Players(List.of(winner1, winner2, loser));
 
