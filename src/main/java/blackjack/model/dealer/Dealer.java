@@ -32,15 +32,15 @@ public class Dealer {
         return cards.isBlackJack();
     }
 
-    public Cards getCards() {
-        return cards;
-    }
-
     public int getActionCount() {
         return cards.getCards().size() - NON_ACTION_COUNT;
     }
 
     public Card getFirstCard() {
         return cards.getCards().get(0);
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

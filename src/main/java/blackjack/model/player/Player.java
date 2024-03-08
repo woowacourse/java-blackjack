@@ -22,15 +22,6 @@ public class Player {
         }
     }
 
-    public boolean canHit() {
-        int cardsTotal = cards.calculateCardsTotal();
-        return cardsTotal <= HIT_CONDITION;
-    }
-
-    public void hit(final CardGenerator cardGenerator) {
-        cards.addCard(cardGenerator);
-    }
-
     public int calculateCardsTotal() {
         return cards.calculateCardsTotal();
     }
@@ -41,6 +32,15 @@ public class Player {
 
     public boolean isBlackJack() {
         return cards.isBlackJack();
+    }
+
+    public boolean canHit() {
+        int cardsTotal = cards.calculateCardsTotal();
+        return cardsTotal <= HIT_CONDITION;
+    }
+
+    public void hit(final CardGenerator cardGenerator) {
+        cards.addCard(cardGenerator);
     }
 
     public Cards getCards() {
