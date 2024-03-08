@@ -2,6 +2,7 @@ package blackjack.model;
 
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;
+import blackjack.model.result.GameResult;
 
 public class GameRule {
 
@@ -34,37 +35,59 @@ public class GameRule {
         return cardScore <= DEALER_HIT_MAX_SCORE;
     }
 
-    public static int selectWinner(Dealer dealer, Player player) {
+    public static void decideWinner(Dealer dealer, Player player, GameResult gameResult) {
         int dealerScore = dealer.calculateTotalScore();
         int playerScore = player.calculateTotalScore();
 
-        boolean isDealerBust = isBusted(dealerScore);
-        boolean isPlayerBust = isBusted(playerScore);
-
-        if (isDealerBust && !isPlayerBust) {
-            return -1;
+        if (dealerWinRule(dealerScore, playerScore)) {
+            decideDealerWin(player, gameResult);
+            return;
         }
-
-        if (!isDealerBust && isPlayerBust) {
-            return 1;
+        if (playerWinRule(dealerScore, playerScore)) {
+            decidePlayerWin(player, gameResult);
+            return;
         }
+        decideTie(player, gameResult);
+    }
 
-        if (isDealerBust && isPlayerBust) {
-            return 1;
+    private static boolean playerWinRule(int dealerScore, int playerScore) {
+        if (isBlackjack(playerScore) && isBlackjack(dealerScore)) {
+            return true;
         }
-
-        if (dealerScore == playerScore && isBlackjack(dealerScore)) {
-            return -1;
+        if (!isBusted(playerScore) && isBusted(dealerScore)) {
+            return true;
         }
-
-        if (dealerScore == playerScore) {
-            return 0;
+        if (!isBusted(playerScore) && playerScore > dealerScore) {
+            return true;
         }
+        return false;
+    }
 
-        if (dealerScore > playerScore) {
-            return 1;
+    private static boolean dealerWinRule(int dealerScore, int playerScore) {
+        if (isBusted(playerScore) && isBusted(dealerScore)) {
+            return true;
         }
+        if (isBusted(playerScore) && !isBusted(dealerScore)) {
+            return true;
+        }
+        if (!isBusted(dealerScore) && playerScore < dealerScore) {
+            return true;
+        }
+        return false;
+    }
 
-        return -1;
+    private static void decideDealerWin(Player player, GameResult gameResult) {
+        gameResult.addDealerWin();
+        gameResult.addPlayerLose(player);
+    }
+
+    private static void decidePlayerWin(Player player, GameResult gameResult) {
+        gameResult.addDealerLose();
+        gameResult.addPlayerWin(player);
+    }
+
+    private static void decideTie(Player player, GameResult gameResult) {
+        gameResult.addDealerTie();
+        gameResult.addPlayerTie(player);
     }
 }

@@ -1,11 +1,11 @@
 package blackjack.model.result;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.model.gamer.Player;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersResultTest {
 
@@ -18,7 +18,8 @@ class PlayersResultTest {
 
         //when
         playersResult.addWin(player);
-        Result playerResult = playersResult.getPlayerResult(player);
+        Map<Player, Result> result = playersResult.getPlayerResult();
+        Result playerResult = result.get(player);
 
         //then
         assertThat(playerResult).isEqualTo(Result.WIN);
@@ -33,7 +34,8 @@ class PlayersResultTest {
 
         //when
         playersResult.addLose(player);
-        Result playerResult = playersResult.getPlayerResult(player);
+        Map<Player, Result> result = playersResult.getPlayerResult();
+        Result playerResult = result.get(player);
 
         //then
         assertThat(playerResult).isEqualTo(Result.LOSE);
@@ -49,7 +51,8 @@ class PlayersResultTest {
 
         //when
         playersResult.addTie(player);
-        Result playerResult = playersResult.getPlayerResult(player);
+        Map<Player, Result> result = playersResult.getPlayerResult();
+        Result playerResult = result.get(player);
 
         //then
         assertThat(playerResult).isEqualTo(Result.TIE);
