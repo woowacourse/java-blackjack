@@ -52,6 +52,10 @@ public class Dealer extends Player implements CardReceivable {
         return ResultStatus.LOSE;
     }
 
+    public Card getFirstCard() {
+        return cards.getFirstCard();
+    }
+
     @Override
     public boolean isReceivable() {
         //TODO : 딜러는 A를 11로 인식해야 한다.

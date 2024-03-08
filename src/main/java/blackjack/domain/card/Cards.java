@@ -26,6 +26,10 @@ public class Cards {
         cards.add(card);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public List<Card> toList() {
         return cards;
     }

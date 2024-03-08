@@ -68,5 +68,16 @@ public class CardsTest {
         assertFalse(result);
     }
 
+    @Test
+    @DisplayName("카드 목록에 첫 번째 카드를 가져온다")
+    public void Cards_Get_first_card() {
+        List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
+                new Card(CardValue.JACK, CardSymbol.CLOVER));
+        var sut = new Cards(cards);
 
+        var result = sut.getFirstCard();
+
+        assertThat(result).isEqualTo(cards.get(0));
+    }
+    
 }
