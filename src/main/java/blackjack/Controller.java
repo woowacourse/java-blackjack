@@ -55,28 +55,22 @@ class Controller {
     }
 
     private void playersTurn(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            playerTurn(player, deck);
-        }
+        players.forEach(player -> playerTurn(player, deck));
     }
 
     private void playerTurn(Player player, Deck deck) {
-        while (player.isPlayable()) {
-            Command command = createGameCommand(player);
-            if (command.isNo()) {
-                outputView.printCards(player);
-                break;
-            }
+        if (!player.isPlayable()) {
+            return;
+        }
 
+        boolean wannaHit = inputView.readCommand(player.getName());
+        if (wannaHit) {
             player.hit(deck.draw());
             outputView.printCards(player);
+            playerTurn(player, deck);
         }
-    }
 
-    private Command createGameCommand(Player player) {
-        String command = inputView.readDecision(player.getName());
-
-        return Command.from(command);
+        outputView.printCards(player);
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
@@ -102,8 +96,9 @@ class Controller {
         }
 
         for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
-            int current = dealerGameResults.get(entry.getValue().getOpposite());
-            dealerGameResults.put(entry.getValue().getOpposite(), current + 1);
+            GameResult gameResult = entry.getValue().getOpposite();
+            int current = dealerGameResults.get(gameResult);
+            dealerGameResults.put(gameResult, current + 1);
         }
 
         return dealerGameResults;
@@ -114,8 +109,8 @@ class Controller {
         Dealer dealer = participants.getDealer();
 
         for (Player player : participants.getPlayers()) {
-            GameResult gameResult = dealer.compareWith(player);
-            playerGameResults.put(player, gameResult.getOpposite());
+            GameResult gameResult = dealer.judge(player);
+            playerGameResults.put(player, gameResult);
         }
 
         return playerGameResults;
@@ -123,12 +118,22 @@ class Controller {
 
     private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
+
         for (CardRank rank : CardRank.values()) {
-            for (CardShape shape : CardShape.values()) {
-                cards.add(new Card(rank, shape));
-            }
+            cards.addAll(extracted(rank));
         }
+
         Collections.shuffle(cards);
+
+        return cards;
+    }
+
+    private List<Card> extracted(CardRank rank) {
+        List<Card> cards = new ArrayList<>();
+
+        for (CardShape shape : CardShape.values()) {
+            cards.add(new Card(rank, shape));
+        }
 
         return cards;
     }
