@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
+import blackjack.model.game.Game;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.referee.Referee;
@@ -11,6 +12,7 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerOutcome;
+
 import java.util.List;
 
 public class BlackjackController {
@@ -23,12 +25,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> playerNames = inputView.askPlayerNames();
-        CardGenerator cardGenerator = new RandomCardGenerator();
-        Players players = new Players(playerNames, cardGenerator);
-        Dealer dealer = new Dealer(cardGenerator);
-        outputView.printDealingResult(players, dealer);
-
+        Game game = prepareGame();
         List<Player> playersInAction = players.getPlayers();
         for (Player player : playersInAction) {
             while (player.canHit()) {
@@ -42,7 +39,6 @@ public class BlackjackController {
                 }
             }
         }
-
         dealer.doAction(cardGenerator);
         outputView.printDealerActionResult(dealer);
 
@@ -56,5 +52,18 @@ public class BlackjackController {
                 .toList();
 
         outputView.printFinalOutcome(outcomes);
+    }
+
+    private Game prepareGame() {
+        CardGenerator cardGenerator = new RandomCardGenerator();
+        Players players = preparePlayers(cardGenerator);
+        Dealer dealer = new Dealer(cardGenerator);
+        outputView.printDealingResult(players, dealer);
+        return new Game(players, dealer, cardGenerator);
+    }
+
+    private Players preparePlayers(final CardGenerator cardGenerator) {
+        List<String> playerNames = inputView.askPlayerNames();
+        return new Players(playerNames, cardGenerator);
     }
 }
