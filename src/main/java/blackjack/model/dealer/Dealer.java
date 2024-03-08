@@ -28,6 +28,10 @@ public class Dealer {
         return cards.isBurst();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public Cards getCards() {
         return cards;
     }

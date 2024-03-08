@@ -39,6 +39,10 @@ public class Player {
         return cards.isBurst();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public Cards getCards() {
         return cards;
     }

@@ -11,6 +11,7 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
+
 import java.util.List;
 
 public class BlackjackController {
@@ -46,6 +47,10 @@ public class BlackjackController {
         CardGenerator cardGenerator = game.cardGenerator();
         Dealer dealer = game.dealer();
 
+        if (dealer.isBlackJack()) {
+            return;
+        }
+
         List<Player> playersInAction = players.getPlayers();
         for (Player player : playersInAction) {
             doPlayerActionUtilEnd(player, cardGenerator);
@@ -55,7 +60,7 @@ public class BlackjackController {
     }
 
     private void doPlayerActionUtilEnd(final Player player, final CardGenerator cardGenerator) {
-        boolean isContinue = true;
+        boolean isContinue = player.canHit();
         while (isContinue) {
             isContinue = doPlayerAction(player, cardGenerator);
         }
