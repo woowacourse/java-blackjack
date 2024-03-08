@@ -24,6 +24,14 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
+    private String buildInitialHand(PlayerDto playerDto) {
+        if (playerDto.name().equals("딜러")) {
+            return playerDto.name() + ": " + playerDto.hands().get(0) + "\n";
+        }
+
+        return buildPlayerCards(playerDto) + "\n";
+    }
+
     public void printHandAfterHit(PlayerDto playerDto) {
         System.out.println(buildPlayerCards(playerDto));
     }
@@ -77,13 +85,5 @@ public class OutputView {
                     .append("\n");
         }
         System.out.println(stringBuilder);
-    }
-
-    private String buildInitialHand(PlayerDto playerDto) {
-        if (playerDto.name().equals("딜러")) {
-            return playerDto.name() + ": " + playerDto.hands().get(0) + "\n";
-        }
-
-        return buildPlayerCards(playerDto) + "\n";
     }
 }
