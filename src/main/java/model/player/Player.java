@@ -7,6 +7,7 @@ import model.card.Cards;
 
 public class Player {
 
+    private static final String INVALID_NAME_LENGTH = "플레이어 이름은 빈 값일 수 없습니다.";
     private static final int ADD_CARD_CONDITION = 22;
 
     private final String name;
@@ -17,8 +18,15 @@ public class Player {
     }
 
     public Player(String name, Cards cards) {
+        validateEmptyName(name);
         this.name = name;
         this.cards = cards;
+    }
+
+    private void validateEmptyName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_NAME_LENGTH);
+        }
     }
 
     public boolean isPossibleAddCard() {
