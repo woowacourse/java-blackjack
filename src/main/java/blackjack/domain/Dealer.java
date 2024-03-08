@@ -9,6 +9,7 @@ import java.util.List;
 public class Dealer implements Gamer {
 
     private static final int THRESHOLD = 16;
+
     private final Cards cards;
 
     private Dealer(final Cards cards) {
