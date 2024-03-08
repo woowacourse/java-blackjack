@@ -3,8 +3,7 @@ package domain.blackjack;
 import domain.card.Card;
 import domain.card.CardName;
 import domain.card.CardType;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,23 +12,22 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardPointCalculatorTest {
+    private static final int MAX_NUMBER = 10;
 
     static Stream<Arguments> calculateParameter() {
-        List<Arguments> arguments = new ArrayList<>();
-        for (CardType cardType : CardType.values()) {
-            for (CardName cardName : CardName.values()) {
-                Card card = new Card(cardName, cardType);
-                CardPoint cardPoint = makeCardPoint(cardName);
-                arguments.add(Arguments.of(card, cardPoint));
-            }
-        }
-        return Stream.of(arguments.toArray(new Arguments[0]));
+        return Arrays.stream(CardType.values())
+                .flatMap(cardType -> Arrays.stream(CardName.values())
+                        .map(cardName -> {
+                            Card card = new Card(cardName, cardType);
+                            CardPoint cardPoint = makeCardPoint(cardName);
+                            return Arguments.of(card, cardPoint);
+                        }));
     }
 
     private static CardPoint makeCardPoint(CardName cardName) {
         CardPoint cardPoint = new CardPoint(cardName.getCardNumber());
-        if (cardName.getCardNumber() > 10) {
-            return new CardPoint(10);
+        if (cardName.getCardNumber() > MAX_NUMBER) {
+            return new CardPoint(MAX_NUMBER);
         }
         return cardPoint;
     }
