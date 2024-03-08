@@ -1,9 +1,9 @@
 package domain;
 
-import static domain.BlackJackGame.DEALER_THRESHOLD;
-import static domain.BlackjackGameResultStatus.DRAW;
-import static domain.BlackjackGameResultStatus.LOSE;
-import static domain.BlackjackGameResultStatus.WIN;
+import static domain.BlackjackGame.DEALER_THRESHOLD;
+import static domain.GameResultStatus.PUSH;
+import static domain.GameResultStatus.LOSE;
+import static domain.GameResultStatus.WIN;
 
 public class Dealer extends Participant {
 
@@ -36,9 +36,9 @@ public class Dealer extends Participant {
         return cardSum() <= DEALER_THRESHOLD;
     }
 
-    public BlackjackGameResultStatus resultStatusOf(final Player player) {
+    public GameResultStatus resultStatusOf(final Player player) {
         if (isBothBust(player) || this.cardSum() == player.cardSum()) {
-            return DRAW;
+            return PUSH;
         }
         if (isWin(player)) {
             return WIN;

@@ -2,9 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static domain.BlackjackGameResultStatus.DRAW;
-import static domain.BlackjackGameResultStatus.LOSE;
-import static domain.BlackjackGameResultStatus.WIN;
+import static domain.GameResultStatus.PUSH;
+import static domain.GameResultStatus.LOSE;
+import static domain.GameResultStatus.WIN;
 import static domain.CardNumber.ACE;
 import static domain.CardNumber.FIVE;
 import static domain.CardNumber.KING;
@@ -46,12 +46,12 @@ class DealerTest {
     @DisplayName("플레이어와 자신의 카드를 비교해 승패무를 정한다.")
     @MethodSource
     @ParameterizedTest
-    void resultStatusOf(Cards dealerCards, Cards playerCards, BlackjackGameResultStatus expected) {
+    void resultStatusOf(Cards dealerCards, Cards playerCards, GameResultStatus expected) {
         Dealer dealer = new Dealer(dealerCards);
         Player player = new Player(new Name("hotea"));
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
-        BlackjackGameResultStatus status = dealer.resultStatusOf(player);
+        GameResultStatus status = dealer.resultStatusOf(player);
         assertThat(status).isEqualTo(expected);
     }
 
@@ -63,12 +63,12 @@ class DealerTest {
 
     static Stream<Arguments> resultStatusOf() {
         return Stream.of(
-                Arguments.of(cardOf22(), cardOf22(), DRAW),
+                Arguments.of(cardOf22(), cardOf22(), PUSH),
                 Arguments.of(cardOf22(), cardOf20(), WIN),
                 Arguments.of(cardOf20(), cardOf22(), LOSE),
                 Arguments.of(cardOf20(), cardOf15(), LOSE),
                 Arguments.of(cardOf15(), cardOf20(), WIN),
-                Arguments.of(cardOf20(), cardOf20(), DRAW)
+                Arguments.of(cardOf20(), cardOf20(), PUSH)
         );
     }
 
