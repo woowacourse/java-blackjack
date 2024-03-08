@@ -1,4 +1,4 @@
-package domain.balckjack;
+package domain.blackjack;
 
 public enum WinStatus {
 

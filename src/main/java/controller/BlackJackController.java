@@ -1,7 +1,7 @@
 package controller;
 
-import domain.balckjack.BlackJack;
-import domain.balckjack.BlackJackResult;
+import domain.blackjack.BlackJack;
+import domain.blackjack.BlackJackResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

@@ -1,5 +1,5 @@
-import domain.balckjack.BlackJack;
-import domain.balckjack.WinStatus;
+package domain.blackjack;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;

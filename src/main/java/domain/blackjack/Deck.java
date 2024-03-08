@@ -1,4 +1,4 @@
-package domain.balckjack;
+package domain.blackjack;
 
 import domain.card.Card;
 import domain.card.Rank;

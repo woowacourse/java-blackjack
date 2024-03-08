@@ -1,3 +1,5 @@
+package domain.card;
+
 import domain.card.Card;
 import domain.card.Hands;
 import domain.card.Rank;

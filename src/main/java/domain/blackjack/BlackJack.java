@@ -1,4 +1,4 @@
-package domain.balckjack;
+package domain.blackjack;
 
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -34,7 +34,7 @@ public class BlackJack {
         return new BlackJackResult(result);
     }
 
-    public WinStatus isWinner(Participant participant) {
+    WinStatus isWinner(Participant participant) {
         if (!participant.canHit()) {
             return WinStatus.from(false);
         }

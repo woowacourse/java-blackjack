@@ -1,7 +1,7 @@
 package view;
 
-import domain.balckjack.BlackJackResult;
-import domain.balckjack.WinStatus;
+import domain.blackjack.BlackJackResult;
+import domain.blackjack.WinStatus;
 import domain.card.Card;
 import domain.participant.Name;
 import domain.participant.Participant;
