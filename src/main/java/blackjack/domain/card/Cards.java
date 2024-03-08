@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class Cards {
     private static final int MAX_SCORE = 21;
+
     private final List<Card> values;
 
     public Cards() {
