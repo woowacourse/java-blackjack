@@ -24,7 +24,7 @@ public class Referee {
     }
 
     public Map<ResultCommand, Integer> judgeDealerResult() {
-        EnumMap<ResultCommand, Integer> dealerResult = new EnumMap<>(ResultCommand.class);
+        Map<ResultCommand, Integer> dealerResult = new EnumMap<>(ResultCommand.class);
         for (ResultCommand playerResult : judgePlayerResult().values()) {
             dealerResult.merge(changeToOppositeResultCommand(playerResult), 1, Integer::sum);
         }
