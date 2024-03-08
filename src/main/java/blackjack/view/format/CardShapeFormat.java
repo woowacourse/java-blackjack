@@ -7,6 +7,7 @@ public enum CardShapeFormat {
     HEART("하트");
 
     private final String format;
+
     CardShapeFormat(final String format) {
         this.format = format;
     }

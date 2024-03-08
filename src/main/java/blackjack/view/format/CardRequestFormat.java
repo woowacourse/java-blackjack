@@ -1,10 +1,8 @@
 package blackjack.view.format;
 
 public enum CardRequestFormat {
-
     YES("y"),
     NO("n");
-
 
     private final String format;
 

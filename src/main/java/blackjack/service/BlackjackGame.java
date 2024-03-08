@@ -1,27 +1,26 @@
 package blackjack.service;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Hands;
-import blackjack.domain.ParticipantName;
-import blackjack.domain.Participants;
-import blackjack.domain.Score;
-import blackjack.domain.WinStatus;
-import blackjack.domain.WinningResult;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.dealer.Deck;
+import blackjack.domain.card.Hands;
+import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.participant.Players;
+import blackjack.domain.result.Score;
+import blackjack.domain.result.WinStatus;
+import blackjack.domain.result.WinningResult;
+import blackjack.dto.CardDTO;
 import blackjack.dto.FinalResultDTO;
 import blackjack.dto.StartCardsDTO;
 import blackjack.dto.WinningResultDTO;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    private final Participants participants;
+    private final Players players;
     private final Dealer dealer;
 
-    public BlackjackGame(final Participants participants) {
-        this.participants = participants;
+    public BlackjackGame(final List<String> playersName) {
+        this.players = Players.from(playersName);
         this.dealer = new Dealer(Deck.create());
     }
 
@@ -29,14 +28,14 @@ public class BlackjackGame {
         dealer.shuffleDeck();
         dealer.addStartCard();
 
-        final int playersCardCount = participants.count() * 2;
-        participants.divideCard(dealer.drawCards(playersCardCount));
+        final int playersCardCount = players.count() * 2;
+        players.divideCard(dealer.drawCards(playersCardCount));
 
         return getStartCards();
     }
 
     private StartCardsDTO getStartCards() {
-        final Map<ParticipantName, Hands> playersCard = participants.getPlayerHands();
+        final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
 
         final Hands dealerHands = dealer.getOpenedHands();
         playersCard.put(dealer.getName(), dealerHands);
@@ -44,8 +43,8 @@ public class BlackjackGame {
         return StartCardsDTO.of(playersCard);
     }
 
-    public void addCardToParticipant(final ParticipantName name) {
-        participants.addCardTo(name, dealer.drawCard());
+    public void addCardToPlayers(final String name) {
+        players.addCardTo(name, dealer.drawCard());
     }
 
     public int giveDealerMoreCard() {
@@ -60,8 +59,8 @@ public class BlackjackGame {
     }
 
     public FinalResultDTO getFinalResults() {
-        Map<ParticipantName, Hands> participantsHands = participants.getPlayerHands();
-        Map<ParticipantName, Score> participantsScores =  participants.getPlayerScores();
+        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
+        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
         final Hands dealerHands = dealer.getHands();
         final Score dealerScore = dealer.calculate();
@@ -73,32 +72,30 @@ public class BlackjackGame {
     }
 
     public WinningResultDTO getWinningResults() {
-        final Map<ParticipantName, WinStatus> rawPlayerWinningResult = participants.determineWinStatus(dealer.calculate());
-
-        final Map<String, String> playerWinningResults = new LinkedHashMap<>();
-        rawPlayerWinningResult.forEach((key, value) -> playerWinningResults.put(key.getName(), value.name()));
-
-        final WinningResult winningResult = new WinningResult(rawPlayerWinningResult);
-        final Map<WinStatus, Integer> dealerWinningResult = winningResult.summarizeDealerResult();
+        final WinningResult winningResult = WinningResult.of(players, dealer.calculate());
+        final Map<ParticipantName, WinStatus> playerWinningResults = winningResult.getParticipantsWinStatus();
+        final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
         return WinningResultDTO.of(playerWinningResults, dealerWinningResult);
     }
 
-    public boolean isPlayerAliveByName(final ParticipantName name) {
-        return participants.isNotDead(name);
+    public boolean isPlayerAliveByName(final String name) {
+        return players.isNotDead(name);
     }
 
-    public boolean isNotDealerWin() {
+    public boolean isNotDealerBlackjack() {
         return dealer.isNotBlackjack();
     }
 
-    public List<Card> getCardsOf(final ParticipantName name) {
-        final Hands hands = participants.getCardsOf(name);
-
-        return hands.getCards();
+    public List<CardDTO> getCardsOf(final String name) {
+        return players.getCardsOf(name).getCards().stream()
+                .map(CardDTO::from)
+                .toList();
     }
 
-    public List<ParticipantName> getParticipantsName() {
-        return participants.getNames();
+    public List<String> getPlayersName() {
+        return players.getNames().stream()
+                .map(ParticipantName::getName)
+                .toList();
     }
 }

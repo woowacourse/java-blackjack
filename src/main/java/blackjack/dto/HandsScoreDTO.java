@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.Hands;
-import blackjack.domain.Score;
+import blackjack.domain.card.Hands;
+import blackjack.domain.result.Score;
 import java.util.List;
 
 public record HandsScoreDTO(List<CardDTO> cards, int score) {

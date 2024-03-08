@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.result.BlackjackStatus;
+import blackjack.domain.result.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hands;
 import java.util.ArrayList;
 
 public class Participant {
@@ -30,8 +34,8 @@ public class Participant {
         hands.add(card);
     }
 
-    public boolean isName(final ParticipantName name) {
-        return this.name.equals(name);
+    public boolean isName(final String name) {
+        return this.name.is(name);
     }
 
     public boolean isNotBlackjack() {

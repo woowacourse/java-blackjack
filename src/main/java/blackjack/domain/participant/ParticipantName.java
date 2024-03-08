@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.Objects;
 
@@ -14,6 +14,10 @@ public class ParticipantName {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("참여자 이름에 공백을 입력할 수 없습니다.");
         }
+    }
+
+    public boolean is(final String otherName) {
+        return name.equals(otherName);
     }
 
     public String getName() {

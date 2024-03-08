@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -9,16 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Hands {
-
     private final List<Card> cards;
 
     public Hands(final List<Card> cards) {
         validateDuplicate(cards);
         this.cards = new ArrayList<>(cards);
-    }
-
-    public Hands(final Card... cards) {
-        this(List.of(cards));
     }
 
     private void validateDuplicate(final List<Card> cards) {

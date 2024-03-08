@@ -75,12 +75,12 @@ public class OutputView {
         printPlayersWinningResult(winningResultDTO.playerWinningResult());
     }
 
-    private void printDealerWinningResult(final Map<String, Integer> dealerWinningResult) {
+    private void printDealerWinningResult(final Map<String, Long> dealerWinningResult) {
         System.out.printf("%s: %s%n", DealerFormat.DEALER.getFormat(), convertToWinningResult(dealerWinningResult));
 
     }
 
-    private String convertToWinningResult(final Map<String, Integer> winningResult) {
+    private String convertToWinningResult(final Map<String, Long> winningResult) {
         return winningResult.entrySet().stream()
                 .map(entry -> entry.getValue() + WinningStatusFormat.valueOf(entry.getKey()).getFormat())
                 .collect(Collectors.joining(" "));

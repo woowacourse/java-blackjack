@@ -1,27 +1,30 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.result.Score;
+import blackjack.domain.result.WinStatus;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hands;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Participants {
+public class Players {
+    private final List<Participant> players;
 
-    private final List<Participant> participants;
-
-    public Participants(final List<Participant> participants) {
-        validateDuplicate(participants);
-        this.participants = participants;
+    public Players(final List<Participant> players) {
+        validateDuplicate(players);
+        this.players = players;
     }
 
-    public static Participants from(final List<String> playerNames) {
+    public static Players from(final List<String> playerNames) {
         final List<Participant> participants = playerNames.stream()
                 .map(Participant::from)
                 .toList();
 
-        return new Participants(participants);
+        return new Players(participants);
     }
 
     private void validateDuplicate(final List<Participant> participants) {
@@ -32,12 +35,12 @@ public class Participants {
 
     public void divideCard(final List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
-            Participant participant = participants.get(i / 2);
+            Participant participant = players.get(i / 2);
             participant.addCard(cards.get(i));
         }
     }
 
-    public void addCardTo(final ParticipantName name, final Card card) {
+    public void addCardTo(final String name, final Card card) {
         final Participant findedParticipant = findParticipant(name);
         findedParticipant.addCard(card);
     }
@@ -45,7 +48,7 @@ public class Participants {
     public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
-        for (Participant participant : participants) {
+        for (Participant participant : players) {
             playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculate()));
         }
 
@@ -53,28 +56,28 @@ public class Participants {
     }
 
     public int count() {
-        return participants.size();
+        return players.size();
     }
 
-    public boolean isNotDead(final ParticipantName name) {
+    public boolean isNotDead(final String name) {
         final Participant participant = findParticipant(name);
         return participant.isNotDead();
     }
 
-    private Participant findParticipant(final ParticipantName name) {
-        return participants.stream()
+    private Participant findParticipant(final String name) {
+        return players.stream()
                 .filter(participant -> participant.isName(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
     }
 
-    public Hands getCardsOf(final ParticipantName name) {
+    public Hands getCardsOf(final String name) {
         final Participant findedParticipant = findParticipant(name);
         return findedParticipant.getHands();
     }
 
     public Map<ParticipantName, Hands> getPlayerHands() {
-        return participants.stream()
+        return players.stream()
                 .collect(toMap(Participant::getName,
                         Participant::getHands,
                         (v1, v2) -> v1,
@@ -82,7 +85,7 @@ public class Participants {
     }
 
     public Map<ParticipantName, Score> getPlayerScores() {
-        return participants.stream()
+        return players.stream()
                 .collect(toMap(Participant::getName,
                         Participant::calculate,
                         (v1, v2) -> v1,
@@ -90,7 +93,7 @@ public class Participants {
     }
 
     public List<ParticipantName> getNames() {
-        return participants.stream()
+        return players.stream()
                 .map(Participant::getName)
                 .toList();
     }

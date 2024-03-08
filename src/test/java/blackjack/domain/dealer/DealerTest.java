@@ -1,13 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.dealer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-
     @Test
     @DisplayName("딜러는 카드의 합이 17 미만인 경우 카드가 더 필요하다.")
     void needMoreCard() {

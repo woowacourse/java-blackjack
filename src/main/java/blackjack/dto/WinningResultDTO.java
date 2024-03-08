@@ -1,24 +1,26 @@
 package blackjack.dto;
 
-import static java.util.stream.Collectors.toMap;
-
-import blackjack.domain.WinStatus;
+import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.result.WinStatus;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-public record WinningResultDTO(Map<String, String> playerWinningResult, Map<String, Integer> dealerWinningResult) {
-
-    public static WinningResultDTO of(final Map<String, String> winningResults,
-                                      final Map<WinStatus, Integer> dealerResult) {
-        return new WinningResultDTO(winningResults, covertToDTO(dealerResult));
+public record WinningResultDTO(Map<String, String> playerWinningResult, Map<String, Long> dealerWinningResult) {
+    public static WinningResultDTO of(final Map<ParticipantName, WinStatus> playerWinningResult,
+                                      final Map<WinStatus, Long> dealerWinningResult) {
+        return new WinningResultDTO(convertToPlayersDTO(playerWinningResult), convertToDealerDTO(dealerWinningResult));
     }
 
-    private static Map<String, Integer> covertToDTO(final Map<WinStatus, Integer> dealerResult) {
-        return dealerResult.entrySet().stream()
-                .collect(toMap(entry -> entry.getKey().name(),
-                        Entry::getValue,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+    private static Map<String, String> convertToPlayersDTO(
+            final Map<ParticipantName, WinStatus> rawPlayerWinningResult) {
+        final Map<String, String> playerWinningResults = new LinkedHashMap<>();
+        rawPlayerWinningResult.forEach((key, value) -> playerWinningResults.put(key.getName(), value.name()));
+        return playerWinningResults;
+    }
+
+    private static Map<String, Long> convertToDealerDTO(final Map<WinStatus, Long> rawDealerWinningResult) {
+        final Map<String, Long> dealerWinningResults = new LinkedHashMap<>();
+        rawDealerWinningResult.forEach((key, value) -> dealerWinningResults.put(key.name(), value));
+        return dealerWinningResults;
     }
 }

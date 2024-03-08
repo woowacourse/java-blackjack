@@ -1,8 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Card;
-import blackjack.domain.Participants;
-import blackjack.domain.ParticipantName;
 import blackjack.dto.CardDTO;
 import blackjack.dto.FinalResultDTO;
 import blackjack.dto.StartCardsDTO;
@@ -13,7 +10,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -23,39 +19,32 @@ public class BlackjackController {
     }
 
     public void run() {
-        final Participants participants = createPlayers();
-        final BlackjackGame blackjackGame = initGame(participants);
+        final BlackjackGame blackjackGame = initGame();
 
-        if (blackjackGame.isNotDealerWin()) {
+        if (blackjackGame.isNotDealerBlackjack()) {
             playGame(blackjackGame);
         }
 
         finishGame(blackjackGame);
     }
 
-    private Participants createPlayers() {
+    private BlackjackGame initGame() {
         try {
-            List<String> playerNames = inputView.readPlayerNames();
-            return Participants.from(playerNames);
-        } catch (IllegalArgumentException e) {
+            final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames());
+            final StartCardsDTO startCardsDTO = blackjackGame.start();
+
+            outputView.printStartCards(startCardsDTO);
+            return blackjackGame;
+        } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return createPlayers();
+            return initGame();
         }
     }
 
-    private BlackjackGame initGame(final Participants participants) {
-        final BlackjackGame blackjackGame = new BlackjackGame(participants);
-
-        final StartCardsDTO startCardsDTO = blackjackGame.start();
-        outputView.printStartCards(startCardsDTO);
-
-        return blackjackGame;
-    }
-
     private void playGame(final BlackjackGame blackjackGame) {
-        final List<ParticipantName> participantName = blackjackGame.getParticipantsName();
+        final List<String> participantName = blackjackGame.getPlayersName();
 
-        for (ParticipantName name : participantName) {
+        for (String name : participantName) {
             runPlayerTurn(blackjackGame, name);
         }
 
@@ -63,49 +52,41 @@ public class BlackjackController {
         outputView.printDealerMoreCard(count);
     }
 
-    private void runPlayerTurn(final BlackjackGame blackjackGame, final ParticipantName name) {
+    private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {
         boolean isFirst = true;
-        List<CardDTO> cards = convertToCardDTO(blackjackGame.getCardsOf(name));
 
         while (isContinue(blackjackGame, name)) {
+            blackjackGame.addCardToPlayers(name);
+            showPlayerCards(blackjackGame, name);
             isFirst = false;
-            blackjackGame.addCardToParticipant(name);
-            cards = convertToCardDTO(blackjackGame.getCardsOf(name));
-            outputView.printPlayerCard(name.getName(), cards);
         }
-        showPlayerInitialCards(name, isFirst, cards);
+
+        if (isFirst) {
+            showPlayerCards(blackjackGame, name);
+        }
     }
 
-    private List<CardDTO> convertToCardDTO(final List<Card> cards) {
-        return cards.stream()
-                .map(CardDTO::from)
-                .toList();
+    private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
+        final List<CardDTO> cards = blackjackGame.getCardsOf(name);
+        outputView.printPlayerCard(name, cards);
     }
 
-    private boolean isContinue(final BlackjackGame blackjackGame, final ParticipantName name) {
+    private boolean isContinue(final BlackjackGame blackjackGame, final String name) {
         return blackjackGame.isPlayerAliveByName(name) && needMoreCard(name);
     }
 
-    private boolean needMoreCard(final ParticipantName name) {
+    private boolean needMoreCard(final String name) {
         try {
-            return inputView.readNeedMoreCard(name.getName());
-        } catch (IllegalArgumentException e){
+            return inputView.readNeedMoreCard(name);
+        } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return needMoreCard(name);
         }
     }
 
-    private void showPlayerInitialCards(final ParticipantName name,
-                                        final boolean isFirst,
-                                        final List<CardDTO> cards) {
-        if (isFirst) {
-            outputView.printPlayerCard(name.getName(), cards);
-        }
-    }
-
     private void finishGame(final BlackjackGame blackjackGame) {
-        FinalResultDTO finalResultDTO = blackjackGame.getFinalResults();
-        WinningResultDTO winningResults = blackjackGame.getWinningResults();
+        final FinalResultDTO finalResultDTO = blackjackGame.getFinalResults();
+        final WinningResultDTO winningResults = blackjackGame.getWinningResults();
         outputView.printFinalResult(finalResultDTO, winningResults);
     }
 }

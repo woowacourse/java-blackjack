@@ -1,19 +1,31 @@
-package blackjack.domain;
+package blackjack.domain.dealer;
 
+import blackjack.domain.result.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hands;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.ParticipantName;
 import java.util.List;
 
 public class Dealer {
-
     public static final Score NEED_CARD_CRITERION = new Score(17);
     private static final String DEALER_SIGNAL = "DEALER";
 
     private final Deck deck;
     private final Participant participant;
 
-
     public Dealer(final Deck deck) {
         this.deck = deck;
         this.participant = Participant.from(DEALER_SIGNAL);
+    }
+
+    public boolean needMoreCard() {
+        return NEED_CARD_CRITERION.isBiggerThan(participant.calculate());
+    }
+
+    public void addStartCard() {
+        final List<Card> cards = drawCards(2);
+        cards.forEach(participant::addCard);
     }
 
     public void shuffleDeck() {
@@ -28,21 +40,12 @@ public class Dealer {
         return deck.pick(count);
     }
 
-    public void addStartCard() {
-        final List<Card> cards = deck.pick(2);
-        cards.forEach(participant::addCard);
-    }
-
-    public boolean needMoreCard() {
-        return NEED_CARD_CRITERION.isBiggerThan(participant.calculate());
+    public void addCard() {
+        participant.addCard(drawCard());
     }
 
     public Score calculate() {
         return participant.calculate();
-    }
-
-    public void addCard() {
-        participant.addCard(drawCard());
     }
 
     public Hands getOpenedHands() {

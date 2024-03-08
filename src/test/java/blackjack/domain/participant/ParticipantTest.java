@@ -1,7 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.result.BlackjackStatus;
+import blackjack.domain.result.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,9 +14,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class ParticipantTest {
-
+    @DisplayName("게임에 유리한 방향으로 ACE를 1, 11 중 선택하여 계산한다.")
     @ParameterizedTest
-    @DisplayName("숫자 합이 21이 넘지 않고 에이스가 존재하지 않을 때까지 에이스를 하나씩 1로 바꿔 계산한다.")
     @CsvSource(value = {"ACE,NINE,TWO,TWO,14",
             "ACE,TWO,TWO,TWO,17",
             "ACE,ACE,NINE,NINE,20",
@@ -39,8 +43,8 @@ class ParticipantTest {
         assertThat(sum).isEqualTo(new Score(expected));
     }
 
-    @Test
     @DisplayName("카드의 합이 21이면 블랙잭이다.")
+    @Test
     void isBlackjack() {
         // given
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);
@@ -56,8 +60,8 @@ class ParticipantTest {
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.BLACKJACK);
     }
 
-    @Test
     @DisplayName("카드의 합이 21 초과면 죽는다.")
+    @Test
     void isNotBlackjack() {
         // given
         Card card1 = new Card(CardNumber.TEN, CardShape.CLOVER);
@@ -74,8 +78,8 @@ class ParticipantTest {
         assertThat(blackjackStatus).isEqualTo(BlackjackStatus.DEAD);
     }
 
-    @Test
     @DisplayName("참여자의 카드의 합이 21 미만이면 블랙잭은 아니지만 살았다.")
+    @Test
     void isAlive() {
         // given
         Card card1 = new Card(CardNumber.ACE, CardShape.CLOVER);

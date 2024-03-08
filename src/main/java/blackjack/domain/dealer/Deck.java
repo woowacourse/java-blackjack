@@ -1,16 +1,19 @@
-package blackjack.domain;
+package blackjack.domain.dealer;
 
+import static java.util.stream.Collectors.toCollection;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-
     private final List<Card> cards;
 
     Deck(Set<Card> cards) {
@@ -26,7 +29,7 @@ public class Deck {
 
         return Arrays.stream(CardShape.values())
                 .flatMap(shape -> numbers.stream().map(number -> new Card(number, shape)))
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(toCollection(LinkedHashSet::new));
     }
 
     public void shuffle() {
@@ -37,6 +40,7 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 부족합니다.");
         }
+
         Card card = cards.get(0);
         cards.remove(card);
 
@@ -44,9 +48,6 @@ public class Deck {
     }
 
     public List<Card> pick(final int count) {
-        if (cards.size() < count) {
-            throw new IllegalStateException("카드가 부족합니다.");
-        }
         return Stream.generate(this::pick)
                 .limit(count)
                 .toList();
