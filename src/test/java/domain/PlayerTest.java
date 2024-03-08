@@ -7,23 +7,37 @@ import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+    Stack<Card> cards;
+    Player player;
 
-    //TODO : 생성 부분 리팩터링
+    @BeforeEach
+    void init() {
+        Card card1 = new Card(Symbol.HEART, Rank.NINE);
+        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
+
+        cards = Stream.of(card1, card2, card3)
+                .collect(Collectors.toCollection(Stack::new));
+
+        Name name = new Name("lini");
+        player = new Player(name);
+    }
+
     @DisplayName("플레이어가 카드를 뽑아서 저장한다.")
     @Test
     void hitTest() {
-        // given
-        Card card = new Card(Symbol.HEART, Rank.NINE);
-
-        Name name = new Name("lini");
-        Player player = new Player(name);
-
         // when
-        player.hit(card);
+        player.hit(cards.pop());
 
         // then
         assertThat(player.getHand()).hasSize(1);
@@ -33,15 +47,10 @@ public class PlayerTest {
     @Test
     void calculateTotalScoreTest() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
+        player.hit(cards.pop());
+        player.hit(cards.pop());
 
-        Name name = new Name("lini");
-        Player player = new Player(name);
-
-        player.hit(card1);
-        player.hit(card2);
-        int expectedScore = 19;
+        int expectedScore = 13;
 
         // when
         int result = player.calculateTotalScore();
@@ -54,16 +63,9 @@ public class PlayerTest {
     @Test
     void isBust() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
-
-        Name name = new Name("lini");
-        Player player = new Player(name);
-
-        player.hit(card1);
-        player.hit(card2);
-        player.hit(card3);
+        player.hit(cards.pop());
+        player.hit(cards.pop());
+        player.hit(cards.pop());
 
         // when
         boolean bust = player.isBust();
@@ -72,25 +74,32 @@ public class PlayerTest {
         assertThat(bust).isTrue();
     }
 
-    @DisplayName("플레이어가 카드를 더 받을 수 있는지 판단한다.")
+    @DisplayName("플레이어가 카드를 더 받지 않는다.")
     @Test
-    void isStayTest() {
+    void isNotStayTest() {
         // given
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
-
-        Name name = new Name("lini");
-        Player player = new Player(name);
-
-        player.hit(card1);
-        player.hit(card2);
-        player.hit(card3);
+        player.hit(cards.pop());
+        player.hit(cards.pop());
+        player.hit(cards.pop());
 
         // when
         boolean stay = player.isStay();
 
         // then
         assertThat(stay).isTrue();
+    }
+
+    @DisplayName("플레이어가 카드를 더 빋는다.")
+    @Test
+    void isStayTest() {
+        // given
+        player.hit(cards.pop());
+        player.hit(cards.pop());
+
+        // when
+        boolean stay = player.isStay();
+
+        // then
+        assertThat(stay).isFalse();
     }
 }
