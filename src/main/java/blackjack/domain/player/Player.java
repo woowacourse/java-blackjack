@@ -23,6 +23,10 @@ public class Player {
         return hand.calculateScore();
     }
 
+    public boolean canHit() {
+        return hand.canHit();
+    }
+
     public int handSize() {
         return hand.countCard();
     }

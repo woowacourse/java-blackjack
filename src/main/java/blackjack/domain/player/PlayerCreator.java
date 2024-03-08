@@ -17,6 +17,6 @@ public class PlayerCreator {
     }
 
     public Player createDealerFrom(CardDeck cardDeck) {
-        return new Player(new PlayerName(DEALER_NAME), handCreator.createPlayerHandFrom(cardDeck));
+        return new Player(new PlayerName(DEALER_NAME), handCreator.createDealerHandFrom(cardDeck));
     }
 }

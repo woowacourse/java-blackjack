@@ -43,6 +43,10 @@ public class Hand {
         return scoreCalculateStrategy.calculate(this);
     }
 
+    public boolean canHit() {
+        return hitStrategy.canHit(calculateScore());
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

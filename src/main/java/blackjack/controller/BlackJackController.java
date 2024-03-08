@@ -6,7 +6,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckCreator;
 import blackjack.domain.player.*;
-import blackjack.domain.rule.*;
+import blackjack.domain.rule.Judge;
+import blackjack.domain.rule.Score;
+import blackjack.domain.rule.ScoreCalculateStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -74,8 +76,7 @@ public class BlackJackController {
     }
 
     private void completePlayerHand(Player player, CardDeck cardDeck) {
-        HitStrategy hitStrategy = new PlayerHitStrategy();
-        while (player.calculateHandScore().hitAllowed(hitStrategy) && readHitDecision(player) == YES) {
+        while (player.canHit() && readHitDecision(player) == YES) {
             player.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(player);
         }
@@ -89,8 +90,7 @@ public class BlackJackController {
     }
 
     private void completeDealerHand(Player dealer, CardDeck cardDeck) {
-        HitStrategy hitStrategy = new DealerHitStrategy();
-        while (dealer.calculateHandScore().hitAllowed(hitStrategy)) {
+        while (dealer.canHit()) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
         }
