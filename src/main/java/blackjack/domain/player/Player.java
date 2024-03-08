@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.Score;
+import blackjack.domain.rule.ScoreCalculateStrategy;
 
 import java.util.Objects;
 
@@ -16,6 +18,10 @@ public class Player {
 
     public void appendCard(Card card) {
         hand.append(card);
+    }
+
+    public Score calculateHandScore(ScoreCalculateStrategy scoreCalculateStrategy) {
+        return scoreCalculateStrategy.calculate(hand);
     }
 
     @Override
