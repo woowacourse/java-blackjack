@@ -1,7 +1,9 @@
 package domain;
 
+import static fixture.CardFixture.카드;
 import static fixture.CardFixture.카드들;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,5 +16,14 @@ class CardDeckTest {
 
         assertThat(cardDeck.draw()).isEqualTo(targetFirst);
         assertThat(cardDeck.draw()).isEqualTo(targetSecond);
+    }
+
+    @Test
+    void 카드가_없을_때_카드를_드로우하면_예외가_발생한다() {
+        CardDeck cardDeck = new CardDeck(카드들(카드()));
+        cardDeck.draw();
+
+        assertThatThrownBy(cardDeck::draw)
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -17,6 +17,9 @@ public class CardDeck {
     }
 
     public Card draw() {
+        if (cardDeck.empty()) {
+            throw new IllegalArgumentException("카드덱의 카드를 모두 소진했습니다.");
+        }
         return cardDeck.pop();
     }
 }
