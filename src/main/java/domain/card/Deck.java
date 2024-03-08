@@ -1,9 +1,11 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Deck {
     private final List<Card> cards;
@@ -18,13 +20,10 @@ public class Deck {
     }
 
     public static Deck fullDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (CardType cardType : CardType.values()) {
-            for (CardName cardName : CardName.values()) {
-                Card card = new Card(cardName, cardType);
-                cards.add(card);
-            }
-        }
+        List<Card> cards = Arrays.stream(CardType.values())
+                .flatMap(cardType -> Arrays.stream(CardName.values())
+                        .map(cardName -> new Card(cardName, cardType)))
+                .collect(Collectors.toList());
         return new Deck(cards);
     }
 
