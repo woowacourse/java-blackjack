@@ -24,8 +24,8 @@ public class Gamer {
         return name.name().equals(test);
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.name();
     }
 
     public int getTotalScore() {

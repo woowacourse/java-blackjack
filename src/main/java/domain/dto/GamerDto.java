@@ -16,9 +16,8 @@ public class GamerDto {
     }
 
     public static GamerDto from(Gamer gamer) {
-        // TODO: 디미터 법칙 위반
         return new GamerDto(
-                gamer.getName().name(),
+                gamer.getName(),
                 gamer.getCards(),
                 gamer.getTotalScore()
         );
