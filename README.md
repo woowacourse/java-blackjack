@@ -92,7 +92,10 @@ example feat: 사용자 입력 후 도메인 사용
   - 순서가 conflict될 경우, 함수 내의 호출 순서로 메서드 위치를 결정한다.
 
 # 객체 협력 관계
-![객체 협력 관계](./src/main/java/resources/static/objectRelations.png)
+
+<img alt="결과" width="550" src=./src/main/java/resources/static/objectRelations.png>
+
 
 # 딜러, 플레이어 결과 정리
-![결과](./src/main/java/resources/static/result.png)
+
+<img alt="결과" width="350px" src=./src/main/java/resources/static/result.png>
