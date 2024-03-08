@@ -51,13 +51,53 @@ public class BlackjackController {
         OutputView.printCardSplitMessage(dealer.getRawName(), playerNames);
     }
 
+    private void dealerDraw(Deck deck) {
+        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
+    }
+
+    private void playerDraw(Deck deck, Gamer player) {
+        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+    }
+
     private void printDealerAndPlayers() {
         printDealer(dealer);
         players.forEach(BlackjackController::printPlayer);
     }
 
+    private static void printDealer(Gamer dealer) {
+        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
+        rawHoldingCards.remove(0);
+        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
+                dealer.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+    }
+
+    private static void printPlayer(Gamer player) {
+        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+                player.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+    }
+
     private void playersTryDraw(Deck deck) {
         players.forEach(player -> playerTryDraw(deck, player));
+    }
+
+    private void playerTryDraw(Deck deck, Gamer player) {
+        boolean needToDraw = true;
+        while (needToDraw && !player.getSummationCardPoint().isDeadPoint()) {
+            needToDraw = playerTryDrawOnce(deck, player);
+        }
+    }
+
+    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
+        boolean needToDraw;
+        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
+        needToDraw = YesOrNoInputView.getYNAsBoolean();
+        if (needToDraw) {
+            playerDraw(deck, player);
+        }
+        printPlayer(player);
+        return needToDraw;
     }
 
     private void dealerTryDraw(Deck deck) {
@@ -95,45 +135,5 @@ public class BlackjackController {
         OutputView.printGameResultMessage();
         GameResultOutputView.print(dealerGameResultDTO);
         playerGameResultDTOS.forEach(GameResultOutputView::print);
-    }
-
-    private void dealerDraw(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
-    }
-
-    private void playerDraw(Deck deck, Gamer player) {
-        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
-    }
-
-    private static void printDealer(Gamer dealer) {
-        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
-        rawHoldingCards.remove(0);
-        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
-    }
-
-    private static void printPlayer(Gamer player) {
-        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
-                player.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
-    }
-
-    private void playerTryDraw(Deck deck, Gamer player) {
-        boolean needToDraw = true;
-        while (needToDraw && !player.getSummationCardPoint().isDeadPoint()) {
-            needToDraw = playerTryDrawOnce(deck, player);
-        }
-    }
-
-    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
-        boolean needToDraw;
-        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
-        needToDraw = YesOrNoInputView.getYNAsBoolean();
-        if (needToDraw) {
-            playerDraw(deck, player);
-        }
-        printPlayer(player);
-        return needToDraw;
     }
 }
