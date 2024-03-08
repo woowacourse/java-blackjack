@@ -28,11 +28,11 @@ public class Hand {
                 .count();
     }
 
-    public int calculateScore() { //TODO: 이부분 의미 전달되게 코드 작성할 수 있지 않을까?
+    public int calculateScore() {
         int aceCount = countAceCard();
         int sum = calculateSum();
-        //메소드 or 상수로 이름부여
-        while (sum > BLACK_JACK && aceCount > 0) {
+
+        while (isBustWithAce(sum, aceCount)) {
             aceCount--;
             sum -= 10;
         }
@@ -42,5 +42,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    private boolean isBustWithAce(int sum, int aceCount) {
+        return sum > BLACK_JACK && aceCount > 0;
     }
 }
