@@ -11,6 +11,7 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerOutcome;
+
 import java.util.List;
 
 public class BlackjackController {
@@ -69,7 +70,8 @@ public class BlackjackController {
     private void showCardOutcome(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.of(dealer);
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
-        outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
+        outputView.printDealerFinalCards(dealerFinalCardsOutcome);
+        outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
     }
 
     private void showGameOutcome(final Players players, final Dealer dealer) {
