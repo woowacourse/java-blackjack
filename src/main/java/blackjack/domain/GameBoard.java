@@ -1,7 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.dto.DealerDto;
+import blackjack.domain.dto.OutcomeDto;
 import blackjack.domain.dto.PlayersDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,19 @@ public class GameBoard {
         return gamer.canDraw();
     }
 
-    public List<Outcome> calculateOutcomes(final Referee referee) {
+    public DealerDto getDealerFinalState() {
+        return dealer.allCardToDto();
+    }
+
+    public PlayersDto getPlayersFinalState() {
+        return players.toDto();
+    }
+
+    public List<Outcome> getDealerOutcome(final Referee referee) {
+        return Outcome.reverse(calculateOutcomes(referee));
+    }
+
+    private List<Outcome> calculateOutcomes(final Referee referee) {
         final List<Outcome> outcomes = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             outcomes.add(calculateOutcome(referee, player.getName()));
@@ -52,8 +66,28 @@ public class GameBoard {
         return outcomes;
     }
 
-    public Outcome calculateOutcome(final Referee referee, final Name name) {
+    public List<OutcomeDto> getPlayerOutcomeDtos(final Referee referee) {
+        final List<OutcomeDto> playerOutcomes = new ArrayList<>();
+        for (Name name : players.getNames()) {
+            playerOutcomes.add(new OutcomeDto(name, calculateOutcome(referee, name)));
+        }
+        return playerOutcomes;
+    }
+
+    private Outcome calculateOutcome(final Referee referee, final Name name) {
         final Player player = players.findByName(name);
         return referee.doesPlayerWin(player.getCards());
+    }
+
+    public Cards getDealerCards() {
+        return dealer.getCards();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

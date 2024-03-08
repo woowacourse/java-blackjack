@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.dto.OutcomeDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +18,9 @@ class GameBoardTest {
      * ...
      * KING - HEART, SPADE, CLOVER, DIAMOND
      */
-    @DisplayName("플레이어의 최종 승패를 계산한다.")
+    @DisplayName("딜러의 최종 승패를 알려준다.")
     @Test
-    void calculatePlayerOutcome() {
+    void informDealerOutcome() {
         final Deck deck = new Deck(new TestDeckFactory());
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
@@ -27,24 +29,31 @@ class GameBoardTest {
         gameBoard.drawInitialPlayersCards();
         gameBoard.drawInitialDealerCards();
 
-        final Outcome outcome = gameBoard.calculateOutcome(referee, new Name("pobi"));
+        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome(referee);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
     }
 
-    @DisplayName("모든 플레이어의 최종 승패를 계산한다.")
+    @DisplayName("모든 플레이어의 최종 승패를 알려준다.")
     @Test
-    void calculateAllPlayersOutcome() {
+    void informPlayersOutcome() {
         final Deck deck = new Deck(new TestDeckFactory());
-        final Players players = Players.from(List.of("pobi", "jason"));
+        final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
         final Referee referee = new Referee(dealer.getCards());
         final GameBoard gameBoard = new GameBoard(deck, dealer, players);
         gameBoard.drawInitialPlayersCards();
         gameBoard.drawInitialDealerCards();
 
-        final List<Outcome> outcome = gameBoard.calculateOutcomes(referee);
+        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos(referee);
 
-        assertThat(outcome).containsExactly(Outcome.WIN, Outcome.WIN);
+        final Name name = playerOutcomeDtos.get(0).getName();
+        final Outcome outcome = playerOutcomeDtos.get(0).getOutcome();
+
+        assertAll(
+                () -> assertThat(playerOutcomeDtos.size()).isEqualTo(players.getPlayers().size()),
+                () -> assertThat(name).isEqualTo(new Name("pobi")),
+                () -> assertThat(outcome).isEqualTo(Outcome.PUSH)
+        );
     }
 }
