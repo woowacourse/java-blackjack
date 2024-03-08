@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.exception.DelimiterFormatException;
-import blackjack.exception.InvalidHitCommandException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
