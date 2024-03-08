@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class InputView {
+    private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
+
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> enterPlayerNames() {
@@ -30,26 +32,26 @@ public class InputView {
 
     private static void isInputStartWithComma(final String input) {
         if (input.startsWith(",")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_DELIMITER_MESSAGE);
         }
     }
 
     private static void isInputEndWithComma(final String input) {
         if (input.endsWith(",")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_DELIMITER_MESSAGE);
         }
     }
 
     private static void isInputWithEmptyName(final String input) {
         if (input.contains(",,")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_DELIMITER_MESSAGE);
         }
     }
 
     private void isNamesDuplicated(final List<String> names) {
         Set<String> distinctNames = new HashSet<>(names);
         if (names.size() != distinctNames.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("중복된 플레이어 이름입니다.");
         }
     }
 

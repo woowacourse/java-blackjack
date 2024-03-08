@@ -47,7 +47,7 @@ public class Round {
         return status;
     }
 
-    public void giveCardToPlayer(String name, OutputView outputView, InputView inputView) {
+    public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
         HandStatus currentHand;
         CardCommand command = inputCommand(name, inputView);

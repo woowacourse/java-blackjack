@@ -16,7 +16,7 @@ public class Player {
 
     private void validateName(final String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("이름으로 빈 문자열이 입력되었습니다.");
         }
     }
 

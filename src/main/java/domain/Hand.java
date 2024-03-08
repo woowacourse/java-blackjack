@@ -13,10 +13,6 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    public Hand(final List<Card> cards) {
-        this.cards = cards;
-    }
-
     public void saveCard(final Card card) {
         cards.add(card);
     }
