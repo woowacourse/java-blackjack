@@ -16,6 +16,7 @@ public final class OutputFormatConverter {
             SPADE, "스페이드", DIAMOND, "다이아몬드", CLOVER, "클로버", HEART, "하트"
     );
     private static final Map<PlayingCardValue, String> PLAYING_CARD_VALUE_STRING = Map.ofEntries(
+            entry(SMALL_ACE, "A"),
             entry(DEFAULT_ACE, "A"),
             entry(TWO, "2"),
             entry(THREE, "3"),
