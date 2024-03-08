@@ -24,7 +24,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame start() {
-        Players players = Players.from(InputView.askPlayerNames());
+        Players players = InputView.preparePlayers();
         Dealer dealer = new Dealer();
         return new BlackjackGame(dealer, players);
     }
@@ -50,7 +50,7 @@ public class BlackjackController {
 
     private void continueHit(BlackjackGame blackjackGame, Player player) {
         while (player.isPossibleAddCard()) {
-            HitAnswer hitAnswer = HitAnswer.of(InputView.askHitAnswer(player));
+            HitAnswer hitAnswer = InputView.prepareHitAnswer(player);
             if (hitAnswer.isStay()) {
                 break;
             }

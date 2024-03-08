@@ -24,13 +24,18 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String DELIMITER_GAME_RESULT = " ";
     private static final String DEALER_NAME = "딜러";
-    private static final String AFTER_SETTING_INTRO = NEWLINE + DEALER_NAME + "와 %s에게 2장을 나누었습니다." + NEWLINE;
+    private static final String AFTER_SETTING_INTRO =
+        NEWLINE + DEALER_NAME + "와 %s에게 2장을 나누었습니다." + NEWLINE;
     private static final String DEALER_CARD_FORMAT = DEALER_NAME + ": %s" + NEWLINE;
     private static final String CARDS_FORMAT = "%s카드: %s" + NEWLINE;
     private static final String DEALER_HIT = NEWLINE + DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_SCORE_FORMAT = NEWLINE + "%s카드: %s - 결과: %d";
     private static final String GAME_RESULT_INTRO = NEWLINE + NEWLINE + "## 최종 승패";
     private static final String GAMER_RESULT_FORMAT = NEWLINE + "%s: %s";
+    private static final String EXCEPTION_PREFIX = "[ERROR] ";
+
+    private OutputView() {
+    }
 
     public static void printCardsAfterSetting(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
@@ -70,11 +75,13 @@ public class OutputView {
 
     public static void printFinalScore(Dealer dealer, Players players, GameResult gameResult) {
         String dealerCards = createCardsMessage(dealer.getCards());
-        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards, gameResult.findDealerScore());
+        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards,
+            gameResult.findDealerScore());
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
             String playerCards = createCardsMessage(player.getCards());
-            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards, gameResult.findPlayerScore(playerName));
+            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards,
+                gameResult.findPlayerScore(playerName));
         }
     }
 
@@ -115,5 +122,9 @@ public class OutputView {
     private static void printPlayerGameResult(GameScore playerScore, GameResult gameResult) {
         ResultStatus result = gameResult.findGameResult(playerScore, gameResult.getDealerScore());
         System.out.printf(GAMER_RESULT_FORMAT, playerScore.getName(), result.getDisplayName());
+    }
+
+    public static void printExceptionMessage(String message) {
+        System.out.println(EXCEPTION_PREFIX + message);
     }
 }
