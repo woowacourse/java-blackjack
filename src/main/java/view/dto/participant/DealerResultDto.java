@@ -17,10 +17,6 @@ public class DealerResultDto {
         this.result = dealerGameResult.getResult();
     }
 
-    public Map<GameResultStatus, Integer> getResult() {
-        return Map.copyOf(result);
-    }
-
     public String parseResult() {
         return name + ": " + result.keySet()
                 .stream()

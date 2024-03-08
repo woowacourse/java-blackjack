@@ -41,7 +41,7 @@ public class Participant {
         return name;
     }
 
-    public Cards cards() {
+    public Cards hand() {
         return hand;
     }
 }

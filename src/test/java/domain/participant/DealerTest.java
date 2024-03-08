@@ -23,10 +23,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.GameResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Player;
 
 class DealerTest {
 
@@ -46,7 +42,7 @@ class DealerTest {
         Player player = new Player(new Name("Zeus"));
 
         dealer.deal(player);
-        Cards cards = player.cards();
+        Cards cards = player.hand();
 
         assertThat(cards.draw()).isEqualTo(card);
     }

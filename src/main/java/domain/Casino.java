@@ -43,7 +43,7 @@ public class Casino {
     private void proceed(final Dealer dealer, final Players players) {
         resultView.printInitialCards(new DealerDto(dealer, dealer.peek()), new PlayersDto(players));
         players.forEach(player -> askAndDealMoreCard(dealer, player));
-        if (dealer.canGetCard()) {
+        if (dealer.canHit()) {
             resultView.printDealerCardMessage(new DealerDto(dealer));
             dealer.deal(dealer);
         }

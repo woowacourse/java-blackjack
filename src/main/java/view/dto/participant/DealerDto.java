@@ -9,7 +9,7 @@ import view.dto.card.CardsDto;
 public class DealerDto extends ParticipantDto {
 
     public DealerDto(final Dealer dealer) {
-        super(dealer.name(), new CardsDto(dealer.cards(), dealer.cardSum()));
+        super(dealer.name(), new CardsDto(dealer.hand(), dealer.cardSum()));
     }
 
     public DealerDto(final Dealer dealer, final Card card) {

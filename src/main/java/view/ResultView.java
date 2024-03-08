@@ -1,6 +1,6 @@
 package view;
 
-import static domain.BlackjackGame.DEALER_THRESHOLD;
+import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class ResultView {
     public void printDealerCardMessage(final DealerDto dealerDto) {
         System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n%n",
                 dealerDto.name(),
-                DEALER_THRESHOLD
+                DEALER_HIT_THRESHOLD
         );
     }
 

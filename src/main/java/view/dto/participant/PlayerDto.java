@@ -7,7 +7,7 @@ import view.dto.card.CardsDto;
 
 public class PlayerDto extends ParticipantDto {
     public PlayerDto(final Player player) {
-        super(player.name(), new CardsDto(player.cards(), player.cardSum()));
+        super(player.name(), new CardsDto(player.hand(), player.cardSum()));
     }
 
     public PlayerDto(final String playerName) {

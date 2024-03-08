@@ -15,7 +15,7 @@ import view.dto.participant.PlayerResultsDto;
 public class BlackjackGame {
 
     public static final int INITIAL_CARD_COUNT = 2;
-    public static final int DEALER_THRESHOLD = 16;
+    public static final int DEALER_HIT_THRESHOLD = 16;
 
     public void ready(final Dealer dealer, final Players players) {
         giveCards(dealer, dealer);

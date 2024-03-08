@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static domain.BlackjackGame.DEALER_THRESHOLD;
+import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
 import static domain.GameResultStatus.PUSH;
 import static domain.GameResultStatus.LOSE;
 import static domain.GameResultStatus.WIN;
@@ -36,8 +36,8 @@ public class Dealer extends Participant {
         participant.receive(drawCard());
     }
 
-    public boolean canGetCard() {
-        return cardSum() <= DEALER_THRESHOLD;
+    public boolean canHit() {
+        return cardSum() <= DEALER_HIT_THRESHOLD;
     }
 
     public GameResultStatus resultStatusOf(final Player player) {
@@ -56,10 +56,10 @@ public class Dealer extends Participant {
 
     private boolean isWin(final Player player) {
         return !player.isBust()
-                && (this.isBust() || (this.cardSum() < player.cardSum()));
+                && (isBust() || (cardSum() < player.cardSum()));
     }
 
     private boolean isBothBust(final Player player) {
-        return this.isBust() && player.isBust();
+        return isBust() && player.isBust();
     }
 }
