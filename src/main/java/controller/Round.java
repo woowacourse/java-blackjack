@@ -49,15 +49,17 @@ public class Round {
 
     public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
-        HandStatus currentHand;
+        HandStatus currentHand = new HandStatus(player.getName(), player.getHand());
         CardCommand command = inputCommand(name, inputView);
-        while (player.isAbleToDrawCard() && HIT.equals(command)) {
+        while (HIT.equals(command)) {
             currentHand = createHandStatusAfterPick(player);
             outputView.printCardStatus(currentHand);
+            if (player.cannotDraw()) {
+                break;
+            }
             command = inputCommand(name, inputView);
         }
         if (STAND.equals(command)) {
-            currentHand = new HandStatus(player.getName(), player.getHand());
             outputView.printCardStatus(currentHand);
         }
     }

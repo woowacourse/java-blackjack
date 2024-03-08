@@ -58,8 +58,8 @@ public class Player {
         return getTotalSize() > dealer.getTotalSize();
     }
 
-    public boolean isAbleToDrawCard() {
-        return hand.calculateScore(BLACKJACK_SCORE) < BLACKJACK_SCORE;
+    public boolean cannotDraw() {
+        return hand.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
     }
 
     public int getTotalSize() {
