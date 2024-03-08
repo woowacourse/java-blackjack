@@ -29,7 +29,7 @@ public class CardHand {
 
     private int calculateSum() {
         return cards.stream()
-                .mapToInt(Card::getDenomination)
+                .mapToInt(Card::getDenominationScore)
                 .sum();
     }
 

@@ -25,15 +25,20 @@ public class InputView {
     }
 
     private List<String> toList(String input) {
-        String[] names = input.split(DEFAULT_DELIMITER, -1);
-        List<String> playerNames = Arrays.stream(names)
-                .map(String::trim)
-                .filter(s -> !INVALID_PLAYER_NAMES.contains(s))
-                .toList();
-        if (names.length != playerNames.size()) {
-            throw new IllegalArgumentException();
-        }
+        List<String> playerNames = Arrays.asList(input.split(DEFAULT_DELIMITER, -1));
+        validateInvalidPlayerName(playerNames);
         return playerNames;
+    }
+
+    private void validateInvalidPlayerName(List<String> playerNames) {
+        if (hasInvalidPlayerName(playerNames)) {
+            throw new IllegalArgumentException("딜러와 연관된 이름이 포함되어 있습니다.");
+        }
+    }
+
+    private boolean hasInvalidPlayerName(List<String> playerNames) {
+        return playerNames.stream()
+                .anyMatch(INVALID_PLAYER_NAMES::contains);
     }
 
     public String readBlackjackAction(String name) {

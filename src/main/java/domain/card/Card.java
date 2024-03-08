@@ -15,7 +15,11 @@ public class Card {
         return denomination.isAce();
     }
 
-    public int getDenomination() {
+    public String getDenominationExpression() {
+        return denomination.getExpression();
+    }
+
+    public int getDenominationScore() {
         return denomination.getScore();
     }
 
