@@ -17,7 +17,9 @@ class DealerTest {
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(5));
 
-        assertTrue(dealer.draw(deck));
+        dealer.draw(deck);
+
+        assertThat(dealer.getHandsCards()).hasSize(3);
     }
 
     @DisplayName("딜러는 자신의 패가 17이상이면 한장을 더 받지 않는다")
@@ -28,7 +30,9 @@ class DealerTest {
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(6));
 
-        assertFalse(dealer.draw(deck));
+        dealer.draw(deck);
+
+        assertThat(dealer.getHandsCards()).hasSize(2);
     }
 
     @DisplayName("딜러는 첫번째 패를 보여준다")
