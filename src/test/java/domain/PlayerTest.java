@@ -34,7 +34,7 @@ class PlayerTest {
         Name name = new Name("산초!!");
         Player player = new Player(name, hand);
         int actual = player.getTotalScore();
-        int expected = card1.getValue() + card2.getValue();
+        int expected = card1.getLetterValue() + card2.getLetterValue();
 
         assertThat(actual)
                 .isEqualTo(expected);
