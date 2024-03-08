@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-
 public enum Denomination {
     ACE(1),
     TWO(2),
@@ -30,12 +28,5 @@ public enum Denomination {
 
         }
         return this.value;
-    }
-
-    public static Denomination getDenomination(final int number) {
-        return Arrays.stream(Denomination.values())
-                .filter(denomination -> denomination.ordinal() == number)
-                .findAny()
-                .orElseThrow();
     }
 }

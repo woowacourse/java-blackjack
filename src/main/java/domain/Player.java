@@ -15,12 +15,12 @@ public abstract class Player {
     public Player() {
     }
 
-    public void addCard(final Card card) {
+    public void hit(final Card card) {
         cards.add(card);
     }
 
 
-    abstract public boolean alive();
+    public abstract boolean isNotBust();
 
     public int calculateScore() {
         int score = 0;

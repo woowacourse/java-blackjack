@@ -10,6 +10,7 @@ public class Deck {
     public Deck() {
         initialize();
     }
+
     private void initialize() {
         for (final Denomination denomination : Denomination.values()) {
             for (final Symbol symbol : Symbol.values()) {
