@@ -72,7 +72,7 @@ class DeckTest {
 		List<Card> cards = deck.drawCards(2);
 
 		// then
-		//TODO: contains 메서드를 만들 지, Extract 방식을 사용할 지 고민해보기
+		// CONCERN POINT: contains 메서드를 만들 지, Extract 방식을 사용할 지 고민해보기
 		assertThat(deck)
 			.extracting("cards")
 			.isNotIn(cards);
