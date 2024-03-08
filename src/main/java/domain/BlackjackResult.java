@@ -11,30 +11,25 @@ public class BlackjackResult {
 
     public BlackjackResultDTO finishGame(List<Player> players, Player dealer) {
         results.put(dealer, Map.entry(0, 0));
-        for (var player : players) {
-            if (isDealer(dealer, player)) {
-                continue;
-            }
-
+        players.forEach(player -> {
             results.put(player, Map.entry(0, 0));
-
-            if (player.calculateScore() > 21) {
-                calculate(dealer, player, 0, 1);
-                continue;
-            }
-            if (dealer.calculateScore() > 21) {
-                calculate(dealer, player, 1, 0);
-                continue;
-            }
-            if (dealer.calculateScore() >= player.calculateScore()) {
-                calculate(dealer, player, 0, 1);
-            }
-        }
+            judgeWinningHand(dealer, player);
+        });
         return new BlackjackResultDTO(results);
     }
 
-    private boolean isDealer(final Player dealer, final Player player) {
-        return player.getName().equals(dealer.getName());
+    private void judgeWinningHand(Player dealer, Player player) {
+        if (player.calculateScore() > 21) {
+            calculate(dealer, player, 0, 1);
+            return;
+        }
+        if (dealer.calculateScore() > 21) {
+            calculate(dealer, player, 1, 0);
+            return;
+        }
+        if (dealer.calculateScore() >= player.calculateScore()) {
+            calculate(dealer, player, 0, 1);
+        }
     }
 
     private void calculate(final Player dealer, final Player player, final int win, final int lose) {
