@@ -38,6 +38,14 @@ class InputViewTest {
                     .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
         }
 
+        @Test
+        @DisplayName("중복된 이름이 있으면 예외를 발생한다.")
+        void duplicateNameTest() {
+            Assertions.assertThatThrownBy(() -> InputView.readNames(() -> "a,a,a"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이름은 중복될 수 없습니다.");
+        }
+
         @DisplayName("공백을 제거한 이름을 반환한다.")
         @Test
         void nameWithSpacesTest() {

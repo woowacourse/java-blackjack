@@ -12,9 +12,17 @@ public class InputView {
         String result = input.get();
         validateEmpty(result);
         validateDelimiter(result);
-        return Arrays.stream(result.split(DELIMITER))
+        List<String> splitInput = Arrays.stream(result.split(DELIMITER))
                 .map(String::trim)
                 .toList();
+        validateDuplicate(splitInput);
+        return splitInput;
+    }
+
+    private static void validateDuplicate(List<String> splitInput) {
+        if (splitInput.stream().distinct().count() != splitInput.size()) {
+            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
+        }
     }
 
     private static void validateEmpty(String input) {
