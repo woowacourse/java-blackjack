@@ -12,26 +12,9 @@ public class GameResultBoard {
         for (Player player : players) {
             String playerName = player.getName();
             Score playerScore = player.getScore();
-            GameResult gameResult = calculateGameResult(playerScore, dealerScore);
+            GameResult gameResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
             resultBoard.put(playerName, gameResult);
         }
-    }
-
-    private GameResult calculateGameResult(Score playerScore, Score dealerScore) {
-        if (playerScore.isBusted()) {
-            return GameResult.LOSE;
-        }
-        if (dealerScore.isBusted()) {
-            return GameResult.WIN;
-        }
-
-        if (playerScore.isGreaterThan(dealerScore)) {
-            return GameResult.WIN;
-        }
-        if (playerScore.isLessThan(dealerScore)) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
     }
 
     public GameResult getGameResult(Player player) {
