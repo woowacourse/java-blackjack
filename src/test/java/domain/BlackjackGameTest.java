@@ -20,7 +20,7 @@ class BlackjackGameTest {
         Players players = 플레이어들("뽀로로", "프린", "포비");
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
-        blackjackGame.initGame();
+        blackjackGame.startGame();
 
         assertThat(dealer).extracting("cardHand").extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(2);
@@ -32,7 +32,7 @@ class BlackjackGameTest {
         Players players = 플레이어들("뽀로로");
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
-        blackjackGame.initGame();
+        blackjackGame.startGame();
 
         GameResult result = blackjackGame.createGameResult();
         Map<Player, ResultStatus> playerResult = result.getPlayerResult();

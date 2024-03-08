@@ -9,7 +9,7 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void initGame() {
+    public void startGame() {
         dealer.shuffle();
 
         for (int count = 0; count < 2; count++) {
