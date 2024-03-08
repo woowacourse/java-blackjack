@@ -22,34 +22,38 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultCalculatorTest {
+    private static final String firstGamerName = "게이머1";
+    private static final String secondGamerName = "게이머2";
     private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(new Card(SIX, HEART));
     private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(new Card(SEVEN, HEART));
     private static final HoldingCards DEAD_CARDS = HoldingCards.of(
             new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(TWO, HEART)
     );
-
     private static final HoldingCards WIN_CARDS_WITH_ACE = HoldingCards.of(
             new Card(ACE, HEART), new Card(QUEEN, HEART)
     );
-
     private static final HoldingCards WIN_CARDS_WITHOUT_ACE = HoldingCards.of(
             new Card(JACK, HEART), new Card(NINE, HEART), new Card(TWO, HEART)
     );
-
     private static final HoldingCards TWO_SIX_CARDS = HoldingCards.of(
             new Card(SIX, HEART), new Card(SIX, DIAMOND)
     );
 
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SIX_HEART), WIN),
-                Arguments.of(new Gamer("게이머1", ONLY_SIX_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), TIE),
-                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", DEAD_CARDS), WIN),
-                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", DEAD_CARDS), TIE),
-                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITH_ACE), new Gamer("게이머2", TWO_SIX_CARDS), WIN),
-                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITH_ACE), new Gamer("게이머2", WIN_CARDS_WITHOUT_ACE), TIE)
+                Arguments.of(new Gamer(firstGamerName, ONLY_SEVEN_HEART), new Gamer(secondGamerName, ONLY_SIX_HEART),
+                        WIN),
+                Arguments.of(new Gamer(firstGamerName, ONLY_SIX_HEART), new Gamer(secondGamerName, ONLY_SEVEN_HEART),
+                        LOSE),
+                Arguments.of(new Gamer(firstGamerName, ONLY_SEVEN_HEART), new Gamer(secondGamerName, ONLY_SEVEN_HEART),
+                        TIE),
+                Arguments.of(new Gamer(firstGamerName, DEAD_CARDS), new Gamer(secondGamerName, ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new Gamer(firstGamerName, ONLY_SEVEN_HEART), new Gamer(secondGamerName, DEAD_CARDS), WIN),
+                Arguments.of(new Gamer(firstGamerName, DEAD_CARDS), new Gamer(secondGamerName, DEAD_CARDS), TIE),
+                Arguments.of(new Gamer(firstGamerName, WIN_CARDS_WITH_ACE), new Gamer(secondGamerName, TWO_SIX_CARDS),
+                        WIN),
+                Arguments.of(new Gamer(firstGamerName, WIN_CARDS_WITH_ACE),
+                        new Gamer(secondGamerName, WIN_CARDS_WITHOUT_ACE), TIE)
         );
     }
 

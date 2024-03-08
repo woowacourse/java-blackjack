@@ -7,9 +7,6 @@ import static domain.card.CardName.QUEEN;
 import static domain.card.CardName.SIX;
 import static domain.card.CardType.HEART;
 
-import domain.blackjack.DealerRandomCardDrawStrategy;
-import domain.blackjack.Gamer;
-import domain.blackjack.HoldingCards;
 import domain.card.Card;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -19,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerCardDrawStrategyTest {
+    private static final String DEALER_NAME = "딜러";
 
     public static Stream<Arguments> canDrawParameters() {
         return Stream.of(
@@ -32,7 +30,7 @@ class DealerCardDrawStrategyTest {
     @MethodSource("canDrawParameters")
     @DisplayName("딜러의 드로우 여부가 제대로 판단되는지 검증")
     void canDraw(HoldingCards holdingCards, boolean expected) {
-        Gamer dealer = new Gamer("딜러", holdingCards);
+        Gamer dealer = new Gamer(DEALER_NAME, holdingCards);
         Assertions.assertThat(new DealerRandomCardDrawStrategy(dealer).canDraw())
                 .isEqualTo(expected);
     }

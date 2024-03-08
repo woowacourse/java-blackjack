@@ -32,14 +32,12 @@ class GamerTest {
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
         Gamer Gamer = new Gamer("robin", HoldingCards.of());
-        Deck deck = Deck.of(new Card(JACK, HEART), new Card(EIGHT, HEART));
-        Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer));
+        Gamer.draw(Deck.of(new Card(JACK, HEART)), new TestPlayerCardDrawStrategy(Gamer));
 
         SummationCardPoint actual = Gamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
 
-        Assertions.assertThat(actual)
-                .isEqualTo(expected);
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 
     @Test
