@@ -22,7 +22,7 @@ public class Dealer extends Participant {
         this.cardDeck = cardDeck;
     }
 
-    public void startDeal(final Players players) {
+    public void initHands(final Players players) {
         for (int i = 0; i < INIT_HANDS_SIZE; i++) {
             players.forEach(player -> player.add(cardDeck.pop()));
             super.add(cardDeck.pop());
@@ -35,12 +35,13 @@ public class Dealer extends Participant {
         }
     }
 
-    public int turn() {
-        int result = 0;
+    public void deal() {
         while (handsSum() <= MIN_HANDS_SUM) {
             super.add(cardDeck.pop());
-            result++;
         }
-        return result;
+    }
+
+    public int countAddedHands() {
+        return handsSize() - INIT_HANDS_SIZE;
     }
 }

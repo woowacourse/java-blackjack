@@ -35,7 +35,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printDealerCard() {
+    public void printDealerTurnMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다."); //TODO 메서드 변경
         System.out.println();
     }
@@ -70,7 +70,7 @@ public class OutputView {
         return String.join(", ", playerNames);
     }
 
-    public void printBustMessage() {
+    public void printBust() {
         System.out.println("BUST");
         System.out.println();
     }

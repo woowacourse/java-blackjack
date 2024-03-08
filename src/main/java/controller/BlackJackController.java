@@ -27,53 +27,72 @@ public class BlackJackController {
         final Dealer dealer = new Dealer(cardDeck);
         final Game game = new Game(dealer, players);
 
-        dealer.startDeal(players);
-        outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
+        initHands(players, dealer);
+        dealWithPlayers(players, dealer);
 
+        if (!players.isAllBust()) {
+            dealer.deal();
+            printDealerTurnMessage(dealer.countAddedHands());
+        }
+        printFinalResult(players, dealer, game);
+    }
+
+    private void printDealerTurnMessage(final int turn) {
+        for (int i = 0; i < turn; i++) {
+            outputView.printDealerTurnMessage();
+        }
+    }
+
+    private void dealWithPlayers(final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
             deal(player, dealer);
         }
+    }
 
-        if (players.isAllBust()) {
-            outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-            outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
-            return;
-        }
+    private void initHands(final Players players, final Dealer dealer) {
+        dealer.initHands(players);
+        outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
+    }
 
-        int turn = dealer.turn();
-        for (int i = 0; i < turn; i++) {
-            outputView.printDealerCard();
-        }
-
+    private void printFinalResult(final Players players, final Dealer dealer, final Game game) {
         outputView.printHandsResult(ParticipantsDto.of(dealer, players));
         outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
     }
 
     private void deal(final Player player, final Dealer dealer) {
-        boolean changed = false;
-        Answer answer = Answer.HIT;
+        boolean handsChanged = false;
+        boolean turnEnded = false;
 
-        while (Answer.HIT.equals(answer)) {
-            answer = Answer.from(inputView.readAnswer(player.getName()));
+        while (!turnEnded) {
+            Answer answer = Answer.from(inputView.readAnswer(player.getName()));
             dealer.deal(player, answer);
 
-            if (handsChanged(changed, answer)) {
-                outputView.printHands(ParticipantDto.from(player));
-            }
-            if (player.isBust()) {
-                outputView.printBustMessage();
-                break;
-            }
-            changed = true;
+            printHandsIfRequired(player, handsChanged, answer);
 
-            if (player.isBlackJack()) {
-                outputView.printBlackJack();
-                break;
-            }
+            handsChanged = true;
+            turnEnded = isTurnEnded(player, answer);
         }
     }
 
-    private boolean handsChanged(final boolean changed, final Answer answer) {
-        return (Answer.STAY.equals(answer) && !changed) || Answer.HIT.equals(answer);
+    private void printHandsIfRequired(final Player player, final boolean handsChanged, final Answer answer) {
+        if (shouldShowHands(handsChanged, answer)) {
+            outputView.printHands(ParticipantDto.from(player));
+        }
+    }
+
+    private boolean isTurnEnded(final Player player, final Answer answer) {
+        if (player.isBust()) {
+            outputView.printBust();
+            return true;
+        }
+        if (player.isBlackJack()) {
+            outputView.printBlackJack();
+            return true;
+        }
+        return Answer.STAY.equals(answer);
+    }
+
+    private boolean shouldShowHands(final boolean handsChanged, final Answer answer) {
+        return (Answer.STAY.equals(answer) && !handsChanged) || Answer.HIT.equals(answer);
     }
 }

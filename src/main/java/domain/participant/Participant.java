@@ -3,10 +3,13 @@ package domain.participant;
 import domain.Hands;
 import domain.Result;
 import domain.card.Card;
+
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
+
+    private static final int INIT_HANDS_SIZE = 2;
     private final String name;
     private final Hands hands;
 
@@ -26,6 +29,10 @@ public abstract class Participant {
 
     public boolean isBlackJack() {
         return hands.isBlackJack();
+    }
+
+    public boolean isHandsChanged() {
+        return handsSize() != INIT_HANDS_SIZE;
     }
 
     public int handsSum() {
