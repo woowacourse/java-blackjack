@@ -25,8 +25,8 @@ public class Player {
         }
     }
 
-    public int calculateCardsTotal() {
-        return cards.calculateCardsTotal();
+    public int calculateCardsTotalScore() {
+        return cards.calculateCardsTotalScore();
     }
 
     public boolean isBlackJack() {
@@ -34,7 +34,7 @@ public class Player {
     }
 
     public boolean canHit() {
-        int cardsTotal = cards.calculateCardsTotal();
+        int cardsTotal = cards.calculateCardsTotalScore();
         return cardsTotal <= HIT_CONDITION;
     }
 

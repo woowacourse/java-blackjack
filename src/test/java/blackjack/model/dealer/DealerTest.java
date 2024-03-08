@@ -1,14 +1,15 @@
 package blackjack.model.dealer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
     @Test
@@ -24,7 +25,7 @@ public class DealerTest {
         dealer.doAction(new SequentialCardGenerator(List.of(firstCardCreatedByAction, secondCardCreatedByAction)));
 
         // then
-        int cardsTotal = dealer.calculateCardsTotal();
+        int cardsTotal = dealer.calculateCardsTotalScore();
         assertThat(cardsTotal).isGreaterThan(17);
     }
 }

@@ -30,7 +30,7 @@ public class Cards {
         cards.add(cardGenerator.pick());
     }
 
-    public int calculateCardsTotal() {
+    public int calculateCardsTotalScore() {
         int total = cards.stream()
                 .map(Card::getDenomination)
                 .mapToInt(Denomination::getScore)
@@ -56,11 +56,11 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return calculateCardsTotal() == BLACK_JACK_CONDITION;
+        return calculateCardsTotalScore() == BLACK_JACK_CONDITION;
     }
 
     public boolean isBurst() {
-        return calculateCardsTotal() > BURST_CONDITION;
+        return calculateCardsTotalScore() > BURST_CONDITION;
     }
 
     public int size() {

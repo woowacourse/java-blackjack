@@ -27,13 +27,13 @@ public class Referee {
     }
 
     private MatchResult determineMatchResult(final Player player) {
-        int playerTotal = player.calculateCardsTotal();
-        int dealerTotal = dealer.calculateCardsTotal();
+        int playerTotalScore = player.calculateCardsTotalScore();
+        int dealerTotalScore = dealer.calculateCardsTotalScore();
 
         if (dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.TIE;
         }
-        if (dealer.isBurst() || playerTotal >= dealerTotal) {
+        if (dealer.isBurst() || playerTotalScore >= dealerTotalScore) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;

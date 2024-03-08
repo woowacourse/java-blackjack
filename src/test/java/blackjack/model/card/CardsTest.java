@@ -1,10 +1,11 @@
 package blackjack.model.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
     @Test
@@ -30,7 +31,7 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotal();
+        int actualTotal = cards.calculateCardsTotalScore();
 
         // then
         int expectedTotal = arbitraryCards.stream()
@@ -53,7 +54,7 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotal();
+        int actualTotal = cards.calculateCardsTotalScore();
 
         // then
         assertThat(actualTotal).isEqualTo(21);
