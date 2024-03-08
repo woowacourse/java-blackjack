@@ -70,9 +70,7 @@ public class BlackJackController {
     }
 
     private void completePlayersHand(Players players, CardDeck cardDeck) {
-        for (Player player : players.getPlayers()) {
-            completePlayerHand(player, cardDeck);
-        }
+        players.getPlayers().forEach(player -> completePlayerHand(player, cardDeck));
     }
 
     private void completePlayerHand(Player player, CardDeck cardDeck) {
