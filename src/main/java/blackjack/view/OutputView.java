@@ -13,48 +13,62 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String SEPARATOR = ", ";
+    private static final String NONE = "";
+
+    private static void printMessage(String message) {
+        System.out.println(message);
+    }
 
     public static void printInitialDrawResult(Dealer dealer, List<Player> players) {
         String separatedNames = convertPlayerNames(players);
-        System.out.printf(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다." + NEW_LINE, separatedNames);
+        String initialMessage = String.format(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.", separatedNames);
+        String dealerCardMessage = dealerCardMessage(List.of(dealer.getFirstCard()));
 
-        printDealerCard(List.of(dealer.getFirstCard()));
+        printMessage(initialMessage);
+        printMessage(dealerCardMessage);
         for (Player player : players) {
-            printPlayerCard(player);
+            String playerCardMessage = playerCardMessage(player);
+            printMessage(playerCardMessage);
         }
     }
 
-    public static void printDealerCard(List<Card> cards) {
-        String separatedNames = convertCardNames(cards);
-        System.out.printf("딜러 카드: %s" + NEW_LINE, separatedNames);
-    }
-
     public static void printPlayerCard(Player player) {
-        String separatedNames = convertCardNames(player.getHandDeck());
-        System.out.printf("%s 카드: %s" + NEW_LINE, player.getName(), separatedNames);
+        printMessage(playerCardMessage(player));
     }
 
     public static void printDealerHit() {
-        System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE);
+        System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printCardScore(Dealer dealer, List<Player> players) {
         List<Card> dealerCard = dealer.getHandDeck();
         int dealerScore = dealer.calculateTotalScore();
-        printDealerCard(dealerCard);
-        System.out.printf("- 결과: %d", dealerScore);
+        String dealerScoreMessage = String.format(dealerCardMessage(dealerCard) + " - 결과: %d", dealerScore);
+        printMessage(NEW_LINE + dealerScoreMessage);
 
         for (Player player : players) {
-            printPlayerCard(player);
-            System.out.printf("- 결과: %d", player.calculateTotalScore());
+            int playerScore = player.calculateTotalScore();
+            String playerScoreMessage = String.format(playerCardMessage(player) + " - 결과: %d", playerScore);
+            printMessage(playerScoreMessage);
         }
     }
 
     public static void printResult(GameResult gameResult) {
-        System.out.println("## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 승패");
         printDealerResult(gameResult);
         printPlayerResult(gameResult);
     }
+
+    private static String dealerCardMessage(List<Card> cards) {
+        String separatedDealerCardName = convertCardNames(cards);
+        return String.format("딜러 카드: %s", separatedDealerCardName);
+    }
+
+    private static String playerCardMessage(Player player) {
+        String separatedPlayerCardName = convertCardNames(player.getHandDeck());
+        return String.format("%s 카드: %s", player.getName(), separatedPlayerCardName);
+    }
+
 
     private static void printDealerResult(GameResult gameResult) {
         int dealerWins = gameResult.countDealerWins();
@@ -66,7 +80,7 @@ public class OutputView {
         stringBuilder.append(dealerLoseFormat(dealerLoses));
         stringBuilder.append(dealerTiesFormat(dealerTies));
 
-        System.out.printf("딜러 : %s", stringBuilder);
+        System.out.printf("딜러 : %s" + NEW_LINE, stringBuilder);
     }
 
     private static void printPlayerResult(GameResult gameResult) {
@@ -75,7 +89,7 @@ public class OutputView {
         for (Player player : playersResult.keySet()) {
             String playerName = player.getName();
             String playerResult = playersResult.get(player).getName();
-            System.out.printf("%s : %s", playerName, playerResult);
+            System.out.printf("%s : %s" + NEW_LINE, playerName, playerResult);
         }
     }
 
@@ -99,27 +113,27 @@ public class OutputView {
         return cardProperties.getCardNumber().getName() + cardProperties.getCardPattern().getName();
     }
 
-    private static String dealerWinFormat( int dealerWins) {
+    private static String dealerWinFormat(int dealerWins) {
         if (dealerWins > 0) {
             return String.format("%d승", dealerWins);
         }
 
-        return "";
+        return NONE;
     }
 
-    private static String dealerLoseFormat( int dealerLoses) {
+    private static String dealerLoseFormat(int dealerLoses) {
         if (dealerLoses > 0) {
-            return String.format("%d패", dealerLoses);
+            return String.format(" %d패", dealerLoses);
         }
 
-        return "";
+        return NONE;
     }
 
-    private static String dealerTiesFormat( int dealerTies) {
+    private static String dealerTiesFormat(int dealerTies) {
         if (dealerTies > 0) {
-            return String.format("%d무", dealerTies);
+            return String.format(" %d무", dealerTies);
         }
 
-        return "";
+        return NONE;
     }
 }
