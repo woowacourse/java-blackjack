@@ -17,7 +17,7 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
-        if (10 < name.trim().length()) {
+        if (MAX_NAME_LENGTH < name.trim().length()) {
             throw new IllegalArgumentException("이름은 " + MAX_NAME_LENGTH + "글자를 넘을 수 없습니다.");
         }
     }
