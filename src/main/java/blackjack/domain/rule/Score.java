@@ -12,6 +12,10 @@ public class Score {
         return hitStrategy.canHit(this);
     }
 
+    public boolean isAbove(int bustCondition) {
+        return bustCondition < value;
+    }
+
     public int getValue() {
         return value;
     }
