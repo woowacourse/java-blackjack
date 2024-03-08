@@ -23,12 +23,17 @@ public class BlackjackController {
     }
 
     public void run() {
+        Game game = prepare();
+        play(game);
+        end(game);
+    }
+
+    private Game prepare() {
         CardGenerator cardGenerator = new RandomCardGenerator();
         Players players = preparePlayers(cardGenerator);
         Dealer dealer = new Dealer(cardGenerator);
         outputView.printDealingResult(players, dealer);
-        play(cardGenerator, players, dealer);
-        end(players, dealer);
+        return new Game(players, dealer, cardGenerator);
     }
 
     private Players preparePlayers(final CardGenerator cardGenerator) {
@@ -36,7 +41,11 @@ public class BlackjackController {
         return new Players(playerNames, cardGenerator);
     }
 
-    private void play(final CardGenerator cardGenerator, final Players players, final Dealer dealer) {
+    private void play(final Game game) {
+        Players players = game.players();
+        CardGenerator cardGenerator = game.cardGenerator();
+        Dealer dealer = game.dealer();
+
         List<Player> playersInAction = players.getPlayers();
         for (Player player : playersInAction) {
             doPlayerActionUtilEnd(player, cardGenerator);
@@ -61,7 +70,10 @@ public class BlackjackController {
         return player.canHit() && command;
     }
 
-    private void end(final Players players, final Dealer dealer) {
+    private void end(final Game game) {
+        Players players = game.players();
+        Dealer dealer = game.dealer();
+
         showCardOutcome(players, dealer);
         showMatchResult(players, dealer);
     }
