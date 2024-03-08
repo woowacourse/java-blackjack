@@ -3,6 +3,7 @@ package blackjack.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
+import blackjack.model.deck.DeckGenerator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

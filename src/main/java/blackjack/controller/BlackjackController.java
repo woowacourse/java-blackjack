@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.model.DeckGenerator;
+import blackjack.model.deck.DeckGenerator;
 import blackjack.model.GameRule;
-import blackjack.model.PlayingDeck;
+import blackjack.model.deck.PlayingDeck;
 import blackjack.model.card.Card;
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;

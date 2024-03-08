@@ -7,6 +7,7 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
 import blackjack.model.card.CardProperties;
+import blackjack.model.deck.HandDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
