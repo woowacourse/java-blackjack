@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.common;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

@@ -1,11 +1,8 @@
-package blackjack;
+package blackjack.domain.card;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardSymbol;
-import blackjack.domain.card.CardValue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +24,7 @@ class CardTest {
 
         var result = sut.isAce();
 
-        assertTrue(result);
+        org.junit.jupiter.api.Assertions.assertTrue(result);
     }
 
     @Test
@@ -37,6 +34,6 @@ class CardTest {
 
         var result = sut.isAce();
 
-        assertFalse(result);
+        org.junit.jupiter.api.Assertions.assertFalse(result);
     }
 }

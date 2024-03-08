@@ -1,10 +1,5 @@
 package blackjack.fixture;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardSymbol;
-import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Cards;
 import java.util.ArrayDeque;
 import java.util.List;
 

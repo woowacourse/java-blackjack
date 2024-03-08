@@ -1,10 +1,9 @@
-package blackjack;
+package blackjack.domain.player;
 
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import blackjack.domain.card.CardValue;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
