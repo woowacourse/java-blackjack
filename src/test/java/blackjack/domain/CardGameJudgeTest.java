@@ -31,10 +31,10 @@ public class CardGameJudgeTest {
                 new Card(QUEEN, HEART),
                 new Card(QUEEN, SPADE));
 
-        var result = cardGameJudge.judge(dealer, List.of(mangcho))
+        var totalResult = cardGameJudge.judge(dealer, List.of(mangcho))
                 .getTotalResult();
 
-        assertThat(result.get(mangcho)).isEqualTo(WinningStatus.LOSE);
+        assertThat(totalResult.get(mangcho)).isEqualTo(WinningStatus.LOSE);
     }
 
     @Test

@@ -1,19 +1,22 @@
 package blackjack.domain;
 
 public class Dealer extends Player {
-    // TODO: 이름 고민
-    public static final String DEALER_NAME = "딜러";
-    public static final int MINIMUM_NUMBER_OF_CARD = 16;
+    public static final String NAME = "딜러";
+    public static final int HIT_THRESHOLD = 16;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(NAME);
     }
 
-    public boolean needMoreCard() {
-        return this.hand.getSum() <= MINIMUM_NUMBER_OF_CARD;
+    public boolean isMoreCardNeeded() {
+        return this.hand.getSum() <= HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {
-        return hand.getAllCards().get(0);
+        try {
+            return hand.getAllCards().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new RuntimeException("[ERROR] 딜러가 카드를 갖고 있지 않습니다.");
+        }
     }
 }

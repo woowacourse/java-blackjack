@@ -13,8 +13,10 @@ public class PlayerTest {
 
     @Test
     void 플레이어는_죽었는지_여부를_반환한다() {
-        Player player = player();
-        player.addCards(new Card(KING, CLOVER), new Card(KING, SPADE), new Card(KING, HEART));
+        Player player = player(
+                new Card(KING, CLOVER),
+                new Card(KING, SPADE),
+                new Card(KING, HEART));
 
         boolean isDead = player.isDead();
 
