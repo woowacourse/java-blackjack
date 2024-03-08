@@ -31,7 +31,7 @@ public class MessageResolver {
     }
 
     private String resolveCardMessage(Card card) {
-        return String.format("%d%s", card.getCardNumber(), card.getCardShape());
+        return String.format("%s%s", card.getCardNumberName(), card.getCardShape());
     }
 
     public String resolveDealerPopCountMessage(int dealerDrawThreshold, int popCount) {
@@ -44,6 +44,7 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
+    //TODO: 이름과 최고 점수를 파라미터로 받도록 개선
     private String resolvePlayerScoreMessage(Player player) {
         String handMessage = resolveHandMessage(player.getHand());
         int sum = player.calculateHandSum();
