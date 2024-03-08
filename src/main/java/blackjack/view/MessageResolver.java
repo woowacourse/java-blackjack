@@ -46,7 +46,7 @@ public class MessageResolver {
 
     //TODO: 이름과 최고 점수를 파라미터로 받도록 개선
     private String resolvePlayerScoreMessage(Player player) {
-        String handMessage = resolveHandMessage(player.getHand());
+        String handMessage = resolvePlayerHandMessage(player);
         int sum = player.calculateHandSum();
         return String.format("%s - 결과: %d", handMessage, sum);
     }
