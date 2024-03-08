@@ -90,3 +90,9 @@ example feat: 사용자 입력 후 도메인 사용
 - [ ] 호출되는 메서드는 호출하는 메서드 아래에 위치한다.
   - 여러 곳에서 호출될 경우, 마지막 호출 메서드 아래에 위치한다.
   - 순서가 conflict될 경우, 함수 내의 호출 순서로 메서드 위치를 결정한다.
+
+# 객체 협력 관계
+![객체 협력 관계](./src/main/java/resources/static/objectRelations.png)
+
+# 딜러, 플레이어 결과 정리
+![결과](./src/main/java/resources/static/result.png)
