@@ -21,7 +21,6 @@ public class Blackjack {
         this.players = players;
         this.deck = new Deck();
     }
-
     public void dealCard(final Player player) {
         player.addCard(deck.draw());
     }

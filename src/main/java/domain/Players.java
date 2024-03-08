@@ -8,7 +8,37 @@ public class Players {
     private final List<Player> players;
 
     public Players(final List<Player> players) {
+
+        validate(players);
         this.players = players;
+
+    }
+
+    private void validate(List<Player> players) {
+        validatePlayerNumbers(players);
+        //2
+        validateDuplicate(players);
+    }
+
+    private static void validatePlayerNumbers(List<Player> players) {
+        if(isInvalidPlayersNumber(players)){
+            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
+        }
+    }
+
+    private boolean hasDuplicatePlayers(List<Player> players) {
+        List<Player> distinctPlayers = players.stream().distinct().toList();
+        return distinctPlayers.size() != players.size();
+    }
+
+    private static boolean isInvalidPlayersNumber(List<Player> players) {
+        return players.size() > 8;
+    }
+
+    private void validateDuplicate(List<Player> players) {
+        if(hasDuplicatePlayers(players)){
+            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다");
+        }
     }
 
     public static Players from(String[] names) {
