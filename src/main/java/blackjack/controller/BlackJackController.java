@@ -28,6 +28,13 @@ public class BlackJackController {
         blackJackGame.distributeCards();
         outputView.printDistributedCardsInfo(blackJackGame);
 
+        executeMultipleTurns(players, blackJackGame);
+        outputView.printFinalScore(blackJackGame);
+        GameResults gameResults = blackJackGame.calculateFinalResults();
+        outputView.printGameResults(gameResults);
+    }
+
+    private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {
         for (int index = 0; index < players.size(); index++) {
             Player player = players.get(index);
             drawCardWithCommand(player, blackJackGame, index);
@@ -36,10 +43,6 @@ public class BlackJackController {
             blackJackGame.updateDealer();
             outputView.printDealerChange();
         }
-        outputView.printFinalScore(blackJackGame);
-
-        GameResults gameResults = blackJackGame.calculateFinalResults();
-        outputView.printGameResults(gameResults);
     }
 
     private void drawCardWithCommand(Player player, BlackJackGame blackJackGame, int index) {
