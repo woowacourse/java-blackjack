@@ -17,6 +17,8 @@ public abstract class Participant {
         this.cards = new ParticipantCards();
     }
 
+    public abstract boolean isReceivable();
+
     public void receive(Card receivedCard) {
         if (isReceivable()) {
             cards.receive(receivedCard);
@@ -41,13 +43,11 @@ public abstract class Participant {
         return cards.calculateScore() > BLACKJACK_SCORE;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
-    }
-
-    public abstract boolean isReceivable();
-
     public String getName() {
         return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getCards());
     }
 }
