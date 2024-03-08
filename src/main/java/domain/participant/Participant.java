@@ -10,7 +10,7 @@ public abstract class Participant {
     private final String name;
     private final Hands hands;
 
-    public Participant(final String name, final Hands hands) {
+    protected Participant(final String name, final Hands hands) {
         this.name = name;
         this.hands = hands;
     }
@@ -19,13 +19,13 @@ public abstract class Participant {
         hands.add(card);
     }
 
-    public Result calculateResult(final Participant participant) {
-        return hands.calculateResult(participant.getHands());
-    }
-
     //TODO 메서드가 조잡해요
     public boolean isBust() {
         return hands.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hands.isBlackJack();
     }
 
     public int handsSum() {
@@ -36,8 +36,8 @@ public abstract class Participant {
         return hands.size();
     }
 
-    public boolean isBlackJack() {
-        return hands.isBlackJack();
+    public Result calculateResult(final Participant participant) {
+        return hands.calculateResult(participant.getHands());
     }
 
     public List<String> getCardNames() {
