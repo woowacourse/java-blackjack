@@ -29,9 +29,13 @@ public class Players {
     }
 
     private static void validate(final List<String> names) {
-        if (names.size() != Set.copyOf(names).size()) {
+        if (isDuplicated(names)) {
             throw new IllegalArgumentException(NAME_DUPLICATED_EXCEPTION);
         }
+    }
+
+    private static boolean isDuplicated(final List<String> names) {
+        return names.size() != Set.copyOf(names).size();
     }
 
     public BlackjackResult createResult(final Dealer dealer) {
