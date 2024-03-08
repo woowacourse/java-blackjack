@@ -12,6 +12,6 @@ public class DealerCards extends Cards implements Drawable {
 
     @Override
     public boolean canDraw() {
-        return sum() <= MIN_SCORE;
+        return bestSum() <= MIN_SCORE;
     }
 }

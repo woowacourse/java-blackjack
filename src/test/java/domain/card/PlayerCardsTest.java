@@ -45,4 +45,11 @@ public class PlayerCardsTest {
 
         assertThat(playerCards.cards).hasSize(3);
     }
+
+    @Test
+    void bestSum() {
+        PlayerCards playerCards = new PlayerCards(new Name("capy"), new ArrayList<>(List.of(new Card(1, Shape.CLUB), new Card(1, Shape.CLUB))));
+
+        assertThat(playerCards.bestSum()).isEqualTo(12);
+    }
 }

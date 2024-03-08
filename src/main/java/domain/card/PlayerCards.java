@@ -6,7 +6,6 @@ import java.util.List;
 
 public class PlayerCards extends Cards implements Drawable {
 
-    private static final int MAX_SCORE = 21;
     private final Name name;
 
     public PlayerCards(Name name, List<Card> cards) {
@@ -16,7 +15,7 @@ public class PlayerCards extends Cards implements Drawable {
 
     @Override
     public boolean canDraw() {
-        return sum() <= MAX_SCORE;
+        return bestSum() <= MAX_SCORE;
     }
 
     public Name getPlayerName() {

@@ -10,6 +10,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
+    }
+
     public int getCardNumber() {
         return cardNumber.getValue();
     }

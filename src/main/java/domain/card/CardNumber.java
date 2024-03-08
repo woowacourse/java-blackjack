@@ -2,7 +2,7 @@ package domain.card;
 
 public enum CardNumber {
 
-    ONE(1, "A"),
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),

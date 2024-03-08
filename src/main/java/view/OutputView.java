@@ -59,7 +59,7 @@ public class OutputView {
     }
 
     private void printSumOfCards(Cards cards) {
-        System.out.println(" - 결과: " + cards.sum());
+        System.out.println(" - 결과: " + cards.bestSum());
     }
 
     public void printScores(ScoreBoard scoreBoard) {
