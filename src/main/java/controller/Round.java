@@ -117,18 +117,15 @@ public class Round {
                 .toList();
     }
 
-    public int giveCardsToDealer() {
+    public void giveCardsToDealer(final OutputView outputView) {
         Dealer dealer = participant.dealer();
 
         int currentScore = dealer.calculateResultScore();
-
-        int count = 0;
         while (currentScore <= THRESHOLD) {
             dealer.pickOneCard(deck);
+            outputView.printDealerPickMessage();
             currentScore = dealer.calculateResultScore();
-            count++;
         }
-        return count;
     }
 
     public Player getPlayer(final String name) {
@@ -137,5 +134,9 @@ public class Round {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    public Dealer getDealer() {
+        return participant.dealer();
     }
 }

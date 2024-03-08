@@ -1,12 +1,9 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.Round;
 import controller.dto.HandStatus;
-import domain.Card;
-import domain.Dealer;
-import domain.Deck;
-import domain.Participant;
-import domain.Player;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.OutputView;
 
 class RoundTest {
 
@@ -21,7 +19,7 @@ class RoundTest {
     @Test
     void startBlackJack() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
-        Round round = new Round(playerNames);
+        Round round = Round.from(playerNames);
 
         List<HandStatus> statuses = round.initiateGameCondition();
 
@@ -46,10 +44,10 @@ class RoundTest {
         Round round = new Round(participant, new Deck(cards));
 
         // when
-        int count = round.giveCardsToDealer();
+        round.giveCardsToDealer(new OutputView());
 
         // then
-        assertThat(count).isEqualTo(1);
+        assertThat(round.getDealer().getHand().size()).isEqualTo(3);
     }
 
     private List<Card> createNormalWithTwoCards() {

@@ -1,7 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.Deck;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;

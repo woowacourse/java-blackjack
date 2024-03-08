@@ -1,10 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.Dealer;
-import domain.GameRule;
-import domain.Participant;
-import domain.Player;
 import domain.constants.Outcome;
 import domain.constants.Score;
 import domain.constants.Shape;

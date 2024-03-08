@@ -26,14 +26,12 @@ public class Game {
         return round;
     }
 
-
     private void startRound(final Round round) {
         List<String> names = round.getPlayerNames();
         for (String name : names) {
             round.giveCardToPlayer(name, outputView, inputView);
         }
 
-        int count = round.giveCardsToDealer();
-        outputView.printDealerPickMessage(count);
+        round.giveCardsToDealer(outputView);
     }
 }

@@ -1,7 +1,7 @@
+package domain;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import domain.Card;
-import domain.Dealer;
 import domain.constants.Score;
 import domain.constants.Shape;
 import org.junit.jupiter.api.DisplayName;
