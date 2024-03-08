@@ -23,9 +23,9 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
-        Player player = new Player("daon", cards);
+
+        Player player = new Player("daon");
+        player.addCards(given);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
 
         player.addCard(cardGenerator.drawCard());
@@ -39,9 +39,8 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
-        Player player = new Player("daon", cards);
+        Player player = new Player("daon");
+        player.addCards(given);
 
         assertThat(player.checkDrawCardState()).isTrue();
     }
@@ -54,10 +53,8 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
-
-        Player player = new Player("daon", cards);
+        Player player = new Player("daon");
+        player.addCards(given);
 
         assertThat(player.checkDrawCardState()).isFalse();
     }
@@ -70,8 +67,6 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
         List<Card> comparison = List.of(
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
@@ -80,8 +75,9 @@ class PlayerTest {
         Cards comparisonCards = new Cards();
         comparisonCards.addCard(comparison);
 
-        Player player = new Player("daon", cards);
-        ResultStatus resultStatus = player.compareScore(comparisonCards);
+        Player player = new Player("daon");
+        player.addCards(given);
+        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
         assertThat(resultStatus).isEqualTo(ResultStatus.LOSE);
     }
 
@@ -93,8 +89,6 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
         List<Card> comparison = List.of(
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
@@ -103,8 +97,9 @@ class PlayerTest {
         Cards comparisonCards = new Cards();
         comparisonCards.addCard(comparison);
 
-        Player player = new Player("daon", cards);
-        ResultStatus resultStatus = player.compareScore(comparisonCards);
+        Player player = new Player("daon");
+        player.addCards(given);
+        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
         assertThat(resultStatus).isEqualTo(ResultStatus.WIN);
     }
 
@@ -117,8 +112,6 @@ class PlayerTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
         List<Card> comparison = List.of(
                 new Card(otherNumber, CardShape.HEART),
                 new Card(CardNumber.TWO, CardShape.CLOVER),
@@ -127,8 +120,9 @@ class PlayerTest {
         Cards comparisonCards = new Cards();
         comparisonCards.addCard(comparison);
 
-        Player player = new Player("daon", cards);
-        ResultStatus resultStatus = player.compareScore(comparisonCards);
+        Player player = new Player("daon");
+        player.addCards(given);
+        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
         assertThat(resultStatus).isEqualTo(expected);
     }
 }

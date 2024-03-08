@@ -3,7 +3,6 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.model.Cards;
 import blackjack.model.GameResults;
 import blackjack.model.Player;
 import blackjack.model.ResultStatus;
@@ -31,13 +30,13 @@ class GameResultsTest {
     private Map<Player, ResultStatus> createResults(int win, int lose, int push) {
         Map<Player, ResultStatus> map = new HashMap<>();
         for (int i = 0; i < win; i++) {
-            map.put(new Player("daon" + i, new Cards()), ResultStatus.WIN);
+            map.put(new Player("daon" + i), ResultStatus.WIN);
         }
         for (int i = 0; i < lose; i++) {
-            map.put(new Player("pobi" + i, new Cards()), ResultStatus.LOSE);
+            map.put(new Player("pobi" + i), ResultStatus.LOSE);
         }
         for (int i = 0; i < push; i++) {
-            map.put(new Player("woni" + i, new Cards()), ResultStatus.PUSH);
+            map.put(new Player("woni" + i), ResultStatus.PUSH);
         }
         return map;
     }

@@ -27,7 +27,7 @@ public class BlackJackGame {
     }
 
     public boolean checkDealerState() {
-        return dealer.isScoreLessThanStandard();
+        return dealer.checkDrawCardState();
     }
 
     public void updateDealer() {

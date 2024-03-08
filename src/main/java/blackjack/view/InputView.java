@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.Cards;
 import blackjack.model.Command;
 import blackjack.model.Player;
 import java.util.Arrays;
@@ -17,7 +16,7 @@ public class InputView {
         String input = scanner.nextLine();
         validateMultipleInputs(input);
         return Arrays.stream(input.split(INPUT_DELIMITER))
-                .map(name -> new Player(name, new Cards()))
+                .map(name -> new Player(name))
                 .toList();
     }
 

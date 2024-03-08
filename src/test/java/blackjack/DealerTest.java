@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.Card;
 import blackjack.model.CardNumber;
 import blackjack.model.CardShape;
-import blackjack.model.Cards;
 import blackjack.model.Dealer;
 import blackjack.model.Player;
 import blackjack.model.ResultStatus;
@@ -24,11 +23,10 @@ class DealerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards cards = new Cards();
-        cards.addCard(given);
-        Card card = new Card(CardNumber.ACE, CardShape.DIAMOND);
-        Dealer dealer = new Dealer(cards);
+        Dealer dealer = new Dealer();
+        dealer.addCards(given);
 
+        Card card = new Card(CardNumber.ACE, CardShape.DIAMOND);
         dealer.addCard(card);
 
         assertThat(dealer.getCards().getCards()).hasSize(3);
@@ -42,9 +40,9 @@ class DealerTest {
                 new Card(CardNumber.SEVEN, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer();
         dealer.addCards(given);
-        Player player = new Player("daon", new Cards());
+        Player player = new Player("daon");
 
         List<Card> playerCards = List.of(
                 new Card(givenNumber, CardShape.HEART),

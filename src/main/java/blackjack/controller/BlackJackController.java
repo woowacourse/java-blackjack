@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.model.BlackJackGame;
 import blackjack.model.CardGenerator;
-import blackjack.model.Cards;
 import blackjack.model.Command;
 import blackjack.model.Dealer;
 import blackjack.model.GameResults;
@@ -23,7 +22,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer();
         List<Player> players = inputView.readPlayers();
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new CardGenerator(new RandomIndexGenerator()));
         blackJackGame.distributeCards();

@@ -22,10 +22,10 @@ class BlackJackGameTest {
         IndexGenerator indexGenerator = (maxRange) -> 2;
         CardGenerator cardGenerator = new CardGenerator(indexGenerator);
 
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer();
         List<Player> players = List.of(
-                new Player("daon", new Cards()),
-                new Player("ella", new Cards())
+                new Player("daon"),
+                new Player("ella")
         );
 
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardGenerator);
@@ -50,11 +50,11 @@ class BlackJackGameTest {
         IndexGenerator indexGenerator = (maxRange) -> 2;
         CardGenerator cardGenerator = new CardGenerator(indexGenerator);
 
-        Dealer dealer = new Dealer(new Cards());
-        Player player = new Player("daon", new Cards());
+        Dealer dealer = new Dealer();
+        Player player = new Player("daon");
         List<Player> players = List.of(
                 player,
-                new Player("ella", new Cards())
+                new Player("ella")
         );
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardGenerator);
 
