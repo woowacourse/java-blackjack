@@ -25,10 +25,9 @@ class JudgeTest {
     @DisplayName("딜러와 플레이어 중 누가 이겼는지 알 수 있다")
     @Test
     void testSelectWinner() {
-        Player dealer = PlayerFixture.of("딜러", 10, 7);
-        Player player = PlayerFixture.of("pobi", 10, 6);
-
-        assertThat(judge.isPlayerWin(dealer, player)).isFalse();
+        Score dealerScore = new Score(10);
+        Score playerScore = new Score(5);
+        assertThat(judge.isPlayerWin(dealerScore, playerScore)).isFalse();
     }
 
     @DisplayName("딜러의 게임 결과를 계산할 수 있다")

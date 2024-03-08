@@ -35,6 +35,16 @@ public class Judge {
         return calculateBestScore(player.getHand()) > calculateBestScore(dealer.getHand());
     }
 
+    public boolean isPlayerWin(Score dealerScore, Score playerScore) {
+        if (dealerScore.isAbove(BLACK_JACK)) {
+            return false;
+        }
+        if (playerScore.isAbove(BLACK_JACK)) {
+            return true;
+        }
+        return playerScore.isBiggerThan(dealerScore);
+    }
+
     public DealerGameResult calculateDealerResult(Player dealer, Players players) {
         int dealerLoseCount = (int) players.getPlayers().stream()
                 .filter(player -> isPlayerWin(dealer, player))

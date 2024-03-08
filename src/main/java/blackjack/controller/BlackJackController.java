@@ -64,8 +64,12 @@ public class BlackJackController {
 
     private void printPlayersGameResult(Players players, Player dealer) {
         Judge judge = new Judge();
+        Score dealerScore = calculateScore(dealer);
         players.getPlayers()
-                .forEach(player -> outputView.printPlayerGameResult(player, judge.isPlayerWin(dealer, player)));
+                .forEach(player -> {
+                    Score playerScore = calculateScore(player);
+                    outputView.printPlayerGameResult(player, judge.isPlayerWin(dealerScore, playerScore));
+                });
     }
 
     private void printDealerGameResult(Player dealer, Players players) {
@@ -96,20 +100,26 @@ public class BlackJackController {
     }
 
     private void completePlayerHand(Player player, CardDeck cardDeck) {
-        Judge judge = new Judge();
-        while (!judge.isBustedHand(player.getHand())) {
-            String name = player.getName();
-            InputMapper inputMapper = new InputMapper();
-            DrawDecision drawDecision = inputMapper.mapToDrawDecision(inputView.readDrawPlan(name));
+        Score playerScore = calculateScore(player);
+        HitStrategy hitStrategy = new PlayerHitStrategy();
 
+        while (playerScore.hitAllowed(hitStrategy)) {
+            DrawDecision drawDecision = readHitDecision(player);
             if (drawDecision == DrawDecision.NO) {
                 break;
             }
-
             Card card = cardDeck.popCard();
             player.appendCard(card);
             outputView.printPlayerHand(player);
+            playerScore = calculateScore(player);
         }
+    }
+
+    private DrawDecision readHitDecision(Player player) {
+        String name = player.getName();
+        InputMapper inputMapper = new InputMapper();
+        DrawDecision hitDecision = inputMapper.mapToDrawDecision(inputView.readDrawPlan(name));
+        return hitDecision;
     }
 
     private CardDeck initCardDeck() {
