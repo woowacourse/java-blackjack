@@ -10,16 +10,8 @@ public class Player extends Participant {
 
     public boolean draw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
-            return addCard(deck);
+            return addCard(deck.draw());
         }
         return false;
-    }
-
-    private boolean addCard(Deck deck) {
-        hands.addCard(deck.draw());
-        if (hands.isBurst()) {
-            return hands.downgradeAce();
-        }
-        return true;
     }
 }

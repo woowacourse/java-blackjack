@@ -11,14 +11,12 @@ public class Dealer extends Participant {
 
     public boolean draw(Deck deck) {
         if (shouldDraw()) {
-            Card card = deck.draw();
-            hands.addCard(card);
-            return true;
+            return addCard(deck.draw());
         }
         return false;
     }
 
-    public String getFirstCardName(){
+    public String getFirstCardName() {
         return hands.getHands()
                 .get(0)
                 .getCardName();

@@ -12,8 +12,12 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
-    public void addCard(Card card) {
+    protected boolean addCard(Card card) {
         hands.addCard(card);
+        if (hands.isBurst()) {
+            return hands.downgradeAce();
+        }
+        return true;
     }
 
     public List<Card> getHandsCards() {
