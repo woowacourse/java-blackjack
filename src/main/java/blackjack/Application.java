@@ -25,33 +25,33 @@ public class Application {
         hit(gameBoard);
         OutputView.printFinalState(gameBoard.getDealerFinalState(), gameBoard.getPlayersFinalState());
 
-        Referee referee = new Referee(gameBoard.getDealerCards());
+        final Referee referee = new Referee(gameBoard.getDealerCards());
         final OutcomesDto dealerOutcome = Outcome.toDto(gameBoard.getDealerOutcome(referee));
         final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos(referee);
         OutputView.printFinalOutcomes(dealerOutcome, playerOutcomes);
     }
 
     private static GameBoard createGameBoard() {
-        Deck deck = new Deck(new DeckShuffleFactory());
-        Dealer dealer = Dealer.create();
-        Players players = Players.from(InputView.readPlayerNames());
+        final Deck deck = new Deck(new DeckShuffleFactory());
+        final Dealer dealer = Dealer.create();
+        final Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(deck, dealer, players);
     }
 
-    private static void drawInitialCard(GameBoard gameBoard) {
+    private static void drawInitialCard(final GameBoard gameBoard) {
         final DealerDto dealerDto = gameBoard.drawInitialDealerCards();
         final PlayersDto playersDto = gameBoard.drawInitialPlayersCards();
 
         OutputView.printInitialState(dealerDto, playersDto);
     }
 
-    private static void hit(GameBoard gameBoard) {
+    private static void hit(final GameBoard gameBoard) {
         hitPlayers(gameBoard, gameBoard.getPlayers());
         hitDealer(gameBoard, gameBoard.getDealer());
     }
 
     private static void hitPlayers(final GameBoard gameBoard, final Players players) {
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             hitPlayer(gameBoard, player);
         }
     }
@@ -64,7 +64,6 @@ public class Application {
     }
 
     private static void hitDealer(final GameBoard gameBoard, final Dealer dealer) {
-        System.out.println();
         while (gameBoard.isHit(dealer)) {
             gameBoard.hit(dealer);
             OutputView.printDealerDrawMessage();

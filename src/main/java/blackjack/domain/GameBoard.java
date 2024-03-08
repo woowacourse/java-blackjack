@@ -26,22 +26,22 @@ public class GameBoard {
     }
 
     public PlayersDto drawInitialPlayersCards() {
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             drawTwoCards(player);
         }
         return players.toDto();
     }
 
-    private void drawTwoCards(Gamer gamer) {
+    private void drawTwoCards(final Gamer gamer) {
         gamer.draw(deck.pop());
         gamer.draw(deck.pop());
     }
 
-    public void hit(Gamer gamer) {
+    public void hit(final Gamer gamer) {
         gamer.draw(deck.pop());
     }
 
-    public boolean isHit(Gamer gamer) {
+    public boolean isHit(final Gamer gamer) {
         return gamer.canDraw();
     }
 
@@ -59,7 +59,7 @@ public class GameBoard {
 
     private List<Outcome> calculateOutcomes(final Referee referee) {
         final List<Outcome> outcomes = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             outcomes.add(calculateOutcome(referee, player.getName()));
         }
         return outcomes;
@@ -67,7 +67,7 @@ public class GameBoard {
 
     public List<OutcomeDto> getPlayerOutcomeDtos(final Referee referee) {
         final List<OutcomeDto> playerOutcomes = new ArrayList<>();
-        for (Name name : players.getNames()) {
+        for (final Name name : players.getNames()) {
             playerOutcomes.add(new OutcomeDto(name, calculateOutcome(referee, name)));
         }
         return playerOutcomes;

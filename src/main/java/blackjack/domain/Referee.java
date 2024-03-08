@@ -8,7 +8,7 @@ public class Referee {
 
     private final Cards dealerCards;
 
-    public Referee(Cards dealerCards) {
+    public Referee(final Cards dealerCards) {
         this.dealerCards = dealerCards;
     }
 
@@ -22,7 +22,7 @@ public class Referee {
         return calculateNormalCase(playerCards);
     }
 
-    private boolean isBust(int score) {
+    private boolean isBust(final int score) {
         return score > BLACKJACK_CANDIDATE;
     }
 
@@ -36,7 +36,7 @@ public class Referee {
         return Outcome.LOSE;
     }
 
-    private boolean isBlackJack(Cards cards) {
+    private boolean isBlackJack(final Cards cards) {
         return cards.sum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
     }
 

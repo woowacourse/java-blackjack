@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 public interface Gamer {
 
-    void draw(Card card);
+    void draw(final Card card);
 
     boolean canDraw();
 

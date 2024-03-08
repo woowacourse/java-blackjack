@@ -32,7 +32,7 @@ public class Cards {
         return Number.sum(numbers);
     }
 
-    private int calculateOptimalSum(List<Number> numbers) {
+    private int calculateOptimalSum(final List<Number> numbers) {
         int softHandSum = Number.sumOneAceToSoftHand(numbers);
 
         if (softHandSum <= BLACKJACK_CANDIDATE) {

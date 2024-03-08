@@ -6,7 +6,7 @@ public class Deck {
 
     private final Stack<Card> deck;
 
-    public Deck(DeckFactory deckFactory) {
+    public Deck(final DeckFactory deckFactory) {
         this.deck = deckFactory.generate();
     }
 
