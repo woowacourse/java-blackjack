@@ -38,7 +38,7 @@ public class OutputView {
 
     public static void printResults(List<Player> players) {
         System.out.println();
-        for (Player player : players) {
+        players.forEach(player -> {
             StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
             List<String> cardInfos = player.getCards()
                     .stream()
@@ -47,7 +47,7 @@ public class OutputView {
             stringBuilder.append(String.join(", ", cardInfos));
             System.out.print(stringBuilder);
             System.out.println(" - 결과 : " + player.calculateScore());
-        }
+        });
     }
 
     public static void printGameResults(BlackjackResultDTO blackjackResult) {
@@ -67,7 +67,8 @@ public class OutputView {
 
     private static void printWinOrLose(final Player player, final Integer win, final Integer lose) {
         if (player.getName().equals("딜러")) {
-            System.out.print(player.getName() + ": " + win + "승" + lose + "패\n");
+            System.out.print(player.getName() + ": " + win + "승" + lose + "패");
+            System.out.println();
             return;
         }
 
@@ -81,9 +82,6 @@ public class OutputView {
         return "패";
     }
 
-    // 2~9
-    // 1 A
-    // 10 jQK
     private static String denominationToMessage(Denomination denomination) {
         if (denomination == Denomination.ACE) {
             return "A";
