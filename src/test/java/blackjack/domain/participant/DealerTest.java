@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,22 +30,22 @@ public class DealerTest {
     @Test
     void draw() {
         //given
-        Card card = new Card(Rank.ACE, Suit.SPADE);
+        TrumpCard trumpCard = new TrumpCard(Rank.ACE, Suit.SPADE);
 
         //when
         dealer.draw();
 
         //then
-        assertThat(dealer.getHandCards()).contains(card);
+        assertThat(dealer.getHandCards()).contains(trumpCard);
     }
 
     @DisplayName("딜러의 첫번째 카드를 공개한다.")
     @Test
     void showFirstCard() {
         //given
-        Card card = new Card(Rank.ACE, Suit.SPADE);
+        TrumpCard trumpCard = new TrumpCard(Rank.ACE, Suit.SPADE);
 
         //when & then
-        assertThat(dealer.showFirstCard()).isEqualTo(card);
+        assertThat(dealer.showFirstCard()).isEqualTo(trumpCard);
     }
 }

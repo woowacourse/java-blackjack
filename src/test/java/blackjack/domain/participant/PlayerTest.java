@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.stream.IntStream;
@@ -49,12 +49,12 @@ public class PlayerTest {
     void draw() {
         //given
         Player player = new Player("choco", dealer);
-        Card card = new Card(Rank.THREE, Suit.SPADE);
+        TrumpCard trumpCard = new TrumpCard(Rank.THREE, Suit.SPADE);
 
         //when
         player.draw(dealer);
 
         //then
-        assertThat(player.getHandCards()).contains(card);
+        assertThat(player.getHandCards()).contains(trumpCard);
     }
 }

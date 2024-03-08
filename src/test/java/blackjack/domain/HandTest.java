@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
@@ -15,30 +15,30 @@ public class HandTest {
     @Test
     void addCard() {
         //given
-        Card cardFourDiamond = new Card(Rank.FOUR, Suit.DIAMOND);
-        Card cardFiveDiamond = new Card(Rank.FIVE, Suit.DIAMOND);
+        TrumpCard trumpCardFourDiamond = new TrumpCard(Rank.FOUR, Suit.DIAMOND);
+        TrumpCard trumpCardFiveDiamond = new TrumpCard(Rank.FIVE, Suit.DIAMOND);
 
         //when
         Hand hand = new Hand();
-        hand.add(cardFourDiamond);
-        hand.add(cardFiveDiamond);
+        hand.add(trumpCardFourDiamond);
+        hand.add(trumpCardFiveDiamond);
 
         //then
         assertThat(hand.getCards())
-                .contains(cardFourDiamond, cardFiveDiamond);
+                .contains(trumpCardFourDiamond, trumpCardFiveDiamond);
     }
 
     @DisplayName("패에 있는 카드들의 점수를 반환한다.")
     @Test
     void calculateScore() {
         //given
-        Card cardFourDiamond = new Card(Rank.FOUR, Suit.DIAMOND);
-        Card cardFiveDiamond = new Card(Rank.FIVE, Suit.DIAMOND);
+        TrumpCard trumpCardFourDiamond = new TrumpCard(Rank.FOUR, Suit.DIAMOND);
+        TrumpCard trumpCardFiveDiamond = new TrumpCard(Rank.FIVE, Suit.DIAMOND);
 
         //when
         Hand hand = new Hand();
-        hand.add(cardFourDiamond);
-        hand.add(cardFiveDiamond);
+        hand.add(trumpCardFourDiamond);
+        hand.add(trumpCardFiveDiamond);
 
         //then
         assertThat(hand.calculateScore())
@@ -49,21 +49,21 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         //given
-        Card cardAceClover = new Card(Rank.ACE, Suit.CLOVER);
-        Card cardAceDiamond = new Card(Rank.ACE, Suit.DIAMOND);
-        Card cardAceSpade = new Card(Rank.ACE, Suit.SPADE);
-        Card cardFourSpade = new Card(Rank.FOUR, Suit.SPADE);
-        Card cardKingSpade = new Card(Rank.KING, Suit.SPADE);
+        TrumpCard trumpCardAceClover = new TrumpCard(Rank.ACE, Suit.CLOVER);
+        TrumpCard trumpCardAceDiamond = new TrumpCard(Rank.ACE, Suit.DIAMOND);
+        TrumpCard trumpCardAceSpade = new TrumpCard(Rank.ACE, Suit.SPADE);
+        TrumpCard trumpCardFourSpade = new TrumpCard(Rank.FOUR, Suit.SPADE);
+        TrumpCard trumpCardKingSpade = new TrumpCard(Rank.KING, Suit.SPADE);
 
         //when
         Hand hand1 = new Hand();
-        hand1.add(cardAceClover, cardAceDiamond);
+        hand1.add(trumpCardAceClover, trumpCardAceDiamond);
 
         Hand hand2 = new Hand();
-        hand2.add(cardAceClover, cardAceDiamond, cardAceSpade, cardFourSpade);
+        hand2.add(trumpCardAceClover, trumpCardAceDiamond, trumpCardAceSpade, trumpCardFourSpade);
 
         Hand hand3 = new Hand();
-        hand3.add(cardKingSpade, cardFourSpade, cardAceClover, cardAceDiamond, cardAceSpade);
+        hand3.add(trumpCardKingSpade, trumpCardFourSpade, trumpCardAceClover, trumpCardAceDiamond, trumpCardAceSpade);
 
         //then
         assertThat(hand1.calculateScore())

@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.stategy.TestShuffleStrategy;
@@ -19,10 +19,10 @@ public class DeckTest {
         //given
         ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
         Deck deck = new Deck(shuffleStrategy);
-        Card card = new Card(Rank.ACE, Suit.SPADE);
+        TrumpCard trumpCard = new TrumpCard(Rank.ACE, Suit.SPADE);
 
         //when & then
         assertThat(deck.getCards().get(0))
-                .isEqualTo(card);
+                .isEqualTo(trumpCard);
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.util.Constants;
 
 public class Dealer extends Gamer {
@@ -17,7 +17,7 @@ public class Dealer extends Gamer {
         selfDraw();
     }
 
-    public Card draw() {
+    public TrumpCard draw() {
         return deck.drawn();
     }
 
@@ -35,11 +35,11 @@ public class Dealer extends Gamer {
     }
 
     private void selfDraw() {
-        Card card = this.deck.drawn();
-        hand.add(card);
+        TrumpCard trumpCard = this.deck.drawn();
+        hand.add(trumpCard);
     }
 
-    public Card showFirstCard() {
+    public TrumpCard showFirstCard() {
         return hand.getFirstCard();
     }
 

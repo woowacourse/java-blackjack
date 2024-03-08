@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCard;
 import blackjack.domain.card.Rank;
 import blackjack.util.Constants;
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ public class Hand {
     public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 
-    private final List<Card> cards;
+    private final List<TrumpCard> trumpCards;
 
     public Hand() {
-        this.cards = new ArrayList<>();
+        this.trumpCards = new ArrayList<>();
     }
 
-    public void add(final Card... card) {
-        cards.addAll(List.of(card));
+    public void add(final TrumpCard... trumpCard) {
+        trumpCards.addAll(List.of(trumpCard));
     }
 
     public long calculateScore() {
@@ -35,13 +35,13 @@ public class Hand {
     }
 
     private long countAce() {
-        return cards.stream()
+        return trumpCards.stream()
                 .filter(card -> (card.getRank() == Rank.ACE))
                 .count();
     }
 
     private int calculateScoreWithoutAce() {
-        return cards.stream()
+        return trumpCards.stream()
                 .filter(card -> (card.getRank() != Rank.ACE))
                 .mapToInt(c -> c.getScore().get(0))
                 .sum();
@@ -56,14 +56,14 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == Constants.BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
+        return calculateScore() == Constants.BLACKJACK_BOUND && trumpCards.size() == BLACKJACK_CARD_SIZE;
     }
 
-    public Card getFirstCard() {
-        return cards.get(0);
+    public TrumpCard getFirstCard() {
+        return trumpCards.get(0);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<TrumpCard> getCards() {
+        return Collections.unmodifiableList(trumpCards);
     }
 }

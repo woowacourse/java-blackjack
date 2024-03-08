@@ -2,14 +2,11 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("카드")
-public class CardTest {
+public class TrumpCardTest {
 
     @DisplayName("숫자와 기호를 가진 카드 조회에 성공한다.")
     @Test
@@ -19,12 +16,12 @@ public class CardTest {
         Suit suit = Suit.CLOVER;
 
         //when
-        Card card = new Card(rank, suit);
+        TrumpCard trumpCard = new TrumpCard(rank, suit);
 
         //then
-        assertThat(card.getRank())
+        assertThat(trumpCard.getRank())
                 .isEqualTo(rank);
-        assertThat(card.getSuit())
+        assertThat(trumpCard.getSuit())
                 .isEqualTo(suit);
     }
 }
