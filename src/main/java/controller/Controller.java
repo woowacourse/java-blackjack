@@ -8,7 +8,9 @@ import java.util.List;
 import model.Choice;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
+import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
+import model.dto.PlayerScoreResult;
 import model.participant.Entrant;
 import model.participant.Names;
 import view.OutputView;
@@ -22,6 +24,9 @@ public class Controller {
         proceedPlayersTurn(casino);
         proceedDealerTurn(casino);
         showFinalFaceUpResults(casino);
+        DealerScoreResult dealerScoreResult = casino.calculateDealerResult();
+        List<PlayerScoreResult> playerScoreResults = casino.calculatePlayerResults();
+        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
     }
 
     private Casino initCasino() {

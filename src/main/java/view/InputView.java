@@ -13,9 +13,7 @@ public class InputView {
 
     public static String input(String inputRequestMessage) {
         System.out.println(inputRequestMessage);
-        String userInput = scanner.nextLine();
-        System.out.print(System.lineSeparator());
-        return userInput;
+        return scanner.nextLine();
     }
 
     public static List<String> inputNames(String inputRequestMessage) {
