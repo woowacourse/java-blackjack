@@ -3,6 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -25,8 +26,7 @@ public class Players {
     }
 
     private boolean hasDuplicatePlayers(final List<Player> players) {
-        final List<Player> distinctPlayers = players.stream().distinct().toList();
-        return distinctPlayers.size() != players.size();
+        return Set.copyOf(players).size() != players.size();
     }
 
     private static boolean isInvalidPlayersNumber(final List<Player> players) {
