@@ -2,7 +2,7 @@ package model.casino;
 
 import java.util.List;
 import model.Choice;
-import model.dto.IndividualFaceUpResult;
+import model.dto.FaceUpResult;
 import model.participant.Entrant;
 
 public class Casino {
@@ -48,15 +48,15 @@ public class Casino {
         return entrant.canHitDealer();
     }
 
-    public IndividualFaceUpResult getDealerFaceUpResult() {
+    public FaceUpResult getDealerFaceUpResult() {
         return entrant.getDealerFaceUpResult();
     }
 
-    public List<IndividualFaceUpResult> getPlayerFaceUpResult() {
+    public List<FaceUpResult> getPlayerFaceUpResult() {
         return entrant.getPlayerFaceUpResults();
     }
 
-    public IndividualFaceUpResult getNextPlayerFaceUpInfo() {
+    public FaceUpResult getNextPlayerFaceUpInfo() {
         return entrant.getNextAvailablePlayerName();
     }
 

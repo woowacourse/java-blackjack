@@ -2,7 +2,7 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.dto.IndividualFaceUpResult;
+import model.dto.FaceUpResult;
 
 public abstract class Participant {
 
@@ -20,8 +20,8 @@ public abstract class Participant {
         cardDeck.addCard(card);
     }
 
-    public IndividualFaceUpResult generateFaceUpResult() {
-        return new IndividualFaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    public FaceUpResult generateFaceUpResult() {
+        return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
     public Name getName(){

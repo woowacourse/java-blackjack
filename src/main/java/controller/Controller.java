@@ -8,7 +8,7 @@ import java.util.List;
 import model.Choice;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
-import model.dto.IndividualFaceUpResult;
+import model.dto.FaceUpResult;
 import model.participant.Entrant;
 import model.participant.Names;
 import view.OutputView;
@@ -31,14 +31,14 @@ public class Controller {
     }
 
     private void showInitialFaceUpResults(Casino casino) {
-        IndividualFaceUpResult dealerFaceUpResult = casino.getDealerFaceUpResult();
-        List<IndividualFaceUpResult> playerFaceUpResults = casino.getPlayerFaceUpResult();
+        FaceUpResult dealerFaceUpResult = casino.getDealerFaceUpResult();
+        List<FaceUpResult> playerFaceUpResults = casino.getPlayerFaceUpResult();
         OutputView.printInitialCardSetting(dealerFaceUpResult, playerFaceUpResults);
     }
 
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
-            IndividualFaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
+            FaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
                     input(currentPlayerFaceUpInfo.getPartipantNameAsString() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")));
             casino.distinctPlayerChoice(playerChoice);
@@ -46,7 +46,7 @@ public class Controller {
         }
     }
 
-    private void showPlayerChoiceResult(Choice playerChoice, IndividualFaceUpResult currentPlayerFaceUpInfo) {
+    private void showPlayerChoiceResult(Choice playerChoice, FaceUpResult currentPlayerFaceUpInfo) {
         if (playerChoice.isYes() || (!playerChoice.isYes() && currentPlayerFaceUpInfo.cards()
                 .size() == 2)) {
             OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
@@ -61,8 +61,8 @@ public class Controller {
     }
 
     private void showFinalFaceUpResults(Casino casino) {
-        List<IndividualFaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
-        IndividualFaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
+        List<FaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
+        FaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
         OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
     }
 }
