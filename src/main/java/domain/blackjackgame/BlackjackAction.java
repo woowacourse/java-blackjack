@@ -6,6 +6,7 @@ public enum BlackjackAction {
     HIT("y"),
     STAY("n");
 
+    private static final BlackjackAction[] VALUES = values();
     private final String expression;
 
     BlackjackAction(String expression) {
@@ -13,7 +14,7 @@ public enum BlackjackAction {
     }
 
     public static BlackjackAction from(String expression) {
-        return Arrays.stream(values())
+        return Arrays.stream(VALUES)
                 .filter(action -> action.isMatchExpression(expression))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력 값입니다."));
