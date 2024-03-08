@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public class PlayerCards extends Cards {
+public class PlayerCards extends Cards implements Drawable {
 
     private static final int MAX_SCORE = 21;
 
@@ -10,6 +10,7 @@ public class PlayerCards extends Cards {
         super(player, cards);
     }
 
+    @Override
     public boolean canDraw() {
         return sum() <= MAX_SCORE;
     }
