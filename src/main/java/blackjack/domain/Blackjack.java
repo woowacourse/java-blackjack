@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.domain;
 
-import blackjack.domain.Deck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.common.Names;

@@ -1,4 +1,4 @@
-import blackjack.Blackjack;
+import blackjack.domain.Blackjack;
 import blackjack.Casino;
 
 public class Application {
