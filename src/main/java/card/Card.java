@@ -2,6 +2,7 @@ package card;
 
 public class Card {
 
+    private static final int FIRST_POSITION_INDEX = 0;
     private final CardNumber cardNumber;
     private final CardPattern cardPattern;
 
@@ -10,8 +11,8 @@ public class Card {
         this.cardPattern = cardPattern;
     }
 
-    public int getCardNumber() {
-        return cardNumber.scores.get(0);
+    public int getFirstCardNumber() {
+        return cardNumber.getCardNumber(FIRST_POSITION_INDEX);
     }
 
     public boolean isSameCardNumber(CardNumber checkNumber) {
