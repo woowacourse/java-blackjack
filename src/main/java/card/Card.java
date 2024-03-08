@@ -3,6 +3,7 @@ package card;
 public class Card {
 
     private static final int FIRST_POSITION_INDEX = 0;
+
     private final CardNumber cardNumber;
     private final CardPattern cardPattern;
 
