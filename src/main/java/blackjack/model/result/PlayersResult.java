@@ -1,7 +1,6 @@
 package blackjack.model.result;
 
 import blackjack.model.gamer.Player;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

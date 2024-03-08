@@ -44,7 +44,7 @@ public class GameResult {
         playersResult.addTie(player);
     }
 
-    public Map<Player, Result> getPlayersResult () {
+    public Map<Player, Result> getPlayersResult() {
         return playersResult.getPlayerResult();
     }
 }

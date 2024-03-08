@@ -1,8 +1,8 @@
 package blackjack.model.gamer;
 
+import blackjack.model.GameRule;
 import blackjack.model.card.Card;
 import blackjack.model.deck.HandDeck;
-import blackjack.model.GameRule;
 import java.util.List;
 
 public abstract class Gamer {

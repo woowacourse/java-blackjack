@@ -3,7 +3,7 @@ package blackjack.model.gamer;
 import blackjack.model.GameRule;
 
 public class Player extends Gamer {
-    
+
     private final Name playerName;
 
     public Player(String playerName) {

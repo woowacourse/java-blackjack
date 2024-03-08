@@ -20,14 +20,6 @@ public class GameRule {
         }
     }
 
-    private static boolean isBusted(int cardScore) {
-        return cardScore > BUST_STANDARD;
-    }
-
-    private static boolean isBlackjack(int cardScore) {
-        return cardScore == BUST_STANDARD;
-    }
-
     public static boolean playerHitRule(int cardScore) {
         return cardScore <= PLAYER_HIT_MAX_SCORE;
     }
@@ -49,6 +41,14 @@ public class GameRule {
             return;
         }
         decideTie(player, gameResult);
+    }
+
+    private static boolean isBusted(int cardScore) {
+        return cardScore > BUST_STANDARD;
+    }
+
+    private static boolean isBlackjack(int cardScore) {
+        return cardScore == BUST_STANDARD;
     }
 
     private static boolean playerWinRule(int dealerScore, int playerScore) {
