@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CardDeck {
@@ -21,6 +22,6 @@ public class CardDeck {
     public List<Card> popCards(int count) {
         return IntStream.range(0, count)
                 .mapToObj(i -> popCard())
-                .toList();
+                .collect(Collectors.toList());
     }
 }
