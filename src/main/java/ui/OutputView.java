@@ -6,6 +6,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,41 +16,37 @@ public class OutputView {
         String result = String.join(", ", players.getPlayerNames());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), result);
 
-        printDealerCardHand(dealer);
-        printPlayersCardHand(players);
+        System.out.println(generateOneCardHandMessage(dealer));
+        for (int i = 0; i < players.count(); i++) {
+            Player player = players.findPlayerByIndex(i);
+            System.out.println(generateAllCardHandMessage(player));
+        }
         System.out.println();
     }
 
-    private void printDealerCardHand(Dealer dealer) {
-        String message = generateDealerCardHandMessage(dealer);
-        System.out.println(message);
-    }
-
-    private String generateDealerCardHandMessage(Dealer dealer) {
+    private String generateOneCardHandMessage(Dealer dealer) {
         Card card = dealer.getFirstCardHand();
         String message = card.getDenominationExpression() + card.getEmblem();
-        return String.format("%s카드: %s", dealer.getName(), message);
+        return formatCardHandMessage(dealer, message);
     }
 
-    private void printPlayersCardHand(Players players) {
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.findPlayerByIndex(i);
-            String message = generateCardHandMessage(player);
-            System.out.println(message);
-        }
+    private String generateAllCardHandMessage(Participant participant) {
+        String message = joinAllCardHand(participant.getCardHand());
+        return formatCardHandMessage(participant, message);
     }
 
-    private String generateCardHandMessage(Participant participant) {
-        String name = participant.getName();
-        String cardHandMessage = participant.getCardHand()
-                .stream()
+    private String joinAllCardHand(List<Card> cardHand) {
+        return cardHand.stream()
                 .map(card -> card.getDenominationExpression() + card.getEmblem())
                 .collect(Collectors.joining(", "));
-        return String.format("%s카드: %s", name, cardHandMessage);
+    }
+
+    private String formatCardHandMessage(Participant participant, String message) {
+        return String.format("%s카드: %s", participant.getName(), message);
     }
 
     public void printCardHandAfterHit(Player player) {
-        System.out.println(generateCardHandMessage(player));
+        System.out.println(generateAllCardHandMessage(player));
     }
 
     public void printDealerReceiveCardMessage() {
@@ -59,29 +56,37 @@ public class OutputView {
     }
 
     public void printCardHandWithScore(Dealer dealer, Players players) {
-        String dealerCardHand = generateCardHandMessage(dealer);
-        System.out.printf("%s - 결과: %d%n", dealerCardHand, dealer.calculateScore());
+        String dealerCardHandMessage = generateAllCardHandMessage(dealer);
+        System.out.println(formatScoreMessage(dealerCardHandMessage, dealer.calculateScore()));
 
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            String playerCardHand = generateCardHandMessage(player);
-            System.out.printf("%s - 결과: %d%n", playerCardHand, player.calculateScore());
+            String playerCardHandMessage = generateAllCardHandMessage(player);
+            System.out.println(formatScoreMessage(playerCardHandMessage, player.calculateScore()));
         }
         System.out.println();
+    }
+
+    private String formatScoreMessage(String cardHandMessage, int score) {
+        return String.format("%s - 결과: %d", cardHandMessage, score);
     }
 
     public void printParticipantResult(Map<ResultStatus, Integer> dealerResult,
                                        Map<Player, ResultStatus> playerResult) {
         System.out.println("## 최종 승패");
-        String dealerResultMessage = generateDealerResultMessage(dealerResult);
-        System.out.printf("딜러: %s%n", dealerResultMessage);
-        playerResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getName()));
+        printDealerResult(dealerResult);
+        printPlayerResult(playerResult);
     }
 
-    private String generateDealerResultMessage(Map<ResultStatus, Integer> dealerResult) {
-        return dealerResult.entrySet()
+    private void printDealerResult(Map<ResultStatus, Integer> dealerResult) {
+        String dealerResultMessage = dealerResult.entrySet()
                 .stream()
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getName()))
                 .collect(Collectors.joining(" "));
+        System.out.printf("딜러: %s%n", dealerResultMessage);
+    }
+
+    private void printPlayerResult(Map<Player, ResultStatus> playerResult) {
+        playerResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getName()));
     }
 }
