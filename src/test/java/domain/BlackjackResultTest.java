@@ -19,6 +19,8 @@ class BlackjackResultTest {
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         teba.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));
         Blackjack blackjack = new Blackjack(new Players(List.of(teba, dealer)), dealer);
+        //
+
 
         BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
         Integer tebaLose = blackjackResultDTO.getLose(teba);
@@ -36,7 +38,7 @@ class BlackjackResultTest {
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(11, 12)));
         dealer.addCard(Card.makeRandomCard(new RandomNumberGeneartor(5, 6)));
-        Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
+        Blackjack blackjack = new Blackjack(new Players(List.of(teba,dealer)), dealer);
 
         BlackjackResultDTO blackjackResultDTO = blackjack.finishGame();
         Integer dealerLose = blackjackResultDTO.getLose(dealer);
