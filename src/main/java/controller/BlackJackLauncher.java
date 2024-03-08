@@ -15,7 +15,7 @@ import model.participant.Entrant;
 import model.participant.Names;
 import view.OutputView;
 
-public class Controller {
+public class BlackJackLauncher {
 
     public void execute() {
         Casino casino = initCasino();
