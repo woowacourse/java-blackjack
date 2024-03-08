@@ -273,14 +273,14 @@ class JudgeTest {
     }
 
     private boolean isDealerResultWin(final DealerResult dealerResult) {
-        return new DealerResult(1, 0, 0).equals(dealerResult);
+        return dealerResult.getWins() == 1 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 0;
     }
 
     private boolean isDealerResultLose(final DealerResult dealerResult) {
-        return new DealerResult(0, 1, 0).equals(dealerResult);
+        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 1 && dealerResult.getDraws() == 0;
     }
 
     private boolean isDealerResultDraw(final DealerResult dealerResult) {
-        return new DealerResult(0, 0, 1).equals(dealerResult);
+        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 1;
     }
 }

@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.ResultStatus;
-import java.util.Objects;
 
 public class DealerResult {
 
@@ -9,7 +8,7 @@ public class DealerResult {
     private final int loses;
     private final int draws;
 
-    public DealerResult(final int wins, final int loses, final int draws) {
+    private DealerResult(final int wins, final int loses, final int draws) {
         this.wins = wins;
         this.loses = loses;
         this.draws = draws;
@@ -17,6 +16,18 @@ public class DealerResult {
 
     public static DealerResult of(final ResultStatus resultStatus) {
         return new DealerResult(resultStatus.getWins(), resultStatus.getLoses(), resultStatus.getDraws());
+    }
+
+    public static DealerResult createWinDealerResult(final ResultStatus resultStatus) {
+        return new DealerResult(resultStatus.getWins() + 1, resultStatus.getLoses(), resultStatus.getDraws());
+    }
+
+    public static DealerResult createLoseDealerResult(final ResultStatus resultStatus) {
+        return new DealerResult(resultStatus.getWins(), resultStatus.getLoses() + 1, resultStatus.getDraws());
+    }
+
+    public static DealerResult createDrawDealerResult(final ResultStatus resultStatus) {
+        return new DealerResult(resultStatus.getWins(), resultStatus.getLoses(), resultStatus.getDraws() + 1);
     }
 
     public int getWins() {
@@ -29,22 +40,5 @@ public class DealerResult {
 
     public int getDraws() {
         return draws;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        DealerResult that = (DealerResult) o;
-        return getWins() == that.getWins() && getLoses() == that.getLoses() && getDraws() == that.getDraws();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getWins(), getLoses(), getDraws());
     }
 }
