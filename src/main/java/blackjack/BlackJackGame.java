@@ -75,13 +75,20 @@ public class BlackJackGame {
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
+        printFinalCardsAndScores(dealer, players);
+        printFinalResultCommand(referee);
+    }
+
+    private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
         OutputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
                 dealer.notifyScore());
         List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
         OutputView.printFinalCardsAndScore(dealerNameCardsScore);
         OutputView.printFinalCardsAndScore(playerNameCardsScore);
+    }
 
+    private void printFinalResultCommand(final Referee referee) {
         Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
         OutputView.printDealerFinalResult(dealerResults);
         Map<String, ResultCommand> playerResults = referee.judgePlayerResult();
