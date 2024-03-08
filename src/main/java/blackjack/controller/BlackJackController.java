@@ -28,7 +28,7 @@ public class BlackJackController {
         CardDeck cardDeck = initCardDeck();
         Players players = initPlayers(cardDeck);
         Player dealer = initDealer(cardDeck);
-        printPlayersInformation(players, cardDeck, dealer);
+        printPlayersInformation(players, dealer);
 
         completePlayersHand(players, cardDeck);
         completeDealerHand(dealer, cardDeck);
@@ -61,7 +61,7 @@ public class BlackJackController {
         return playerCreator.createDealerFrom(cardDeck);
     }
 
-    private void printPlayersInformation(Players players, CardDeck cardDeck, Player dealer) {
+    private void printPlayersInformation(Players players, Player dealer) {
         outputView.printHandOutEvent(players, 2);
         outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
