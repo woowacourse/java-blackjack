@@ -20,7 +20,6 @@ public class CardGameJudge {
         return new CardGameResult(result);
     }
 
-    // TODO : 판단의 책임을 dealer가 담당할 수 있지 않을까?
     private WinningStatus judge(final Player dealer, final Player player) {
         int dealerScore = dealer.getScore();
         int playerScore = player.getScore();
@@ -28,8 +27,6 @@ public class CardGameJudge {
         return doesPlayerWin(dealerScore, playerScore);
     }
 
-    // TODO: 이름 바꾸기
-    // TODO: 정리
     private WinningStatus doesPlayerWin(final int dealerScore, final int playerScore) {
         if (playerScore > BUST_THRESHOLD) {
             return WinningStatus.LOSE;
@@ -38,7 +35,7 @@ public class CardGameJudge {
             return WinningStatus.WIN;
         }
         if (dealerScore == playerScore) {
-            return WinningStatus.PUSH;  // TODO: 도메인 지식 없으면 이해하기 힘듦
+            return WinningStatus.PUSH;
         }
         if (dealerScore < playerScore) {
             return WinningStatus.WIN;

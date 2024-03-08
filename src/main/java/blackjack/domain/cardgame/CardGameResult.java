@@ -19,7 +19,6 @@ public class CardGameResult {
         return Collections.unmodifiableMap(totalResult);
     }
 
-    // TODO: 어지러움
     public int getDealerWinCount() {
         return (int) totalResult.values()
                 .stream()

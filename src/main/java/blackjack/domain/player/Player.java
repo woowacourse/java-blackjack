@@ -23,12 +23,12 @@ public class Player {
         return hand.getSum() <= BUST_THRESHOLD;
     }
 
-    public List<Card> getCards() {
-        return hand.getAllCards();
-    }
-
     public int getScore() {
         return hand.getSum();
+    }
+
+    public List<Card> getCards() {
+        return hand.getAllCards();
     }
 
     public String getName() {

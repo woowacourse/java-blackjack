@@ -22,7 +22,6 @@ public class CardGame {
         giveTwoCardsEachPlayer(players);
     }
 
-    // TODO: 이름 수정
     private void giveTwoCardsEachPlayer(final List<Player> players) {
         for (final Player player : players) {
             giveCard(player);

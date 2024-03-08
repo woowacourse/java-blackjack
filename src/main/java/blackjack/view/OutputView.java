@@ -38,8 +38,6 @@ public class OutputView {
         System.out.println(playerCardInfo);
     }
 
-    // TODO: Dealer 타입이 아닌 Name을 받도록 수정
-    // TODO: 16이라는 조건을 어디서 관리해야 하는가
     public static void printDealerHitMessage(final Dealer dealer) {
         final String dealerHitMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println(dealerHitMessage);
