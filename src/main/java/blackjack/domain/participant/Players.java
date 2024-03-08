@@ -6,10 +6,12 @@ import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Players {
     private final List<Participant> players;
@@ -34,9 +36,10 @@ public class Players {
     }
 
     public void divideCard(final List<Card> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            final Participant participant = players.get(i / 2);
-            participant.addCard(cards.get(i));
+        final Iterator<Card> cardIterator = cards.iterator();
+
+        for (final Participant player : players) {
+            player.addStartCard(cardIterator.next(), cardIterator.next());
         }
     }
 
@@ -53,10 +56,6 @@ public class Players {
         }
 
         return playersWinStatus;
-    }
-
-    public int count() {
-        return players.size();
     }
 
     public boolean isNotDead(final String name) {
@@ -96,5 +95,9 @@ public class Players {
         return players.stream()
                 .map(Participant::getName)
                 .toList();
+    }
+
+    public int count() {
+        return players.size();
     }
 }

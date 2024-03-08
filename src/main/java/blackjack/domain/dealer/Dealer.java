@@ -23,11 +23,6 @@ public class Dealer {
         return NEED_CARD_CRITERION.isBiggerThan(participant.calculate());
     }
 
-    public void addStartCard() {
-        final List<Card> cards = drawCards(2);
-        cards.forEach(participant::addCard);
-    }
-
     public void shuffleDeck() {
         deck.shuffle();
     }
@@ -40,12 +35,16 @@ public class Dealer {
         return deck.pick(count);
     }
 
+    public Score calculate() {
+        return participant.calculate();
+    }
+
     public void addCard() {
         participant.addCard(drawCard());
     }
 
-    public Score calculate() {
-        return participant.calculate();
+    public void addStartCard() {
+        participant.addStartCard(drawCard(), drawCard());
     }
 
     public Hands getOpenedHands() {

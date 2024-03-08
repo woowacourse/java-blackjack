@@ -34,6 +34,10 @@ public class Participant {
         hands.add(card);
     }
 
+    public void addStartCard(final Card firstCard, final Card secondCard) {
+        hands.addStartCard(firstCard, secondCard);
+    }
+
     public boolean isName(final String name) {
         return this.name.is(name);
     }

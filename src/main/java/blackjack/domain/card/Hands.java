@@ -26,6 +26,11 @@ public class Hands {
         cards.add(card);
     }
 
+    public void addStartCard(final Card firstCard, final Card secondCard) {
+        cards.add(firstCard);
+        cards.add(secondCard);
+    }
+
     public int sum() {
         return cards.stream()
                 .mapToInt(Card::getRealNumber)

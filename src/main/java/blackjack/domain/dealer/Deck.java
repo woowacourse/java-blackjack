@@ -37,9 +37,7 @@ public class Deck {
     }
 
     public Card pick() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("카드가 부족합니다.");
-        }
+        validateEmpty();
 
         Card card = cards.get(0);
         cards.remove(card);
@@ -51,5 +49,11 @@ public class Deck {
         return Stream.generate(this::pick)
                 .limit(count)
                 .toList();
+    }
+
+    private void validateEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 부족합니다.");
+        }
     }
 }
