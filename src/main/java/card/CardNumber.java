@@ -27,4 +27,19 @@ public enum CardNumber {
         this.scores = scores;
         this.numberId = numberId;
     }
+
+    public int getCardNumber(int numberPosition) {
+        validateIsOverScoreRange(numberPosition);
+        return scores.get(numberPosition);
+    }
+
+    private void validateIsOverScoreRange(int numberPosition) {
+        if (scores.size() <= numberPosition) {
+            throw new IllegalArgumentException("가능한 범위의 점수 값이 아닙니다.");
+        }
+    }
+
+    public int getAdditionalScore() {
+        return getCardNumber(1) - getCardNumber(0);
+    }
 }
