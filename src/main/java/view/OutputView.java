@@ -62,10 +62,8 @@ public class OutputView {
 
     public static void printFinalHandStatus(final DealerHandStatusDto dealerHandStatusDto, final List<PlayerHandStatusDto> playerHandStatusDtos) {
         System.out.println("딜러 카드: " + convertPlayingCardsToString(dealerHandStatusDto.playingCards()) + " - 결과: " + dealerHandStatusDto.playingCardSum());
-        playerHandStatusDtos.forEach(
-                playerHandStatusDto -> System.out.println(
-                        convertPlayerCardsToString(
-                                playerHandStatusDto.playerName(), playerHandStatusDto.playingCards()) + " - 결과: " + playerHandStatusDto.playingCardSum()));
+        playerHandStatusDtos.forEach(playerHandStatusDto -> System.out.println(
+                convertPlayerCardsToString(playerHandStatusDto.playerName(), playerHandStatusDto.playingCards()) + " - 결과: " + playerHandStatusDto.playingCardSum()));
         System.out.println();
     }
 
