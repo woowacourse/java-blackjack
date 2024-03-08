@@ -26,6 +26,6 @@ public enum ShapeDescription {
                 .filter(shapeDescription -> shapeDescription.shape == shape)
                 .findFirst()
                 .map(ShapeDescription::getDescription)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 값을 찾을 수 없습니다."));
     }
 }

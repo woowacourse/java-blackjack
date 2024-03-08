@@ -25,6 +25,6 @@ public enum GameResultDescription {
                 .filter(resultDescription -> resultDescription.gameResult == result)
                 .findFirst()
                 .map(GameResultDescription::getDescription)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 값을 찾을 수 없습니다."));
     }
 }

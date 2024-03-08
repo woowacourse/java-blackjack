@@ -35,6 +35,6 @@ public enum ValueDescription {
                 .filter(valueDescription -> valueDescription.value == value)
                 .findFirst()
                 .map(ValueDescription::getDescription)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 값을 찾을 수 없습니다."));
     }
 }
