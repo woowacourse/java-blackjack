@@ -28,6 +28,10 @@ public class Hand {
                 .count();
     }
 
+    public int countCard() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

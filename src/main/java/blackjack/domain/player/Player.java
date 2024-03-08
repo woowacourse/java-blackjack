@@ -24,6 +24,10 @@ public class Player {
         return scoreCalculateStrategy.calculate(hand);
     }
 
+    public int handSize() {
+        return hand.countCard();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
