@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.dto.BlackjackResult;
+import blackjack.dto.DealerResult;
 import blackjack.util.Constants;
 import java.util.List;
 
@@ -59,19 +60,19 @@ public class OutputView {
     public void printFinalResult(final List<String> names, final BlackjackResult blackjackResult) {
         System.out.println(FINAL_RESULT_TITLE);
 
-        printDealerFinalResult(blackjackResult);
+        printDealerFinalResult(blackjackResult.getDealerResult());
         for (String name : names) {
             System.out.printf(CARD_STATUS + System.lineSeparator(), name,
                     ResultView.toResultView(blackjackResult.findPlayerResultByName(name)));
         }
     }
 
-    private void printDealerFinalResult(final BlackjackResult blackjackResult) {
+    private void printDealerFinalResult(final DealerResult dealerResult) {
         System.out.printf(
                 DEALER_FINAL_RESULT,
-                blackjackResult.countWins(),
-                blackjackResult.countLoses(),
-                blackjackResult.countDraws()
+                dealerResult.getWins(),
+                dealerResult.getLoses(),
+                dealerResult.getDraws()
         );
     }
 

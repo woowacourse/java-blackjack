@@ -52,8 +52,8 @@ public class PlayersTest {
         //then
         assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
         assertThat(blackjackResult.findPlayerResultByName(nameB)).isEqualTo(GameResult.LOSE);
-        assertThat(blackjackResult.countWins()).isEqualTo(2);
-        assertThat(blackjackResult.countLoses()).isEqualTo(0);
+        assertThat(blackjackResult.getDealerResult().getWins()).isEqualTo(2);
+        assertThat(blackjackResult.getDealerResult().getLoses()).isEqualTo(0);
     }
 
     @DisplayName("버스트된 플레이어는 패배한다.")

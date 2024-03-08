@@ -16,15 +16,7 @@ public class BlackjackResult {
         return playerResult.findByName(name);
     }
 
-    public int countWins() {
-        return dealerResult.getWins();
-    }
-
-    public int countLoses() {
-        return dealerResult.getLoses();
-    }
-
-    public int countDraws() {
-        return dealerResult.getDraws();
+    public DealerResult getDealerResult() {
+        return dealerResult;
     }
 }
