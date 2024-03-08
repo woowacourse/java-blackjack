@@ -7,8 +7,6 @@ import strategy.CardGenerator;
 
 public class DeckCards {
 
-    private static final int STARTING_CARDS_AMOUNT = 2;
-
     private final List<Card> cards;
 
     private DeckCards(List<Card> cards) {
@@ -27,8 +25,8 @@ public class DeckCards {
         return cards.remove(cards.size() - 1);
     }
 
-    public List<Card> drawStartingCards() {
-        return IntStream.range(0, STARTING_CARDS_AMOUNT)
+    public List<Card> drawStartingCards(int amount) {
+        return IntStream.range(0, amount)
             .mapToObj(i -> draw())
             .toList();
     }

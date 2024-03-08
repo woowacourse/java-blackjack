@@ -11,6 +11,8 @@ import strategy.CardGenerator;
 
 public class BlackjackGame {
 
+    public static final int STARTING_CARDS_AMOUNT = 2;
+
     private final Participants participants;
     private final DeckCards deckCards;
 
@@ -21,7 +23,7 @@ public class BlackjackGame {
 
     public void distributeStartingCards() {
         for (Participant participant : participants.getParticipants()) {
-            List<Card> cards = deckCards.drawStartingCards();
+            List<Card> cards = deckCards.drawStartingCards(STARTING_CARDS_AMOUNT);
             participant.receive(cards);
         }
     }

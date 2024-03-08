@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final int STARTING_CARDS_AMOUNT = 2;
     private static final int DEALER_THRESHOLD_SCORE = 16;
     private static final String DELIMITER = ", ";
 
@@ -19,7 +18,8 @@ public class OutputView {
         String playerNames = game.getPlayers().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, STARTING_CARDS_AMOUNT);
+        System.out.printf(
+            "%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, BlackjackGame.STARTING_CARDS_AMOUNT);
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
