@@ -9,7 +9,7 @@ import static domain.constant.GameOption.BLACKJACK_CONDITION;
 import static java.util.Collections.unmodifiableList;
 
 public class Hand {
-    private List<PlayingCard> playingCards;
+    private final List<PlayingCard> playingCards;
 
     Hand(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
@@ -24,7 +24,6 @@ public class Hand {
         for (PlayingCard playingCard : playingCards) {
             result = playingCard.addValue(result);
         }
-
         return result;
     }
 
