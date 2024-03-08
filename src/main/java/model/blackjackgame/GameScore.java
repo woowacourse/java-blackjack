@@ -9,9 +9,11 @@ import model.player.Player;
 
 public class GameScore {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int ACE_SCORE_HIGH = 11;
     private static final int ACE_SCORE_LOW = 1;
     private static final int MINIMUM_SCORE_FOR_ACE_HIGH = 12;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final String name;
     private final int score;
@@ -30,7 +32,7 @@ public class GameScore {
     public static GameScore from(Dealer dealer) {
         Cards cards = dealer.getCards();
         int totalScore = calculateTotalScore(cards);
-        return new GameScore("딜러", totalScore);
+        return new GameScore(DEALER_NAME, totalScore);
     }
 
     private static int calculateTotalScore(Cards cards) {
@@ -45,6 +47,14 @@ public class GameScore {
             countA--;
         }
         return totalScore;
+    }
+
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
+    public boolean isBurst() {
+        return score > BLACKJACK_SCORE;
     }
 
     public String getName() {

@@ -69,5 +69,6 @@ public class BlackjackController {
         Players players = blackjackGame.getPlayers();
         GameResult gameResult = GameResult.of(dealer, players);
         OutputView.printFinalScore(dealer, players, gameResult);
+        OutputView.printGameResult(gameResult);
     }
 }
