@@ -4,8 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
     @Test
@@ -30,14 +31,30 @@ class PlayersTest {
 
     @Test
     void 플레이어들을_생성한다() {
-        String roro = "뽀로로";
-        String prin = "프린";
-        String pobi = "포비";
-        List<String> playerNames = List.of(roro, prin, pobi);
-
+        List<String> playerNames = List.of("뽀로로", "프린", "포비");
         Players players = new Players(playerNames);
 
-        assertThat(players).extracting("players", InstanceOfAssertFactories.list(Player.class))
-                .hasSize(3);
+        List<String> result = players.getPlayerNames();
+
+        assertThat(result).containsExactlyElementsOf(playerNames);
+    }
+
+    @Test
+    void 인덱스로_플레이어를_찾는다() {
+        Players players = new Players(List.of("뽀로로", "프린", "포비"));
+
+        Player player = players.getPlayerByIndex(2);
+
+        assertThat(player.getName()).isEqualTo("포비");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 3})
+    void 인덱스가_범위를_벗어날_경우_예외가_발생한다(int invalidIndex) {
+        Players players = new Players(List.of("뽀로로", "프린", "포비"));
+
+        assertThatThrownBy(() -> players.getPlayerByIndex(invalidIndex))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("인덱스가 범위를 벗어났습니다.");
     }
 }

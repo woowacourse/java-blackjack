@@ -66,8 +66,15 @@ public class Players {
         return this.players.size();
     }
 
-    public Player getPlayerByIndex(int index) { // todo index validation
+    public Player getPlayerByIndex(int index) {
+        if (isOutOfRange(index)) {
+            throw new IllegalArgumentException("인덱스가 범위를 벗어났습니다.");
+        }
         return this.players.get(index);
+    }
+
+    private boolean isOutOfRange(int index) {
+        return index < 0 || players.size() <= index;
     }
 
     public List<String> getPlayerNames() {
