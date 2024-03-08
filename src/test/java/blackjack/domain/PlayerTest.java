@@ -8,6 +8,7 @@ import static blackjack.domain.card.Value.QUEEN;
 import static blackjack.domain.card.Value.THREE;
 import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -17,15 +18,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "      ", "\n"})
+    @DisplayName("공백 이름으로는 플레이어를 생성하면 예외가 발생한다.")
+    void throwsExceptionWhenNameIsBlankTest(String blankName) {
+        assertThatThrownBy(() -> Player.fromName(blankName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름이 비어있습니다.");
+    }
+
     @Test
     @DisplayName("덱으로 부터 카드 한장을 받아올 수 있다.")
     void drawCardTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = new Player("pedro");
+        Player player = Player.fromName("pedro");
         player.draw(deck);
 
         List<Card> playerCards = player.getCards();
@@ -38,7 +49,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = new Player("pedro");
+        Player player = Player.fromName("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
@@ -55,7 +66,7 @@ class PlayerTest {
     void checkBustTest(List<Card> cards, boolean expected) {
         Deck deck = new Deck(cards);
 
-        Player player = new Player("pedro");
+        Player player = Player.fromName("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
