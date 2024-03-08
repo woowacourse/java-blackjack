@@ -57,8 +57,8 @@ public class BlackJackController {
     }
 
     private void printInitialCards(Dealer dealer, Players players) {
-        Card dealerCard = dealer.getFirstCard();
-        outputView.printDealerInitialCard(dealerCard);
+        List<Card> dealerCards = dealer.getCards();
+        outputView.printDealerInitialCard(dealerCards.get(0));
 
         List<PlayerDto> playerDtos = players.getPlayers().stream()
                 .map(PlayerDto::from)
