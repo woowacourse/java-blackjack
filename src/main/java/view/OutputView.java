@@ -77,7 +77,7 @@ public class OutputView {
 
         System.out.println("딜러:" + buildDealerResult(dealerGameResult));
         playersGameResult.forEach(
-                (name, result) -> System.out.println("%s:%s".formatted(name, result.getResult())));
+                (name, result) -> System.out.println("%s: %s".formatted(name, result.getResult())));
 
     }
 
