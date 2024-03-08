@@ -36,6 +36,14 @@ public class BlackJackController {
         return new PlayerNames(inputNames);
     }
 
+    private void printInitialDealAndHand(BlackJackGame blackJackGame) {
+        List<Player> initialParticipants = blackJackGame.getEveryParticipants();
+        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
+
+        outputView.printInitialDeal(playerInitDtos);
+        outputView.printInitialHand(playerInitDtos);
+    }
+
     private void repeatHitUntilStand(BlackJackGame blackJackGame) throws IOException {
         for (Player player : blackJackGame.getPlayers()) {
             repeatHitUntilPlayerStand(blackJackGame, player);
@@ -55,14 +63,6 @@ public class BlackJackController {
         while (blackJackGame.hitDealer()) {
             outputView.printDealerHitMessage();
         }
-    }
-
-    private void printInitialDealAndHand(BlackJackGame blackJackGame) {
-        List<Player> initialParticipants = blackJackGame.getEveryParticipants();
-        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
-
-        outputView.printInitialDeal(playerInitDtos);
-        outputView.printInitialHand(playerInitDtos);
     }
 
     private void printGameResult(BlackJackGame blackJackGame) {
