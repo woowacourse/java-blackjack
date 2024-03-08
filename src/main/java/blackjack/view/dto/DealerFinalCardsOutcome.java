@@ -6,6 +6,6 @@ import java.util.List;
 
 public record DealerFinalCardsOutcome(List<Card> cards, int totalScore) {
     public static DealerFinalCardsOutcome of(final Dealer dealer) {
-        return new DealerFinalCardsOutcome(dealer.getHand().getCards(), dealer.calculateCardsTotal());
+        return new DealerFinalCardsOutcome(dealer.getCards().getCards(), dealer.calculateCardsTotal());
     }
 }

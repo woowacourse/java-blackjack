@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Hand;
+import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
 
 public class Player {
@@ -8,12 +8,12 @@ public class Player {
     private static final int HIT_CONDITION = 21;
 
     private final String name;
-    private final Hand hand;
+    private final Cards cards;
 
     public Player(final String name, final CardGenerator cardGenerator) {
         validateName(name);
         this.name = name;
-        this.hand = new Hand(cardGenerator);
+        this.cards = new Cards(cardGenerator);
     }
 
     private void validateName(final String name) {
@@ -23,24 +23,24 @@ public class Player {
     }
 
     public boolean canHit() {
-        int cardsTotal = hand.calculateCardsTotal();
+        int cardsTotal = cards.calculateCardsTotal();
         return cardsTotal <= HIT_CONDITION;
     }
 
     public void hit(final CardGenerator cardGenerator) {
-        hand.addCard(cardGenerator);
+        cards.addCard(cardGenerator);
     }
 
     public int calculateCardsTotal() {
-        return hand.calculateCardsTotal();
+        return cards.calculateCardsTotal();
     }
 
     public boolean isBurst() {
-        return hand.isBurst();
+        return cards.isBurst();
     }
 
-    public Hand getHand() {
-        return hand;
+    public Cards getCards() {
+        return cards;
     }
 
     public String getName() {

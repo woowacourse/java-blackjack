@@ -15,8 +15,8 @@ public enum Denomination {
     KING(10, "K"),
     JACK(10, "J");
 
-    private int score;
-    private String name;
+    private final int score;
+    private final String name;
 
     Denomination(final int score, final String name) {
         this.score = score;

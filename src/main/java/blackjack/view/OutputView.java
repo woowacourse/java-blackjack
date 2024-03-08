@@ -34,7 +34,7 @@ public class OutputView {
     }
 
     private String formatPlayerCards(final Player player) {
-        List<Card> cards = player.getHand().getCards();
+        List<Card> cards = player.getCards().getCards();
         String joinedCards = formatCards(cards);
         return String.format(PLAYER_CARDS_FORM, player.getName(), joinedCards);
     }

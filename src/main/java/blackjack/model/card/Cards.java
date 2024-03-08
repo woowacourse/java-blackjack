@@ -4,18 +4,18 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public class Cards {
     private static final int BLACK_JACK_CONDITION = 21;
     private static final int BURST_CONDITION = 21;
     private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
 
-    Hand(final List<Card> cards) {
+    Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public Hand(final CardGenerator cardGenerator) {
+    public Cards(final CardGenerator cardGenerator) {
         this.cards = new ArrayList<>(deal(cardGenerator));
     }
 
