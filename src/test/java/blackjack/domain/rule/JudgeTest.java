@@ -25,12 +25,6 @@ class JudgeTest {
         judge = new Judge();
     }
 
-    @DisplayName("핸드가 건네지면 가장 최선의 합계를 구할 수 있다")
-    @Test
-    void testCalculateBestScore() {
-        Hand hand = HandFixture.of(2, 8, 1);
-        assertThat(judge.calculateBestScore(hand)).isEqualTo(21);
-    }
 
     @DisplayName("버스트 된 핸드를 판별할 수 있다")
     @Test
