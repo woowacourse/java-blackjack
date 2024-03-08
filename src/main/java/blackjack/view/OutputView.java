@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Players;
+import blackjack.domain.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +11,7 @@ public class OutputView {
     private static final String ASK_DRAW_MESSAGE = "는/은 한장의 카드를 더 받겠습니까?(예는 "
             + ACCEPT_DRAW_MESSAGE + ", 아니오는 " + REJECT_DRAW_MESSAGE + ")";
 
-    private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d" + System.lineSeparator();
+    private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d";
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private OutputView() {
@@ -49,8 +46,15 @@ public class OutputView {
         System.out.println(resolveParticipantHandsMessage(participant));
     }
 
-    public static void printFinalHandsAndScore(Participant participant) {
-        System.out.printf((FINAL_HANDS_AND_SCORE_FORMAT)
+    public static void printFinalHandsAndScoreMessage(Dealer dealer, Players players) {
+        System.out.println(resolveFinalHandsAndScoreMessage(dealer));
+        for (Player player : players.getPlayers()) {
+            System.out.println(resolveFinalHandsAndScoreMessage(player));
+        }
+    }
+
+    public static String resolveFinalHandsAndScoreMessage(Participant participant) {
+        return String.format(FINAL_HANDS_AND_SCORE_FORMAT
                 , resolveParticipantHandsMessage(participant)
                 , participant.getHandsScore());
     }
