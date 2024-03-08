@@ -50,7 +50,7 @@ public class BlackJackController {
         }
     }
 
-    private static boolean isHitOption(Participant participant) {
+    private boolean isHitOption(Participant participant) {
         return participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()));
     }
 
