@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.util.Constants;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public abstract class Gamer {
         return hand.calculateScore();
     }
 
-    public List<TrumpCard> getHandCards() {
+    public List<Card> getHandCards() {
         return hand.getCards();
     }
 }
