@@ -18,6 +18,10 @@ public class Participants {
         return new Participants(initialParticipants);
     }
 
+    public boolean doesNotContain(Participant participant) {
+        return !participants.contains(participant);
+    }
+
     public List<Player> getPlayers() {
         return participants.stream()
             .filter(participant -> participant instanceof Player)
