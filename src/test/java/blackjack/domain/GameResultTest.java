@@ -11,7 +11,7 @@ class GameResultTest {
 
     @DisplayName("플레이어 승 : 플레이어 카드패 > 딜러 카드패")
     @Test
-    void should_returnWin_When_PlayerHands_Higher_Than_DealerHands(){
+    void should_returnWin_When_PlayerHands_Higher_Than_DealerHands() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
@@ -25,9 +25,9 @@ class GameResultTest {
         assertThat(gameResult.getTargetResultCount(Result.WIN)).isOne();
     }
 
-    @DisplayName("플레이어 승 : 플레이어 - NonBurst, 딜러 - Burst" )
+    @DisplayName("플레이어 승 : 플레이어 - NonBurst, 딜러 - Burst")
     @Test
-    void should_returnWin_When_PlayerNonBurst_DealerBurst(){
+    void should_returnWin_When_PlayerNonBurst_DealerBurst() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
@@ -46,7 +46,7 @@ class GameResultTest {
 
     @DisplayName("플레이어 패 : 플레이어 카드패 < 딜러 카드패")
     @Test
-    void should_returnLose_When_PlayerHands_Lower_Than_DealerHands(){
+    void should_returnLose_When_PlayerHands_Lower_Than_DealerHands() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
@@ -61,9 +61,10 @@ class GameResultTest {
 
         assertThat(gameResult.getTargetResultCount(Result.LOSE)).isOne();
     }
-    @DisplayName("플레이어 패 : 플레이어 - Burst, 딜러 - NonBurst" )
+
+    @DisplayName("플레이어 패 : 플레이어 - Burst, 딜러 - NonBurst")
     @Test
-    void should_returnLose_When_PlayerBurst_DealerNonBurst(){
+    void should_returnLose_When_PlayerBurst_DealerNonBurst() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
@@ -82,7 +83,7 @@ class GameResultTest {
 
     @DisplayName("무승부 : 플레이어 카드패 == 딜러 카드패")
     @Test
-    void should_returnDraw_When_PlayerHands_Equal_DealerHands(){
+    void should_returnDraw_When_PlayerHands_Equal_DealerHands() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
@@ -98,7 +99,7 @@ class GameResultTest {
 
     @DisplayName("무승부 : 플레이어- Burst, 딜러- Burst")
     @Test
-    void should_returnDraw_When_Both_Burst(){
+    void should_returnDraw_When_Both_Burst() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
