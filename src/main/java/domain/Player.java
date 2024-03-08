@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Player {
+    private static final int ACE_LOW = 1;
+    private static final int ACE_HIGH = 11;
+    private static final int BUST_CONDITION = 21;
+    protected static final String DEALER_NAME = "딜러";
+
     private final Name name;
     private final List<Card> cards = new ArrayList<>();
 
@@ -34,14 +39,14 @@ public abstract class Player {
     }
 
     private int determineAceScore(final int score) {
-        if (score + 11 <= 21) {
-            return 11;
+        if (score + ACE_HIGH <= BUST_CONDITION) {
+            return ACE_HIGH;
         }
-        return 1;
+        return ACE_LOW;
     }
 
     public boolean isDealer() {
-        return this.name.equals(new Name("딜러"));
+        return this.name.equals(new Name(DEALER_NAME));
     }
 
     public String getName() {

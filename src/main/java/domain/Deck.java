@@ -28,7 +28,7 @@ public class Deck {
 
     private Card pollLastCard() {
         final Card card = cards.get(cards.size() - 1);
-        cards.remove(cards.size()-1);
+        cards.remove(cards.size() - 1);
         return card;
     }
 }
