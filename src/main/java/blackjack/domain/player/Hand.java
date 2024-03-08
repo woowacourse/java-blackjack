@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
 
 import java.util.List;
@@ -33,6 +34,10 @@ public class Hand {
 
     public int countCard() {
         return cards.size();
+    }
+
+    public Score calculateScore() {
+        return scoreCalculateStrategy.calculate(this);
     }
 
     public List<Card> getCards() {
