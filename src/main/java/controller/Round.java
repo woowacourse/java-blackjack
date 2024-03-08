@@ -20,11 +20,11 @@ public class Round {
     private final Participant participant;
     private final Deck deck;
 
-    public Round(final Dealer dealer, final List<String> playerNames) {
+    public Round(final List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
-        this.participant = new Participant(dealer, players);
+        this.participant = new Participant(new Dealer("딜러"), players);
         deck = new Deck();
     }
 

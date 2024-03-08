@@ -21,8 +21,7 @@ class RoundTest {
     @Test
     void startBlackJack() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
-        Dealer dealer = new Dealer("딜러");
-        Round round = new Round(dealer, playerNames);
+        Round round = new Round(playerNames);
 
         List<HandStatus> statuses = round.initiateGameCondition();
 

@@ -41,9 +41,7 @@ public class Game {
 
     private Round start() {
         List<String> names = inputView.enterPlayerNames();
-        Dealer dealer = new Dealer("딜러");
-
-        Round round = new Round(dealer, names);
+        Round round = new Round(names);
         outputView.printAfterStartGame(round.initiateGameCondition());
         return round;
     }
