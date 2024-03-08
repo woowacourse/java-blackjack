@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hands {
+    private static final int DOWNGRADE_SCORE = 10;
+
     private final List<Card> hands;
     private final HandsScore handsScore;
 
@@ -18,11 +20,10 @@ public class Hands {
     }
 
     public boolean downgradeAce() {
-        // TODO depth 줄이기
         for (Card card : hands) {
             if (card.getValue() == Value.ACEHIGH) {
                 card.downgradeAce();
-                handsScore.addScore(-10);
+                handsScore.addScore(-DOWNGRADE_SCORE);
                 return true;
             }
         }
