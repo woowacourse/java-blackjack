@@ -56,10 +56,13 @@ public class BlackJackGame {
                 .isBust();
     }
 
-    public void drawDealerCard() {
+    public int drawDealerCard() {
+        int dealerDrawCount = 0;
         while (dealer.getTotalScore() <= 16) {
             dealer.takeCard(deck.draw());
+            dealerDrawCount++;
         }
+        return dealerDrawCount;
     }
 
     public BlackJackResult getGameResult() {

@@ -25,7 +25,7 @@ public class OutputView {
                         dealerDto.getCards().get(0).toString()));
         gamerDtos.stream()
                 .map(gamerDto -> buildNameCards(gamerDto.getName(), gamerDto.getCards()))
-                .forEach(System.out::println);
+                .collect(Collectors.joining("\n"));
     }
 
     private static String buildNameCards(String name, List<Card> cards) {
@@ -35,6 +35,11 @@ public class OutputView {
 
     public static void printGamerStatus(GamerDto gamer) {
         System.out.println(buildNameCards(gamer.getName(), gamer.getCards()));
+    }
+
+    public static void printDealerTurn(int dealerDrawCount) {
+        System.out.println();
+        System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n".repeat(dealerDrawCount));
     }
 
     public static void printTotalStatus(GameStatusDto gameStatusDto) {
