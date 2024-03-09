@@ -63,9 +63,9 @@ class HandTest {
     }
 
     private static Stream<Arguments> provideCardsWithScoreGreaterThan() {
-        return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), 17, false),
-                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.ACE)), 4, true)
+        return Stream.of(Arguments.of(createCards(List.of(Number.TWO, Number.THREE)), 5, false),
+                Arguments.of(createCards(List.of(Number.QUEEN, Number.JACK)), 20, false),
+                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.ACE)), 11, true)
         );
     }
 
