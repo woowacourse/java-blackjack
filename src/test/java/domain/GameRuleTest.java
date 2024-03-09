@@ -170,7 +170,7 @@ class GameRuleTest {
 
     private GameRule createGameRule(final Player player, final Dealer dealer) {
         List<Player> players = List.of(player);
-        Participant participant = new Participant(dealer, players);
+        Participants participant = new Participants(dealer, players);
 
         return new GameRule(participant);
     }

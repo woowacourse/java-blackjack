@@ -9,7 +9,7 @@ import controller.dto.PlayerResult;
 import domain.Dealer;
 import domain.Deck;
 import domain.GameRule;
-import domain.Participant;
+import domain.Participants;
 import domain.Player;
 import domain.constants.CardCommand;
 import domain.constants.Outcome;
@@ -21,10 +21,10 @@ import view.OutputView;
 public class Round {
     private static final int THRESHOLD = 16;
 
-    private final Participant participant;
+    private final Participants participant;
     private final Deck deck;
 
-    public Round(final Participant participant, final Deck deck) {
+    public Round(final Participants participant, final Deck deck) {
         this.participant = participant;
         this.deck = deck;
     }
@@ -34,7 +34,7 @@ public class Round {
                 .map(Player::new)
                 .toList();
         return new Round(
-                new Participant(new Dealer(), players),
+                new Participants(new Dealer(), players),
                 new Deck()
         );
     }

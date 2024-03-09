@@ -36,12 +36,12 @@ class RoundTest {
         dealer.drawCards(createNormalWithTwoCards());
 
         List<Player> players = List.of(new Player("pobi"));
-        Participant participant = new Participant(dealer, players);
+        Participants participants = new Participants(dealer, players);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Score.THREE, Shape.DIAMOND));
 
-        Round round = new Round(participant, new Deck(cards));
+        Round round = new Round(participants, new Deck(cards));
 
         // when
         round.giveCardsToDealer(new OutputView());
