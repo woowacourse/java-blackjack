@@ -18,20 +18,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
-    private static Player createPlayer(List<Number> numbers, List<Shape> shapes, String name) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Player(new Name(name), handGenerator);
-    }
-
-    private static Stream<Arguments> provideNumbersWithCanHit() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.JACK), true),
-                Arguments.of(List.of(Number.EIGHT, Number.NINE), true),
-                Arguments.of(List.of(Number.EIGHT, Number.NINE, Number.QUEEN), false)
-        );
-    }
-
     @DisplayName("플레이어는 처음에 두 장의 카드를 오픈한다.")
     @Test
     void initialOpenedCardsTest() {
@@ -56,5 +42,19 @@ class PlayerTest {
         Player player = new Player(new Name("gamza"), handGenerator);
         CardDrawer.addAllCards(deck, player);
         assertThat(player.canHit()).isEqualTo(canHit);
+    }
+
+    private static Player createPlayer(List<Number> numbers, List<Shape> shapes, String name) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new Player(new Name(name), handGenerator);
+    }
+
+    private static Stream<Arguments> provideNumbersWithCanHit() {
+        return Stream.of(
+                Arguments.of(List.of(Number.ACE, Number.JACK), true),
+                Arguments.of(List.of(Number.EIGHT, Number.NINE), true),
+                Arguments.of(List.of(Number.EIGHT, Number.NINE, Number.QUEEN), false)
+        );
     }
 }

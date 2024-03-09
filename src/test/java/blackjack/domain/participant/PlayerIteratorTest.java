@@ -45,11 +45,6 @@ class PlayerIteratorTest {
         assertFalse(playerIterator.hasNext());
     }
 
-    private static void bustFirstPlayer(Players players) {
-        Player firstPlayer = getPlayerByIndex(players, 0);
-        firstPlayer.addCard(new CustomDeck(List.of(Number.EIGHT)));
-    }
-
     private static Players createPlayers(List<Number> numbers) {
         List<Name> playerNames = IntStream.range(0, numbers.size() / 2)
                 .mapToObj((number) -> new Name(VALID_NAME))
@@ -61,5 +56,10 @@ class PlayerIteratorTest {
 
     private static Player getPlayerByIndex(Players players, int index) {
         return players.getValues().get(index);
+    }
+
+    private static void bustFirstPlayer(Players players) {
+        Player firstPlayer = getPlayerByIndex(players, 0);
+        firstPlayer.addCard(new CustomDeck(List.of(Number.EIGHT)));
     }
 }

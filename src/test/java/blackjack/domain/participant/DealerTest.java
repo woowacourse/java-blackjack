@@ -17,20 +17,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
-    private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Dealer(handGenerator);
-    }
-
-    private static Stream<Arguments> provideNumbersWithCanHit() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.JACK), false),
-                Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
-                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
-        );
-    }
-
     @DisplayName("딜러는 처음에 한 장의 카드를 오픈한다.")
     @Test
     void initialOpenedCardsTest() {
@@ -55,5 +41,19 @@ class DealerTest {
         Dealer dealer = new Dealer(handGenerator);
 
         assertThat(dealer.canHit()).isEqualTo(canHit);
+    }
+
+    private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new Dealer(handGenerator);
+    }
+
+    private static Stream<Arguments> provideNumbersWithCanHit() {
+        return Stream.of(
+                Arguments.of(List.of(Number.ACE, Number.JACK), false),
+                Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
+                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
+        );
     }
 }
