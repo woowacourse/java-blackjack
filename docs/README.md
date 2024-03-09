@@ -1,11 +1,14 @@
 ## 도메인 용어 정리
 
 - 게임(Game)
+- 게임 결과(GameResult)
 - 참여자들(Participants)
 - 참여자(Participant)
 - 딜러(Dealer)
 - 사용자(Player)
 - 카드(Card)
+- 카드 등급(CardRank)
+- 카드 모양(CardShape)
 - 덱(Deck)
 - 패(Hand)
 
