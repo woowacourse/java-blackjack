@@ -42,8 +42,8 @@ public class Dealer extends Participant {
     }
 
     private boolean isDealerWin(final Player player) {
-        if (!player.hand.isBurst()) {
-            return !hand.isBurst() && (hand.getCardsNumberSum() >= player.getHandSum());
+        if (player.hand.isNotBurst()) {
+            return hand.isNotBurst() && (hand.getCardsNumberSum() >= player.getHandSum());
         }
         return true;
     }

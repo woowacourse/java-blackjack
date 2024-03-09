@@ -47,7 +47,7 @@ public class HandTest {
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBurst = hand.isBurst();
+        boolean isBurst = !hand.isNotBurst();
 
         // Then
         assertThat(isBurst).isTrue();
@@ -77,7 +77,7 @@ public class HandTest {
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBlackJack = hand.isBlackJack();
+        boolean isBlackJack = !hand.isNotBlackJack();
 
         // Then
         Assertions.assertThat(isBlackJack).isTrue();

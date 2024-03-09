@@ -28,8 +28,8 @@ public class Hand {
         return result;
     }
 
-    public boolean isBurst() {
-        return getCardsNumberSum() > BLACKJACK_CONDITION;
+    public boolean isNotBurst() {
+        return getCardsNumberSum() <= BLACKJACK_CONDITION;
     }
 
     public void addCard(final PlayingCard card) {
@@ -40,7 +40,7 @@ public class Hand {
         return Collections.unmodifiableList(playingCards);
     }
 
-    public boolean isBlackJack() {
-        return getCardsNumberSum() == BLACKJACK_CONDITION;
+    public boolean isNotBlackJack() {
+        return getCardsNumberSum() != BLACKJACK_CONDITION;
     }
 }
