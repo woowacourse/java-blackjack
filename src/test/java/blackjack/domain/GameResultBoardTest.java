@@ -36,7 +36,7 @@ class GameResultBoardTest {
         Player player = Player.fromName("testPlayer");
         giveCardToPlayer(player, deck, 2);
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
 
         assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
     }
@@ -70,7 +70,7 @@ class GameResultBoardTest {
         List<Player> players = generatePlayers();
         players.forEach(player -> giveCardToPlayer(player, deck, 2));
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(players));
         Map<GameResult, Integer> dealerResult = gameResultBoard.getDealerResult();
 
         assertAll(

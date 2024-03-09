@@ -76,7 +76,7 @@ public class BlackJackController {
 
     private void printGameResult(Dealer dealer, Players players) {
         printCardStatus(dealer, players);
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
 
         outputView.printDealerResult(gameResultBoard.getDealerResult());
         for (Player player : players.getPlayers()) {

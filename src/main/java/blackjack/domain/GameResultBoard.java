@@ -1,15 +1,14 @@
 package blackjack.domain;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResultBoard {
     private final Map<String, GameResult> resultBoard = new HashMap<>();
 
-    public GameResultBoard(Dealer dealer, List<Player> players) {
+    public GameResultBoard(Dealer dealer, Players players) {
         Score dealerScore = dealer.getScore();
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             String playerName = player.getName();
             Score playerScore = player.getScore();
             GameResult gameResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
