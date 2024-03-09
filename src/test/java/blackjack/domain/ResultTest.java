@@ -1,6 +1,8 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +25,11 @@ public class ResultTest {
                         new Player("isang"), ResultStatus.WIN));
 
         Map<ResultStatus, Long> results = result.calculateDealerResult();
-        results.forEach((key, value) -> System.out.println(key.getName() + " : " + value));
+
+        assertAll(
+                () -> assertThat(results.get(ResultStatus.DRAW)).isEqualTo(1),
+                () -> assertThat(results.get(ResultStatus.LOSE)).isEqualTo(2)
+        );
     }
 
 }
