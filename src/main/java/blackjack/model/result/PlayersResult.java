@@ -20,7 +20,7 @@ public class PlayersResult {
         playerResult.put(player, Result.TIE);
     }
 
-    public Map<Player, Result> getPlayerResult() {
-        return playerResult;
+    public Result findPlayerResult(Player player) {
+        return playerResult.get(player);
     }
 }

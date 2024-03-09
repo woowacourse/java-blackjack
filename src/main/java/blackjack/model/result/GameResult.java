@@ -1,7 +1,6 @@
 package blackjack.model.result;
 
 import blackjack.model.gamer.Player;
-import java.util.Map;
 
 public class GameResult {
 
@@ -44,7 +43,7 @@ public class GameResult {
         playersResult.addTie(player);
     }
 
-    public Map<Player, Result> getPlayersResult() {
-        return playersResult.getPlayerResult();
+    public Result findPlayerResult(Player player) {
+        return playersResult.findPlayerResult(player);
     }
 }
