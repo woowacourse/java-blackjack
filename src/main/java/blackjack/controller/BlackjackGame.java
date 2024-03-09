@@ -66,8 +66,8 @@ public class BlackjackGame {
 
     private PlayerAction getPlayerAction(Player player) {
         String playerName = player.getName();
-        String command = inputView.readPlayerActionCommand(playerName);
-        return PlayerAction.getAction(command);
+        boolean dosePlayerWantHit = inputView.dosePlayerWantHit(playerName);
+        return PlayerAction.getAction(dosePlayerWantHit);
     }
 
     private void dealerHitCard(Dealer dealer) {
