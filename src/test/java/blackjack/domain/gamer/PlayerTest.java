@@ -1,6 +1,6 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.CardPicker;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,9 +26,9 @@ public class PlayerTest {
     void gameDealTest() {
         // given
         Player player = new Player("lemone");
-        CardPicker cardPicker = new CardPicker();
+        Deck deck = new Deck();
         // when
-        player.deal(cardPicker);
+        player.deal(deck);
 
         // then
         assertThat(player.getCards().size()).isEqualTo(2);
@@ -39,9 +39,9 @@ public class PlayerTest {
     void gameHitTest() {
         // given
         Player player = new Player("lemone");
-        CardPicker cardPicker = new CardPicker();
+        Deck deck = new Deck();
         // when
-        player.hit(cardPicker);
+        player.hit(deck);
 
         // then
         assertThat(player.getCards().size()).isEqualTo(1);

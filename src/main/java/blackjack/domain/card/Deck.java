@@ -1,24 +1,20 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.IntStream;
 
-public class CardPicker {
-    private final Random random;
-
+public class Deck {
     private final List<Card> cards;
 
-    public CardPicker() {
+    public Deck() {
         this.cards = new ArrayList<>(List.of(Card.values()));
-        random = new Random();
+        Collections.shuffle(cards);
     }
 
     private Card pick() {
-        int randomIndex = random.nextInt(0, cards.size());
-        return cards.remove(randomIndex);
+        return cards.remove(cards.size() - 1);
     }
 
     public List<Card> pick(int count) {

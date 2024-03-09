@@ -8,17 +8,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("카드 피커")
-public class CardPickerTest {
+public class DeckTest {
     @Test
     @DisplayName("게임 시작 시 인원 당 받는 덱의 수는 2장이다.")
     void gameCreateTest() {
         // given
-        CardPicker cardPicker = new CardPicker();
+        Deck deck = new Deck();
         int count = 2;
         int expectedCount = 2;
 
         // when
-        List<Card> cards = cardPicker.pick(count);
+        List<Card> cards = deck.pick(count);
 
         // then
         assertThat(cards.size()).isEqualTo(expectedCount);

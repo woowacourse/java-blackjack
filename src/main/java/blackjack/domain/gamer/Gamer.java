@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPicker;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ public abstract class Gamer {
         }
     }
 
-    public void deal(CardPicker cardPicker) {
-        cardPicker.pick(DEAL_CARD_COUNT)
+    public void deal(Deck deck) {
+        deck.pick(DEAL_CARD_COUNT)
                 .forEach(cards::addCard);
     }
 
-    public void hit(CardPicker cardPicker) {
-        cardPicker.pick(HIT_CARD_COUNT)
+    public void hit(Deck deck) {
+        deck.pick(HIT_CARD_COUNT)
                 .forEach(cards::addCard);
     }
 

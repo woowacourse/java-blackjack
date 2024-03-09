@@ -17,7 +17,7 @@ public class CommandController {
         runnable.put(playerCommand, supplier);
     }
 
-    public boolean run(String command) {
+    public boolean runUntilCanHit(String command) {
         PlayerCommand playerCommand = PlayerCommand.from(command);
         return runnable.get(playerCommand).get();
     }

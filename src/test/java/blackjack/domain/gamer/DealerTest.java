@@ -1,7 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPicker;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
         Card exptecedCard = Card.SPADE_NINE;
-        CardPicker cardPicker = new CardPicker() {
+        Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {
                 return cards;
@@ -26,7 +26,7 @@ class DealerTest {
         };
 
         // when
-        dealer.deal(cardPicker);
+        dealer.deal(deck);
 
         // then
         assertThat(dealer.getFirstCard())
@@ -39,7 +39,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        CardPicker cardPicker = new CardPicker() {
+        Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {
                 return cards;
@@ -56,12 +56,12 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        CardPicker cardPicker = new CardPicker();
+        Deck deck = new Deck();
 
         // when
-        dealer.deal(cardPicker);
+        dealer.deal(deck);
         if (dealer.isHitUnderBound()) {
-            dealer.hit(cardPicker);
+            dealer.hit(deck);
         }
 
         // then
