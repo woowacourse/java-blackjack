@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
+    private final Hand hand;
     private final Name name;
 
     protected Participant(String name) {

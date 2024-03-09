@@ -30,7 +30,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isPlayable() {
-        int score = hand.calculateScore();
+        int score = calculateScore();
 
         return score < STAND_BOUND;
     }
