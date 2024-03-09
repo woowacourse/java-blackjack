@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.rule.HitStrategy;
 import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
@@ -20,7 +21,8 @@ public class Hand {
 
     public int sum() {
         return cards.stream()
-                .mapToInt(Card::getCardNumber)
+                .map(Card::getCardNumber)
+                .mapToInt(CardNumber::getValue)
                 .sum();
     }
 

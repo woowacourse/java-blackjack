@@ -1,7 +1,12 @@
 package blackjack.view;
 
+import static blackjack.view.CardDescription.NUMBER_NAME;
+import static blackjack.view.CardDescription.SHAPE_NAME;
+
 import blackjack.domain.DealerGameResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.player.Hand;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -36,7 +41,9 @@ public class MessageResolver {
     }
 
     private String resolveCardMessage(Card card) {
-        return String.format("%s%s", card.getCardNumberName(), card.getCardShape());
+        CardNumber cardNumber = card.getCardNumber();
+        CardShape cardShape = card.getCardShape();
+        return String.format("%s%s", NUMBER_NAME.get(cardNumber), SHAPE_NAME.get(cardShape));
     }
 
     public String resolveDealerHandMessage(Player dealer) {

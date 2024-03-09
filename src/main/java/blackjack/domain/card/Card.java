@@ -33,15 +33,11 @@ public class Card {
         return Objects.hash(cardShape, cardNumber);
     }
 
-    public int getCardNumber() {
-        return cardNumber.getValue();
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
-    public String getCardNumberName() {
-        return cardNumber.getName();
-    }
-
-    public String getCardShape() {
-        return cardShape.getName();
+    public CardShape getCardShape() {
+        return cardShape;
     }
 }
