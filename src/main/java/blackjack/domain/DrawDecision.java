@@ -14,7 +14,7 @@ public enum DrawDecision {
     }
 
     public static DrawDecision from(String code) {
-        return Arrays.stream(DrawDecision.values())
+        return Arrays.stream(values())
                 .filter(drawDecision -> drawDecision.code.equals(code))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 값을 찾지 못하였습니다."));
