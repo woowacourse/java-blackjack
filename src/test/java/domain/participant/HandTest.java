@@ -70,8 +70,7 @@ public class HandTest {
     @Test
     void isBlackJackTest() {
         // Given
-//        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, NINE), new PlayingCard(SPADE, TWO));
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, DEFAULT_ACE));
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
         Hand hand = new Hand(playingCards);
 
         // When

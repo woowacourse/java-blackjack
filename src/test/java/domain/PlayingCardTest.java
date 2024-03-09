@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.PlayingCardShape.HEART;
-import static domain.PlayingCardValue.DEFAULT_ACE;
+import static domain.PlayingCardValue.ACE;
 import static domain.PlayingCardValue.FIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,12 +18,8 @@ public class PlayingCardTest {
     @DisplayName("카드의 모양과 숫자를 입력하면 인스턴스가 생성된다.")
     @Test
     void createPlayingCardTest() {
-        // Given
-        PlayingCardShape playingCardShape = HEART;
-        PlayingCardValue playingCardValue = FIVE;
-
         // When
-        PlayingCard playingCard = new PlayingCard(playingCardShape, playingCardValue);
+        PlayingCard playingCard = new PlayingCard(HEART, FIVE);
 
         // Then
         assertThat(playingCard).isNotNull();
@@ -42,8 +38,8 @@ public class PlayingCardTest {
 
     private static Stream<Arguments> addValueParameters() {
         return Stream.of(
-                Arguments.of(new PlayingCard(HEART, DEFAULT_ACE), 4, 15),
-                Arguments.of(new PlayingCard(HEART, DEFAULT_ACE), 18, 19),
+                Arguments.of(new PlayingCard(HEART, ACE), 4, 15),
+                Arguments.of(new PlayingCard(HEART, ACE), 18, 19),
                 Arguments.of(new PlayingCard(HEART, FIVE), 15, 20)
         );
     }
