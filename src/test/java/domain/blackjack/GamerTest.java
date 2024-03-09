@@ -27,14 +27,21 @@ class GamerTest {
         );
     }
 
+    public static Stream<Arguments> validatePlayerHasNextDrawChanceParameters() {
+        return Stream.of(
+                Arguments.of(new Card(TWO, HEART), false),
+                Arguments.of(new Card(ACE, HEART), true)
+        );
+    }
+
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
-        Gamer Gamer = new Gamer("robin", HoldingCards.of());
+        Gamer gamer = new Gamer("robin", HoldingCards.of());
         Deck deck = Deck.of(new Card(JACK, HEART), new Card(EIGHT, HEART));
-        Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer));
+        gamer.draw(deck, new TestPlayerCardDrawStrategy(gamer));
 
-        SummationCardPoint actual = Gamer.getSummationCardPoint();
+        SummationCardPoint actual = gamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
 
         Assertions.assertThat(actual)
@@ -44,16 +51,15 @@ class GamerTest {
     @Test
     @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDrawLimit() {
-        Gamer Gamer = new Gamer("robin", HoldingCards.of(
+        Gamer gamer = new Gamer("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
         ));
         Deck deck = Deck.of(
                 new Card(TWO, SPADE)
         );
-
-        Assertions.assertThatThrownBy(() -> Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드를 더이상 뽑을 수 없습니다.");
+        DrawResult drawResult = gamer.draw(deck, new TestPlayerCardDrawStrategy(gamer));
+        Assertions.assertThat(drawResult.getFailCause())
+                .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
     }
 
     @Test
@@ -66,9 +72,9 @@ class GamerTest {
                 new Card(TWO, SPADE)
         );
 
-        Assertions.assertThatThrownBy(() -> gamer.draw(deck, new TestDealerCardDrawStrategy(gamer)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드를 더이상 뽑을 수 없습니다.");
+        DrawResult drawResult = gamer.draw(deck, new TestDealerCardDrawStrategy(gamer));
+        Assertions.assertThat(drawResult.getFailCause())
+                .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
     }
 
     @ParameterizedTest
@@ -80,5 +86,17 @@ class GamerTest {
         ));
 
         Assertions.assertThat(gamer.isDead()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("validatePlayerHasNextDrawChanceParameters")
+    @DisplayName("플레이어의 다음 드로우 기회 유무를 제대로 판단하는지 검증")
+    void validatePlayerHasNextDrawChance(Card cardInDeck, boolean expected) {
+        Gamer gamer = new Gamer("robin", HoldingCards.of(
+                new Card(JACK, HEART), new Card(QUEEN, HEART)
+        ));
+        DrawResult drawResult = gamer.draw(Deck.of(cardInDeck), new TestPlayerCardDrawStrategy(gamer));
+        Assertions.assertThat(drawResult.hasNextChance())
+                .isEqualTo(expected);
     }
 }

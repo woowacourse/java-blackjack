@@ -1,11 +1,11 @@
 package controller;
 
 import domain.blackjack.DealerRandomCardDrawStrategy;
+import domain.blackjack.DrawResult;
 import domain.blackjack.GameResult;
 import domain.blackjack.GameResultCalculator;
 import domain.blackjack.Gamer;
 import domain.blackjack.PlayerRandomCardDrawStrategy;
-import domain.blackjack.SummationCardPoint;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerGameResultDTO;
@@ -41,20 +41,20 @@ public class BlackjackController {
     }
 
     private void initDealerAndPlayers(Deck deck) {
-        dealerDraw(deck);
-        dealerDraw(deck);
-        players.forEach(player -> playerDraw(deck, player));
-        players.forEach(player -> playerDraw(deck, player));
+        for (int index = 0; index < 2; index++) {
+            dealerDraw(deck);
+            players.forEach(player -> playerDraw(deck, player));
+        }
         String namesOutput = players.stream().map(Gamer::getRawName).collect(Collectors.joining(", "));
         OutputView.print("딜러와 %s에게 2장을 나누었습니다.".formatted(namesOutput));
     }
 
-    private void dealerDraw(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
+    private DrawResult dealerDraw(Deck deck) {
+        return dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
     }
 
-    private void playerDraw(Deck deck, Gamer player) {
-        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+    private DrawResult playerDraw(Deck deck, Gamer player) {
+        return player.draw(deck, new PlayerRandomCardDrawStrategy(player));
     }
 
     private void printDealerAndPlayers() {
@@ -81,33 +81,31 @@ public class BlackjackController {
     }
 
     private void playerTryDraw(Deck deck, Gamer player) {
-        boolean needToDraw = true;
-        while (needToDraw && canDraw(player, new SummationCardPoint(21))) {
-            needToDraw = playerTryDrawOnce(deck, player);
+        boolean hasNextDrawChance = true;
+        while (hasNextDrawChance) {
+            hasNextDrawChance = playerTryDrawOnce(deck, player);
         }
     }
 
     private boolean playerTryDrawOnce(Deck deck, Gamer player) {
-        boolean needToDraw;
         OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
-        needToDraw = YesOrNoInputView.getYNAsBoolean();
+        boolean needToDraw = YesOrNoInputView.getYNAsBoolean();
+        DrawResult drawResult = null;
         if (needToDraw) {
-            playerDraw(deck, player);
+            drawResult = playerDraw(deck, player);
         }
         printPlayer(player);
-        return needToDraw;
+        if (drawResult == null) {
+            return false;
+        }
+        return drawResult.hasNextChance();
     }
 
-    private boolean canDraw(Gamer player, SummationCardPoint threshold) {
-        return !player.getSummationCardPoint().isBiggerThan(threshold);
-    }
 
     private void dealerTryDraw(Deck deck) {
-        try {
-            dealerDraw(deck);
+        DrawResult drawResult = dealerDraw(deck);
+        if (drawResult.isSuccess()) {
             OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-        } catch (IllegalStateException ignored) {
-
         }
     }
 

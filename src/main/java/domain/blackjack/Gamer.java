@@ -16,9 +16,17 @@ public class Gamer {
         this.holdingCards = holdingCards;
     }
 
-    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
-        Card draw = deck.draw(cardDrawStrategy);
-        holdingCards.add(draw);
+    public DrawResult draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
+        if (isDead()) {
+            return DrawResult.fail("카드를 더이상 뽑을 수 없습니다.", false);
+        }
+        try {
+            Card draw = deck.draw(cardDrawStrategy);
+            holdingCards.add(draw);
+            return DrawResult.success(!isDead());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return DrawResult.fail(e, !isDead());
+        }
     }
 
     public SummationCardPoint getSummationCardPoint() {
