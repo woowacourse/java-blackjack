@@ -31,7 +31,8 @@ public class DealerTest {
     void isDrawableTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, EIGHT));
-        Hand hand = new Hand(playingCards);
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
         Dealer dealer = new Dealer(hand);
 
         // When
@@ -61,8 +62,10 @@ public class DealerTest {
     @Test
     void getGameResultsTest() {
         // Given
-        Hand playerHand = new Hand(List.of(new PlayingCard(DIAMOND, NINE)));
-        Hand dealerHand = new Hand(List.of(new PlayingCard(DIAMOND, EIGHT)));
+        Hand playerHand = Hand.init();
+        List.of(new PlayingCard(DIAMOND, NINE)).forEach(playerHand::addCard);
+        Hand dealerHand = Hand.init();
+        List.of(new PlayingCard(DIAMOND, EIGHT)).forEach(dealerHand::addCard);
         List<Player> players = List.of(new Player(new PlayerName("kelly"), playerHand));
         Dealer dealer = new Dealer(dealerHand);
 

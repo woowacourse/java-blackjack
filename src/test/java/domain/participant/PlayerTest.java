@@ -31,7 +31,8 @@ public class PlayerTest {
     void isDrawableTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING));
-        Hand hand = new Hand(playingCards);
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
         Player player = new Player(new PlayerName("kelly"), hand);
 
         // When

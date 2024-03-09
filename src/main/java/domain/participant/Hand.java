@@ -11,7 +11,7 @@ import static domain.constant.GameOption.BLACKJACK_CONDITION;
 public class Hand {
     private final List<PlayingCard> playingCards;
 
-    Hand(final List<PlayingCard> playingCards) {
+    private Hand(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 

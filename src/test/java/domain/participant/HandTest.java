@@ -28,7 +28,8 @@ public class HandTest {
     void getCardsNumberSumTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(CLOVER, FOUR), new PlayingCard(DIAMOND, SEVEN));
-        Hand hand = new Hand(playingCards);
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
 
         // When
         int result = hand.getCardsNumberSum();
@@ -42,7 +43,8 @@ public class HandTest {
     void isBurstTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
-        Hand hand = new Hand(playingCards);
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
 
         // When
         boolean isBurst = hand.isBurst();
@@ -71,7 +73,8 @@ public class HandTest {
     void isBlackJackTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
-        Hand hand = new Hand(playingCards);
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
 
         // When
         boolean isBlackJack = hand.isBlackJack();
