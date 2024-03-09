@@ -23,13 +23,13 @@ public class Name {
 
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
-            throw new InvalidNameLengthException();
+            throw new InvalidNameLengthException(name);
         }
     }
 
     private void validateIsAlphabetic(String name) {
         if (!NAME_PATTERN.matcher(name).matches()) {
-            throw new NonAlphabeticNameException();
+            throw new NonAlphabeticNameException(name);
         }
     }
 }

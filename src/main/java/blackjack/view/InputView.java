@@ -40,7 +40,7 @@ public class InputView {
 
     private void validateHitRequest(String input) {
         if (!HIT_REQUEST_PATTERN.matcher(input).matches()) {
-            throw new InvalidHitCommandException();
+            throw new InvalidHitCommandException(input);
         }
     }
 }
