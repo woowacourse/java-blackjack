@@ -55,14 +55,22 @@ public class BlackJackGame {
 
     private void playForDealer(final Deck deck, final Dealer dealer) {
         while (dealer.isDrawable()) {
-            dealer.draw(deck);
+            try {
+                dealer.draw(deck);
+            } catch (IllegalStateException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
             OutputView.printDealerDrawMessage();
         }
     }
 
     private void playForPlayer(final Deck deck, final Player player) {
         while (checkAcceptDraw(player)) {
-            player.draw(deck);
+            try {
+                player.draw(deck);
+            } catch (IllegalStateException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
             OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
         }
     }
@@ -84,14 +92,22 @@ public class BlackJackGame {
     }
 
     private void firstDraw(final Deck deck, final Dealer dealer, final List<Player> players) {
-        for (int gameCount = 0; gameCount < 2; gameCount++) {
-            players.forEach(player -> player.draw(deck));
-            dealer.draw(deck);
+        try {
+            firstDrawInit(deck, dealer, players);
+        } catch (IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
         PlayingCardDto dealerCardDto = PlayingCardDto.of(dealer.getHandCards().get(0));
         List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
                 .map(PlayerHandStatusDto::of)
                 .toList();
         OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+    }
+
+    private void firstDrawInit(final Deck deck, final Dealer dealer, final List<Player> players) {
+        for (int gameCount = 0; gameCount < 2; gameCount++) {
+            players.forEach(player -> player.draw(deck));
+            dealer.draw(deck);
+        }
     }
 }

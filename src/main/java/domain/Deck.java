@@ -1,23 +1,23 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 public class Deck {
     private final List<PlayingCard> playingCards;
 
-   Deck(final List<PlayingCard> playingCards) {
+    private Deck(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
     public static Deck init() {
-        return Arrays.stream(PlayingCardShape.values())
-                .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
-                .collect(collectingAndThen(toList(), Deck::new));
+       List<PlayingCard> playingCards = new ArrayList<>(Arrays.stream(PlayingCardShape.values())
+               .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
+               .toList());
+       Collections.shuffle(playingCards);
+       return new Deck(playingCards);
     }
 
     private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
@@ -27,11 +27,9 @@ public class Deck {
     }
 
     public PlayingCard drawn() {
-        Collections.shuffle(playingCards);
-
-        PlayingCard card = playingCards.get(0);
-        playingCards.remove(0);
-
-        return card;
+        if (playingCards.size() > 0) {
+            return playingCards.remove(0);
+        }
+        throw new IllegalStateException("덱이 모두 소진되었습니다.");
     }
 }
