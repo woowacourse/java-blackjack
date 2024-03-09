@@ -8,10 +8,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+
     @DisplayName("중복된 플레이어를 생성할 수 없다.")
     @Test
     void validateDuplicate() {
@@ -49,5 +51,20 @@ class PlayersTest {
                 () -> assertThat(players.getHandsOf(pobi).getCards())
                         .hasSize(2)
                         .containsExactly(card3, card4));
+    }
+
+    @DisplayName("카드를 참가자에게 나눠줄 때 수량이 참가자 수의 2배와 다르면 안된다.")
+    @Test
+    void validateCardSize() {
+        // given
+        Players players = new Players(List.of(new Participant("kirby"), new Participant("pobi")));
+        List<Card> cards = List.of(new Card(CardNumber.ACE, CardShape.SPADE),
+                new Card(CardNumber.TWO, CardShape.SPADE),
+                new Card(CardNumber.THREE, CardShape.SPADE));
+
+        // when
+        assertThatThrownBy(() -> players.divideCard(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드의 수량이 맞지 않습니다.");
     }
 }

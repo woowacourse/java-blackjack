@@ -36,9 +36,16 @@ public class Players {
     }
 
     public void divideCard(final List<Card> cards) {
+        validateCardSize(cards);
         final Iterator<Card> cardIterator = cards.iterator();
 
         players.forEach(player -> player.addStartCard(cardIterator.next(), cardIterator.next()));
+    }
+
+    private void validateCardSize(final List<Card> cards) {
+        if (cards.size() != players.size() * 2) {
+            throw new IllegalArgumentException("카드의 수량이 맞지 않습니다.");
+        }
     }
 
     public void addCardTo(final String name, final Card card) {
