@@ -13,4 +13,15 @@ class CardTest {
         Card card = new Card(Shape.SPADE, Number.ACE);
         assertThat(card.getScore()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("동등성을 정확하게 판단한다.")
+    void equalsTest() {
+        // given
+        Card card = new Card(Shape.SPADE, Number.ACE);
+        // when, then
+        assertThat(card)
+                .isEqualTo(new Card(Shape.SPADE, Number.ACE))
+                .isNotEqualTo(new Card(Shape.HEART, Number.ACE));
+    }
 }
