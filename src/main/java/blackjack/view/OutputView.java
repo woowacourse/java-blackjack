@@ -15,9 +15,8 @@ public class OutputView {
         System.out.println();
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), buildPlayerNameMessage(players));
         System.out.printf("%s카드: %s%n", dealer.getName(), buildCardsMessage(dealer.getOpenCards()));
-        for (Player player : players) {
-            printCards(player);
-        }
+        players.forEach(this::printCards);
+        System.out.println();
     }
 
     private String buildPlayerNameMessage(List<Player> players) {
@@ -31,14 +30,12 @@ public class OutputView {
     }
 
     public void printDealerHitMessage() {
-        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printAllCardsWithScore(List<Participant> participants) {
-        for (Participant participant : participants) {
-            System.out.println(buildCardsWithScoreMessage(participant));
-        }
+        System.out.println();
+        participants.forEach(participant -> System.out.println(buildCardsWithScoreMessage(participant)));
     }
 
     private String buildCardsWithScoreMessage(Participant participant) {
@@ -58,10 +55,8 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", buildDealerResult(dealerGameResult));
-        playerGameResults.forEach((player, gameResult) -> {
-            System.out.printf("%s: %s%n", player.getName(), gameResult.getValue());
-        });
-
+        playerGameResults.forEach((player, gameResult) ->
+                System.out.printf("%s: %s%n", player.getName(), gameResult.getValue()));
     }
 
     private String buildDealerResult(Map<GameResult, Integer> dealerGameResult) {
