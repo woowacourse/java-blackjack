@@ -1,10 +1,6 @@
 package domain.blackjack;
 
-import domain.card.Card;
-import domain.card.CardDrawStrategy;
-import java.util.List;
-
-public class TestDealerCardDrawStrategy implements CardDrawStrategy {
+public class TestDealerCardDrawStrategy extends TestAbstractFirstCardDrawStrategy {
     private final Gamer player;
 
     public TestDealerCardDrawStrategy(Gamer player) {
@@ -12,18 +8,7 @@ public class TestDealerCardDrawStrategy implements CardDrawStrategy {
     }
 
     @Override
-    public final Card nextCard(List<Card> cards) {
-        if (canDraw()) {
-            return cardSelectStrategy(cards);
-        }
-        throw new IllegalStateException("카드를 더이상 뽑을 수 없습니다.");
-    }
-
-    private boolean canDraw() {
+    boolean canDraw() {
         return !player.getSummationCardPoint().isDealerAdditionalCardPoint();
-    }
-
-    private Card cardSelectStrategy(List<Card> cards) {
-        return cards.get(0);
     }
 }
