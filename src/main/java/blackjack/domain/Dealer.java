@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Dealer extends Player {
 
     private final Deck deck;
@@ -17,10 +15,6 @@ public class Dealer extends Player {
 
     public Card draw() {
         return deck.draw();
-    }
-
-    public List<Card> doubleDraw() {
-        return List.of(draw(), draw());
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Game {
     }
 
     public void play() {
-        initializeHand();
+        initializeHands();
 
         List<Player> players = getPlayers();
         OutputView.printInitialHand(dealer, players);
@@ -32,19 +32,16 @@ public class Game {
         OutputView.printResult(calculateResult(), dealer);
     }
 
-    public void initializeHand() {
+    public void initializeHands() {
         dealer.shuffle();
+        initializeHand(dealer);
         for (Player player : players.getPlayers()) {
-            initHand(player);
+            initializeHand(player);
         }
-        initHand(dealer);
     }
 
-    private void initHand(Player player) {
-        List<Card> cards = this.dealer.doubleDraw();
-        for (Card card : cards) {
-            player.putCard(card);
-        }
+    private void initializeHand(Player player) {
+        player.initializeHand(dealer.draw(), dealer.draw());
     }
 
     public Dealer getDealer() {

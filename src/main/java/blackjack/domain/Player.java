@@ -10,6 +10,11 @@ public class Player {
         this.hand = new Hand();
     }
 
+    public void initializeHand(Card card1, Card card2) {
+        hand.put(card1);
+        hand.put(card2);
+    }
+
     public int calculate() {
         return hand.calculate();
     }

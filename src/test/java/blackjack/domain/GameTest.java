@@ -31,7 +31,7 @@ public class GameTest {
     public void initializeHand() {
         Game game = getGame();
 
-        game.initializeHand();
+        game.initializeHands();
         Dealer findDealer = game.getDealer();
         List<Player> findPlayers = game.getPlayers();
 
@@ -43,7 +43,7 @@ public class GameTest {
     @Test
     public void calculateResult() {
         Game game = getGame();
-        game.initializeHand();
+        game.initializeHands();
 
         Result result = game.calculateResult();
         Map<Player, ResultStatus> results = result.getResults();
