@@ -1,5 +1,10 @@
 package blackjack.controller;
 
+import blackjack.dto.DealerDto;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.DtoGenerator;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayersResultDto;
 import blackjack.model.GameRule;
 import blackjack.model.card.Card;
 import blackjack.model.deck.DeckGenerator;
@@ -31,13 +36,16 @@ public class BlackjackController {
         initialDraw(dealer, players);
         runPlayerTurn(players);
         runDealerTurn(dealer);
-        calculateResult(dealer, players);
+        gameResult(dealer, players);
     }
 
     private void initialDraw(Dealer dealer, List<Player> players) {
         drawCardToDealer(dealer);
         drawCardToPlayer(players);
-        OutputView.printInitialDrawResult(dealer, players);
+
+        DealerDto dealerDto = DtoGenerator.createInitialDealerDto(dealer.getFirstCard());
+        List<PlayerDto> playerDtos = DtoGenerator.createPlayerDtos(players);
+        OutputView.printInitialDrawResult(dealerDto, playerDtos);
     }
 
     private void drawCardToDealer(Dealer dealer) {
@@ -69,14 +77,16 @@ public class BlackjackController {
             executeHit(player);
         }
         if (player.canHit()) {
-            OutputView.printPlayerCard(player);
+            PlayerDto playerDto = DtoGenerator.createPlayerDto(player);
+            OutputView.printPlayerCard(playerDto);
         }
     }
 
     private void executeHit(Player player) {
         Card card = playingDeck.drawCard();
         player.receiveCard(card);
-        OutputView.printPlayerCard(player);
+        PlayerDto playerDto = DtoGenerator.createPlayerDto(player);
+        OutputView.printPlayerCard(playerDto);
     }
 
     private void runDealerTurn(Dealer dealer) {
@@ -87,14 +97,27 @@ public class BlackjackController {
         }
     }
 
-    private void calculateResult(Dealer dealer, List<Player> players) {
-        GameResult gameResult = new GameResult();
+    private void gameResult(Dealer dealer, List<Player> players) {
+        showScore(dealer, players);
 
+        GameResult gameResult = new GameResult();
+        calculateResult(dealer, players, gameResult);
+
+        PlayersResultDto playerResultDto = DtoGenerator.createPlayerResultDto(players, gameResult);
+        DealerResultDto dealerResultDro = DtoGenerator.createDealerResultDro(gameResult);
+        OutputView.printResult(dealerResultDro, playerResultDto);
+    }
+
+    private void calculateResult(Dealer dealer, List<Player> players, GameResult gameResult) {
         for (Player player : players) {
             GameRule.decideWinner(dealer, player, gameResult);
         }
+    }
 
-        OutputView.printCardScore(dealer, players);
-        OutputView.printResult(gameResult);
+    private void showScore(Dealer dealer, List<Player> players) {
+        DealerDto dealerDto = DtoGenerator.createDealerDto(dealer);
+        List<PlayerDto> playerDtos = DtoGenerator.createPlayerDtos(players);
+
+        OutputView.printGamerCardAndScore(dealerDto, playerDtos);
     }
 }
