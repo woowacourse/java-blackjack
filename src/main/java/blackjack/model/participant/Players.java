@@ -4,9 +4,11 @@ import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -29,10 +31,8 @@ public class Players {
     }
 
     private void validateNotDuplicateName(final List<Player> players) {
-        long uniqueNameSize = players.stream()
-                .distinct()
-                .count();
-        if (players.size() != uniqueNameSize) {
+        Set<Player> uniquePlayer = new HashSet<>(players);
+        if (players.size() != uniquePlayer.size()) {
             throw new IllegalArgumentException("중복되는 이름을 입력할 수 없습니다.");
         }
     }
