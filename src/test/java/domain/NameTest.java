@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,6 +18,16 @@ public class NameTest {
     void construct_NoException_OneToFiveLetters(String rawName) {
         assertThatCode(() -> new Name(rawName))
             .doesNotThrowAnyException();
+
+        assertThat(new Name(rawName).getName()).isEqualTo(rawName);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a", "가나다a1", "abcde"})
+    @DisplayName("성공: 이름 확인")
+    void construct_Equals_rawName(String rawName) {
+        Name name = new Name(rawName);
+        assertThat(name.getName()).isEqualTo(rawName);
     }
 
     @ParameterizedTest
