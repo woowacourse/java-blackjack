@@ -1,3 +1,5 @@
+package blackjackgame;
+
 import controller.BlackjackController;
 import domain.blackjack.Gamer;
 import domain.blackjack.HoldingCards;
@@ -15,7 +17,7 @@ public class Main {
         List<Gamer> players = NameInputView.getNames().stream()
                 .map(name -> new Gamer(name, HoldingCards.of()))
                 .toList();
-        
+
         BlackjackController blackjackController = new BlackjackController(dealer, players);
         blackjackController.startBlackjackGame(Deck.fullDeck());
     }
