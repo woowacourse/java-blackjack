@@ -1,12 +1,12 @@
 package blackjack.model.result;
 
 import blackjack.model.gamer.Player;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PlayersResult {
 
-    private final Map<Player, Result> playerResult = new LinkedHashMap<>();
+    private final Map<Player, Result> playerResult = new HashMap<>();
 
     public void addWin(Player player) {
         playerResult.put(player, Result.WIN);
