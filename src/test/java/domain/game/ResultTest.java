@@ -1,15 +1,18 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class ResultTest {
@@ -31,7 +34,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.TIE);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.TIE);
     }
 
     @Test
@@ -42,7 +45,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
 
     @Test
@@ -53,11 +56,9 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
     }
 
-    // 버스트
-    // 플레이어 버스트 -> 플레이어 패배
     @Test
     @DisplayName("플레이어 패배: 플레이어 버스트(경계값 22점)")
     void playerLose_PlayerIsBusted() {
@@ -68,7 +69,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
     }
 
     @Test
@@ -81,7 +82,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
     }
 
     @Test
@@ -97,6 +98,69 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+    }
+
+    @Nested
+    class countTest {
+
+        private List<Player> players;
+        private Dealer dealer;
+
+        // winPlayer: 21점, losePlayer: 5점, tiePlayer: 17점, dealer: 17점)
+        @BeforeEach
+        void beforeEach() {
+            players = new ArrayList<>(List.of(
+                    new Player(new Name("A")),
+                    new Player(new Name("B")),
+                    new Player(new Name("C"))));
+            dealer = new Dealer();
+            dealer.receive(List.of(new Card(Rank.TEN, Symbol.CLUB), new Card(Rank.SEVEN, Symbol.CLUB)));
+        }
+
+        @Test
+        @DisplayName("성공: 딜러 승리 수 == 플레이어 패배 수")
+        void countDealerWins() {
+            distributeLoseCards(players);
+            Result result = Result.of(players, dealer);
+
+            assertThat(result.countDealerWins()).isEqualTo(3);
+        }
+
+        @Test
+        @DisplayName("성공: 딜러 패배 수 == 플레이어 승리 수")
+        void countDealerLoses() {
+            distributeWinCards(players);
+            Result result = Result.of(players, dealer);
+
+            assertThat(result.countDealerLoses()).isEqualTo(3);
+        }
+
+        @Test
+        @DisplayName("성공: 딜러 무승부 수 == 플레이어 무승부 수")
+        void countDealerTies() {
+            distributeTieCards(players);
+            Result result = Result.of(players, dealer);
+
+            assertThat(result.countDealerTies()).isEqualTo(3);
+        }
+
+        private void distributeWinCards(List<Player> players) {
+            for (Player player : players) {
+                player.receive(List.of(new Card(Rank.KING, Symbol.CLUB), new Card(Rank.ACE, Symbol.CLUB)));
+            }
+        }
+
+        private void distributeLoseCards(List<Player> players) {
+            for (Player player : players) {
+                player.receive(List.of(new Card(Rank.TWO, Symbol.CLUB), new Card(Rank.THREE, Symbol.CLUB)));
+            }
+        }
+
+        private void distributeTieCards(List<Player> players) {
+            for (Player player : players) {
+                player.receive(List.of(new Card(Rank.TEN, Symbol.CLUB), new Card(Rank.SEVEN, Symbol.CLUB)));
+            }
+        }
     }
 }
