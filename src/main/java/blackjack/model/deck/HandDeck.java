@@ -34,11 +34,14 @@ public class HandDeck {
 
     private void validateDuplicatedCard(Card card) {
         if (cards.contains(card)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 카드는 받을 수 없습니다.");
+            String cardNumber = card.number().getName();
+            String cardPattern = card.pattern().getName();
+            String errorMessage = String.format("[ERROR] 중복된 카드는 받을 수 없습니다.(중복된 카드 : %s%s)", cardNumber, cardPattern);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }
