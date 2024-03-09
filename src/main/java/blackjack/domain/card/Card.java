@@ -4,7 +4,6 @@ import static blackjack.domain.card.CardScore.*;
 import static blackjack.domain.card.CardSymbol.*;
 
 public enum Card {
-
     SPADE_TWO(SPADE, TWO),
     SPADE_THREE(SPADE, THREE),
     SPADE_FOUR(SPADE, FOUR),

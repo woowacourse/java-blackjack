@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Cards {
+public class Deck {
     private static final int MAX_SCORE = 21;
 
     private final List<Card> values;
 
-    public Cards() {
+    public Deck() {
         this.values = new ArrayList<>();
     }
 

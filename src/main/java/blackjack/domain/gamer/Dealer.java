@@ -11,10 +11,10 @@ public class Dealer extends Gamer {
     }
 
     public Card getFirstCard() {
-        return cards.get().get(0);
+        return deck.get().get(0);
     }
 
     public boolean isHitUnderBound() {
-        return cards.totalScore() <= HIT_UPPER_BOUND;
+        return deck.totalScore() <= HIT_UPPER_BOUND;
     }
 }

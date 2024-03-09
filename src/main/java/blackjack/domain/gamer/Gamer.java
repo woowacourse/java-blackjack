@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPicker;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ public abstract class Gamer {
     private static final int MAX_SCORE = 21;
     private static final int HIT_CARD_COUNT = 1;
 
-    protected final Cards cards;
+    protected final Deck deck;
     private final String name;
 
     protected Gamer(String name) {
         validate(name);
         this.name = name;
-        this.cards = new Cards();
+        this.deck = new Deck();
     }
 
     private void validate(String name) {
@@ -29,24 +29,24 @@ public abstract class Gamer {
 
     public void deal(CardPicker cardPicker) {
         cardPicker.pick(DEAL_CARD_COUNT)
-                .forEach(cards::addCard);
+                .forEach(deck::addCard);
     }
 
     public void hit(CardPicker cardPicker) {
         cardPicker.pick(HIT_CARD_COUNT)
-                .forEach(cards::addCard);
+                .forEach(deck::addCard);
     }
 
     public boolean isBust() {
-        return cards.totalScore() > MAX_SCORE;
+        return deck.totalScore() > MAX_SCORE;
     }
 
     public boolean isBlackjack() {
-        return isMaxScore() && cards.get().size() == DEAL_CARD_COUNT;
+        return isMaxScore() && deck.get().size() == DEAL_CARD_COUNT;
     }
 
     public boolean isMaxScore() {
-        return cards.totalScore() == MAX_SCORE;
+        return deck.totalScore() == MAX_SCORE;
     }
 
     public String getName() {
@@ -54,10 +54,10 @@ public abstract class Gamer {
     }
 
     public List<Card> getCards() {
-        return cards.get();
+        return deck.get();
     }
 
     public int getScore() {
-        return cards.totalScore();
+        return deck.totalScore();
     }
 }
