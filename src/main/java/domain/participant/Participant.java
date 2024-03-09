@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BLACKJACK_SCORE = 21;
-
     private final Name name;
     private final Cards cards;
 
@@ -40,7 +38,7 @@ public abstract class Participant {
     }
 
     public boolean isBusted() {
-        return cards.calculateScore() > BLACKJACK_SCORE;
+        return cards.isOverBlackjackScore();
     }
 
     public String getName() {

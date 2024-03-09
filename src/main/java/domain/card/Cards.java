@@ -36,6 +36,10 @@ public class Cards {
             .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
     }
 
+    public boolean isOverBlackjackScore() {
+        return calculateInitialScore() > BLACKJACK_SCORE;
+    }
+
     private int calculateInitialScore() {
         return cards.stream()
             .mapToInt(Card::score)
