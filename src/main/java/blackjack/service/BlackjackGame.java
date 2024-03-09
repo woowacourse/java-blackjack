@@ -29,7 +29,6 @@ public class BlackjackGame {
     }
 
     public StartCardsDTO start() {
-        dealer.shuffleDeck();
         dealer.addStartCard();
 
         final int playersCardCount = players.count() * 2;

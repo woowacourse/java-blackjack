@@ -23,9 +23,6 @@ public class Dealer {
         return NEED_CARD_CRITERION.isBiggerThan(participant.calculate());
     }
 
-    public void shuffleDeck() {
-        deck.shuffle();
-    }
 
     public Card drawCard() {
         return deck.pick();

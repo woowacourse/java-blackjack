@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class DealerTest {
         Card card1 = new Card(CardNumber.SEVEN, CardShape.HEART);
         Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
 
-        Dealer dealer = new Dealer(new Deck(Set.of(card1, card2)));
+        Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
         dealer.addStartCard();
 
         boolean needMoreCard = dealer.needMoreCard();
@@ -30,7 +31,7 @@ class DealerTest {
         Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
         Card card2 = new Card(CardNumber.EIGHT, CardShape.HEART);
 
-        Dealer dealer = new Dealer(new Deck(Set.of(card1, card2)));
+        Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
         dealer.addStartCard();
 
         boolean needMoreCard = dealer.needMoreCard();
