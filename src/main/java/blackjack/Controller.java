@@ -48,7 +48,9 @@ class Controller {
     }
 
     private Deck createDeck() {
-        return new Deck(createShuffledCards());
+        List<Card> cards = createShuffledCards();
+
+        return new Deck(cards);
     }
 
     private List<Card> createShuffledCards() {
