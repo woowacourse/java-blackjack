@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.view.object.Command;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,15 +75,11 @@ public class BlackjackController {
 	}
 
 	private boolean canDistribute(Player player) {
-		return player.canReceiveCard() && HIT_COMMAND.equals(getCommand(player));
+		return player.canReceiveCard() && Command.isHit(getCommand(player));
 	}
 
-	private String getCommand(Player player) {
-		String command = inputView.receiveCommand(player.getName().value());
-		if (HIT_COMMAND.equals(command) || STAND_COMMAND.equals(command)) {
-			return command;
-		}
-		throw new IllegalArgumentException(HIT_COMMAND + " 또는 " + STAND_COMMAND + "만 입력 가능합니다.");
+	private Command getCommand(Player player) {
+		return inputView.receiveCommand(player.getName().value());
 	}
 
 	private void distributeCardToDealer(Dealer dealer, Deck deck) {
