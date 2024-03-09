@@ -20,7 +20,10 @@ public enum Rank {
         return this.name();
     }
 
-    public int getScore() {
+    public int getScore(int totalScore) { // TODO 시소랑 토의
+        if (this == ACE && totalScore + 11 <= 21) {
+            return 11;
+        }
         return score;
     }
 }

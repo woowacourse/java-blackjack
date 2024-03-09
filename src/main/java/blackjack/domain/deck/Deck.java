@@ -8,7 +8,6 @@ import java.util.Random;
 public class Deck {
 
     private static final Random RANDOM  = new Random();
-    private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -28,29 +27,18 @@ public class Deck {
 
     public int calculateTotalScore() {
         validateDeck();
-        int totalScore = cards.stream()
-                .map(Card::getRank)
-                .mapToInt(Rank::getScore)
-                .sum();
-        if (hasAce() && canAddAceBonusScore(totalScore)) {
-            totalScore += ACE_BONUS_SCORE;
+        int totalScore = 0;
+        for (Card card : cards) {
+            Rank rank = card.getRank();
+            totalScore += rank.getScore(totalScore);
         }
         return totalScore;
-    }
-
-    private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
     }
 
     private void validateDeck() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("카드가 없습니다.");
         }
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
     }
 
     public int size() {
