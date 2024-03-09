@@ -22,7 +22,7 @@ public class Game {
     public void play() {
         initializeHands();
 
-        List<Player> players = getPlayers();
+        List<Player> players = this.players.getPlayers();
         OutputView.printInitialHand(dealer, players);
 
         playerTurn(players, dealer);
@@ -32,7 +32,7 @@ public class Game {
         OutputView.printResult(calculateResult(), dealer);
     }
 
-    public void initializeHands() {
+    private void initializeHands() {
         dealer.shuffle();
         initializeHand(dealer);
         for (Player player : players.getPlayers()) {
@@ -44,15 +44,7 @@ public class Game {
         player.initializeHand(dealer.draw(), dealer.draw());
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
-    }
-
-    public Result calculateResult() {
+    private Result calculateResult() {
         int dealerScore = dealer.calculate();
         Map<Player, Integer> playersScore = players.calculate();
 
