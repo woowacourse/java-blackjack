@@ -12,7 +12,7 @@ public class CardPicker {
     private final List<Card> cards;
 
     public CardPicker() {
-        this.cards = new ArrayList<>(Arrays.stream(Card.values()).toList());
+        this.cards = new ArrayList<>(List.of(Card.values()));
         random = new Random();
     }
 
