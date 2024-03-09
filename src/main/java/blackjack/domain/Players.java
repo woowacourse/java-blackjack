@@ -10,13 +10,13 @@ public class Players {
         this.playerGroup = playerGroup;
     }
 
-    private static void validate(List<Player> players) {
+    private void validate(List<Player> players) {
         if (duplicatedNameExist(players)) {
             throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
     }
 
-    private static boolean duplicatedNameExist(List<Player> players) {
+    private boolean duplicatedNameExist(List<Player> players) {
         int distinctCount = (int) players.stream()
                 .map(Player::getName)
                 .distinct()
