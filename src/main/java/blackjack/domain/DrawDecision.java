@@ -17,6 +17,6 @@ public enum DrawDecision {
         return Arrays.stream(values())
                 .filter(drawDecision -> drawDecision.code.equals(code))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 값을 찾지 못하였습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] " + YES.code + "또는 " + NO.code + "로 입력해주세요"));
     }
 }
