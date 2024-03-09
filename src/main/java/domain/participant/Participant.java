@@ -35,7 +35,7 @@ public abstract class Participant {
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
     }
 
-    public int score() {
+    public int calculateScore() {
         return cards.calculateScore();
     }
 

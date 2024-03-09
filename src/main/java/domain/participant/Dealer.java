@@ -13,7 +13,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return score() <= THRESHOLD_SCORE;
+        return calculateScore() <= THRESHOLD_SCORE;
     }
 
     public Card findShowingCard() {

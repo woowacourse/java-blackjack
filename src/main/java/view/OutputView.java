@@ -33,9 +33,9 @@ public class OutputView {
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
         System.out.println();
         System.out.println(
-            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().score()));
+            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().calculateScore()));
         for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player) + scoreText(player.score()));
+            System.out.println(participantNameAndCardsText(player) + scoreText(player.calculateScore()));
         }
         System.out.println();
     }
