@@ -95,25 +95,20 @@ public class BlackjackController {
     }
 
     private void playerTryDraw(Deck deck, Gamer player) {
-        boolean needToDraw = true;
-        while (needToDraw) {
-            needToDraw = playerTryDrawOnce(deck, player);
+        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
+        while (YesOrNoInputView.getYNAsBoolean() && playerTryDrawOnce(deck, player)) {
+            OutputView.printPlayerAdditionalCardMessage(player.getRawName());
         }
     }
 
     private boolean playerTryDrawOnce(Deck deck, Gamer player) {
-        boolean needToDraw;
-        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
-        needToDraw = YesOrNoInputView.getYNAsBoolean();
-        if (needToDraw) {
-            try {
-                playerDraw(deck, player);
-                printPlayer(player);
-            } catch (IllegalStateException e) {
-                return false;
-            }
+        try {
+            playerDraw(deck, player);
+            printPlayer(player);
+        } catch (IllegalStateException ignored) {
+            return false;
         }
-        return needToDraw;
+        return true;
     }
 
     private void dealerTryDraw(Deck deck) {
