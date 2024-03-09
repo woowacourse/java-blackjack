@@ -14,11 +14,15 @@ import java.util.stream.Stream;
 public class Deck {
     private final Deque<Card> deck;
 
-    public Deck() {
-        this.deck = makeDeck();
+    private Deck(final Deque<Card> deck) {
+        this.deck = deck;
     }
 
-    private static Deque<Card> makeDeck() {
+    public static Deck createByRandomOrder() {
+        return new Deck(makeRandomOrderDeck());
+    }
+
+    private static Deque<Card> makeRandomOrderDeck() {
         List<Card> originDeck = Arrays.stream(Shape.values())
                 .flatMap(Deck::matchScore)
                 .collect(Collectors.toList());

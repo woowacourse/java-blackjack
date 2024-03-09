@@ -18,7 +18,7 @@ public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
     public void run() {
-        final Deck deck = new Deck();
+        final Deck deck = Deck.createByRandomOrder();
 
         final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
         final Players players = Players.of(names, deck.distributeInitialCard(names.size()));
