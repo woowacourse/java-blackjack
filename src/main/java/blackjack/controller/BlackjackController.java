@@ -12,7 +12,7 @@ import blackjack.view.PlayerCommand;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static blackjack.domain.gamer.Gamer.DEAL_CARD_COUNT;
+import static blackjack.domain.gamer.Player.DEAL_CARD_COUNT;
 
 public class BlackjackController {
 
