@@ -12,7 +12,7 @@ public class Player {
 
     public Player(final String name, final Hand hand) {
         validateNullAndEmptyName(name);
-        this.name = name;
+        this.name = name.trim();
         this.hand = hand;
     }
 

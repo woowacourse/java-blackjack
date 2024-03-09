@@ -37,6 +37,15 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("이름 입력시 앞 뒤에 공백을 입력하면 제거한다.")
+    void trimName() {
+        String name = "  리브  ";
+        Hand hand = new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE)));
+        Player player = new Player(name, hand);
+        assertThat(player.getName()).isEqualTo("리브");
+    }
+
+    @Test
     @DisplayName("플레이어 생성시 카드 2장을 지급받지 않으면 예외를 던진다.")
     void createCardsLowerSize() {
         assertThatIllegalArgumentException()
