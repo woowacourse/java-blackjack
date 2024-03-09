@@ -58,6 +58,20 @@ class DealerTest {
         assertThat(result).isFalse();
     }
 
+    @DisplayName("딜러는 카드를 한 장 숨길 수 있다.")
+    @Test
+    void hideCard() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        dealer.hit(card1);
+        dealer.hit(card2);
+
+        List<Card> result = dealer.getOpenCards();
+
+        assertThat(result).containsExactly(card2);
+    }
+
     @DisplayName("둘 다 버스트되면, 딜러가 이긴다.")
     @Test
     void allBust() {
