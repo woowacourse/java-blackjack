@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +35,7 @@ class DealerTest {
 
         boolean needMoreCard = dealer.needMoreCard();
 
-        System.out.println(dealer.calculate().getValue());
+        System.out.println(dealer.calculateScore().getValue());
         assertThat(needMoreCard).isFalse();
     }
 }

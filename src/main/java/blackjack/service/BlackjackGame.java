@@ -83,7 +83,7 @@ public class BlackjackGame {
         final Map<ParticipantName, Score> participantsScores = players.getPlayersScore();
 
         final Hands dealerHands = dealer.getHands();
-        final Score dealerScore = dealer.calculate();
+        final Score dealerScore = dealer.calculateScore();
 
         participantsHands.put(dealer.getName(), dealerHands);
         participantsScores.put(dealer.getName(), dealerScore);
@@ -92,7 +92,7 @@ public class BlackjackGame {
     }
 
     public WinningResultDTO getWinningResults() {
-        final WinningResult winningResult = WinningResult.of(players, dealer.calculate());
+        final WinningResult winningResult = WinningResult.of(players, dealer.calculateScore());
         final Map<ParticipantName, WinStatus> playerWinningResults = winningResult.getParticipantsWinStatus();
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 

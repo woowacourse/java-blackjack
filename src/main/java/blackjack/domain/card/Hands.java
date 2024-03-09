@@ -3,6 +3,8 @@ package blackjack.domain.card;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.result.BlackjackStatus;
+import blackjack.domain.result.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,21 +28,43 @@ public class Hands {
         cards.add(card);
     }
 
-    public void addStartCard(final Card firstCard, final Card secondCard) {
-        cards.add(firstCard);
-        cards.add(secondCard);
+    public Score calculateScore() {
+        int sum = sum();
+        int aceCount = countAce();
+
+        while (isDeadScore(sum) && aceCount-- > 0) {
+            sum -= 10;
+        }
+
+        return new Score(sum);
     }
 
-    public int sum() {
+    private int sum() {
         return cards.stream()
                 .mapToInt(Card::getRealNumber)
                 .sum();
     }
 
-    public int countAce() {
+    private int countAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    private boolean isDeadScore(final int sum) {
+        return BlackjackStatus.from(new Score(sum)).isDead();
+    }
+
+    public boolean isNotBlackjack() {
+        return !getStatus().isBlackjack();
+    }
+
+    public boolean isNotDead() {
+        return !getStatus().isDead();
+    }
+
+    private BlackjackStatus getStatus() {
+        return BlackjackStatus.from(calculateScore());
     }
 
     public Hands getFirstCard() {

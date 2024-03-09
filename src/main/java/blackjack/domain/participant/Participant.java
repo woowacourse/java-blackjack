@@ -23,19 +23,8 @@ public class Participant {
         hands.add(card);
     }
 
-    public Score calculate() {
-        int sum = hands.sum();
-        int aceCount = hands.countAce();
-
-        while (isDeadScore(sum) && aceCount-- > 0) {
-            sum -= 10;
-        }
-
-        return new Score(sum);
-    }
-
-    private boolean isDeadScore(final int sum) {
-        return BlackjackStatus.from(new Score(sum)).isDead();
+    public Score calculateScore() {
+        return hands.calculateScore();
     }
 
     public boolean isName(final String name) {
@@ -51,7 +40,7 @@ public class Participant {
     }
 
     private BlackjackStatus getStatus() {
-        return BlackjackStatus.from(calculate());
+        return BlackjackStatus.from(calculateScore());
     }
 
     public Hands getHands() {

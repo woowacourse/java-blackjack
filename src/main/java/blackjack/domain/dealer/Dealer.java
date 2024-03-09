@@ -21,7 +21,7 @@ public class Dealer {
     }
 
     public boolean needMoreCard() {
-        return NEED_CARD_CRITERION.isBiggerThan(participant.calculate());
+        return NEED_CARD_CRITERION.isBiggerThan(participant.calculateScore());
     }
 
 
@@ -45,8 +45,8 @@ public class Dealer {
         }
     }
 
-    public Score calculate() {
-        return participant.calculate();
+    public Score calculateScore() {
+        return participant.calculateScore();
     }
 
     public boolean isNotBlackjack() {

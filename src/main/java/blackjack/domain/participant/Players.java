@@ -58,7 +58,7 @@ public class Players {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Participant participant : players) {
-            playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculate()));
+            playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculateScore()));
         }
 
         return playersWinStatus;
@@ -92,7 +92,7 @@ public class Players {
     public Map<ParticipantName, Score> getPlayersScore() {
         return players.stream()
                 .collect(toMap(Participant::getName,
-                        Participant::calculate,
+                        Participant::calculateScore,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
     }
