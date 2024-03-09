@@ -45,6 +45,28 @@ class Controller {
         return new Participants(playerNames);
     }
 
+    private List<Card> createCards() {
+        List<Card> cards = new ArrayList<>();
+
+        for (CardRank rank : CardRank.values()) {
+            cards.addAll(createRankCards(rank));
+        }
+
+        Collections.shuffle(cards);
+
+        return cards;
+    }
+
+    private List<Card> createRankCards(CardRank rank) {
+        List<Card> cards = new ArrayList<>();
+
+        for (CardShape shape : CardShape.values()) {
+            cards.add(new Card(rank, shape));
+        }
+
+        return cards;
+    }
+
     private void initialDeal(Participants participants, Deck deck) {
         for (Participant participant : participants.getParticipants()) {
             participant.hit(deck.draw());
@@ -89,22 +111,6 @@ class Controller {
         outputView.printGameResult(playerGameResults, dealerGameResult);
     }
 
-    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        EnumMap<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerGameResults.put(gameResult, 0);
-        }
-
-        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
-            GameResult gameResult = entry.getValue().getOpposite();
-            int current = dealerGameResults.get(gameResult);
-            dealerGameResults.put(gameResult, current + 1);
-        }
-
-        return dealerGameResults;
-    }
-
     private Map<Player, GameResult> createPlayerGameResults(Participants participants) {
         Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
@@ -117,25 +123,19 @@ class Controller {
         return playerGameResults;
     }
 
-    private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
+    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
+        Map<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
 
-        for (CardRank rank : CardRank.values()) {
-            cards.addAll(createRankCards(rank));
+        for (GameResult gameResult : GameResult.values()) {
+            dealerGameResults.put(gameResult, 0);
         }
 
-        Collections.shuffle(cards);
-
-        return cards;
-    }
-
-    private List<Card> createRankCards(CardRank rank) {
-        List<Card> cards = new ArrayList<>();
-
-        for (CardShape shape : CardShape.values()) {
-            cards.add(new Card(rank, shape));
+        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
+            GameResult gameResult = entry.getValue().getOpposite();
+            int current = dealerGameResults.get(gameResult);
+            dealerGameResults.put(gameResult, current + 1);
         }
 
-        return cards;
+        return dealerGameResults;
     }
 }
