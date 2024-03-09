@@ -5,6 +5,11 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.dto.DealerDto;
 import blackjack.domain.dto.OutcomeDto;
 import blackjack.domain.dto.PlayersDto;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +47,7 @@ public class GameBoard {
     }
 
     public boolean isHit(final Gamer gamer) {
-        return gamer.canDraw();
+        return gamer.canHit();
     }
 
     public DealerDto getDealerFinalState() {

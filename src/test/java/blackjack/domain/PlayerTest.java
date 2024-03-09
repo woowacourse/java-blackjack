@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +17,11 @@ class PlayerTest {
     void checkIsEqualOrLessThanMaxValue() {
         final Card card1 = new Card(Number.ACE, Suit.DIAMOND);
         final Card card2 = new Card(Number.TEN, Suit.CLOVER);
-        final Player player = Player.from(new Name("pobi"));
+        final Player player = new Player(new Name("pobi"));
         player.draw(card1);
         player.draw(card2);
 
-        boolean actual = player.canDraw();
+        boolean actual = player.canHit();
 
         assertThat(actual).isEqualTo(true);
     }
@@ -30,12 +32,12 @@ class PlayerTest {
         final Card card1 = new Card(Number.TEN, Suit.DIAMOND);
         final Card card2 = new Card(Number.TEN, Suit.CLOVER);
         final Card card3 = new Card(Number.TWO, Suit.CLOVER);
-        final Player player = Player.from(new Name("pobi"));
+        final Player player = new Player(new Name("pobi"));
         player.draw(card1);
         player.draw(card2);
         player.draw(card3);
 
-        boolean actual = player.canDraw();
+        boolean actual = player.canHit();
 
         assertThat(actual).isEqualTo(false);
     }

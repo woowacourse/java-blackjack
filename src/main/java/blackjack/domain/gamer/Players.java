@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayersDto;
@@ -18,7 +18,7 @@ public class Players {
     public static Players from(final List<String> names) {
         final List<Player> players = new ArrayList<>();
         for (final String name : names) {
-            players.add(Player.from(new Name(name)));
+            players.add(new Player(new Name(name)));
         }
         return new Players(players);
     }
@@ -35,6 +35,7 @@ public class Players {
         return names;
     }
 
+    // TODO: DTO 변환 위치 재고
     public PlayersDto toDto() {
         final List<PlayerDto> playerDtos = new ArrayList<>();
         for (final Player player : players) {

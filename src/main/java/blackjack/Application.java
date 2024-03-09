@@ -1,10 +1,7 @@
 package blackjack;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.GameBoard;
 import blackjack.domain.Outcome;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
@@ -12,8 +9,12 @@ import blackjack.domain.dto.DealerDto;
 import blackjack.domain.dto.OutcomeDto;
 import blackjack.domain.dto.OutcomesDto;
 import blackjack.domain.dto.PlayersDto;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
 
 public class Application {
@@ -33,7 +34,7 @@ public class Application {
 
     private static GameBoard createGameBoard() {
         final Deck deck = new Deck(new DeckShuffleFactory());
-        final Dealer dealer = Dealer.create();
+        final Dealer dealer = new Dealer();
         final Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(deck, dealer, players);
     }

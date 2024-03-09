@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Deck;
 import blackjack.domain.dto.OutcomeDto;
 import java.util.List;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +26,7 @@ class GameBoardTest {
     void informDealerOutcome() {
         final Deck deck = new Deck(new TestDeckFactory());
         final Players players = Players.from(List.of("pobi"));
-        final Dealer dealer = Dealer.create();
+        final Dealer dealer = new Dealer();
         final Referee referee = new Referee(dealer.getCards());
         final GameBoard gameBoard = new GameBoard(deck, dealer, players);
         gameBoard.drawInitialPlayersCards();
@@ -39,7 +42,7 @@ class GameBoardTest {
     void informPlayersOutcome() {
         final Deck deck = new Deck(new TestDeckFactory());
         final Players players = Players.from(List.of("pobi"));
-        final Dealer dealer = Dealer.create();
+        final Dealer dealer = new Dealer();
         final Referee referee = new Referee(dealer.getCards());
         final GameBoard gameBoard = new GameBoard(deck, dealer, players);
         gameBoard.drawInitialPlayersCards();
