@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
 import blackjack.domain.participants.Name;
@@ -48,21 +49,21 @@ public class GameBoard {
         return participants.isDealerNotOver();
     }
 
-    public void distributeInitialDecks() {
-        List<Deck> initialDecks = makeInitialDecks();
-        participants.receiveInitialDecks(initialDecks);
+    public void distributeInitialHands() {
+        List<Hands> initialDecks = makeInitialDecks();
+        participants.receiveInitialHands(initialDecks);
     }
 
-    private List<Deck> makeInitialDecks() {
-        List<Deck> initialDecks = new ArrayList<>();
+    private List<Hands> makeInitialDecks() {
+        List<Hands> initialDecks = new ArrayList<>();
         for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
             initialDecks.add(makeInitialDeck());
         }
         return initialDecks;
     }
 
-    private Deck makeInitialDeck() {
-        Deck tempDeck = new Deck();
+    private Hands makeInitialDeck() {
+        Hands tempDeck = new Hands(new ArrayList<>());
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
             tempDeck.addCard(this.allCardDeck.pickRandomCard());
         }

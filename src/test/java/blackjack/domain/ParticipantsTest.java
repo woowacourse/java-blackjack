@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
 import blackjack.domain.participants.Name;
@@ -42,7 +43,7 @@ class ParticipantsTest {
 
         participants.receivePlayerCard(card, 0);
 
-        assertThat(participants.getOnePlayer(0).getDeck().size()).isEqualTo(1);
+        assertThat(participants.getOnePlayer(0).getHands().size()).isEqualTo(1);
     }
 
     @Test
@@ -52,51 +53,58 @@ class ParticipantsTest {
 
         participants.receiveDealerCard(card);
 
-        assertThat(participants.getDealer().getDeck().size()).isEqualTo(1);
+        assertThat(participants.getDealer().getHands().size()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("게임 참가자들이 초기 카드를 받는다")
     void initialDistributeTest() {
-        Deck deck1 = new Deck();
-        deck1.addCard(new Card(Shape.HEART, Rank.ACE));
-        deck1.addCard(new Card(Shape.HEART, Rank.TWO));
-
-        Deck deck2 = new Deck();
-        deck2.addCard(new Card(Shape.SPADE, Rank.ACE));
-        deck2.addCard(new Card(Shape.SPADE, Rank.TWO));
-
-        Deck deck3 = new Deck();
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.ACE));
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.TWO));
-
-
-        participants.receiveInitialDecks(
-                new ArrayList<>(List.of(deck1, deck2, deck3))
+        Hands hands1 = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO))
         );
 
-        assertThat(siso.getDeck().size()).isEqualTo(2);
+        Hands hands2 = new Hands(List.of(
+                new Card(Shape.SPADE, Rank.ACE),
+                new Card(Shape.SPADE, Rank.TWO))
+        );
+
+        Hands hands3 = new Hands(List.of(
+                new Card(Shape.DIAMOND, Rank.ACE),
+                new Card(Shape.DIAMOND, Rank.TWO))
+        );
+
+
+        participants.receiveInitialHands(
+                new ArrayList<>(List.of(hands1, hands2, hands3))
+        );
+
+        assertThat(siso.getHands().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("참가자들의 결과를 계산한다.")
     void calculateResultTest() {
-        Deck deck1 = new Deck();
-        deck1.addCard(new Card(Shape.HEART, Rank.ACE));
-        deck1.addCard(new Card(Shape.HEART, Rank.TWO));
-
-        Deck deck2 = new Deck();
-        deck2.addCard(new Card(Shape.SPADE, Rank.ACE));
-        deck2.addCard(new Card(Shape.SPADE, Rank.TWO));
-
-        Deck deck3 = new Deck();
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.ACE));
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.TWO));
-
-
-        participants.receiveInitialDecks(
-                new ArrayList<>(List.of(deck1, deck2, deck3))
+        Hands hands1 = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO))
         );
+
+        Hands hands2 = new Hands(List.of(
+                new Card(Shape.SPADE, Rank.ACE),
+                new Card(Shape.SPADE, Rank.TWO))
+        );
+
+        Hands hands3 = new Hands(List.of(
+                new Card(Shape.DIAMOND, Rank.ACE),
+                new Card(Shape.DIAMOND, Rank.TWO))
+        );
+
+
+        participants.receiveInitialHands(
+                new ArrayList<>(List.of(hands1, hands2, hands3))
+        );
+
         Map<Player, Boolean> result = participants.calculateVictory();
         assertThat(result.get(siso)).isFalse();
     }
@@ -104,21 +112,24 @@ class ParticipantsTest {
     @Test
     @DisplayName("참가자가 카드를 더 받을 수 있다.")
     void isPlayerNotOverTest() {
-        Deck deck1 = new Deck();
-        deck1.addCard(new Card(Shape.HEART, Rank.ACE));
-        deck1.addCard(new Card(Shape.HEART, Rank.TWO));
+        Hands hands1 = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO))
+        );
 
-        Deck deck2 = new Deck();
-        deck2.addCard(new Card(Shape.SPADE, Rank.ACE));
-        deck2.addCard(new Card(Shape.SPADE, Rank.TWO));
+        Hands hands2 = new Hands(List.of(
+                new Card(Shape.SPADE, Rank.ACE),
+                new Card(Shape.SPADE, Rank.TWO))
+        );
 
-        Deck deck3 = new Deck();
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.ACE));
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.TWO));
+        Hands hands3 = new Hands(List.of(
+                new Card(Shape.DIAMOND, Rank.ACE),
+                new Card(Shape.DIAMOND, Rank.TWO))
+        );
 
 
-        participants.receiveInitialDecks(
-                new ArrayList<>(List.of(deck1, deck2, deck3))
+        participants.receiveInitialHands(
+                new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
         assertThat(participants.isPlayerNotOver(0)).isTrue();
@@ -127,21 +138,24 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있다.")
     void isDealerNotOverTest() {
-        Deck deck1 = new Deck();
-        deck1.addCard(new Card(Shape.HEART, Rank.JACK));
-        deck1.addCard(new Card(Shape.HEART, Rank.SIX));
+        Hands hands1 = new Hands(List.of(
+                new Card(Shape.HEART, Rank.JACK),
+                new Card(Shape.HEART, Rank.SIX))
+        );
 
-        Deck deck2 = new Deck();
-        deck2.addCard(new Card(Shape.SPADE, Rank.ACE));
-        deck2.addCard(new Card(Shape.SPADE, Rank.TWO));
+        Hands hands2 = new Hands(List.of(
+                new Card(Shape.SPADE, Rank.ACE),
+                new Card(Shape.SPADE, Rank.TWO))
+        );
 
-        Deck deck3 = new Deck();
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.ACE));
-        deck3.addCard(new Card(Shape.DIAMOND, Rank.TWO));
+        Hands hands3 = new Hands(List.of(
+                new Card(Shape.DIAMOND, Rank.ACE),
+                new Card(Shape.DIAMOND, Rank.TWO))
+        );
 
 
-        participants.receiveInitialDecks(
-                new ArrayList<>(List.of(deck1, deck2, deck3))
+        participants.receiveInitialHands(
+                new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
         assertThat(participants.isDealerNotOver()).isTrue();

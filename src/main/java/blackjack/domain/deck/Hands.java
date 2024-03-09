@@ -1,6 +1,7 @@
 package blackjack.domain.deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hands {
@@ -26,5 +27,9 @@ public class Hands {
             totalScore += rank.getScore(totalScore);
         }
         return totalScore;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

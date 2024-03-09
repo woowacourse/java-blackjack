@@ -1,7 +1,7 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +26,18 @@ public class Participants {
         dealer.receiveCard(card);
     }
 
-    public void receiveInitialDecks(List<Deck> decks) {
-        Deck dealerDeck = extractOneDeck(decks);
-        dealer.receiveDeck(dealerDeck);
+    public void receiveInitialHands(List<Hands> AllHands) {
+        Hands dealerHands = extractOneHands(AllHands);
+        dealer.receiveHands(dealerHands);
 
         for (int index = 0; index < players.size(); index++) {
-            Deck currentDeck = decks.get(index);
-            players.receiveOnePlayerDeck(currentDeck, index);
+            Hands currentHands = AllHands.get(index);
+            players.receiveOnePlayerHands(currentHands, index);
         }
     }
 
-    private Deck extractOneDeck(List<Deck> decks) {
-        return decks.remove(decks.size() - 1);
+    private Hands extractOneHands(List<Hands> hands) {
+        return hands.remove(hands.size() - 1);
     }
 
     public Map<Player, Boolean> calculateVictory() {

@@ -9,37 +9,36 @@ import java.util.ArrayList;
 public class Player {
 
     private final Name name;
-    private final Hands hands;
+    private Hands hands;
 
     public Player(Name name) {
         this.name = name;
-        this.hands = new Hands(new ArrayList<>());
     }
 
-    public void receiveDeck(Deck tempDeck) { // TODO 삭제
-        int tempDeckSize = tempDeck.size();
-        for (int i = 0; i < tempDeckSize; i++) {
-
-        }
+    public void receiveHands(Hands hands) {
+        this.hands = hands;
     }
 
     public void receiveCard(Card card) {
+        if (hands == null) {
+            hands = new Hands(new ArrayList<>());
+        }
         hands.addCard(card);
     }
 
     public int calculateScore() {
-        return 0;
+        return hands.calculateScore();
     }
 
     public boolean isNotOver(int boundaryScore) {
-        return 0 < boundaryScore;
+        return hands.calculateScore() < boundaryScore;
     }
 
     public Name getName() {
         return name;
     }
 
-    public Deck getDeck() { // TODO 삭제
-        return null;
+    public Hands getHands() {
+        return hands;
     }
 }

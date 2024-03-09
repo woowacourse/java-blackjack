@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
 import blackjack.domain.participants.Name;
@@ -28,16 +29,18 @@ public class GameBoardTest {
         siso = new Player(new Name("시소"));
         takan = new Player(new Name("타칸"));
 
-        Deck sisoDeck = new Deck();
-        sisoDeck.addCard(new Card(Shape.HEART, Rank.JACK));
-        sisoDeck.addCard(new Card(Shape.HEART, Rank.SIX)); // 16
+        Hands sisoHands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.JACK),
+                new Card(Shape.HEART, Rank.SIX))
+        );
 
-        Deck takanDeck = new Deck();
-        takanDeck.addCard(new Card(Shape.SPADE, Rank.ACE));
-        takanDeck.addCard(new Card(Shape.SPADE, Rank.JACK)); // 21
+        Hands takanHands = new Hands(List.of(
+                new Card(Shape.SPADE, Rank.ACE),
+                new Card(Shape.SPADE, Rank.JACK))
+        );
 
-        siso.receiveDeck(sisoDeck);
-        takan.receiveDeck(takanDeck);
+        siso.receiveHands(sisoHands);
+        takan.receiveHands(takanHands);
 
         List<Player> playerList = List.of(siso, takan);
         players = new Players(playerList);
@@ -85,9 +88,9 @@ public class GameBoardTest {
     @Test
     @DisplayName("초기에 딜러와 플레이어는 카드 두 장을 받는다.")
     void initialDistributeTest() {
-        gameBoard.distributeInitialDecks();
+        gameBoard.distributeInitialHands();
 
-        assertThat(dealer.getDeck().size()).isEqualTo(2);
+        assertThat(dealer.getHands().size()).isEqualTo(2);
     }
 
     @Test
@@ -95,7 +98,7 @@ public class GameBoardTest {
     void addCardToPlayerTest() {
         gameBoard.addCardToPlayer(0);
 
-        assertThat(siso.getDeck().size()).isEqualTo(3);
+        assertThat(siso.getHands().size()).isEqualTo(3);
     }
 
     @Test
@@ -103,7 +106,7 @@ public class GameBoardTest {
     void addCardToDealerTest() {
         gameBoard.addCardToDealer();
 
-        assertThat(dealer.getDeck().size()).isEqualTo(1);
+        assertThat(dealer.getHands().size()).isEqualTo(1);
     }
 
     @Test

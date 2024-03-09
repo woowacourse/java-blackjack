@@ -3,6 +3,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class Players {
         players.get(playerIndex).receiveCard(card);
     }
 
-    public void receiveOnePlayerDeck(Deck deck, int playerIndex) {
-        players.get(playerIndex).receiveDeck(deck);
+    public void receiveOnePlayerHands(Hands hands, int playerIndex) {
+        players.get(playerIndex).receiveHands(hands);
     }
 
     public boolean isOnePlayerNotOver(int playerIndex) {

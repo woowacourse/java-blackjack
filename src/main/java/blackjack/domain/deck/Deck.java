@@ -1,6 +1,5 @@
 package blackjack.domain.deck;
 
-import blackjack.domain.participants.Players;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
