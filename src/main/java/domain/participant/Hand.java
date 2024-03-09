@@ -3,10 +3,10 @@ package domain.participant;
 import domain.PlayingCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static domain.constant.GameOption.BLACKJACK_CONDITION;
-import static java.util.Collections.unmodifiableList;
 
 public class Hand {
     private final List<PlayingCard> playingCards;
@@ -37,7 +37,7 @@ public class Hand {
     }
 
     public List<PlayingCard> getPlayingCards() {
-        return unmodifiableList(playingCards);
+        return Collections.unmodifiableList(playingCards);
     }
 
     public boolean isBlackJack() {
