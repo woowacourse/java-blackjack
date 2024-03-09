@@ -1,7 +1,6 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.CardName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +34,6 @@ public class HoldingCards {
 
     boolean hasAce() {
         return holdingCards.stream()
-                .anyMatch(card -> card.name() == CardName.ACE);
+                .anyMatch(Card::isCardNameAce);
     }
 }

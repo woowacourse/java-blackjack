@@ -24,4 +24,8 @@ public enum CardName {
     public int getCardNumber() {
         return cardNumber;
     }
+
+    public boolean isAce() {
+        return cardNumber == 1;
+    }
 }
