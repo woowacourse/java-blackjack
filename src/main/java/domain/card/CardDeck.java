@@ -1,4 +1,4 @@
-package card;
+package domain.card;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class CardDeck {
 
     private static final int DECK_TOP_POSITION = 0;
-    private List<Card> deck;
+    private final List<Card> deck;
 
     public CardDeck() {
         deck = readyCards();
