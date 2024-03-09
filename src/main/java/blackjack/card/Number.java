@@ -23,6 +23,6 @@ public enum Number {
     }
 
     int getScore() {
-        return this.score;
+        return score;
     }
 }

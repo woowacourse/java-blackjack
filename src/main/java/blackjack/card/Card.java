@@ -13,7 +13,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.number == Number.ACE;
+        return number == Number.ACE;
     }
 
     public int getScore() {
