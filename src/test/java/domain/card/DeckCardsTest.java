@@ -16,19 +16,19 @@ class DeckCardsTest {
 
     @Test
     @DisplayName("성공: 덱에서 카드 한 장 빼기")
-    void draw_NoException() {
+    void drawCard_NoException() {
         DeckCards deckCards = DeckCards.from(new SequentialCardGenerator());
-        Card drawnCard = deckCards.draw();
+        Card drawnCard = deckCards.drawCard();
         Assertions.assertThat(drawnCard.getRank()).isEqualTo(Rank.ACE);
         Assertions.assertThat(drawnCard.getSymbol()).isEqualTo(Symbol.SPADE);
     }
 
     @Test
     @DisplayName("실패: 덱에 카드가 없는 상태에서 카드 한 장 빼기")
-    void draw_Exception_NoCardsLeft() {
+    void drawCard_Exception_NoCardsLeft() {
         DeckCards deckCards = DeckCards.from(new OneCardGenerator());
-        deckCards.draw();
-        Assertions.assertThatThrownBy(deckCards::draw)
+        deckCards.drawCard();
+        Assertions.assertThatThrownBy(deckCards::drawCard)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
     }

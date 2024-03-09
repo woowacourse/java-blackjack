@@ -21,11 +21,11 @@ public class DeckCards {
     public List<Card> drawCards(int amount) {
         validateAmount(amount);
         return IntStream.range(0, amount)
-                .mapToObj(i -> draw())
+                .mapToObj(i -> drawCard())
                 .toList();
     }
 
-    public Card draw() {
+    public Card drawCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드를 모두 사용하였습니다.");
         }

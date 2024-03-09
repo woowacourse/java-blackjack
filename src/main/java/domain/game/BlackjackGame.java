@@ -33,7 +33,7 @@ public class BlackjackGame {
             throw new IllegalArgumentException("[ERROR] 해당 게임의 참여자가 아닙니다.");
         }
         if (participant.isReceivable()) {
-            participant.receive(deckCards.draw());
+            participant.receive(deckCards.drawCard());
         }
     }
 
