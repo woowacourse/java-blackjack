@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
 public class ParticipantName {
@@ -12,7 +13,7 @@ public class ParticipantName {
 
     private void validateBlank(final String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("참여자 이름에 공백을 입력할 수 없습니다.");
+            throw new NeedRetryException("참여자 이름에 공백을 입력할 수 없습니다.");
         }
     }
 

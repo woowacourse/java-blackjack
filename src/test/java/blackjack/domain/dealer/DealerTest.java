@@ -35,7 +35,6 @@ class DealerTest {
 
         boolean needMoreCard = dealer.needMoreCard();
 
-        System.out.println(dealer.calculateScore().getValue());
         assertThat(needMoreCard).isFalse();
     }
 }

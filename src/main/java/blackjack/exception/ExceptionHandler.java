@@ -15,8 +15,8 @@ public class ExceptionHandler {
     public static <T> T retry(final Supplier<T> supplier, final Consumer<String> errorConsumer) {
         try {
             return supplier.get();
-        } catch (final IllegalArgumentException exception) {
-            errorConsumer.accept(exception.getMessage());
+        } catch (final NeedRetryException e) {
+            errorConsumer.accept(e.getMessage());
             validateRetryCount();
             return retry(supplier, errorConsumer);
         }
@@ -24,7 +24,7 @@ public class ExceptionHandler {
 
     private static void validateRetryCount() {
         if (retryCount++ >= MAX_RETRY_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 재시도 횟수를 초과했습니다.");
+            throw new IllegalArgumentException("재시도 횟수를 초과했습니다.");
         }
     }
 

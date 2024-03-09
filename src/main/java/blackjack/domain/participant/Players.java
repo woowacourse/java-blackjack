@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
+import blackjack.exception.NeedRetryException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Players {
 
     private void validateDuplicate(final List<Participant> participants) {
         if (Set.copyOf(participants).size() != participants.size()) {
-            throw new IllegalArgumentException("중복된 이름의 참여자는 참여할 수 없습니다.");
+            throw new NeedRetryException("중복된 이름의 참여자는 참여할 수 없습니다.");
         }
     }
 

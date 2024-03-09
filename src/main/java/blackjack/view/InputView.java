@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import blackjack.view.format.DealerFormat;
 import java.util.Arrays;
@@ -22,13 +23,13 @@ public class InputView {
 
     private void validateDelimiter(final String input) {
         if (input.endsWith(DELIMITER)) {
-            throw new IllegalArgumentException(DELIMITER + " 로 끝날 수 없습니다.");
+            throw new NeedRetryException(DELIMITER + " 로 끝날 수 없습니다.");
         }
     }
 
     private void validateDealerSignal(final List<String> names) {
         if (hasDealerSignal(names)) {
-            throw new IllegalArgumentException(
+            throw new NeedRetryException(
                     DealerFormat.DEALER.name() + " or " + DealerFormat.DEALER.getFormat() + " 라는 이름을 사용할 수 없습니다.");
         }
     }
