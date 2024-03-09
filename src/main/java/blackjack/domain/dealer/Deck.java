@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public class Deck {
+    private static final Set<Card> CARDS_CACHE = createCards();
+
     private final List<Card> cards;
 
     Deck(Set<Card> cards) {
@@ -21,7 +23,7 @@ public class Deck {
     }
 
     public static Deck create() {
-        return new Deck(createCards());
+        return new Deck(CARDS_CACHE);
     }
 
     private static Set<Card> createCards() {
