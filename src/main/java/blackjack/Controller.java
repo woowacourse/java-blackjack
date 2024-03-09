@@ -68,6 +68,7 @@ class Controller {
             player.hit(deck.draw());
             outputView.printCards(player);
             playerTurn(player, deck);
+            return;
         }
 
         outputView.printCards(player);
