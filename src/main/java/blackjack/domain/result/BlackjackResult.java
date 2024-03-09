@@ -22,15 +22,15 @@ public class BlackjackResult {
         return dealerResults;
     }
 
+    public Map<Player, HandResult> getPlayersResult() {
+        return playersResult;
+    }
+
     private Map<HandResult, Integer> initializeDealerResults() {
         Map<HandResult, Integer> dealerResults = new LinkedHashMap<>();
         for (HandResult handResult : HandResult.values()) {
             dealerResults.put(handResult, 0);
         }
         return dealerResults;
-    }
-
-    public Map<Player, HandResult> getPlayersResult() {
-        return playersResult;
     }
 }

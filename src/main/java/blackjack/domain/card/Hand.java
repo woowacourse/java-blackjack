@@ -13,12 +13,12 @@ public class Hand {
         this.cards = cards;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public boolean isBust() {
         return isTotalScoreGreaterThan(BLACKJACK);
+    }
+
+    public boolean isTotalScoreGreaterThan(int score) {
+        return getCardTotalScore() > score;
     }
 
     public boolean isBlackjack() {
@@ -34,12 +34,12 @@ public class Hand {
         return aceCountForAlter * ACE_ALTERNATIVE_SCORE + cardTotalScore;
     }
 
-    public boolean isTotalScoreGreaterThan(int score) {
-        return getCardTotalScore() > score;
-    }
-
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     private int getCardTotalScore() {

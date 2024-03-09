@@ -9,15 +9,15 @@ public class Card {
         this.shape = shape;
     }
 
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
+
     public String getSignature() {
         return number.getSymbol() + shape.getValue();
     }
 
     public int getScore() {
         return number.getScore();
-    }
-
-    public boolean isAce() {
-        return number.equals(Number.ACE);
     }
 }

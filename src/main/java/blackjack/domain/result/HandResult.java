@@ -11,10 +11,6 @@ public enum HandResult {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public HandResult getOpposite() {
         if (WIN.equals(this)) {
             return LOSE;
@@ -23,5 +19,9 @@ public enum HandResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getName() {
+        return name;
     }
 }

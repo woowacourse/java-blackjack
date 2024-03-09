@@ -30,15 +30,21 @@ public class BlackjackGame {
         return retryOnException(() -> createParticipantsWithNames(handGenerator));
     }
 
+    private Participants createParticipantsWithNames(HandGenerator handGenerator) {
+        List<Name> playersName = readPlayersName();
+        return new Participants(playersName, handGenerator);
+    }
+
+    private List<Name> readPlayersName() {
+        List<String> playersName = inputView.readPlayersName();
+        return playersName.stream()
+                .map(Name::new)
+                .toList();
+    }
+
     private void participantsHitCard(Participants participants) {
         playersHitCard(participants.getPlayers());
         dealerHitCard(participants.getDealer());
-    }
-
-    private void printBlackjackResult(Participants participants) {
-        Referee referee = new Referee(participants);
-        BlackjackResult blackjackResult = referee.generateResult();
-        outputView.printBlackjackResult(blackjackResult);
     }
 
     private void playersHitCard(Players players) {
@@ -46,16 +52,6 @@ public class BlackjackGame {
         while (playerIterator.hasNext()) {
             hitIfCurrentPlayerWants(playerIterator);
         }
-    }
-
-    private void dealerHitCard(Dealer dealer) {
-        Deck deck = RandomDeck.getInstance();
-        int hitCount = 0;
-        while (dealer.canHit()) {
-            dealer.addCard(deck);
-            hitCount++;
-        }
-        outputView.printDealerHitCount(hitCount);
     }
 
     private void hitIfCurrentPlayerWants(PlayerIterator playerIterator) {
@@ -74,16 +70,20 @@ public class BlackjackGame {
         return PlayerAction.getAction(command);
     }
 
-    private Participants createParticipantsWithNames(HandGenerator handGenerator) {
-        List<Name> playersName = readPlayersName();
-        return new Participants(playersName, handGenerator);
+    private void dealerHitCard(Dealer dealer) {
+        Deck deck = RandomDeck.getInstance();
+        int hitCount = 0;
+        while (dealer.canHit()) {
+            dealer.addCard(deck);
+            hitCount++;
+        }
+        outputView.printDealerHitCount(hitCount);
     }
 
-    private List<Name> readPlayersName() {
-        List<String> playersName = inputView.readPlayersName();
-        return playersName.stream()
-                .map(Name::new)
-                .toList();
+    private void printBlackjackResult(Participants participants) {
+        Referee referee = new Referee(participants);
+        BlackjackResult blackjackResult = referee.generateResult();
+        outputView.printBlackjackResult(blackjackResult);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

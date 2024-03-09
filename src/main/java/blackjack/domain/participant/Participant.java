@@ -16,14 +16,6 @@ public abstract class Participant {
         this.hand = handGenerator.generate();
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }
@@ -35,6 +27,14 @@ public abstract class Participant {
 
     public int getScore() {
         return hand.getOptimizedScore();
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public abstract List<Card> getInitialOpenedCards();
