@@ -31,7 +31,7 @@ public enum ScoreDisplay {
         return Arrays.stream(ScoreDisplay.values())
                 .filter(scoreDisplay -> scoreDisplay.score == score)
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalArgumentException("해당 카드 점수에 매칭되는 출력 문자가 없습니다."))
                 .value;
     }
 }

@@ -22,7 +22,7 @@ public enum ShapeDisplay {
         return Arrays.stream(ShapeDisplay.values())
                 .filter(converter -> converter.shape == shape)
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalArgumentException("해당 카드 모양에 매칭되는 출력 문자가 없습니다."))
                 .value;
     }
 }
