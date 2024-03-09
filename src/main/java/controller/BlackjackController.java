@@ -20,6 +20,8 @@ import view.OutputView;
 import view.YesOrNoInputView;
 
 public class BlackjackController {
+    private static final int EXECUTION_COUNT = 2;
+
     private final Gamer dealer;
     private final List<Gamer> players;
 
@@ -40,10 +42,8 @@ public class BlackjackController {
     }
 
     private void initDealerAndPlayers(Deck deck) {
-        dealerDraw(deck);
-        dealerDraw(deck);
-        players.forEach(player -> playerDraw(deck, player));
-        players.forEach(player -> playerDraw(deck, player));
+        dealerDraw(deck, EXECUTION_COUNT);
+        players.forEach(player -> playerDraw(deck, player, EXECUTION_COUNT));
 
         List<String> playerNames = players.stream()
                 .map(Gamer::getRawName)
@@ -55,8 +55,20 @@ public class BlackjackController {
         dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
     }
 
+    private void dealerDraw(Deck deck, int execution_count) {
+        for (int count = 1; count <= execution_count; count++) {
+            dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
+        }
+    }
+
     private void playerDraw(Deck deck, Gamer player) {
         player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+    }
+
+    private void playerDraw(Deck deck, Gamer player, int execution_count) {
+        for (int count = 1; count <= execution_count; count++) {
+            player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+        }
     }
 
     private void printDealerAndPlayers() {
