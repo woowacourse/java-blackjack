@@ -77,9 +77,9 @@ public class OutputView {
     public void printResult(BlackjackGame game, Result result) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%s%s%n",
-            resultText(result.dealerWinCount(), "승 "),
-            resultText(result.dealerTieCount(), "무 "),
-            resultText(result.dealerLoseCount(), "패")
+            resultText(result.countDealerWins(), "승 "),
+            resultText(result.countDealerTies(), "무 "),
+            resultText(result.countDealerLoses(), "패")
         );
         for (Player player : game.getPlayers()) {
             System.out.println(player.getName() + ": " + winLoseText(result.playerWinLose(player)));

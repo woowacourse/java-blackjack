@@ -45,19 +45,19 @@ public class Result {
         return WinLose.TIE;
     }
 
-    public long dealerWinCount() {
+    public long countDealerWins() {
         return resultMap.values().stream()
             .filter(value -> value == WinLose.LOSE)
             .count();
     }
 
-    public long dealerLoseCount() {
+    public long countDealerLoses() {
         return resultMap.values().stream()
             .filter(value -> value == WinLose.WIN)
             .count();
     }
 
-    public long dealerTieCount() {
+    public long countDealerTies() {
         return resultMap.values().stream()
             .filter(value -> value == WinLose.TIE)
             .count();

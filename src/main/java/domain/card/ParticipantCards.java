@@ -29,7 +29,7 @@ public class ParticipantCards {
             return score;
         }
 
-        return IntStream.rangeClosed(0, aceCount())
+        return IntStream.rangeClosed(0, countAce())
             .map(index -> (score + index * ACE_SPECIAL_SCORE))
             .filter(number -> number <= BLACKJACK_SCORE)
             .max()
@@ -42,7 +42,7 @@ public class ParticipantCards {
             .sum();
     }
 
-    private int aceCount() {
+    private int countAce() {
         return (int) cards.stream()
             .filter(card -> card.getRank() == Rank.ACE)
             .count();
