@@ -19,7 +19,7 @@ class DrawDecisionTest {
     void testEnumFromInvalidCode(String code) {
         assertThatThrownBy(() -> DrawDecision.from(code))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당하는 값을 찾지 못하였습니다.");
+                .hasMessage("[ERROR] y또는 n로 입력해주세요");
     }
 
     @DisplayName("존재하는 코드명이면 적절한 상수를 반환받는다")
