@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class ParticipantCards {
+public class Cards {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
 
     private final List<Card> cards;
 
-    public ParticipantCards() {
+    public Cards() {
         this.cards = new ArrayList<>();
     }
 

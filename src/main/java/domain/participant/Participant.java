@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.ParticipantCards;
+import domain.card.Cards;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,11 +10,11 @@ public abstract class Participant {
     private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
-    private final ParticipantCards cards;
+    private final Cards cards;
 
     public Participant(Name name) {
         this.name = name;
-        this.cards = new ParticipantCards();
+        this.cards = new Cards();
     }
 
     public abstract boolean isReceivable();
