@@ -39,7 +39,9 @@ public class PlayerCards {
     }
 
     private int getAceCount() {
-        return (int) cards.stream().filter(Card::isAce).count();
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public List<Card> getCards() {
