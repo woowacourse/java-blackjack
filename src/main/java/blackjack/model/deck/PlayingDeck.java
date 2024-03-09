@@ -16,12 +16,13 @@ public class PlayingDeck {
     }
 
     public Card drawCard() {
-        validatePlayingDeckEmpty();
-        return playingDeck.poll();
+        Card card = playingDeck.poll();
+        validatePlayingDeckEmpty(card);
+        return card;
     }
 
-    private void validatePlayingDeckEmpty() {
-        if (playingDeck.isEmpty()) {
+    private void validatePlayingDeckEmpty(Card card) {
+        if (card == null) {
             throw new IllegalArgumentException("[ERROR] 카드를 모두 사용했습니다.");
         }
     }
