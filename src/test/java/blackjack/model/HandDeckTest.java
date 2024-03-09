@@ -2,6 +2,7 @@ package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
@@ -34,8 +35,8 @@ class HandDeckTest {
     void addCard_duplicateCard() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
-        Card card2 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
+        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
+        Card card2 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
 
         handDeck.addCard(card1);
         //when, then
@@ -89,7 +90,9 @@ class HandDeckTest {
         handDeck.switchAceValueInRow();
 
         //then
-        assertThat(card1.getScore()).isEqualTo(1);
-        assertThat(card2.getScore()).isEqualTo(11);
+        assertAll(
+                () -> assertThat(card1.getScore()).isEqualTo(1),
+                () -> assertThat(card2.getScore()).isEqualTo(11)
+        );
     }
 }

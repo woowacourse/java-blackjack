@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,8 +30,10 @@ class CardTest {
         card.switchAceValue();
         int modifiedScore = card.getScore();
 
-        //when, then
-        assertThat(unmodifiedScore).isEqualTo(11);
-        assertThat(modifiedScore).isEqualTo(1);
+        //then
+        assertAll(
+                () -> assertThat(unmodifiedScore).isEqualTo(11),
+                () -> assertThat(modifiedScore).isEqualTo(1)
+        );
     }
 }
