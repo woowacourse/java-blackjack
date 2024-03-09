@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String DELIMITER = ",";
+    private static final String NAME_SPLIT_DELIMITER = ",";
 
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readNames() {
         String input = scanner.nextLine();
-        String[] names = input.split(DELIMITER);
+        String[] names = input.split(NAME_SPLIT_DELIMITER);
         return Arrays.stream(names)
                 .map(String::trim)
                 .toList();
