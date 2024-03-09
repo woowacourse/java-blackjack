@@ -19,17 +19,6 @@ class HandsTest {
         assertThat(score).isEqualTo(10);
     }
 
-    @DisplayName("사용자의 카드중 ACE 포함여부를 반환한다.")
-    @Test
-    void hasAce() {
-        Hands hands = new Hands();
-        hands.receive(new Card(Shape.HEART, Rank.ACE));
-
-        boolean hasAce = hands.hasAce();
-
-        assertThat(hasAce).isTrue();
-    }
-
     @DisplayName("ace를 11로 결정한다.")
     @Test
     void calculateAceIsEleven() {

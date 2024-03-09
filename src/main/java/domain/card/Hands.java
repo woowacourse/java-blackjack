@@ -27,7 +27,7 @@ public class Hands {
         return totalScore;
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return value.stream()
                 .anyMatch(card -> Rank.ACE == card.getRank());
     }
