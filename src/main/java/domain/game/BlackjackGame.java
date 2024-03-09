@@ -23,7 +23,7 @@ public class BlackjackGame {
 
     public void distributeStartingCards() {
         for (Participant participant : participants.getParticipants()) {
-            List<Card> cards = deckCards.drawStartingCards(STARTING_CARDS_AMOUNT);
+            List<Card> cards = deckCards.drawCards(STARTING_CARDS_AMOUNT);
             participant.receive(cards);
         }
     }
