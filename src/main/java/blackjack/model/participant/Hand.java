@@ -27,9 +27,8 @@ public class Hand {
         }
     }
 
-    public Hand addCard(final Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
-        return new Hand(cards);
     }
 
     public int calculateScore() {

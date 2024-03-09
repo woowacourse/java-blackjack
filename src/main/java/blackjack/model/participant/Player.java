@@ -8,7 +8,7 @@ public class Player {
     private static final int HITTABLE_THRESHOLD = 21;
 
     protected final String name;
-    protected Hand hand;
+    protected final Hand hand;
 
     public Player(final String name, final Hand hand) {
         validateNullAndEmptyName(name);
@@ -23,7 +23,7 @@ public class Player {
     }
 
     public void receiveCard(final Card card) {
-        this.hand = hand.addCard(card);
+        hand.addCard(card);
     }
 
     public int notifyScore() {

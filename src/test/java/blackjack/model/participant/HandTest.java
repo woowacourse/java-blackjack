@@ -1,7 +1,16 @@
 package blackjack.model.participant;
 
-import static blackjack.model.deck.Score.*;
-import static blackjack.model.deck.Shape.*;
+import static blackjack.model.deck.Score.ACE;
+import static blackjack.model.deck.Score.EIGHT;
+import static blackjack.model.deck.Score.FIVE;
+import static blackjack.model.deck.Score.FOUR;
+import static blackjack.model.deck.Score.NINE;
+import static blackjack.model.deck.Score.TEN;
+import static blackjack.model.deck.Score.TWO;
+import static blackjack.model.deck.Shape.CLOVER;
+import static blackjack.model.deck.Shape.DIA;
+import static blackjack.model.deck.Shape.HEART;
+import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -23,8 +32,9 @@ class HandTest {
     @DisplayName("카드를 추가할 수 있다.")
     void addCard() {
         Hand hand = new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
-        Hand addedCard = hand.addCard(new Card(CLOVER, ACE));
-        assertThat(addedCard.getCards()).isEqualTo(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR), new Card(CLOVER, ACE)));
+        hand.addCard(new Card(CLOVER, ACE));
+        assertThat(hand.getCards()).isEqualTo(
+                List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR), new Card(CLOVER, ACE)));
     }
 
     @Test
