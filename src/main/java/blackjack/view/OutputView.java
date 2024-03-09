@@ -52,6 +52,12 @@ public class OutputView {
                 participant.calculateScore());
     }
 
+    private String buildCardsMessage(List<Card> cards) {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
+    }
+
     public void printGameResult(Map<Player, GameResult> playerGameResults, Map<GameResult, Integer> dealerGameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
@@ -67,11 +73,5 @@ public class OutputView {
                 .filter(entry -> entry.getValue() > 0)
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getValue()))
                 .collect(Collectors.joining(" "));
-    }
-
-    private String buildCardsMessage(List<Card> cards) {
-        return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
     }
 }

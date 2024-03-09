@@ -14,6 +14,18 @@ class Hand {
         cards.add(card);
     }
 
+    public boolean isBust() {
+        int score = calculateScore();
+
+        return score > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        int score = calculateScore();
+
+        return score == BLACKJACK_SCORE;
+    }
+
     public int calculateScore() {
         int hardHandScore = calculateHardHandScore();
         int softHandScore = hardHandScore + BONUS_SCORE;
@@ -25,28 +37,16 @@ class Hand {
         return hardHandScore;
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-                .map(Card::getCardRank)
-                .anyMatch(CardRank::isAce);
-    }
-
     private int calculateHardHandScore() {
         return cards.stream()
                 .map(Card::getScore)
                 .reduce(0, Integer::sum);
     }
 
-    public boolean isBust() {
-        int score = calculateScore();
-
-        return score > BLACKJACK_SCORE;
-    }
-
-    public boolean isBlackJack() {
-        int score = calculateScore();
-
-        return score == BLACKJACK_SCORE;
+    private boolean hasAce() {
+        return cards.stream()
+                .map(Card::getCardRank)
+                .anyMatch(CardRank::isAce);
     }
 
     public List<Card> getCards() {

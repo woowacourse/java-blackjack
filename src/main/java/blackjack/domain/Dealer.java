@@ -9,13 +9,6 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    @Override
-    public boolean isPlayable() {
-        int score = hand.calculateScore();
-
-        return score < STAND_BOUND;
-    }
-
     public GameResult judge(Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = calculateScore();
@@ -33,5 +26,12 @@ public class Dealer extends Participant {
         }
 
         return GameResult.LOSE;
+    }
+
+    @Override
+    public boolean isPlayable() {
+        int score = hand.calculateScore();
+
+        return score < STAND_BOUND;
     }
 }
