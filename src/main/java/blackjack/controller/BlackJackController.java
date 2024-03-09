@@ -71,15 +71,7 @@ public class BlackJackController {
 
     private void doDealerRound(Dealer dealer, Deck deck) {
         dealer.drawUntilExceedMinimum(deck);
-        printExtraDealerDraw(dealer);
-    }
-
-    private void printExtraDealerDraw(Dealer dealer) {
-        int dealerCardsCount = dealer.getCardsCount();
-        int extraDrawCount = dealerCardsCount - INITIAL_CARDS_COUNT;
-        if (extraDrawCount > 0) {
-            outputView.printExtraDealerDraw(extraDrawCount);
-        }
+        outputView.printExtraDealerDraw(dealer.getExtraCardsCount(INITIAL_CARDS_COUNT));
     }
 
     private void printGameResult(Dealer dealer, Players players) {

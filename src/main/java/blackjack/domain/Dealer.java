@@ -40,7 +40,7 @@ public class Dealer {
         return player;
     }
 
-    public int getCardsCount() {
-        return player.getTotalCardsCount();
+    public int getExtraCardsCount(int initialCardsCount) {
+        return player.getTotalCardsCount() - initialCardsCount;
     }
 }
