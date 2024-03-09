@@ -20,4 +20,8 @@ public class Player extends Participant {
     public PlayerName getPlayerName() {
         return playerName;
     }
+
+    public boolean isNotBurst() {
+        return hand.isNotBurst();
+    }
 }
