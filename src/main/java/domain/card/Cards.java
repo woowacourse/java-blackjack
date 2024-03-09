@@ -24,7 +24,7 @@ public class Cards {
     }
 
     public int calculateScore() {
-        final int score = initialScore();
+        final int score = calculateInitialScore();
         if (score > BLACKJACK_SCORE) {
             return score;
         }
@@ -36,7 +36,7 @@ public class Cards {
             .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
     }
 
-    private int initialScore() {
+    private int calculateInitialScore() {
         return cards.stream()
             .mapToInt(Card::score)
             .sum();
