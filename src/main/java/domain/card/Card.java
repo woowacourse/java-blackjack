@@ -12,6 +12,10 @@ public class Card {
         this.rank = rank;
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     public int getScore() {
         return rank.getScore();
     }

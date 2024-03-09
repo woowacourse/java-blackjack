@@ -29,7 +29,7 @@ public class Hands {
 
     private boolean hasAce() {
         return value.stream()
-                .anyMatch(card -> Rank.ACE == card.getRank());
+                .anyMatch(Card::isAce);
     }
 
     private int calculateAceScore(int totalScore) {
