@@ -3,41 +3,43 @@ package blackjack.domain.participants;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.Hands;
+import java.util.ArrayList;
 
 public class Player {
 
     private final Name name;
-    private final Deck deck;
+    private final Hands hands;
 
     public Player(Name name) {
         this.name = name;
-        this.deck = new Deck();
+        this.hands = new Hands(new ArrayList<>());
     }
 
-    public void receiveDeck(Deck tempDeck) {
+    public void receiveDeck(Deck tempDeck) { // TODO 삭제
         int tempDeckSize = tempDeck.size();
         for (int i = 0; i < tempDeckSize; i++) {
-            deck.addCard(tempDeck.pickRandomCard());
+
         }
     }
 
     public void receiveCard(Card card) {
-        deck.addCard(card);
+        hands.addCard(card);
     }
 
     public int calculateScore() {
-        return deck.calculateTotalScore();
+        return 0;
     }
 
     public boolean isNotOver(int boundaryScore) {
-        return deck.calculateTotalScore() < boundaryScore;
+        return 0 < boundaryScore;
     }
 
     public Name getName() {
         return name;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Deck getDeck() { // TODO 삭제
+        return null;
     }
 }
