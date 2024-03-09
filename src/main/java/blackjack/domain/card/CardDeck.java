@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public class CardDeck {
 
     private final List<Card> cards;
-    
+
     public CardDeck(List<Card> cards) {
         this.cards = cards;
     }
@@ -16,7 +16,7 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다");
         }
-        return cards.remove(0);
+        return cards.remove(cards.size() - 1);
     }
 
     public List<Card> popCards(int count) {

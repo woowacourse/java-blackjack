@@ -25,7 +25,7 @@ class CardDeckTest {
 
         CardDeck cardDeck = new CardDeck(cards);
         Card popped = cardDeck.popCard();
-        assertThat(popped).isEqualTo(card1);
+        assertThat(popped).isEqualTo(card3);
     }
 
     @DisplayName("덱에서 횟수만큼 카드를 뽑을 수 있다")
