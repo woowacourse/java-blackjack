@@ -3,9 +3,11 @@ package blackjack.domain.participant;
 import blackjack.exception.InvalidNameLengthException;
 import blackjack.exception.NonAlphabeticNameException;
 
+import java.util.regex.Pattern;
+
 public class Name {
     private static final int MAX_NAME_LENGTH = 5;
-    private static final String NAME_FORMAT = "^[a-zA-Z가-힣]*$";
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]*$");
 
     private final String value;
 
@@ -26,7 +28,7 @@ public class Name {
     }
 
     private void validateIsAlphabetic(String name) {
-        if (!name.matches(NAME_FORMAT)) {
+        if (!NAME_PATTERN.matcher(name).matches()) {
             throw new NonAlphabeticNameException();
         }
     }
