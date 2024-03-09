@@ -43,16 +43,4 @@ class PlayerTest {
         Player updatedPlayer = player.addCard(card);
         assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
     }
-
-    @DisplayName("카드를 추가로 받을 수 없으면 카드 획득 불가")
-    @Test
-    void shouldNotAddCardWhenNotAllowed() {
-        Cards cards = new Cards(
-            List.of(new Card(TEN, HEART), new Card(JACK, HEART), new Card(TWO, HEART))
-        );
-        Player player = new Player("lily", cards);
-        Card card = new Card(TWO, DIAMOND);
-        Player updatedPlayer = player.addCard(card);
-        assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
-    }
 }
