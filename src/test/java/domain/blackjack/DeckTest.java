@@ -23,4 +23,17 @@ class DeckTest {
         Assertions.assertThat(deck.getCardCount())
                 .isEqualTo(51);
     }
+
+    @DisplayName("덱에 카드가 더 이상 없을 때 드로우를 시도할 경우 예외를 발생시킨다")
+    @Test
+    void emptyDeck() {
+        Deck deck = new Deck();
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+
+        Assertions.assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 더 이상 카드가 없습니다.");
+    }
 }
