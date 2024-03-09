@@ -22,7 +22,7 @@ public class CardGameResult {
     public int getDealerWinCount() {
         return (int) totalResult.values()
                 .stream()
-                .filter(playerWinningstatus -> playerWinningstatus.equals(LOSE))
+                .filter(playerWinningStatus -> playerWinningStatus.equals(LOSE))
                 .count();
     }
 
