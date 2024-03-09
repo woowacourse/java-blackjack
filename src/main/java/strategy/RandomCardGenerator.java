@@ -22,7 +22,7 @@ public class RandomCardGenerator implements CardGenerator {
         Collections.shuffle(cards);
 
         validateAmount(cards);
-        return List.copyOf(cards);
+        return cards;
     }
 
     private List<Card> allCardsWithSameSymbol(Symbol symbol) {

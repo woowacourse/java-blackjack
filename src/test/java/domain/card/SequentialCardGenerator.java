@@ -14,7 +14,7 @@ public class SequentialCardGenerator implements CardGenerator {
         for (Symbol symbol : Symbol.values()) {
             cards.addAll(allCardsWithSameSymbol(symbol));
         }
-        return List.copyOf(cards);
+        return cards;
     }
 
     private List<Card> allCardsWithSameSymbol(Symbol symbol) {

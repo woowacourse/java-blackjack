@@ -11,6 +11,6 @@ public class OneCardGenerator implements CardGenerator {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Rank.KING, Symbol.CLUB));
 
-        return List.copyOf(cards);
+        return cards;
     }
 }
