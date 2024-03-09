@@ -1,9 +1,7 @@
-package card;
+package domain.card;
 
 public class Card {
-
-    private static final int FIRST_POSITION_INDEX = 0;
-
+    
     private final CardNumber cardNumber;
     private final CardPattern cardPattern;
 
@@ -12,15 +10,15 @@ public class Card {
         this.cardPattern = cardPattern;
     }
 
-    public int getFirstCardNumber() {
-        return cardNumber.getCardNumber(FIRST_POSITION_INDEX);
+    public int getScore() {
+        return cardNumber.getCardNumber();
     }
 
-    public boolean isSameCardNumber(CardNumber checkNumber) {
+    public boolean isAce(CardNumber checkNumber) {
         return cardNumber == checkNumber;
     }
 
-    public String getCard() {
+    public String getCardName() {
         return cardNumber.number + cardPattern.name;
     }
 }
