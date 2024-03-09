@@ -63,11 +63,11 @@ public class GameBoard {
     }
 
     private Hands makeInitialDeck() {
-        Hands tempDeck = new Hands(new ArrayList<>());
+        Hands hands = new Hands(new ArrayList<>());
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            tempDeck.addCard(this.allCardDeck.pickRandomCard());
+            hands.addCard(this.allCardDeck.pickRandomCard());
         }
-        return tempDeck;
+        return hands;
     }
 
     public void addCardToPlayer(int playerIndex) {
