@@ -2,16 +2,15 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.result.Score;
-import blackjack.domain.result.WinStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.domain.result.Score;
+import blackjack.domain.result.WinStatus;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 public class Players {
     private final List<Participant> players;
@@ -35,16 +34,18 @@ public class Players {
         }
     }
 
-    public void divideCard(final List<Card> cards) {
+    public void divideCard(final List<List<Card>> cards) {
         validateCardSize(cards);
-        final Iterator<Card> cardIterator = cards.iterator();
+        final Iterator<List<Card>> cardIterator = cards.iterator();
 
-        players.forEach(player -> player.addStartCard(cardIterator.next(), cardIterator.next()));
+        for (final Participant player : players) {
+            cardIterator.next().forEach(player::addCard);
+        }
     }
 
-    private void validateCardSize(final List<Card> cards) {
-        if (cards.size() != players.size() * 2) {
-            throw new IllegalArgumentException("카드의 수량이 맞지 않습니다.");
+    private void validateCardSize(final List<List<Card>> cards) {
+        if (cards.size() != players.size()) {
+            throw new IllegalArgumentException("카드 묶음 수량이 플레이어 수량과 맞지 않습니다.");
         }
     }
 

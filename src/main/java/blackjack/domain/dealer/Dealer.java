@@ -6,6 +6,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantName;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Dealer {
     public static final Score NEED_CARD_CRITERION = new Score(17);
@@ -28,16 +29,20 @@ public class Dealer {
         return deck.pick();
     }
 
-    public List<Card> drawCards(final int count) {
-        return deck.pick(count);
+    public List<List<Card>> drawCards(final int playerSize, final int eachCardCount) {
+        return Stream.generate(() -> deck.pick(eachCardCount))
+                .limit(playerSize)
+                .toList();
     }
 
     public void addCard() {
         participant.addCard(drawCard());
     }
 
-    public void addStartCard() {
-        participant.addStartCard(drawCard(), drawCard());
+    public void addCard(int count) {
+        while (count-- > 0) {
+            participant.addCard(drawCard());
+        }
     }
 
     public Score calculate() {

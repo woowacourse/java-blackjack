@@ -38,10 +38,10 @@ class PlayersTest {
         Card card2 = new Card(CardNumber.TWO, CardShape.SPADE);
         Card card3 = new Card(CardNumber.THREE, CardShape.SPADE);
         Card card4 = new Card(CardNumber.FOUR, CardShape.SPADE);
-        List<Card> cards = List.of(card1, card2, card3, card4);
+        List<List<Card>> cardsBundle = List.of(List.of(card1, card2), List.of(card3, card4));
 
         // when
-        players.divideCard(cards);
+        players.divideCard(cardsBundle);
 
         // then
         assertAll(
@@ -58,13 +58,12 @@ class PlayersTest {
     void validateCardSize() {
         // given
         Players players = new Players(List.of(new Participant("kirby"), new Participant("pobi")));
-        List<Card> cards = List.of(new Card(CardNumber.ACE, CardShape.SPADE),
-                new Card(CardNumber.TWO, CardShape.SPADE),
-                new Card(CardNumber.THREE, CardShape.SPADE));
+        List<List<Card>> cards = List.of(List.of(new Card(CardNumber.ACE, CardShape.SPADE),
+                new Card(CardNumber.TWO, CardShape.SPADE)));
 
         // when
         assertThatThrownBy(() -> players.divideCard(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드의 수량이 맞지 않습니다.");
+                .hasMessage("카드 묶음 수량이 플레이어 수량과 맞지 않습니다.");
     }
 }

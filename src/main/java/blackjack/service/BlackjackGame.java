@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
+    private static final int START_CARD_COUNT = 2;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -29,10 +31,9 @@ public class BlackjackGame {
     }
 
     public StartCardsDTO start() {
-        dealer.addStartCard();
+        dealer.addCard(START_CARD_COUNT);
 
-        final int playersCardCount = players.count() * 2;
-        players.divideCard(dealer.drawCards(playersCardCount));
+        players.divideCard(dealer.drawCards(players.count(), START_CARD_COUNT));
 
         return getStartCards();
     }

@@ -23,10 +23,6 @@ public class Participant {
         hands.add(card);
     }
 
-    public void addStartCard(final Card firstCard, final Card secondCard) {
-        hands.addStartCard(firstCard, secondCard);
-    }
-
     public Score calculate() {
         int sum = hands.sum();
         int aceCount = hands.countAce();

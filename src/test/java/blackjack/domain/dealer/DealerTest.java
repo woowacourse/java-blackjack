@@ -18,7 +18,7 @@ class DealerTest {
         Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
 
         Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
-        dealer.addStartCard();
+        dealer.addCard(2);
 
         boolean needMoreCard = dealer.needMoreCard();
 
@@ -32,7 +32,7 @@ class DealerTest {
         Card card2 = new Card(CardNumber.EIGHT, CardShape.HEART);
 
         Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
-        dealer.addStartCard();
+        dealer.addCard(2);
 
         boolean needMoreCard = dealer.needMoreCard();
 
