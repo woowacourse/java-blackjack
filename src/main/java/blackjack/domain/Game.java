@@ -98,7 +98,7 @@ public class Game {
             dealer.putCard(dealer.draw());
             OutputView.printDealerDraw(dealer);
         }
-        OutputView.printDealerStand(dealer);
+//        OutputView.printDealerStand(dealer);
     }
 
     private void playerTurn(List<Player> players, Dealer dealer) {
