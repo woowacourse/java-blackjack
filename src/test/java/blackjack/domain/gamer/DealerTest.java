@@ -46,7 +46,10 @@ class DealerTest {
             }
         };
 
-        // when & then
+        // when
+        dealer.deal(deck);
+
+        // then
         assertThat(dealer.isHitUnderBound()).isEqualTo(true);
     }
 
@@ -56,7 +59,12 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        Deck deck = new Deck();
+        Deck deck = new Deck() {
+            @Override
+            public List<Card> pick(int count) {
+                return cards;
+            }
+        };
 
         // when
         dealer.deal(deck);
@@ -65,7 +73,6 @@ class DealerTest {
         }
 
         // then
-        assertThat(dealer.getCards().size())
-                .isBetween(2, 3);
+        assertThat(dealer.getCards().size()).isEqualTo(3);
     }
 }
