@@ -27,8 +27,8 @@ class BlackjackGameTest {
     void testDistributeCardsForSetting() {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Cards cards = new Cards(
-            List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ONE, HEART),
-                new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
+                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ONE, HEART),
+                        new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
         );
 
         blackjackGame.distributeCardsForSetting(cards);
@@ -38,13 +38,7 @@ class BlackjackGameTest {
 
         assertThat(updatedDealer.cardsSize()).isEqualTo(2);
         updatedPlayers.getPlayers()
-            .forEach(player -> assertThat(player.cardsSize()).isEqualTo(2));
-    }
-
-    private BlackjackGame prepareBlackjackGame() {
-        Dealer dealer = new Dealer();
-        Players players = Players.from(List.of("lily", "jojo"));
-        return new BlackjackGame(dealer, players);
+                .forEach(player -> assertThat(player.cardsSize()).isEqualTo(2));
     }
 
     @DisplayName("각 플레이어에게 추가 카드를 지급한다")
@@ -63,5 +57,20 @@ class BlackjackGameTest {
         Players updatedPlayers = blackjackGame.getPlayers();
         assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
         assertThat(updatedPlayers.getPlayers().get(1).cardsSize()).isEqualTo(0);
+    }
+
+    @DisplayName("딜러의 카드 합계가 16점 이하이면 카드가 1개 증가한 딜러 객체를 반환한다")
+    @Test
+    void testHitFromDealer() {
+        BlackjackGame blackjackGame = prepareBlackjackGame();
+        blackjackGame.dealerHitsUnderSixteen(new Card(JACK, DIAMOND));
+        Dealer updatedDealer = blackjackGame.getDealer();
+        assertThat(updatedDealer.cardsSize()).isEqualTo(1);
+    }
+
+    private BlackjackGame prepareBlackjackGame() {
+        Dealer dealer = new Dealer();
+        Players players = Players.from(List.of("lily", "jojo"));
+        return new BlackjackGame(dealer, players);
     }
 }

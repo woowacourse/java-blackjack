@@ -29,6 +29,12 @@ public class BlackjackGame {
         }
     }
 
+    public void dealerHitsUnderSixteen(Card card) {
+        if (dealer.isPossibleAddCard()) {
+            dealer = dealer.addCard(card);
+        }
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
