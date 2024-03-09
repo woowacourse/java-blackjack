@@ -28,8 +28,8 @@ public class DeckTest {
     @DisplayName("랜덤 카드를 선택한다.")
     void pickRandomCardTest() {
         Deck deck = new Deck();
-
         Card card = new Card(Shape.HEART, Rank.EIGHT);
+
         deck.addCard(card);
         Card result = deck.pickRandomCard();
 

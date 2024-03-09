@@ -8,43 +8,33 @@ public class Deck {
 
     private static final Random RANDOM  = new Random();
 
-    private final List<Card> cards;
+    private final List<Card> deck;
 
     public Deck() {
-        this.cards = new LinkedList<>();
+        this.deck = new LinkedList<>();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        deck.add(card);
     }
 
     public Card pickRandomCard() {
         validateDeck();
-        int pickCardIndex = RANDOM.nextInt(cards.size());
-        return cards.remove(pickCardIndex);
-    }
-
-    public int calculateTotalScore() {
-        validateDeck();
-        int totalScore = 0;
-        for (Card card : cards) {
-            Rank rank = card.getRank();
-            totalScore += rank.getScore(totalScore);
-        }
-        return totalScore;
+        int pickCardIndex = RANDOM.nextInt(deck.size());
+        return deck.remove(pickCardIndex);
     }
 
     private void validateDeck() {
-        if (cards.isEmpty()) {
+        if (deck.isEmpty()) {
             throw new IllegalArgumentException("카드가 없습니다.");
         }
     }
 
     public int size() {
-        return cards.size();
+        return deck.size();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getDeck() {
+        return deck;
     }
 }
