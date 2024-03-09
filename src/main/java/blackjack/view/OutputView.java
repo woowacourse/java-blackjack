@@ -26,11 +26,11 @@ public class OutputView {
         System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
-    public static void printDealCards(String name, List<Card> cards) {
+    public static void printCards(String name, List<Card> cards) {
         System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCards(cards));
     }
 
-    public static void printDealCard(String name, Card card) {
+    public static void printCard(String name, Card card) {
         System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCard(card));
     }
 
@@ -48,30 +48,36 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printErrorMessage(String message) {
-        System.out.println(ERROR_PREFIX + message);
-    }
-
     public static void printDealerHitAnnounce() {
         System.out.println(DEALER_HIT_FORMAT);
     }
 
-    public static void printGamerCards(String name, List<Card> cards, int totalScore) {
+    public static void printCardsWithScore(String name, List<Card> cards, int totalScore) {
         System.out.printf(CARD_FORMAT + RESULT_SCORES_FORMAT + LINE_SEPARATOR, name, formatCards(cards), totalScore);
     }
 
-    public static void printWinAnnounce() {
+    public static void printResult(String dealerName, Map<GameResult, Integer> dealerResult, Map<String, GameResult> playerResults) {
+        printWinAnnounce();
+        printDealerWinStatus(dealerName, dealerResult);
+        playerResults.forEach(OutputView::printPlayerWinStatus);
+    }
+
+    private static void printWinAnnounce() {
         System.out.println(LINE_SEPARATOR + WIN_ANNOUNCE);
     }
 
-    public static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
+    private static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
         String gameResultsFormat = gameResults.keySet().stream()
                 .map(key -> gameResults.get(key) + GameResultName.convert(key))
                 .collect(Collectors.joining(" "));
         System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, gameResultsFormat);
     }
 
-    public static void printPlayerWinStatus(String name, GameResult gameResult) {
+    private static void printPlayerWinStatus(String name, GameResult gameResult) {
         System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(gameResult));
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(ERROR_PREFIX + message);
     }
 }

@@ -12,27 +12,35 @@ import blackjack.view.PlayerCommand;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static blackjack.domain.gamer.Gamer.DEAL_CARD_COUNT;
+
 public class BlackjackController {
 
     public void run() {
         Players players = requestPlayers();
         Dealer dealer = new Dealer();
         CardPicker cardPicker = new CardPicker();
+        Referee referee = new Referee();
 
         processDeal(players, dealer, cardPicker);
         processHitOrStand(players, dealer, cardPicker);
-
-        Referee referee = new Referee();
         referee.calculatePlayersResults(players, dealer);
-
-        printAllGameResult(dealer, referee);
+        printResult(dealer, referee);
     }
 
-    private void printAllGameResult(Dealer dealer, Referee referee) {
-        OutputView.printWinAnnounce();
-        OutputView.printDealerWinStatus(dealer.getName(), referee.getDealerResult());
-        referee.getPlayersResults()
-                .forEach(OutputView::printPlayerWinStatus);
+    private Players requestPlayers() {
+        return requestUntilValid(() -> Players.from(InputView.readPlayersName()));
+    }
+
+    private void processDeal(Players players, Dealer dealer, CardPicker cardPicker) {
+        OutputView.printDealAnnounce(players.getNames());
+        players.forEach(player -> player.deal(cardPicker));
+        dealer.deal(cardPicker);
+
+        OutputView.printCard(dealer.getName(), dealer.getFirstCard());
+        players.forEach(player ->
+                OutputView.printCards(player.getName(), player.getCards()));
+        OutputView.printNewLine();
     }
 
     private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
@@ -40,9 +48,9 @@ public class BlackjackController {
         OutputView.printNewLine();
         dealerHitUntilBound(dealer, cardPicker);
 
-        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
+        OutputView.printCardsWithScore(dealer.getName(), dealer.getCards(), dealer.getScore());
         players.forEach(player ->
-                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
+                OutputView.printCardsWithScore(player.getName(), player.getCards(), player.getScore()));
     }
 
     private void requestHitOrStand(Player player, CardPicker cardPicker) {
@@ -58,13 +66,13 @@ public class BlackjackController {
 
     private boolean hitAndPrint(Player player, CardPicker cardPicker) {
         player.hit(cardPicker);
-        OutputView.printDealCards(player.getName(), player.getCards());
+        OutputView.printCards(player.getName(), player.getCards());
         return !(player.isBurst() || player.isMaxScore());
     }
 
     private boolean checkPlayerStandAfterDeal(Player player) {
-        if (player.getCards().size() == 2) {
-            OutputView.printDealCards(player.getName(), player.getCards());
+        if (player.getCards().size() == DEAL_CARD_COUNT) {
+            OutputView.printCards(player.getName(), player.getCards());
         }
         return false;
     }
@@ -76,20 +84,11 @@ public class BlackjackController {
         }
     }
 
-
-    private void processDeal(Players players, Dealer dealer, CardPicker cardPicker) {
-        OutputView.printDealAnnounce(players.getNames());
-        players.forEach(player -> player.deal(cardPicker));
-        dealer.deal(cardPicker);
-
-        OutputView.printDealCard(dealer.getName(), dealer.getFirstCard());
-        players.forEach(player ->
-                OutputView.printDealCards(player.getName(), player.getCards()));
-        OutputView.printNewLine();
-    }
-
-    private Players requestPlayers() {
-        return requestUntilValid(() -> Players.from(InputView.readPlayersName()));
+    private void printResult(Dealer dealer, Referee referee) {
+        OutputView.printResult(
+                dealer.getName(),
+                referee.getDealerResult(),
+                referee.getPlayersResults());
     }
 
     private <T> T requestUntilValid(Supplier<T> supplier) {
