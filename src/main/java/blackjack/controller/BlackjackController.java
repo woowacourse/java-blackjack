@@ -4,12 +4,14 @@ import blackjack.dto.CardDTO;
 import blackjack.dto.FinalHandsScoreDTO;
 import blackjack.dto.StartCardsDTO;
 import blackjack.dto.WinningResultDTO;
+import blackjack.exception.ExceptionHandler;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -21,6 +23,9 @@ public class BlackjackController {
     public void run() {
         final BlackjackGame blackjackGame = initGame();
 
+        final StartCardsDTO startCardsDTO = blackjackGame.start();
+        outputView.printStartCards(startCardsDTO);
+
         if (blackjackGame.isNotDealerBlackjack()) {
             playGame(blackjackGame);
         }
@@ -29,16 +34,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame initGame() {
-        try {
-            final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames());
-            final StartCardsDTO startCardsDTO = blackjackGame.start();
-
-            outputView.printStartCards(startCardsDTO);
-            return blackjackGame;
-        } catch (final IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return initGame();
-        }
+        return ExceptionHandler.retry(() -> new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
@@ -71,12 +67,7 @@ public class BlackjackController {
     }
 
     private boolean needMoreCard(final String name) {
-        try {
-            return inputView.readNeedMoreCard(name);
-        } catch (final IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return needMoreCard(name);
-        }
+        return ExceptionHandler.retry(() -> inputView.readNeedMoreCard(name), outputView::printError);
     }
 
     private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
