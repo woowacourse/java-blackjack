@@ -38,8 +38,7 @@ public class Hand {
 
     public int calculateScore(final int blackJackScore) {
         int sum = cards.stream()
-                .map(Card::getScore)
-                .mapToInt(score -> score)
+                .mapToInt(Card::getScore)
                 .sum();
         int aceCardCount = 0;
         for (Card card : cards) {
