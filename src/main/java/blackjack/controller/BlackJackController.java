@@ -41,9 +41,7 @@ public class BlackJackController {
     }
 
     private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
-        players.getPlayers().forEach(
-                player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
-        );
+        players.initialDraw(deck, INITIAL_CARDS_COUNT);
         drawCard(dealer.getPlayer(), deck, INITIAL_CARDS_COUNT);
 
         outputView.printInitialMessage(players.getPlayerNames());

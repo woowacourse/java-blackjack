@@ -33,6 +33,16 @@ public class Players {
         return new Players(players);
     }
 
+    public void initialDraw(Deck deck, int amount) {
+        for (int i = 0; i < amount; i++) {
+            drawEachPlayer(deck);
+        }
+    }
+
+    private void drawEachPlayer(Deck deck) {
+        playerGroup.forEach(player -> player.draw(deck));
+    }
+
     public List<Player> getPlayers() {
         return playerGroup;
     }
