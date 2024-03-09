@@ -20,12 +20,14 @@ public class OutputView {
     public static void printFirstDrawStatus(final PlayingCardDto dealerCardDto, final List<PlayerHandStatusDto> playerHandStatuses) {
         System.out.println("딜러와 " + createNamesMessage(playerHandStatuses) + "에게 2장을 나누었습니다.");
         System.out.println(convertDealerCardToString(dealerCardDto));
-        playerHandStatuses.forEach(playerHandStatusDto -> System.out.println(convertPlayerCardsToString(playerHandStatusDto.playerName(), playerHandStatusDto.playingCards())));
+        playerHandStatuses.forEach(playerHandStatusDto -> System.out.println(
+                convertPlayerCardsToString(playerHandStatusDto.playerName(), playerHandStatusDto.playingCards())));
         System.out.println();
     }
 
     private static String createNamesMessage(final List<PlayerHandStatusDto> playerHandStatuses) {
-        List<String> playerNames = playerHandStatuses.stream().map(playerHandStatusDto -> playerHandStatusDto.playerName().value()).toList();
+        List<String> playerNames = playerHandStatuses.stream()
+                .map(playerHandStatusDto -> playerHandStatusDto.playerName().value()).toList();
         return String.join(", ", playerNames);
     }
 
