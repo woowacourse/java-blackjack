@@ -1,12 +1,14 @@
 package blackjack;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardShape;
@@ -31,7 +33,7 @@ class Controller {
 
     public void run() {
         Participants participants = createParticipants();
-        Deck deck = new Deck(createCards());
+        Deck deck = createDeck();
 
         initialDeal(participants, deck);
         playersTurn(participants.getPlayers(), deck);
@@ -45,26 +47,25 @@ class Controller {
         return new Participants(playerNames);
     }
 
-    private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
+    private Deck createDeck() {
+        return new Deck(createShuffledCards());
+    }
 
-        for (CardRank rank : CardRank.values()) {
-            cards.addAll(createRankCards(rank));
-        }
+    private List<Card> createShuffledCards() {
+        List<Card> cards = Arrays.stream(CardShape.values())
+                .map(this::createShapeCards)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         Collections.shuffle(cards);
 
         return cards;
     }
 
-    private List<Card> createRankCards(CardRank rank) {
-        List<Card> cards = new ArrayList<>();
-
-        for (CardShape shape : CardShape.values()) {
-            cards.add(new Card(rank, shape));
-        }
-
-        return cards;
+    private List<Card> createShapeCards(CardShape cardShape) {
+        return Arrays.stream(CardRank.values())
+                .map(cardRank -> new Card(cardRank, cardShape))
+                .toList();
     }
 
     private void initialDeal(Participants participants, Deck deck) {
