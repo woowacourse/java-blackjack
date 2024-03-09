@@ -10,9 +10,22 @@ import static org.assertj.core.api.Assertions.*;
 
 class ParticipantTest {
 
-    @DisplayName("사용자의 점수가 21이하인지 확인한다.")
+    @DisplayName("사용자의 점수가 21이하면 카드를 받을 수 없다.")
     @Test
     void canHit() {
+        Participant participant = new Participant(new Name("user"));
+        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
+        participant.receiveCard(new Card(Shape.DIA, Rank.FIVE));
+        participant.receiveCard(new Card(Shape.HEART, Rank.SIX));
+
+        boolean canHit = participant.canHit();
+
+        assertThat(canHit).isTrue();
+    }
+
+    @DisplayName("사용자의 점수가 22이상이면 카드를 받을 수 없다.")
+    @Test
+    void canNotHit() {
         Participant participant = new Participant(new Name("user"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.DIA, Rank.KING));
@@ -21,6 +34,5 @@ class ParticipantTest {
         boolean canHit = participant.canHit();
 
         assertThat(canHit).isFalse();
-
     }
 }
