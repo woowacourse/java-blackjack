@@ -7,7 +7,7 @@ import blackjack.domain.card.Hands;
 import java.util.ArrayList;
 
 public class Participant {
-    protected final Hands hands;
+    private final Hands hands;
     private final ParticipantName name;
 
     protected Participant(final String name) {
@@ -19,23 +19,27 @@ public class Participant {
         return new Participant(name);
     }
 
-    public Score calculate() {
-        int sum = hands.sum();
-        int aceCount = hands.countAce();
-
-        while (sum > BlackjackStatus.BLACKJACK_NUMBER && aceCount-- > 0) {
-            sum -= 10;
-        }
-
-        return new Score(sum);
-    }
-
     public void addCard(final Card card) {
         hands.add(card);
     }
 
     public void addStartCard(final Card firstCard, final Card secondCard) {
         hands.addStartCard(firstCard, secondCard);
+    }
+
+    public Score calculate() {
+        int sum = hands.sum();
+        int aceCount = hands.countAce();
+
+        while (isDeadScore(sum) && aceCount-- > 0) {
+            sum -= 10;
+        }
+
+        return new Score(sum);
+    }
+
+    private boolean isDeadScore(final int sum) {
+        return BlackjackStatus.from(new Score(sum)).isDead();
     }
 
     public boolean isName(final String name) {
@@ -50,7 +54,7 @@ public class Participant {
         return !getStatus().isDead();
     }
 
-    protected BlackjackStatus getStatus() {
+    private BlackjackStatus getStatus() {
         return BlackjackStatus.from(calculate());
     }
 

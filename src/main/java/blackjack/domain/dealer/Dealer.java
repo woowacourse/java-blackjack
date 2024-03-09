@@ -35,10 +35,6 @@ public class Dealer {
         return deck.pick(count);
     }
 
-    public Score calculate() {
-        return participant.calculate();
-    }
-
     public void addCard() {
         participant.addCard(drawCard());
     }
@@ -47,12 +43,16 @@ public class Dealer {
         participant.addStartCard(drawCard(), drawCard());
     }
 
-    public Hands getOpenedHands() {
-        return participant.getFirstCard();
+    public Score calculate() {
+        return participant.calculate();
     }
 
     public boolean isNotBlackjack() {
         return participant.isNotBlackjack();
+    }
+
+    public Hands getOpenedHands() {
+        return participant.getFirstCard();
     }
 
     public Hands getHands() {
