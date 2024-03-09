@@ -4,6 +4,7 @@ import blackjack.game.MatchResult;
 import java.util.Arrays;
 
 public enum PlayerResultDisplay {
+
     PLAYER_WIN(MatchResult.PLAYER_WIN, "승"),
     PLAYER_LOSE(MatchResult.DEALER_WIN, "패"),
     TIE(MatchResult.TIE, "무");
