@@ -2,7 +2,9 @@ package controller;
 
 import domain.Deck;
 import domain.GameResults;
+import domain.constant.GameResult;
 import domain.dto.DealerHandStatusDto;
+import domain.dto.PlayerGameResultDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
 import domain.participant.Dealer;
@@ -13,6 +15,7 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
     public void run() {
@@ -23,7 +26,7 @@ public class BlackJackGame {
         play(deck, dealer, players);
 
         GameResults gameResults = dealer.getGameResults(players);
-        OutputView.printGameResult(gameResults.dealerGameResult(), gameResults.getPlayerGameResultDto());
+        OutputView.printGameResult(gameResults.dealerGameResult(), getPlayerGameResultDto(gameResults.playerGameResults()));
     }
 
     private List<Player> initPlayers() {
@@ -109,5 +112,12 @@ public class BlackJackGame {
             players.forEach(player -> player.draw(deck));
             dealer.draw(deck);
         }
+    }
+
+    private List<PlayerGameResultDto> getPlayerGameResultDto(Map<Player, GameResult> playerGameResults) {
+        return playerGameResults.entrySet()
+                .stream()
+                .map(playerGameResult -> new PlayerGameResultDto(playerGameResult.getKey().getPlayerName(), playerGameResult.getValue()))
+                .toList();
     }
 }
