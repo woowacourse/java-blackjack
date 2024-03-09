@@ -19,33 +19,30 @@ public class BlackJackGame {
 
     public void run() {
         final Deck deck = Deck.createByRandomOrder();
-
-        final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
-        final Players players = Players.of(names, deck.distributeInitialCard(names.size()));
-
+        final Players players = initPlayers(InputView.readPlayerNames(CONSOLE_READER), deck);
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer), players);
 
-        OutputView.printDistributionSubject(players.getNames());
-        printInitialCards(dealer, players);
-
-        playPlayersTurn(players.getPlayers(), deck);
-        playDealerTurn(dealer, deck);
-
-        printFinalResult(dealer, players, referee);
+        announceInitialCards(dealer, players);
+        play(dealer, players.getPlayers(), deck);
+        announceResult(dealer, players, referee);
     }
 
-    private void printInitialCards(final Dealer dealer, final Players players) {
+    private Players initPlayers(final List<String> names, final Deck deck) {
+        return Players.of(names, deck.distributeInitialCard(names.size()));
+    }
+
+    private void announceInitialCards(final Dealer dealer, final Players players) {
+        OutputView.printDistributionSubject(players.getNames());
         OutputView.printNameAndCards(dealer.getName(), dealer.openCard());
         players.collectCardsOfEachPlayer()
                 .forEach(OutputView::printNameAndCards);
         OutputView.println();
     }
 
-    private void playPlayersTurn(final List<Player> players, final Deck deck) {
-        for (Player player : players) {
-            playPlayerTurn(player, deck);
-        }
+    private void play(final Dealer dealer, final List<Player> players, final Deck deck) {
+        players.forEach(player -> playPlayerTurn(player, deck));
+        playDealerTurn(dealer, deck);
     }
 
     private void playPlayerTurn(final Player player, final Deck deck) {
@@ -74,7 +71,7 @@ public class BlackJackGame {
         player.receiveCard(deck.distribute());
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
+    private void announceResult(final Dealer dealer, final Players players, final Referee referee) {
         printFinalCardsAndScores(dealer, players);
         printFinalResultCommand(referee);
     }
