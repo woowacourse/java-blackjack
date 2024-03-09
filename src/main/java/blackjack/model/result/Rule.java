@@ -18,10 +18,10 @@ public class Rule {
     }
 
     private ResultCommand judgePlayerResultWhenDealerBust(final Player player) {
-        if (!player.isBust()) {
-            return ResultCommand.WIN;
+        if (player.isBust()) {
+            return ResultCommand.LOSE;
         }
-        return ResultCommand.DRAW;
+        return ResultCommand.WIN;
     }
 
     private ResultCommand judgePlayerResultWhenDealerNotBust(final Player player) {
@@ -38,14 +38,12 @@ public class Rule {
     }
 
     private ResultCommand judgePlayerResultWhenSameScore(final Player player) {
-        int playerCardCount = player.announceCardCount();
-        int dealerCardCount = dealer.announceCardCount();
-        if (playerCardCount < dealerCardCount) {
-            return ResultCommand.WIN;
+        if (player.hasManyCardsThan(dealer)) {
+            return ResultCommand.LOSE;
         }
-        if (playerCardCount == dealerCardCount) {
+        if (player.hasSameCardsSizeThan(dealer)) {
             return ResultCommand.DRAW;
         }
-        return ResultCommand.LOSE;
+        return ResultCommand.WIN;
     }
 }

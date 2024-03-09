@@ -86,7 +86,7 @@ class RefereeTest {
     }
 
     @Nested
-    @DisplayName("딜러가 21 초과했을 경우")
+    @DisplayName("딜러가 21 초과했을 경우(버스트)")
     class DealerOver21 {
 
         @Test
@@ -103,6 +103,21 @@ class RefereeTest {
             Referee referee = new Referee(new Rule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
         }
+
+        @Test
+        @DisplayName("플레이어가 21을 초과하는 경우 플레이어가 패배한다.")
+        void playerLoseWhenAllBust() {
+            Players players = Players.of(
+                    List.of("몰리"),
+                    List.of(new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR),
+                            new Card(Shape.CLOVER, Score.TEN)))));
+            Dealer dealer = new Dealer(new Hand(
+                    List.of(new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.TEN),
+                            new Card(Shape.DIA, Score.TEN))));
+
+            Referee referee = new Referee(new Rule(dealer), players);
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", LOSE));
+        }
     }
 
     @Nested
@@ -110,7 +125,7 @@ class RefereeTest {
     class draw {
 
         @Test
-        @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
+        @DisplayName("플레이어와 딜러 모두 블랙잭이면 딜러가 승리한다.")
         void bothBlackJack() {
             Players players = Players.of(
                     List.of("몰리"),
@@ -130,21 +145,6 @@ class RefereeTest {
                     List.of(new Hand(List.of(new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.SPADE, Score.FIVE)))));
             Dealer dealer = new Dealer(
                     new Hand(List.of(new Card(Shape.HEART, Score.FIVE), new Card(Shape.DIA, Score.FIVE))));
-
-            Referee referee = new Referee(new Rule(dealer), players);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
-        }
-
-        @Test
-        @DisplayName("플레이어와 딜러 모두 21 초과인 경우")
-        void bothBust() {
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN),
-                            new Card(Shape.SPADE, Score.NINE)))));
-            Dealer dealer = new Dealer(
-                    new Hand(List.of(new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN),
-                            new Card(Shape.DIA, Score.NINE))));
 
             Referee referee = new Referee(new Rule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
