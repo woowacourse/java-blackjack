@@ -15,14 +15,14 @@ public class Result {
     }
 
     public static Result of(List<Player> players, Dealer dealer) {
-        Map<Player, WinLose> map = new LinkedHashMap<>();
+        Map<Player, WinLose> currentResultMap = new LinkedHashMap<>();
 
         for (Player player : players) {
             WinLose winLose = decideWinLose(player, dealer);
-            map.put(player, winLose);
+            currentResultMap.put(player, winLose);
         }
 
-        return new Result(map);
+        return new Result(currentResultMap);
     }
 
     private static WinLose decideWinLose(Player player, Dealer dealer) {
