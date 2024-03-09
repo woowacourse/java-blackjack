@@ -3,6 +3,9 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("카드들")
@@ -48,6 +51,25 @@ public class CardsTest {
 
         // then
         assertThat(cards.totalScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("카드들의 모든 점수 경우의 수를 구한다.")
+    void calculateScoreCases() {
+        // given
+        Card card1 = Card.CLUB_ACE;
+        Card card2 = Card.CLUB_FIVE;
+        Card card3 = Card.DIAMOND_ACE;
+        Cards cards = new Cards();
+        Set<Integer> expected = Set.of(7, 17, 27);
+
+        // when
+        cards.addCard(card1);
+        cards.addCard(card2);
+        cards.addCard(card3);
+
+        // then
+        assertThat(cards.generateScoreCases()).isEqualTo(expected);
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Cards {
     private static final int MAX_SCORE = 21;
@@ -23,23 +24,37 @@ public class Cards {
     }
 
     public int totalScore() {
-        Set<Integer> scoreCases = new HashSet<>();
-        List<List<Integer>> cardsScores = values.stream().map(card -> card.getScore().get()).toList();
-        calculateScoreCases(scoreCases, cardsScores, 0, 0);
+        Set<Integer> scoreCases = generateScoreCases();
 
         return scoreCases.stream()
                 .filter(score -> score <= MAX_SCORE)
                 .max(Integer::compare)
-                .orElse(scoreCases.stream().min(Integer::compare).get());
+                .orElse(minScore(scoreCases));
     }
 
-    private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> cardsScores, int sum, int index) {
-        if (index == cardsScores.size()) {
-            scoreCases.add(sum);
-            return;
-        }
-        for (int score : cardsScores.get(index)) {
-            calculateScoreCases(scoreCases, cardsScores, sum + score, index + 1);
-        }
+    Set<Integer> generateScoreCases() {
+        return new HashSet<>(getCardsScores().stream()
+                .reduce(List.of(0), this::combinationSumOfScores));
+    }
+
+    private List<List<Integer>> getCardsScores() {
+        return values.stream()
+                .map(card -> card
+                        .getScore()
+                        .get())
+                .toList();
+    }
+
+    private List<Integer> combinationSumOfScores(List<Integer> scores1, List<Integer> scores2) {
+        return scores1.stream()
+                .flatMap(score1 -> scores2.stream()
+                        .map(score2 -> score1 + score2))
+                .toList();
+    }
+
+    private Integer minScore(Set<Integer> scores) {
+        return scores.stream()
+                .min(Integer::compare)
+                .orElse(0);
     }
 }

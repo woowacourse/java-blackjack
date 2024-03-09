@@ -31,7 +31,8 @@ public class BlackjackController {
     private void printAllGameResult(Dealer dealer, Referee referee) {
         OutputView.printWinAnnounce();
         OutputView.printDealerWinStatus(dealer.getName(), referee.getDealerResult());
-        referee.getPlayersResults().forEach(OutputView::printPlayerWinStatus);
+        referee.getPlayersResults()
+                .forEach(OutputView::printPlayerWinStatus);
     }
 
     private void processHitOrStand(Players players, Dealer dealer, CardPicker cardPicker) {
