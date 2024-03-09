@@ -7,6 +7,10 @@ public class GameRule {
     private static final int BLACKJACK_SCORE = 21;
     private final Participants participants;
 
+    public GameRule(final Participants participants) {
+        this.participants = participants;
+    }
+
     public List<Outcome> judge() {
         if (isBusted(participants.getDealer())) {
             return participants.getOutcomesIf(
@@ -29,14 +33,10 @@ public class GameRule {
         if (player.isNotSameScoreAs(participants.getDealer())) {
             return player.hasMoreScoreThan(participants.getDealer());
         }
-        return player.hasLessOrSameCard(participants.getDealer());
+        return player.hasLessOrSameCardThan(participants.getDealer());
     }
 
     private boolean isBusted(final Player player) {
         return player.hasMoreScoreThan(BLACKJACK_SCORE);
-    }
-
-    private boolean isNotSame(final Player player) {
-        return player.calculateResultScore() != participants.dealer().calculateResultScore();
     }
 }

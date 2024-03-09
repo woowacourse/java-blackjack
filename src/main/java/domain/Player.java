@@ -46,16 +46,20 @@ public class Player {
         return calculateResultScore() != other.calculateResultScore();
     }
 
+    public boolean hasMoreScoreThan(final int otherScore) {
+        return calculateResultScore() > otherScore;
+    }
+
+    public boolean hasMoreScoreThan(final Player other) {
+        return calculateResultScore() > other.calculateResultScore();
+    }
+
     public int calculateResultScore() {
         return hand.calculateScore(BLACKJACK_SCORE);
     }
 
-    public boolean hasLessOrSameCard(final Dealer dealer) {
-        return getTotalSize() <= dealer.getTotalSize();
-    }
-
-    public boolean hasMoreScoreThan(final int score) {
-        return calculateResultScore() > score;
+    public boolean hasLessOrSameCardThan(final Player other) {
+        return getTotalSize() <= other.getTotalSize();
     }
 
     public boolean cannotDraw() {

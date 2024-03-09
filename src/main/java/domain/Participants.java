@@ -16,4 +16,11 @@ public class Participants {
                 .map(player -> Outcome.from(function.apply(player)))
                 .toList();
     }
+
+    public Player getDealer() {
+        return players.stream()
+                .filter(player -> player instanceof Dealer)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 }
