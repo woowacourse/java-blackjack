@@ -2,6 +2,8 @@ package blackjack.model.participant;
 
 import static blackjack.model.deck.Score.FIVE;
 import static blackjack.model.deck.Score.FOUR;
+import static blackjack.model.deck.Score.SIX;
+import static blackjack.model.deck.Score.TEN;
 import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +19,7 @@ class DealerTest {
 
     @BeforeEach
     void init() {
-        hand = new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
+        hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, SIX)));
         dealer = new Dealer(hand);
     }
 
@@ -30,6 +32,6 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 2장의 카드를 받고 한 장의 카드만 공개한다.")
     void openCard() {
-        assertThat(dealer.openCard()).containsExactly(new Card(CLOVER, FIVE));
+        assertThat(dealer.openCard()).containsExactly(new Card(CLOVER, TEN));
     }
 }
