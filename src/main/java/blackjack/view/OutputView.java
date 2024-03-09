@@ -59,8 +59,8 @@ public class OutputView {
     }
 
     private String convertCard(Card card) {
-        String convertedNumber = CardNumberDisplay.fromNumber(card.getNumber());
-        String convertedShape = CardShapeDisplay.fromShape(card.getShape());
+        String convertedNumber = CardNumberDisplay.getDisplayByNumber(card.getNumber());
+        String convertedShape = CardShapeDisplay.getDisplayByShape(card.getShape());
         return convertedNumber + convertedShape;
     }
 

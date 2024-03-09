@@ -18,7 +18,7 @@ public enum CardShapeDisplay {
         this.display = display;
     }
 
-    public static String fromShape(Shape shape) {
+    public static String getDisplayByShape(Shape shape) {
         return Arrays.stream(CardShapeDisplay.values())
                 .filter(displayShape -> displayShape.shape == shape)
                 .findFirst()

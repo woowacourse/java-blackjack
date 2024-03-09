@@ -27,7 +27,7 @@ public enum CardNumberDisplay {
         this.display = display;
     }
 
-    public static String fromNumber(Number number) {
+    public static String getDisplayByNumber(Number number) {
         return Arrays.stream(CardNumberDisplay.values())
                 .filter(displayNumber -> displayNumber.number == number)
                 .findFirst()
