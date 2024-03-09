@@ -13,8 +13,8 @@ public enum PlayingCardValue {
 
     public int getValue(final int inputValue) {
         if (this == ACE && inputValue + this.value > BLACKJACK_CONDITION) {
-            return ACE.value - 10 + inputValue;
+            return ACE.value - 10;
         }
-        return value + inputValue;
+        return value;
     }
 }

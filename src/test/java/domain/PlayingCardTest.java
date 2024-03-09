@@ -25,12 +25,12 @@ public class PlayingCardTest {
         assertThat(playingCard).isNotNull();
     }
 
-    @DisplayName("카드의 숫자만큼 더해서 반환한다.")
+    @DisplayName("상황에 맞게 카드의 숫자를 반환한다.")
     @MethodSource("addValueParameters")
     @ParameterizedTest(name = "[{index}] \"{0}\" => {1}")
     void addValueTest(PlayingCard playingCard, int inputNumber, int expect) {
         // When
-        int result = playingCard.addValue(inputNumber);
+        int result = playingCard.getValue(inputNumber);
 
         // Then
         assertThat(result).isEqualTo(expect);
@@ -38,9 +38,9 @@ public class PlayingCardTest {
 
     private static Stream<Arguments> addValueParameters() {
         return Stream.of(
-                Arguments.of(new PlayingCard(HEART, ACE), 4, 15),
-                Arguments.of(new PlayingCard(HEART, ACE), 18, 19),
-                Arguments.of(new PlayingCard(HEART, FIVE), 15, 20)
+                Arguments.of(new PlayingCard(HEART, ACE), 4, 11),
+                Arguments.of(new PlayingCard(HEART, ACE), 18, 1),
+                Arguments.of(new PlayingCard(HEART, FIVE), 15, 5)
         );
     }
 }

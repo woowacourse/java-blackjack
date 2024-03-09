@@ -22,9 +22,8 @@ public class Hand {
     public int getCardsNumberSum() {
         int result = 0;
         for (PlayingCard playingCard : playingCards) {
-            result = playingCard.addValue(result);
+            result += playingCard.getValue(result);
         }
-
         return result;
     }
 
