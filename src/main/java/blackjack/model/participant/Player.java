@@ -42,8 +42,12 @@ public class Player {
         return hand.isBust();
     }
 
-    public int announceCardCount() {
-        return hand.countSize();
+    public boolean hasManyCardsThan(Player other) {
+        return hand.hasManyThan(other.hand);
+    }
+
+    public boolean hasSameCardsSizeThan(Player other) {
+        return hand.hasSameSizeWith(other.hand);
     }
 
     public String getName() {

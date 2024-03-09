@@ -6,6 +6,7 @@ import static blackjack.model.deck.Score.FIVE;
 import static blackjack.model.deck.Score.FOUR;
 import static blackjack.model.deck.Score.NINE;
 import static blackjack.model.deck.Score.TEN;
+import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
 import static blackjack.model.deck.Shape.CLOVER;
 import static blackjack.model.deck.Shape.DIA;
@@ -80,16 +81,18 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("카드의 개수를 반환한다.")
-    void countCardsSize() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
-        assertThat(hand.countSize()).isEqualTo(3);
-    }
-
-    @Test
     @DisplayName("2장의 카드로 21인 경우 블랙잭이다.")
     void isBlackJack() {
         Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)));
         assertThat(hand.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("자신이 가진 카드의 개수가 다른 사람보다 큰지 확인한다.")
+    void hasManySizeThanOtherCards() {
+        Hand myHand = new Hand(List.of(new Card(DIA, TEN), new Card(DIA, ACE), new Card(DIA, THREE)));
+        Hand otherHand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)));
+
+        assertThat(myHand.hasManyThan(otherHand)).isTrue();
     }
 }

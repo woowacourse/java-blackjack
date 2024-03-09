@@ -63,12 +63,16 @@ public class Hand {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    public int countSize() {
-        return cards.size();
-    }
-
     public boolean isBlackJack() {
         return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean hasManyThan(Hand other) {
+        return this.cards.size() > other.cards.size();
+    }
+
+    public boolean hasSameSizeWith(Hand other) {
+        return this.cards.size() == other.cards.size();
     }
 
     public List<Card> getCards() {
